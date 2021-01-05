@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41677C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 812A1C433E9
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 04:44:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 078F12251F
+	by mail.kernel.org (Postfix) with ESMTP id 4484F22955
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 04:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727706AbhAEEnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727783AbhAEEnu (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 4 Jan 2021 23:43:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50532 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbhAEEnt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726834AbhAEEnt (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 4 Jan 2021 23:43:49 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E19C4C061793
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8AF3C061794
         for <git@vger.kernel.org>; Mon,  4 Jan 2021 20:43:08 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id c5so34866407wrp.6
+Received: by mail-wr1-x431.google.com with SMTP id c5so34866482wrp.6
         for <git@vger.kernel.org>; Mon, 04 Jan 2021 20:43:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=b5U/lKs1go42IHvNS7dENQgNEgcymcgXpAXyxZKfWhM=;
-        b=LGaUmNSLHRlcboZV9wk3TEV8v6usZ+EPZylUjK1hW7K4PEFHRMY5PJ35xxDdmumV1x
-         4lkZzvttyzDUU0fhFRHheL/UwYox8JNw1Y4T0AunymSMAf0dTsPgpWFuP5pEGQsLPVBk
-         7Y//ZNCAgTx+4LNOe1t/G0xkWuQ8k47iXW6awTO4KK3HSj93P392pVIQroCyQvSRoRJt
-         45ehlK45ZcA6tGyenUCY/RWx4aZAOs1nNw0bjdznCuIUcjwZVNh9skQHBosiotFIqmGY
-         bAN1tkQAKSB9IX2iWO/m+1dx18M/gpGTJYP6cTcYGzS3bjISgWdgy/xP5YxFZkpyfO66
-         2tYQ==
+        bh=0TeogiNJ7ipGmFDWNnuJH30APRPsqSsAei8/MLisySQ=;
+        b=G351nDPPkKg0/JS9mQyXrzKsmZ2dCguZfk90xANHpMvG8dAHoNOAC61Z3CrVOP4jCR
+         IueXgtXpP1h6YWdYjmgDUTsu8ILN8be+w3Ki/wHkc5eVD2BUBGep+dhoa36vBoZqQVBy
+         II8q2pK6ZPa8VF5MC7WKPo2AvX2tFXv6RdTzSHz2YlxC/vePAhQHHqxD21iSrJIymknx
+         otiu+xZq/K44RzLFuHU9Me92mVd8F4OUdR52NqIacStXVdGZNc4rC2Ykd+Rc7mEsJ/0M
+         FtIFM0Mlg2JdYt30QlGXPKN4U5XKM3f/VJEX0yRPQ8X/QM8jp00Vl671QkjT5wCbMFgh
+         1OIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b5U/lKs1go42IHvNS7dENQgNEgcymcgXpAXyxZKfWhM=;
-        b=LR8C8rNAQEtyL6n/l3KVv8K/P4om4IY7qsMOI85waA7olBshwXH5y2H3pbyHcs05tO
-         PfhpuIVUPOCMWYhCqQErRZl2PIWXJJ3HBYeAhiSXXrZyY5S47BOIYPhJLMTKt9MBbfRM
-         97wRT9R7mFLkiVkpxlAfWhtp3GiSwmKTLwWU+ci2tfvwsxQ33eRZuId/C4kfEHQRxObY
-         TjtTQgkZ0ZAfDHzTJvURrLqWvuq2Uja0dkY+C66QX43+jFlLRpaTp4rFfgOfsWpdn6Pk
-         6Uoj6sRhhednbeLnslrtHU7rFtis0KHw7Ek4LNx5dfvN325Yp7mVuzS19XLgEVP0IAPb
-         gAlQ==
-X-Gm-Message-State: AOAM530f7pHUHCdcoT74agiZpXWC6GSrvrrmsleKqSUGa3MNohCiJFDC
-        VI0TXv4x/2aewoK56jVK7mK/KHCNCfA=
-X-Google-Smtp-Source: ABdhPJz/Ib590X8pFT86IiI4KpSrrYcriLAz69s5zkT9goreOWZLPU1JWwrlZ0fuTTxg7bwrpNUcWg==
-X-Received: by 2002:a05:6000:1290:: with SMTP id f16mr84508520wrx.298.1609821784620;
-        Mon, 04 Jan 2021 20:43:04 -0800 (PST)
+        bh=0TeogiNJ7ipGmFDWNnuJH30APRPsqSsAei8/MLisySQ=;
+        b=UkEcnGZq4fZQZP2g2vSC0u7QsnGlkdXtsE3iO1wzWBc187AicPNoDhAATkkMKxlO7C
+         A5/7Q4FfU1jpDqm/pSUaAnzchtFEH/vn54MdvpCmo6irx9+IkX0GCkJtLdbIAHZToz1h
+         rlBeN2dVpWvNTIsUk8GKEVFdNIGDeiyBvkl/AJhh1uPkUntQAs5uk/j9kha7BJHTSKkz
+         JNt4FU3D8vo8eJOaDjJ/sJIzq9Hz/X4Vs3fpkg+UJvbjDDq/i9Mc64BQkgan+NEZSpb8
+         rHiJHQB6p5qrAIkWtB55kSMsrjn4TxNOxMFczmnlPaF7Bb3YpV5RduCSIIVSyHvQASW6
+         +meQ==
+X-Gm-Message-State: AOAM530s4SmDwRbZEGiRNd3vEbe+Gzmxgqx8CtQRoCxAFTbAjSwRrdWD
+        MOv24q2608s056QcR8aOjVmJ9ffrozk=
+X-Google-Smtp-Source: ABdhPJwL63sTxUpRZ5NcBep0E0bX6EK6hblSrwW4JQcNTkqX+IT4/SBD8jyUXoDhzC1CWAuSH1qjyg==
+X-Received: by 2002:a5d:5049:: with SMTP id h9mr85661112wrt.404.1609821786655;
+        Mon, 04 Jan 2021 20:43:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a13sm89399321wrt.96.2021.01.04.20.43.04
+        by smtp.gmail.com with ESMTPSA id h184sm2474554wmh.23.2021.01.04.20.43.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jan 2021 20:43:04 -0800 (PST)
-Message-Id: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
-In-Reply-To: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+        Mon, 04 Jan 2021 20:43:06 -0800 (PST)
+Message-Id: <e715c703cb88d9a153e2925ae24c31b5bf5957ec.1609821783.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
 References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+        <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 05 Jan 2021 04:42:49 +0000
-Subject: [PATCH v2 00/14] Remove more index compatibility macros
+Date:   Tue, 05 Jan 2021 04:42:51 +0000
+Subject: [PATCH v2 02/14] rm: remove compatilibity macros
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,384 +73,205 @@ Cc:     pclouds@gmail.com, gitster@pobox.com,
         Eric Sunshine <sunshine@sunshineco.com>,
         Alban Gruin <alban.gruin@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-UPDATE: this is now based on ag/merge-strategies-in-c to avoid conflicts in
-'seen'. The changes in builtin/rm.c still conflict with
-mt/rm-sparse-checkout, but that branch seems to be waiting for a clearer
-plan on some corner cases. I thought about ejecting it, but 'rm' still uses
-ce_match_stat(), so just dropping the patch gives less of a final stake at
-the end of the series. (I'm still open to it, if necessary.)
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I noticed that Duy's project around USE_THE_INDEX_COMPATIBILITY_MACROS has
-been on pause for a while. Here is my attempt to continue that project a
-little.
+The rm builtin still uses the antiquated compatibility macros for
+interacting with the index. Update these to the more modern uses by
+passing around a 'struct index_state' pointer.
 
-I started going through the builtins that still use cache_name_pos() and the
-first was easy: mv and rm.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/rm.c | 56 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 30 insertions(+), 26 deletions(-)
 
-Then I hit update-index and it was a bit bigger.
-
-My strategy for update-index was to create static globals "repo" and
-"istate" that point to the_repository and the_index, respectively. Then, I
-was able to remove macros one-by-one without changing method prototypes
-within the file. Then, these static globals were also removed by
-systematically updating the local method prototypes, plus some fancy
-structure stuff for the option parsing callbacks.
-
-I had started trying to keep everything local to the method signatures, but
-I hit a snag when reaching the command-line parsing callbacks, which I could
-not modify their call signature. At that point, I had something that was
-already much more complicated than what I present now. Outside of the first
-update-index commit, everything was a mechanical find/replace.
-
-In total, this allows us to remove four of the compatibility macros because
-they are no longer used.
-
-
-Updates in V2
-=============
-
- * newly based on ag/merge-strategies-in-c, as there were some interesting
-   conflicts in buitin/update-index.c.
-
- * Patch to update builtin/merge-index.c was dropped as that is already
-   handled in ag/merge-strategies-in-c
-
- * I added patches that remove the static globals that I injected to make
-   the compatibility macros easy to delete. I do this in three parts.
-
- * Commit messages improved.
-
-Thanks, -Stolee
-
-Derrick Stolee (14):
-  mv: remove index compatibility macros
-  rm: remove compatilibity macros
-  update-index: drop the_index, the_repository
-  update-index: use istate->cache over active_cache
-  update-index: use index->cache_nr over active_nr
-  update-index: use istate->cache_changed
-  update-index: use index_name_pos() over cache_name_pos()
-  update-index: use remove_file_from_index()
-  update-index: use add_index_entry()
-  update-index: replace several compatibility macros
-  update-index: remove ce_match_stat(), all macros
-  update-index: reduce static globals, part 1
-  update-index: reduce static globals, part 2
-  update-index: remove static globals from callbacks
-
- Documentation/technical/racy-git.txt |   6 +-
- builtin/mv.c                         |  42 ++--
- builtin/rm.c                         |  56 ++---
- builtin/update-index.c               | 320 +++++++++++++++------------
- cache.h                              |   4 -
- 5 files changed, 233 insertions(+), 195 deletions(-)
-
-
-base-commit: 3da8920d38a007157ccf8e53382e5206b909dafe
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-830%2Fderrickstolee%2Findex-compatibility-1-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-830/derrickstolee/index-compatibility-1-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/830
-
-Range-diff vs v1:
-
-  2:  84330533d4f =  1:  5ccc464cf26 mv: remove index compatibility macros
-  3:  54e167d5872 =  2:  e715c703cb8 rm: remove compatilibity macros
-  4:  77f6510bb68 !  3:  4bf3c582f9d update-index: drop the_index, the_repository
-     @@ Commit message
-          To reduce the need for the index compatibility macros, we will replace
-          their uses in update-index mechanically. This is the most interesting
-          change, which creates global "repo" and "istate" pointers. The macros
-     -    can then be mechanically replaced by instances that use the istate
-     -    pointer instead of the version that autocompletes to use the_index.
-     +    that expand to use the_index can then be mechanically replaced by
-     +    references to the istate pointer.
-      
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-     @@ builtin/update-index.c: static int add_one_path(const struct cache_entry *old, c
-       		discard_cache_entry(ce);
-       		return -1;
-      @@ builtin/update-index.c: static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
-     - 		return error("Invalid path '%s'", path);
-     - 
-     - 	len = strlen(path);
-     --	ce = make_empty_cache_entry(&the_index, len);
-     -+	ce = make_empty_cache_entry(istate, len);
-     - 
-     - 	oidcpy(&ce->oid, oid);
-     - 	memcpy(ce->name, path, len);
-     + {
-     + 	int res;
-     + 
-     +-	res = add_to_index_cacheinfo(&the_index, mode, oid, path, stage,
-     ++	res = add_to_index_cacheinfo(istate, mode, oid, path, stage,
-     + 				     allow_add, allow_replace, NULL);
-     + 	if (res == -1)
-     + 		return res;
-      @@ builtin/update-index.c: static struct cache_entry *read_one_ent(const char *which,
-       	struct object_id oid;
-       	struct cache_entry *ce;
-  5:  cc5df3566df =  4:  4b509ba5fa2 update-index: use istate->cache over active_cache
-  6:  e99b8bddb3a =  5:  6c0e019f91c update-index: use index->cache_nr over active_nr
-  7:  f841500c663 =  6:  5091e2661d1 update-index: use istate->cache_changed
-  8:  d2af7e21ca1 =  7:  5b14fa10a4b update-index: use index_name_pos() over cache_name_pos()
-  9:  c576e2d9676 =  8:  a1a9fb01b07 update-index: use remove_file_from_index()
- 10:  cf091799cae !  9:  620e300ad6b update-index: use add_index_entry()
-     @@ builtin/update-index.c: static int add_one_path(const struct cache_entry *old, c
-       		discard_cache_entry(ce);
-       		return error("%s: cannot add to the index - missing --add option?", path);
-       	}
-     -@@ builtin/update-index.c: static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
-     - 		ce->ce_flags |= CE_VALID;
-     - 	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
-     - 	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
-     --	if (add_cache_entry(ce, option))
-     -+	if (add_index_entry(istate, ce, option))
-     - 		return error("%s: cannot add to the index - missing --add option?",
-     - 			     path);
-     - 	report("add '%s'", path);
-      @@ builtin/update-index.c: static int unresolve_one(const char *path)
-       	}
-       
- 11:  d7856e2e772 = 10:  68b26a11d77 update-index: replace several compatibility macros
- 12:  8fb307c3bee ! 11:  f1cffe2b455 update-index: remove ce_match_stat(), all macros
-     @@ Commit message
-          update-index: remove ce_match_stat(), all macros
-      
-          The final index compatibility macro to remove from the update-index
-     -    builtin is ce_match_state(). Further, this is the last use of that macro
-     +    builtin is ce_match_stat(). Further, this is the last use of that macro
-          anywhere, so it should be removed.
-      
-          There are some remaining references in the racy-git.txt technical
-  -:  ----------- > 12:  79e267f39ec update-index: reduce static globals, part 1
-  1:  68d88b651c7 ! 13:  457402b4fdc merge-index: drop index compatibility macros
-     @@ Metadata
-      Author: Derrick Stolee <dstolee@microsoft.com>
-      
-       ## Commit message ##
-     -    merge-index: drop index compatibility macros
-     +    update-index: reduce static globals, part 2
-      
-     -    Replace uses of the old macros for the_index and instead pass around a
-     -    'struct index_state' pointer. This allows dropping the compatibility
-     -    flag.
-     +    In order to remove index compatibility macros cleanly, we relied upon
-     +    static globals 'repo' and 'istate' to be pointers to the_repository and
-     +    the_index, respectively. We can continue reducing the need for these
-     +    static globals by modifying method prototypes to use them when
-     +    necessary.
-     +
-     +    Move these static globals further down the file so we can identify which
-     +    methods need both 'struct repository *repo' and 'struct index_state
-     +    *istate' parameters. The only changes included here adjust method
-     +    prototypes and their call locations.
-     +
-     +    The only remaining change is to remove the static globals entirely, but
-     +    that requires updating the parse-opt callbacks, which need a different
-     +    solution.
-      
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-     - ## builtin/merge-index.c ##
-     -@@
-     --#define USE_THE_INDEX_COMPATIBILITY_MACROS
-     - #include "builtin.h"
-     - #include "run-command.h"
-     + ## builtin/update-index.c ##
-     +@@ builtin/update-index.c: static const char * const update_index_usage[] = {
-     + static struct object_id head_oid;
-     + static struct object_id merge_head_oid;
-       
-     -@@ builtin/merge-index.c: static const char *pgm;
-     - static int one_shot, quiet;
-     - static int err;
-     - 
-     --static int merge_entry(int pos, const char *path)
-     -+static int merge_entry(struct index_state *istate,
-     -+		       int pos, const char *path)
-     +-static struct repository *repo;
-     +-static struct index_state *istate;
-     +-
-     +-static struct cache_entry *read_one_ent(const char *which,
-     ++static struct cache_entry *read_one_ent(struct repository *repo,
-     ++					struct index_state *istate,
-     ++					const char *which,
-     + 					struct object_id *ent, const char *path,
-     + 					int namelen, int stage)
-       {
-     - 	int found;
-     - 	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
-     - 	char hexbuf[4][GIT_MAX_HEXSZ + 1];
-     - 	char ownbuf[4][60];
-     - 
-     --	if (pos >= active_nr)
-     -+	if (pos >= istate->cache_nr)
-     - 		die("git merge-index: %s not in the cache", path);
-     - 	found = 0;
-     - 	do {
-     --		const struct cache_entry *ce = active_cache[pos];
-     -+		const struct cache_entry *ce = istate->cache[pos];
-     - 		int stage = ce_stage(ce);
-     - 
-     - 		if (strcmp(ce->name, path))
-     -@@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
-     - 		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
-     - 		arguments[stage] = hexbuf[stage];
-     - 		arguments[stage + 4] = ownbuf[stage];
-     --	} while (++pos < active_nr);
-     -+	} while (++pos < istate->cache_nr);
-     - 	if (!found)
-     - 		die("git merge-index: %s not in the cache", path);
-     - 
-     -@@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
-     - 	return found;
-     +@@ builtin/update-index.c: static struct cache_entry *read_one_ent(const char *which,
-     + 	return ce;
-       }
-       
-     --static void merge_one_path(const char *path)
-     -+static void merge_one_path(struct index_state *istate,
-     -+			   const char *path)
-     +-static int unresolve_one(const char *path)
-     ++static int unresolve_one(struct repository *repo,
-     ++			 struct index_state *istate,
-     ++			 const char *path)
-       {
-     --	int pos = cache_name_pos(path, strlen(path));
-     -+	int pos = index_name_pos(istate, path, strlen(path));
-     - 
-     - 	/*
-     - 	 * If it already exists in the cache as stage0, it's
-     - 	 * already merged and there is nothing to do.
-     + 	int namelen = strlen(path);
-     + 	int pos;
-     +@@ builtin/update-index.c: static int unresolve_one(const char *path)
-     + 	 * stuff HEAD version in stage #2,
-     + 	 * stuff MERGE_HEAD version in stage #3.
-       	 */
-     - 	if (pos < 0)
-     --		merge_entry(-pos-1, path);
-     -+		merge_entry(istate, -pos - 1, path);
-     +-	ce_2 = read_one_ent("our", &head_oid, path, namelen, 2);
-     +-	ce_3 = read_one_ent("their", &merge_head_oid, path, namelen, 3);
-     ++	ce_2 = read_one_ent(repo, istate, "our", &head_oid, path, namelen, 2);
-     ++	ce_3 = read_one_ent(repo, istate, "their", &merge_head_oid, path, namelen, 3);
-     + 
-     + 	if (!ce_2 || !ce_3) {
-     + 		ret = -1;
-     +@@ builtin/update-index.c: static void read_head_pointers(void)
-     + 	}
-       }
-       
-     --static void merge_all(void)
-     -+static void merge_all(struct index_state *istate)
-     +-static int do_unresolve(int ac, const char **av,
-     ++static int do_unresolve(struct repository *repo,
-     ++			struct index_state *istate,
-     ++			int ac, const char **av,
-     + 			const char *prefix, int prefix_length)
-       {
-       	int i;
-     --	for (i = 0; i < active_nr; i++) {
-     --		const struct cache_entry *ce = active_cache[i];
-     -+	for (i = 0; i < istate->cache_nr; i++) {
-     -+		const struct cache_entry *ce = istate->cache[i];
-     - 		if (!ce_stage(ce))
-     - 			continue;
-     --		i += merge_entry(i, ce->name)-1;
-     -+		i += merge_entry(istate, i, ce->name)-1;
-     +@@ builtin/update-index.c: static int do_unresolve(int ac, const char **av,
-     + 	for (i = 1; i < ac; i++) {
-     + 		const char *arg = av[i];
-     + 		char *p = prefix_path(prefix, prefix_length, arg);
-     +-		err |= unresolve_one(p);
-     ++		err |= unresolve_one(repo, istate, p);
-     + 		free(p);
-       	}
-     + 	return err;
-       }
-       
-     - int cmd_merge_index(int argc, const char **argv, const char *prefix)
-     +-static int do_reupdate(int ac, const char **av,
-     ++static int do_reupdate(struct repository *repo,
-     ++		       struct index_state *istate,
-     ++		       int ac, const char **av,
-     + 		       const char *prefix)
-       {
-     - 	int i, force_file = 0;
-     -+	struct index_state *istate;
-     + 	/* Read HEAD and run update-index on paths that are
-     +@@ builtin/update-index.c: static int do_reupdate(int ac, const char **av,
-     + 		if (ce_stage(ce) || !ce_path_match(istate, ce, &pathspec, NULL))
-     + 			continue;
-     + 		if (has_head)
-     +-			old = read_one_ent(NULL, &head_oid,
-     ++			old = read_one_ent(repo, istate, NULL, &head_oid,
-     + 					   ce->name, ce_namelen(ce), 0);
-     + 		if (old && ce->ce_mode == old->ce_mode &&
-     + 		    oideq(&ce->oid, &old->oid)) {
-     +@@ builtin/update-index.c: struct refresh_params {
-     + 	int *has_errors;
-     + };
-       
-     - 	/* Without this we cannot rely on waitpid() to tell
-     - 	 * what happened to our children.
-     -@@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const char *prefix)
-     - 	if (argc < 3)
-     - 		usage("git merge-index [-o] [-q] <merge-program> (-a | [--] [<filename>...])");
-     ++static struct repository *repo;
-     ++static struct index_state *istate;
-     ++
-     + static int refresh(struct refresh_params *o, unsigned int flag)
-     + {
-     + 	setup_work_tree();
-     +@@ builtin/update-index.c: static enum parse_opt_result unresolve_callback(
-     + 	BUG_ON_OPT_ARG(arg);
-       
-     --	read_cache();
-     -+	repo_read_index(the_repository);
-     -+	istate = the_repository->index;
-     + 	/* consume remaining arguments. */
-     +-	*has_errors = do_unresolve(ctx->argc, ctx->argv,
-     +-				prefix, prefix ? strlen(prefix) : 0);
-     ++	*has_errors = do_unresolve(repo, istate, ctx->argc, ctx->argv,
-     ++				   prefix, prefix ? strlen(prefix) : 0);
-     + 	if (*has_errors)
-     + 		istate->cache_changed = 0;
-     + 
-     +@@ builtin/update-index.c: static enum parse_opt_result reupdate_callback(
-     + 
-     + 	/* consume remaining arguments. */
-     + 	setup_work_tree();
-     +-	*has_errors = do_reupdate(ctx->argc, ctx->argv, prefix);
-     ++	*has_errors = do_reupdate(repo, istate, ctx->argc, ctx->argv, prefix);
-     + 	if (*has_errors)
-     + 		istate->cache_changed = 0;
-       
-     - 	i = 1;
-     - 	if (!strcmp(argv[i], "-o")) {
-     -@@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const char *prefix)
-     - 				continue;
-     - 			}
-     - 			if (!strcmp(arg, "-a")) {
-     --				merge_all();
-     -+				merge_all(istate);
-     - 				continue;
-     - 			}
-     - 			die("git merge-index: unknown option %s", arg);
-     - 		}
-     --		merge_one_path(arg);
-     -+		merge_one_path(istate, arg);
-     - 	}
-     - 	if (err && !quiet)
-     - 		die("merge program failed");
-  -:  ----------- > 14:  2b171a142b3 update-index: remove static globals from callbacks
-
+diff --git a/builtin/rm.c b/builtin/rm.c
+index 4858631e0f0..767df8d6b25 100644
+--- a/builtin/rm.c
++++ b/builtin/rm.c
+@@ -3,7 +3,6 @@
+  *
+  * Copyright (C) Linus Torvalds 2006
+  */
+-#define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+ #include "config.h"
+ #include "lockfile.h"
+@@ -28,12 +27,14 @@ static struct {
+ 	} *entry;
+ } list;
+ 
+-static int get_ours_cache_pos(const char *path, int pos)
++static int get_ours_cache_pos(struct index_state *istate,
++			      const char *path, int pos)
+ {
+ 	int i = -pos - 1;
+ 
+-	while ((i < active_nr) && !strcmp(active_cache[i]->name, path)) {
+-		if (ce_stage(active_cache[i]) == 2)
++	while ((i < istate->cache_nr) &&
++	       !strcmp(istate->cache[i]->name, path)) {
++		if (ce_stage(istate->cache[i]) == 2)
+ 			return i;
+ 		i++;
+ 	}
+@@ -61,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
+ 	}
+ }
+ 
+-static void submodules_absorb_gitdir_if_needed(void)
++static void submodules_absorb_gitdir_if_needed(struct index_state *istate)
+ {
+ 	int i;
+ 	for (i = 0; i < list.nr; i++) {
+@@ -69,13 +70,13 @@ static void submodules_absorb_gitdir_if_needed(void)
+ 		int pos;
+ 		const struct cache_entry *ce;
+ 
+-		pos = cache_name_pos(name, strlen(name));
++		pos = index_name_pos(istate, name, strlen(name));
+ 		if (pos < 0) {
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(istate, name, pos);
+ 			if (pos < 0)
+ 				continue;
+ 		}
+-		ce = active_cache[pos];
++		ce = istate->cache[pos];
+ 
+ 		if (!S_ISGITLINK(ce->ce_mode) ||
+ 		    !file_exists(ce->name) ||
+@@ -88,7 +89,8 @@ static void submodules_absorb_gitdir_if_needed(void)
+ 	}
+ }
+ 
+-static int check_local_mod(struct object_id *head, int index_only)
++static int check_local_mod(struct index_state *istate,
++			   struct object_id *head, int index_only)
+ {
+ 	/*
+ 	 * Items in list are already sorted in the cache order,
+@@ -114,21 +116,21 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 		int local_changes = 0;
+ 		int staged_changes = 0;
+ 
+-		pos = cache_name_pos(name, strlen(name));
++		pos = index_name_pos(istate, name, strlen(name));
+ 		if (pos < 0) {
+ 			/*
+ 			 * Skip unmerged entries except for populated submodules
+ 			 * that could lose history when removed.
+ 			 */
+-			pos = get_ours_cache_pos(name, pos);
++			pos = get_ours_cache_pos(istate, name, pos);
+ 			if (pos < 0)
+ 				continue;
+ 
+-			if (!S_ISGITLINK(active_cache[pos]->ce_mode) ||
++			if (!S_ISGITLINK(istate->cache[pos]->ce_mode) ||
+ 			    is_empty_dir(name))
+ 				continue;
+ 		}
+-		ce = active_cache[pos];
++		ce = istate->cache[pos];
+ 
+ 		if (lstat(ce->name, &st) < 0) {
+ 			if (!is_missing_file_error(errno))
+@@ -165,7 +167,7 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 		 * Is the index different from the file in the work tree?
+ 		 * If it's a submodule, is its work tree modified?
+ 		 */
+-		if (ce_match_stat(ce, &st, 0) ||
++		if (ie_match_stat(istate, ce, &st, 0) ||
+ 		    (S_ISGITLINK(ce->ce_mode) &&
+ 		     bad_to_remove_submodule(ce->name,
+ 				SUBMODULE_REMOVAL_DIE_ON_ERROR |
+@@ -257,6 +259,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	struct pathspec pathspec;
+ 	char *seen;
++	struct index_state *istate;
+ 
+ 	git_config(git_default_config, NULL);
+ 
+@@ -284,24 +287,25 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	if (!index_only)
+ 		setup_work_tree();
+ 
+-	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
++	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
+ 
+-	if (read_cache() < 0)
++	if (repo_read_index(the_repository) < 0)
+ 		die(_("index file corrupt"));
+ 
+-	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
++	istate = the_repository->index;
++	refresh_index(istate, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
+ 
+ 	seen = xcalloc(pathspec.nr, 1);
+ 
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
+-		if (!ce_path_match(&the_index, ce, &pathspec, seen))
++	for (i = 0; i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
++		if (!ce_path_match(istate, ce, &pathspec, seen))
+ 			continue;
+ 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
+ 		list.entry[list.nr].name = xstrdup(ce->name);
+ 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
+ 		if (list.entry[list.nr++].is_submodule &&
+-		    !is_staging_gitmodules_ok(&the_index))
++		    !is_staging_gitmodules_ok(istate))
+ 			die(_("please stage your changes to .gitmodules or stash them to proceed"));
+ 	}
+ 
+@@ -329,7 +333,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (!index_only)
+-		submodules_absorb_gitdir_if_needed();
++		submodules_absorb_gitdir_if_needed(istate);
+ 
+ 	/*
+ 	 * If not forced, the file, the index and the HEAD (if exists)
+@@ -345,7 +349,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		struct object_id oid;
+ 		if (get_oid("HEAD", &oid))
+ 			oidclr(&oid);
+-		if (check_local_mod(&oid, index_only))
++		if (check_local_mod(istate, &oid, index_only))
+ 			exit(1);
+ 	}
+ 
+@@ -358,7 +362,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		if (!quiet)
+ 			printf("rm '%s'\n", path);
+ 
+-		if (remove_file_from_cache(path))
++		if (remove_file_from_index(istate, path))
+ 			die(_("git rm: unable to remove %s"), path);
+ 	}
+ 
+@@ -398,10 +402,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 		}
+ 		strbuf_release(&buf);
+ 		if (gitmodules_modified)
+-			stage_updated_gitmodules(&the_index);
++			stage_updated_gitmodules(istate);
+ 	}
+ 
+-	if (write_locked_index(&the_index, &lock_file,
++	if (write_locked_index(istate, &lock_file,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+ 		die(_("Unable to write new index file"));
+ 
 -- 
 gitgitgadget
+
