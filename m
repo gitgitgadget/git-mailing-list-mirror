@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6230EC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C685C433E6
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 13:09:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28D6922AED
+	by mail.kernel.org (Postfix) with ESMTP id 5F0A922B3B
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 13:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729337AbhAENJP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 08:09:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44204 "EHLO
+        id S1729684AbhAENJR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 08:09:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727397AbhAENJN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 08:09:13 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07150C061793
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 05:08:33 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 3so2995385wmg.4
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 05:08:32 -0800 (PST)
+        with ESMTP id S1729513AbhAENJQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 08:09:16 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6DB7C061798
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 05:08:35 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id t30so36153869wrb.0
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 05:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RodYAdkQd8R+l8FdZHezwZH9UXeD13YYCk5O1JOaM8I=;
-        b=WstGXo6+Nf2mOMPRZMPY21nqP66PsKOVJWKLRIEiPwck2qZ0u1U91R/FN4nNGbNZky
-         pIebapi0An5M4NnHXHsiNs8PkdL2ewH3Sx0dFim+mjVrTQUgKHoWJgVrJT0OSFc/tPpk
-         r6Jkk3EV+PBsmaWb4kxzp3ZNYDNp08LqE+2yaC9yqb9CQtqnBkXPED7kVQP/s9pv3s7k
-         oBgdVYmLHHyYZyuNeUekhQkKd/xiqm9bMkpArgX7FfVU6Ezp9wp9oLrRFy0MUcgSo7Rw
-         KsyjN7Kp1AlMNKGZtCIk8+my/fC/9vnu2zb5nRYDXLZRKGzIl73VPGuVIDEJ1ikp8RTE
-         an4A==
+        bh=uqUiNtL73v9qRcMKJ/7YcDUUHeK1b32DpcQz9BCr8GA=;
+        b=l1s3IzGZ3Y2/0sbOPEMWMMF6i8/a4maX+DwCpkbeze5qMdlQbId2jWVkT53V2rgVTD
+         lVI4ctVo+ya2MDeghe6PJiLTZ1C5YVQwRCzHmXla/HfDxpkBSCNTzWirIm2EUEWXEfck
+         SUgr1lHj1bMvo68tTEY/vsPhbWD64qFh9KNbCez8KJf40iSLTf5pJb79LgAkZpb6RBDe
+         c6QOGnUcS48NiYrfkDhUVOerwQM3Ha8gYBxVNPjs2vyBCCjFbqrDleM4muOmVWUMJFNr
+         1IDn05kiru4052EuVrLJy7rHpw12HSjld9Mh2xFBpCyREEsrfrtKb3O3KGi1b5emidZ8
+         gMrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RodYAdkQd8R+l8FdZHezwZH9UXeD13YYCk5O1JOaM8I=;
-        b=fFM86l8uUhXWFlD2J/wOlIS7p6Tf1tC6ccA12mK/qVxIaZmrcc4QAltI/0cCS6OrTA
-         FNMynRUGdu+jR4WvA7lxZ1g3n8s1JPKHm3yIcVgGjpaioEUxy6Z3mxXIl3G5l1BNIOtz
-         5Q3nef6xM3RHLsvk0moRRG5V4JqhWTsPvLTy7xu0A24xCOyyHS+pWqAw7Xr79P08a/Vm
-         hTRvb3X1NZCqwjtFkfI2VEoG+zSiUqzAilxugNjprRx36uzd9xkDspIqsuXnHPWqxb7l
-         bq0T8C4W8EsxAfH3Xiitl+QkwyC9eV6kAA6NNVS49yGHL6LVVcS3B9/obCslHS8Gmdp4
-         /9Ng==
-X-Gm-Message-State: AOAM530K53Jf0xHgXz61I83F4g0OVLEd7L3hp1WN16Iv9f/q9m/yfHyC
-        O11hn/Eyl2bGXTqWVxjvxN3+9f7Qkns=
-X-Google-Smtp-Source: ABdhPJwFT8oCexhtni/dXzxZ47/PcmYaGWRRhOZ4l56oJQfE1zggH1U/8j7JWWZfe4wWePa6jP5znQ==
-X-Received: by 2002:a1c:7d94:: with SMTP id y142mr3461108wmc.105.1609852111460;
-        Tue, 05 Jan 2021 05:08:31 -0800 (PST)
+        bh=uqUiNtL73v9qRcMKJ/7YcDUUHeK1b32DpcQz9BCr8GA=;
+        b=cNgjsnReFg2HDLNEiGjazzcSn3Hri0QyCEmuZTeMqEQ1N96kGrFgknG5vrqJOHYSFr
+         MEQAaixhKOd4pQA4uPUU14wugw5WeXk4N6jeKiwHBXTktuptGzkFnP4OSP5I4DgtETcg
+         j7yTPG4ykPg4BZ9ETbG6Cj6bRX2XPhjxpNcvFxjLlWdpeJL5rA0jlz4AIm7tfhxiW4eT
+         J9OTMGd3ebPeYFR07kE/wOCPCd9y+1xcR6YGtJjoSCHmRw/8Mch0FbgFCyyth3+ofQcm
+         JQQiyD23whL4tqcw9ETvFwNcB5z/p+RU1wfr8cl4eeLqEL/KYG0IQtHHCeIWd1vpzirz
+         Tc2g==
+X-Gm-Message-State: AOAM530/ni2PdF0cp6D67CiyTNJsLbEUbScbFRbh5Sx00xFbo+gO6J6x
+        BU4sRb4Es3ohNj1aKeaWvH1jK5ls8Rg=
+X-Google-Smtp-Source: ABdhPJy1uVdph0mHSMD48hA8UAiTf1gLodPxeMv9jt+uwou7ojclMwDhJDBPwIB4od3HXIvWn3zdyw==
+X-Received: by 2002:adf:f401:: with SMTP id g1mr84535424wro.258.1609852114122;
+        Tue, 05 Jan 2021 05:08:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e15sm96544077wrx.86.2021.01.05.05.08.30
+        by smtp.gmail.com with ESMTPSA id a17sm99608464wrs.20.2021.01.05.05.08.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 05:08:30 -0800 (PST)
-Message-Id: <4807342b0019be29bb369ed3403a485f0ce9c15d.1609852108.git.gitgitgadget@gmail.com>
+        Tue, 05 Jan 2021 05:08:33 -0800 (PST)
+Message-Id: <68f5013dee3762d5ad2fdc4bb229b522881efdf7.1609852109.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.776.v7.git.1609852108.gitgitgadget@gmail.com>
 References: <pull.776.v6.git.1607542142.gitgitgadget@gmail.com>
         <pull.776.v7.git.1609852108.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 05 Jan 2021 13:08:25 +0000
-Subject: [PATCH v7 1/4] maintenance: extract platform-specific scheduling
+Date:   Tue, 05 Jan 2021 13:08:28 +0000
+Subject: [PATCH v7 4/4] maintenance: use Windows scheduled tasks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,198 +78,342 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The existing schedule mechanism using 'cron' is supported by POSIX
-platforms, but not Windows. It also works slightly differently on
-macOS to significant detriment of the user experience. To allow for
-new implementations on these platforms, extract a method that
-performs the platform-specific scheduling mechanism. This will be
-swapped at compile time with new implementations on specialized
-platforms.
+Git's background maintenance uses cron by default, but this is not
+available on Windows. Instead, integrate with Task Scheduler.
 
-As we add this generality, rename GIT_TEST_CRONTAB to
-GIT_TEST_MAINT_SCHEDULER. Further, this variable is now parsed as
-"<scheduler>:<command>" so we can test platform-specific scheduling
-logic even when not on the correct platform. By specifying the
-<scheduler> in this string, we will be able to test all three sets of
-Git logic from a Linux machine.
+Tasks can be scheduled using the 'schtasks' command. There are several
+command-line options that can allow for some advanced scheduling, but
+unfortunately these seem to all require authenticating using a password.
+
+Instead, use the "/xml" option to pass an XML file that contains the
+configuration for the necessary schedule. These XML files are based on
+some that I exported after constructing a schedule in the Task Scheduler
+GUI. These options only run background maintenance when the user is
+logged in, and more fields are populated with the current username and
+SID at run-time by 'schtasks'.
+
+Since the GIT_TEST_MAINT_SCHEDULER environment variable allows us to
+specify 'schtasks' as the scheduler, we can test the Windows-specific
+logic on other platforms. Thus, add a check that the XML file written
+by Git is valid when xmllint exists on the system.
+
+Since we use a temporary file for the XML files sent to 'schtasks', we
+prefix the random characters with the frequency so it is easier to
+examine the proper file during tests. Instead of an exact match on the
+'args' file, we 'grep' for the arguments other than the filename.
+
+There is a deficiency in the current design. Windows has two kinds of
+applications: GUI applications that start by "winmain()" and console
+applications that start by "main()". Console applications are attached
+to a new Console window if they are not already associated with a GUI
+application. This means that every hour the scheudled task launches a
+command window for the scheduled tasks. Not only is this visually
+obtrusive, but it also takes focus from whatever else the user is
+doing!
+
+A simple fix would be to insert a GUI application that acts as a shim
+between the scheduled task and Git. This is currently possible in Git
+for Windows by setting the <Command> tag equal to
+
+  C:\Program Files\Git\git-bash.exe
+
+with options "--hide --no-needs-console --command=cmd\git.exe"
+followed by the arguments currently used. Since git-bash.exe is not
+included in Windows builds of core Git, I chose to leave out this
+feature. My plan is to submit a small patch to Git for Windows that
+converts the use of git.exe with this use of git-bash.exe in the
+short term. In the long term, we can consider creating this GUI
+shim application within core Git, perhaps in contrib/.
 
 Co-authored-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c           | 70 ++++++++++++++++++++++++++----------------
- t/t7900-maintenance.sh |  8 ++---
- t/test-lib.sh          |  7 +++--
- 3 files changed, 51 insertions(+), 34 deletions(-)
+ Documentation/git-maintenance.txt |  22 ++++
+ builtin/gc.c                      | 168 +++++++++++++++++++++++++++++-
+ t/t7900-maintenance.sh            |  37 +++++++
+ 3 files changed, 226 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 5f8f63f0988..6970f2b8983 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -313,6 +313,28 @@ To create more advanced customizations to your background tasks, see
+ launchctl.plist(5) for more information.
+ 
+ 
++BACKGROUND MAINTENANCE ON WINDOWS SYSTEMS
++-----------------------------------------
++
++Windows does not support `cron` and instead has its own system for
++scheduling background tasks. The `git maintenance start` command uses
++the `schtasks` command to submit tasks to this system. You can inspect
++all background tasks using the Task Scheduler application. The tasks
++added by Git have names of the form `Git Maintenance (<frequency>)`.
++The Task Scheduler GUI has ways to inspect these tasks, but you can also
++export the tasks to XML files and view the details there.
++
++Note that since Git is a console application, these background tasks
++create a console window visible to the current user. This can be changed
++manually by selecting the "Run whether user is logged in or not" option
++in Task Scheduler. This change requires a password input, which is why
++`git maintenance start` does not select it by default.
++
++If you want to customize the background tasks, please rename the tasks
++so future calls to `git maintenance (start|stop)` do not overwrite your
++custom tasks.
++
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/gc.c b/builtin/gc.c
-index e3098ef6a12..18ae7f7138a 100644
+index 782769f2438..fdc95d9e99f 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1494,35 +1494,23 @@ static int maintenance_unregister(void)
- #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
- #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
+@@ -1589,7 +1589,7 @@ static int launchctl_schedule_plist(const char *exec_path, enum schedule_priorit
+ 		die(_("failed to create directories for '%s'"), filename);
+ 	plist = xfopen(filename, "w");
  
--static int update_background_schedule(int run_maintenance)
-+static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
- {
- 	int result = 0;
- 	int in_old_region = 0;
- 	struct child_process crontab_list = CHILD_PROCESS_INIT;
- 	struct child_process crontab_edit = CHILD_PROCESS_INIT;
- 	FILE *cron_list, *cron_in;
--	const char *crontab_name;
- 	struct strbuf line = STRBUF_INIT;
--	struct lock_file lk;
--	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
+-	preamble = "<?xml version=\"1.0\" encoding=\"US-ASCII\"?>\n"
++	preamble = "<?xml version=\"1.0\"?>\n"
+ 		   "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+ 		   "<plist version=\"1.0\">"
+ 		   "<dict>\n"
+@@ -1671,6 +1671,168 @@ static int launchctl_update_schedule(int run_maintenance, int fd, const char *cm
+ 		return launchctl_remove_plists(cmd);
+ }
  
--	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
--		return error(_("another process is scheduling background maintenance"));
--
--	crontab_name = getenv("GIT_TEST_CRONTAB");
--	if (!crontab_name)
--		crontab_name = "crontab";
--
--	strvec_split(&crontab_list.args, crontab_name);
-+	strvec_split(&crontab_list.args, cmd);
- 	strvec_push(&crontab_list.args, "-l");
- 	crontab_list.in = -1;
--	crontab_list.out = dup(lk.tempfile->fd);
-+	crontab_list.out = dup(fd);
- 	crontab_list.git_cmd = 0;
- 
--	if (start_command(&crontab_list)) {
--		result = error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
--		goto cleanup;
--	}
-+	if (start_command(&crontab_list))
-+		return error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
- 
- 	/* Ignore exit code, as an empty crontab will return error. */
- 	finish_command(&crontab_list);
-@@ -1531,17 +1519,15 @@ static int update_background_schedule(int run_maintenance)
- 	 * Read from the .lock file, filtering out the old
- 	 * schedule while appending the new schedule.
- 	 */
--	cron_list = fdopen(lk.tempfile->fd, "r");
-+	cron_list = fdopen(fd, "r");
- 	rewind(cron_list);
- 
--	strvec_split(&crontab_edit.args, crontab_name);
-+	strvec_split(&crontab_edit.args, cmd);
- 	crontab_edit.in = -1;
- 	crontab_edit.git_cmd = 0;
- 
--	if (start_command(&crontab_edit)) {
--		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
--		goto cleanup;
--	}
-+	if (start_command(&crontab_edit))
-+		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
- 
- 	cron_in = fdopen(crontab_edit.in, "w");
- 	if (!cron_in) {
-@@ -1586,14 +1572,44 @@ static int update_background_schedule(int run_maintenance)
- 	close(crontab_edit.in);
- 
- done_editing:
--	if (finish_command(&crontab_edit)) {
-+	if (finish_command(&crontab_edit))
- 		result = error(_("'crontab' died"));
--		goto cleanup;
-+	else
-+		fclose(cron_list);
++static char *schtasks_task_name(const char *frequency)
++{
++	struct strbuf label = STRBUF_INIT;
++	strbuf_addf(&label, "Git Maintenance (%s)", frequency);
++	return strbuf_detach(&label, NULL);
++}
++
++static int schtasks_remove_task(enum schedule_priority schedule, const char *cmd)
++{
++	int result;
++	struct strvec args = STRVEC_INIT;
++	const char *frequency = get_frequency(schedule);
++	char *name = schtasks_task_name(frequency);
++
++	strvec_split(&args, cmd);
++	strvec_pushl(&args, "/delete", "/tn", name, "/f", NULL);
++
++	result = run_command_v_opt(args.v, 0);
++
++	strvec_clear(&args);
++	free(name);
 +	return result;
 +}
 +
-+static const char platform_scheduler[] = "crontab";
++static int schtasks_remove_tasks(const char *cmd)
++{
++	return schtasks_remove_task(SCHEDULE_HOURLY, cmd) ||
++		schtasks_remove_task(SCHEDULE_DAILY, cmd) ||
++		schtasks_remove_task(SCHEDULE_WEEKLY, cmd);
++}
 +
-+static int update_background_schedule(int enable)
++static int schtasks_schedule_task(const char *exec_path, enum schedule_priority schedule, const char *cmd)
 +{
 +	int result;
-+	const char *scheduler = platform_scheduler;
-+	const char *cmd = scheduler;
-+	char *testing;
-+	struct lock_file lk;
-+	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
++	struct child_process child = CHILD_PROCESS_INIT;
++	const char *xml;
++	struct tempfile *tfile;
++	const char *frequency = get_frequency(schedule);
++	char *name = schtasks_task_name(frequency);
++	struct strbuf tfilename = STRBUF_INIT;
 +
-+	testing = xstrdup_or_null(getenv("GIT_TEST_MAINT_SCHEDULER"));
-+	if (testing) {
-+		char *sep = strchr(testing, ':');
-+		if (!sep)
-+			die("GIT_TEST_MAINT_SCHEDULER unparseable: %s", testing);
-+		*sep = '\0';
-+		scheduler = testing;
-+		cmd = sep + 1;
- 	}
--	fclose(cron_list);
- 
--cleanup:
-+	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
-+		return error(_("another process is scheduling background maintenance"));
++	strbuf_addf(&tfilename, "%s/schedule_%s_XXXXXX",
++		    get_git_common_dir(), frequency);
++	tfile = xmks_tempfile(tfilename.buf);
++	strbuf_release(&tfilename);
 +
-+	if (!strcmp(scheduler, "crontab"))
-+		result = crontab_update_schedule(enable, lk.tempfile->fd, cmd);
++	if (!fdopen_tempfile(tfile, "w"))
++		die(_("failed to create temp xml file"));
++
++	xml = "<?xml version=\"1.0\" ?>\n"
++	      "<Task version=\"1.4\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">\n"
++	      "<Triggers>\n"
++	      "<CalendarTrigger>\n";
++	fputs(xml, tfile->fp);
++
++	switch (schedule) {
++	case SCHEDULE_HOURLY:
++		fprintf(tfile->fp,
++			"<StartBoundary>2020-01-01T01:00:00</StartBoundary>\n"
++			"<Enabled>true</Enabled>\n"
++			"<ScheduleByDay>\n"
++			"<DaysInterval>1</DaysInterval>\n"
++			"</ScheduleByDay>\n"
++			"<Repetition>\n"
++			"<Interval>PT1H</Interval>\n"
++			"<Duration>PT23H</Duration>\n"
++			"<StopAtDurationEnd>false</StopAtDurationEnd>\n"
++			"</Repetition>\n");
++		break;
++
++	case SCHEDULE_DAILY:
++		fprintf(tfile->fp,
++			"<StartBoundary>2020-01-01T00:00:00</StartBoundary>\n"
++			"<Enabled>true</Enabled>\n"
++			"<ScheduleByWeek>\n"
++			"<DaysOfWeek>\n"
++			"<Monday />\n"
++			"<Tuesday />\n"
++			"<Wednesday />\n"
++			"<Thursday />\n"
++			"<Friday />\n"
++			"<Saturday />\n"
++			"</DaysOfWeek>\n"
++			"<WeeksInterval>1</WeeksInterval>\n"
++			"</ScheduleByWeek>\n");
++		break;
++
++	case SCHEDULE_WEEKLY:
++		fprintf(tfile->fp,
++			"<StartBoundary>2020-01-01T00:00:00</StartBoundary>\n"
++			"<Enabled>true</Enabled>\n"
++			"<ScheduleByWeek>\n"
++			"<DaysOfWeek>\n"
++			"<Sunday />\n"
++			"</DaysOfWeek>\n"
++			"<WeeksInterval>1</WeeksInterval>\n"
++			"</ScheduleByWeek>\n");
++		break;
++
++	default:
++		break;
++	}
++
++	xml = "</CalendarTrigger>\n"
++	      "</Triggers>\n"
++	      "<Principals>\n"
++	      "<Principal id=\"Author\">\n"
++	      "<LogonType>InteractiveToken</LogonType>\n"
++	      "<RunLevel>LeastPrivilege</RunLevel>\n"
++	      "</Principal>\n"
++	      "</Principals>\n"
++	      "<Settings>\n"
++	      "<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>\n"
++	      "<Enabled>true</Enabled>\n"
++	      "<Hidden>true</Hidden>\n"
++	      "<UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>\n"
++	      "<WakeToRun>false</WakeToRun>\n"
++	      "<ExecutionTimeLimit>PT72H</ExecutionTimeLimit>\n"
++	      "<Priority>7</Priority>\n"
++	      "</Settings>\n"
++	      "<Actions Context=\"Author\">\n"
++	      "<Exec>\n"
++	      "<Command>\"%s\\git.exe\"</Command>\n"
++	      "<Arguments>--exec-path=\"%s\" for-each-repo --config=maintenance.repo maintenance run --schedule=%s</Arguments>\n"
++	      "</Exec>\n"
++	      "</Actions>\n"
++	      "</Task>\n";
++	fprintf(tfile->fp, xml, exec_path, exec_path, frequency);
++	strvec_split(&child.args, cmd);
++	strvec_pushl(&child.args, "/create", "/tn", name, "/f", "/xml",
++				  get_tempfile_path(tfile), NULL);
++	close_tempfile_gently(tfile);
++
++	child.no_stdout = 1;
++	child.no_stderr = 1;
++
++	if (start_command(&child))
++		die(_("failed to start schtasks"));
++	result = finish_command(&child);
++
++	delete_tempfile(&tfile);
++	free(name);
++	return result;
++}
++
++static int schtasks_schedule_tasks(const char *cmd)
++{
++	const char *exec_path = git_exec_path();
++
++	return schtasks_schedule_task(exec_path, SCHEDULE_HOURLY, cmd) ||
++		schtasks_schedule_task(exec_path, SCHEDULE_DAILY, cmd) ||
++		schtasks_schedule_task(exec_path, SCHEDULE_WEEKLY, cmd);
++}
++
++static int schtasks_update_schedule(int run_maintenance, int fd, const char *cmd)
++{
++	if (run_maintenance)
++		return schtasks_schedule_tasks(cmd);
 +	else
-+		die("unknown background scheduler: %s", scheduler);
++		return schtasks_remove_tasks(cmd);
++}
 +
- 	rollback_lock_file(&lk);
-+	free(testing);
- 	return result;
- }
+ #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
+ #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
  
+@@ -1761,6 +1923,8 @@ static int crontab_update_schedule(int run_maintenance, int fd, const char *cmd)
+ 
+ #if defined(__APPLE__)
+ static const char platform_scheduler[] = "launchctl";
++#elif defined(GIT_WINDOWS_NATIVE)
++static const char platform_scheduler[] = "schtasks";
+ #else
+ static const char platform_scheduler[] = "crontab";
+ #endif
+@@ -1789,6 +1953,8 @@ static int update_background_schedule(int enable)
+ 
+ 	if (!strcmp(scheduler, "launchctl"))
+ 		result = launchctl_update_schedule(enable, lk.tempfile->fd, cmd);
++	else if (!strcmp(scheduler, "schtasks"))
++		result = schtasks_update_schedule(enable, lk.tempfile->fd, cmd);
+ 	else if (!strcmp(scheduler, "crontab"))
+ 		result = crontab_update_schedule(enable, lk.tempfile->fd, cmd);
+ 	else
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 20184e96e1a..eeb939168da 100755
+index adf24dee72d..135505f6195 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -368,7 +368,7 @@ test_expect_success 'register and unregister' '
+@@ -454,6 +454,43 @@ test_expect_success 'start and stop macOS maintenance' '
+ 	test_line_count = 0 actual
  '
  
- test_expect_success 'start from empty cron table' '
--	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
-+	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start &&
- 
- 	# start registers the repo
- 	git config --get --global maintenance.repo "$(pwd)" &&
-@@ -379,19 +379,19 @@ test_expect_success 'start from empty cron table' '
- '
- 
- test_expect_success 'stop from existing schedule' '
--	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
-+	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance stop &&
- 
- 	# stop does not unregister the repo
- 	git config --get --global maintenance.repo "$(pwd)" &&
- 
- 	# Operation is idempotent
--	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
-+	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance stop &&
- 	test_must_be_empty cron.txt
- '
- 
- test_expect_success 'start preserves existing schedule' '
- 	echo "Important information!" >cron.txt &&
--	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
-+	GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt" git maintenance start &&
- 	grep "Important information!" cron.txt
- '
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4a60d1ed766..ddbeee1f5eb 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1704,7 +1704,8 @@ test_lazy_prereq REBASE_P '
- '
- 
- # Ensure that no test accidentally triggers a Git command
--# that runs 'crontab', affecting a user's cron schedule.
--# Tests that verify the cron integration must set this locally
-+# that runs the actual maintenance scheduler, affecting a user's
-+# system permanently.
-+# Tests that verify the scheduler integration must set this locally
- # to avoid errors.
--GIT_TEST_CRONTAB="exit 1"
-+GIT_TEST_MAINT_SCHEDULER="none:exit 1"
++test_expect_success 'start and stop Windows maintenance' '
++	write_script print-args <<-\EOF &&
++	echo $* >>args
++	while test $# -gt 0
++	do
++		case "$1" in
++		/xml) shift; xmlfile=$1; break ;;
++		*) shift ;;
++		esac
++	done
++	test -z "$xmlfile" || cp "$xmlfile" "$xmlfile.xml"
++	EOF
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="schtasks:./print-args" git maintenance start &&
++
++	# start registers the repo
++	git config --get --global maintenance.repo "$(pwd)" &&
++
++	for frequency in hourly daily weekly
++	do
++		grep "/create /tn Git Maintenance ($frequency) /f /xml" args &&
++		file=$(ls .git/schedule_${frequency}*.xml) &&
++		test_xmllint "$file" || return 1
++	done &&
++
++	rm -f args &&
++	GIT_TEST_MAINT_SCHEDULER="schtasks:./print-args" git maintenance stop &&
++
++	# stop does not unregister the repo
++	git config --get --global maintenance.repo "$(pwd)" &&
++
++	printf "/delete /tn Git Maintenance (%s) /f\n" \
++		hourly daily weekly >expect &&
++	test_cmp expect args
++'
++
+ test_expect_success 'register preserves existing strategy' '
+ 	git config maintenance.strategy none &&
+ 	git maintenance register &&
 -- 
 gitgitgadget
-
