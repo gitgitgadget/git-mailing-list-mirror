@@ -2,125 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5605C433E0
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 12:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CBBC433E0
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 12:18:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A40A22AAA
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 12:06:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A92EB229C4
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 12:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726794AbhAEMGL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 07:06:11 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54269 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725824AbhAEMGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 07:06:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 430F5108E42;
-        Tue,  5 Jan 2021 07:05:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=Q+usUCVhWpouCCyh9wiQMvTL+
-        dc=; b=iojfRZlUTNGT3nlBKZKMaRhlA7BJMAA8H31yM99nkxziZRsm0ykpe2x6u
-        LPf7OqlYmaqBEpZf5074cGxOBtRpFKmfTyULXT9cRSV5cxjl7whMQm27WVlc2t0s
-        xr/ykHT2eXL5gKgjoMgmZUGGW2cqHoqsTVKyij0FV64SV2pLN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=vQZ8UW6ZAQSqKkta+dh
-        xYlJu4SuS2QwONOVdrPuZ75ub0Xa5xXkmLl7FRICu7tKuyz2ot52W0fDsMAMB0Tk
-        qI6hftKVUGriP1JUPOe8Fwz5m7nO/qd96s7gpxKGKlYKCE+q6oDJIPNYrk102/hV
-        wbbwL4gVbWuD7ttgNQlhzwCU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3B920108E41;
-        Tue,  5 Jan 2021 07:05:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 66E7D108E40;
-        Tue,  5 Jan 2021 07:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] cache-tree: use ce_namelen() instead of strlen()
-References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
-        <20ea7050324cdd78b0966f54366b26224dfc7814.1609356414.git.gitgitgadget@gmail.com>
-        <daeb59ee-861d-9c8d-3601-6aef1ac3fc94@web.de>
-        <3ed37ae6-1f09-bd6b-c9d9-c8089da1af92@gmail.com>
-        <a8b5bb13-5c88-d744-b47e-7204e12ad05d@web.de>
-Date:   Tue, 05 Jan 2021 04:05:22 -0800
-Message-ID: <xmqqlfd7zj0d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728284AbhAEMSk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 07:18:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725831AbhAEMSj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 07:18:39 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2FDC061793
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 04:17:59 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id 4so14545042qvh.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 04:17:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=I5URYIPXZhVTGyBt+6/Ji8L8lI7Pg4xcIR2yJfBJjxY=;
+        b=s0BfgkD0bT6nnOsii/Y7f/aAfYUh145m2zzKzh8Rf2pDvihCZ8MZkJY+iaYQEncmsr
+         dzrOt4aX/PpV+f2nlSlCh6ZBwdtdSNCxR3KQ5RKdOeJUg9nkjZ6RcbNySdgtjCoXR6FB
+         X/X8f6SG+TXGce635ol2wPrjjv52RyzZtthc0ateEUHt0LBIH1kZaIATbEdlct8HVQ8Q
+         S3zFz4Z7dgHuFZwTADqcO+vKruZpm8uSLRYWbd8wvgUao7HOgJFiZWS/H9oXzMH38C5Q
+         2a89nQTJhJiP8zXjPH+odejFaBciZ2DzjEI7HrdIxYKYU14LW0sKCreiRqjuima58RXs
+         q9Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=I5URYIPXZhVTGyBt+6/Ji8L8lI7Pg4xcIR2yJfBJjxY=;
+        b=Skh22ZaRYCnbiaultes0yXdYOkR9XhgxBUd/ITzZSvSdvlAzZfsAFI7fwbxYPw5Fsg
+         p62ZwspeDyrSsosJoGe1Ks/Hy4auyeBRUgpt4wcuq9/qk25O5YYbdpremvYYTq3qVv4+
+         PLqJ17eCMJ+I1BCIDWK4lUY6yUbqvHpKprhr2G8qFtqRLJo6U0OHngzCJTUsfNZghHVV
+         CmusSc/dn2Xx+O8gxRCjuetd9uzcqBMX9Ak3bpsAODne7e1J49qlSMLoyLXYg9QGX3ON
+         UXU0BrHTkT0sQAfYzhJHbIuRwRK5rI5gmYy18YB/z4SHF44iGgT5To21J+f7KpIvqJDc
+         WQAA==
+X-Gm-Message-State: AOAM531RACna5JFtalN8ijGYCy84vo3HSHBBDiqy9IhUd+EU2fsDmfSj
+        yHFT6SigmPyg1nOTXw9QU1s=
+X-Google-Smtp-Source: ABdhPJwy2H7/JGTE/++n5vsKI9yYi6cMtKPQeAbOI/GMjH91jCZ3ukjhiReV9puEUGGHQyWeiYcNzw==
+X-Received: by 2002:a0c:e84c:: with SMTP id l12mr81976530qvo.0.1609849078760;
+        Tue, 05 Jan 2021 04:17:58 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id 198sm38081468qkk.4.2021.01.05.04.17.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jan 2021 04:17:57 -0800 (PST)
+Subject: Re: [PATCH v6 0/4] Maintenance IV: Platform-specific background
+ maintenance
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.776.v5.git.1606191405.gitgitgadget@gmail.com>
+ <pull.776.v6.git.1607542142.gitgitgadget@gmail.com>
+ <xmqqpn3izeit.fsf@gitster.c.googlers.com>
+ <CAPig+cSciupmmupdgynfBO98EFke5fneC5W+k2vCo9Zkh3KF5w@mail.gmail.com>
+ <xmqq5z5azd2r.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <73383c58-6b78-bded-da7b-fc44c8b9c02b@gmail.com>
+Date:   Tue, 5 Jan 2021 07:17:57 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4AB5C5F0-4F4E-11EB-BC85-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq5z5azd2r.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On 12/9/2020 8:04 PM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>> On Wed, Dec 9, 2020 at 7:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>>> Update in V6
+>>>> ============
+>>>>
+>>>>  * The Windows platform uses the tempfile API a bit better, including using
+>>>>    the frequency in the filename to make the test simpler.
+>>>
+>>> Are two fix-up patches from Eric that have been queued near the top
+>>> of ds/maintenance-part-4 still relevant?
+>>
+>> Both of the patches from Sunshine are still relevant atop Stolee's
+>> latest (v6), and they should apply cleanly (I would think) since v6
+>> didn't change anything related to those patches.
+> 
+> Yup, I tried rebasing these two and they applied cleanly, so I'll
+> include them in today's pushout (which I haven't finished yet).
+> 
+> I probably would not notice if the updated 4-patch series already
+> solved the issue in another way without causing the textual conflict
+> with your two fix-up patches, though ;-)
 
-> Use the name length field of cache entries instead of calculating its
-> value anew.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> Not sure why it took me so long to spot this.. o_O
+I noticed a subtle issue with the v6 series, so I _will_ reroll the
+series squashing in Eric's patches. He will remain a co-author and
+I'll add the Helped-by: Ævar along with the details for that patch.
 
-That probably is because this does not cause behaviour change.
+Thanks,
+-Stolee
 
-It used to be that use of ce_namelen() was more important in
-learning the length of the string before 7a51ed66 (Make on-disk
-index representation separate from in-core one, 2008-01-14) and
-7fec10b7 (index: be careful when handling long names, 2008-01-18).
-The on-disk field to store the name length has only 12 bits, and
-before b60e188c (Strip namelen out of ce_flags into a ce_namelen
-field, 2012-07-11), the convention to learn the length of the name
-of an in-core cache entry was to see the field and then if it fully
-occupies the full 12-bit field, ask the name string itself its
-length with strlen().
-
-These days, ce->namelen is a separate field that always gives the
-full length after the on-disk index is read, so with this change,
-you won't be running strlen() in this part of the function even with
-an entry with a long pathname.
-
->
->  cache-tree.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/cache-tree.c b/cache-tree.c
-> index a537a806c1..57cacab195 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -185,10 +185,12 @@ static int verify_cache(struct cache_entry **cach=
-e,
->  		 * the cache is sorted.  Also path can appear only once,
->  		 * which means conflicting one would immediately follow.
->  		 */
-> -		const char *this_name =3D cache[i]->name;
-> -		const char *next_name =3D cache[i+1]->name;
-> -		int this_len =3D strlen(this_name);
-> -		if (this_len < strlen(next_name) &&
-> +		const struct cache_entry *this_ce =3D cache[i];
-> +		const struct cache_entry *next_ce =3D cache[i + 1];
-> +		const char *this_name =3D this_ce->name;
-> +		const char *next_name =3D next_ce->name;
-> +		int this_len =3D ce_namelen(this_ce);
-> +		if (this_len < ce_namelen(next_ce) &&
->  		    strncmp(this_name, next_name, this_len) =3D=3D 0 &&
->  		    next_name[this_len] =3D=3D '/') {
->  			if (10 < ++funny) {
-> --
-> 2.30.0
