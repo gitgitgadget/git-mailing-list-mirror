@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 906F6C433E0
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B037C433DB
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64CD322D6F
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F76722D6F
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730934AbhAEToz (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730940AbhAEToz (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 5 Jan 2021 14:44:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50036 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730921AbhAETox (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:44:53 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40010C0617A4
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:40 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d26so308537wrb.12
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:40 -0800 (PST)
+        with ESMTP id S1730926AbhAEToy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:44:54 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894C8C0617A6
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:42 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id 190so608055wmz.0
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Lm7xPXJUT0TSQKgC++uSxgFf2YALDhEz263zAZuMUA4=;
-        b=k1vnx4Yi5VUHuGfxjIO+GM26z86J/1nPE1FMKlyiP95qhHjtIymzqUseRtXeCciIjb
-         TaUa9/6a75oBaE5ZNu3+9ciYO/6pXFxTEN9yiDQL27caE6aaJ5Jjl7JnzTehi626waDq
-         enn+3P1JE//9Jc37x3L18sh5AWs+gW3Xl8sivB7qhCd5dU+gHpw37R/iKNtJG9qz+6Ce
-         9Ua32V8ZX7eS72CIMmQ1IdG5E3D5c+BLPNAbNL5G5d6Wuy01qBYTuyjw275kyY4yUnbq
-         hnFVbCztlEziSKqDhJFQt2OUkR75YqWzm+qzP1sZQWGSfOginU+mkypGbzX/QxZgtLFD
-         8AkA==
+        bh=Cmw+KtIkVva3phLPHPxZT2YEJYOfdGs2hrBDNqixXno=;
+        b=Wk8TdAq/XnJgjJ8mleAcuYubFDJEuWA/Nv2kSkMFgxaYYUIgaTjY/ujfu/YB3utwun
+         EZlfPa8SWQZ5Bc4fLrdreOygkyIbtKvCEltwdpHrrMXSvej+w/p/XTzlUW2zRts+5Rqp
+         Im260AM/vR7A498CaqglxNniaB62YkCl+lT7rh8EdjfIIpb7d5lVlwee2M2gcs6vppSb
+         XS6U+Jg4zThrHTAgjXZ/BPajSIMCWPL70THtrztNzbBVxJVyPvuspSa7ep4ZUB+FrV7Z
+         y/bWfwO1mbuPo2o5QgBF5gA1tbKamqT2ssC3b/aWFTFcK0T0wBTEOinHxuBSMPtJ/6Ei
+         6ujA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Lm7xPXJUT0TSQKgC++uSxgFf2YALDhEz263zAZuMUA4=;
-        b=emWeyeivEolNYjkMlL4inusgz9wvisSSmZw8fS+EDRs5G0AAfJqb5v0gOtTNJJ0fha
-         RgVTSPiAOAcZAzn7cHmxsY4ScAKBIEf+8kTRZocxgMgyIbo8czVFRKtLNjIdRqIOWwUU
-         IA2jYbk8/QE9rDXqSCE0C+2tmUBt2kR9KU8368ceV4rjjAWg4H0Kq2Dm2qOue0qdp3Qz
-         TtQSoVkut78gz9kzZt7pVsrkpIn4B7igC4Iwk/Dw9ozOpBu5JMsTwacn8f3CcP02dX9t
-         3JWpnKVrmL32TTZdu+lEfIIMej/9vF4nTpRvi2xFiD2yOyMqtzMa0C+unvy+1ZOZrywx
-         j2hA==
-X-Gm-Message-State: AOAM531QDsXDIj8JnjT6Hng66UWZdTd3ss1plOhiWhzEYic2A+zEmj9H
-        T0r/PmHLec8TePUC65tffTiSgypLBASmbA==
-X-Google-Smtp-Source: ABdhPJy9p2GxHhB01YpLVdxTfxo/9sFpth8PR+muchp7SCGng18t3lXlQuj4aLNdqmxHBzz0poQ6iQ==
-X-Received: by 2002:adf:f3c8:: with SMTP id g8mr1018722wrp.405.1609875818718;
-        Tue, 05 Jan 2021 11:43:38 -0800 (PST)
+        bh=Cmw+KtIkVva3phLPHPxZT2YEJYOfdGs2hrBDNqixXno=;
+        b=EyDidKOGmA+FtVEo62jSEv6bfbtqbawG6OHKcfy3JXyY3Fhm97c/0yhXaeCpD7abGC
+         P3AdjFY+w9ARYOTPL5WAT2fVfXIaH/t78Ulw7frXSpRoLIZPJLwdjkW1TfZV8mFcfMpl
+         6E6PWbm5CQVLpoji0oOxh8J3Nzct+Ha/mcnFUBlA1mgCeAVQSA9y6bM+X26nEIFazDEU
+         TZjlolEiK+dVn1KRdp9IsqoutjMPZWWsDY5J6UlnZXYkh/PDl9vr/QuTUYO2E9CLI2fV
+         1cCZbuwCRuj2TTla+0rKWkgkqflTbEn7gqgK+SgG8Cq/SZi2rxo0RZVY68/DQ8Mg28Re
+         /bIg==
+X-Gm-Message-State: AOAM531R0IYa1EEHQyJ7NCtZH7YTTpIcDp8EcILwgDdg0jUDL1wKEHf7
+        vDjDh81CnJYHxgDDQteEVn9LVylb77IxLQ==
+X-Google-Smtp-Source: ABdhPJxXih3PgtH8UEFIaVCBe52r/Fim/qAycOBSwbmO5b2eY5EOKZpRTu3LnBf/jZ2VZiEBDto9pg==
+X-Received: by 2002:a1c:4604:: with SMTP id t4mr595878wma.17.1609875821031;
+        Tue, 05 Jan 2021 11:43:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.37
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:37 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 11/23] mktag tests: test "hash-object" compatibility
-Date:   Tue,  5 Jan 2021 20:42:40 +0100
-Message-Id: <20210105194252.627-12-avarab@gmail.com>
+Subject: [PATCH v5 13/23] mktag tests: test verify_object() with replaced objects
+Date:   Tue,  5 Jan 2021 20:42:42 +0100
+Message-Id: <20210105194252.627-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,91 +79,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change all the successful "mktag" tests to test that "hash-object"
-produces the same hash for the input, and that fsck passes for
-both.
+Add tests to demonstrate what "mktag" does in the face of replaced
+objects.
 
-This tests e.g. that "mktag" doesn't trim its input or otherwise munge
-it in a way that "hash-object" doesn't.
-
-Since we're doing an "fsck --strict" here at the end let's incorporate
-the creation of the "mytag" name into this test, removing the
-special-case at the end of the file.
+There was an existing test for replaced objects fed to "mktag" added
+in cc400f50112 (mktag: call "check_sha1_signature" with the
+replacement sha1, 2009-01-23), but that one only tests a
+commit->commit mapping. Not a mapping to a different type as like
+we're also testing for here. We could remove the "mktag" test in
+t6050-replace.sh now if the created tag wasn't being used by a
+subsequent "fsck" test.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3800-mktag.sh | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ t/t3800-mktag.sh | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 661b62f0912..47380292223 100755
+index ced540035d4..fbaf648491f 100755
 --- a/t/t3800-mktag.sh
 +++ b/t/t3800-mktag.sh
-@@ -19,6 +19,19 @@ check_verify_failure () {
- 	'
- }
- 
-+test_expect_mktag_success() {
-+	test_expect_success "$1" '
-+		git hash-object -t tag -w --stdin <tag.sig >expected &&
-+		git fsck --strict &&
-+
-+		git mktag <tag.sig >hash &&
-+		test_cmp expected hash &&
-+		test_when_finished "git update-ref -d refs/tags/mytag $(cat hash)" &&
-+		git update-ref refs/tags/mytag $(cat hash) $(test_oid zero) &&
-+		git fsck --strict	
-+	'
-+}
-+
- ###########################################################
- # first create a commit, so we have a valid object/type
+@@ -38,7 +38,11 @@ test_expect_mktag_success() {
  # for the tag.
-@@ -220,9 +233,7 @@ tagger T A Gger <> 0 +0000
- 
- EOF
- 
--test_expect_success \
--    'allow empty tag email' \
--    'git mktag <tag.sig'
-+test_expect_mktag_success 'allow empty tag email'
+ test_expect_success 'setup' '
+ 	test_commit A &&
+-	head=$(git rev-parse --verify HEAD)
++	test_commit B &&
++	head=$(git rev-parse --verify HEAD) &&
++	head_parent=$(git rev-parse --verify HEAD~) &&
++	tree=$(git rev-parse HEAD^{tree}) &&
++	blob=$(git rev-parse --verify HEAD:B.t)
+ '
  
  ############################################################
- # 16. disallow spaces in tag email
-@@ -347,9 +358,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
- this line comes after an extra newline
- EOF
- 
--test_expect_success 'allow extra newlines at start of body' '
--	git mktag <tag.sig
--'
-+test_expect_mktag_success 'allow extra newlines at start of body'
- 
- cat >tag.sig <<EOF
- object $head
-@@ -359,9 +368,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
+@@ -180,6 +184,35 @@ tagger . <> 0 +0000
  
  EOF
  
--test_expect_success 'require a blank line before an empty body (1)' '
--	git mktag <tag.sig
--'
-+test_expect_mktag_success 'require a blank line before an empty body (1)'
++check_verify_failure 'verify object (hash/type) check -- mismatched type, valid object' \
++	'^error: char7: could not verify object'
++
++############################################################
++#  9.5. verify object (hash/type) check -- replacement
++
++test_expect_success 'setup replacement of commit -> commit and tree -> blob' '
++	git replace $head_parent $head &&
++	git replace -f $tree $blob
++'
++
++cat >tag.sig <<EOF
++object $head_parent
++type commit
++tag mytag
++tagger . <> 0 +0000
++
++EOF
++
++test_expect_mktag_success 'tag to a commit replaced by another commit'
++
++cat >tag.sig <<EOF
++object $tree
++type tree
++tag mytag
++tagger . <> 0 +0000
++
++EOF
++
+ check_verify_failure 'verify object (hash/type) check -- mismatched type, valid object' \
+ 	'^error: char7: could not verify object'
  
- cat >tag.sig <<EOF
- object $head
-@@ -384,10 +391,6 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
- 
- EOF
- 
--test_expect_success 'create valid tag' '
--	git mktag <tag.sig >hash &&
--	git update-ref refs/tags/mytag $(cat hash) $(test_oid zero) &&
--	git fsck --strict
--'
-+test_expect_mktag_success 'create valid tag object'
- 
- test_done
 -- 
 2.29.2.222.g5d2a92d10f8
 
