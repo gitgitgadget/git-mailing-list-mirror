@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50D04C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76943C43381
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:45:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2AE6A22DCC
+	by mail.kernel.org (Postfix) with ESMTP id 5F10422D5A
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730970AbhAETpG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 14:45:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50018 "EHLO
+        id S1730975AbhAETpJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 14:45:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730966AbhAETpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:45:05 -0500
+        with ESMTP id S1730977AbhAETpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:45:09 -0500
 Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C842FC0617B1
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:48 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id m5so328248wrx.9
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:48 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F89C0617BC
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:53 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id t30so376707wrb.0
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FKEzxXyKX4o3YbLhdB1nnTXUORXSqXtuMODL749Iuz0=;
-        b=gAv20sfk4PGx6SvS8/qhYrqALDCH9tlUe6wE+z9nDNMvVjjChlmbuUK4eSpiMBxCnq
-         bsuI9xc+5sFrRsSi4Twa6w8Lyinfld5Yw/C9OWVjTUDcvqb54yardEoPGez+cVKTYnqZ
-         ilkRNyOs/pMBjSmvnOMSSfVqXJcH12wL+EKKwcYDbrsz54ad37KSpN5H9wTucCKEd2wv
-         PcOXiUPRb9vv4X64YXfVI7DWapKplOcstple+GP/Y0MsKhga8n/EOd65oom6psLXCr/v
-         3ZUktYPWBlg/h513N40us8gUkqfFa6NI5ClpiNaDPaTyz27rKzlSFQ89NlykcMBF8wYq
-         fbcg==
+        bh=C9zO8W7ov/B2Omd/+XOSb1HaK2iItwuXV7V8QHTw3ZE=;
+        b=Z2OHJgF3D+XWiWXXk1qWfFwXoO8OdOrhv7mRXDxknhip0WMN/QYB2+t97RMRlPvvq3
+         P0YDw1R8K8pmJCjvAeq8hwiqbpyeYb0Ix2Zo27nL61+bRXKPLbI4yi/NEnrFPhxKv0E5
+         hJVVVvcN9txAUiZXZ6Vz9d7pVb/zWuhrE58RxrUyaFqHcromaqPVQ34rYu4O+ya4X1el
+         5AQJMQFnkt4PK8yScAMPft7TgQnQwgUdBUxYRXXEr7oFmm37h+xo02BoaJE8p9guIrWs
+         Ak2ijStondiWCL8MxOTDrCvisHepcMRiu820qVQDmWkeEIMMtRiktykNoXQqBk7t2Cwi
+         K7Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FKEzxXyKX4o3YbLhdB1nnTXUORXSqXtuMODL749Iuz0=;
-        b=H9VLVwoSx36Va4STUwrKQFb9cSs3K7VXuxJ2BfZsEaJevI/HXc2df2MDXvPUeYWJRl
-         UbN+q5Nvb35s5QLLmj9NgsppVaLJiwmZQSovHEhHfDR1jEZKNPd2EuJlk2P6+F8d/KEX
-         wbGRfbuss92IiOUbcFIqZE4qT4SOTt9RApz1KATzGf4MoU/+gR69LnE5D8/+f6pcToSS
-         XGYeQu311AepNUjonn3kTEq4WsRhyUIWkfpy+TQk6gwiYHOanbCfqV36cSq+CVU5GHdm
-         6Wi2+oL6gKr8jdIwbJ8sXz1pceL4oiDdPBhkSH6nWmfknNVNdYjF12LxzNWXvre4s5ef
-         QnuQ==
-X-Gm-Message-State: AOAM5300ifckK3hcIY5CvxxqN1ERW0UXnBU/7UHYq+NRti5Pim51yR3A
-        BpdxKEamo3wP57+jRgLoynAqNhyh4E18vw==
-X-Google-Smtp-Source: ABdhPJylmeP8wss6L0oPDLyVvWo3aSWug3u1XzG0rc5byOy54yXVj6/k66OZ9o6h8tdd+vhTW7vdJA==
-X-Received: by 2002:adf:fe05:: with SMTP id n5mr1079195wrr.9.1609875827242;
-        Tue, 05 Jan 2021 11:43:47 -0800 (PST)
+        bh=C9zO8W7ov/B2Omd/+XOSb1HaK2iItwuXV7V8QHTw3ZE=;
+        b=oyp+UpbaZHiaJxqlTXyct6X0egoSLppuGsAgCIyio4Gmi1fdtZhMq/YwYD5m8thBWo
+         ka2+omWseWgNCsp7XQbCMqbfPFlwgXGqH06Tm0NdiPcpnmi7ue7x3J+vvszi0zA7pcJK
+         Ugx7J7OmXSsDFQonwBzp99WLBkygNJSwFK7bQF4xqev3+y3A9YGWNGo7VG6ygeY8ZAeW
+         nNrR2bvfhIU4aw4DCpFJPtLs8ukb5c86V8bQw6Wl7rbIEt7iKjy+htiEL0fP4/SO29TQ
+         eHugk7zre9tzEhJkLhx29gb6GfkV9xnOPaxerThoRm6L85kxWQelNi+jAAb7uDNLuR7Q
+         rO0w==
+X-Gm-Message-State: AOAM531b4tUGF7UiyDKASB3eGjkruwDae/9WXAqBvIIzFL964tvPdhfN
+        ghC6W29/r5O4UL93umRUcj0zAMIUrmgwaQ==
+X-Google-Smtp-Source: ABdhPJxOte+48xrRcIoEQ1k4dvakJ8KI4FfdpDWf3kabCM2x+pcsX/FOYCLilOti/5ZdFj7vl1ibIQ==
+X-Received: by 2002:a5d:4dcd:: with SMTP id f13mr1095675wru.10.1609875831488;
+        Tue, 05 Jan 2021 11:43:51 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.46
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:46 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:50 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 19/23] mktag: allow turning off fsck.extraHeaderEntry
-Date:   Tue,  5 Jan 2021 20:42:48 +0100
-Message-Id: <20210105194252.627-20-avarab@gmail.com>
+Subject: [PATCH v5 23/23] mktag: add a --no-strict option
+Date:   Tue,  5 Jan 2021 20:42:52 +0100
+Message-Id: <20210105194252.627-24-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,109 +79,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In earlier commits mktag learned to use the fsck machinery, at which
-point we needed to add fsck.extraHeaderEntry so it could be as strict
-about extra headers as it's been ever since it was implemented.
+Now that mktag has been migrated to use the fsck machinery to check
+its input, it makes sense to teach it to run in the equivalent of "git
+fsck"'s default mode, instead of hardcoding "git fsck --strict". Let's
+do that and support the "--no-strict" option.
 
-But it's not nice to need to switch away from "mktag" to "hash-object"
-+ manual "fsck" just because you'd like to have an extra header. So
-let's support turning it off by getting "fsck.*" variables from the
-config.
-
-Pedantically speaking it's still not possible to make "mktag" behave
-just like "hash-object -t tag" does, since we're unconditionally going
-to check the referenced object in verify_object_in_tag(), which is our
-own check, and not one that exists in fsck.c.
-
-But the spirit of "this works like fsck" is preserved, in that if you
-created such a tag with "hash-object" and did a full "fsck" on the
-repository it would also error out about that invalid object, it just
-wouldn't emit the same message as fsck does.
+Since this is a new option we don't need to cater to parse-option.c's
+default of automatically supporting --strict. So let's use
+PARSE_OPT_NONEG, using a new trivial helper macro.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-mktag.txt |  5 ++++-
- builtin/mktag.c             | 11 ++++++++++-
- t/t3800-mktag.sh            | 14 ++++++++++++++
- 3 files changed, 28 insertions(+), 2 deletions(-)
+ Documentation/git-mktag.txt |  8 ++++++++
+ builtin/mktag.c             |  9 +++++++++
+ t/t3800-mktag.sh            | 33 +++++++++++++++++++++++----------
+ 3 files changed, 40 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index fa070e21a0b..79813ff8df0 100644
+index 79813ff8df0..17a2603a600 100644
 --- a/Documentation/git-mktag.txt
 +++ b/Documentation/git-mktag.txt
-@@ -32,7 +32,10 @@ would run by default in that all `fsck.<msg-id>` messages are promoted
- from warnings to errors (so e.g. a missing "tagger" line is an error).
+@@ -11,6 +11,14 @@ SYNOPSIS
+ [verse]
+ 'git mktag'
  
- Extra headers in the object are also an error under mktag, but ignored
--by linkgit:git-fsck[1]
-+by linkgit:git-fsck[1]. This extra check can be turned off by setting
-+the appropriate `fsck.<msg-id>` varible:
++OPTIONS
++-------
 +
-+    git -c fsck.extraHeaderEntry=ignore mktag <my-tag-with-headers
++--strict::
++	By default mktag turns on the equivalent of
++	linkgit:git-fsck[1] `--strict` mode. Use `--no-strict` to
++	disable it.
++
+ DESCRIPTION
+ -----------
  
- Tag Format
- ----------
 diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 4dd35bc79e2..373926d7e0c 100644
+index 9b04b61c2bb..41a399a69e4 100644
 --- a/builtin/mktag.c
 +++ b/builtin/mktag.c
-@@ -3,6 +3,14 @@
- #include "replace-object.h"
- #include "object-store.h"
- #include "fsck.h"
-+#include "config.h"
-+
-+static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
-+
-+static int mktag_config(const char *var, const char *value, void *cb)
-+{
-+	return fsck_config_internal(var, value, cb, &fsck_options);
-+}
+@@ -10,6 +10,7 @@ static char const * const builtin_mktag_usage[] = {
+ 	N_("git mktag"),
+ 	NULL
+ };
++static int option_strict = 1;
  
- static int mktag_fsck_error_func(struct fsck_options *o,
- 				 const struct object_id *oid,
-@@ -53,7 +61,6 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
+ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
+ 
+@@ -25,6 +26,12 @@ static int mktag_fsck_error_func(struct fsck_options *o,
+ {
+ 	switch (msg_type) {
+ 	case FSCK_WARN:
++		if (!option_strict) {
++			fprintf_ln(stderr, _("warning: tag input does not pass fsck: %s"), message);
++			return 0;
++
++		}
++		/* fallthrough */
+ 	case FSCK_ERROR:
+ 		/*
+ 		 * We treat both warnings and errors as errors, things
+@@ -67,6 +74,8 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
  int cmd_mktag(int argc, const char **argv, const char *prefix)
  {
+ 	static struct option builtin_mktag_options[] = {
++		OPT_BOOL(0, "strict", &option_strict,
++			 N_("enable more strict checking")),
+ 		OPT_END(),
+ 	};
  	struct strbuf buf = STRBUF_INIT;
--	struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
- 	struct object_id tagged_oid;
- 	int tagged_type;
- 	struct object_id result;
-@@ -66,6 +73,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
- 
- 	fsck_options.error_func = mktag_fsck_error_func;
- 	fsck_set_msg_type(&fsck_options, "extraheaderentry", "warn");
-+	/* config might set fsck.extraHeaderEntry=* again */
-+	git_config(mktag_config, NULL);
- 	if (fsck_tag_standalone(NULL, buf.buf, buf.len, &fsck_options,
- 				&tagged_oid, &tagged_type))
- 		die("tag on stdin did not pass our strict fsck check");
 diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 0e2a9a883ba..dccf4503235 100755
+index 0ddd0f01cc7..4d76ccbbc19 100755
 --- a/t/t3800-mktag.sh
 +++ b/t/t3800-mktag.sh
-@@ -412,6 +412,20 @@ EOF
- check_verify_failure 'detect invalid header entry' \
- 	'^error:.* extraHeaderEntry:'
+@@ -12,12 +12,17 @@ test_description='git mktag: tag object verify test'
+ # given in the expect.pat file.
  
-+test_expect_success 'invalid header entry config & fsck' '
-+	test_must_fail git mktag <tag.sig &&
-+	test_must_fail git -c fsck.extraHeaderEntry=error mktag <tag.sig &&
-+	test_must_fail git -c fsck.extraHeaderEntry=warn mktag <tag.sig &&
-+	git -c fsck.extraHeaderEntry=ignore mktag <tag.sig &&
-+	git fsck &&
-+	env GIT_TEST_GETTEXT_POISON=false \
-+		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
-+	grep "warning .*extraHeaderEntry:" err &&
-+	test_must_fail env GIT_TEST_GETTEXT_POISON=false \
-+		git -c fsck.extraHeaderEntry=error 2>err fsck &&
-+	grep "error .* extraHeaderEntry:" err
-+'
+ check_verify_failure () {
+-	expect="$2"
+-	test_expect_success "$1" '
++	test_expect_success "$1" "
+ 		test_must_fail env GIT_TEST_GETTEXT_POISON=false \
+ 			git mktag <tag.sig 2>message &&
+-		grep "$expect" message
+-	'
++		grep '$2' message &&
++		if test '$3' != '--no-strict'
++		then
++			test_must_fail env GIT_TEST_GETTEXT_POISON=false \
++				git mktag --no-strict <tag.sig 2>message.no-strict &&
++			grep '$2' message.no-strict
++		fi
++	"
+ }
+ 
+ test_expect_mktag_success() {
+@@ -65,7 +70,7 @@ too short for a tag
+ EOF
+ 
+ check_verify_failure 'Tag object length check' \
+-	'^error:.* missingObject:'
++	'^error:.* missingObject:' 'strict'
+ 
+ ############################################################
+ #  2. object line label check
+@@ -240,7 +245,7 @@ tagger . <> 0 +0000
+ EOF
+ 
+ check_verify_failure 'verify tag-name check' \
+-	'^error:.* badTagName:'
++	'^error:.* badTagName:' '--no-strict'
+ 
+ ############################################################
+ # 11. tagger line label check #1
+@@ -254,7 +259,7 @@ This is filler
+ EOF
+ 
+ check_verify_failure '"tagger" line label check #1' \
+-	'^error:.* missingTaggerEntry:'
++	'^error:.* missingTaggerEntry:' '--no-strict'
+ 
+ ############################################################
+ # 12. tagger line label check #2
+@@ -269,7 +274,7 @@ This is filler
+ EOF
+ 
+ check_verify_failure '"tagger" line label check #2' \
+-	'^error:.* missingTaggerEntry:'
++	'^error:.* missingTaggerEntry:' '--no-strict'
+ 
+ ############################################################
+ # 13. allow missing tag author name like fsck
+@@ -298,7 +303,7 @@ tagger T A Gger <
+ EOF
+ 
+ check_verify_failure 'disallow malformed tagger' \
+-	'^error:.* badEmail:'
++	'^error:.* badEmail:' '--no-strict'
+ 
+ ############################################################
+ # 15. allow empty tag email
+@@ -422,13 +427,21 @@ this line should not be here
+ EOF
+ 
+ check_verify_failure 'detect invalid header entry' \
+-	'^error:.* extraHeaderEntry:'
++	'^error:.* extraHeaderEntry:' '--no-strict'
+ 
+ test_expect_success 'invalid header entry config & fsck' '
+ 	test_must_fail git mktag <tag.sig &&
++	git mktag --no-strict <tag.sig &&
 +
- cat >tag.sig <<EOF
- object $head
- type commit
+ 	test_must_fail git -c fsck.extraHeaderEntry=error mktag <tag.sig &&
++	test_must_fail git -c fsck.extraHeaderEntry=error mktag --no-strict <tag.sig &&
++
+ 	test_must_fail git -c fsck.extraHeaderEntry=warn mktag <tag.sig &&
++	git -c fsck.extraHeaderEntry=warn mktag --no-strict <tag.sig &&
++
+ 	git -c fsck.extraHeaderEntry=ignore mktag <tag.sig &&
++	git -c fsck.extraHeaderEntry=ignore mktag --no-strict <tag.sig &&
++
+ 	git fsck &&
+ 	env GIT_TEST_GETTEXT_POISON=false \
+ 		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
 -- 
 2.29.2.222.g5d2a92d10f8
 
