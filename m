@@ -2,113 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 472B0C433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 04:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A808C433DB
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 04:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E03722D04
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 04:06:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 108BE22D04
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 04:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725815AbhAFEGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 23:06:08 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52934 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbhAFEGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 23:06:08 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A1DA410BFED;
-        Tue,  5 Jan 2021 23:05:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=50zB+C0lTsC1pE1wakjwXdGiY
-        P8=; b=vg286KpzAU3oOlizKsOxMDpfF+KXaEemyuGFv52BHC7iMbtGTtL130Eqq
-        Wfm2IcvVLLHNaYXUFOzVg/3OFyrz0tyzFPA9MDSs7oPPXzp5gNgPjAcPmTHvHs2c
-        QbEgsjk5P8jDdo3MJ2NOEzQXzcvsSVAZM5LvrppKJu7DNP74HY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=VOFzl0bdfL4B/oPE6Kr
-        dfxeo1U06pveGMl5yPkcSSNHOJWFcYpjX1gOyoBH8j/eAItmeyVR00xPY+temkbb
-        Eb5sMYK5+dZiUaUhUC/+Avn5Uasn0UIHS0Pl+RxbrEDM/Sc7sb6YJ8d8t4Y7jkAW
-        r5EeenWGbHN//kTj0+/BBUbU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 878FD10BFEC;
-        Tue,  5 Jan 2021 23:05:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3052910BFEB;
-        Tue,  5 Jan 2021 23:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Dan Moseley <Dan.Moseley@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-mv: fix git mv bug with case insensitive fs
-References: <BYAPR21MB1158F64E1141453F7D00B46CE0D89@BYAPR21MB1158.namprd21.prod.outlook.com>
-        <BYAPR21MB11585FFD46DEE7AD4EEEFEABE0D89@BYAPR21MB1158.namprd21.prod.outlook.com>
-        <BYAPR21MB1158D9E88C96D51259A0CC04E0D89@BYAPR21MB1158.namprd21.prod.outlook.com>
-        <20201231071357.mtcxmoxbg6jrq3gn@tb-raspi4>
-Date:   Tue, 05 Jan 2021 20:05:22 -0800
-Message-ID: <xmqq7doqwvzx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725996AbhAFEVI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 23:21:08 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:35849 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725803AbhAFEVH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 23:21:07 -0500
+Received: by mail-ed1-f44.google.com with SMTP id b2so3205686edm.3
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 20:20:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qDrwx771hWCZTzRebtDlXM8aI2i4djxB8YvvXoiTpXs=;
+        b=eZWRsSwj31BBMG8iAMgPZwjz+/dR42KbPgEMkxnElb1RHPPHWbO9rhHinwdWCPCVWD
+         IsS3uAhNH8Pvybyq04pKQZhOhu2LU/FBsYdHKSyZP/x34wigCP33VAZIrvGooMhnvZc+
+         DczTTmUm5b7SIvVTlwh9bEU5J58FwC22PmmRsz4VcVfZ8QBLBG0iajDFX8eIHInJ1kHk
+         vIeuLIlqKg5t4bIWHn6PGlJ6VcO54A4EjxIFqX+bcKH7FCGGSnTwlt4yPX1hfJXviZfk
+         loiXjuc5/zth+nwzUBzBEXwe3P4O1qXgG6n8sbVGR4+YnrFGHG9mfvO8Jxun8COZ/cly
+         81/A==
+X-Gm-Message-State: AOAM531+DTF/mgFxUsFKpiAFEPJtFaKpD9rf92wwExWr1blQ4ld23Mq5
+        2z5Rmtby7N383pwcubbcyczcUeTpZyE5IZ8C7G6byr4SZJk=
+X-Google-Smtp-Source: ABdhPJyfoUwpeiODNEFryaPBzgdX17Y1iGQd6wyEi4MDHWYuzbghDU51+U0LUjJwlON11NroFqvPZf3K+Fnh0vJxWqU=
+X-Received: by 2002:a50:ab51:: with SMTP id t17mr2662450edc.89.1609906825145;
+ Tue, 05 Jan 2021 20:20:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 66D939E8-4FD4-11EB-96C2-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.834.git.1609857770445.gitgitgadget@gmail.com>
+ <CAPig+cQ4B6s7RzGH=1QhSc_2kKy-Mbp9fyK4VoTntdAfCT4d9A@mail.gmail.com> <db7bf751-7541-59b9-a3a0-ec07e28eb9de@gmail.com>
+In-Reply-To: <db7bf751-7541-59b9-a3a0-ec07e28eb9de@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 5 Jan 2021 23:20:14 -0500
+Message-ID: <CAPig+cRGWzz5n_PZ=_OiHy2hkmeru3=fo2zX3_hnsEhnPq+giQ@mail.gmail.com>
+Subject: Re: [PATCH] for-each-repo: do nothing on empty config
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+On Tue, Jan 5, 2021 at 9:20 PM Derrick Stolee <stolee@gmail.com> wrote:
+> On 1/5/2021 12:55 PM, Eric Sunshine wrote:
+> > On Tue, Jan 5, 2021 at 9:44 AM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > Probably not worth a re-roll, but the above has higher cognitive load than:
+> >
+> >     if (!value)
+> >         return 0;
+> >
+> > which indicates clearly that the command succeeded, whereas `return
+> > result` makes the reader scan all the code above the conditional to
+> > figure out what values `result` could possibly hold.
+>
+> True. Looking at this again, it might be better to just update the
+> loop to be
+>
+>         for (i = 0; values && i < values->nr; i++) {
+>
+> which would run the loop zero times when there are zero results.
 
-> On Tue, Dec 29, 2020 at 02:06:37AM +0000, Dan Moseley wrote:
->
-> First of all, thanks for submitting this to git.git.
-> I take the freedom to add some comments here.
->
->> Fix git mv to not assert when src is already in the index under a
->> different casing, core.caseInsensitive=3Dtrue, and the file system
->> is case insensitive.
-> The config variable is named core.ignorecase
->
-> Does it make sense to illustrate the use case here, like this:
->
->  git init
->  echo foo >foo
->  git add foo
->  git mv foo FOO
->  git mv foo bar
->
->>
->> Since 9b906af657 the check that git mv does to ensure the src is in th=
-e
->> cache respects caseInsensitive. As a result git mv allows a move from =
-a
->> file that has a different case in the index than it does on disk.
->> After the rename on disk, git mv fails to find the file in the cache
->> in order to rename it in the index, and asserts.
->> Assertion failed: pos >=3D 0, file builtin/mv.c, line 295
->>
->> This is the simplest possible fix, suggested by @tboegi. It does leave
->> the file renamed on disk, but that is easy to reverse after the error.
->
-> We can expand the short-ish "@tboegi" into a "Helped-by" line, please s=
-ee below.
-> And refrase the paragraf like this:
->
-> This is the simplest possible fix, it avoids to leaving a .git/index.lo=
-ck
-> behind.  It does leave the file renamed on disk,
-> but that is easy to reverse after the error.
+I find the explicit `return 0` easier to reason about since I can see
+immediately that it handles a particular boundary condition, after
+which I no longer have to think about that condition as I continue
+reading the code.
 
-Sorry but I feel lost here.  So this is not a fix with which the end
-user does not have to do anything after kicking in?  The only thing
-it "fixes" is to avoid hitting a BUG() or something that can leave
-the .lock file behind (so that the user does not have to run "rm
-.git/index.lock" after the operation)?
+That said, I don't think it matters greatly one way or the other
+whether you use `return result`, `return 0`, or adjust the loop
+condition. It might matter if more functionality is added later, but
+we don't have to worry about it now, and it's not worth re-rolling
+just for this, or spending a lot of time discussing it.
 
+> >> +       git for-each-repo --config=bogus.config -- these args would fail
+> >
+> > The `these args would fail` arguments add mystery to the test,
+> > prompting the reader to wonder what exactly is going on: "Fail how?",
+> > "Is it supposed to fail?". It might be less confusing to use something
+> > more direct like `nonexistent` or `does not exist`.
+>
+> I guess the point is that if we actually did try running a subcommand
+> on a repo (for instance, accidentally running it on the current repo)
+> then the command would fail when running "git these args would fail".
+>
+> To me, "nonexistent" or "does not exist" doesn't adequately describe
+> this (hypothetical) situation.
+>
+> Perhaps "fail-subcommand" might be better?
+
+I had never even looked at git-for-each-repo before, so I took the
+time to read the documentation and the source code before writing this
+reply. Now that I understand what is supposed to happen, I might be
+tempted to suggest `this-command-wont-be-run` as an argument, but
+that's a mouthful. If you want to be really explicit that it should
+fail if a bug gets re-introduced which causes the argument to be run
+even though the config is empty, then perhaps use `false`:
+
+    git for-each-repo --config=bogus.config -- false
+
+By the way, when reading the documentation, some questions came to mind.
+
+Is the behavior implemented by this patch desirable? That is, if the
+user mistypes the name of the configuration variable, would it be
+better to let the user know about the problem by returning an error
+code rather than succeeding silently? Or do you foresee people
+intentionally running the command against an empty config variable?
+That might be legitimate in automation situations. If legitimate to
+have an empty config, then would it be helpful to somehow distinguish
+between an empty config variable and a non-existent one (assuming we
+can even do that)?
+
+Is the API of this command ideal? It feels odd to force the user to
+specify required input via a command-line option rather than just as a
+positional argument. In other words, since the config variable name is
+mandatory, an alternative invocation format would be:
+
+    git for-each-repo <config-var> <cmd>
+
+Or do you foresee future enhancements expanding the ways in which the
+repo list can be specified (such as from a file or stdin or directly
+via the command-line), in which case the `--config` option makes
+sense.
