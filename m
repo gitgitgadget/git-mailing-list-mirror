@@ -2,157 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6248C433E0
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 14:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1DD5C433E9
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 14:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BD572311C
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 14:23:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF7B823121
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 14:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727302AbhAFOXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 09:23:35 -0500
-Received: from mout.web.de ([212.227.15.4]:52717 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725926AbhAFOXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 09:23:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1609942897;
-        bh=FNNteq+yXM6zp6hbQuluwRLKmR+kPxJtJDu4QmxmSfc=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=YJz0EWmXs2cTkVMmmrGSLdZ21U/AwfUr1t6vo5oLb9+7MzpJJIqdTSImutPFZxLsb
-         xLQtv/UwWK8iB5E2iBaX3MIJ1ulD4O0qX0U3mNfnsQ++d7xSPYGpF4Ym1vUlDmiAjy
-         8ubPTDIdakbjWK6sskDDNc9SVdg9yl719e+Yp+7A=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MV2KQ-1kWALP2y6I-00SUWE; Wed, 06
- Jan 2021 15:21:37 +0100
-Date:   Wed, 6 Jan 2021 15:21:37 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Daniel Troger <random_n0body@icloud.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
- characters)
-Message-ID: <20210106142137.gxd2a4vnrsjj4jq5@tb-raspi4>
-References: <A102844A-9501-4A86-854D-E3B387D378AA@icloud.com>
+        id S1726974AbhAFOoZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 09:44:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59264 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726244AbhAFOoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 09:44:24 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18B79C061357
+        for <git@vger.kernel.org>; Wed,  6 Jan 2021 06:44:08 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id y17so2627404wrr.10
+        for <git@vger.kernel.org>; Wed, 06 Jan 2021 06:44:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=P2GMqPywAdEd2RC7DQzh+rWtlmGR2auDjQL4xLrlyLQ=;
+        b=IGW8Ac1LPrAvMNyJ3ZrWTtGVhy2xuVosXp7St+eHcmzWVnG6y9KQwbDQRYCRskqugi
+         lvT/iDM3dcV1JRCatluf7qASY1vl7IFFgvzj41ta5lqnC4+lPnmg1TF506SDG8qJ/yvb
+         o5zU5rHBHPqNxoQaJTn3QJga8wPnrMXHiHG+cPllxwiuTsXBakfzv6jAOUX56pAvxE4s
+         GmIiDl/hhpSDQJXHjOxt/wcSnjtrnkeia1NA6SJ5uDqlhSDnrfmV6d4PpByxeIHlrFyh
+         lgf4o6yBFmWm+48m2g+wIj6oqePtoyCHQfoTpJbuYpIeZtTIIJ+E7VbWp7sGAf2UT978
+         Ix7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=P2GMqPywAdEd2RC7DQzh+rWtlmGR2auDjQL4xLrlyLQ=;
+        b=MZPHnxqso8suDI3CU3M1zs9QnylA6kM6x6SuNPekZJSPCElnWhUpK0CWMXhC0NLJQX
+         Nd1oyksQFsyJ9JfD/pDxxDNUWSp+1O6HgX48X8bTZk72OLcr5xiP4V1VuaE82YSs0mAk
+         tURQLAxZOhI9pE4GnbvER60aWLtPT6lVU10gWK8Wpx7kSsCPpHKwU2hIL1waUsdBxRjt
+         GMLJHDScDqZsJQk1CNamSLWO3cCpodRDYE7gtV7NHBrf/o4BK5ghyIVkLngZDzfGoqm9
+         wL9z4sFnC8bk1VOe2RPR8w2Ak4zQrApwvMgF6Jj3V9ARz8x/SOKJHAVg2cMLDlR6CqT9
+         b9mA==
+X-Gm-Message-State: AOAM533UG6LZrYtnM9yB8RwvBzP1Oz7uFpoM83NOTBwqY0ya3V0HvWj1
+        I4olqGwNhDydsfbSgsYyVuPTCbesfpI=
+X-Google-Smtp-Source: ABdhPJxddaJZA+TEWnmxdPMlFCiSSQg/cFo7NFHbb4Yv00krmyniprZTWijtOHQYtqcmraFCz1DEng==
+X-Received: by 2002:a5d:6a4f:: with SMTP id t15mr4826531wrw.62.1609944246566;
+        Wed, 06 Jan 2021 06:44:06 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i11sm3245520wmd.47.2021.01.06.06.44.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jan 2021 06:44:06 -0800 (PST)
+Message-Id: <9d508df032bf1038fdbc67d14e11dae1210b0fd2.1609944243.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.822.v3.git.1609944243.gitgitgadget@gmail.com>
+References: <pull.822.v2.git.1609933875.gitgitgadget@gmail.com>
+        <pull.822.v3.git.1609944243.gitgitgadget@gmail.com>
+From:   "Junio C Hamano via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 06 Jan 2021 14:44:02 +0000
+Subject: [PATCH v3 1/2] parse-options: format argh like error messages
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <A102844A-9501-4A86-854D-E3B387D378AA@icloud.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:jdfYLOen+62MKoQ7qxs7MbRgLEbvX+sfpOc50z1zMX9hRR14B6I
- w/YjWuligYlKz+O5FWJgwv8OtsqIMSBb2Vn59UNJTAqYqPbYkGGNvXWVvuzE+tisgdlW1PM
- PEAHaTtEtGj7SIbit0i65PR1H6rD4Q3q+s4h0eTAovCUuMlm2eNPhOH/Zkfco1KZXljxFau
- VsIjd0qPtirvuewZbXxPg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PLMuvWwxR5U=:hv51ZhnB35t6RHq94CnhDw
- uF7gtMvmHQtpOXGmRTbtPZiUJeeRHGjACihbgOJoGEiFRIgFMESUrZKxxFgsSZHCJhkZ+nsoy
- iLQynIJ9wZrqX/T0dKSWcDMLnoX2Sh9OiErSIKmp3w7+U3Y/6WSYbUZFpv61IfQENCkYQSRTf
- XKKLLMqzbCtXqXeL3DChQX7H1kU6DVVmLf7I9mSwx0nDKiumOZLosa8qt7nHvnHDHhLF1IY3T
- ZzqfTwjOKQfKZKM5y1x42RBgWa/GsbSxlSSEoYoryFyiDNf9XazNPlnXacHsg+ytrem84dTmc
- BAF1l8791myt8jD3H5YwdrWIGlZRBmdo0oK7F9xzBSGFwLHtyQtbSLO+cXtbjtIuADaKVtOjT
- D/dxrvn63A4Y1ST6MQWzXvX3jqiWJf8p6UwDxcog1Hv5e+5yrPsTe9Hq3lUrhHAiAbWqBn+IJ
- qRUyiIBXyIxX5QSBuv+Pxc+1wUVnjWT4zOB2fCzxSJsnKKRbfuHBsJMHFOjt9RUlDdOVHMAzc
- uTG+VHVY+hRdicrPQt8wx75bgrQNAWCDDTufIJYyFBi8FScedrQFbqPF/GYIEBn3v4/mMZ8sp
- OAQdP4uZ4A3rs8WKYI4prOmbQMnqImBQpZyyZfe039SlyNJlBIEI7vEWQZnoGJNhavptw4qDJ
- ZbaLd5rBWuM1YewY0xQ760UtwVpsuMnhVZnqKlEgkexVrK8CMHRwe2nVh+c0I8epVwt/Bww7+
- rEaRIHRJYtjtgWiSAQWtutIQHn+sxiPUIJVfgejIYZYURzBLcpjV3Eskfd/jrmWVd5AlLd5mp
- uxHRud94QXjFElL0+FYTdn4oyK3ANVU3OdRhBASwBfMp0E6RZ/0u59eQwxCg0f6OM4ZbF6ig5
- T00DiR1+OVRZXebecm0w==
+To:     git@vger.kernel.org
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 06, 2021 at 12:35:26PM +0100, Daniel Troger wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> I ran `git restore -p .`
->
-> What did you expect to happen? (Expected behavior)
-> git restore to open in interactive mode and letting me select data to di=
-scard
->
-> What happened instead? (Actual behavior)
-> I got an error message:
-> ```
-> me@iMac:[redacted]/paulbrunng=E5rd-springyard/src$ git restore -p .
-> BUG: pathspec.c:495: error initializing pathspec_item
-> Cannot close git diff-index --cached --numstat --summary HEAD -- :(,pref=
-ix:44)[redacted]/paulbrunng=E5rd-springyard/src/ () at /usr/local/Cellar/g=
-it/2.29.2/libexec/git-core/git-add--interactive line 183.
-> ```
->
-> What's different between what you expected and what actually happened?
-> The main problem is that the command didn't do anything. It basically pr=
-inted an error message instead of changing a file in the way I wanted.
->
-> Anything else you want to add:
-> Yeah. So pretty obviously the problem is the "=E5" in the filename. The =
-interesting thing is that the folder with the "=E5" in the filename seems =
-to exist twice, with differently encoded "=E5"s. But their content IS AUTO=
-MATICALLY PERFECTLY SYNCED. And the only tool which recognizes them as two=
- different folders is git. ls in the terminal shows them as one, finder sh=
-ows them as one, even "glob" in php shows them as one.
-> This is what git seems to see them at (taken from git status):
->
-> `modified:   "paulbrunnga\314\212rd-springyard/`
-> And further down:
-> ```
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
-> 	"paulbrunng\303\245rd-springyard/"
-> ```
-> Here is a zip containing the folder (emptied): https://arxius.io/f/7ec7e=
-1c7
-> I tried creating a new git repo, extracting the zip in it, going into th=
-e folder and running `git add empty` and could reproduce that git sees it =
-as two different folders.
->
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.29.2
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Darwin 17.7.0 Darwin Kernel Version 17.7.0: Sun Jun  2 20:31:42 P=
-DT 2019; root:xnu-4570.71.46~1/RELEASE_X86_64 x86_64
-> compiler info: clang: 10.0.0 (clang-1000.11.45.5)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/bash
->
->
-> [Enabled Hooks]
->
+From: Junio C Hamano <gitster@pobox.com>
 
-This uses the decomposed form of "=E5":
-> `modified:   "paulbrunnga\314\212rd-springyard/`
-...
-And here is the precomposed form og the "=E5"
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
-> 	"paulbrunng\303\245rd-springyard/"
-> ```
+"Keep it homogeneous across the repository" is in general a
+guideline that can be used to converge to a good practice, but
+we can be a bit more prescriptive in this case.  Just like the
+messages we give die(_("...")) are formatted without the final
+full stop and without the initial capitalization, most of the
+argument help text are already formatted that way, and we want
+to encourage that as the house style.
 
-Both are lowercase, right ?
+Noticed-by: ZheNing Hu <adlternative@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ parse-options.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-What does
-git config -l | grep unicode
-tell you ?
+diff --git a/parse-options.h b/parse-options.h
+index 7030d8f3da6..ff6506a5047 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -82,9 +82,9 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
+  *   stores pointers to the values to be filled.
+  *
+  * `argh`::
+- *   token to explain the kind of argument this option wants. Keep it
+- *   homogeneous across the repository. Should be wrapped by N_() for
+- *   translation.
++ *   token to explain the kind of argument this option wants. Does not
++ *   begin in capital letter, and does not end with a full stop.
++ *   Should be wrapped by N_() for translation.
+  *
+  * `help`::
+  *   the short help associated to what the option does.
+-- 
+gitgitgadget
 
-I have
-core.precomposeunicode=3Dtrue
-
-and that what we need on a Mac (to handle precomposed and decomposed bette=
-r)
