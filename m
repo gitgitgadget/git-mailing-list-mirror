@@ -2,81 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD3B1C433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC4DC433DB
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:37:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 82AB62313C
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:26:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 534C023158
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbhAFW0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 17:26:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727220AbhAFW0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 17:26:12 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC85C061757
-        for <git@vger.kernel.org>; Wed,  6 Jan 2021 14:25:32 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id x15so4810775ilq.1
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 14:25:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MsHdOTDdCr7grXucsv6oufVeNZjaVktfWUx7YcXNkPQ=;
-        b=A0i+CjIkhh+NCxTw7UkY3RBYUR4VON05SAcDSKNnzr68xVd+oUD47hkoVj0u2ftz2z
-         aBRAx7VpZl6z4/OFPfl/DhDiGTbgzWUyA1Uzwoi2E0HmTU930xQsNkVpbvTfbTnXXfoD
-         JVbamtTVRcbvvz2cM2wv0RWOkYILkZO2xfcjgde/K94qxnOysgN1QbUjj1xKb/DFXiFs
-         bSM5RqmSlfPZ5oVPm1ug0gZwpFY4MDA/l25RjEn75kaRiAymuBYM9pxZwBbVpdqn5aYG
-         1HP/3T5akv2QtHkbW28F/z5HgahfP41yPIzewaWprmFNedbrkRL0YphNAlzKiVB43E4j
-         jeIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MsHdOTDdCr7grXucsv6oufVeNZjaVktfWUx7YcXNkPQ=;
-        b=JDLpGls+4vrhE/mUHEjzdSUE/9xjdto1Ai8TMHY+u+DKGopMOMCBnYWf2e+7U/Sd/t
-         s7PQ9AAPw9Hl+gU4IbcNSHR/cW6M69xPaWoftI1PW20UNzcN1mbDdInXvobp/y655JMt
-         yTHia0aerO0WseEtIvyRai1GyKdxAb6fxLHIVwxJWekrC7ldae8Ea9dCzdxs2lePKcJW
-         8mHHuqt0EmbZfo7x3ghkgAmackUIzAfcoCFWALiRqFfpJxKTyrK49MxvWm6lc9xEwpdz
-         rnfxmKQHoz7uAIowE2QRq71b+HDv2opWF93/mKxW9rXN/Ezvq+/3hfPkIlNmyHKW/5QT
-         Fz2g==
-X-Gm-Message-State: AOAM530wXCJmAac9gc8T+CAuYR0i81PdNP6DC+6dMTPI/gF9uswDZtJH
-        Jir5nX8juMLn4Xvs396nePi5TPvDk2IaiU2Pl4Q=
-X-Google-Smtp-Source: ABdhPJxoGKJabm89zAv2BD2OYVYrR8TJSn5ym1NX94prj0YVqrovphERXK087yxfoO7IBLanWTKhwvHSB7ddRX46/5M=
-X-Received: by 2002:a05:6e02:1b8a:: with SMTP id h10mr6368129ili.141.1609971931746;
- Wed, 06 Jan 2021 14:25:31 -0800 (PST)
+        id S1727557AbhAFWhh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 17:37:37 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53767 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726684AbhAFWhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 17:37:37 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD016B42D5;
+        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=kU/qAxGI1Ebm
+        w8MGyqkzqe8s0O4=; b=LMj5puYlGY0PrQdeHRd4lwubaUKbNom7o1xk9oWlpuQm
+        QmH8LQFulzvwcsSblk/Wpj3LfeO9tshBM1VguzL3KpqRZa1gTxXxeeRMU2fJ6ENN
+        CzSW0LxRgxqNTIYzcKUCgeuhX0vgHRNmtDsKhnWFmjGws+QUM0uLMYOavQj13xE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NpMl7O
+        JwEFHdQ4cS7bHw+0G9PdTb22k06KgOEpHEerLN8nw/yReAKSJHD40MINHpzf6yxB
+        eiRMUpJcle/QcjNmnQd9dGiUWKF7+lcnUv8b2kjpuZU1uai4MM5jre/KGedv4Fdo
+        nsd5oREDLXXWONyCvlrvHnuqWdDl2zI/Dbpa0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3A9CB42D4;
+        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23799B42D3;
+        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
+References: <cover.1609874026.git.martin.agren@gmail.com>
+        <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
+        <xmqq5z4as2j9.fsf@gitster.c.googlers.com>
+Date:   Wed, 06 Jan 2021 14:36:55 -0800
+In-Reply-To: <xmqq5z4as2j9.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 06 Jan 2021 03:55:22 -0800")
+Message-ID: <xmqqim89pu9k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <jwvwnwqrqwd.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <CABPp-BE1QXA0ohB9D-tqKpzDTok0BMsGQjotmcqMxfs9AL5noA@mail.gmail.com>
- <xmqq1rexrbz1.fsf@gitster.c.googlers.com> <CAEE75_0e4_m_7hQXycVK1f=4LOb82U2DYveAvcF2XKKNgmfpNw@mail.gmail.com>
- <xmqqr1mxpv8n.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1mxpv8n.fsf@gitster.c.googlers.com>
-From:   Jim Hill <gjthill@gmail.com>
-Date:   Wed, 6 Jan 2021 14:25:20 -0800
-Message-ID: <CAEE75_1o+A13+8SBeF9S0SN0ZaYhgK3D1bhbfWNWZWsj9jOXrw@mail.gmail.com>
-Subject: Re: New orphan worktree?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Stefan Monnier <monnier@iro.umontreal.ca>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AE5981A6-506F-11EB-8CCA-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 6, 2021 at 2:15 PM Junio C Hamano <gitster@pobox.com> wrote:
-> not a good example to support the use of the "--orphan" option.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I agree with that part, slathering infrastructure and abstractions on
-oneliners (okay, twoliners) is suspect in my book. worktree add,
-symoblic ref (really, no need to get lowlevel there, checkout --orphan
-does it) done. Tag an empty commit and the sequence gets closer
-to a legit oneliner
+> Derrick Stolee <stolee@gmail.com> writes:
+>
+>> On 1/5/2021 2:23 PM, Martin =C3=85gren wrote:
+>>> I made a comment in [1] about how we could avoid peeking into a `stru=
+ct
+>>> lock_file` and instead use a helper function that we happen to have a=
+t
+>>> our disposal. I then grepped around a bit and found that we're pretty
+>>> good at avoiding such peeking at the moment, but that we could do
+>>> a bit better.
+>>>=20
+>>> Here's a series to avoid such `lk.tempfile.foo` in favor of
+>>> `get_lock_file_foo(&lk)`.
+>>>=20
+>>> [1] https://lore.kernel.org/git/CAN0heSrOKr--GenbowHP+iwkijbg5pCeJLq+=
+wz6NXCXTsfcvGg@mail.gmail.com/
+>>
+>> Thanks for being diligent and keeping the code clean.
+>>
+>> This series is good-to-go.
+>>
+>> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+>
+> Thanks, both.
 
-    git worktree add foo empty; git -C foo checkout --orphan newbranch
+I liked what I saw.  The code after these patches got certainly
+clearer.
+
+But it was not quite clear what I was *NOT* seeing in these patches.
+
+IOW, how extensive is the coverage of these patches?  If we renamed
+the .tempfile field to, say, .tmpfile in "struct lock_file" in
+"lockfile.h", for example, would "lockfile.[ch]" be the *only* files
+that need to be adjusted to make the code compile again?  The same
+question for various fields in "struct tempfile".
+
