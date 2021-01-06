@@ -2,171 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 547B9C433E6
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B07F9C433DB
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:29:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 172FD2310B
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:03:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 608872310D
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726471AbhAFKDS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 05:03:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725861AbhAFKDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 05:03:17 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8FDC06135A
-        for <git@vger.kernel.org>; Wed,  6 Jan 2021 02:02:08 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id q18so1896269wrn.1
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 02:02:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ise7IwhiQmdjtggtvUjYapk4t3iV1wfOXWWgoQ8mDc0=;
-        b=EbOAK5hOGHnOJ63gLBWyQ+746DLrJqfmSR848PBonyvgny64+VZ2IVfa/M7VXh+C0G
-         tFPh3nwCMysYXOjEY9BHkjn0JdonYLoS+XrcrHM810H7ewZZZSjYJ79hDmQ08PVMAPU2
-         FITKi+6Nmj58Qh4WlhjREV2sjTV8jC1Z9tFwt0WtRSGzkXJ0ed+cfD2+JMTQ1uY5fK+9
-         4RCWKv1CfRsAV43pVwfbTufF56qz40hTUBe4wITz/oiWQ0jyajeQMZQA/DGBBALuE9aE
-         EGR2jw2kISKFObEN8VAUrXWDY4GkY6Y+d7thVia9OoX1razqU+tnr4JntEyprSr48TWf
-         YjPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ise7IwhiQmdjtggtvUjYapk4t3iV1wfOXWWgoQ8mDc0=;
-        b=cWgheDeTgBMtckQzP8qi7LoKLQAPtf4FyqjLuzzjhaSnfWbuFX8R1l5gOdNf1LYXlO
-         vlpKjKp4TosEHn8v+2PEmH+xY8Q317TecPbDUmbSy8jae2j6RtCdO1/lGAAZHU32Kbgb
-         QVGS9lTAH/ddjqR7llnjq944aDvkjSzl1D0U+FOSaqVr1fi1nRiJzfRgC64PByeG8kV4
-         YDkcbBMWP4XsWby5c7YcFisXb5UHNkUhcSXR9STNIdbgvhgE/e9/ZbXbz+BB11Lyg3CT
-         3ScupwRtPnAa9BCL2885oDHSayTiVykevlNjsW0w4tUMe84990QkBlZHrxn3qa45+HkB
-         PK6A==
-X-Gm-Message-State: AOAM5320A9KY8HgU5nwxtqogd/IglehnQWzOz3hb4fOJtbyHE2SS3ynb
-        ciuoxM/f2bp+SpdcWocjEcIpEhZKUW8JgQ==
-X-Google-Smtp-Source: ABdhPJyqKhWjr5oZk3vMGGzbXKmRESRUvqaRP5FdBfN9MRYLB6TOOQEgxvLtaepvF18aY9j3iODIXw==
-X-Received: by 2002:adf:c6c4:: with SMTP id c4mr3598207wrh.348.1609927327331;
-        Wed, 06 Jan 2021 02:02:07 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r13sm2538637wrs.6.2021.01.06.02.02.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jan 2021 02:02:06 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthew DeVore <matvore@google.com>, git@matthieu-moy.fr,
-        olyatelezhnaya@gmail.com, samuel.maftoul@gmail.com,
-        Johannes.Schindelin@gmx.de, karthik.188@gmail.com,
-        pclouds@gmail.com, sunshine@sunshineco.com,
-        emilyshaffer@google.com, jrnieder@gmail.com,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 5/5] branch: show "HEAD detached" first under reverse sort
-Date:   Wed,  6 Jan 2021 11:01:39 +0100
-Message-Id: <20210106100139.14651-6-avarab@gmail.com>
-X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
-In-Reply-To: <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
-References: <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
+        id S1726324AbhAFK3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 05:29:19 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:54447 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726231AbhAFK3S (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 6 Jan 2021 05:29:18 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 7D0125C017C;
+        Wed,  6 Jan 2021 05:28:06 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 06 Jan 2021 05:28:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=O1b3VFxLppYVqrCT71KjI7vDTqf
+        Cmoo6chhh+17p7h0=; b=fxlqfhRWBG/m0FvKWOtuM5CmsrK3JsFnKmYSyNWLWMJ
+        TGGbeT0WOyRSevBrLGvEYfhYUfp5LsQ9RUmx/pVCuaZFyuutLONePe0rXRAqOo0N
+        1zm34iB8IykKOwibZCzG6mOe5AnAW5lHxMoxRS0GIpkZZ8KhFzyNMcGUbPvOCI7h
+        F/DsQJ12WMikDBZZwu8DrZ87Muk6F/OsGCeRR86zay5CCHpaglbh5gL/526Ht0Y+
+        WFDbA4SJxlT5XNlH4m9vAoVN9AQsPR6z+o4ghpmemM/sxdTknwr7ugh1H/HTa3YG
+        fDCE1rFmalGJKjsRQxbyhmq2dTFZWA1SRZlPbQgSrKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=O1b3VF
+        xLppYVqrCT71KjI7vDTqfCmoo6chhh+17p7h0=; b=dv2PGB4UCFXnjvXpkks1DB
+        sTs2QTWv0os8CNHIwQy8Y1zVmMrIl81TLlz3noVdo22tx90P21HnchNEDZQ5j20G
+        HasurdKjOgeb0YTb8oV4oEUpf+6o8gG92WcdxlcYVtqyCtpRTjY6xq25fFk4hWjI
+        O1rKnNAIHeKdXRvip4A+ZZZdT75HuPhwt5iI2QAXsXdjTRcM4C6OGQd6W/cAnNhm
+        I9SK40FPGevZn+FFgH2hGUwmE4koWb/A/uDWSqDcMwQCzCxQC/rYLI2xU6JMazr2
+        2B9o7AGyXJiqiZGMsjEViEsPzEDDA0nQYCxRJkSYRNKxnwFgArQ6V+6P+JGRL+Lg
+        ==
+X-ME-Sender: <xms:tZD1X_Fp_-JY1mWD3d5rhoogfVEhFwUoWYMO_U_RSTzsN7f5K0D7Zg>
+    <xme:tZD1X8W9EBDzN2Vm4UpEhl1PuqI40w5Dra0fSmX-tzrDkOW1IQcBch_HCb9EoiET6
+    VOeeCdjM1YvDF4a0Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdefledgudejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucfkphepjeejrdduledurdeiuddrvdefheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:tZD1XxIjnKDNYvyYPGcXnKFNnHSXpeNzvTaKq5Up53EHbwGF8dgCAw>
+    <xmx:tZD1X9GGeN_qxUv1J24woSD0fJJs6RoHoOR1RnwxuvuIWz5o4Hh4jw>
+    <xmx:tZD1X1XxYDK0Aw3rA0DbN6jclY1blDAiFSdBS9zZcbhoSnFkTUET0A>
+    <xmx:tpD1X4Tu4D5OLR4l8nKaSpqSn5la5FY60qRla1qS8N3YXiJu9Iw-IQ>
+Received: from vm-mail.pks.im (x4dbf3deb.dyn.telefonica.de [77.191.61.235])
+        by mail.messagingengine.com (Postfix) with ESMTPA id B14E11080063;
+        Wed,  6 Jan 2021 05:28:04 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 198fc643 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 6 Jan 2021 10:28:01 +0000 (UTC)
+Date:   Wed, 6 Jan 2021 11:28:00 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v5 8/8] config: allow specifying config entries via
+ envvar pairs
+Message-ID: <X/WQsO47uhgvrcaS@ncase>
+References: <cover.1606214397.git.ps@pks.im>
+ <cover.1608104755.git.ps@pks.im>
+ <dfceffd8d4fbc3c99cfa7c5d838e4c3a2db6598a.1608104755.git.ps@pks.im>
+ <xmqqczz06x83.fsf@gitster.c.googlers.com>
+ <xmqq1rfg6vcz.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pB0JwAqS6/Rwe6Ve"
+Content-Disposition: inline
+In-Reply-To: <xmqq1rfg6vcz.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the output of the likes of "git branch -l --sort=-objectsize"
-to show the "(HEAD detached at <hash>)" message at the start of the
-output. Before the compare_detached_head() function added in a
-preceding commit we'd emit this output as an emergent effect.
 
-It doesn't make any sense to consider the objectsize, type or other
-non-attribute of the "(HEAD detached at <hash>)" message for the
-purposes of sorting. Let's always emit it at the top instead. The only
-reason it was sorted in the first place is because we're injecting it
-into the ref-filter machinery so builtin/branch.c doesn't need to do
-its own "am I detached?" detection.
+--pB0JwAqS6/Rwe6Ve
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- ref-filter.c             | 4 +++-
- t/t3203-branch-output.sh | 6 +++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+On Wed, Dec 23, 2020 at 01:55:08PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> > The same problem may exist in new paragraphs in git.txt that
+> > describes the "--config-env" stuff.
+>=20
+> Here is what I tentatively queued on top of these 8 patches as a fixup.
+>=20
+> Thanks.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 7e0289cb659..5bbdc46c1f9 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2355,6 +2355,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- {
- 	struct atom_value *va, *vb;
- 	int cmp;
-+	int cmp_detached_head = 0;
- 	cmp_type cmp_type = used_atom[s->atom].type;
- 	int (*cmp_fn)(const char *, const char *);
- 	struct strbuf err = STRBUF_INIT;
-@@ -2370,6 +2371,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 	     ^
- 	     (b->kind & FILTER_REFS_DETACHED_HEAD))) {
- 		cmp = compare_detached_head(a, b);
-+		cmp_detached_head = 1;
- 	} else if (s->version)
- 		cmp = versioncmp(va->s, vb->s);
- 	else if (cmp_type == FIELD_STR)
-@@ -2383,7 +2385,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 			cmp = 1;
- 	}
- 
--	return (s->reverse) ? -cmp : cmp;
-+	return (s->reverse && !cmp_detached_head) ? -cmp : cmp;
- }
- 
- static int compare_refs(const void *a_, const void *b_, void *ref_sorting)
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 8f53b081365..5e0577d5c7f 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -221,10 +221,10 @@ test_expect_success 'git branch `--sort=[-]objectsize` option' '
- 	test_i18ncmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  branch-one
- 	  main
- 	  branch-two
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-objectsize >actual &&
- 	test_i18ncmp expect actual
-@@ -241,10 +241,10 @@ test_expect_success 'git branch `--sort=[-]type` option' '
- 	test_i18ncmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  branch-one
- 	  branch-two
- 	  main
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-type >actual &&
- 	test_i18ncmp expect actual
-@@ -261,10 +261,10 @@ test_expect_success 'git branch `--sort=[-]version:refname` option' '
- 	test_i18ncmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  main
- 	  branch-two
- 	  branch-one
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-version:refname >actual &&
- 	test_i18ncmp expect actual
--- 
-2.29.2.222.g5d2a92d10f8
+Your changes look good to me, thanks!
 
+Patrick
+
+>=20
+>  Documentation/git-config.txt |  8 ++++----
+>  Documentation/git.txt        | 29 +++++++++++++++--------------
+>  2 files changed, 19 insertions(+), 18 deletions(-)
+>=20
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> index b71c1ac7b8..67eb40f506 100644
+> --- a/Documentation/git-config.txt
+> +++ b/Documentation/git-config.txt
+> @@ -348,10 +348,10 @@ GIT_CONFIG_VALUE_<n>::
+>  	pairs are processed. These environment variables will override values
+>  	in configuration files, but will be overridden by any explicit options
+>  	passed via `git -c`.
+> -
+> -	This is useful for cases where you want to spawn multiple git commands
+> -	with a common configuration but cannot depend on a configuration file,
+> -	for example when writing scripts.
+> ++
+> +This is useful for cases where you want to spawn multiple git commands
+> +with a common configuration but cannot depend on a configuration file,
+> +for example when writing scripts.
+> =20
+> =20
+>  [[EXAMPLES]]
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 80fb8fab11..3b0f87a71b 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -81,25 +81,26 @@ foo.bar=3D ...`) sets `foo.bar` to the empty string w=
+hich `git config
+>  --type=3Dbool` will convert to `false`.
+> =20
+>  --config-env=3D<name>=3D<envvar>::
+> -	Like `-c <name>=3D<var>` except the value is the name of an
+> +	Like `-c <name>=3D<value>`, give configuration variable
+> +	'<name>' a value, where <envvar> is the name of an
+>  	environment variable from which to retrieve the value. Unlike
+>  	`-c` there is no shortcut for directly setting the value to an
+>  	empty string, instead the environment variable itself must be
+> -	set to the empty strin. Errors if the `<envvar>` does not exist
+> +	set to the empty string.  It is an error if the `<envvar>` does not exi=
+st
+>  	in the environment. `<envvar>` may not contain an equals sign
+>  	to avoid ambiguity with `<name>`s which contain one.
+> -
+> -	This is useful for cases where you want to pass transitory
+> -	configuration options to git, but are doing so on OS's where
+> -	other processes might be able to read your cmdline
+> -	(e.g. `/proc/self/cmdline`), but not your environ
+> -	(e.g. `/proc/self/environ`). That behavior is the default on
+> -	Linux, but may not be on your system.
+> -
+> -	Note that this might add security for variables such as
+> -	`http.extraHeader` where the sensitive information is part of
+> -	the value, but not e.g. `url.<base.insteadOf` where the
+> -	sensitive information can be part of the key.
+> ++
+> +This is useful for cases where you want to pass transitory
+> +configuration options to git, but are doing so on OS's where
+> +other processes might be able to read your cmdline
+> +(e.g. `/proc/self/cmdline`), but not your environ
+> +(e.g. `/proc/self/environ`). That behavior is the default on
+> +Linux, but may not be on your system.
+> ++
+> +Note that this might add security for variables such as
+> +`http.extraHeader` where the sensitive information is part of
+> +the value, but not e.g. `url.<base>.insteadOf` where the
+> +sensitive information can be part of the key.
+> =20
+>  --exec-path[=3D<path>]::
+>  	Path to wherever your core Git programs are installed.
+> --=20
+> 2.30.0-rc1-197-ga312a798fc
+>=20
+
+--pB0JwAqS6/Rwe6Ve
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/1kK8ACgkQVbJhu7ck
+PpSXyw//cKCkkW1ip7b1az4w6Ues6FwXCvTHXjBlsqOtJu2ZO2W9mEJgoJI8qsTB
+9hfO/eevqo/zP76IDZpiVRfTKBdq99V9pvUSK6PEUsX56oKfp5rPy/IIUsnFgYJW
+TkOhcFELzJqo9BrJf1WzjgFCO5e4XAlIcJlvwO0qXJu2hIEqvDuBOt2vbijWJSGc
+cCe8qYShvRbHmoFiWC+Cv6FJlLfaXhupO6SNu3QcpZQjWlA7bdw/fVVky1jkASP6
+peBGaW6dhJlWQxRt1bQZ2ZyVmezuApzd/EG8zk3nypqMJglrL+wOc3wfv9uN+I4g
+IHDpICqpNBwnrBUEzzfYn9twyx9N98tCZ4befif1I3GbClyQnGrYvoWkMEpqWS90
+9Br6keZOjrQrbXJi+zWUm30ArjbYsyIubE7Z0kwQpvLEQS6WVcgoeKkf1KIVTZIM
+e2iX7DweSID4VTH44OgJc5ykGDSFYirVeyq2CS+usc6SuIAoQrlJjeo59kqA46s1
+xksPM4nR/Kfj6hmkJvCVtMrYHtsUCc63iBGW+jo1EHEc5C7xujlZZEQviHZ5arR5
+xCqRYoScHx97JicqhR6bLn+SwwJiVW/YvFhKWGq0Vx23DWJOe9pMhK+BoVzGkLb1
+Y9FlD+tlKDBhOnpvBcm4L61xCP+16gkrK3nti+mBuJd5OcOsgms=
+=C1Dn
+-----END PGP SIGNATURE-----
+
+--pB0JwAqS6/Rwe6Ve--
