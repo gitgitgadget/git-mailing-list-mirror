@@ -2,148 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31151C433E6
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 05:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEDBCC433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 05:37:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A8322D01
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 05:06:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A60BD227C3
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 05:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726165AbhAFFGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 00:06:08 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64222 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725562AbhAFFGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 00:06:08 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A8EF9C687;
-        Wed,  6 Jan 2021 00:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=rhkUJxvJvlhp5mo+MWOEBwEh/RQ=; b=GUAaSKKIEHQxhrLjNODQ
-        nTTxUCgQQagpzzx1hpmL04sChqGLmNytLqlnCodP1SuBmxONZ3NcrpJHz2gYhtiA
-        tjpDra5B7bbsA3l25JXDPLdK3qeqsJGJAKjXIQPcE0ZC56vLVo0AtADSmKNk4N/+
-        gGylBx9ZlmdnNef5E0IoSRc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=gx3vexDZRGDQSqkxoYAmkyB7Vv6TXCiB88J2n2FAsb3jSc
-        dgGMBQB0HD2BYkKmFvb4Adp9jgZmqdaJGSQNmK5YUS5rMPV9JbhIZFZXycgPSDgz
-        ZhwqmqYiIM7sDtwYhLchDZQ2/TNGI+AH60FFHRhWKAwcmfidGPAwrUX85cbLs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E1A99C686;
-        Wed,  6 Jan 2021 00:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8DFCC9C685;
-        Wed,  6 Jan 2021 00:05:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Abhishek Kumar <abhishekkumar8222@gmail.com>
-Cc:     Antonio Russo <aerusso@aerusso.net>, git@vger.kernel.org
-Subject: Re: [PATCH] t6016: move to lib-log-graph.sh framework
-References: <6dc37f6b-1afd-544d-126e-2be9422571c6@aerusso.net>
-        <X/K1BgP8tpsgNe2x@Abhishek-Arch>
-Date:   Tue, 05 Jan 2021 21:05:22 -0800
-Message-ID: <xmqq1reywt7x.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725960AbhAFFhY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 00:37:24 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:41682 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbhAFFhY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 00:37:24 -0500
+Received: by mail-ed1-f44.google.com with SMTP id i24so3268926edj.8
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 21:37:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o5l2RJIQst0zIq/HYUi0DQPy2gSlBp0/s6j2SrysX1c=;
+        b=S/RPJB2KXi2W2EDXL35s6VoK0VOJXogTryFKgY2eCrcbyW+Qldo5qV/gOH4O2Rau/U
+         CIH1XBJN2um70wfufGIYa2SHEoEMi6HGq/uu1AQ4RKIhk9wKEEnQI1tz4RXp9AD3Zf8b
+         jn7vVzUgyMYYd8kSI3ARS3+n2I+59d+TCux5lxynOuhHTPROCbhJBeL+TUKH0N7Soc1k
+         lYZRLmWewjR99ryeXiWOKEiQ2ynGgLnwBgGRTG4CdCiyCWQi2sGmEJtpsMugSANfMNiz
+         /wWSeU3mq0ZkCwd3rUHKzwUrH4i9Pfze9+ChzNb3wszPE+Dh4aughSkFBGPwCxYMxeUG
+         5Asw==
+X-Gm-Message-State: AOAM533ozmrhRgkIPhKvKotmrsLClbrR93ym3m4tFU5WERVG2covuVxk
+        J843P+WLw8jgg3c4C6MH6j+OmChf4HoAorEVgPFHz8V8RPM=
+X-Google-Smtp-Source: ABdhPJwucWgL8G3B53CGqZsJ29tlq++A4Cqx2zYwRM7p76J0SPKNjaxe8W4caoXc1FuYKcsMz5DFeHMwzNA6t192NQg=
+X-Received: by 2002:a05:6402:46:: with SMTP id f6mr2801053edu.163.1609911402711;
+ Tue, 05 Jan 2021 21:36:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8413BA6-4FDC-11EB-AD9B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
+In-Reply-To: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 6 Jan 2021 00:36:31 -0500
+Message-ID: <CAPig+cSMA0J9fBvG=L0ojWvd5ePwxb6ya67umX1HdOy4LEiZpg@mail.gmail.com>
+Subject: Re: [PATCH 0/7] teach `worktree list` verbose mode and prunable annotations
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhishek Kumar <abhishekkumar8222@gmail.com> writes:
-
-> On Sun, Jan 03, 2021 at 07:30:35PM -0700, Antonio Russo wrote:
->> t6016 manually reconstructs git log --graph output by using the reported
->> commit hashes from `git rev-parse`.  Each tag is converted into an
->> environment variable manually, and then `echo`-ed to an expected output
->> file, which is in turn compared to the actual output.
->> 
->> The expected output is difficult to read and write, because, e.g.,
->> each line of output must be prefaced with echo, quoted, and properly
->> escaped.  Additionally, the test is sensitive to trailing whitespace,
->> which may potentially be removed from graph log output in the future.
->> 
->> In order to reduce duplication, ease troubleshooting of failed tests by
->> improving readability, and ease the addition of more tests to this file,
->> port the operations to `lib-log-graph.sh`, which is already used in
->> several other tests, e.g., t4215.  Give all merges a simple commit
->> message, and use a common `check_graph` macro taking a heredoc of the
->> expected output which does not required extensive escaping.
->> 
+On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
+<rafaeloliveira.cs@gmail.com> wrote:
+> In c57b3367be (worktree: teach `list` to annotate locked worktree,
+> 2020-10-11) we taught `git worktree list` to annotate working tree that
+> is locked by appending "locked" text in order to signalize to the user
+> that a working tree is locked.  During the review, there was some
+> discussion about additional annotations and information that `list`
+> command could provide to the user that has long been envisioned and
+> mentioned in [2], [3] and [4].
 >
-> Glad to see others using `lib-log-graph.sh` as well!
->
-> The changes look alright to me but maybe you could have split the two
-> changes into two different commits: Using tags directly instead of
-> environment variables and using `check_graph` instead of manually
-> `echo`-ing to an expected output and comparing with the actual output.
+> This patch series address some of these changes by teaching
+> `worktree list` to show "prunable" annotation, adding verbose mode and
+> extending the --porcelain format with prunable and locked annotation as
+> follow up from [1]. Additionally, it address one shortcoming for porcelain
+> format to escape any newline characters (LF and CRLF) for the lock reason
+> to prevent breaking format mentioned in [4] and [1] during the review
+> cycle.
 
-Perhaps.  Also I am wondering if the tests still need to create tags
-after this change---isn't the output all matched by the commit title
-now?
+Thank you for working on this. I'm happy to see these long-envisioned
+enhancements finally taking shape. Before even reviewing the patches,
+I decided to apply them and play with the new features, and I'm very
+pleased to see that they behave exactly as I had envisioned all those
+years ago.
 
-That is ...
+Very nicely done.
 
->>  . ./test-lib.sh
->> +. "$TEST_DIRECTORY"/lib-log-graph.sh
->> +
->> +check_graph () {
->> +	cat >expect &&
->> +	lib_test_cmp_graph --format=%s "$@"
->> +}
+I'll review the patches when I finish responding to this cover letter.
 
-... this only shows the title, and ...
+> The first moves the should_prune_worktree() machinery to the top-level
+> worktree.c exposing the function as general API, that will be reference
+> by should_prune_worktree() wrapper implemented on the second patch. The
+> original idea was to not only move should_prune_worktree() but also
+> refactor to accept "struct worktree" and load the information directly,
+> which can simplify the `prune` command by reusing get_worktrees().
+> However this seems to also require refactoring get_worktrees() itself
+> to return "non-valid" working trees that can/should be pruned. This is
+> also mentioned in [5]. Having the wrapper function makes it easier to add
+> the prunable annotation without touching the get_worktrees() and the
+> other worktree sub commands.  The refactoring can be addressed in a
+> future patch, if this turns out to be good idea.  One possible approach
+> is to teach get_worktrees() to take additional flags that will tell
+> whether to return only valid or all worktrees in GIT_DIR/worktrees/
+> directory and address its own possible shortcoming, if any.
 
->> -	git merge B C &&
->> +	git merge B C -m A4 &&
+I haven't looked at the patches yet, so I can't respond to this right now.
 
-... that is why we need to have the title here.
+> The third patch changes worktree_lock_reason() to be more gentle for the
+> main working tree to simply returning NULL instead of aborting the
+> program via assert() macro. This allow us to simplify the code that
+> checks if the working tree is locked for default and porcelain format.
+> This changes is also mentioned in [6].
 
->>  	git tag A4 &&
+Sounds good.
 
-Now, does this A4 used anywhere?
+> The forth patch is the one that teaches `list` command to show prunable
+> annotation, for both default and porcelain format, and adds the verbose
+> option. These changes are also done for the "locked" annotation that was
+> not done on in [1]. Additionally, `list` learns to fail when both
+> --verbose and --porcelain format as used together.
 
->> -	# Store commit names in variables for later use
->> -	A1=$(git rev-parse --verify A1) &&
->> -	A2=$(git rev-parse --verify A2) &&
->> -	A3=$(git rev-parse --verify A3) &&
->> -	A4=$(git rev-parse --verify A4) &&
+My knee-jerk response to disallowing --verbose and --porcelain
+together was that it seemed unnecessarily harsh, but upon reflection,
+I think it's the correct thing to do. After all, porcelain output,
+even though extensible and flexible, should be predictable, so it
+doesn't make sense for options such as --verbose to affect it.
 
-It certainly used to be needed here, but ...
->> +	check_graph --all <<-\EOF
->> +	* A7
->> +	*   A6
->> +	|\
->> +	| * C4
->> +	| * C3
->> +	* | A5
->> +	| |
->> +	|  \
->> +	*-. | A4
+> The fifth patch adds worktree_escape_reason() that accepts a (char *)
+> text and returned the text with any LF or CRLF escaped. The caller is
+> responsible to freeing the escaped text. This is used by the locked
+> annotation in porcelain format. Currently, this is defined within
+> builtin/worktree.c as I was not sure whether libfying the function as
+> part of this series is a good idea. At this time it seems more sensible
+> to leave the code internally and libfying later once we are confident
+> about the implementation and whether it can be used in other part of the
+> code base but I'm open for suggestion.
 
-... not anymore in the new version.
-
->> +	|\ \|
->> +	| | * C2
->> +	| | * C1
->> +	| * | B2
->> +	| * | B1
->> +	* | | A3
->> +	| |/
->> +	|/|
->> +	* | A2
->> +	|/
->> +	* A1
->> +	EOF
->> +'
->>  
+Perhaps I misunderstand, but I had envisioned employing one of the
+codebase's existing quoting/escaping functions rather than crafting a
+new one from scratch. However, I'll reserve judgment until I actually
+read the patch.
