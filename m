@@ -2,140 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A65BC433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 09:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A397C433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:00:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E40852310C
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 09:58:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0355D2310B
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 10:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727005AbhAFJ6x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 04:58:53 -0500
-Received: from mail-ej1-f52.google.com ([209.85.218.52]:46792 "EHLO
-        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726820AbhAFJ6w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 04:58:52 -0500
-Received: by mail-ej1-f52.google.com with SMTP id t16so4148937ejf.13
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 01:58:36 -0800 (PST)
+        id S1726531AbhAFKAc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 05:00:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43246 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726298AbhAFKAb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 05:00:31 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DC73C06134C
+        for <git@vger.kernel.org>; Wed,  6 Jan 2021 01:59:51 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id g24so3836052edw.9
+        for <git@vger.kernel.org>; Wed, 06 Jan 2021 01:59:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XAlRn3byVFFGX22yNIxJrtMEA5Cl0o3+gmOEH9PJAhc=;
+        b=YIvk5SGm1OXQy/Y1TvXrQgsE3PP/FLsa0WgLJgoZ+UfKRc4BYQODVilkKpq6EjmoPe
+         GkCjAf3yo8h6WuJjDu8fH2avhNynI1dpqvQMvqxlITmcMpj+Cxg2bvGwxHb5wwI9RMlR
+         qy88O+peXZtvvN/dC4aKYcMSVu8aBDRcF5cf90e8i41oBDVLuBChzGkJtleQY2fwJUvP
+         cAgZDe57TZVKTl2kpZ1X2nFGWAbZCAj4Z3BUa6bX5YhqarWzcgswhUg15iW9rnqBPA9R
+         GdB6wzFIYOCrgvMuerb/V0jZZpqxilC59gBoox+epdMPq4PKKeDwyG7OX51AnO//19Nm
+         WHjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ek51VsHdgX7If/RqZLZSM6vameev2G/RHLe6Pp06NzE=;
-        b=M8fsBP1jv5HWg9Q3ZpCfvm3RIbnmnn8Djl6NIi9ufP5UzCVqexFYPhUEvMwwS3ev8P
-         qdN8HUAncpvOyUkKRcg9zNPGsnwnReBWNhCOpQ/tRFagVW++SWRJdwQLxqCxjIQ5LlF/
-         YKoq/uQkqA/rznGwSUwiMKjC4uSqX8cPN5wGXi/0hMi5zTZra/jcLkGQO3z5zohI4pSR
-         RjdrJaBlOb57CTE9lvwmilqTfs3H77GjkkDZsbM7QP6EnG8qIlnbx67rtpQm4eku9ABC
-         CaHT2P/qBJRsGq/RBK9u4ap6xCxXw7RT+Wp7cXXbTlJRcT4shiiAmYfMrxkZs+Jlsrik
-         NOoQ==
-X-Gm-Message-State: AOAM532GU+dnylpYY3AmpEeG3LTBi0XzsAoGi9MWXVmfC1J4e+IgIf2A
-        zjcpY2Yny1bzMn3/Jk+0iClQmebZ9B+n0k7afxo=
-X-Google-Smtp-Source: ABdhPJzQOYb5m8hwiS+DdfkqJTyizX2wNjHGtL4EVPWU9pZq30W1k85faW/oSMV7vrr4DQgMpgDT/wnTOdQeK5g3JO4=
-X-Received: by 2002:a17:906:4348:: with SMTP id z8mr2310021ejm.371.1609927090309;
- Wed, 06 Jan 2021 01:58:10 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XAlRn3byVFFGX22yNIxJrtMEA5Cl0o3+gmOEH9PJAhc=;
+        b=dXiRWxgpq4jO4jY3FatcXF7lTTdVOTMMwKUjKDaZBrA4LM6DanvnNXRTOZHraOarhd
+         cvsHlyx+sNjqOOifgbMO1AVP6HWTT+ht0y30x/NWAwNMrGo0NgULSezoGtVHZ53nCVc5
+         2OaVNqJ2jbwwrfmxLd6LggBeNTSHrXCsXEl5OBHpXwYZ3ZVE1cZeZenhlBVyWVbXLC0Y
+         S9QTlgCS1g1MNB2g2xRfQFLPhYC7fEbjm90zCK9J4zWPvKLN0yhcqJctHNmsJW1xVavW
+         0RX9xGbtjMJiKQM0L99EOipYd7k2KCE4va2M9qufLqB4K9B14Ms4E1pL3cA5bCn1i+67
+         RJRg==
+X-Gm-Message-State: AOAM531ADCU1/wM5GN9BnyphGCrImhFmcFpkj3yEhRzMBtWPsu8Tywzg
+        tu0uHmNSrYN56F0dhSwWceA=
+X-Google-Smtp-Source: ABdhPJy0XgL/DlVpCS4G+e/c39Mze/ztHJ6LqKmUa6nm1eaSOCoWR26DiUoLZHX9V/9YfBPJDIosJg==
+X-Received: by 2002:a05:6402:3048:: with SMTP id bu8mr3431247edb.49.1609927189866;
+        Wed, 06 Jan 2021 01:59:49 -0800 (PST)
+Received: from szeder.dev (84-236-109-79.pool.digikabel.hu. [84.236.109.79])
+        by smtp.gmail.com with ESMTPSA id dh19sm1243534edb.78.2021.01.06.01.59.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 06 Jan 2021 01:59:49 -0800 (PST)
+Date:   Wed, 6 Jan 2021 10:59:47 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] refs: allow @{n} to work with n-sized reflog
+Message-ID: <20210106095947.GP8396@szeder.dev>
+References: <0c6885f15f5ce0be28142d9c69724362e72481a9.1609551262.git.liu.denton@gmail.com>
+ <cover.1609923643.git.liu.denton@gmail.com>
+ <18a35506b87356c1ae844d2686b2be6bd04567b2.1609923643.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com> <20210104162128.95281-8-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210104162128.95281-8-rafaeloliveira.cs@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 6 Jan 2021 04:57:59 -0500
-Message-ID: <CAPig+cRtd9V_ko1gNmueKWbJvna80mMgdvj6_06afK8JzypAOg@mail.gmail.com>
-Subject: Re: [PATCH 7/7] worktree: document `list` verbose and prunable annotations
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <18a35506b87356c1ae844d2686b2be6bd04567b2.1609923643.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> Update the documentation with "git worktree list" verbose mode, prunable
-> and locked annotations for the default and porcelain format as part of
-> teaching the command to show prunable working trees and verbose mode.
->
-> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
-> ---
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> @@ -226,9 +227,12 @@ This can also be set up as the default behaviour by using the
->  -v::
->  --verbose::
->         With `prune`, report all removals.
-> +       With `list`, output additional information for working trees.
-
-This leaves the reader wondering what additional information is output
-for `list`. Perhaps a small tweak will help:
-
-    With `list`, output additional information about worktrees (see below).
-
->  --expire <time>::
->         With `prune`, only expire unused working trees older than `<time>`.
-> +       With `list`, annotate unused working trees older than `<time>` as prunable
-> +       candidates that will be remove by `prune` command if the same option is used.
-
-Perhaps just minimal:
-
-    With `list`, annotate missing worktrees as prunable if they
-    are older than `<time>`.
-
-> @@ -367,13 +371,48 @@ $ git worktree list
-> +The command also shows annotations for each working tree, according to its state.
-> +These annotations are:
+On Wed, Jan 06, 2021 at 01:01:54AM -0800, Denton Liu wrote:
+> diff --git a/t/t1508-at-combinations.sh b/t/t1508-at-combinations.sh
+> index 4a9964e9dc..15aac6e77a 100755
+> --- a/t/t1508-at-combinations.sh
+> +++ b/t/t1508-at-combinations.sh
+> @@ -99,4 +99,20 @@ test_expect_success 'create path with @' '
+>  check "@:normal" blob content
+>  check "@:fun@ny" blob content
+>  
+> +test_expect_success '@{1} works with only one reflog entry' '
+> +	git checkout -B newbranch master &&
+> +	git reflog expire --expire=now refs/heads/newbranch &&
+> +	git commit --allow-empty -m "first after expiration" &&
+> +	git rev-parse newbranch~ >expect &&
+> +	git rev-parse newbranch@{1} >actual &&
+> +	test_cmp expect actual
+> +'
 > +
-> + * "locked", if any working tree is locked
-> + * "prunable", if any working tree can be pruned via "git worktree prune".
+> +test_expect_success '@{0} works with empty reflog' '
+> +	git checkout -B newbranch master &&
+> +	git reflog expire --expire=now refs/heads/newbranch &&
+> +	git rev-parse newbranch >expect &&
+> +	git rev-parse newbranch@{0} >actual &&
+> +	test_cmp expect actual
 
-s/any/the/g
+You could use 'test_cmp_rev' in these two tests to spare a few lines
+and to get a bit friendlier error message on failure.
 
-We might want to use backticks around these annotations rather than
-double quotes, and we certainly do want to use backticks around the
-`git worktree prune` command to ensure it is styled consistently with
-other commands in this document.
-
-> +Note that, the annotation is only moved to the next line only if the
-> +additional text is available, otherwise the text is kept on the same.
-
-Drop the comma between "that, the". Also, too many "only"s in this
-sentence. You can actually drop both of them and the sentence will
-still read fine:
-
-   Note that the annotation is moved to the next line if the
-   additional information is available, otherwise it stays on
-   the same line as the worktree itself.
-
-or something.
-
->  Porcelain Format
->  ~~~~~~~~~~~~~~~~
->  The porcelain format has a line per attribute.  Attributes are listed with a
->  label and value separated by a single space.  Boolean attributes (like `bare`
->  and `detached`) are listed as a label only, and are present only
->  if the value is true.  The first attribute of a working tree is always
-> -`worktree`, an empty line indicates the end of the record.  For example:
-> +`worktree`, an empty line indicates the end of the record.
-> ++
-> +In case any of the working trees are locked or is a candidate for pruning
-> +(See DESCRIPTION above) the labels "locked" and "prunable" is also shown
-> +followed by a reason, if available, otherwise only the labels are listed.
-> +For example:
-
-s/(See/(see/
-s/is also/are also/
-
-Let's also use backticks rather than double quotes around `locked` and
-`prunable` to ensure consistent formatting with the other porcelain
-labels `bare` and `detached` which are already in backticks.
-
-Also, the unnecessary `+` line (seen as `++` in the diff) makes this
-render incorrectly. It renders as:
-
-    +In case any...
-
-To fix it, just leave the line blank between paragraphs.
-
-(If possible, install `asciidoc` and `xmlto` and then run `make html`
-to render the documentation yourself, and open
-Documentation/git-worktree.html in your browser to check the output.)
