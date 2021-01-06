@@ -2,89 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A4E1C433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 02:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE8EC433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 02:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1612E22CE3
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 02:05:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C18E222D50
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 02:16:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725817AbhAFCFM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 21:05:12 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63900 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725730AbhAFCFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 21:05:12 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6559FAD8A1;
-        Tue,  5 Jan 2021 21:04:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L+1UoHsif136b390Xl3F2Wty5YU=; b=jOKyqI
-        Jkhzrh398zUGEqpAOidSx+lRW8xvrsvabyKiVzCec6T8wMNfBmwTBkL/NFmyoMLl
-        yp0GQq0YRGP1Wz8wyv9ZuGJMvuwiSJ2j5wKqwFYs1YQd0XAi4QBQeYWO5GIebIP6
-        2cfheIMb4cP/5Ce2vZPLU+XQEpkE+2ywU/U0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mBup/LKZWq9L2xgWsfqBaNMBpL/eOTug
-        HJbAZ0Px08gdf+A+L/qeL5DquJMBqE1K7mMRj0dQmUqw41nzIts3hCyx6Xd0mFsg
-        SX0qxtEHiJPq53MiWfmE66X0+DvgIshVpHu8sIdgQdY43HSyTyQYmH+RM9fxnVjV
-        iEMgi52J3gw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C854AD8A0;
-        Tue,  5 Jan 2021 21:04:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DFBD4AD89F;
-        Tue,  5 Jan 2021 21:04:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v6 06/13] merge-index: don't fork if the requested
- program is `git-merge-one-file'
-References: <20201116102158.8365-1-alban.gruin@gmail.com>
-        <20201124115315.13311-1-alban.gruin@gmail.com>
-        <20201124115315.13311-7-alban.gruin@gmail.com>
-        <44c9189d-9d2f-c437-d0d6-9529708d2c99@gmail.com>
-        <411b68ad-dee5-5a19-ae94-c2b6a249161a@gmail.com>
-Date:   Tue, 05 Jan 2021 18:04:29 -0800
-In-Reply-To: <411b68ad-dee5-5a19-ae94-c2b6a249161a@gmail.com> (Alban Gruin's
-        message of "Wed, 6 Jan 2021 00:20:33 +0100")
-Message-ID: <xmqqv9cax1le.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725925AbhAFCQo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 21:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55426 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725824AbhAFCQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 21:16:43 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AACC061388
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 18:16:03 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id r9so1678078otk.11
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 18:16:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3bJuBRzvHWb7U7b43Rn2KYAMDJ/qVfwyK/JVEMaYci8=;
+        b=Yb0jhk4ZM7DTfu9DTveqdqgE91R4hjyZgVp4PozoudQui4gB926Leu7cfxNLL7onhc
+         XM4iVZATXXSpjtuwjx1SlD60H66cqKlq1sbYyYOtrSvUrKjno5eBIcjJnODbHh5QDcBt
+         HZUbA097uB9cb+LXR/jEb0HESoskk0uefpY3MTlETSC3qns0GByrOYdpjio/EkwF5emD
+         WG84yyJ4BCn3D2QX1zgrlz/Jc82rkoKwEbkWi/VstA9GmsmSsN69pa97okWWm+wAURPH
+         ZrUXxMOcI6ez3PLL4b9Eg0Qvj7BDiXJDsYJ5571x+1BuEX8oyo5iDy5M8OWcNXQ/u8mA
+         Dl7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3bJuBRzvHWb7U7b43Rn2KYAMDJ/qVfwyK/JVEMaYci8=;
+        b=NcN1dQ9cXWPr325ilUv7DRkwcLidjZ1BnQLyoGG/0vKbmvtpQpxXMacqXj8Iuz13H/
+         mNs/IWjT8z/rxJJZkohC2rdaIO1Hga94C2i3fBbF2lneG5Q9LORCCnljl2el5CEboz5u
+         TQqKtdRl8wacb5BRqYucyUq058JwniqKbq61k28J6eV5c57eo8wInDe8ToOhNpSv7a0V
+         UbrxCnU6kjayk43R60pydZl0XElXMsuM35YyAQFZXCkzmAiDrZNDz3k1CxEXDykddCws
+         jsWNBNccm2aTxAM8MsFIm7c1TBgzkXH8nyeBI+9x+aTpVnFvd6St6QApMw1UbnE1vrCc
+         3gFA==
+X-Gm-Message-State: AOAM5301kIhf3mfoXQ+21rEbF6cCfrlSgwSAahPUL1Yss4C5NoPRiyJ4
+        iH6zEVKqc5yMDjy+iDeHvt4=
+X-Google-Smtp-Source: ABdhPJzyU/7qud9ZQRQRatYwHa1k/vQuxPZH9fswmyY+GiItjTgSUcExtr9kRUv6SE2an+Ej8Wri8Q==
+X-Received: by 2002:a05:6830:1398:: with SMTP id d24mr1792807otq.199.1609899362686;
+        Tue, 05 Jan 2021 18:16:02 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id k3sm256904oof.31.2021.01.05.18.16.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jan 2021 18:16:02 -0800 (PST)
+Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org
+Cc:     Alban Gruin <alban.gruin@gmail.com>
+References: <cover.1609874026.git.martin.agren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
+Date:   Tue, 5 Jan 2021 21:16:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 82F624F8-4FC3-11EB-960E-D152C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <cover.1609874026.git.martin.agren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+On 1/5/2021 2:23 PM, Martin Ågren wrote:
+> I made a comment in [1] about how we could avoid peeking into a `struct
+> lock_file` and instead use a helper function that we happen to have at
+> our disposal. I then grepped around a bit and found that we're pretty
+> good at avoiding such peeking at the moment, but that we could do
+> a bit better.
+> 
+> Here's a series to avoid such `lk.tempfile.foo` in favor of
+> `get_lock_file_foo(&lk)`.
+> 
+> [1] https://lore.kernel.org/git/CAN0heSrOKr--GenbowHP+iwkijbg5pCeJLq+wz6NXCXTsfcvGg@mail.gmail.com/
 
-> We had the same discussion with Phillip, who pointed out this previous
-> discussion about this topic:
-> https://lore.kernel.org/git/xmqqblv5kr9u.fsf@gitster-ct.c.googlers.com/
->
-> So, it's probably OK to do that.
+Thanks for being diligent and keeping the code clean.
 
-These days, there exists an optional installation option exists that
-won't even install built-in commands in $GIT_EXEC_PATH, which
-invalidates the assessment made in 2019 in the article you cited
-above, so the code might still be OK, but the old justification no
-longer would apply.
+This series is good-to-go.
 
-In any case, if two people who reviewed a patch found the same thing
-in it fishy, it is an indication that the reason why the apparently
-fishy code is OK needs to be better explained so that future readers
-of the code do not have to be puzzled about the same thing.
-
-Thanks.
-
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
