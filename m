@@ -2,105 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC4DC433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8289BC433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:42:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 534C023158
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:37:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5178723142
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 22:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbhAFWhh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 17:37:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53767 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726684AbhAFWhh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 17:37:37 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD016B42D5;
-        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=kU/qAxGI1Ebm
-        w8MGyqkzqe8s0O4=; b=LMj5puYlGY0PrQdeHRd4lwubaUKbNom7o1xk9oWlpuQm
-        QmH8LQFulzvwcsSblk/Wpj3LfeO9tshBM1VguzL3KpqRZa1gTxXxeeRMU2fJ6ENN
-        CzSW0LxRgxqNTIYzcKUCgeuhX0vgHRNmtDsKhnWFmjGws+QUM0uLMYOavQj13xE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NpMl7O
-        JwEFHdQ4cS7bHw+0G9PdTb22k06KgOEpHEerLN8nw/yReAKSJHD40MINHpzf6yxB
-        eiRMUpJcle/QcjNmnQd9dGiUWKF7+lcnUv8b2kjpuZU1uai4MM5jre/KGedv4Fdo
-        nsd5oREDLXXWONyCvlrvHnuqWdDl2zI/Dbpa0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3A9CB42D4;
-        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 23799B42D3;
-        Wed,  6 Jan 2021 17:36:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
-References: <cover.1609874026.git.martin.agren@gmail.com>
-        <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
-        <xmqq5z4as2j9.fsf@gitster.c.googlers.com>
-Date:   Wed, 06 Jan 2021 14:36:55 -0800
-In-Reply-To: <xmqq5z4as2j9.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 06 Jan 2021 03:55:22 -0800")
-Message-ID: <xmqqim89pu9k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727275AbhAFWmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 17:42:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50445 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726379AbhAFWmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 17:42:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1609972856;
+        bh=YTliJfYa3AsSUsmesimOV5DyGBXoe3v5Mwfwc2AGzik=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=aSzMCA9o4OfOtOYQyDKYxtttr/k5McvedVJqstVkRnMlH6UV6bg+AmEDHKBknkIq1
+         2Mvgv5oEV8jBgdAcXbeE4yjUE7uzLIcC2OkTHGD5GOnhho+O6ZTJHw0eGZqNNRd8GJ
+         GT9A4z4NFJmx86jnQ1frxX04fBawMLjbk+a1PejU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw7V-1kF7EJ2p7r-00iztT; Wed, 06
+ Jan 2021 23:40:56 +0100
+Date:   Wed, 6 Jan 2021 23:40:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Mike McLean <stixmclean@googlemail.com>, git@vger.kernel.org
+Subject: Re: Git Feature Request (Fixdown in interactive rebase)
+In-Reply-To: <7b5ad849-ca6c-a462-fdef-c06f8511d946@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.2101062336350.2213@tvgsbejvaqbjf.bet>
+References: <CAM0jFOeCE-iTAMkiGE6m8bVNjJRn-BUmbUAP2ANrj4FbhuQG=g@mail.gmail.com> <CAM0jFOdCD1uEcHaPB_go7aarapEBKx6M4d35zVOP8h9=MuZEmA@mail.gmail.com> <xmqqczz05b4x.fsf@gitster.c.googlers.com> <CAM0jFOfSE3_TQ7WXiR_G6eHOZnr-0ryv=CniXs4sxs1=JnucUg@mail.gmail.com>
+ <ab835195-0c69-830b-c7cb-71d50b4ce4db@kdbg.org> <xmqq8s9m3kx4.fsf@gitster.c.googlers.com> <7b5ad849-ca6c-a462-fdef-c06f8511d946@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AE5981A6-506F-11EB-8CCA-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7320mDybiCqfM5xSDPOk0b+qsPuV8NSdW6yLSxnzQNAVyW2GaUf
+ jiNx3bZkXceFY8zj6Q2531wr6Hl38OITn5W8Mf/mMk9fRDGzszIrTgwpb2r72+TtXDJM2yj
+ Rhxiq8wZdQ7l0mOSEMLvpxbI4fXxwjaS+gSZ4uKNeXFQW2sv3n3imWalsGCQM7UqYKR9v0g
+ 9H8bU4TfMh/dvfZ4O9EbA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:67eh/1bo1xI=:vYKQI05NsQPdFzmFykuuyx
+ pc/NwsoIJPg2A2FNfZiaf4tx4JLxYHPMHjnyXpJSJbI91RtvXoSdRmqsviAXbn9gRsv7vDY9l
+ 4JWmtrKCMBSn0GdQ/4dMwnsU4wh/uEQmav/8TbTsiBN1zGxfmqVNMnAWVSVz04+IhbMuFcCpp
+ 9FQys25AiqWbi7C+Au4feEInz6UFCkt/OV50jWzbivvS9+9JYC0OM7gwdNn9vm699knje4Cht
+ JF5VeJ6mM5xoPgHjhek4RVKohCTqBiOpkEpnCeSFEkX+jAqeDWoo6nOBcSguMEDayV+n1nt8s
+ CTGJ1wvLs6t87vbwg+oIhGm6I48sNPm0Hqh2D0RTzhuEd+x9RMFVniOf5CtosS4wmmaIzeRQs
+ djtNpEE4p65PxOIPrBK9waT+RfKanJZE0Xo5DOsozE43/6iqSkHBhF0BQwyuj0C7sX2NlZ51z
+ Ggr3QQi0Nd/cMb+hPpjOx9/1rHcVPvBGvTFjg1SLfRRMb+mIedTAFM708P9wGP5uv1bm2Hy/V
+ wAC6xt9iNl6ucv9FVhl789t6U5LtYtVJ3OuBryqlpLMh4AVVtvrizl9qBALmFcPSpdvdoPBtt
+ PpVcNyiVClwYbBXieRYchmTWVARkSeVOgce3sIdk23TMxOaD2l1IyJB30kbArxndxjfjiATSk
+ HA2RpsViQYoJ3BxGWQIhNcTPZXJ04OzuZAkpwd3pFsqalH6ujrT2HxyqbUaMYURidqP5NV1zU
+ vo/3WnOvaUSrOUgk2rJjV+TAyQnDNLFsyirAdaHQ8T/Rs3pQoLvV4EZlYM9+Nh+Lp/QtPb9h+
+ QW7g5Arqo/vfBubP15NnFtnhYc5o0Xh6PiqL1QRx4s/7YxPGTgnDlDsI4xb/XyadOB/wYQ6n1
+ v4vSdWQYL7KGwDt+xWbu8DP6wNMTyAV2OkWo5UqU4=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Derrick Stolee <stolee@gmail.com> writes:
+On Thu, 24 Dec 2020, Johannes Sixt wrote:
+
+> Am 24.12.20 um 23:21 schrieb Junio C Hamano:
+> > I wonder if we deliberately designed how each insn you can write in
+> > the todo list should come up with the authorship data (i.e. ident
+> > and timestamp), or if we are just using the natural consequence of
+> > how the implementation happens to work?  I think it makes sense for
+> > "fixup", as an instruction used to make a small tweak to the bulk of
+> > work you've done some time ago, to use the authorship information of
+> > the original commit that gets fixed up. I don't know offhand what
+> > other insns like "edit", "reword", etc. do, and if there is a room
+> > to improve them.
 >
->> On 1/5/2021 2:23 PM, Martin =C3=85gren wrote:
->>> I made a comment in [1] about how we could avoid peeking into a `stru=
-ct
->>> lock_file` and instead use a helper function that we happen to have a=
-t
->>> our disposal. I then grepped around a bit and found that we're pretty
->>> good at avoiding such peeking at the moment, but that we could do
->>> a bit better.
->>>=20
->>> Here's a series to avoid such `lk.tempfile.foo` in favor of
->>> `get_lock_file_foo(&lk)`.
->>>=20
->>> [1] https://lore.kernel.org/git/CAN0heSrOKr--GenbowHP+iwkijbg5pCeJLq+=
-wz6NXCXTsfcvGg@mail.gmail.com/
->>
->> Thanks for being diligent and keeping the code clean.
->>
->> This series is good-to-go.
->>
->> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
->
-> Thanks, both.
+> For 'squash' it was a deliberate decision to keep authorship of the
+> first commit, see 81ab1cb43a87. Initially, 'edit' changed authorship
+> including the date to the current author and date; that was changed to
+> preserve them, but I cannot find the responsible commit.
 
-I liked what I saw.  The code after these patches got certainly
-clearer.
+Note that a new verb is not even necessary, thanks to the `exec` verb:
+Something like this:
 
-But it was not quite clear what I was *NOT* seeing in these patches.
+	pick <moved-here>
+	squash <use-this-commits-message>
+	exec git commit --amend -C <use-this-commits-message>
 
-IOW, how extensive is the coverage of these patches?  If we renamed
-the .tempfile field to, say, .tmpfile in "struct lock_file" in
-"lockfile.h", for example, would "lockfile.[ch]" be the *only* files
-that need to be adjusted to make the code compile again?  The same
-question for various fields in "struct tempfile".
+As to the implementation of a hypothetical `fixdown`? It would be a bit
+hairy, I think: right now, we rely on the fact that we can find the target
+of every fixup!/squash! in the already-parsed todo list. If we do not find
+it there, the fixup!/squash! simply won't be auto-squashed. The desired
+feature, however, would have to look in the opposite direction. I'd rather
+avoid that complexity.
 
+Ciao,
+Johannes
