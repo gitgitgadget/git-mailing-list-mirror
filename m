@@ -2,115 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C2E3C433E0
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 07:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 977EDC433DB
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:06:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F77823104
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 07:30:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4681423107
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726287AbhAFHal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 02:30:41 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:38126 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725813AbhAFHal (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 02:30:41 -0500
-Received: by mail-ej1-f53.google.com with SMTP id 6so3822662ejz.5
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 23:30:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vo7ntJrSPIKvAluvW3RcrIyFsk4GHXsEImRvHdpK8bA=;
-        b=ETTkqZ6TyM3kGCXgSMAafDvnk0YsMY5QRK2Ii1SCI+wyyyw4u6NECZypYVCGOzOBeC
-         HsubpZ9enfd46EF1bzle4p42rYhS+7+dbtAVwKJkitzud0kdlinkKoYa3Nax+lL75ZQ2
-         GgycOFZAd/EvJstA9zEi4eUjEDc0qqa83GqrsU9ZRGeHl7A9CMt0sssxu++67bk5JHyc
-         3Vymfe50U9VrrHZYmZUJdmrBTeCQa8vQgb2F5vV06SuzFPmqjeexzaYaK2Xh3Gogkx0m
-         L1QHLYckkOd+sgR3VILJkeiu8hhxwejQOMQ2F+yUQg5PRxNsYhmVPTOps2JWvyiysLXV
-         szIQ==
-X-Gm-Message-State: AOAM533Nkb+p0mraLQlL3NWp+j7l9MrF7J7/R40qIzIiYASp0Flt0n12
-        F4sKtQWCuCeF7yv8fx7Ao7S+/fGEElYX3yTdCto=
-X-Google-Smtp-Source: ABdhPJz9b3SCAdYs0rRIF/NTuzG5Z37jxlHtEMjjTu5hsw9waYjtElqcSp1LeImM7HKZDkDT5nlcBOk9E1QR2twr4Qc=
-X-Received: by 2002:a17:906:b287:: with SMTP id q7mr1875705ejz.311.1609918198452;
- Tue, 05 Jan 2021 23:29:58 -0800 (PST)
+        id S1726192AbhAFIGG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 03:06:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54314 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbhAFIGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 03:06:06 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC7789D448;
+        Wed,  6 Jan 2021 03:05:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=LsN63tCqoJe4MqBKim95Yuz4z7U=; b=JbrBUN9i9/S6O+btUgDj
+        CMLhFabRkfTcSiv6szYxgV3Q0Z/ZpMWcOHgaKIqEpO0dbd6BQczF6q8YNFGZsiJt
+        awGjVkEQmI4jGhih0+WptucyxTHvk9x0I3rNjsigLCP23qH8t/bZJF7tJfcNSbn2
+        6UTk5yWwV62qPWUx1WbYnoQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=IV5nzg94mhAyHu0RNPlqPwSpS46/+HEYmv0s5rQD0BUYrA
+        Cqlt1msYKQSCW+9yKasmn4wqb5ltV4GuHvGl29oUE88TgS3cOQ84RSYSQFmBt5cF
+        TpuOFKZipSniYU3pk7q2MHD93RQ1yt84ogjG74BdoyNY8L9qcc+Smj2NByQmo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D32439D447;
+        Wed,  6 Jan 2021 03:05:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4C7819D446;
+        Wed,  6 Jan 2021 03:05:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] for-each-repo: do nothing on empty config
+References: <pull.834.git.1609857770445.gitgitgadget@gmail.com>
+        <CAPig+cQ4B6s7RzGH=1QhSc_2kKy-Mbp9fyK4VoTntdAfCT4d9A@mail.gmail.com>
+        <db7bf751-7541-59b9-a3a0-ec07e28eb9de@gmail.com>
+Date:   Wed, 06 Jan 2021 00:05:22 -0800
+Message-ID: <xmqqa6tmtrr1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com> <20210104162128.95281-4-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210104162128.95281-4-rafaeloliveira.cs@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 6 Jan 2021 02:29:47 -0500
-Message-ID: <CAPig+cRrU-T9ULyoNVtrWxm-5yb5NVSCT3+LvLmA5xJCv4n_9Q@mail.gmail.com>
-Subject: Re: [PATCH 3/7] worktree: teach worktree_lock_reason() to gently
- handle main worktree
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: ED65A426-4FF5-11EB-8E2D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> The main worktree should not be locked and the worktree_lock_reason() API
-> is aware of this fact and avoids running the check code for the main
-> worktree. This checks is done via assert() macro, Therefore the caller
+Derrick Stolee <stolee@gmail.com> writes:
 
-s/Therefore/therefore/
-
-> needs to ensure the function is never called, usually by additional code.
+>> Probably not worth a re-roll, but the above has higher cognitive load than:
+>> 
+>>     if (!value)
+>>         return 0;
+>>
+>> which indicates clearly that the command succeeded, whereas `return
+>> result` makes the reader scan all the code above the conditional to
+>> figure out what values `result` could possibly hold.
 >
-> We can handle that case more gently by just returning false for the main
-> worktree and not bother checking if the "locked" file exists. This will
-> allowed further simplification from the caller as they will not need to
-> ensure the main worktree is never passed to the API.
+> True. Looking at this again, it might be better to just update the
+> loop to be
 >
-> Teach worktree_lock_reason() to be more gently and just return false for
-> the main working tree.
+> 	for (i = 0; values && i < values->nr; i++) {
+>
+> which would run the loop zero times when there are zero results.
 
-The situation is even a bit worse since the main worktree restriction
-isn't even documented. Here's a possible rewrite of the commit message
-which addresses that point too:
+It is misleading, though.  It forces readers to first assume that
+the loop body may update "values" from non-NULL to NULL in some
+condition and hunt for such a code in vain.
 
-    worktree_lock_reason() aborts with an assertion failure when
-    called on the main worktree since locking the main worktree is
-    nonsensical. Not only is this behavior undocumented, thus callers
-    might not even be aware that the call could potentially crash the
-    program, but it also forces clients to be extra careful:
+If some clean-up starts to become needed after the loop, the "if the
+value array is empty, immediately return 0" may have to be rewritten
+to "if empty, jump to the clean-up part after the loop", but until
+then, what Eric gave us would be the easiest to read, I would think.
 
-        if (!is_main_worktree(wt) && worktree_locked_reason(...))
-           ...
+> To me, "nonexistent" or "does not exist" doesn't adequately describe
+> this (hypothetical) situation.
+>
+> Perhaps "fail-subcommand" might be better?
 
-    Since we know that locking makes no sense in the context of the
-    main worktree, we can simply return false for the main worktree,
-    thus making client code less complex by eliminating the need for
-    callers to have inside knowledge about the implementation:
+I wonder if "false" or "exit 1" would fit the bill.  In any case, a
+comment may help, perhaps?
 
-        if (worktree_locked_reason(...))
-            ...
-
-> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -225,9 +225,7 @@ int is_main_worktree(const struct worktree *wt)
->  const char *worktree_lock_reason(struct worktree *wt)
->  {
-> -       assert(!is_main_worktree(wt));
-> -
-> -       if (!wt->lock_reason_valid) {
-> +       if (!is_main_worktree(wt) && !wt->lock_reason_valid) {
->                 struct strbuf path = STRBUF_INIT;
-
-As mentioned in my review of patch [2/7], this would be more idiomatic
-and easier to reason about if the function returns early for the main
-worktree case, thus freeing the reader from having to think about that
-case for the remainder of the code. So:
-
-    if (is_main_worktree(wt))
-        return NULL;
-    if (!wt->lock_reason_valid) {
-        ...
-
-Subjective, and not necessarily worth a re-roll, though.
+	test_expect_success 'do nothing and succeed on empty/missing config' '
+		# if this runs even once, "false" ensures a failure
+		git for-each-repo --config=bogus.config -- false
+	'
