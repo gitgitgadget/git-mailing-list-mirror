@@ -2,245 +2,206 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5400FC433DB
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0524C433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:54:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08FAA23106
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:32:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7FBF42310A
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 08:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726498AbhAFIcl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 03:32:41 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:39909 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726253AbhAFIcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 03:32:41 -0500
-Received: by mail-ed1-f41.google.com with SMTP id c7so3661193edv.6
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 00:32:24 -0800 (PST)
+        id S1726904AbhAFIxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 03:53:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726795AbhAFIxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 03:53:46 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94587C06134C
+        for <git@vger.kernel.org>; Wed,  6 Jan 2021 00:53:05 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id 91so1679996wrj.7
+        for <git@vger.kernel.org>; Wed, 06 Jan 2021 00:53:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=ehXPLhhv+x6ddF3Y/ouw3+URsWiF4qO3xYC2rBimN84=;
+        b=A0RZQdrKOtgo1JPGNIGdG/3/TeA2Kqt8jXjFDYABtuMwDQvFzSM7QHUh2S+Qzgt6e8
+         PfdNQkAqabEwsKZ/OTty8UUGWCFTqJeQsgrL+ITzF1TJcraA/PQjaO1Fo6niZWW1UX8b
+         43GJA5VQfFHtEOO+ZguJC1e/jSga9oiRZH4AsaRXo7JnTBpryaNenPXwxYm8bFaA00Yw
+         1CkbsbSSTdaDniAp2G+UiyQrglAraeQMFOqpxt47I9bSFPRDgzSHg/R2Yr7m9A5Oh6Ts
+         yxNSO3V+gdol3hNzUzF1DKPOavJVm6LNKV9hzrNSwN3UsTagJlJsRNhBm5JKnOFXDzdc
+         S/sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ue7i6cgP1swr/SWFOTg7RKvvS5+oK2JoSvQ+LdDXMkw=;
-        b=eLjA1yAMpUnM/hH/RdSVRHylpW3GnzzNTX8s443WtocNthPbMOuodg203253a7ODFp
-         8WqcF8LO9pS0COHMyzbw6p/OF8RB1mKd7rbE/fawjz2CNENiuk7ygU2O9MGAHuv2pZ2Y
-         fItoP3hTX4EXajVxJZYDZK9HCUj3/42tdZTEYvotYf3itEyU/IlZwyWSVQp7hbtTpEyX
-         DIsp3TXFLkcgfoByfSgXaJ8lNHdV//MsEhvd5oVfy/u3OrCMz0KNXVNL3QvWFr4Afxau
-         ZPjCsQrfYAieBa4esPnxPRjLtwSS7BWQcGgNMZ7JS95Zd8TC5uHnqiDP+Zu2xJuxdprC
-         bujw==
-X-Gm-Message-State: AOAM531WtR1ZWjHNTX7disefyGfBQ/DE59N6F5LeWrsATxzbKhxz3kjy
-        jvqjxn9GRIvg288yR2MsVLYHk1IokDzaHxfoWpw=
-X-Google-Smtp-Source: ABdhPJw6yVYYH3rR8MNtY9l/vvnIUJ61MiKi3MNNfcfIyiBkLgJlVt/iCtqoBpMVgC85m90cy8abhNSkdmpp2CAqn5k=
-X-Received: by 2002:a05:6402:1592:: with SMTP id c18mr3174090edv.181.1609921918253;
- Wed, 06 Jan 2021 00:31:58 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ehXPLhhv+x6ddF3Y/ouw3+URsWiF4qO3xYC2rBimN84=;
+        b=eCRl/+YU+MZ4JCka9zqKsFU2bsVzA1OM9pbgjNADj4WOoWVvWbgSGJ2r9TyLdXqyUX
+         9at/lp/My53yEoaTgugBpajD1A6th9rlx62201nhFEGehU2YD5ILuaff5iH+cfsQFsQp
+         i1jzDZUM2u+0eqkSs1V+aOP3NLFEykRxil4FilTUzm/5BERkEM7xVPzzqRvmZaxWWXZM
+         HtPsIJj3+rkrvJ2GLVnbXEaQuAxgmOZ8O90PBmT/ZQif/DbRLae8hZKiim/+s755JoKA
+         G4LblnCYhapPc7bU5XSyt1hTYtBBKD0bukKRRSe41wL3xlGikxZLLmLgWSB5MHjT0L61
+         /w4Q==
+X-Gm-Message-State: AOAM5308M4vn0368PixH3QTO8R7g9JCnliKCmJc+33qarX+nPT8aizE4
+        be/+5AWEzOZCLb7wSm+paSkB4mVawvo=
+X-Google-Smtp-Source: ABdhPJwN+j+uD8yIb9fg5ylrp6Myi4l75BydsiIvu9+n2GlmVDg593VHynMdTXsQz2SdWMg0xbov3A==
+X-Received: by 2002:a5d:4cca:: with SMTP id c10mr3206586wrt.176.1609923183912;
+        Wed, 06 Jan 2021 00:53:03 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c4sm2472495wrw.72.2021.01.06.00.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Jan 2021 00:53:03 -0800 (PST)
+Message-Id: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
+From:   "=?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 06 Jan 2021 08:53:02 +0000
+Subject: [PATCH] builtin/ls-files.c:add git ls-file --dedup option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com> <20210104162128.95281-5-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210104162128.95281-5-rafaeloliveira.cs@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 6 Jan 2021 03:31:46 -0500
-Message-ID: <CAPig+cRO86CXFPfiX7dj3Qkxv0O6nXXe0gqd+OkaXgHUbi7Vqw@mail.gmail.com>
-Subject: Re: [PATCH 4/7] worktree: teach `list` prunable annotation and verbose
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> The "git worktree list" command shows the absolute path to the worktree,
-> the commit that is checked out, the name of the branch, and a "locked"
-> annotation if the worktree is locked. It is not clear whether a worktree,
-> if any, is prunable.
+From: ZheNing Hu <adlternative@gmail.com>
 
-Maybe this could just say...
+1.When we use git ls-files with both -m -d,
+we would find that repeated path,sometimes
+it is confusing.
+2.When we are performing a branch merge,
+ the default git ls-files will also output
+ multiple repeated file names.
+Therefore, I added the --dedup option to git ls-files.
+1. It can be achieved that only the deleted file name
+is displayed when using -m, -d, and --dedup at the same time.
+2. Add --dedup when merging branches to remove duplicate file
+ names. (unless -s, -u are used)
 
-    ... "locked" annotation if the worktree is locked,
-    however, it does not indicate whether it is prunable.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    builtin/ls-files.c:add git ls-file --dedup option
+    
+    I am reading the source code of git ls-files and learned that git ls
+    -files may have duplicate entries when conflict occurs in a branch merge
+    or when different options are used at the same time. Users may fell
+    confuse when they see these duplicate entries.
+    
+    As Junio C Hamano said ,it have odd behaviour.
+    
+    Therefore, we can provide an additional option to git ls-files to delete
+    those repeated information.
+    
+    This fixes https://github.com/gitgitgadget/git/issues/198
+    
+    Thanks!
 
-> The "prune" command will remove a worktree in case
-> is a prunable candidate unless --dry-run option is specified. This could
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-832%2Fadlternative%2Fls-files-dedup-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-832/adlternative/ls-files-dedup-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/832
 
-s/case is/case it is/
+ builtin/ls-files.c | 43 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
 
-Or better:
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index c8eae899b82..66a7e251a46 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -35,6 +35,7 @@ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
+ static int recurse_submodules;
++static int delete_dup;
+ 
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -301,6 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ {
+ 	int i;
+ 	struct strbuf fullname = STRBUF_INIT;
++	const struct cache_entry *last_stage=NULL;
+ 
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+@@ -315,7 +317,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 	if (show_cached || show_stage) {
+ 		for (i = 0; i < repo->index->cache_nr; i++) {
+ 			const struct cache_entry *ce = repo->index->cache[i];
+-
++			if(show_cached && delete_dup){
++				switch (ce_stage(ce)) {
++				case 0:
++				default:
++					break;
++				case 1:
++				case 2:
++				case 3:
++					if (last_stage &&
++					!strcmp(last_stage->name, ce->name))
++						continue;
++					last_stage=ce;
++				}
++			}
+ 			construct_fullname(&fullname, repo, ce);
+ 
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+@@ -336,7 +351,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 			const struct cache_entry *ce = repo->index->cache[i];
+ 			struct stat st;
+ 			int err;
+-
++			if(delete_dup){
++				switch (ce_stage(ce)) {
++				case 0:
++				default:
++					break;
++				case 1:
++				case 2:
++				case 3:
++					if (last_stage &&
++					!strcmp(last_stage->name, ce->name))
++						continue;
++					last_stage=ce;
++				}
++			}
+ 			construct_fullname(&fullname, repo, ce);
+ 
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+@@ -347,10 +375,14 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 			if (ce_skip_worktree(ce))
+ 				continue;
+ 			err = lstat(fullname.buf, &st);
+-			if (show_deleted && err)
++			if(delete_dup && show_deleted && show_modified && err)
+ 				show_ce(repo, dir, ce, fullname.buf, tag_removed);
+-			if (show_modified && ie_modified(repo->index, ce, &st, 0))
+-				show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			else{
++				if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
++					show_ce(repo, dir, ce, fullname.buf, tag_removed);
++				if (show_modified && ie_modified(repo->index, ce, &st, 0))
++					show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			}
+ 		}
+ 	}
+ 
+@@ -578,6 +610,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			N_("pretend that paths removed since <tree-ish> are still present")),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
++		OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
+ 		OPT_END()
+ 	};
+ 
 
-    ... will remove a worktree if it is prunable unless...
-
-> lead to a worktree being removed without the user realizing before is to
-> late, in case the user forgets to pass --dry-run for instance.
-
-s/before is/before it is/
-s/to/too/
-
-> If the "list" command shows which worktree is prunable, the user could
-> verify before running "git worktree prune" and hopefully prevents the
-> working tree to be removed "accidently" on the worse case scenario.
->
-> Let's teach "git worktree list" to show when a worktree is prunable by
-> appending "prunable" text to its output by default and show a prunable
-> label for the porcelain format followed by the reason, if the avaiable.
-> While at it, let's do the same for the "locked" annotation.
-
-s/avaiable/available/
-
-> Also, the worktree_prune_reason() stores the reason why git is selecting
-> the worktree to be pruned, so let's leverage that and also display this
-> information to the user. However, the reason is human readable text that
-> can take virtually any size which might make harder to extend the "list"
-> command with additional annotations and not fit nicely on the screen.
->
-> In order to address this shortcoming, let's teach "git worktree list" to
-> take a verbose option that will output the prune reason on the next line
-> indented, if the reason is available, otherwise the annotation is kept on
-> the same line. While at it, let's do the same for the "locked"
-> annotation.
-
-This is a lot of changes for one patch to be making, and it's hard for
-a reader to digest all those changes from the commit message. I think
-I counted four distinct changes being made here:
-
-1. extend porcelain to include lock line (with optional reason)
-2. add prunable annotation to normal list output
-3. add prune line (with optional reason) to porcelain output
-4. extend normal list output with --verbose to include reasons
-
-The patch itself is not overly large or complicated, so perhaps
-combining all these changes together is reasonable, although I'm quite
-tempted to ask for them to be separated into at least four patches
-(probably in the order shown above). A benefit of splitting them into
-distinct patches is that you can add targeted documentation and test
-updates to each individual patch rather than saving all the
-documentation and test updates for a single (large) patch at the end
-of the series. This helps reviewers reason about the changes more
-easily since they get to see how each change impacts the documentation
-and tests rather than having to wait for a patch late in the series to
-make all the documentation and test updates, at which point the
-reviewers may have forgotten details of the earlier patches.
-
-(I've come back here after reading and reviewing the patch itself, and
-I'm on the fence as to whether to suggest splitting this into multiple
-patches. The changes in this patch are easy enough to understand and
-digest, so I'm not convinced it makes sense to ask you to do all the
-extra work of splitting it into smaller pieces. On the other hand, it
-might be nice to have each documentation and test update done in the
-patch which makes each particular change. So, I don't have a good
-answer. Use your best judgment and do the amount of work you feel is
-appropriate.)
-
-> The output of "git worktree list" with verbose becomes like so:
->
->     $ git worktree list --verbose
->     /path/to/main             aba123 [main]
->     /path/to/locked           acb124 [branch-a] locked
->     /path/to/locked-reason    acc125 [branch-b]
->         locked: worktree with locked reason
->     /path/to/prunable         acd126 [branch-c] prunable
->     /path/to/prunable-reason  ace127 [branch-d]
->         prunable: gitdir file points to non-existent location
-
-One "weird" aesthetic issue is that if the lock reason contains
-newlines, the subsequent lines of the lock reason are not indented.
-However, this is a very minor point and I don't think this patch
-series should worry about it. We can think about how to address it
-some time in the future if someone ever complains about it.
-
-> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
-> ---
->  builtin/worktree.c | 35 +++++++++++++++++++++++++++++++++--
->  1 file changed, 33 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index eeb3ffaed0..dedd4089e5 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -578,6 +578,20 @@ static void show_worktree_porcelain(struct worktree *wt)
-> +               if (worktree_lock_reason(wt)) {
-> +                       if (*wt->lock_reason)
-> +                               printf("locked %s\n", wt->lock_reason);
-> +                       else
-> +                               printf("locked\n");
-> +               }
-> +
-> +               if (worktree_prune_reason(wt, expire)) {
-> +                       if (*wt->prune_reason)
-> +                               printf("prunable %s\n", wt->prune_reason);
-> +                       else
-> +                               printf("prunable\n");
-> +               }
-
-A couple observations...
-
-As a consumer of `struct worktree`, builtin/worktree.c should not be
-poking at or accessing the structure's private fields `prune_reason`
-and `lock_reason`; instead it should be retrieving those values via
-worktree_prune_reason() and worktree_lock_reason() which are part of
-the public API.
-
-If a worktree is prunable, then worktree_prune_reason() will
-unconditionally return a (non-empty) string; if it is not prunable,
-then it will unconditionally return NULL. This means that the
-`printf("prunable\n")` case is dead-code; it will never be reached.
-This differs from worktree_lock_reason() which can return an empty
-string to indicate a locked worktree for which no reason has been
-specified.
-
-Taking the above observations into account, a reasonable rewrite would be:
-
-    const char *reason;
-
-    reason = worktree_lock_reason(wt);
-    if (reason && *reason)
-        printf("locked %s\n", reason);
-    else if (reason)
-        printf("locked\n");
-
-    reason = worktree_prune_reason(wt, expire);
-    if (reason)
-        printf("prunable %s\n", reason);
-
-> @@ -604,8 +618,19 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
->                         strbuf_addstr(&sb, "(error)");
->         }
->
-> -       if (!is_main_worktree(wt) && worktree_lock_reason(wt))
-> -               strbuf_addstr(&sb, " locked");
-> +       if (worktree_lock_reason(wt)) {
-> +               if (verbose && *wt->lock_reason)
-> +                       strbuf_addf(&sb, "\n\tlocked: %s", wt->lock_reason);
-> +               else
-> +                       strbuf_addstr(&sb, " locked");
-> +       }
-> +
-> +       if (worktree_prune_reason(wt, expire)) {
-> +               if (verbose && *wt->prune_reason)
-> +                       strbuf_addf(&sb, "\n\tprunable: %s", wt->prune_reason);
-> +               else
-> +                       strbuf_addstr(&sb, " prunable");
-> +       }
-
-Same observations here about using public API rather than touching
-private `struct worktree` fields, and about the final `else` case
-being dead code.
-
-> @@ -650,12 +675,18 @@ static int list(int ac, const char **av, const char *prefix)
->                 OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
-> +               OPT__VERBOSE(&verbose, N_("show extended annotations and reasons, if available")),
-> +               OPT_EXPIRY_DATE(0, "expire", &expire,
-> +                               N_("show working trees that is candidate to be pruned older than <time>")),
-
-Perhaps:
-
-    "add 'prunable' annotation to worktrees older than <time>"
-
->                 OPT_END()
->         };
->
-> +       expire = TIME_MAX;
-
-Good, this mirrors how prune() initializes this variable.
+base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
+-- 
+gitgitgadget
