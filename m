@@ -2,78 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 071B0C433E0
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 23:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FAECC433DB
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 23:22:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0E6423333
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 23:15:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EBD2B22D6F
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 23:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbhAFXPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 18:15:18 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63014 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbhAFXPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 18:15:17 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CB6D1112ADB;
-        Wed,  6 Jan 2021 18:14:35 -0500 (EST)
+        id S1727336AbhAFXWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 18:22:00 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60443 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727192AbhAFXV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 18:21:59 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 62981B4829;
+        Wed,  6 Jan 2021 18:21:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DZZlFCxJcf7Mv8070F/Y7qXLrw8=; b=feWZo7
-        s7y//C10exF9uvHgtDub0EHOk0Ke6wJa3nfWHW9dIcZ8R9pOasCJ3qqe5dNXXBjw
-        WXr1d1K1gLUbZcXPtDINblk1znzKH1FhvXCiBncok2xYuSnMAItnmiBANZvONxhq
-        scTxJs9Kh/8Lg3qUn5Z0nkYb/xR5/xOOtVGTc=
+        :content-type:content-transfer-encoding; s=sasl; bh=03UXfETZNlsq
+        zwV/3CAl2N2+X3I=; b=eIBoWBx/ZrQ8+loIlBBzjAM/kgYH63Oc0u5x76WRCWst
+        N7lTL0/YpVVAxXervrdj7wDyULjYwyvGjjqFZHIKRRJpgPi0FS0twKUCZABENXib
+        UrElrPt6IWwiZoi7efb0USXneJNol/Nc5MaOB56oECOQb95HEi5TZx/JDFhPJj4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UVSlUv9HMlA7dwNAQgY9crfh24b+l25a
-        lmaf+4yBOTEfX9DtDA0LF3otA7vkfWWacAFApRQI3FmaEFKBMgWIonS5FUmzllIg
-        1n/9FFuKiEhFpfybhchgQxk0GiyDcbjp/9Voh4iwhr3hC1DA/GmTEsJ1aiom+b64
-        bSkgguU0Nj0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C4248112ADA;
-        Wed,  6 Jan 2021 18:14:35 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LlpGsc
+        NeUlbosWNZx28qsFB0Uz5Do1qv9Qj2qzP3AXNxKSvuaOPegRAzMivb+YHgwJlBOG
+        zebWiAaUkICl0/lZM18KzG6yaZnHJhhKb7RKmfem1mj/jwFE0YkQVMxDddC7dwAE
+        4A313p1ubIDwlB9HxvOsXTT0Mkbv4ugEkku2Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59411B4828;
+        Wed,  6 Jan 2021 18:21:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 17B47112AD4;
-        Wed,  6 Jan 2021 18:14:33 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C9345B4827;
+        Wed,  6 Jan 2021 18:21:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?6Zi/5b6354OI?= <adlternative@gmail.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v3 0/2] builtin/*: update usage format
-References: <pull.822.v2.git.1609933875.gitgitgadget@gmail.com>
-        <pull.822.v3.git.1609944243.gitgitgadget@gmail.com>
-Date:   Wed, 06 Jan 2021 15:14:31 -0800
-In-Reply-To: <pull.822.v3.git.1609944243.gitgitgadget@gmail.com>
- (=?utf-8?B?IumYv+W+t+eDiA==?= via
-        GitGitGadget"'s message of "Wed, 06 Jan 2021 14:44:01 +0000")
-Message-ID: <xmqqa6tlpsiw.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Matthew DeVore <matvore@google.com>,
+        git@matthieu-moy.fr, olyatelezhnaya@gmail.com,
+        samuel.maftoul@gmail.com, Johannes.Schindelin@gmx.de,
+        karthik.188@gmail.com, pclouds@gmail.com, sunshine@sunshineco.com,
+        emilyshaffer@google.com, jrnieder@gmail.com
+Subject: Re: [PATCH 2/5] branch tests: add to --sort tests
+References: <9bd85516f91c3e2fdefdafd51df71f75603e51f6.1560895672.git.matvore@google.com>
+        <20210106100139.14651-3-avarab@gmail.com>
+Date:   Wed, 06 Jan 2021 15:21:16 -0800
+In-Reply-To: <20210106100139.14651-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 6 Jan 2021 11:01:36 +0100")
+Message-ID: <xmqq5z49ps7n.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EF98DE5A-5074-11EB-96C1-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E03DA188-5075-11EB-8B91-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  builtin/am.c                |  4 ++--
->  builtin/blame.c             | 48 ++++++++++++++++++-------------------
->  builtin/commit-graph.c      |  6 ++---
->  builtin/fast-export.c       | 22 ++++++++---------
->  builtin/log.c               |  8 +++----
->  builtin/shortlog.c          | 10 ++++----
->  builtin/submodule--helper.c | 24 +++++++++----------
->  parse-options.h             |  6 ++---
->  8 files changed, 64 insertions(+), 64 deletions(-)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Looks good to me.  Thanks.
+> Further stress the --sort callback in ref-filter.c. The implementation
+> uses certain short-circuiting logic, let's make sure it behaves the
+> same way on e.g. name & version sort. Improves a test added in
+> aedcb7dc75e (branch.c: use 'ref-filter' APIs, 2015-09-23).
+>
+> I don't think all of this output makes sense, but let's test for the
+> behavior as-is, we can fix bugs in it in a later commit.
+
+OK.
+
+I wondered if 'type' and '-type' tests and 'version:refname' and
+'-version:refname' tests, should be separate, so that the latter
+half of the latter pair can expect to have HEAD at the beginning
+with test_expect_failure until it gets fixed.  But "document the
+status quo, and then change the behaviour and demonstrate how the
+new behaviour is superiour with the change in the expectation in the
+patch" is a reasonable approach, too.
+
+Will queue; thanks.
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  t/t3203-branch-output.sh | 51 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 50 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index b945faf4702..f92fb3aab9d 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -210,7 +210,7 @@ EOF
+>  	test_i18ncmp expect actual
+>  '
+> =20
+> -test_expect_success 'git branch `--sort` option' '
+> +test_expect_success 'git branch `--sort=3D[-]objectsize` option' '
+>  	cat >expect <<-\EOF &&
+>  	* (HEAD detached from fromtag)
+>  	  branch-two
+> @@ -218,6 +218,55 @@ test_expect_success 'git branch `--sort` option' '
+>  	  main
+>  	EOF
+>  	git branch --sort=3Dobjectsize >actual &&
+> +	test_i18ncmp expect actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	  branch-one
+> +	  main
+> +	* (HEAD detached from fromtag)
+> +	  branch-two
+> +	EOF
+> +	git branch --sort=3D-objectsize >actual &&
+> +	test_i18ncmp expect actual
+> +'
+> +
+> +test_expect_success 'git branch `--sort=3D[-]type` option' '
+> +	cat >expect <<-\EOF &&
+> +	* (HEAD detached from fromtag)
+> +	  branch-one
+> +	  branch-two
+> +	  main
+> +	EOF
+> +	git branch --sort=3Dtype >actual &&
+> +	test_i18ncmp expect actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	* (HEAD detached from fromtag)
+> +	  branch-one
+> +	  branch-two
+> +	  main
+> +	EOF
+> +	git branch --sort=3D-type >actual &&
+> +	test_i18ncmp expect actual
+> +'
+> +
+> +test_expect_success 'git branch `--sort=3D[-]version:refname` option' =
+'
+> +	cat >expect <<-\EOF &&
+> +	* (HEAD detached from fromtag)
+> +	  branch-one
+> +	  branch-two
+> +	  main
+> +	EOF
+> +	git branch --sort=3Dversion:refname >actual &&
+> +	test_i18ncmp expect actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	  main
+> +	  branch-two
+> +	  branch-one
+> +	* (HEAD detached from fromtag)
+> +	EOF
+> +	git branch --sort=3D-version:refname >actual &&
+>  	test_i18ncmp expect actual
+>  '
