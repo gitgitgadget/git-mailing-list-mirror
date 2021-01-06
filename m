@@ -2,183 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.5 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9051C433E0
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 15:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56CF6C433E0
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 16:05:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 832D523130
-	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 15:59:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 270B72312E
+	for <git@archiver.kernel.org>; Wed,  6 Jan 2021 16:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbhAFP7w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 10:59:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([63.128.21.124]:57303 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725800AbhAFP7w (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 6 Jan 2021 10:59:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1609948705;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=kPgVTlcHNC97WTbhJlTe3n8LiL2Nx10d7aIZ8Tc7Yck=;
-        b=EunFwYwn7Rihk6TbmkpOR9OevZQCB7euAS9i1LC+f8h0lF8YjQtKyQmYkcG+BXDOUTzBcz
-        1ntPKWP9AhYZ9T7BtG8f7nTvKEVLJ0PeJdXsBPabPXdgYwm5dO7h1CqzAfpZvKTZasd64B
-        hzF+9PsHyZZqlWsQ9ZZQrBA73qf0pHI=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-272-l5ADVRhuM7eZzQKiqKsGSg-1; Wed, 06 Jan 2021 10:58:20 -0500
-X-MC-Unique: l5ADVRhuM7eZzQKiqKsGSg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 7584BC740A;
-        Wed,  6 Jan 2021 15:58:19 +0000 (UTC)
-Received: from lacos-laptop-7.usersys.redhat.com (ovpn-113-198.ams2.redhat.com [10.36.113.198])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 74BFB10016DB;
-        Wed,  6 Jan 2021 15:58:18 +0000 (UTC)
-Subject: Re: [RFC PATCH] gitk: Activate --find-copies-harder
-To:     Robert Pollak <robert.pollak@posteo.net>,
-        Paul Mackerras <paulus@ozlabs.org>
-Cc:     git@vger.kernel.org
-References: <b12574f0-3ebc-95c0-9def-555150257e46@posteo.net>
-From:   Laszlo Ersek <lersek@redhat.com>
-Message-ID: <46693c60-98ee-b6c9-df8e-12216622ddf9@redhat.com>
-Date:   Wed, 6 Jan 2021 16:58:17 +0100
+        id S1727289AbhAFQFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 11:05:07 -0500
+Received: from mail.netline.ch ([148.251.143.178]:58752 "EHLO
+        netline-mail3.netline.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727049AbhAFQFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 11:05:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by netline-mail3.netline.ch (Postfix) with ESMTP id E983C2A6045;
+        Wed,  6 Jan 2021 17:04:23 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at netline-mail3.netline.ch
+Received: from netline-mail3.netline.ch ([127.0.0.1])
+        by localhost (netline-mail3.netline.ch [127.0.0.1]) (amavisd-new, port 10024)
+        with LMTP id WI9tSX3wWVJz; Wed,  6 Jan 2021 17:04:22 +0100 (CET)
+Received: from thor (24.99.2.85.dynamic.wline.res.cust.swisscom.ch [85.2.99.24])
+        by netline-mail3.netline.ch (Postfix) with ESMTPSA id BF0552A6042;
+        Wed,  6 Jan 2021 17:04:21 +0100 (CET)
+Received: from [::1]
+        by thor with esmtp (Exim 4.94)
+        (envelope-from <michel@daenzer.net>)
+        id 1kxBIK-002nrr-Q2; Wed, 06 Jan 2021 17:04:20 +0100
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Daniel Stone <daniel@fooishbar.org>
+References: <c22ba034-6d7d-866a-c6fb-d769d117eec4@daenzer.net>
+ <502b710e-6347-5fa7-0461-21a84ae2250d@gmail.com>
+From:   =?UTF-8?Q?Michel_D=c3=a4nzer?= <michel@daenzer.net>
+Subject: Re: Bug report: git rebase ignores different context, resulting in
+ subtle breakage
+Message-ID: <8b4da09f-cc0f-8ea4-1b65-95a7fa9858d0@daenzer.net>
+Date:   Wed, 6 Jan 2021 17:04:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <b12574f0-3ebc-95c0-9def-555150257e46@posteo.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+In-Reply-To: <502b710e-6347-5fa7-0461-21a84ae2250d@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-CA
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/04/21 20:54, Robert Pollak wrote:
-> Naively forward the diff arguments to make --find-copies-harder work.
+On 2021-01-06 4:40 p.m., Phillip Wood wrote:
+> Hi Michel
 > 
-> Signed-off-by: Robert Pollak <robert.pollak@posteo.net>
-> ---
-> Dear Paul Mackerras,
+> Sorry for the slow response, this fell through the Christmas cracks.
 > 
-> This patch is an obviously naive attempt to make gitk observe
-> --find-copies-harder. I am a gitk user with many small projects, so I am
-> currently using this patch to get better diffs.
+> On 14/12/2020 14:37, Michel Dänzer wrote:
+>>
+>> (Originally reported as a GitLab issue: 
+>> https://gitlab.com/gitlab-org/gitlab/-/issues/292754)
+>>
+>>
+>> All output below is from Debian git 2.29.2-1.
+>>
+>>
+>> The following branches of 
+>> https://gitlab.freedesktop.org/daenzer/mesa.git can be used to reproduce:
+>>
+>> gitlab-issue-292754/pre-rebase (pre-rebase state)
+>> gitlab-issue-292754/base (new base)
+>> gitlab-issue-292754/bad-rebase (bad post-rebase state)
+>>
+>>
+>> The pre-rebase commit b9f18d0ddb6b075819bc2c6b9fa36dee483ef443 
+>> contains this (truncated) hunk:
+>>
+>> @@ -480,13 +491,9 @@ sanity:
+>>
+>>     rules:
+>>
+>>       - if: *is-pre-merge
+>>
+>>         when: on_success
+>>
+>> -    - if: *is-forked-branch
+>>
+>> -      when: manual
+>>
+>>       # Other cases default to never
+>>
+>>     script:
+>>
+>>       # ci-fairy check-commits --junit-xml=check-commits.xml
+>>
+>>
+>>
+>> The new base commit f20153536087079f39f1ab9995ac3d36dd3c467f contains 
+>> this hunk:
+>>
+>> @@ -484,10 +484,8 @@ sanity:
+>>
+>>       - .fdo.ci-fairy
+>>
+>>     stage: sanity
+>>
+>>     rules:
+>>
+>> -    - if: *is-pre-merge
+>>
+>> +    - if: *is-forked-branch-or-pre-merge
+>>
+>>         when: on_success
+>>
+>> -    - if: *is-forked-branch
+>>
+>> -      when: manual
+>>
+>>       # Other cases default to never
+>>
+>>     variables:
+>>
+>>       GIT_STRATEGY: none
+>>
+>>
+>>
+>> Both remove the same 2 lines, but the context is different both before 
+>> and after those lines.
+>>
+>> My expectation for this case would be that
+>>
+>>   git rebase gitlab-issue-292754/base gitlab-issue-292754/pre-rebase
+>>
+>> fails with a conflict. However, it succeeds without any indication of 
+>> trouble, resulting in these contents in commit 
+>> 4e549e1ac3354f465d8afe0174902e62143a6ff4:
+>>
+>>     rules:
+>>
+>>
+>>      - if: *is-forked-branch-or-pre-merge
+>>
+>>
+>>         when: on_success
+>>
+>>
+>>       # Other cases default to never
+>>
+>>
+>>     variables:
+>>
+>>
+>>       GIT_STRATEGY: none
+>>
+>>     script:
+>>
+>>
+>>       # ci-fairy check-commits --junit-xml=check-commits.xml
+>>
+>>
+>> I.e. identical to the new base.
 > 
-> With this, gitk displays the copy in the second commit of my test
-> repository [1] as desired:
-> 
-> similarity index 100%
-> copy from a
-> copy to b
-> 
-> 
-> I see the following problems with my patch:
-> 
-> 1) It is totally untested with all the other args that are collected in
-> diffargs, like e.g. "-O<orderfile>", since I didn't need them yet.
+> This looks like the correct merge to me as the changes in the original 
+> commit are already in the new base.
 
-It would be really great if gitk supported both "-O<orderfile>" and
---find-copies-harder!
+Are you referring to the same two lines which have been removed already? 
+Since the context is different, removing those two lines has a different 
+effect than intended.
 
-I can't offer a review, but I very much support the use case.
 
-Thanks,
-Laszlo
+> Rebase has detected that the context lines do not match and used a
+> 3-way merge instead of a simple patch application. This matches the
+> behavior of the merge based rebase backend which is the default in
+> recent versions of git. Git tracks content not changes and so rebasing
+> a branch means cherry-picking each commit onto the rebased version of
+> it's parent, not applying each patch on top of the new base.
 
-> 
-> 2) Even if --find-copies-harder is the only diff argument used, there
-> might be unintended side effects, since the modified procedure 'diffcmd'
-> is called in several places. I did not systematically test all these
-> code paths.
-> 
-> 
-> To deal with 1), I could rename the variable 'vdflags' to
-> 'vdflags_ignored' and continue using 'vdflags' only for
-> --find-copies-harder. Later, other flags could be moved over, after
-> their harmlessness has been proven. Would this be good?
-> 
-> Ad 2), maybe someone with more code knowledge can tell whether this
-> a real risk? Also, would it be preferable to add the new flag(s) only to
-> the arguments of the diffcmd call in 'getblobdiffs'?
-> (as in:
-> diff --git a/gitk b/gitk
-> index 23d9dd1..da6b372 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -8017,7 +8017,7 @@ proc initblobdiffvars {} {
->  proc getblobdiffs {ids} {
->      global blobdifffd diffids env
->      global treediffs
-> -    global diffcontext
-> +    global vdflags diffcontext
->      global ignorespace
->      global worddiff
->      global limitdiffs vfilelimit curview
-> @@ -8031,7 +8031,7 @@ proc getblobdiffs {ids} {
->      if {[package vcompare $git_version "1.6.6"] >= 0} {
->          set submodule "--submodule"
->      }
-> -    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
-> +    set cmd [diffcmd $ids "$vdflags($curview) -p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
->      if {$ignorespace} {
->          append cmd " -w"
->      }
-> )
-> For my test case, this also works.
-> 
-> 
-> I'd be happy to prepare an updated patch incorporating your feedback.
-> 
-> Having this functionality in gitk will hopefully make some people stop
-> crafting their git history for copy detection, like described e.g. in
-> https://devblogs.microsoft.com/oldnewthing/20190919-00/?p=102904 .
-> 
-> I am CCing Laszlo Ersek, because he expressed interest in a similar
-> topic a year ago:
-> 'gitk feature requests: (1) "diff.orderFile" and (2) "--function-context"',
-> https://public-inbox.org/git/d972c1f1-c49a-f644-ab1c-6a3e26c43ee3@redhat.com/
-> .
-> 
-> -- Robert
-> 
-> [1] My minimal test case:
->> git init
->> echo "a file" > a
->> git add a
->> git commit -m "a file"
->> cp a b
->> git add b
->> git commit -m "a copy"
-> 
-> 
->  gitk | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitk b/gitk
-> index 23d9dd1..eb6ba9a 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -7869,7 +7869,7 @@ proc addtocflist {ids} {
->  }
->   proc diffcmd {ids flags} {
-> -    global log_showroot nullid nullid2 git_version
-> +    global log_showroot nullid nullid2 git_version vdflags curview
->       set i [lsearch -exact $ids $nullid]
->      set j [lsearch -exact $ids $nullid2]
-> @@ -7909,7 +7909,7 @@ proc diffcmd {ids flags} {
->          if {$log_showroot} {
->              lappend flags --root
->          }
-> -        set cmd [concat | git diff-tree -r $flags $ids]
-> +        set cmd [concat | git diff-tree -r $vdflags($curview) $flags $ids]
->      }
->      return $cmd
->  }
-> 
+There is a single commit that needs rebasing, and the context in the new 
+base commit is different from what it's based on. To me this seems like 
+an obvious conflict.
 
+
+-- 
+Earthling Michel Dänzer               |               https://redhat.com
+Libre software enthusiast             |             Mesa and X developer
