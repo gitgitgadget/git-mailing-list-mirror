@@ -2,240 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31585C433DB
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 01:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70D89C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 01:38:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D20DC2311E
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 01:09:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31F1922E00
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 01:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725978AbhAGBJu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 20:09:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44400 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbhAGBJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 20:09:49 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96B0C0612EF
-        for <git@vger.kernel.org>; Wed,  6 Jan 2021 17:09:08 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id 91so4031197wrj.7
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 17:09:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=EQj0gGIxK6KIS+yIMG+OieLyHi+Ttxe1sRh7o9XrhrY=;
-        b=CrMeYi0uJU8vwI4X6Ib8A7uCoaNcqyqLs0a405zyWKn10Gb9xRl4s41IzUQGCdwbPZ
-         Drr16eNl+7bD1ARwnC7wK/xy3KHGfT+CXA+NdXNv8rDogNKarWdSaXG5Lz77VZbizSxO
-         yHk2S7NKh0AG1g5EpScG1fb9gBPgiyojRkkTMrfywLsBDA1tbbneMKWVF3a/8dXFIgIF
-         F8Ov+G6Nj8HobdWvbMcn3Afnk+4O+SnijjMDmU+luvjwW8jbHPLAlDI/mKB2q5dx8Z/A
-         RwT0byCHY1MN/hYqmMdaVoJ1wM9HoQRGa4MouyHRN+yTKuBP7oV7q1BbEeB7ciQMwOoG
-         v8GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EQj0gGIxK6KIS+yIMG+OieLyHi+Ttxe1sRh7o9XrhrY=;
-        b=aH/NdWnpLo3PYBn9NksXreAub45NEc9+2fsClUVHVHp57zmcPIelL3A3/wrmm3TL05
-         icwCUkCPm5ijmcAin5TmrlUuGoeeYylNZMj+cQ2HMd1B/D6RlD3GX5W1RSP89oAJod2f
-         AWh7Lv7QsQPN4/8slALXxm+/38uoQ+M3Uo9K+4ssXN+JdmDjFX/ubCjWA3WK3xRk/dqO
-         36c8J0z0gQvdY1H4lNOpXe5D87MtPB1sPMpPsAkbxYQaRQ2PGTxaxdpr1DWcduiTVW4X
-         ie57lTlSBecUeWTO72L2m33Jpfgz1hElrfrp9MOkiyhJo1xLDbtNUSYC8/DY8cK8o0gD
-         yhHQ==
-X-Gm-Message-State: AOAM532TTl5CCUZ6eAfwyXkIm1VHobqOYSFcT6dx8vPupN0ent+QFAkz
-        eZno8vGKorLBmiVEx/IBUe/h7uAwuAI=
-X-Google-Smtp-Source: ABdhPJwQXVLNtZVRmGyY4eiZbcXpSySm2xJ0VBUydEOmCvVrsid3bpJ+vQ74/jm1jjB5yLOiYTYLyQ==
-X-Received: by 2002:a5d:6a05:: with SMTP id m5mr6449086wru.96.1609981747444;
-        Wed, 06 Jan 2021 17:09:07 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v1sm4996297wmj.31.2021.01.06.17.09.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Jan 2021 17:09:06 -0800 (PST)
-Message-Id: <pull.825.v3.git.1609981745668.gitgitgadget@gmail.com>
-In-Reply-To: <pull.825.v2.git.1609184505071.gitgitgadget@gmail.com>
-References: <pull.825.v2.git.1609184505071.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 01:09:05 +0000
-Subject: [PATCH v3] mergetool--lib: fix '--tool-help' to correctly show
- available tools
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726303AbhAGBh7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 20:37:59 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54058 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbhAGBh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 20:37:59 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D60AFA41E7;
+        Wed,  6 Jan 2021 20:37:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bl0B9zoTg5zd6Mclx4Z3fBrhaaM=; b=rlOLiJ
+        hiWX+ml+8uXk//kFMXmuvH6Aa7FzTwIpYTd2I0bXr07XJcGsHzVblR/wAB5BqVNU
+        y1RtaGe3+aa51ATFY+RXt9Sv2DSCUXtwhbtQfFgoW0x5BFGQhV8zkDvzqXqNZ7qb
+        Jrmm+vvRGTAHVz8KgvqpNTxIi/qR2wLy8o7A8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Mjo2c4XRCRZ+7ngHttxf35ZjdJEZ6D06
+        n+MMF5z7nJX/1gI7DQjKw/kJMEOFLTf2Pcy3Wuub9ReqsPmfjep+a01bpKkXpsgi
+        pTG1iq0nKZoSeZDSFbaX3fR1lcPom9EExcLrDC/+W91AT0JIsYZTHfSc5sylju0a
+        uHCVL0FeKjk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC99CA41E2;
+        Wed,  6 Jan 2021 20:37:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 565EFA41DD;
+        Wed,  6 Jan 2021 20:37:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH] revision: trace topo-walk statistics
+References: <pull.828.git.1609302714183.gitgitgadget@gmail.com>
+Date:   Wed, 06 Jan 2021 17:37:15 -0800
+In-Reply-To: <pull.828.git.1609302714183.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Wed, 30 Dec 2020 04:31:53
+        +0000")
+Message-ID: <xmqqh7nto7ck.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        pudinha <rogi@skylittlesystem.org>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DFB30E02-5088-11EB-AE30-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Commit 83bbf9b92e (mergetool--lib: improve support for vimdiff-style tool
-variants, 2020-07-29) introduced a regression in the output of `git mergetool
---tool-help` and `git difftool --tool-help` [1].
+> diff --git a/revision.c b/revision.c
+> index 9dff845bed6..1bb590ece78 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -3308,6 +3308,26 @@ struct topo_walk_info {
+>  	struct author_date_slab author_date;
+>  };
+>  
+> +static int topo_walk_atexit_registered;
+> +static unsigned int count_explore_walked;
+> +static unsigned int count_indegree_walked;
+> +static unsigned int count_topo_walked;
 
-In function 'show_tool_names' in git-mergetool--lib.sh, we loop over the
-supported mergetools and their variants and accumulate them in the variable
-'variants', separating them with a literal '\n'.
+The revision walk machinery is designed to be callable more than
+once during the lifetime of a process.  These make readers wonder
+if they should be defined in "struct rev_info" to allow stats
+collected per traversal.
 
-The code then uses 'echo $variants' to turn these '\n' into newlines, but this
-behaviour is not portable, it just happens to work in some shells, like
-dash(1)'s 'echo' builtin.
-
-For shells in which 'echo' does not turn '\n' into newlines, the end
-result is that the only tools that are shown are the existing variants
-(except the last variant alphabetically), since the variants are
-separated by actual newlines in '$variants' because of the several
-'echo' calls in mergetools/{bc,vimdiff}::list_tool_variants.
-
-Fix this bug by embedding an actual line feed into `variants` in
-show_tool_names(). While at it, replace `sort | uniq` by `sort -u`.
-
-To prevent future regressions, add a simple test that checks that a few
-known tools are correctly shown (let's avoid counting the total number
-of tools to lessen the maintenance burden when new tools are added or if
-'--tool-help' learns additional logic, like hiding tools depending on
-the current platform).
-
-[1] https://lore.kernel.org/git/CADtb9DyozjgAsdFYL8fFBEWmq7iz4=prZYVUdH9W-J5CKVS4OA@mail.gmail.com/
-
-Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Based-on-patch-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    Fix regression in 'git {diff,merge}tool --tool-help'
-    
-    Changes since v1:
-    
-     * Changed commit authorship (v1 sent with wrong identity).
-    
-    v1: I went with Johannes' suggestion finally because upon further
-    inspection, René's patch for some reason (I did not debug further)
-    caused to code to never reach 'any_shown=yes' in show_tool_help,
-    therefore changing the output of the command.
-    
-    I guess it's too late for inclusion in 2.30...
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-825%2Fphil-blain%2Fmergetool-tool-help-fix-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-825/phil-blain/mergetool-tool-help-fix-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/825
-
-Range-diff vs v2:
-
- 1:  2b9dce31fd0 ! 1:  f66421939ec mergetool--lib: fix '--tool-help' to correctly show available tools
-     @@ Commit message
-          behaviour is not portable, it just happens to work in some shells, like
-          dash(1)'s 'echo' builtin.
-      
-     -    For shells in which 'echo' does not turn '\n' into newlines, the end result is
-     -    that the only tools that are shown are those that are found and have variants,
-     -    since the variants are separated by actual newlines in '$variants' because of
-     -    the several 'echo' calls in mergetools/{bc,vimdiff}::list_tool_variants.
-     +    For shells in which 'echo' does not turn '\n' into newlines, the end
-     +    result is that the only tools that are shown are the existing variants
-     +    (except the last variant alphabetically), since the variants are
-     +    separated by actual newlines in '$variants' because of the several
-     +    'echo' calls in mergetools/{bc,vimdiff}::list_tool_variants.
-      
-          Fix this bug by embedding an actual line feed into `variants` in
-          show_tool_names(). While at it, replace `sort | uniq` by `sort -u`.
-      
-     -    To prevent future regressions, add a simple test that counts the number
-     -    of tools shown by 'git mergetool --tool-help', irrespective of their
-     -    installed status, by making use of the fact that mergetools are listed
-     -    by 'git mergetool --tool-help' on lines starting with tabs. Prefix the
-     -    `git config` commands used at the beginning of the test to remove the
-     -    fake tools used by the previous test with 'test_might_fail' so that the
-     -    test can be run independantly of the previous test without failing.
-     +    To prevent future regressions, add a simple test that checks that a few
-     +    known tools are correctly shown (let's avoid counting the total number
-     +    of tools to lessen the maintenance burden when new tools are added or if
-     +    '--tool-help' learns additional logic, like hiding tools depending on
-     +    the current platform).
-      
-          [1] https://lore.kernel.org/git/CADtb9DyozjgAsdFYL8fFBEWmq7iz4=prZYVUdH9W-J5CKVS4OA@mail.gmail.com/
-      
-     @@ t/t7610-mergetool.sh: test_expect_success 'mergetool -Oorder-file is honored' '
-       	test_cmp expect actual
-       '
-       
-     -+test_expect_success 'mergetool --tool-help shows all recognized tools' '
-     -+	# Remove fake tools added in previous tests
-     -+	test_might_fail git config --unset merge.tool &&
-     -+	test_might_fail git config --remove-section mergetool.mytool &&
-     -+	test_might_fail git config --remove-section mergetool.mybase &&
-     -+	git mergetool --tool-help >output &&
-     -+	grep "$(printf "\t")" output >mergetools &&
-     -+	test_line_count = 30 mergetools
-     ++test_expect_success 'mergetool --tool-help shows recognized tools' '
-     ++	# Check a few known tools are correctly shown
-     ++	git mergetool --tool-help >mergetools &&
-     ++	grep vimdiff mergetools &&
-     ++	grep vimdiff3 mergetools &&
-     ++	grep gvimdiff2 mergetools &&
-     ++	grep araxis mergetools &&
-     ++	grep xxdiff mergetools &&
-     ++	grep meld mergetools
-      +'
-      +
-       test_done
-
-
- git-mergetool--lib.sh |  6 ++++--
- t/t7610-mergetool.sh  | 11 +++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 7225abd8112..78f3647ed97 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -46,9 +46,11 @@ show_tool_names () {
- 		while read scriptname
- 		do
- 			setup_tool "$scriptname" 2>/dev/null
--			variants="$variants$(list_tool_variants)\n"
-+			# We need an actual line feed here
-+			variants="$variants
-+$(list_tool_variants)"
- 		done
--		variants="$(echo "$variants" | sort | uniq)"
-+		variants="$(echo "$variants" | sort -u)"
- 
- 		for toolname in $variants
- 		do
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 70afdd06fa7..6ac75b5d4c0 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -828,4 +828,15 @@ test_expect_success 'mergetool -Oorder-file is honored' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'mergetool --tool-help shows recognized tools' '
-+	# Check a few known tools are correctly shown
-+	git mergetool --tool-help >mergetools &&
-+	grep vimdiff mergetools &&
-+	grep vimdiff3 mergetools &&
-+	grep gvimdiff2 mergetools &&
-+	grep araxis mergetools &&
-+	grep xxdiff mergetools &&
-+	grep meld mergetools
-+'
-+
- test_done
-
-base-commit: 4a0de43f4923993377dbbc42cfc0a1054b6c5ccf
--- 
-gitgitgadget
