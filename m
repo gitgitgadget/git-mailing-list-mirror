@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED646C433E9
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D8A0C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6F9823444
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DAAF23444
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728131AbhAGUC1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51914 "EHLO
+        id S1728144AbhAGUC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:02:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727903AbhAGUC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 15:02:26 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B548BC061285
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:40 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d26so6792430wrb.12
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:40 -0800 (PST)
+        with ESMTP id S1727903AbhAGUC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 15:02:28 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C76C0612A4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:47 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id q75so6581185wme.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7SNw9eu+RPlhHL8eL3KhfrVAuFokhSKjmDIaKN5ygSU=;
-        b=PnmUtrZ7W67oKK9aEmou2nLoZuNXc6Eu2XC85R9QeUHI9f6vg/PtlBNaMsGIyKlFZY
-         Uahl5v8BaLxLCbddinTQi2uT+tSmjoxgu3I2q3ei8aixkDylqTEf+S38fpvZ1n48B5C6
-         3CWCAmTljwqDLf+wA7uZRGie9LMKAybMYEjlaBJ0keoifZuZvktxL4r2KfVFnMjB4vUk
-         9SQtR3Kubx2eTEDw73/Ua2BLEfEe8n4YE2zxc+bH4U61JCs/B2zzX8Y0q0srVvIv8S2g
-         SyFkW4fk5QlwReei7M+DlfFpW8wQi6Gl8cF28zsZ5Y2NuuI903Fv250or+RTFQGVuTfW
-         8TKg==
+        bh=nAuK0icYeCv6YS0QrluSPaIZD6FjfdByI7t/kR1s2e0=;
+        b=O7RL340E+h2QThQPBG0Him3tp0CXHTktL3+aB5WoKL6UKf2l2m4MFEhdhY9t2wpEQY
+         PrpOHs/iiuvqJAXtKpfcEA3tEuDi4BplIyXvbzVBclu0rn4kkwhmsxo6lVK5DmIbPdKS
+         cXwdLwlv/5ljVk43gYRCWD7yIJPuFqMTl7yWtQbMXA1lxzIwW4X8I/HVbK6QSdyJaN6A
+         ZSLBJyGkzIZIacJSBcUME82jntLsd0GSD1Zw2uFrlag4tDrb3LHJ+FPN46dVC4T8QawY
+         vnKUV7U1C+oPrjOtbhi0xRzL8+YRXXPz+mIxfV6RLjL49961WyZJBWzfFrjGLp/U8eb3
+         0q2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7SNw9eu+RPlhHL8eL3KhfrVAuFokhSKjmDIaKN5ygSU=;
-        b=WTLwLkc9JD3nLEXrsqZT8lBKrl2WO8DFWwV4CslWhKCB0/zzujfQybwxYLaTXRHOMa
-         JP9h6Xd8Q6X27teawRw7BdIgHkaR4r0CfGJAbEiakKagW4CDC/LKF2QUac52IE0uLv5d
-         lGo43+XkaipJAu5Bgxf92wm8RtZG74dS0Rf84foVc5Ls7wgijdFGcVJ+hqAptXyXSDRZ
-         ImJiSck4bmmkXsIF5/rEY5nrpDtHPhZT5hKEcNlDoxqIP8Of0eB4kskHbPAP+7IC+3b7
-         UlV8RZVZi9UoYSRISRsKSDxQRJ7t6pmOCQGxsJbyyYDPgVnhftBmWYT/y7Nd67v1iXCY
-         iu8w==
-X-Gm-Message-State: AOAM531aHlo87tXwu8x+25GWrA1GP+W+0dYCjQaRMETm2cUiam/Z2vTE
-        z+hq/2GJXHv3C9BbzH7kB0Sh3SByHeQ=
-X-Google-Smtp-Source: ABdhPJwc5FBX90jkVwJYgAwVtutuFl6P32uhxQ/iCq23HCr4p83MYw5Db//ojxkm0spnpD+T1LswNg==
-X-Received: by 2002:adf:fd0c:: with SMTP id e12mr269906wrr.61.1610049699351;
-        Thu, 07 Jan 2021 12:01:39 -0800 (PST)
+        bh=nAuK0icYeCv6YS0QrluSPaIZD6FjfdByI7t/kR1s2e0=;
+        b=sV33vO22Drb5fQHmGO/4BQvK4dvfbit8Vv7w9dHpw5BVuHDgo3QAsSGCUOX3Q+fzAB
+         5YV5RlWiFPX7j6qu/CmiAuoDbQM1/lf+hWusje1qWU89X3BhOAnezTXGuw5t/Kvu12QQ
+         W3K7YAR+z/QBCgyOB+hzjuvD71XoEVwN23w6EysqlWApP6lWHxKwvrjpa85e1F6pRFLt
+         fK1BU93M51E4Ml8DC39Gd8rCimK/iNjOAyY4O7AqqbMzZr5Ea1zMLWI8WBUumGNiTdYY
+         eBOLPQA8HfLMWLUuMeJhlxdSQ3smHnyPFo906U5B9mIKK0mfnv8LTT9svA36mfTaAz5K
+         jWPQ==
+X-Gm-Message-State: AOAM5335xUf/zJsBNqwLwfhy7U1paEVCrMlEkgWL2aenobJiWbzwzWyQ
+        z2GuZnxjBJFOiPndjeYAy/DqKk3sUDQ=
+X-Google-Smtp-Source: ABdhPJyYKD/+jaNC8xy7ZX+7RIEZuqBjEWMKcO8owRteh5k1hVc/7r1kfh0XnrlwS5h4cWA9KzB4XQ==
+X-Received: by 2002:a1c:3c09:: with SMTP id j9mr166579wma.180.1610049705962;
+        Thu, 07 Jan 2021 12:01:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b127sm10674216wmc.45.2021.01.07.12.01.38
+        by smtp.gmail.com with ESMTPSA id s13sm10181608wra.53.2021.01.07.12.01.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:38 -0800 (PST)
-Message-Id: <2ffb93c37ac7e9ca8697a43c41d618d987db4f47.1610049687.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:45 -0800 (PST)
+Message-Id: <786dc8f0c449958174a4cf5e98704d36f3ae4076.1610049687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:20 +0000
-Subject: [PATCH 11/18] merge-ort: implement apply_dir_rename() and
- check_dir_renamed()
+Date:   Thu, 07 Jan 2021 20:01:27 +0000
+Subject: [PATCH 18/18] DO NOT SUBMIT: directory rename stuff for
+ redo_after_renames
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,69 +77,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Both of these are copied from merge-recursive.c, with just minor tweaks
-due to using strmap API and not having a non_unique_new_dir field.
+I believe the
+   ci->dirmask & sidemask
+stuff was leftovers from before I added dirs_removed.  I think it's
+dead, useless code; just need to check.
+
+Also, the
+   !mi || mi->clean
+portions should only be triggerable once I do the redo_after_renames
+stuff.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 37 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 35 insertions(+), 2 deletions(-)
+ merge-ort.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index e436418d0d2..8ee9c685c7b 100644
+index 55a835f8b97..1eb3a2e0fbb 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -736,7 +736,29 @@ struct collision_info {
- static char *apply_dir_rename(struct strmap_entry *rename_info,
- 			      const char *old_path)
- {
--	die("Not yet implemented!");
-+	struct strbuf new_path = STRBUF_INIT;
-+	const char *old_dir = rename_info->key;
-+	const char *new_dir = rename_info->value;
-+	int oldlen, newlen, new_dir_len;
-+
-+	oldlen = strlen(old_dir);
-+	if (*new_dir == '\0')
-+		/*
-+		 * If someone renamed/merged a subdirectory into the root
-+		 * directory (e.g. 'some/subdir' -> ''), then we want to
-+		 * avoid returning
-+		 *     '' + '/filename'
-+		 * as the rename; we need to make old_path + oldlen advance
-+		 * past the '/' character.
-+		 */
-+		oldlen++;
-+	new_dir_len = strlen(new_dir);
-+	newlen = new_dir_len + (strlen(old_path) - oldlen) + 1;
-+	strbuf_grow(&new_path, newlen);
-+	strbuf_add(&new_path, new_dir, new_dir_len);
-+	strbuf_addstr(&new_path, &old_path[oldlen]);
-+
-+	return strbuf_detach(&new_path, NULL);
+@@ -1031,6 +1031,48 @@ static void get_provisional_directory_renames(struct merge_options *opt,
+ 	}
  }
  
- static void get_renamed_dir_portion(const char *old_path, const char *new_path,
-@@ -981,7 +1003,18 @@ static void handle_directory_level_conflicts(struct merge_options *opt)
- static struct strmap_entry *check_dir_renamed(const char *path,
- 					      struct strmap *dir_renames)
- {
--	die("Not yet implemented!");
-+	char *temp = xstrdup(path);
-+	char *end;
-+	struct strmap_entry *e = NULL;
++static void remove_invalid_dir_renames(struct merge_options *opt,
++				       struct strmap *side_dir_renames,
++				       unsigned side_mask)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
++	struct string_list removable = STRING_LIST_INIT_NODUP;
++	int i;
 +
-+	while ((end = strrchr(temp, '/'))) {
-+		*end = '\0';
-+		e = strmap_get_entry(dir_renames, temp);
-+		if (e)
-+			break;
++	strmap_for_each_entry(side_dir_renames, &iter, entry) {
++		struct merged_info *mi;
++		struct conflict_info *ci;
++
++		mi = strmap_get(&opt->priv->paths, entry->key);
++		INITIALIZE_CI(ci, mi);
++		if (!mi ||
++		    mi->clean ||
++		    (ci->dirmask & side_mask)) {
++			/*
++			 * !mi: This rename came from a directory that was
++			 * unchanged on the other side of history, and NULL on
++			 * our side.  No directory rename detection needed.
++			 *
++			 * mi->clean: Due to redo_after_renames, on the second
++			 * run, collect_merge_info_callback was able to
++			 * cleanly resolve the trivial directory merge without
++			 * recursing.  As such, we know we don't need
++			 * directory rename detection for it.
++			 *
++			 * ci->dirmask & side_mask: this directory "rename"
++			 * isn't valid because the source directory name still
++			 * exists on the destination side.
++			 */
++			string_list_append(&removable, entry->key);
++		}
 +	}
-+	free(temp);
-+	return e;
++
++	for (i=0; i<removable.nr; ++i)
++		strmap_remove(side_dir_renames, removable.items[i].string, 0);
++	string_list_clear(&removable, 0);
++}
++
+ static void handle_directory_level_conflicts(struct merge_options *opt)
+ {
+ 	struct hashmap_iter iter;
+@@ -1050,6 +1092,9 @@ static void handle_directory_level_conflicts(struct merge_options *opt)
+ 		strmap_remove(side2_dir_renames, duplicated.items[i].string, 0);
+ 	}
+ 	string_list_clear(&duplicated, 0);
++
++	remove_invalid_dir_renames(opt, side1_dir_renames, (1 << MERGE_SIDE1));
++	remove_invalid_dir_renames(opt, side2_dir_renames, (1 << MERGE_SIDE2));
  }
  
- static void compute_collisions(struct strmap *collisions,
+ static struct strmap_entry *check_dir_renamed(const char *path,
 -- 
 gitgitgadget
-
