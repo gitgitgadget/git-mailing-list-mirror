@@ -2,92 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33907C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 08:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8523AC433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:28:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F14AE23125
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 08:20:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59A8F2312E
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbhAGIUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 03:20:35 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57600 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726231AbhAGIUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 03:20:34 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89547A6355;
-        Thu,  7 Jan 2021 03:19:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9Z7hYT237ICE
-        3xwavnnQSrQQzwA=; b=fJxhmEqmI4BgG4mPjS6QWW2kvM1ig+N+q/1qlK+MUKwa
-        nGtpPNdmihxuNIaCiqHpE9nRo2Eva735nhp1jyAtkiGvsAgG2QfOYtXzF8WtIdfQ
-        TQ0zaRKeISSAgpzTBGuNqGXGUO+kUddc9R3uayvYgoKCw2K+MuY3o9WV3lP2iM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xifMz+
-        YgJhlR7mal6yTc2wispK4WNTKRI7cc9Bbks9HCoFagbUjYJsSQcnNoBQOz+xbsph
-        PwEkNqlK7WzDNEjb76w4wVpVBUAVuMByNxOdUp4/mVXZV2vRU7DsrOYvXWBLsB91
-        3Pr7Ex+InJDY5tPdXmOkwRI5JJNX685De4waM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81E9CA6354;
-        Thu,  7 Jan 2021 03:19:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FFA2A6351;
-        Thu,  7 Jan 2021 03:19:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
-References: <cover.1609874026.git.martin.agren@gmail.com>
-        <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
-        <xmqq5z4as2j9.fsf@gitster.c.googlers.com>
-        <xmqqim89pu9k.fsf@gitster.c.googlers.com>
-        <8ae92e79-ef13-3faf-2fc2-d4b107e73c36@gmail.com>
-        <CAN0heSqdphJWgG6gLM4a8mrDLh6qGUVq5w2FYAr7g8uePrcd2w@mail.gmail.com>
-Date:   Thu, 07 Jan 2021 00:19:51 -0800
-In-Reply-To: <CAN0heSqdphJWgG6gLM4a8mrDLh6qGUVq5w2FYAr7g8uePrcd2w@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 7 Jan 2021 08:55:32
- +0100")
-Message-ID: <xmqqft3dma54.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727048AbhAGJ2E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 04:28:04 -0500
+Received: from out02.mta.xmission.com ([166.70.13.232]:41000 "EHLO
+        out02.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726110AbhAGJ2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 04:28:02 -0500
+Received: from in01.mta.xmission.com ([166.70.13.51])
+        by out02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1kxRZf-008jXw-He; Thu, 07 Jan 2021 02:27:19 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.87)
+        (envelope-from <seth@eseth.com>)
+        id 1kxRZf-0006SM-3I; Thu, 07 Jan 2021 02:27:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id BE400500C7E;
+        Thu,  7 Jan 2021 02:27:18 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id u4c36Fp0-z03; Thu,  7 Jan 2021 02:27:18 -0700 (MST)
+Received: from ellen (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 878D8500A2D;
+        Thu,  7 Jan 2021 02:27:18 -0700 (MST)
+Date:   Thu, 7 Jan 2021 02:27:16 -0700
+From:   Seth House <seth@eseth.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Message-ID: <20210107092716.GA548935@ellen>
+References: <20201228045427.1166911-1-seth@eseth.com>
+ <20201228192919.1195211-1-seth@eseth.com>
+ <20201228192919.1195211-6-seth@eseth.com>
+ <xmqqpn2ivcc1.fsf@gitster.c.googlers.com>
+ <20210107035806.GA530261@ellen>
+ <xmqqy2h5meum.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1D9F4C3E-50C1-11EB-B389-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqy2h5meum.fsf@gitster.c.googlers.com>
+X-XM-SPF: eid=1kxRZf-0006SM-3I;;;mid=<20210107092716.GA548935@ellen>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: Re: [PATCH v9 5/5] mergetool: add automerge_enabled tool-specific
+ override function
+X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+On Wed, Jan 06, 2021 at 10:38:09PM -0800, Junio C Hamano wrote:
+> By the way, do you have any idea why we see test breakages only on
+> macos when this topic is merged to 'seen'?
 
-> To be perfectly honest, I just grepped around. I just tried your
-> suggestion and it seems like I really did catch everyone who looks at
-> `->tempfile` or `.tempfile`.
+Thanks for those links. I have an OSX machine nearby and will
+investigate tomorrow.
 
-That's wonderful ;-)
+Related: are the Windows tests affected by this patch? I wanted to check
+for myself but I've been struggling with getting Git-for-Windows
+installed in a VM.
 
-> I could add a remark in the commit message of the last patch along the
-> lines of "After this commit, renaming the `tempfile` field only trigger=
-s
-> compilation errors in lockfile.[ch] and this one instance that we're
-> intentionally leaving here.".
-
-It would be a nice addition to the log message to help readers to
-feel confident about the conversion.  It is OK if you want to add
-one, and certainly a good trick to have in your toolbox for your
-next conversion, but it may not be worth rerolling only to update
-the log message with such a remark.
-
-Thanks.
