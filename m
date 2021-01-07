@@ -7,123 +7,122 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 073E9C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 05:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F9EAC433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 06:11:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C96BD225AC
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 05:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C27F230F9
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 06:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726456AbhAGFKM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 00:10:12 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:35243 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725929AbhAGFKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 00:10:11 -0500
-Received: by mail-ej1-f53.google.com with SMTP id q22so8127515eja.2
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 21:09:55 -0800 (PST)
+        id S1726414AbhAGGLQ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 7 Jan 2021 01:11:16 -0500
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:38126 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbhAGGLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 01:11:15 -0500
+Received: by mail-ej1-f52.google.com with SMTP id 6so8203449ejz.5
+        for <git@vger.kernel.org>; Wed, 06 Jan 2021 22:10:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hacK8OzUBjI5DO7s2Hxsd1anqPe+fUw40HcXNejrPQc=;
-        b=Wl3FWgF7y0YfFiWr323eJREUzWjN6PWk1GbFO7MEndnsC5GBOz+yXvVeicXEZEXLKs
-         98YP7WXVeOSYYPvdEOtMyRjxDW+o8blRH9TH6+uEJ8lUqNxvBvrsz2kfuW8bW6JmYSVJ
-         ZwV46OWxPmivtpz+ggQ16VOyZXf/LoHoulAjMtA5Set2zZGm28uCPh2hngnjkH6pg71b
-         DGRANi7pOyAICqodm0byRjpLwVLKcii8UNnVSyivSTQbs6nJN5AxLJMWQLPbgYFwcanb
-         Ud4VRVXYJEVwqSIQ/jrJ/RpKwywaAaK0KLxof2TyIoaI+WK5IwIA5fad0uXpDzajTyiP
-         OPhw==
-X-Gm-Message-State: AOAM533WhwINCJG5Zf9WourW356ZDRb7PK4rMpNzzCGyXY1VWksGfjfK
-        LtCozXx6szOBoiCckiJDC2+eOjFsZk4ul2RsThk=
-X-Google-Smtp-Source: ABdhPJzbcR7E51Tj4XIhzQ94DUOM6T1fqlozo6A1Dy47vuJRcK/z5r3ZM5TIPNHJOC2A1oY6fr8KSckGcCCAp2WUcos=
-X-Received: by 2002:a17:906:d0c1:: with SMTP id bq1mr4961180ejb.202.1609996169477;
- Wed, 06 Jan 2021 21:09:29 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QUEc5Yv/wNB8hShyrB898FYGasVnMv8+rGeHgECcmgk=;
+        b=lcH6inPLULAtCbPPfFjR3+uB1y5lyy3GIWnrsW1Nf7oWDoX/ySj4x3e95Az+sa/QD3
+         rUYVbKNymaUJ1ysudPdaHJ/DmSb9p9SKvlq3/qZenNclp5OG8sQ0JBdE2mJncpII5jcw
+         VNmXitW/GH9ANkYwGJrwcnwN2A48s4mY/WS7+6A7DVuE6lABjldsmAXQEt8j9Rrch4au
+         qhxbTeVYViW4jS7QXehgCPQDridhx8CqFGPR7qMr4jEOaONG1pHc0Fs9v6d26RxCuYN5
+         yytezzYJxw0NqM+XPotn0aCMBcwW8qMOhw70AVB0Exygw/Wfs9CGsnSPaRM2Ixr2Yevr
+         RaZA==
+X-Gm-Message-State: AOAM5337nZE57pcHVY5BCKT0UYizXsI0+78jqV7V0nY5H5EXcSOoXcgC
+        aam5dHxLmHXms323TdNGmDurv3Ic3cxISFvzavk8s6qjVTAuTw==
+X-Google-Smtp-Source: ABdhPJxMAO1bpIVF5eaHE2OHZ+zcjldA8qENM0YZ8S3WDIaOz4OOEMVSJTBb/jOsrxYlxsaQuwb70gHlQI5lUZ7N3UE=
+X-Received: by 2002:a17:906:d8dc:: with SMTP id re28mr5277723ejb.168.1609999833395;
+ Wed, 06 Jan 2021 22:10:33 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
- <pull.830.v2.git.1609821783.gitgitgadget@gmail.com> <2b171a142b36b114d5ff526073fe3fd9517a4d32.1609821783.git.gitgitgadget@gmail.com>
-In-Reply-To: <2b171a142b36b114d5ff526073fe3fd9517a4d32.1609821783.git.gitgitgadget@gmail.com>
+References: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
+In-Reply-To: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 7 Jan 2021 00:09:18 -0500
-Message-ID: <CAPig+cTfHsd7WMvcX1_433WVOG+y4FceUACBx_4UfnjJTgVY6g@mail.gmail.com>
-Subject: Re: [PATCH v2 14/14] update-index: remove static globals from callbacks
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Date:   Thu, 7 Jan 2021 01:10:22 -0500
+Message-ID: <CAPig+cTY0qGkYZ_OjvFUhopoioCPzaWEk=AX1mNgcOsF60hwAg@mail.gmail.com>
+Subject: Re: [PATCH] builtin/ls-files.c:add git ls-file --dedup option
+To:     =?UTF-8?B?6Zi/5b6354OIIHZpYSBHaXRHaXRHYWRnZXQ=?= 
+        <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 4, 2021 at 11:43 PM Derrick Stolee via GitGitGadget
+On Wed, Jan 6, 2021 at 3:54 AM 阿德烈 via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-> In order to remove index compatibility macros cleanly, we relied upon
-> static globals 'repo' and 'istate' to be pointers to the_repository and
-> the_index, respectively. We remove these static globals inside the
-> option parsing callbacks, which are the final uses in update-index.
->
-> The callbacks cannot change their method signature, so we must use the
-> value member of 'struct option', assigned in the array of option macros.
-> There are several callback methods that require at least one of 'repo'
-> and 'istate', but they use a variety of different data types for the
-> callback value.
->
-> Unify these callback methods to use a consistent 'struct callback_data'
-> that contains 'repo' and 'istate', ready to use. This takes the place of
-> the previous 'struct refresh_params' which served only to group the
-> 'flags' and 'has_errors' ints. We also collect other one-off settings,
-> but only those that require access to the index or repository in their
-> operation.
+> [...]
+> Therefore, I added the --dedup option to git ls-files.
+> 1. It can be achieved that only the deleted file name
+> is displayed when using -m, -d, and --dedup at the same time.
+> 2. Add --dedup when merging branches to remove duplicate file
+>  names. (unless -s, -u are used)
 
-Makes sense. The patch itself is necessarily a bit noisy, but there's
-nothing particularly complicated in that noise.
+I'm just pointing out a few minor style issues below; I'm not properly
+reviewing the patch...
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 > ---
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> @@ -784,19 +784,21 @@ static int do_reupdate(struct repository *repo,
-> -struct refresh_params {
-> +struct callback_data {
-> +       struct repository *repo;
-> +       struct index_state *istate;
-> +
->         unsigned int flags;
-> -       int *has_errors;
-> +       unsigned int has_errors;
-> +       unsigned nul_term_line;
-> +       unsigned read_from_stdin;
->  };
+>  builtin/ls-files.c | 43 ++++++++++++++++++++++++++++++++++++++-----
+> 1 file changed, 38 insertions(+), 5 deletions(-)
 
-The only mildly unexpected thing here is that `has_errors` is now a
-simple value rather than a pointer to a value, but you handle that
-easily enough by always accessing `has_error` directly from the
-structure, even within the function in which `has_error` used to be a
-local variable. Fine.
+This change adds a new command-line option, so the documentation
+(Documentation/git-ls-files.txt) should be updated and at least one
+new test should be added (in one of the t/t30??-ls-files-*.sh scripts
+probably).
 
-> @@ -818,7 +820,7 @@ static int really_refresh_callback(const struct option *opt,
->  static int chmod_callback(const struct option *opt,
-> -                               const char *arg, int unset)
-> +                         const char *arg, int unset)
-> @@ -829,11 +831,12 @@ static int chmod_callback(const struct option *opt,
->  static int resolve_undo_clear_callback(const struct option *opt,
-> -                               const char *arg, int unset)
-> +                                      const char *arg, int unset)
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> @@ -301,6 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+>         struct strbuf fullname = STRBUF_INIT;
+> +       const struct cache_entry *last_stage=NULL;
 
-A couple drive-by indentation fixes. Okay.
+Add spaces around `=` similar to the preceding line:
 
-> @@ -1098,8 +1103,13 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
-> -       istate = repo->index;
-> +       cd.repo = repo;
-> +       cd.istate = istate = repo->index;
+    const struct cache_entry *last_stage = NULL;
 
-Will there ever be a case in which `cd.istate` will be different from
-`cd.repo->index`? If not, then we could get by with having only
-`cd.repo`; callers requiring access to `istate` can fetch it from
-`cd.repo`. If, on the other hand, `cd.istate` can be different from
-`cd.repo->istate` -- or if that might become a possibility in the
-future -- then having `cd.istate` makes sense. Not a big deal, though.
-Just generally curious about it.
+> @@ -315,7 +317,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+>                 for (i = 0; i < repo->index->cache_nr; i++) {
+>                         const struct cache_entry *ce = repo->index->cache[i];
+> -
+
+This patch deletes the blank line but this project usually prefers to
+have a blank line after declarations.
+
+> +                       if(show_cached && delete_dup){
+
+Add space after `if` and before `{`:
+
+    if (show_cached && delete_dup) {
+
+> @@ -336,7 +351,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+> +                       if(delete_dup){
+
+Style: if (delete_dup) {
+
+> @@ -347,10 +375,14 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+> -                       if (show_deleted && err)
+> +                       if(delete_dup && show_deleted && show_modified && err)
+
+Style: if (delete_dup && ...
+
+> -                       if (show_modified && ie_modified(repo->index, ce, &st, 0))
+> -                               show_ce(repo, dir, ce, fullname.buf, tag_modified);
+> +                       else{
+
+Style: else {
+
+> +                               if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
+
+Add space before `/* comment */`.
+Add space in "...it, so...".
+
+> @@ -578,6 +610,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+> +               OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
+
+The short help makes it seem like it's modifying the index. Perhaps instead:
+
+    N_("suppress duplicate entries")
