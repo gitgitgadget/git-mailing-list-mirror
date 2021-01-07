@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6329C433DB
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E51A1C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B95623444
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2F9123444
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728104AbhAGUCY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51890 "EHLO
+        id S1727875AbhAGUCX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:02:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727903AbhAGUCS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 15:02:18 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10258C0612FE
+        with ESMTP id S1728030AbhAGUCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 15:02:19 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F07ADC0612FF
         for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:38 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id e25so6594490wme.0
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:37 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id a12so6805112wrv.8
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HFooLETrm6cM084s80tGP8huAtkbI3KV88B3jfO86ys=;
-        b=muBC3zn1iuIYNWCMRX49W5yvQYEd4Mr914GzMofcwCL2Rav6oQYlaA2E9/JUr8AyGk
-         +ihE7wMHRUJuyGZa8StuzASdvA9QNz6QqsiD9MFASGBaisXKHUoondFSDbnys3Owkigd
-         7eoumoYcYaNCBZGTIG3/AzSDxDr4x6JIqQQskRyUO7dIwyHFBDa5O4GLP6X5bbHsxmRf
-         WLl48h82oR7J9VO0bMj9S4V7eD5cC2G/OkPEeU2ZWxKGwZPg0ZqCr5eBdsOGfJVi2D0A
-         /Cie4TpzACyjvCOnMmxVk0r2p5OYRu5zc9+UaiQq+0GpaKr4FNnQpXqawkfXZltv4njP
-         Oiww==
+        bh=IM9iUgvIbWyIXf1PCkOZI86FcaiMwFm5yW5FJzWa8Ao=;
+        b=JRA7yteWnlVxyuDgI2O8qXhqt/APGkbbObax/5e0egnfokICAOBJudvyGV70c+BhO6
+         6agFVq+m0e/dewsI4kIwK+O6kvyjhBWfAaluiX7e4RvuTvS7s8XT0yAbXPjsDqYKP4Xg
+         2yr1TeY5Gsrvuk8brjtc/NWLs5geMFcuO3HtG1lku26Ysx/9iJRCV9WYj/pvZzZS1wV+
+         FLwKkvQPxa8zU2321A3K5rWxZ/G1qu3Jv80QZTPkA+A5CRFWkKJIOGRHwJYEAi2SJG8n
+         Eb0jQkQtmsAz3tIP6J3L+1LnCsC7XHDGH0oDBP8nSV2u7L9v0843xuae4O5kCOll9kBo
+         k/KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HFooLETrm6cM084s80tGP8huAtkbI3KV88B3jfO86ys=;
-        b=Z9n9X0KnS9oKnzgbZhqOjU3UQX7R3O+8HTJI83BYEmgVOVbumSQfvU0PYZ4+heK3VK
-         Jg7AtiI7gdpMflp/4DANgqpHkdiLW3RWJ2I6wEeBwt159X8Aclqo1LxBg9XejdaRWaCY
-         +uZc74SxLcCe4TgnbN20VNz2IwZICNyfghh8hRRzrT6ck9MidmnWYmLvA/ugE4o7fNaG
-         nlVGvvZbGmdiH+bA8GMltqCvol5uZ65I7zW1iu0Z8NTuRFUE1Io8E/St3P9q9pMFcfgb
-         O9hB95JqNugeXl4/0lt0tsGn7VvDkYI1M8UsQ/OUELySkhmXsrdqpNd7AC01A4VQBopm
-         j7mA==
-X-Gm-Message-State: AOAM531UMazx5+BsZZLX0XKj3idlGdH2j4WsUArAca5CI9nTAByM+5Q2
-        KMRmgE3fx9EGpOSv9pETMHIkMDoYnoA=
-X-Google-Smtp-Source: ABdhPJyhjGaOuqkyM7/BH1v/J+tMrqriDO+Iz2E6ujnR7I+gNmfuzPpBH0rWYDIveS8291DL+cJ9sg==
-X-Received: by 2002:a05:600c:2903:: with SMTP id i3mr158416wmd.41.1610049696587;
-        Thu, 07 Jan 2021 12:01:36 -0800 (PST)
+        bh=IM9iUgvIbWyIXf1PCkOZI86FcaiMwFm5yW5FJzWa8Ao=;
+        b=nv0zZHo1Laapl2SOZClWWNTb1DC0fW5B0hq94uJs3rh9Nxee0luRTFmCwcfWzm98W3
+         mY1fzrSop3Mna18U4AsTfgMtJpZ9l4lR1DNbPan8gMONDwTGHyEbMEnlqmAyDTtAu/d/
+         uLttOll4YV9yuftTDx6Qk9ZZQYsPZZN2uC7UoR2S3cs+iZyu25jkFa2nXb5Ru3aTRHH+
+         cb5hYk27JKMpbB7FpCoTO2TVtIeq/pj+zm6mF0FDkcRdLUTWWdrqTcxJiWgbnmMsh5Th
+         +hO0LxUWhpWC8YIXXJG10dCAcczOuYvy0qzs4MayMnkhFQ/P3+ND/2ilTgb76cQ26uTC
+         wFTA==
+X-Gm-Message-State: AOAM5324vJp92xJnHwDqiU1wEttd0QOh9HY39e+nJ8Guow7CLSgy5Gf+
+        8yjkhMkVDvQdkdR7jAiQ/i6pFi0wSds=
+X-Google-Smtp-Source: ABdhPJwD1OCVKT1roLbHFzj0Uxr9BeEDwOsbHK0PDl00kSQH5HE2bIuPtqzK/El8Cgzk6aKU0of+lg==
+X-Received: by 2002:a5d:4f8a:: with SMTP id d10mr252000wru.219.1610049697548;
+        Thu, 07 Jan 2021 12:01:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t188sm8812140wmf.9.2021.01.07.12.01.35
+        by smtp.gmail.com with ESMTPSA id z3sm10610777wrn.59.2021.01.07.12.01.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:36 -0800 (PST)
-Message-Id: <f6efa4350d621cd955965e13329f15f4d1b91bb4.1610049687.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:37 -0800 (PST)
+Message-Id: <bdd9d6cd70274477050e87a3f0a0aa18496f3a22.1610049687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:17 +0000
-Subject: [PATCH 08/18] merge-ort: implement handle_directory_level_conflicts()
+Date:   Thu, 07 Jan 2021 20:01:18 +0000
+Subject: [PATCH 09/18] merge-ort: modify collect_renames() for directory
+ rename handling
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,61 +77,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This is modelled on the version of handle_directory_level_conflicts()
-from merge-recursive.c, but is massively simplified due to the following
-factors:
-  * strmap API provides simplifications over using direct hashamp
-  * we have a dirs_removed field in struct rename_info that we have an
-    easy way to populate from collect_merge_info(); this was already
-    used in compute_rename_counts() and thus we do not need to check
-    for condition #2.
-  * The removal of condition #2 by handling it earlier in the code also
-    obviates the need to check for condition #3 -- if both sides renamed
-    a directory, meaning that the directory no longer exists on either
-    side, then neither side could have added any new files to that
-    directory, and thus there are no files whose locations we need to
-    move due to such a directory rename.
-
-In fact, the same logic that makes condition #3 irrelevant means
-condition #1 is also irrelevant so we could drop this function.
-However, it is cheap to check if both sides rename the same directory,
-and doing so can save future computation.  So, simply remove any
-directories that both sides renamed from the list of directory renames.
+collect_renames() is similar to merge-recursive.c's get_renames(), but
+lacks the directory rename handling found in the latter.  Port that code
+structure over to merge-ort.  This introduces three new
+die-not-yet-implemented functions that will be defined in future
+commits.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ merge-ort.c | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 74 insertions(+), 4 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index a8fcc026031..feeb838231a 100644
+index feeb838231a..f7ecd76c479 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -941,7 +941,23 @@ static void get_provisional_directory_renames(struct merge_options *opt,
+@@ -721,6 +721,11 @@ static int handle_content_merge(struct merge_options *opt,
  
- static void handle_directory_level_conflicts(struct merge_options *opt)
+ /*** Function Grouping: functions related to directory rename detection ***/
+ 
++struct collision_info {
++	struct string_list source_files;
++	unsigned reported_already:1;
++};
++
+ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+ 				    char **old_dir, char **new_dir)
  {
--	die("Not yet implemented!");
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+	struct string_list duplicated = STRING_LIST_INIT_NODUP;
-+	struct strmap *side1_dir_renames = &opt->priv->renames.dir_renames[1];
-+	struct strmap *side2_dir_renames = &opt->priv->renames.dir_renames[2];
-+	int i;
-+
-+	strmap_for_each_entry(side1_dir_renames, &iter, entry) {
-+		if (strmap_contains(side2_dir_renames, entry->key))
-+			string_list_append(&duplicated, entry->key);
-+	}
-+
-+	for (i=0; i<duplicated.nr; ++i) {
-+		strmap_remove(side1_dir_renames, duplicated.items[i].string, 0);
-+		strmap_remove(side2_dir_renames, duplicated.items[i].string, 0);
-+	}
-+	string_list_clear(&duplicated, 0);
+@@ -960,6 +965,31 @@ static void handle_directory_level_conflicts(struct merge_options *opt)
+ 	string_list_clear(&duplicated, 0);
  }
  
++static void compute_collisions(struct strmap *collisions,
++			       struct strmap *dir_renames,
++			       struct diff_queue_struct *pairs)
++{
++	die("Not yet implemented.");
++}
++
++static char *check_for_directory_rename(struct merge_options *opt,
++					const char *path,
++					unsigned side_index,
++					struct strmap *dir_renames,
++					struct strmap *dir_rename_exclusions,
++					struct strmap *collisions,
++					int *clean_merge)
++{
++	die("Not yet implemented.");
++}
++
++static void apply_directory_rename_modifications(struct merge_options *opt,
++						 struct diff_filepair *pair,
++						 char *new_path)
++{
++	die("Not yet implemented.");
++}
++
  /*** Function Grouping: functions related to regular rename detection ***/
+ 
+ static int process_renames(struct merge_options *opt,
+@@ -1285,22 +1315,44 @@ static void detect_regular_renames(struct merge_options *opt,
+  */
+ static int collect_renames(struct merge_options *opt,
+ 			   struct diff_queue_struct *result,
+-			   unsigned side_index)
++			   unsigned side_index,
++			   struct strmap *dir_renames_for_side,
++			   struct strmap *rename_exclusions)
+ {
+ 	int i, clean = 1;
++	struct strmap collisions;
+ 	struct diff_queue_struct *side_pairs;
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
+ 	struct rename_info *renames = &opt->priv->renames;
+ 
+ 	side_pairs = &renames->pairs[side_index];
++	compute_collisions(&collisions, dir_renames_for_side, side_pairs);
+ 
+ 	for (i = 0; i < side_pairs->nr; ++i) {
+ 		struct diff_filepair *p = side_pairs->queue[i];
++		char *new_path; /* non-NULL only with directory renames */
+ 
+-		if (p->status != 'R') {
++		if (p->status != 'A' && p->status != 'R') {
+ 			diff_free_filepair(p);
+ 			continue;
+ 		}
+ 
++		new_path = check_for_directory_rename(opt, p->two->path,
++						      side_index,
++						      dir_renames_for_side,
++						      rename_exclusions,
++						      &collisions,
++						      &clean);
++
++		if (p->status != 'R' && !new_path) {
++			diff_free_filepair(p);
++			continue;
++		}
++
++		if (new_path)
++			apply_directory_rename_modifications(opt, p, new_path);
++
+ 		/*
+ 		 * p->score comes back from diffcore_rename_extended() with
+ 		 * the similarity of the renamed file.  The similarity is
+@@ -1315,6 +1367,20 @@ static int collect_renames(struct merge_options *opt,
+ 		result->queue[result->nr++] = p;
+ 	}
+ 
++	/* Free each value in the collisions map */
++	strmap_for_each_entry(&collisions, &iter, entry) {
++		struct collision_info *info = entry->value;
++		string_list_clear(&info->source_files, 0);
++	}
++	/*
++	 * In compute_collisions(), we set collisions.strdup_strings to 0
++	 * so that we wouldn't have to make another copy of the new_path
++	 * allocated by apply_dir_rename().  But now that we've used them
++	 * and have no other references to these strings, it is time to
++	 * deallocate them.
++	 */
++	free_strmap_strings(&collisions);
++	strmap_clear(&collisions, 1);
+ 	return clean;
+ }
+ 
+@@ -1346,8 +1412,12 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 	ALLOC_GROW(combined.queue,
+ 		   renames->pairs[1].nr + renames->pairs[2].nr,
+ 		   combined.alloc);
+-	clean &= collect_renames(opt, &combined, MERGE_SIDE1);
+-	clean &= collect_renames(opt, &combined, MERGE_SIDE2);
++	clean &= collect_renames(opt, &combined, MERGE_SIDE1,
++				 &renames->dir_renames[2],
++				 &renames->dir_renames[1]);
++	clean &= collect_renames(opt, &combined, MERGE_SIDE2,
++				 &renames->dir_renames[1],
++				 &renames->dir_renames[2]);
+ 	QSORT(combined.queue, combined.nr, compare_pairs);
+ 
+ 	clean &= process_renames(opt, &combined);
 -- 
 gitgitgadget
 
