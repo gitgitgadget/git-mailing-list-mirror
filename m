@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DA86C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB26C433E6
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 592CB233EA
+	by mail.kernel.org (Postfix) with ESMTP id 9EA96233EE
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727263AbhAGUCm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        id S1725835AbhAGUCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:02:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726805AbhAGUCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 15:02:41 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942A0C0612A2
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:44 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id a6so6119038wmc.2
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:44 -0800 (PST)
+        with ESMTP id S1726805AbhAGUCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 15:02:49 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 805A3C0612F5
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:46 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id w5so6791523wrm.11
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=x+DF9E4DRBiUqWwG/Jbo7vmizhmBZ9RLlQ3C2U2KsZ8=;
-        b=B2wpXdsItMJkalfd8XfJWwcVWq1IiMNwh4S8taP6mShe1+wCq/B19vNBgNn3+ZNVLd
-         7m4EKvX45R3sRchfs8Bh2oxnJ4lGSpdB84/UOSfX7BWI3kzv7+nxK388F9zkcCWYfZvr
-         Xq3x9+VCbnpfrtTITCX+p6ifcAYDlqQ6LyNhrfXnInZx4u0wOlwQPe35wZaz2BxM+/8N
-         sOT7yQS2s0qXTKAx/4CKJbX1XnBz8B3SFSFWue+0rZkw/Q7Lvy6F4HXI8jHICaMdIVMp
-         epJSOOHfD9oAPIACFuR1QAvXutj4SnFAtPqnOu10ovX69gS0YRoAH7Tv/T2v7EkTDcN1
-         I5TQ==
+        bh=gO75Y2ITWHlP9keipCaly8dIgYl7zS22kQ7bUpxDDyE=;
+        b=dPGFxvgaWi9iD2ards8gb7YZWc75e109esj98jNPdkjPdzlbYw7X8YcXfM/QB09qdG
+         R/fjStVN40dQoD+SSArDehQNLnleRPkHlTkhmIUTUW8B2bYyRoQW7Pi8xa1+kufKBwcf
+         LCgMm4pF8Ao77IEvazIMnlIXwcuxkORB1RvXRBbmuoKqR4vIy1DkKnT6H1rWCaxma6vn
+         shFDwxpIikavg8dU1SxBPazS4dSZJnaaDN+oWdL1fdhDkP87AAev3NKgdriFdlSe/aBb
+         Hu3adXMWQZp7ZAq5cLI2eHJjB6CuCxN5e/D1JyPz9wBbqLFxh1Kqjj3EnE/Rwv+nsdWP
+         P0Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=x+DF9E4DRBiUqWwG/Jbo7vmizhmBZ9RLlQ3C2U2KsZ8=;
-        b=USnx/biW19bj9A4Uy/6G09IFwbnPErjkDFvrFxdLKRYPmGBf10jLeqFMK64JN7F0Cc
-         4wREbRfCoWbflYfB2kmFtydGrsPoImRrHrT7FK8GOz9loZ1YdneTlPiVkqclmnXayxZq
-         JnA7rSsF7mE7EDa3wOoLSv6uKUpmTKuLw4Z3DoCKanCCJUUzSd8/lcsVTlClHMXdXZIl
-         8xwmiMYWI2TOn7uLnN+lR/taUu7lRS966CIEg5qujn1liFXAI+1LrC/AU628BCfyDHlq
-         xfS2SIcxaUMYabBMjizd9qFg7kFGs/kVUb67modktob8dAtpLaXO9lTH00L0S3Gm3n/F
-         X3oA==
-X-Gm-Message-State: AOAM530KlWL4wkL7mgrYc8BOKxycVeFVBweRfTHd31KkR9DXH/J6eNf7
-        9UTwQQmK0Al38EnXTzjlZzMp6eU6dSY=
-X-Google-Smtp-Source: ABdhPJwaWny1UaJYiGKGQlk2J/bFHi1nO6/XG1w6PkUxcnvLWJ3nUl50oLQ8DRA3e0xSSqPmREMJOQ==
-X-Received: by 2002:a1c:b657:: with SMTP id g84mr141167wmf.181.1610049703036;
-        Thu, 07 Jan 2021 12:01:43 -0800 (PST)
+        bh=gO75Y2ITWHlP9keipCaly8dIgYl7zS22kQ7bUpxDDyE=;
+        b=aCAuclasVBnLycUIw+D9aGF+5vgO1xA5dboyBY2i7aXkyGrxbqQ1t99R5x6QRfVZ8L
+         DlX2AN1RMMyG75kKqSEkyUBeqFiX62PXjFk/NrlwwoXyZ+9Tc2U9NR5a5tQhVmMH+LLn
+         qoHJcBK2rDGADyNsO61dgesDoUll3IFaYd4lZWr6fDNhLMTClryZHGRuy4WxbUM7gdka
+         p9V9djw1zFezsweoHTGDovXM+5D9Co07+wAJ8owmA8LEdBNApS8pm1xby0VkplK5tokd
+         vFTuU6DSx22R5bieSAS0i96gqnsPvUFzC8JysQGs7Qbgxm1b5DI+Bj9yVpzVMr3Xsbd2
+         AQBA==
+X-Gm-Message-State: AOAM530rLZQYj16RU0zBFHpjPaboHQAQFqbeWRSx8weK4XaZyz1hrPVf
+        Cib/gW+/lHWQKjx6shUPI4dblSDKavc=
+X-Google-Smtp-Source: ABdhPJxSBU/NyK0eKROWxu+KNKVy664dph3nDiRMJoG9Uw5pAHSUyT2qZ8CxbWJoKeeL8X/QmBWc7A==
+X-Received: by 2002:a5d:54cc:: with SMTP id x12mr302626wrv.132.1610049704942;
+        Thu, 07 Jan 2021 12:01:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n16sm9814164wrj.26.2021.01.07.12.01.42
+        by smtp.gmail.com with ESMTPSA id l8sm10578903wrb.73.2021.01.07.12.01.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:42 -0800 (PST)
-Message-Id: <d74417e86c54ea03f5a7802a7e4fd2bc3a22f935.1610049687.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:44 -0800 (PST)
+Message-Id: <551878bd84da895e0899eba620553f6efe60e100.1610049687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:24 +0000
-Subject: [PATCH 15/18] merge-ort: implement
- apply_directory_rename_modifications()
+Date:   Thu, 07 Jan 2021 20:01:26 +0000
+Subject: [PATCH 17/18] merge-ort: fix a directory rename detection bug
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,212 +76,286 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This function roughly follows the same outline as the function of the
-same name from merge-recursive.c, but the code diverges in multiple
-ways due to some special considerations:
-  * merge-ort's version needs to update opt->priv->paths with any new
-    paths (and opt->priv->paths points to struct conflict_infos which
-    track quite a bit of metadata for each path); merge-recursive's
-    version would directly update the index
-  * merge-ort requires that opt->priv->paths has any leading directories
-    of any relevant files also be included in the set of paths.  And
-    due to pointer equality requirements on merged_info.directory_name,
-    we have to be careful how we compute and insert these.
-  * due to the above requirements on opt->priv->paths, merge-ort's
-    version starts with a long comment to explain all the special
-    considerations that need to be handled
-  * merge-ort can use the full data stored in opt->priv->paths to avoid
-    making expensive get_tree_entry() calls to regather the necessary
-    data.
-  * due to messages being deferred automatically in merge-ort, this is
-    the best place to handle conflict messages whereas in
-    merge-recursive.c they are deferred manually so that processing of
-    entries does all the printing
+As noted in commit 902c521a35 ("t6423: more involved directory rename
+test", 2020-10-15), when we have a case where
+
+  * dir/subdir/ has several files
+  * almost all files in dir/subdir/ are renamed to folder/subdir/
+  * one of the files in dir/subdir/ is renamed to folder/subdir/newsubdir/
+  * the other side of history (that doesn't do the renames) adds a
+    new file to dir/subdir/
+
+Then for the majority of the file renames, the directory rename of
+   dir/subdir/ -> folder/subdir/
+is actually not represented that way but as
+   dir/ -> folder/
+We also had one rename that was represented as
+   dir/subdir/ -> folder/subdir/newsubdir/
+
+Now, since there's a new file in dir/subdir/, where does it go?  Well,
+there's only one rule for dir/subdir/, so the code previously noted that
+this rule had the "majority" of the one "relevant" rename and thus
+erroneously used it to place the file in folder/subdir/newsubdir/.  We
+really want the heavy weight associated with dir/ -> folder/ to also be
+treated as dir/subdir/ -> folder/subdir/, so that we correctly place the
+file in folder/subdir/.
+
+Add a bunch of logic to make sure that we use all relevant renamings in
+directory rename detection.
+
+Note that testcase 12f of t6423 still fails after this, but it gets
+further than merge-recursive does.  There are some performance related
+bits in that testcase (the region_enter messages) that do not yet
+succeed, but the rest of the testcase works after this patch.
+Subsequent patch series will fix up the performance side.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 168 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 167 insertions(+), 1 deletion(-)
+ merge-ort.c | 198 +++++++++++++++++++++-------------------------------
+ 1 file changed, 81 insertions(+), 117 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 19850ffc0ab..ea6a08e23e2 100644
+index 9e4ebd9c4d6..55a835f8b97 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1224,7 +1224,173 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
- 						 struct diff_filepair *pair,
- 						 char *new_path)
- {
--	die("Not yet implemented.");
-+	/*
-+	 * The basic idea is to get the conflict_info from opt->priv->paths
-+	 * at old path, and insert it into new_path; basically just this:
-+	 *     ci = strmap_get(&opt->priv->paths, old_path);
-+	 *     strmap_remove(&opt->priv->paths, old_path, 0);
-+	 *     strmap_put(&opt->priv->paths, new_path, ci);
-+	 * However, there are some factors complicating this:
-+	 *     - opt->priv->paths may already have an entry at new_path
-+	 *     - Each ci tracks its containing directory, so we need to
-+	 *       update that
-+	 *     - If another ci has the same containing directory, then
-+	 *       the two char*'s MUST point to the same location.  See the
-+	 *       comment in struct merged_info.  strcmp equality is not
-+	 *       enough; we need pointer equality.
-+	 *     - opt->priv->paths must hold the parent directories of any
-+	 *       entries that are added.  So, if this directory rename
-+	 *       causes entirely new directories, we must recursively add
-+	 *       parent directories.
-+	 *     - For each parent directory added to opt->priv->paths, we
-+	 *       also need to get its parent directory stored in its
-+	 *       conflict_info->merged.directory_name with all the same
-+	 *       requirements about pointer equality.
-+	 */
-+	struct string_list dirs_to_insert = STRING_LIST_INIT_NODUP;
-+	struct conflict_info *ci, *new_ci;
-+	struct strmap_entry *entry;
-+	const char *branch_with_new_path, *branch_with_dir_rename;
-+	const char *old_path = pair->two->path;
-+	const char *parent_name;
-+	const char *cur_path;
-+	int i, len;
-+
-+	entry = strmap_get_entry(&opt->priv->paths, old_path);
-+	old_path = entry->key;
-+	ci = entry->value;
-+	VERIFY_CI(ci);
-+
-+	/* Find parent directories missing from opt->priv->paths */
-+	cur_path = new_path;
-+	while (1) {
-+		/* Find the parent directory of cur_path */
-+		char *last_slash = strrchr(cur_path, '/');
-+		if (last_slash) {
-+			parent_name = xstrndup(cur_path, last_slash - cur_path);
-+		} else {
-+			parent_name = opt->priv->toplevel_dir;
-+			break;
-+		}
-+
-+		/* Look it up in opt->priv->paths */
-+		entry = strmap_get_entry(&opt->priv->paths, parent_name);
-+		if (entry) {
-+			free((char*)parent_name);
-+			parent_name = entry->key; /* reuse known pointer */
-+			break;
-+		}
-+
-+		/* Record this is one of the directories we need to insert */
-+		string_list_append(&dirs_to_insert, parent_name);
-+		cur_path = parent_name;
-+	}
-+
-+	/* Traverse dirs_to_insert and insert them into opt->priv->paths */
-+	for (i = dirs_to_insert.nr-1; i >= 0; --i) {
-+		struct conflict_info *dir_ci;
-+		char *cur_dir = dirs_to_insert.items[i].string;
-+
-+		dir_ci = xcalloc(1, sizeof(*dir_ci));
-+
-+		dir_ci->merged.directory_name = parent_name;
-+		len = strlen(parent_name);
-+		/* len+1 because of trailing '/' character */
-+		dir_ci->merged.basename_offset = (len > 0 ? len+1 : len);
-+		dir_ci->dirmask = ci->filemask;
-+		strmap_put(&opt->priv->paths, cur_dir, dir_ci);
-+
-+		parent_name = cur_dir;
-+	}
-+
-+	/*
-+	 * We are removing old_path from opt->priv->paths.  old_path also will
-+	 * eventually need to be freed, but it may still be used by e.g.
-+	 * ci->pathnames.  So, store it in another string-list for now.
-+	 */
-+	string_list_append(&opt->priv->paths_to_free, old_path);
-+
-+	assert(ci->filemask == 2 || ci->filemask == 4);
-+	assert(ci->dirmask == 0);
-+	strmap_remove(&opt->priv->paths, old_path, 0);
-+
-+	branch_with_new_path   = (ci->filemask == 2) ? opt->branch1 : opt->branch2;
-+	branch_with_dir_rename = (ci->filemask == 2) ? opt->branch2 : opt->branch1;
-+
-+	/* Now, finally update ci and stick it into opt->priv->paths */
-+	ci->merged.directory_name = parent_name;
-+	len = strlen(parent_name);
-+	ci->merged.basename_offset = (len > 0 ? len+1 : len);
-+	new_ci = strmap_get(&opt->priv->paths, new_path);
-+	if (!new_ci) {
-+		/* Place ci back into opt->priv->paths, but at new_path */
-+		strmap_put(&opt->priv->paths, new_path, ci);
-+	} else {
-+		int index;
-+
-+		/* A few sanity checks */
-+		VERIFY_CI(new_ci);
-+		assert(ci->filemask == 2 || ci->filemask == 4);
-+		assert((new_ci->filemask & ci->filemask) == 0);
-+		assert(!new_ci->merged.clean);
-+
-+		/* Copy stuff from ci into new_ci */
-+		new_ci->filemask |= ci->filemask;
-+		if (new_ci->dirmask)
-+			new_ci->df_conflict = 1;
-+		index = (ci->filemask >> 1);
-+		new_ci->pathnames[index] = ci->pathnames[index];
-+		new_ci->stages[index].mode = ci->stages[index].mode;
-+		oidcpy(&new_ci->stages[index].oid, &ci->stages[index].oid);
-+
-+		free(ci);
-+		ci = new_ci;
-+	}
-+
-+	if (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE) {
-+		/* Notify user of updated path */
-+		if (pair->status == 'A')
-+			path_msg(opt, new_path, 1,
-+				 _("Path updated: %s added in %s inside a "
-+				   "directory that was renamed in %s; moving "
-+				   "it to %s."),
-+				 old_path, branch_with_new_path,
-+				 branch_with_dir_rename, new_path);
-+		else
-+			path_msg(opt, new_path, 1,
-+				 _("Path updated: %s renamed to %s in %s, "
-+				   "inside a directory that was renamed in %s; "
-+				   "moving it to %s."),
-+				 pair->one->path, old_path, branch_with_new_path,
-+				 branch_with_dir_rename, new_path);
-+	} else {
-+		/*
-+		 * opt->detect_directory_renames has the value
-+		 * MERGE_DIRECTORY_RENAMES_CONFLICT, so mark these as conflicts.
-+		 */
-+		ci->path_conflict = 1;
-+		if (pair->status == 'A')
-+			path_msg(opt, new_path, 0,
-+				 _("CONFLICT (file location): %s added in %s "
-+				   "inside a directory that was renamed in %s, "
-+				   "suggesting it should perhaps be moved to "
-+				   "%s."),
-+				 old_path, branch_with_new_path,
-+				 branch_with_dir_rename, new_path);
-+		else
-+			path_msg(opt, new_path, 0,
-+				 _("CONFLICT (file location): %s renamed to %s "
-+				   "in %s, inside a directory that was renamed "
-+				   "in %s, suggesting it should perhaps be "
-+				   "moved to %s."),
-+				 pair->one->path, old_path, branch_with_new_path,
-+				 branch_with_dir_rename, new_path);
-+	}
-+
-+	/*
-+	 * Finally, record the new location.
-+	 */
-+	pair->two->path = new_path;
+@@ -764,109 +764,6 @@ static char *apply_dir_rename(struct strmap_entry *rename_info,
+ 	return strbuf_detach(&new_path, NULL);
  }
  
- /*** Function Grouping: functions related to regular rename detection ***/
+-static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+-				    char **old_dir, char **new_dir)
+-{
+-	char *end_of_old, *end_of_new;
+-
+-	/* Default return values: NULL, meaning no rename */
+-	*old_dir = NULL;
+-	*new_dir = NULL;
+-
+-	/*
+-	 * For
+-	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
+-	 * the "e/foo.c" part is the same, we just want to know that
+-	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
+-	 * so, for this example, this function returns "a/b/c/d" in
+-	 * *old_dir and "a/b/some/thing/else" in *new_dir.
+-	 */
+-
+-	/*
+-	 * If the basename of the file changed, we don't care.  We want
+-	 * to know which portion of the directory, if any, changed.
+-	 */
+-	end_of_old = strrchr(old_path, '/');
+-	end_of_new = strrchr(new_path, '/');
+-
+-	/*
+-	 * If end_of_old is NULL, old_path wasn't in a directory, so there
+-	 * could not be a directory rename (our rule elsewhere that a
+-	 * directory which still exists is not considered to have been
+-	 * renamed means the root directory can never be renamed -- because
+-	 * the root directory always exists).
+-	 */
+-	if (end_of_old == NULL)
+-		return; /* Note: *old_dir and *new_dir are still NULL */
+-
+-	/*
+-	 * If new_path contains no directory (end_of_new is NULL), then we
+-	 * have a rename of old_path's directory to the root directory.
+-	 */
+-	if (end_of_new == NULL) {
+-		*old_dir = xstrndup(old_path, end_of_old - old_path);
+-		*new_dir = xstrdup("");
+-		return;
+-	}
+-
+-	/* Find the first non-matching character traversing backwards */
+-	while (*--end_of_new == *--end_of_old &&
+-	       end_of_old != old_path &&
+-	       end_of_new != new_path)
+-		; /* Do nothing; all in the while loop */
+-
+-	/*
+-	 * If both got back to the beginning of their strings, then the
+-	 * directory didn't change at all, only the basename did.
+-	 */
+-	if (end_of_old == old_path && end_of_new == new_path &&
+-	    *end_of_old == *end_of_new)
+-		return; /* Note: *old_dir and *new_dir are still NULL */
+-
+-	/*
+-	 * If end_of_new got back to the beginning of its string, and
+-	 * end_of_old got back to the beginning of some subdirectory, then
+-	 * we have a rename/merge of a subdirectory into the root, which
+-	 * needs slightly special handling.
+-	 *
+-	 * Note: There is no need to consider the opposite case, with a
+-	 * rename/merge of the root directory into some subdirectory
+-	 * because as noted above the root directory always exists so it
+-	 * cannot be considered to be renamed.
+-	 */
+-	if (end_of_new == new_path &&
+-	    end_of_old != old_path && end_of_old[-1] == '/') {
+-		*old_dir = xstrndup(old_path, --end_of_old - old_path);
+-		*new_dir = xstrdup("");
+-		return;
+-	}
+-
+-	/*
+-	 * We've found the first non-matching character in the directory
+-	 * paths.  That means the current characters we were looking at
+-	 * were part of the first non-matching subdir name going back from
+-	 * the end of the strings.  Get the whole name by advancing both
+-	 * end_of_old and end_of_new to the NEXT '/' character.  That will
+-	 * represent the entire directory rename.
+-	 *
+-	 * The reason for the increment is cases like
+-	 *    a/b/star/foo/whatever.c -> a/b/tar/foo/random.c
+-	 * After dropping the basename and going back to the first
+-	 * non-matching character, we're now comparing:
+-	 *    a/b/s          and         a/b/
+-	 * and we want to be comparing:
+-	 *    a/b/star/      and         a/b/tar/
+-	 * but without the pre-increment, the one on the right would stay
+-	 * a/b/.
+-	 */
+-	end_of_old = strchr(++end_of_old, '/');
+-	end_of_new = strchr(++end_of_new, '/');
+-
+-	/* Copy the old and new directories into *old_dir and *new_dir. */
+-	*old_dir = xstrndup(old_path, end_of_old - old_path);
+-	*new_dir = xstrndup(new_path, end_of_new - new_path);
+-}
+-
+ static int path_in_way(struct strmap *paths, const char *path, unsigned side_mask)
+ {
+ 	struct merged_info *mi = strmap_get(paths, path);
+@@ -952,6 +849,14 @@ static char *handle_path_level_conflicts(struct merge_options *opt,
+ 	return new_path;
+ }
+ 
++static void dirname_munge(char *filename)
++{
++	char *slash = strrchr(filename, '/');
++	if (!slash)
++		slash = filename;
++	*slash = '\0';
++}
++
+ static void increment_count(struct strmap *dir_rename_count,
+ 			    char *old_dir,
+ 			    char *new_dir)
+@@ -973,6 +878,76 @@ static void increment_count(struct strmap *dir_rename_count,
+ 	strintmap_incr(counts, new_dir, 1);
+ }
+ 
++static void update_dir_rename_counts(struct strmap *dir_rename_count,
++				     struct strset *dirs_removed,
++				     const char *oldname,
++				     const char *newname)
++{
++	char *old_dir = xstrdup(oldname);
++	char *new_dir = xstrdup(newname);
++	char new_dir_first_char = new_dir[0];
++	int first_time_in_loop = 1;
++
++	while (1) {
++		dirname_munge(old_dir);
++		dirname_munge(new_dir);
++
++		/*
++		 * When renaming
++		 *   "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
++		 * then this suggests that both
++		 *   a/b/c/d/e/ => a/b/some/thing/else/e/
++		 *   a/b/c/d/   => a/b/some/thing/else/
++		 * so we want to increment counters for both.  We do NOT,
++		 * however, also want to suggest that there was the following
++		 * rename:
++		 *   a/b/c/ => a/b/some/thing/
++		 * so we need to quit at that point.
++		 *
++		 * Note the when first_time_in_loop, we only strip off the
++		 * basename, and we don't care if that's different.
++		 */
++		if (!first_time_in_loop) {
++			char *old_sub_dir = strchr(old_dir, '\0')+1;
++			char *new_sub_dir = strchr(new_dir, '\0')+1;
++			if (!*new_dir) {
++				/*
++				 * Special case when renaming to root directory,
++				 * i.e. when new_dir == "".  In this case, we had
++				 * something like
++				 *    a/b/subdir => subdir
++				 * and so dirname_munge() sets things up so that
++				 *    old_dir = "a/b\0subdir\0"
++				 *    new_dir = "\0ubdir\0"
++				 * We didn't have a '/' to overwrite a '\0' onto
++				 * in new_dir, so we have to compare differently.
++				 */
++				if (new_dir_first_char != old_sub_dir[0] ||
++				    strcmp(old_sub_dir+1, new_sub_dir))
++					break;
++			} else {
++				if (strcmp(old_sub_dir, new_sub_dir))
++					break;
++			}
++		}
++
++		if (strset_contains(dirs_removed, old_dir))
++			increment_count(dir_rename_count, old_dir, new_dir);
++		else
++			break;
++
++		/* If we hit toplevel directory ("") for old or new dir, quit */
++		if (!*old_dir || !*new_dir)
++			break;
++
++		first_time_in_loop = 0;
++	}
++
++	/* Free resources we don't need anymore */
++	free(old_dir);
++	free(new_dir);
++}
++
+ static void compute_rename_counts(struct diff_queue_struct *pairs,
+ 				  struct strmap *dir_rename_count,
+ 				  struct strset *dirs_removed)
+@@ -980,19 +955,11 @@ static void compute_rename_counts(struct diff_queue_struct *pairs,
+ 	int i;
+ 
+ 	for (i = 0; i < pairs->nr; ++i) {
+-		char *old_dir, *new_dir;
+ 		struct diff_filepair *pair = pairs->queue[i];
+ 
+ 		if (pair->status != 'R')
+ 			continue;
+ 
+-		/* Get the old and new directory names */
+-		get_renamed_dir_portion(pair->one->path, pair->two->path,
+-					&old_dir,        &new_dir);
+-		if (!old_dir)
+-			/* Directory didn't change at all; ignore this one. */
+-			continue;
+-
+ 		/*
+ 		 * Make dir_rename_count contain a map of a map:
+ 		 *   old_directory -> {new_directory -> count}
+@@ -1000,12 +967,9 @@ static void compute_rename_counts(struct diff_queue_struct *pairs,
+ 		 * the old filename and the new filename and count how many
+ 		 * times that pairing occurs.
+ 		 */
+-		if (strset_contains(dirs_removed, old_dir))
+-			increment_count(dir_rename_count, old_dir, new_dir);
+-
+-		/* Free resources we don't need anymore */
+-		free(old_dir);
+-		free(new_dir);
++		update_dir_rename_counts(dir_rename_count, dirs_removed,
++					 pair->one->path,
++					 pair->two->path);
+ 	}
+ }
+ 
 -- 
 gitgitgadget
 
