@@ -2,181 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 047ECC433E6
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 312AEC433E6
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:37:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D37F423355
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:35:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0397F23142
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728956AbhAGOfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 09:35:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728498AbhAGOfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 09:35:18 -0500
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0213BC0612F4
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 06:34:38 -0800 (PST)
-Received: by mail-io1-xd2e.google.com with SMTP id t8so6325988iov.8
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 06:34:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=7IpSLN1qT2Sh4mcSOiGa5d97eUCJOSI4FyRfg48s/Rc=;
-        b=r0HBjBiq2gUsMUxrj8bkooVH0vMg1CpDhaogxvVnKH39m8buG/vOwByY3NwD8wv9HC
-         TOL9wCvsMsjgM8+X8nRIXEQnqE4jokjlpyuzSER7d2dav6VRmaOpk8U0WOCjn3ZKBNSy
-         MfAnipATj0tcv+zl9a3iTx0EA0XWIv1EXZDh14GWgbYagRgPGj5wQM7ERffUa7gcV+rO
-         ZIP6XfQ68hiXlcr37lFAm0fiIr3Sk5yInzY3jhJm4TQAAk5fZPm7g1q5CArJp3sPMcnr
-         NJtuGkM1f/cn1XW/IJMDgFb0LTIZGhlzef0dPdrba09Uurq7OlLsmK+lSY4ArIx3zw3q
-         JhHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7IpSLN1qT2Sh4mcSOiGa5d97eUCJOSI4FyRfg48s/Rc=;
-        b=ObVlEstQICUh+dmbtKimpqO2/9CDw0GjVVcMfjc776XgTk/XHFOKuWdH4sSlfbwvpL
-         ZcE5rRd76gGOkk5Dry3quzHDql4Fl6bw6hvzj8JlRZskBgCyMm3fMUC0spdANsHqQhln
-         /tIkPH8beEZTPveIdI1qwuAcSMkYeB5mvTPKkpk/Iiidy/F8WASHKAL1GmHaR8pR8cEk
-         c5wLzcsAVruETTLUNFadM2PQA0Hbjsm2QqIdZ3IBEMxe+NOrSOEP7T4kuoYerKKgVj/m
-         BejVRBSul5nIhOrU6AJLdzqxpO5fGRuUidkDA/zp/41N5LVKIr4FX6HOOk4/npIh2jbZ
-         YXBA==
-X-Gm-Message-State: AOAM531vjK7lcXOF0bX0jq+GW3d7XXjProCgjSxi0KNwoodyE88N8eOF
-        jSqAxlxA1sEtY+8hkavxL74pi9IQZYdtL/wa
-X-Google-Smtp-Source: ABdhPJzHvNxcfuM5BWrtFlIjcWFClrXZHACq3j34/DdcVaXAv0NVg7+o1F1Qaixid8dWs3mANxB3vw==
-X-Received: by 2002:a6b:b205:: with SMTP id b5mr1480324iof.190.1610030077397;
-        Thu, 07 Jan 2021 06:34:37 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id a7sm4686943iln.0.2021.01.07.06.34.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jan 2021 06:34:36 -0800 (PST)
-Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
- characters)
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'Daniel Troger' <random_n0body@icloud.com>,
-        =?UTF-8?Q?=27Torsten_B=c3=b6gershausen=27?= <tboegi@web.de>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20210106214737.qwlp4jvg3x2voafs@tb-raspi4>
- <A342FAE0-A363-4280-848C-162F38C22C8E@icloud.com>
- <002601d6e480$c193bd00$44bb3700$@nexbridge.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <ffe0a3ae-780d-95ae-524d-7b029eda21ee@gmail.com>
-Date:   Thu, 7 Jan 2021 09:34:35 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.0
+        id S1729467AbhAGOhe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 09:37:34 -0500
+Received: from mout.gmx.net ([212.227.17.22]:36573 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729173AbhAGOh3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 09:37:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1610030155;
+        bh=iYOlB7HhPWBjtqOHMFIBNbhuyD1oIkuY9fsOu7ctV/c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=j1T77XYotKi+Xwx8CSfYFY2p3gi1YkmCM6ImjLu39nRmMCkcIbxE2+xOlbVv9p588
+         WEF4H6s/O/5wpsMTlIhPfO/2wwMdzyk5O9eNZi+4OKF0B4HsR7vGetoMgsdj8N/Cyc
+         tS0QPzOsIGzPuzisWNNSnZoFe27Sb3OH6L7EhIdo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0oG5-1k18W749qv-00wnZv; Thu, 07
+ Jan 2021 15:35:55 +0100
+Date:   Thu, 7 Jan 2021 15:35:54 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Philippe Blain <levraiphilippeblain@gmail.com>, jrnieder@gmail.com,
+        git@vger.kernel.org
+Subject: Re: Patchwork instance "Submitter" attribution and GitGitGadget
+In-Reply-To: <xmqqiml4bsra.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2101071534440.2213@tvgsbejvaqbjf.bet>
+References: <75987318-A9A7-4235-8B1D-315B29B644E8@gmail.com> <nycvar.QRO.7.76.6.2001201314580.46@tvgsbejvaqbjf.bet> <xmqqiml4bsra.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <002601d6e480$c193bd00$44bb3700$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1224246309-1610030156=:2213"
+X-Provags-ID: V03:K1:WCRX8auu3h9JNmG0cZO3C93FTHBQrPpB3BbV3QqI/fASwZt8qY1
+ sP7K1NcEqe/zOfIoCZ1oqUxB7US1cQXJ8zkLXZ/ibrlSo8KmYhtRc6CW5T5oFgLcZMi+3HN
+ hj9aoZVfT5rnN4BaKtbRsMRv6F6ZnjCYWGQnzyzyYq04s2O8usneaq1Okew7Ksq1LCHxyhd
+ pjB/nz5T5M4ApbkzCDHWw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:O84WB/8vjPk=:OuzA4haOznQK78QYA+VzGU
+ HNearYkIoBJcS4UCz9DtPaAK6gtEFk6x+TefgFajsiFUxrCsMFPIj5RKbNpuQRpqa1XZDNBvk
+ ZZ9yLCkKpVZiRiu8EjHFNFSWryhTRcDspSOpNkEbLtQjKdZRtQ/E+SbSH+b+HoowgNEOyU09m
+ tVogLe4FkGpZJsJmYMqueNV50fxvtSOQisaxcaCNhU7w0ahdW89opFxKWbNB6CwNg6THpLVsH
+ ul9J1SZprRhpDolgYSsBZpbkw/FuZnOYfehUqzRExPLXnznnX7J75N+xzUEoz9lMF0vXFVF6n
+ 2oZ+kLOTDbwhpIKILSh6S0+WcdJymgDguXbfN0En8SMGbR/FWg3PSlkiqxouRhTdCKIQ8p6Sv
+ 4gvA5O20YRwxZKQGhM2WL+PsTTXD4eh2OdtyhiH2vOJRPj00u9671V+vRewKGLC40S7f+5VqG
+ Zggq1fUKA36P2tT207ddjQbYRC83iyjeJMsD12LGY8QR1yR2CRN8e2kUAOr7hudThIrLZ+kTy
+ QnCO0J6OffOKI9Izt0BuUvQsQuCCVD4JUyNoOj/H3sV3W5MwC8OY7rC00eUl4rbx9LMlxH+bo
+ oFgiiX6dy+a5ffSnDvK7qotmRPgsShYhfp/8cMYGdYRauz9n8GEc7EqAfl4kPfzcNA+Iz8x84
+ JJhcIIdGb8csZsP+56W7CBCsaorlzb+6EmQJIauH7OoC6kct7QUnlxgMNnmzRMwN9MsBE5oPX
+ SxVfUrj3m6EU2pvAaWWiu0QLwf/tM6zqyrrdhty+UqxKy82l2xIxghDDDOuteQRx/i8XVa5v0
+ mOsUG9B4jXjgITuWb0Sn05l4tZRjm2/0oS9Kdp+uLSvYjYucYP0P+SHx4ZKn3c73UKhp+NAWc
+ 1Tgc9zsFPMQE52sea5sz6J1s4V+Szap8eMv2Qf0bg=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Le 2021-01-06 à 18:07, Randall S. Becker a écrit :
-> On January 6, 2021 5:22 PM, Daniel Troger wrote:
->> Hi, maybe this helps you reproduce. I think I should have committed before
->> doing the second changes but I still got the error message and the two
->> names for one folder:
->>
->> me@iMac:/tmp$ mkdir git_bug
->> me@iMac:/tmp$ cd git_bug
->> me@iMac:/tmp/git_bug$ git init
->> hint: Using 'master' as the name for the initial branch. This default branch
->> name
->> hint: is subject to change. To configure the initial branch name to use in all
->> hint: of your new repositories, which will suppress this warning, call:
->> hint:
->> hint: 	git config --global init.defaultBranch <name>
->> hint:
->> hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
->> hint: 'development'. The just-created branch can be renamed via this
->> command:
->> hint:
->> hint: 	git branch -m <name>
->> Initialized empty Git repository in /private/tmp/git_bug/.git/
->> me@iMac:/tmp/git_bug$ ls -la total 8
->> drwxr-xr-x   4 daniel  wheel   128 Jan  6 23:13 .
->> drwxrwxrwt  27 root    wheel   864 Jan  6 23:13 ..
->> drwxr-xr-x   9 daniel  wheel   288 Jan  6 23:12 .git
->> -rw-r--r--@  1 daniel  staff  1283 Jan  6 23:13 paulbrunngård-springyard.zip
->> me@iMac:/tmp/git_bug$ unzip paulbrunngård-springyard.zip
->> Archive:  paulbrunngård-springyard.zip
->>     creating: paulbrunnga??rd-springyard/
->>    inflating: paulbrunnga??rd-springyard/.DS_Store
->>     creating: __MACOSX/
->>     creating: __MACOSX/paulbrunnga??rd-springyard/
->>    inflating: __MACOSX/paulbrunnga??rd-springyard/._.DS_Store
->>   extracting: paulbrunnga??rd-springyard/empty me@iMac:/tmp/git_bug$ rm
->> -rf __MACOSX/ *.zip me@iMac:/tmp/git_bug$ ls -la total 0
->> drwxr-xr-x   4 daniel  wheel  128 Jan  6 23:15 .
->> drwxrwxrwt  27 root    wheel  864 Jan  6 23:13 ..
->> drwxr-xr-x   9 daniel  wheel  288 Jan  6 23:15 .git
->> drwxr-xr-x@  4 daniel  wheel  128 Jan  6 12:20 paulbrunngård-springyard
->> me@iMac:/tmp/git_bug$ cd paulbrunngård-springyard/
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
->> content me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git add empty
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
->> content
->>
->>
->> Line I want to keep
->>
->> Line I want gone
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git restore -p .
->> BUG: pathspec.c:495: error initializing pathspec_item Cannot close git diff-
->> index --cached --numstat --summary
->> 4b825dc642cb6eb9a060e54bf8d69288fbee4904 --
->> :(,prefix:27)paulbrunngård-springyard/ () at
->> /usr/local/Cellar/git/2.30.0/libexec/git-core/git-add--interactive line 183.
->> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cd ..
->> me@iMac:/tmp/git_bug$ git status
->> On branch master
->>
->> No commits yet
->>
->> Changes to be committed:
->>    (use "git rm --cached <file>..." to unstage)
->> 	new file:   "paulbrunnga\314\212rd-springyard/empty"
->>
->> Changes not staged for commit:
->>    (use "git add <file>..." to update what will be committed)
->>    (use "git restore <file>..." to discard changes in working directory)
->> 	modified:   "paulbrunnga\314\212rd-springyard/empty"
->>
->> Untracked files:
->>    (use "git add <file>..." to include in what will be committed)
->> 	.DS_Store
->> 	"paulbrunng\303\245rd-springyard/"
->>
->> me@iMac:/tmp/git_bug$
-> 
-> Is it possible that the å character is coming from a UTF-16 encoding and is not representable in UTF-8? I'm wondering whether the name has a double-byte representation where one of the bytes is null, resulting in a truncated file name coming from readdir(). The file name would not be representable on some platforms that do not support UTF-16 path names.
+--8323328-1224246309-1610030156=:2213
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I don't think that's the case (the angstrom is present in UTF-8 [1]).
-I think it's another UTF-8 precomposed/decomposed bug. As far as I
-was able to test it happens as soon as you have a precomposed character
-in the folder name. I observed the same behaviour with a folder named
-"folderü", for example. I also tried 'git -c add.interactive.usebuiltin restore -p .'
-to see if the new experimental builtin add-interactive has the same problem,
-and it does (though the error is less verbose).
+Hi Junio,
 
-Anyway as you show with 'git status', it's not just 'git add -p' that is
-faulty, it's deeper than that, I would say.
+On Tue, 21 Jan 2020, Junio C Hamano wrote:
 
-Cheers,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > On Sat, 18 Jan 2020, Philippe Blain wrote:
+> >
+> >> I=E2=80=99ve noticed that all (I think) patch series sent to the list=
+ using
+> >> Gitgitgadget are attributed to Dscho (Submitter is "Johannes Schindel=
+in
+> >> via GitGitGadget") on the patchwork instance [1]. I don=E2=80=99t kno=
+w if you
+> >> are aware of that or if there=E2=80=99s a way to fix it in patchwork=
+=E2=80=A6
+> >
+> > Right now, it shows "Lucius Hu via GitGitGadget". Clearly, patchwork u=
+ses
+> > only the email address as identifier, being unprepared to accept that =
+the
+> > same email address might be used by multiple contributors.
+>
+> Would it help to use the "Sender:" header?  IIUC right now GGG
+> records its name on "From:" with its e-mail and a human-readable
+> name derived from the author of the ptach, but if it can record the
+> true author on "From:" and leave GGG's name on the "Sender:", would
+> patchwork use the "From:" side of the identity instead?
 
-Philippe.
+To tie up that loose end: GMail seemed to insist in my tests on replacing
+the `From:` header, therefore we cannot implement this `Sender:` idea, not
+using GMail to deliver the GitGitGadget patch series at least.
 
-[1] https://en.wikipedia.org/wiki/%C3%85#On_computers
+Ciao,
+Dscho
+
+> If that works, it would have an additional benefit of not having to
+> add the in-body "From:" to override the mail-header "From:", to avoid
+> attributing the authorship to GGG.
+>
+>
+>
+
+--8323328-1224246309-1610030156=:2213--
