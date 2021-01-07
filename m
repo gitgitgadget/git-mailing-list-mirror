@@ -7,74 +7,75 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFC11C433DB
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 11:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC95AC433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 12:54:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97FF123340
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 11:51:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9F1923371
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 12:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728037AbhAGLvq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 06:51:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60076 "EHLO
+        id S1727846AbhAGMyL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 07:54:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728023AbhAGLvq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 06:51:46 -0500
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA1DC0612F4
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 03:51:06 -0800 (PST)
-Received: by mail-oo1-xc31.google.com with SMTP id j8so1508813oon.3
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 03:51:06 -0800 (PST)
+        with ESMTP id S1727413AbhAGMyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 07:54:10 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA7C0C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 04:53:29 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id 9so7252487oiq.3
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 04:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=evSwfNI/Y7w7Qjg85+xVWQ3kgUWiRUm8u8qXYwaEoiE=;
-        b=KIA9f84GhcIITyw/kXh4FdazfHJp3X0M/pYX0b1h66F+QCuns0tfbFNkxsANEz/tby
-         CwagZSlbA6IwVe6GL6nbn6c5ztd0jmYdWcMsOTsOj510C7vF4xsZr6pbdO3kvIdS+UrK
-         L2CIS5qFtwW/luLuP1zMVlXlksqCXZ3jxLZO4rA3hOYUUjrgwC8eZ+3+5vZ9AvUoZAeJ
-         vuGuJxur12M+JAIjygMHBLjdWYFGjhhMGDuZSzpMwNNB1ZbtQIB4vS1pOhoRME0OunQq
-         61oEq68PcXOQYgFUoGw3llsO3dNrjodbO+u0QvNsZ+5H7tk85O021vykmXOzcYxubQp/
-         N/1Q==
+        bh=rFl0dif0PRYexF2sEL2iiN75lGHAbZNbL5jL7nj3vG8=;
+        b=fbrJsfhBjlkUmbuAiB3eSFHUA8XIJ96kU4UzKpXWL6xUSiGE/vlUUkUj/qTDFiJQ4q
+         nXMc79JX5ipX8fd9yAEwC7sLIg6m3uctOpOUmKINxaAB3gIAJvhZWNEAiMaWAnmAmJAa
+         c0QyGC+jH1vwVaO36q/kCgDatEFHwbphUeXq/37UCc66MdyjZ9wToxiyvztObmB70m73
+         71uP/PIBSn3wnhMefrt8vn91rX9jvoxxit1tPQIc85op0cZoAZzIFRTgLjx2YHpkeQ9L
+         6HwgSUmsNCM1oO2ExIKQXQUMe+4gHBST683DClZBYxXx+K6quh4VGZ00zOKTw954QCSW
+         Jo9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=evSwfNI/Y7w7Qjg85+xVWQ3kgUWiRUm8u8qXYwaEoiE=;
-        b=m5u9jjTcfBMLbakePKOG/tyUKRcLqnKh1T0lN3XorGVyBpoDs02t77MfUR2fc/NT+T
-         LlYtvaRdbW47jj4Xkg1fxRRnjIEw/FgwAl6aaCoOplB2fo/kOyKe2tR66ag6sLl1nehc
-         SUqadA4PLm6Nc4iC0ATvEVQD1TjVdTWPYOZ1qCF8mLcU9JxZ5DRGMz1ObKC9NdOttaUE
-         BpebySQme52ex+NJ2ZGw4yrmKbwisWd5ItM3BlaVW0KvRKr4iKD/eyS1S7ftpM72PCNx
-         TUlZEy92PAbZry+D60BcgpzNNBN48f4oi2X7iemvSBPhlxDOYdpJ83ZrDjlHoTmfrW63
-         ADeA==
-X-Gm-Message-State: AOAM532ovkuwTutQooh56WTvIHWL/wACgM4z9SDHxllyjVeE/mm3GYmU
-        E9zBsa8VKfbW8O5OtxNTakw=
-X-Google-Smtp-Source: ABdhPJws1HWmq9OEpDT76bTKl8Apb+pak9iyceZYrJ+gXn5zQhLH0FhYBB5VivrVOBUWE4hoo/+Bww==
-X-Received: by 2002:a4a:1d82:: with SMTP id 124mr824318oog.12.1610020265374;
-        Thu, 07 Jan 2021 03:51:05 -0800 (PST)
+        bh=rFl0dif0PRYexF2sEL2iiN75lGHAbZNbL5jL7nj3vG8=;
+        b=X+kRTev/zCxQSbAEP12nMtQEpIHs5t/Z6Z0eYJYs0bI+bfM6uo1iALkcqUCIxXp8Os
+         thAWcR9KceCFZftpBV0psGk0tWo983QRAqx53Rs/AKMMmI34nxOuqIBCYUwa79X4BG7Q
+         lXXkE/RXP2hse8VaD011U/Caiu2zWd5y7+j826l7TxzENgK/9GbhUYX+/qt4iSAeGXQs
+         oW4SpvA+Kq4G/GQfV9KzwZ1NHYzKnlvkgb1ZcCstOGXDl1WymhODAepvk/hpXkek5Emm
+         okqZqswD5765/rVA5EvG21XnAFwV1JSFc6Y0PY/88Bikn6SZ1SdGoq4lWVvhN3WdGR4+
+         EO4w==
+X-Gm-Message-State: AOAM5333K7LFnPIfHw2hxV+YJQnlCLRQ5jTBgika8rNbe3g3VwKooHZU
+        qmvB/YbWcRgR6ThffhKYzMg=
+X-Google-Smtp-Source: ABdhPJzOu7i6eELrUvnHiMLXjgtv9V52O4CDjclViYQpuoaaOzblyJUQmrt69Eegqb0i2ebyqUsBDg==
+X-Received: by 2002:a54:4096:: with SMTP id i22mr6445738oii.126.1610024008720;
+        Thu, 07 Jan 2021 04:53:28 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id h7sm1091795otq.21.2021.01.07.03.51.03
+        by smtp.gmail.com with UTF8SMTPSA id g12sm1118703oos.8.2021.01.07.04.53.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Jan 2021 03:51:04 -0800 (PST)
-Subject: Re: [PATCH v2 6/9] index-format: update preamble to cached tree
- extension
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
- <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
- <75b51483d3c7088d0cfae36544966672374c50f9.1609729758.git.gitgitgadget@gmail.com>
- <xmqqble1o5sc.fsf@gitster.c.googlers.com>
+        Thu, 07 Jan 2021 04:53:27 -0800 (PST)
+Subject: Re: sparse-checkout questions and proposals [Was: Re: [PATCH] rm:
+ honor sparse checkout patterns]
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <9f2135f90ffea7f4ccb226f506bf554deab324cc.1605205427.git.matheus.bernardino@usp.br>
+ <xmqqeekt83fl.fsf@gitster.c.googlers.com>
+ <CABPp-BHvZyb4cF29HqDYgMHTMEr2LdvKYATWqADRyhqJzB=Liw@mail.gmail.com>
+ <CABPp-BGMX3wb7LiS1HkJpGveoW3J1oR0vVHbKTF5+qYLRF+59g@mail.gmail.com>
+ <CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com>
+ <1a1e33f6-3514-9afc-0a28-5a6b85bd8014@gmail.com>
+ <CABPp-BHfbuRX2kWgS1SuHkpCa+rfpkeUvkrp4hZ9AWV+YfKgWA@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5a1a51c1-7ada-6f66-a6d0-2fc01303d334@gmail.com>
-Date:   Thu, 7 Jan 2021 06:51:03 -0500
+Message-ID: <06326ed2-d21d-2d4f-e90c-733cbfe2d04c@gmail.com>
+Date:   Thu, 7 Jan 2021 07:53:27 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
  Thunderbird/85.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqble1o5sc.fsf@gitster.c.googlers.com>
+In-Reply-To: <CABPp-BHfbuRX2kWgS1SuHkpCa+rfpkeUvkrp4hZ9AWV+YfKgWA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -82,96 +83,409 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/6/2021 9:10 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 1/6/2021 2:15 PM, Elijah Newren wrote:
+> On Sun, Jan 3, 2021 at 7:02 PM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 12/31/2020 3:03 PM, Elijah Newren wrote:
+>> Others use sparse-checkout to remove a few large files unless they
+>> need them. I'm less interested in this case, myself.
+>>
+>> Both perspectives get better with partial clone because the download
+>> size shrinks significantly. While partial clone has a sparse-checkout
+>> style filter, it is hard to compute on the server side. Further, it
+>> is not very forgiving of someone wanting to change their sparse
+>> definition after cloning. Tree misses are really expensive, and I find
+>> that the extra network transfer of the full tree set is a price that is
+>> worth paying.
 > 
->> Subject: Re: [PATCH v2 6/9] index-format: update preamble to cached tree extension
-> 
-> By the way, the name of the extension is "cache tree".
-> 
-> 	git grep -i 'cached[- ]tree' ':!po/'
->         
-> reveals there are a handful of mistakes already present but their
-> number is dwarfed when we check:
-> 
-> 	git grep -i 'cache tree' ':!po/'
+> Out of curiosity, is that because the promisor handling doesn't do
+> nice batching of trees to download, as is done for blobs, or is there
+> a more fundamental reason they are really expensive?  (I'm just
+> wondering if we are risking changing design in some areas based on
+> suboptimal implementation of other things.  I don't actually have
+> experience with partial clones yet, though, so I'm basically just
+> querying about random but interesting things without any experience to
+> back it up.)
 
-I will fix my own additions and add a patch that fixes these mistakes.
+GitHub doesn't support pathspec filters for partial clone because it
+is too expensive to calculate that initial packfile (cannot use
+reachability bitmaps). Even outside of that initial cost, we have
+problems.
 
->> +  Since the index does not record entries for directories, the cache
->> +  entries cannot describe tree objects that already exist in the object
->> +  database for regions of the index that are unchanged from an existing
->> +  commit. The cached tree extension stores a recursive tree structure that
->> +  describes the trees that already exist and completely match sections of
->> +  the cache entries. This speeds up tree object generation from the index
->> +  for a new commit by only computing the trees that are "new" to that
->> +  commit.
+The biggest problem is that we ask for the tree as a one-off request.
+There are two ways to approach this:
+
+1. Ask for all trees that are reachable from that tree so we can
+   complete the tree walk (current behavior). This downloads trees we
+   already have, most of the time.
+
+2. Ask for only that tree and no extra objects. This causes the request
+   count to increase significantly, especially during a 'git pull' or
+   'git checkout' that spans a large distance.
+
+In either case, commands like "git log -- README.md" are really bad in
+a treeless clone (--filter=tree:0).
+
+For the sparse-checkout case, we still need the trees outside of our
+sparse cone in order to construct an index, even if we never actually
+check out those files. (Maybe not forever, though...)
+
+And maybe the solution would be to ask the server for your missing
+trees in the entire history when you change sparse-checkout definition,
+but what does that request look like?
+
+ client> I have these commits with trees according to this pathspec.
+ client> I want these commits with trees according to a new pathspec.
+ server> *flips table*
+
+>> I think there are three possible situations:
+>>
+>> 1. sparse-checkout should not affect the behavior at all.
+>>
+>>    An example for this is "git commit". We want the root tree to contain
+>>    all of the subtrees and blobs that are out of the sparse-checkout
+>>    definition. The underlying object model should never change.
+>>
+>> 2. sparse-checkout should change the default, but users can opt-out.
+>>
+>>    The examples I think of here are 'git grep' and 'git rm', as we have
+>>    discussed recently. Having a default of "you already chose to be in
+>>    a sparse-checkout, so we think this behavior is better for you"
+>>    should continue to be pursued.
+>>
+>> 3. Users can opt-in to a sparse-checkout version of a behavior.
+>>
+>>    The example in this case is "git diff". Perhaps we would want to see
+>>    a diff scoped only to our sparse definition, but that should not be
+>>    the default. It is too risky to change the output here without an
+>>    explicit choice by the user.
 > 
-> The original motivation was the above one.  A cache of tree objects
-> that correspond to unmodified part of the directory structure helps
-> writing out a new tree out of modified index.
+> I'm curious why you put grep and diff in different categories.  A
+> plain "git diff" without revisions will give the same output whether
+> or not it restricts to the sparsity paths (because the other paths are
+> unchanged), so restricting is purely an optimization question.  Making
+> "git diff REVISION" restrict to the sparsity paths would be a
+> behavioral change as you note, but "git grep [REVISION]" would also
+> require a behavioral change to limit to the sparsity paths.  If it's
+> too risky to change the output for git diff with revisions, why is it
+> not also too risky to do that with git grep with revisions?
+
+I generally think of 'grep' as being "search for something I care about"
+which is easier to justify scoping to sparse-checkouts.
+
+'diff' is something that I usually think of as "compare two git objects"
+and it is operating on immutable data.
+
+The practical difference comes into play with a blobless partial clone:
+'diff' will download blobs that need a content comparison, so the cost
+is relative to the number of changed paths in that region and relative
+to the requested output. 'grep' will download every blob reachable from
+the root tree. We've seen too many cases of users trying 'git grep' to
+search the Windows codebase and complaining that it takes too long
+(because they are downloading 3 million blobs one at a time).
+
+> Also, I think you are missing a really important category:
 > 
-> We later found out that we rather often compare the index against
-> the tree of HEAD (think: "git status"), and diff-lib.c::diff_cache()
-> does take advantage of the fact that an entire directory can be
-> skipped if the tree object taken from the HEAD side exactly matches
-> the tree recorded for the subdirectory in the cache tree extension.
-
-I need to read more about this. traverse_by_cache_tree() seems to
-be a good place to start. Thanks.
-
->> +  The recursive tree structure uses nodes that store a number of cache
->> +  entries, a list of subnodes, and an object ID (OID). The OID references
->> +  the exising tree for that node, if it is known to exist. The subnodes
->> +  correspond to subdirectories that themselves have cached tree nodes. The
->> +  number of cache entries corresponds to the number of cache entries in
->> +  the index that describe paths within that tree's directory.
-
-s/exising/existing/
-
+> 4. sparse-checkout changes the behavior of commands and there is no
+> opt-out or configurability provided.
 > 
-> OK.
-> 
->> +  Note that the path for a given tree is part of the parent node in-memory
-> 
-> Sorry, I am not sure if I follow.  The top-level in-core cache_tree
-> object records the number of entries, tree object name for the
-> entire tree (if valid), and cache_tree_sub structures, one for each
-> subdirectory.  Each of the cache_tree_sub structure describes the
-> "child" directory, including the path to it.
-> 
->> +  but is part of the child in the file format. The root tree has an empty
->> +  string for its name and its name does not exist in-memory.
-> 
-> It's more like we could have consistently used cache_tree_sub
-> instances to represent each and every level (i.e. I consider that
-> cache_tree_sub is what represents a directory, with cache_tree being
-> a record of just one aspect of it) including the root of the
-> hierarchy, but because there wasn't much point in giving a name to
-> the root level, I cheated and avoided wasting a cache_tree_sub for
-> it.  So from that point of view, the path belongs to the node in
-> each level in both in-core and on-disk representations.
+> The most obvious examples are switch and checkout -- their modified
+> behavior is really the /point/ of sparse-checkouts and if you want to
+> "opt out" then just don't use sparse-checkouts.  `reset --hard` can go
+> in the same bucket; it's modified in the same way.  However, some
+> commands are modified in a different way, but also have no opt-out --
+> for example, merge, rebase, cherry-pick, revert, and stash, all "try"
+> to avoid writing files to the working tree that match the sparsify
+> specifications, but will vivify files which have conflicts (and maybe
+> a few additional files based on implementation shortcomings).  Another
+> command that behaves differently than any of these, and is also
+> non-configurable in this change, is git-add.  It'll ignore any tracked
+> files with the SKIP_WORKTREE bit set, even if the file is present.
+> That's really helpful thing for "git add -A [GLOB_OR_DIRECTORY]" to
+> do, as we don't want sparsity to accidentally be treated as a
+> directive to remove files from the repository.
 
-That's a good point. I'll retract my statement here.
+True. Except for these, the opt-in/out is "git sparse-checkout init"
+and "git sparse-checkout disable". If I want "git checkout" to behave
+differently, then I modify my sparse-checkout definition or disable
+it altogether.
 
->> +  When a path is updated in index, Git invalidates all nodes of the
->> +  recurisive cached tree corresponding to the parent directories of that
->> +  path. We store these tree nodes as being "invalid" by using "-1" as the
->> +  number of cache entries.
+Perhaps instead we should think of this category as the "core
+functionality of sparse-checkout."
+
+> I think more commands should fall under this fourth category as well,
+> including rm.
+
+The biggest issue with 'rm' is that users may want to use it to
+delete paths outside of their sparse-checkout according to a
+pathspec. This is especially true since it is the current
+behavior, so if we change it by default we might discover more
+complaints than the current requests for a way to limit to the
+sparse-checkout definition.
+
+>>>   * mt/grep-sparse-checkout: figure out shorter flag names.  Default to
+>>>       --no-restrict-to-sparse, for now.  Then merge it for git-2.31.
+>>
+>> I don't want to derail your high-level conversation too much, but by the
+>> end of January I hope to send an RFC to create a "sparse index" which allows
+>> the index to store entries corresponding to a directory with the skip-
+>> worktree bit on. The biggest benefit is that commands like 'git status' and
+>> 'git add' will actually change their performance based on the size of the
+>> sparse-checkout definition and not the total number of paths at HEAD.
 > 
-> Correct.
-
-Making note of my s/recurisive/recursive/ typo here.
-
->> +  To create trees corresponding to the current
->> +  index, Git only walks the invalid tree nodes and uses the cached OIDs
->> +  for the valid trees to construct new trees.
+> This is _awesome_; I think it'll be huge.  It'll cause even more
+> commands behavior to change, of course, but in a good way.  And I
+> don't consider this derailing at all but extending the discussion
+> complete with extra investigation work.  :-)
 > 
-> I wonder if the above is sufficiently clear, or "Git only has to
-> walk the spans of index entries that corresponds to the invalid
-> trees, while reusing the ..." is too long and detailed.
+>> The other thing that happens once we have that idea is that these behaviors
+>> in 'git grep' or 'git rm' actually become _easier_ to implement because we
+>> don't even have an immediate reference to the blobs outside of the sparse
+>> cone (assuming cone mode).
+>>
+>> The tricky part (that I'm continuing to work on, hence no RFC today) is
+>> enabling the part where a user can opt-in to the old behavior. This requires
+>> parsing trees to expand the index as necessary. A simple approach is to
+>> create an in-memory index that is the full expansion at HEAD, when necessary.
+>> It will be better to do expansions in a targeted way.
+> 
+> I'm not sure if you're just thinking of the old mt/rm-sparse-checkout
+> and commenting on it, or if you're actively disagreeing with my
+> proposal for rm.
 
-I will try to simplify.
+I remember the discussion around how making 'rm' sparse-aware was more
+complicated than "only look at entries without CE_SKIP_WORKTREE" but
+it might be easier with a sparse-index. So my intention here was to
+see if we should _delay_ our investigation here until I can at least
+get a prototype ready for inspection.
+
+I'm also saying that perhaps we could redirect this discussion around
+how to opt-in/out of these changes. Much like your "category 4" above
+being "behavior expected when in a sparse-checkout," what if this
+behavior of restricting to the sparse set was expected when using a
+sparse-index instead of based on config options or run-time arguments?
+
+What if we had something like "git update-index --[no-]sparse" to
+toggle between the two states?
+
+That's my intention with bringing up my half-baked idea before I have
+code to show for it.
+
+>> (Your merge-ort algorithm is critical to the success here, since that doesn't
+>> use the index as a data structure. I expect to make merge-ort the default for
+>> users with a sparse index. Your algorithm will be done first.)
+> 
+> Well, at 50 added/changed lines per patch, I've only got ~50 more
+> patches to go for ort after the ones I submitted Monday (mostly
+> optimization related).  If I submit 10 patches per week (starting next
+> week since I already sent a big patchset this week), then maybe
+> mid-to-late February.  That's a more aggressive pace than we've
+> managed so far, but maybe it gets easier towards the end?  Anyway,
+> hopefully that helps you with timing predictions.
+> 
+> On my end, this does make the ort work look like there's finally some
+> light at the end of the tunnel; I just hope it's not an oncoming
+> train. :-)
+
+While I expect to have an RFC ready at the end of the month, I expect
+I will be working on sparse-index for the entire 2021 calendar year
+before it will be fully ready to use by end-users. I expect my RFC to
+have fast "git status" and "git add" times, but other commands will
+have a guard that expands a sparse-index into a "full" index before
+proceeding. This protection will keep behavior consistent but will
+cause performance problems. Iteratively removing these guards and
+implementing "sparse-aware" versions of each index operation will take
+time and care.
+
+>> My point in bringing this up is that perhaps we should pause concrete work on
+>> updating other builtins until we have a clearer idea of what a sparse index
+>> could look like and how the implementation would change based on having one
+>> or not. I hope that my RFC will be illuminating in this regard.
+> 
+> Are you suggesting to pause any work on those pieces of the proposal
+> that might be affected by your sparse index, or pause any work at all
+> on sparse-checkouts?  For example, I think
+> en/stash-apply-sparse-checkout that's been sitting in seen is good to
+> merge down to master now.  I suspect mt/rm-sparse-checkout WITH my
+> suggested changes (no configurability -- similar to git-add) and a
+> better warning/error message for git-add are some examples of cleanups
+> that could be done before your sparse index, but if you're worried
+> about conflicting I certainly don't want to derail your project.  (I
+> agree that anything with configurability and touching on "behavior A"
+> or "sparse parallelax", like mt/grep-sparse-checkout would be better
+> if we waited on.  I do feel pretty bad for how much we've made Matheus
+> wait on that series, but waiting does still seem best.)
+
+I don't want to hold up valuable work. It's just tricky to navigate
+parallel efforts in the same space. I'm asking for a little more time
+to get my stuff together to see if it would influence your work.
+
+But it is unreasonable for me to "squat" on the feature and keep others
+from making valuable improvements.
+
+>>>     * shorter flag names than --[no-]restrict-to-sparse.  --dense and
+>>>       --sparse?  --[no-]restrict?
+>>
+>> --full-workdir?
+> 
+> Hmm.  "workdir" sounds like an abbreviation of "working directory",
+> which is the place where the files are checked out.  And the working
+> directory is sparse in a sparse-checkout.  So isn't this misleading?
+> Or did you intend for this option to be the name for requesting a
+> sparser set?  (If so, isn't "full" in its name a bit weird?)
+> 
+> Also, what would the inverse name of --full-workdir be?  I was looking
+> to add options for both restricting the command to the sparser set and
+> for expanding to the full set of files.  Though I guess as you note
+> below, you perhaps might be in favor of only one of these without
+> configuration options to adjust defaults.
+
+Right. Perhaps --full-tree or --sparse-tree would be better? I was
+trying to link the adjectives "full" and "sparse" to a noun that they
+modify.
+
+--dense already exists in rev-list to describe a form of history
+simplification.
+
+>>> --> Commands that would change for behavior A
+>>>   * bisect
+>>>     * Only consider commits touching paths matching sparsity patterns
+>>>   * diff
+>>>     * When given revisions, only show subset of files matching sparsity
+>>>       patterns.  If pathspecs are given, intersect them with sparsity
+>>>       patterns.
+>>>   * log
+>>>     * Only consider commits touching at least one path matching sparsity
+>>>       patterns.  If pathspecs are given, paths must match both the
+>>>       pathspecs and the sparsity patterns in order to be considered
+>>>       relevant and be shown.
+>>>   * gitk
+>>>     * See log
+>>>   * shortlog
+>>>     * See log
+>>>   * grep
+>>>     * See mt/grep-sparse-checkout; it's been discussed in detail..and is
+>>>       implemented.  (Other than that we don't want behavior A to be the
+>>>       default when so many commands do not support it yet.)
+>>>
+>>>   * show-branch
+>>>     * See log
+>>>   * whatchanged
+>>>     * See log
+>>>   * show (at least for commits)
+>>>     * See diff
+>>>
+>>>   * blame
+>>>     * With -C or -C -C, only detect lines moved/copied from files that match
+>>>       the sparsity paths.
+>>>   * annotate
+>>>     * See blame.
+>>
+>> this "behavior A" idea is the one I'm most skeptical about. Creating a
+>> way to opt-in to a sparse definition might be nice. It might be nice to
+>> run "git log --simplify-sparse" to see the simplified history when only
+>> caring about commits that changed according to the current sparse-checkout
+>> definitions. Expand that more when asking for diffs as part of that log,
+>> and the way we specify the option becomes tricky.
+> 
+> --simplify-sparse is a really long name to need to specify at every
+> invocation.  Also, if we have --[no]-restrict or --sparse/--dense
+> options at the git level (rather than the subcommand level), then I
+> think we don't want extra ones like this at the subcommand level.
+> 
+> Also, if the option appears at the global git level, doesn't that
+> remove the trickiness of revision traversal vs. diff outputting in
+> commands like log?  It just automatically applies to both.  (The only
+> trickiness would be if you wanted to somehow apply sparsity patterns
+> to just revision traversal or just diff outputting but not to both,
+> but that's already tricky in log with explicit pathspecs and we've
+> traditionally had files restrict both.)
+> 
+>> But I also want to avoid doing this as a default or even behind a config
+>> setting. We already get enough complains about "missing commits" when
+>> someone does a bad merge so "git log -- file" simplifies away a commit
+>> that exists in the full history. Imagine someone saying "on my machine,
+>> 'git log' shows the commit, but my colleague can't see it!" I would really
+>> like to avoid adding to that confusion if possible.
+> 
+> That's a good point.  A really good point.  Maybe we do only want to
+> allow explicit requests for this behavior -- and thus need very short
+> option name for it.
+
+And even though I mentioned earlier that "having a sparse-index might
+be a good way to opt-in," I would still say that simplifying commit
+history in 'git log' or reducing diff output would still require a
+short command-line option.
+
+> Here's a not-even-half-baked idea for thought: What if we allowed a
+> configuration option to control this, BUT whenever a command like
+> diff/grep/log restricts output based on the sparsity paths due solely
+> to the configuration option, it prints a small reminder on stderr at
+> the beginning of the output (e.g. "Note: output limited to sparsity
+> paths, as per sparse.restrictCmds setting")?
+
+I'm not thrilled with this idea, but perhaps the warning can be
+toggled by an advice.* config option.
+
+>>> --> Commands whose behavior I'm still uncertain of:
+>>>   * worktree add
+>>>     * for behavior A (marrying sparse-checkout with partial clone), we
+>>>       should almost certainly copy sparsity paths from the previous
+>>>       worktree (we either have to do that or have some kind of
+>>>       specify-at-clone-time default set of sparsity paths)
+>>>     * for behavior B, we may also want to copy sparsity paths from the
+>>>       previous worktree (much like a new command line shell will copy
+>>>       $PWD from the previous one), but it's less clear.  Should it?
+>>
+>> I think 'git worktree add' should at minimum continue using a sparse-
+>> checkout if the current working directory has one. Worktrees are a
+>> great way to scale the creation of multiple working directories for
+>> the same repository without re-cloning all of the history. In a partial
+>> clone case, it's really important that we don't explode the workdir in
+>> the new worktree (or even download all those blobs).
+> 
+> Okay, sounds like you agree with me for the partial clone case -- it's
+> necessary.
+> 
+> But what about the non-partial clone case?  I think it should adopt
+> the sparsity in that case too, but Junio has objected in the past.
+> I'm pretty sure Junio wasn't thinking about the partial clone case,
+> where I think it seems obvious and compelling.  But I'm not sure how
+> best to convince him in the non-partial clone case (or maybe I already
+> did; he didn't respond further after his initial objection).
+
+We might want to consider certain behavior to be on by default when
+enough other optional features are enabled. A philosophy such as "We
+see you are using partial clone and sparse-checkout, so we restricted
+the search in 'git grep' for your own good" might be useful here.
+
+>> Thanks for starting the discussion. Perhaps more will pick it up as
+>> they return from the holiday break.
+> 
+> Thanks for jumping in and pushing it much further with sparse indices
+> (or is it sparse indexes?)  I'm excited.
+
+Another way to push this discussion further would be to create a
+forward-looking documentation file in Documentation/technical.
+We could use such a documentation as a place to organize thoughts
+and plans, especially things like:
+
+* How sparse-checkout works and why users need it.
+* How it works (and doesn't work) with partial clone.
+* Plans for modifying behavior in sparse scenarios:
+  - Current behavior that is wrong or suspicious.
+  - Commands that could have different default behavior.
+  - Commands that could have different opt-in behavior.
+  (This section would include a description of the planned flag
+   that modifies behavior to limit to the sparse set.)
+
+I would add a section about sparse-index into such a document, if it
+existed.
+
+As things get implemented, these items could be moved out of the
+technical documentation and into Documentation/git-sparse-checkout.txt
+so we have a central place for users to discover how sparse-checkout
+can change their behavior.
 
 Thanks,
 -Stolee
