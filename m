@@ -2,107 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAFA7C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 23:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B65AC433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 23:30:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7E5923603
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 23:25:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC9AC2368A
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 23:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728256AbhAGXZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 18:25:39 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50081 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727669AbhAGXZj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 18:25:39 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 917CB11EAA0;
-        Thu,  7 Jan 2021 18:24:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/AZ71SdXlbYP
-        MrjIkGMMyAgZ8a0=; b=mYvhfMo9JLGSV8tyv1T0V0Wn0midx091LNnmcAC+r3HH
-        mX2YssH5e4e+PSw7Z3rSUsq58gSGkgxOYLBdFZ3qsVlJi66f6jwK5GeSLDrPGNWb
-        7Q/kq2IEqm810qbXAh8Q/OjB142HETCLmvlYMLyNiAjX8vbK56e2ld7+f1aAbc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ixBz4L
-        zfP4PP7VFNrYv+8VlnvDcDM7flvoVhkl/XGx0nrsU3RDXcFxvqAE0PcDsSs/BWMU
-        a1HsZIHjGrfUWIIG98KPVxPp+mkn4NCig/CB0pE2QvpfjJTOVGkXfTyHXG7Dt0JA
-        3X8hca3YK97QCWD5BLT5TZSeanQFv55+DJfJk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8926111EA9F;
-        Thu,  7 Jan 2021 18:24:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D049E11EA9E;
-        Thu,  7 Jan 2021 18:24:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Matthew DeVore <matvore@google.com>,
-        git@matthieu-moy.fr, olyatelezhnaya@gmail.com,
-        samuel.maftoul@gmail.com, Johannes.Schindelin@gmx.de,
-        karthik.188@gmail.com, pclouds@gmail.com, sunshine@sunshineco.com,
-        emilyshaffer@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v2 5/7] ref-filter: move ref_sorting flags to a bitfield
-References: <20210106100139.14651-1-avarab@gmail.com>
-        <20210107095153.4753-6-avarab@gmail.com>
-Date:   Thu, 07 Jan 2021 15:24:53 -0800
-In-Reply-To: <20210107095153.4753-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 7 Jan 2021 10:51:51 +0100")
-Message-ID: <xmqqpn2gjpoa.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728425AbhAGXa0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 18:30:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:59677 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726720AbhAGXaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 18:30:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1610062131;
+        bh=yrrYsgGsvB4LRFGUXbMotYvP+jewIy1BReqPjz1MTX4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hGBmaY+O+oKJTaIfe3+v4rzTRXflmS/kp91Wu4F4yYBEsDNmNlrA6KdquBz6l6iP0
+         Xk1YM1RjTUsWEEyUVDSXQrpHtzqWGONes0hykFDAGz1yk6TUeXPNfQ6IpsPYR+okB3
+         WAOHt8/3J7R2RTXVWWTcIqgx/CYiovWFlpu15B6k=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mFY-1jz7b52g1M-013ARN; Fri, 08
+ Jan 2021 00:28:51 +0100
+Date:   Fri, 8 Jan 2021 00:28:49 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: Re* [PATCH v2 2/2] CoC: update to version 2.0 + local changes
+In-Reply-To: <xmqqft3g463x.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2101080028150.2213@tvgsbejvaqbjf.bet>
+References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>        <20201228171734.30038-3-avarab@gmail.com>        <xmqqmtxxedwd.fsf@gitster.c.googlers.com> <xmqqft3g463x.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8C9B65AE-513F-11EB-88E8-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1040697933-1610062131=:2213"
+X-Provags-ID: V03:K1:D6Rt8hNmRu+lBCeRe2khKSlX8CYfU7j6YXIFbf79w9ehzEgtxsF
+ aXhIF/WYc1o6ouWfzQXgAdDw8elGmEJfycfWQY+b1PgATfrMKe0037oGMQ0dQxaGRlplcSZ
+ o13hAzmLHW/o+wTbLiS2bfF9EpFslwJYbBMfGaEaV3hp82uyJ0Z65sq2ypVFaeZW8vYR9/U
+ PqbKCkVQMBrytrT9BX88A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9JUfMGYUVso=:u+6pdB5Qr7yQhjcnfiQgok
+ 2pwoCRZvbTefeFyQU9g8hH2RHJYnMZeTC9LfrIvWU4YWEJ6cRH40kN5i4S+tDhW8OB9q7uCHw
+ j5q+AH8nsBSqj+rd0dXK2x/QkdHyvDGImffp6nLMoLg6R0eYlj6laVYrQBl1BgMGtnI6pO7Iu
+ CNfVF1cX6Acehw1ueZCFWKqai1X6AVdMseZ0qKsnjGUqC4TdSRJ8WL2mcYY/rfQUFCpsrTQDe
+ R/ywE/JyEbZmx402rgVNqlIyHLe7La0eJ1JojJ8zb+cDnCd+/ak1gqosK2hoYgiZD104RD1kw
+ nzVhlKcMH+8Oov2YbASLRNn1slDS/F1d0OLEPbphMyZEEqz+gW7DE0U2RZ+iChpqMWVvmSX7G
+ H8Bo+YmV3NSMzQsis4x+Nni/Bs3rR/CmcLDXzm7IpAlN6ENCjJHR92FjU28VCmSuwFS0lphvd
+ HzcxH1Bhe+wZ0OcrbwpNrG7eJjB5fGUtMi2LaMnH7xQb8N+W4mPWl1fmIfvzlOL8B0NElvmi+
+ Ed684mV1THMtA95M/I0uDutATF0VMF7meWKzs2Xcdr2y1KoVW4r9uuWsvzdrySbl0R7pghuah
+ zKc0ns+WasT1BI7e1nAq+KgIAaoRRH+pmhPKt363sQvXsmwUikdiSKFMaaORdsw2X4TKou38N
+ ePG9CfHtMb/EREa8AQuyrs7VGWA2cduVTwsWQhrBAiT4myGhKUVzw/zicj7d3xRBvgU0V3qFF
+ T1AFateXSrRyZLzpMGIkQgvuzzgDS+ar+CiE9+Hrr2xREQuFCuRtq5/UIvuC7TeokI7QT/6cz
+ ditpVJPfFX6w/UOqr5fE1EMHR7+8MxJvhL6fSklwjbH2fnNi8A7GZMYM/f69iPIXbrHDk7PdF
+ ZlhTlYL9xieloyE0lfsGqWF3/lvKISOgewH5D+EvM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Perhaps there's a more idiomatic way of doing the "for each in list
-> amend mask" pattern than this "mask/on" variable combo. This function
-> doesn't allow us to e.g. do any arbitrary changes to the bitfield for
-> multiple flags, but I think in this case that's fine. The common case
-> is that we're calling this with a list of one.
+--8323328-1040697933-1610062131=:2213
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-An obvious alternative would be to pass two masks, one for setting
-and the other for clearing, instead of passing a mask and a bool
-that says if the mask is for setting or clearing.
+Hi Junio,
 
-The helper that follows such a design would be:
+On Mon, 4 Jan 2021, Junio C Hamano wrote:
 
-	void ref_sorting_tweak_flags(struct ref_sorting *sorting,
-				     unsigned set, unsigned clear)
-	{
-		while (sorting) {
-			sorting->sort_flags |=3D set;
-			sorting->sort_flags &=3D ~clear;
-			sorting =3D sorting->next;
-		}
-	}
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> >
+> >> This change intentionally preserves a warning emitted on "git diff
+> >> --check". It's better to make it easily diff-able with upstream than
+> >> to fix whitespace changes in our version while we're at it.
+> >
+> > I think there are only two lines that needs to tolerate trailing
+> > whitespaces, and even if we strip them, it should be still easily
+> > diff-able with the upstream with --ignore-space-at-eol or whatever
+> > appropriate option, so I am not sure if it is worth try "keeping"
+> > these whitespace breakage.
+>
+> In the meantime, I'll insert this as step [1.5/2] while queuing.
+>
+> In any case, your [2/2] lacks your sign-off, which we eventually
+> need to have before applying these patches.  In the meantime, we
+> also need to collect Acks on the move to 2.0 from folks.
 
-and the caller in the endgame would become
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-	...
-	} else if (list) {
-		unsigned set =3D REF_SORTING_DETACHED_HEAD_FIRST;
-		unsigned clear =3D 0;
+Thanks,
+Dscho
 
-                *(icase ? &set : &clear) |=3D REF_SORTING_ICASE;
-		ref_sorting_tweak_flags(sorting, set, clear);
-
-which may be more lines but probably copes better when adding new
-bits.
-
-Thanks.
+--8323328-1040697933-1610062131=:2213--
