@@ -2,102 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A19CDC433DB
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04158C433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:54:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65E63233CF
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:36:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D05B923428
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:54:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729019AbhAGSgO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 13:36:14 -0500
-Received: from mx2.suse.de ([195.135.220.15]:58898 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726064AbhAGSgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 13:36:14 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.221.27])
-        by mx2.suse.de (Postfix) with ESMTP id 5D443AAF1;
-        Thu,  7 Jan 2021 18:35:33 +0000 (UTC)
-Date:   Thu, 7 Jan 2021 19:35:32 +0100
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: git gc ineffective
-Message-ID: <20210107183531.GB6564@kitsune.suse.cz>
-References: <20201109092041.GV29778@kitsune.suse.cz>
- <87361ilv1a.fsf@igel.home>
- <20201109101738.GW29778@kitsune.suse.cz>
- <20201109104327.GX29778@kitsune.suse.cz>
- <87v9eekcd6.fsf@igel.home>
+        id S1729205AbhAGSyd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 13:54:33 -0500
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:43987 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727215AbhAGSyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 13:54:32 -0500
+Received: by mail-ej1-f54.google.com with SMTP id jx16so11081092ejb.10
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 10:54:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vqShZr+fRuIM94Muvarsx15YY9ZLKOGlDKtVPGrVt6E=;
+        b=jK9INh2htv0TQ5ZOPdOCuUuceVzNIvx52UFrOuCe6YlFJ+Fg80S11P1MoUK9S9YKT8
+         RH56j1z2F5bwap+SNtbqPf16UgpUrl4kofrEW+NPiiEq6BZPPRsUZLwXlzRrKuxjWGYa
+         ZIC4WErck7gGykX9yTSYuQJHBMIvqr4MiIwV7EwyW+vRvC4k7D5OZkGdA0Mal0h4tU5U
+         2ugV2mUBSH1dW2tjVjMvveO6lZVHewRJVxenylyWV2qSiT3ljMw0CZcsyQukuFEFnMOw
+         XGX9pSeJaNrBxleq9dofLfkv9VeyiYzu8ld0WhqU9IcGt1u2/EBI1tngT4GJV0c1MnJb
+         RZmQ==
+X-Gm-Message-State: AOAM533uj8lng9aAUsiV7fvHi7QgPxHEf0HAhuiXY/3J3gIx6/AYAKed
+        YS4t1j/n9ZgnOHFIptXjrzOVC2+jsSL8lbd7oRg=
+X-Google-Smtp-Source: ABdhPJw86fVpbygUF+5XmtEBM1BLZvU8fJfTL/09ZI2XbZAum++JpK0j2R5fFF3qU5w1EDKa1lThklSsCq53PNo+DAg=
+X-Received: by 2002:a17:906:6b88:: with SMTP id l8mr139182ejr.482.1610045631105;
+ Thu, 07 Jan 2021 10:53:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v9eekcd6.fsf@igel.home>
-User-Agent: Mutt/1.11.3 (2019-02-01)
+References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+ <pull.830.v2.git.1609821783.gitgitgadget@gmail.com> <2b171a142b36b114d5ff526073fe3fd9517a4d32.1609821783.git.gitgitgadget@gmail.com>
+ <CAPig+cTfHsd7WMvcX1_433WVOG+y4FceUACBx_4UfnjJTgVY6g@mail.gmail.com> <73f51832-583a-27e8-65fa-86eb0ebac4cf@gmail.com>
+In-Reply-To: <73f51832-583a-27e8-65fa-86eb0ebac4cf@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 7 Jan 2021 13:53:40 -0500
+Message-ID: <CAPig+cSLsLibDik3YYTPdwbHpywStMxR_4rRBZfYrX7S-cFnNA@mail.gmail.com>
+Subject: Re: [PATCH v2 14/14] update-index: remove static globals from callbacks
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Thu, Jan 7, 2021 at 6:19 AM Derrick Stolee <stolee@gmail.com> wrote:
+> On 1/7/2021 12:09 AM, Eric Sunshine wrote:
+> > Will there ever be a case in which `cd.istate` will be different from
+> > `cd.repo->index`? If not, then we could get by with having only
+> > `cd.repo`; callers requiring access to `istate` can fetch it from
+> > `cd.repo`. If, on the other hand, `cd.istate` can be different from
+> > `cd.repo->istate` -- or if that might become a possibility in the
+> > future -- then having `cd.istate` makes sense. Not a big deal, though.
+> > Just generally curious about it.
+>
+> I don't believe that 'istate' and 'repo->index' will ever be
+> different in this file. This includes the members of the
+> callback_data struct, but also the method parameters throughout.
+>
+> It could be possible to replace all references to 'istate' with
+> 'repo->index' but the patches get slightly more messy. I also
+> think the code looks messier, but you do make a good point that
+> there is no concrete reason to separate the two.
 
-On Mon, Nov 09, 2020 at 12:17:57PM +0100, Andreas Schwab wrote:
-> On Nov 09 2020, Michal Suchánek wrote:
-> 
-> > On Mon, Nov 09, 2020 at 11:17:38AM +0100, Michal Suchánek wrote:
-> >> On Mon, Nov 09, 2020 at 10:49:21AM +0100, Andreas Schwab wrote:
-> >> > On Nov 09 2020, Michal Suchánek wrote:
-> >> > 
-> >> > > I noticed I am running out of disk space, and one repository taking up
-> >> > > about 38G. Did git gc --aggressive, and the used space *raised* to 42G,
-> >> > > and git would report it does gc after every commit.
-> >> > 
-> >> > Do you have a lot of loose objects?
-> >> { for i in  .git/objects/?? ; do ls $i ; done ; } | wc -l
-> >> 53392
-> > And in the double-size repository it's doubled, too:
-> >  { for i in  .git/objects/?? ; do ls $i ; done ; } | wc -l
-> >  101167
-> 
-> git count-objects also shows the size.
-$ git count-objects
-59853 objects, 43249880 kilobytes
-$ du -hs .git
-48G     .git
-$ git gc --aggressive
-Enumerating objects: 1825080, done.
-Counting objects: 100% (1825080/1825080), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (1803925/1803925), done.
-Writing objects: 100% (1825080/1825080), done.
-Total 1825080 (delta 1234005), reused 587969 (delta 0), pack-reused 0
-Removing duplicate objects: 100% (256/256), done.
-Checking connectivity: 2003814, done.
-Expanding reachable commits in commit graph: 337512, done.
-$ du -hs .git
-172G    .git
-$ git count-objects
-178734 objects, 175309572 kilobytes
-
-> Does it help to prune them --exprire now?
-
-$ git prune
-Checking connectivity: 1825478, done.
-$ du -hs .git
-3.9G    .git
-$ git --version
-git version 2.26.2
-
-So it is my wrong expectation that 'gc' comand removes garbage. It
-creates it en masse.
-
-It just makes is in a way that the 'prune' command that really reoves
-garbage can now remove it.
-
-Thanks
-
-Michal
+I agree that it would make the code a bit noisier (to read) if
+`istate` is eliminated from the callback structure, however, even
+though I didn't originally feel strongly one way or the other about
+having both `repo` and `istate` in the structure, I'm now leaning more
+toward seeing `istate` eliminated. My one (big) concern with `istate`
+is that it confuses readers into wondering whether `istate` and
+`repo->istate` will ever be different. One way to avoid such confusion
+would be to leave a comment in the code stating that the two values
+will always be the same. The other way, of course, is to eliminate
+`istate` from the structure altogether. I don't want to make more work
+for you, but the more I think about it, the more I feel that removing
+`istate` is the sensible thing to do. (And it doesn't require an extra
+patch -- it can just be how this patch is crafted -- without ever
+introducing `istate` to the structure in the first place.)
