@@ -4,189 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A7F6C433E6
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC177C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1A2423447
+	by mail.kernel.org (Postfix) with ESMTP id AE4E823443
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727004AbhAGUCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:01 -0500
+        id S1727072AbhAGUBq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:01:46 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726064AbhAGUCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 15:02:01 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7F28C061282
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:39 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id r3so6848363wrt.2
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:39 -0800 (PST)
+        with ESMTP id S1726326AbhAGUBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 15:01:46 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CA69C0612F5
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:30 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id 91so6831942wrj.7
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xk6I5P6DqHm/qwpFbAbA7RHflfrmgcuc6HeGgd6g7G4=;
-        b=NcGbF/Teqc16f+dDkiUXnywawOTCa8LMa92cFHacyB5KXmhfACxUBGjqngLviEEIQW
-         Db3/tCsE2nepoTXI9RnSbiEt9xXRci0JM5ozkErphIO1MFm1/90UHbVkt27BqBrqPgSn
-         cjVfYMQ3Gf9WqT3GUFmixNKfySlSh2vK0SPAmrQhmidvUf2PuFXMMAH3ojYjHlQF605O
-         iRFBHKpiusak97yqr28BYEz1bPDsNOtIicVYWph6fEuUI4DZyp+Ijqky4QU+Q/Lp3Izq
-         Y5GHDcaBn6kC2Sv4zdl4uFmLJP1SiAhM0GfzpvlPfWSc0EPvAHOqD3Gifs3rVojbmrxG
-         Ifvg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=SdrSdTzEIutmWUiv9EhRLfX/FvXp2WtwaB5DX/FVMgc=;
+        b=VXhJdk6BEWUrKIM7U4FTSkJvDdcNmNuNiD4bbN0WAJoXRO8uXt2KbViVaY1Z1olwdn
+         aZ4UyC1sEC9iY7GPSyTFapRnrgUrEv9N6dE9lZCoCTbkye0R0Zfzi6b59AU2CMtfoxsS
+         6CmkngWtsdlgIBSb4dXkqp8yva7KnvkddsvDQUS84M3Jd5N7yRmb2TurzB5tpVVP9xIQ
+         Zm2tfTVwKLev09FUj2K7fML98CUHYiUX7+OsGDn3nzseaOZcKcS1UoLZDEWOp+OKWgkF
+         NZgEKjC8dfYZ+aMzmLE9OpGyYU9G3mOAhaCjfc0OLAD1qEe7wLZXKON5irffe0EA/QQF
+         q1Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xk6I5P6DqHm/qwpFbAbA7RHflfrmgcuc6HeGgd6g7G4=;
-        b=KopSlqHE4bgg2+tkOjEj1g0aqydhoQHhAKG6O7tFCBZhvdm3rgESAILB5aPNxUSsC+
-         +gVc2dzj3aO6z7rmSLXEQiRgL8RlED8wGDCZa9kvdQcEnVyUj2RkISVaB9fAdh6jJBIE
-         05PB77bkuCGIHelQhqGtlCRZiTs0XMPnTLfBTqgTWWRQprOJXNYoYiC/8CMOuAJQMo3h
-         beqDqmupZTqVnjjAM1GKHxvYkQh/OKAd4jEwEQAn1aJ6PmvUFZQZdDMfpA3MFklVvM8F
-         9TVgX+Gsrcy8gO0EE60hep4lONlK5x3LNDQox7P6DU+KDV+JBjaJv1Iuns12ut2KMeSH
-         XmDg==
-X-Gm-Message-State: AOAM530Zu0FyOtsUwmn6mM5bU239J3tnMJLKmruvzzsrlbAtcXa9qhvo
-        werU9XFteCTFNiF68EiBX3leE3+k6Y8=
-X-Google-Smtp-Source: ABdhPJwgG/iAaWKSh2iaRz6VYgoV/XxBfu8MRAteS9fBrhB8TdsuZ1QBf+COvIFSDucqN3BfvAUeaw==
-X-Received: by 2002:adf:fb85:: with SMTP id a5mr249460wrr.331.1610049698415;
-        Thu, 07 Jan 2021 12:01:38 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=SdrSdTzEIutmWUiv9EhRLfX/FvXp2WtwaB5DX/FVMgc=;
+        b=TwrYm2ktxiCdTZv/2hmotWNxnV8GuhKva+5pm8xQ33yeSJ90vNB28G8RYJ1Emy04df
+         qZoV8+Vh7n8dJ3NoZ8ZWlWG53hAxHghvvrl5FzaiSdkiQBExIObRcbhssisHnoQnE52L
+         9ujx+PrzDHENdyRoaRKfaHgDnE5QWIqJEdEGNwHbKmHEZQHPXWERzDDPmwlt5DILIgId
+         br8uph9dMU+0rBC9syUpef57KBryVyNOYyIpDFi+c0tpozbDMoRRUNRuMevOYbd4KFM+
+         IrU8F3C01DkkXUdBWenT7WlvfUscoLls4fzj9F/bDLJo6w/egUEMeg3RHXlVIFCw5cma
+         6Y8g==
+X-Gm-Message-State: AOAM5312n9LkbdRxn8OyeGJoNlx6IrItDYPbo2Qs/xcD6QQpXPA46l89
+        dCNmq9PMFRlJcNecgIYu93F9Wps5gpw=
+X-Google-Smtp-Source: ABdhPJyLCFiQdPhijjdZ/eB4iJXHBO6CUMtZ6zr4C7irosgcGFrilVhT6zoGIy4SzvDdpzK+kDqkTw==
+X-Received: by 2002:adf:f88d:: with SMTP id u13mr269072wrp.161.1610049688982;
+        Thu, 07 Jan 2021 12:01:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u66sm9171233wmg.30.2021.01.07.12.01.37
+        by smtp.gmail.com with ESMTPSA id h29sm10561887wrc.68.2021.01.07.12.01.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:37 -0800 (PST)
-Message-Id: <9a06c698857d4067ea34f9ae9dd610b999b907b8.1610049687.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
-References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:28 -0800 (PST)
+Message-Id: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:19 +0000
-Subject: [PATCH 10/18] merge-ort: implement compute_collisions()
+Date:   Thu, 07 Jan 2021 20:01:09 +0000
+Subject: [PATCH 00/18] Add directory rename detection to merge-ort
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+[This is a resend of
+https://lore.kernel.org/git/20210104235006.2867404-1-newren@gmail.com/ from
+Monday without any changes; I wanted to move it to gitgitgadget for testing
+and such after I remembered I had perms to create temporary branches for the
+pull request base.]
 
-This is nearly a wholesale copy of compute_collisions() from
-merge-recursive.c, and the logic remains the same, but it has been
-tweaked slightly due to:
+This series depends on a merge of en/merge-ort-3 and en/merge-ort-recursive.
+It does not depend on the en/ort-conflict-handling.
 
-  * using strmap.h API (instead of direct hashmaps)
-  * allocation/freeing of data structures were done separately in
-    merge_start() and clear_or_reinit_internal_opts() in an earlier
-    patch in this series
-  * there is no non_unique_new_dir data field in merge-ort; that will
-    be handled a different way
+This series mostly implements directory rename detection for merge-ort; I'll
+cover the "mostly" bit below. If one merges this series with en/merge-tests
+and en/ort-conflict-handling, then this series drops the number of failing
+tests in the testsuite under GIT_TEST_MERGE_ALGORITHM=ort from 60 down to 8.
 
-It does depend on two new functions, apply_dir_rename() and
-check_dir_renamed() which were introduced with simple
-die-not-yet-implemented shells and will be implemented in subsequent
-patches.
+There's a lot of code here, but almost all of the logic is just copied over
+from similarly named functions in merge-recursive.c, as repeatedly noted in
+the commit messages. There are several minor differences spread throughout
+that make it not be a direct copy:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 67 insertions(+), 1 deletion(-)
+ * using strmap API instead of direct hashmap calls
+ * ort keeps track of all files and directories and their shas in
+   opt->priv->paths; no need to re-walk tree objects
+ * keeping the necessary invariants for opt->priv->paths
+ * we can pre-compute which directories are removed (stored in
+   dirs_removed), avoiding the need for some post-processing
+ * since ort already has struct rename_info, add the extra data there and
+   allocate/free it with the rest of the rename_info
+ * no non_unique_new_dir field, leading to the failure of test 2b; this will
+   be addressed in a different way with upcoming performance work.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index f7ecd76c479..e436418d0d2 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -726,6 +726,19 @@ struct collision_info {
- 	unsigned reported_already:1;
- };
- 
-+/*
-+ * Return a new string that replaces the beginning portion (which matches
-+ * rename_info->key), with rename_info->util.new_dir.  In perl-speak:
-+ *   new_path_name = (old_path =~ s/rename_info->key/rename_info->value/);
-+ * NOTE:
-+ *   Caller must ensure that old_path starts with rename_info->key + '/'.
-+ */
-+static char *apply_dir_rename(struct strmap_entry *rename_info,
-+			      const char *old_path)
-+{
-+	die("Not yet implemented!");
-+}
-+
- static void get_renamed_dir_portion(const char *old_path, const char *new_path,
- 				    char **old_dir, char **new_dir)
- {
-@@ -965,11 +978,64 @@ static void handle_directory_level_conflicts(struct merge_options *opt)
- 	string_list_clear(&duplicated, 0);
- }
- 
-+static struct strmap_entry *check_dir_renamed(const char *path,
-+					      struct strmap *dir_renames)
-+{
-+	die("Not yet implemented!");
-+}
-+
- static void compute_collisions(struct strmap *collisions,
- 			       struct strmap *dir_renames,
- 			       struct diff_queue_struct *pairs)
- {
--	die("Not yet implemented.");
-+	int i;
-+
-+	strmap_init_with_options(collisions, NULL, 0);
-+	if (strmap_empty(dir_renames))
-+		return;
-+
-+	/*
-+	 * Multiple files can be mapped to the same path due to directory
-+	 * renames done by the other side of history.  Since that other
-+	 * side of history could have merged multiple directories into one,
-+	 * if our side of history added the same file basename to each of
-+	 * those directories, then all N of them would get implicitly
-+	 * renamed by the directory rename detection into the same path,
-+	 * and we'd get an add/add/.../add conflict, and all those adds
-+	 * from *this* side of history.  This is not representable in the
-+	 * index, and users aren't going to easily be able to make sense of
-+	 * it.  So we need to provide a good warning about what's
-+	 * happening, and fall back to no-directory-rename detection
-+	 * behavior for those paths.
-+	 *
-+	 * See testcases 9e and all of section 5 from t6043 for examples.
-+	 */
-+	for (i = 0; i < pairs->nr; ++i) {
-+		struct strmap_entry *rename_info;
-+		struct collision_info *collision_info;
-+		char *new_path;
-+		struct diff_filepair *pair = pairs->queue[i];
-+
-+		if (pair->status != 'A' && pair->status != 'R')
-+			continue;
-+		rename_info = check_dir_renamed(pair->two->path, dir_renames);
-+		if (!rename_info)
-+			continue;
-+
-+		new_path = apply_dir_rename(rename_info, pair->two->path);
-+		assert(new_path);
-+		collision_info = strmap_get(collisions, new_path);
-+		if (collision_info) {
-+			free(new_path);
-+		} else {
-+			collision_info = xcalloc(1,
-+						 sizeof(struct collision_info));
-+			string_list_init(&collision_info->source_files, 0);
-+			strmap_put(collisions, new_path, collision_info);
-+		}
-+		string_list_insert(&collision_info->source_files,
-+				   pair->two->path);
-+	}
- }
- 
- static char *check_for_directory_rename(struct merge_options *opt,
+These differences make a direct comparison difficult, but there's not really
+any new or novel logic; the logic for how directory rename detection is
+performed is identical to what is found in merge-recursive; it's just
+packaged slightly differently.
+
+...with one exception -- the final patch in the series modifies the logic
+and makes it different than merge-recursive in order to fix a known bug
+(testcase 12f of t6423).
+
+There are still four failing tests in t6423 (directory rename tests) after
+this series:
+
+ * one test (2b) where merge-ort erroneously prints a "directory rename
+   split" conflict message, despite the fact that there is no new file and
+   thus no need for a directory rename to be detected. This comes from the
+   lack of a non_unique_new_dir field that I didn't bother copying, since
+   performance work will address it in a completely different way.
+
+ * two tests (12b1 and 12c1) where merge-ort produces the same result at
+   merge-recursive (these tests are marked as test_expect_failure for
+   merge-recursive). Some performance work will fix these two tests.
+
+ * one test (12f) where merge-ort produces a better result than
+   merge-recursive.c (this test is marked as test_expect_failure for
+   merge-recursive), but where merge-ort does not yet manage to pass the
+   final four lines of the test related to performance checking.
+
+Elijah Newren (18):
+  merge-ort: add new data structures for directory rename detection
+  merge-ort: initialize and free new directory rename data structures
+  merge-ort: collect which directories are removed in dirs_removed
+  merge-ort: add outline for computing directory renames
+  merge-ort: add outline of get_provisional_directory_renames()
+  merge-ort: copy get_renamed_dir_portion() from merge-recursive.c
+  merge-ort: implement compute_rename_counts()
+  merge-ort: implement handle_directory_level_conflicts()
+  merge-ort: modify collect_renames() for directory rename handling
+  merge-ort: implement compute_collisions()
+  merge-ort: implement apply_dir_rename() and check_dir_renamed()
+  merge-ort: implement check_for_directory_rename()
+  merge-ort: implement handle_path_level_conflicts()
+  merge-ort: add a new toplevel_dir field
+  merge-ort: implement apply_directory_rename_modifications()
+  merge-ort: process_renames() now needs more defensiveness
+  merge-ort: fix a directory rename detection bug
+  DO NOT SUBMIT: directory rename stuff for redo_after_renames
+
+ merge-ort.c | 876 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 857 insertions(+), 19 deletions(-)
+
+
+base-commit: 9c85b62e817e83401855e4f2e11283be8386739e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-835%2Fnewren%2Fort-directory-renames-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-835/newren/ort-directory-renames-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/835
 -- 
 gitgitgadget
-
