@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0DB2C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39271C433E6
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C656823444
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF9EB23444
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727999AbhAGUCS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51884 "EHLO
+        id S1726961AbhAGUCT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:02:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727903AbhAGUCR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727833AbhAGUCR (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 7 Jan 2021 15:02:17 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A3F8C0612FD
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:37 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id c124so6104182wma.5
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:37 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99BBAC0612A1
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:43 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id y23so6579099wmi.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4JP1HOJAF5tmslgBv1jJeKDuRrchYeWGkW2hGbQECY0=;
-        b=Nd7qC/DYENxcM3UNuUSUkwQ3y6nepmk4E09I6PB0Qlo4nNy5rmGULuH6kImopn9wQn
-         2Wt6vNswPlGflLkkFHNhzJUY2IL2c6LzrgyWLnEiPE/PbHel8bchCHdoUC657riecK7B
-         cgqgM/PPgb/6KX/qAdDhpY8a8LkIN8H/bBDTFW7+539XW44xrJY2Jh900/oFEsS7NAyM
-         evA07W5+w+ENYB0xX3UeVKugH25avdl3jwt+PXxFZ0VCHk+HhT0KoScrMs8p8wzrZ6Hn
-         R4stSvf/1HCkDc9QkdhmSPpA8B1C7RAMdKAERqDTh9yebEPcxScXvamcW6c95JGa2EOk
-         IZhw==
+        bh=VsDDCUfuM3/U0xqHj0cutD4REsVRsW0DC2i4mKl9dK0=;
+        b=jhYRmY/syqj36Z6Pg3EPgp87yIVQ7A+nOezf0PPq/2EriFTAfk61aNPA2A/kHq8JS1
+         wyvlMYv56p//Te3N4Zpy/cTcIvdh1kCrNyPVDnUfnKSiQ5TfH8tfIkNnx0Myy/wFVH2+
+         9FvTA+msihX2E8S0gNlYx7eT/HOqyruUw+YWiWit15PMriQfK6er9U3sxMU1Btu6WLqx
+         Y7nbyEts8+lEtd+4PS0KCklAPsw9eA64IrTbJq+jNOf0XNL12MlprV3Fpx4h5BLh6JPW
+         iSeW0aeXT0YgZ1ZpuwCG++y0XwKYJrtZDbOVRdiILk7TzQ0Zknm1BKgC/f7NFPTBE5oY
+         RpsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4JP1HOJAF5tmslgBv1jJeKDuRrchYeWGkW2hGbQECY0=;
-        b=ROIyfswAjUrjfDK4YiHdYDbknRavqrXu0Xfa612yCgLDnKM6NOczTc18UhvVRV9Ced
-         0pa3SQH9mRmNMutvczm4e13t+8m2mjpBuZZETsxULi3RLowGm/ywBaVwasc54gt8NcPc
-         nSDqIbikH3vbvc3Rj9NXyE0ZjJ5Vpxahqas5VK0HOUzOKW6oaLFK1hHZrylYDwPQ+ErV
-         bRIHjhO2tCuQALGfro7qLm9aBggdq0tk1MD/xtjCRgQuEFUUdA7otN8a2HJ594YCcmwT
-         WcVt/9pWS3iuASmg5sutNQ0tCCscChpqGKE2wIM/VkmdGXVlG2Za0rIzjXAt0v4LogTt
-         oyNA==
-X-Gm-Message-State: AOAM532g0igpoxr8LtbK1t7t4rvzjjTCl8YXu8VspR561Ul/4P8+3lPo
-        f5mCNOVEnhlJw4288eZQCkUva2XmRWY=
-X-Google-Smtp-Source: ABdhPJxLJB3g8beJ7dIBz61F4Nr8/EY2SVu56Ea/r4Fj6x+rxeOkQf+v5zPnlRHrB7rqVu/lIlvdTQ==
-X-Received: by 2002:a05:600c:2042:: with SMTP id p2mr173251wmg.152.1610049695674;
-        Thu, 07 Jan 2021 12:01:35 -0800 (PST)
+        bh=VsDDCUfuM3/U0xqHj0cutD4REsVRsW0DC2i4mKl9dK0=;
+        b=aYTcw2JmP8Oso8Es2kl6Wj8v58PhESjG3U1S273EbMqkSXV2ZYDLtzbgL13Vca2bqh
+         Sy61N0IprAVkzjoU0ProrwzgkiExrurJGCJlTRfuufHxuK3qJKOry5TyvlY6/tFY4VD9
+         9lz6yWVLX7xxKEgkhP7W7dq+og40/RuyMoFnNLimCSrkEafhdN5fuVRHz373SZ8YQJWT
+         /2jMbCHbQLxtONxHuz+utMfTLB7EWOmX632OnOJls3LqOlqNiScIH4Et/BZlB1HiQaH0
+         1mJc5XzY7MaaPujiJzbrf6kzWuItJWfk30zCM7958JI45RktQMLt2Bzmswqj8wrIc1Q4
+         6MRQ==
+X-Gm-Message-State: AOAM533kgMneIiREioIQE8jMxvhxHSaI+Lht01mr5+iZchMOJzAuxZyD
+        lQPSeaf/zyZCJ6+VNjRYT+EDMLH3XQ0=
+X-Google-Smtp-Source: ABdhPJy2t+ZwJmXiXtIQi0LVpLgPtf3IjFe6d6k0Q6zSdtD4j38xTRT/QeF38EqJzelF+8OrqrZCbA==
+X-Received: by 2002:a1c:24c4:: with SMTP id k187mr193858wmk.14.1610049702199;
+        Thu, 07 Jan 2021 12:01:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l5sm10006218wrv.44.2021.01.07.12.01.34
+        by smtp.gmail.com with ESMTPSA id l1sm10008383wrq.64.2021.01.07.12.01.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:35 -0800 (PST)
-Message-Id: <1e48cde01b9e2fe24eeda063e0298db8421b13a7.1610049687.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:41 -0800 (PST)
+Message-Id: <4b912f2c0251b7d19ba74f0af5563605f6ad9667.1610049687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:16 +0000
-Subject: [PATCH 07/18] merge-ort: implement compute_rename_counts()
+Date:   Thu, 07 Jan 2021 20:01:23 +0000
+Subject: [PATCH 14/18] merge-ort: add a new toplevel_dir field
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,89 +76,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This function is based on the first half of get_directory_renames() from
-merge-recursive.c
+Due to the string-equality-iff-pointer-equality requirements placed on
+merged_info.directory_name, apply_directory_rename_modifications() will
+need to have access to the exact toplevel directory name string pointer
+and can't just use a new empty string.  Store it in a field that we can
+use.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 2 deletions(-)
+ merge-ort.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 7e0cc597055..a8fcc026031 100644
+index 43cfee29bd0..19850ffc0ab 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -721,7 +721,6 @@ static int handle_content_merge(struct merge_options *opt,
+@@ -168,12 +168,15 @@ struct merge_options_internal {
+ 	struct rename_info renames;
  
- /*** Function Grouping: functions related to directory rename detection ***/
+ 	/*
+-	 * current_dir_name: temporary var used in collect_merge_info_callback()
++	 * current_dir_name, toplevel_dir: temporary vars
+ 	 *
+-	 * Used to set merged_info.directory_name; see documentation for that
+-	 * variable and the requirements placed on that field.
++	 * These are used in collect_merge_info_callback(), and will set the
++	 * various merged_info.directory_name for the various paths we get;
++	 * see documentation for that variable and the requirements placed on
++	 * that field.
+ 	 */
+ 	const char *current_dir_name;
++	const char *toplevel_dir;
  
--MAYBE_UNUSED
- static void get_renamed_dir_portion(const char *old_path, const char *new_path,
- 				    char **old_dir, char **new_dir)
- {
-@@ -825,11 +824,61 @@ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
- 	*new_dir = xstrndup(new_path, end_of_new - new_path);
- }
+ 	/* call_depth: recursion level counter for merging merge bases */
+ 	int call_depth;
+@@ -682,10 +685,10 @@ static int collect_merge_info(struct merge_options *opt,
+ 	int ret;
+ 	struct tree_desc t[3];
+ 	struct traverse_info info;
+-	const char *toplevel_dir_placeholder = "";
  
-+static void increment_count(struct strmap *dir_rename_count,
-+			    char *old_dir,
-+			    char *new_dir)
-+{
-+	struct strintmap *counts;
-+	struct strmap_entry *e;
-+
-+	/* Get the {new_dirs -> counts} mapping using old_dir */
-+	e = strmap_get_entry(dir_rename_count, old_dir);
-+	if (e) {
-+		counts = e->value;
-+	} else {
-+		counts = xmalloc(sizeof(*counts));
-+		strintmap_init_with_options(counts, 0, NULL, 1);
-+		strmap_put(dir_rename_count, old_dir, counts);
-+	}
-+
-+	/* Increment the count for new_dir */
-+	strintmap_incr(counts, new_dir, 1);
-+}
-+
- static void compute_rename_counts(struct diff_queue_struct *pairs,
- 				  struct strmap *dir_rename_count,
- 				  struct strset *dirs_removed)
- {
--	die("Not yet implemented!");
-+	int i;
-+
-+	for (i = 0; i < pairs->nr; ++i) {
-+		char *old_dir, *new_dir;
-+		struct diff_filepair *pair = pairs->queue[i];
-+
-+		if (pair->status != 'R')
-+			continue;
-+
-+		/* Get the old and new directory names */
-+		get_renamed_dir_portion(pair->one->path, pair->two->path,
-+					&old_dir,        &new_dir);
-+		if (!old_dir)
-+			/* Directory didn't change at all; ignore this one. */
-+			continue;
-+
-+		/*
-+		 * Make dir_rename_count contain a map of a map:
-+		 *   old_directory -> {new_directory -> count}
-+		 * In other words, for every pair look at the directories for
-+		 * the old filename and the new filename and count how many
-+		 * times that pairing occurs.
-+		 */
-+		if (strset_contains(dirs_removed, old_dir))
-+			increment_count(dir_rename_count, old_dir, new_dir);
-+
-+		/* Free resources we don't need anymore */
-+		free(old_dir);
-+		free(new_dir);
-+	}
- }
- 
- static void get_provisional_directory_renames(struct merge_options *opt,
+-	opt->priv->current_dir_name = toplevel_dir_placeholder;
+-	setup_traverse_info(&info, toplevel_dir_placeholder);
++	opt->priv->toplevel_dir = "";
++	opt->priv->current_dir_name = opt->priv->toplevel_dir;
++	setup_traverse_info(&info, opt->priv->toplevel_dir);
+ 	info.fn = collect_merge_info_callback;
+ 	info.data = opt;
+ 	info.show_all_errors = 1;
 -- 
 gitgitgadget
 
