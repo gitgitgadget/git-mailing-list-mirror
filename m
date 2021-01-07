@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE75C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBCF7C4332B
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:33:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F87423433
+	by mail.kernel.org (Postfix) with ESMTP id A352D233FC
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:33:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728812AbhAGQdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 11:33:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47378 "EHLO
+        id S1728644AbhAGQdg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 11:33:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728741AbhAGQdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 11:33:37 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C19C0612FF
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 08:32:24 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id w5so6210273wrm.11
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 08:32:24 -0800 (PST)
+        with ESMTP id S1727753AbhAGQdf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 11:33:35 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B9DC0612FA
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 08:32:19 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 190so5712204wmz.0
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 08:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=RWzNeO0RUBCbiAHqidiz31YNJN86Cus3A4MuiXII+/s=;
-        b=RtAPVIWEieGYsb9bWyM4S2J3cEVTLBi1lWao5b9gx10IgP9arcPnR9aZVmbNJX5Rjm
-         tPhsKKbbekF5NnydQ0myDFQOCKAbyGC15LYzOi07kERyTG0GYts+y/zUi7TnqXZJMfX1
-         A5HBhO64Rjyf9NYR9r9YE+JQTzm7SX2A0TjGL8X1pkPtTyWnTQjM76S722rD01pPy0Sb
-         WMiFHv12iiYehEUU2mxag/5ullhyiMQsGc3jrgu95+V12U/S5oFqC0ktRd0gC9b2AqGv
-         pvoOs70eefEaFd5oGI06jwPmOSqFheeJ5vMNUXVn6R/+smdkK0A7Qtz5QWJHP/uDwKET
-         fczQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1cXbZJPHh6PbIf9iSugyF98nzI72FppH2Gn56ddappw=;
+        b=IarpQOBlNs+ZA/I8l2LL5wnq8KdrM5bbgmbZQRRNLRCqdCXhTwlUOC4zeMjes7hRGG
+         dA7M0SGhlnpBjNKjkgteUfQOJ9ZmHSIOuhwMEBDkQm3trsMDyad38cMYV65KyXGY6N22
+         FaON3nDAovbPtXu2MRJB/r4CQ3TyBvOifIaC55QM1gOVmcd0fj3tjG3M3+y2qlUYxW7A
+         +prxs1cbSw6lvXZlLwqPcr+x8tdbrtbkE3rj9QSwFOE3vrTfEKC3GghCgPXcPCfmoR7r
+         XG+kYYskhxaMqNFtv+jVlZuB6LmZ5TR98zUAvNO8BkxwHh2Al5GBZbFCSAkZGOtAseGT
+         9n6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=RWzNeO0RUBCbiAHqidiz31YNJN86Cus3A4MuiXII+/s=;
-        b=umX1pWStaW1vhVbYG0IH1OIGCP9i4rodT1OirS3PlaOrsg9aUeYP/vu9O2SmDm6jLC
-         PhVDGQoB+ryvKN+1dXSDts9NPKFxSTPQS5uc9Xx41ZzZeJC1UqC1Av3m9WkGyHtrsk2Q
-         4mdnzxVIN4LG8DWsGKD7i7DfIprQxxoN9bkercDoQBQM5Qy2iw7zTIO5DiwZvJLrw8QM
-         UkKSTQQFEyzUdX8V7V5gm/u/AtDp96ADhiS3Pi3pyfnIAHzKWRbaEPwlz0TL3yxHZqyX
-         8rWhWyntivvfn8OECQDWJr84MubJTwjsKBf/hyV6BMR8AHquZ0klYRvmv54dSE920O2e
-         a0uw==
-X-Gm-Message-State: AOAM530bpn7m0C/9aQsVkStAJnBU5M1L2otEgxQ3BM2UqsNLHSlKImfQ
-        RaAKAQJCQNWNFBOVXGDSJZK4DMVBcUk=
-X-Google-Smtp-Source: ABdhPJzuXbPgIt3cz3Cc4lhx7gAVnoIqIh6HNsd7d+YC0aktUYifF8UcAJIsNqEWJhSoq4pSUk1eZA==
-X-Received: by 2002:adf:ded1:: with SMTP id i17mr9611469wrn.190.1610037142689;
-        Thu, 07 Jan 2021 08:32:22 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=1cXbZJPHh6PbIf9iSugyF98nzI72FppH2Gn56ddappw=;
+        b=HQlmsnAsEP98MklEHfqvyOHhPaxAIx/q/0jelae/DDJGUoYGCh3joI1hL8M+Dbcjrd
+         wdkUHIwQdrNcBWpEob0bDtv6fwnwyWv0QU2MKym1sMjQP3DR11DZbrdnn/NCFn+8uEs2
+         xts7naLQWPbOxFBWoc1Kudw5F/sYAsnmERvy7Eld/iC5stlLFlCGTv2+W1X6dY96E7TE
+         1uL+ANvYAjNTjEf+VJq7QD1JOE3f1iY4T70UotdGqkE2QCJW6oEb4Yw9PUJXgr7amE3/
+         /X9xbTKt/J/U/kcF7u4tsz31tzM/k9+sQgTtjCB2iuI0NCaxsksMVq/sik8tJPOUZUPe
+         Y2aw==
+X-Gm-Message-State: AOAM532pSxga0CnObE0COra+2fKbTyKUHcwwxTbIHiZ+feB3/wAAtHWO
+        E9Kg+CpKd2z0tgjqfFeq/QoNcUMKYA4=
+X-Google-Smtp-Source: ABdhPJxgywc3OJbsJkkbDU96CJ0xc06K4sM5MaxiGFk8ZTAyvbUbnkR69CIPwT+rnUrL4KSFMV4hWg==
+X-Received: by 2002:a1c:a706:: with SMTP id q6mr8729482wme.7.1610037138112;
+        Thu, 07 Jan 2021 08:32:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h15sm8625068wru.4.2021.01.07.08.32.22
+        by smtp.gmail.com with ESMTPSA id h16sm8630574wrq.29.2021.01.07.08.32.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 08:32:22 -0800 (PST)
-Message-Id: <7c1c206a0bccd25842e49b282d64432d61e879d8.1610037132.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 08:32:17 -0800 (PST)
+Message-Id: <2b2e70bb77c8dafbf2cfedd9e68f834f02deb4a2.1610037132.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.829.v3.git.1610037131.gitgitgadget@gmail.com>
 References: <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
         <pull.829.v3.git.1610037131.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 16:32:11 +0000
-Subject: [PATCH v3 10/10] cache-tree: speed up consecutive path comparisons
-MIME-Version: 1.0
+Date:   Thu, 07 Jan 2021 16:32:06 +0000
+Subject: [PATCH v3 05/10] cache-tree: trace regions for prime_cache_tree
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com,
         Derrick Stolee <stolee@gmail.com>,
@@ -79,53 +79,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The previous change reduced time spent in strlen() while comparing
-consecutive paths in verify_cache(), but we can do better. The
-conditional checks the existence of a directory separator at the correct
-location, but only after doing a string comparison. Swap the order to be
-logically equivalent but perform fewer string comparisons.
-
-To test the effect on performance, I used a repository with over three
-million paths in the index. I then ran the following command on repeat:
-
-  git -c index.threads=1 commit --amend --allow-empty --no-edit
-
-Here are the measurements over 10 runs after a 5-run warmup:
-
-  Benchmark #1: v2.30.0
-    Time (mean ± σ):     854.5 ms ±  18.2 ms
-    Range (min … max):   825.0 ms … 892.8 ms
-
-  Benchmark #2: Previous change
-    Time (mean ± σ):     833.2 ms ±  10.3 ms
-    Range (min … max):   815.8 ms … 849.7 ms
-
-  Benchmark #3: This change
-    Time (mean ± σ):     815.5 ms ±  18.1 ms
-    Range (min … max):   795.4 ms … 849.5 ms
-
-This change is 2% faster than the previous change and 5% faster than
-v2.30.0.
+Commands such as "git reset --hard" rebuild the in-memory representation
+of the cached tree index extension by parsing tree objects starting at a
+known root tree. The performance of this operation can vary widely
+depending on the width and depth of the repository's working directory
+structure. Measure the time in this operation using trace2 regions in
+prime_cache_tree().
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ cache-tree.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/cache-tree.c b/cache-tree.c
-index 4274de75bac..3f1a8d4f1b7 100644
+index 45fb57b17f3..7da59b2aa07 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -191,8 +191,8 @@ static int verify_cache(struct cache_entry **cache,
- 		const char *next_name = next_ce->name;
- 		int this_len = ce_namelen(this_ce);
- 		if (this_len < ce_namelen(next_ce) &&
--		    strncmp(this_name, next_name, this_len) == 0 &&
--		    next_name[this_len] == '/') {
-+		    next_name[this_len] == '/' &&
-+		    strncmp(this_name, next_name, this_len) == 0) {
- 			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
+@@ -744,10 +744,13 @@ void prime_cache_tree(struct repository *r,
+ 		      struct index_state *istate,
+ 		      struct tree *tree)
+ {
++	trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
+ 	cache_tree_free(&istate->cache_tree);
+ 	istate->cache_tree = cache_tree();
++
+ 	prime_cache_tree_rec(r, istate->cache_tree, tree);
+ 	istate->cache_changed |= CACHE_TREE_CHANGED;
++	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
+ }
+ 
+ /*
 -- 
 gitgitgadget
+
