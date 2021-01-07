@@ -7,89 +7,187 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 861D3C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2071BC433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:22:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EC14233FC
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:18:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFF0C233CF
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 18:22:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729291AbhAGSSP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 13:18:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35678 "EHLO
+        id S1728118AbhAGSWe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 13:22:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbhAGSSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 13:18:15 -0500
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F42C0612F6
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 10:17:34 -0800 (PST)
-Received: by mail-vs1-xe2a.google.com with SMTP id e20so4099948vsr.12
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 10:17:34 -0800 (PST)
+        with ESMTP id S1726326AbhAGSWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 13:22:32 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79522C0612F6
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 10:21:52 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id x13so8376094oic.5
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 10:21:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VKEXqSsWkXkVK9cEtgRbEQD68J/NSkZdG1FfP0MSHrE=;
-        b=EooQH+tYbIBBvYEoGWcdS4L7NPQN8EaAy9k6yKPL41fw1bly0+owLvYpHkMJUP/FLC
-         s72GxkDTu8+P3lPKMgCfHzMA4zfCyzQZirY0z4kHWKt5BLdQbVEolPnUr94liEbnBmva
-         moQ94MSG0oI4dMfv8aRgeeYp0PDHrA/On59npF6iLCAHULTSpgQ1K0r7OYaqgSlMtxFX
-         2mDwNft6l2wk5H9HBsh9TkSbzjN6Vvm9E3RkB9Tg/J2sxqxGMNxJWpv16HFfCugO4sRh
-         ygrwpFW9Krt56SO7SPEoEJE3BlgZIxGuKR7VADUbJ4OfbxMdXSVzRbCitWLg/sBz+aMD
-         QM1w==
+         :cc;
+        bh=E0EUT8x8Td0vBl/DZj6337FI47Mu4xg5q9dkUDaP/xY=;
+        b=mgsmXDJsTf9L5OVJvHFYtXAUnSuqI/F84sEZiQZlujmzVrIZrfKv/AHzmYDuPITJpj
+         H+NuUasA7SVxnT5BbrDatYNdVwcJojwbEA+4IV6tpvKOHCAmnXKGEr2l8Rdk6cOLM8iN
+         vxOdDudE6QX/7XqTMamG295UnhLgJJipDu/Sf5O6z/4eq9XsI4zcC+NrIj0pquc2rpNg
+         VcFoX17wrZvgrwqrSjypn77Y/Q2XwOAwRBcmQyCtShtQ6mFl4AZlWf4oA8ECEdQLbojq
+         76hgAgMTAaP/v2i0OiJQrI9cfzwZXoFVLz9p9oR+WAoHCo+EZ/4jvWRtloQilcDAVZCJ
+         tgDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VKEXqSsWkXkVK9cEtgRbEQD68J/NSkZdG1FfP0MSHrE=;
-        b=FJ1oV0IDRizietRPWoM+Y16+/oa7AnTyNeqoCfVKqUo3OF0yWoUkbVC4dj8elYIQ44
-         CC6/RqqND3pHDbg4VmeyvEUGEoOL2VSu4uKN+i6exPfmw6juQZuvVkOCzQaSsKRiE+hT
-         VIvU+RHDJoL23eBPmdqAjHq58IP3xyNkSijt3xPE224GS7IpUQM5BUnaeUkLnhCAv7nq
-         rOUsY/kYEAY0DGUIV4f3YDmE2ThJH3GKHWfAitO/J+T+wzqfSFltvvIg1/czbS+YjFdI
-         en2Hma4nE+nO8GiBviRQk8opH6z6J8OxTW3FnyR2nI8OT0hhWMeQc5zVPLAooxIjjvMa
-         gYAQ==
-X-Gm-Message-State: AOAM5302o9Jo5b/adP/Uh6I/ewHuBNShTx/C4d+jqFpADCqucP+ByQG9
-        kpwgHeVhK67v57H+ZSkoU/SaZE5ZnxKpq5MrGn11k/EioJc=
-X-Google-Smtp-Source: ABdhPJyBKf/u77OOjJKv4gcqsge4PDclrsIQ7usGnhAvMLmiwMxTHAin4S0f8zGYTZtF2LxuyxkST2WNxaskdL5/1EA=
-X-Received: by 2002:a67:dc98:: with SMTP id g24mr8434923vsk.29.1610043454204;
- Thu, 07 Jan 2021 10:17:34 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=E0EUT8x8Td0vBl/DZj6337FI47Mu4xg5q9dkUDaP/xY=;
+        b=HvOZR70E6DRB9ThCgeZPvugjqXFdeJ//6ZGwZffnDRciZc4L0q/ryc6ZIJ0MgIK9hy
+         rkEI9wIv5mzD3sWF+EP7gHn+wrjM0T17WFhvx1r8nAtnv+ei7SW7pNiYzAL8UpodXx0K
+         6gxYAT4VxOg/24/INXrOSWCSt65idi30bi6BMRsWfzJzrfC2nT8UsR424+Zs1iiHMCZA
+         Pm6vJpWBNlPgisw4vIyR70gAoUoeUsiiq6Ix5WsTbb4u29luICkhdWB4JHhdxUFarR0C
+         WjpEefxzW+LWyvq3cogFzP4gYOtQtUey08Ygbf2s+mNBGjxr6jrWJ8p6tKa3HLo9jyCK
+         9x0A==
+X-Gm-Message-State: AOAM531qVFeMt90EyxAnLkoFg5/NoLiNtL9s9OJQ45fSpYhv8+V2f69c
+        1b2VASV4l/9MxkYgT/GsdKI1TVrHejFT6i4GfYc=
+X-Google-Smtp-Source: ABdhPJzAaiq6D/b5e+4DFaiY6DYit/q88ym2w9oVx3TS/8DwJyhnMPIzzQBby4XzkNy0D6iJAaccb046MGgh+Xg2gmI=
+X-Received: by 2002:a54:4185:: with SMTP id 5mr2157021oiy.31.1610043711787;
+ Thu, 07 Jan 2021 10:21:51 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1609874026.git.martin.agren@gmail.com> <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
- <xmqq5z4as2j9.fsf@gitster.c.googlers.com> <xmqqim89pu9k.fsf@gitster.c.googlers.com>
- <8ae92e79-ef13-3faf-2fc2-d4b107e73c36@gmail.com> <CAN0heSqdphJWgG6gLM4a8mrDLh6qGUVq5w2FYAr7g8uePrcd2w@mail.gmail.com>
- <xmqqft3dma54.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqft3dma54.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 7 Jan 2021 19:17:23 +0100
-Message-ID: <CAN0heSoK21Qx_x-69KtmuScU6cN1SqB45ptgDwV8qpeh1iTC0Q@mail.gmail.com>
-Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
+References: <xmqqa6tkn9xw.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6tkn9xw.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 7 Jan 2021 10:21:40 -0800
+Message-ID: <CABPp-BFkACtF6LHkFJNt9dTOmwfQbf8ZO=BTrPYwPSmbqc9+hg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2021, #01; Wed, 6)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 7 Jan 2021 at 09:19, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
-> > I could add a remark in the commit message of the last patch along the
-> > lines of "After this commit, renaming the `tempfile` field only trigger=
-s
-> > compilation errors in lockfile.[ch] and this one instance that we're
-> > intentionally leaving here.".
->
-> It would be a nice addition to the log message to help readers to
-> feel confident about the conversion.  It is OK if you want to add
-> one, and certainly a good trick to have in your toolbox for your
-> next conversion, but it may not be worth rerolling only to update
-> the log message with such a remark.
+Hi Junio (& Matheus),
 
-Ok, got it. So I'm not planning to reroll this series. Unless something
-else shows up, obviously.
+On Thu, Jan 7, 2021 at 5:41 AM Junio C Hamano <gitster@pobox.com> wrote:
+> * mt/grep-sparse-checkout (2020-12-06) 10 commits
+>  - t7817: do not depend on any specific default branch name
+>  - config: add setting to ignore sparsity patterns in some cmds
+>  - grep: honor sparse checkout patterns
+>  - config: correctly read worktree configs in submodules
+>  - config: make do_git_config_sequence receive a 'struct repository'
+>  - t/helper/test-config: unify exit labels
+>  - t/helper/test-config: diagnose missing arguments
+>  - t/helper/test-config: be consistent with exit codes
+>  - t1308-config-set: avoid false positives when using test-config
+>  - doc: grep: unify info on configuration variables
+>  (this branch is used by mt/rm-sparse-checkout.)
+>
+>  "git grep" has been tweaked to be limited to the sparse checkout
+>  paths.
+>
+>
+> * mt/rm-sparse-checkout (2020-12-08) 1 commit
+>  - rm: honor sparse checkout patterns
+>  (this branch uses mt/grep-sparse-checkout.)
+>
+>  "git rm" follows suit to "git grep" to ignore paths outside the
+>  sparsity pattern when the sparse checkout feature is in use.
+>
+>  Need to wait for how these fit in larger picture.
+>  cf. <CABPp-BGMX3wb7LiS1HkJpGveoW3J1oR0vVHbKTF5+qYLRF+59g@mail.gmail.com>
 
-Thank you.
+Larger picture provided last week[1].  I would now say that:
+  * mt/rm-sparse-checkout needs some small changes (Matheus: I'm happy
+to tweak the patch and add a Helped-by: Elijah to it if you want me to
+push those changes)
+  * the bug fix part of mt/grep-sparse-checkout could possibly be
+broken out and merged now (Matheus: similar question here...do you
+want help with this?)
+  * the other parts of mt/grep-sparse-checkout should probably wait
+off based on Stollee's sparse-index work mentioned later in that
+thread (Matheus: I'm so sorry we've delayed your series for so long.
+I feel bad.  But Stollee is proposing some rather big changes that
+could significantly affect this and several other things.)
 
-Martin
+[1] https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
+
+> * en/merge-ort-recursive (2020-12-16) 4 commits
+>   (merged to 'next' on 2020-12-22 at 0dbf60011f)
+>  + merge-ort: implement merge_incore_recursive()
+>  + merge-ort: make clear_internal_opts() aware of partial clearing
+>  + merge-ort: copy a few small helper functions from merge-recursive.c
+>  + commit: move reverse_commit_list() from merge-recursive
+>  (this branch uses en/merge-ort-2 and en/merge-ort-impl; is tangled with en/merge-ort-3 and en/ort-conflict-handling.)
+>
+>  The ORT merge strategy learned to synthesize virtual ancestor tree
+>  by recursively merging multiple merge bases together, just like the
+>  recursive backend has done for years.
+>
+>  Will merge to 'master'.
+
+Thanks.
+
+> * en/merge-ort-3 (2020-12-15) 11 commits
+>  - merge-ort: add implementation of type-changed rename handling
+>  - merge-ort: add implementation of normal rename handling
+>  - merge-ort: add implementation of rename collisions
+>  - merge-ort: add implementation of rename/delete conflicts
+>  - merge-ort: add implementation of both sides renaming differently
+>  - merge-ort: add implementation of both sides renaming identically
+>  - merge-ort: add basic outline for process_renames()
+>  - merge-ort: implement compare_pairs() and collect_renames()
+>  - merge-ort: implement detect_regular_renames()
+>  - merge-ort: add initial outline for basic rename detection
+>  - merge-ort: add basic data structures for handling renames
+>  (this branch uses en/merge-ort-2 and en/merge-ort-impl; is tangled with en/merge-ort-recursive and en/ort-conflict-handling.)
+>
+>  Rename detection is added to the "ORT" merge strategy.
+
+Is there a reason this is being held back in seen?  It was submitted
+and reviewed[2] before en/merge-ort-recursive which you've marked for
+merging to master.  I'm not aware of any outstanding review issues,
+and think it's ready to merge down.
+
+[2] https://lore.kernel.org/git/xmqqh7om7mdc.fsf@gitster.c.googlers.com/;
+and note that the one (embarrassing) issue highlighted in that revew
+was addressed at
+https://lore.kernel.org/git/pull.812.v3.git.1608056886.gitgitgadget@gmail.com/
+
+> * en/diffcore-rename (2021-01-04) 9 commits
+>  - diffcore-rename: remove unnecessary duplicate entry checks
+>  - diffcore-rename: accelerate rename_dst setup
+>  - diffcore-rename: simplify and accelerate register_rename_src()
+>  - t4058: explore duplicate tree entry handling in a bit more detail
+>  - t4058: add more tests and documentation for duplicate tree entry handling
+>  - diffcore-rename: reduce jumpiness in progress counters
+>  - diffcore-rename: simplify limit check
+>  - diffcore-rename: avoid usage of global in too_many_rename_candidates()
+>  - diffcore-rename: rename num_create to num_destinations
+>
+>  File-level rename detection updates.
+
+I'm curious again about your workflow and the meanings of your
+messages.  Here, I'm surprised by the change in date; in [2] you
+listed it as 2020-12-14.  Do you update the dates when you pull in new
+versions of the patch series?  (In particular, I submitted one just
+before the new year that did nothing more than correct the
+'unneccessary' typo in a commit message.)  Again, not a big deal, I'm
+just trying to understand.
+
+[2] https://lore.kernel.org/git/xmqq3608duhp.fsf@gitster.c.googlers.com/
+
+Anyway, I'm not aware of any outstanding requests for this series; I
+think it's ready to start merging down.  Are there issues you are
+aware of that you want to see fixed?
+
+> * en/stash-apply-sparse-checkout (2020-12-01) 3 commits
+>  - stash: fix stash application in sparse-checkouts
+>  - stash: remove unnecessary process forking
+>  - t7012: add a testcase demonstrating stash apply bugs in sparse checkouts
+>
+>  "git stash" did not work well in a sparsely checked out working
+>  tree.
+>
+>  Will merge to 'next'.
+
+Thanks.
