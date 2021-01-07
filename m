@@ -2,131 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21E2BC433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 02:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BE9DC433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 02:12:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE12F22D01
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 02:09:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47AB722D01
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 02:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726638AbhAGCJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 6 Jan 2021 21:09:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53750 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726525AbhAGCJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Jan 2021 21:09:39 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF2FC0612EF
-        for <git@vger.kernel.org>; Wed,  6 Jan 2021 18:08:58 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id x13so4930162oto.8
-        for <git@vger.kernel.org>; Wed, 06 Jan 2021 18:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KLCzbqR6wOn+RbD4NOqqyF8I9KX36PCeCdvhnVOat/k=;
-        b=JFBY9dbXIp2hKE9ofhrx/tKCJhL4Rmd9JVS6Q3JIfc1SL3I3jUxIxKxoeB4HRwVzzc
-         sID7TaVN9FgwVCB659H1KGYFF69tymIkJYGZm/EmChxGMlCSegeA9E5kOTMZbLtL4v0O
-         vb1k/MWNlJTpBeDgB726B5ThwfwWlyN+Yfchd/7kfaOQ2aHpzjxjv72cMRBJfBB14xbM
-         TUVqlEfIFsFJswyXBkGzyUYlk1TOLwn8Np/O59ubMoDfzL3rZk8McDG0aIq0/6l2dIhU
-         iudNYrevol+VDDyjIZv5L4M7NdibyShaGsDR0H8hQEZpkdHX6uCEaFjYtEefcAoyaJrA
-         RelA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KLCzbqR6wOn+RbD4NOqqyF8I9KX36PCeCdvhnVOat/k=;
-        b=kETCU/Dz5j5/iupia8CCBjA7x/a/B4RJ0DwT9uwWmN6E8EaOx0GkT4K7oKFGeyK6M0
-         pJvDgmsMHMq/kL/qYnxuNkkHcnRY6AYiWsZu6BeHrdto/zanZIwbY8U6D0jld9R7oP9d
-         Yar1nLS+jlALzBIuhk8TrG0fKnQIWKCTR51RPXqjEbziU4adPIcejINrQl7ElRVnWnFY
-         jf6C+oUEAENeeDV63UCSFFMjd6xDcwQat7BsqXIOHeHuIpbATVHj6hpwIWhNIwVzXNUp
-         Lrk4Bmt4796/WSuXhcPTULGehW1shCggepKLNANEgfBz5mQHBOhktBcLvNlu2wvYmhLU
-         zjyw==
-X-Gm-Message-State: AOAM530jACBmHqcWpUAhNUVQ0KDTVg/bq0EUvQJQPlHy5qket0Ki4x3Q
-        GD8tjkTWHdR1lmxyAWMe68A=
-X-Google-Smtp-Source: ABdhPJxfHQ2BC5Ip1VBuq+BbAWNXtv5LIQ3IEaF3vebvNVMJss2q//DLZK0+I271PLtLB4YHd9rnPw==
-X-Received: by 2002:a9d:57c8:: with SMTP id q8mr5186001oti.168.1609985338028;
-        Wed, 06 Jan 2021 18:08:58 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id t2sm887364otj.47.2021.01.06.18.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Jan 2021 18:08:57 -0800 (PST)
-Subject: Re: [PATCH 0/5] avoid peeking into `struct lock_file`
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>
-References: <cover.1609874026.git.martin.agren@gmail.com>
- <a401a6a7-fc15-9f26-2345-651964cf7b5d@gmail.com>
- <xmqq5z4as2j9.fsf@gitster.c.googlers.com>
- <xmqqim89pu9k.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8ae92e79-ef13-3faf-2fc2-d4b107e73c36@gmail.com>
-Date:   Wed, 6 Jan 2021 21:08:57 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1726660AbhAGCLq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 6 Jan 2021 21:11:46 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61552 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbhAGCLp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Jan 2021 21:11:45 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B8638117990;
+        Wed,  6 Jan 2021 21:11:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uEdF9lCyqmsBgv84CLV1TpzGce8=; b=Wi8E8N
+        5wY9A5HCRHg3rTyBGcFyDHSIJjcKpv7B3vSqZPK2pi/TaSy3rpTwzfxWyb4IuPGK
+        c4n7JAVyQcCxY60lZqAejUQ+JZhHcNd3gicMYLR+o23vbXWWoyG0VU5r3O3eOrFA
+        KSkKapNqenZ+JizQaTmbvIKeNrsACM69E5pRc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Uc3A/ZA8VcJE6heaCJDHv+q78vOo5kyi
+        jsrmz95ys5bC+vIGmmVsc+H6iMWZeZWLiEhuNMmjXXlk1vHScMo+YzfG636yKjnd
+        5Fr9L7fuhGO+Yu+shJjUF1vGtW/ywPfJdFlmIRog5zQ8c8H4zGdvw1tuGWM1sCLW
+        jCFUh3qiTYM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B03DE11798F;
+        Wed,  6 Jan 2021 21:11:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 056F411798C;
+        Wed,  6 Jan 2021 21:11:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 6/9] index-format: update preamble to cached tree
+ extension
+References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
+        <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
+        <75b51483d3c7088d0cfae36544966672374c50f9.1609729758.git.gitgitgadget@gmail.com>
+Date:   Wed, 06 Jan 2021 18:10:59 -0800
+In-Reply-To: <75b51483d3c7088d0cfae36544966672374c50f9.1609729758.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 04 Jan 2021
+        03:09:15 +0000")
+Message-ID: <xmqqble1o5sc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqim89pu9k.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 967DB958-508D-11EB-863D-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/6/2021 5:36 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Derrick Stolee <stolee@gmail.com> writes:
->>
->>> On 1/5/2021 2:23 PM, Martin Ågren wrote:
->>>> I made a comment in [1] about how we could avoid peeking into a `struct
->>>> lock_file` and instead use a helper function that we happen to have at
->>>> our disposal. I then grepped around a bit and found that we're pretty
->>>> good at avoiding such peeking at the moment, but that we could do
->>>> a bit better.
->>>>
->>>> Here's a series to avoid such `lk.tempfile.foo` in favor of
->>>> `get_lock_file_foo(&lk)`.
->>>>
->>>> [1] https://lore.kernel.org/git/CAN0heSrOKr--GenbowHP+iwkijbg5pCeJLq+wz6NXCXTsfcvGg@mail.gmail.com/
->>>
->>> Thanks for being diligent and keeping the code clean.
->>>
->>> This series is good-to-go.
->>>
->>> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
->>
->> Thanks, both.
-> 
-> I liked what I saw.  The code after these patches got certainly
-> clearer.
-> 
-> But it was not quite clear what I was *NOT* seeing in these patches.
-> 
-> IOW, how extensive is the coverage of these patches?  If we renamed
-> the .tempfile field to, say, .tmpfile in "struct lock_file" in
-> "lockfile.h", for example, would "lockfile.[ch]" be the *only* files
-> that need to be adjusted to make the code compile again?  The same
-> question for various fields in "struct tempfile".
- 
-There was a note in patch 5 about how do_write_index() takes a
-tempfile instead of a lockfile, because sometimes the index is
-written without a lock.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I can't say that this is otherwise comprehensive. Definitely a
-step in the right direction.
+> Subject: Re: [PATCH v2 6/9] index-format: update preamble to cached tree extension
 
-I think the only way to enforce this is to make 'struct lock_file'
-anonymous in lockfile.h and actually defined in lockfile.c, assuming
-that's possible. It seems like external callers would only be able
-to declare a pointer to one, but without access to sizeof(struct
-lock_file) these callers would be severely limited.
+By the way, the name of the extension is "cache tree".
 
-Thanks,
--Stolee
+	git grep -i 'cached[- ]tree' ':!po/'
+        
+reveals there are a handful of mistakes already present but their
+number is dwarfed when we check:
+
+	git grep -i 'cache tree' ':!po/'
+
+> I had difficulty in my efforts to learn about the cached tree extension
+> based on the documentation and code because I had an incorrect
+> assumption about how it behaved. This might be due to some ambiguity in
+> the documentation, so this change modifies the beginning of the cached
+> tree format by expanding the description of the feature.
+>
+> My hope is that this documentation clarifies a few things:
+>
+> 1. There is an in-memory recursive tree structure that is constructed
+>    from the extension data. This structure has a few differences, such
+>    as where the name is stored.
+>
+> 2. What does it mean for an entry to be invalid?
+>
+> 3. When exactly are "new" trees created?
+
+Thanks.  Describing them is a worthy goal.
+
+> +  Since the index does not record entries for directories, the cache
+> +  entries cannot describe tree objects that already exist in the object
+> +  database for regions of the index that are unchanged from an existing
+> +  commit. The cached tree extension stores a recursive tree structure that
+> +  describes the trees that already exist and completely match sections of
+> +  the cache entries. This speeds up tree object generation from the index
+> +  for a new commit by only computing the trees that are "new" to that
+> +  commit.
+
+The original motivation was the above one.  A cache of tree objects
+that correspond to unmodified part of the directory structure helps
+writing out a new tree out of modified index.
+
+We later found out that we rather often compare the index against
+the tree of HEAD (think: "git status"), and diff-lib.c::diff_cache()
+does take advantage of the fact that an entire directory can be
+skipped if the tree object taken from the HEAD side exactly matches
+the tree recorded for the subdirectory in the cache tree extension.
+
+> +  The recursive tree structure uses nodes that store a number of cache
+> +  entries, a list of subnodes, and an object ID (OID). The OID references
+> +  the exising tree for that node, if it is known to exist. The subnodes
+> +  correspond to subdirectories that themselves have cached tree nodes. The
+> +  number of cache entries corresponds to the number of cache entries in
+> +  the index that describe paths within that tree's directory.
+
+OK.
+
+> +  Note that the path for a given tree is part of the parent node in-memory
+
+Sorry, I am not sure if I follow.  The top-level in-core cache_tree
+object records the number of entries, tree object name for the
+entire tree (if valid), and cache_tree_sub structures, one for each
+subdirectory.  Each of the cache_tree_sub structure describes the
+"child" directory, including the path to it.
+
+> +  but is part of the child in the file format. The root tree has an empty
+> +  string for its name and its name does not exist in-memory.
+
+It's more like we could have consistently used cache_tree_sub
+instances to represent each and every level (i.e. I consider that
+cache_tree_sub is what represents a directory, with cache_tree being
+a record of just one aspect of it) including the root of the
+hierarchy, but because there wasn't much point in giving a name to
+the root level, I cheated and avoided wasting a cache_tree_sub for
+it.  So from that point of view, the path belongs to the node in
+each level in both in-core and on-disk representations.
+
+> +  When a path is updated in index, Git invalidates all nodes of the
+> +  recurisive cached tree corresponding to the parent directories of that
+> +  path. We store these tree nodes as being "invalid" by using "-1" as the
+> +  number of cache entries.
+
+Correct.
+
+> +  To create trees corresponding to the current
+> +  index, Git only walks the invalid tree nodes and uses the cached OIDs
+> +  for the valid trees to construct new trees.
+
+I wonder if the above is sufficiently clear, or "Git only has to
+walk the spans of index entries that corresponds to the invalid
+trees, while reusing the ..." is too long and detailed.
+
+> +  In this way, Git only
+> +  constructs trees on the order of the number of changed paths (and their
+> +  depth in the working directory). This comes at a cost of tracking the
+> +  full directory structure in the cached tree extension, but this is
+> +  generally smaller than the full cache entry list in the index.
+>  
+>    The signature for this extension is { 'T', 'R', 'E', 'E' }.
+
+Looks good.  Thanks for working on this.
