@@ -2,173 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 250FBC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CEF0C433DB
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:33:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9EE0233FC
+	by mail.kernel.org (Postfix) with ESMTP id B95DD233F6
 	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728142AbhAGQc4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 11:32:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
+        id S1727667AbhAGQcz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 11:32:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726468AbhAGQc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 11:32:56 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE47C0612F5
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 08:32:15 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id y17so6219391wrr.10
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 08:32:15 -0800 (PST)
+        with ESMTP id S1726468AbhAGQcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 11:32:55 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4B10C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 08:32:14 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id w5so6209801wrm.11
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 08:32:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Dkys2TZsvFsYLc4Nzw+wTJ/OAwTXIQdwI+QSCleLVFI=;
-        b=UZY8mM8r/vYJvIlQl61Wo9xVpINe7M5uosebvOlbbsTpoBPKw2DOeNaDnQFgizrkYr
-         sr4eJbAcm9HgKG6c0eaTH3kXEfcnELoK5WV90W3e4agXKnvn73VVJ0SphuDEeZmT4t/f
-         scwQrDZHkoaT2MJICXKEQw+0eSa+1PJ2RguGS8zBt8VSKgNMmfnuUsY2TJ+kkncQoeoN
-         itCrm8vq8L6gLXrZjyqDX8AALDjlkqx1oNr9MszGbIcehRSWhUXNzh/ttS6uoCZOnkxS
-         xCie63w64emwXGyP8DsAO0zOKPCZZxg7G1o1JjoT4NxomOkHZ34F6D1IGPFwf4u/q7R8
-         SoAg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=E1VVJbrHctTPZlXJfsCndqd4b3Q1NPx64O0d+tXoImc=;
+        b=BP+Eh2PzifqB50+J8HcaDKdiY5+nzgCPWuYCbZD1coCCApKXxzVjU8lJ4hX/r1Cro/
+         HpZZ8HGLICbIWOFczVFdvkwyUM0Pf31agkHEjiN2NvRm9VnJc7O10HCeEvTNN+3WFob/
+         XJ1UNpPYmSX9DcQzx2UC4+lobN35SwpEkrcI36hYLI41gWc2ufIwHGX9BZ1+Ljsil98k
+         /XdV/V8x4Cldv8omH2WT5TK8Gsm7s6m30+9ISPDx9YcaaAvY4WmFKa44dxu71BD28wFE
+         Elj2eBZIBH4N/vpU2k3k5aV3ZXLKKuUF5IQq8zL5lVeOWFrKUrJUGa2eeXCFQue8auoP
+         h45g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Dkys2TZsvFsYLc4Nzw+wTJ/OAwTXIQdwI+QSCleLVFI=;
-        b=Pi/X0NS1xZXqd3Cm2yrnyIJ82o8WJyNBPfx3KGNjT8ZSpqs7Q4RmNEe6TPo/hUGMr3
-         CwlXl0vcdu8GRzqZtC/qAJ4ZP4VyLSnNYV8Cs7MLz8LDPjjpG+RDkYy8Ct9VpBfY0acA
-         dg8qEj8SnvMq2KAg11nc6EZORwkEhv8UdB6MsOwaUv5HAxqYM+fAeYPmFXJBcq6n3xgt
-         Qq6fICyyldFdXuVUBtHmg5Rq3v/7+w/hZNmg5WYw5wwg05hZN0rPbtSw4w8nZA0ZOjCP
-         WTsEtyYK/9HJkqzjpShFnyXYlo8DL3YjNbqk9+Ww0XIsWhHdfL4zmLQ/6bhRikKbaRQj
-         hwkQ==
-X-Gm-Message-State: AOAM532FAiOtCKP3KUKwLk8cTH1iTcJQ80LTYglGuoJuBNTVORKWctbR
-        nChgDM2U+t/LceUmk3rLPt+1ZxAytjg=
-X-Google-Smtp-Source: ABdhPJwY6GIr98pgaio6g7WsZvlorfnVuX71zMUCBAahLn5vdCdZ7dhl78cqhlOjZ7/YGKCt7C4UqQ==
-X-Received: by 2002:adf:f605:: with SMTP id t5mr9564439wrp.39.1610037134253;
-        Thu, 07 Jan 2021 08:32:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s63sm9493806wms.18.2021.01.07.08.32.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=E1VVJbrHctTPZlXJfsCndqd4b3Q1NPx64O0d+tXoImc=;
+        b=E5O0UO/YHCHmp2CKzu/TkzGPpy+GCmFfFQ80VmdzwrFT/AEihk9djegIUM2uDD4AHn
+         kVGfoIjtf7cDMYsIPOaDkv+5AaD6P4VlOjLOYu6xRAlGYOqeAIHGJvXIQoZUr5VsUrIo
+         xd8YNeD+Xss9nLRdhliL3YxZxZhW9n8U8uv5ISMSTqb+wjdRazUipK4XE2hpvNFFhGTr
+         l5z+mMbKBXWsApE/lj85kRZNXGPH5SZspHf6fgNC9TCTymHR9/CDABs65lzmErDOrV06
+         BlWVkv4JY9Rj/zAlMLOAQ+4KfUqqHCD1CYS2P0XKLSWpzD0psCv9K1mTS++u2BnJ8fg1
+         hD1g==
+X-Gm-Message-State: AOAM532v+anV+mUkqs9RO1WfEHtzfU+kwq4fVMDdbAzfp/QNK+UgKjlG
+        hzezCWNhEfEqYmMuOTI/+S6f/Bau+N4=
+X-Google-Smtp-Source: ABdhPJyjVRxa4H+zNEDeQ4fTxa3LWN3XHFp1L1zT/1Kfk0mXEdukNkRoWxHBFN4fmpNY+uFBimrL7Q==
+X-Received: by 2002:adf:ee10:: with SMTP id y16mr9894740wrn.296.1610037133300;
         Thu, 07 Jan 2021 08:32:13 -0800 (PST)
-Message-Id: <0e500c86f397987c4d03beac52b1e91f683e4d11.1610037131.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.829.v3.git.1610037131.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l11sm8869421wrt.23.2021.01.07.08.32.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jan 2021 08:32:12 -0800 (PST)
+Message-Id: <pull.829.v3.git.1610037131.gitgitgadget@gmail.com>
+In-Reply-To: <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
 References: <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
-        <pull.829.v3.git.1610037131.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 16:32:02 +0000
-Subject: [PATCH v3 01/10] tree-walk: report recursion counts
-Fcc:    Sent
+Date:   Thu, 07 Jan 2021 16:32:01 +0000
+Subject: [PATCH v3 00/10] Cleanups around index operations
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, newren@gmail.com,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+I've taken a professional interest in the index lately, and I've been trying
+mostly to learn about it and measure different operations. Along the way,
+I've seen some possible improvements in documentation, behavior, and
+tracing.
 
-The traverse_trees() method recursively walks through trees, but also
-prunes the tree-walk based on a callback. Some callers, such as
-unpack_trees(), are quite complicated and can have wildly different
-performance between two different commands.
+This series collects most of my thoughts so far, including:
 
-Create constants that count these values and then report the results at
-the end of a process. These counts are cumulative across multiple "root"
-instances of traverse_trees(), but they provide reproducible values for
-demonstrating improvements to the pruning algorithm when possible.
+ 1. Adding extra trace2 regions and statistics (similar to [1]) (Patches
+    1-5).
+ 2. Update documentation about the cached tree extension (Patches 6-7).
+ 3. Improved the performance of verify_cache() (Patches 8-9).
 
-This change is modeled after a similar statistics reporting in 42e50e78
-(revision.c: add trace2 stats around Bloom filter usage, 2020-04-06).
+Thanks, -Stolee
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- tree-walk.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+[1]
+https://lore.kernel.org/git/pull.828.git.1609302714183.gitgitgadget@gmail.com/
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 0160294712b..2d6226d5f18 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -4,6 +4,7 @@
- #include "object-store.h"
- #include "tree.h"
- #include "pathspec.h"
-+#include "json-writer.h"
- 
- static const char *get_mode(const char *str, unsigned int *modep)
- {
-@@ -167,6 +168,25 @@ int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
- 	return 1;
- }
- 
-+static int traverse_trees_atexit_registered;
-+static int traverse_trees_count;
-+static int traverse_trees_cur_depth;
-+static int traverse_trees_max_depth;
-+
-+static void trace2_traverse_trees_statistics_atexit(void)
-+{
-+	struct json_writer jw = JSON_WRITER_INIT;
-+
-+	jw_object_begin(&jw, 0);
-+	jw_object_intmax(&jw, "traverse_trees_count", traverse_trees_count);
-+	jw_object_intmax(&jw, "traverse_trees_max_depth", traverse_trees_max_depth);
-+	jw_end(&jw);
-+
-+	trace2_data_json("traverse_trees", the_repository, "statistics", &jw);
-+
-+	jw_release(&jw);
-+}
-+
- void setup_traverse_info(struct traverse_info *info, const char *base)
- {
- 	size_t pathlen = strlen(base);
-@@ -180,6 +200,11 @@ void setup_traverse_info(struct traverse_info *info, const char *base)
- 	info->namelen = pathlen;
- 	if (pathlen)
- 		info->prev = &dummy;
-+
-+	if (trace2_is_enabled() && !traverse_trees_atexit_registered) {
-+		atexit(trace2_traverse_trees_statistics_atexit);
-+		traverse_trees_atexit_registered = 1;
-+	}
- }
- 
- char *make_traverse_path(char *path, size_t pathlen,
-@@ -416,6 +441,12 @@ int traverse_trees(struct index_state *istate,
- 	int interesting = 1;
- 	char *traverse_path;
- 
-+	traverse_trees_count++;
-+	traverse_trees_cur_depth++;
-+
-+	if (traverse_trees_cur_depth > traverse_trees_max_depth)
-+		traverse_trees_max_depth = traverse_trees_cur_depth;
-+
- 	if (n >= ARRAY_SIZE(entry))
- 		BUG("traverse_trees() called with too many trees (%d)", n);
- 
-@@ -515,6 +546,8 @@ int traverse_trees(struct index_state *istate,
- 	free(traverse_path);
- 	info->traverse_path = NULL;
- 	strbuf_release(&base);
-+
-+	traverse_trees_cur_depth--;
- 	return error;
- }
- 
+
+UPDATES IN V3
+=============
+
+ * Added a patch that fixes previous uses of "cached tree"
+
+ * Updated preamble patch with typos and semantic corrections.
+
+Derrick Stolee (9):
+  tree-walk: report recursion counts
+  unpack-trees: add trace2 regions
+  cache-tree: use trace2 in cache_tree_update()
+  cache-tree: trace regions for I/O
+  cache-tree: trace regions for prime_cache_tree
+  index-format: use 'cache tree' over 'cached tree'
+  index-format: update preamble to cache tree extension
+  index-format: discuss recursion of cached-tree better
+  cache-tree: speed up consecutive path comparisons
+
+René Scharfe (1):
+  cache-tree: use ce_namelen() instead of strlen()
+
+ Documentation/technical/index-format.txt | 42 ++++++++++++++++++------
+ cache-tree.c                             | 30 +++++++++++++----
+ t/t7104-reset-hard.sh                    |  2 +-
+ tree-walk.c                              | 33 +++++++++++++++++++
+ unpack-trees.c                           |  5 +++
+ 5 files changed, 94 insertions(+), 18 deletions(-)
+
+
+base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-829%2Fderrickstolee%2Fcache-tree%2Fbasics-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-829/derrickstolee/cache-tree/basics-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/829
+
+Range-diff vs v2:
+
+  1:  0e500c86f39 =  1:  0e500c86f39 tree-walk: report recursion counts
+  2:  4157b91acf8 =  2:  4157b91acf8 unpack-trees: add trace2 regions
+  3:  8959d57abdd =  3:  8959d57abdd cache-tree: use trace2 in cache_tree_update()
+  4:  1d8a797ee26 =  4:  1d8a797ee26 cache-tree: trace regions for I/O
+  5:  2b2e70bb77c =  5:  2b2e70bb77c cache-tree: trace regions for prime_cache_tree
+  -:  ----------- >  6:  2d7b18c2e0b index-format: use 'cache tree' over 'cached tree'
+  6:  75b51483d3c !  7:  c5cffb5956e index-format: update preamble to cached tree extension
+     @@ Metadata
+      Author: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Commit message ##
+     -    index-format: update preamble to cached tree extension
+     +    index-format: update preamble to cache tree extension
+      
+     -    I had difficulty in my efforts to learn about the cached tree extension
+     +    I had difficulty in my efforts to learn about the cache tree extension
+          based on the documentation and code because I had an incorrect
+          assumption about how it behaved. This might be due to some ambiguity in
+          the documentation, so this change modifies the beginning of the cached
+     @@ Commit message
+      
+          3. When exactly are "new" trees created?
+      
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Documentation/technical/index-format.txt ##
+      @@ Documentation/technical/index-format.txt: Git index format
+       
+     - === Cached tree
+     + === Cache tree
+       
+     --  Cached tree extension contains pre-computed hashes for trees that can
+     +-  Cache tree extension contains pre-computed hashes for trees that can
+      -  be derived from the index. It helps speed up tree object generation
+      -  from index for a new commit.
+      -
+     @@ Documentation/technical/index-format.txt: Git index format
+      +  Since the index does not record entries for directories, the cache
+      +  entries cannot describe tree objects that already exist in the object
+      +  database for regions of the index that are unchanged from an existing
+     -+  commit. The cached tree extension stores a recursive tree structure that
+     ++  commit. The cache tree extension stores a recursive tree structure that
+      +  describes the trees that already exist and completely match sections of
+      +  the cache entries. This speeds up tree object generation from the index
+      +  for a new commit by only computing the trees that are "new" to that
+     -+  commit.
+     ++  commit. It also assists when comparing the index to another tree, such
+     ++  as `HEAD^{tree}`, since sections of the index can be skipped when a tree
+     ++  comparison demonstrates equality.
+      +
+      +  The recursive tree structure uses nodes that store a number of cache
+      +  entries, a list of subnodes, and an object ID (OID). The OID references
+     -+  the exising tree for that node, if it is known to exist. The subnodes
+     -+  correspond to subdirectories that themselves have cached tree nodes. The
+     ++  the existing tree for that node, if it is known to exist. The subnodes
+     ++  correspond to subdirectories that themselves have cache tree nodes. The
+      +  number of cache entries corresponds to the number of cache entries in
+      +  the index that describe paths within that tree's directory.
+      +
+     -+  Note that the path for a given tree is part of the parent node in-memory
+     -+  but is part of the child in the file format. The root tree has an empty
+     -+  string for its name and its name does not exist in-memory.
+     ++  The extension tracks the full directory structure in the cache tree
+     ++  extension, but this is generally smaller than the full cache entry list.
+      +
+      +  When a path is updated in index, Git invalidates all nodes of the
+     -+  recurisive cached tree corresponding to the parent directories of that
+     ++  recursive cache tree corresponding to the parent directories of that
+      +  path. We store these tree nodes as being "invalid" by using "-1" as the
+     -+  number of cache entries. To create trees corresponding to the current
+     -+  index, Git only walks the invalid tree nodes and uses the cached OIDs
+     -+  for the valid trees to construct new trees. In this way, Git only
+     -+  constructs trees on the order of the number of changed paths (and their
+     -+  depth in the working directory). This comes at a cost of tracking the
+     -+  full directory structure in the cached tree extension, but this is
+     -+  generally smaller than the full cache entry list in the index.
+     ++  number of cache entries. Invalid nodes still store a span of index
+     ++  entries, allowing Git to focus its efforts when reconstructing a full
+     ++  cache tree.
+       
+         The signature for this extension is { 'T', 'R', 'E', 'E' }.
+       
+  7:  b2bb141a254 =  8:  97c06c80a85 index-format: discuss recursion of cached-tree better
+  8:  5298694786e =  9:  2532f5cc189 cache-tree: use ce_namelen() instead of strlen()
+  9:  72edd7bb427 = 10:  7c1c206a0bc cache-tree: speed up consecutive path comparisons
+
 -- 
 gitgitgadget
-
