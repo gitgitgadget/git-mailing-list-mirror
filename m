@@ -2,106 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A912C43381
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 047ECC433E6
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:35:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1086522DBF
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:20:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D37F423355
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729435AbhAGOUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 09:20:05 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56161 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729427AbhAGOUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 09:20:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610029108;
-        bh=KGoaSIETL3B4fxWYuKy9AFqOoTCXMF6fkthd9Hq3bmU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CfnqlT9WTsp5ZM6h5yhgdptjNyFl5bXV8UGmKUZdEZKJGedKRw5ODijReB/aLa8MB
-         p92vG5GiP3pCarjiP2+68nkGp2JU7uUoEKSxnXMTA5D60uIgQKITS7OPoImHHAXYnU
-         5/KJPO4fL7BxZ09v0i2VVhiQd7HKWLvhqxxiXSaM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvK0R-1k6eaD1NlB-00rKZa; Thu, 07
- Jan 2021 15:18:28 +0100
-Date:   Thu, 7 Jan 2021 15:18:28 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
-Subject: Cc'ing the Git maintainer on GitGitGadget contributions, was Re:
- [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
-In-Reply-To: <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
-References: <pull.475.git.1574539001.gitgitgadget@gmail.com> <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet>
- <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728956AbhAGOfW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 09:35:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57246 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728498AbhAGOfS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 09:35:18 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0213BC0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 06:34:38 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id t8so6325988iov.8
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 06:34:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7IpSLN1qT2Sh4mcSOiGa5d97eUCJOSI4FyRfg48s/Rc=;
+        b=r0HBjBiq2gUsMUxrj8bkooVH0vMg1CpDhaogxvVnKH39m8buG/vOwByY3NwD8wv9HC
+         TOL9wCvsMsjgM8+X8nRIXEQnqE4jokjlpyuzSER7d2dav6VRmaOpk8U0WOCjn3ZKBNSy
+         MfAnipATj0tcv+zl9a3iTx0EA0XWIv1EXZDh14GWgbYagRgPGj5wQM7ERffUa7gcV+rO
+         ZIP6XfQ68hiXlcr37lFAm0fiIr3Sk5yInzY3jhJm4TQAAk5fZPm7g1q5CArJp3sPMcnr
+         NJtuGkM1f/cn1XW/IJMDgFb0LTIZGhlzef0dPdrba09Uurq7OlLsmK+lSY4ArIx3zw3q
+         JhHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7IpSLN1qT2Sh4mcSOiGa5d97eUCJOSI4FyRfg48s/Rc=;
+        b=ObVlEstQICUh+dmbtKimpqO2/9CDw0GjVVcMfjc776XgTk/XHFOKuWdH4sSlfbwvpL
+         ZcE5rRd76gGOkk5Dry3quzHDql4Fl6bw6hvzj8JlRZskBgCyMm3fMUC0spdANsHqQhln
+         /tIkPH8beEZTPveIdI1qwuAcSMkYeB5mvTPKkpk/Iiidy/F8WASHKAL1GmHaR8pR8cEk
+         c5wLzcsAVruETTLUNFadM2PQA0Hbjsm2QqIdZ3IBEMxe+NOrSOEP7T4kuoYerKKgVj/m
+         BejVRBSul5nIhOrU6AJLdzqxpO5fGRuUidkDA/zp/41N5LVKIr4FX6HOOk4/npIh2jbZ
+         YXBA==
+X-Gm-Message-State: AOAM531vjK7lcXOF0bX0jq+GW3d7XXjProCgjSxi0KNwoodyE88N8eOF
+        jSqAxlxA1sEtY+8hkavxL74pi9IQZYdtL/wa
+X-Google-Smtp-Source: ABdhPJzHvNxcfuM5BWrtFlIjcWFClrXZHACq3j34/DdcVaXAv0NVg7+o1F1Qaixid8dWs3mANxB3vw==
+X-Received: by 2002:a6b:b205:: with SMTP id b5mr1480324iof.190.1610030077397;
+        Thu, 07 Jan 2021 06:34:37 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id a7sm4686943iln.0.2021.01.07.06.34.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Jan 2021 06:34:36 -0800 (PST)
+Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
+ characters)
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Daniel Troger' <random_n0body@icloud.com>,
+        =?UTF-8?Q?=27Torsten_B=c3=b6gershausen=27?= <tboegi@web.de>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20210106214737.qwlp4jvg3x2voafs@tb-raspi4>
+ <A342FAE0-A363-4280-848C-162F38C22C8E@icloud.com>
+ <002601d6e480$c193bd00$44bb3700$@nexbridge.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <ffe0a3ae-780d-95ae-524d-7b029eda21ee@gmail.com>
+Date:   Thu, 7 Jan 2021 09:34:35 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tVhTocg39Kb8/ijlHFPRZ4epzoyiD6vweQsEeQkEej/ieuxoJPl
- Dd73ntkZSH5AKAMWI5nrYwUqT158gxOgwi7trhmtWGJOwgLLZU13t61bdMPq62cMcolTSNJ
- LaPo7uSKU1CUOtz5DaH3sATMfjIOjj6Lklqgdtu9WbT0Lk4a0E5xW0RBrmLpUnHJGuGUtfg
- zkrpwO0DZCDq+/J7i/wJw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ENfcurKEAFs=:spwYXk3PtOJxrwdxkEDIq2
- mLYFTc/IqcqrdDNohgxkEc7/H/RtsHEGxgFq9zP2eOCecjrATIFc+r53yplZoOhZPIXsH7QgD
- VqWHzjEUFPYG1HyctXyLuoblJttPKJ0fZ9xPI5FnZ1e81eDc8jwNpuPeHJsktrqezsobwMCcF
- l3rnENhiYsnq7Am8pd9haJHSqT2Pw0IikHAkMapgvcn7Q7pnLrRIXFlKWRZm72AZmc6U6sX+k
- 7W5900dN/WMVCShA7UK/pGJP1L8ySVUlUVF5NA0/LVn8pN6JpM8Ft6gaw2MF9omUJfZ7Dbkvz
- dyTjkUHVb9eibJcc2SjGKy++LSqGJSwBgQlEAP3QtcFvXQ2RfTZwb+VF3+USUQAnd716H8Y97
- aPrnNu64zWo065DLzbO4Iu8gBuD9CUDGwbg6Qt0PLE7mlAZagEzEFF3qWssEydNbSS7N1j3S+
- HmIlmKMYwQXdR1yi7MZ5wz0a2ocdZi/5pPxbGvn1DB94RoeQowgNSxb5dmUIT1d25f54kNRni
- TubeUDoGVSd6ExnEFT7lJsHaWeriRuGSrJsQdvHZxRsKekz3akRH8nohhLG97ehQOeSISi3Yr
- 1YffePbFvwRzntIzFXq2tbFKWkOmeslAfqSufVvE0mt6aHy/xfo3DjRenhs7+6yzmqrYkdUxS
- sq1S2yOZ+qbAk42Ir2p1kG7bXhWjWVbylHYyt+eRV1kz+M2YjX/ti8UDUM0auzGne23A5lrR0
- DIkMOiq3kYxYTJHR4fLPxqVJUDeKo+JegBWeGCKNZqTofwi8dmtBwbODNmSAukqObk3mITF7Z
- I69YzMJHUfzyzr6j6obzFgoJQ/pKRol/XlT4A8IZ1xQEVoV/mjRXP+wLThyhtFKR6tC6pbjrz
- BJwaLbxV5oVHhFuGKTIPvYy8e0DJP3HJAOtZDiwzc=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <002601d6e480$c193bd00$44bb3700$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi everyone,
 
-On Tue, 26 Nov 2019, Junio C Hamano wrote:
+Le 2021-01-06 à 18:07, Randall S. Becker a écrit :
+> On January 6, 2021 5:22 PM, Daniel Troger wrote:
+>> Hi, maybe this helps you reproduce. I think I should have committed before
+>> doing the second changes but I still got the error message and the two
+>> names for one folder:
+>>
+>> me@iMac:/tmp$ mkdir git_bug
+>> me@iMac:/tmp$ cd git_bug
+>> me@iMac:/tmp/git_bug$ git init
+>> hint: Using 'master' as the name for the initial branch. This default branch
+>> name
+>> hint: is subject to change. To configure the initial branch name to use in all
+>> hint: of your new repositories, which will suppress this warning, call:
+>> hint:
+>> hint: 	git config --global init.defaultBranch <name>
+>> hint:
+>> hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+>> hint: 'development'. The just-created branch can be renamed via this
+>> command:
+>> hint:
+>> hint: 	git branch -m <name>
+>> Initialized empty Git repository in /private/tmp/git_bug/.git/
+>> me@iMac:/tmp/git_bug$ ls -la total 8
+>> drwxr-xr-x   4 daniel  wheel   128 Jan  6 23:13 .
+>> drwxrwxrwt  27 root    wheel   864 Jan  6 23:13 ..
+>> drwxr-xr-x   9 daniel  wheel   288 Jan  6 23:12 .git
+>> -rw-r--r--@  1 daniel  staff  1283 Jan  6 23:13 paulbrunngård-springyard.zip
+>> me@iMac:/tmp/git_bug$ unzip paulbrunngård-springyard.zip
+>> Archive:  paulbrunngård-springyard.zip
+>>     creating: paulbrunnga??rd-springyard/
+>>    inflating: paulbrunnga??rd-springyard/.DS_Store
+>>     creating: __MACOSX/
+>>     creating: __MACOSX/paulbrunnga??rd-springyard/
+>>    inflating: __MACOSX/paulbrunnga??rd-springyard/._.DS_Store
+>>   extracting: paulbrunnga??rd-springyard/empty me@iMac:/tmp/git_bug$ rm
+>> -rf __MACOSX/ *.zip me@iMac:/tmp/git_bug$ ls -la total 0
+>> drwxr-xr-x   4 daniel  wheel  128 Jan  6 23:15 .
+>> drwxrwxrwt  27 root    wheel  864 Jan  6 23:13 ..
+>> drwxr-xr-x   9 daniel  wheel  288 Jan  6 23:15 .git
+>> drwxr-xr-x@  4 daniel  wheel  128 Jan  6 12:20 paulbrunngård-springyard
+>> me@iMac:/tmp/git_bug$ cd paulbrunngård-springyard/
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
+>> content me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git add empty
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
+>> content
+>>
+>>
+>> Line I want to keep
+>>
+>> Line I want gone
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git restore -p .
+>> BUG: pathspec.c:495: error initializing pathspec_item Cannot close git diff-
+>> index --cached --numstat --summary
+>> 4b825dc642cb6eb9a060e54bf8d69288fbee4904 --
+>> :(,prefix:27)paulbrunngård-springyard/ () at
+>> /usr/local/Cellar/git/2.30.0/libexec/git-core/git-add--interactive line 183.
+>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cd ..
+>> me@iMac:/tmp/git_bug$ git status
+>> On branch master
+>>
+>> No commits yet
+>>
+>> Changes to be committed:
+>>    (use "git rm --cached <file>..." to unstage)
+>> 	new file:   "paulbrunnga\314\212rd-springyard/empty"
+>>
+>> Changes not staged for commit:
+>>    (use "git add <file>..." to update what will be committed)
+>>    (use "git restore <file>..." to discard changes in working directory)
+>> 	modified:   "paulbrunnga\314\212rd-springyard/empty"
+>>
+>> Untracked files:
+>>    (use "git add <file>..." to include in what will be committed)
+>> 	.DS_Store
+>> 	"paulbrunng\303\245rd-springyard/"
+>>
+>> me@iMac:/tmp/git_bug$
+> 
+> Is it possible that the å character is coming from a UTF-16 encoding and is not representable in UTF-8? I'm wondering whether the name has a double-byte representation where one of the bytes is null, resulting in a truncated file name coming from readdir(). The file name would not be representable on some platforms that do not support UTF-16 path names.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> > Hmph, I wonder why this was sent my way.  How does GGG determine
-> >> > whom to send patches to?  I, like other reviewers, prefer not to se=
-e
-> >> > earlier rounds of patches sent directly to me unless they are about
-> >> > areas that I am mostly responsible for (other patches I'll see them
-> >> > and review them on the copies sent to the mailing list anyway).
-> >
-> > Oops, I forgot to address this. The reason why this is sent your way i=
-s
-> > that you are the Git maintainer, and as such, GitGitGadget sends _all_=
- Git
-> > patches your way (except the Git GUI ones).
-> >
-> > The reason for this is that this is the suggested way, as per
-> > https://git-scm.com/docs/SubmittingPatches#patch-flow:
-> >
-> >> 5. The list forms consensus that the last round of your patch is good=
-. Send
-> >>    it to the maintainer and cc the list.
->
-> Yeah, but as far as I can tell, this is the _first_ round the list
-> sees this topic, which by definition would not have any consensus
-> ;-)
+I don't think that's the case (the angstrom is present in UTF-8 [1]).
+I think it's another UTF-8 precomposed/decomposed bug. As far as I
+was able to test it happens as soon as you have a precomposed character
+in the folder name. I observed the same behaviour with a folder named
+"folderü", for example. I also tried 'git -c add.interactive.usebuiltin restore -p .'
+to see if the new experimental builtin add-interactive has the same problem,
+and it does (though the error is less verbose).
 
-I thought about it for over a year and still have no clue how we could
-teach GitGitGadget to Cc: you when it is appropriate, not without putting
-the burden on any human being.
+Anyway as you show with 'git status', it's not just 'git add -p' that is
+faulty, it's deeper than that, I would say.
 
-Ciao,
-Dscho
+Cheers,
+
+Philippe.
+
+[1] https://en.wikipedia.org/wiki/%C3%85#On_computers
