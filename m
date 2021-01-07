@@ -2,118 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 312AEC433E6
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCF63C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:58:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0397F23142
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:37:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 949C7225AC
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729467AbhAGOhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 09:37:34 -0500
-Received: from mout.gmx.net ([212.227.17.22]:36573 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729173AbhAGOh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 09:37:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610030155;
-        bh=iYOlB7HhPWBjtqOHMFIBNbhuyD1oIkuY9fsOu7ctV/c=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=j1T77XYotKi+Xwx8CSfYFY2p3gi1YkmCM6ImjLu39nRmMCkcIbxE2+xOlbVv9p588
-         WEF4H6s/O/5wpsMTlIhPfO/2wwMdzyk5O9eNZi+4OKF0B4HsR7vGetoMgsdj8N/Cyc
-         tS0QPzOsIGzPuzisWNNSnZoFe27Sb3OH6L7EhIdo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0oG5-1k18W749qv-00wnZv; Thu, 07
- Jan 2021 15:35:55 +0100
-Date:   Thu, 7 Jan 2021 15:35:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Philippe Blain <levraiphilippeblain@gmail.com>, jrnieder@gmail.com,
-        git@vger.kernel.org
-Subject: Re: Patchwork instance "Submitter" attribution and GitGitGadget
-In-Reply-To: <xmqqiml4bsra.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2101071534440.2213@tvgsbejvaqbjf.bet>
-References: <75987318-A9A7-4235-8B1D-315B29B644E8@gmail.com> <nycvar.QRO.7.76.6.2001201314580.46@tvgsbejvaqbjf.bet> <xmqqiml4bsra.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728120AbhAGO6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 09:58:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726326AbhAGO6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 09:58:37 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA00CC0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 06:57:56 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id jx16so10011209ejb.10
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 06:57:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=bGrKeCVNMDESpHBgqLHPofFL2MBoUW/fQZk08CbSxU0=;
+        b=WPfK21s13NDQmXgDrslEnPlVqAo+tf3VzomSuhuf1b1cPVA7LPLTbqoVkmZ6WeSwRn
+         SzU3f4uDhMYWnf4KcQlg41bIfZQf5dAQz4FRZZYM7hom/YaDLUDQBrnjw/dzDGtxJjku
+         jRzC7Uvl89g0XgTEKdD3wZXKZ4NtXiii5fb6pjCoKGyeKANLU5MpvKvCJd2JhS3s8GJA
+         kG8QHWglRNVZvFemaR/ErlKJAQwiYGTY+W27kcSlzn5+uWJQXw4KgngbwHWoIHprEr8H
+         wBw0D5rqxcQAzzlk8yOrv8qO54wbAQVMrD2CXgiOVpg2OVji5dHb8r+ELNJ+xDul4Uy7
+         3EhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=bGrKeCVNMDESpHBgqLHPofFL2MBoUW/fQZk08CbSxU0=;
+        b=hyJ0l4gvfs0AcW5fiEO7PVJ1AqUfUaJI7lXUnKIimV+N2nKIlRHF5IIS72nDdjcIph
+         vywicK7fWWAtmU+uQMsznhY5MQZOhrawe/1HpIs7ws+yBweqVJut5Hk78w8qF6WjBmkY
+         +ScsqqUNj2mFYjvnUVilXW00i510NYAXq33J9HeXw6+Kp5HXBem0n2BxH0lEq58/sDkM
+         Ua3R2yhBNtRYhGxH4ob5lAX294MdfpqNzmiZGwH2UpULmYFHMgYFcyb5Zo7+b1L4CHHm
+         D0vQQ4cSx0qSjFU5RHQ3cPY2XcwlnLzG1nb6MzMPkp6V1DvSw5ImkpcF8CZB0gEtIB9Q
+         +zNw==
+X-Gm-Message-State: AOAM531KjdkxL5dXeRaWLl6QmptcJCBIn3MpUFiNr4Kj7IXvQ9aXzjBt
+        +l9jYyZrCR6DvU5BXfy5w48=
+X-Google-Smtp-Source: ABdhPJzrMGb1ZsLwFKff1/bZUkLbZqcdyLOasqn7f8RWEKiWj8cre9sUHo5sTyvPOSucHi4FePdc4A==
+X-Received: by 2002:a17:906:971a:: with SMTP id k26mr6761510ejx.515.1610031475492;
+        Thu, 07 Jan 2021 06:57:55 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id qp16sm2519459ejb.74.2021.01.07.06.57.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jan 2021 06:57:54 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
+Subject: Re: Cc'ing the Git maintainer on GitGitGadget contributions, was
+ Re: [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
+References: <pull.475.git.1574539001.gitgitgadget@gmail.com>
+ <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet>
+ <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet>
+ <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
+Date:   Thu, 07 Jan 2021 15:57:54 +0100
+Message-ID: <87wnwordzh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1224246309-1610030156=:2213"
-X-Provags-ID: V03:K1:WCRX8auu3h9JNmG0cZO3C93FTHBQrPpB3BbV3QqI/fASwZt8qY1
- sP7K1NcEqe/zOfIoCZ1oqUxB7US1cQXJ8zkLXZ/ibrlSo8KmYhtRc6CW5T5oFgLcZMi+3HN
- hj9aoZVfT5rnN4BaKtbRsMRv6F6ZnjCYWGQnzyzyYq04s2O8usneaq1Okew7Ksq1LCHxyhd
- pjB/nz5T5M4ApbkzCDHWw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:O84WB/8vjPk=:OuzA4haOznQK78QYA+VzGU
- HNearYkIoBJcS4UCz9DtPaAK6gtEFk6x+TefgFajsiFUxrCsMFPIj5RKbNpuQRpqa1XZDNBvk
- ZZ9yLCkKpVZiRiu8EjHFNFSWryhTRcDspSOpNkEbLtQjKdZRtQ/E+SbSH+b+HoowgNEOyU09m
- tVogLe4FkGpZJsJmYMqueNV50fxvtSOQisaxcaCNhU7w0ahdW89opFxKWbNB6CwNg6THpLVsH
- ul9J1SZprRhpDolgYSsBZpbkw/FuZnOYfehUqzRExPLXnznnX7J75N+xzUEoz9lMF0vXFVF6n
- 2oZ+kLOTDbwhpIKILSh6S0+WcdJymgDguXbfN0En8SMGbR/FWg3PSlkiqxouRhTdCKIQ8p6Sv
- 4gvA5O20YRwxZKQGhM2WL+PsTTXD4eh2OdtyhiH2vOJRPj00u9671V+vRewKGLC40S7f+5VqG
- Zggq1fUKA36P2tT207ddjQbYRC83iyjeJMsD12LGY8QR1yR2CRN8e2kUAOr7hudThIrLZ+kTy
- QnCO0J6OffOKI9Izt0BuUvQsQuCCVD4JUyNoOj/H3sV3W5MwC8OY7rC00eUl4rbx9LMlxH+bo
- oFgiiX6dy+a5ffSnDvK7qotmRPgsShYhfp/8cMYGdYRauz9n8GEc7EqAfl4kPfzcNA+Iz8x84
- JJhcIIdGb8csZsP+56W7CBCsaorlzb+6EmQJIauH7OoC6kct7QUnlxgMNnmzRMwN9MsBE5oPX
- SxVfUrj3m6EU2pvAaWWiu0QLwf/tM6zqyrrdhty+UqxKy82l2xIxghDDDOuteQRx/i8XVa5v0
- mOsUG9B4jXjgITuWb0Sn05l4tZRjm2/0oS9Kdp+uLSvYjYucYP0P+SHx4ZKn3c73UKhp+NAWc
- 1Tgc9zsFPMQE52sea5sz6J1s4V+Szap8eMv2Qf0bg=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1224246309-1610030156=:2213
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jan 07 2021, Johannes Schindelin wrote:
 
-Hi Junio,
-
-On Tue, 21 Jan 2020, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Hi Junio,
 >
-> > On Sat, 18 Jan 2020, Philippe Blain wrote:
-> >
-> >> I=E2=80=99ve noticed that all (I think) patch series sent to the list=
- using
-> >> Gitgitgadget are attributed to Dscho (Submitter is "Johannes Schindel=
-in
-> >> via GitGitGadget") on the patchwork instance [1]. I don=E2=80=99t kno=
-w if you
-> >> are aware of that or if there=E2=80=99s a way to fix it in patchwork=
-=E2=80=A6
-> >
-> > Right now, it shows "Lucius Hu via GitGitGadget". Clearly, patchwork u=
-ses
-> > only the email address as identifier, being unprepared to accept that =
-the
-> > same email address might be used by multiple contributors.
+> On Tue, 26 Nov 2019, Junio C Hamano wrote:
 >
-> Would it help to use the "Sender:" header?  IIUC right now GGG
-> records its name on "From:" with its e-mail and a human-readable
-> name derived from the author of the ptach, but if it can record the
-> true author on "From:" and leave GGG's name on the "Sender:", would
-> patchwork use the "From:" side of the identity instead?
-
-To tie up that loose end: GMail seemed to insist in my tests on replacing
-the `From:` header, therefore we cannot implement this `Sender:` idea, not
-using GMail to deliver the GitGitGadget patch series at least.
-
-Ciao,
-Dscho
-
-> If that works, it would have an additional benefit of not having to
-> add the in-body "From:" to override the mail-header "From:", to avoid
-> attributing the authorship to GGG.
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>> >> > Hmph, I wonder why this was sent my way.  How does GGG determine
+>> >> > whom to send patches to?  I, like other reviewers, prefer not to see
+>> >> > earlier rounds of patches sent directly to me unless they are about
+>> >> > areas that I am mostly responsible for (other patches I'll see them
+>> >> > and review them on the copies sent to the mailing list anyway).
+>> >
+>> > Oops, I forgot to address this. The reason why this is sent your way is
+>> > that you are the Git maintainer, and as such, GitGitGadget sends _all_ Git
+>> > patches your way (except the Git GUI ones).
+>> >
+>> > The reason for this is that this is the suggested way, as per
+>> > https://git-scm.com/docs/SubmittingPatches#patch-flow:
+>> >
+>> >> 5. The list forms consensus that the last round of your patch is good. Send
+>> >>    it to the maintainer and cc the list.
+>>
+>> Yeah, but as far as I can tell, this is the _first_ round the list
+>> sees this topic, which by definition would not have any consensus
+>> ;-)
 >
->
->
+> I thought about it for over a year and still have no clue how we could
+> teach GitGitGadget to Cc: you when it is appropriate, not without putting
+> the burden on any human being.
 
---8323328-1224246309-1610030156=:2213--
+That message is from November 2019, didn't you later fix this in January
+2020 here: https://github.com/gitgitgadget/gitgitgadget/commit/b2221f4 ?
+
+I.e. now users need to explicitly add "cc: gitster@pobox.com" to the
+description, no? So isn't in the same as for us who use the
+format-patch/send-email flow in this regard?
