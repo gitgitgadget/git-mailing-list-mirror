@@ -2,167 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88EABC433E9
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 10:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88151C433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 10:38:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BBD523142
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 10:37:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C85D2312F
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 10:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727820AbhAGKhx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 05:37:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48432 "EHLO
+        id S1727932AbhAGKiP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 05:38:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727686AbhAGKhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 05:37:53 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E2A2C0612FB
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 02:37:09 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id i7so4556808pgc.8
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 02:37:09 -0800 (PST)
+        with ESMTP id S1726522AbhAGKiO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 05:38:14 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3423AC0612FC
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 02:37:10 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id g3so3284546plp.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 02:37:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EU6PMD/cQVpy7gJt7uGtJNdOZFdhc9ezdXO/cCFPlyE=;
-        b=Py+YjsSJonvy9e2TL6lH121WSfqz2/RpJdM0DoHQ5bxFjQoXz3RrBy5sjsKNdvlNSA
-         KwP1gp6vSZWFbnAwcllqrrwQDzpEuKrXcSWYl8gM945uh2n9l3UfC0dsbFQZatxHFmLA
-         aGit5gDnGuOK/9xOIHbBEeFCiP+dfzzPYKxnvKbQAA0oTDimtZAjni+FyYEhm/Z2Nlgk
-         iCy3LH7LCdhxxOWLvZp+oqkq1hXcleciUc29UlMJt8dc4scn02/3HWQwtHihdG7XS2uu
-         8ox5Ew5sUcY+/3gaPfxSe+t7y2lsxCTV7xwRpWQLnJdTiO7C9R/3mOl1e7kMekHmUXhu
-         uMEg==
+        bh=wdLUcs3RHXTDanAA+JFePnfaSbgyLTYONomgKCN8nyY=;
+        b=IIKcrxK/yzdHoiEDXZf65PA0f6LvutURcAoh+eAf1aU+SZo4pjXAA9jZlcExUNwU+P
+         I1CT7tFJwCMWze5jRGDeQEiqqwaIi8/w26A7ykXMZjgx0H+6Hcaue9Ua9sTA/bY3I9CJ
+         gWEXdUfk68q+lUmMSQs8oZ0mkXP9kU6avRCDVGupqZwAIEGaDJc1nukUAxe+XVlFe5A2
+         XXzK4JCCSffKcuWgo8X5Be8doTu/NZ2iGa7gUhj4vVCx6Tf+4QYtt/DWS5zn9fShrOdk
+         VXLdlYtp2vhjr5S7HaU+71ijS8BiuqqmPNjlcaXGTVcg9dvIz0x/Qo+3RApXkI1Ta0Vj
+         H4ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EU6PMD/cQVpy7gJt7uGtJNdOZFdhc9ezdXO/cCFPlyE=;
-        b=QkUVBjXxQY4Wn5R1PezhlQuUmgQWgHU400Y8NAbG5e7ea1v/dDjwxpRixFRbup1uXf
-         uaMlp7hQKx6T3elbw4ZzGc1crsskRZGPCDutC2lk4JTJ57bdOXlFXo1rVzHx4l4Njgh/
-         WY/H4Cf/0B7STK+iRZtd/OzmtN9yvn0rFDUU77CTN/paYoaJ3f42FMRs10kRSTpSyVyM
-         98ZsnGVP6XdnNMWCc5V4bDVNvykKQf/z12BSIDT2yu3zjCdcL5m+8TsCK+8Ia+44snLb
-         j3Pvf6Rz3+AqhLSuWB5mQRs/Dklk1fcTrg/LEvLZ+O7u1tIr9shNCmVJ8LtDqWfVvRi6
-         z5FQ==
-X-Gm-Message-State: AOAM533+pQOrqqDMkyyC5ZcVvlqZO44v9Taz2jzIv6y6sBGGvTycudxA
-        HCdO1WxFuZcZtv5v7PCgrdbVcKfs6vU=
-X-Google-Smtp-Source: ABdhPJxZlx+x1ot/IlSQqK2Y7kDlx7TwJHhfZblvpl1whgJBrD6kS/0JqwhbQw3K9tlTOuTAusdQgw==
-X-Received: by 2002:a63:e108:: with SMTP id z8mr1193204pgh.363.1610015828305;
-        Thu, 07 Jan 2021 02:37:08 -0800 (PST)
+        bh=wdLUcs3RHXTDanAA+JFePnfaSbgyLTYONomgKCN8nyY=;
+        b=sSa+6fjzI+EA9AqA2c1gDBinUuFDjl/iFCmn2tBTIDuIRHcYg2MqGRz3hAxzFejLBz
+         rbWYVZ6nxxrPrOcverqABqEY6ll3KVwx3JnshvAENWdh95In8HTqCHBHlSmdxGQIj7yH
+         vSILXijXWwgCDJj5OrZ1UtRarrCPH0xcGJBccrX4RyUDZi4xuhxqBVfDRlv9YgyDudS/
+         4ibKGVmgVcyv7M2CLT3eMPW4fd+AhxXIoDTN/jEQjCjCyU+2cSE4YXeC/lNSaOkS43ua
+         BCvitJIE+MOOjFeEQ4dKHcKeNNhgmfgS+2C7tYmrOl5Jd2zqZPWjpaMl+f2cDbVZrdjY
+         DeCQ==
+X-Gm-Message-State: AOAM531vI7f97Wc8wwctoED6Ld+qgQ+IQQNiAKA2+8iBybvRK25JPPsZ
+        B0ZCDIBLDUiIwBdHw8E9F9kG3Ivy2aI=
+X-Google-Smtp-Source: ABdhPJxtqSf7hsuyOYyO7eN2LOoSSLXzX8Xr+FpwJBFUaY2FIIzlVI+dlyKOsDPH4F4CU3K8OgmnHg==
+X-Received: by 2002:a17:90b:4d09:: with SMTP id mw9mr7854478pjb.199.1610015829509;
+        Thu, 07 Jan 2021 02:37:09 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id bg20sm1777416pjb.6.2021.01.07.02.37.06
+        by smtp.gmail.com with ESMTPSA id bg20sm1777416pjb.6.2021.01.07.02.37.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 02:37:07 -0800 (PST)
+        Thu, 07 Jan 2021 02:37:08 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 0/2] refs: allow @{n} to work with n-sized reflog
-Date:   Thu,  7 Jan 2021 02:36:57 -0800
-Message-Id: <cover.1610015769.git.liu.denton@gmail.com>
+Subject: [PATCH v3 1/2] refs: factor out set_read_ref_cutoffs()
+Date:   Thu,  7 Jan 2021 02:36:58 -0800
+Message-Id: <8f14ec39970b6cbf9b6615485316063306706e6a.1610015769.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.30.0
-In-Reply-To: <cover.1609923643.git.liu.denton@gmail.com>
-References: <cover.1609923643.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1610015769.git.liu.denton@gmail.com>
+References: <cover.1609923643.git.liu.denton@gmail.com> <cover.1610015769.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When there is only one reflog entry (perhaps caused by expiring the
-reflog and then making a single commit) @{1} errors out even though
-there is technically enough information to do the lookup. Look at the
-old side of the reflog instead of the new side so that this does not
-fail. This is explained in more detail in the commit of the last patch.
+This block of code is duplicated twice. In a future commit, it will be
+duplicated for a third time. Factor out the common functionality into
+set_read_ref_cutoffs().
 
-This idea was given by Junio at [0].
+In the case of read_ref_at_ent(), we are incrementing `cb->reccnt` at the
+beginning of the function. Move these to right before the return so that
+the `cb->reccnt - 1` is changed to `cb->reccnt` and it can be cleanly
+factored out into set_read_ref_cutoffs(). The duplication of the
+increment statements will be removed in a future patch.
 
-[0]: https://lore.kernel.org/git/xmqqzh8zgcfp.fsf@gitster.c.googlers.com/
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ refs.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Changes since v1:
-
-* Factor out set_read_ref_cutoffs()
-
-* Check the output of rev-parse to ensure that the intended commit is
-  returned
-
-Changes since v2:
-
-* Rename at_indexed_ent -> reached_count
-
-* Add an in-code comment to document that cb->cnt can't be 0 in the first
-  iteration of read_ref_at_ent()
-
-* Make test cases use test_cmp_rev() for brevity and better errors
-
-Denton Liu (2):
-  refs: factor out set_read_ref_cutoffs()
-  refs: allow @{n} to work with n-sized reflog
-
- refs.c                      | 122 +++++++++++++++++++++---------------
- t/t1503-rev-parse-verify.sh |   4 +-
- t/t1508-at-combinations.sh  |  12 ++++
- 3 files changed, 84 insertions(+), 54 deletions(-)
-
-Range-diff against v2:
-1:  8f14ec3997 = 1:  8f14ec3997 refs: factor out set_read_ref_cutoffs()
-2:  18a35506b8 ! 2:  c88c997eab refs: allow @{n} to work with n-sized reflog
-    @@ refs.c: static int read_ref_at_ent(struct object_id *ooid, struct object_id *noi
-      		const char *message, void *cb_data)
-      {
-      	struct read_ref_at_cb *cb = cb_data;
-    -+	int at_indexed_ent;
-    ++	int reached_count;
-      
-      	cb->tz = tz;
-      	cb->date = timestamp;
-      
-     -	if (timestamp <= cb->at_time || cb->cnt == 0) {
-    ++	/*
-    ++	 * It is not possible for cb->cnt == 0 on the first itertion because
-    ++	 * that special case is handled in read_ref_at().
-    ++	 */
-     +	if (cb->cnt > 0)
-     +		cb->cnt--;
-    -+	at_indexed_ent = cb->cnt == 0 && !is_null_oid(ooid);
-    -+	if (timestamp <= cb->at_time || at_indexed_ent) {
-    ++	reached_count = cb->cnt == 0 && !is_null_oid(ooid);
-    ++	if (timestamp <= cb->at_time || reached_count) {
-      		set_read_ref_cutoffs(cb, timestamp, tz, message);
-      		/*
-      		 * we have not yet updated cb->[n|o]oid so they still
-    @@ refs.c: static int read_ref_at_ent(struct object_id *ooid, struct object_id *noi
-      					cb->refname, show_date(cb->date, cb->tz, DATE_MODE(RFC2822)));
-     -		}
-     -		else if (cb->date == cb->at_time)
-    -+		if (at_indexed_ent)
-    ++		if (reached_count)
-     +			oidcpy(cb->oid, ooid);
-     +		else if (!is_null_oid(&cb->ooid) || cb->date == cb->at_time)
-      			oidcpy(cb->oid, noid);
-    @@ t/t1508-at-combinations.sh: test_expect_success 'create path with @' '
-     +	git checkout -B newbranch master &&
-     +	git reflog expire --expire=now refs/heads/newbranch &&
-     +	git commit --allow-empty -m "first after expiration" &&
-    -+	git rev-parse newbranch~ >expect &&
-    -+	git rev-parse newbranch@{1} >actual &&
-    -+	test_cmp expect actual
-    ++	test_cmp_rev newbranch~ newbranch@{1}
-     +'
-     +
-     +test_expect_success '@{0} works with empty reflog' '
-     +	git checkout -B newbranch master &&
-     +	git reflog expire --expire=now refs/heads/newbranch &&
-    -+	git rev-parse newbranch >expect &&
-    -+	git rev-parse newbranch@{0} >actual &&
-    -+	test_cmp expect actual
-    ++	test_cmp_rev newbranch newbranch@{0}
-     +'
-      test_done
+diff --git a/refs.c b/refs.c
+index 13dc2c3291..bfdd04aefd 100644
+--- a/refs.c
++++ b/refs.c
+@@ -882,25 +882,30 @@ struct read_ref_at_cb {
+ 	int *cutoff_cnt;
+ };
+ 
++static void set_read_ref_cutoffs(struct read_ref_at_cb *cb,
++		timestamp_t timestamp, int tz, const char *message)
++{
++	if (cb->msg)
++		*cb->msg = xstrdup(message);
++	if (cb->cutoff_time)
++		*cb->cutoff_time = timestamp;
++	if (cb->cutoff_tz)
++		*cb->cutoff_tz = tz;
++	if (cb->cutoff_cnt)
++		*cb->cutoff_cnt = cb->reccnt;
++}
++
+ static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
+ 		const char *email, timestamp_t timestamp, int tz,
+ 		const char *message, void *cb_data)
+ {
+ 	struct read_ref_at_cb *cb = cb_data;
+ 
+-	cb->reccnt++;
+ 	cb->tz = tz;
+ 	cb->date = timestamp;
+ 
+ 	if (timestamp <= cb->at_time || cb->cnt == 0) {
+-		if (cb->msg)
+-			*cb->msg = xstrdup(message);
+-		if (cb->cutoff_time)
+-			*cb->cutoff_time = timestamp;
+-		if (cb->cutoff_tz)
+-			*cb->cutoff_tz = tz;
+-		if (cb->cutoff_cnt)
+-			*cb->cutoff_cnt = cb->reccnt - 1;
++		set_read_ref_cutoffs(cb, timestamp, tz, message);
+ 		/*
+ 		 * we have not yet updated cb->[n|o]oid so they still
+ 		 * hold the values for the previous record.
+@@ -917,11 +922,13 @@ static int read_ref_at_ent(struct object_id *ooid, struct object_id *noid,
+ 			warning(_("log for ref %s unexpectedly ended on %s"),
+ 				cb->refname, show_date(cb->date, cb->tz,
+ 						       DATE_MODE(RFC2822)));
++		cb->reccnt++;
+ 		oidcpy(&cb->ooid, ooid);
+ 		oidcpy(&cb->noid, noid);
+ 		cb->found_it = 1;
+ 		return 1;
+ 	}
++	cb->reccnt++;
+ 	oidcpy(&cb->ooid, ooid);
+ 	oidcpy(&cb->noid, noid);
+ 	if (cb->cnt > 0)
+@@ -935,14 +942,7 @@ static int read_ref_at_ent_oldest(struct object_id *ooid, struct object_id *noid
+ {
+ 	struct read_ref_at_cb *cb = cb_data;
+ 
+-	if (cb->msg)
+-		*cb->msg = xstrdup(message);
+-	if (cb->cutoff_time)
+-		*cb->cutoff_time = timestamp;
+-	if (cb->cutoff_tz)
+-		*cb->cutoff_tz = tz;
+-	if (cb->cutoff_cnt)
+-		*cb->cutoff_cnt = cb->reccnt;
++	set_read_ref_cutoffs(cb, timestamp, tz, message);
+ 	oidcpy(cb->oid, ooid);
+ 	if (is_null_oid(cb->oid))
+ 		oidcpy(cb->oid, noid);
 -- 
 2.30.0
 
