@@ -2,119 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCF63C433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9024FC433E0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 15:34:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 949C7225AC
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 14:58:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54FAA233FD
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 15:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728120AbhAGO6h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 09:58:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726326AbhAGO6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 09:58:37 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA00CC0612F4
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 06:57:56 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id jx16so10011209ejb.10
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 06:57:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=bGrKeCVNMDESpHBgqLHPofFL2MBoUW/fQZk08CbSxU0=;
-        b=WPfK21s13NDQmXgDrslEnPlVqAo+tf3VzomSuhuf1b1cPVA7LPLTbqoVkmZ6WeSwRn
-         SzU3f4uDhMYWnf4KcQlg41bIfZQf5dAQz4FRZZYM7hom/YaDLUDQBrnjw/dzDGtxJjku
-         jRzC7Uvl89g0XgTEKdD3wZXKZ4NtXiii5fb6pjCoKGyeKANLU5MpvKvCJd2JhS3s8GJA
-         kG8QHWglRNVZvFemaR/ErlKJAQwiYGTY+W27kcSlzn5+uWJQXw4KgngbwHWoIHprEr8H
-         wBw0D5rqxcQAzzlk8yOrv8qO54wbAQVMrD2CXgiOVpg2OVji5dHb8r+ELNJ+xDul4Uy7
-         3EhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=bGrKeCVNMDESpHBgqLHPofFL2MBoUW/fQZk08CbSxU0=;
-        b=hyJ0l4gvfs0AcW5fiEO7PVJ1AqUfUaJI7lXUnKIimV+N2nKIlRHF5IIS72nDdjcIph
-         vywicK7fWWAtmU+uQMsznhY5MQZOhrawe/1HpIs7ws+yBweqVJut5Hk78w8qF6WjBmkY
-         +ScsqqUNj2mFYjvnUVilXW00i510NYAXq33J9HeXw6+Kp5HXBem0n2BxH0lEq58/sDkM
-         Ua3R2yhBNtRYhGxH4ob5lAX294MdfpqNzmiZGwH2UpULmYFHMgYFcyb5Zo7+b1L4CHHm
-         D0vQQ4cSx0qSjFU5RHQ3cPY2XcwlnLzG1nb6MzMPkp6V1DvSw5ImkpcF8CZB0gEtIB9Q
-         +zNw==
-X-Gm-Message-State: AOAM531KjdkxL5dXeRaWLl6QmptcJCBIn3MpUFiNr4Kj7IXvQ9aXzjBt
-        +l9jYyZrCR6DvU5BXfy5w48=
-X-Google-Smtp-Source: ABdhPJzrMGb1ZsLwFKff1/bZUkLbZqcdyLOasqn7f8RWEKiWj8cre9sUHo5sTyvPOSucHi4FePdc4A==
-X-Received: by 2002:a17:906:971a:: with SMTP id k26mr6761510ejx.515.1610031475492;
-        Thu, 07 Jan 2021 06:57:55 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id qp16sm2519459ejb.74.2021.01.07.06.57.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 06:57:54 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
-Subject: Re: Cc'ing the Git maintainer on GitGitGadget contributions, was
- Re: [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
-References: <pull.475.git.1574539001.gitgitgadget@gmail.com>
- <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet>
- <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
-Date:   Thu, 07 Jan 2021 15:57:54 +0100
-Message-ID: <87wnwordzh.fsf@evledraar.gmail.com>
+        id S1726447AbhAGPe2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 10:34:28 -0500
+Received: from mout.gmx.net ([212.227.17.21]:48951 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726326AbhAGPe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 10:34:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1610033573;
+        bh=+x4fArIo7gUexRHKGM2qZI0hoiVhziB3YemWL2gCHp8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=glQ4jt5P0cREG6PkHrrnYpplCdPmZ5NJ+KSEjDyau5tf+VRsI/IKkvFQrmmKVaID5
+         zW7MTp5pd3W757FCP9T9IZirDAzSec/isuWd3A0JdBeFn5KxqkHf3rJls0OVUOvMi+
+         b/ioi0kOkiynmW5v/0liX5GnL/nhzYi8tCNAZ4/E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MowGU-1kBo3n1dLK-00qSMO; Thu, 07
+ Jan 2021 16:32:53 +0100
+Date:   Thu, 7 Jan 2021 16:32:53 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "Rosenbush, David M        Collins" <david.rosenbush@collins.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: bug report: git add --dry-run does not honor core.ignorecase
+In-Reply-To: <b082a81ee8bc4d7da325c3b0a6d2611c@UUSALE0i.utcmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2101071629140.2213@tvgsbejvaqbjf.bet>
+References: <b082a81ee8bc4d7da325c3b0a6d2611c@UUSALE0i.utcmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:l9vIVEP+0BV0U7rAv/dnrNFPISy4EXUc/X0BXg7E7e4J+cIzdWu
+ ZimOlDVfnrkqMheyJcv3L+H5BZfrHsamAdKjxfIXT3OhugyMWbh338vtL8yTKRB1wXEerm4
+ 5a7msyLyGBhx0Evdru27HNhj0g7oyx4KyaqVXI4NO3CGYBEZOMHA92PtsBQT0Pf1R17qvE6
+ DA5j51QeKOfhI4wkJG0Zw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oMgKnburkno=:3CwlMVT3+jF7wNB3BQo4NQ
+ 8l4fI/34+CfhuNWFNEYIBT/9mGK0RI6HeWgctlFy5sc+7d5yldI6MFtFMH58kCNf/rBi1MZgw
+ Y7oGhNgemnD+JzzPCUeoa2ggPypGY0DhnkFgx5Wj6JbG90okGozGO55cSOowI96JCPK8MVzDn
+ llgNs4Pnr9jOB8txLZdGAXh2jEvYty5WfXGAXuYijsSZRFKXv7ZHf8fgddVJYgxfmQAxGdLEq
+ trw8XSe+zyzkikXsUsl4SezQwy+nRffIXTCCn8DIr+UYzOmV6VuP2xd0GTf4Q8/nA0hgUoIva
+ xPlUb5xcOQEqLOfX7u4AnYLUPqv3jy1ZlvGVO3Or+KXUuHRCfwPjAyI4Ua1tpvk/9ogE3WEL0
+ Qfjut8iZxjeMxOK3Lc8ZtiCu8EGt65xyM3lyww6/EhwiT6Dq+x0+ROWel26/8cpFCKbKCTBa6
+ 1V/ZB4T8b8Wt9k80hzolyujzdJN7rQt1aqUK+puliXDZRq1i+PL1XYAz55DcerZuK8sJCPLcB
+ UK/ARmdNNAc2O/IveYE7xAXLSJQgWcEA89SNPO3ngcG2j2WHNi/ZoUcawBbi3o3LxZCaqmwkb
+ dFmXrreG+Jr7jer3Tu79aR3rVMI7/mNsQfMTpmPZEBhhngDpRCN/zlMT3kS+8IhlbFkd/82WR
+ SUldiBFfuS1QTwj6lNtqyj7NxyPCLS/8in1ohDZPh+SGG6kgH1XvWgP0XJ2jOmXgnZg7PCWuL
+ INqKg01Nx+FOsazlycsImi+Holb1L4sk3aSPsCf4ptPe7fb2GLVPAzUzEiLzNf3zwjy5VB301
+ xDijjHxMqDRD1wVLcxMxVvFg8uleOytJwVGaq0mpszYCTAP/4THFQ0mVATJKFuQs3YokO+3Ym
+ x4ezSZMWM7+X48Q5iyr0lQVhj0xKs1/DXO1pX5mms=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi David,
 
-On Thu, Jan 07 2021, Johannes Schindelin wrote:
+On Mon, 26 Oct 2020, Rosenbush, David M        Collins wrote:
 
-> Hi Junio,
+> SUMMARY: the git add --dry-run seems to ignore the core.ignorecase confi=
+guration setting.
+
+I don't think that is _technically_ true: `git add` takes pathspecs, and
+they ignore core.ignoreCase on purpose; Instead, whether pathspecs ignore
+case is controlled by `--icase-pathspecs` (see
+https://git-scm.com/docs/git#Documentation/git.txt---icase-pathspecs) or
+`GIT_ICASE_PATHSPECS`
+(https://git-scm.com/docs/git#Documentation/git.txt-codeGITICASEPATHSPECSc=
+ode).
+
+Ciao,
+Johannes
+
+P.S.: A more minimal reproducer is to not even use `--pathspec-from-file`,
+but to provide the file name as a command-line argument directly.
+
 >
-> On Tue, 26 Nov 2019, Junio C Hamano wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> I started with an empty archive.
+> The configuration was set: git config core.ignorecase true
+> The file git_ext.txt, used in the command below, includes multiple speci=
+fications including *.ico
+> I issued the command: git add --dry-run --verbose --pathspec-from-file=
+=3Dgit_ext.txt
+> git reported that no file matched *.ico even though there were files nam=
+ed xxx.ICO
+> git proceeded no further after the report.
+> running the git add command without the --dry-run added the xxx.ICO file=
+s to the archive
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->> >> > Hmph, I wonder why this was sent my way.  How does GGG determine
->> >> > whom to send patches to?  I, like other reviewers, prefer not to see
->> >> > earlier rounds of patches sent directly to me unless they are about
->> >> > areas that I am mostly responsible for (other patches I'll see them
->> >> > and review them on the copies sent to the mailing list anyway).
->> >
->> > Oops, I forgot to address this. The reason why this is sent your way is
->> > that you are the Git maintainer, and as such, GitGitGadget sends _all_ Git
->> > patches your way (except the Git GUI ones).
->> >
->> > The reason for this is that this is the suggested way, as per
->> > https://git-scm.com/docs/SubmittingPatches#patch-flow:
->> >
->> >> 5. The list forms consensus that the last round of your patch is good. Send
->> >>    it to the maintainer and cc the list.
->>
->> Yeah, but as far as I can tell, this is the _first_ round the list
->> sees this topic, which by definition would not have any consensus
->> ;-)
+> What did you expect to happen? (Expected behavior)
+> git add --dry-run should have reported that the xxx.ICO files would be a=
+dded to the archive.
 >
-> I thought about it for over a year and still have no clue how we could
-> teach GitGitGadget to Cc: you when it is appropriate, not without putting
-> the burden on any human being.
-
-That message is from November 2019, didn't you later fix this in January
-2020 here: https://github.com/gitgitgadget/gitgitgadget/commit/b2221f4 ?
-
-I.e. now users need to explicitly add "cc: gitster@pobox.com" to the
-description, no? So isn't in the same as for us who use the
-format-patch/send-email flow in this regard?
+> What happened instead? (Actual behavior)
+> Executing git add with the --dry-run switch should mirror execution with=
+out the --dry-run switch.
+> Both forms should honor the core.ignorecase true configuration, but --dr=
+y-run does not.
+>
+>
+> [System Info]
+> git version:
+> git version 2.29.0.windows.1
+> cpu: x86_64
+> built from commit: add3cebdf89e93784955b34e1c1ffcba308b89cc
+> sizeof-long: 4
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> uname: Windows 10.0 17763
+> compiler info: gnuc: 10.2
+> libc info: no libc information available
+> $SHELL (typically, interactive shell): <unset>
+>
+>
+> David Rosenbush | Staff Engineer, Software
+> COLLINS AEROSPACE | ISR & Space
+> One Hamilton Road
+> Windsor Locks, CT 06096
+> Tel: (860) 654-5697     cell: (860) 798-9944   Home: (860) 658-7993
+> David.Rosenbush@collins.com
+>
+> CONFIDENTIALITY WARNING: This message may contain proprietary and/or pri=
+vileged information of Collins Aerospace and its affiliated companies. If =
+you are not the intended recipient, please 1) Do not disclose, copy, distr=
+ibute or use this message or its contents. 2) Advise the sender by return =
+email. 3) Delete all copies (including all attachments) from your computer=
+. Your cooperation is greatly appreciated.
+>
+>
+>
