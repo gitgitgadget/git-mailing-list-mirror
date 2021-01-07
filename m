@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B01F8C433E6
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AB34C433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 80EAE23444
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2007723444
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 20:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727962AbhAGUCS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 15:02:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51872 "EHLO
+        id S1728113AbhAGUC0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 15:02:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727665AbhAGUCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 15:02:14 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499BDC0612FA
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:34 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id 91so6832105wrj.7
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:34 -0800 (PST)
+        with ESMTP id S1727183AbhAGUCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 15:02:24 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63FC8C0612A3
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 12:01:45 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d13so6773670wrc.13
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 12:01:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9Per0sGB/F/TcHB64BoKVIyLbqwPA6indn6vys9rSI0=;
-        b=sENvxkAB0BOdVB+t2BnGOAVxStMQLTkt6MP5GMRSBpNSVrgN0mJJEIpxGuBHQbKE7U
-         WaCwbiUIIxdNd3HojiLiiRSj60XhSb6O0m5YxwE8fmJah3sEz7677RIPF8pS+oNSF0mB
-         eWOaDD+nndVCIBr9uOE1Yt0izy4ZRi/6kIBXb1aovkRs22x6ObGqp878bbBk4E22J5Gn
-         iR8OB7g8/ku3HH67GyyOdBEZB9mmV83bCW+nktR3R/TSvUKeeRNCJYVeNQuA61M5vhgU
-         iOgDmL/eurnHe/cKe3jTcNjGL58knv4nLIrMU7zSZwWRIeG2EvA6G+3Qt/LEn10AtaM8
-         +ALA==
+        bh=zuhaytbslpiiTsJARPXCZhteNOT9TskDEFoa6C7OWHg=;
+        b=KSauYskfzhP6kXK24rjwbyL78H3L6b1k+XwF/YmwKMMo4oVrgSxalGQziehupIubaL
+         WrOTJJ3lz/ZidtApwjm1PeD+c7VCFZFsC0AM5z80adTkaZQEHlKIPcjHiVNFrgCL7ypn
+         tgJnkBiNQpqb1MQTPdPNp+CVU9LYhdNVjDM7C8NRuRvpyzTJ+ZIuVFx++ViacV56ZTW/
+         oe36GvxR0QhTmDjLLumGmvoYLOBdlwAzsuvpXwo+heZfhbJodrsNdBYcDRkJGIa2EJZK
+         +At97cff9VQziBr5Oqhrzuf7FeIrIPJS+foDX0XGEeTwfW4hVFkObSupL85lhO0atkWY
+         wvhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9Per0sGB/F/TcHB64BoKVIyLbqwPA6indn6vys9rSI0=;
-        b=HmZEOHt0+jt6foH/Ew6ZenaGCBDB2E5FeGt6qiXTIETjaTPHHXhvDHSAeNyJ4/ZBaJ
-         2MeUdRAMLTUVYuyacO9k1bke6pEZg44X3kGahCE8GNwGZIwUy+wMDm9/bWGKDmXdNJpe
-         MPJzldemIAjoJOQ4BzVMCJNPTelyMmpcBu054u4N5GuybrytRD64G1NiXMILlHP/H/LH
-         rY4pyBtrJEK/H0K9bgAcd2QzTpy+jekshuC7lxch8eXj5HOZ0vICGaBU8sByyV3AkYPB
-         EycBMvhXCJlBWQgaT0QE1Dw0yIdkPjVjz/pvo5eD0CXFmdp+Zurl9TWPO2zrWEoTpXVe
-         9x8g==
-X-Gm-Message-State: AOAM530PHsKLIZiK87N63X5HoMa9QzC+edGU/UQt7W61qtGITE8ldNG4
-        0zJKvhVKi4/UkJITZAH3OsQDLvLTQus=
-X-Google-Smtp-Source: ABdhPJzjk2Ym/bsmsW1sqq7MCmYHaiVW0ofT26kIPcj0PV4dr6PsZiD0KPohRW2Z4Mq222JmlCGSNg==
-X-Received: by 2002:adf:fccb:: with SMTP id f11mr273362wrs.3.1610049692903;
-        Thu, 07 Jan 2021 12:01:32 -0800 (PST)
+        bh=zuhaytbslpiiTsJARPXCZhteNOT9TskDEFoa6C7OWHg=;
+        b=UclN2TTlTjyM1WkCU4/iqSfZedkg9Q9ody84vjEJ61D1DzqnNDy72reEUPglVOBZmD
+         6V+og76wNt3Q2yLKmPavzlg1dfbsiKQLHYehGvCiRQGUvvETHxjjpAy4GIYRPk8cVC0z
+         Lb7eZjjW1OLnT7HTX7ogHZSU416yV8lleTkRzSuFlGMAtr4BVZyPXQVH64RTE9GTj1Vp
+         XEu6kFfXr61q4g87mu02bb1etVqjNScZkOtv6D4mahI2nC89/hlQ3AP1e2BSONZABqtW
+         KoLPHdHXUtzDpBJ5Cuq69r0Yo0RwJr4m3ViyuueQlmII+bPQoYXFlHQhyq2scL0WyCnR
+         bGDg==
+X-Gm-Message-State: AOAM531AGg8c8K72v3uwgbgpekgXPJIiiDBno5d7GBlDHaaWopAfgZuP
+        r8OHZZqq9MB51M/svL5idaBuobC0V7I=
+X-Google-Smtp-Source: ABdhPJwgX+P13QglD785DNlpDICXzWeRf71iUdoyrsmBfRsWcaFWBpOfldpRqI9m9yq9YQWx2ZQ5Pw==
+X-Received: by 2002:a5d:4e86:: with SMTP id e6mr277624wru.33.1610049704012;
+        Thu, 07 Jan 2021 12:01:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u10sm8892913wmd.43.2021.01.07.12.01.32
+        by smtp.gmail.com with ESMTPSA id j59sm10544787wrj.13.2021.01.07.12.01.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 12:01:32 -0800 (PST)
-Message-Id: <ccb30dfc3c4c9ad2fc7cd33dc72ecf768827ed9f.1610049687.git.gitgitgadget@gmail.com>
+        Thu, 07 Jan 2021 12:01:43 -0800 (PST)
+Message-Id: <11e45af831d14296c6a78441e423aba315c8f76b.1610049687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Jan 2021 20:01:13 +0000
-Subject: [PATCH 04/18] merge-ort: add outline for computing directory renames
+Date:   Thu, 07 Jan 2021 20:01:25 +0000
+Subject: [PATCH 16/18] merge-ort: process_renames() now needs more
+ defensiveness
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,66 +77,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Port some directory rename handling changes from merge-recursive.c's
-detect_and_process_renames() to the same-named function of merge-ort.c.
-This does not yet add any use or handling of directory renames, just the
-outline for where we start to compute them.  Thus, a future patch will
-add port additional changes to merge-ort's detect_and_process_renames().
+Since directory rename detection adds new paths to opt->priv->paths and
+removes old ones, process_renames() needs to now check whether
+pair->one->path actually exists in opt->priv->paths instead of just
+assuming it does.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ merge-ort.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 999a7c91c52..378ac495d09 100644
+index ea6a08e23e2..9e4ebd9c4d6 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -721,6 +721,18 @@ static int handle_content_merge(struct merge_options *opt,
+@@ -1411,12 +1411,28 @@ static int process_renames(struct merge_options *opt,
+ 		const char *rename_branch = NULL, *delete_branch = NULL;
  
- /*** Function Grouping: functions related to directory rename detection ***/
- 
-+static void get_provisional_directory_renames(struct merge_options *opt,
-+					      unsigned side,
-+					      int *clean)
-+{
-+	die("Not yet implemented!");
-+}
+ 		old_ent = strmap_get_entry(&opt->priv->paths, pair->one->path);
+-		oldpath = old_ent->key;
+-		oldinfo = old_ent->value;
+-
+ 		new_ent = strmap_get_entry(&opt->priv->paths, pair->two->path);
+-		newpath = new_ent->key;
+-		newinfo = new_ent->value;
++		if (old_ent) {
++			oldpath = old_ent->key;
++			oldinfo = old_ent->value;
++		}
++		newpath = pair->two->path;
++		if (new_ent) {
++			newpath = new_ent->key;
++			newinfo = new_ent->value;
++		}
 +
-+static void handle_directory_level_conflicts(struct merge_options *opt)
-+{
-+	die("Not yet implemented!");
-+}
-+
- /*** Function Grouping: functions related to regular rename detection ***/
++		/*
++		 * If pair->one->path isn't in opt->priv->paths, that means
++		 * that either directory rename detection removed that
++		 * path, or a parent directory of oldpath was resolved and
++		 * we don't even need the rename; in either case, we can
++		 * skip it.  If oldinfo->merged.clean, then the other side
++		 * of history had no changes to oldpath and we don't need
++		 * the rename and can skip it.
++		 */
++		if (!oldinfo || oldinfo->merged.clean)
++			continue;
  
- static int process_renames(struct merge_options *opt,
-@@ -1086,13 +1098,24 @@ static int detect_and_process_renames(struct merge_options *opt,
- {
- 	struct diff_queue_struct combined;
- 	struct rename_info *renames = &opt->priv->renames;
--	int s, clean = 1;
-+	int need_dir_renames, s, clean = 1;
- 
- 	memset(&combined, 0, sizeof(combined));
- 
- 	detect_regular_renames(opt, merge_base, side1, MERGE_SIDE1);
- 	detect_regular_renames(opt, merge_base, side2, MERGE_SIDE2);
- 
-+	need_dir_renames =
-+	  !opt->priv->call_depth &&
-+	  (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE ||
-+	   opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT);
-+
-+	if (need_dir_renames) {
-+		for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++)
-+			get_provisional_directory_renames(opt, s, &clean);
-+		handle_directory_level_conflicts(opt);
-+	}
-+
- 	ALLOC_GROW(combined.queue,
- 		   renames->pairs[1].nr + renames->pairs[2].nr,
- 		   combined.alloc);
+ 		/*
+ 		 * diff_filepairs have copies of pathnames, thus we have to
 -- 
 gitgitgadget
 
