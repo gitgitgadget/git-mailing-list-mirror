@@ -2,140 +2,265 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C4AC433E0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FEECC433DB
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:23:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFE8C233A0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:22:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 400F7224D3
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 16:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728291AbhAGQWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 11:22:00 -0500
-Received: from mout.gmx.net ([212.227.17.20]:60815 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726427AbhAGQWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 11:22:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610036423;
-        bh=OEqz+O/wkEiJDizwbMY1+gAXYi21xOZaB6XqNQM/TKM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hktvhm+/i7DI9Zbt/OjjA2J3f8EfNftNiz1SxM9V7dwUyf0fBwWwxzG12xEDBpG7s
-         37CIdYQjz6DgMg1LlyeQSzeZdicSaUeQ1pFH0grZkiXhAfq+A8sacATLmTIhahcqbw
-         km0dQqm7mDrZLzUm/FEqxXx5ZY6yS6ZnqGlphHyM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.251.4] ([213.196.212.28]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJVDM-1kiE3z1hqC-00Jr8w; Thu, 07
- Jan 2021 17:20:23 +0100
-Date:   Thu, 7 Jan 2021 17:20:22 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
-Subject: Re: Cc'ing the Git maintainer on GitGitGadget contributions, was
- Re: [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
-In-Reply-To: <87wnwordzh.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2101071718470.2213@tvgsbejvaqbjf.bet>
-References: <pull.475.git.1574539001.gitgitgadget@gmail.com> <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet> <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet> <87wnwordzh.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728532AbhAGQWj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 11:22:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726427AbhAGQWj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 11:22:39 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 178B9C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 08:21:59 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id 7so4617140qtp.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 08:21:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cNBiw1zgSrg/qV7GNXZEZa15AtD7I1aaUCqae2WJgjE=;
+        b=RHxTDYb2kuQo2HGML1pGM7M2q/5CHqD870daRsxxepjrKFaqclRdzAfwSaiix0fQ/x
+         L9zGHm7hH7batMElbVAe8fid/HUAi+MqdZ2GOiI9jqFMW4lQOPQAq9IlbSm1v8+ymJx6
+         1EPloE5GwAp8/j2Cl9fuXygEMu+IqaLvGnN5v9fCz+WCZFZYCaQIClWN54RpBSn9XvAt
+         ZCfNvaJeyPQ7W9fsbsznXyss4DZ+hGkCXVX9j12hXuiEH32qrKbxq+zfxkSeIvltiEgW
+         6R8gD6bEPQCO78QLh7EYs9xiupMj2sVbCt6GFl13+f/boQUjHq4myQQ5oKrHkSfuEW40
+         vb9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cNBiw1zgSrg/qV7GNXZEZa15AtD7I1aaUCqae2WJgjE=;
+        b=T2JGSOxecKjEl0/L8otRO5wdUihn0ipy7TcWqPdw1oLDsc19Cp2cxdo+aoU4pmtYMM
+         23S0sIjakGjhrUdAbXd1tFf74uX7le0cAneVQuBv86AEhPT6RD/myGHjTBhm2bTrPkuN
+         qd0I5cRy/CtYESeY2W83V7NEC7LXZ7bsLx23gfzWkdOyMpGMcQawaN3thV7cmpdAo0eD
+         l7dslIJPmqEl+fsDJz0UJcUSHO0r85ZFyNnU0Q7NTTMHh+c+e+Nww4o+hU/WJpshBGoC
+         yOmkQLrAhoy2Wb/sb2iqUMc7iIF28PDBDMbeIg8xHvYnzbjyLN5/nfew4CdhMC3VMNmF
+         XSJw==
+X-Gm-Message-State: AOAM533DX+VyaahAqFEVtwe/aa0AUJO3z9366cE90lJ8aQ2k4/FIz80Y
+        0QzHz8RUveyYYa1OXcJhU1U=
+X-Google-Smtp-Source: ABdhPJwwO6cJrUwv8GgeJsqnH3y51mLdTxVx9RoB9RU39YsadNS3QPLMzOOEg5XMfDixdawSTeLNFA==
+X-Received: by 2002:ac8:4801:: with SMTP id g1mr9015922qtq.44.1610036518222;
+        Thu, 07 Jan 2021 08:21:58 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id e10sm2856334qtr.92.2021.01.07.08.21.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Jan 2021 08:21:57 -0800 (PST)
+Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
+ characters)
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Daniel Troger' <random_n0body@icloud.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20210106214737.qwlp4jvg3x2voafs@tb-raspi4>
+ <A342FAE0-A363-4280-848C-162F38C22C8E@icloud.com>
+ <002601d6e480$c193bd00$44bb3700$@nexbridge.com>
+ <ffe0a3ae-780d-95ae-524d-7b029eda21ee@gmail.com>
+ <20210107154926.6tb7ukgemn7kmpnl@tb-raspi4>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <613fb31c-c23d-0568-f311-74eb14bba2ca@gmail.com>
+Date:   Thu, 7 Jan 2021 11:21:56 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1168004566-1610036425=:2213"
-X-Provags-ID: V03:K1:Auf4Nw0n/GPXx1ZykUa+cPTgdPFUQH8RQeXR3oAJpmjHK2GXWQf
- I7AZ4kNZ3Qsafn5E6TaDTuxGFu9dxO++ZDBDC3ohwcG+EL3ZcsTQuYJf7lMJJYZF/P4oUzS
- DaIzPugq7jZNrNgz6FYXKqi3xpRI2wOrmGsK28IEmJ1ukjLDwJLum3zTPBL7s4dSMCydrrN
- N/qnrnkEjnQhfjr87c9+w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WVpJ5PpNWOQ=:gmTROXyzsfPNQ4h5Hi9hjN
- IjV/pZxwm5urR1PThySqGqkLbiN6714kSueKAp0vE5EQWlBG2e/15QJLAS9Iq7XqJo1M9hTCH
- 8ZCQKY5Q0gEg+cyH9q92ddxbIjksPrcuivLCGgcKV0bwTM6ZhqjL4Isvf7uJvrhst36Exz7xY
- pRwoc7Qc8VoqDMlQcpXaWA/FjFyuy+EpI/kDBTJ4qXw2En1BBzz1KayET0+pp+ktbTLTFD+Yl
- ke05nD3y0LlUGGWBbhjkUMn9p+nMYu+jAeAZS42NYaJcy5NXJHUPvaeNULtyvzUCcs/leb+wJ
- +EmGsl7RxiOaDXWKzlCBIZK8XG8gEaqMuqtBGTbJRyI04cUAnx6mV7CwQNr3mU64IJhMthrBe
- rqljkIqtYzfzr6y3hIQbTatGg+HR2Ul+/QZD9N0/6TtKI6lTro7TMTupPpMZY35qhuD0tlNza
- +0JmJ0cbUHxTYXK3uK38UzUy/mY9ICP58dgPBos53tQvbQOYROO5Ax90/zSgsPr+VpDe2Xgmt
- qLdK9DqjbpcCtpPNuqFH6D7dfrPsxIhIHsFD1Fg7mAOBujXtqdUPGhjTu0FNJOCJ7KS4NEPvJ
- YJdC3CeR5SJPlCfNT85OLjAY1U4Uf/xNtU5ZdyW8XPwWyVZWV+x+4QuUMCZ1QErHlSEOwW+47
- fxAt3JRxDxbyvNPNCmZrrRScy4wGkp85NFWwzQqu8Zsl3ufVTE9U3KawGh2sAnGNGAgwM2l9B
- 55JHeIHn9H89zDj+gKWBP4BEdcrItT1/h+eSZXFtYzjAQjcw75BTZZWxkIZsze7Lx39Y2lCU7
- dcGciNccFhmEdaLHsh6zrBHB+aNBxig0zXL8Cg7QoU+IJspgmGf96UYKLmr+udFRtjknKPeJe
- L3uciDaN8CkJ6Veg7kUjF+KK1HnhSOfyo2m9HnVrE=
+In-Reply-To: <20210107154926.6tb7ukgemn7kmpnl@tb-raspi4>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Torsten,
 
---8323328-1168004566-1610036425=:2213
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Le 2021-01-07 à 10:49, Torsten Bögershausen a écrit :
+> On Thu, Jan 07, 2021 at 09:34:35AM -0500, Philippe Blain wrote:
+>> Hi everyone,
+>>
+>> Le 2021-01-06 à 18:07, Randall S. Becker a écrit :
+>>> On January 6, 2021 5:22 PM, Daniel Troger wrote:
+>>>> Hi, maybe this helps you reproduce. I think I should have committed before
+>>>> doing the second changes but I still got the error message and the two
+>>>> names for one folder:
+>>>>
+>>>> me@iMac:/tmp$ mkdir git_bug
+>>>> me@iMac:/tmp$ cd git_bug
+>>>> me@iMac:/tmp/git_bug$ git init
+>>>> hint: Using 'master' as the name for the initial branch. This default branch
+>>>> name
+>>>> hint: is subject to change. To configure the initial branch name to use in all
+>>>> hint: of your new repositories, which will suppress this warning, call:
+>>>> hint:
+>>>> hint: 	git config --global init.defaultBranch <name>
+>>>> hint:
+>>>> hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+>>>> hint: 'development'. The just-created branch can be renamed via this
+>>>> command:
+>>>> hint:
+>>>> hint: 	git branch -m <name>
+>>>> Initialized empty Git repository in /private/tmp/git_bug/.git/
+>>>> me@iMac:/tmp/git_bug$ ls -la total 8
+>>>> drwxr-xr-x   4 daniel  wheel   128 Jan  6 23:13 .
+>>>> drwxrwxrwt  27 root    wheel   864 Jan  6 23:13 ..
+>>>> drwxr-xr-x   9 daniel  wheel   288 Jan  6 23:12 .git
+>>>> -rw-r--r--@  1 daniel  staff  1283 Jan  6 23:13 paulbrunngård-springyard.zip
+>>>> me@iMac:/tmp/git_bug$ unzip paulbrunngård-springyard.zip
+>>>> Archive:  paulbrunngård-springyard.zip
+>>>>      creating: paulbrunnga??rd-springyard/
+>>>>     inflating: paulbrunnga??rd-springyard/.DS_Store
+>>>>      creating: __MACOSX/
+>>>>      creating: __MACOSX/paulbrunnga??rd-springyard/
+>>>>     inflating: __MACOSX/paulbrunnga??rd-springyard/._.DS_Store
+>>>>    extracting: paulbrunnga??rd-springyard/empty me@iMac:/tmp/git_bug$ rm
+>>>> -rf __MACOSX/ *.zip me@iMac:/tmp/git_bug$ ls -la total 0
+>>>> drwxr-xr-x   4 daniel  wheel  128 Jan  6 23:15 .
+>>>> drwxrwxrwt  27 root    wheel  864 Jan  6 23:13 ..
+>>>> drwxr-xr-x   9 daniel  wheel  288 Jan  6 23:15 .git
+>>>> drwxr-xr-x@  4 daniel  wheel  128 Jan  6 12:20 paulbrunngård-springyard
+>>>> me@iMac:/tmp/git_bug$ cd paulbrunngård-springyard/
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
+>>>> content me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git add empty
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ nano empty
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cat empty Initial
+>>>> content
+>>>>
+>>>>
+>>>> Line I want to keep
+>>>>
+>>>> Line I want gone
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ git restore -p .
+>>>> BUG: pathspec.c:495: error initializing pathspec_item Cannot close git diff-
+>>>> index --cached --numstat --summary
+>>>> 4b825dc642cb6eb9a060e54bf8d69288fbee4904 --
+>>>> :(,prefix:27)paulbrunngård-springyard/ () at
+>>>> /usr/local/Cellar/git/2.30.0/libexec/git-core/git-add--interactive line 183.
+>>>> me@iMac:/tmp/git_bug/paulbrunngård-springyard$ cd ..
+>>>> me@iMac:/tmp/git_bug$ git status
+>>>> On branch master
+>>>>
+>>>> No commits yet
+>>>>
+>>>> Changes to be committed:
+>>>>     (use "git rm --cached <file>..." to unstage)
+>>>> 	new file:   "paulbrunnga\314\212rd-springyard/empty"
+>>>>
+>>>> Changes not staged for commit:
+>>>>     (use "git add <file>..." to update what will be committed)
+>>>>     (use "git restore <file>..." to discard changes in working directory)
+>>>> 	modified:   "paulbrunnga\314\212rd-springyard/empty"
+>>>>
+>>>> Untracked files:
+>>>>     (use "git add <file>..." to include in what will be committed)
+>>>> 	.DS_Store
+>>>> 	"paulbrunng\303\245rd-springyard/"
+>>>>
+>>>> me@iMac:/tmp/git_bug$
+>>>
+>>> Is it possible that the å character is coming from a UTF-16 encoding and is not representable in UTF-8? I'm wondering whether the name has a double-byte representation where one of the bytes is null, resulting in a truncated file name coming from readdir(). The file name would not be representable on some platforms that do not support UTF-16 path names.
+>>
+>> I don't think that's the case (the angstrom is present in UTF-8 [1]).
+>> I think it's another UTF-8 precomposed/decomposed bug. As far as I
+>> was able to test it happens as soon as you have a precomposed character
+>> in the folder name. I observed the same behaviour with a folder named
+>> "folderü", for example. I also tried 'git -c add.interactive.usebuiltin restore -p .'
+>> to see if the new experimental builtin§ add-interactive has the same problem,
+>> and it does (though the error is less verbose).
+>>
+>> Anyway as you show with 'git status', it's not just 'git add -p' that is
+>> faulty, it's deeper than that, I would say.
+>>
+>> Cheers,
+>>
+>> Philippe.
+>>
+>> [1] https://en.wikipedia.org/wiki/%C3%85#On_computers
+> 
+> Folks, I can not reproduce anything here.
+> - The zip file mentioned earlier does not include a decomposed "å"
+>    Neither when running unzip under Linux nor under Mac
+> - Trying to write a test script does not show anything special
+> 
+> My attempt looks like this:
 
-Hi =C3=86var,
+With a few modifications, you should see things start to get strange:
 
-On Thu, 7 Jan 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> cat test.sh
+> #!/bin/sh
+> DIR=git-test-restore-p
+> GIT=/usr/local/bin/git
+> 
+> Adiarnfc=$(printf '\303\204')
+> Adiarnfd=$(printf 'A\314\210')
+> DIRNAME=xx${Adiarnfd}yy
+> FILENAME=$DIRNAME/file
 
-> On Thu, Jan 07 2021, Johannes Schindelin wrote:
->
-> > Hi Junio,
-> >
-> > On Tue, 26 Nov 2019, Junio C Hamano wrote:
-> >
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >>
-> >> >> > Hmph, I wonder why this was sent my way.  How does GGG determine
-> >> >> > whom to send patches to?  I, like other reviewers, prefer not to=
- see
-> >> >> > earlier rounds of patches sent directly to me unless they are ab=
-out
-> >> >> > areas that I am mostly responsible for (other patches I'll see t=
-hem
-> >> >> > and review them on the copies sent to the mailing list anyway).
-> >> >
-> >> > Oops, I forgot to address this. The reason why this is sent your wa=
-y is
-> >> > that you are the Git maintainer, and as such, GitGitGadget sends _a=
-ll_ Git
-> >> > patches your way (except the Git GUI ones).
-> >> >
-> >> > The reason for this is that this is the suggested way, as per
-> >> > https://git-scm.com/docs/SubmittingPatches#patch-flow:
-> >> >
-> >> >> 5. The list forms consensus that the last round of your patch is g=
-ood. Send
-> >> >>    it to the maintainer and cc the list.
-> >>
-> >> Yeah, but as far as I can tell, this is the _first_ round the list
-> >> sees this topic, which by definition would not have any consensus
-> >> ;-)
-> >
-> > I thought about it for over a year and still have no clue how we could
-> > teach GitGitGadget to Cc: you when it is appropriate, not without putt=
-ing
-> > the burden on any human being.
->
-> That message is from November 2019, didn't you later fix this in January
-> 2020 here: https://github.com/gitgitgadget/gitgitgadget/commit/b2221f4 ?
+change to:
+FILENAME=file
 
-I would not call that a fix. As mentioned, I could not come up with a way
-to Cc: Junio only when appropriate in a way that wouldn't surprise new
-users. So yes, I disabled the auto-Cc:ing, with no appropriate
-replacement.
+> 
+> rm -rf $DIR &&
+>      mkdir $DIR &&
+>      cd $DIR &&
+>      $GIT init &&
+>      mkdir $DIRNAME &&
 
-> I.e. now users need to explicitly add "cc: gitster@pobox.com" to the
-> description, no? So isn't in the same as for us who use the
-> format-patch/send-email flow in this regard?
+add:
+cd $DIRNAME &&
 
-Right. And that is... intuitive? If you have to read the manual, the
-design is broken.
+>      echo "Initial" >$FILENAME &&
 
-Ciao,
-Dscho
+add:
+$GIT status &&
 
---8323328-1168004566-1610036425=:2213--
+>      $GIT add $FILENAME &&
+
+add:
+$GIT status &&
+
+>      echo  >>$FILENAME &&
+>      echo  >>$FILENAME &&
+>      echo "One more line"  >>$FILENAME &&
+>      echo  >>$FILENAME &&
+>      echo  >>$FILENAME &&
+>      echo "Last line"  >$FILENAME &&
+
+add:
+$GIT status &&
+
+>      $GIT restore -p . &&
+>      $GIT restore -p . &&
+>      echo git=$GIT &&
+>      $GIT --version &&
+>      echo "OK"
+> 
+> ==================================
+> It points out Git from brew, I think.
+
+I don't think it's a packaging bug;
+I tried with /usr/bin/git on macOS 10.11 (git version 2.10.1 (Apple Git-78))
+and I also get a (different) error but the command does not fail
+(I needed to change restore to reset):
+
+$ ./test.sh
+Initialized empty Git repository in /private/var/folders/lr/r6n2057j0dzd4gdb614fp0740000gp/T/repro/git-test-restore-p/.git/
+Assertion failed: (item->nowildcard_len <= item->len && item->prefix <= item->len), function prefix_pathspec, file pathspec.c, line 317.
+No changes.
+Assertion failed: (item->nowildcard_len <= item->len && item->prefix <= item->len), function prefix_pathspec, file pathspec.c, line 317.
+No changes.
+git=/usr/bin/git
+git version 2.10.1 (Apple Git-78)
+OK
+
