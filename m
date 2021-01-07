@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C38D5C433E6
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0C08C433E9
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:53:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A1B3217A0
-	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF5B0217A0
+	for <git@archiver.kernel.org>; Thu,  7 Jan 2021 09:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728059AbhAGJxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 04:53:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
+        id S1727273AbhAGJxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 04:53:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727560AbhAGJxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 04:53:35 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31453C0612FC
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 01:52:22 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id r3so5013178wrt.2
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 01:52:22 -0800 (PST)
+        with ESMTP id S1727366AbhAGJxd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 04:53:33 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D2DC0612FA
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 01:52:19 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id q75so4984868wme.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 01:52:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ccZKqxiWIAZOqv/z5zaiFjTEnjAbnawhQjILWbeJLQU=;
-        b=GR2KMTVlvM+TtfC5d82D1Mef0y0DXQhgMXFmGMa3sbLG7rs0T/uX9cV9/hYcgK1GyR
-         KcDirY0YWOs9npE8q2pTtw7fHrV39xiSIuy+2uZZn/DTTkP73r/zJffZLccRd+/vx7v1
-         LZIrLyDygF5YG1CHqR7qRqE5PmZK2WXM/MeDzItsf1gmthNSh9kWtz+EdO4XiXdeyrnW
-         oaqwqm7EuhYEJOd88Dz2u80XQow0K+U6ahnmO8i5sB0NV634DKdqIuZrVkSwmyJIKfMj
-         q7p7ycSwUUSkeeF34/CYDXh0U+9ZcBb2b1Dl6wSRFA0S8mkEMR6OR2rIDjwsHH/QxHms
-         p0Jg==
+        bh=4o2/u2lXkOH0h/RF/TJKUIGB3WnODBhX0AArxrztVbQ=;
+        b=aF62soTqaP4vgqkZmml8+5r5ydvVpek3+kp9Yci0ZPQbSuz9B4zSaE4OFJYkDeSIL2
+         sTIeNa2c5ffeFloHB3mp8Pq7R7sAqxjC0d00rLEAJaG5QI3tPyJMG7V4aTAJzj6yXOp2
+         QngZDY8dojL+uk4ocSf3ESCHWqceHrfH6S/ngW7dHxYlM6HjEsmkGMcjbjDioEsF0kSJ
+         J+m+NBSkFdhXd9WuMaapG5CO9iTaT2phNJ3n5zewzd3j9LdMLxLg1V36Vrs3ZhRcJouD
+         M8KVZ6tOKiI98IL9iGasm6bbxcsMjiK6PneEwYeaDZyNynnoVOmnMp/iawdk2vWK7TC9
+         mGtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ccZKqxiWIAZOqv/z5zaiFjTEnjAbnawhQjILWbeJLQU=;
-        b=JH9JlUKi+on8fOvnwrc8PWskRAeh6/JMeNHz9K7Xy+WtZUzv1zEEhxk0onIGkxMA2v
-         0EEA3AwHWbyF0rQJX1seFGvjNLlbX945bfafbsrpTVJcyiXlRpT52X4Gj4Wk8T5VfsGN
-         EmaPfgDaCJIJsAbCZEYagRiasRxNCf1WgICRB6hrQvzYWJN0jwLAyX+kPh1cM6DK7qHc
-         Ub/bCuK2oq7ydYLBz6mMIpQTz2DCzyMipBM8BGUhMB67wJ+OWxturApRY39vIYHG/pYK
-         amYQjvYcGexQiQt1nQbpl69WjwK+6wOBc2xC8hjw+ovC7Lf/Hu/y9/bxRuJcX8uh3T32
-         q5Cw==
-X-Gm-Message-State: AOAM5322Nf+7qIWkZWzYsNYO3UJ3guI9VnNmAV2EqY7PAQgH8dfYX6VB
-        uTah5Pxr9afx3rPBXAJNUxEcvy1tf9FUcA==
-X-Google-Smtp-Source: ABdhPJzOAFIjUH6OCVD6qadq2UTtrC+LWS52LVhgxmY01A1O8CnDZKSGgSNVY0vpIjBd5k68Wr64IQ==
-X-Received: by 2002:adf:8145:: with SMTP id 63mr7899052wrm.8.1610013140650;
-        Thu, 07 Jan 2021 01:52:20 -0800 (PST)
+        bh=4o2/u2lXkOH0h/RF/TJKUIGB3WnODBhX0AArxrztVbQ=;
+        b=tiLxp8kfkHqvLVQPzovh6W89QAmWdwPbRfFrunpcWiEcqeE6hWqI83Lc+Har+gX0lh
+         GD3lM8EtBn7WUsVCXDua0R27QfATOnYA2EyjP9zcJBIO/7kz21Ne8i3eNjt1t3wtth16
+         u8FJKmN+vvfPn2f4elpYYTkW54x/PmgKc7MworQcXgaEPo8eWaJzOEAl4cFBiwMdGLzl
+         jwg+imenJN9p72uyK866dikBiQBj3WC202AZnFyVOicDZ6MAQcr71YP8Qe9VMqzuOGjQ
+         R4IHwTT2if7jwjPnyP1/L21V8Tu7JW7emDXTLvNjLc4R9WvVI8vz92/kQfxEjJUEzJsO
+         /vlA==
+X-Gm-Message-State: AOAM533tBMArR3X1cE4IX7uvWlABRUfZKtsdLnbpufl7SqMmSGbpZUWL
+        sC1T8Df4BNvasJ4mnnwIspOJYWGsxOqJiw==
+X-Google-Smtp-Source: ABdhPJxmEHigWPlIJ1qoZPI0PAmDm91Wi4zbM/Gu+LkzLFpiccMUbwHw033BgRweEXJ1CNF9YapY7A==
+X-Received: by 2002:a7b:c385:: with SMTP id s5mr7208464wmj.170.1610013137431;
+        Thu, 07 Jan 2021 01:52:17 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k10sm6806535wrq.38.2021.01.07.01.52.19
+        by smtp.gmail.com with ESMTPSA id k10sm6806535wrq.38.2021.01.07.01.52.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 01:52:19 -0800 (PST)
+        Thu, 07 Jan 2021 01:52:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -67,9 +67,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         emilyshaffer@google.com, jrnieder@gmail.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 7/7] branch: show "HEAD detached" first under reverse sort
-Date:   Thu,  7 Jan 2021 10:51:53 +0100
-Message-Id: <20210107095153.4753-8-avarab@gmail.com>
+Subject: [PATCH v2 5/7] ref-filter: move ref_sorting flags to a bitfield
+Date:   Thu,  7 Jan 2021 10:51:51 +0100
+Message-Id: <20210107095153.4753-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20210106100139.14651-1-avarab@gmail.com>
 References: <20210106100139.14651-1-avarab@gmail.com>
@@ -80,94 +80,170 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the output of the likes of "git branch -l --sort=-objectsize"
-to show the "(HEAD detached at <hash>)" message at the start of the
-output. Before the compare_detached_head() function added in a
-preceding commit we'd emit this output as an emergent effect.
+Change the reverse/ignore_case/version sort flags in the ref_sorting
+struct into a bitfield. Having three of them was already a bit
+unwieldy, but it would be even more so if another flag needed a
+function like ref_sorting_icase_all() introduced in
+76f9e569adb (ref-filter: apply --ignore-case to all sorting keys,
+2020-05-03).
 
-It doesn't make any sense to consider the objectsize, type or other
-non-attribute of the "(HEAD detached at <hash>)" message for the
-purposes of sorting. Let's always emit it at the top instead. The only
-reason it was sorted in the first place is because we're injecting it
-into the ref-filter machinery so builtin/branch.c doesn't need to do
-its own "am I detached?" detection.
+A follow-up change will introduce such a flag, so let's move this over
+to a bitfield. Instead of using the usual '#define' pattern I'm using
+the "enum" pattern from builtin/rebase.c's b4c8eb024af (builtin
+rebase: support --quiet, 2018-09-04).
+
+Perhaps there's a more idiomatic way of doing the "for each in list
+amend mask" pattern than this "mask/on" variable combo. This function
+doesn't allow us to e.g. do any arbitrary changes to the bitfield for
+multiple flags, but I think in this case that's fine. The common case
+is that we're calling this with a list of one.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ref-filter.c             | 5 ++++-
- t/t3203-branch-output.sh | 6 +++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ builtin/branch.c       |  2 +-
+ builtin/for-each-ref.c |  2 +-
+ builtin/tag.c          |  2 +-
+ ref-filter.c           | 24 +++++++++++++++---------
+ ref-filter.h           | 12 +++++++-----
+ 5 files changed, 25 insertions(+), 17 deletions(-)
 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 045866a51ae..2dd51a8653b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -739,7 +739,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		if (!sorting)
+ 			sorting = ref_default_sorting();
+-		ref_sorting_icase_all(sorting, icase);
++		ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 		print_ref_list(&filter, sorting, &format);
+ 		print_columns(&output, colopts, NULL);
+ 		string_list_clear(&output, 0);
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 9d1ecda2b8f..cb9c81a0460 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -70,7 +70,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!sorting)
+ 		sorting = ref_default_sorting();
+-	ref_sorting_icase_all(sorting, icase);
++	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
+ 
+ 	filter.name_patterns = argv;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index ecf011776dc..24d35b746d1 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -485,7 +485,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	}
+ 	if (!sorting)
+ 		sorting = ref_default_sorting();
+-	ref_sorting_icase_all(sorting, icase);
++	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
+ 	if (cmdmode == 'l') {
+ 		int ret;
 diff --git a/ref-filter.c b/ref-filter.c
-index 8d0739b9972..ee337df232a 100644
+index 8882128cd3e..fe587afb80b 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -2357,6 +2357,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- {
- 	struct atom_value *va, *vb;
- 	int cmp;
-+	int cmp_detached_head = 0;
- 	cmp_type cmp_type = used_atom[s->atom].type;
- 	struct strbuf err = STRBUF_INIT;
- 
-@@ -2368,6 +2369,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
- 	if (s->sort_flags & REF_SORTING_DETACHED_HEAD_FIRST &&
- 	    ((a->kind | b->kind) & FILTER_REFS_DETACHED_HEAD)) {
- 		cmp = compare_detached_head(a, b);
-+		cmp_detached_head = 1;
- 	} else if (s->sort_flags & REF_SORTING_VERSION) {
+@@ -2362,11 +2362,12 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 	if (get_ref_atom_value(b, s->atom, &vb, &err))
+ 		die("%s", err.buf);
+ 	strbuf_release(&err);
+-	if (s->version) {
++	if (s->sort_flags & REF_SORTING_VERSION) {
  		cmp = versioncmp(va->s, vb->s);
  	} else if (cmp_type == FIELD_STR) {
-@@ -2384,7 +2386,8 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 		int (*cmp_fn)(const char *, const char *);
+-		cmp_fn = s->ignore_case ? strcasecmp : strcmp;
++		cmp_fn = s->sort_flags & REF_SORTING_ICASE
++			? strcasecmp : strcmp;
+ 		cmp = cmp_fn(va->s, vb->s);
+ 	} else {
+ 		if (va->value < vb->value)
+@@ -2377,7 +2378,7 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
  			cmp = 1;
  	}
  
--	return (s->sort_flags & REF_SORTING_REVERSE) ? -cmp : cmp;
-+	return (s->sort_flags & REF_SORTING_REVERSE && !cmp_detached_head)
-+		? -cmp : cmp;
+-	return (s->reverse) ? -cmp : cmp;
++	return (s->sort_flags & REF_SORTING_REVERSE) ? -cmp : cmp;
  }
  
  static int compare_refs(const void *a_, const void *b_, void *ref_sorting)
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 8f53b081365..5e0577d5c7f 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -221,10 +221,10 @@ test_expect_success 'git branch `--sort=[-]objectsize` option' '
- 	test_i18ncmp expect actual &&
+@@ -2392,15 +2393,20 @@ static int compare_refs(const void *a_, const void *b_, void *ref_sorting)
+ 			return cmp;
+ 	}
+ 	s = ref_sorting;
+-	return s && s->ignore_case ?
++	return s && s->sort_flags & REF_SORTING_ICASE ?
+ 		strcasecmp(a->refname, b->refname) :
+ 		strcmp(a->refname, b->refname);
+ }
  
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  branch-one
- 	  main
- 	  branch-two
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-objectsize >actual &&
- 	test_i18ncmp expect actual
-@@ -241,10 +241,10 @@ test_expect_success 'git branch `--sort=[-]type` option' '
- 	test_i18ncmp expect actual &&
+-void ref_sorting_icase_all(struct ref_sorting *sorting, int flag)
++void ref_sorting_set_sort_flags_all(struct ref_sorting *sorting,
++				    unsigned int mask, int on)
+ {
+-	for (; sorting; sorting = sorting->next)
+-		sorting->ignore_case = !!flag;
++	for (; sorting; sorting = sorting->next) {
++		if (on)
++			sorting->sort_flags |= mask;
++		else
++			sorting->sort_flags &= ~mask;
++	}
+ }
  
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  branch-one
- 	  branch-two
- 	  main
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-type >actual &&
- 	test_i18ncmp expect actual
-@@ -261,10 +261,10 @@ test_expect_success 'git branch `--sort=[-]version:refname` option' '
- 	test_i18ncmp expect actual &&
+ void ref_array_sort(struct ref_sorting *sorting, struct ref_array *array)
+@@ -2537,12 +2543,12 @@ void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg)
+ 	*sorting_tail = s;
  
- 	cat >expect <<-\EOF &&
-+	* (HEAD detached from fromtag)
- 	  main
- 	  branch-two
- 	  branch-one
--	* (HEAD detached from fromtag)
- 	EOF
- 	git branch --sort=-version:refname >actual &&
- 	test_i18ncmp expect actual
+ 	if (*arg == '-') {
+-		s->reverse = 1;
++		s->sort_flags |= REF_SORTING_REVERSE;
+ 		arg++;
+ 	}
+ 	if (skip_prefix(arg, "version:", &arg) ||
+ 	    skip_prefix(arg, "v:", &arg))
+-		s->version = 1;
++		s->sort_flags |= REF_SORTING_VERSION;
+ 	s->atom = parse_sorting_atom(arg);
+ }
+ 
+diff --git a/ref-filter.h b/ref-filter.h
+index feaef4a8fde..6296ae8bb27 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -28,9 +28,11 @@ struct atom_value;
+ struct ref_sorting {
+ 	struct ref_sorting *next;
+ 	int atom; /* index into used_atom array (internal) */
+-	unsigned reverse : 1,
+-		ignore_case : 1,
+-		version : 1;
++	enum {
++		REF_SORTING_REVERSE = 1<<0,
++		REF_SORTING_ICASE = 1<<1,
++		REF_SORTING_VERSION = 1<<2,
++	} sort_flags;
+ };
+ 
+ struct ref_array_item {
+@@ -109,8 +111,8 @@ void ref_array_clear(struct ref_array *array);
+ int verify_ref_format(struct ref_format *format);
+ /*  Sort the given ref_array as per the ref_sorting provided */
+ void ref_array_sort(struct ref_sorting *sort, struct ref_array *array);
+-/*  Set the ignore_case flag for all elements of a sorting list */
+-void ref_sorting_icase_all(struct ref_sorting *sorting, int flag);
++/*  Set REF_SORTING_* sort_flags for all elements of a sorting list */
++void ref_sorting_set_sort_flags_all(struct ref_sorting *sorting, unsigned int mask, int on);
+ /*  Based on the given format and quote_style, fill the strbuf */
+ int format_ref_array_item(struct ref_array_item *info,
+ 			  const struct ref_format *format,
 -- 
 2.29.2.222.g5d2a92d10f8
 
