@@ -2,70 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1975DC433E0
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6A7BC433DB
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:43:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B474A23406
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:43:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 872EB23406
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727077AbhAHHnX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 02:43:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48278 "EHLO
+        id S1727137AbhAHHny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 02:43:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725771AbhAHHnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 02:43:22 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068DDC0612F9
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 23:42:42 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id p22so10180903edu.11
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 23:42:41 -0800 (PST)
+        with ESMTP id S1725771AbhAHHny (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 02:43:54 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6323C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 23:43:13 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id q22so13360435eja.2
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 23:43:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=references:user-agent:from:to:cc:subject:message-id:in-reply-to
          :date:mime-version;
-        bh=00vvRx0OQG7mCgt0YBpyrk52GTMv9PHTmr/w4oEeVGc=;
-        b=flFc/DOBjusnFaOkzTKpj4Pi3nn9KOl6HWzSZSn7c8hwUPT60UK7UxNw0mszUAEphQ
-         Un9K1Cehq2Z3MR58tu+VIIvKIBNtk/PinebDk09BNJisLG9rg5g472EwrfTI/pdcb2Ih
-         PEflia+cBkMZPQymdkn7R5BdhdQlCzKhlzlGGdCOFxfUsBNqtjx+bUDbYDskOSI038ZK
-         imDXDTUX8Ok9IQU4ifO5lIANqzDdDEZsCMCotjbklKT6daKT5mZY3ukhuid2euIcvB23
-         rhgzlzLwhwkrGOvZeblrGBsxLfWuG/GiYigKYZua0ovXGZ3Un4iUUH/QP3rrv+BkwzRw
-         wCig==
+        bh=LHY5CCPo5MKyB8Fonytsy1s4R19IlwKjZRqmDF+7HFk=;
+        b=mAssyqSZFIVn636GvFNZU7NDGLg43lgz5nPADrvbDU93z9PttTeyx2we2gNBoRW3Nj
+         9eh83cBacPLui02QI/FYXRJctTA1lQWn/VkRZQ4bEpj5gKwTylxOSrhWQuqo0sUVAWOx
+         vQemb9cpfBGV/JyC9UYAzf+9WnD7wX9Lo7cbi3gnapMloIN/Da2/K9HxaTT3kqVnFjXZ
+         OkBavyno8rbKt1Nj3vahemih4xyKGU3yLMivdYseSoWHtLtcT3wx8yuCxzLbYJq593qS
+         GFCj+quLoPGR4OFbO1GV88PcokX2kok14R0HYB9C/GrRk1A8YUof1QM7qLRiAd7JGZEr
+         /6Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :message-id:in-reply-to:date:mime-version;
-        bh=00vvRx0OQG7mCgt0YBpyrk52GTMv9PHTmr/w4oEeVGc=;
-        b=JBUhY5FuDtedxw5674Sq7eARPHzolrte5LCBnvnmSf3Cs13xBUuvzhss8R+mTJYxnP
-         J3PtAzM4nYiRRaZcy9E2KHrJ9YQiuxpvksg2JEV2Eh9IX0LEJsxMd87xLKNukjMoh2Hn
-         rDrWSio9eOxKpEG0H6WIHws2CL9PGhbQa05OSt/cLbazUIhxbsgMIM19nJF93rnWkf3s
-         7Gqx9Ia0XgDGqETQ+1F55RGmD8ItKRmhUWpBl+Lwc/Eo+rCbrW9O4+aCru9bQi3BjLum
-         Ii58/b7xK7fqSMuRXxoh/jMsg6+PFwZ5KY6lDxa4MjQ7X7UHZDJE5vVOmuQNL47CoqXc
-         yEag==
-X-Gm-Message-State: AOAM531KRnMpZdb/7KSWmfjU/fCNNaskOqT6nEJ9kiVt8Ey3sdRA/A4C
-        Ai5AfPUV33BcIHAmRGQ6LFEnbRXvQtvRdA==
-X-Google-Smtp-Source: ABdhPJwANnKY7rKxqk7IFUip3DPAeYoqj9If5hQiiQIGsab0/5pV1RQvp+GO3nYRgCtc4bQXvofzhA==
-X-Received: by 2002:a05:6402:c1c:: with SMTP id co28mr4354906edb.287.1610091760354;
-        Thu, 07 Jan 2021 23:42:40 -0800 (PST)
+        bh=LHY5CCPo5MKyB8Fonytsy1s4R19IlwKjZRqmDF+7HFk=;
+        b=pYxfaDG4oL34q/fgCe8o1lGF0/icCZRBFQ0Ly8nMjSAcegJCqRHsAVma65nkHO7dSx
+         uqAhLin3Yo3XyGAJKGdnT+mC7y6Z2b0U7UVMCgpEmtDby+6npa5vw6xJsOjlpgAPT4Gp
+         VipvCamGzAZEt25ZvDU23W6DBuVwW5xHJIFC4aMl4t/2NDf1YS1PQatTDC0VLhIO2cZB
+         6RPuPIvWT6Dsv//7sccHMiJmKQ2NuuHPiVV8XY3o238d1/pcAVckevz9HN9z+/7TqQCy
+         d+a9gAnldLZpASQ+yMpgFC2h5D0TN5rF3kdoWxmzRkmRXawJ6clhm0LmqGAmSVVjnp8G
+         FJiw==
+X-Gm-Message-State: AOAM530/L3kuUTKq0YBQrr9lagxUYPZBD5ekwZp+AS86Xk83YobnV86e
+        x/4hq5fgDimPfj6d1aF4ah3YhSjbDQ8pKw==
+X-Google-Smtp-Source: ABdhPJygaP5bH5bEBD7CxTib2c98kR2ZQKK9o7fI+kdovbed9SYlnMZgRsTf+v9m80I4eydYCkYIWA==
+X-Received: by 2002:a17:907:d8b:: with SMTP id go11mr1819987ejc.303.1610091792406;
+        Thu, 07 Jan 2021 23:43:12 -0800 (PST)
 Received: from cpm12071.local ([212.86.35.64])
-        by smtp.gmail.com with ESMTPSA id u26sm3450055edo.37.2021.01.07.23.42.39
+        by smtp.gmail.com with ESMTPSA id r24sm3514800edo.4.2021.01.07.23.43.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 23:42:39 -0800 (PST)
+        Thu, 07 Jan 2021 23:43:11 -0800 (PST)
 References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
- <20210104162128.95281-3-rafaeloliveira.cs@gmail.com>
- <CAPig+cRNJeDS+TJL24_QGVE+goD2qBV7aorr+EKr9ORTTmusNg@mail.gmail.com>
+ <20210104162128.95281-4-rafaeloliveira.cs@gmail.com>
+ <CAPig+cRrU-T9ULyoNVtrWxm-5yb5NVSCT3+LvLmA5xJCv4n_9Q@mail.gmail.com>
 User-agent: mu4e 1.4.13; emacs 27.1
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/7] worktree: implement worktree_prune_reason() wrapper
-Message-ID: <gohp6kpn2gm1ky.fsf@gmail.com>
-In-reply-to: <CAPig+cRNJeDS+TJL24_QGVE+goD2qBV7aorr+EKr9ORTTmusNg@mail.gmail.com>
-Date:   Fri, 08 Jan 2021 08:42:39 +0100
+Subject: Re: [PATCH 3/7] worktree: teach worktree_lock_reason() to gently
+ handle main worktree
+Message-ID: <gohp6k8s94m15w.fsf@gmail.com>
+In-reply-to: <CAPig+cRrU-T9ULyoNVtrWxm-5yb5NVSCT3+LvLmA5xJCv4n_9Q@mail.gmail.com>
+Date:   Fri, 08 Jan 2021 08:43:10 +0100
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,181 +79,78 @@ Eric Sunshine writes:
 
 > On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
 > <rafaeloliveira.cs@gmail.com> wrote:
->> worktree: implement worktree_prune_reason() wrapper
+>> The main worktree should not be locked and the worktree_lock_reason() API
+>> is aware of this fact and avoids running the check code for the main
+>> worktree. This checks is done via assert() macro, Therefore the caller
 >
-> We might be able to give the reader more useful information in the
-> subject by explaining a bit more the goal of this patch. Perhaps
-> something like this:
->
->     worktree: teach worktree to lazy-load "prunable" reason
+> s/Therefore/therefore/
 >
 
-yeah, that's sounds better. will change it on the next revision.
+Nice catch. thanks.
 
->> The should_prune_worktree() machinery is used by the "prune" command to
->> identify whether a worktree is a candidate for pruning. This function
->> however, is not prepared to work directly with "struct worktree" and
->> refactoring is required not only on the function itself, but also also
->> changing get_worktrees() to return non-valid worktrees and address the
->> changes in all "worktree" sub commands.
+>> needs to ensure the function is never called, usually by additional code.
 >>
->> Instead let's implement worktree_prune_reason() that accepts
->> "struct worktree" and uses should_prune_worktree() and returns whether
->> the given worktree is a candidate for pruning. As the "list" sub command
->> already uses a list of "struct worktree", this allow to simply check if
->> the working tree prunable by passing the structure directly without the
->> others parameters.
+>> We can handle that case more gently by just returning false for the main
+>> worktree and not bother checking if the "locked" file exists. This will
+>> allowed further simplification from the caller as they will not need to
+>> ensure the main worktree is never passed to the API.
+>>
+>> Teach worktree_lock_reason() to be more gently and just return false for
+>> the main working tree.
 >
-> Everything through "not prepared to work directly with `struct
-> worktree`" makes sense when explaining why you are adding this wrapper
-> function, however, most of what follows is describing an aborted idea
-> about how you originally intended to implement this. The bit about
-> get_worktrees() not being able to return non-valid worktrees is
-> certainly an important limitation in the overall scheme of things, but
-> doesn't really help to sell the change made by this patch, and it
-> probably confuses the reader who didn't also read the cover-letter,
-> especially since this patch does nothing to help that situation.
+> The situation is even a bit worse since the main worktree restriction
+> isn't even documented. Here's a possible rewrite of the commit message
+> which addresses that point too:
 >
-> It also isn't really necessary to talk about `git worktree list` at
-> this stage since this patch stands on its own by fleshing out the API
-> without having to cite a specific client.
+>     worktree_lock_reason() aborts with an assertion failure when
+>     called on the main worktree since locking the main worktree is
+>     nonsensical. Not only is this behavior undocumented, thus callers
+>     might not even be aware that the call could potentially crash the
+>     program, but it also forces clients to be extra careful:
 >
-
-Make sense.
-
->> Also, let's add prune_reason field to the worktree structure that will
->> store the reason why the worktree can be pruned that is returned by
->> should_prune_worktree() when such reason is available.
+>         if (!is_main_worktree(wt) && worktree_locked_reason(...))
+>            ...
 >
-> In my opinion, this is the real reason this patch exists, thus should
-> be the focus of the commit message. All the description above this
-> paragraph can likely be dropped.
+>     Since we know that locking makes no sense in the context of the
+>     main worktree, we can simply return false for the main worktree,
+>     thus making client code less complex by eliminating the need for
+>     callers to have inside knowledge about the implementation:
 >
-> Taking the above comments into account, perhaps the entire commit
-> message could be collapsed to something like this:
->
->     worktree: teach worktree to lazy-load "prunable" reason
->
->     Add worktree_prune_reason() to allow a caller to discover whether
->     a worktree is prunable and the reason that it is, much like
->     worktree_lock_reason() indicates whether a worktree is locked and
->     the reason for the lock. As with worktree_lock_reason(), retrieve
->     the prunable reason lazily and cache it in the `worktree`
->     structure.
+>         if (worktree_locked_reason(...))
+>             ...
 >
 
-Interesting point. Rewording the commit message like this seems better,
-and as you mentioned this patch can stands on its own and can be more
-clear about what the commit is introducing to the code instead of all
-the previous message trying to explain why this exists.
+Yes, this is a nicer commit message to explain the current situation and
+having the code example in there makes even more clearer. Thanks for the
+suggestion will definitely make this change on the next revision.
 
-Thank you for suggesting this commit message. I will revise and change on
-the next revision.
-
+>> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+>> ---
 >> diff --git a/worktree.c b/worktree.c
->> @@ -15,6 +15,7 @@ void free_worktrees(struct worktree **worktrees)
->>                 free(worktrees[i]->lock_reason);
->> +               free(worktrees[i]->prune_reason);
->>                 free(worktrees[i]);
+>> @@ -225,9 +225,7 @@ int is_main_worktree(const struct worktree *wt)
+>>  const char *worktree_lock_reason(struct worktree *wt)
+>>  {
+>> -       assert(!is_main_worktree(wt));
+>> -
+>> -       if (!wt->lock_reason_valid) {
+>> +       if (!is_main_worktree(wt) && !wt->lock_reason_valid) {
+>>                 struct strbuf path = STRBUF_INIT;
 >
-> Remembering to free the prune-reason. Good.
->
->> @@ -245,6 +246,24 @@ const char *worktree_lock_reason(struct worktree *wt)
->> +const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
->> +{
->> +       if (!is_main_worktree(wt)) {
->> +               char *path;
->> +               struct strbuf reason = STRBUF_INIT;
->> +
->> +               if (should_prune_worktree(wt->id, &reason, &path, expire))
->> +                       wt->prune_reason = strbuf_detach(&reason, NULL);
->> +               else
->> +                       wt->prune_reason = NULL;
->> +
->> +               free(path);
->> +               strbuf_release(&reason);
->> +       }
->> +
->> +       return wt->prune_reason;
->> +}
->
-> A couple observations...
->
-> I realize you patterned this after worktree_lock_reason(), however, it
-> is more common in this codebase to return early from the function for
-> conditions such as `is_main_worktree(wt)` which don't require any
-> additional processing. One reason is that doing so allows us to lose
-> an indentation level. Another is that it is easier to reason about the
-> rest of the function if we get the simple cases out of the way early,
-> such that we don't have to think about them again while reading the
-> remainder of the code.
->
-> If I'm not mistaken, the intention here was to cache `prune_reason`
-> for reuse, however, this function just overwrites it each time it's
-> called for a particular worktree, thus providing no caching and
-> leaking the previously-retrieved reason as well. To fix this, I think
-> you need to add a private `prune_reason_valid` member to `struct
-> worktree` (similar to `lock_reason_valid`) and check it before calling
-> should_prune_worktree().
->
-
-Good point. I totally missed the caching aspect of the implementation
-and I greed about getting the simple case out earlier in order to make it
-simple to reason about it.
-
-> Taking the above comments into account, perhaps it should be written like this:
+> As mentioned in my review of patch [2/7], this would be more idiomatic
+> and easier to reason about if the function returns early for the main
+> worktree case, thus freeing the reader from having to think about that
+> case for the remainder of the code. So:
 >
 >     if (is_main_worktree(wt))
 >         return NULL;
->     if (wt->prune_reason_valid)
->         return wt->prune_reason;
->     if (should_prune_worktree(wt->id, &reason, &path, expire))
->         wt->prune_reason = strbuf_detach(&reason, NULL);
->     wt_prune_reason_valid = 1;
->     free(path);
->     strbuf_release(&reason);
+>     if (!wt->lock_reason_valid) {
+>         ...
 >
+> Subjective, and not necessarily worth a re-roll, though.
 
-Thanks. I will add this suggestion in the next revision. 
-
->> diff --git a/worktree.h b/worktree.h
->> @@ -11,6 +11,7 @@ struct worktree {
->>         char *id;
->>         char *head_ref;         /* NULL if HEAD is broken or detached */
->>         char *lock_reason;      /* private - use worktree_lock_reason */
->> +       char *prune_reason;     /* private - use worktree_prune_reason */
->
-> As noted above, we also probably need a new `prune_reason_valid`
-> member, similar to the existing `lock_reason_valid`.
->
-
-Indeed. will add on the next revision.
-
->> @@ -73,6 +74,12 @@ int is_main_worktree(const struct worktree *wt);
->> +/*
->> + * Return the reason string if the given worktree should be pruned
->> + * or NULL otherwise.
->> + */
->> +const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire);
->
-> The documentation should also talk about `expire` since its purpose
-> and meaning is unclear.
->
-
-Good point. I missed adding the message here for the `expire` parameter,
-will add it. 
-
-> Nit: I realize that you patterned this description after the one for
-> worktree_lock_reason(), but it's a bit unclear. Perhaps rephrasing it
-> like this would help:
->
->     Return the reason the worktree should be pruned, otherwise
->     NULL if it should not be pruned.
-
-Also make sense to rephrase like this.
-
-
-Thank you for this review will address all this changes on the v2.
+I'm inclined to change here on the next revision as I will do the same
+for the patch [2/7] with the worktree_prune_reason() and use the same
+pattern for both functions.
 
 -- 
 Thanks
