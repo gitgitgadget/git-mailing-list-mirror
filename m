@@ -2,116 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B52C433DB
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 21:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F3AC433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:41:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67D7223A9D
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 21:56:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B8A720786
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726614AbhAHV4f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 16:56:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726482AbhAHV4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 16:56:35 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A05BC061574
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 13:55:53 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id n4so11214881iow.12
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 13:55:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=c/U4oiFwPh9ah5nE0Mjegn1Dtw4I7rPeyBdD8Ft6mio=;
-        b=GcPJE1SDMwKfb3P6sXw74z4UQTBVWxk4/J66++LUN0FmajiJQBtAZPpH/yQvgb9bk1
-         VmCmhnmTHRz7qiw1MdbhoB5QDZV7/F+jVfm5f5KoNKQhBPVEg7603JtuwZflOr2BVnqB
-         k4je4DA9/ObWfTqdPGUjXJwD8YRlYJM7odrUkHOWCVjYfdmuplneCe01ao6+Xl+PvTrQ
-         bGEdMF4aH0xbnUNNRyO7VkbOF9b+/JYIPytMobEiDXhDghJaPaXBP/Cs4B1UDORkpDmw
-         zs4RhWEQm/JcMgzJB40wLzlXFw2tw0SJNo1TC22afsd9+apETRuWTCU9qUoO8tGQyCf9
-         VflA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=c/U4oiFwPh9ah5nE0Mjegn1Dtw4I7rPeyBdD8Ft6mio=;
-        b=kCPEciOGbmIrp5mMZvrdciLyc1RFzLeugi0/lKVG7blBgxCW8dxPuZMdrB8cOZJv5V
-         ROh/sc4MJ+syuOw4vuxVb0eiuRxy3svzkgKFkYHyKCSxKxJoEX8ePkGFx9wph+o7MXj+
-         4gbDsLSEgfOMo9+U9sN+J7yiaPwjgUf2pn9ZQNoKE1fd6adVhsUIMX24Kco8WKrRo8AT
-         zO/ioPEz5R6pRgF42ycLW51H+JAutTjHKM2ZGEysdX0hVPDRdrjFaN2M+kYlLkdL9Bti
-         SLT2MzQi7CWt5/6B0bdSlHXDFiVgNpn8thigohfIlm2KDyzm82wICd8ho2po1V+YeJMO
-         TciA==
-X-Gm-Message-State: AOAM532OPE9WkcQiOwYuLpCCsqETAvll3xW0t3+pPSHmR6i0nJX7c26M
-        sGQg8VeT+NET6BtqY0fcTVJU9g==
-X-Google-Smtp-Source: ABdhPJyrRxyBAC8OMMEgz1EMn5BYuDgJG7O9vDLRaspgJP+SoecYUsWsYibIVqbEtUEhl+3mpEtMOg==
-X-Received: by 2002:a6b:f90f:: with SMTP id j15mr6963571iog.89.1610142952833;
-        Fri, 08 Jan 2021 13:55:52 -0800 (PST)
-Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id 1sm8281735ilv.37.2021.01.08.13.55.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 13:55:52 -0800 (PST)
-From:   Taylor Blau <ttaylorr@github.com>
-X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
-Date:   Fri, 8 Jan 2021 16:55:49 -0500
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/1] merge-ort: begin performance work; instrument with
- trace2_region_* calls
-Message-ID: <X/jUykDe8hfPDqv4@nand.local>
-References: <20210108205111.2197944-1-newren@gmail.com>
- <20210108205111.2197944-2-newren@gmail.com>
- <X/jHpZlSxwAxoUyq@nand.local>
- <CABPp-BE4zyGa7=dOKifWhv-46__0YtfRZ39Q1JYT0JZ2HT0itA@mail.gmail.com>
+        id S1725836AbhAHXlI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 18:41:08 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52267 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbhAHXlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 18:41:08 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1DEBE10CC66;
+        Fri,  8 Jan 2021 18:40:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vx80te1Bk/e5o5jYTV1ZB58O9ak=; b=bWjRkK
+        8ltiNkogbQYlVju7N7tGV4naG65o9OV5141EkcBAy/zLCv5sMEGl08e7UfaCrW+p
+        QaPmTHjcRJGPzqbqbkVeszuv5vcHELRTSnhgAcmn+eIEDdu70dqF597Ug59qn/3W
+        RnutJ6hLPjPmKe8Mi9/ps8wxeeKKyyg6walR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PCMJc4xd1rj3d5Y2XPCLCnZqJ4YOSewu
+        pPNwCvyrvw5A8I/3fRfKPay5O+HWAEPPqJIvSnqtwz7tPmt7BcP3Wuqia7G4hko6
+        uG8xPb2B0ndM1V1v35n8l//cEPPF2Sxa7r6CZuCXZtVPpLNA8GxKYry40m3fpwBb
+        VQs40LYz1Ak=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1709410CC65;
+        Fri,  8 Jan 2021 18:40:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 185E310CC64;
+        Fri,  8 Jan 2021 18:40:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 1/4] fetch: extract writing to FETCH_HEAD
+References: <cover.1610027375.git.ps@pks.im> <cover.1610107599.git.ps@pks.im>
+        <d80dbc5a9c9520621651541e418ee5216d164053.1610107599.git.ps@pks.im>
+Date:   Fri, 08 Jan 2021 15:40:17 -0800
+In-Reply-To: <d80dbc5a9c9520621651541e418ee5216d164053.1610107599.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Fri, 8 Jan 2021 13:11:14 +0100")
+Message-ID: <xmqqmtxjgfq6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BE4zyGa7=dOKifWhv-46__0YtfRZ39Q1JYT0JZ2HT0itA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: DDE95C24-520A-11EB-9265-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 01:50:34PM -0800, Elijah Newren wrote:
-> On Fri, Jan 8, 2021 at 12:59 PM Taylor Blau <ttaylorr@github.com> wrote:
-> >
-> > On Fri, Jan 08, 2021 at 12:51:11PM -0800, Elijah Newren wrote:
-> > > Overall timings, using hyperfine (1 warmup run, 3 runs for mega-renames,
-> > > 10 runs for the other two cases):
-> >
-> > Ah, I love hyperfine. In case you don't already have this in your
-> > arsenal, the following `--prepare` step is useful for measuring
-> > cold-cache performance:
-> >
-> >     --prepare='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
->
-> /proc/sys/vm/drop_caches is definitely useful for cold-cache
-> measurements and I've used it in other projects for that purpose.  I
-> think cold-cache testing makes sense for various I/O intensive areas
-> such as object lookup, but I ignored it here as I felt the merge code
-> is really about algorithmic performance.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yes, I agree that the interesting thing here is algorithmic performance
-moreso than I/O.
+> +static int open_fetch_head(struct fetch_head *fetch_head)
+> +{
+> +	const char *filename = git_path_fetch_head(the_repository);
+> +
+> +	if (!write_fetch_head)
+> +		return 0;
+> +
+> +	fetch_head->fp = fopen(filename, "a");
+> +	if (!fetch_head->fp)
+> +		return error_errno(_("cannot open %s"), filename);
+> +
+> +	return 0;
+> +}
 
-> So, I instead went the other direction and ensured warm-cache testing
-> by using a warmup run, in order to ensure that I wasn't putting one of
-> the tests at an unfair disadvantage.
+So the difference from the original, which used to have a writable
+filehandle to /dev/null in the dry-run mode, is that fetch_head->fp
+is left as-is (not even NULLed out).
 
-I often use it for both. Combining that `--prepare` step with at least
-one `--warmup` invocation is useful to make sure that your I/O cache is
-warmed only with the things it might want to read during your timing
-tests. (Probably one `--warmup` without dumping the cache is fine, since
-you will likely end up evicting things out of your cache that you don't
-care about, but I digress..)
+> +static void append_fetch_head(struct fetch_head *fetch_head, const char *old_oid,
 
-Thanks,
-Taylor
+It is clear from the type these days but variable names like
+"old_oid" hint the readers that they are not a hexadecimal object
+name string but either an array of uchar[40] or a struct object_id;
+perhaps "old_oid_hex" would be less misleading.
+
+If the caller does have struct object_id, then it would be even
+better to take it as-is as a parameter and use oid_to_hex_r() on it in
+this function when it is given to fprintf().  [Nit #1]
+
+> +			      const char *merge_status_marker, const char *note,
+> +			      const char *url, size_t url_len)
+> +{
+> +	size_t i;
+> +
+> +	if (!write_fetch_head)
+> +		return;
+
+Presumably, this check is what makes sure that fetch_head->fp that
+is left uninitialized will never gets used.
+
+> +	fprintf(fetch_head->fp, "%s\t%s\t%s",
+> +		old_oid, merge_status_marker, note);
+> +	for (i = 0; i < url_len; ++i)
+> +		if ('\n' == url[i])
+> +			fputs("\\n", fetch_head->fp);
+> +		else
+> +			fputc(url[i], fetch_head->fp);
+> +	fputc('\n', fetch_head->fp);
+> +}
+
+OK.  This is the "case FETCH_HEAD_NOT_FOR_MERGE" and "case
+FETCH_HEAD_MERGE" parts in the original.
+
+As an abstraction, it may be better to make the caller pass a
+boolean "is this for merge?" and keep the knowledge of what exact
+string is used for merge_status_marker to this function, instead of
+letting the caller passing it as a parameter in the string form.
+After all, we never allow anything other than an empty string or a
+fixed "not-for-merge" string in that place in the file format.
+[Nit #2]
+
+> +static void commit_fetch_head(struct fetch_head *fetch_head)
+> +{
+> +	/* Nothing to commit yet. */
+> +}
+> +
+> +static void close_fetch_head(struct fetch_head *fetch_head)
+> +{
+> +	if (!write_fetch_head)
+> +		return;
+
+So is this check a protection against uninitialized fetch_head->fp.
+Both changes make sense.
+
+> +	fclose(fetch_head->fp);
+> +}
+
+> @@ -909,22 +959,19 @@ N_("It took %.2f seconds to check forced updates. You can use\n"
+>  static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  			      int connectivity_checked, struct ref *ref_map)
+>  {
+> -	FILE *fp;
+> +	struct fetch_head fetch_head;
+
+And that is why this variable is left uninitialised on stack and it
+is OK.  An alternative design would be to initialize fetch_head.fp
+to NULL, and return early with "if (!fetch_head->fp)" in the two
+functions that take fetch_head struct.  That way, we have less
+reliance on the global variable write_fetch_head.
+
+>  	struct commit *commit;
+>  	int url_len, i, rc = 0;
+>  	struct strbuf note = STRBUF_INIT;
+>  	const char *what, *kind;
+>  	struct ref *rm;
+>  	char *url;
+> -	const char *filename = (!write_fetch_head
+> -				? "/dev/null"
+> -				: git_path_fetch_head(the_repository));
+>  	int want_status;
+>  	int summary_width = transport_summary_width(ref_map);
+>  
+> -	fp = fopen(filename, "a");
+> -	if (!fp)
+> -		return error_errno(_("cannot open %s"), filename);
+> +	rc = open_fetch_head(&fetch_head);
+> +	if (rc)
+> +		return -1;
+
+OK, we've already said "cannot open" in the open_fetch_head()
+function, so we just return an error silently.
+
+> @@ -1016,16 +1063,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  				merge_status_marker = "not-for-merge";
+>  				/* fall-through */
+>  			case FETCH_HEAD_MERGE:
+> -				fprintf(fp, "%s\t%s\t%s",
+> -					oid_to_hex(&rm->old_oid),
+> -					merge_status_marker,
+> -					note.buf);
+> -				for (i = 0; i < url_len; ++i)
+> -					if ('\n' == url[i])
+> -						fputs("\\n", fp);
+> -					else
+> -						fputc(url[i], fp);
+> -				fputc('\n', fp);
+> +				append_fetch_head(&fetch_head,
+> +						  oid_to_hex(&rm->old_oid),
+> +						  merge_status_marker,
+> +						  note.buf, url, url_len);
+
+Here, we can lose merge_status_marker variable from this caller, and
+then this caller becomes:
+
+		switch (rm->fetch_head_status) {
+		case FETCH_HEAD_NOT_FOR_MERGE:
+		case FETCH_HEAD_MERGE:
+			append_fetch_head(&fetch_head, &rm->old_oid,
+				rm->fetch_head_status == FETCH_HEAD_MERGE,
+                                note.buf, url, url_len);
+
+Note that I am passing "is this a ref to be merged?" boolean to keep
+the exact string of "not-for-merge" in the callee.
+
+> @@ -1060,6 +1101,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  		}
+>  	}
+>  
+> +	if (!rc)
+> +		commit_fetch_head(&fetch_head);
+> +
+>  	if (rc & STORE_REF_ERROR_DF_CONFLICT)
+>  		error(_("some local refs could not be updated; try running\n"
+>  		      " 'git remote prune %s' to remove any old, conflicting "
+> @@ -1077,7 +1121,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>   abort:
+>  	strbuf_release(&note);
+>  	free(url);
+> -	fclose(fp);
+> +	close_fetch_head(&fetch_head);
+>  	return rc;
+>  }
+
+Other than the above two nits, this step looks good to me.
+
+Thanks.
