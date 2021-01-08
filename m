@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF4DC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47924C4332B
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E24E238A1
+	by mail.kernel.org (Postfix) with ESMTP id 281D323998
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727569AbhAHOh7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727556AbhAHOh7 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 8 Jan 2021 09:37:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56100 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbhAHOh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 09:37:59 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CEDC06129E
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:36:43 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id r3so9249079wrt.2
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:36:43 -0800 (PST)
+        with ESMTP id S1727530AbhAHOh6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 09:37:58 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D50C06129D
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:36:44 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id a12so9200199wrv.8
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:36:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=CExMPGt4R59wKj4DHc15d0hNgAEd8il/FaYm8Jgf0Ns=;
-        b=osrRYN8xFrp/aLzpTlG0kWODRHrHJa+vhx85nsVJji0vWIipBa37KGVblaumtC7QPD
-         XHOBl5UyP75FyBaJrhGQNDux993QNJK3mbP7JApLq1orFponaq3hVPGmi2+vaP/uwzpZ
-         48M2JA4OKG5mHCWmDqh6sx2IuBdpnU5cEclt4qBjVANWWI6EJ0GFbHHDunN9pqpsiGqg
-         TOc/YrJGCeQbOqEZFCdTccphuWDG9CBReGfwSt53YvMdOKjYIXQrFN70HGmV5H0HAD9C
-         dw0AFrVlR79RRjTUloFXpXbhvMsA1HRApxN+tfOV0r07TKY0oxqpx5H1Ipj7xBzO+mtY
-         zgXg==
+        bh=APpCjt2Pe2F6i548+qNzvY3SI/W9CyLbFQAsontzePg=;
+        b=TAokXOv+RizKUNfRwhxkQaA466uFIu6U6L806JdLB8FcMIE7/4/Gl1jfnPwsWtRZIv
+         TsDbkIM3Ju3o/qKGOOfIXMiQmnVjx6kypkrUbqJsx+YX0hRngVBC0U/8Qzgp3SVYbExn
+         LiIQHcZyjednb16AjMrkcNtTmAyaSzNZkW9j6tQpiFlh67Z5o3xsZIEBflgmML1nh5Tq
+         rMhKCm0888KlDHc2cYntk+81ioNg2f5pXcprHIDdiA7eqibb8njvQLey+aKXztEzlEIQ
+         75jc5c4OaP3dd/NNQqAzxYm0YCBOKdzyrg8ALmxvi7EGTnkWVedYL3IKm0BKH2kuVr3O
+         Xq0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CExMPGt4R59wKj4DHc15d0hNgAEd8il/FaYm8Jgf0Ns=;
-        b=lIkPMJdcnAtT4IXPr7FvzG0cz0yZWj/4YFEamPV7+I3SHvW2UqRoI8jQOepkoYi/1r
-         sfS90KJsBoqd/EBNSVFjBXE4gDayEZQiE+VNNwA04LNptXKtIdL7PGTqEEYCUNszRymD
-         FIa9JE8lphK8has1Ig9B3cutgXaFMOJeFGcIMRMenhF7k6KP57w1BoUY7a8P0GfxJpk/
-         y1WvQU3jN5es2GYe3pO6g5/vcq7fxyNy2CFwb2o9jN78xA4oVi2bahRM54kHcmKS36iU
-         uuNQPXHzndZ87RV+ExTzrQtURfFtRfr5vI3iLak4o0yQisMXTT8mssXDuTzQOI1ks/Ew
-         /akA==
-X-Gm-Message-State: AOAM532ey81uyhiqdKLxC2KXHz1rBkGxYTz338ZRQlHZsDA81xONGcLp
-        /aArOnjUWSp1P8oFAESijmYEql9eZDs=
-X-Google-Smtp-Source: ABdhPJxQldpfLUJ9MBbbRFl1mw9OuU/crD1Q7UFUBKqIe4naS0njViHx2eq5SUIASe4pgXkWnN0GSg==
-X-Received: by 2002:a5d:6206:: with SMTP id y6mr4077005wru.413.1610116602179;
-        Fri, 08 Jan 2021 06:36:42 -0800 (PST)
+        bh=APpCjt2Pe2F6i548+qNzvY3SI/W9CyLbFQAsontzePg=;
+        b=ePL+SPT8qJD7Bhw29UQJh5/XiNcgy8rRW7NHwVBWcAh7/kgjW+evciB87kPJUSJab1
+         GZUduN2eCm1cehKZNnjhwTlgW+nKyF2pkIeXKZVwJXY5rA7ZWDfiG855QszxEj3itRxh
+         IVnPLxt6cmFHKU+uGsWNdIE5t4jkLWEFDXW3pc7zZCqD6+kIMo3gAFjpHsnmk2mSeYfn
+         PlgZXOYIcn3rge1D+QDHbwQzLM5DwOpn+pY8okCNbH9zXF209hk7N8b2BZl0/ekkx4tK
+         +bqTM5/Wm48f6V9XoqDPtpZRcd66fgJbbg0iIanGDuFr2isGuy752JYKhy0kQh7ZXTaT
+         r+EA==
+X-Gm-Message-State: AOAM530eI0FvVl0sBVclAkEtKj8d/1uXYmk+YQkeE2G0WulA6OVxcLlD
+        x2ijs/bBxeabjJYrEE//FvRLDOV7Pow=
+X-Google-Smtp-Source: ABdhPJwo50YM07Y80xOUTQJdK8JTkvMR8ugTMEqSKXvSZG/VLnm662MN+6+Z7ajM/aWJ7WeK+GquFw==
+X-Received: by 2002:a5d:40ce:: with SMTP id b14mr3902451wrq.350.1610116603231;
+        Fri, 08 Jan 2021 06:36:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2sm13827447wrn.83.2021.01.08.06.36.41
+        by smtp.gmail.com with ESMTPSA id i11sm12014197wmd.47.2021.01.08.06.36.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 06:36:41 -0800 (PST)
-Message-Id: <0261e5d245ef0a5b9a717be1bc03492d7bc06c5e.1610116600.git.gitgitgadget@gmail.com>
+        Fri, 08 Jan 2021 06:36:42 -0800 (PST)
+Message-Id: <a09a5098aa66ea0ed89fe0fcde3f016b4a65814d.1610116600.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
 References: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
         <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jan 2021 14:36:38 +0000
-Subject: [PATCH v2 1/2] builtin/ls-files.c:add git ls-file --dedup option
+Date:   Fri, 08 Jan 2021 14:36:39 +0000
+Subject: [PATCH v2 2/2] builtin:ls-files.c:add git ls-file --dedup option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,113 +77,187 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-1.When we use git ls-files with both -m -d,
-we would find that repeated path,sometimes
-it is confusing.
-2.When we are performing a branch merge,
- the default git ls-files will also output
- multiple repeated file names.
-Therefore, I added the --dedup option to git ls-files.
-1. It can be achieved that only the deleted file name
-is displayed when using -m, -d, and --dedup at the same time.
-2. Add --dedup when merging branches to remove duplicate file
- names. (unless -s, -u are used)
+This commit standardizes the code format.
+For git ls-file --dedup option added
+relevant descriptions in Documentation/git-ls-files.txt
+and wrote t/t3012-ls-files-dedup.sh test script
+to prove the correctness of--dedup option.
+
+this patch fixed: https://github.com/gitgitgadget/git/issues/198
+Thanks.
 
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- builtin/ls-files.c | 43 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
+ Documentation/git-ls-files.txt |  4 +++
+ builtin/ls-files.c             | 20 ++++++-----
+ t/t3012-ls-files-dedup.sh      | 63 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+), 9 deletions(-)
+ create mode 100755 t/t3012-ls-files-dedup.sh
 
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index cbcf5263dd0..41a9c5a8b27 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])*
+ 		(-[c|d|o|i|s|u|k|m])*
+ 		[--eol]
++		[--dedup]
+ 		[-x <pattern>|--exclude=<pattern>]
+ 		[-X <file>|--exclude-from=<file>]
+ 		[--exclude-per-directory=<file>]
+@@ -81,6 +82,9 @@ OPTIONS
+ 	\0 line termination on output and do not quote filenames.
+ 	See OUTPUT below for more information.
+ 
++--dedup::
++	Suppress duplicates entries when conflicts happen or
++	specify -d -m at the same time.
+ -x <pattern>::
+ --exclude=<pattern>::
+ 	Skip untracked files matching pattern.
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index c8eae899b82..66a7e251a46 100644
+index 66a7e251a46..bc4eded19ab 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -35,6 +35,7 @@ static int line_terminator = '\n';
- static int debug_mode;
- static int show_eol;
- static int recurse_submodules;
-+static int delete_dup;
- 
- static const char *prefix;
- static int max_prefix_len;
-@@ -301,6 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+@@ -302,7 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
  {
  	int i;
  	struct strbuf fullname = STRBUF_INIT;
-+	const struct cache_entry *last_stage=NULL;
+-	const struct cache_entry *last_stage=NULL;
++	const struct cache_entry *last_stage = NULL;
  
  	/* For cached/deleted files we don't need to even do the readdir */
  	if (show_others || show_killed) {
-@@ -315,7 +317,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+@@ -317,7 +317,8 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
  	if (show_cached || show_stage) {
  		for (i = 0; i < repo->index->cache_nr; i++) {
  			const struct cache_entry *ce = repo->index->cache[i];
--
-+			if(show_cached && delete_dup){
-+				switch (ce_stage(ce)) {
-+				case 0:
-+				default:
-+					break;
-+				case 1:
-+				case 2:
-+				case 3:
-+					if (last_stage &&
-+					!strcmp(last_stage->name, ce->name))
-+						continue;
-+					last_stage=ce;
-+				}
-+			}
+-			if(show_cached && delete_dup){
++
++			if (show_cached && delete_dup) {
+ 				switch (ce_stage(ce)) {
+ 				case 0:
+ 				default:
+@@ -328,7 +329,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 					if (last_stage &&
+ 					!strcmp(last_stage->name, ce->name))
+ 						continue;
+-					last_stage=ce;
++					last_stage = ce;
+ 				}
+ 			}
  			construct_fullname(&fullname, repo, ce);
- 
- 			if ((dir->flags & DIR_SHOW_IGNORED) &&
-@@ -336,7 +351,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+@@ -351,7 +352,8 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
  			const struct cache_entry *ce = repo->index->cache[i];
  			struct stat st;
  			int err;
--
-+			if(delete_dup){
-+				switch (ce_stage(ce)) {
-+				case 0:
-+				default:
-+					break;
-+				case 1:
-+				case 2:
-+				case 3:
-+					if (last_stage &&
-+					!strcmp(last_stage->name, ce->name))
-+						continue;
-+					last_stage=ce;
-+				}
-+			}
+-			if(delete_dup){
++
++			if (delete_dup) {
+ 				switch (ce_stage(ce)) {
+ 				case 0:
+ 				default:
+@@ -362,7 +364,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 					if (last_stage &&
+ 					!strcmp(last_stage->name, ce->name))
+ 						continue;
+-					last_stage=ce;
++					last_stage = ce;
+ 				}
+ 			}
  			construct_fullname(&fullname, repo, ce);
- 
- 			if ((dir->flags & DIR_SHOW_IGNORED) &&
-@@ -347,10 +375,14 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+@@ -375,10 +377,10 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
  			if (ce_skip_worktree(ce))
  				continue;
  			err = lstat(fullname.buf, &st);
--			if (show_deleted && err)
-+			if(delete_dup && show_deleted && show_modified && err)
+-			if(delete_dup && show_deleted && show_modified && err)
++			if (delete_dup && show_deleted && show_modified && err)
  				show_ce(repo, dir, ce, fullname.buf, tag_removed);
--			if (show_modified && ie_modified(repo->index, ce, &st, 0))
--				show_ce(repo, dir, ce, fullname.buf, tag_modified);
-+			else{
-+				if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
-+					show_ce(repo, dir, ce, fullname.buf, tag_removed);
-+				if (show_modified && ie_modified(repo->index, ce, &st, 0))
-+					show_ce(repo, dir, ce, fullname.buf, tag_modified);
-+			}
- 		}
- 	}
- 
-@@ -578,6 +610,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+-			else{
+-				if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
++			else {
++				if (show_deleted && err)
+ 					show_ce(repo, dir, ce, fullname.buf, tag_removed);
+ 				if (show_modified && ie_modified(repo->index, ce, &st, 0))
+ 					show_ce(repo, dir, ce, fullname.buf, tag_modified);
+@@ -610,7 +612,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
  			N_("pretend that paths removed since <tree-ish> are still present")),
  		OPT__ABBREV(&abbrev),
  		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
-+		OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
+-		OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
++		OPT_BOOL(0, "dedup", &delete_dup, N_("suppress duplicate entries")),
  		OPT_END()
  	};
  
+diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
+new file mode 100755
+index 00000000000..00c7f65cfc1
+--- /dev/null
++++ b/t/t3012-ls-files-dedup.sh
+@@ -0,0 +1,63 @@
++#!/bin/sh
++
++test_description='git ls-files --dedup test.
++
++This test prepares the following in the cache:
++
++    a.txt       - a file(base)
++    a.txt	- a file(master)
++    a.txt       - a file(dev)
++    b.txt       - a file
++    delete.txt  - a file
++    expect1	- a file
++    expect2	- a file
++
++'
++
++. ./test-lib.sh
++
++test_expect_success 'master branch setup and write expect1 expect2 and commit' '
++	touch a.txt &&
++	touch b.txt &&
++	touch delete.txt &&
++	cat <<-EOF >expect1 &&
++	M a.txt
++	H b.txt
++	H delete.txt
++	H expect1
++	H expect2
++	EOF
++	cat <<-EOF >expect2 &&
++	C a.txt
++	R delete.txt
++	EOF
++	git add a.txt b.txt delete.txt expect1 expect2 &&
++	git commit -m master:1
++'
++
++test_expect_success 'main commit again' '
++	echo a>a.txt &&
++	echo b>b.txt &&
++	echo delete>delete.txt &&
++	git add a.txt b.txt delete.txt &&
++	git commit -m master:2
++'
++
++test_expect_success 'dev commit' '
++	git checkout HEAD~ &&
++	git switch -c dev &&
++	echo change>a.txt &&
++	git add a.txt &&
++	git commit -m dev:1
++'
++
++test_expect_success 'dev merge master' '
++	test_must_fail git merge master &&
++	git ls-files -t --dedup >actual1 &&
++	test_cmp expect1 actual1 &&
++	rm delete.txt &&
++	git ls-files -d -m -t --dedup >actual2 &&
++	test_cmp expect2 actual2
++'
++
++test_done
 -- 
 gitgitgadget
-
