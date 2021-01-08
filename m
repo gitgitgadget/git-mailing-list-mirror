@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3221C433E9
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1945C433E6
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9C9023A80
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A06A723A01
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729090AbhAHUEZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 15:04:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729073AbhAHUEX (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729070AbhAHUEX (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 8 Jan 2021 15:04:23 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2FE7C0612A7
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 12:03:10 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id t30so10157011wrb.0
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 12:03:10 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50574 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbhAHUEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 15:04:22 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38519C06129F
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 12:03:06 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id y23so9419012wmi.1
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 12:03:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tfHl/JvvFkcclxfk74hs+6J1R6G8s7cxlIqUHRLIFj4=;
-        b=CyAPkxP061z2CASw6dZSCp+vGIZzPUOmXCBs8Ki11k4Sz8u/1QVSJXbrX85mOioU08
-         c2bKThFPx/2R3g7gGwrSy5giqgfyzv0Wgpqlj5u5ARvMFYmNf/VLWXK2UBcceXp5Hn0W
-         5zjcoXyftSSMi/z5HVWX6eTujDvkGbXsg/FqUJNGqywo2woFulmjW76FsN/RuCZk82zw
-         RDybD+RYcBin3gw+XLRz1sSNDosQzUrPw50tr9KOO7Pj0eDLPVhoS4eEMx9e5zXHNHMl
-         uRel25GqJc76iGFX9z68WKeEwsg9JPyGxVeU52ea4nLRxCHeuQLmZEezJt13qlyukHfQ
-         2JyA==
+        bh=jO10ZIWybl1T7dDcsv1BvC3cxOd3MoOlPtprl9OSFoE=;
+        b=AOCq7RElOa46POxXyK64f9ccC/c0K8/iAb8nvVNOvFEcBXNa1KyH2SJ8LflpcZG+kf
+         hJIj3oq2SSMwW7DLOKU2xYtzzZC1r9BJ9Iyzhw4iDR+BuFwQxirZf3p/9pRw3K4YyypF
+         KaLagjxm2BC6pro7q4m2f2anFCdgUtpaFxuB15tMPyGj+eNlsOcn7xGbpGVAp946l8ep
+         bMyX0XjY8qkGC5eIqXUuyv2OOieX/G9vwyyNJH9s2t2BbHG4N2k2/HVEoXsF8tCn9GTk
+         mFKDvCp1S7k+L9d9BVd5VQdHDc4OtmCpKopiHuBNcBFTYhvFAsPOjifK8K2/N4cyHwxf
+         RSJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tfHl/JvvFkcclxfk74hs+6J1R6G8s7cxlIqUHRLIFj4=;
-        b=Ff9fZYOixsmIM6ScpwyIVMCn7c9/0W+iabYVjvZyWMgaQXXJeqLbMrwR7/H0lH/L1v
-         0szqROPJ80AyI1fAYzqwvbRXmqAhvi5RsM/oGb7Ieu9CyjO58TU1qHAJLwUGWN40QzFj
-         fTP/dR1fBTHYBb8ycJkMNSL/xQstye9vbaHsEv5p/fdDQ2Q017NCCB3TbGT2HGWWmoET
-         bkeT/aXHN0b2nm6SHzXN8u3BSoONwNDJBiSpKXl+Fozp8SiVsMVRfSdEVI4/EWp1J0Nm
-         vF2j8LsZeGi++hqlODcqwr9TY3V/S4F35hhzU6AaQcHfj/Pb16oNyZVxsjYtTu89mQDa
-         TJCQ==
-X-Gm-Message-State: AOAM530KnYDLihmvWT2AiMbUwCVOtn8jYMDRfvWR7CplUt2FrAw++jYH
-        x/o4M+wr6bKaBnrDe+Jw9BL8mynau3E=
-X-Google-Smtp-Source: ABdhPJwtnlqsc+lLWTOc9Glg0cPE/hcuujvb+IhMIVpwE6gTWJWI0LnJnrCaWWX6PVw6c5OZ6co6UA==
-X-Received: by 2002:adf:aad3:: with SMTP id i19mr5119101wrc.119.1610136189411;
-        Fri, 08 Jan 2021 12:03:09 -0800 (PST)
+        bh=jO10ZIWybl1T7dDcsv1BvC3cxOd3MoOlPtprl9OSFoE=;
+        b=N8NxJGXxvfWYy/SZOBtGv7vbOj9RhCyyaOk+Q4moa+KAeHPTYhGCS7PWSRyD0inyxx
+         8e+IkfFbKOiutlnyYRRnjOAzCvcoW+vj9MNNCZoo/Ekl6eK7sk/hvxocregN7JB11POk
+         ocqJeJIpqvISxvyRuEcxZryx5UWdINyQ8Es/7maLsIquS1gX7wT0HSpqdt9kbgUnogVh
+         Gl7VyLbqeRYJ3Nq2pbW2WnFGZDxQ3sZhIAw8mDa355wOUvoBcTUtjg9VBcSNiBNanefJ
+         XD8oR2G5gWuEIYfBAi39ULI9aZWw1w83XpT8rHfOHFTqjOF+6qKaZzDYmRsO0heVVF39
+         HWSw==
+X-Gm-Message-State: AOAM530gHbLZG9moClqmcMmaxGYNgW7qucLf6TIuiR6dByHVjri5AhZg
+        5SrqpbFigtoKvwkY5KUjUfWb5ioeNAk=
+X-Google-Smtp-Source: ABdhPJzd4vMXl/WnyFEUXhHadquQiJS6dkC4rXkF9d2FfxiuUW2rPJNSKj4+7JoOsG3PYbBnaSSV5g==
+X-Received: by 2002:a7b:ce14:: with SMTP id m20mr4496430wmc.149.1610136184765;
+        Fri, 08 Jan 2021 12:03:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q1sm14492677wrj.8.2021.01.08.12.03.08
+        by smtp.gmail.com with ESMTPSA id u205sm13901116wme.42.2021.01.08.12.03.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 12:03:08 -0800 (PST)
-Message-Id: <e9d4fa613a65e0fedde0648b5fbf71e16f8fe8a0.1610136177.git.gitgitgadget@gmail.com>
+        Fri, 08 Jan 2021 12:03:04 -0800 (PST)
+Message-Id: <f450f43cd0dc837622ada37d45b35f465ef902c8.1610136177.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.830.v3.git.1610136177.gitgitgadget@gmail.com>
 References: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
         <pull.830.v3.git.1610136177.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jan 2021 20:02:54 +0000
-Subject: [PATCH v3 11/14] update-index: remove ce_match_stat(), all macros
+Date:   Fri, 08 Jan 2021 20:02:49 +0000
+Subject: [PATCH v3 06/14] update-index: use istate->cache_changed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,84 +81,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The final index compatibility macro to remove from the update-index
-builtin is ce_match_stat(). Further, this is the last use of that macro
-anywhere, so it should be removed.
-
-There are some remaining references in the racy-git.txt technical
-document that are updated to ie_match_stat().
+This is a mechanical replacement of active_cache_changed.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/racy-git.txt | 6 +++---
- builtin/update-index.c               | 3 +--
- cache.h                              | 1 -
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ builtin/update-index.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
-index ceda4bbfda4..65188e04559 100644
---- a/Documentation/technical/racy-git.txt
-+++ b/Documentation/technical/racy-git.txt
-@@ -26,7 +26,7 @@ information obtained from the filesystem via `lstat(2)` system
- call when they were last updated.  When checking if they differ,
- Git first runs `lstat(2)` on the files and compares the result
- with this information (this is what was originally done by the
--`ce_match_stat()` function, but the current code does it in
-+`ie_match_stat()` function, but the current code does it in
- `ce_match_stat_basic()` function).  If some of these "cached
- stat information" fields do not match, Git can tell that the
- files are modified without even looking at their contents.
-@@ -102,7 +102,7 @@ timestamp as the index file itself.
- 
- The callers that want to check if an index entry matches the
- corresponding file in the working tree continue to call
--`ce_match_stat()`, but with this change, `ce_match_stat()` uses
-+`ie_match_stat()`, but with this change, `ie_match_stat()` uses
- `ce_modified_check_fs()` to see if racily clean ones are
- actually clean after comparing the cached stat information using
- `ce_match_stat_basic()`.
-@@ -128,7 +128,7 @@ Runtime penalty
- ---------------
- 
- The runtime penalty of falling back to `ce_modified_check_fs()`
--from `ce_match_stat()` can be very expensive when there are many
-+from `ie_match_stat()` can be very expensive when there are many
- racily clean entries.  An obvious way to artificially create
- this situation is to give the same timestamp to all the files in
- the working tree in a large project, run `git update-index` on
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 64feb47c97f..1c1cb8f8d4a 100644
+index 2b03b29261b..70ca47e712c 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -3,7 +3,6 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
--#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-@@ -276,7 +275,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
- 	struct cache_entry *ce;
- 
- 	/* Was the old index entry already up-to-date? */
--	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
-+	if (old && !ce_stage(old) && !ie_match_stat(istate, old, st, 0))
+@@ -241,7 +241,7 @@ static int mark_ce_flags(const char *path, int flag, int mark)
+ 			istate->cache[pos]->ce_flags &= ~flag;
+ 		istate->cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
+ 		cache_tree_invalidate_path(istate, path);
+-		active_cache_changed |= CE_ENTRY_CHANGED;
++		istate->cache_changed |= CE_ENTRY_CHANGED;
  		return 0;
+ 	}
+ 	return -1;
+@@ -915,7 +915,7 @@ static enum parse_opt_result unresolve_callback(
+ 	*has_errors = do_unresolve(ctx->argc, ctx->argv,
+ 				prefix, prefix ? strlen(prefix) : 0);
+ 	if (*has_errors)
+-		active_cache_changed = 0;
++		repo->index->cache_changed = 0;
  
- 	ce = make_empty_cache_entry(istate, len);
-diff --git a/cache.h b/cache.h
-index 8c091be6256..740bd0aa1dd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -416,7 +416,6 @@ extern struct index_state the_index;
- #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
- #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
--#define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
- #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
- #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
- #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
+ 	ctx->argv += ctx->argc - 1;
+ 	ctx->argc = 1;
+@@ -936,7 +936,7 @@ static enum parse_opt_result reupdate_callback(
+ 	setup_work_tree();
+ 	*has_errors = do_reupdate(ctx->argc, ctx->argv, prefix);
+ 	if (*has_errors)
+-		active_cache_changed = 0;
++		repo->index->cache_changed = 0;
+ 
+ 	ctx->argv += ctx->argc - 1;
+ 	ctx->argc = 1;
+@@ -1135,7 +1135,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+ 
+ 		if (repo->index->version != preferred_index_format)
+-			active_cache_changed |= SOMETHING_CHANGED;
++			repo->index->cache_changed |= SOMETHING_CHANGED;
+ 		repo->index->version = preferred_index_format;
+ 	}
+ 
+@@ -1223,7 +1223,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		report(_("fsmonitor disabled"));
+ 	}
+ 
+-	if (active_cache_changed || force_write) {
++	if (repo->index->cache_changed || force_write) {
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
+ 				exit(128);
 -- 
 gitgitgadget
 
