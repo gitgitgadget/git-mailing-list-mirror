@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D31C4332E
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E16C43332
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BC3423A7A
+	by mail.kernel.org (Postfix) with ESMTP id DA19C23A7A
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728725AbhAHSST (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 13:18:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33982 "EHLO
+        id S1728733AbhAHSSV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 13:18:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728719AbhAHSSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:18:18 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349EBC0612A4
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:51 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id 75so11123755ilv.13
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:51 -0800 (PST)
+        with ESMTP id S1728727AbhAHSSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 13:18:20 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A40C061380
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:25 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id h16so4699499qvu.8
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=zCb37iXSFsX9rFmR1LLC+H3EPGfQdLbpmMxbI4AJd3g=;
-        b=XG5KQvesgB6lknDOW9L474XlfM+oGqa6oFussocfCaIxymWKhlq7NqiVbb50eTU5eS
-         OPXaqlve707VO+31k7LByaySQvh4hVsNA/sxweDTFh0bO9nFPdMJf9k/WAcG7W+wAcbT
-         aL8TWYkRKJHqsuk26sFiIu5SwUhSRekTy2a0XLL+Z++hgWo7NQZoGWqY0qkcuFLnNcvi
-         b12Bt9dIHauMaN9j/EWvmgtGPJ3PAKHy2LwqxMRwkst0jk1d55lEOuhIjHcTbbBc7HfP
-         xymvxubov3/vUWg/yznhXrG7XoQ1R9H73UWzamAgOT7wHGmiTZFJuDKxm4rU4joyg+DI
-         avtQ==
+        bh=RFUmAYihgEn8U2ycrvgYAS4mVFzyah6mujmtOpaH3X4=;
+        b=TLn7nm6snlOzbdPggwIlrSD5o6u/6wRBwPgcfa2jjDbnL95b4xHIquUtpSaRK92W4S
+         wuw4DxsUX4ewePJK1p8//isAi3agHWAZD1c1hCJpoIgYf76pvAqakScTNTIvs/5PEgm/
+         RSI+nyH/7Y9uUaA8w8d4eo+zhZ+QkJAczXkyyKotThJ56koJj1liNEPCz8u5gbccd6sw
+         LAkmZbyBpLBrO9/Mtv44SSCULm35X5LQndJ1r2gnS4qLfV9x2z9V96nO3p2eSYd2TY1Q
+         GFZ6/MBI63pxkJ9KsvYS0exjqlTPM9EzSDbnGZyKP8Ye0dkke0YbPlUdfIFSFRd8DZZZ
+         E0bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=zCb37iXSFsX9rFmR1LLC+H3EPGfQdLbpmMxbI4AJd3g=;
-        b=iuC8oiSKB71lHhTsCBf0ish+7HtEmhiUNRsxJKXuGo6dANlV3pdjrioqE6q8Vz0OFh
-         I1fFuUvEUQG7NImDRKoD1cPgTH+ZfQBJS9hve4vHm6tcS4NhqdIiAI3E3pQUgDM0L5r4
-         6oUIypO/A458CJXOWTjSQkf5sqYGLeLaAat3awy9DhbC1b2Mqv1TX6owObKV87uRqw4l
-         P8H3pc2J0wYAZM2mDTLWMJthOpZIwKsxH+aqNbohB+WCvNanC2q2V15cNvT3SpJ8sCNk
-         O5rmG9NiDnd3FpVtVgmwFwrYt6lQSWNxBxiJ5pI3CSbwxr2DG71MZxRoOY0XBlB8bzZW
-         9SJw==
-X-Gm-Message-State: AOAM531Dgwze1YjqOef9b+TofpyH9Sumj9ugdfW5D+rhY/Y82HevkDyK
-        CxBRPEcL7m27/ImRytKrn3NEmme0AJXw4Q==
-X-Google-Smtp-Source: ABdhPJyg08/wA1UZGxggeO85q+cvEFyzJxCFSlOefqvqO1DdJz+JTIOhKKxUvIZIJsa601W7gkdQag==
-X-Received: by 2002:a92:cec4:: with SMTP id z4mr4995627ilq.217.1610129870374;
-        Fri, 08 Jan 2021 10:17:50 -0800 (PST)
+        bh=RFUmAYihgEn8U2ycrvgYAS4mVFzyah6mujmtOpaH3X4=;
+        b=d9yTGyU0ODbC8RITZH4af5YXuP9s6C2QSSE+VOHKT7pPMBmCA4lRrS4F36k1l0wCib
+         vvHHYcH09ipX56Ll4qG8lLr7arP5UNQ6QnuAt3V0k9eA20VaPsVJlWfjO1T19TCdaAmS
+         okWnO0UzBQNf7ZSAU/bsP+rS+L7KTxPkHH4VsSVBtBHTAs2p5MT7gFliTAvqNADIcPRS
+         /pn+O1pORblZrRPZezkPYUUVHiq6GucexrpATomdNoK81dkmxMpSxc6KcCQCwv1H2qlx
+         prQAaFjdOcasdXCx5cuN8IKdPhiWkniOIEh/UwYqgmG2aw+C6v8KrOJsuxUw5Ts7ZH2y
+         kYfw==
+X-Gm-Message-State: AOAM532XHnbMVwpdhZz5NekZpa6sUJ29A2by6t1+9lyr6Ip/48CAdFbC
+        uE/xlvMZ4Rvk+LtkI/1ZbBOYSpVaibnY/Q==
+X-Google-Smtp-Source: ABdhPJwRheSdvexf7SS4KqRaV4fME7WPHWcwTq+sS8JmlASbh/LmWtAnS947utx5TNrsGMaOrkQw0Q==
+X-Received: by 2002:a0c:bd2b:: with SMTP id m43mr4937665qvg.32.1610129844177;
+        Fri, 08 Jan 2021 10:17:24 -0800 (PST)
 Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id e9sm7266137ilc.73.2021.01.08.10.17.49
+        by smtp.gmail.com with ESMTPSA id q27sm5079620qkj.131.2021.01.08.10.17.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 10:17:49 -0800 (PST)
-Date:   Fri, 8 Jan 2021 13:17:47 -0500
+        Fri, 08 Jan 2021 10:17:23 -0800 (PST)
+Date:   Fri, 8 Jan 2021 13:17:21 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@gmail.com
-Subject: [PATCH 16/20] builtin/gc.c: guess the size of the revindex
-Message-ID: <7c17db7a7df8b524f13969efd1cb5e6e95de5a2d.1610129796.git.me@ttaylorr.com>
+Subject: [PATCH 10/20] rebuild_existing_bitmaps(): convert to new revindex API
+Message-ID: <97eaa7b2d6d923da0dca6e96b890d4b85bf9d7d8.1610129796.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,39 +70,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'estimate_repack_memory()' takes into account the amount of memory
-required to load the reverse index in memory by multiplying the assumed
-number of objects by the size of the 'revindex_entry' struct.
-
-Prepare for hiding the definition of 'struct revindex_entry' by removing
-a 'sizeof()' of that type from outside of pack-revindex.c. Instead,
-guess that one off_t and one uint32_t are required per object. Strictly
-speaking, this is a worse guess than asking for 'sizeof(struct
-revindex_entry)' directly, since the true size of this struct is 16
-bytes with padding on the end of the struct in order to align the offset
-field.
-
-But, this is an approximation anyway, and it does remove a use of the
-'struct revindex_entry' from outside of pack-revindex internals.
+Remove another instance of looking at the revindex directly by instead
+calling 'pack_pos_to_index()'. Unlike other patches, this caller only
+cares about the index position of each object in the loop.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/gc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 4c24f41852..c60811f212 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -301,7 +301,7 @@ static uint64_t estimate_repack_memory(struct packed_git *pack)
- 	/* and then obj_hash[], underestimated in fact */
- 	heap += sizeof(struct object *) * nr_objects;
- 	/* revindex is used also */
--	heap += sizeof(struct revindex_entry) * nr_objects;
-+	heap += (sizeof(off_t) + sizeof(uint32_t)) * nr_objects;
- 	/*
- 	 * read_sha1_file() (either at delta calculation phase, or
- 	 * writing phase) also fills up the delta base cache
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 3f5cd4e77d..24b9628dca 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1392,11 +1392,10 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
+ 
+ 	for (i = 0; i < num_objects; ++i) {
+ 		struct object_id oid;
+-		struct revindex_entry *entry;
+ 		struct object_entry *oe;
+ 
+-		entry = &bitmap_git->pack->revindex[i];
+-		nth_packed_object_id(&oid, bitmap_git->pack, entry->nr);
++		nth_packed_object_id(&oid, bitmap_git->pack,
++				     pack_pos_to_index(bitmap_git->pack, i));
+ 		oe = packlist_find(mapping, &oid);
+ 
+ 		if (oe)
 -- 
 2.30.0.138.g6d7191ea01
 
