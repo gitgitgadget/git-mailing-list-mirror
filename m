@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C493BC433DB
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52651C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AF4F23AAC
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06F7F23AAC
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729096AbhAHUE2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 15:04:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50582 "EHLO
+        id S1729110AbhAHUEj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 15:04:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729057AbhAHUEW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 15:04:22 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15A25C0612A4
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 12:03:08 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id v14so8728818wml.1
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 12:03:08 -0800 (PST)
+        with ESMTP id S1729057AbhAHUEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 15:04:39 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64CCC0612A9
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 12:03:12 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d13so10071316wrc.13
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 12:03:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ErszZlGN3ltMcK2sPORBKYvHBVvmshBvJvPsKViGnLY=;
-        b=cGc52n5VMTpYMGiifyWv4LCnXcHfFCHJMKDUqNr7aLOOrtLRSceHSHsFHiWLf0fkVB
-         NMPzGZ9ubpV0SvaJwuVIPemwieQXJFcseKM4BfHPZCN6q5WEDr694niK/EkflFofQvxy
-         QbNNn6+G6pSWXcWDI/WwxN2eGup1HjGRAz0cPy0s/sJO9WCosMZUrvufXh6b6riqjQlR
-         otp6eMf2eFDbxcHq9VeNmS5OAHhhGnfJP7FYPF67nPycBiQbWmDZ8jQ++1fb6KYQ8HFa
-         4GDwnKB6hCPNOVaLqM6pvO3aI1gSzRUgsJFI98zsdF1l+n4BXeCdl0p0D7huT1x6HAPm
-         GGKg==
+        bh=AKrjmO1/ZFbpcKjWQvaQLMrhMhS47QmP9byd4n49/9E=;
+        b=YNmNOyIw98AJ7tqr9QHXc47mNYU6hjsuAMX+aATkvvxoF3RkSL73DCplM7nzWZumTV
+         MdHMK1G4zxmW8BM5TLIt+By30R1S7ergSgP8lqgLHoZ+useippeOHTrwukuo3bICDPhy
+         YhAdmyl391ufwEDBHZlRMD0C7CP8FRXwC95DKrMAasDjkIaHIDR5Z5a8pLwZutnvt39z
+         YQcyqv7ZMg1aCdjqvPR/+6/XIM1QOfmVG7oM84pxfwJ8On9WwraCd9CD7rY0eOl/XiVm
+         kfvVc24SR9mXGvn4CR/CVgvzxGkiECtdy3fKQdNOFGL64Kx4ablI5/OYbVQgOLA1lvM3
+         BauA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ErszZlGN3ltMcK2sPORBKYvHBVvmshBvJvPsKViGnLY=;
-        b=lmhMthJ0LlB9zo5srMBZus8yLwUWMQhCuaWFnrDNdySUOTc6ACEVDBiLnOY9ezHXbJ
-         luWGsgEgcnYWliNx22Mi03NZFRerTGUk+lwTL/T7i1J56uat7SRkT7DrhJylCJr8Bjc0
-         1s2ukeyxYy07gDC55EB1iePKdSxufoAaDA5SWvzQVHQ9gVVdwgfVt9siYqtnaQfFQyfI
-         YE3QJ6sHt7GiO03y01uU4WmhJzO2EChxGUemO2x1ZD/FDqScccKgHNeM3zEYFONImmQj
-         YHkPBeguGyNmOXve50BcAH4JjGdHStfHi5V0aZuVD6nNeDRN6WZLvmSF7MgffaRNRTKh
-         2LsA==
-X-Gm-Message-State: AOAM5316h5ueXyTbYmEUm8QVdo7nLg/bbSpzwH/o6Py8N+uiZJqYdQ4S
-        v9kwNmLUr5BrRI2RW0Xlz6E178f9wrw=
-X-Google-Smtp-Source: ABdhPJwQFso1xXj6XhUO1/6bOR7flp8SrRRb3crtLZZAsi4hW8yf23EK994zY9vZ4jvblTgQEyTk8Q==
-X-Received: by 2002:a1c:8f:: with SMTP id 137mr4593241wma.4.1610136186694;
-        Fri, 08 Jan 2021 12:03:06 -0800 (PST)
+        bh=AKrjmO1/ZFbpcKjWQvaQLMrhMhS47QmP9byd4n49/9E=;
+        b=hZu9wFC+uw1uDNq0DCjsu1AaEffPgTv7ldu9YVdYQzQTgBhlIM9A0nu00HHVLp2ou6
+         R7lI4waqe063odtQ8CthgX4IytWSsrSlTCt3YeBknykVEk34AX13GwTqamGPcy5tn+ST
+         CnhYQKDu/6Lb70YqCyqUnz+vpT2dKMqfCaXcLk++7tk59iyIZ8jChUfv/BB6WzZRh2Vz
+         87xIcXdoVujx6dWuTvY6jpv4IqbbUYPpsHUwNc/ibzvjVQnVrRdgxz++lkHHMc8cATaN
+         1Y1jpZcRufMk/38zk85Ir+BGmUg+uWQ9BjSLtnkhszskrDHoaYroGq+fPDQvU5W7YpNI
+         nQFg==
+X-Gm-Message-State: AOAM530LthkSC79cJHyycnkk3yWwXMstjS7Y3mt6JGaICDYikeZud/hk
+        3zi5ObxYbOLuSiHekjmjP+IkzqGkgdE=
+X-Google-Smtp-Source: ABdhPJw4kdHJZKFyMF7Wokr311EWrJOrmCFIqcP1MEbrsYXSk/CHnIVZU/SdRebmP7OV2vWyjK3MCw==
+X-Received: by 2002:adf:c18d:: with SMTP id x13mr5129482wre.128.1610136191430;
+        Fri, 08 Jan 2021 12:03:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 189sm13654743wma.22.2021.01.08.12.03.05
+        by smtp.gmail.com with ESMTPSA id c10sm14942505wrb.92.2021.01.08.12.03.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 12:03:06 -0800 (PST)
-Message-Id: <2eead833fbafdc3cb408532cdcb7e7bd0909d03a.1610136177.git.gitgitgadget@gmail.com>
+        Fri, 08 Jan 2021 12:03:10 -0800 (PST)
+Message-Id: <a9185af4740d7b7fe2325604045ca8b6df0a52c0.1610136177.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.830.v3.git.1610136177.gitgitgadget@gmail.com>
 References: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
         <pull.830.v3.git.1610136177.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jan 2021 20:02:51 +0000
-Subject: [PATCH v3 08/14] update-index: use remove_file_from_index()
+Date:   Fri, 08 Jan 2021 20:02:56 +0000
+Subject: [PATCH v3 13/14] update-index: reduce static globals, part 2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,62 +81,126 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This is a mechanical replacement of remove_file_from_cache().
+In order to remove index compatibility macros cleanly, we relied upon
+static globals 'repo' and 'istate' to be pointers to the_repository and
+the_index, respectively. We can continue reducing the need for these
+static globals by modifying method prototypes to use them when
+necessary.
+
+Move the remaining 'struct repository *repo' further down the file and
+use method parameters to pass it around instead.
+
+The only remaining change is to remove the static global entirely, but
+that requires updating the parse-opt callbacks, which need a different
+solution.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/update-index.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/update-index.c | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index a24b1fc90e4..87fbc580032 100644
+index 9a83603c0db..3e01d62865f 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -251,7 +251,7 @@ static int remove_one_path(const char *path)
+@@ -593,9 +593,9 @@ static const char * const update_index_usage[] = {
+ 
+ static struct object_id head_oid;
+ static struct object_id merge_head_oid;
+-static struct repository *repo;
+ 
+-static struct cache_entry *read_one_ent(const char *which,
++static struct cache_entry *read_one_ent(struct repository *repo,
++					const char *which,
+ 					struct object_id *ent, const char *path,
+ 					int namelen, int stage)
  {
- 	if (!allow_remove)
- 		return error("%s: does not exist and --remove not passed", path);
--	if (remove_file_from_cache(path))
-+	if (remove_file_from_index(istate, path))
- 		return error("%s: cannot remove from the index", path);
- 	return 0;
+@@ -623,7 +623,8 @@ static struct cache_entry *read_one_ent(const char *which,
+ 	return ce;
  }
-@@ -385,7 +385,7 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 		 * On the other hand, removing it from index should work
- 		 */
- 		if (!ignore_skip_worktree_entries && allow_remove &&
--		    remove_file_from_cache(path))
-+		    remove_file_from_index(istate, path))
- 			return error("%s: cannot remove from the index", path);
- 		return 0;
- 	}
-@@ -472,7 +472,7 @@ static void update_one(const char *path)
- 	}
  
- 	if (force_remove) {
--		if (remove_file_from_cache(path))
-+		if (remove_file_from_index(istate, path))
- 			die("git update-index: unable to remove %s", path);
- 		report("remove '%s'", path);
- 		return;
-@@ -555,7 +555,7 @@ static void read_index_info(int nul_term_line)
+-static int unresolve_one(const char *path)
++static int unresolve_one(struct repository *repo,
++			 const char *path)
+ {
+ 	int namelen = strlen(path);
+ 	int pos;
+@@ -665,8 +666,8 @@ static int unresolve_one(const char *path)
+ 	 * stuff HEAD version in stage #2,
+ 	 * stuff MERGE_HEAD version in stage #3.
+ 	 */
+-	ce_2 = read_one_ent("our", &head_oid, path, namelen, 2);
+-	ce_3 = read_one_ent("their", &merge_head_oid, path, namelen, 3);
++	ce_2 = read_one_ent(repo, "our", &head_oid, path, namelen, 2);
++	ce_3 = read_one_ent(repo, "their", &merge_head_oid, path, namelen, 3);
  
- 		if (!mode) {
- 			/* mode == 0 means there is no such path -- remove */
--			if (remove_file_from_cache(path_name))
-+			if (remove_file_from_index(istate, path_name))
- 				die("git update-index: unable to remove %s",
- 				    ptr);
- 		}
-@@ -671,7 +671,7 @@ static int unresolve_one(const char *path)
- 		goto free_return;
- 	}
- 
--	remove_file_from_cache(path);
-+	remove_file_from_index(repo->index, path);
- 	if (add_cache_entry(ce_2, ADD_CACHE_OK_TO_ADD)) {
- 		error("%s: cannot add our version to the index.", path);
+ 	if (!ce_2 || !ce_3) {
  		ret = -1;
+@@ -705,7 +706,8 @@ static void read_head_pointers(void)
+ 	}
+ }
+ 
+-static int do_unresolve(int ac, const char **av,
++static int do_unresolve(struct repository *repo,
++			int ac, const char **av,
+ 			const char *prefix, int prefix_length)
+ {
+ 	int i;
+@@ -719,13 +721,14 @@ static int do_unresolve(int ac, const char **av,
+ 	for (i = 1; i < ac; i++) {
+ 		const char *arg = av[i];
+ 		char *p = prefix_path(prefix, prefix_length, arg);
+-		err |= unresolve_one(p);
++		err |= unresolve_one(repo, p);
+ 		free(p);
+ 	}
+ 	return err;
+ }
+ 
+-static int do_reupdate(int ac, const char **av,
++static int do_reupdate(struct repository *repo,
++		       int ac, const char **av,
+ 		       const char *prefix)
+ {
+ 	/* Read HEAD and run update-index on paths that are
+@@ -754,7 +757,7 @@ static int do_reupdate(int ac, const char **av,
+ 		if (ce_stage(ce) || !ce_path_match(repo->index, ce, &pathspec, NULL))
+ 			continue;
+ 		if (has_head)
+-			old = read_one_ent(NULL, &head_oid,
++			old = read_one_ent(repo, NULL, &head_oid,
+ 					   ce->name, ce_namelen(ce), 0);
+ 		if (old && ce->ce_mode == old->ce_mode &&
+ 		    oideq(&ce->oid, &old->oid)) {
+@@ -782,6 +785,8 @@ struct refresh_params {
+ 	int *has_errors;
+ };
+ 
++static struct repository *repo;
++
+ static int refresh(struct refresh_params *o, unsigned int flag)
+ {
+ 	setup_work_tree();
+@@ -921,8 +926,8 @@ static enum parse_opt_result unresolve_callback(
+ 	BUG_ON_OPT_ARG(arg);
+ 
+ 	/* consume remaining arguments. */
+-	*has_errors = do_unresolve(ctx->argc, ctx->argv,
+-				prefix, prefix ? strlen(prefix) : 0);
++	*has_errors = do_unresolve(repo, ctx->argc, ctx->argv,
++				   prefix, prefix ? strlen(prefix) : 0);
+ 	if (*has_errors)
+ 		repo->index->cache_changed = 0;
+ 
+@@ -943,7 +948,7 @@ static enum parse_opt_result reupdate_callback(
+ 
+ 	/* consume remaining arguments. */
+ 	setup_work_tree();
+-	*has_errors = do_reupdate(ctx->argc, ctx->argv, prefix);
++	*has_errors = do_reupdate(repo, ctx->argc, ctx->argv, prefix);
+ 	if (*has_errors)
+ 		repo->index->cache_changed = 0;
+ 
 -- 
 gitgitgadget
 
