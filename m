@@ -7,152 +7,117 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D029C433E0
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F21C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:54:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E1BC23877
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:51:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 747F323998
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 23:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbhAHXur (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 18:50:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50017 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725861AbhAHXuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 18:50:46 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 05E4F9719F;
-        Fri,  8 Jan 2021 18:50:04 -0500 (EST)
+        id S1725835AbhAHXy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 18:54:29 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59923 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbhAHXy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 18:54:29 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D021B424F;
+        Fri,  8 Jan 2021 18:53:47 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1rj2IK4UZ3i2ghC5Fg6pEcpXvOs=; b=va/dF8
-        kywsXLvz6CH54bk8yZIlXsh9PNCUWL+2Jls6vuoxmTB48GeDo3DMeBAD3doWzGgR
-        EtGK1yAGHeeEyd7WCb6+CpGily2LpmiGgBNq7mGON16RgK1jfBz9Fy2kM52MGA9G
-        zucuzriy7QB6XSXrKulSkk75Tz+0UxSOJ67Kk=
+        :content-type; s=sasl; bh=O6Z531O/c3gk82yAKSZ6atD/Q5Q=; b=mm05dK
+        hq/SB2vpgRdbcMPuOHZoBUspfpcAcfzx6+OmuktJqxKF++evTNCf9GCcCy2dicUy
+        ftvNyzVrXEk3vPk5bwihn5ozqGcl1r3w7OTlbWCsl5s+XYu+6/oAdSlmSbkYRjiO
+        bRJ7nsu5zE1au1ppKwqoK+/XRaaiQp2bbJOE4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Gwn8iK3t1OMvoGtzLHtpikfHBPP3jgF9
-        z/HSLv5aYwlDFa+9UaFIKiJFOuQTh9JANMLGIfHcmTwdw1XX8jqizJWszoTtoqMV
-        Co+EuUR+DczThPv7bMFJ9NBow9PaNYb0ejH756ermrQf14zWAx8jtEO81xxyh6bV
-        X5W5TMT6rws=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C714B9719B;
-        Fri,  8 Jan 2021 18:50:03 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=ZPjc3/6YG/SPa35oLU0AfgfeewxmzIi2
+        5cB+XFcWhS+n+WLWKRsSNbY6jlMQoU9D9PM2hkWuvRojr3uCrVq+pVZM9QahJnuj
+        XaLHMH4zooZnEk+pMs2N/gtlMxm8yJQCEfUs8Ae1nAkoYO/6gOEJ1ou+1lOAL4+d
+        N1fZZaTxNY4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 539E4B424E;
+        Fri,  8 Jan 2021 18:53:47 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EFFE297199;
-        Fri,  8 Jan 2021 18:50:01 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D7121B424D;
+        Fri,  8 Jan 2021 18:53:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 2/4] fetch: refactor `s_update_ref` to use common
- exit path
+Subject: Re: [PATCH v2 3/4] fetch: allow passing a transaction to
+ `s_update_ref()`
 References: <cover.1610027375.git.ps@pks.im> <cover.1610107599.git.ps@pks.im>
-        <718a8bf5d7a0ed92c3004991a42419279ff38253.1610107599.git.ps@pks.im>
-Date:   Fri, 08 Jan 2021 15:50:00 -0800
-In-Reply-To: <718a8bf5d7a0ed92c3004991a42419279ff38253.1610107599.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Fri, 8 Jan 2021 13:11:19 +0100")
-Message-ID: <xmqqim87gf9z.fsf@gitster.c.googlers.com>
+        <4162d10fcbb5729dffaaec0651345dd9522a8e05.1610107599.git.ps@pks.im>
+Date:   Fri, 08 Jan 2021 15:53:46 -0800
+In-Reply-To: <4162d10fcbb5729dffaaec0651345dd9522a8e05.1610107599.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Fri, 8 Jan 2021 13:11:23 +0100")
+Message-ID: <xmqqczyfgf3p.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 39570E7A-520C-11EB-A22D-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: BF638C0A-520C-11EB-8C3F-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> @@ -598,30 +598,33 @@ static int s_update_ref(const char *action,
+> @@ -597,10 +598,17 @@ static int s_update_ref(const char *action,
+>  		rla = default_rla.buf;
 >  	msg = xstrfmt("%s: %s", rla, action);
 >  
->  	transaction = ref_transaction_begin(&err);
-> -	if (!transaction ||
-> -	    ref_transaction_update(transaction, ref->name,
-> -				   &ref->new_oid,
-> -				   check_old ? &ref->old_oid : NULL,
-> -				   0, msg, &err))
-> -		goto fail;
-> +	if (!transaction) {
-> +		ret = STORE_REF_ERROR_OTHER;
-> +		goto out;
-> +	}
-> +
-> +	ret = ref_transaction_update(transaction, ref->name, &ref->new_oid,
-> +				     check_old ? &ref->old_oid : NULL,
-> +				     0, msg, &err);
-> +	if (ret) {
-> +		ret = STORE_REF_ERROR_OTHER;
-> +		goto out;
-> +	}
-
-The above certainly got cleaner thanks to Christian's suggestion,
-but I wonder why
-
-	transaction = ref_transaction_begin(&err);
-	if (!transaction ||
-	    ref_transaction_update(transaction, ref->name,
-				   &ref->new_oid,
-				   check_old ? &ref->old_oid : NULL,
-				   0, msg, &err)) {
-		ret = STORE_REF_ERROR_OTHER;
-		goto out;
-	}
-
-shouldn't be sufficient.
-
->  	ret = ref_transaction_commit(transaction, &err);
->  	if (ret) {
-> -		df_conflict = (ret == TRANSACTION_NAME_CONFLICT);
-> -		goto fail;
-> +		ret = (ret == TRANSACTION_NAME_CONFLICT) ? STORE_REF_ERROR_DF_CONFLICT
-> +							 : STORE_REF_ERROR_OTHER;
-> +		goto out;
+> -	transaction = ref_transaction_begin(&err);
+> +	/*
+> +	 * If no transaction was passed to us, we manage the transaction
+> +	 * ourselves. Otherwise, we trust the caller to handle the transaction
+> +	 * lifecycle.
+> +	 */
+>  	if (!transaction) {
+> -		ret = STORE_REF_ERROR_OTHER;
+> -		goto out;
+> +		transaction = our_transaction = ref_transaction_begin(&err);
+> +		if (!transaction) {
+> +			ret = STORE_REF_ERROR_OTHER;
+> +			goto out;
+> +		}
 >  	}
-> 
-> +out:
->  	ref_transaction_free(transaction);
 
-It is a bit funny to see a goto that jumps to the label without
-having anything else in between, but we know we will be adding more
-code just before the "out:" label, so it is a good preliminary
-preparation.
+OK, this answers the question I posed in the review of the previous
+step.  We need to separate out "if (!transaction || ...)" into two
+anyway with this step, so it is easier to see what changed in this
+step if we separated in the previous preparatory clean-up step.
 
-I think a variant that is much easier to follow would be to write
-like this instead:
-
-	switch (ref_transaction_commit(transaction, &err)) {
-        case 0: /* happy */
-		break;
-	case TRANSACTION_NAME_CONFLICT:
-		ret = STORE_REF_ERROR_DF_CONFLICT;
-		goto out;
-	default:
-		ret = STORE_REF_ERROR_OTHER;
-		goto out;
-	}
-
-> +	if (ret)
-> +		error("%s", err.buf);
-
-OK.
-
->  	strbuf_release(&err);
->  	free(msg);
-> -	return 0;
-> -fail:
-> -	ref_transaction_free(transaction);
-> -	error("%s", err.buf);
-> -	strbuf_release(&err);
-> -	free(msg);
-> -	return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
-> -			   : STORE_REF_ERROR_OTHER;
-> +	return ret;
->  }
+> @@ -611,15 +619,17 @@ static int s_update_ref(const char *action,
+>  		goto out;
+>  	}
 >  
->  static int refcol_width = 10;
+> -	ret = ref_transaction_commit(transaction, &err);
+> -	if (ret) {
+> -		ret = (ret == TRANSACTION_NAME_CONFLICT) ? STORE_REF_ERROR_DF_CONFLICT
+> -							 : STORE_REF_ERROR_OTHER;
+> -		goto out;
+> +	if (our_transaction) {
+> +		ret = ref_transaction_commit(our_transaction, &err);
+> +		if (ret) {
+> +			ret = (ret == TRANSACTION_NAME_CONFLICT) ? STORE_REF_ERROR_DF_CONFLICT
+> +								 : STORE_REF_ERROR_OTHER;
+> +			goto out;
+> +		}
 
-THanks.
+The switch statement suggested earlier would shine when the
+constants involved have such long names.
+
+>  	}
+>  
+>  out:
+> -	ref_transaction_free(transaction);
+> +	ref_transaction_free(our_transaction);
+>  	if (ret)
+>  		error("%s", err.buf);
+>  	strbuf_release(&err);
+
+Makes sense.  Thanks.
