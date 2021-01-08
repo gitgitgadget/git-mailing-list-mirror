@@ -2,262 +2,519 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47924C4332B
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2ED3C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:46:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 281D323998
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AA8842396F
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727556AbhAHOh7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 09:37:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56102 "EHLO
+        id S1726418AbhAHOqB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 09:46:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727530AbhAHOh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 09:37:58 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D50C06129D
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:36:44 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id a12so9200199wrv.8
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:36:44 -0800 (PST)
+        with ESMTP id S1725817AbhAHOqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 09:46:00 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51EBEC061380
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:45:20 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id x126so6368988pfc.7
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:45:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=APpCjt2Pe2F6i548+qNzvY3SI/W9CyLbFQAsontzePg=;
-        b=TAokXOv+RizKUNfRwhxkQaA466uFIu6U6L806JdLB8FcMIE7/4/Gl1jfnPwsWtRZIv
-         TsDbkIM3Ju3o/qKGOOfIXMiQmnVjx6kypkrUbqJsx+YX0hRngVBC0U/8Qzgp3SVYbExn
-         LiIQHcZyjednb16AjMrkcNtTmAyaSzNZkW9j6tQpiFlh67Z5o3xsZIEBflgmML1nh5Tq
-         rMhKCm0888KlDHc2cYntk+81ioNg2f5pXcprHIDdiA7eqibb8njvQLey+aKXztEzlEIQ
-         75jc5c4OaP3dd/NNQqAzxYm0YCBOKdzyrg8ALmxvi7EGTnkWVedYL3IKm0BKH2kuVr3O
-         Xq0w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oRPiB31Eln29WE7xRLCN6SfhrCiBp/1D8UShEp9+kcI=;
+        b=k3GS6k2QmqcIGdiOw6SlagiG/ktUXkLVFnyMMIUHrAdUCNz4FX0FIy+VHvQuJ6QOo9
+         O/UqDITap5YUQvwmYSyBZwIYg0UPUXBA6MrHuwXaeEq3rrsWCK3VfbOsuSbXAyMZgOLk
+         bUHwUfnfMuCTuyZgncbVsJdIuY9htg9VzEnynCqkj2e3RIln1qBQ63iME/iRVEvSYh0W
+         Ff8+EVEOJQp+yPobiO+92wmG0bcleCbST46YkPMJJWPhqif1zGXcV32EOivSgBH1Db9p
+         L7erPxJIR47eHft6Tf/GdFi3U2koFZ/hR4YyUAvo7oj7tr9IyfQAzuhUajD8LIZuVZ5M
+         7MeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=APpCjt2Pe2F6i548+qNzvY3SI/W9CyLbFQAsontzePg=;
-        b=ePL+SPT8qJD7Bhw29UQJh5/XiNcgy8rRW7NHwVBWcAh7/kgjW+evciB87kPJUSJab1
-         GZUduN2eCm1cehKZNnjhwTlgW+nKyF2pkIeXKZVwJXY5rA7ZWDfiG855QszxEj3itRxh
-         IVnPLxt6cmFHKU+uGsWNdIE5t4jkLWEFDXW3pc7zZCqD6+kIMo3gAFjpHsnmk2mSeYfn
-         PlgZXOYIcn3rge1D+QDHbwQzLM5DwOpn+pY8okCNbH9zXF209hk7N8b2BZl0/ekkx4tK
-         +bqTM5/Wm48f6V9XoqDPtpZRcd66fgJbbg0iIanGDuFr2isGuy752JYKhy0kQh7ZXTaT
-         r+EA==
-X-Gm-Message-State: AOAM530eI0FvVl0sBVclAkEtKj8d/1uXYmk+YQkeE2G0WulA6OVxcLlD
-        x2ijs/bBxeabjJYrEE//FvRLDOV7Pow=
-X-Google-Smtp-Source: ABdhPJwo50YM07Y80xOUTQJdK8JTkvMR8ugTMEqSKXvSZG/VLnm662MN+6+Z7ajM/aWJ7WeK+GquFw==
-X-Received: by 2002:a5d:40ce:: with SMTP id b14mr3902451wrq.350.1610116603231;
-        Fri, 08 Jan 2021 06:36:43 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i11sm12014197wmd.47.2021.01.08.06.36.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 06:36:42 -0800 (PST)
-Message-Id: <a09a5098aa66ea0ed89fe0fcde3f016b4a65814d.1610116600.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
-References: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
-        <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jan 2021 14:36:39 +0000
-Subject: [PATCH v2 2/2] builtin:ls-files.c:add git ls-file --dedup option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oRPiB31Eln29WE7xRLCN6SfhrCiBp/1D8UShEp9+kcI=;
+        b=bw+PlVSVKpOnfjLT9Kktq9KHuApxobOK5PhTCYj/4k+fHjoYpIYq2aqMQJ+VNdBfnv
+         7VXzeJNiL4qMGJ+E1HbaXTKxCPoDw+cSdD+hiIzZM51o/LZmoUzfz7dR3YzEiQF1ABMU
+         RUH0LUWSRFy6rWxQ0vtSL39a4la5X3QsulADCbvIPUIXkHUCAgxT4HvkRkF8ElUZutqx
+         4G3TKjQ4qqSBUMKvSIbJ8NlvfmrwcrQYyW31BNG4d+HxqKy7tVdjhVRoQRPkqd9OR0Jj
+         VgCIolA6juXoZtEQbf9WijTJvsQQ5R/EqKzU9yvYeB5vbgf/x84uB7650voE/mMunUB0
+         giYA==
+X-Gm-Message-State: AOAM5332u+OIAMnqfSHI2to0vfr+f8q7cDEJbbB5azMkJc0ynTcUD+6z
+        BN23R5fwVsBhHHqKXYmP26E=
+X-Google-Smtp-Source: ABdhPJxfv8b7WU58TqujWT+GSEsxs2UjxLRzB1pLRMRc5ukIW4o54WhfRc4GeN7UHrUJ3Lbh3gN07A==
+X-Received: by 2002:aa7:8499:0:b029:19e:6c5:b103 with SMTP id u25-20020aa784990000b029019e06c5b103mr3883371pfn.13.1610117119785;
+        Fri, 08 Jan 2021 06:45:19 -0800 (PST)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id q15sm9471894pgk.11.2021.01.08.06.45.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Jan 2021 06:45:19 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v4 0/2] Improvements for git-bundle
+Date:   Fri,  8 Jan 2021 09:45:12 -0500
+Message-Id: <20210108144514.24805-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <X/cqrTgilKAW9P9G@danh.dev>
+References: <X/cqrTgilKAW9P9G@danh.dev>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-This commit standardizes the code format.
-For git ls-file --dedup option added
-relevant descriptions in Documentation/git-ls-files.txt
-and wrote t/t3012-ls-files-dedup.sh test script
-to prove the correctness of--dedup option.
+## Two improvements for git-bundle
 
-this patch fixed: https://github.com/gitgitgadget/git/issues/198
-Thanks.
+1. Commit "bundle: lost objects when removing duplicate pendings",
+   which fixes command like:
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- Documentation/git-ls-files.txt |  4 +++
- builtin/ls-files.c             | 20 ++++++-----
- t/t3012-ls-files-dedup.sh      | 63 ++++++++++++++++++++++++++++++++++
- 3 files changed, 78 insertions(+), 9 deletions(-)
- create mode 100755 t/t3012-ls-files-dedup.sh
+        $ git bundle create <file> 'master^!'
+  
+2. Commits "bundle: arguments can be read from stdin",
+   which add "--stdin" option support for git-bundle, like:
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index cbcf5263dd0..41a9c5a8b27 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])*
- 		(-[c|d|o|i|s|u|k|m])*
- 		[--eol]
-+		[--dedup]
- 		[-x <pattern>|--exclude=<pattern>]
- 		[-X <file>|--exclude-from=<file>]
- 		[--exclude-per-directory=<file>]
-@@ -81,6 +82,9 @@ OPTIONS
- 	\0 line termination on output and do not quote filenames.
- 	See OUTPUT below for more information.
- 
-+--dedup::
-+	Suppress duplicates entries when conflicts happen or
-+	specify -d -m at the same time.
- -x <pattern>::
- --exclude=<pattern>::
- 	Skip untracked files matching pattern.
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 66a7e251a46..bc4eded19ab 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -302,7 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- {
- 	int i;
- 	struct strbuf fullname = STRBUF_INIT;
--	const struct cache_entry *last_stage=NULL;
-+	const struct cache_entry *last_stage = NULL;
- 
- 	/* For cached/deleted files we don't need to even do the readdir */
- 	if (show_others || show_killed) {
-@@ -317,7 +317,8 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 	if (show_cached || show_stage) {
- 		for (i = 0; i < repo->index->cache_nr; i++) {
- 			const struct cache_entry *ce = repo->index->cache[i];
--			if(show_cached && delete_dup){
-+
-+			if (show_cached && delete_dup) {
- 				switch (ce_stage(ce)) {
- 				case 0:
- 				default:
-@@ -328,7 +329,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 					if (last_stage &&
- 					!strcmp(last_stage->name, ce->name))
- 						continue;
--					last_stage=ce;
-+					last_stage = ce;
- 				}
- 			}
- 			construct_fullname(&fullname, repo, ce);
-@@ -351,7 +352,8 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 			const struct cache_entry *ce = repo->index->cache[i];
- 			struct stat st;
- 			int err;
--			if(delete_dup){
-+
-+			if (delete_dup) {
- 				switch (ce_stage(ce)) {
- 				case 0:
- 				default:
-@@ -362,7 +364,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 					if (last_stage &&
- 					!strcmp(last_stage->name, ce->name))
- 						continue;
--					last_stage=ce;
-+					last_stage = ce;
- 				}
- 			}
- 			construct_fullname(&fullname, repo, ce);
-@@ -375,10 +377,10 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
- 			if (ce_skip_worktree(ce))
- 				continue;
- 			err = lstat(fullname.buf, &st);
--			if(delete_dup && show_deleted && show_modified && err)
-+			if (delete_dup && show_deleted && show_modified && err)
- 				show_ce(repo, dir, ce, fullname.buf, tag_removed);
--			else{
--				if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
-+			else {
-+				if (show_deleted && err)
- 					show_ce(repo, dir, ce, fullname.buf, tag_removed);
- 				if (show_modified && ie_modified(repo->index, ce, &st, 0))
- 					show_ce(repo, dir, ce, fullname.buf, tag_modified);
-@@ -610,7 +612,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 			N_("pretend that paths removed since <tree-ish> are still present")),
- 		OPT__ABBREV(&abbrev),
- 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
--		OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
-+		OPT_BOOL(0, "dedup", &delete_dup, N_("suppress duplicate entries")),
- 		OPT_END()
- 	};
- 
-diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
-new file mode 100755
-index 00000000000..00c7f65cfc1
---- /dev/null
-+++ b/t/t3012-ls-files-dedup.sh
-@@ -0,0 +1,63 @@
-+#!/bin/sh
-+
-+test_description='git ls-files --dedup test.
-+
-+This test prepares the following in the cache:
-+
-+    a.txt       - a file(base)
-+    a.txt	- a file(master)
-+    a.txt       - a file(dev)
-+    b.txt       - a file
-+    delete.txt  - a file
-+    expect1	- a file
-+    expect2	- a file
-+
-+'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'master branch setup and write expect1 expect2 and commit' '
-+	touch a.txt &&
-+	touch b.txt &&
-+	touch delete.txt &&
-+	cat <<-EOF >expect1 &&
-+	M a.txt
-+	H b.txt
-+	H delete.txt
-+	H expect1
-+	H expect2
-+	EOF
-+	cat <<-EOF >expect2 &&
-+	C a.txt
-+	R delete.txt
-+	EOF
-+	git add a.txt b.txt delete.txt expect1 expect2 &&
-+	git commit -m master:1
-+'
-+
-+test_expect_success 'main commit again' '
-+	echo a>a.txt &&
-+	echo b>b.txt &&
-+	echo delete>delete.txt &&
-+	git add a.txt b.txt delete.txt &&
-+	git commit -m master:2
-+'
-+
-+test_expect_success 'dev commit' '
-+	git checkout HEAD~ &&
-+	git switch -c dev &&
-+	echo change>a.txt &&
-+	git add a.txt &&
-+	git commit -m dev:1
-+'
-+
-+test_expect_success 'dev merge master' '
-+	test_must_fail git merge master &&
-+	git ls-files -t --dedup >actual1 &&
-+	test_cmp expect1 actual1 &&
-+	rm delete.txt &&
-+	git ls-files -d -m -t --dedup >actual2 &&
-+	test_cmp expect2 actual2
-+'
-+
-+test_done
+        $ git bundle create <file> <input
+
+
+## Changes of v4
+
++ Refactor t6020.
+
+
+## Range diff of v3...v4
+
+1:  9df48434f3 ! 1:  0abad6486a bundle: lost objects when removing duplicate pendings
+    @@ t/t6020-bundle-misc.sh (new)
+     +
+     +. ./test-lib.sh
+     +
+    ++# Check count of objects in a bundle file.
+    ++# We can use "--thin" opiton to check thin pack, which must be fixed by
+    ++# command `git-index-pack --fix-thin --stdin`.
+     +test_bundle_object_count () {
+    ++	thin= &&
+    ++	if test "$1" = "--thin"
+    ++	then
+    ++		thin=yes
+    ++		shift
+    ++	fi &&
+    ++	if test $# -ne 2
+    ++	then
+    ++		echo >&2 "args should be: <bundle> <count>"
+    ++		return 1
+    ++	fi
+     +	bundle=$1 &&
+     +	pack=${bundle%.bdl}.pack &&
+     +	convert_bundle_to_pack <"$bundle" >"$pack" &&
+    -+	git index-pack "$pack" &&
+    -+	git verify-pack -v "$pack" >verify.out &&
+    -+	count=$(grep "^$OID_REGEX " verify.out | wc -l) &&
+    ++	if test -n "$thin"
+    ++	then
+    ++		test_must_fail git index-pack "$pack" &&
+    ++		mv "$pack" "$pack"-thin &&
+    ++		cat "$pack"-thin |
+    ++			git index-pack --stdin --fix-thin "$pack"
+    ++	else
+    ++		git index-pack "$pack"
+    ++	fi &&
+    ++	git verify-pack -v "$pack" >verify.out
+    ++	if test $? -ne 0
+    ++	then
+    ++		echo >&2 "error: fail to convert $bundle to $pack"
+    ++		return 1
+    ++	fi
+    ++	count=$(grep -c "^$OID_REGEX " verify.out) &&
+     +	test $2 = $count && return 0
+    -+	echo object count for $bundle is $count, not $2
+    -+	return 1
+    -+}
+    -+
+    -+
+    -+test_thin_bundle_object_count () {
+    -+	bundle=$1 &&
+    -+	pack=${bundle%.bdl}.pack &&
+    -+	convert_bundle_to_pack <"$bundle" |
+    -+		test_must_fail git index-pack --stdin "$pack" &&
+    -+	rm -f "$pack" &&
+    -+	convert_bundle_to_pack <"$bundle" |
+    -+		git index-pack --stdin --fix-thin "$pack" &&
+    -+	git verify-pack -v "$pack" >verify.out &&
+    -+	count=$(grep "^$OID_REGEX " verify.out | wc -l) &&
+    -+	test $2 = $count && return 0
+    -+	echo object count for $bundle is $count, not $2
+    ++	echo >&2 "error: object count for $bundle is $count, not $2"
+     +	return 1
+     +}
+     +
+    ++# Display the pack data contained in the bundle file, bypassing the
+    ++# header that contains the signature, prerequisites and references.
+     +convert_bundle_to_pack () {
+     +	while read x && test -n "$x"
+     +	do
+    @@ t/t6020-bundle-misc.sh (new)
+     +	cat
+     +}
+     +
+    ++# Create a commit or tag and set the variable with the object ID.
+    ++test_commit_setvar () {
+    ++	notick= &&
+    ++	signoff= &&
+    ++	indir= &&
+    ++	merge= &&
+    ++	tag= &&
+    ++	var= &&
+    ++	while test $# != 0
+    ++	do
+    ++		case "$1" in
+    ++		--merge)
+    ++			merge=yes
+    ++			;;
+    ++		--tag)
+    ++			tag=yes
+    ++			;;
+    ++		--notick)
+    ++			notick=yes
+    ++			;;
+    ++		--signoff)
+    ++			signoff="$1"
+    ++			;;
+    ++		-C)
+    ++			indir="$2"
+    ++			shift
+    ++			;;
+    ++		-*)
+    ++			echo >&2 "error: unknown option $1"
+    ++			return 1
+    ++			;;
+    ++		*)
+    ++			test -n "$var" && break
+    ++			var=$1
+    ++			;;
+    ++		esac
+    ++		shift
+    ++	done &&
+    ++	indir=${indir:+"$indir"/} &&
+    ++	if test $# -eq 0
+    ++	then
+    ++		echo >&2 "no args provided"
+    ++		return 1
+    ++	fi &&
+    ++	if test -z "$notick"
+    ++	then
+    ++		test_tick
+    ++	fi &&
+    ++	if test -n "$merge"
+    ++	then
+    ++		git ${indir:+ -C "$indir"} merge --no-edit --no-ff \
+    ++			${2:+-m "$2"} "$1" &&
+    ++		oid=$(git ${indir:+ -C "$indir"} rev-parse HEAD)
+    ++	elif test -n "$tag"
+    ++	then
+    ++		git ${indir:+ -C "$indir"} tag -m "$1" "$1" &&
+    ++		oid=$(git ${indir:+ -C "$indir"} rev-parse "$1")
+    ++	else
+    ++		file=${2:-"$1.t"} &&
+    ++		echo "${3-$1}" > "$indir$file" &&
+    ++		git ${indir:+ -C "$indir"} add "$file" &&
+    ++		git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
+    ++		oid=$(git ${indir:+ -C "$indir"} rev-parse HEAD)
+    ++	fi &&
+    ++	eval $var=$oid
+    ++}
+    ++
+    ++
+     +# Format the output of git commands to make a user-friendly and stable
+     +# text.  We can easily prepare the expect text without having to worry
+     +# about future changes of the commit ID and spaces of the output.
+     +make_user_friendly_and_stable_output () {
+     +	sed \
+    -+		-e "s/ *\$//" \
+    -+		-e "s/$A/<COMMIT-A>/g" \
+    -+		-e "s/$B/<COMMIT-B>/g" \
+    -+		-e "s/$C/<COMMIT-C>/g" \
+    -+		-e "s/$D/<COMMIT-D>/g" \
+    -+		-e "s/$E/<COMMIT-E>/g" \
+    -+		-e "s/$F/<COMMIT-F>/g" \
+    -+		-e "s/$G/<COMMIT-G>/g" \
+    -+		-e "s/$H/<COMMIT-H>/g" \
+    -+		-e "s/$I/<COMMIT-I>/g" \
+    -+		-e "s/$J/<COMMIT-J>/g" \
+    -+		-e "s/$K/<COMMIT-K>/g" \
+    -+		-e "s/$L/<COMMIT-L>/g" \
+    -+		-e "s/$M/<COMMIT-M>/g" \
+    -+		-e "s/$N/<COMMIT-N>/g" \
+    -+		-e "s/$O/<COMMIT-O>/g" \
+    -+		-e "s/$P/<COMMIT-P>/g" \
+    ++		-e "s/$A/<COMMIT-A>/" \
+    ++		-e "s/$B/<COMMIT-B>/" \
+    ++		-e "s/$C/<COMMIT-C>/" \
+    ++		-e "s/$D/<COMMIT-D>/" \
+    ++		-e "s/$E/<COMMIT-E>/" \
+    ++		-e "s/$F/<COMMIT-F>/" \
+    ++		-e "s/$G/<COMMIT-G>/" \
+    ++		-e "s/$H/<COMMIT-H>/" \
+    ++		-e "s/$I/<COMMIT-I>/" \
+    ++		-e "s/$J/<COMMIT-J>/" \
+    ++		-e "s/$K/<COMMIT-K>/" \
+    ++		-e "s/$L/<COMMIT-L>/" \
+    ++		-e "s/$M/<COMMIT-M>/" \
+    ++		-e "s/$N/<COMMIT-N>/" \
+    ++		-e "s/$O/<COMMIT-O>/" \
+    ++		-e "s/$P/<COMMIT-P>/" \
+    ++		-e "s/$TAG1/<TAG-1>/" \
+    ++		-e "s/$TAG2/<TAG-2>/" \
+    ++		-e "s/$TAG3/<TAG-3>/" \
+     +		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
+     +		-e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g" \
+     +		-e "s/$(echo $C | cut -c1-7)[0-9a-f]*/<OID-C>/g" \
+    @@ t/t6020-bundle-misc.sh (new)
+     +		-e "s/$(echo $N | cut -c1-7)[0-9a-f]*/<OID-N>/g" \
+     +		-e "s/$(echo $O | cut -c1-7)[0-9a-f]*/<OID-O>/g" \
+     +		-e "s/$(echo $P | cut -c1-7)[0-9a-f]*/<OID-P>/g" \
+    -+		-e "s/$TAG1/<TAG-1>/g" \
+    -+		-e "s/$TAG2/<TAG-2>/g" \
+    -+		-e "s/$TAG3/<TAG-3>/g" \
+     +		-e "s/$(echo $TAG1 | cut -c1-7)[0-9a-f]*/<OID-TAG-1>/g" \
+     +		-e "s/$(echo $TAG2 | cut -c1-7)[0-9a-f]*/<OID-TAG-2>/g" \
+     +		-e "s/$(echo $TAG3 | cut -c1-7)[0-9a-f]*/<OID-TAG-3>/g" \
+    -+		-e "s/$ZERO_OID/<ZERO-OID>/g"
+    ++		-e "s/ *\$//"
+     +}
+     +
+     +#            (C)   (D, pull/1/head, topic/1)
+    @@ t/t6020-bundle-misc.sh (new)
+     +# (A)   (B)  (E, tag:v1) (I)  (J)                  (K)       (O)   (P)
+     +#
+     +test_expect_success 'setup' '
+    -+	# commit A & B
+    -+	cat >main.txt <<-EOF &&
+    -+		Commit A
+    -+		EOF
+    -+	git add main.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit A" &&
+    ++	# Try to make a stable fixed width for abbreviated commit ID,
+    ++	# this fixed-width oid will be replaced with "<OID>".
+    ++	git config core.abbrev 7 &&
+     +
+    -+	cat >main.txt <<-EOF &&
+    -+		Commit B
+    -+		EOF
+    -+	git add main.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit B" &&
+    -+	A=$(git rev-parse HEAD~) &&
+    -+	B=$(git rev-parse HEAD) &&
+    ++	# branch main: commit A & B
+    ++	test_commit_setvar A "Commit A" main.txt &&
+    ++	test_commit_setvar B "Commit B" main.txt &&
+     +
+    -+	# branch topic/1
+    ++	# branch topic/1: commit C & D, refs/pull/1/head
+     +	git checkout -b topic/1 &&
+    -+	cat >topic-1.txt <<-EOF &&
+    -+		Commit C
+    -+		EOF
+    -+	git add topic-1.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit C" &&
+    -+
+    -+	cat >topic-1.txt <<-EOF &&
+    -+		Commit D
+    -+		EOF
+    -+	git add -u &&
+    -+	test_tick &&
+    -+	git commit -m "Commit D" &&
+    ++	test_commit_setvar C "Commit C" topic-1.txt &&
+    ++	test_commit_setvar D "Commit D" topic-1.txt &&
+     +	git update-ref refs/pull/1/head HEAD &&
+    -+	C=$(git rev-parse topic/1~) &&
+    -+	D=$(git rev-parse topic/1) &&
+     +
+    -+	# commit E
+    ++	# branch topic/1: commit E, tag v1
+     +	git checkout main &&
+    -+	cat >main.txt <<-EOF &&
+    -+		Commit E
+    -+		EOF
+    -+	git add main.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit E" &&
+    -+	E=$(git rev-parse HEAD) &&
+    -+	test_tick &&
+    -+	git tag -m "v1" v1 HEAD &&
+    -+	TAG1=$(git rev-parse refs/tags/v1) &&
+    -+
+    -+	# branch topic/2
+    -+	git checkout -b topic/2 &&
+    -+	cat >topic-2.txt <<-EOF &&
+    -+		Commit F
+    -+		EOF
+    -+	git add topic-2.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit F" &&
+    ++	test_commit_setvar E "Commit E" main.txt &&
+    ++	test_commit_setvar TAG1 --tag v1 &&
+     +
+    -+	cat >topic-2.txt <<-EOF &&
+    -+		Commit G
+    -+		EOF
+    -+	git add -u &&
+    -+	test_tick &&
+    -+	git commit -m "Commit G" &&
+    ++	# branch topic/2: commit F & G, refs/pull/2/head
+    ++	git checkout -b topic/2 &&
+    ++	test_commit_setvar F "Commit F" topic-2.txt &&
+    ++	test_commit_setvar G "Commit G" topic-2.txt &&
+     +	git update-ref refs/pull/2/head HEAD &&
+    ++	test_commit_setvar H "Commit H" topic-2.txt &&
+     +
+    -+	cat >topic-2.txt <<-EOF &&
+    -+		Commit H
+    -+		EOF
+    -+	git add -u &&
+    -+	test_tick &&
+    -+	git commit -m "Commit H" &&
+    -+	F=$(git rev-parse topic/2~2) &&
+    -+	G=$(git rev-parse topic/2~) &&
+    -+	H=$(git rev-parse topic/2) &&
+    -+
+    -+	# merge commit I & J
+    ++	# branch main: merge commit I & J
+     +	git checkout main &&
+    -+	test_tick &&
+    -+	git merge --no-ff --no-edit topic/1 &&
+    -+	test_tick &&
+    -+	git merge --no-ff --no-edit refs/pull/2/head &&
+    -+	I=$(git rev-parse HEAD~) &&
+    -+	J=$(git rev-parse HEAD) &&
+    -+
+    -+	# commit K
+    ++	test_commit_setvar I --merge topic/1 "Merge commit I" &&
+    ++	test_commit_setvar J --merge refs/pull/2/head "Merge commit J" &&
+    ++
+    ++	# branch main: commit K
+     +	git checkout main &&
+    -+	cat >main.txt <<-EOF &&
+    -+		Commit K
+    -+		EOF
+    -+	git add main.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit K" &&
+    -+	K=$(git rev-parse HEAD) &&
+    ++	test_commit_setvar K "Commit K" main.txt &&
+     +
+    -+	# branch release
+    ++	# branch release:
+     +	git checkout -b release &&
+    -+	cat >release.txt <<-EOF &&
+    -+		Commit L
+    -+		EOF
+    -+	git add release.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit L" &&
+    ++	test_commit_setvar L "Commit L" release.txt &&
+    ++	test_commit_setvar M "Commit M" release.txt &&
+    ++	test_commit_setvar TAG2 --tag v2 &&
+    ++	test_commit_setvar N "Commit N" release.txt &&
+    ++	test_commit_setvar TAG3 --tag v3 &&
+     +
+    -+	cat >release.txt <<-EOF &&
+    -+		Commit M
+    -+		EOF
+    -+	git add -u &&
+    -+	test_tick &&
+    -+	git commit -m "Commit M" &&
+    -+	test_tick &&
+    -+	git tag -m "v2" v2 HEAD &&
+    -+
+    -+	cat >release.txt <<-EOF &&
+    -+		Commit N
+    -+		EOF
+    -+	git add -u &&
+    -+	test_tick &&
+    -+	git commit -m "Commit N" &&
+    -+	test_tick &&
+    -+	git tag -m "v3" v3 HEAD &&
+    -+	L=$(git rev-parse HEAD~2) &&
+    -+	M=$(git rev-parse HEAD~) &&
+    -+	N=$(git rev-parse HEAD) &&
+    -+	TAG2=$(git rev-parse refs/tags/v2) &&
+    -+	TAG3=$(git rev-parse refs/tags/v3) &&
+    -+
+    -+	# merge commit O
+    -+	git checkout main &&
+    -+	test_tick &&
+    -+	git merge --no-ff --no-edit tags/v2 &&
+    -+	O=$(git rev-parse HEAD) &&
+    -+
+    -+	# commit P
+    ++	# branch main: merge commit O, commit P
+     +	git checkout main &&
+    -+	cat >main.txt <<-EOF &&
+    -+		Commit P
+    -+		EOF
+    -+	git add main.txt &&
+    -+	test_tick &&
+    -+	git commit -m "Commit P" &&
+    -+	P=$(git rev-parse HEAD)
+    ++	test_commit_setvar O --merge tags/v2 "Merge commit O" &&
+    ++	test_commit_setvar P "Commit P" main.txt
+     +'
+     +
+     +test_expect_success 'create bundle from special rev: main^!' '
+    @@ t/t6020-bundle-misc.sh (new)
+     +'
+     +
+     +test_expect_success 'create bundle with --since option' '
+    ++	since="Thu Apr 7 15:26:13 2005 -0700" &&
+    ++	git log -1 --pretty="%ad" $M >actual &&
+    ++	echo "$since" >expect &&
+    ++	test_cmp expect actual &&
+    ++
+     +	git bundle create since.bdl \
+    -+		--since "Thu Apr 7 15:26:13 2005 -0700" \
+    -+		--all &&
+    ++		--since "$since" --all &&
+     +
+     +	git bundle list-heads since.bdl |
+     +		make_user_friendly_and_stable_output >actual &&
+    @@ t/t6020-bundle-misc.sh (new)
+     +		EOF
+     +	test_i18ncmp expect actual &&
+     +
+    -+	test_thin_bundle_object_count since.bdl 16
+    ++	test_bundle_object_count --thin since.bdl 16
+     +'
+     +
+     +test_expect_success 'create bundle 1 - no prerequisites' '
+2:  86ad41e4d4 = 2:  48ef4aa44e bundle: arguments can be read from stdin
+
+--
+Jiang Xin (2):
+  bundle: lost objects when removing duplicate pendings
+  bundle: arguments can be read from stdin
+
+ bundle.c                | 111 ++++----
+ object.c                |  10 +-
+ t/t5607-clone-bundle.sh |   4 +-
+ t/t6020-bundle-misc.sh  | 546 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 614 insertions(+), 57 deletions(-)
+ create mode 100755 t/t6020-bundle-misc.sh
+
 -- 
-gitgitgadget
+2.30.0.2.g06d2f50715
+
