@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89660C4321A
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2CE9C43331
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C96823A7A
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA53523A7B
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728751AbhAHSSZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 13:18:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
+        id S1728723AbhAHSST (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 13:18:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728742AbhAHSSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:18:23 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F558C0612FF
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:18:05 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id 75so11124376ilv.13
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:18:05 -0800 (PST)
+        with ESMTP id S1728707AbhAHSSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 13:18:18 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FBFC0612A3
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:47 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id s6so4714412qvn.6
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=cqCXcF3s42aVhCLcgyqbKz+bbVfloj8Z9G3uiLc3txc=;
-        b=Qoca/PEjIUHZBmqW5Vg/kRWuimb65fZcWBiCEYUchcQl0D0428XGbqi6v7jMx4lsSG
-         LvVZFxyyjOZxH3CWJC6vQLkFqHC65eAVBFgncDU6XVeZoPrb45SOA+yqA+rFeEHecdpd
-         uaizIwASykYhK758iXrRm39duDqLoJcZuX62YEMB7aqwGE+vh6/uVPl8UEG7/RcG4rz5
-         38sbjXvMWEdptSzZlNrhrztYKlMfr2H77Ioda1DXkJFvcPbVumIIqAfF+rPBjT3FMvd2
-         uptE1w1CL/fyOdLhZe7IpfYECQxPMXhK4rqPchWfOLJ9wqWeqh29t4O4oz8gi9cARvO1
-         ejJQ==
+        bh=HoRaU13iduWPn49awvL3lquMnX6J2oADKyWbLdNdiyg=;
+        b=tZAvqsVJixYLyjyFPYafjMbD+QDjzjtpr1ELOTXN+rFgKu0F3Uo7sg2iRfPJi1O1lW
+         Co3rU2+SoFmWzCTCIHqDCA/qPzxrC51XYwmhaMnjjSM9L26C8wLCgv9vrtckYhOx9a2b
+         qEJz+XWTeV6SFF8N/IO+FjxwYC3rTwfVMpro2tNk3ULCBr1okBql1s7yJccXuzd1OxvC
+         Op8vvWgIgtCzspYE/46iJwKVNC5Sjnm2wxBfYtvCYje0o6/edOjzapSd3QwP8t1F5a27
+         NN4Fj2TDPDg5OFlkpbRvAwMsqxKI1GKDr9o191GtMKx5zvGcQwBbdiObg8LI7u+w0iYD
+         fCXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=cqCXcF3s42aVhCLcgyqbKz+bbVfloj8Z9G3uiLc3txc=;
-        b=rwTyPkj1fpDeWqSuvyPlTOVX1LorL9RsUdauQEyY21kWndOOdtdn324f/w0y+qHCt0
-         s1SWo20MprN2LeC3sA/KaRTeWBS5ASHIfAEDGuS+p4/wNr0tOaMUYvQx19xr4Crs3RSu
-         tKnVmvpvVIPjl3WpYHaxzTeaq03wE0+DOX9m6ckyyO/Cslnugw8hysTIm8zuZUMc75lG
-         LXl0jIYCCvSiMjjJ7PAiAHN9chQa6Wqy0yEQhAhHYhsIdCF9V6CqsGYWT92v+IQ0QhGC
-         qbhpLObExU+gOUnyVH37h0UvonI8ikK7gKEReya+aCxQj2ZM8igmb9OMWF2OD8SnQM8o
-         dH6Q==
-X-Gm-Message-State: AOAM532Yre8AEN2ZijrCl6bTqflNBNWjt/dm7rcV6klnJxQmpx1wxRLU
-        CEXzHtcybHXWEU2NC5ZCPtElDj47+0JpMA==
-X-Google-Smtp-Source: ABdhPJxXye+6mr6ZXetxf9HjK1MpPQhjucBFC77D3pxMp7otH8G+yLtO9Uh8+6c5G/kk1Hq4TMsAjQ==
-X-Received: by 2002:a05:6e02:1a82:: with SMTP id k2mr5053226ilv.164.1610129884252;
-        Fri, 08 Jan 2021 10:18:04 -0800 (PST)
+        bh=HoRaU13iduWPn49awvL3lquMnX6J2oADKyWbLdNdiyg=;
+        b=aPsVlMy3ZENd2ptEFOs6OA/uSNHMN45ro5hzVPiD6zqNKLRF4NV2aECEN7cz1g+Apu
+         hczFrbLvL4ddOvxm68nM1oE/VtugadaIYVwfdMzIsbqL19fx/pYmJ85jqKeO2DQKAEC5
+         +t5+yFILSCsxmi64a2Hs5LPxkSYV+q0+N1ExP3kVVdXnEJmKRnVVwWz/DpeW6BuNRoCQ
+         pu5VFXNqAUWZqM8K7TjH06i/o3X1mDhysgSde5FrL4E1Rz/VaKMElQVGK/Zy1zUo84TC
+         AuWhTTh+M80R6Tb0fJF9wJ2HYhB5QbxFN1ckZlBC4J5a4cHyT2CIOccG+7um7vx022DQ
+         bcVQ==
+X-Gm-Message-State: AOAM530RywgByHo4aJU66ey0Rbt2c7fQJqftRu+mIWTejJ5l8VhraOB6
+        d6B7uvQxs47LI/JThwhI4ScG7+rDcZurpg==
+X-Google-Smtp-Source: ABdhPJz3AFYuQfVUcuBojQM6IuumVFIarupt6I1fC8le6B7Hocxy+bN9B5FmEy7/5KsXQRXQITLy5g==
+X-Received: by 2002:a0c:b4d1:: with SMTP id h17mr4757511qvf.53.1610129866305;
+        Fri, 08 Jan 2021 10:17:46 -0800 (PST)
 Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id 15sm7487952ilx.84.2021.01.08.10.18.03
+        by smtp.gmail.com with ESMTPSA id w33sm4994459qth.34.2021.01.08.10.17.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 10:18:03 -0800 (PST)
-Date:   Fri, 8 Jan 2021 13:18:01 -0500
+        Fri, 08 Jan 2021 10:17:45 -0800 (PST)
+Date:   Fri, 8 Jan 2021 13:17:43 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@gmail.com
-Subject: [PATCH 19/20] pack-revindex: hide the definition of 'revindex_entry'
-Message-ID: <7c0e4acc845d1135e684188b2ccc61cf358994dc.1610129796.git.me@ttaylorr.com>
+Subject: [PATCH 15/20] for_each_object_in_pack(): convert to new revindex API
+Message-ID: <a3249986f9ab935825bc37e1bf980e44532700ae.1610129796.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,48 +70,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now that all spots outside of pack-revindex.c that reference 'struct
-revindex_entry' directly have been removed, it is safe to hide the
-implementation by moving it from pack-revindex.h to pack-revindex.c.
+Avoid looking at the 'revindex' pointer directly and instead call
+'pack_pos_to_index()'.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-revindex.c | 5 +++++
- pack-revindex.h | 5 -----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ packfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 9392c4be73..36ef276378 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -3,6 +3,11 @@
- #include "object-store.h"
- #include "packfile.h"
+diff --git a/packfile.c b/packfile.c
+index 34467ea4a3..46c9c7ea3c 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2082,7 +2082,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ 		struct object_id oid;
  
-+struct revindex_entry {
-+	off_t offset;
-+	unsigned int nr;
-+};
-+
- /*
-  * Pack index for existing packs give us easy access to the offsets into
-  * corresponding pack file where each object's data starts, but the entries
-diff --git a/pack-revindex.h b/pack-revindex.h
-index b5dd114fd5..b501a7cd62 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -3,11 +3,6 @@
+ 		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
+-			pos = p->revindex[i].nr;
++			pos = pack_pos_to_index(p, i);
+ 		else
+ 			pos = i;
  
- struct packed_git;
- 
--struct revindex_entry {
--	off_t offset;
--	unsigned int nr;
--};
--
- int load_pack_revindex(struct packed_git *p);
- 
- int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos);
 -- 
 2.30.0.138.g6d7191ea01
 
