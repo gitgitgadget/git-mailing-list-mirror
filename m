@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2CE9C43331
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6571C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:19:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA53523A7B
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 834DF23A7B
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728723AbhAHSST (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 13:18:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33980 "EHLO
+        id S1728333AbhAHSSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 13:18:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728707AbhAHSSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:18:18 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FBFC0612A3
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:47 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id s6so4714412qvn.6
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:47 -0800 (PST)
+        with ESMTP id S1728317AbhAHSSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 13:18:43 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB98FC0612A6
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:55 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id c14so7190369qtn.0
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=HoRaU13iduWPn49awvL3lquMnX6J2oADKyWbLdNdiyg=;
-        b=tZAvqsVJixYLyjyFPYafjMbD+QDjzjtpr1ELOTXN+rFgKu0F3Uo7sg2iRfPJi1O1lW
-         Co3rU2+SoFmWzCTCIHqDCA/qPzxrC51XYwmhaMnjjSM9L26C8wLCgv9vrtckYhOx9a2b
-         qEJz+XWTeV6SFF8N/IO+FjxwYC3rTwfVMpro2tNk3ULCBr1okBql1s7yJccXuzd1OxvC
-         Op8vvWgIgtCzspYE/46iJwKVNC5Sjnm2wxBfYtvCYje0o6/edOjzapSd3QwP8t1F5a27
-         NN4Fj2TDPDg5OFlkpbRvAwMsqxKI1GKDr9o191GtMKx5zvGcQwBbdiObg8LI7u+w0iYD
-         fCXA==
+        bh=vCuddtAjGaCy9Blc34YzMVmKVBD1Y4MOb555wFeIH2Q=;
+        b=Eo0TTAXW9XDtd1S9Jjqp+zUL4lWS2JA34VlflkaccsmtzQZhg4Iq0sCEYQPEIyhkVJ
+         9JKi/hDA3vqeaqGULliB5dIzX1qVMdVycEg/iJ4Tfs0DsEOwFSzbqwHZlLLcUhnPQsMl
+         OJDv4uueT3hKfQG8TAsjHJd7H9xodoBNpfCrp9hGfvL4hVQPf4aed0tLLXK5jkF32ZgP
+         2tWGsVeQq2X8wiuSaVP6EqyjwQ9U9mhTdNocv38ZNrg5NcWEdLgv2itJgkDN36LlYAaj
+         9Fa4658xCbaTHVLEi/n5sYTrZ37Qa9dJIe6jx9xu8QT0LaMsUON89X0TOzX6PoSYhpsZ
+         fHsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=HoRaU13iduWPn49awvL3lquMnX6J2oADKyWbLdNdiyg=;
-        b=aPsVlMy3ZENd2ptEFOs6OA/uSNHMN45ro5hzVPiD6zqNKLRF4NV2aECEN7cz1g+Apu
-         hczFrbLvL4ddOvxm68nM1oE/VtugadaIYVwfdMzIsbqL19fx/pYmJ85jqKeO2DQKAEC5
-         +t5+yFILSCsxmi64a2Hs5LPxkSYV+q0+N1ExP3kVVdXnEJmKRnVVwWz/DpeW6BuNRoCQ
-         pu5VFXNqAUWZqM8K7TjH06i/o3X1mDhysgSde5FrL4E1Rz/VaKMElQVGK/Zy1zUo84TC
-         AuWhTTh+M80R6Tb0fJF9wJ2HYhB5QbxFN1ckZlBC4J5a4cHyT2CIOccG+7um7vx022DQ
-         bcVQ==
-X-Gm-Message-State: AOAM530RywgByHo4aJU66ey0Rbt2c7fQJqftRu+mIWTejJ5l8VhraOB6
-        d6B7uvQxs47LI/JThwhI4ScG7+rDcZurpg==
-X-Google-Smtp-Source: ABdhPJz3AFYuQfVUcuBojQM6IuumVFIarupt6I1fC8le6B7Hocxy+bN9B5FmEy7/5KsXQRXQITLy5g==
-X-Received: by 2002:a0c:b4d1:: with SMTP id h17mr4757511qvf.53.1610129866305;
-        Fri, 08 Jan 2021 10:17:46 -0800 (PST)
+        bh=vCuddtAjGaCy9Blc34YzMVmKVBD1Y4MOb555wFeIH2Q=;
+        b=iyx3OHjYrjLgSAmlf4p+fQxJZV0A6lPW3/3WpGVzyhsz2kndbxv6TZfalZ/Ct6qCsE
+         3ELiP/71y1KNzYfftk/tuQ2gpXdnXwxYdCaomoaiMHSJWdeMDg6xz/HSDENmfIDF3xa8
+         uZxEG1WkoXFpAXohdiekGfdzqolnAlrXzQrbef5kwbvY94nnjuZtXtaQw9jGaTbh9Rm1
+         SkbrsgTg4iPEuyyyGUm+S6+NdYFT7KpHRGGMenNHoMkhAXTdT4TwCslKSllIrg6/SzCT
+         AjqDiOAUd3RmRc4Gte0zd2VGqeUexdAjKWBSlxOjjDoQr/n+/TCHSxasFd5gj1p++JiG
+         jlcA==
+X-Gm-Message-State: AOAM532IZQrp2mkoaXfI82cZ+fId+f9S8JWvtbXpNEAJPBMt0QWAGCCc
+        onSAR0WGp1ljlZbAzI3xvbokFFaJ7Nx8Sw==
+X-Google-Smtp-Source: ABdhPJxrkbTkRAyXH3ZtkWUnqCabMqOEbnBgG325rwSikA38JGD9tGOOeOfVK5GTb3FV0I20OU3tdw==
+X-Received: by 2002:a05:622a:201:: with SMTP id b1mr4532527qtx.237.1610129874884;
+        Fri, 08 Jan 2021 10:17:54 -0800 (PST)
 Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id w33sm4994459qth.34.2021.01.08.10.17.45
+        by smtp.gmail.com with ESMTPSA id b6sm4900647qkc.128.2021.01.08.10.17.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 10:17:45 -0800 (PST)
-Date:   Fri, 8 Jan 2021 13:17:43 -0500
+        Fri, 08 Jan 2021 10:17:54 -0800 (PST)
+Date:   Fri, 8 Jan 2021 13:17:52 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@gmail.com
-Subject: [PATCH 15/20] for_each_object_in_pack(): convert to new revindex API
-Message-ID: <a3249986f9ab935825bc37e1bf980e44532700ae.1610129796.git.me@ttaylorr.com>
+Subject: [PATCH 17/20] pack-revindex: remove unused 'find_pack_revindex()'
+Message-ID: <c4c88bcc3da6c0a7e28b82e0558a44195403fe25.1610129796.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,27 +70,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid looking at the 'revindex' pointer directly and instead call
-'pack_pos_to_index()'.
+Now that no callers of 'find_pack_revindex()' remain, remove the
+function's declaration and implementation entirely.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- packfile.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-revindex.c | 15 ---------------
+ pack-revindex.h |  2 --
+ 2 files changed, 17 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 34467ea4a3..46c9c7ea3c 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2082,7 +2082,7 @@ int for_each_object_in_pack(struct packed_git *p,
- 		struct object_id oid;
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 6d86a85208..4e42238906 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -189,21 +189,6 @@ int find_revindex_position(struct packed_git *p, off_t ofs)
+ 	return -1;
+ }
  
- 		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
--			pos = p->revindex[i].nr;
-+			pos = pack_pos_to_index(p, i);
- 		else
- 			pos = i;
+-struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs)
+-{
+-	int pos;
+-
+-	if (load_pack_revindex(p))
+-		return NULL;
+-
+-	pos = find_revindex_position(p, ofs);
+-
+-	if (pos < 0)
+-		return NULL;
+-
+-	return p->revindex + pos;
+-}
+-
+ int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
+ {
+ 	int ret;
+diff --git a/pack-revindex.h b/pack-revindex.h
+index 256c0a9106..07c1a7a3c8 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -11,8 +11,6 @@ struct revindex_entry {
+ int load_pack_revindex(struct packed_git *p);
+ int find_revindex_position(struct packed_git *p, off_t ofs);
  
+-struct revindex_entry *find_pack_revindex(struct packed_git *p, off_t ofs);
+-
+ int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos);
+ uint32_t pack_pos_to_index(struct packed_git *p, uint32_t pos);
+ off_t pack_pos_to_offset(struct packed_git *p, uint32_t pos);
 -- 
 2.30.0.138.g6d7191ea01
 
