@@ -4,110 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16FA4C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF4DC43381
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E95CF23884
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E24E238A1
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 14:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727525AbhAHOh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 09:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56094 "EHLO
+        id S1727569AbhAHOh7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 09:37:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbhAHOh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 09:37:57 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF99BC06129C
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:36:42 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d13so9175091wrc.13
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:36:42 -0800 (PST)
+        with ESMTP id S1726858AbhAHOh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 09:37:59 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CEDC06129E
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 06:36:43 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r3so9249079wrt.2
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 06:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IplanKWoNuYpePttOBjIqsk7GiwWzSbEGRv5in1w3Ao=;
-        b=keA51QhwrwkrGZYUWkiywztlEoTsIrWDZwQxHStXqUe4byGKw4Zn2kHkHn3K976tQM
-         PVofQJ0DQte8SJ3gU3nR5/l7E61xdE8YGYS31zqeKQk/vWnHetw72Y5EhrsRT/sng03G
-         i15HyCH9Stb78NOIdPNEdyB/O5avqQYkSOqWLnk+bVjHRagTlAnBr1vtrB90Hhczn3A2
-         PenNYPsDdHhMaJw6leZaiIWkjOsqxy5U2ODWRkdObvRY/eqBaEC9Tg7xDaUpkykJm11t
-         iJiQwqqzwY6dHMZhdqwxj0CoZRorl2zc//iu3rrhrk3d5zzFKTUBUUzX5ygc53ep99hC
-         /uxA==
+        bh=CExMPGt4R59wKj4DHc15d0hNgAEd8il/FaYm8Jgf0Ns=;
+        b=osrRYN8xFrp/aLzpTlG0kWODRHrHJa+vhx85nsVJji0vWIipBa37KGVblaumtC7QPD
+         XHOBl5UyP75FyBaJrhGQNDux993QNJK3mbP7JApLq1orFponaq3hVPGmi2+vaP/uwzpZ
+         48M2JA4OKG5mHCWmDqh6sx2IuBdpnU5cEclt4qBjVANWWI6EJ0GFbHHDunN9pqpsiGqg
+         TOc/YrJGCeQbOqEZFCdTccphuWDG9CBReGfwSt53YvMdOKjYIXQrFN70HGmV5H0HAD9C
+         dw0AFrVlR79RRjTUloFXpXbhvMsA1HRApxN+tfOV0r07TKY0oxqpx5H1Ipj7xBzO+mtY
+         zgXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IplanKWoNuYpePttOBjIqsk7GiwWzSbEGRv5in1w3Ao=;
-        b=Dn0l0PXFF803aw4G3E4P4wYy8QKf1GDrgBAJq7cZIml2Odh2YjEdX/uFnAXempC6cM
-         HuSmSazCizXUXwGh5ByUREgydzRcmKhbNemjU//j1ppaXx6dVLHTa+hO+drTLuMysOpX
-         6zXheQCCJ9tPBcM3RDfxw01fqmA+dIqEABOS5iy3r3s6h4ttv21zRwZ/kuOQONJ2zvNi
-         IoKqb1d6btqPhWeTROY3Yv+5G7qFJ/4h0AbJSoGN3z9R21NbbPePBoVo1HCl5+MfVUvx
-         jddHLr14/5DYcordeUCFRuznhe2AsPxeTFgVSEevg+M1BkWh/Sc42HYY+tPxtprXBHui
-         9AOA==
-X-Gm-Message-State: AOAM530JTrjJoaWPrGQg6nUn2rRQ1n2O/jb0zFu6RBm/1RgBD5frrWmQ
-        1e/0mIwZjnx4CqGxyTUOo0lcKXoKhZE=
-X-Google-Smtp-Source: ABdhPJwvvROeSloFfbtnrIN4v9+29JY9RZM35ruI2oDFrFEBbc2miV1BQ40bnYdwmtxMOBqVm9CIZQ==
-X-Received: by 2002:a5d:6884:: with SMTP id h4mr3975256wru.174.1610116601240;
-        Fri, 08 Jan 2021 06:36:41 -0800 (PST)
+        bh=CExMPGt4R59wKj4DHc15d0hNgAEd8il/FaYm8Jgf0Ns=;
+        b=lIkPMJdcnAtT4IXPr7FvzG0cz0yZWj/4YFEamPV7+I3SHvW2UqRoI8jQOepkoYi/1r
+         sfS90KJsBoqd/EBNSVFjBXE4gDayEZQiE+VNNwA04LNptXKtIdL7PGTqEEYCUNszRymD
+         FIa9JE8lphK8has1Ig9B3cutgXaFMOJeFGcIMRMenhF7k6KP57w1BoUY7a8P0GfxJpk/
+         y1WvQU3jN5es2GYe3pO6g5/vcq7fxyNy2CFwb2o9jN78xA4oVi2bahRM54kHcmKS36iU
+         uuNQPXHzndZ87RV+ExTzrQtURfFtRfr5vI3iLak4o0yQisMXTT8mssXDuTzQOI1ks/Ew
+         /akA==
+X-Gm-Message-State: AOAM532ey81uyhiqdKLxC2KXHz1rBkGxYTz338ZRQlHZsDA81xONGcLp
+        /aArOnjUWSp1P8oFAESijmYEql9eZDs=
+X-Google-Smtp-Source: ABdhPJxQldpfLUJ9MBbbRFl1mw9OuU/crD1Q7UFUBKqIe4naS0njViHx2eq5SUIASe4pgXkWnN0GSg==
+X-Received: by 2002:a5d:6206:: with SMTP id y6mr4077005wru.413.1610116602179;
+        Fri, 08 Jan 2021 06:36:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l7sm12073490wme.4.2021.01.08.06.36.40
+        by smtp.gmail.com with ESMTPSA id r2sm13827447wrn.83.2021.01.08.06.36.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 06:36:40 -0800 (PST)
-Message-Id: <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
-In-Reply-To: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
+        Fri, 08 Jan 2021 06:36:41 -0800 (PST)
+Message-Id: <0261e5d245ef0a5b9a717be1bc03492d7bc06c5e.1610116600.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
 References: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
-From:   "=?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Fri, 08 Jan 2021 14:36:37 +0000
-Subject: [PATCH v2 0/2] builtin/ls-files.c:add git ls-file --dedup option
+        <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 08 Jan 2021 14:36:38 +0000
+Subject: [PATCH v2 1/2] builtin/ls-files.c:add git ls-file --dedup option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>
+        =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am reading the source code of git ls-files and learned that git ls -files
-may have duplicate entries when conflict occurs in a branch merge or when
-different options are used at the same time. Users may fell confuse when
-they see these duplicate entries.
+From: ZheNing Hu <adlternative@gmail.com>
 
-As Junio C Hamano said ,it have odd behaviour.
+1.When we use git ls-files with both -m -d,
+we would find that repeated path,sometimes
+it is confusing.
+2.When we are performing a branch merge,
+ the default git ls-files will also output
+ multiple repeated file names.
+Therefore, I added the --dedup option to git ls-files.
+1. It can be achieved that only the deleted file name
+is displayed when using -m, -d, and --dedup at the same time.
+2. Add --dedup when merging branches to remove duplicate file
+ names. (unless -s, -u are used)
 
-Therefore, we can provide an additional option to git ls-files to delete
-those repeated information.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ builtin/ls-files.c | 43 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
 
-This fixes https://github.com/gitgitgadget/git/issues/198
-
-Thanks!
-
-ZheNing Hu (2):
-  builtin/ls-files.c:add git ls-file --dedup option
-  builtin:ls-files.c:add git ls-file --dedup option
-
- Documentation/git-ls-files.txt |  4 +++
- builtin/ls-files.c             | 41 ++++++++++++++++++++--
- t/t3012-ls-files-dedup.sh      | 63 ++++++++++++++++++++++++++++++++++
- 3 files changed, 105 insertions(+), 3 deletions(-)
- create mode 100755 t/t3012-ls-files-dedup.sh
-
-
-base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-832%2Fadlternative%2Fls-files-dedup-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-832/adlternative/ls-files-dedup-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/832
-
-Range-diff vs v1:
-
- 1:  0261e5d245e = 1:  0261e5d245e builtin/ls-files.c:add git ls-file --dedup option
- -:  ----------- > 2:  a09a5098aa6 builtin:ls-files.c:add git ls-file --dedup option
-
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index c8eae899b82..66a7e251a46 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -35,6 +35,7 @@ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
+ static int recurse_submodules;
++static int delete_dup;
+ 
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -301,6 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ {
+ 	int i;
+ 	struct strbuf fullname = STRBUF_INIT;
++	const struct cache_entry *last_stage=NULL;
+ 
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+@@ -315,7 +317,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 	if (show_cached || show_stage) {
+ 		for (i = 0; i < repo->index->cache_nr; i++) {
+ 			const struct cache_entry *ce = repo->index->cache[i];
+-
++			if(show_cached && delete_dup){
++				switch (ce_stage(ce)) {
++				case 0:
++				default:
++					break;
++				case 1:
++				case 2:
++				case 3:
++					if (last_stage &&
++					!strcmp(last_stage->name, ce->name))
++						continue;
++					last_stage=ce;
++				}
++			}
+ 			construct_fullname(&fullname, repo, ce);
+ 
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+@@ -336,7 +351,20 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 			const struct cache_entry *ce = repo->index->cache[i];
+ 			struct stat st;
+ 			int err;
+-
++			if(delete_dup){
++				switch (ce_stage(ce)) {
++				case 0:
++				default:
++					break;
++				case 1:
++				case 2:
++				case 3:
++					if (last_stage &&
++					!strcmp(last_stage->name, ce->name))
++						continue;
++					last_stage=ce;
++				}
++			}
+ 			construct_fullname(&fullname, repo, ce);
+ 
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+@@ -347,10 +375,14 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 			if (ce_skip_worktree(ce))
+ 				continue;
+ 			err = lstat(fullname.buf, &st);
+-			if (show_deleted && err)
++			if(delete_dup && show_deleted && show_modified && err)
+ 				show_ce(repo, dir, ce, fullname.buf, tag_removed);
+-			if (show_modified && ie_modified(repo->index, ce, &st, 0))
+-				show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			else{
++				if (show_deleted && err)/* you can't find it,so it's actually removed at all! */
++					show_ce(repo, dir, ce, fullname.buf, tag_removed);
++				if (show_modified && ie_modified(repo->index, ce, &st, 0))
++					show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			}
+ 		}
+ 	}
+ 
+@@ -578,6 +610,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			N_("pretend that paths removed since <tree-ish> are still present")),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
++		OPT_BOOL(0, "dedup", &delete_dup, N_("delete duplicate entry in index")),
+ 		OPT_END()
+ 	};
+ 
 -- 
 gitgitgadget
+
