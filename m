@@ -2,129 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B4EDC433E0
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6F22C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:52:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 663FC23AC1
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:11:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A707623A80
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 20:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728960AbhAHUKs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 15:10:48 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63579 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728591AbhAHUKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 15:10:48 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0919106930;
-        Fri,  8 Jan 2021 15:10:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=M4PRx3TKohNn
-        F2T/tKbueCDLZVM=; b=woPXdbw4K22kDoM9oRz+9AuEURfCLYqXemeYThbYBCS/
-        mkkHDADfK+WsEgSfWDvP4OdmYPxrR+xg3paMqJs00G80HUEwJQY8xJDeNWbmqDMZ
-        m/w4FsLE/nIe7oHsz61ZF2zSKbgESpzufJdbEe7BjYWGahzPHRadICay4dJlXjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Vqwdq7
-        VLa9PFLvT6x7BSZaseiiJJVp1t8DLevo5LNi4To7gKSozbSLXEJnp/+Rcsu8kDgW
-        mU3NZURQ6v3gPgDDgsZfdiqs1BiJ4St83wGtSS1FYy0Xckr/wshJ/YgvSD1hBUIV
-        Zp6GcFOsuNzZ+z6SdPqKNGPdu7r2tE+W7co2Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 96FD010692F;
-        Fri,  8 Jan 2021 15:10:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 94B7F106929;
-        Fri,  8 Jan 2021 15:10:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t7800-difftool: don't accidentally match tmp dirs
-References: <20201224092431.13354-1-szeder.dev@gmail.com>
-        <xmqq35zdnu1w.fsf@gitster.c.googlers.com>
-        <20210108092036.GR8396@szeder.dev>
-Date:   Fri, 08 Jan 2021 12:10:00 -0800
-In-Reply-To: <20210108092036.GR8396@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Fri, 8 Jan 2021 10:20:36 +0100")
-Message-ID: <xmqq1revi413.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729061AbhAHUwQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 15:52:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58134 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728222AbhAHUwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 15:52:15 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 337E1C061380
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 12:51:35 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id 9so12829205oiq.3
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 12:51:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qNvEI0tJ0zWJQx0WsRHwONvn/99wSDQoT5RlcI1qHcg=;
+        b=GKTl6LrMvxmbGCsVoUkAbs3IFBAliV75tAK1x98FaBNM7wajtAJAk5zpynnHBtymYr
+         Web8Eut7Hfw7nZOWnEZ750EI2cM9ubrqEUdx9TDjMlx/myonj6IqAYxJAf6HrJTCUFpV
+         GaB1nCt0j3+krqERnarC6cejB/mqVxxm5eyMM9ZtDvgT/jHWwm6eU5fwfrB4T2Jv6nmm
+         Gu5bFpIjtmwwdLYQ6KntaCQwkv2n8BikqWqct6AqN09HukcTmiM8Egz1ZNZDtwzTlEYu
+         igOMzJouE39XAeMKblDSz/5Tdjbhjh99jZYwutkCzw1vL5OfwcDey3QWoSOHGrNNe7pB
+         zZVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=qNvEI0tJ0zWJQx0WsRHwONvn/99wSDQoT5RlcI1qHcg=;
+        b=d6bC0DloY4mmKT9NounSLJaOnDZ5edxaizw8LcUrVnhMct1Nuxj6q5rWigqmgfwBUN
+         ZFaRqkjB8QyXp4UUgpb09Hp/CKc7svrVC/ExTI1LDhW/qbwNR1dD3aw8Cu/q3YD50yus
+         PJAv4iM594tDRbzCiBjICKlMVpkqpUEktmSlX7OFW/jIA87rnCo0KOS51o+/n9U3MayY
+         tI/DkJqhYLp8iDBSucpDTLl7u8tGsQkUMLLwwTAfJn0kKPqhyl+2PxkSaxlnV149tzrA
+         XBFSegkAsLSoIs07UdD7L8dhhpfiXK14v/Xc+y8Ay30wVNuZXkOl+MhoNIqDsxHD7kH7
+         qvrQ==
+X-Gm-Message-State: AOAM531Ea58aCIT21tFkFV/oRXbNml4wV9bxZ31eUaogBrxHVCmageJ7
+        niK8AcN/VquT3Gnj3rD+TXpOw+ZMpfc=
+X-Google-Smtp-Source: ABdhPJygybIL6BqGOSVXcY8hTx8C+Bj8b/HI2huPdPYRBGC4ajlUfJs8/olwvcki4h2P60rK2mBONA==
+X-Received: by 2002:a54:4899:: with SMTP id r25mr3403493oic.28.1610139094303;
+        Fri, 08 Jan 2021 12:51:34 -0800 (PST)
+Received: from tiger.attlocal.net ([2600:1700:bae0:2de0::26])
+        by smtp.gmail.com with ESMTPSA id j10sm2018817otn.63.2021.01.08.12.51.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 12:51:33 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/1] And so it begins...merge/rename performance work
+Date:   Fri,  8 Jan 2021 12:51:10 -0800
+Message-Id: <20210108205111.2197944-1-newren@gmail.com>
+X-Mailer: git-send-email 2.29.2.542.g6f8bc064c5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7DE5DAC2-51ED-11EB-ABDC-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+This depends on a merge of en/ort-conflict-handling, en/diffcore-rename,
+and en/ort-directory-rename.
 
-> On Wed, Jan 06, 2021 at 10:24:27PM -0800, Junio C Hamano wrote:
->> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->>=20
->> > diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
->> > index a578b35761..fe02fe1688 100755
->> > --- a/t/t7800-difftool.sh
->> > +++ b/t/t7800-difftool.sh
->> > @@ -439,73 +439,104 @@ run_dir_diff_test () {
->> >  }
->> > =20
->> >  run_dir_diff_test 'difftool -d' '
->> > +	cat >expect <<-\EOF &&
->> > +	file
->> > +	file2
->> > +
->> > +	file
->> > +	file2
->> > +	sub
->> > +	EOF
->> >  	git difftool -d $symlinks --extcmd ls branch >output &&
->> > -	grep sub output &&
->> > -	grep file output
->> > +	grep -v ^/ output >actual &&
->>=20
->> This unfortunately would not catch full paths on certain platforms.
->>=20
->> See https://github.com/git/git/runs/1660588243?check_suite_focus=3Dtru=
-e#step:7:4186
->> for an example X-<.
->
-> Hrm, one has to log in to view those CI logs?  Really?! :(
+This series begins the performance work for merge-ort and
+diffcore-rename.  This series only has one patch and all it does is add
+trace2_region enter/leave pairs -- but it comes with a lengthy commit
+message detailing my driving testcases, the current status, and my
+plans.  Part of the point of the lengthy testcase description is it will
+allow me to repeatedly refer to it in subsequent series' commit messages
+with a paragraph of the form:
 
-Yup, it sucks.  I am curious (but not strongly interested enough to
-demand) to learn the reason why from GitHub folks.
+    For the testcases mentioned in commit 9542932eee ("merge-ort: begin
+    performance work; instrument with trace2_region_* calls", 2020-10-28),
+    this change improves the performance as follows:
+    
+                                  Before                  After
+          no-renames:       12.975 s ±  0.037 s    12.904 s ±  0.069 s
+          mega-renames:   5154.338 s ± 19.139 s  1670.582 s ±  0.904 s
+          just-one-mega:   146.703 s ±  0.852 s    48.149 s ±  0.306 s
 
-> Anyway, I (apparently falsely) assumed that the output these tests
-> look at come from Git itself, and therefore we can rely on difftool's
-> temporary directories being normalized UNIX-style absolute paths...
-> But it seems they don't actually come from Git but from 'ls', because
-> that's what those '--extcmd ls' options do, and I now going to assume
-> that 'ls' prints those absolute paths with drive letter prefixes and
-> whatnot on Windows.
->
-> The initial version of this patch just tightened all potentially
-> problematic 'grep' patterns, e.g. 'grep ^sub$ output && grep ^file$
-> output'.  That should work on Windows as well, shouldn't it.  Will see
-> whether I can dig it out from the reflogs.
 
-I only see 'file', 'file2', 'b', 'c', etc. used in the tests; do we
-ever use any path that ends with a colon?
+Elijah Newren (1):
+  merge-ort: begin performance work; instrument with trace2_region_*
+    calls
 
-I wonder if would it be more robust to use something like
+ diffcore-rename.c |  8 +++++++
+ merge-ort.c       | 57 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
 
-	sed -e 's|^.*/\([a-z]*\)/:$|/directory-path-\1/:|'
+-- 
+2.29.1.107.g69489f3566
 
-in place of "grep -v /" to redact the temporary directory names
-difftool creates.  It would give you /directory-path-left/: or
-/directory-path-right/: instead of removing these lines and it would
-clarify what these two series of file names are, which may be an
-added bonus.
