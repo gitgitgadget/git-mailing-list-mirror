@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71EDBC4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5D31C4332E
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4881F23A7A
+	by mail.kernel.org (Postfix) with ESMTP id 9BC3423A7A
 	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 18:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728716AbhAHSSR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 13:18:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34028 "EHLO
+        id S1728725AbhAHSST (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 13:18:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728707AbhAHSSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 13:18:16 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C8EFC0612EA
-        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:34 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id p5so4713843qvs.7
-        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:34 -0800 (PST)
+        with ESMTP id S1728719AbhAHSSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 13:18:18 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 349EBC0612A4
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 10:17:51 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id 75so11123755ilv.13
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 10:17:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5SiY02Oy0Xb62PPHOJxVqcbNUHkVa6NVif34C1mP8AM=;
-        b=yf3OskJKq8q0SZdSsvuRlHmIwblqOHBZy5l9trBEx76ZP50Tx/Uf/7S8UAZBKrrkJY
-         hNI3iVaMBcmO5vhY0hd8oUu05wD0ArRdw0r1Te//qfxn+NUKOjNgKpyYCQxXHni7kEnG
-         U2Mr5haCIQYK68I2ATEiFkhferr88Qb1AOkMGDxdDf6dyOFQEoWe9QHAdYR1HUQPZ5uR
-         htAAnt8ML3u7u/roZcvu60lC6zAxWdRpAghEc1M1aOEgJIEM+2S/dhkDls0oS3V2bOHZ
-         6LOvzhSKK7NhiOVITG0gmm7O0ljH5xnMwLZxIsMEoxmsAxD2wxSixrd8JsgMHTO6Z5jz
-         ChHw==
+        bh=zCb37iXSFsX9rFmR1LLC+H3EPGfQdLbpmMxbI4AJd3g=;
+        b=XG5KQvesgB6lknDOW9L474XlfM+oGqa6oFussocfCaIxymWKhlq7NqiVbb50eTU5eS
+         OPXaqlve707VO+31k7LByaySQvh4hVsNA/sxweDTFh0bO9nFPdMJf9k/WAcG7W+wAcbT
+         aL8TWYkRKJHqsuk26sFiIu5SwUhSRekTy2a0XLL+Z++hgWo7NQZoGWqY0qkcuFLnNcvi
+         b12Bt9dIHauMaN9j/EWvmgtGPJ3PAKHy2LwqxMRwkst0jk1d55lEOuhIjHcTbbBc7HfP
+         xymvxubov3/vUWg/yznhXrG7XoQ1R9H73UWzamAgOT7wHGmiTZFJuDKxm4rU4joyg+DI
+         avtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5SiY02Oy0Xb62PPHOJxVqcbNUHkVa6NVif34C1mP8AM=;
-        b=IYi77ugFr1AFxvZBoSkrUzbIWN6dREvPzrNyxWbLZ8edq7i8NJ6y7KPrbkxcYzlGj4
-         iM9wOhGUGDfxdErJs0zST5vQAw9zIgwgPdRwjfU3FpfR1FYyG5t//KOGoaB4EY+dIiLh
-         7qN/b4yBMRXoiTIvmUJu2Q5S0ekhqyLbQgpcASuwJV5GDPkqd0oVImlhP2iE9Anrly6S
-         rRoS6QJaxTgmmja3iWAaM9UO/WmDPcPM3hNffD0nyDju6v8Iucw8+La+e1JvO5HWAP/J
-         Li3Jf2ffbX5GnUN66LfZ5jDGW/1asicewMeF0LGCVAMjNGWHdb3HnvNXU3tw5zgWrwRn
-         SfWA==
-X-Gm-Message-State: AOAM533rlHNum60fHuqAxx9/x/Boi+tYkX3G2d+SZskk0DoXQOmiACPD
-        0jN0bINU2Ts2ClqxNEBHPiDnxF/bw5E0Dw==
-X-Google-Smtp-Source: ABdhPJwiQyrCBro/ODlhP3akqJ4+NpkQlZjaOcioidRhrFM10NQxFntFyj51t7AQiNyQDpzf0uHdfQ==
-X-Received: by 2002:a0c:e84c:: with SMTP id l12mr8029818qvo.0.1610129852727;
-        Fri, 08 Jan 2021 10:17:32 -0800 (PST)
+        bh=zCb37iXSFsX9rFmR1LLC+H3EPGfQdLbpmMxbI4AJd3g=;
+        b=iuC8oiSKB71lHhTsCBf0ish+7HtEmhiUNRsxJKXuGo6dANlV3pdjrioqE6q8Vz0OFh
+         I1fFuUvEUQG7NImDRKoD1cPgTH+ZfQBJS9hve4vHm6tcS4NhqdIiAI3E3pQUgDM0L5r4
+         6oUIypO/A458CJXOWTjSQkf5sqYGLeLaAat3awy9DhbC1b2Mqv1TX6owObKV87uRqw4l
+         P8H3pc2J0wYAZM2mDTLWMJthOpZIwKsxH+aqNbohB+WCvNanC2q2V15cNvT3SpJ8sCNk
+         O5rmG9NiDnd3FpVtVgmwFwrYt6lQSWNxBxiJ5pI3CSbwxr2DG71MZxRoOY0XBlB8bzZW
+         9SJw==
+X-Gm-Message-State: AOAM531Dgwze1YjqOef9b+TofpyH9Sumj9ugdfW5D+rhY/Y82HevkDyK
+        CxBRPEcL7m27/ImRytKrn3NEmme0AJXw4Q==
+X-Google-Smtp-Source: ABdhPJyg08/wA1UZGxggeO85q+cvEFyzJxCFSlOefqvqO1DdJz+JTIOhKKxUvIZIJsa601W7gkdQag==
+X-Received: by 2002:a92:cec4:: with SMTP id z4mr4995627ilq.217.1610129870374;
+        Fri, 08 Jan 2021 10:17:50 -0800 (PST)
 Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id j30sm4849540qtl.43.2021.01.08.10.17.31
+        by smtp.gmail.com with ESMTPSA id e9sm7266137ilc.73.2021.01.08.10.17.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Jan 2021 10:17:32 -0800 (PST)
-Date:   Fri, 8 Jan 2021 13:17:30 -0500
+        Fri, 08 Jan 2021 10:17:49 -0800 (PST)
+Date:   Fri, 8 Jan 2021 13:17:47 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@gmail.com
-Subject: [PATCH 12/20] retry_bad_packed_offset(): convert to new revindex API
-Message-ID: <aae01d70293545e32c317454748ef72480331d49.1610129796.git.me@ttaylorr.com>
+Subject: [PATCH 16/20] builtin/gc.c: guess the size of the revindex
+Message-ID: <7c17db7a7df8b524f13969efd1cb5e6e95de5a2d.1610129796.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,34 +70,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Perform exactly the same conversion as in the previous commit to another
-caller within 'packfile.c'.
+'estimate_repack_memory()' takes into account the amount of memory
+required to load the reverse index in memory by multiplying the assumed
+number of objects by the size of the 'revindex_entry' struct.
+
+Prepare for hiding the definition of 'struct revindex_entry' by removing
+a 'sizeof()' of that type from outside of pack-revindex.c. Instead,
+guess that one off_t and one uint32_t are required per object. Strictly
+speaking, this is a worse guess than asking for 'sizeof(struct
+revindex_entry)' directly, since the true size of this struct is 16
+bytes with padding on the end of the struct in order to align the offset
+field.
+
+But, this is an approximation anyway, and it does remove a use of the
+'struct revindex_entry' from outside of pack-revindex internals.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- packfile.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ builtin/gc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/packfile.c b/packfile.c
-index 3e3f391949..7c37f9ec5c 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1256,12 +1256,11 @@ static int retry_bad_packed_offset(struct repository *r,
- 				   off_t obj_offset)
- {
- 	int type;
--	struct revindex_entry *revidx;
-+	uint32_t pos;
- 	struct object_id oid;
--	revidx = find_pack_revindex(p, obj_offset);
--	if (!revidx)
-+	if (offset_to_pack_pos(p, obj_offset, &pos) < 0)
- 		return OBJ_BAD;
--	nth_packed_object_id(&oid, p, revidx->nr);
-+	nth_packed_object_id(&oid, p, pack_pos_to_index(p, pos));
- 	mark_bad_packed_object(p, oid.hash);
- 	type = oid_object_info(r, &oid, NULL);
- 	if (type <= OBJ_NONE)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 4c24f41852..c60811f212 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -301,7 +301,7 @@ static uint64_t estimate_repack_memory(struct packed_git *pack)
+ 	/* and then obj_hash[], underestimated in fact */
+ 	heap += sizeof(struct object *) * nr_objects;
+ 	/* revindex is used also */
+-	heap += sizeof(struct revindex_entry) * nr_objects;
++	heap += (sizeof(off_t) + sizeof(uint32_t)) * nr_objects;
+ 	/*
+ 	 * read_sha1_file() (either at delta calculation phase, or
+ 	 * writing phase) also fills up the delta base cache
 -- 
 2.30.0.138.g6d7191ea01
 
