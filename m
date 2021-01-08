@@ -2,155 +2,246 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA07C433DB
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 16:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA994C433DB
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 16:29:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0FBDB235FF
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 16:16:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63D67238E8
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 16:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728066AbhAHQPs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 11:15:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50096 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726654AbhAHQPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 11:15:47 -0500
-Received: (qmail 32213 invoked by uid 109); 8 Jan 2021 16:15:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Jan 2021 16:15:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17578 invoked by uid 111); 8 Jan 2021 16:15:07 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Jan 2021 11:15:07 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 8 Jan 2021 11:15:06 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jon Sagotsky <sagotsky@gmail.com>, git@vger.kernel.org
-Subject: Re: Feature request - git add --patch should have an option to
- discard or drop a hunk Inbox
-Message-ID: <X/iFCo0bXLR+LZXs@coredump.intra.peff.net>
-References: <CAJamm=+Z=88G6cH3DRkttGQkrf9tng310+p=4cKiy-GvdCG3zg@mail.gmail.com>
- <X/ghgg+IdZYri1KV@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2101081614440.2213@tvgsbejvaqbjf.bet>
+        id S1727494AbhAHQ3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 11:29:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726011AbhAHQ3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 11:29:02 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7043C061380
+        for <git@vger.kernel.org>; Fri,  8 Jan 2021 08:28:21 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id a12so9551295wrv.8
+        for <git@vger.kernel.org>; Fri, 08 Jan 2021 08:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=KXFglIRWMK2Yr2XprfXJRhmOVwdiZdtWrCGz3gdCgXc=;
+        b=Gb3BKYrsMLKIObDgfuVOKApnvCgxyZqnMFy9sh77MOnSzV0m4y8Yoo1zTVy7PRnqSz
+         ykP/SEpfEAk9cXtd6je+r/+WmTFrbPFM8LuFATfFNelzSxAhMtmLxsvNa4t3d2KUOFtO
+         Giev/+cshw6Nuu7q1M9yyo7zAwnKzkIowNYrLAw1+kDAuf52jn1ukdDInJYFY2XoXcbj
+         nNITrhGgAtoCfIdW6UMi3VL8iztj4LgUerB0SQWwehPx9UxuVGiSN1nQI0LB5a/sOilB
+         V69kcSXPoi9otKycED8m45XrRHoDXZNQA2cJaN0axcrBlE+6Hhd9J1E/0E0CwZFMzD9F
+         C3VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=KXFglIRWMK2Yr2XprfXJRhmOVwdiZdtWrCGz3gdCgXc=;
+        b=PjJDjZNJq+hPu0urdy8zjzHj7Jr9UC4AcG19cbpi4SB9wJDNbrVLttO9/L0kSnaaAr
+         CyRcmeFc/8IqxIfs3aNNqFPrfzy42NDc0K8oTIo+NSJ3y8oNsG5lOn6L3JS2b0rxt4J7
+         W0kwJZJ5tHqp3/NWtZEi2FHVtfh8SkwWTFw2JW4st1sU5hXLwVJiaRfgqxhyQVP8KwE3
+         QwjOQNmBe3vYN9FcFScNF1ygmIIRYkv7G0+T/GNeVZyT5ESyn8QnXw5eKx7mQ1kWCIQy
+         TlAq+VyM6vSd0eNpTeTk39J/SQEzLu5l6q0AJefSDnPraG333FmJVT7flaYzabdEx5mo
+         h/Tw==
+X-Gm-Message-State: AOAM531J9QRcTdMkextKtDiJFlGwi5Fxx3IT7IORAJQtFBwA5jzmqgWO
+        kUcWGDCg+7sHJ26pgHz7l5nknbiQWUY=
+X-Google-Smtp-Source: ABdhPJy6Kk1Ih85H5CUCufVBE5jzyGrwzLOAl2lMH9GGNJqxt1OPjud9VgQAThN6KPqaFqIsr9/K9g==
+X-Received: by 2002:adf:94e1:: with SMTP id 88mr4396216wrr.341.1610123300260;
+        Fri, 08 Jan 2021 08:28:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 125sm13052869wmc.27.2021.01.08.08.28.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Jan 2021 08:28:19 -0800 (PST)
+Message-Id: <pull.818.v2.git.1610123298764.gitgitgadget@gmail.com>
+In-Reply-To: <pull.818.git.1608337339246.gitgitgadget@gmail.com>
+References: <pull.818.git.1608337339246.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 08 Jan 2021 16:28:18 +0000
+Subject: [PATCH v2] rebase -i: do leave commit message intact in fixup! chains
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2101081614440.2213@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Vojt=C4=9Bch?= Knyttl <vojtech@knyt.tl>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 04:21:05PM +0100, Johannes Schindelin wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> >   - in the most general form of the tool, it would let you take a pass
-> >     through the hunks and annotating them. The simple common form is two
-> >     annotations: stage these ones, discard those ones. There may be room
-> >     for a more generalized tool, or it may just be over-complicating
-> >     things.
-> >
-> >     The generalized form probably shouldn't be "add -p". The simplified
-> >     one (just adding "discard this hunk from the worktree") could
-> >     perhaps be, though it does feel a little weird for "git add" to
-> >     modify working tree files.
-> 
-> We do have `git stash -p`, which I used sometimes to discard such unwanted
-> pieces. However, `git stash -p` suffers from a couple implementation
-> details (see e.g.
-> https://lore.kernel.org/git/20200731165140.29197-1-alban.gruin@gmail.com/)
+In 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
+'squash' commands, 2017-01-02), this developer introduced a change of
+behavior by mistake: when encountering a `fixup!` commit (or multiple
+`fixup!` commits) without any `squash!` commit thrown in, the final `git
+commit` was invoked with `--cleanup=strip`. Prior to that commit, the
+commit command had been called without that `--cleanup` option.
 
-Yeah, and I often will take a first pass with "stash -p" to get rid of
-unwanted hunks, and _then_ start dividing up the hunks into commits that
-I want. But that requires multiple passes. I think the point is that you
-often see the undesirable hunk (that you'd like to stash or discard)
-while you're making another pass, and would like to deal with it then
-and there, instead of separately.
+Since we explicitly read the original commit message from a file in that
+case, there is really no sense in forcing that clean-up.
 
-To be clear, I'm not objecting to a "-p" command modifying the working
-tree or anything like that. Just that mixing the modification of the
-working tree into "add -p" feels weird, because of the "add" half, not
-the "-p" half. :) Conceptually it's a separate action: take a single
-pass over the hunks and decide what to do with them. But I do agree that
-in practice that's the operation people are trying to do with "add -p",
-so it may be a practical place to put it.
+We actually need to actively suppress that clean-up lest a configured
+`commit.cleanup` may interfere with what we want to do: leave the commit
+message unchanged.
 
-> More often than not, I am actually using `git add -p` to commit those
-> changes instead, using the commit message `TO-DROP` and later using
-> `rebase -i` to actually drop them.
+Reported-by: Vojtěch Knyttl <vojtech@knyt.tl>
+Helped-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    Fix bug in interactive rebases where fixup! cleans up the commit message
+    
+    Original report here:
+    https://lore.kernel.org/git/CANVGpwZGbzYLMeMze64e_OU9p3bjyEgzC5thmNBr6LttBt%2BYGw%40mail.gmail.com/t
+    
+    Changes since v1:
+    
+     * The fix now works even if commit.cleanup = commit
 
-That works OK, too, but suffers from the same multi-pass problem. You
-have to do a separate pass to put them in a TO-DROP commit, and likely
-you've already marked a bunch of other hunks to be staged for a real
-commit.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-818%2Fdscho%2Fautosquash-without-scissors-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-818/dscho/autosquash-without-scissors-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/818
 
-> I could imagine that it should not be _too_ hard to implement an action in
-> `git add -p` to allow stashing a given hunk. The biggest challenge there
-> would be to make sure that potentially edited, to-be-stashed changes won't
-> interfere with staging what was intended (because `git add -p` batches the
-> changing per-file, and if the index changes while picking what to stage,
-> things might conflict).
-> 
-> Maybe an Outreachy project?
+Range-diff vs v1:
 
-Yeah, it's probably about the right size. The actual mechanics are
-pretty easy. Here's a really ugly proof-of-concept in the perl script:
+ 1:  bfade3b146f ! 1:  c760d6cd203 rebase -i: do leave commit message intact in fixup! chains
+     @@ Commit message
+          Since we explicitly read the original commit message from a file in that
+          case, there is really no sense in forcing that clean-up.
+      
+     +    We actually need to actively suppress that clean-up lest a configured
+     +    `commit.cleanup` may interfere with what we want to do: leave the commit
+     +    message unchanged.
+     +
+          Reported-by: Vojtěch Knyttl <vojtech@knyt.tl>
+     +    Helped-by: Martin Ågren <martin.agren@gmail.com>
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## sequencer.c ##
+     +@@ sequencer.c: N_("you have staged changes in your working tree\n"
+     + #define CLEANUP_MSG (1<<3)
+     + #define VERIFY_MSG  (1<<4)
+     + #define CREATE_ROOT_COMMIT (1<<5)
+     ++#define VERBATIM_MSG (1<<6)
+     + 
+     + static int run_command_silent_on_success(struct child_process *cmd)
+     + {
+     +@@ sequencer.c: static int run_git_commit(const char *defmsg,
+     + 		strvec_pushl(&cmd.args, "-C", "HEAD", NULL);
+     + 	if ((flags & CLEANUP_MSG))
+     + 		strvec_push(&cmd.args, "--cleanup=strip");
+     ++	if ((flags & VERBATIM_MSG))
+     ++		strvec_push(&cmd.args, "--cleanup=verbatim");
+     + 	if ((flags & EDIT_MSG))
+     + 		strvec_push(&cmd.args, "-e");
+     + 	else if (!(flags & CLEANUP_MSG) &&
+     +@@ sequencer.c: static int try_to_commit(struct repository *r,
+     + 
+     + 	if (flags & CLEANUP_MSG)
+     + 		cleanup = COMMIT_MSG_CLEANUP_ALL;
+     ++	else if (flags & VERBATIM_MSG)
+     ++		cleanup = COMMIT_MSG_CLEANUP_NONE;
+     + 	else if ((opts->signoff || opts->record_origin) &&
+     + 		 !opts->explicit_cleanup)
+     + 		cleanup = COMMIT_MSG_CLEANUP_SPACE;
+      @@ sequencer.c: static int do_pick_commit(struct repository *r,
+     - 		flags |= AMEND_MSG;
+       		if (!final_fixup)
+       			msg_file = rebase_path_squash_msg();
+     --		else if (file_exists(rebase_path_fixup_msg())) {
+     + 		else if (file_exists(rebase_path_fixup_msg())) {
+      -			flags |= CLEANUP_MSG;
+     -+		else if (file_exists(rebase_path_fixup_msg()))
+     ++			flags |= VERBATIM_MSG;
+       			msg_file = rebase_path_fixup_msg();
+     --		} else {
+     -+		else {
+     + 		} else {
+       			const char *dest = git_path_squash_msg(r);
+     - 			unlink(dest);
+     - 			if (copy_file(dest, rebase_path_squash_msg(), 0666))
+      
+       ## t/t3415-rebase-autosquash.sh ##
+      @@ t/t3415-rebase-autosquash.sh: test_expect_success 'fixup a fixup' '
+     @@ t/t3415-rebase-autosquash.sh: test_expect_success 'fixup a fixup' '
+      +	oneline="#818" &&
+      +	git commit --allow-empty -m "$oneline" &&
+      +	git commit --fixup HEAD --allow-empty &&
+     -+	git rebase -ki --autosquash HEAD~2 &&
+     ++	git -c commit.cleanup=strip rebase -ki --autosquash HEAD~2 &&
+      +	test "$oneline" = "$(git show -s --format=%s)"
+      +'
+      +
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 96426a53c6..528688e553 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -106,6 +106,7 @@ sub colored {
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 0,
-+		DISCARD => sub { apply_patch 'apply -R', @_ },
- 	},
- 	'stash' => {
- 		DIFF => 'diff-index -p HEAD',
-@@ -1568,6 +1569,9 @@ sub patch_update_file {
- 				print;
- 			}
- 		}
-+		if (exists $patch_mode_flavour{DISCARD}) {
-+			$other .= ',x';
-+		}
- 		my $type = $num ? $hunk[$ix]{TYPE} : $head->{TYPE};
- 		print colored $prompt_color, "(", ($ix+1), "/", ($num ? $num : 1), ") ",
- 			sprintf(__($patch_update_prompt_modes{$patch_mode}{$type}), $other);
-@@ -1761,6 +1765,18 @@ sub patch_update_file {
- 					splice @hunk, $ix, 1, $newhunk;
- 				}
- 			}
-+			elsif ($line =~ /^x/) {
-+				unless ($other =~ /x/) {
-+					error_msg("don't know how to discard in this mode");
-+				}
-+				# should probably save up discards and apply at
-+				# the end?
-+				my @patch = reassemble_patch($head->{TEXT},
-+					                     @{$hunk[$ix]->{TEXT}});
-+				$patch_mode_flavour{DISCARD}->(@patch);
-+				# should mark hunk as used so we don't
-+				# redisplay it
-+			}
- 			else {
- 				help_patch_cmd($other);
- 				next;
 
-I left this intentionally ugly because I do not even want to consider
-implementing this for real in the perl version, not when we're so close
-to getting rid of it (but I'm familiar enough with it and it's fast
-enough to hack on that I did not want to even try the ugly thing in the
-C code). It's just meant to show that we basically have all the
-low-level parts available already.
+ sequencer.c                  | 7 ++++++-
+ t/t3415-rebase-autosquash.sh | 8 ++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-There are some obvious unfinished bits in the comments, but I agree the
-really tricky parts will be corner cases: what happens to edited hunks
-or ones which overlap. It may all Just Work because we're applying to
-two different spots, so overlap isn't a problem. But I haven't thought
-deeply about it.
+diff --git a/sequencer.c b/sequencer.c
+index 8909a467700..092e7b811f0 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -943,6 +943,7 @@ N_("you have staged changes in your working tree\n"
+ #define CLEANUP_MSG (1<<3)
+ #define VERIFY_MSG  (1<<4)
+ #define CREATE_ROOT_COMMIT (1<<5)
++#define VERBATIM_MSG (1<<6)
+ 
+ static int run_command_silent_on_success(struct child_process *cmd)
+ {
+@@ -1012,6 +1013,8 @@ static int run_git_commit(const char *defmsg,
+ 		strvec_pushl(&cmd.args, "-C", "HEAD", NULL);
+ 	if ((flags & CLEANUP_MSG))
+ 		strvec_push(&cmd.args, "--cleanup=strip");
++	if ((flags & VERBATIM_MSG))
++		strvec_push(&cmd.args, "--cleanup=verbatim");
+ 	if ((flags & EDIT_MSG))
+ 		strvec_push(&cmd.args, "-e");
+ 	else if (!(flags & CLEANUP_MSG) &&
+@@ -1454,6 +1457,8 @@ static int try_to_commit(struct repository *r,
+ 
+ 	if (flags & CLEANUP_MSG)
+ 		cleanup = COMMIT_MSG_CLEANUP_ALL;
++	else if (flags & VERBATIM_MSG)
++		cleanup = COMMIT_MSG_CLEANUP_NONE;
+ 	else if ((opts->signoff || opts->record_origin) &&
+ 		 !opts->explicit_cleanup)
+ 		cleanup = COMMIT_MSG_CLEANUP_SPACE;
+@@ -2002,7 +2007,7 @@ static int do_pick_commit(struct repository *r,
+ 		if (!final_fixup)
+ 			msg_file = rebase_path_squash_msg();
+ 		else if (file_exists(rebase_path_fixup_msg())) {
+-			flags |= CLEANUP_MSG;
++			flags |= VERBATIM_MSG;
+ 			msg_file = rebase_path_fixup_msg();
+ 		} else {
+ 			const char *dest = git_path_squash_msg(r);
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 7bab6000dc7..88040bc4352 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -440,4 +440,12 @@ test_expect_success 'fixup a fixup' '
+ 	test XZWY = $(git show | tr -cd W-Z)
+ '
+ 
++test_expect_success 'fixup does not clean up commit message' '
++	oneline="#818" &&
++	git commit --allow-empty -m "$oneline" &&
++	git commit --fixup HEAD --allow-empty &&
++	git -c commit.cleanup=strip rebase -ki --autosquash HEAD~2 &&
++	test "$oneline" = "$(git show -s --format=%s)"
++'
++
+ test_done
 
--Peff
+base-commit: ba2aa15129e59f248d8cdd30404bc78b5178f61d
+-- 
+gitgitgadget
