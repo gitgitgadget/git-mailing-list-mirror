@@ -2,291 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBA9C433DB
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 00:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9273C433DB
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 01:53:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABAF923603
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 00:46:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A63C23601
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 01:53:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729619AbhAHAqk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 19:46:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40272 "EHLO
+        id S1729870AbhAHBwz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 20:52:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727858AbhAHAqk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Jan 2021 19:46:40 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C4CCC0612F4
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 16:46:00 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id b9so12380450ejy.0
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 16:46:00 -0800 (PST)
+        with ESMTP id S1726805AbhAHBwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 20:52:55 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22993C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 17:52:15 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id a109so8309649otc.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 17:52:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aAnLedsNLj/kfdw0yxZFtctPUxx2mIewClH2kefC3pM=;
-        b=M/WbKwZvvdzNuBkcx9+vW4K2N2PTM/YbG3nSUlowqLohMHQQTavuO2eqcogMVElYK6
-         p5yYatWvjUtgXszQ+hQM+5Gi81F+9FACkyMMJUQJy2uXJB/dsUqX2CXMPTS0Kz881sxa
-         KiQR6al8k1EyHjW4ISfmSrIn0BiTDWScT/1WXtPohpYPcVl0e4bxQ0/+N3PmZ6s3MgDW
-         IxP0sLilSMxhS1FidfdoHw3FUp1nY7dRC1kgFExoayhGV72p6MTj8KnxEugm06btwQRS
-         NgPCC2MpHtl+ejmKyJNo3rwWgigUSNRK4VMyxETAWz5mCpvygStfeWnAK5D9jeEZH8dE
-         NO5w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+uuPiqr41BKR8zb9ALYF01gqqXIo5ov/wAzRRxk4Clg=;
+        b=H42ghPGnTbLVNwkuOI9E0/ACd/FzZLwAoQnwxAwc62Gn3DHM4si+tJKTgGH8lijmCs
+         GiMFLHvBuNIITcTXTzrBbwCea8R3c2ftG5WogAWKEAQ1W2Dai9A9hmDAfJO3N+H62lfP
+         wFfKpKCBnTQDPPwRzVwikk1ibh0n7GKqYKn8aK8RoAP0d17CiFcRZ45jBitM0PTZDvSC
+         jf1VBR0DsFhds/LO+A39yiQklGZhFc00WYFefip/1dv1M957VfsnghPYfYzDrtcn18iJ
+         Hpyd55LZsJYSV9iaQAcKs+BZAfNRhozPFt4ZkvDYAkfOvQzDYYFylhr7FYIj2rVXcWaL
+         A+cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aAnLedsNLj/kfdw0yxZFtctPUxx2mIewClH2kefC3pM=;
-        b=eYys3GRTHeEgI9Zgl9B9uxYeiBvwQLH549Ov0py8S5cyZ6+eWjE6rI5lNmAMyUhT/W
-         3/kMqoT/u/HeSyMwTzgd3QYvtm+vRJQC0NXQM3wqAd6nW3wETZJ+db5O4XL0psNwNVqP
-         oMsHPuhdgbTmRaMVCURCITyWws5Q/z0b/mgXQeb9HxHBLdAGw1YYAzpJtTyGU89kZmQ5
-         M/qLvOBtQg0kfeRyf4V/tqEG1CaeyKe+llBfA0x41TNPDi14cvirrNejRB7UOL4HwCXB
-         hiMp/wY5W3cLxt+xmWKtR2wSevt15QFOEmFktYaZEVPdOyuMDP//49KTDOD400CJlvQ0
-         9vOA==
-X-Gm-Message-State: AOAM530TZthUFSyau9myYHyWDKExFgavCAYtdTU0huY+pXoxM6d4vcm4
-        KURNKaaa6ISGCDINpjw6gNk5prdjVKSq5IbjzT0=
-X-Google-Smtp-Source: ABdhPJztlVRoG8dNC/FZJfRC0Za9Q1Rwq7fE4fcX6izsCfyIXmjeXd999gY0l9rsGOD1Q1gsLOwIUPUbrs1+4m81xpU=
-X-Received: by 2002:a17:906:e212:: with SMTP id gf18mr978082ejb.551.1610066758761;
- Thu, 07 Jan 2021 16:45:58 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+uuPiqr41BKR8zb9ALYF01gqqXIo5ov/wAzRRxk4Clg=;
+        b=a38mqxBBGqBj5TVfiz7o96FvE6XKN0lZ06E/+wdlg67jaMDgOqa6pI426vkZZPMJyS
+         ZfSHxDHy8jx85iBQWDFwz0OhjGTa2Wd7XAcpcSRyBMJKrhIzyFv7Dm0JFd63WmOLmhOE
+         Yj7EE8xdyU6d9fKHEjI8hkjr7pUdqpU18VwkHRgXwKxFXmTNfFGsn04Lvy4fLV4L26eG
+         l9Hw9pAJDrJzlGUZS3Upx3A4cJ4c+PcwiDBoIvoiBqDG59KDDly0flORmUwcgp40DIFq
+         VjcLbi/WZGy976nqMmNGnV8sg01qw7LgbnAUuj5Sco3fOCAxFaaNz5LzGYD8OPldPj47
+         DLoA==
+X-Gm-Message-State: AOAM530GkNSwM2f4ysW4WrOU29LUNMzZJarhiIQzAuVi070RfvefrSrC
+        fr0Qkloimi5ZEGFob6Ty8jU=
+X-Google-Smtp-Source: ABdhPJyofwA7B88Q5NBFJf/TChuJ57ghAj1I+YapwjETY6XISZoW4qUBGOtcF3wEZ5ebEnBLOUaxKA==
+X-Received: by 2002:a05:6830:578:: with SMTP id f24mr975671otc.36.1610070734344;
+        Thu, 07 Jan 2021 17:52:14 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id a18sm1490846otf.33.2021.01.07.17.52.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Jan 2021 17:52:13 -0800 (PST)
+Subject: Re: [PATCH v2 14/14] update-index: remove static globals from
+ callbacks
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
+        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+ <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
+ <2b171a142b36b114d5ff526073fe3fd9517a4d32.1609821783.git.gitgitgadget@gmail.com>
+ <CAPig+cTfHsd7WMvcX1_433WVOG+y4FceUACBx_4UfnjJTgVY6g@mail.gmail.com>
+ <73f51832-583a-27e8-65fa-86eb0ebac4cf@gmail.com>
+ <CAPig+cSLsLibDik3YYTPdwbHpywStMxR_4rRBZfYrX7S-cFnNA@mail.gmail.com>
+ <xmqq4kjsmses.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e598f0e4-bdd9-4b59-f267-545204829a63@gmail.com>
+Date:   Thu, 7 Jan 2021 20:52:12 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-References: <cover.1610027375.git.ps@pks.im> <e627e729e5cd14c94dcf819f4f87b1412b9a9e9b.1610027375.git.ps@pks.im>
- <xmqqtursjqva.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtursjqva.fsf@gitster.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 8 Jan 2021 01:45:47 +0100
-Message-ID: <CAP8UFD1YxHGHLEHd_Bx1awSskjM6fHgM52nPWpTG2UHOmaOT9A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] fetch: allow passing a transaction to `s_update_ref()`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqq4kjsmses.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 8, 2021 at 12:04 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> >  static int s_update_ref(const char *action,
-> >                       struct ref *ref,
-> > +                     struct ref_transaction *transaction,
-> >                       int check_old)
-> >  {
-> >       char *msg;
-> >       char *rla = getenv("GIT_REFLOG_ACTION");
-> > -     struct ref_transaction *transaction;
-> > +     struct ref_transaction *transaction_to_free = NULL;
-> >       struct strbuf err = STRBUF_INIT;
-> > -     int ret, df_conflict = 0;
-> > +     int ret, df_conflict = 0, commit = 0;
->
-> > @@ -597,26 +598,38 @@ static int s_update_ref(const char *action,
-> >               rla = default_rla.buf;
-> >       msg = xstrfmt("%s: %s", rla, action);
-> >
-> > -     transaction = ref_transaction_begin(&err);
-> > -     if (!transaction ||
-> > -         ref_transaction_update(transaction, ref->name,
-> > +     /*
-> > +      * If no transaction was passed to us, we manage the transaction
-> > +      * ourselves. Otherwise, we trust the caller to handle the transaction
-> > +      * lifecycle.
-> > +      */
-> > +     if (!transaction) {
-> > +             transaction = transaction_to_free = ref_transaction_begin(&err);
-> > +             if (!transaction)
-> > +                     goto fail;
-> > +             commit = 1;
-> > +     }
->
-> The idea is that we still allow the caller to pass NULL in which
-> case we begin and commit a transaction ourselves, but if the caller
-> is to pass an already initialized transaction to us, we obviously
-> do not have to "begin" but also we won't commit.
->
-> Which makes sense, but then do we still need the "commit" variable
-> that reminds us "we are responsible for finishing the transaction we
-> started"?
+On 1/7/2021 2:57 PM, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>>> It could be possible to replace all references to 'istate' with
+>>> 'repo->index' but the patches get slightly more messy. I also
+>>> think the code looks messier, but you do make a good point that
+>>> there is no concrete reason to separate the two.
+>>
+>> I agree that it would make the code a bit noisier (to read) if
+>> `istate` is eliminated from the callback structure, however, even
+>> though I didn't originally feel strongly one way or the other about
+>> having both `repo` and `istate` in the structure, I'm now leaning more
+>> toward seeing `istate` eliminated. My one (big) concern with `istate`
+>> is that it confuses readers into wondering whether `istate` and
+>> `repo->istate` will ever be different.
+> 
+> Some applications may want to work on more than one in-core index at
+> the same time (perhaps a merge strategy may want to keep a copy of
+> the original index and update a second copy with the result of the
+> merge), and it may be useful for such applications if 'repo->istate'
+> does not have to be the in-core index instance to be worked on.  So
+> things that go in libgit.a may want to allow such distinction.
+> 
+> But what goes in builtin/ is a different story.  As long as this
+> application has no need for such a feature and will always work on
+> the primary in-core index, prepared for the in-core repository
+> structure for convenience, it may not worth it to support such a
+> feature that no callers benefit from.
 
-Yeah, I think we also don't need the df_conflict variable, and I don't
-like the duplication of the following clean up code:
+I'll try to restructure my patches to do the following order:
 
-        ref_transaction_free(transaction_to_free);
-        strbuf_release(&err);
-        free(msg);
+1. replace compatibility macros with static global references, except
+   i. use 'istate' in the methods that don't need a repository.
+  ii. use 'repo->index' in the methods that need a repository.
 
-Patrick's patch didn't introduce them, but we might still want to get
-rid of them (see below).
+2. replace static globals with method parameters.
+   i. drop 'istate' static global with method parameters. Methods that
+      have a repo will pass 'repo->index' to these methods.
+  ii. drop 'repo' static global with method parameters.
 
-> If we rename "transaction_to_free" to a name that makes it more
-> clear that it is a transaction that we created and that we are
-> responsible for seeing through to its end (after all, "to-free"
-> captures only one half of that, i.e. before returning, we are
-> responsible for calling ref_transation_free() on it), then we do not
-> need such an extra variable that can go out of sync by mistake, no?
-> The block that protects the call to ref_transaction_commit() can
-> just check if the transaction_to_free variable (with a better name)
-> is non-NULL, instead of looking at the commit variable.
->
-> Just my attempt to come up with an alternative name for
-> transaction_to_free:
->
->  - "our_transaction" because it is ours?
->
->  - "auto_transaction" because it is automatically started and
->    committed without bothering the caller?
+3. replace static globals in callback methods using 'repo->index',
+   where 'repo' is a member of the callback_data struct.
 
-"our_transaction" looks fine.
+That should keep the structure as presented in v2 while also avoiding
+this question of "can istate differ from repo->index?"
 
-Here is a suggested refactoring patch that could come before Patrick's patch:
-
--------------------------------------------------------------------------
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ecf8537605..8017fc19da 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -581,6 +581,22 @@ static struct ref *get_ref_map(struct remote *remote,
-#define STORE_REF_ERROR_OTHER 1
-#define STORE_REF_ERROR_DF_CONFLICT 2
-
-+static int do_s_update_ref(struct ref_transaction *transaction,
-+                          struct ref *ref,
-+                          int check_old,
-+                          struct strbuf *err,
-+                          char *msg)
-+{
-+       if (!transaction ||
-+           ref_transaction_update(transaction, ref->name,
-+                                  &ref->new_oid,
-+                                  check_old ? &ref->old_oid : NULL,
-+                                  0, msg, err))
-+               return TRANSACTION_GENERIC_ERROR;
-+
-+       return ref_transaction_commit(transaction, err);
-+}
-+
-static int s_update_ref(const char *action,
-                       struct ref *ref,
-                       int check_old)
-@@ -589,7 +605,7 @@ static int s_update_ref(const char *action,
-       char *rla = getenv("GIT_REFLOG_ACTION");
-       struct ref_transaction *transaction;
-       struct strbuf err = STRBUF_INIT;
--       int ret, df_conflict = 0;
-+       int ret = 0;
-
-       if (dry_run)
-               return 0;
-@@ -598,30 +614,19 @@ static int s_update_ref(const char *action,
-       msg = xstrfmt("%s: %s", rla, action);
-
-       transaction = ref_transaction_begin(&err);
--       if (!transaction ||
--           ref_transaction_update(transaction, ref->name,
--                                  &ref->new_oid,
--                                  check_old ? &ref->old_oid : NULL,
--                                  0, msg, &err))
--               goto fail;
-
--       ret = ref_transaction_commit(transaction, &err);
-+       ret = do_s_update_ref(transaction, ref, check_old, &err, msg);
-       if (ret) {
--               df_conflict = (ret == TRANSACTION_NAME_CONFLICT);
--               goto fail;
-+               error("%s", err.buf);
-+               ret = (ret == TRANSACTION_NAME_CONFLICT)
-+                       ? STORE_REF_ERROR_DF_CONFLICT
-+                       : STORE_REF_ERROR_OTHER;
-       }
-
-       ref_transaction_free(transaction);
-       strbuf_release(&err);
-       free(msg);
--       return 0;
--fail:
--       ref_transaction_free(transaction);
--       error("%s", err.buf);
--       strbuf_release(&err);
--       free(msg);
--       return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
--                          : STORE_REF_ERROR_OTHER;
-+       return ret;
-}
-
-static int refcol_width = 10;
--------------------------------------------------------------------------
-
-After the above patch, Patrick's patch would become:
-
--------------------------------------------------------------------------
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8017fc19da..d58805c03d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -584,6 +584,7 @@ static struct ref *get_ref_map(struct remote *remote,
-static int do_s_update_ref(struct ref_transaction *transaction,
-                          struct ref *ref,
-                          int check_old,
-+                          int commit,
-                          struct strbuf *err,
-                          char *msg)
-{
-@@ -594,16 +595,17 @@ static int do_s_update_ref(struct
-ref_transaction *transaction,
-                                  0, msg, err))
-               return TRANSACTION_GENERIC_ERROR;
-
--       return ref_transaction_commit(transaction, err);
-+       return (commit) ? ref_transaction_commit(transaction, err) : 0;
-}
-
-static int s_update_ref(const char *action,
-+                       struct ref_transaction *transaction,
-                       struct ref *ref,
-                       int check_old)
-{
-       char *msg;
-       char *rla = getenv("GIT_REFLOG_ACTION");
--       struct ref_transaction *transaction;
-+       struct ref_transaction *our_transaction = NULL;
-       struct strbuf err = STRBUF_INIT;
-       int ret = 0;
-
-@@ -613,9 +615,16 @@ static int s_update_ref(const char *action,
-               rla = default_rla.buf;
-       msg = xstrfmt("%s: %s", rla, action);
-
--       transaction = ref_transaction_begin(&err);
-+       /*
-+        * If no transaction was passed to us, we manage the
-+        * transaction ourselves. Otherwise, we trust the caller to
-+        * handle the transaction lifecycle.
-+        */
-+       if (!transaction)
-+               transaction = our_transaction = ref_transaction_begin(&err);
-
--       ret = do_s_update_ref(transaction, ref, check_old, &err, msg);
-+       ret = do_s_update_ref(transaction, ref, check_old, !!our_transaction,
-+                             &err, msg);
-       if (ret) {
-               error("%s", err.buf);
-               ret = (ret == TRANSACTION_NAME_CONFLICT)
-@@ -623,7 +632,7 @@ static int s_update_ref(const char *action,
-                       : STORE_REF_ERROR_OTHER;
-       }
-
--       ref_transaction_free(transaction);
-+       ref_transaction_free(our_transaction);
-       strbuf_release(&err);
-       free(msg);
-       return ret;
-...
--------------------------------------------------------------------------
-
-You can find these patches, with Patrick as the author, there:
-
-https://gitlab.com/gitlab-org/gitlab-git/-/commits/cc-improve-s-update-ref/
+Thanks,
+-Stolee
