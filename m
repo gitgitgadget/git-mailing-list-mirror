@@ -2,113 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C525C433DB
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 01:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80AD4C433E0
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 02:31:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CDD42343B
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 01:58:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A0FE23603
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 02:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727928AbhAHB63 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 7 Jan 2021 20:58:29 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48532 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727669AbhAHB63 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 Jan 2021 20:58:29 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9D4D160781;
-        Fri,  8 Jan 2021 01:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610071067;
-        bh=HRTUHOO20uocPm8G//qvpFo4VpSZqXKaGqKZOFXzLE8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=iF/JBUa/TH4wVMlchYhMoAtj+9ZBScoAHrBekNiZWjS9fj2GUAXnhJ4qmaC1G5qrd
-         YdukT2N83LXioZ+ecahUlxgtX7vZsgqJiE3LSQ1FFoQZU5nZezuUWKh/t0Ujpz2bSF
-         GSBAcQR1WiXKLFw46CBI+FLLvhdecAchnbOCeWtIu/3dShaszttN6Ezq/KurzF8RHH
-         52SnYCrFozQ0pNwl/gCvMze0G3YHxc3Mbkjmi82Dbb6qwogtlVFNHkbZdVzM72NO9n
-         cc9/dq7pljdM0kmQuyUDLiGYBr+CH7nYUg+VhPzi7cFw2IJJ6itPiMF2HQShLcAiHn
-         e8gP9Sg1DBJCiH4SCXJZHtQC4J2/i5oW2sPq3gXGVCxe0RDN8KZfjn20ZFS0e4LCug
-         kx93kisXaab0CF+atzDgSZghdIm//mlr+ZlslZSyEbV3wHWfXCBqG9jvq1/kgTexGS
-         4m/xQgycd2/FuOTQ3ieEemL8NgfUXqoDpWMuCNeIwPunTEDUiLA
-Date:   Fri, 8 Jan 2021 01:57:40 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] CoC: update to version 2.0 + local changes
-Message-ID: <X/e8FIexuAL0FqZ5@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
- <20201228171734.30038-3-avarab@gmail.com>
- <xmqqmtxxedwd.fsf@gitster.c.googlers.com>
+        id S1726581AbhAHCbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 7 Jan 2021 21:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726377AbhAHCbg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Jan 2021 21:31:36 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C880C0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 18:30:50 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id q18so7544768wrn.1
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 18:30:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=PwtjR5FjoD6YczNu8tIdF+qyYvQNwu8WniGgQJ0zqyE=;
+        b=SFz/cOn3GycWrOalFBSH/g4q9jwudiGyXGyYn/3aqvwjPk40gKoWnptv/KU3exne1X
+         rlnks1OOKKp9IRdxAD47xoIXb6TPTL/zYiJLMba17VUouR7CxFUMJpF+gqR8cv4W7EEJ
+         eInaqajMdpMi1CQqUnbjo8nSoMhGATSNPR+FS2H7cu9VqnCAlnDx37hv5dvce0yT1QkQ
+         s8UWDoq4wXy51KvVPnvEL+jlbqZ/GoM5wBFcN26AWs2TfbkJOW9R1EHbCcGDZ6k9Xa6Z
+         Ud+2KhaFk9gWjpOXMYXAX2Ckc0KzPV/wVUcyCC4LY9FxxQZ7yQUQ1uZMDwFDoeJ5Znt8
+         ILOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=PwtjR5FjoD6YczNu8tIdF+qyYvQNwu8WniGgQJ0zqyE=;
+        b=cR2Ij1JyO6qiR4Eqh1mJtXmtJuZBgLQNcx9W5Vs7b7HFnRolTVMd61fBAMaQhYwdVF
+         gIBFaVlsgRFWnYM9iXa2uZpVuZeRgqH2hltS1QfjqRoKwf1NzeKTdHOseCqXXCrqbZ20
+         BuoIVQSjBtzeqLQGWHml+OjnCGU+gyFoSoz33y0XKivSyd8ZVlT2nwH+IVpaC6CzAPm8
+         hxA16BcFnk4xmZQSvqsvqUH4h7DZgm2ZSue38fHHAO6Y2NIeL0EGpzEPbhieM3CIPlOg
+         RaFzGCCTxUFfJuQpPcIF+O4Zds7I0R2TSrj3sfYiTh+x/Ac/1YPoArT0t8mN+w6Ut84d
+         BKbw==
+X-Gm-Message-State: AOAM533d5/Qj2TWtGVXZKLJYUXMjuJn+I4VM2YP2Qj9dfgU3n3DKVN3T
+        6HMCdHugVYkEga/ZqZlI/A7xEdaGhVQ=
+X-Google-Smtp-Source: ABdhPJzaT55pBpM5Cyx6fEEYUgxs8BkuxeW23A99NZ4fQvYdzMBiOePNZmN1oCFcGdOtK4z7Xh9y7Q==
+X-Received: by 2002:a5d:678d:: with SMTP id v13mr1285985wru.71.1610073048641;
+        Thu, 07 Jan 2021 18:30:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 189sm10627048wma.22.2021.01.07.18.30.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Jan 2021 18:30:47 -0800 (PST)
+Message-Id: <pull.834.v3.git.1610073047135.gitgitgadget@gmail.com>
+In-Reply-To: <pull.834.v2.git.1609960783988.gitgitgadget@gmail.com>
+References: <pull.834.v2.git.1609960783988.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 08 Jan 2021 02:30:46 +0000
+Subject: [PATCH v3] for-each-repo: do nothing on empty config
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G0Zl57fSMVyD5yn+"
-Content-Disposition: inline
-In-Reply-To: <xmqqmtxxedwd.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
---G0Zl57fSMVyD5yn+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+'git for-each-repo --config=X' should return success without calling any
+subcommands when the config key 'X' has no value. The current
+implementation instead segfaults.
 
-On 2020-12-28 at 22:58:42, Junio C Hamano wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->=20
-> > This change intentionally preserves a warning emitted on "git diff
-> > --check". It's better to make it easily diff-able with upstream than
-> > to fix whitespace changes in our version while we're at it.
->=20
-> I think there are only two lines that needs to tolerate trailing
-> whitespaces, and even if we strip them, it should be still easily
-> diff-able with the upstream with --ignore-space-at-eol or whatever
-> appropriate option, so I am not sure if it is worth try "keeping"
-> these whitespace breakage.
->=20
-> If you still want to do so, we should tweak .gitattributes so that
-> "git diff --check" would not trigger.
->=20
-> > 1. https://www.contributor-covenant.org/version/2/0/code_of_conduct/cod=
-e_of_conduct.md
->=20
-> Yes, thanks for the full URL.  In 5cdf2301 (add a Code of Conduct
-> document, 2019-09-24) we pointed at the HTML version, but if we ship
-> MD and they have MD, using theirs as the base makes perfect sense.
->=20
-> Sign-off plus acks need to be collected here.
+A user could run into this issue if they used 'git maintenance start' to
+initialize their cron schedule using 'git for-each-repo
+--config=maintenance.repo ...' but then using 'git maintenance
+unregister' to remove the config option. (Note: 'git maintenance stop'
+would remove the config _and_ remove the cron schedule.)
 
-Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Add a simple test to ensure this works. Use 'git help --no-such-option'
+as the potential subcommand to ensure that we will hit a failure if the
+subcommand is ever run.
 
---G0Zl57fSMVyD5yn+
-Content-Type: application/pgp-signature; name="signature.asc"
+Reported-by: Andreas Bühmann <dev@uuml.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    for-each-repo: do nothing on empty config
+    
+    Thanks, Andreas, for drawing my attention to this bug.
+    
+    V3: update comment in test and use git help --no-such-option as the
+    subcommand to fail.
+    
+    [1] https://github.com/gitgitgadget/git/issues/833
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-834%2Fderrickstolee%2Ffor-each-repo-empty-config-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-834/derrickstolee/for-each-repo-empty-config-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/834
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX/e8EwAKCRB8DEliiIei
-gYVEAQD/xwcuD/HMoMfDpQr5kdw6QuX4hV75HrIfvoDJYWXt7wD/RXKCeO0pzJC5
-UUFKF37TokqyNiP+vmg5nlZXCMq+vQM=
-=G/b+
------END PGP SIGNATURE-----
+Range-diff vs v2:
 
---G0Zl57fSMVyD5yn+--
+ 1:  a1f1300bacb ! 1:  31350c7845c for-each-repo: do nothing on empty config
+     @@ Commit message
+          unregister' to remove the config option. (Note: 'git maintenance stop'
+          would remove the config _and_ remove the cron schedule.)
+      
+     -    Add a simple test to ensure this works.
+     +    Add a simple test to ensure this works. Use 'git help --no-such-option'
+     +    as the potential subcommand to ensure that we will hit a failure if the
+     +    subcommand is ever run.
+      
+          Reported-by: Andreas Bühmann <dev@uuml.de>
+          Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+     +    Helped-by: Junio C Hamano <gitster@pobox.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## builtin/for-each-repo.c ##
+     @@ t/t0068-for-each-repo.sh: test_expect_success 'run based on configured value' '
+       '
+       
+      +test_expect_success 'do nothing on empty config' '
+     -+	# will fail if any subcommand is run
+     -+	git for-each-repo --config=bogus.config -- false
+     ++	# the whole thing would fail if for-each-ref iterated even
+     ++	# once, because "git help --no-such-option" would fail
+     ++	git for-each-repo --config=bogus.config -- help --no-such-option
+      +'
+      +
+       test_done
+
+
+ builtin/for-each-repo.c  | 7 +++++++
+ t/t0068-for-each-repo.sh | 6 ++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 5bba623ff12..52be64a4373 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -51,6 +51,13 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ 	values = repo_config_get_value_multi(the_repository,
+ 					     config_key);
+ 
++	/*
++	 * Do nothing on an empty list, which is equivalent to the case
++	 * where the config variable does not exist at all.
++	 */
++	if (!values)
++		return 0;
++
+ 	for (i = 0; !result && i < values->nr; i++)
+ 		result = run_command_on_repo(values->items[i].string, &args);
+ 
+diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
+index 136b4ec8392..4675e852517 100755
+--- a/t/t0068-for-each-repo.sh
++++ b/t/t0068-for-each-repo.sh
+@@ -27,4 +27,10 @@ test_expect_success 'run based on configured value' '
+ 	grep again message
+ '
+ 
++test_expect_success 'do nothing on empty config' '
++	# the whole thing would fail if for-each-ref iterated even
++	# once, because "git help --no-such-option" would fail
++	git for-each-repo --config=bogus.config -- help --no-such-option
++'
++
+ test_done
+
+base-commit: 4950b2a2b5c4731e4c9d5b803739a6979b23fed6
+-- 
+gitgitgadget
