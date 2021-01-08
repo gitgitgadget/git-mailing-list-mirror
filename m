@@ -5,68 +5,69 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7B0C43332
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 810BCC433DB
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:50:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AAF9235DD
-	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:50:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38CA523447
+	for <git@archiver.kernel.org>; Fri,  8 Jan 2021 07:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728031AbhAHHuG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 8 Jan 2021 02:50:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49338 "EHLO
+        id S1728008AbhAHHub (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 8 Jan 2021 02:50:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728003AbhAHHuF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Jan 2021 02:50:05 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79EE6C0612F5
-        for <git@vger.kernel.org>; Thu,  7 Jan 2021 23:49:25 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id cw27so10278042edb.5
-        for <git@vger.kernel.org>; Thu, 07 Jan 2021 23:49:25 -0800 (PST)
+        with ESMTP id S1726863AbhAHHua (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Jan 2021 02:50:30 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F295BC0612F4
+        for <git@vger.kernel.org>; Thu,  7 Jan 2021 23:49:49 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id cw27so10279006edb.5
+        for <git@vger.kernel.org>; Thu, 07 Jan 2021 23:49:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=references:user-agent:from:to:cc:subject:message-id:in-reply-to
          :date:mime-version;
-        bh=eVpzq5ZcBLF2Xma64ciGVvgRSW7u9b43wAxX5UrAkcE=;
-        b=fOvsiptZNdG92EiGOOwo4x0KsIKoJyfUqUUv8RCw0YHsUOUA7q7v8cWk0JM6TDc1+p
-         67e8YGGV4rqaIGOwNyEB6hXGNkmwmmGX5noIqSTI8Iz5mhl4GA9wvkpKVgW6LB26GRCH
-         BPPyFR4CmJvX7zA74LkD27yGmnx2kYZnkIsQKdp+iaaGWm7+wzmir+CFGFPoJXHsDbcx
-         rEbZDzRCnMnN6JfhYbKdoHTyCSGpPmNFbIP9IllcXaxp8un9T6FbYcRg6QPCzqliNc8m
-         LmmzNGhzsu/Jp/K9hEIXQdEw4piVo6klpFOBTOtjJ1P3csnVbrB/ZgxFNOTJf4775sU2
-         QlwQ==
+        bh=bIxmeiaYBbyIyS0z10xVyioLbPyqnSPIWgU6I1qZQqs=;
+        b=K4bJTytDmnC9TOmd7Hsh6RH78e3VSx3tYh1A4eTrOb43ESfHQ7MnJnaT3QNBK0omhZ
+         3CTEcjojh1WcTSpb1u81Tio+b6SBH4l/0upuBWYfv13nbxuH9cZtizv2isCD9MSE2/t8
+         TeIi8WBE4rdFmBTWHCO6KfMUTO+qA3E5a72Zm1hBqQdzABinvKCBRFaU27DkA38bH2yG
+         SVNhwX3UVtZk6vVi50g36fcOyIjkGMNDAEgMncfX0vPkezYRyLuCifGGiMj2qb09F7ZK
+         i5EK/SKxKAHoWvkVq0xu6Vpz0tfyXiMVAEPCXd6JQiqPeKrLZVk8cLsKqc/Nzij4A2KL
+         9stQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :message-id:in-reply-to:date:mime-version;
-        bh=eVpzq5ZcBLF2Xma64ciGVvgRSW7u9b43wAxX5UrAkcE=;
-        b=fQH8Gusz1USQ86HoWMx8SZA7j6wkVzlemmCa9GIvBtffKd2FVWgYyltpOe+dMmv0vQ
-         rbJeFzH4dABGaLT91AWWFCt5EhoI9rC3Lrt1Jg/Z/h+1JZ2Ef8cnWz/hutYA95BVvLBT
-         sxVztqaj4K+FM6t1xFMB1FluXKWexe2kq3YYEfKNNEF+iH7IGG2U7goKwWCXLlpZv2cA
-         NxlAaygJvnq/wDzeu64UCMplciDCTgEhw6GDzysVvKhSpx6/7jxXs/+zlhgZFoF/N9fV
-         tcZ51p+fefWTKbpSrkiFlZv61k+2M6EKgS/Hwah2lfQHTHQiz0wUGuo96hyYOPYIpDY3
-         SIpQ==
-X-Gm-Message-State: AOAM531o9YFZ2ZUVjDj8N+bKaIOTigd7qPu1GDSST/PArZoUQpCsQeU6
-        aOuTS4O0Z90sRG8PTNIwMT2wH8aB6bQb8w==
-X-Google-Smtp-Source: ABdhPJy7yUJcNqDMel4Nux4J+m/enJzSU9SC2qjYxmkVKawCNX4OCipy+JUvqT5XTlyeN5ZkrWpQXQ==
-X-Received: by 2002:aa7:d407:: with SMTP id z7mr4668199edq.234.1610092163887;
-        Thu, 07 Jan 2021 23:49:23 -0800 (PST)
+        bh=bIxmeiaYBbyIyS0z10xVyioLbPyqnSPIWgU6I1qZQqs=;
+        b=AmHPRjdGJwFz5ZXCr+ENRaPD30hkckMLnOFYfqWCo3sG99RxctE+zQVz4//BdcpR6m
+         2TUVdeE1cIUfYM8A3+dtLLQjOtCUqcxXfNqaq9eYW5AXZum8xgY/Avi7q1qoQh3sEfRp
+         Vp9Kd3IQc0rq10oJ1J5AzralBH+VLxS+0Ze+FEjBzJGTw7EXo2bF/JDdG5CdKhZD2vQW
+         SPR6i7ehrQNW70qrx8fhe6aI/ZHkWbufZWcjpNkf8bp4ld3PigRAxa6FO4XtTBuJ07cn
+         EdVaPA2Ma3wdMIh+CCJL8A4YGHjcMG45+OE1UPRKuzRTehZhSm5ykbwCqGBa2cEB/huO
+         G0Hw==
+X-Gm-Message-State: AOAM5317G3utsa/XRe7fuJhQq2ACLPi1kx/RlWrHMwm4WD+PKateRLlG
+        wJ1pzk0McGrGBjbaBQ1tem6dbmOkXyl+VA==
+X-Google-Smtp-Source: ABdhPJyJmFTKAtIltY+3qnxc07i6Eko1AA4Duz1pwZER6wbEb1GT8P+8wXZZ5FVgw20Gh2uPlnHAbg==
+X-Received: by 2002:a05:6402:40e:: with SMTP id q14mr4372576edv.85.1610092188351;
+        Thu, 07 Jan 2021 23:49:48 -0800 (PST)
 Received: from cpm12071.local ([212.86.35.64])
-        by smtp.gmail.com with ESMTPSA id ef11sm3257858ejb.15.2021.01.07.23.49.23
+        by smtp.gmail.com with ESMTPSA id n4sm3497735edt.46.2021.01.07.23.49.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Jan 2021 23:49:23 -0800 (PST)
+        Thu, 07 Jan 2021 23:49:47 -0800 (PST)
 References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
- <20210104162128.95281-7-rafaeloliveira.cs@gmail.com>
- <CAPig+cRysXpK0e1xXOuVd+EtkeyTk8FR6MUrL=Bg3W4ve8jdNA@mail.gmail.com>
+ <20210104162128.95281-8-rafaeloliveira.cs@gmail.com>
+ <CAPig+cRtd9V_ko1gNmueKWbJvna80mMgdvj6_06afK8JzypAOg@mail.gmail.com>
 User-agent: mu4e 1.4.13; emacs 27.1
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 6/7] worktree: add tests for `list` verbose and annotations
-Message-ID: <gohp6kk0sndhj9.fsf@gmail.com>
-In-reply-to: <CAPig+cRysXpK0e1xXOuVd+EtkeyTk8FR6MUrL=Bg3W4ve8jdNA@mail.gmail.com>
-Date:   Fri, 08 Jan 2021 08:49:22 +0100
+Subject: Re: [PATCH 7/7] worktree: document `list` verbose and prunable
+ annotations
+Message-ID: <gohp6kturrc2fk.fsf@gmail.com>
+In-reply-to: <CAPig+cRtd9V_ko1gNmueKWbJvna80mMgdvj6_06afK8JzypAOg@mail.gmail.com>
+Date:   Fri, 08 Jan 2021 08:49:47 +0100
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,108 +79,111 @@ Eric Sunshine writes:
 
 > On Mon, Jan 4, 2021 at 11:22 AM Rafael Silva
 > <rafaeloliveira.cs@gmail.com> wrote:
->> Add tests for "git worktree list" verbose mode, prunable and locked
->> annotations for both default and porcelain format and ensure the
->> "prunable" annotation is consistent with what "git worktree prune"
->> command will eventually remove. Additionally, add one test case to
->> ensure any newline characters are escaped from locked reason for the
->> porcelain format to prevent breaking the format.
->>
->> The c57b3367be (worktree: teach `list` to annotate locked worktree,
->> 2020-10-11) introduced a new test to ensure locked worktrees are listed
->> with "locked" annotation. However, the test does not remove the worktree
->> as the "git worktree prune" is not going to remove any locked worktrees.
->> Let's fix that by unlocking the worktree before the "prune" command.
+>> Update the documentation with "git worktree list" verbose mode, prunable
+>> and locked annotations for the default and porcelain format as part of
+>> teaching the command to show prunable working trees and verbose mode.
 >>
 >> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
 >> ---
->> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
->> @@ -62,7 +62,9 @@ test_expect_success '"list" all worktrees --porcelain' '
->>  test_expect_success '"list" all worktrees with locked annotation' '
->> -       test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
->> +       test_when_finished "rm -rf locked unlocked out &&
->> +               git worktree unlock locked &&
->> +               git worktree prune" &&
->>         git worktree add --detach locked master &&
->>         git worktree add --detach unlocked master &&
->>         git worktree lock locked &&
+>> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+>> @@ -226,9 +227,12 @@ This can also be set up as the default behaviour by using the
+>>  -v::
+>>  --verbose::
+>>         With `prune`, report all removals.
+>> +       With `list`, output additional information for working trees.
 >
-> You might need to be a bit more careful here. If the test fails before
-> the worktree is locked, then the `git worktree unlock` in the cleanup
-> code will return an error, which will make the code executed by
-> test_when_finished() fail, as well, which makes it harder to debug
-> problems. Moving the `unlock` cleanup after you know the lock
-> succeeded will address this issue:
+> This leaves the reader wondering what additional information is output
+> for `list`. Perhaps a small tweak will help:
 >
->     test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
->     git worktree add --detach locked master &&
->     git worktree add --detach unlocked master &&
->     git worktree lock locked &&
->     test_when_finished "git worktree unlock locked" &&
->     ...
->
-> Same comment applies to other new tests added by this patch which lock
-> worktrees.
+>     With `list`, output additional information about worktrees (see below).
 >
 
-This is good point. will change on the next revision.
+Make sense.
 
->> @@ -71,6 +73,96 @@ test_expect_success '"list" all worktrees with locked annotation' '
->> +test_expect_success '"list" all worktrees with prunable consistent with "prune"' '
->> +       test_when_finished "rm -rf prunable out && git worktree prune" &&
->> +       git worktree add --detach prunable &&
->> +       rm -rf prunable &&
->> +       git worktree list >out &&
->> +       grep "/prunable  *[0-9a-f].* prunable$" out &&
->> +       git worktree prune --verbose >out &&
->> +       test_i18ngrep "^Removing worktrees/prunable" out
->> +'
+>>  --expire <time>::
+>>         With `prune`, only expire unused working trees older than `<time>`.
+>> +       With `list`, annotate unused working trees older than `<time>` as prunable
+>> +       candidates that will be remove by `prune` command if the same option is used.
 >
-> To be trustworthy, doesn't this test also need to have an unprunable
-> worktree, and test that `git worktree list` doesn't annotate it as
-> "prunable" _and_ that `git worktree prune` didn't prune it? Otherwise,
-> we really don't know that the two commands agree about what is and is
-> not prunable -- we only know they agree that this particular worktree
-> was prunable.
+> Perhaps just minimal:
+>
+>     With `list`, annotate missing worktrees as prunable if they
+>     are older than `<time>`.
 >
 
-You're right this test is missing the case the "unprunable case". Will
-add into the next revision.
+Sounds reasonable.
 
->> +test_expect_success '"list" all worktrees --porcelain with newline escaped locked reason' '
->> +       test_when_finished "rm -rf locked_lf locked_crlf reason_lf reason_crlf out actual expect reason &&
->> +               git worktree unlock locked_lf &&
->> +               git worktree unlock locked_crlf &&
->> +               git worktree prune" &&
+>> @@ -367,13 +371,48 @@ $ git worktree list
+>> +The command also shows annotations for each working tree, according to its state.
+>> +These annotations are:
+>> +
+>> + * "locked", if any working tree is locked
+>> + * "prunable", if any working tree can be pruned via "git worktree prune".
 >
-> Nit: It's not a big deal, but we don't normally bother cleaning up
-> every junk file in tests, such as `out`, `actual`, `expect` if those
-> files aren't going to be a problem for subsequent tests. We are
-> explicitly cleaning up the worktrees in these tests because this
-> script is all about testing worktree behavior, and some random
-> leftover worktree could be a problem for other tests. I don't care
-> strongly one way or the other, but I worry a tiny bit that the list of
-> files being cleaned up could become outdated as changes are made to
-> the tests later...
+> s/any/the/g
+>
+> We might want to use backticks around these annotations rather than
+> double quotes, and we certainly do want to use backticks around the
+> `git worktree prune` command to ensure it is styled consistently with
+> other commands in this document.
 >
 
-Make sense, and ...
+Yes, good catch. It make sense to have backticks here.
 
->> +test_expect_success '"list" all worktrees --porcelain with prunable' '
->> +       test_when_finished "rm -rf prunable list out && git worktree prune" &&
->> +       git worktree add --detach prunable &&
->> +       rm -rf prunable &&
->> +       git worktree list --porcelain >out &&
->> +       test_i18ngrep "^prunable gitdir file points to non-existent location$" out
->> +'
+>> +Note that, the annotation is only moved to the next line only if the
+>> +additional text is available, otherwise the text is kept on the same.
 >
-> ... for instance, the file `list` being cleaned up in this test is not
-> even created by this test.
+> Drop the comma between "that, the". Also, too many "only"s in this
+> sentence. You can actually drop both of them and the sentence will
+> still read fine:
+>
+>    Note that the annotation is moved to the next line if the
+>    additional information is available, otherwise it stays on
+>    the same line as the worktree itself.
+>
+> or something.
 >
 
-This is exactly the case of updating the test and forgetting to
-remove from the cleanup part because it was not used anymore. I'm also
-inclined to make this changes on the next revision.
+Thanks for the alternative suggestion. It reads better like this will
+add change the patch message to something more close to your suggestion.
+
+>>  Porcelain Format
+>>  ~~~~~~~~~~~~~~~~
+>>  The porcelain format has a line per attribute.  Attributes are listed with a
+>>  label and value separated by a single space.  Boolean attributes (like `bare`
+>>  and `detached`) are listed as a label only, and are present only
+>>  if the value is true.  The first attribute of a working tree is always
+>> -`worktree`, an empty line indicates the end of the record.  For example:
+>> +`worktree`, an empty line indicates the end of the record.
+>> ++
+>> +In case any of the working trees are locked or is a candidate for pruning
+>> +(See DESCRIPTION above) the labels "locked" and "prunable" is also shown
+>> +followed by a reason, if available, otherwise only the labels are listed.
+>> +For example:
+>
+> s/(See/(see/
+> s/is also/are also/
+>
+> Let's also use backticks rather than double quotes around `locked` and
+> `prunable` to ensure consistent formatting with the other porcelain
+> labels `bare` and `detached` which are already in backticks.
+>
+
+Nice catch. 
+
+> Also, the unnecessary `+` line (seen as `++` in the diff) makes this
+> render incorrectly. It renders as:
+>
+>     +In case any...
+>
+> To fix it, just leave the line blank between paragraphs.
+>
+> (If possible, install `asciidoc` and `xmlto` and then run `make html`
+> to render the documentation yourself, and open
+> Documentation/git-worktree.html in your browser to check the output.)
+
+Sure thing. thanks for the suggestion. I should have rendered the
+documentation before sending. Apologize for that.
 
 -- 
 Thanks
