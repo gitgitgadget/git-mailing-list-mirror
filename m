@@ -2,227 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA731C433DB
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 21:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58CDFC433E0
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 21:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5304D23A82
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 21:41:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 105FA23A82
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 21:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbhAIVlB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 16:41:01 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51479 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbhAIVlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 16:41:01 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 44A04113DD7;
-        Sat,  9 Jan 2021 16:40:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YVTMcT22FAl9
-        TuYBLGiFq3BSEgs=; b=VRoVXAKKcM8M+mD38EhOUqdgUDKKuASRp060kWtv87SX
-        pWvV3TgA7OTjEeBo59OYMuq35oWzH0lMWN6wIdzq7NaKRc2qv5qIBDDmfWvEy5kn
-        eMM5jyF7tLBrialSfmnD+sSqhiINyIA83I++qIo6LdL3qVw/UUm7ECtm7/+n9rQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AlqqZ3
-        LA2Nuvk8euX1fzMzq9DYDFkbXTxa6/UiWNPlLtud5CX+70I1F8NjzakiQdR5jRSD
-        ccyKr0SDujBzc3wE9Ccqm4fIYpNfWUCW+0AMiKGRnF9ubRL+4DpnF4gPdtWWHenF
-        jZzZ2A9IJ1u80zd3wgu6sgJIdPO/JiPu/bvmM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D8FF113DD6;
-        Sat,  9 Jan 2021 16:40:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726196AbhAIVnl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 16:43:41 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49716 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726062AbhAIVnl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Jan 2021 16:43:41 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 834A5113DD5;
-        Sat,  9 Jan 2021 16:40:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9528760781;
+        Sat,  9 Jan 2021 21:42:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1610228579;
+        bh=IB7nQlCHlWk9f5IhHKPlcMP7I+4MO8gu92lP8o4pb1E=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=lrJPPmuk+8sGzv0pIwYoKkC4VSQvkCeroz7OGSmSZNrfl1Hm1MTeVL9TpDuf5Ic3W
+         z5xX+0ZFc6XHAbOUZn/ERdvy3q10jx893owcn/1N+vS6ffALqWvrzILmH4HbPECKBK
+         qbYfA5C3CHmBpNMQkMIW5WUsW1/WtmnU42YAadkeKcLlNuZABjYs32DwagP/UWN+T3
+         FyCzfFQSUMB+N/4BueDBsdU54m9fDUenEZCvb6uj3xmbavAH7dI13mQxJ9QynzoPQI
+         gkIsP40VtXsYbsGbMRH2WOLLLd6Sc/nA7wU8Baw0OB3qjO+uKrw6WQIhf1G5YIf6ej
+         R0CDdfiQFVWRQb3g9Jpn9Kx/e5XvPtgdx5U0y5o6c8VSDApPB1qDSW0ZVLRyjx2aUk
+         3/NgNyUvlgbOfHEuQ5bbuxvnt05URbchTkEXgrA2fEHOemB5lHMZCqIrGcbdfcseB0
+         8sxZkNZgIciTUZ/5Wry0Yte2L6RzukpFHQQA7/FrmdMQb7fg6x2
+Date:   Sat, 9 Jan 2021 21:42:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alan Mackenzie <acm@muc.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] t7800-difftool: don't accidentally match tmp dirs
-References: <20210108092036.GR8396@szeder.dev>
-        <20210109170513.31084-1-szeder.dev@gmail.com>
-Date:   Sat, 09 Jan 2021 13:40:09 -0800
-In-Reply-To: <20210109170513.31084-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Sat, 9 Jan 2021 18:05:13 +0100")
-Message-ID: <xmqqft39g56u.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Subject: Re: Difficulties of scripting git
+Message-ID: <X/ojXdtGOHeP2IhY@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alan Mackenzie <acm@muc.de>, git@vger.kernel.org
+References: <X/oAhdZlLwcFRCrR@ACM>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 40481532-52C3-11EB-AB52-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="WYowugLx+rvpq1bo"
+Content-Disposition: inline
+In-Reply-To: <X/oAhdZlLwcFRCrR@ACM>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> In a bunch of test cases in 't7800-difftool.sh' we 'grep' for specific
-> filenames in 'git difftool's output, and those test cases are prone to
-> occasional failures because those filenames might be part of the name
-> of difftool's temporary directory as well, e.g.:
->
->   +git difftool --dir-diff --no-symlinks --extcmd ls v1
->   +grep sub output
->   +test_line_count =3D 2 sub-output
->   test_line_count: line count for sub-output !=3D 2
->   /tmp/git-difftool.Ssubfq/left/:
->   sub
->   /tmp/git-difftool.Ssubfq/right/:
->   sub
->   error: last command exited with $?=3D1
->   not ok 50 - difftool --dir-diff v1 from subdirectory --no-symlinks
->
-> Fix this by tightening the 'grep' patterns looking for those
-> interesting filenames to match only lines where a filename stands on
-> its own.
+--WYowugLx+rvpq1bo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OK.  I thought that your previous "we know not just we want to see
-sub and file anywhere in the output, but we want them to appear in
-this order" attempt was nicer, especially when dealing with the
-directory diff output.  That was why I suggested to "normalize" the
-lines that report the directory path with a sed script, instead of
-removing them with "grep -v", and change the condition to tell if a
-line is a directory from "^/" to "/:$".
+On 2021-01-09 at 19:14:13, Alan Mackenzie wrote:
+> Hello, git.
+>=20
+> I want to write a bash script (more precisely, correct an existing
+> script) which uses git, and it is DIFFICULT!!!
+>=20
+> I need a git pull in the script.  Fine, but how does the script know if
+> it's worked or not?  I couldn't find any description of a return code in
+> the git-pull man page (or in the git-merge man page).
+>=20
+> The big problem is when I have modified, uncommitted files in the target
+> repo, and those same files are to be updated in commits coming from the
+> source repo.  Sadly, git is unable to merge these changes.  It just
+> fails, putting an error message onto stderr, but doesn't tell the
+> calling script in any way that I can see.
+>=20
+> One idea would be always to call git stash before doing the pull, then
+> git stash pop afterwards.  Trouble is, git stash is unreliable - it
+> doesn't always add a new stash entry, so the stash pop at the end would
+> sometimes/often pop off an entry it shouldn't.  git stash doesn't have a
+> --force argument.  git stash doesn't set a result code, either, that I
+> can see.  One way around this would be to do
+>=20
+>     $ git stash list | wc -l
+>=20
+> both before and after the git stash and compare the answers, but really?
 
-But the approach taken with this round is much simpler.  When we
-only care about 'sub' and 'file' in the output, for example, we used
-to just grep for these strings, allowing substring matches.  Now we
-make sure the lines we consider matches contain these tokens we want
-to see and nothing else.  It focuses on only fixing the bug, without
-attempting to "improve" the tests while at it.  And it is certainly
-simpler to explain the change between the version before this patch
-and the version with this patch.
+git stash doesn't consider there being nothing to stash to be an error,
+so it doesn't set a nonzero error code.  Think of it as, "I want a clean
+working tree," not, "I want to create a stash."  In that sense, what you
+wanted is already done, so it's not an error.
 
-Thanks.
+You are, however, not the only person who's been unhappy with this
+behavior.  A --force option may be a useful option to have if someone
+wanted to create it.
 
+> So, next idea, feed the output from git status --porcelain through grep
+> before and after the git pull, so as to find out whether there are any
+> modified files before the git pull (thus making a stash necessary) and
+> any files with conflicts after the git stash pop.  Shouldn't be too
+> difficult.
 
+Using "git status --porcelain" before and after the stash is an easy way
+to find out whether there was anything to stash.  If there's a
+difference, then a stash was created.
 
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  t/t7800-difftool.sh | 38 +++++++++++++++++++-------------------
->  1 file changed, 19 insertions(+), 19 deletions(-)
->
-> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-> index a578b35761..32291fb67b 100755
-> --- a/t/t7800-difftool.sh
-> +++ b/t/t7800-difftool.sh
-> @@ -440,20 +440,20 @@ run_dir_diff_test () {
-> =20
->  run_dir_diff_test 'difftool -d' '
->  	git difftool -d $symlinks --extcmd ls branch >output &&
-> -	grep sub output &&
-> -	grep file output
-> +	grep "^sub$" output &&
-> +	grep "^file$" output
->  '
-> =20
->  run_dir_diff_test 'difftool --dir-diff' '
->  	git difftool --dir-diff $symlinks --extcmd ls branch >output &&
-> -	grep sub output &&
-> -	grep file output
-> +	grep "^sub$" output &&
-> +	grep "^file$" output
->  '
-> =20
->  run_dir_diff_test 'difftool --dir-diff ignores --prompt' '
->  	git difftool --dir-diff $symlinks --prompt --extcmd ls branch >output=
- &&
-> -	grep sub output &&
-> -	grep file output
-> +	grep "^sub$" output &&
-> +	grep "^file$" output
->  '
-> =20
->  run_dir_diff_test 'difftool --dir-diff branch from subdirectory' '
-> @@ -462,11 +462,11 @@ run_dir_diff_test 'difftool --dir-diff branch fro=
-m subdirectory' '
->  		git difftool --dir-diff $symlinks --extcmd ls branch >output &&
->  		# "sub" must only exist in "right"
->  		# "file" and "file2" must be listed in both "left" and "right"
-> -		grep sub output >sub-output &&
-> +		grep "^sub$" output >sub-output &&
->  		test_line_count =3D 1 sub-output &&
-> -		grep file"$" output >file-output &&
-> +		grep "^file$" output >file-output &&
->  		test_line_count =3D 2 file-output &&
-> -		grep file2 output >file2-output &&
-> +		grep "^file2$" output >file2-output &&
->  		test_line_count =3D 2 file2-output
->  	)
->  '
-> @@ -477,11 +477,11 @@ run_dir_diff_test 'difftool --dir-diff v1 from su=
-bdirectory' '
->  		git difftool --dir-diff $symlinks --extcmd ls v1 >output &&
->  		# "sub" and "file" exist in both v1 and HEAD.
->  		# "file2" is unchanged.
-> -		grep sub output >sub-output &&
-> +		grep "^sub$" output >sub-output &&
->  		test_line_count =3D 2 sub-output &&
-> -		grep file output >file-output &&
-> +		grep "^file$" output >file-output &&
->  		test_line_count =3D 2 file-output &&
-> -		! grep file2 output
-> +		! grep "^file2$" output
->  	)
->  '
-> =20
-> @@ -491,9 +491,9 @@ run_dir_diff_test 'difftool --dir-diff branch from =
-subdirectory w/ pathspec' '
->  		git difftool --dir-diff $symlinks --extcmd ls branch -- .>output &&
->  		# "sub" only exists in "right"
->  		# "file" and "file2" must not be listed
-> -		grep sub output >sub-output &&
-> +		grep "^sub$" output >sub-output &&
->  		test_line_count =3D 1 sub-output &&
-> -		! grep file output
-> +		! grep "^file$" output
->  	)
->  '
-> =20
-> @@ -503,9 +503,9 @@ run_dir_diff_test 'difftool --dir-diff v1 from subd=
-irectory w/ pathspec' '
->  		git difftool --dir-diff $symlinks --extcmd ls v1 -- .>output &&
->  		# "sub" exists in v1 and HEAD
->  		# "file" is filtered out by the pathspec
-> -		grep sub output >sub-output &&
-> +		grep "^sub$" output >sub-output &&
->  		test_line_count =3D 2 sub-output &&
-> -		! grep file output
-> +		! grep "^file$" output
->  	)
->  '
-> =20
-> @@ -518,8 +518,8 @@ run_dir_diff_test 'difftool --dir-diff from subdire=
-ctory with GIT_DIR set' '
->  		cd sub &&
->  		git difftool --dir-diff $symlinks --extcmd ls \
->  			branch -- sub >output &&
-> -		grep sub output &&
-> -		! grep file output
-> +		grep "^sub$" output &&
-> +		! grep "^file$" output
->  	)
->  '
-> =20
-> @@ -527,7 +527,7 @@ run_dir_diff_test 'difftool --dir-diff when worktre=
-e file is missing' '
->  	test_when_finished git reset --hard &&
->  	rm file2 &&
->  	git difftool --dir-diff $symlinks --extcmd ls branch master >output &=
-&
-> -	grep file2 output
-> +	grep "^file2$" output
->  '
-> =20
->  run_dir_diff_test 'difftool --dir-diff with unmerged files' '
+> Except, how does one recognise a file with conflicts from this git
+> status output?  The man page says that
+>=20
+>     "   For paths with merge conflicts, `X' and `Y' show the modification
+>     states of each side of the merge.  For paths that do not have merge
+>     conflicts, `X' shows the status of the index, and `Y' shows the status
+>     of the work tree.  For untracked paths, `XY' are `??'.  Other status
+>     codes can be interpreted as follows:  ...."
+>=20
+> I've spent nearly an hour trying to make sense of this bit of man page.
+> How is one meant to distinguish an XY of a merge conflict from the XY of
+> an index/work tree entry?  I can't find that key bit of information
+> anywhere.
+
+In the chart, the options in the first section are "normal" cases that
+occur without a merge conflict.  The second section is things that
+happen when there's a conflict (the "unmerged" states).
+
+So what you're looking for to find conflicts is something maybe a little
+like this:
+
+  git status --porcelain | grep -E '^(AA|DD|[AUD]U|U[AUD])'
+
+If you believe that you're likely to need to handle names with newlines,
+then of course you'll need -z as well.
+
+I do agree that this is a little unclear; I went ahead and simulated a
+merge conflict to verify.  I'll try to send a patch making the
+documentation reflect what I mentioned about the chart above.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--WYowugLx+rvpq1bo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX/ojXAAKCRB8DEliiIei
+gQF5APwIAGb91XPZXcOOXEN153hH8kW6OdY/58+8IlhfzI6cwgEA7D8VKEc15O/0
+makd3FhK8azfAoHhcPSdElRAgyYg+Ao=
+=1WQG
+-----END PGP SIGNATURE-----
+
+--WYowugLx+rvpq1bo--
