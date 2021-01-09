@@ -2,120 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72070C433E0
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 234B3C433E6
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AB792388B
+	by mail.kernel.org (Postfix) with ESMTP id D50892388B
 	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:43:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726386AbhAIWnZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 17:43:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37722 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbhAIWnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 17:43:24 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FBAC061786
-        for <git@vger.kernel.org>; Sat,  9 Jan 2021 14:42:44 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id q4so7547801plr.7
-        for <git@vger.kernel.org>; Sat, 09 Jan 2021 14:42:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=N6jYHYt3fnDjj3C4gnvdRcXf9fA7FlMIz3mhEpbzUEE=;
-        b=fOp4Wkiwxqzwao8Y2EAl+DaupL3tVfav8fTKEfK9o/UYrqsnIUKnonI1L9ycxLf0zn
-         ++13D6Jdam0McI0Vh1yXrWsZdtpFlHtaC3NgMgOwRJ8lVxersm5PjFGpPyWpfRIEalhW
-         +6HaLbCKIVMUn9QMhqWokEQKKTNohJr5be9ukz7S1V/hb4hZm2OwXLO6AJ9B3fUAkfZs
-         smism1A7v9hUyKdgXnlpgW9oOcY132FdyEGLQv0Yv2ke84v8+JWCXpzUBg4iXe09XPXj
-         hnECdyDly2pBzW/Ea26wL6QZ//MfoUuUiAzdVLbPXWjC3rmbMFGgtofJjEjW2uAptbcG
-         k7RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=N6jYHYt3fnDjj3C4gnvdRcXf9fA7FlMIz3mhEpbzUEE=;
-        b=Xna5dC9q0BAE++IXWHZ0K4K0iMlKRhGbKKyH9hN7DIlfWbLUcf+iwaHEhdIkNk2IEV
-         IuKPwZTskh9pByYMuWUwiVT4eMtgmuNXv7D1vrpVgmQMQ9xfP6iyCYMAbvvwSlkMAIWv
-         UkKIEL3U9Xpy79lIatHvlKZQR6TSvUgdnlt1+w1/EL0vt/9SufPAgv5nocVBkLwKV+qz
-         StbIGDOVstE0Y77vLNUKznoHs1kk5selWCUp4KWPycaMD14UhFpRF2IklkLpErGBYDVX
-         5tGqmx5RLnb+1AZ6cXIDVrrJMMG5MYWvyLwUINvBnF9BAfcoc0zORt+AKngwliI8Zl78
-         JbdQ==
-X-Gm-Message-State: AOAM531Y7G2XcsUGTX1O/vtFIOu/tWCmkdsyBDCo+XZiVTm6NUdyM0vC
-        mt+I51re2X+hqE7EsaWgld0=
-X-Google-Smtp-Source: ABdhPJxFny0sk1ARuGlr7NNrVlG2Db1UNmfMbLHqqCEd2drMtHhpHcOuv1H1nHoI+VBTN8pdxRb35Q==
-X-Received: by 2002:a17:902:9a90:b029:da:ba07:efdc with SMTP id w16-20020a1709029a90b02900daba07efdcmr10132683plp.1.1610232163885;
-        Sat, 09 Jan 2021 14:42:43 -0800 (PST)
-Received: from mailhub.fa.disney.com ([198.187.190.10])
-        by smtp.gmail.com with ESMTPSA id cu4sm9868013pjb.18.2021.01.09.14.42.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Jan 2021 14:42:43 -0800 (PST)
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Seth House <seth@eseth.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v2] fixup! mergetool: add automerge configuration
-Date:   Sat,  9 Jan 2021 14:42:36 -0800
-Message-Id: <20210109224236.50363-1-davvid@gmail.com>
-X-Mailer: git-send-email 2.30.0.rc1.6.g3f22546b2b.dirty
-In-Reply-To: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
-References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
+        id S1726394AbhAIWnl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 17:43:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64441 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726077AbhAIWnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jan 2021 17:43:40 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F7C39F01C;
+        Sat,  9 Jan 2021 17:42:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=I6P1iUkr1x+g
+        pb+mVFxvfna4aOM=; b=NtwU3BQndvZMtrsI5NW3IqYmXoEFN9J5fEKFzGr3gnHQ
+        sNuA2qM00U80OJth1rfcslxU56r46HlCmLsTKFRUhwPJvDqlrTTvhjvkV0oD5RG6
+        L/cfFsaZ9ECBD6C7sXNJ+t+LvYpbE0sgBlhhla50T5W028s/mIPJWVdMQ2gYuas=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AZyTwy
+        jLIyZsiwScrF9eau02lH/3azA9L2VFYWllYUrfPlz6GU27wFalJxAFBew6usjsyh
+        Jeye8UiR7KkqUYXVk0rHiiJczrVqa17HHh3uS6Onf5r/De8l9dxzUET9r/6nFwKp
+        eTBZVKpXIVwo1Fqy6frHe4IIt+HNpr42ZH9rQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 06ACC9F01B;
+        Sat,  9 Jan 2021 17:42:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 880119F01A;
+        Sat,  9 Jan 2021 17:42:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Is t5516 somehow flakey only on macOS?
+References: <xmqq35zbgd2a.fsf@gitster.c.googlers.com>
+        <CAPig+cQ3U4s0qmzoLL=ZBeSyCZm=QqjWz2P36ZUxMzNAyYn-WQ@mail.gmail.com>
+        <X/mGnY3wR1fGoxcf@coredump.intra.peff.net>
+        <X/mJ6gHrKVxQqPX4@coredump.intra.peff.net>
+        <20210109173336.GS8396@szeder.dev>
+Date:   Sat, 09 Jan 2021 14:42:56 -0800
+In-Reply-To: <20210109173336.GS8396@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sat, 9 Jan 2021 18:33:36 +0100")
+Message-ID: <xmqqo8hxenpr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05017884-52CC-11EB-A818-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"\r\?" in sed is not portable to macOS and possibly others.
-"\r" is not valid on Linux with POSIXLY_CORRECT.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Replace "\r" with a substituted variable that contains "\r".
-Replace "\?" with "\{0,1\}".
+>> Commit 014ade7484 (upload-pack: send ERR packet for non-tip objects,
+>> 2019-04-13) added a test that greps the output of a failed fetch to ma=
+ke
+>> sure that upload-pack sent us the ERR packet we expected. But checking
+>> this is racy; despite the argument in that commit, the client may stil=
+l
+>> be sending a "done" line when the server exits, causing it to die() on=
+ a
+>
+> Nit: I think using the word "after" would make the problematic
+> sequence of events a tad clearer, i.e. "... after the server has
+> exited, ...".
 
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-This is based on top of fc/mergetool-automerge and can be squashed in
-(with the addition of my sign-off) if desired.
-
-Changes since last time:
-- printf '\r' instead of printf '\x0d'
-- The commit message now mentions POSIXLY_CORRECT.
-
- git-mergetool.sh | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index a44afd3822..9029a79431 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -243,9 +243,16 @@ auto_merge () {
- 	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
- 	if test -s "$DIFF3"
- 	then
--		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======\r\?$/,/^>>>>>>> /d' "$DIFF3" >"$BASE"
--		sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$DIFF3" >"$LOCAL"
--		sed -e '/^<<<<<<< /,/^=======\r\?$/d' -e '/^>>>>>>> /d' "$DIFF3" >"$REMOTE"
-+		cr=$(printf '\r')
-+		sed -e '/^<<<<<<< /,/^||||||| /d' \
-+			-e "/^=======$cr\{0,1\}$/,/^>>>>>>> /d" \
-+			"$DIFF3" >"$BASE"
-+		sed -e '/^||||||| /,/^>>>>>>> /d' \
-+			-e '/^<<<<<<< /d' \
-+			"$DIFF3" >"$LOCAL"
-+		sed -e "/^<<<<<<< /,/^=======$cr\{0,1\}$/d" \
-+			-e '/^>>>>>>> /d' \
-+			"$DIFF3" >"$REMOTE"
- 	fi
- 	rm -- "$DIFF3"
- }
--- 
-2.30.0.rc1.6.g3f22546b2b.dirty
-
+Thanks everybody for helping with extra clarity.  I do find it
+easier to follow with "after the server has exited" to picture
+the sequence of events in my mind.
