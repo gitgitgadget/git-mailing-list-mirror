@@ -2,155 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D66C433E0
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14CB4C433DB
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:34:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50E0B23884
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:25:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC79D238A1
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbhAIRZH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 12:25:07 -0500
-Received: from mout.web.de ([212.227.15.3]:43149 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725926AbhAIRZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 12:25:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1610212982;
-        bh=yMaASub+HdpUS1IkdYpnu7s9PKftRY+7KU6g8pouD/k=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=HTxU00jVCbHt6LRaoQYu2fKup354XrxqhGr9RMWpp/2kCkBXTUecapCJJZgcuel3I
-         7ZWFeL/lhZranCn/AAsGwINuLg+o4M7vmM68c3t/zpf4L/tvpIn6rjC6WaHhhsuCv0
-         Ntma9TTVy+wLE8jnIKJU2yEvySRF9WQxgiFIEJCA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LudLU-1jyS5W2sCm-00znl3; Sat, 09
- Jan 2021 18:23:02 +0100
-Date:   Sat, 9 Jan 2021 18:23:01 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Daniel Troger <random_n0body@icloud.com>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
- characters)
-Message-ID: <20210109172301.qkxxeeqnyrr6nyc5@tb-raspi4>
-References: <7B64BC13-CB54-43CE-8C01-D45E25591E2A@icloud.com>
+        id S1726298AbhAIReV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 12:34:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725942AbhAIReU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jan 2021 12:34:20 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C592C061786
+        for <git@vger.kernel.org>; Sat,  9 Jan 2021 09:33:40 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id t16so12065922wra.3
+        for <git@vger.kernel.org>; Sat, 09 Jan 2021 09:33:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HqycJ9X+8llr1aZie4hnKvfPXOruNz5OFrrrmWmOQP4=;
+        b=kOPLvNJCQPJKxUfh7meseMSABFGzG8a/DSmgjcTTJ/9em3q1oKcsogkghBkeTsUkEY
+         6ast+hNNaJ0qsi77KQA/8Q77y3zK3eCKgV+gNyhW2bfBL5dps7XL4eFPIulV2/Xc8dXw
+         pFJxUwEWHTbEpO/RxqxEe9KWVTIGb9KCuweJbvRysHh18pe2hB6+ZCbvlgsgpz1aGEG/
+         4nL35lZxmYArIcVPU4UvU1/dp5FEDyuuQElBz+pquTHjhOIUfRSjJdaFAaKSkLD1HWR9
+         vmmmIxHraJLxp2dYKuzXQgx7ditzkd+sjJXfsU6hDHlHbb12vBiEvU/NOjhQCN0HDQRM
+         sjMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HqycJ9X+8llr1aZie4hnKvfPXOruNz5OFrrrmWmOQP4=;
+        b=JtRb29aZ6a0GLUllCnKFOcTTsX7WJkasCqbicBkli01i249PQXmoyF6aPJur0jIp+K
+         IsAcy+uLCVDHg8J4epfNtuACx6CeSFfWTRImbaYEsEkoIszhZV5Z8XZ3T1AFikNPpqMq
+         7xK8fTYzsDWE+Y7C0YrBhcz/5RR4FNVT5JiEMzAKKGmyeodjzFucMc3miW1EwVl6IJcr
+         IznFCvgEBHMzOJFbZZ0PJzGmtXZU2ZgHWCS5MIGeGKg9X01xcAkFX/zGvSVpbpF0UHAg
+         zAy9JhFxOBj8F8Ew0dPe8Qxt+kvUhUAMiwgewTLsn9Dsh3NKumux55T6QuTF2DYvdCdc
+         towQ==
+X-Gm-Message-State: AOAM531po0SFHXAasE1uLzx5iFHs48mzXwuPibqFKtw4TVJTXM0P/ad/
+        XHu5WDQ+FOEEX5/bBmuJNlv+ZUMpAIc=
+X-Google-Smtp-Source: ABdhPJzXz6coxZL0A0oTadRVBn5mDX72Kidm4IqUu7ZNOkaGmyQ9IG5dfO1iVQZzic9UhpSADdbTqQ==
+X-Received: by 2002:a5d:6204:: with SMTP id y4mr8933118wru.48.1610213619180;
+        Sat, 09 Jan 2021 09:33:39 -0800 (PST)
+Received: from szeder.dev (84-236-109-1.pool.digikabel.hu. [84.236.109.1])
+        by smtp.gmail.com with ESMTPSA id m18sm17942096wrw.43.2021.01.09.09.33.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 09 Jan 2021 09:33:38 -0800 (PST)
+Date:   Sat, 9 Jan 2021 18:33:36 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Is t5516 somehow flakey only on macOS?
+Message-ID: <20210109173336.GS8396@szeder.dev>
+References: <xmqq35zbgd2a.fsf@gitster.c.googlers.com>
+ <CAPig+cQ3U4s0qmzoLL=ZBeSyCZm=QqjWz2P36ZUxMzNAyYn-WQ@mail.gmail.com>
+ <X/mGnY3wR1fGoxcf@coredump.intra.peff.net>
+ <X/mJ6gHrKVxQqPX4@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <7B64BC13-CB54-43CE-8C01-D45E25591E2A@icloud.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:wRa36rLgpQRmoCKRrNC7eejnmcq8MKCdyZWgp/HLeuQiYsz9ZWf
- B4dgBi0IeWS8/s0xp+okPCxjDHmV9bpW0H8kOQQ/X9H67g8ODsi5/Zc5zh18OgOhaiI355E
- PeGfuX2jWwLcIH/EhDffFBim8RS+fLH/V1zI18008mdrUE77S+ZGnoIkoyrSJga13aeePZ9
- waoz2VcOJUE49fyglm6sw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:XMuT0pSvnaU=:mtfDp/+BDLfwzo4olUAc+5
- auLllh8yYLLytYugLm5zTrPnfxfH5i5WLA6l9DV0i/W3kxZjn+YFsKy9qJiLBf1LuMxPPuofs
- I6JB+Xlcaw6aABj4DmYTX6Sl8SMWyVCqxcbum7CwYmoVoFrL3Gf82cDNqiZnzmBgrVVToWVMF
- eIlgGt+gIFxT25kxNwUaByjl4bCKd56nn4tolsZF4sbYAqdZcLIf8Gx4WdCUA9c9pmpTY9/Gd
- F+fEiedTA9j9fvAPcfXEfDQFiZ1shmKcW4Bt0R3VS8CSTSjzfO8fRdq/XfvB30UNGOgcQ87wS
- +8Lwdb0shr2NuG0kQude7mBx3oqqLFOhDAne5LRKfaRc2+zmaJBEgYQszlbXpG3aw4MasMrO3
- LwOBNgT161AalgQUfRbZ+W2GFN5NGxOSNKojNuqSUTaci+2W4qQKLMuIOUkfWyCD6tOM72AWL
- dTli3ir+lXlkpTSpfe1YLnYAZ7ESHF/kgfoXFYaaoLGNfXezm4i50bxlUXSIPg/m+NG+98AVl
- +H3EXndy09Z40Vcc4GRGvg7wVM3BYeNf5SfIQSrzwHX8VKdtOpQF2G26teey37vlAtgSb2unl
- ZbvHLJTkO5bjGL3VUktDxYp/bvO13A1JyGZKuu/JqgH0RthohxDn2sWxYBYMIx/xEqEsZd8Jc
- 7Mu3W+ltZsDdwsphwEbYfAMNEgRfhrJtZ8Rc2iZFjn5b9b2In3jueBZzSYIrRS79OAFU/Y+Dl
- W5plaKYkYbNIrMq3xj0yzW7EfYu9xqTuOjZTqEyyHKpcJ2zGTLjpkLF4CzOZNPNjzlk2/EYW6
- 2t9dAf1Mfj39ez5C29WuzL8X6e/1fwj0+N2jINf9QVvlsTmILLKVG1750jIBA79e3YwgTtwVh
- sik8u35x5GyPXz1jJR3g==
+In-Reply-To: <X/mJ6gHrKVxQqPX4@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 08:56:08PM +0100, Daniel Troger wrote:
-> > That did the trick, the test case is now reproducible here.
->
-> > It seems as if there could be a patch in a couple of days, but no prom=
-ises.
->
-> That's great news, thank you all very much!
+On Sat, Jan 09, 2021 at 05:48:10AM -0500, Jeff King wrote:
+> On Sat, Jan 09, 2021 at 05:34:05AM -0500, Jeff King wrote:
+> 
+> > For this _particular_ test, since we know that it is testing a v0-only
+> > behavior, we might want to just loosen the test. This goes against the
+> > point of adding it in 014ade7484 (upload-pack: send ERR packet for
+> > non-tip objects, 2019-04-13), but it's the best we can do for now.
+> > Something like this:
+> 
+> Since this issue has been languishing for a while now with several
+> "something like this" patches, I've packaged it up into something more
+> palatable. I think we should just apply this and move on. We may still
+> run into other similar races, but I don't think this one is worth
+> spending more mental effort on.
+> 
+> -- >8 --
+> Subject: [PATCH] t5516: loosen "not our ref" error check
+> 
+> Commit 014ade7484 (upload-pack: send ERR packet for non-tip objects,
+> 2019-04-13) added a test that greps the output of a failed fetch to make
+> sure that upload-pack sent us the ERR packet we expected. But checking
+> this is racy; despite the argument in that commit, the client may still
+> be sending a "done" line when the server exits, causing it to die() on a
 
-Hej Daniel,
-Not sure if I can keep my promise, please see below.
+Nit: I think using the word "after" would make the problematic
+sequence of events a tad clearer, i.e. "... after the server has
+exited, ...".
 
-> I was already afraid at first it was some weird macOS filesystem bug onl=
-y happening on high sierra
-> and earlier which was never going to be fixed.
+> failed write() and never see the ERR packet at all.
+> 
+> This fails quite rarely on Linux, but more often on macOS. However, it
+> can be triggered reliably with:
+> 
+> 	diff --git a/fetch-pack.c b/fetch-pack.c
+> 	index 876f90c759..cf40de9092 100644
+> 	--- a/fetch-pack.c
+> 	+++ b/fetch-pack.c
+> 	@@ -489,6 +489,7 @@ static int find_common(struct fetch_negotiator *negotiator,
+> 	 done:
+> 	 	trace2_region_leave("fetch-pack", "negotiation_v0_v1", the_repository);
+> 	 	if (!got_ready || !no_done) {
+> 	+		sleep(1);
+> 	 		packet_buf_write(&req_buf, "done\n");
+> 	 		send_request(args, fd[1], &req_buf);
+> 	 	}
 
-I haven't heard about anything special about Mac OS High Sierra.
-If there are strange things, please let us know.
+FWIW (not much?), I've run the test suite with that sleep(1) in place,
+and there were no other test failures.
 
-(And I still womder, how did you mange to create the "decomposed version o=
-f =E5" ?
- Mac OS itself doesn't decompose the "=E5", in opposite to "=E4" or "=F6".
- It creates a name for a file in decomposed form for "=E4", "=F6" and a lo=
-t of other
- characters/code points, but not for "=E5".
- It does, however, treat the pre- and de-composed form of "=E5" equivilent=
-)
+> This is a real user-visible race that it would be nice to fix, but it's
+> tricky to do so: the client would have to speculatively try to read an
+> ERR packet after hitting a write() error. And at least for this error,
+> it's specific to v0 (since v2 does not enforce reachability at all).
+> 
+> So let's loosen to test to avoid annoying racy failures. If we
+> eventually do the read-after-failed-write thing, we can tighten it. And
+> if not, v0 will grow increasingly obsolete as servers support v2, so the
+> utility of this test will decrease over time anyway.
 
->
-> In the meantime I have managed to add "both directories" to git (with gi=
-t add paulbr*).
-> It's funny, now one directory shows up twice when viewing my repo on git=
-lab.
->
-> And this is the message I get when cloning:
-> warning: the following paths have collided (e.g. case-sensitive paths
-> on a case-insensitive filesystem) and only one from the same
-> colliding group is in the working tree:
->   '[...]/paulbrunng=E5rd-springyard/main.ts'
->   '[...]/paulbrunng=E5rd-springyard/main.ts'
->
-> What will happen with the two folders in the git repo after the patch?
->
+Makes sense.  Back then when I investigated this issue the default
+protocol was still v0; now that we default to v2 I agree its better to
+work around the issue in the test instead of "fixing" the root cause
+with that "trying to read ERR packet on error" hack.
 
-Now, that is another question.
+Good, a year-and-a-half old entry checked off from my todo list :)
+Thanks.
 
-First of all, I would recommend to "remove" one of the folders from Git,
-because all files are tracked twice in Git, but "shadowed" by the file sys=
-tem.
-
-
-
-To clean up the repo, you can do like this, explained in a dummy repo:
-
-#One file (that is all we have) is tracked twice:
-user@mac:/tmp/AAA> git ls-files
-"paulbrunnga\314\212rd-springyard/horse"
-"paulbrunng\303\245rd-springyard/horse"
-
-# Remove all files from Git, but keep them on disk:
-user@mac:/tmp/AAA> git rm -rf --cached .
-rm 'paulbrunng=E5rd-springyard/horse'
-rm 'paulbrunng=E5rd-springyard/horse'
-
-# Re-add one version, the precomposed:
-user@mac:/tmp/AAA> git add .
-user@mac:/tmp/AAA> git status
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-          deleted:    "paulbrunnga\314\212rd-springyard/horse"
-
-user@mac:/tmp/AAA> git ls-files
-"paulbrunng\303\245rd-springyard/horse"
-
-#Not shown:
-git commit -m "Remove duplicate directory"
-
-####################
-
-Now back to a potential patch:
-That will take some time.
-I digged some hours into the stuff, add lots of debug traces,
-patches and stuff, and now we need a cleanup and get it into a better
-shape to be acceptable.
-
-All the best
