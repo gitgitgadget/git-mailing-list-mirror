@@ -2,207 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EAA2C433DB
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D66C433E0
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:25:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 319E72343F
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:06:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50E0B23884
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 17:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726073AbhAIRGE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 12:06:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50436 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725872AbhAIRGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 12:06:04 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA1BC061786
-        for <git@vger.kernel.org>; Sat,  9 Jan 2021 09:05:23 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 190so10287842wmz.0
-        for <git@vger.kernel.org>; Sat, 09 Jan 2021 09:05:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=K2J0aZIlVeGQ1qToT+N1HHjWxo5AmInC8VWT+NX9CyU=;
-        b=HbAXLzx9XRp2G5VfDlhAYaq+hvfFRFiSiNdbgzmKKYqjvUsRA98TjYs4pIoKBsmeFN
-         Vp59cRB+brWNm3AwQtuuJZ10l8rt3hcRCC+H0V9msIrj/WkcXG2iAa+tTl4twrVGxqFL
-         qO1y1Y1Z9Do0/1ie4LPBSRO6yu4QgGLsQnLP0uMddgcLsTmpRTLIei/088WNqQjJgmf4
-         HySqvs/UXIF1XkYV25fDMXhev2aryv0/aPxQmtgOFj1ByigfkV1ldIf1ZmYg52SUOuXL
-         cl2snHu44HxlvAow/0hej/UtSe7NNeNEL9IisQiCBoVQ6+agxYyccQcRWRxdXkaDGDLt
-         8mLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=K2J0aZIlVeGQ1qToT+N1HHjWxo5AmInC8VWT+NX9CyU=;
-        b=dFpvhHsTO/N1DU0uVjWCuYWAk7mnvP2B9j4kKQlEn1iKa4TrIAsWr6gluHWKY+fD4u
-         ZA+PBOrfg2zdYW61WLlVbtLwTkpc9BDW+1RaYbB/JKWQD2ZBckoAg3RNmGc4ykWP2LlV
-         hf6x2vMDnpVWfS5ig0lqyVnPpmHhLQgq72nRg7V2SjXpPvuP7DHbl4TiCH3/hXOdJQgu
-         NyCA82udMaX9kitb0m8dHK1R+a5akcB85H15C96ETxCO3y1Oo7ht7aD6pLVMEMOt9HGX
-         O3ne+xwdcDP1JxkQ/8C4si8tlGwIS29naIpG0RivXTD14Gh7U743GyOyDNOSWotRxxaG
-         6u6A==
-X-Gm-Message-State: AOAM53195QssrMLgDUSySdCGB/bwx/u2Sa+2+WdPhoijU1gf1dzP5Bph
-        PqR56ycrMBnzYwb4wDkI0kc=
-X-Google-Smtp-Source: ABdhPJyg/OUNlrzzbJqCUGyAVg7jO6WIUa0lcOB/WY1VJtxdr+A/1E7oRW99pa34biUSFGV8IfmmDg==
-X-Received: by 2002:a1c:f70f:: with SMTP id v15mr7659859wmh.38.1610211922317;
-        Sat, 09 Jan 2021 09:05:22 -0800 (PST)
-Received: from localhost.localdomain (84-236-109-1.pool.digikabel.hu. [84.236.109.1])
-        by smtp.gmail.com with ESMTPSA id b127sm18798874wmc.45.2021.01.09.09.05.21
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 09 Jan 2021 09:05:21 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2] t7800-difftool: don't accidentally match tmp dirs
-Date:   Sat,  9 Jan 2021 18:05:13 +0100
-Message-Id: <20210109170513.31084-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.30.0.337.g235c185d39
-In-Reply-To: <20210108092036.GR8396@szeder.dev>
-References: <20210108092036.GR8396@szeder.dev>
+        id S1726133AbhAIRZH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 12:25:07 -0500
+Received: from mout.web.de ([212.227.15.3]:43149 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725926AbhAIRZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jan 2021 12:25:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1610212982;
+        bh=yMaASub+HdpUS1IkdYpnu7s9PKftRY+7KU6g8pouD/k=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=HTxU00jVCbHt6LRaoQYu2fKup354XrxqhGr9RMWpp/2kCkBXTUecapCJJZgcuel3I
+         7ZWFeL/lhZranCn/AAsGwINuLg+o4M7vmM68c3t/zpf4L/tvpIn6rjC6WaHhhsuCv0
+         Ntma9TTVy+wLE8jnIKJU2yEvySRF9WQxgiFIEJCA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LudLU-1jyS5W2sCm-00znl3; Sat, 09
+ Jan 2021 18:23:02 +0100
+Date:   Sat, 9 Jan 2021 18:23:01 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Daniel Troger <random_n0body@icloud.com>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special
+ characters)
+Message-ID: <20210109172301.qkxxeeqnyrr6nyc5@tb-raspi4>
+References: <7B64BC13-CB54-43CE-8C01-D45E25591E2A@icloud.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <7B64BC13-CB54-43CE-8C01-D45E25591E2A@icloud.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:wRa36rLgpQRmoCKRrNC7eejnmcq8MKCdyZWgp/HLeuQiYsz9ZWf
+ B4dgBi0IeWS8/s0xp+okPCxjDHmV9bpW0H8kOQQ/X9H67g8ODsi5/Zc5zh18OgOhaiI355E
+ PeGfuX2jWwLcIH/EhDffFBim8RS+fLH/V1zI18008mdrUE77S+ZGnoIkoyrSJga13aeePZ9
+ waoz2VcOJUE49fyglm6sw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XMuT0pSvnaU=:mtfDp/+BDLfwzo4olUAc+5
+ auLllh8yYLLytYugLm5zTrPnfxfH5i5WLA6l9DV0i/W3kxZjn+YFsKy9qJiLBf1LuMxPPuofs
+ I6JB+Xlcaw6aABj4DmYTX6Sl8SMWyVCqxcbum7CwYmoVoFrL3Gf82cDNqiZnzmBgrVVToWVMF
+ eIlgGt+gIFxT25kxNwUaByjl4bCKd56nn4tolsZF4sbYAqdZcLIf8Gx4WdCUA9c9pmpTY9/Gd
+ F+fEiedTA9j9fvAPcfXEfDQFiZ1shmKcW4Bt0R3VS8CSTSjzfO8fRdq/XfvB30UNGOgcQ87wS
+ +8Lwdb0shr2NuG0kQude7mBx3oqqLFOhDAne5LRKfaRc2+zmaJBEgYQszlbXpG3aw4MasMrO3
+ LwOBNgT161AalgQUfRbZ+W2GFN5NGxOSNKojNuqSUTaci+2W4qQKLMuIOUkfWyCD6tOM72AWL
+ dTli3ir+lXlkpTSpfe1YLnYAZ7ESHF/kgfoXFYaaoLGNfXezm4i50bxlUXSIPg/m+NG+98AVl
+ +H3EXndy09Z40Vcc4GRGvg7wVM3BYeNf5SfIQSrzwHX8VKdtOpQF2G26teey37vlAtgSb2unl
+ ZbvHLJTkO5bjGL3VUktDxYp/bvO13A1JyGZKuu/JqgH0RthohxDn2sWxYBYMIx/xEqEsZd8Jc
+ 7Mu3W+ltZsDdwsphwEbYfAMNEgRfhrJtZ8Rc2iZFjn5b9b2In3jueBZzSYIrRS79OAFU/Y+Dl
+ W5plaKYkYbNIrMq3xj0yzW7EfYu9xqTuOjZTqEyyHKpcJ2zGTLjpkLF4CzOZNPNjzlk2/EYW6
+ 2t9dAf1Mfj39ez5C29WuzL8X6e/1fwj0+N2jINf9QVvlsTmILLKVG1750jIBA79e3YwgTtwVh
+ sik8u35x5GyPXz1jJR3g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a bunch of test cases in 't7800-difftool.sh' we 'grep' for specific
-filenames in 'git difftool's output, and those test cases are prone to
-occasional failures because those filenames might be part of the name
-of difftool's temporary directory as well, e.g.:
+On Fri, Jan 08, 2021 at 08:56:08PM +0100, Daniel Troger wrote:
+> > That did the trick, the test case is now reproducible here.
+>
+> > It seems as if there could be a patch in a couple of days, but no prom=
+ises.
+>
+> That's great news, thank you all very much!
 
-  +git difftool --dir-diff --no-symlinks --extcmd ls v1
-  +grep sub output
-  +test_line_count = 2 sub-output
-  test_line_count: line count for sub-output != 2
-  /tmp/git-difftool.Ssubfq/left/:
-  sub
-  /tmp/git-difftool.Ssubfq/right/:
-  sub
-  error: last command exited with $?=1
-  not ok 50 - difftool --dir-diff v1 from subdirectory --no-symlinks
+Hej Daniel,
+Not sure if I can keep my promise, please see below.
 
-Fix this by tightening the 'grep' patterns looking for those
-interesting filenames to match only lines where a filename stands on
-its own.
+> I was already afraid at first it was some weird macOS filesystem bug onl=
+y happening on high sierra
+> and earlier which was never going to be fixed.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t7800-difftool.sh | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+I haven't heard about anything special about Mac OS High Sierra.
+If there are strange things, please let us know.
 
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a578b35761..32291fb67b 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -440,20 +440,20 @@ run_dir_diff_test () {
- 
- run_dir_diff_test 'difftool -d' '
- 	git difftool -d $symlinks --extcmd ls branch >output &&
--	grep sub output &&
--	grep file output
-+	grep "^sub$" output &&
-+	grep "^file$" output
- '
- 
- run_dir_diff_test 'difftool --dir-diff' '
- 	git difftool --dir-diff $symlinks --extcmd ls branch >output &&
--	grep sub output &&
--	grep file output
-+	grep "^sub$" output &&
-+	grep "^file$" output
- '
- 
- run_dir_diff_test 'difftool --dir-diff ignores --prompt' '
- 	git difftool --dir-diff $symlinks --prompt --extcmd ls branch >output &&
--	grep sub output &&
--	grep file output
-+	grep "^sub$" output &&
-+	grep "^file$" output
- '
- 
- run_dir_diff_test 'difftool --dir-diff branch from subdirectory' '
-@@ -462,11 +462,11 @@ run_dir_diff_test 'difftool --dir-diff branch from subdirectory' '
- 		git difftool --dir-diff $symlinks --extcmd ls branch >output &&
- 		# "sub" must only exist in "right"
- 		# "file" and "file2" must be listed in both "left" and "right"
--		grep sub output >sub-output &&
-+		grep "^sub$" output >sub-output &&
- 		test_line_count = 1 sub-output &&
--		grep file"$" output >file-output &&
-+		grep "^file$" output >file-output &&
- 		test_line_count = 2 file-output &&
--		grep file2 output >file2-output &&
-+		grep "^file2$" output >file2-output &&
- 		test_line_count = 2 file2-output
- 	)
- '
-@@ -477,11 +477,11 @@ run_dir_diff_test 'difftool --dir-diff v1 from subdirectory' '
- 		git difftool --dir-diff $symlinks --extcmd ls v1 >output &&
- 		# "sub" and "file" exist in both v1 and HEAD.
- 		# "file2" is unchanged.
--		grep sub output >sub-output &&
-+		grep "^sub$" output >sub-output &&
- 		test_line_count = 2 sub-output &&
--		grep file output >file-output &&
-+		grep "^file$" output >file-output &&
- 		test_line_count = 2 file-output &&
--		! grep file2 output
-+		! grep "^file2$" output
- 	)
- '
- 
-@@ -491,9 +491,9 @@ run_dir_diff_test 'difftool --dir-diff branch from subdirectory w/ pathspec' '
- 		git difftool --dir-diff $symlinks --extcmd ls branch -- .>output &&
- 		# "sub" only exists in "right"
- 		# "file" and "file2" must not be listed
--		grep sub output >sub-output &&
-+		grep "^sub$" output >sub-output &&
- 		test_line_count = 1 sub-output &&
--		! grep file output
-+		! grep "^file$" output
- 	)
- '
- 
-@@ -503,9 +503,9 @@ run_dir_diff_test 'difftool --dir-diff v1 from subdirectory w/ pathspec' '
- 		git difftool --dir-diff $symlinks --extcmd ls v1 -- .>output &&
- 		# "sub" exists in v1 and HEAD
- 		# "file" is filtered out by the pathspec
--		grep sub output >sub-output &&
-+		grep "^sub$" output >sub-output &&
- 		test_line_count = 2 sub-output &&
--		! grep file output
-+		! grep "^file$" output
- 	)
- '
- 
-@@ -518,8 +518,8 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory with GIT_DIR set' '
- 		cd sub &&
- 		git difftool --dir-diff $symlinks --extcmd ls \
- 			branch -- sub >output &&
--		grep sub output &&
--		! grep file output
-+		grep "^sub$" output &&
-+		! grep "^file$" output
- 	)
- '
- 
-@@ -527,7 +527,7 @@ run_dir_diff_test 'difftool --dir-diff when worktree file is missing' '
- 	test_when_finished git reset --hard &&
- 	rm file2 &&
- 	git difftool --dir-diff $symlinks --extcmd ls branch master >output &&
--	grep file2 output
-+	grep "^file2$" output
- '
- 
- run_dir_diff_test 'difftool --dir-diff with unmerged files' '
--- 
-2.30.0.337.g235c185d39
+(And I still womder, how did you mange to create the "decomposed version o=
+f =E5" ?
+ Mac OS itself doesn't decompose the "=E5", in opposite to "=E4" or "=F6".
+ It creates a name for a file in decomposed form for "=E4", "=F6" and a lo=
+t of other
+ characters/code points, but not for "=E5".
+ It does, however, treat the pre- and de-composed form of "=E5" equivilent=
+)
 
+>
+> In the meantime I have managed to add "both directories" to git (with gi=
+t add paulbr*).
+> It's funny, now one directory shows up twice when viewing my repo on git=
+lab.
+>
+> And this is the message I get when cloning:
+> warning: the following paths have collided (e.g. case-sensitive paths
+> on a case-insensitive filesystem) and only one from the same
+> colliding group is in the working tree:
+>   '[...]/paulbrunng=E5rd-springyard/main.ts'
+>   '[...]/paulbrunng=E5rd-springyard/main.ts'
+>
+> What will happen with the two folders in the git repo after the patch?
+>
+
+Now, that is another question.
+
+First of all, I would recommend to "remove" one of the folders from Git,
+because all files are tracked twice in Git, but "shadowed" by the file sys=
+tem.
+
+
+
+To clean up the repo, you can do like this, explained in a dummy repo:
+
+#One file (that is all we have) is tracked twice:
+user@mac:/tmp/AAA> git ls-files
+"paulbrunnga\314\212rd-springyard/horse"
+"paulbrunng\303\245rd-springyard/horse"
+
+# Remove all files from Git, but keep them on disk:
+user@mac:/tmp/AAA> git rm -rf --cached .
+rm 'paulbrunng=E5rd-springyard/horse'
+rm 'paulbrunng=E5rd-springyard/horse'
+
+# Re-add one version, the precomposed:
+user@mac:/tmp/AAA> git add .
+user@mac:/tmp/AAA> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+          deleted:    "paulbrunnga\314\212rd-springyard/horse"
+
+user@mac:/tmp/AAA> git ls-files
+"paulbrunng\303\245rd-springyard/horse"
+
+#Not shown:
+git commit -m "Remove duplicate directory"
+
+####################
+
+Now back to a potential patch:
+That will take some time.
+I digged some hours into the stuff, add lots of debug traces,
+patches and stuff, and now we need a cleanup and get it into a better
+shape to be acceptable.
+
+All the best
