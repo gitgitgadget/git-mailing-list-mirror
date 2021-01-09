@@ -2,134 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECAA2C433DB
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF011C433DB
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:02:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6ECE23AC0
-	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:00:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79B3523B01
+	for <git@archiver.kernel.org>; Sat,  9 Jan 2021 22:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726298AbhAIWAO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 17:00:14 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49726 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726253AbhAIWAN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 9 Jan 2021 17:00:13 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726265AbhAIWCx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 17:02:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58487 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726068AbhAIWCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Jan 2021 17:02:53 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E14B9EB4D;
+        Sat,  9 Jan 2021 17:02:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=91ZjMbMqELuspAsxYggYvSSUhjE=; b=JoZLgB
+        R/H/fCONWcfFJnupOlZ2cXwPkVR+zXKB/xg8scp4ZfNSTvWnAQyKShXysiOxLkDY
+        1JIcNDdfoHdHLQuv0I9Sc0YzLawNc2kwTDwzycGtNhRLdpCR1VPbU5n9UQ6NypHV
+        Cz76RE7SKzNo+DsqoAbF4/APSIuu/+PD/pfg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Cr2rf6UPldi1yL1w9AwHJG3t1yIjIy0b
+        dhtcxLgl10Uqfg9R/aHInq1Hwx0JNJJ17U70uYvH7S4Z4a3WtEFMtNCWG4VfP5Ii
+        1mFLwOU0TkS/9MfgRM8fwgzDsvMcIL9viPl/FWSCG3i9q0ycYboLNzSiJAnufRA9
+        GGHm7dgIxWI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 163C39EB4C;
+        Sat,  9 Jan 2021 17:02:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E8DB360781;
-        Sat,  9 Jan 2021 21:59:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610229572;
-        bh=xc+aTZ0u4F9JPTLiKKptfrhJtosZ+9pt7ELNaLyWZEE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tWDbsebutCmpkDESEv2JZDDekGs2qUmzGF1FtNGpjBiwZCc+4A7auuU7HbENG1RHR
-         PvnIjYAUl5Dp8SDo5EXVDEVDtyQb2hlD7QLIkLgg9k6kNEePuxeV11jzbIjYJlnkKF
-         DjW1uswq/FqVAdGumwpF6gfk6uIUOeZMS2CKrWQRJcYuTkzIm+YUp+wydvPYF2Vljp
-         /eeFLBSn7o8KUKXta4oPD2UfTjpGcYkdAxdD/fWkHGzvGKK5YYQcyN/acqxHKavSJ5
-         d4qNyAAHojeitQR5mKbSshNLxEDDRBVNTLMNkw/08yw77O5+hTmBL5PFAOt7OnI88A
-         9x5osmNymTytGfWdoYYq2Emq44SQxjtcM9I7RTyG+08HlAdIb0qc/LgB4RwVjkFDi6
-         egkUx/SurSVM4TL45k/wA1/lQfxbXsKTuPnVuh7f+TnRCpbr5JBQVr0DOfNYWxwMBd
-         0MaFjm2Ik/q88eV9rYgcPYLW0wvvfn5rtgylZ3ECy3xmmQe6jyj
-Date:   Sat, 9 Jan 2021 21:59:27 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Seth House <seth@eseth.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] fixup! mergetool: add automerge configuration
-Message-ID: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Aguilar <davvid@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Seth House <seth@eseth.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-References: <20210109214922.33972-1-davvid@gmail.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8BB9C9EB4B;
+        Sat,  9 Jan 2021 17:02:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
+        <congdanhqx@gmail.com>, Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v4 1/2] bundle: lost objects when removing duplicate
+ pendings
+References: <X/cqrTgilKAW9P9G@danh.dev>
+        <20210108144514.24805-2-worldhello.net@gmail.com>
+        <xmqqv9c6g8r4.fsf@gitster.c.googlers.com>
+        <CANYiYbGcXORT-kryEngy17_J1g3FDKbty9wVXj1U5OWHu8yM8g@mail.gmail.com>
+Date:   Sat, 09 Jan 2021 14:02:09 -0800
+In-Reply-To: <CANYiYbGcXORT-kryEngy17_J1g3FDKbty9wVXj1U5OWHu8yM8g@mail.gmail.com>
+        (Jiang Xin's message of "Sat, 9 Jan 2021 21:32:18 +0800")
+Message-ID: <xmqqbldxg466.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G5lza6BDyoli0Zdo"
-Content-Disposition: inline
-In-Reply-To: <20210109214922.33972-1-davvid@gmail.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 527D03F4-52C6-11EB-A097-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jiang Xin <worldhello.net@gmail.com> writes:
 
---G5lza6BDyoli0Zdo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> > +# Create a commit or tag and set the variable with the object ID.
+>> > +test_commit_setvar () {
+>> > +     notick= &&
+>> > +     signoff= &&
+>> > +     indir= &&
+>> > +     merge= &&
+>> > +     tag= &&
+>> > +     var= &&
+>> > +     while test $# != 0
+>> > +     do
+>> > +             case "$1" in
+>> > ...
+>> > +             -*)
+>> > +                     echo >&2 "error: unknown option $1"
+>> > +                     return 1
+>> > +                     ;;
+>> > +             *)
+>> > +                     test -n "$var" && break
+>> > +                     var=$1
+>
+> The loop ends only if $var has been assigned a value, or no other
+> args.  Will report error if no other args later.
 
-On 2021-01-09 at 21:49:22, David Aguilar wrote:
-> The use of "\r\?" in sed is not portable to macOS and possibly
-> other unix flavors.
->=20
-> Replace "\r" with a substituted variable that contains "\r".
-> Replace "\?" with "\{0,1\}".
+"We see an arg that is not an dashed option.  We already saw an arg
+and taken it as the name of the variable, so break" was a misleading
+way to structure this loop.
 
-Ah, yes, this is true.  The statement about "\r" is also true for Linux
-with POSIXLY_CORRECT, IIRC.
+It looked as if it was just refusing to parse the remainder of the
+command line, so that a check after the loop would complain if there
+is still remaining arguments (as if to warn "var given twice").  But
+that is not what the post-loop check does; it expects there still
+are some argument left to be processed in mode-specific code that
+follows, so it happens to work as intended.
 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> This is based on top of fc/mergetool-automerge and can be squashed in
-> (with the addition of my sign-off) if desired.
->=20
-> Let me know if you'd prefer a separate patch. I figured we'd want
-> a squash to preserve bisectability.
->=20
->  git-mergetool.sh | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->=20
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index a44afd3822..12c3e83aa7 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -243,9 +243,16 @@ auto_merge () {
->  	git merge-file --diff3 --marker-size=3D7 -q -p "$LOCAL" "$BASE" "$REMOT=
-E" >"$DIFF3"
->  	if test -s "$DIFF3"
->  	then
-> -		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=3D=3D=3D=3D=3D=3D=3D\r\?$/,/^=
->>>>>>> /d' "$DIFF3" >"$BASE"
-> -		sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$DIFF3" >"$LOCAL"
-> -		sed -e '/^<<<<<<< /,/^=3D=3D=3D=3D=3D=3D=3D\r\?$/d' -e '/^>>>>>>> /d' =
-"$DIFF3" >"$REMOTE"
-> +		cr=3D$(printf '\x0d')
+That is brittle, though.  The current code may always consume one or
+more extra arguments in $merge/$tag/other specific mode in the code
+after the loop, but a new mode that will get added in the future to
+sit next to --merge and --tag may learn all necessary info in the
+command line parsing loop above, without any need for extra args to
+be processed after the loop.  And $#=0 may not always be an error at
+that point.
 
-Unfortunately, printf is not specified by POSIX to take hex escapes, so
-this, too is nonportable.  We are unfortunately allowed to use only
-octal escapes (yuck).  However, we can write this:
+I forgot to notice / mention it, but now you made me to look at the
+loop again, I see this part
 
-  cr=3D$(printf '\r')
+	-C)
+		indir="$2"
+		shift
+		;;
 
-or
+does not ensure we are getting something sensible in -C; that
+potential bug by the caller also happens to be covered by the
+post-loop "we require at least one argument that we can use as an
+arg" check, but as I said already, that feels rather brittle.
 
-  cr=3D$(printf '\015')
+Anyway, let's queue the patches as-is and see what others think.
 
-I think the former is clearer, since that's what we were writing before.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---G5lza6BDyoli0Zdo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX/onPwAKCRB8DEliiIei
-gcolAPkBtZ1Srp0UhzIU2DmaalM5iO/0+j6ZKRZGjG31DKHZdgD8CJFhICrFZhfT
-e6s+atuGG2qWlN8zgI1sLeQoz5jgWgU=
-=qtjH
------END PGP SIGNATURE-----
-
---G5lza6BDyoli0Zdo--
+Thanks.
