@@ -6,74 +6,78 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 537D2C433E0
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44E73C433DB
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:33:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0EE64239CF
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:32:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E9A2239CF
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:33:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725956AbhAJH3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 02:29:48 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:56848 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbhAJH3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jan 2021 02:29:47 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kyV9t-001XST-IO; Sun, 10 Jan 2021 00:29:06 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kyV9s-006nYP-Pf; Sun, 10 Jan 2021 00:29:05 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 900F1500AB0;
-        Sun, 10 Jan 2021 00:29:04 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id ZtEyAXOWynxR; Sun, 10 Jan 2021 00:29:04 -0700 (MST)
-Received: from ellen (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 3C96E500AAB;
-        Sun, 10 Jan 2021 00:29:04 -0700 (MST)
-Date:   Sun, 10 Jan 2021 00:29:02 -0700
-From:   Seth House <seth@eseth.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     David Aguilar <davvid@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Message-ID: <20210110072902.GA247325@ellen>
-References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
- <20210109224236.50363-1-davvid@gmail.com>
- <20210109225400.GA156779@ellen>
- <xmqqmtxhd1zx.fsf@gitster.c.googlers.com>
- <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
+        id S1726228AbhAJHcx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 02:32:53 -0500
+Received: from mail-ej1-f53.google.com ([209.85.218.53]:45071 "EHLO
+        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbhAJHcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 02:32:53 -0500
+Received: by mail-ej1-f53.google.com with SMTP id qw4so20147403ejb.12
+        for <git@vger.kernel.org>; Sat, 09 Jan 2021 23:32:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=M285HRURDM+J7oXrXqGdjfkWuFaogzTqsGg6dGI/bco=;
+        b=SvtKGlyfBU3kS1xNYskfyPmnlgCIFlaK7jBpI/fwEIgcV96NZCBanLLlo8wzrzrTvb
+         lwRCOYCSmvwIxL/jOq3Nn1MafUyXqtu27XOJRRLs0/QMPT9YceldXpDW/6vpnjUifvcN
+         O5K6Bpk+3nOdvEjDIqd6LLk0c8V+uiXGxuitwoRfso/POK77iE8dflI9FCSo0S8k7vI+
+         j93U0cBu2BHQvBoL36I+v4M1xIH9SO1lYhuCzS4FBFwr1jj3nNEFeEPS2JC/oJGA0n+K
+         f4BRbvJ2iF+pxsMajpf4S35rBRQfCjPA7ZIzfx3GgZ82lMafQ8qErug3nW0QhrL72bvQ
+         bv+A==
+X-Gm-Message-State: AOAM533lnCf+C/zixeVSyWqqCMtmbhWliOobbiyWj32hCPmBAmJ4dzXn
+        FfXzM97caFSAHeihmhlGEw5zGRxhSh4BWb8OvnckJzMSrLw=
+X-Google-Smtp-Source: ABdhPJxKbWXoBdE8i+ZAs7OkfhWlD8PtYwtmxDkPz0BmeKscLhyK3AO/8B+lqv4I5odzrdqFDsc/ScQ2mQN7YMo15Sw=
+X-Received: by 2002:a17:906:1ed6:: with SMTP id m22mr7722067ejj.231.1610263931000;
+ Sat, 09 Jan 2021 23:32:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
-X-XM-SPF: eid=1kyV9s-006nYP-Pf;;;mid=<20210110072902.GA247325@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+References: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
+ <pull.830.v3.git.1610136177.gitgitgadget@gmail.com> <xmqq1retclzr.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq1retclzr.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 10 Jan 2021 02:32:00 -0500
+Message-ID: <CAPig+cQnZbKRu+iSGDzhMsG6bgEL1NbAu15DR3dNXM-Nfc9w8A@mail.gmail.com>
+Subject: Re: [PATCH v3 00/14] Remove more index compatibility macros
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 09, 2021 at 10:40:20PM -0800, Junio C Hamano wrote:
-> An ugly workaround patch that caters only to difftool breakage is
-> attached at the end; I did not look if a similar treatment is
-> necessary for the mergetool side.
+On Sun, Jan 10, 2021 at 2:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > UPDATE: this is now based on ag/merge-strategies-in-c to avoid conflicts in
+> > 'seen'. The changes in builtin/rm.c still conflict with
+> > mt/rm-sparse-checkout, but that branch seems to be waiting for a clearer
+> > plan on some corner cases. I thought about ejecting it, but 'rm' still uses
+> > ce_match_stat(), so just dropping the patch gives less of a final stake at
+> > the end of the series. (I'm still open to it, if necessary.)
+>
+> I haven't read this latest iteration myself yet beyond the cover
+> letter, but tonight's 'seen' has this queued near its tip.  I expect
+> it would either stay there or occasionally ejected, until the base
+> topic solidifies a bit more.
+>
+> >  * Methods that know about the 'repo' pointer no longer also have an
+> >    'istate' pointer and instead prefer 'repo->index'
+> >
+> >  * This includes the callback_data struct which only has a 'repo' member, no
+> >    'istate'.
+>
+> OK.
 
-That fixup does the trick on my machine too. Thank you.
-
-How wary are you of continuing with `initialize_merge_tool`? Do you see
-a better approach to get `automerge_enabled `into scope? While it is
-a nice feature to have, is it worth the risk vs. reward?
-
+I looked this version of the series over and did not find anything
+else about which to comment.
