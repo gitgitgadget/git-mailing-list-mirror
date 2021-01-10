@@ -2,102 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 230B5C433E0
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 20:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 620E4C433DB
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 20:53:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E02C2229C4
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 20:37:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2895A229C4
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 20:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbhAJUgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 15:36:51 -0500
-Received: from zucker.schokokeks.org ([178.63.68.96]:55539 "EHLO
-        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726432AbhAJUgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jan 2021 15:36:50 -0500
-X-Greylist: delayed 341 seconds by postgrey-1.27 at vger.kernel.org; Sun, 10 Jan 2021 15:36:04 EST
-Received: from localhost (localhost [::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1.3,256bits,TLS_AES_256_GCM_SHA384)
-  by zucker.schokokeks.org with ESMTPSA
-  id 0000000000000151.000000005FFB6417.00007E49; Sun, 10 Jan 2021 21:31:19 +0100
-Date:   Sun, 10 Jan 2021 21:31:18 +0100
-From:   Simon Ruderich <simon@ruderich.org>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Martin =?iso-8859-1?Q?=C5gren?=" <martin.agren@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] refs: allow @{n} to work with n-sized reflog
-Message-ID: <X/tkFuESnia/n35e@ruderich.org>
-References: <cover.1609923643.git.liu.denton@gmail.com>
- <cover.1610015769.git.liu.denton@gmail.com>
- <c88c997eab2b3405cce20f719bf07d5bba7aa18e.1610015769.git.liu.denton@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-32329-1610310679-0001-2"
-Content-Disposition: inline
-In-Reply-To: <c88c997eab2b3405cce20f719bf07d5bba7aa18e.1610015769.git.liu.denton@gmail.com>
+        id S1726432AbhAJUwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 15:52:46 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61624 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbhAJUwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 15:52:46 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F5EC11E062;
+        Sun, 10 Jan 2021 15:52:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oNLOE8LVDLkXi35WZO7/EqMnM/I=; b=QK5UXK
+        PX1xeC4hmZ4iMyR+5EMXlgZCTvyhHWSlpCY0hylfHAKd77L3PdCGMZLDflKR/Mi/
+        Tx1gtpQbDj03DHW73MZr5iErYvMdd0+VWef4ITCvJDc6ucPn91ZuCSmBX/tJjC2k
+        OgZiiNijI7Um4VakzAeTyc1ZjMJ0+edpgfUeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mOYhgxWKmrAK5GbIxsCSZNHSXKZ8zaMH
+        frW3oP2A2z5S0CVGqFjmvnfm0hKNltY2mjnLGs/cHIevhL1b0Sif/nsKiDxqc9cm
+        AZ6okHhgKFCkP1WkDbWHF2gLVSGRN7xSD8EV6/hAEYUqFuEUWM3e36gFNEucZcxi
+        saSO9D6tcZI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0680B11E061;
+        Sun, 10 Jan 2021 15:52:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C8EED11E05E;
+        Sun, 10 Jan 2021 15:51:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v6 06/13] merge-index: don't fork if the requested
+ program is `git-merge-one-file'
+References: <20201116102158.8365-1-alban.gruin@gmail.com>
+        <20201124115315.13311-1-alban.gruin@gmail.com>
+        <20201124115315.13311-7-alban.gruin@gmail.com>
+        <44c9189d-9d2f-c437-d0d6-9529708d2c99@gmail.com>
+        <411b68ad-dee5-5a19-ae94-c2b6a249161a@gmail.com>
+        <xmqqv9cax1le.fsf@gitster.c.googlers.com>
+        <f7d7cc3b-b53d-ed48-8aa4-2b26a0ce7da3@gmail.com>
+Date:   Sun, 10 Jan 2021 12:51:58 -0800
+In-Reply-To: <f7d7cc3b-b53d-ed48-8aa4-2b26a0ce7da3@gmail.com> (Alban Gruin's
+        message of "Sun, 10 Jan 2021 18:15:52 +0100")
+Message-ID: <xmqqzh1g8qhd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AF19A5A8-5385-11EB-858F-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Alban Gruin <alban.gruin@gmail.com> writes:
 
---=_zucker.schokokeks.org-32329-1610310679-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jan 07, 2021 at 02:36:59AM -0800, Denton Liu wrote:
-> diff --git a/refs.c b/refs.c
-> index bfdd04aefd..e70dcd33f7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -900,40 +900,53 @@ static int read_ref_at_ent(struct object_id *ooid, =
-struct object_id *noid,
->  		const char *message, void *cb_data)
->  {
->  	struct read_ref_at_cb *cb =3D cb_data;
-> +	int reached_count;
+>> These days, there exists an optional installation option exists that
+>> won't even install built-in commands in $GIT_EXEC_PATH, which
+>> invalidates the assessment made in 2019 in the article you cited
+>> above, so the code might still be OK, but the old justification no
+>> longer would apply.
+>> 
+>> In any case, if two people who reviewed a patch found the same thing
+>> in it fishy, it is an indication that the reason why the apparently
+>> fishy code is OK needs to be better explained so that future readers
+>> of the code do not have to be puzzled about the same thing.
 >
->  	cb->tz =3D tz;
->  	cb->date =3D timestamp;
->
-> -	if (timestamp <=3D cb->at_time || cb->cnt =3D=3D 0) {
-> +	/*
-> +	 * It is not possible for cb->cnt =3D=3D 0 on the first itertion because
+> Perhaps we could try to check if the provided command exists (with
+> locate_in_PATH()), if it does, run it through merge_one_file_spawn(),
+> else, use merge_one_file_func()?
 
-s/itertion/iteration/
+So you think your current implementation will be broken if the "no
+dashed git binary on disk" installation option is used?
 
-Regards
-Simon
---=20
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+I do not think "first check if an on-disk command exists and use it,
+otherwise check its name" alone would work well in practice.  Both
+the 'cat' example that appears in the manual page, and the typical
+invocation of git-merge-one-file from merge-resolve:
 
---=_zucker.schokokeks.org-32329-1610310679-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
+	git merge-index cat MM
+	git merge-index git-merge-one-file -a
 
------BEGIN PGP SIGNATURE-----
+would work just as well as before, but does not give you a way to
+bypass fork() for the latter.  And changing the order of checks
+would mean the users won't have a way to override a buggy builtin
+implementation of merge_one_file function.  Besides, using the name
+of the binary feels like a bad hack.  
 
-iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAl/7ZBYACgkQkv79t+RM
-MvmUKw//UgLUnUaiUOtdHB+Z9ZezD6jRgF2Z6oDycWsxiyGT2n8gueIrN8LUndT5
-zhSSDymYj8nEhbvLb8wZyz63I6nxmJXYItb+v57lmkT6BxgWMjtod49e653pHRQ+
-cAMHcajWninSFNMMe8Qx+jswGmaXIVdL1VhsjtJLnZG9c5T34JTxZbkE4YPEOcAP
-auvMH9ja4cKpaFqG4U0CctgICH2+qGV99VmLx1/P1Ld6Xvgw25CfzU4Q/y8KC7+7
-NfBR6K9QsURFTBk9oP7q9SaM+201Bq95/kyM/sqgalcSHUcIWo6jeweNOp2IDGB4
-RrmnjtJI+bJGbtWUDWVVhNpxms4HbyNyIH/Dgias/yAHgv+aUkSNhXFL9F2MQNPI
-yPxPcW7KtvPkh8J0QHeXETYvIhxtjI9UVdFQNQHlfkho0YvQqrAtaK94ad+2ppxf
-UDmQlms5/pzZyJlldukHFCwaOiVOZi/3mYDa39Rc2o2V6c8wmfzZX7c276GT8jPU
-e1hcikbN9D/NU5By3xUJt6WhDHNAzYlEgHQ2wovJkKsiZpS73dHoxWdw/3bxpcfd
-P0aFrfBR3+Q8tNkqIFzg26ew4keMwy4J2AVtD77noofBcEMI+84afNZQmPnRNGeC
-8or7OSeZALr/9lQSNE22Vos7/99nvIz1xMNEfNNUoAm8souqmPc=
-=t23B
------END PGP SIGNATURE-----
+As the invocation from merge-resolve is purely an internal matter,
+it may make more sense to introduce a new option and explicitly tell
+merge-index that the command line is not asking for an external
+program to be spawned, e.g.
 
---=_zucker.schokokeks.org-32329-1610310679-0001-2--
+	git merge-index --use=merge-one-file -a
+
+You'd prepare a table of internally implemented "take info on a
+single path that is being merged and give an automated resolution"
+functions, which begins with a single entry that maps the string
+"merge-one-file" to your merge_one_file_func function.  Any value to
+the "--use" option that names a function not in the table would
+cause an error.
+
+Note that in the above the "table of functions" is merely
+conceptual.  It is perfectly OK to implement the single entry table
+by codeflow (i.e. "if (!strcmp()) ... else error();").  But thinking
+in terms of "a table of functions the user can choose from" helps to
+form the right mental picture.
+
+Hmm?
