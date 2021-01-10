@@ -2,139 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBE3C433E0
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 03:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C509C43381
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 06:35:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C2D520882
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 03:24:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52627235F7
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 06:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726267AbhAJDXv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 22:23:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51270 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726062AbhAJDXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 22:23:51 -0500
-Received: (qmail 11451 invoked by uid 109); 10 Jan 2021 03:23:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 10 Jan 2021 03:23:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16731 invoked by uid 111); 10 Jan 2021 03:23:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 09 Jan 2021 22:23:11 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 9 Jan 2021 22:23:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Is t5516 somehow flakey only on macOS?
-Message-ID: <X/pzHU917VpQOjfL@coredump.intra.peff.net>
-References: <xmqq35zbgd2a.fsf@gitster.c.googlers.com>
- <CAPig+cQ3U4s0qmzoLL=ZBeSyCZm=QqjWz2P36ZUxMzNAyYn-WQ@mail.gmail.com>
- <X/mGnY3wR1fGoxcf@coredump.intra.peff.net>
- <X/mJ6gHrKVxQqPX4@coredump.intra.peff.net>
- <20210109173336.GS8396@szeder.dev>
- <xmqqo8hxenpr.fsf@gitster.c.googlers.com>
+        id S1726523AbhAJGfE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 01:35:04 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:44604 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbhAJGfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 01:35:04 -0500
+Received: by mail-ed1-f53.google.com with SMTP id p22so15397431edu.11
+        for <git@vger.kernel.org>; Sat, 09 Jan 2021 22:34:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eaN8h1OUnpkPPo4gPWzsf5Gg2+64vKjRJkyWw2XREOw=;
+        b=jgaA9joXsyWnj+prZcR3nzspgetrQqCRxNW55EEGSgADVfT9cjjKtsqPo77k1T4mnr
+         URuT9OA+tavog3kRlrq2NR668XTDxk6SSH6MGt0r57uryduYNhvk9H0gHWBiO/z1cI1S
+         3AjRhP72qgqRwfDcKDZcykajH3PGPH59G9Lkvwu/e4mqtSJnW0NJ8jJb5oMb9omk10r4
+         0khOpCt4kwNPwmAviL2RSYwD7wB0PGX7yYWe073IFZEcYlPrRO+W9qpQN+IZxYgRpYZ7
+         mQq1CjoWYSL3wyTl5tWu7iM5Hk1nxvVapKW/oNZk5PI/ItIYYNv7mAu4E9F95/UMWvUX
+         7r+Q==
+X-Gm-Message-State: AOAM531t89BKj44YX0cUGqnLicBfJ64AfzHAiPUVZVYeSAWJUbmxRBwc
+        /wdeWWwBgaqznqNGvOKlA7sGCnSLtfdg4jSqiF4=
+X-Google-Smtp-Source: ABdhPJz6r1RRgKXgsnMYzRw487i+8ne4MQjsSCQF5rc4N/qkKuw72gTLZQKp46wlkio+gnYfCYKyjalVNiyMCvfM2FY=
+X-Received: by 2002:a50:f0dc:: with SMTP id a28mr10474083edm.291.1610260462136;
+ Sat, 09 Jan 2021 22:34:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqo8hxenpr.fsf@gitster.c.googlers.com>
+References: <pull.776.v6.git.1607542142.gitgitgadget@gmail.com>
+ <pull.776.v7.git.1609852108.gitgitgadget@gmail.com> <3576c7aa54e08c11ac86675ca9bc11b80366d390.1609852109.git.gitgitgadget@gmail.com>
+In-Reply-To: <3576c7aa54e08c11ac86675ca9bc11b80366d390.1609852109.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 10 Jan 2021 01:34:11 -0500
+Message-ID: <CAPig+cRBK778CTj1mbg03HOcCCZXn9v+FLDkhA0ho+wd=GTCNQ@mail.gmail.com>
+Subject: Re: [PATCH v7 3/4] maintenance: use launchctl on macOS
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 09, 2021 at 02:42:56PM -0800, Junio C Hamano wrote:
+On Tue, Jan 5, 2021 at 8:08 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> [...]
+> The need for a user id requires us to run 'id -u' which works on
+> POSIX systems but not Windows. Further, the need for fully-qualitifed
+> path names including $HOME behaves differently in the Git internals and
+> the external test suite. The $HOME variable starts with "C:\..." instead
+> of the "/c/..." that is provided by Git in these subcommands. The test
+> therefore has a prerequisite that we are not on Windows. The cross-
+> platform logic still allows us to test the macOS logic on a Linux
+> machine.
 
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> >> Commit 014ade7484 (upload-pack: send ERR packet for non-tip objects,
-> >> 2019-04-13) added a test that greps the output of a failed fetch to make
-> >> sure that upload-pack sent us the ERR packet we expected. But checking
-> >> this is racy; despite the argument in that commit, the client may still
-> >> be sending a "done" line when the server exits, causing it to die() on a
-> >
-> > Nit: I think using the word "after" would make the problematic
-> > sequence of events a tad clearer, i.e. "... after the server has
-> > exited, ...".
-> 
-> Thanks everybody for helping with extra clarity.  I do find it
-> easier to follow with "after the server has exited" to picture
-> the sequence of events in my mind.
+You forgot to remove the above paragraph...
 
-Agreed. Here's the same patch with the commit message updated to use
-"after", plus Eric's typofix.
+> We strive to make these tests work on all platforms, but Windows caused
+> some headaches. In particular, the value of getuid() called by the C
+> code is not guaranteed to be the same as `$(id -u)` invoked by a test.
+> This is because `git.exe` is a native Windows program, whereas the
+> utility programs run by the test script mostly utilize the MSYS2 runtime,
+> which emulates a POSIX-like environment. Since the purpose of the test
+> is to check that the input to the hook is well-formed, the actual user
+> ID is immaterial, thus we can work around the problem by making the the
+> test UID-agnostic. Another subtle issue is the $HOME environment
+> variable being a Windows-style path instead of a Unix-style path. We can
+> be more flexible here instead of expecting exact path matches.
 
--- >8 --
-Subject: [PATCH] t5516: loosen "not our ref" error check
-
-Commit 014ade7484 (upload-pack: send ERR packet for non-tip objects,
-2019-04-13) added a test that greps the output of a failed fetch to make
-sure that upload-pack sent us the ERR packet we expected. But checking
-this is racy; despite the argument in that commit, the client may still
-be sending a "done" line after the server exits, causing it to die() on
-a failed write() and never see the ERR packet at all.
-
-This fails quite rarely on Linux, but more often on macOS. However, it
-can be triggered reliably with:
-
-	diff --git a/fetch-pack.c b/fetch-pack.c
-	index 876f90c759..cf40de9092 100644
-	--- a/fetch-pack.c
-	+++ b/fetch-pack.c
-	@@ -489,6 +489,7 @@ static int find_common(struct fetch_negotiator *negotiator,
-	 done:
-	 	trace2_region_leave("fetch-pack", "negotiation_v0_v1", the_repository);
-	 	if (!got_ready || !no_done) {
-	+		sleep(1);
-	 		packet_buf_write(&req_buf, "done\n");
-	 		send_request(args, fd[1], &req_buf);
-	 	}
-
-This is a real user-visible race that it would be nice to fix, but it's
-tricky to do so: the client would have to speculatively try to read an
-ERR packet after hitting a write() error. And at least for this error,
-it's specific to v0 (since v2 does not enforce reachability at all).
-
-So let's loosen the test to avoid annoying racy failures. If we
-eventually do the read-after-failed-write thing, we can tighten it. And
-if not, v0 will grow increasingly obsolete as servers support v2, so the
-utility of this test will decrease over time anyway.
-
-Note that we can still check stderr to make sure upload-pack bailed for
-the reason we expected. It writes a similar message to stderr, and
-because the server side is just another process connected by pipes,
-we'll reliably see it. This would not be the case for git://, or for
-ssh servers that do not relay stderr (e.g., GitHub's custom endpoint
-does not).
-
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5516-fetch-push.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 01004ff680..3ed121d0ce 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1260,7 +1260,9 @@ do
- 			git cat-file commit $SHA1_2 &&
- 			test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 \
- 				git fetch ../testrepo/.git $SHA1_3 2>err &&
--			test_i18ngrep "remote error:.*not our ref.*$SHA1_3\$" err
-+			# ideally we would insist this be on a "remote error:"
-+			# line, but it is racy; see the commit message
-+			test_i18ngrep "not our ref.*$SHA1_3\$" err
- 		)
- 	'
- done
--- 
-2.30.0.455.g8a2dc96235
-
+...when you added this paragraph from my separate patch which you
+folded into this patch for v7. The two paragraphs are at odds with one
+another.
