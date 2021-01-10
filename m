@@ -2,123 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7D75C433E6
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 01:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20721C433E0
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 01:59:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD65823A01
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 01:53:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D262922513
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 01:59:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbhAJBxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 9 Jan 2021 20:53:14 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58643 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbhAJBxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Jan 2021 20:53:13 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EDE111560F;
-        Sat,  9 Jan 2021 20:52:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=kxsLDElN9tz6bFo5pBGTbPrIXdQ=; b=JqAa7H
-        1S44k6uveGqCy/1gVaQtuOuiFTMHVUliYwXjfRe4LJNAHITDsIkCCdyYLUQpzwGv
-        2LKSm2J6Vs9BUcTtO6JTxqBentICp3AnrZ1503+Udc6CERw3hUuiY+KD2D7MgVZ6
-        KrtkDSCZCsdFwbbQdXGbUykmA9niF68Xv6xj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wdVwamYqzetFOgeiSdQr85y1cCMcqwmF
-        hDgLbBbr0c9UD1IX37jkElsbfKQURd7ydn4pOXDMBl6zo3O1oUCpkP37fPtX3dV6
-        +Ji+Cd1yEFpzofFzY9Ip9PjCPF12Myd/zqbRpB3Tg4V0Zu7KgrDHMTET/6gAH1DS
-        vyYW9I+7UKE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9702B11560E;
-        Sat,  9 Jan 2021 20:52:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726238AbhAJB6q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 9 Jan 2021 20:58:46 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49854 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726090AbhAJB6q (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 9 Jan 2021 20:58:46 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0B4BB11560B;
-        Sat,  9 Jan 2021 20:52:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     Seth House <seth@eseth.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] fixup! mergetool: add automerge configuration
-References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
-        <20210109224236.50363-1-davvid@gmail.com>
-        <xmqqbldxem24.fsf@gitster.c.googlers.com>
-Date:   Sat, 09 Jan 2021 17:52:26 -0800
-In-Reply-To: <xmqqbldxem24.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 09 Jan 2021 15:18:43 -0800")
-Message-ID: <xmqqeeitd0dh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0557060781;
+        Sun, 10 Jan 2021 01:58:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1610243885;
+        bh=Qg0iPGZAWJqWdRmlMukbAreL/DDt1XxA300wtgvYzmg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=XkXtw2BlOaGTENqHUaeLFqHNTZt1DQPSEe3iQuE+XIXmur3hHmZVWoZsVGRl6MRwW
+         6G+8GxJtrKkd5Tf7dowBQ57JBBcvuo/FRi91jiG234pngV06fVQa7Xgk9Cu4fTWNOF
+         w179KlsSiPcocmFsXGYbhJ2UPJIvVID9ZxOTGpUQgllJAOIHAIuohy8tM74/NazLFd
+         VlmNfhV0ht1I1RTz9I3uypoSZoECHKSCCnmIZ11cuzSKl3A0sUPuf0O4Y1RHgyUaRD
+         0I134PWH1qbSGq7+4ywl4WT5zWmg1Ru06OtZROgWtD4cMyempfP9KSwNyCQOJGinYw
+         Verop6xKeXGVdxSVTtgZRFIJ0zh3m7rbzHX5uPdeV9ad0o4OgyP0AD+gknRLKS+hTG
+         sokhsXKJ/p9Jxp+96qxsgRN7smoEMFxqZ00BdunCUW7XmA7Rp/OsYzbKCJ2t2RjASn
+         cKShe4C0gPzKdlfF9RDMGZ66wvQTel5laMHUQwkbJ41nYM8YtrW
+Date:   Sun, 10 Jan 2021 01:58:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Alan Mackenzie <acm@muc.de>
+Subject: Re: [PATCH] docs: add description of status output table
+Message-ID: <X/pfKCV3Pz6cNn1h@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Alan Mackenzie <acm@muc.de>
+References: <X/oAhdZlLwcFRCrR@ACM>
+ <20210109220614.759779-1-sandals@crustytoothpaste.net>
+ <xmqqim85d0vw.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7E5876C8-52E6-11EB-AFB3-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="BRtGHgpv0ksbfAp5"
+Content-Disposition: inline
+In-Reply-To: <xmqqim85d0vw.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> I was hoping that we can avoid repetition that can cause bugs with
-> something like
-> ...
+--BRtGHgpv0ksbfAp5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Here is a cleaned-up version that would apply cleanly on top of
-yours.
+On 2021-01-10 at 01:41:23, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > The table describing the porcelain format in git-status(1) is helpful,
+> > but it's not completely clear what the three sections mean, even to
+> > some contributors.  As a result, users are unable to find how to detect
+> > common cases like merge conflicts programmatically.
+>=20
+> I agree that the addition clarifies, but it is a bit sad that we
+> already have a beginning of the explanation; I wonder if we should
+> improve the existing description in addition, even if it may not be
+> sufficient to eliminate the need for this new paragraph.  Here is
+> what we already have:
+>=20
+>     For paths with merge conflicts, `X` and `Y` show the modification
+>     states of each side of the merge. For paths that do not have merge
+>     conflicts, `X` shows the status of the index, and `Y` shows the status
+>     of the work tree.  For untracked paths, `XY` are `??`.  Other status
+>     codes can be interpreted as follows:
+>=20
+> This introductory text does sort-of hint that there are three
+> classes (merged paths, unmerged paths and untracked paths), but (1)
+> the order the three classes are described do not match that of the
+> table, and (2) the explanation of the untracked paths predates the
+> addition of ignored ones to the untracked class, so the description
+> is added after the legends as if an afterthought.
+>=20
+> I am actually tempted to suggest rewriting the whole section,
+> starting from the paragraph above and ending at the table, with
+> something like this:
 
-I suspect that it would make it even easier to follow the logic if
-the two sed "-e" expressions are swapped for the $LOCAL one.  
+Sure, I can reroll with that.  I noticed that we're using a text diagram
+instead of a table, so maybe I can fix that up as well in v2, depending
+how the output looks.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-It would clarify that we remove $C0 (separator before ours) and
-$C1..$C3 (ancestor's and theirs, including the separators) to get
-the local version.
+--BRtGHgpv0ksbfAp5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The other two are already described in the correct order.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-Thanks.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX/pfJwAKCRB8DEliiIei
+gS5LAQCeR72mqxT3qXxE4rcg91gLH68BQe536EY4chZW24GNbgD/U6IeQFotIrtx
+aSOp4KxGJGqDje24aROTwXDUlntBEAs=
+=xUGL
+-----END PGP SIGNATURE-----
 
- git-mergetool.sh | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 9029a79431..ed152a4187 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -243,16 +243,14 @@ auto_merge () {
- 	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
- 	if test -s "$DIFF3"
- 	then
--		cr=$(printf '\r')
--		sed -e '/^<<<<<<< /,/^||||||| /d' \
--			-e "/^=======$cr\{0,1\}$/,/^>>>>>>> /d" \
--			"$DIFF3" >"$BASE"
--		sed -e '/^||||||| /,/^>>>>>>> /d' \
--			-e '/^<<<<<<< /d' \
--			"$DIFF3" >"$LOCAL"
--		sed -e "/^<<<<<<< /,/^=======$cr\{0,1\}$/d" \
--			-e '/^>>>>>>> /d' \
--			"$DIFF3" >"$REMOTE"
-+		C0="^<<<<<<< "
-+		C1="^||||||| "
-+		C2="^=======$(printf '\015')\{0,1\}$"
-+		C3="^>>>>>>> "
-+
-+		sed -e "/$C0/,/$C1/d" -e "/$C2/,/$C3/d" "$DIFF3" >"$BASE"
-+		sed -e "/$C1/,/$C3/d" -e "/$C0/d" "$DIFF3" >"$LOCAL"
-+		sed -e "/$C0/,/$C2/d" -e "/$C3/d" "$DIFF3" >"$REMOTE"
- 	fi
- 	rm -- "$DIFF3"
- }
--- 
-2.30.0-307-g37795e20d9
-
+--BRtGHgpv0ksbfAp5--
