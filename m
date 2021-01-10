@@ -6,116 +6,74 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A72EC433E0
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 537D2C433E0
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:32:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2407D23976
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:29:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EE64239CF
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 07:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725820AbhAJH23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 02:28:29 -0500
-Received: from mail-ej1-f44.google.com ([209.85.218.44]:45770 "EHLO
-        mail-ej1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725782AbhAJH22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jan 2021 02:28:28 -0500
-Received: by mail-ej1-f44.google.com with SMTP id qw4so20140152ejb.12
-        for <git@vger.kernel.org>; Sat, 09 Jan 2021 23:28:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zdDKYtApnZL6cSPAqdbZaKadxlRmFo6m4obU+OLUdAU=;
-        b=aTp3obrEkd8ZQoejorNJhoK/mA7pSDuxzDQmB/TdIlSvbsBtZd+34MdHTLTBg9WAGF
-         rbILoPs5lM65c0VyhyaUYXBWHtLyKOpm8HfVPi0lP+UfJehixuoBriyPNqDn3G8NmOhN
-         cn+oUHUeLw6fX6c0jflFwojdWYkumaLdkH/mJwOgv3LGgTfHFBJ5RV2Y186FoxHIa32S
-         859/NQu9bBIhRdROayl3I14GgnStNVJ69csxCCJB3kjqozFyeuCCaaXobHeAcwvL6niD
-         2BN2RNwKBR2nWcXJcjJGF2FTdTnLGvOiCdv8BRePFPoq3ur1lvBqGbgv6Cz1sInW+wAp
-         0kOw==
-X-Gm-Message-State: AOAM531IP43nuzpJQy3pv4Gidl3aF6WQyQgzAqBpNsY8DnXC4F/2IaIh
-        YpwLSnslJWWbblsBZAEEfGFzGgSm8EOe+iEZwCo=
-X-Google-Smtp-Source: ABdhPJy6Nk1q4CO2uWEUaO/lsyAY5X4IiY7UVO2YWcdlpMAAtWlPIWGFVgy0ILoRyp50UF3eN8w2VjtrVI/9Y4e3UQ0=
-X-Received: by 2002:a17:906:d8dc:: with SMTP id re28mr7425057ejb.168.1610263666325;
- Sat, 09 Jan 2021 23:27:46 -0800 (PST)
+        id S1725956AbhAJH3s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 02:29:48 -0500
+Received: from out03.mta.xmission.com ([166.70.13.233]:56848 "EHLO
+        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbhAJH3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 02:29:47 -0500
+Received: from in02.mta.xmission.com ([166.70.13.52])
+        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1kyV9t-001XST-IO; Sun, 10 Jan 2021 00:29:06 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1kyV9s-006nYP-Pf; Sun, 10 Jan 2021 00:29:05 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id 900F1500AB0;
+        Sun, 10 Jan 2021 00:29:04 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id ZtEyAXOWynxR; Sun, 10 Jan 2021 00:29:04 -0700 (MST)
+Received: from ellen (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 3C96E500AAB;
+        Sun, 10 Jan 2021 00:29:04 -0700 (MST)
+Date:   Sun, 10 Jan 2021 00:29:02 -0700
+From:   Seth House <seth@eseth.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Message-ID: <20210110072902.GA247325@ellen>
+References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
+ <20210109224236.50363-1-davvid@gmail.com>
+ <20210109225400.GA156779@ellen>
+ <xmqqmtxhd1zx.fsf@gitster.c.googlers.com>
+ <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <428d16e8-fdb8-a587-6a0b-39c6c50eba99@gmail.com>
- <20210105110219.99610-1-phillip.wood123@gmail.com> <CAPig+cT-9sjmkdWFEcFS=rg9ziV9b6uWNMpQ8BTYP-a258La6Q@mail.gmail.com>
- <936f9b7c-6d54-00bc-f136-4cb4c2836eb6@gmail.com>
-In-Reply-To: <936f9b7c-6d54-00bc-f136-4cb4c2836eb6@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 10 Jan 2021 02:27:35 -0500
-Message-ID: <CAPig+cQq_RnanDQ3jHfNz_L58WyzmsUJBhtdrLxa=H0v_io+WA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add -z option for list subcommand
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
+X-XM-SPF: eid=1kyV9s-006nYP-Pf;;;mid=<20210110072902.GA247325@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 8, 2021 at 5:33 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> On 07/01/2021 03:34, Eric Sunshine wrote:
-> > On Tue, Jan 5, 2021 at 6:02 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >> Add a -z option to be used in conjunction with --porcelain that gives
-> >> NUL-terminated output. This enables 'worktree list --porcelain' to
-> >> handle worktree paths that contain newlines.
-> >
-> > Adding a -z mode makes a lot of sense. This, along with a fix to call
-> > quote_c_style() on paths in normal (not `-z`) porcelain mode,
->
-> I'm concerned that starting to quote paths will break backwards
-> compatibility. Even if we restricted the quoting to just those paths
-> that contain '\n' there is no way to distinguish between a quoted path
-> and one that begins and ends with ".
+On Sat, Jan 09, 2021 at 10:40:20PM -0800, Junio C Hamano wrote:
+> An ugly workaround patch that caters only to difftool breakage is
+> attached at the end; I did not look if a similar treatment is
+> necessary for the mergetool side.
 
-Backward compatibility is a valid concern, though I haven't managed to
-convince myself that it would matter much in this case. In one sense,
-the failure of the porcelain format to properly quote/escape paths
-when needed can be viewed as an outright bug and, although we value
-backward compatibility, we also value correctness, and such bug fixes
-have been accepted in the past. Especially in a case such as this, it
-seems exceedingly unlikely that fixing the bug would be harmful or
-break existing tooling (though, of course that possibility always
-exists, even if remotely so).
+That fixup does the trick on my machine too. Thank you.
 
-I can imagine ways in which tooling might be engineered to work around
-the shortcoming that `git worktree list --porcelain` doesn't properly
-handle newlines embedded in paths, but such tooling would almost
-certainly be so fragile anyhow that it would break as we add more keys
-to the extensible porcelain format. Coupled with the fact that
-newlines embedded in paths are so exceedingly unlikely, it's hard to
-imagine that fixing this bug would have a big impact on existing
-tooling.
+How wary are you of continuing with `initialize_merge_tool`? Do you see
+a better approach to get `automerge_enabled `into scope? While it is
+a nice feature to have, is it worth the risk vs. reward?
 
-The case you mention about a path which happens to have a double-quote
-as its first character does concern me a bit more since existing
-tooling wouldn't have had to jump through hoops, or indeed do anything
-special, with such paths, unlike the embedded newline case. But then,
-too, it's pretty hard to imagine this coming up much, if at all, in
-practice. That's not to say that I can't imagine a path, in general,
-beginning with a quote, but keeping in mind that we're talking only
-about worktree paths, it seems exceedingly unlikely.
-
-My gut feeling (for what it's worth) is that worktree paths containing
-embedded newlines (or other special characters) or beginning with a
-double-quote is so unlikely to come in in actual practice that viewing
-this as a bug fix is probably a reasonable approach, whereas some
-other approach -- such as introducing porcelain-v2 or creating a new
-porcelain key, say "worktreepath" which supersedes "worktree" (without
-retiring "worktree") -- may be overkill.
-
-None of the above is an argument against a complementary `-z` mode,
-which I think is a very good idea.
-
-> This is the reason I prefer to add
-> `-z` instead of taking Rafael's patch to quote the lock reason as that
-> patch still leaves the output of `git worktree list --porcelain`
-> ambiguous and it cannot be fixed without breaking existing users. A
-> counter argument to all this is that there are thousands of users on
-> file systems that cannot have newlines in paths and Rafael's patch is
-> definitely a net win for them.
-
-Rafael's patch is quoting only the lock-reason, not the worktree path,
-so I think it's orthogonal to this discussion. Also, his patch is
-introducing `lock` as a new attribute in porcelain output, not
-modifying behavior of an existing `lock` attribute.
