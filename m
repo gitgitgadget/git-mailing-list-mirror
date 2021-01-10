@@ -2,118 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B9FAC433E0
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 19:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9ABC43333
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 19:07:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A5E2227BF
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 19:05:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 048DD22AAE
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 19:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbhAJTFj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 14:05:39 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50310 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726559AbhAJTFj (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 14:05:39 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C170F60781;
-        Sun, 10 Jan 2021 19:04:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610305498;
-        bh=XwGRsHRAN4aCp6pVSqY+JJ+Bhu/6qUhg3/OlcM+6XPY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kSKZg5rqrpM3j8vnbRPiC7m/axBRhITMEWO+hU38+FglN23bBOZw7Pr0rH3+RmF9t
-         JV78s3Dnd/rrWHwLnhJa3LJszE7qvB+jRp5d35TB9wUUXPFcw4h7bcDq4BWZynQ7Iu
-         iNRHojEDkLMgtWnHXZrLrjFNW1ej4Pmc8kYfYmbbBkdCTbs17BgJp7YYuEJkywEwR3
-         vQxwufkacM8H/l4H0LJcB0EExVtMr+5xizSUIi3hqXAw+JkvcVHvlVyCGllLjV9/C4
-         Tx3CSf3CHAk3dJGf+fazYYgUw2AUZrSITuZEnClpurL/zkSCpaC+IE2Ow4Z7yrBftC
-         m7JDOwXKgPbp40d/9PepGRcl6YbaI14CuNpwYjsdQU7V3SkEpQv/VB/+ExoIjyLQJR
-         sFc33stRzAxgeLBuyY8FBGhHB6ckI5Exyp0Gi/RffZOp6SM78L8cNdcGUGZWdPkzfJ
-         H8AZrPwydJX6bBigEPQMcdMEiCPMF/bgpdOHw+M795o7nOMhcjr
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Alan Mackenzie <acm@muc.de>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] docs: rephrase and clarify the git status --short format
-Date:   Sun, 10 Jan 2021 19:04:48 +0000
-Message-Id: <20210110190448.779754-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
-In-Reply-To: <X/oAhdZlLwcFRCrR@ACM>
-References: <X/oAhdZlLwcFRCrR@ACM>
+        id S1727087AbhAJTGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 14:06:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43578 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbhAJTGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 14:06:35 -0500
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E18FC061786
+        for <git@vger.kernel.org>; Sun, 10 Jan 2021 11:05:55 -0800 (PST)
+Received: by mail-io1-xd2b.google.com with SMTP id e22so14982563iom.5
+        for <git@vger.kernel.org>; Sun, 10 Jan 2021 11:05:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=WlJT0aL65Z1V2Kw2G1ii9u87246/Rurj4aIYVpvE0LY=;
+        b=ThRLm6zlYihAyNsF6mrcBxxbOMrDrqL+UcqNM/DmvEVGFXutrebhPQ+7/13TsSgbS5
+         adrUyOWjrDwzg40AM66R+5S1upfzZbKXiEi492DHVz3DfGsFARCZjehmdgSmAq8SIWd0
+         fWfLOgjrUlSTZ8Os8UPoi2bJ0e38g8upGwfJyIvxQHMUM7iaAoIe1jrZuTqlp3p7M3Pn
+         e7kS9zkNbEKDOllLo7UD9npRhNfwafsXA+K3KVhqzi5G+A6ihhT3xSseXhvx7IfnpMF8
+         lgR4ix7uJswTTokNOSQ6oaijbOGB2Q97FnQwjbqUp8z5WF/YGVHzmaGZvcJi1n2Gx1Xi
+         C30g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=WlJT0aL65Z1V2Kw2G1ii9u87246/Rurj4aIYVpvE0LY=;
+        b=e2M0aRBLbsty6DBXMZagwiNvkt6jNHXuceU12SCdRm6F63fqR45Y/c3eE9x46oOcSv
+         S1gVo9LIivQ8k476cRFLDl5w3/Nq0mLiPQf/sPUmtRto4YZDwLoZaoCJxbKUBpmZLMYB
+         ZcI5id3IGSc+M5Pliz/6csaUDJwBc25okN54kPtWC35x51oZvAf9M5lBKN9k4g6TAYIL
+         Xm8KdZv3lwMZDK47/+LuKGmP9Bq6mamw7BvLXY10/NAGlfSQQnfpQW02ZzflM6XlEFb/
+         Hq45Zp1wkuIgw74mqrbRVME60mdJtOHo5XIlDCIQmrqPdmSkHIXVQEs9OuWmHZaw2rF1
+         +p5A==
+X-Gm-Message-State: AOAM533NrEbuDdpwIbfcxa23UlKKem7Krk0SPPrIA3YkaBbxDbph8lPF
+        o69zMNWIH3tv0Vik9Rp8gvloqUfNnL2Vo7Ks1pL9OF96eiA=
+X-Google-Smtp-Source: ABdhPJyQ/Vl1lybkRG5DBhLLdo1kUNUaAAqmO9lxElJ14LQUz38l9TuGRV7tmdsPXmswmYO9C5K440iGaqEelhEY0Vg=
+X-Received: by 2002:a5e:dd0d:: with SMTP id t13mr12765833iop.132.1610305554445;
+ Sun, 10 Jan 2021 11:05:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAH8yC8km6mHsrCD6sW+Z2ERpyO_X8Xp6fJbYKV+JF2gaqYakgQ@mail.gmail.com>
+ <4d81f0f1-66eb-2aac-4eab-dc5508d161b1@mail.de>
+In-Reply-To: <4d81f0f1-66eb-2aac-4eab-dc5508d161b1@mail.de>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Sun, 10 Jan 2021 14:05:43 -0500
+Message-ID: <CAH8yC8mVxNrd-j3=7OWz-vnKvvjHmp8izSow9XK0G71XqcP1tw@mail.gmail.com>
+Subject: Re: Git 2.30.0 and failed self tests
+To:     Stefan Moch <stefanmoch@mail.de>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The table describing the porcelain format in git-status(1) is helpful,
-but it's not completely clear what the three sections mean, even to
-some contributors.  As a result, users are unable to find how to detect
-common cases like merge conflicts programmatically.
+On Sun, Jan 10, 2021 at 12:09 PM Stefan Moch <stefanmoch@mail.de> wrote:
+>
+> Jeffrey Walton wrote:
+> > I'm seeing some failed self tests with 2.30.0 on Fedora 33 x86_64
+> > fully patched. They seem to be centered around email.
+>
+> I cannot confirm this on the same git version and platform:
+>
+>     # passed all 174 test(s)
+>     1..174
+>
+> Christian's suggestion from your other thread about running the test
+> with the options -i -v -x should also help here to give more
+> detailed error messages:
+>
+> https://lore.kernel.org/git/CAP8UFD30et-kL8dFoWvh7aPf4AKbzGxSzTuA=B3YNHZL_1axFA@mail.gmail.com/
+>
+> >     *** t9001-send-email.sh ***
+> >     ok 1 - prepare reference tree
+> >     ok 2 - Setup helper tool
+> >     ok 3 - Extract patches
+> >     not ok 4 - No confirm with --suppress-cc
+>
+> Since the tests 1-3 do not call git send-email, but test 4 and most
+> of the following do, I suspect the system is missing some dependency
+> packages needed for git send-email, probably mail-related Perl modules.
+>
+> Installing Fedora's git-email package is probably enough to fix this:
+>
+>     dnf install git-email
 
-Let's improve this situation by rephrasing to be more explicit about
-what each of the sections in the table means, to tell users in plain
-language which cases are occurring, and to describe what "unmerged"
-means.
+It looks like a Perl problem.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-This uses text from Junio's email, so his sign-off will be required
-here.  I assume that won't be a problem, but I can send a v3 if it is.
+I've got a Perl recipe for OpenSSL. The OpenSSL devs don't realize the
+trouble they create with that dependency. Old systems need a newer
+Perl for OpenSSL. The F33 machine is a test machine, so Perl gets
+tested on it, too.
 
- Documentation/git-status.txt | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+t$ ./t9001-send-email.sh -i -v -x
+Initialized empty Git repository in
+/home/jwalton/Build-Scripts/git-2.30.0/t/trash
+directory.t9001-send-email/.git/
+expecting success of 9001.1 'prepare reference tree':
+    echo "1A quick brown fox jumps over the" >file &&
+    echo "lazy dog" >>file &&
+    git add file &&
+    GIT_AUTHOR_NAME="A" git commit -a -m "Initial."
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 7731b45f07..c0764e850a 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -184,11 +184,26 @@ characters, that field will be quoted in the manner of a C string
- literal: surrounded by ASCII double quote (34) characters, and with
- interior special characters backslash-escaped.
- 
--For paths with merge conflicts, `X` and `Y` show the modification
--states of each side of the merge. For paths that do not have merge
--conflicts, `X` shows the status of the index, and `Y` shows the status
--of the work tree.  For untracked paths, `XY` are `??`.  Other status
--codes can be interpreted as follows:
-+There are three different types of states that are shown using this format, and
-+each one uses the `XY` syntax differently:
-+
-+* When a merge is occurring and the merge was successful, or outside of a merge
-+	situation, `X` shows the status of the index and `Y` shows the status of the
-+	working tree.
-+* When a merge conflict has occurred and has not yet been resolved, `X` and `Y`
-+	show the state introduced by each head of the merge, relative to the common
-+	ancestor. These paths are said to be _unmerged_.
-+* When a path is untracked, `X` and `Y` are always the same, since they are
-+	unknown to the index. `??` is used for untracked paths. Ignored files are
-+	not listed unless `--ignored` is used; if it is, ignored files are indicated
-+	by `!!`.
-+
-+Note that the term _merge_ here also includes rebases using the default
-+`--merge` strategy, cherry-picks, and anything else using the merge machinery.
-+
-+In the following table, these three classes are shown in separate sections, and
-+these characters are used for `X` and `Y` fields for the first two sections that
-+show tracked paths:
- 
- * ' ' = unmodified
- * 'M' = modified
-@@ -198,9 +213,6 @@ codes can be interpreted as follows:
- * 'C' = copied
- * 'U' = updated but unmerged
- 
--Ignored files are not listed, unless `--ignored` option is in effect,
--in which case `XY` are `!!`.
--
- ....
- X          Y     Meaning
- -------------------------------------------------
+++ echo '1A quick brown fox jumps over the'
+++ echo 'lazy dog'
+++ git add file
+++ GIT_AUTHOR_NAME=A
+++ git commit -a -m Initial.
+[master (root-commit) fbff2ba] Initial.
+ Author: A <author@example.com>
+ 1 file changed, 2 insertions(+)
+ create mode 100644 file
+ok 1 - prepare reference tree
+
+expecting success of 9001.2 'Setup helper tool':
+    write_script fake.sendmail <<-\EOF &&
+    shift
+    output=1
+    while test -f commandline$output
+    do
+        output=$(($output+1))
+    done
+    for a
+    do
+        echo "!$a!"
+    done >commandline$output
+    cat >"msgtxt$output"
+    EOF
+    git add fake.sendmail &&
+    GIT_AUTHOR_NAME="A" git commit -a -m "Second."
+
+++ write_script fake.sendmail
+++ echo '#!/bin/sh'
+++ cat
+++ chmod +x fake.sendmail
+++ git add fake.sendmail
+++ GIT_AUTHOR_NAME=A
+++ git commit -a -m Second.
+[master 60cacbf] Second.
+ Author: A <author@example.com>
+ 1 file changed, 12 insertions(+)
+ create mode 100755 fake.sendmail
+ok 2 - Setup helper tool
+
+expecting success of 9001.3 'Extract patches':
+    patches=$(git format-patch -s --cc="One <one@example.com>"
+--cc=two@example.com -n HEAD^1) &&
+    threaded_patches=$(git format-patch -o threaded -s
+--in-reply-to="format" HEAD^1)
+
++++ git format-patch -s '--cc=One <one@example.com>'
+--cc=two@example.com -n 'HEAD^1'
+++ patches=0001-Second.patch
++++ git format-patch -o threaded -s --in-reply-to=format 'HEAD^1'
+++ threaded_patches=threaded/0001-Second.patch
+ok 3 - Extract patches
+
+expecting success of 9001.4 'No confirm with --suppress-cc':
+    test_no_confirm --suppress-cc=sob &&
+    check_no_confirm
+
+++ test_no_confirm --suppress-cc=sob
+++ rm -f no_confirm_okay
+++ echo n
++++ pwd
+++ GIT_SEND_EMAIL_NOTTY=1
+++ git send-email '--from=Example <from@example.com>'
+--to=nobody@example.com
+'--smtp-server=/home/jwalton/Build-Scripts/git-2.30.0/t/trash
+directory.t9001-send-email/fake.sendmail' --suppress-cc=sob
+0001-Second.patch
+Can't locate Term/ReadLine.pm in @INC (you may need to install the
+Term::ReadLine module) (@INC contains:
+/home/jwalton/Build-Scripts/git-2.30.0/perl/build/lib
+/home/jwalton/Build-Scripts/git-2.30.0/t/../perl/build/lib
+/usr/local/lib64/perl5/5.32 /usr/local/share/perl5/5.32
+/usr/lib64/perl5/vendor_perl /usr/share/perl5/vendor_perl
+/usr/lib64/perl5 /usr/share/perl5) at
+/home/jwalton/Build-Scripts/git-2.30.0/git-send-email line 25.
+BEGIN failed--compilation aborted at
+/home/jwalton/Build-Scripts/git-2.30.0/git-send-email line 25.
+error: last command exited with $?=2
+not ok 4 - No confirm with --suppress-cc
+#
+#        test_no_confirm --suppress-cc=sob &&
+#        check_no_confirm
+
+Jeff
