@@ -2,102 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 144BCC433E9
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 11:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD201C433DB
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 12:04:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E510E2395A
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 11:58:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 831172388C
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 12:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbhAJL5t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 06:57:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37058 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726819AbhAJL5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jan 2021 06:57:48 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B328EC0617A2
-        for <git@vger.kernel.org>; Sun, 10 Jan 2021 03:57:07 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id j12so14256859ota.7
-        for <git@vger.kernel.org>; Sun, 10 Jan 2021 03:57:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=A5iPxhsBV3d+G0Cazh3mqN6x6cQvmvP8TdJELUYRKnc=;
-        b=prTefsLhYty8JdgVn9DKb6NOG0kfcnbeg8On9WfhbzdQsAme2J+bA8SCrCgZ3WBqI8
-         qT+BvrguMXsc8uNT7tVr0GNIv85nYhLeB9Qzw5cTJB0U+8dlUiJ9iut0HtFKimhfF0cW
-         cxkc/7ZELkt3HTZOpAWf5iBplakHRUodkAVq2vmQwNLwbx81xaNj9IEJN0jcio4Up3Bb
-         uwuajG68M8k6gBIGtvzbMcAnUxwNsh1QogEuXC2PZOeqy5jUPzAw7VaKw4dfjCPLl3Ta
-         M6qQF3YTzN9qSS2eE+d6VwRWu7o2y5E6OXL00ud5ai3ltDpLk5/kIkZ8U8cFER++J65C
-         HP7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=A5iPxhsBV3d+G0Cazh3mqN6x6cQvmvP8TdJELUYRKnc=;
-        b=ZJ6WnheHGLzXYy0zahiseOFsgtzQtYdaaIEiGWFYXGPG7zwg2lGkN9SBm4yyXQOqHk
-         h3HndcenynfPCiubxM5WV5dKVqBgz3ZHmA6j3FBSxIHL6UqKnSSmivBm6xnr3dr8DvjT
-         f9nIQEkju1eZNRoZ7rOHCGG1DUQcnT7fw5YO4qRSeROwi7ITBzwuXJKkVlBFP5VwLKWx
-         gPkXc0vOiqj1eTqhv272jrIKfealgKF/Cw+vAaj4iQHj87wPXG5aWpRSj4g62yDKfSIk
-         DUh4dPrT3+WVjqsaaa0CdPeUJ0Bgz5pVZxgfMcpIbBtIl6y0w81I2ju80JsdlDTHtci5
-         rqgw==
-X-Gm-Message-State: AOAM530JuT0fgmZeQIPmvg/ftA2gVYJlk/U86aWECcjfy2UivMlJn1oX
-        R8dwVXGAYAEgA1TCaXA/xww=
-X-Google-Smtp-Source: ABdhPJz6jpRfw0dyqYvuTR25xQxba7YP6tq9pUctkwxqTpuqJT2HfBKAhTEKm69To5iKCR93+vxxDg==
-X-Received: by 2002:a05:6830:1f5a:: with SMTP id u26mr8049726oth.250.1610279827030;
-        Sun, 10 Jan 2021 03:57:07 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id d20sm3001342ote.48.2021.01.10.03.57.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Jan 2021 03:57:06 -0800 (PST)
-Subject: Re: [PATCH v3 00/14] Remove more index compatibility macros
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.830.v2.git.1609821783.gitgitgadget@gmail.com>
- <pull.830.v3.git.1610136177.gitgitgadget@gmail.com>
- <xmqq1retclzr.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1c428df5-849d-7e30-76b7-498bdd827f5e@gmail.com>
-Date:   Sun, 10 Jan 2021 06:57:05 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1726461AbhAJMEa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 07:04:30 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50641 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726386AbhAJMEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 07:04:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1610280174;
+        bh=Gw4wdHoiDePsJV4JExF1IbS0nCOr0Fv2aIdeSybJW54=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gwpNOgOThmChvPzo7AjmJoLpoAQEc23jprTvQ6TO3+lSlySYG+4D2WD4/GaS4oR78
+         pK+juWIKWjc14sK5ryZvEtq7/ysrUlOM1w+YXFl3K/INPBI6n3M5nvVfTcstJzRiAw
+         DVzzmDZOXrdsE4S8R1OmDZYOYdGdMqKbELJ0dp8I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.18.250.66] ([213.196.212.28]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Ml6mE-1kFHuc0XsK-00lTR6; Sun, 10
+ Jan 2021 13:02:54 +0100
+Date:   Sun, 10 Jan 2021 13:02:52 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
+Subject: Re: Cc'ing the Git maintainer on GitGitGadget contributions, was
+ Re: [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
+In-Reply-To: <xmqq8s93i506.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2101101301280.56@tvgsbejvaqbjf.bet>
+References: <pull.475.git.1574539001.gitgitgadget@gmail.com> <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet> <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet> <87wnwordzh.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2101071718470.2213@tvgsbejvaqbjf.bet> <xmqqft3cl9rw.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2101081534380.2213@tvgsbejvaqbjf.bet>
+ <xmqq8s93i506.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqq1retclzr.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ks9fZi7gjy60DTk0FkLScyf+8jEDVdII8YmHv+bqL3GopNiGG8B
+ U0AeLavza6T7oebv8f6weLPYNHK9ZbmLNRTupfrjWO288ED9aLDl/VKljHEl1YWORiQB7cC
+ okN1Ier+iFXpke0MuTH4uzlghtz6fCF9+Ws0+YaZagOwes5G5P2/wpZggNWxl1vj+CzSSly
+ KzQfVF+GFis8PHOaGTBsw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j0CUKH+7zuI=:OUl1XVrL+OmSPM/2euWu/1
+ LlkgzI32csXcKp0ljmDqgm1gsx98prvE6hOxN5W9b2hT83s4XFV0zi1hF1d70jjEARKRefptt
+ XQrJBcmZejhtC9LC5B0s8EGL67t0h/ef6JjMA9pPRRJNh+bUR5WLOqmp/aAfxbKgf46nZF8MZ
+ K8WN2h+uNMUprITsaalFDI+V41P0Fqfn7DTBXBZyrqf+hfUkKXIrfSV/Aq84/J+wYIR8iakE2
+ wV0pyFu1lsSN8lk7Hh8PtdgJXoBlpY374eVYSvvzFQKbrNBTZp4DqFf5t8qJPP3OHgN8lArqR
+ jSxdkCaEKz+318klM1miJPLOB9EIgLtDuraFl1zo2x0jzXffMfW/+d8CdJJHKfLXXPtIcvIqC
+ JxiyBXYkHI8A2UV6zJEA4XWVyq2u9Ar+8hOUQI6/6T+QqVPxqjIbuSYpWutflCPJI/NIdkR9J
+ P6covg9o0R4NfWCzhi4+3p5NIcpkn4wd9bk5HZeZLLyhUF1lcNDUNTJpcfb8fjpZlUOHWCcvy
+ eysAhjxdZ1a5/gLhfAjAG7AjQzP2l1QfxwWY2Ss2Uie+Ot/9lUB0KKxW5fBxHcMLnsr7/bw/o
+ 4rPPzuwAaH2h+rZ6pR/WobYyPu7ip+AFrxl5QwO5xFl+PefT4QL0gMhlAzW/aGK+QqSYNSEs5
+ 1jVPqokIC86v5/7467QWmyhlQRnhNpQKGLrQOuSQjgrjkrpVWaq4X0RaxQa2MEdga5WYppkVT
+ PRVh0wfeAoxUpcjtOYvwNfPU+57bOHDjNuTqX88i3jD+CWO2PnoHq/n2jMEJ7tOdGvMf5c+Gg
+ dGPV8fJIGkQnS7Up761agdO8fAvesVm87hyYaVVdN/sOX+vTnuvtud+/kGydL+3IzAuDrWECO
+ ZYCc3/4NNGQSWgIjb+s+EqS5oUr68cnIBs/utlP6E=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/10/2021 2:03 AM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> UPDATE: this is now based on ag/merge-strategies-in-c to avoid conflicts in
->> 'seen'. The changes in builtin/rm.c still conflict with
->> mt/rm-sparse-checkout, but that branch seems to be waiting for a clearer
->> plan on some corner cases. I thought about ejecting it, but 'rm' still uses
->> ce_match_stat(), so just dropping the patch gives less of a final stake at
->> the end of the series. (I'm still open to it, if necessary.)
-> 
-> I haven't read this latest iteration myself yet beyond the cover
-> letter, but tonight's 'seen' has this queued near its tip.  I expect
-> it would either stay there or occasionally ejected, until the base
-> topic solidifies a bit more.
+Hi Junio,
 
-Thanks. I'll continue to watch that topic and provide review as
-new versions come out.
+On Fri, 8 Jan 2021, Junio C Hamano wrote:
 
--Stolee
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> One attribute of a quality patch is that it is CC'ed to the right
+> people and at the right time.
 
+That's like saying that a quality guest in my house is one who does not
+have to ask where the bathroom is.
+
+I want the Git project to be more inviting than that.
+
+Ciao,
+Dscho
