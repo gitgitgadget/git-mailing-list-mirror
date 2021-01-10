@@ -2,492 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A9FC433DB
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 15:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6ED2EC433E0
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 17:16:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90387227C3
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 15:29:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36ABB224D3
+	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 17:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726321AbhAJP31 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 10:29:27 -0500
-Received: from mail.aerusso.net ([104.225.219.13]:56200 "EHLO mail.aerusso.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726069AbhAJP31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Jan 2021 10:29:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aerusso.net; s=default;
-        t=1610292525;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=3QLxp/GCXVzzT4RbYYjrcij+jI1ZGzaP0PbvWh8VnyY=;
-        b=G0tnj6WM5M60B4taEkHO9PAwYQvTrL77Yrj8E5VZlxghTEbGUJBaHeLqX39AG9VVCc2F0O
-        Sp2zFTmeQyguky3MNf/rmn4uMQ+AzrIliYHQ88mdGl/ZLTwF5Pt3ZlY19SuqEkqLe5Pqqs
-        j6u6clkB1NdckWGfkNFs4FJuhbzgtq7y+IE0bYCwMr2Yza1JHCNsV4bEVMlnPRufqInEbT
-        jol/+UCnselX1fplGvjfQbc2NfXv8SazoyHYKRJ4F3aDvoQhqHb43pY35TNba/Kb99sxES
-        +rP8wGRf0YoIRw7j20KoFO2gTH382rQiHE54N/6NqwiOozsUJn+yKyrT8MrR7Q==
-Subject: [PATCH v2] t6016: move to lib-log-graph.sh framework
-From:   Antonio Russo <aerusso@aerusso.net>
-To:     git-ml <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-References: <6dc37f6b-1afd-544d-126e-2be9422571c6@aerusso.net>
-Message-ID: <82785993-0393-4db0-a089-d1633e5d1374@aerusso.net>
-Date:   Sun, 10 Jan 2021 08:28:22 -0700
+        id S1726794AbhAJRQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 12:16:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726394AbhAJRQm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 12:16:42 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A935C061786
+        for <git@vger.kernel.org>; Sun, 10 Jan 2021 09:16:02 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id m5so14025360wrx.9
+        for <git@vger.kernel.org>; Sun, 10 Jan 2021 09:16:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=S7OdM8kILiSJ3zIvNkyfmTKd7kG2EBt+XEmpUyPIzuc=;
+        b=XduRUJ0eQ9sPBT7fQ58ViptNJqb6rgxKKesT195R2W+oIXfLN93NpgAJH1Bhdg+5lW
+         N+xkYRZXEY8XAS8ArfHaHAwdWoMN1K0r3HMq/kc8H309Pd8XJo/Rwzi1C10KIryvdzJ+
+         JpRcL8duOuTVIB61zfYv/sTep9yjLUUW/pRFstU3CzIC0v5KaGpsBqaxoCaZNrNsMm/B
+         uD2MBm21n95+cPWafRV7TD46jR4XeoE/2o+wmu8Lwll1aUDAyrujSwpUPob/AezzoTvf
+         flU4BXL/XAiTlL2/9vJI/5I0Q3aX2MNGXEZ2K/Qo8nBzv79KtupTiuIcV66IKXP4W1+c
+         FucQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=S7OdM8kILiSJ3zIvNkyfmTKd7kG2EBt+XEmpUyPIzuc=;
+        b=QS9fN1WvWa5WCk8e27KDFNvMPaL1TIn9KEw3E2XVxobVmkqqRZHNBwmkdbI3qNnSG7
+         s+rgveFXsq94nq5WwqtuH/zWMMsoI/y6qT1fS2+KBy2sfU9KVkcvuSJ5CqlTlojl3iai
+         NXy3Drp0mt2+NGy2VMgr1tzY9MqjX5mn3HtZLfH48LzaGdAE3m+sA+lKmYWHaAn4182x
+         fah7JNQZ6msXRLHjw3N2s/4Sl/de95rX/nWE/bIP4QlfUgHjyQkxR9rSDdtPfEaT+qah
+         2Z6dI5kkHWx2KX0Ati1Wjx+4q1TXPEnrY8Bfie6UNZiPLsBj78RPh2QgwULXCAYkF7XE
+         kqBg==
+X-Gm-Message-State: AOAM5324fa0K/cwBr6BBYArht9aTotgFIS2Pp81KdktArd4LiS29T+1G
+        nz+FiXeu9rNQZvJZut9+0/wy5DswkVqT0Q==
+X-Google-Smtp-Source: ABdhPJx51m3bVOB1tjS6voJ9d9+jAxzM23krH8jh3FyVnANUNPPVnXJm44FbzKzX+eFjsaDyvlcXgg==
+X-Received: by 2002:a5d:60cb:: with SMTP id x11mr13062088wrt.0.1610298960997;
+        Sun, 10 Jan 2021 09:16:00 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-654-1-420-166.w2-6.abo.wanadoo.fr. [2.6.83.166])
+        by smtp.gmail.com with ESMTPSA id y63sm19713494wmd.21.2021.01.10.09.16.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Jan 2021 09:16:00 -0800 (PST)
+Subject: Re: [PATCH v6 06/13] merge-index: don't fork if the requested program
+ is `git-merge-one-file'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20201116102158.8365-1-alban.gruin@gmail.com>
+ <20201124115315.13311-1-alban.gruin@gmail.com>
+ <20201124115315.13311-7-alban.gruin@gmail.com>
+ <44c9189d-9d2f-c437-d0d6-9529708d2c99@gmail.com>
+ <411b68ad-dee5-5a19-ae94-c2b6a249161a@gmail.com>
+ <xmqqv9cax1le.fsf@gitster.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Message-ID: <f7d7cc3b-b53d-ed48-8aa4-2b26a0ce7da3@gmail.com>
+Date:   Sun, 10 Jan 2021 18:15:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <6dc37f6b-1afd-544d-126e-2be9422571c6@aerusso.net>
+In-Reply-To: <xmqqv9cax1le.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-t6016 manually reconstructs git log --graph output by using the reported
-commit hashes from `git rev-parse`.  Each tag is converted into an
-environment variable manually, and then `echo`-ed to an expected output
-file, which is in turn compared to the actual output.
+Hi Junio,
 
-The expected output is difficult to read and write, because, e.g.,
-each line of output must be prefaced with echo, quoted, and properly
-escaped.  Additionally, the test is sensitive to trailing whitespace,
-which may potentially be removed from graph log output in the future.
+Le 06/01/2021 à 03:04, Junio C Hamano a écrit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
+> 
+>> We had the same discussion with Phillip, who pointed out this previous
+>> discussion about this topic:
+>> https://lore.kernel.org/git/xmqqblv5kr9u.fsf@gitster-ct.c.googlers.com/
+>>
+>> So, it's probably OK to do that.
+> 
+> These days, there exists an optional installation option exists that
+> won't even install built-in commands in $GIT_EXEC_PATH, which
+> invalidates the assessment made in 2019 in the article you cited
+> above, so the code might still be OK, but the old justification no
+> longer would apply.
+> 
+> In any case, if two people who reviewed a patch found the same thing
+> in it fishy, it is an indication that the reason why the apparently
+> fishy code is OK needs to be better explained so that future readers
+> of the code do not have to be puzzled about the same thing.
+> 
+> Thanks.
+> 
 
-In order to reduce duplication, ease troubleshooting of failed tests by
-improving readability, and ease the addition of more tests to this file,
-port the operations to `lib-log-graph.sh`, which is already used in
-several other tests, e.g., t4215.  Give all merges a simple commit
-message, and use a common `check_graph` macro taking a heredoc of the
-expected output which does not required extensive escaping.
+Perhaps we could try to check if the provided command exists (with
+locate_in_PATH()), if it does, run it through merge_one_file_spawn(),
+else, use merge_one_file_func()?
 
-All commits, including merges, continue to be tagged, even if they are
-immediately deleted, in order to exercise the exact same logic, i.e. in
-`--all`, `--simplify-by-decoration`, and `git tag -d`.
-
-Signed-off-by: Antonio Russo <aerusso@aerusso.net>
----
- t/t6016-rev-list-graph-simplify-history.sh | 354 ++++++++++-----------
- 1 file changed, 167 insertions(+), 187 deletions(-)
-
-I did not try to factor this commit into two since I did not hear any
-strong opinions in favor of that.
-
-diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
-index f5e6e92f5b..f79df8b6d1 100755
---- a/t/t6016-rev-list-graph-simplify-history.sh
-+++ b/t/t6016-rev-list-graph-simplify-history.sh
-@@ -8,6 +8,12 @@
- test_description='--graph and simplified history'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-log-graph.sh
-+
-+check_graph () {
-+	cat >expect &&
-+	lib_test_cmp_graph --format=%s "$@"
-+}
- 
- test_expect_success 'set up rev-list --graph test' '
- 	# 3 commits on branch A
-@@ -28,7 +34,7 @@ test_expect_success 'set up rev-list --graph test' '
- 
- 	# Octopus merge B and C into branch A
- 	git checkout A &&
--	git merge B C &&
-+	git merge B C -m A4 &&
- 	git tag A4 &&
- 
- 	test_commit A5 bar.txt &&
-@@ -38,81 +44,64 @@ test_expect_success 'set up rev-list --graph test' '
- 	test_commit C3 foo.txt &&
- 	test_commit C4 bar.txt &&
- 	git checkout A &&
--	git merge -s ours C &&
-+	git merge -s ours C -m A6 &&
- 	git tag A6 &&
- 
--	test_commit A7 bar.txt &&
--
--	# Store commit names in variables for later use
--	A1=$(git rev-parse --verify A1) &&
--	A2=$(git rev-parse --verify A2) &&
--	A3=$(git rev-parse --verify A3) &&
--	A4=$(git rev-parse --verify A4) &&
--	A5=$(git rev-parse --verify A5) &&
--	A6=$(git rev-parse --verify A6) &&
--	A7=$(git rev-parse --verify A7) &&
--	B1=$(git rev-parse --verify B1) &&
--	B2=$(git rev-parse --verify B2) &&
--	C1=$(git rev-parse --verify C1) &&
--	C2=$(git rev-parse --verify C2) &&
--	C3=$(git rev-parse --verify C3) &&
--	C4=$(git rev-parse --verify C4)
--	'
-+	test_commit A7 bar.txt
-+'
- 
- test_expect_success '--graph --all' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "| * $C3" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "| |   " >> expected &&
--	echo "|  \\  " >> expected &&
--	echo "*-. | $A4" >> expected &&
--	echo "|\\ \\| " >> expected &&
--	echo "| | * $C2" >> expected &&
--	echo "| | * $C1" >> expected &&
--	echo "| * | $B2" >> expected &&
--	echo "| * | $B1" >> expected &&
--	echo "* | | $A3" >> expected &&
--	echo "| |/  " >> expected &&
--	echo "|/|   " >> expected &&
--	echo "* | $A2" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A1" >> expected &&
--	git rev-list --graph --all > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --all <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	| * C3
-+	* | A5
-+	| |
-+	|  \
-+	*-. | A4
-+	|\ \|
-+	| | * C2
-+	| | * C1
-+	| * | B2
-+	| * | B1
-+	* | | A3
-+	| |/
-+	|/|
-+	* | A2
-+	|/
-+	* A1
-+	EOF
-+'
- 
- # Make sure the graph_is_interesting() code still realizes
- # that undecorated merges are interesting, even with --simplify-by-decoration
- test_expect_success '--graph --simplify-by-decoration' '
--	rm -f expected &&
- 	git tag -d A4 &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "| * $C3" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "| |   " >> expected &&
--	echo "|  \\  " >> expected &&
--	echo "*-. | $A4" >> expected &&
--	echo "|\\ \\| " >> expected &&
--	echo "| | * $C2" >> expected &&
--	echo "| | * $C1" >> expected &&
--	echo "| * | $B2" >> expected &&
--	echo "| * | $B1" >> expected &&
--	echo "* | | $A3" >> expected &&
--	echo "| |/  " >> expected &&
--	echo "|/|   " >> expected &&
--	echo "* | $A2" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A1" >> expected &&
--	git rev-list --graph --all --simplify-by-decoration > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --all --simplify-by-decoration <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	| * C3
-+	* | A5
-+	| |
-+	|  \
-+	*-. | A4
-+	|\ \|
-+	| | * C2
-+	| | * C1
-+	| * | B2
-+	| * | B1
-+	* | | A3
-+	| |/
-+	|/|
-+	* | A2
-+	|/
-+	* A1
-+	EOF
-+'
- 
- test_expect_success 'setup: get rid of decorations on B' '
- 	git tag -d B2 &&
-@@ -122,142 +111,133 @@ test_expect_success 'setup: get rid of decorations on B' '
- 
- # Graph with branch B simplified away
- test_expect_success '--graph --simplify-by-decoration prune branch B' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "| * $C3" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "* | $A4" >> expected &&
--	echo "|\\| " >> expected &&
--	echo "| * $C2" >> expected &&
--	echo "| * $C1" >> expected &&
--	echo "* | $A3" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A2" >> expected &&
--	echo "* $A1" >> expected &&
--	git rev-list --graph --simplify-by-decoration --all > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --simplify-by-decoration --all <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	| * C3
-+	* | A5
-+	* | A4
-+	|\|
-+	| * C2
-+	| * C1
-+	* | A3
-+	|/
-+	* A2
-+	* A1
-+	EOF
-+'
- 
- test_expect_success '--graph --full-history -- bar.txt' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "* | $A4" >> expected &&
--	echo "|\\| " >> expected &&
--	echo "* | $A3" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A2" >> expected &&
--	git rev-list --graph --full-history --all -- bar.txt > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --full-history --all -- bar.txt <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	* | A5
-+	* | A4
-+	|\|
-+	* | A3
-+	|/
-+	* A2
-+	EOF
-+'
- 
- test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "* | $A3" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A2" >> expected &&
--	git rev-list --graph --full-history --simplify-merges --all \
--		-- bar.txt > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --full-history --simplify-merges --all -- bar.txt <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	* | A5
-+	* | A3
-+	|/
-+	* A2
-+	EOF
-+'
- 
- test_expect_success '--graph -- bar.txt' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "* $A5" >> expected &&
--	echo "* $A3" >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A2" >> expected &&
--	git rev-list --graph --all -- bar.txt > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --all -- bar.txt <<-\EOF
-+	* A7
-+	* A5
-+	* A3
-+	| * C4
-+	|/
-+	* A2
-+	EOF
-+'
- 
- test_expect_success '--graph --sparse -- bar.txt' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "* $A6" >> expected &&
--	echo "* $A5" >> expected &&
--	echo "* $A4" >> expected &&
--	echo "* $A3" >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "| * $C3" >> expected &&
--	echo "| * $C2" >> expected &&
--	echo "| * $C1" >> expected &&
--	echo "|/  " >> expected &&
--	echo "* $A2" >> expected &&
--	echo "* $A1" >> expected &&
--	git rev-list --graph --sparse --all -- bar.txt > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --sparse --all -- bar.txt <<-\EOF
-+	* A7
-+	* A6
-+	* A5
-+	* A4
-+	* A3
-+	| * C4
-+	| * C3
-+	| * C2
-+	| * C1
-+	|/
-+	* A2
-+	* A1
-+	EOF
-+'
- 
- test_expect_success '--graph ^C4' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "* $A6" >> expected &&
--	echo "* $A5" >> expected &&
--	echo "*   $A4" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $B2" >> expected &&
--	echo "| * $B1" >> expected &&
--	echo "* $A3" >> expected &&
--	git rev-list --graph --all ^C4 > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --all ^C4 <<-\EOF
-+	* A7
-+	* A6
-+	* A5
-+	*   A4
-+	|\
-+	| * B2
-+	| * B1
-+	* A3
-+	EOF
-+'
- 
- test_expect_success '--graph ^C3' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "* $A5" >> expected &&
--	echo "*   $A4" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $B2" >> expected &&
--	echo "| * $B1" >> expected &&
--	echo "* $A3" >> expected &&
--	git rev-list --graph --all ^C3 > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --all ^C3 <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	* A5
-+	*   A4
-+	|\
-+	| * B2
-+	| * B1
-+	* A3
-+	EOF
-+'
- 
- # I don't think the ordering of the boundary commits is really
- # that important, but this test depends on it.  If the ordering ever changes
- # in the code, we'll need to update this test.
- test_expect_success '--graph --boundary ^C3' '
--	rm -f expected &&
--	echo "* $A7" >> expected &&
--	echo "*   $A6" >> expected &&
--	echo "|\\  " >> expected &&
--	echo "| * $C4" >> expected &&
--	echo "* | $A5" >> expected &&
--	echo "| |     " >> expected &&
--	echo "|  \\    " >> expected &&
--	echo "*-. \\   $A4" >> expected &&
--	echo "|\\ \\ \\  " >> expected &&
--	echo "| * | | $B2" >> expected &&
--	echo "| * | | $B1" >> expected &&
--	echo "* | | | $A3" >> expected &&
--	echo "o | | | $A2" >> expected &&
--	echo "|/ / /  " >> expected &&
--	echo "o / / $A1" >> expected &&
--	echo " / /  " >> expected &&
--	echo "| o $C3" >> expected &&
--	echo "|/  " >> expected &&
--	echo "o $C2" >> expected &&
--	git rev-list --graph --boundary --all ^C3 > actual &&
--	test_cmp expected actual
--	'
-+	check_graph --boundary --all ^C3 <<-\EOF
-+	* A7
-+	*   A6
-+	|\
-+	| * C4
-+	* | A5
-+	| |
-+	|  \
-+	*-. \   A4
-+	|\ \ \
-+	| * | | B2
-+	| * | | B1
-+	* | | | A3
-+	o | | | A2
-+	|/ / /
-+	o / / A1
-+	 / /
-+	| o C3
-+	|/
-+	o C2
-+	EOF
-+'
- 
- test_done
--- 
-2.30.0
+Alban
 
