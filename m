@@ -2,133 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99FCEC433E0
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 19:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 311C6C433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 19:19:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5776F22A84
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 19:05:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E05B822CAD
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 19:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390694AbhAKTFA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 14:05:00 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51879 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390691AbhAKTE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 14:04:59 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 02EAD125E7E;
-        Mon, 11 Jan 2021 14:04:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=4EdUFm2BrUsR
-        wRKeMjynUg0YifQ=; b=uyCDOjJZNQO0Qw6h6IEBlA23X0J5ppDD6OhHmSdEoaeX
-        VXh1bmhGxpqmVHyJ15MnCxZ8a9m4fRFNms5YzFghmdEuxGngMA+wSDpAIQTNKy2u
-        nsyZX+W2uFs++mVU0yDmS+4Jm92vEH+otY/Cy+80IaHnvwZzVqqzrlsxC2z4kQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=s3DoZ7
-        gpFaaHirC1DySzX9MfVfghg4FxVb0jlvUpOQlpu2Vw84wdHq5rqtLB2XaWPCrWdn
-        JXPLg2qIXhRTJh/Z16TaszLYt0THNiXSfkDHAjbgM5LYSE19zQu2Duxukg1NWZS9
-        rzQ9BDzleSN+VX/h2Sqzce6TWdn30MR0Owdvs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EFEA3125E7D;
-        Mon, 11 Jan 2021 14:04:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27684125E79;
-        Mon, 11 Jan 2021 14:04:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
-References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
-        <871reu752k.fsf@evledraar.gmail.com>
-        <xmqqk0slg5ph.fsf@gitster.c.googlers.com>
-        <X/oosXBJlyt/IrOr@camp.crustytoothpaste.net>
-        <xmqq4kjpelza.fsf@gitster.c.googlers.com>
-        <X/uvhc5Hpu792qA/@camp.crustytoothpaste.net>
-Date:   Mon, 11 Jan 2021 11:04:11 -0800
-In-Reply-To: <X/uvhc5Hpu792qA/@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Mon, 11 Jan 2021 01:53:09 +0000")
-Message-ID: <xmqqeeir8fdg.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2390829AbhAKTTM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 14:19:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43608 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732725AbhAKTTM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 14:19:12 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D73C061786
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 11:18:31 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id e7so272930ili.2
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 11:18:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8xnOye8oSzqFMBrjfukfqBhP2tTqGx4ZUbLJwpdzKVs=;
+        b=AYGf8RJAVy99aAE9n8WnvvyOgLbpZRm9xXHadkrnKjAzxDTViZgUd9NDYfZ7FPlvUf
+         1ep7HWqQcRPhBRRVHG78u43DKRJHbyQyBRH0GkAen4ld0js7JrcmcGCr5WQqK+RgiqlB
+         htHUEjBNaiy5MBOUHD/uSNGD2Vrlzi9TM1dHFDZNuGwg9RmWTYlsZBiv3b7YJ0GTeWyH
+         8mQ4jTtDH+HqEW3yNqm2nUbKD1CdlOkT3IKgft3ND7YlsKVK+he0duMP7jMRJJ+Iwwuc
+         +msvywUGxBSnhC80oDnzYVh3Shmj7BQoPPzNH+gxUGnrLFvSpJrem/x4OthYKQeZfb4z
+         /yKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8xnOye8oSzqFMBrjfukfqBhP2tTqGx4ZUbLJwpdzKVs=;
+        b=DGKaJgCVhm2Qo5vCwoPIyiBkLjqxuVJIapJtkXYke5XTVDcdvbG+U7POGYqKhE8Sg5
+         wi/Z96aSKcj+m2Mw1NlpLAUP5dhfta5tHSZgbQ1q+lK/PP+RPbbma2cwT1RBP0FXJR2N
+         JHapzbUieUh9fz4kooQO+pPaPOk++AvRGu5m7ZNX5yvqsVWId0+3qaZVmEiTXEQhfRn8
+         MQPLHZQglZ17NKw5EG5fX9dbOmtRgEchgpkf5HqbwdeIDZR0+LddexsFvY4YXOc7VV52
+         kWOyoRQtKrQyv6X0Pu5FazblwZuZYMGjueEl7g/F5A/8ngCoOibOLCQdVZI2s7LQ1RK5
+         3RUw==
+X-Gm-Message-State: AOAM532wMgjoZnckm39Rh34Q0Y0fjcRrEfYJLCiusIFxcTd5U1WlD190
+        zol3wXiAXR2L2JngLy7ae9CY7A==
+X-Google-Smtp-Source: ABdhPJxXmXy4MjPBKYr/GZQ5puDTDTFLsx5Sp4AKlga2cXBhnDVTRpWmRflMuu29uAZts+YRteDRVg==
+X-Received: by 2002:a05:6e02:1a8e:: with SMTP id k14mr598516ilv.308.1610392711066;
+        Mon, 11 Jan 2021 11:18:31 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:42e2:d139:3745:d47])
+        by smtp.gmail.com with ESMTPSA id l9sm282114ilg.51.2021.01.11.11.18.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jan 2021 11:18:30 -0800 (PST)
+Date:   Mon, 11 Jan 2021 14:18:27 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
+Subject: Re: Cc'ing the Git maintainer on GitGitGadget contributions, was Re:
+ [PATCH 0/1] add--interactive: skip index refresh in reset patch mode
+Message-ID: <X/ykg4rEDDpWdZN9@nand.local>
+References: <nycvar.QRO.7.76.6.1911251543430.31080@tvgsbejvaqbjf.bet>
+ <xmqqpnhfwibn.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.2101071517260.2213@tvgsbejvaqbjf.bet>
+ <87wnwordzh.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2101071718470.2213@tvgsbejvaqbjf.bet>
+ <xmqqft3cl9rw.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2101081534380.2213@tvgsbejvaqbjf.bet>
+ <X/i7zvgMJHfOmyZG@nand.local>
+ <nycvar.QRO.7.76.6.2101101306310.56@tvgsbejvaqbjf.bet>
+ <xmqq8s90a6li.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CB154A18-543F-11EB-AA20-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq8s90a6li.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> On 2021-01-09 at 23:20:25, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>=20
->> > On 2021-01-09 at 21:28:58, Junio C Hamano wrote:
->> >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->> >> > FWIW there was since a re-roll on 2021-01-03, but the discussion =
-is
->> >> > sort-of outstanding, so maybe that's intentional...
->> >>=20
->> >> I had an impression that those 4 or 5 patches haven't gained
->> >> concensus that they are good as-is.
->> >
->> > There will be another reroll.  I'm hoping to get to it this weekend.
->>=20
->> Thanks.
+On Sun, Jan 10, 2021 at 12:18:33PM -0800, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> Having read =C3=86var's latest comment, I've decided instead to drop th=
-is, so
-> feel free to do so whenever it's convenient.
+> > Hi Taylor,
+> >
+> > On Fri, 8 Jan 2021, Taylor Blau wrote:
+> > ...
+> >> I think that this could be reasonably addressed. When someone opens a PR
+> >> (but before the hit /submit), GGG could say:
+> >>
+> >>     Your change touches these files, and so suggested reviewers include
+> >>     X, Y, Z. When you believe your submission is in its last round,
+> >>     please also include the maintainer, M.
+> >
+> > That is an option.
+>
+> As Taylor created the above suggestion as a counter-proposal, I can
+> see that I apparently did not express what I meant very well, when I
+> said:
 
-That's kind of sad.
+...or that I must have not read your email which quite clearly states
+what I was thinking of, too. ;-).
 
-I view that this is the kind of topic where perfect easily can
-become an enemy of good, as there is by definition no perfection
-available to us without breaking existing Git.
+> So perhaps we three are on the same page from the beginning ;-)
 
-I do not know about =C3=86var, but to me, my initial impression while
-reading the discussion from sideline was that the goal was to
-prevent a mechanical scan of a recent version of .mailmap from
-learning that Joe used to use Jane as his/her name, and that was the
-reason why I asked to be convinced why encoding for obfuscation was
-insufficient.  In the above, I meant "mechanical scan" as something
-like "a web search engine crawls and finds a .mailmap---a query for
-Joe produces a line with some garbage on it that is not Jane." and a
-casual attacker would stop there.
+I think so.
 
-But of course, a casual attacker who knows urlencode or whatever
-obfuscation in use can read that "garbage" once he/she knows that
-"garbage" is worth attacking (i.e. it is known to be associated to
-Joe, the person the attacker is interested in).
-
-If your goal is to make it harder than just urlencode, even though
-we all have to accept that scanning "git log --all" for all names
-that appear in the history and hashing them all to see what name
-hashes to the "garbage" in question, then @sha256:<hash> approach
-does make sense as a stopping point.  Perhaps we need to sell this
-with a clear definition of what kind of attackes we are protecting
-the name data from:
-
-    The attacker is required to obtain sufficient amount of history
-    in the project to uncover the obfuscation; a more casual
-    attackers will fail to uncover, and we declare that it is better
-    than nothing and it is good enough in practice.
-
-or something like that?  I am not sure if I drew the line at the
-level you intended to draw in the above, if I think that it is good
-enough in practice, or if I agree to a change that is better than
-nothing but not good enough in practice, but having such a statement
-would help to see where we agree or disagree.
-
-Thanks.
+Thanks,
+Taylor
