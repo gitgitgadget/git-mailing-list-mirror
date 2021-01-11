@@ -7,69 +7,70 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93A99C433E6
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55DFBC433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:12:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63C7722BEF
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:10:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 274CB229CA
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:12:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389301AbhAKRKL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 12:10:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43918 "EHLO
+        id S2389159AbhAKRLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 12:11:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387654AbhAKRKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 12:10:10 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 451D5C061786
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:09:30 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id d20so371793otl.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:09:30 -0800 (PST)
+        with ESMTP id S1728844AbhAKRLy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 12:11:54 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B81DC061794
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:11:14 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id q205so20787938oig.13
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:11:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=SXDTnzOdmgTgzuG07HpcJ8BkkdQvlu1b/oGIQEmyI+E=;
-        b=dpwY5zi1i+lcCyPhiZ/rg/M0iK8koafowXq9zd0gBrWpyUqqpdx6ikTAWZVuzV+/wH
-         SfdZD0pFJP9z7MVxbarPkjqZ/FMTrBduGYApWo9hQ2xC9NUj2UMxTRdeRgtEJvwby+eS
-         JWS/lZFUqxQeii5K9AshDVnHFlErC/QvMUCTJ4c4gxmQlBVyx72qpvTG3lgv+BwgAvFR
-         ZRXJihudonIWbcH2VWXgpw6u9ikEd7FRYCKeWtMF6sWonD0k6ggMX+yL3DFU08NFX/oh
-         znIeD+Xn5YWBMczQ6dEQKQhV3fmqDX2/4x62kZQ6NfrwkLSNrfA+A6PLPWnOVRJxAlT+
-         1QDQ==
+        bh=HrniTzL780Bboky7xkv1cXBppm0aVSgo0zH80JTjRAM=;
+        b=fqHPX7VaLXdC8B2IWkQQs4iWxMaUZ4U+cEPGBlSb/gxXmC1oHOPZQT9aNku6XdB/gV
+         q5IPex1cVN4lYVjJf7Wt1dwIdxNqM27yfWCV81DvKKGfzj02omfS7tgQjWnetmrUD5TA
+         kuJBQP6UCyHLBNwinmUf3AYCSVK8WOkPXbIgW3GXN2yYASo53wuwos3BiHsNyxSI5WMU
+         Bz3UPBHK+s5nRQVG154NHQB2Ox2I/DAnnOGh56bO3d85+1/kC1rRvRdjK8x/9J2tq7jH
+         r4/sYc205su/D55qLLKVPBtjgiEBZ0P2IoHouz5Jo/Gj2NQT067cttjowOYyHrIiMBpu
+         YrcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=SXDTnzOdmgTgzuG07HpcJ8BkkdQvlu1b/oGIQEmyI+E=;
-        b=jNbyVGPE4sHLdQrzxf4G2Z5EbfVQ+FlxauDGPDC3udGoOCdGm1jKSiYP277xrUqkON
-         KQZlJY/BSiPAPgriAlQo2Ntjk+AfOp/rEQutplwb1knVBDeGm/MtT5oL9omLtv3/ZLCE
-         faRdpdkG0q/aFjVnHG+ONnLgEKJrE5fI5M4u4l6j/ffZOU27mLMVPJwhP5SHePdZIo9i
-         LD8lPAwDKSUvm/88ExK6H7ZpxIa5UYqDgwOGajMWMZ3mq6T9mREy6K8x8hDeC4ZZfeZ/
-         yL7HzxDZ6F5U6cifDngQSDSf6pTu+iLSJ2e/5IFEpko0huvjXe++VuPd6rl1SBrISfyR
-         iZ+A==
-X-Gm-Message-State: AOAM533WIoCms1S0RUNBX0FZprHbaufYko/Hof2QkA2hlprPwteACaRP
-        T2YN737Jx2uzwIymN2pXQCU=
-X-Google-Smtp-Source: ABdhPJweYmxByQiNi/sm5cO1I6ojaH7BBZCaB0YppZG6FGjA7bYIHJVlgShONWBHX8uCBUoyiD9xWg==
-X-Received: by 2002:a05:6830:30a8:: with SMTP id g8mr77578ots.291.1610384969614;
-        Mon, 11 Jan 2021 09:09:29 -0800 (PST)
+        bh=HrniTzL780Bboky7xkv1cXBppm0aVSgo0zH80JTjRAM=;
+        b=j8w/j+Souh6azVHHumRdmQr42+SHZY5b454o+M94GZbvC1Ed3as20CstzgBW2c2Ssq
+         RYlR4gUOyIutJbsgat2qNYf6z8qLsUp+xDaNEYWq5xgY2XUTq1o967/8PG0K0zqvVmiX
+         ivu+cjJzQONQfgnkOCb9QbzZRUOzH+iSFHUvPwFBM3h4d2xo5ssKdbfGiMbOEQYHybLj
+         8IKh+m4rAmvKd5VBFxgKi8gm6lj/PWMYpeo1zi7EnVuqI2JU7J0ADNCx/7IytsTUJ8o7
+         VxMOW2VJvgctSeYZHFZb+oqVY/G7KAc+HiBcrRyrfvSwPhKuOmgpIruMD6sU5aOw7U1M
+         3xew==
+X-Gm-Message-State: AOAM532/uNRbITKL2oTQiJdZ+dlxMb0QrXMi+5SWJCfT20Z7X7kitXFc
+        wfNyv5f5liX6zK9ZyGaL+1Y=
+X-Google-Smtp-Source: ABdhPJxumN4IZcWviqE9o6c79Njc92gCND7imOKbd+05zz7rakltB2n75hj/YKgA8G+8d0cKqu54xA==
+X-Received: by 2002:aca:4355:: with SMTP id q82mr236715oia.132.1610385073866;
+        Mon, 11 Jan 2021 09:11:13 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id s26sm73813otd.8.2021.01.11.09.09.28
+        by smtp.gmail.com with UTF8SMTPSA id f145sm20418oob.18.2021.01.11.09.11.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jan 2021 09:09:28 -0800 (PST)
-Subject: Re: [PATCH 16/20] builtin/gc.c: guess the size of the revindex
+        Mon, 11 Jan 2021 09:11:12 -0800 (PST)
+Subject: Re: [PATCH 18/20] pack-revindex: remove unused
+ 'find_revindex_position()'
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
 References: <cover.1610129796.git.me@ttaylorr.com>
- <7c17db7a7df8b524f13969efd1cb5e6e95de5a2d.1610129796.git.me@ttaylorr.com>
- <87cd1b2c-7a28-da77-4ae4-99ffbbdfda72@gmail.com>
- <X/x7mrcwfxGO8xH7@nand.local>
+ <d60411d524656f4680ac578765b2a8704325a060.1610129796.git.me@ttaylorr.com>
+ <624d0642-b6c9-7c76-aeb6-d7e18b0aad1f@gmail.com>
+ <X/x8dXFfQUdpKeVn@nand.local>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <13c28eca-81d5-10c9-c92c-162547416014@gmail.com>
-Date:   Mon, 11 Jan 2021 12:09:27 -0500
+Message-ID: <61f6acde-3788-03ee-8dce-f621984a3402@gmail.com>
+Date:   Mon, 11 Jan 2021 12:11:12 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
  Thunderbird/85.0
 MIME-Version: 1.0
-In-Reply-To: <X/x7mrcwfxGO8xH7@nand.local>
+In-Reply-To: <X/x8dXFfQUdpKeVn@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -77,52 +78,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/11/2021 11:23 AM, Taylor Blau wrote:
-> On Mon, Jan 11, 2021 at 06:52:24AM -0500, Derrick Stolee wrote:
->> This is so far the only not-completely-obvious change.
->>
->>> But, this is an approximation anyway, and it does remove a use of the
->>> 'struct revindex_entry' from outside of pack-revindex internals.
->>
->> And this might be enough justification for it, but...
->>
->>> -	heap += sizeof(struct revindex_entry) * nr_objects;
->>> +	heap += (sizeof(off_t) + sizeof(uint32_t)) * nr_objects;
->>
->> ...outside of the estimation change, will this need another change
->> when the rev-index is mmap'd? Should this instead be an API call,
->> such as estimate_rev_index_memory(nr_objects)? That would
->> centralize the estimate to be next to the code that currently
->> interacts with 'struct revindex_entry' and will later interact with
->> the mmap region.
+On 1/11/2021 11:27 AM, Taylor Blau wrote:
+> On Mon, Jan 11, 2021 at 06:57:00AM -0500, Derrick Stolee wrote:
+>> Not that this is new to the current patch, but this patch made me
+>> wonder if we should initialize *pos = -1 in the case of a failure
+>> to find the position? A correct caller should not use the value
+>> if they are checking for the fail-to-find case properly. But, I
+>> could see someone making a mistake and having trouble diagnosing
+>> the problem because their position variable was initialized to
+>> zero or a previous successful case.
 > 
-> I definitely did consider this, and it seems that I made a mistake in
-> not documenting my consideration (since I assumed that it was so benign
-> nobody would notice / care ;-)).
+> *pos = -1 may be more confusing than clarifying since pos is unsigned.
+
+RIGHT. My bad.
+
+> It would be nice if there was a clear signal beyond returning a negative
+> value. I guess you could take a double pointer here which would allow
+> you to assign NULL, but that feels rather cumbersome as a means to catch
+> callers who failed to check the return value.
 > 
-> The reason I didn't pursue it here was that we haven't yet loaded the
-> reverse index by this point. So, you'd want a function that at least
-> stats the '*.rev' file (and either does or doesn't parse it [1]), or
-> aborts early to indicate otherwise.
+> It does raise the argument of whether or not we should allow the
+> program to continue at all if 'ret < 0' (i.e., 'offset_to_pack_pos()'
+> either 'die()'s or returns a usable uint32_t), but I'm OK with the
+> current behavior.
 
-In this patch, I would expect it to use sizeof(struct revindex_entry).
-Later, the method would know if a .rev file exists and do the right
-thing instead. (Also, should mmap'd data count towards this estimate?)
+I was thinking "*pos = -1" was a free way to "help" a developer
+who uses the API incorrectly, but it's _not_ free. Ignore me.
 
-> One would hope that 'load_pack_revindex()' would do just that, but it
-> falls back to load a reverse index in memory, which involves exactly the
-> slow sort that we're trying to avoid. (Of course, we're going to have to
-> do it later anyway, but allocating many GB of heap just to provide an
-> estimation seems ill-advised to me ;-).)
-> 
-> So, we'd have to expand the API in some way or another, and to me it
-> didn't seem worth it. As I mentioned in the commit message, I'm
-> skeptical of the value of being accurate here, since this is (after all)
-> an estimation.
-
-Yes, I'm probably just poking somewhere it was easy to poke. This is
-probably not worth the time I'm spending asking about it.
-
-Feel free to disregard.
-
+Thanks,
 -Stolee
