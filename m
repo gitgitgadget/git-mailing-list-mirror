@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74DD2C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C9EAC433E6
 	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 03:59:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 411FF22473
+	by mail.kernel.org (Postfix) with ESMTP id 5A80F22475
 	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 03:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbhAKD7c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 22:59:32 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50696 "EHLO
+        id S1727010AbhAKD7d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 22:59:33 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50706 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726151AbhAKD7b (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 22:59:31 -0500
+        by vger.kernel.org with ESMTP id S1725991AbhAKD7c (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 22:59:32 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1327660784;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9B62E6080E;
         Mon, 11 Jan 2021 03:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610337530;
-        bh=m2rhZX5/XNR8DiaN1eUsemknZxB+BfmCBZ7ZQuQh6qQ=;
+        s=default; t=1610337531;
+        bh=Fv4Gt8h72wYuxAxF7cQhHRiMjfsMQ1PGi3Q32phIhl4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=c8vGL+LDiE1HMEYMUjJO6sbSLfQDYlYP3H6PMGFA/X1EzCys9DHX/WCnrJlW2U5p7
-         k2PWXL7aq+UuRPx2Njs5oB2ClmsIMMO8A06ZztX5mcqhGLgI6FmTuCOEqeMpVFeN2d
-         gWYWiNV4lnO1seekk4SZjCym5XpdCK6CFcsRITRWenU4PVaqNoNNHA8e0Ast4LYc2/
-         jyJgDZ8ADduWGccvf9N7P21hW7WmLqlJEc3Rs3oBffOpqgidRHDQ7QD2jUjpEzp6Pm
-         u9rjGLpsngNmfD0A5//UIjWtrRi62bPJhxnv749fw+0cv35l4bs88qrlEy0j1hJJT/
-         ZGSHKqzYR5YSMaIYNzVTZ38xZ0na+Zy8tFsX4nHwQvGWdpo1veOrOqVUdyT4oyKjlZ
-         1axFCgZzSlDcqD6woBS6B3oJzs/D2Od2bOn1bM4AW9FYMudfWr14Y3+JTYSAaTko5+
-         nuUsyx8GCE+xQ+JuDa5fFS11NyqUarosCT1SWSljgiaCGzaEQhN
+        b=XkEje9Dm0pnSfR0A12LnmAqc0eKD56+sH5QKET6TNFVpPdEY0j+aO2Kzv7tkLVeao
+         t9lLB5J6HpTJs+ZJZYXVuQfROal+d9RG+tOmyxpH6VKLJZ+MWnRqBNUJOnUipHEjRH
+         m4vnhNV42jOUTEyJXjkfg8gZxJcnimjEPuj8Xd27MpbZMk06iyTfpUIxW8cs0Qc58O
+         lXu8+b7oxLcdbWyf3o4InfPr7f2tTMQ6EzGIhN6gmofEjwyzpsdV4iv0QZHle/yhYV
+         vSdBoQ5VrKeZa0LjvmXkCyxGxKVdZI1d/R377FTSQCyqGQt/mw19CYBmS9CSByShUq
+         H0wSMZOF3KQ2mgSMVnPSh4Iy/y73+yDAtcb9k0LSlGgLsNDd4QCA32f9zzFGySsDLn
+         iZ+RtLOn4ViEtPjfVAteoSh95uC4oN1JHjw52MU7hUQC4oJ0shbtqvCB/PlUvFuEh1
+         AB+Qh7rt4nanKz+AGNceYBgnkWuzdg+RWY0r2AGnn6Reqsy7wLI
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 3/5] commit: allow parsing arbitrary buffers with headers
-Date:   Mon, 11 Jan 2021 03:58:38 +0000
-Message-Id: <20210111035840.2437737-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 4/5] ref-filter: hoist signature parsing
+Date:   Mon, 11 Jan 2021 03:58:39 +0000
+Message-Id: <20210111035840.2437737-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210111035840.2437737-1-sandals@crustytoothpaste.net>
 References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
@@ -55,91 +55,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently only commits are signed with headers.  However, in the future,
-we'll also sign tags with headers as well.  Let's refactor out a
-function called parse_buffer_signed_by_header which does exactly that.
-In addition, since we'll want to sign things other than commits this
-way, let's call the function sign_with_header instead of do_sign_commit.
+When we parse a signature in the ref-filter code, we continually
+increment the buffer pointer.  Hoist the signature parsing above the
+blank line delimiting headers and body so we can find the signature when
+using a header to sign the buffer.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- commit.c | 20 ++++++++++++++++----
- commit.h |  9 +++++++++
- 2 files changed, 25 insertions(+), 4 deletions(-)
+ ref-filter.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 794dc8b593..23020c0bca 100644
---- a/commit.c
-+++ b/commit.c
-@@ -995,7 +995,7 @@ static const char *gpg_sig_headers[] = {
- 	"gpgsig-sha256",
- };
+diff --git a/ref-filter.c b/ref-filter.c
+index 8d8baec1b5..32ed4d5111 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1221,6 +1221,8 @@ static void find_subpos(const char *buf,
+ 	const char *end = buf + strlen(buf);
+ 	const char *sigstart;
  
--static int do_sign_commit(struct strbuf *buf, const char *keyid)
-+int sign_with_header(struct strbuf *buf, const char *keyid)
- {
- 	struct strbuf sig = STRBUF_INIT;
- 	int inspos, copypos;
-@@ -1035,13 +1035,26 @@ static int do_sign_commit(struct strbuf *buf, const char *keyid)
- 	return 0;
- }
++	/* parse signature first; we might not even have a subject line */
++	parse_signature(buf, end - buf, &payload, &signature);
  
-+
-+
- int parse_signed_commit(const struct commit *commit,
- 			struct strbuf *payload, struct strbuf *signature,
- 			const struct git_hash_algo *algop)
- {
+ 	/* skip past header until we hit empty line */
+ 	while (*buf && *buf != '\n') {
+@@ -1232,9 +1234,6 @@ static void find_subpos(const char *buf,
+ 	/* skip any empty lines */
+ 	while (*buf == '\n')
+ 		buf++;
 -
- 	unsigned long size;
- 	const char *buffer = get_commit_buffer(commit, &size);
-+	int ret = parse_buffer_signed_by_header(buffer, size, payload, signature, algop);
-+
-+	unuse_commit_buffer(commit, buffer);
-+	return ret;
-+}
-+
-+int parse_buffer_signed_by_header(const char *buffer,
-+				  unsigned long size,
-+				  struct strbuf *payload,
-+				  struct strbuf *signature,
-+				  const struct git_hash_algo *algop)
-+{
- 	int in_signature = 0, saw_signature = 0, other_signature = 0;
- 	const char *line, *tail, *p;
- 	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(algop)];
-@@ -1078,7 +1091,6 @@ int parse_signed_commit(const struct commit *commit,
- 		}
- 		line = next;
- 	}
--	unuse_commit_buffer(commit, buffer);
- 	return saw_signature;
- }
+-	/* parse signature first; we might not even have a subject line */
+-	parse_signature(buf, end - buf, &payload, &signature);
+ 	*sig = strbuf_detach(&signature, siglen);
+ 	sigstart = buf + parse_signed_buffer(buf, strlen(buf));
  
-@@ -1530,7 +1542,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	if (encoding_is_utf8 && !verify_utf8(&buffer))
- 		fprintf(stderr, _(commit_utf8_warn));
+@@ -1330,7 +1329,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			v->s = xmemdupz(sigpos, siglen);
+ 		else if (atom->u.contents.option == C_LINES) {
+ 			struct strbuf s = STRBUF_INIT;
+-			const char *contents_end = bodylen + bodypos - siglen;
++			const char *contents_end = bodypos + nonsiglen;
  
--	if (sign_commit && do_sign_commit(&buffer, sign_commit)) {
-+	if (sign_commit && sign_with_header(&buffer, sign_commit)) {
- 		result = -1;
- 		goto out;
- 	}
-diff --git a/commit.h b/commit.h
-index 030aa65ab8..e2856ce8ef 100644
---- a/commit.h
-+++ b/commit.h
-@@ -360,4 +360,13 @@ int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void
- LAST_ARG_MUST_BE_NULL
- int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
- 
-+/* Sign a commit or tag buffer, storing the result in a header. */
-+int sign_with_header(struct strbuf *buf, const char *keyid);
-+/* Parse the signature out of a header. */
-+int parse_buffer_signed_by_header(const char *buffer,
-+				  unsigned long size,
-+				  struct strbuf *payload,
-+				  struct strbuf *signature,
-+				  const struct git_hash_algo *algop);
-+
- #endif /* COMMIT_H */
+ 			/*  Size is the length of the message after removing the signature */
+ 			append_lines(&s, subpos, contents_end - subpos, atom->u.contents.nlines);
