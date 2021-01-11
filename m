@@ -2,94 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6941C433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8EDAC433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:44:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A3392242A
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:34:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99045224B8
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbhAKMem (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 07:34:42 -0500
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:52663 "EHLO
-        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbhAKMem (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 07:34:42 -0500
-X-Originating-IP: 103.82.80.125
-Received: from localhost (unknown [103.82.80.125])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id CB7731C000A;
-        Mon, 11 Jan 2021 12:33:59 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Laszlo Ersek <lersek@redhat.com>
-Cc:     Robert Pollak <robert.pollak@posteo.net>,
-        Paul Mackerras <paulus@ozlabs.org>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] gitk: Activate --find-copies-harder
-References: <b12574f0-3ebc-95c0-9def-555150257e46@posteo.net>
-        <46693c60-98ee-b6c9-df8e-12216622ddf9@redhat.com>
-        <b0c0a630-25a9-8ef8-2270-fa40404c2897@posteo.net>
-        <23445a9c-46b2-0232-845b-c8d5fe36d506@redhat.com>
-Date:   Mon, 11 Jan 2021 18:03:57 +0530
-In-Reply-To: <23445a9c-46b2-0232-845b-c8d5fe36d506@redhat.com> (Laszlo Ersek's
-        message of "Mon, 11 Jan 2021 10:21:25 +0100")
-Message-ID: <87mtxfwt3e.fsf@yadavpratyush.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727474AbhAKMoN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 07:44:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727451AbhAKMoN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 07:44:13 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 509BEC061794
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 04:43:33 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id s75so19975294oih.1
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 04:43:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xlGJVwMwVraA3FoCzYL1UVxhMZZvwWVaIDOlO11U9rE=;
+        b=XZ/GGb4Oj2pzfbpo+aUIoJzzpVnM4v5Qco2A1LmTcA4+oFZXj+KC6qJNpiRlIm5k3G
+         YravMD89hbKFj+6dPs6gytgoDfwEOwSPnnOBh3BskrFzzvoWhgwTyxz7XM/G73N/B1Uk
+         vPdgbwMzEODgIYK3FlmfzNlEyH42KweS6PNdCOzN4dO6ec8jtuGEEWo//761QBwmMLWE
+         zvFwAN66ELKvUTPhjRr/pvjnlOBX1DOcs4SyFbEBZIwTx6cFYFdeVOCwwXR62aMBhzOw
+         DwWCuokI5ofqCMzsO6dIZ21AMqYUrvqXOxDmVKI74kvr9XAlZtm6/RI1XLk4uEj8f5V+
+         JlaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xlGJVwMwVraA3FoCzYL1UVxhMZZvwWVaIDOlO11U9rE=;
+        b=gf6zOoisymo53ASXes5V3G9w9PK1FyTwVzOT5zg49HtTW5Pjt57DsSs7A9Z+3oW6ua
+         yiLa8L1wSdoHXs36uWKm0nZEV22l/+TCDLdUZTb2GsgAdrlRAAJqd4sJcMJDXI1J4fs7
+         yv2D+7QC8dzoxIEmUOCzCYleKchc7yWls/BnUnhJSJ00lnVsbX9M8ETjQ7k7BnvnxUJY
+         fxa2+JzH5xhu6i9m5FGlKcnpoU6heZ2XYG8BLrUadZEutsmlKntA37y5XVlrPqArT5le
+         BmAGBXuHgGk59pk+UdIX8tDLj61E+2YcIzatlEIXcvwdbOxe0FqyrYqNE63v/+y0qebR
+         etNg==
+X-Gm-Message-State: AOAM5303ymtnqVMb3TkF3D0TRCMJWSVxwP9ILPvRMOEftdvxLvb1Rjzk
+        /YJqyZBi6/MvNRy7jFmL+9rQUMHM3Zo=
+X-Google-Smtp-Source: ABdhPJwKCa8IdBd3NnqGsneDsKLYimYNfY3AUi2QFlx/AwSYDzvTJpJPn+N7gTeth/FWMlWlsvtUXg==
+X-Received: by 2002:aca:aa50:: with SMTP id t77mr10093091oie.28.1610369012585;
+        Mon, 11 Jan 2021 04:43:32 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id n22sm3935112oig.32.2021.01.11.04.43.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Jan 2021 04:43:32 -0800 (PST)
+Subject: Re: [PATCH v5 09/11] commit-graph: use generation v2 only if entire
+ chain does
+To:     2e89c6e1-e8e8-0d51-5670-038b4e296d93@gmail.com
+Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
+        gitgitgadget@gmail.com, jnareb@gmail.com, me@ttaylorr.com
+References: <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
+ <pull.676.v5.git.1609154168.gitgitgadget@gmail.com>
+ <a3a70a1edd0949ff3088fae625afa68fc61975df.1609154169.git.gitgitgadget@gmail.com>
+ <2e89c6e1-e8e8-0d51-5670-038b4e296d93@gmail.com>
+ <X/r9i0HJFEGxuyW/@Abhishek-Arch>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <003c1892-cbfe-7437-f8ce-fbae58f0cb83@gmail.com>
+Date:   Mon, 11 Jan 2021 07:43:31 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <X/r9i0HJFEGxuyW/@Abhishek-Arch>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11 2021, Laszlo Ersek wrote:
-
-> On 01/10/21 13:59, Robert Pollak wrote:
->> On 2021-01-06 16:58, Laszlo Ersek wrote:
->>> On 01/04/21 20:54, Robert Pollak wrote:
->> [...]
->>>> I see the following problems with my patch:
->>>>
->>>> 1) It is totally untested with all the other args that are collected in
->>>> diffargs, like e.g. "-O<orderfile>", since I didn't need them yet.
->>>
->>> It would be really great if gitk supported both "-O<orderfile>" and
->>> --find-copies-harder!
+On 1/10/2021 8:13 AM, Abhishek Kumar wrote:
+> On Tue, Dec 29, 2020 at 10:23:54PM -0500, Derrick Stolee wrote:
+>> Your tests in this patch seem very thorough, covering all the cases
+>> I could think to create this strange situation. I even tried creating
+>> cases where the overflow would be necessary. The following test actually
+>> fails on the "graph_read_expect 6" due to the extra chunk, not the 'write'
+>> process I was trying to trick into failure.
 >>
->> Can you please test these options with my patch and report back?
->>
->> -- Robert
->>
->
-> The patch doesn't apply with git-am (I'm trying on top of 72c4083ddf91):
->
->> Applying: gitk: Activate --find-copies-harder
->> error: corrupt patch at line 100
->> Patch failed at 0001 gitk: Activate --find-copies-harder
->> hint: Use 'git am --show-current-patch' to see the failed patch
->> When you have resolved this problem, run "git am --continue".
->> If you prefer to skip this patch, run "git am --skip" instead.
->> To restore the original branch and stop patching, run "git am --abort".
->
-> One problem could be the embedded diff in the notes section (I guess it
-> could confuse git-am).
->
-> Also, "gitk" has existed at "gitk-git/gitk" since commit 62ba5143ec2a
-> ("Move gitk to its own subdirectory", 2007-11-18), so the pathname
-> headers in the patch look wrong.
+>> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+>> index 8e90f3423b..cfef8e52b9 100755
+>> --- a/t/t5324-split-commit-graph.sh
+>> +++ b/t/t5324-split-commit-graph.sh
+>> @@ -453,6 +453,20 @@ test_expect_success 'prevent regression for duplicate commits across layers' '
+>>         git -C dup commit-graph verify
+>>  '
+>>  
+>> +test_expect_success 'upgrade to generation data succeeds when there was none' '
+>> +	(
+>> +		cd dup &&
+>> +		rm -rf .git/objects/info/commit-graph* &&
+>> +		GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph \
+>> +			write --reachable &&
+>> +		GIT_COMMITTER_DATE="1980-01-01 00:00" git commit --allow-empty -m one &&
+>> +		GIT_COMMITTER_DATE="2090-01-01 00:00" git commit --allow-empty -m two &&
+>> +		GIT_COMMITTER_DATE="2000-01-01 00:00" git commit --allow-empty -m three &&
+>> +		git commit-graph write --reachable &&
+>> +		graph_read_expect 6
+>> +	)
+>> +'
+> 
+> I am not sure what this test adds over the existing generation data
+> overflow related tests added in t5318-commit-graph.sh
 
-gitk is maintained as a separate repo by Paul Mackerras at
-git://ozlabs.org/~paulus/gitk, and then is pulled into the main Git repo
-from time to time using a subtree merge. That's how gitk changes end up
-in gitk-git/. Patches for gitk should be based on the gitk repo to make
-it easier for Paul to apply them. In short, the paths are fine.
+Good point.
 
-> Thanks
-> Laszlo
->
-
--- 
-Regards,
-Pratyush Yadav
+-Stolee
