@@ -7,147 +7,186 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EDF3C433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 10:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95E2AC433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 10:43:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA5CE224DE
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 10:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B5D520B1F
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 10:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728879AbhAKK3g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 05:29:36 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:37275 "EHLO
+        id S1729188AbhAKKnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 05:43:02 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:57603 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728664AbhAKK3g (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 11 Jan 2021 05:29:36 -0500
+        by vger.kernel.org with ESMTP id S1726734AbhAKKnC (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Jan 2021 05:43:02 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 3A33C257B;
-        Mon, 11 Jan 2021 05:28:50 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 11 Jan 2021 05:28:50 -0500
+        by mailout.west.internal (Postfix) with ESMTP id 2ED2F2554;
+        Mon, 11 Jan 2021 05:42:16 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 11 Jan 2021 05:42:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=pWUSXUVmKtcvyq6TGGBr71CWLxL
-        lY50Q9w2IC/V7oRw=; b=yxP2eOjNv4Yptl95hm2nmd9VY0Ak+VDv2Rw8YkefueX
-        4y3BR3iIFsbNkEJrmR/iG1NJY0lAKBhaggwfwdCW0TV+VwLjfSIIvItVcPXKGoST
-        tQKe7vzcFel2sn9UGHIEWBrGQ69CVy3zOcVUfWVsKEYWfKr7aAViU7m3w4aUwD9L
-        HbFGU+KudnKEKprXYlgJrYFz3B0a/EQsI9CDqpjhh6I72hd7nRn6LFsQyCEfL/C8
-        jrXXsj1wPd/XsKEdM1TH/BMmglMbdstYOvXBNZHCCU0gOFO+1Cmi19W/7Zi5PZZ0
-        KVYJLKROOG3doqOOifBbre+R8BFSOqudqcMXfFPqvcQ==
+        :content-type:in-reply-to; s=fm3; bh=FobFz63xFkHMLd4F5iPIwZyaJPV
+        90pv2wyXkaTDTXVo=; b=MWL1uRwDVPFviWnenJ58vXi9ygF1HyxiBSyyrEDecLa
+        n7DXH2gwu4KzgtqyIQ7UljcNNFfhcyXpbxQbXOQpKZ0sYVYxgwKlHs7w9f2TRAF0
+        YtisnDV4PJl3AgvI0YIRGnI1WIurWqCL5YUrRi7jZovSSdlMqmTfibZWPVaJFTU+
+        EwlRY+ZECrplWSIcLxpIhdOi39kVvJmoaBbHSucKh2TBVmVhjjK8/LdR98+dJFcV
+        k/R323py3NME1w5a8dmnjjWpgeIbxht5hA8NwQG+lVyhkwuIDK9EYwuUyiuyZIy8
+        5KKwVPQe+wNXobFijMSiQofBGzCS4FwVFADfoH6vDOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=pWUSXU
-        VmKtcvyq6TGGBr71CWLxLlY50Q9w2IC/V7oRw=; b=qkRC6AdYVXhprF5z3s+ICd
-        L2MeeyVl4+fu1HhYJx/EDaQh79UHKCiaHbkZnDmya+LZsWkbLqfPXXCQOR/DqFE7
-        5qQT1J/w0UjD+P7XPuwnxrYMYNTHtdZrZIgo6Pmv6MllkS/J++mwIkgZJXNR54MQ
-        BMCBxxdPa/b5Jr0cr3/HH7kAQj/XfRWj3tGRcwOGtotWfAuUYsS7nx1sI3wT5/Eo
-        FsvN2gNV9dR22e0WpoIM5B2/LR8JrzxlPa0tNXBVHpJenygEaVUEV3dkJMP0FbCO
-        3tJupHaw1B+giesBpwVoI1DgtQJUnAipuUEQ4jedruVhrNDZSurP/mFx5ujc3jkg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=FobFz6
+        3xFkHMLd4F5iPIwZyaJPV90pv2wyXkaTDTXVo=; b=LCEPFKIYCGrn1PS67h3MNV
+        +NzNVH1gcrzSSnSO2zHjQBYcq84oz9OTrzFmjfNSqyGCRI6BVo4AigxzUP2g7OKD
+        AxjhgW6zQKsE4QxDd6EEbAXYPkORZaTWDMio5nIYy1mVIuZLR611D4gIVTHlbFGx
+        eiJu/32xPHfmeZdTJ1Gq/uY7+JYxwl2Yp3GSFIj7GWib3mAgUleb2RpuGST0/uhF
+        PF4O3OUm4Aga9Zc8reiHdfXTGclHwI5nt7IcSs3PKOiNa1zakMKFIudwfgmD1OxI
+        YLo4iH6Htb6ueNKPYxrFKpJ4kPLN8cIjR8RX/I0qC+Un2DAOfzw24DPzA4L3J81w
         ==
-X-ME-Sender: <xms:YSj8X7mgmGJg0I-xUtRR1bN8i-FGld95-BXb9RdCwb-DI2R5iUDdQg>
-    <xme:YSj8X-3A5Ps34RjYugO7YS_PNBSAVATyzXaU3gDqvHWUSEfAynSuAJo-xjz5s0MIW
-    HLUL4TA-uNRYVYw3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdehuddgudejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:hyv8X1BSz-ueGtjPObAlJLIZGDm44_wJE3HoMojuA35sty0Qj7QvRA>
+    <xme:hyv8XzgI8DSAR_THU8oZhhhKR3EmIr65AtjmygJv9iMYuUcQ8Arw07Z_qwfwGCjOf
+    t1XZcV1FYEgGdxpgQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdehuddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepkeelrddugedrgeehrddujedtnecuvehluhhsthgvrhfuihiivgepudenucfrrg
+    ucfkphepkeelrddugedrgeehrddujedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:YSj8Xxprlx3W-dExWnvH-zm1tdD5dhv27NrvaSJYEoXZpJp-5DK7mA>
-    <xmx:YSj8XzlijTB_ZOgcbpn2EwTqGm-6roRpGqJFcQk7zFqKljiQlU8-Vw>
-    <xmx:YSj8X53MQemukrdeB39FfqTa26z88nXkOetP7VV0dZQZ_lWibcqL4g>
-    <xmx:YSj8X28RGaXiJNgXn3M4ZI5le4ZaPDk6wN333Y6Msg-P1_Lgq4C0hA>
+X-ME-Proxy: <xmx:hyv8Xwkolkz6XXqkNXa97QKGlO_9NT1PKcyJTOqgHDvWN_Cf3ZwQtA>
+    <xmx:hyv8X_yNFn_2jcMb0WUIJjt4vsDgVnSLv2cssHoterZIlK9JAHfMnw>
+    <xmx:hyv8X6Sgvgi9vVRXUDEYP4u1hUvDiVFB2XIC2UK5Yv51vpbvR_omEQ>
+    <xmx:hyv8Xz7d0qqoPS4BiwP7a0ZWSfC3-r7nbbyVh6FouOuajeqXiS4ezQ>
 Received: from vm-mail.pks.im (dynamic-089-014-045-170.89.14.pool.telefonica.de [89.14.45.170])
-        by mail.messagingengine.com (Postfix) with ESMTPA id C935A24005B;
-        Mon, 11 Jan 2021 05:28:48 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id C5E691080063;
+        Mon, 11 Jan 2021 05:42:14 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 3db2bb14 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 11 Jan 2021 10:28:48 +0000 (UTC)
-Date:   Mon, 11 Jan 2021 11:28:46 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 0d5f5e15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 11 Jan 2021 10:42:10 +0000 (UTC)
+Date:   Mon, 11 Jan 2021 11:42:09 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 2/4] fetch: refactor `s_update_ref` to use common exit
- path
-Message-ID: <X/woXrxFqctcX2NB@ncase>
+Subject: Re: [PATCH v2 4/4] fetch: implement support for atomic reference
+ updates
+Message-ID: <X/wrgYYcZfYZj+4/@ncase>
 References: <cover.1610027375.git.ps@pks.im>
  <cover.1610107599.git.ps@pks.im>
- <718a8bf5d7a0ed92c3004991a42419279ff38253.1610107599.git.ps@pks.im>
- <xmqqim87gf9z.fsf@gitster.c.googlers.com>
+ <53705281b60285837905137f45fc8607012d2f19.1610107599.git.ps@pks.im>
+ <xmqq7dongeji.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9OYkIK2MmprROAMi"
+        protocol="application/pgp-signature"; boundary="XBypyAU1GVfIXQWD"
 Content-Disposition: inline
-In-Reply-To: <xmqqim87gf9z.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7dongeji.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---9OYkIK2MmprROAMi
+--XBypyAU1GVfIXQWD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 08, 2021 at 03:50:00PM -0800, Junio C Hamano wrote:
+On Fri, Jan 08, 2021 at 04:05:53PM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-[snip]
-> >  	ret =3D ref_transaction_commit(transaction, &err);
-> >  	if (ret) {
-> > -		df_conflict =3D (ret =3D=3D TRANSACTION_NAME_CONFLICT);
-> > -		goto fail;
-> > +		ret =3D (ret =3D=3D TRANSACTION_NAME_CONFLICT) ? STORE_REF_ERROR_DF_=
-CONFLICT
-> > +							 : STORE_REF_ERROR_OTHER;
-> > +		goto out;
-> >  	}
-> >=20
-> > +out:
-> >  	ref_transaction_free(transaction);
 >=20
-> It is a bit funny to see a goto that jumps to the label without
-> having anything else in between, but we know we will be adding more
-> code just before the "out:" label, so it is a good preliminary
-> preparation.
+> > +	/*
+> > +	 * When using an atomic fetch, we do not want to update FETCH_HEAD if
+> > +	 * any of the reference updates fails. We thus have to write all
+> > +	 * updates to a buffer first and only commit it as soon as all
+> > +	 * references have been successfully updated.
+> > +	 */
+> > +	if (atomic_fetch) {
+> > +		strbuf_addf(&fetch_head->buf, "%s\t%s\t%s",
+> > +			    old_oid, merge_status_marker, note);
+> > +		strbuf_add(&fetch_head->buf, url, url_len);
+> > +		strbuf_addch(&fetch_head->buf, '\n');
+> > +	} else {
+> > +		fprintf(fetch_head->fp, "%s\t%s\t%s",
+> > +			old_oid, merge_status_marker, note);
+> > +		for (i =3D 0; i < url_len; ++i)
+> > +			if ('\n' =3D=3D url[i])
+> > +				fputs("\\n", fetch_head->fp);
+> > +			else
+> > +				fputc(url[i], fetch_head->fp);
+> > +		fputc('\n', fetch_head->fp);
+> > +	}
 >=20
-> I think a variant that is much easier to follow would be to write
-> like this instead:
+> I do not want to see it done like this; formating what ought to come
+> out identical with two separate mechanisms will lead to bugs under
+> the road.
 >=20
-> 	switch (ref_transaction_commit(transaction, &err)) {
->         case 0: /* happy */
-> 		break;
-> 	case TRANSACTION_NAME_CONFLICT:
-> 		ret =3D STORE_REF_ERROR_DF_CONFLICT;
-> 		goto out;
-> 	default:
-> 		ret =3D STORE_REF_ERROR_OTHER;
-> 		goto out;
-> 	}
+> Also what is the deal about "\n" vs "\\n"?  Do we already have
+> behaviour differences between two codepaths from the get-go?
 
-Agreed, that is easier to read. Thanks!
+Good point. I'll unify those code paths.
+
+> It would be much more preferrable to see this series go like so:
+>=20
+>     [1/4] create append_fetch_head() that writes out to
+>           fetch_head->fp
+>=20
+>     [1.5/4] convert append_fetch_head() to ALWAYS accumulate in
+>             fetch_head->buf, and ALWAYS flushes what is accumulated
+>             at the end.
+
+This is a change I'm hesitant to make. The thing is that FETCH_HEAD is
+quite weird as the current design allows different `git fetch --append`
+processes to write to FETCH_HEAD at the same time. If we change to
+always accumulate first and flush once we're done, then we essentially
+have a change in behaviour as FETCH_HEADs aren't written in an
+interleaving fashion anymore, but only at the end. Also, if there is any
+unexpected error in between updating references which causes us to die,
+then we wouldn't have written the already updated references to
+FETCH_HEAD now.
+
+So I'm all in when it comes to merging formatting directives, even more
+so as I have missed the "\\n" weirdness. But for now, I'll keep the
+current flushing semantics in the non-atomic case. Please let me know if
+you're not convinced and I'll have another look for v4.
+
+> After these two patches are applied, there shouldn't be any
+> behaviour change or change in the format in generated FETCH_HEAD.
+>=20
+>     [2/4] and [3/4] stay the same
+>=20
+>     [4/4] this step does not touch append_fetch_head() at all.  It
+>     just changes the way how fetch_head->buf is flushed at the end
+>     (namely, under atomic mode and after seeing any failure, the
+>     accumulated output gets discarded without being written).
+>=20
+> I also thought briefly about an alternative approach to rewind and
+> truncate the output to its original length upon seeing a failure
+> under the atomic mode, but rejected it because the code gets hairy.
+> I think "accumulate until we know we want to actually write them out"
+> is a good approach to this issue.
+>=20
+> Thanks.
 
 Patrick
 
---9OYkIK2MmprROAMi
+--XBypyAU1GVfIXQWD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/8KF0ACgkQVbJhu7ck
-PpQCRBAAn0mozjzzxxbjyZA3n/gylGszp+zV/z9436PtO3emaaUrV2B3ioTJptut
-I4fI8Ay3nmR3gL9eoSPvcP0TfYcbcrBoiNhPysn+Y/McFhW8RUIo3D4Gd2bFpYcu
-pYQ5nXBdncxBA1soR5EIp2eEDuAhjNa+wDeR0GUPn4HUDpuNX1iIkWvxmJNsEAOa
-siHWKxtRzMfjitsetbtVWS2BWns9LQh0unk8WWEH73EOhrvFQB9kB7ttgpOqb5VB
-lWSfEjJvcg52o4ZV/ZNOMGKHRWK/c8mEXWpRp6nKmEZ1jvS/Aopgm9P86cVmoVBB
-h6/B+8cR2qPBcwlar7g8Wxj25MmUOlcROZeU3WAXYeSz6NL902s8sMyX09nNL3I1
-J02HStqDlYoK8mZ6XCmeGHFuDNXSLpwBp21+lWEfk3Kq1z8lcRbz8m0ydDaVL/+F
-/+ONP/So2LhnozZPVqJ0mZMpTmMkFaRbXZIH3KegeBFOYVSYqdSpkxUPrTyAgB6o
-ufWdzBqD4/Y/udcfPm0b1jWXs52kEuAo+FuSLUtHzAlksrLExw8BTA4L2tPj8pEW
-JUEMyRq34f+tjb+14UQRyqXVRbKXns9bfO6za0Xnx07cP+fo4dWL3l4iqrRtDVBt
-aM9fK/lRlYdKmY8pcKbhpRXjI6rO8a64loqW2WtFTB20cG3fB/M=
-=nBz7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/8K4AACgkQVbJhu7ck
+PpRVRhAAme5On+A81BAlfOZKgaBd4CxHRjHc8uW+jK9XInM8TGpEcjXOgsEfFLXc
+Dcn5JWU4054HvCQAow6nrnTYXvsjggUjz0FRUoiolMiMmACaLASZdy708zgqQg0W
+LmdBQB+seFvsq1mXSX15GuHDdPUlQyJVE4y6xQFnD4d4Kgw/QgApyR0ZBbBa7Is9
+znFuZLcqemAI+Z1jv5PZJ4Zf2gvQguoV9NX/kmXF1z95Tz44aBjJ67aFiIwAc1x1
+qhGwn1vBDJhdVdykW11m+O9dDDkGXoBZkXpcX9DFWT1eYbww3/kt34olKqDhS3c8
+oA1kRS7S0CNLzhT123Swr3FQ/g/Py95i5VDlTaaPVDkSFlCC4hRUfO9gggQgX685
+p+B1HMqRQxL9Lnkye3G9W9uFfZKzb2bOe0bjHe14icv6KjCtkpD3gPGZRpEwbxou
+DfqNSdiCkCsP4jTp8pXmp8U8L3bSSUx6MAhFmXEP+WhzQmOvFxAWE56zILcXUjqL
+57isKieBkU1o0VIBOXgOcOJcwMKAVkV5ZFKgXHn63CW2c7brwfWwfQ912n/va7iH
+feduG1IVjOiTTRD9XzUHV8PxTHfs2Zqq/ESLYJ3PQH9iMa4OkngWHzICzN80xjGu
+9JU6eTxKTe6NNUit1UDgfFiwvjrq5UVZqgo5VV5pp01IRiB4Slw=
+=yeMj
 -----END PGP SIGNATURE-----
 
---9OYkIK2MmprROAMi--
+--XBypyAU1GVfIXQWD--
