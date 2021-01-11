@@ -2,107 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 169CBC433E6
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 16:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E17C433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 16:24:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8BB422AAD
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 16:16:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B8F0223E4
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 16:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387780AbhAKQQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 11:16:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60558 "EHLO
+        id S1731396AbhAKQYj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 11:24:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733190AbhAKQQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 11:16:34 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65CC6C061795
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 08:15:54 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id z20so60356qtq.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 08:15:54 -0800 (PST)
+        with ESMTP id S1728506AbhAKQYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 11:24:39 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD0CC061794
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 08:23:58 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id 22so15020231qkf.9
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 08:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BuIb7CAJpMA5YSIIBAngWhqAjVt0kPDU9CyYrtj/LBg=;
-        b=O0SP1lMKi4kZ0DcV9cdQjndqzNQJxieBp84Kqo9XF+phsG20qQbWcYPwnuCC/LusuI
-         to98g+U2fyBBAHDM3lIcUit+pTZAAboXk3EJHktTZzuv2b8VhfgJchQxhmfNbsE6e5du
-         EwGRIYPtqHz3Vr6SNMynF2tmzKoG/o5cqwEXR9bEgTOgeETnj5NXJTUAm7+bdyqfIphg
-         +4J6zh6JQEGO5T5BIOIVHKdz+/2OQIWIBfKM8QnYv9PW4GgYPSWXiwfdXosj9EtqSg4Y
-         JBG9J6yaSxRKWdpuLd4tTC+pHrbUh+q2KNGy3BGna5MDJu4slfXrmvaSd3S2DKXqODuZ
-         3dGg==
+        bh=lHtyJXwNzTk7qUSrkoOCGcnFHY9Z0XprHUkWuJeZLl4=;
+        b=dPSmU/YgtmsLGr94X9M3kAZPQwE/RXryzsFZpK3urdu4iF+3pkc20Zw52LFoEww07M
+         fJkq2G1LWJcNFTLoWIhxXS+3oXkPaZovvBfIc6WrrF+Bvseh+Cb6fuBAe/M9B8rBtbuG
+         1GoNkMSjhymS+1mr/6tr0RNdAOzhmKvEAl2i299J5v4ucpySrG/RXLo7DL8Nly7C7dez
+         7CXyWre2ZV10RkF651490HvFqmUhwXOLDdg4ozvF2V3fPXULKYfwVyXh/y+L+Pt5Whf4
+         9KWOTqVka7XJdYgL0ecCSGmU68gfQ3nhZiV6aRGX/MXh4kCKnK4mYSqLsuwdMA7mOl2b
+         STag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BuIb7CAJpMA5YSIIBAngWhqAjVt0kPDU9CyYrtj/LBg=;
-        b=MDEDrYyI1ik5d79zlT5azXh3xaK1ZjgSc7YYX0kouvJLroFtV5/nruIQ44sFkEQ5zU
-         ziVqFT41iDqHpbu8li8ktg2CPW+y4EMHqKkvjSqe/UHIAIBbtAoLTDlBnudKWGo8ElLE
-         YZyQfsvfUKkRJxI6kYw0qQ35mQlHEalYWJn6U6Jgpb1mJ3HNG657Dsz+REsvrrSadwOt
-         o/sta2G62JHO15NPPgusE2yQ8Wn/uZg66CXOB7Gp3W8aQnq+1XEvbSSZptg80GW+0Led
-         Q07BaFvFve2Ny7K/Yef0xTQt4kUj5DQJvA5Ty9gYcpx+gCmM+A9O4jrawDO+KxAQxnJq
-         v5Yw==
-X-Gm-Message-State: AOAM532NJ2g5jqUOTewwg7G6h55aw2BdvmWc1fPIq6/dl0mxcQXFEVCe
-        zkq1VLZa5KDEhFRqj54jsZUkUQ==
-X-Google-Smtp-Source: ABdhPJx3BD3Kdsxl1HGephb+sbgBA+NHm5SLVmmJMTMnEQ51l3rKZRxgsA/vHQt/20rpaZWE64ECig==
-X-Received: by 2002:aed:2183:: with SMTP id l3mr318211qtc.75.1610381753575;
-        Mon, 11 Jan 2021 08:15:53 -0800 (PST)
+        bh=lHtyJXwNzTk7qUSrkoOCGcnFHY9Z0XprHUkWuJeZLl4=;
+        b=e2cPp9Yi83f6283ryK09i5P6JlMGqFCuM+5V0xeGiMtfdYP8JvpXKL6ra7lzx+5P0H
+         TGyaBp/71FmFzyhGHZ7K8pde9ItiEzZMB+F9qHZqtL47Zz8YhOjsiVE2wE1I6km/AL24
+         +cYw6s3sMLev3Or59Q+84lB2B3tlLPdQrfHKLBIzmTAHDmTHVMUwTZgrvccGnfSLNnt/
+         s8nf85ET7bi/o6Vds3RZ3f0x0p7kENKtNQ7eWjsCENDYXFlD3MGs/QK1fAileh6R9jWI
+         p5/AM7naL4cYPIDpeojVK642eEPCry/kzC5axgOhZTrT9WfXa+qzZOVq7ak1MARB4Lnx
+         TpoA==
+X-Gm-Message-State: AOAM5329M2ZnOLykX02sMKLK5JwjHOnO6esCPT3OC/Beho0n1nrJPEBA
+        npVrN5vpIvEwAP9X0RbF/IRsig==
+X-Google-Smtp-Source: ABdhPJyURc7BAo3U3JZpIkW+zqMGhc+SvSJFFkNw0J0rngUXFRLRc6cvjvXoJA/u83GkLaVBoDzKAQ==
+X-Received: by 2002:a37:c0b:: with SMTP id 11mr117199qkm.32.1610382238034;
+        Mon, 11 Jan 2021 08:23:58 -0800 (PST)
 Received: from localhost ([8.9.92.205])
-        by smtp.gmail.com with ESMTPSA id f17sm8016349qtv.68.2021.01.11.08.15.52
+        by smtp.gmail.com with ESMTPSA id u4sm8521qtv.49.2021.01.11.08.23.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Jan 2021 08:15:52 -0800 (PST)
-Date:   Mon, 11 Jan 2021 11:15:49 -0500
+        Mon, 11 Jan 2021 08:23:57 -0800 (PST)
+Date:   Mon, 11 Jan 2021 11:23:54 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
         jrnieder@gmail.com
-Subject: Re: [PATCH 05/20] check_object(): convert to new revindex API
-Message-ID: <X/x5tdbM3PzkqbFQ@nand.local>
+Subject: Re: [PATCH 16/20] builtin/gc.c: guess the size of the revindex
+Message-ID: <X/x7mrcwfxGO8xH7@nand.local>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <c47e77a30eb40d9841a60a28b620671860dc2461.1610129796.git.me@ttaylorr.com>
- <b1a6110a-a097-931f-5710-92a1f59a842b@gmail.com>
+ <7c17db7a7df8b524f13969efd1cb5e6e95de5a2d.1610129796.git.me@ttaylorr.com>
+ <87cd1b2c-7a28-da77-4ae4-99ffbbdfda72@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b1a6110a-a097-931f-5710-92a1f59a842b@gmail.com>
+In-Reply-To: <87cd1b2c-7a28-da77-4ae4-99ffbbdfda72@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11, 2021 at 06:43:23AM -0500, Derrick Stolee wrote:
-> > @@ -1813,11 +1813,11 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
-> >  				goto give_up;
-> >  			}
-> >  			if (reuse_delta && !entry->preferred_base) {
-> > -				struct revindex_entry *revidx;
-> > -				revidx = find_pack_revindex(p, ofs);
-> > -				if (!revidx)
-> > +				uint32_t pos;
-> > +				if (offset_to_pack_pos(p, ofs, &pos) < 0)
+On Mon, Jan 11, 2021 at 06:52:24AM -0500, Derrick Stolee wrote:
+> This is so far the only not-completely-obvious change.
 >
-> The current implementation does not return a positive value. Only
-> -1 on error and 0 on success. Is this "< 0" doing anything important?
-> Seems like it would be easiest to do
+> > But, this is an approximation anyway, and it does remove a use of the
+> > 'struct revindex_entry' from outside of pack-revindex internals.
 >
-> 	if (offset_to_pack_pos(p, ofs, &pos))
+> And this might be enough justification for it, but...
 >
-> [snip]
+> > -	heap += sizeof(struct revindex_entry) * nr_objects;
+> > +	heap += (sizeof(off_t) + sizeof(uint32_t)) * nr_objects;
+>
+> ...outside of the estimation change, will this need another change
+> when the rev-index is mmap'd? Should this instead be an API call,
+> such as estimate_rev_index_memory(nr_objects)? That would
+> centralize the estimate to be next to the code that currently
+> interacts with 'struct revindex_entry' and will later interact with
+> the mmap region.
 
-Either would work, of course. I tend to find the '< 0' form easier to
-read, but I may be in the minority there. For me, the negative return
-value makes clear that the function encountered an error.
+I definitely did consider this, and it seems that I made a mistake in
+not documenting my consideration (since I assumed that it was so benign
+nobody would notice / care ;-)).
 
-A secondary benefit is that if the function ever were to return a
-positive value that _didn't_ indicate an error, we would already be
-protected against it. That is probably a pretty weak argument, though,
-since any such refactoring would probably require the callers to change,
-too.
+The reason I didn't pursue it here was that we haven't yet loaded the
+reverse index by this point. So, you'd want a function that at least
+stats the '*.rev' file (and either does or doesn't parse it [1]), or
+aborts early to indicate otherwise.
 
-Anyway, that's all to say that I'm happy to leave it as-is, but I'm
-equally happy to change it, too.
+One would hope that 'load_pack_revindex()' would do just that, but it
+falls back to load a reverse index in memory, which involves exactly the
+slow sort that we're trying to avoid. (Of course, we're going to have to
+do it later anyway, but allocating many GB of heap just to provide an
+estimation seems ill-advised to me ;-).)
+
+So, we'd have to expand the API in some way or another, and to me it
+didn't seem worth it. As I mentioned in the commit message, I'm
+skeptical of the value of being accurate here, since this is (after all)
+an estimation.
+
+Perhaps a longer response than you were bargaining for, but... :-).
 
 Thanks,
 Taylor
+
+[1]: Likely negligible, since all "parsing" really does is verify the
+internal checksum, and then assign a pointer into it.
