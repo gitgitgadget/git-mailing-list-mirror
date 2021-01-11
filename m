@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3506C433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D40AC433E9
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E31222B43
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EA8322B2C
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbhAKAjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727074AbhAKAjR (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 10 Jan 2021 19:39:17 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50546 "EHLO
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50550 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726841AbhAKAjQ (ORCPT
+        by vger.kernel.org with ESMTP id S1727049AbhAKAjQ (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 19:39:16 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF55560820;
-        Mon, 11 Jan 2021 00:37:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 893186096B;
+        Mon, 11 Jan 2021 00:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1610325476;
         bh=iOk2zNQtGOchx4/xFaRbXMeuwZfTKEgGvqnvKg8PJc0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CvGYhCj2i2qxjDEYySPjjSzmRN6x3fx0zUiy2Nn23RzTW3PcWl6WcCm2zQi/WM3o3
-         2M7kP4sMzmLiVbekpkLcBeVIwhVoKADca3qCaKtfffdYRFkctoLyuxzlSVe0KEZ6x4
-         OaM+QGSfSqndSwk2yMo3sOuVA6wz+tamPlVrJlCuUS958iRx6cVO0cJtL4Xj/X1Kwn
-         SeC354wbGfo/9kIW4xKC2vNUrk7Lcg36V1ciFMGmp/oc/FvO9DfnVImZfe8slip/q+
-         yxERTaAQvYBZ43Rkg6jK/ewWqtlyYiaAgIrm2kY5A0uaaKtvE4MF6ws0mSKW4v3eca
-         hxMrAf2d68naVGje65X76qdRBKL35cbdsaAUi51SFh9PC5dXEfnrgUxmGBP4q2V5FG
-         QJLryU+HJn5U75eK5POSQquH4mc+A8t9jaVmt8/WRlBZ5EvyNbipphDvC0uUtUhUfs
-         EDThb1jq9cbbuvFLmcoyg10qc7Wy/9tx6crXuKBE4QuCn5eBTsY
+        b=xYtP9vQBI6IhCRgmWHxs9WPpmfenO3XTXtmZh+2pZzQKt2pBeTeBkfIsh6Dp9todt
+         YRIpSAkTUl711osHYEQntj7QOoSSs5Icf3heVdG0YkeCj71ex3t24+KnPoUno+aQWe
+         LAO4RrPei9ktcU07VEHFqJJ97AqSUWdCXm3YIkU/+XPKRbvBXinlAefOqKGm7lK8UE
+         8vDR/JMkYuX2tgd0QeHSvVcFxCn4jhwuYfXxW+q6M3SBYee07dU9ATp+/DoSn4B9Ak
+         NQPDs++l8tBIGtYL/RSjj1egmbGTUYfMJXaiZ8oadc3b55tmU+jVJP5OaIqh42Z0yF
+         Yv62V6G5EAjR7LR9Ole9u4nW2LbqeEbbKz0Rrf+5hAk2OPSUv5V656vbBGa2QPMSug
+         4XU8r5SdMRakoskPYwwB/P3aLdfTgoJSEdqw6L+4b8VeVwj0dnNvqncNSfyHRvs5OO
+         Nej4lY5a9Cthq+Rp2lruvQQlV26fNxRbTCpMoXKgozPhxOgXnG7
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 5/5] gpg-interface: remove other signature headers before verifying
-Date:   Mon, 11 Jan 2021 00:37:39 +0000
-Message-Id: <20210111003740.1319996-7-sandals@crustytoothpaste.net>
+Subject: [PATCH 6/6] gpg-interface: remove other signature headers before verifying
+Date:   Mon, 11 Jan 2021 00:37:40 +0000
+Message-Id: <20210111003740.1319996-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
 References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
