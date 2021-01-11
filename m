@@ -2,102 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FD4C4332B
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24B4CC433E0
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:30:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9279C229CA
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:16:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E37C422AAD
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 17:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389298AbhAKRQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 12:16:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45318 "EHLO
+        id S2389388AbhAKRa1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 12:30:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389057AbhAKRQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 12:16:40 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39175C061794
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:16:00 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id h4so163529qkk.4
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:16:00 -0800 (PST)
+        with ESMTP id S1732644AbhAKRa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 12:30:26 -0500
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466A0C061786
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:29:46 -0800 (PST)
+Received: by mail-qv1-xf2a.google.com with SMTP id h13so11778qvo.1
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 09:29:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=l+782H6KawMiyPcjjtz/t6hZBd81xDR3PD+QaAABt5s=;
-        b=ELY4sggY2DRCHnp4LmIru6h2eH/oi4FP8fsD+sKB9lNGvMQn08b2rvRXfnJrMJwy6M
-         022dhBqja3bee2WP3zQNmJvphtQFg+aaKBHyI+BZd2l43Md/LRi4wcxzBFNRsM1K03hL
-         hzh8vWeq/Td9ROGFzD0o2RGQ7VHX3dOPvuLUVOI0311ZrYmcnljjrn0B2/4ZMnvjIJDp
-         HoaPK9/tsfOD0oAH47Gs9qMZvQhjb93IIDvdXH1MjwyDyrwmC4WeOOWh4cz4GWKh1ixk
-         fkoO1LWIe9S7dyVq43ZD4elGXPlW1VqUiR7O8ixYc3QfGcQUbERWqPcR9gZUkqdNGVUU
-         RWwg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6I8JpnrszRP5/ddry1xSY988g5cca4RtiBjFbw9F2fA=;
+        b=L0yvM4gWW3GSfzvlFGwNxdRLNhuc6eqFWkOxavmEG+xHdCCwJL3fcX0TciRbHG9cK8
+         qsPpIO5YVE+1YozZEWEYL7aLswwzhPnuZ5JjW8vh7Tqzy1GzCOYk2k3I8ckobQUCiqwS
+         Bga59nBDc8jvzaUdIAiz1Spolr9nW2HWeQkB+SF7YD9T074FiuDNip4j9Beo3IqDJS7Y
+         klx6LmY6M3KGdZptosLfmSc4Ry6T65Qzs+ycSNmMfsTkoaX3AC3FQPREXuz7nmy+JK0K
+         PUwkYGmFXjaP2EGNDGcYZW9sA21bSh3jfZIAeSelZu4KLfWqJSrKNxLvpsK8SXdYq5J/
+         H1Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=l+782H6KawMiyPcjjtz/t6hZBd81xDR3PD+QaAABt5s=;
-        b=qzdFF0W9sOm+ZcFvr+SwrZTdW7a1Y6T/HnBjZGSxaiXgdeEIyJy/5DwOKFcn54eNKG
-         lxHvOeMiHEeTjPXCnZeiVCpKfduOVAtno4UPeXxRnQ9NOP4Hrc1bh8qEjtMMzbfvH5ra
-         CVIe7P730OjEV5bUl5W9G9wLGZZp+mH2pmBBYW0IMIvJXrtXWALbQ8KAf8u/xhXaiyYm
-         cbMDa+bwXr5/FG/4poVOqjqjWof2FNa+CjWqCz2V9R8As48ucnpBmzLvGrRedn8BXqow
-         5QpEocMOE1brRinAZCMHtXtPm8Up4Xs/slGQDlK3Ge1WeW9GZFJWZ9IhzYpEHC4JBGSK
-         eVeA==
-X-Gm-Message-State: AOAM533mwUoGYnOeqGwxhpRGLLJPnQUBbsZvrE9RoMOXDIzoi/qvsd57
-        6pSAI94oq+d4H/kFZftXsfUhjhSSGQs=
-X-Google-Smtp-Source: ABdhPJwjR934kTrjzEpk42M1cqHrPwBlhhmUW5rgaSw4rwGf4VkC3imTwSjbl/eQwYlebpmh4Qk4fw==
-X-Received: by 2002:a37:8703:: with SMTP id j3mr253629qkd.455.1610385359444;
-        Mon, 11 Jan 2021 09:15:59 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id d46sm84291qtc.76.2021.01.11.09.15.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jan 2021 09:15:59 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6I8JpnrszRP5/ddry1xSY988g5cca4RtiBjFbw9F2fA=;
+        b=AwtsplJyhyoxWiNNeafA3E6mt9gacb3gLmKf/SZqYUxqozMU9KYFZGgi6adjYOQluo
+         d51EuQXg4NexYj2AHAgsT1/otq93Fs+4GQX33ILz6pYjQxMgWVgOfQ1O1gZusdi0LJVc
+         kzGJpNdGBQouZLvocqTENc0OT/+hMTbVXSWBA75VVve4xYJuR747u/WSij4wHVK8mke7
+         bJRfbmMOvYpc3vXkDK76f3uAPLUwTC1mlsBiVD6sKfVCH4GsgJ32nD1ym2ThUmkByWbm
+         GVc7XyStxn1+jbLUaEEC2qbTL1WL73YcyD4xqFQX9f+xqy64QFqXRcRSSd0YicZQpnWv
+         lylw==
+X-Gm-Message-State: AOAM531wJmPnertEgG0rSn8ogxlHbx6qPd1mAQLP/FsjGw32anLmpCMb
+        isWQ3qh7KtS/zPElwaFKQokUyQ==
+X-Google-Smtp-Source: ABdhPJxu4VsWgFOrInHtlTSFn6cdxcfDo5VkCb9q91WtciGAKVoe70LkK9H3CWt6MlGjxXeKk8dItw==
+X-Received: by 2002:a0c:c242:: with SMTP id w2mr556734qvh.33.1610386185442;
+        Mon, 11 Jan 2021 09:29:45 -0800 (PST)
+Received: from localhost ([8.9.92.205])
+        by smtp.gmail.com with ESMTPSA id n14sm142248qtr.9.2021.01.11.09.29.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jan 2021 09:29:44 -0800 (PST)
+Date:   Mon, 11 Jan 2021 12:29:42 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
+        jrnieder@gmail.com
 Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
+Message-ID: <X/yLBm0SSR82Tob8@nand.local>
 References: <cover.1610129796.git.me@ttaylorr.com>
  <75ba9979-1a1f-de9f-c2cc-1433d30ed09d@gmail.com>
  <X/x9MMv4hBZMGKBT@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7e56e831-c6d6-3454-94c5-b8e888497568@gmail.com>
-Date:   Mon, 11 Jan 2021 12:15:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+ <7e56e831-c6d6-3454-94c5-b8e888497568@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <X/x9MMv4hBZMGKBT@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7e56e831-c6d6-3454-94c5-b8e888497568@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/11/2021 11:30 AM, Taylor Blau wrote:
-> On Mon, Jan 11, 2021 at 07:07:17AM -0500, Derrick Stolee wrote:
->> My comments on this series are very minor.
->>
->> I made only one comment about "if (method() < 0)" versus
->> "if (method())" but that pattern appears in multiple patches.
->> _If_ you decide to change that pattern, then I'm sure you can
->> find all uses.
-> 
-> I have no strong opinion here, so I'm happy to defer to your or others'
-> judgement. My very weak opinion is that I'd just as soon leave it as-is,
-> but that if I'm rerolling and others would like to see it changed, then
-> I'm happy to do it.
+On Mon, Jan 11, 2021 at 12:15:58PM -0500, Derrick Stolee wrote:
+> On 1/11/2021 11:30 AM, Taylor Blau wrote:
+> > On Mon, Jan 11, 2021 at 07:07:17AM -0500, Derrick Stolee wrote:
+> >> My comments on this series are very minor.
+> >>
+> >> I made only one comment about "if (method() < 0)" versus
+> >> "if (method())" but that pattern appears in multiple patches.
+> >> _If_ you decide to change that pattern, then I'm sure you can
+> >> find all uses.
+> >
+> > I have no strong opinion here, so I'm happy to defer to your or others'
+> > judgement. My very weak opinion is that I'd just as soon leave it as-is,
+> > but that if I'm rerolling and others would like to see it changed, then
+> > I'm happy to do it.
+>
+> Well, I found 782 instances of ") < 0)" in the codebase, and my initial
+> scan of these shows they are doing exactly what you are asking. So as
+> far as code style goes, there is plenty of precedent.
 
-Well, I found 782 instances of ") < 0)" in the codebase, and my initial
-scan of these shows they are doing exactly what you are asking. So as
-far as code style goes, there is plenty of precedent.
+Thanks for looking, I was curious about that myself after our thread,
+but I hadn't yet bothered to look.
 
-The thing that makes me react to this is that it _looks_ like an extra
-comparison. However, I'm sure the assembly instructions have the same
-performance characteristics between "!= 0" and "< 0".
+> The thing that makes me react to this is that it _looks_ like an extra
+> comparison. However, I'm sure the assembly instructions have the same
+> performance characteristics between "!= 0" and "< 0".
 
+It should make no difference. Both comparisons will do a 'cmp $0 ...'
+where '...' is probably an indirect into the current frame. The '!= 0'
+will use je, and the '< 0' comparison will use 'jns'. Both conditional
+jumps should be implemented by checking a CPU flag only (ZF and SF,
+respectively).
+
+Not that any of this matters, it's just fun to look.
+
+> Thanks,
+> -Stolee
+>
 Thanks,
--Stolee
-
+Taylor
