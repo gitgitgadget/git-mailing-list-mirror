@@ -2,109 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24371C433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4D46C433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:24:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFE2522D08
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:23:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8422022C7E
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404179AbhAKUW6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 15:22:58 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63632 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726693AbhAKUW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 15:22:58 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 10407122B81;
-        Mon, 11 Jan 2021 15:22:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=urFoLiv/om8owV/BH8CI189Y8mA=; b=sn1Yp5
-        Swvyv/Ydo4aXH4ieRLSGibm/h29f49a3tFHD39dpegr7Oca2uaihenVhWwJOyzsy
-        vZSMR82OJ+z7MJdtcbEc1W0LTwhs/VII8E39cycl+Chffs2w6lJgVt0PPe3xOAFq
-        j9QbB8IFU76ifUjIkyOopNF6WYdlD15Y79Aiw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZFUyT786YzdA2UxIQewIGaONeQp3s3PR
-        Q9q8pjl+x/qQu9CDnSlgviq5E6Gko3kOzAEmMddtPDEFqKYjXw/kmIMGlRtvXilG
-        wgpSgRuE1yJ+75RRTo1YyW6bgXhD/eZS5fz/PdWm6Ut05XocN2/95Fnyq6jWjw9y
-        W2WOPYr9C30=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 08B26122B80;
-        Mon, 11 Jan 2021 15:22:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4C52B122B7F;
-        Mon, 11 Jan 2021 15:22:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Alan Mackenzie <acm@muc.de>
-Subject: Re: [PATCH v2] docs: rephrase and clarify the git status --short
- format
-References: <X/oAhdZlLwcFRCrR@ACM>
-        <20210110190448.779754-1-sandals@crustytoothpaste.net>
-Date:   Mon, 11 Jan 2021 12:22:10 -0800
-In-Reply-To: <20210110190448.779754-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Sun, 10 Jan 2021 19:04:48 +0000")
-Message-ID: <xmqqr1mr6x71.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2404197AbhAKUXo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 15:23:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57568 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389284AbhAKUXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 15:23:43 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74AE6C061786
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 12:23:03 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id d203so732426oia.0
+        for <git@vger.kernel.org>; Mon, 11 Jan 2021 12:23:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xpXkOnut7iytBXwQ/GB3UhTM8tqnJzSlLhcKd7jermk=;
+        b=EWE0nzmQs9y8muwN98YhACwnvJLUuJuL7P66O1UECk5n9FJUY0Hef4bx5FGcT6/9of
+         0nW7Y8i8vR6n8UbWvOD0yp4PuIQ2p4eCno5WM+iZieH0t6LFSmqU8O+dwWodc0aBeayZ
+         ODjQykQCKcwDsDMnAcjAwAWpOyf+wCyGHAwHFVpE1AyO1ejlPGMDIoiThdlkVHTVJcvV
+         4E+w3+9FKja1JJzUKissOG+kJO07cu/6HHHD0BZD6xiveY+MIZyLefMDv9+1+eM+Qseo
+         7CqMypg6Ho6uHuNk74yd90OlSV6AuqZDp6dqxgf/xEq0DZBALdT3t/IFd5772+Bacos4
+         FLZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xpXkOnut7iytBXwQ/GB3UhTM8tqnJzSlLhcKd7jermk=;
+        b=dXwGpKwdugbxv8dkUyG10p7twJ2LBEbcYPtjgYnGsZrBQ072qtWajHvD6srzfCVwKS
+         PQPcrcEadiadXtvQxmdDFgtaX77ZWJL3KXtbnVJuIAB2sKmWGnaixQ+Y5qYz5aapnLPr
+         lnDoVOhVhwumyKhdCWg1yycgzEf1Ml7NOKsaia9V1sNgE8xLpetc5yA3EboZ87Up1iMl
+         tb2W84Ee8651tcKQuKHUcFr/a9N+6eLI/jwp/yoFw7x3yKc5u8fMYjmKdnKM+Io+dCjw
+         Av+4iDZMVk6zQPRF/klMExVHtZA5QjzcoQy/TRq73jybISAUBaM2a+92cHiu5ouUJHNP
+         SoyA==
+X-Gm-Message-State: AOAM533FsX0hyE+hqqyhCwtz7Xv2ZWHe3yQve9A4eV1vW/sNa+XR7Rrk
+        P1BcvR6BmQhZeNO8M0i3b3KaRGZjood02lj5xw8=
+X-Google-Smtp-Source: ABdhPJxFALhf3G+nkpon5tBUP9GOa9esqrTf+tikck8XCzRHixAlROrvGmjJFKmnjRz+YhTnE5+2x2wMPnF8cwjx2ow=
+X-Received: by 2002:aca:3145:: with SMTP id x66mr347822oix.29.1610396582602;
+ Mon, 11 Jan 2021 12:23:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B012B59C-544A-11EB-8ACA-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <pull.820.v4.git.1608599513.gitgitgadget@gmail.com>
+ <pull.820.v5.git.1608609498.gitgitgadget@gmail.com> <xmqq1rfijpyf.fsf@gitster.c.googlers.com>
+ <CAN8Z4-VQJsXWmJPNg0Fdu98csK7ZQ0yDNzxPqRhsbuw9CUJjnw@mail.gmail.com> <xmqq8s9o5aza.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq8s9o5aza.fsf@gitster.c.googlers.com>
+From:   Nipunn Koorapati <nipunn1313@gmail.com>
+Date:   Mon, 11 Jan 2021 20:22:51 +0000
+Message-ID: <CAN8Z4-UpQzvQguhEqwCJHVZ_0phOXtGouHFNFNwa8jwSpugxSw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] negative-refspec: fix segfault on : refspec
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> Eventually by backporting, but a fix typically goes to the current
+> development track first so it would happen after 2.30 is finished, I
+> would think.
 
-> The table describing the porcelain format in git-status(1) is helpful,
-> but it's not completely clear what the three sections mean, even to
-> some contributors.  As a result, users are unable to find how to detect
-> common cases like merge conflicts programmatically.
->
-> Let's improve this situation by rephrasing to be more explicit about
-> what each of the sections in the table means, to tell users in plain
-> language which cases are occurring, and to describe what "unmerged"
-> means.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
-> This uses text from Junio's email, so his sign-off will be required
-> here.  I assume that won't be a problem, but I can send a v3 if it is.
+I wanted to bump this idea - now that it appears that 2.30 is complete
+and the new maint branch. Given that this patch makes matching-refspec
+unusable in 2.29, would it make sense to backport a fix to the 2.29
+release? If that seems risky/unwanted, is there some practice of
+documenting known (serious) bugs in past releases?
 
-Actually I find the text so vastly improved from "here is my
-attempt" version in the discussion that, other than the paragraph
-structure, there is nothing left that I can call my contribution.
-I'll sign the resulting commit off anyway, though ;-)
-
-> +There are three different types of states that are shown using this format, and
-> +each one uses the `XY` syntax differently:
-> ...
-> +
-> +Note that the term _merge_ here also includes rebases using the default
-> +`--merge` strategy, cherry-picks, and anything else using the merge machinery.
-
-Even if rebase uses the good-old "format-patch | am -3" pipeline, it
-would result in an index with entries at higher stages.  So I am not
-sure if this "Note that" helps the reader.
-
-> +In the following table, these three classes are shown in separate sections, and
-
-This iteration has improved the "Three different classes of paths
-are shown" in the "here is my attempt" version to "Three different
-types of states ..."; shouldn't we be doing the same here with
-s/classes/types of states/?
-
-> +these characters are used for `X` and `Y` fields for the first two sections that
-> +show tracked paths:
-
-Thanks.
+Thanks
+--Nipunn
