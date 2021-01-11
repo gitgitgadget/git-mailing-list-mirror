@@ -2,118 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8EDAC433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7362FC433E0
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 13:00:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99045224B8
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 12:44:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C2E52251F
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 13:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727474AbhAKMoN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 07:44:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43086 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727451AbhAKMoN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 07:44:13 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 509BEC061794
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 04:43:33 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id s75so19975294oih.1
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 04:43:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xlGJVwMwVraA3FoCzYL1UVxhMZZvwWVaIDOlO11U9rE=;
-        b=XZ/GGb4Oj2pzfbpo+aUIoJzzpVnM4v5Qco2A1LmTcA4+oFZXj+KC6qJNpiRlIm5k3G
-         YravMD89hbKFj+6dPs6gytgoDfwEOwSPnnOBh3BskrFzzvoWhgwTyxz7XM/G73N/B1Uk
-         vPdgbwMzEODgIYK3FlmfzNlEyH42KweS6PNdCOzN4dO6ec8jtuGEEWo//761QBwmMLWE
-         zvFwAN66ELKvUTPhjRr/pvjnlOBX1DOcs4SyFbEBZIwTx6cFYFdeVOCwwXR62aMBhzOw
-         DwWCuokI5ofqCMzsO6dIZ21AMqYUrvqXOxDmVKI74kvr9XAlZtm6/RI1XLk4uEj8f5V+
-         JlaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xlGJVwMwVraA3FoCzYL1UVxhMZZvwWVaIDOlO11U9rE=;
-        b=gf6zOoisymo53ASXes5V3G9w9PK1FyTwVzOT5zg49HtTW5Pjt57DsSs7A9Z+3oW6ua
-         yiLa8L1wSdoHXs36uWKm0nZEV22l/+TCDLdUZTb2GsgAdrlRAAJqd4sJcMJDXI1J4fs7
-         yv2D+7QC8dzoxIEmUOCzCYleKchc7yWls/BnUnhJSJ00lnVsbX9M8ETjQ7k7BnvnxUJY
-         fxa2+JzH5xhu6i9m5FGlKcnpoU6heZ2XYG8BLrUadZEutsmlKntA37y5XVlrPqArT5le
-         BmAGBXuHgGk59pk+UdIX8tDLj61E+2YcIzatlEIXcvwdbOxe0FqyrYqNE63v/+y0qebR
-         etNg==
-X-Gm-Message-State: AOAM5303ymtnqVMb3TkF3D0TRCMJWSVxwP9ILPvRMOEftdvxLvb1Rjzk
-        /YJqyZBi6/MvNRy7jFmL+9rQUMHM3Zo=
-X-Google-Smtp-Source: ABdhPJwKCa8IdBd3NnqGsneDsKLYimYNfY3AUi2QFlx/AwSYDzvTJpJPn+N7gTeth/FWMlWlsvtUXg==
-X-Received: by 2002:aca:aa50:: with SMTP id t77mr10093091oie.28.1610369012585;
-        Mon, 11 Jan 2021 04:43:32 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id n22sm3935112oig.32.2021.01.11.04.43.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Jan 2021 04:43:32 -0800 (PST)
-Subject: Re: [PATCH v5 09/11] commit-graph: use generation v2 only if entire
- chain does
-To:     2e89c6e1-e8e8-0d51-5670-038b4e296d93@gmail.com
-Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
-        gitgitgadget@gmail.com, jnareb@gmail.com, me@ttaylorr.com
-References: <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
- <pull.676.v5.git.1609154168.gitgitgadget@gmail.com>
- <a3a70a1edd0949ff3088fae625afa68fc61975df.1609154169.git.gitgitgadget@gmail.com>
- <2e89c6e1-e8e8-0d51-5670-038b4e296d93@gmail.com>
- <X/r9i0HJFEGxuyW/@Abhishek-Arch>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <003c1892-cbfe-7437-f8ce-fbae58f0cb83@gmail.com>
-Date:   Mon, 11 Jan 2021 07:43:31 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1727670AbhAKNAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 08:00:07 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:61839 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726672AbhAKNAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 08:00:07 -0500
+X-Greylist: delayed 1863 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Jan 2021 08:00:06 EST
+Received: from 79-66-17-94.dynamic.dsl.as9105.com ([79.66.17.94] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kywIy-0005dc-6t; Mon, 11 Jan 2021 12:28:16 +0000
+Subject: Re: Using Git for OpenSCAD and 3D Printing
+To:     "Mr. Sandor Kunyik" <sandor@kane-il.us>, git@vger.kernel.org
+References: <cee9debaf32b69d793d0b8a3e8d4b2c6@kane-il.us>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <a3e191a0-5c39-fe50-f57e-6b2ddeb4373d@iee.email>
+Date:   Mon, 11 Jan 2021 12:28:15 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <X/r9i0HJFEGxuyW/@Abhishek-Arch>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <cee9debaf32b69d793d0b8a3e8d4b2c6@kane-il.us>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/10/2021 8:13 AM, Abhishek Kumar wrote:
-> On Tue, Dec 29, 2020 at 10:23:54PM -0500, Derrick Stolee wrote:
->> Your tests in this patch seem very thorough, covering all the cases
->> I could think to create this strange situation. I even tried creating
->> cases where the overflow would be necessary. The following test actually
->> fails on the "graph_read_expect 6" due to the extra chunk, not the 'write'
->> process I was trying to trick into failure.
->>
->> diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
->> index 8e90f3423b..cfef8e52b9 100755
->> --- a/t/t5324-split-commit-graph.sh
->> +++ b/t/t5324-split-commit-graph.sh
->> @@ -453,6 +453,20 @@ test_expect_success 'prevent regression for duplicate commits across layers' '
->>         git -C dup commit-graph verify
->>  '
->>  
->> +test_expect_success 'upgrade to generation data succeeds when there was none' '
->> +	(
->> +		cd dup &&
->> +		rm -rf .git/objects/info/commit-graph* &&
->> +		GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph \
->> +			write --reachable &&
->> +		GIT_COMMITTER_DATE="1980-01-01 00:00" git commit --allow-empty -m one &&
->> +		GIT_COMMITTER_DATE="2090-01-01 00:00" git commit --allow-empty -m two &&
->> +		GIT_COMMITTER_DATE="2000-01-01 00:00" git commit --allow-empty -m three &&
->> +		git commit-graph write --reachable &&
->> +		graph_read_expect 6
->> +	)
->> +'
-> 
-> I am not sure what this test adds over the existing generation data
-> overflow related tests added in t5318-commit-graph.sh
+Hi Sandor
 
-Good point.
+I haven't used OpenSCAD but I thought it worth mentioning some personal
+points about using Git for Engineering products, where variants
+proliferate and build-products must be  versioned.
+ I had a go with FreeCAD a few years ago to create an insulating spacer
+that the mech eng had forgotten...
 
--Stolee
+On 05/01/2021 09:57, Mr. Sandor Kunyik wrote:
+> Greetings,
+>
+> If you were to design a new workflow, what key observations would you
+> make in regards to OpenSCAD scripts?
+
+I'm sure that git is able to store and version all the scripts and
+products, but it does need a vision about how to present the
+organisation of the scripts and products, especially for engineered
+items. Remember that software version control is just drawing office
+procedure with the hard stuff ripped out ;-) [1]
+>
+> As a quick illustration: I have a model with cavities to hold hex
+> bolts and nuts. I fine-tuned the model to print on PrinterA, using
+> FilamentA, SettingsA. 
+
+Is the fine tuning done via the scripts, or is it manual. If it is the
+latter then it will need the user to record in the commit message for
+the revision the various what/why/how aspects that aren't obvious from
+the 'diff'. Does OpenSCAD have an informative 'diff' capability? If it
+is just a 'compile for printerA using known-tool' then it could be an
+automated commit message as you are storing a build product (If it was
+regular software it's likely it's a binary..)
+
+> Once in "production" I need to "freeze" all relevant scripts,
+> especially when using multi-file structure. If the modules receive
+> parameters I need to "remember" those parameters (such as the radius
+> for the hex, and the dept of the cavity), and if they use hard-coded
+> values I must remember not to change them. Otherwise I cannot
+> repeatedly print the same model.
+
+So these parameters are essentially a 'configuration file' (inc. the
+hard coded values). If you auto generate such a file then it can easily
+be stored within revision (commit) - It is important that the scripts
+should be able to work directly from that config file (idempotent [2])
+
+>
+> Now imagine this for the entire standard set of hex bolts - each of
+> these were fine-tuned, test-printed and verified.
+A library? Hence a sub-module perhaps. 
+> The rationale behind this to guarantee that the models trying to
+> conform to a standard (such as ASME B18.3) stay put, while models
+> receiving non-standardized sizes such as Nylon 6/6/ (which have bigger
+> hex heads) stay separated, and tweaked to work with each supplier.
+A configurable library item? Tricky. I remember a project that need to
+change 20,000 drawing because they changed the paint colour (green to
+grey), and then the next major order was in the old colour! In software
+terms its like 're-skinning' a GUI, but worse.
+More likely you'll have a separate sub-module-library for these
+'specials' where the source part is cherry-picked (give give a backward
+textual reference) and then modified locally giving git level
+traceability. 
+>
+> My question is, should I just "hardcode" everything, set up forks or
+> branches for all past scenarios? So far I only have a few dozen models
+> and I'm already having a hard time finding models I printed and used
+> in the past, to print again. How do I structure all this?
+
+The hard part is to be both the 'design authority' that signs off the
+'release' and also the day to day designer trying things where it's a
+'fingers crossed' hope that this 3d print run will actually produce what
+you want and expect, but mainly it's a case of realising the mistake and
+cycle it around.
+You should at least use tags for the good release commits, to make them
+easy to find.
+>
+> I am a mechanical engineer not a coder, new to all these. 
+I feel you pain. Some of the above may be more suited for those who
+actually design and contribute OpenSCAD, rather that a user getting
+started.
+> Maybe git or revision control is not the correct tool for this job?
+>
+As an ME you will know that without [good] revision control the world
+falls apart for anything other than bespoke item home jobs!
+
+Git is great because it give you full control, and local storage,
+without taking up too much room.
+Git is a problem because it gives you too much control and too much
+choice. Start simple, be open to the 'mind-shift'.
+
+Add any (i.e. more) files that you use to Git. Remove them (one at a
+time) when you stop using them. They will still be in the history!
+
+Commit often: including halfway through a change - you know you will add
+more and then more, then more tweaks before you print - have a commit
+for each. I.e. distinguish between 'Printing' runs, and the act of
+'visualising the part' in the OpenSCAD viewer - both steps get a commit,
+with concise description. (probably every 5 minutes or less!)
+
+Use the 'git gui' and 'gitk' to visualise how you have developed and
+progressed. (or a GUI of your choice -> CAD people are NOT terminal
+people!!)
+
+Git unfortunately lacks a short command to allow you to park a completed
+items onto a 'Completed' branch that's just an easy quick way of seeing
+those finished items (Git has the view that they [old software versions]
+are 'gone/left behind', with just a few v# tags), so I don't have any
+great solution for that.
+If you have concise commit subject titles and messages, then it's easier
+to search history for "print: insulating spacer widget v2.1" (and before
+that "visualise: insulating spacer widget v2.1a", 1b, 1c, 1d, 1e...).
+You may want to allow-empty commits for ease of recording!
+
+Hope that helps.
+
+[1] Drawing Office procedures allow for non perfect machining, serial
+numbering, etc. Software generally asserts perfect replication,
+repeatability and machining.
+[2] https://en.wikipedia.org/wiki/Idempotence
+[3] concise: adjective - giving a lot of information clearly and in a
+few words; brief but comprehensive. "a concise account of the country's
+history" (Git: without repeating the obvious changes shown in the diff!)
