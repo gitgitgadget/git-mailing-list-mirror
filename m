@@ -7,78 +7,127 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51546C433DB
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 22:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F3A1C433E9
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 22:35:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 133B022D04
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 22:17:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7805A22D07
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 22:35:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731436AbhAKWRU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 17:17:20 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59469 "EHLO
+        id S2389718AbhAKWfs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 17:35:48 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52940 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726725AbhAKWRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 17:17:19 -0500
+        with ESMTP id S1727853AbhAKWfs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 17:35:48 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E7B0B123777;
-        Mon, 11 Jan 2021 17:16:37 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20E86123A1D;
+        Mon, 11 Jan 2021 17:35:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+hLUg/23SpR9eS0QRceqeoaDMbg=; b=u7wNMO
-        I4a8P9WtbCrTSOS5Py9cgX/y9xbl56QgJfvwUp53MHVzDao7mJDdoJJo/4diT2+F
-        SOSVtS/8ie04szcniAmItSnol+MbsmHyiutBAskF7YV6PhRUhjcRf06gLNVKM6C0
-        uCHVkRZT6mJnimf+2F2PfyszfSoCV8VqKpmlY=
+        :content-type; s=sasl; bh=3sl2G+NkFwOPGfQYiLh4Kszsvkc=; b=g0ftdr
+        XCXnh/OBL1rB3xvZrttbFGeg+9sacEOSxq3NThvp2V2ciWFer9068HUlpRQWb6gq
+        nTkL0DIwjhr2UyidVr9mTRTlcxdrBSzxeIDu+vF8bCHGYUSjOZrgdspSVQKWoUzn
+        DFpedoGy6UZDRxDCQcr8LGBgBgTSc7i4u1t+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p3lP7R9gR3Toi2IJ5R3faNrnC+vpPyag
-        jeMVWmhVMgHXKD6fNt4/4Zh83RzHn4Et+3Gf6fOnMi/QItFLJFDRF5g1LXKKAZMB
-        db25feuyT8cPm83GsPtb/rLD7hxwNHaEvYXgL4VxmhOYlTY0B4lsJ9r5afd3xRDq
-        GH0+MhNarXw=
+        :content-type; q=dns; s=sasl; b=FJ9Yrk6LrhaF5SzOXkrOWfkyIpB9RDRc
+        l1jtDfJdJg5MxFs68ulUiosYDYht1Ct01ma+hnpCcqFzFT5oCIU4gYP1x11kFaKO
+        PJpdIfWxliX6VnJRJT/Wpb8rmFq1pyLQuZE8GZZtTot8RjjtUD99UKayGNHrOE3q
+        9OHaW1Ob8S4=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DEA3D123776;
-        Mon, 11 Jan 2021 17:16:37 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 19A57123A1C;
+        Mon, 11 Jan 2021 17:35:06 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
+Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F048123775;
-        Mon, 11 Jan 2021 17:16:35 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6DDEC1239F7;
+        Mon, 11 Jan 2021 17:34:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Support for commits signed by multiple algorithms
-References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
-        <20210111035840.2437737-1-sandals@crustytoothpaste.net>
-Date:   Mon, 11 Jan 2021 14:16:33 -0800
-In-Reply-To: <20210111035840.2437737-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 11 Jan 2021 03:58:35 +0000")
-Message-ID: <xmqq5z436rwe.fsf@gitster.c.googlers.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Simon Ruderich <simon@ruderich.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v7 2/8] config: add new way to pass config via
+ `--config-env`
+References: <cover.1606214397.git.ps@pks.im> <cover.1610353895.git.ps@pks.im>
+        <b9cf47afe896f8a6a76ba2e8aa87155e147ff31d.1610353895.git.ps@pks.im>
+Date:   Mon, 11 Jan 2021 14:34:31 -0800
+In-Reply-To: <b9cf47afe896f8a6a76ba2e8aa87155e147ff31d.1610353895.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Mon, 11 Jan 2021 09:36:49 +0100")
+Message-ID: <xmqq1rer6r2g.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AAABA23E-545A-11EB-BE5B-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 2D5CA118-545D-11EB-A1B3-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> This series introduces support for verifying commits and tags signed by
-> multiple algorithms.
->
-> Originally, we had planned for SHA-256 tags to stuff the signature in a
-> header instead of using a trailing signature, and a patch to do that was
-> sent out in part 1/3.  Unfortunately, for whatever reason, that patch
-> didn't make it into the master branch, and so we use trailing signatures
-> there.
->
-> We can't change this now, because otherwise it would be ambiguous
-> whether the trailing signature on a SHA-256 object was for the SHA-256
-> contents or whether the contents were a rewritten SHA-1 object with no
-> SHA-256 signature at all.
+> +void git_config_push_env(const char *spec)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	const char *env_name;
+> +	const char *env_value;
+> +
+> +	env_name = strrchr(spec, '=');
+> +	if (!env_name)
+> +		die(_("invalid config format: %s"), spec);
+> +	env_name++;
+> +	if (!*env_name)
+> +		die(_("missing value for --config-env"));
 
-How widely are SHA-256 tags in use in the real world, though?  Is it
-really too late to fix that already?
+If reporting the name of the configuration variable, for which we
+checked an environment variable, is worth doing in the !env_value
+case below, shouldn't we be doing the same here, too?  I.e.
+
+		die(_("missing environment variable name in %s", spec));;
+
+or something to complain against "git --config-env foo="?
+
+> +	env_value = getenv(env_name);
+> +	if (!env_value)
+> +		die(_("missing environment variable '%s' for configuration '%.*s'"),
+> +		    env_name, (int)(env_name - spec - 1), spec);
+
+> +test_expect_success 'git --config-env=key=envvar support' '
+> +	cat >expect <<-\EOF &&
+> +	value
+> +	value
+> +	false
+> +	EOF
+> +	{
+> +		env ENVVAR=value git --config-env=core.name=ENVVAR config core.name &&
+> +		env ENVVAR=value git --config-env=foo.CamelCase=ENVVAR config foo.camelcase &&
+> +		env ENVVAR= git --config-env=foo.flag=ENVVAR config --bool foo.flag
+
+These "env " prefixes are not wrong per-se but are unnecessary.  The
+same for the rest of this patch.
+
+> +	} >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git --config-env fails with invalid parameters' '
+> +	test_must_fail git --config-env=foo.flag config --bool foo.flag 2>error &&
+> +	test_i18ngrep "invalid config format" error &&
+> +	test_must_fail git --config-env=foo.flag= config --bool foo.flag 2>error &&
+> +	test_i18ngrep "missing value for --config-env" error &&
+> +	test_must_fail git --config-env=foo.flag=NONEXISTENT config --bool foo.flag 2>error &&
+
+How are we making sure 
+
+	$ NONEXISTENT=True make test
+
+is not what the end-user is running?
+
+	sane_unset X &&
+	test_must_fail git --config-env foo.flag=X config --bool foo.flag
+
+or something along that line, perhaps?
