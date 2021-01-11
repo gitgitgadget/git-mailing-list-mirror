@@ -2,87 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,FSL_HAS_TINYURL,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87644C433DB
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 22:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D3BC433DB
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:22:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F8F229C7
-	for <git@archiver.kernel.org>; Sun, 10 Jan 2021 22:24:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2293622AAF
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbhAJWYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 17:24:03 -0500
-Received: from mail-gateway-shared11.cyon.net ([194.126.200.64]:45208 "EHLO
-        mail-gateway-shared11.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726418AbhAJWYD (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 17:24:03 -0500
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared11.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1kyj7G-0002dj-2r
-        for git@vger.kernel.org; Sun, 10 Jan 2021 23:23:20 +0100
-Received: from [10.20.10.232] (port=62366 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.93)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1kyj7E-00Bheo-Tm; Sun, 10 Jan 2021 23:23:16 +0100
-Subject: Re: [PATCH] gitk: check main window visibility before waiting for it
- to show
-To:     Tobias Pietzsch via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Tobias Pietzsch <tobias.pietzsch@gmail.com>,
-        Tobias Pietzsch <pietzsch@mycroft.speedport.ip>
-References: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com>
-From:   Beat Bolli <dev+git@drbeat.li>
-Message-ID: <bdaab72b-37f4-658a-716a-d6a958b6f709@drbeat.li>
-Date:   Sun, 10 Jan 2021 23:23:15 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.0
+        id S1726932AbhAKAWe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 19:22:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50166 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726391AbhAKAWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Jan 2021 19:22:33 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 16865AB05F;
+        Sun, 10 Jan 2021 19:21:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=8cZ5LezvUghx
+        MavKkVuJc5OWzHQ=; b=JbkdXKa/LEhPY93Idhe1NylxVXGBps5aBSHfDwS1H3Ne
+        8HA3FsaaQULtjbFjAjadXT7J/zRRjVRSHhctw+tT9+mZaHAnTHhe5f+6w+kyXFI3
+        JPWU+pWi46jN0lx3Md9vyatNydfsIzSN2Bb7+T7Q7P/blocKf1JlMwLZinWAMTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qyifiS
+        oLBjfhA3ek8zSVWPnRBHANCJcwU+s3VC6WJ/5oDLfgWyk/Yn8xu9AUNjLwbXkjG+
+        yE+dJTwPCbaQW0H9BxS85EKaBcOJn6Vnvdww9fjfLz2LsmmuryGmnDI4ic1aBBLs
+        B3bbuJQrU8BFl2vnxWTsvdoN+Wb2Bl7NhtPAc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0DFA6AB05D;
+        Sun, 10 Jan 2021 19:21:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 963A3AB05B;
+        Sun, 10 Jan 2021 19:21:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
+References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
+        <871reu752k.fsf@evledraar.gmail.com>
+        <xmqqk0slg5ph.fsf@gitster.c.googlers.com>
+        <87v9c462ht.fsf@evledraar.gmail.com>
+Date:   Sun, 10 Jan 2021 16:21:49 -0800
+In-Reply-To: <87v9c462ht.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 10 Jan 2021 20:00:46 +0100")
+Message-ID: <xmqqv9c48grm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: de-CH
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-OutGoing-Spam-Status: No, score=-1.0
+X-Pobox-Relay-ID: FFCBDC1A-53A2-11EB-A319-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10.01.21 00:26, Tobias Pietzsch via GitGitGadget wrote:
-> From: Tobias Pietzsch <pietzsch@mycroft.speedport.ip>
->
-> If the main window is already visible when gitk waits for it to
-> become visible, gitk hangs forever.
-> This commit adds a check whether the window is already visible.
-> See https://wiki.tcl-lang.org/page/tkwait+visibility
->
-> Signed-off-by: Tobias Pietzsch <pietzsch@mycroft.speedport.ip>
-> ---
->     gitk: check main window visibility before waiting for it to show
->
->     If the main window is already visible when gitk waits for it to become
->     visible, gitk hangs forever.
->
->     This commit adds a check whether the window is already visible. See
->     https://wiki.tcl-lang.org/page/tkwait+visibility
->
->     The symptom of the for-ever waiting is that gitk shows just an empty
->     window, like this: https://tinyurl.com/yxr5qlf6 It happens (to me) on
->     macOS 11.1 with git-gui installed via homebrew. It doesn't happen on
->     macOS 10.14.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Thanks, this also occurred on my macOS 10.14.6 just an hour ago after a
-recent brew upgrade, and the patch makes gitk usable again.
+> On Sat, Jan 09 2021, Junio C Hamano wrote:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>> I forgot that, oops. Is just declaring here that all of that's:
+>>>
+>>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+>>>
+>>> Since you have some acks etc. squashed into it at this point...
+>>
+>> Puzzlled.  The patches on the trailers topic were all signed-off by
+>> you, unless I was careless when I checked before merging them to
+>> 'next'.
+>>
+>> Do the above three lines refer to a different topic, on CoC 2.0?
+>
+> Yes, I accidentally snipped out the part I should have been quoting. I
+> meant "please assume my signed-off-by" to be in reply the CoC 2.0
+> series.
 
-Cheers, Beat
+Thanks.  Will squash your sign-off in.
