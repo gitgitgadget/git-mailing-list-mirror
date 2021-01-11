@@ -2,88 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5495EC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 830B4C433E6
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 00:27:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DA1B22D57
+	by mail.kernel.org (Postfix) with ESMTP id 5CA3E22D57
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 00:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391807AbhALA0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2391801AbhALA0D (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 11 Jan 2021 19:26:03 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58896 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404227AbhALAFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 19:05:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4697A127D4E;
-        Mon, 11 Jan 2021 19:04:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gn2BcJp6RE8xeYfNSi439czj/yo=; b=CwF5Ti
-        lZMzHc02b5Xqnr2yoC1AmQjZPxTZTgiD7V81vMpF826QFChCQ8jGc9/4ju+dJRfT
-        cG5g7Q3LNUjOU9e6vpnuyUid1MiqVacmcws8TH9uzT4oNj4eLUJAolgrpNE8GLcb
-        jWXV4zvjweaSCqRcoSpAJ77v9zpwuBu7tyJ3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=JZGEIr1kmQ0QHo6W2kMYuimCS9VTJPQy
-        YVCgWKFdDreOpjeAX4WOZ8DtS0+feDZpfveTJxXATkzKBIEfUSoI3zoUk9nwk5kt
-        ZbpHBiFLoCocZOK0NCqWC197FC4u2J9SZWCtYT3euenoD3D8gjpJpgVz7WUH2VlV
-        P2l6sQ8ptTI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 410F0127D4D;
-        Mon, 11 Jan 2021 19:04:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:51238 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2404125AbhAKXbM (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 11 Jan 2021 18:31:12 -0500
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 882CB127D4B;
-        Mon, 11 Jan 2021 19:04:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 0/5] fetch: implement support for atomic reference
- updates
-References: <cover.1610027375.git.ps@pks.im> <cover.1610362744.git.ps@pks.im>
-Date:   Mon, 11 Jan 2021 16:04:20 -0800
-In-Reply-To: <cover.1610362744.git.ps@pks.im> (Patrick Steinhardt's message of
-        "Mon, 11 Jan 2021 12:05:11 +0100")
-Message-ID: <xmqqo8hv58cb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8900D60781;
+        Mon, 11 Jan 2021 23:30:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1610407801;
+        bh=gFTY3SG7jZEUw+QLvT/Ri7eadQ3duB45PaWIVgZpYiY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=sRN4k+9GkS6hhkt4LMXmGAIOvvtN6TPiBr7lOfijxuvT34BaIbk/v0XHQwRjVXi6K
+         E4Bb5neJ0Xm0DLVTjl4lrYivygXvlAqepNXZRXBgTMqO7iWWG9NqQrTUws7hDQbrgt
+         syIF3K52kReu8+bwdgAyWVgdztFjXjqk1DrznzluU2upI2dhAia9Tk3JICXar2NgTV
+         PO7qSmg2S4w5v3nE6z1kUhJ9Bo+SvxVU5j8dI5OhcGI2CSPYbBJUc2acXONNIvlNmy
+         yPy5tufh+6XuSIFw79mRR/4c9+aim3+8iY42dUez4fGDC1mvHb4G49DRxnMRihIz+X
+         XIusTjFNTQn5GgsNLxQWiEPqnE/G4BIemIciiFw4kK9yBW7xAnMxjQSYpPOZsFcbzM
+         P6XRdyV0Ctrq6GZdPYIEa3Nv8EVFgyi6/fIIRWOT3VVV2rHWXDPZCVeSrEZV5/37mO
+         pkRWEVRJFOiDLeFt8NjBXCuzn2o8rnkXxRr6/idj8P3tWiPeAi0
+Date:   Mon, 11 Jan 2021 23:29:56 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/5] Support for commits signed by multiple algorithms
+Message-ID: <X/zfdA8uUAdx0oEu@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
+References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
+ <20210111035840.2437737-1-sandals@crustytoothpaste.net>
+ <xmqq5z436rwe.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B984F80A-5469-11EB-9025-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="9MTyW25hekXqSiFh"
+Content-Disposition: inline
+In-Reply-To: <xmqq5z436rwe.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> Changes compared to v2:
->
->     - `append_fetch_head` now takes a `struct object_id *old_oid`
->       instead of a `char *old_oid`.
->
->     - Handling of the merge status marker was moved into
->       `append_fetch_head`.
->
->     - I've unified code paths to format the line we're about to write to
->       FETCH_HEAD in atomic and non-atomic cases, which is the new 2/5
->       patch.
->
->     - We now always initialize `fetch_head->fp` and use it to derive
->       whether anything should be written at all instead of using the
->       global `write_fetch_head` variable.
->
-> I think this should address all of Junio's feedback. Thanks for your
-> input!
+--9MTyW25hekXqSiFh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Looking good.  I left a few comments on remaining or newly
-introduced issues, but IIRC all of them were rather minor.
+On 2021-01-11 at 22:16:33, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > This series introduces support for verifying commits and tags signed by
+> > multiple algorithms.
+> >
+> > Originally, we had planned for SHA-256 tags to stuff the signature in a
+> > header instead of using a trailing signature, and a patch to do that was
+> > sent out in part 1/3.  Unfortunately, for whatever reason, that patch
+> > didn't make it into the master branch, and so we use trailing signatures
+> > there.
+> >
+> > We can't change this now, because otherwise it would be ambiguous
+> > whether the trailing signature on a SHA-256 object was for the SHA-256
+> > contents or whether the contents were a rewritten SHA-1 object with no
+> > SHA-256 signature at all.
+>=20
+> How widely are SHA-256 tags in use in the real world, though?  Is it
+> really too late to fix that already?
 
-Thanks, will replace.
+I don't know.  I don't know of any major hosting platform that supports
+them, but of course many people may be using them independently on
+self-hosted instances.
+
+I don't think it matters one way or the other, honestly, because the
+functionality is the same either way, whether we always put SHA-256 in a
+header or whether we put the non-default algorithm in the header.
+Multiply signed commits and tags are still unverifiable on older
+versions because the older versions consider the header to be part of
+the payload and not something to be stripped.
+
+I just noticed this because I'm now getting to the case where we write
+(and sign) both SHA-1 and SHA-256 versions of commits and I thought I'd
+better send in a patch sooner rather than later, since there's a lot
+more prep work (surprise) before we get to anything interesting.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--9MTyW25hekXqSiFh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX/zfcwAKCRB8DEliiIei
+gdY+AP9BH8VG/4WQHxrfqHzQGTde5kwsaEl3kMCVv9IXWgzD0wEAhzTrmUERTI82
+Xy7t5Ydgovufhq4cKV+661NC6LWb+AI=
+=Hlxe
+-----END PGP SIGNATURE-----
+
+--9MTyW25hekXqSiFh--
