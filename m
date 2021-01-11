@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC59C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3506C433DB
 	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1826822B43
+	by mail.kernel.org (Postfix) with ESMTP id 9E31222B43
 	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 00:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727069AbhAKAjQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 10 Jan 2021 19:39:16 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50548 "EHLO
+        id S1727080AbhAKAjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 10 Jan 2021 19:39:17 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:50546 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726995AbhAKAjQ (ORCPT
+        by vger.kernel.org with ESMTP id S1726841AbhAKAjQ (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 10 Jan 2021 19:39:16 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4147C6081F;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF55560820;
         Mon, 11 Jan 2021 00:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610325475;
-        bh=I74n+sMDQczOQbATZv+EOmOHt/wClxEbGAeMZOAGddk=;
+        s=default; t=1610325476;
+        bh=iOk2zNQtGOchx4/xFaRbXMeuwZfTKEgGvqnvKg8PJc0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Bp6NS6xh6BfW7TZxqF9D1mjvd2WKAQHEt7bbtenijSNzqs57JVijPFFqv7EmS5kHT
-         dNhgu+TwfeRCcidBLsxBjWRGFyXZrWTZ1jQmiJodqVPxsA0447/e0On6w/o3X4aJZz
-         Q76AMUe8CzA+Y2MOhsearRW43+5Q0hDwdtZYZK55oTTe4GCZRK/02eYMoaSLMm4C8s
-         WY0DSoVgvnGH68uCE5izykOka/LjPcihjvWywhetw4LQvZJC7i0Ixa1y2HWQuwRiK4
-         G/oL1uPwyhFhX6vfBRfiT6Xg6wwOUAF6h2ZRsRERvROyXAVnkqOl9kulwe9Uap8kjt
-         kUOs+GYQ2efdJ+hrlsej3M81XgH4awHXnHCXh9TE0xvlwzJMri/VlV/IR4Veqmq8TL
-         fSGf10PFfU3BqKH1kZVnRCQiRBgUQF/H8WzvnDNlckeuvVUdABQxw/cA19qUyrtwDH
-         ybvLSq7NXtJS69QJTxufBZk4t/qogBwZi0sxSJGfxBd+Icy9d4Q
+        b=CvGYhCj2i2qxjDEYySPjjSzmRN6x3fx0zUiy2Nn23RzTW3PcWl6WcCm2zQi/WM3o3
+         2M7kP4sMzmLiVbekpkLcBeVIwhVoKADca3qCaKtfffdYRFkctoLyuxzlSVe0KEZ6x4
+         OaM+QGSfSqndSwk2yMo3sOuVA6wz+tamPlVrJlCuUS958iRx6cVO0cJtL4Xj/X1Kwn
+         SeC354wbGfo/9kIW4xKC2vNUrk7Lcg36V1ciFMGmp/oc/FvO9DfnVImZfe8slip/q+
+         yxERTaAQvYBZ43Rkg6jK/ewWqtlyYiaAgIrm2kY5A0uaaKtvE4MF6ws0mSKW4v3eca
+         hxMrAf2d68naVGje65X76qdRBKL35cbdsaAUi51SFh9PC5dXEfnrgUxmGBP4q2V5FG
+         QJLryU+HJn5U75eK5POSQquH4mc+A8t9jaVmt8/WRlBZ5EvyNbipphDvC0uUtUhUfs
+         EDThb1jq9cbbuvFLmcoyg10qc7Wy/9tx6crXuKBE4QuCn5eBTsY
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 5/6] fixup! commit: ignore additional signatures when parsing signed commits
-Date:   Mon, 11 Jan 2021 00:37:38 +0000
-Message-Id: <20210111003740.1319996-6-sandals@crustytoothpaste.net>
+Subject: [PATCH 5/5] gpg-interface: remove other signature headers before verifying
+Date:   Mon, 11 Jan 2021 00:37:39 +0000
+Message-Id: <20210111003740.1319996-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
 References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
@@ -54,19 +54,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
- commit.c | 1 -
- 1 file changed, 1 deletion(-)
+When we have a multiply signed commit, we need to remove the signature
+in the header before verifying the object, since the trailing signature
+will not be over both pieces of data.  Do so, and verify that we
+validate the signature appropriately.
 
-diff --git a/commit.c b/commit.c
-index 7bbab5add4..23020c0bca 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1058,7 +1058,6 @@ int parse_buffer_signed_by_header(const char *buffer,
- 	int in_signature = 0, saw_signature = 0, other_signature = 0;
- 	const char *line, *tail, *p;
- 	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(algop)];
--	int gpg_sig_header_len = strlen(gpg_sig_header);
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ gpg-interface.c |  2 ++
+ t/t7004-tag.sh  | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index c6274c14af..127aecfc2b 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "commit.h"
+ #include "config.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+@@ -366,6 +367,7 @@ int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct
+ 	size_t match = parse_signed_buffer(buf, size);
+ 	if (match != size) {
+ 		strbuf_add(payload, buf, match);
++		remove_signature(payload);
+ 		strbuf_add(signature, buf + match, size - match);
+ 		return 1;
+ 	}
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 05f411c821..6fb4e3cf11 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -17,6 +17,13 @@ tag_exists () {
+ 	git show-ref --quiet --verify refs/tags/"$1"
+ }
  
- 	line = buffer;
- 	tail = buffer + size;
++test_expect_success 'setup' '
++	test_oid_cache <<-EOM
++	othersigheader sha1:gpgsig-sha256
++	othersigheader sha256:gpgsig
++	EOM
++'
++
+ test_expect_success 'listing all tags in an empty tree should succeed' '
+ 	git tag -l &&
+ 	git tag
+@@ -1371,6 +1378,24 @@ test_expect_success GPG \
+ 	'test_config gpg.program echo &&
+ 	 test_must_fail git tag -s -m tail tag-gpg-failure'
+ 
++# try to produce invalid signature
++test_expect_success GPG 'git verifies tag is valid with double signature' '
++	git tag -s -m tail tag-gpg-double-sig &&
++	git cat-file tag tag-gpg-double-sig >tag &&
++	othersigheader=$(test_oid othersigheader) &&
++	sed -ne "/^\$/q;p" tag >new-tag &&
++	cat <<-EOM >>new-tag &&
++	$othersigheader -----BEGIN PGP SIGNATURE-----
++	 someinvaliddata
++	 -----END PGP SIGNATURE-----
++	EOM
++	sed -e "1,/^tagger/d" tag >>new-tag &&
++	new_tag=$(git hash-object -t tag -w new-tag) &&
++	git update-ref refs/tags/tag-gpg-double-sig $new_tag &&
++	git verify-tag tag-gpg-double-sig &&
++	git fsck
++'
++
+ # try to sign with bad user.signingkey
+ test_expect_success GPGSM \
+ 	'git tag -s fails if gpgsm is misconfigured (bad key)' \
