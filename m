@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0D59C433E0
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFC0FC433E6
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:12:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8926422B51
-	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:10:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B41EA2054F
+	for <git@archiver.kernel.org>; Mon, 11 Jan 2021 20:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391188AbhAKUKn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 15:10:43 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54535 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726722AbhAKUKn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 15:10:43 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 104CE122959;
-        Mon, 11 Jan 2021 15:09:57 -0500 (EST)
+        id S2404070AbhAKUMv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 15:12:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50155 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390366AbhAKUMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 15:12:48 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CEF3B931F4;
+        Mon, 11 Jan 2021 15:12:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IeWmgs+cE193ef30cPOMnTPByH8=; b=LKnrO7
-        tnF/sWL86WnjkEryYNjZJRRhTx0KdO1fqIoGCty85XS0jLpD3IGmM5Esa8HRcNa9
-        Fx/DW9S2KHeAIS7nZkHWWRCPbizO0oDiWtt31MJ+aQUQ9EcwRTuUP5cI/b5SFPXQ
-        Zjvg/f1feF3i9mhZvzhpLYrVfxBJnoMDRJxIY=
+        :content-type; s=sasl; bh=BLPg+tjwPM/eBqO3EeIdJCyYnrw=; b=Yz5QA5
+        0ESl+joqRwBCkIwEeWpzBgxABUzIKGKVSmCG55g9nSLpbS1G+B/7J4F45udb2EZF
+        q81/n0CbA3FaO9ZLUGioZaOGIb/7+yNdz+KRjcWEURsqE/igdpR29NmqCmF10rxw
+        SF/yqNzOndff36f+9mib7ngBHvnCRuNO/kJIY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uMfYmlOF3dHwPjyyx8HzTwjCpCWMwnM0
-        QIixEWvJU42bDd8TtwxIW0E+iDMU1FIJmNC0K4Txhxkk92UTtOu51BZHC9EL209l
-        VWFFYdZg+HBvL+kb7VojB67kxBiVov3M3fqRA2CCV3ai/np45Du1mUg/Vj3TW1ml
-        l3X190dndXM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 08E64122958;
-        Mon, 11 Jan 2021 15:09:57 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=CA8X1HB70EOM1nuUkTPstI1Zbe9o/Af8
+        GZmdt8+WqC72eakWQRr+58jGTF4QhMXedQbhDcrpIU46IF5z/FQY7Ea4OqMKWWYs
+        4H7qm0W+emhENrXgW7VoGMgbeslkxpOOA7Lgs/5FBsCMjlziYGk3OWYK8ZOyvt2e
+        u9ofKxiL5xE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B7D0E931F3;
+        Mon, 11 Jan 2021 15:12:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 48D38122957;
-        Mon, 11 Jan 2021 15:09:54 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 13895931F1;
+        Mon, 11 Jan 2021 15:12:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
@@ -51,201 +51,67 @@ Cc:     Git List <git@vger.kernel.org>,
         =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?= =?utf-8?B?Zw==?= Danh 
         <congdanhqx@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v5 1/3] test: add helper functions for git-bundle
+Subject: Re: [PATCH v5 2/3] bundle: lost objects when removing duplicate
+ pendings
 References: <xmqqbldxg466.fsf@gitster.c.googlers.com>
-        <20210110143019.5625-2-worldhello.net@gmail.com>
-Date:   Mon, 11 Jan 2021 12:09:52 -0800
-In-Reply-To: <20210110143019.5625-2-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Sun, 10 Jan 2021 09:30:17 -0500")
-Message-ID: <xmqq1rer8cbz.fsf@gitster.c.googlers.com>
+        <20210110143019.5625-3-worldhello.net@gmail.com>
+Date:   Mon, 11 Jan 2021 12:12:05 -0800
+In-Reply-To: <20210110143019.5625-3-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Sun, 10 Jan 2021 09:30:18 -0500")
+Message-ID: <xmqqwnwj6xnu.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F82EF7B6-5448-11EB-A994-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 46BBE39E-5449-11EB-8184-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jiang Xin <worldhello.net@gmail.com> writes:
 
-> +# Create a commit or tag and set the variable with the object ID.
-> +test_commit_setvar () {
-> +	notick=
-> +	signoff=
-> +	indir=
-> +	merge=
-> +	tag=
-> +	var=
-> +
-> +	while test $# != 0
-> +	do
-> +		case "$1" in
-> +		--merge)
-> +			merge=t
-> +			;;
-> +		--tag)
-> +			tag=t
-> +			;;
-> +		--notick)
-> +			notick=t
-> +			;;
-> +		--signoff)
-> +			signoff="$1"
-> +			;;
-> +		-C)
-> +			shift
-> +			indir="$1"
-> +			;;
-> +		-*)
-> +			echo >&2 "error: unknown option $1"
-> +			return 1
-> +			;;
-> +		*)
-> +			break
-> +			;;
-> +		esac
-> +		shift
-> +	done
-> +
-> +	var=$1
-> +	shift
-> +	if test -z "$var"
-> +	then
-> +		echo >&2 "error: var is not defined"
-> +		return 1
-> +	fi
+>  /*
+> - * Return true iff array already contains an entry with name.
+> + * Return true if array already contains an entry.
+>   */
 
-We need to check $# immediately after the loop to ensure that we can
-carve out $var and at least another arg.  [*Nit 1*]
+I think the original deliberately spells "if and only if", but a
+natural reading of "return true if X" would be "this would never
+return true if not X", so perhaps the above change is OK.
 
-The previous round required the command line to have at least one
-after the loop (including parsing of $var) parsed it, but now we
-fall through from here when a command line were:
-
-    test_commit_setvar --merge -C there VAR
-
-and because "$1" does not exist, such an error is propagated down to
-"git merge" not getting the side branch, "git tag" not getting the
-object to tag, etc.
-
-> +	indir=${indir:+"$indir"/}
-> +	if test -z "$notick"
-> +	then
-> +		test_tick
-> +	fi &&
-> +	if test -n "$merge"
-> +	then
-> +		git ${indir:+ -C "$indir"} merge --no-edit --no-ff \
-> +			${2:+-m "$2"} "$1" &&
-> +		oid=$(git ${indir:+ -C "$indir"} rev-parse HEAD)
-> +	elif test -n "$tag"
-> +	then
-> +		git ${indir:+ -C "$indir"} tag -m "$1" "$1" &&
-> +		oid=$(git ${indir:+ -C "$indir"} rev-parse "$1")
-> +	else
-> +		file=${2:-"$1.t"} &&
-> +		echo "${3-$1}" > "$indir$file" &&
-
-Style?  [*Nit 2*]
-
-> +		git ${indir:+ -C "$indir"} add "$file" &&
-> +		git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
-> +		oid=$(git ${indir:+ -C "$indir"} rev-parse HEAD)
-> +	fi &&
-> +	eval $var=$oid
-> +}
-
-
-> +
-> +
-> +# Format the output of git commands to make a user-friendly and stable
-> +# text.  We can easily prepare the expect text without having to worry
-> +# about future changes of the commit ID and spaces of the output.
-> +make_user_friendly_and_stable_output () {
-> +	sed \
-> +		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<COMMIT-A>/g" \
-
-Is "$(echo $A | cut -c1-7)" the same as "${A%${A#???????}}"?  If so,
-the latter may be a bit shorter.
-
-> diff --git a/t/test-bundle-functions.sh b/t/test-bundle-functions.sh
-> new file mode 100644
-> index 0000000000..0853eb1eca
-> --- /dev/null
-> +++ b/t/test-bundle-functions.sh
-> @@ -0,0 +1,47 @@
-> +# Library of git-bundle related functions.
-> +
-> +# Display the pack data contained in the bundle file, bypassing the
-> +# header that contains the signature, prerequisites and references.
-> +convert_bundle_to_pack () {
-> +	while read x && test -n "$x"
-> +	do
-> +		:;
-> +	done
-> +	cat
-> +}
-> +
-> +# Check count of objects in a bundle file.
-> +# We can use "--thin" opiton to check thin pack, which must be fixed by
-> +# command `git-index-pack --fix-thin --stdin`.
-> +test_bundle_object_count () {
-> +	thin=
-> +	if test "$1" = "--thin"
-> +	then
-> +		thin=t
-> +		shift
-> +	fi
-> +	if test $# -ne 2
-> +	then
-> +		echo >&2 "args should be: <bundle> <count>"
-> +		return 1
-> +	fi
-> +	bundle=$1
-> +	pack=$bundle.pack
-> +	convert_bundle_to_pack <"$bundle" >"$pack" &&
-> +	if test -n "$thin"
-> +	then
-> +		mv "$pack" "$bundle.thin.pack" &&
-> +		git index-pack --stdin --fix-thin "$pack" <"$bundle.thin.pack"
-> +	else
-> +		git index-pack "$pack"
-> +	fi
-
-I wonder why we shouldn't always do "--fix-thin", so that the caller
-does not even have to bother passing the "--thin" option.
-
-Is this to protect us from "git bundle" creating a bundle that
-contains a thin pack when it should not?  A caller that knows it is
-storing a fully connected history can deliberately omit "--thin"
-from the command line and make sure "index-pack" that is not asked
-to do "--fix-thin" indeed finds the pack data fully self-contained,
-so it may be a good idea to have these two separate codepaths after
-all.  OK.
-
-> +	if test $? -ne 0
-> +	then
-> +		echo >&2 "error: fail to convert $bundle or index-pack"
-> +		return 1
-> +	fi
-
-Do we even need the "error" message?  "git index-pack" would have
-already given some error message to its standard error stream, no?
-If so
-
-	if test -n "$thin"
-	then
-		...
-	fi || return 1
-
-would be sufficient, I guess.
-
-> +	count=$(git show-index <"${pack%pack}idx" | wc -l) &&
-> +	test $2 = $count && return 0
-> +	echo >&2 "error: object count for $bundle is $count, not $2"
-> +	return 1
-> +}
-
-Looking good except for a few minor nits I mentioned above.
-
-Thanks.
+> -static int contains_name(struct object_array *array, const char *name)
+> +static int contains_object(struct object_array *array,
+> +			   const struct object *item, const char *name)
+>  {
+>  	unsigned nr = array->nr, i;
+>  	struct object_array_entry *object = array->objects;
+>  
+>  	for (i = 0; i < nr; i++, object++)
+> -		if (!strcmp(object->name, name))
+> +		if (item == object->item && !strcmp(object->name, name))
+>  			return 1;
+>  	return 0;
+>  }
+> @@ -432,7 +433,8 @@ void object_array_remove_duplicates(struct object_array *array)
+>  
+>  	array->nr = 0;
+>  	for (src = 0; src < nr; src++) {
+> -		if (!contains_name(array, objects[src].name)) {
+> +		if (!contains_object(array, objects[src].item,
+> +				     objects[src].name)) {
+>  			if (src != array->nr)
+>  				objects[array->nr] = objects[src];
+>  			array->nr++;
+> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+> index 637cdb5a8e..5c9d5ed94d 100755
+> --- a/t/t6020-bundle-misc.sh
+> +++ b/t/t6020-bundle-misc.sh
+> @@ -169,7 +169,7 @@ test_expect_success 'setup' '
+>  	test_commit_setvar P "Commit P" main.txt
+>  '
+>  
+> -test_expect_failure 'create bundle from special rev: main^!' '
+> +test_expect_success 'create bundle from special rev: main^!' '
+>  	git bundle create special-rev.bdl "main^!" &&
+>  
+>  	git bundle list-heads special-rev.bdl |
+n
