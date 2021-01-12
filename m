@@ -6,94 +6,96 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B903C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C43C43333
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:03:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42E172311B
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:00:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C82FF2311F
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405515AbhALRA1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 12:00:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41234 "EHLO
+        id S2391742AbhALRDE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 12:03:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388731AbhALRA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 12:00:26 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8439AC061786
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:59:46 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id c7so2467915qke.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:59:46 -0800 (PST)
+        with ESMTP id S2391729AbhALRDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 12:03:04 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F91C061786
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:02:24 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id s6so1201843qvn.6
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=M2LEW1PyhgKxM/qgf+1WrRgVPMa3ysdJ6mH5h6ssmvA=;
-        b=YzRKi+sU/MOj6uGPZnCL80QKd1jR/PWt0hwbmSSereCaHwTKJY/R5eUcimRYr+dA75
-         XpQaXXh5SushY/mtMuCrIAKJ8GWK4o6oVFe9mR6POxCKQcou22Xg8Jo03rkBF858aehy
-         aqEb89+EsEnGWd3YOnL2H7vY5z8hNuoanAesTVUadFsroMplgY6XC8VQ4L5UcsrmwbRM
-         HCOp7ths9Gg/P7j2M5WxsSZTdn3gou0BnOSUBKXtjpy0B7wxkwtbykoTQ1uVDYGu0r0b
-         3JKBG5y50D4Nxku9d9YR+18n8+ZNb1zxrNSk3WBSMibykDG+pYnoqdRzg9MY71tTIefJ
-         XdMQ==
+        bh=pXcdDuiuS0rutkUwk71fnGMqxWY4G5EzmmfpZg3Ru24=;
+        b=jUrEG0DUx7SLY/E/5nsmqdIJZ1Io3iiQV4Azj1VSRUQMcy6dLHHJRdNjxwt3is41/C
+         3RuBNZhsH1qeHKcGi+2Z0CLFkxtjlL3lDh07h6rviCNV2VbrLquvxF5vNW5h3Mv/9A+O
+         929NR4RIC3bV06c3A0i6yPfPkrb60e01ki3M1jRYRBAIUerPrxai04us/bP9q/SyPnzw
+         J6w+i3m9BswF6gOWxIPRiXFzdcwKY4TcRr+m6DJxSgCmqOnZCWZcZ72q7UhtsGdVmNeR
+         pTUFM5+nZVDrqCYtz8ETmBCWgrfl3y6na6B9Hb5tD+OGqtuYF4+wB2HL10B7IRdbuvMV
+         TrFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=M2LEW1PyhgKxM/qgf+1WrRgVPMa3ysdJ6mH5h6ssmvA=;
-        b=M4MV4ondIqb+oq8COCEn0DtMa679dne7+e22LOLdybaxxO9+4DA098rtlpOCENP04z
-         YY6XACzpEN4RqPsGNXM/E4zHcBzbq/xgqZj0TjQFd1V4l2rf5oNP0aYcHKwyDpNg4P8c
-         rmG3zS0mQgzBCbsnXRzMniGxqhanwkctzLupK5UIMV/iN3p7ZinF8pVNgUa9tOUfA8HX
-         1pLTQOmvqdppferRE5ppZBFxa081PdgN82QfarAirLF6aP3z1u2kv7aW5uRmfhxjc1H4
-         lG92TkYvDrIILqpu6PDxnSuSKWVJpDRCwAiAfKpqvGzZeC6r18nYYiB/sfiEFV4WYXoY
-         rYnw==
-X-Gm-Message-State: AOAM532eW5XUXPn0blnqYjKpfsWn1TGnFk3hAu7BGvdU8a3APTWlk+4a
-        nzCW0B/S1zkSjO9BRF1hLjfeag==
-X-Google-Smtp-Source: ABdhPJzBph+eL2grlF64/do3CvMKkh6QGFoRKNbaVF1J4Q3XGbO3GZQAWTgmKTjMMJIktYvIBA9haw==
-X-Received: by 2002:ae9:f402:: with SMTP id y2mr238040qkl.356.1610470785823;
-        Tue, 12 Jan 2021 08:59:45 -0800 (PST)
+        bh=pXcdDuiuS0rutkUwk71fnGMqxWY4G5EzmmfpZg3Ru24=;
+        b=dgsnrkBPMXLIyE4WPEWTTDrAvGnd+JTEA399cJLLURdZjht7PlZAjKumSj/gpteLGD
+         AGncVrGnPjjAxFnK800f1lLDUTnwhl+A2YflOKDHJN8cU+MSsqkDIObh/RfIgAOMCRRz
+         mYDUP4NUKRhUMMaitB5J1Xe6NGU/HY7PYfy1Ycctb5nMHjX+Y2nHh/wadFLC9mrv7p2k
+         HV4EVbBAcEA6DAwp/gEzoyT63M1YO+nuRHn1P966KcrUTX7I981rBLOHCBSpWQxHretc
+         xF3svTO0Tfcu6LuDz3X/xcvkRvWZIKucG7hf/7qaznJA3JJc8zPwYVpUh07T9uFwI593
+         fRyw==
+X-Gm-Message-State: AOAM532tAp3a8u1+DfM4npg0AmAhh6nTN2FWsj/PtxvziFo3z21nz/1H
+        mYA6pEuctruO2Iww+eblPrspN1H+z47jdQ==
+X-Google-Smtp-Source: ABdhPJzhYl0W9TB6Vi32HlpEorKkavrs/+7L/VaknVaYfkbf45BBbBzvIfjcG4jL/1HljuVYohmZSQ==
+X-Received: by 2002:a05:6214:533:: with SMTP id x19mr20253qvw.20.1610470936765;
+        Tue, 12 Jan 2021 09:02:16 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:42e2:d139:3745:d47])
-        by smtp.gmail.com with ESMTPSA id h22sm1333070qth.55.2021.01.12.08.59.44
+        by smtp.gmail.com with ESMTPSA id b15sm1417388qta.75.2021.01.12.09.02.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 08:59:45 -0800 (PST)
-Date:   Tue, 12 Jan 2021 11:59:42 -0500
+        Tue, 12 Jan 2021 09:02:10 -0800 (PST)
+Date:   Tue, 12 Jan 2021 12:02:04 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         jrnieder@gmail.com
-Subject: Re: [PATCH 18/20] pack-revindex: remove unused
- 'find_revindex_position()'
-Message-ID: <X/3VfteeF3Ok2C+S@nand.local>
+Subject: Re: [PATCH 20/20] pack-revindex.c: avoid direct revindex access in
+ 'offset_to_pack_pos()'
+Message-ID: <X/3WDArP4zrdd0S2@nand.local>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <d60411d524656f4680ac578765b2a8704325a060.1610129796.git.me@ttaylorr.com>
- <X/1st6SrJXysoejt@coredump.intra.peff.net>
+ <eada1ffcfafc3fb57de80626e368672cb8b22318.1610129796.git.me@ttaylorr.com>
+ <X/1txTIxV4pYt0Xo@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <X/1st6SrJXysoejt@coredump.intra.peff.net>
+In-Reply-To: <X/1txTIxV4pYt0Xo@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 04:32:39AM -0500, Jeff King wrote:
-> Good catch. We might want to drop the initialization of "lo":
+On Tue, Jan 12, 2021 at 04:37:09AM -0500, Jeff King wrote:
+> This definitely makes sense in the long run. I could take or leave it as
+> a final patch in _this_ series (as opposed to the first patch in a
+> subsequent series adding the rev files).
 >
-> >  	int lo = 0;
-> > -	int hi = p->num_objects + 1;
+> >  	do {
+> >  		const unsigned mi = lo + (hi - lo) / 2;
+> > -		if (revindex[mi].offset == ofs) {
+> > +		off_t got = pack_pos_to_offset(p, mi);
 >
-> down to here:
 >
-> > +	hi = p->num_objects + 1;
+> They're both constant-time, so performance should be the same big-O. The
+> function has extra BUG() checks. I doubt those are measurable in
+> practice, though.
 
-> to maintain symmetry (though it's quite a minor point).
+Funny enough, I have moved this patch between the two so many times
+before submitting this. I tend to agree that I don't think it makes a
+difference in which series this patch goes, so I'm just as happy to
+leave it where it is and stop thinking about it ;-).
 
-:-). I agree it's a minor point, but I think that the symmetry is nice,
-so it's worth doing.
-
-> I notice these are signed ints, but we've taken care to use uint32_t
-> elsewhere for positions. Shouldn't these be uint32_t, also (or at least
-> unsigned)?
-
-I'll let both of these be an raw unsigned, since the midpoint is already
-labeled as an unsigned.
+If others have strong feelings, this can be dropped when queuing and
+I'll send it along as the first commit in the second series (which will
+have to be updated along with this one).
 
 > -Peff
 
