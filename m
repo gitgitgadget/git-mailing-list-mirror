@@ -7,210 +7,171 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51B42C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6649C433E6
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:29:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28EB121D93
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:29:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95CD023110
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:29:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387398AbhALM24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:28:56 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:33047 "EHLO
+        id S2387401AbhALM3A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 07:29:00 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:45487 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729535AbhALM2y (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:28:54 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id CCDE7A26;
-        Tue, 12 Jan 2021 07:27:32 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 12 Jan 2021 07:27:33 -0500
+        by vger.kernel.org with ESMTP id S1733015AbhALM2t (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:28:49 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id BE4511B61;
+        Tue, 12 Jan 2021 07:27:13 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:27:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=bS+BxXOY5f/2D1/Kak+84zwulUM
-        MAhGZOQ/1/79D7Ao=; b=sCXMMmLdqdbGcnu/HI+hQbfodZ+fzvAN0wUYaWv7Jjw
-        3Vog3dXqgR6yi8hQlrsQb6dlWpN30NNh2uASuOHHTnpYH6cg6kw23DWw5l4F0Csn
-        MnjVGRlt0PwDURsXQtL5H64uMLzSu/gD5kPU7plG+UIZ5USr4qeoVevb9t0sU1UZ
-        CYLlBG6nRvHIM0JQ8g0VAEvgmdZaRrV7uKXLrjhz1491vuPQLMuLTGMDb+Eq8BnZ
-        I7H0Poqpd5f2aRd337uIGWQjOkWfL3H7d7sE1K8DNoaNRzVw8Q+FGCgkdq306UVm
-        xVrH/ouCg5Bqa2NhScQ2Kgt/C9Up6rPXXYRviHOCN3A==
+        :content-type:in-reply-to; s=fm3; bh=U1+40+UHQIsPAMpciXrArYnK6oH
+        PN8/WXzdZUfgKp68=; b=ciBlEONcOl4nj6nJTyvtA/LpQ987Euguzd5p5tRBSW9
+        niVKIu+pSZHE/BC7R8G8ixWtCeIp28R5LMTrg6LQ3Bv2w8mXFA6NsLja433cP+8G
+        WB0ecPSJ0dsDhYQ48UwdehSweLLKu8bh/O8ZNoSKHybRCBWRtB5lNiuXh19gxEcO
+        x9GKbVWAY/79O8nazHRF7wP4f66rwdVVWBOuBL9Db3KRPYziRpQ9nDleCZeeAjp0
+        AqcwT0uwtIreDMRq9d7PPHuUvU9na/2AgfNJFO4owFevNWGzLauD0mi84yCn0Emq
+        KAaP0HOH0Dhi+jQf7lWI6USupSa6HdSFtHC8Gocys4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=bS+BxX
-        OY5f/2D1/Kak+84zwulUMMAhGZOQ/1/79D7Ao=; b=HMUq8RuKX1sQsEdP5vZfCx
-        EZgh6M+0C+0IqkAVE8Svi1OpzFgikkrUu3p3Jz7YQGnyzhgWynugQh8O+HrMrZC/
-        16ETYplgts+5sLKsEK4hnGq4hIoEWuiP7e1zR/O0Gj8P24TQiRay11qYetHk0qrh
-        YEAAYai1iPvYViu5mQkdiH/CMDdwQXcN0+uqn3C1tJZ3/B/1ag1Hp2sL17zb02Nl
-        c1CYLaObWyqeHOP4far6jFi3fpGdoRdXTj5TXuWGJN9S+KRcPfn+dQd/Le2BnfRw
-        9TUmp1P7Vv/pvwzGFEpwBDO+wT4vL5TAQBs+QXI/LZRx7YB7rEWTI8EldLU8nf9g
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=U1+40+
+        UHQIsPAMpciXrArYnK6oHPN8/WXzdZUfgKp68=; b=cavIvhQTrmLQKoSlGLsmtb
+        7keBtuBWfALQsczzbifeRM0lkey93ia+fR/Gv1dkSXWMO7cggm0AZDC/EyvCJCI4
+        SSdLO0A0YBWFRTzjwK32XZP/p5IRQuN2J/BQlNijK6iQuxwyg8+/2WSdoXfN+8HR
+        2lj1mjc7VnxmnLgfFcEZVDKZHGe+BA8u5FWFP5oa2beZzNthzojA25FlC5L7fvtA
+        HRqo1EgtSZA+jiiDEPWdWYMnpXxJVpscxNmIhIUi1I10z38fy7MrbwUV8LSUpNeN
+        55VWto4HAtPg10kSKddoBtNDBOWSWb5Vc3ex5F79zs5LYC9sqx+j9F1Ez1CvjzCg
         ==
-X-ME-Sender: <xms:tJX9X3IqH5K9KzGi7IiQeVzg03oC0pbg5tXpbiL49ubpQcCny9Iu4w>
-    <xme:tJX9X7H_9JxN5cCy8dHt_s0x4fTdeoL9PemWeUmLi2EcPKrA3hyzR2dkpBatcFaGC
-    nZ49ADaZLX-aM0RyA>
+X-ME-Sender: <xms:oZX9X61LIDI7h2nU8XYWGqv0JHeHNc6LW9Ng7YtqZCw22uem_3Oryg>
+    <xme:oZX9X9HCL22VY86GY3S_Sx-R6wGXFBwL__INfWIxjLhvmnf-QJYcElOrgQO479GEW
+    0d4ZXBaYc5jE1BuMg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgepjeenucfrrghrrg
     hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:tJX9X8nZWshUUCjqRmKyvZt6L_KVScUDntnMsZs5zuFkanhFZuz3yA>
-    <xmx:tJX9X4I9UMODbztezIIJ1IXKh_RVvKcR6NlWxchi95Z956H4UzyVMg>
-    <xmx:tJX9X9YFRL_0ab-ANe2s-ZcSdOamdDsYzO6lHuOVqGRC_8ZqHnKWYg>
-    <xmx:tJX9X5Yqawvoy_ERlSD358WJbW9kTRGJjCdjVzyT5CME0BIsV5rQYg>
+X-ME-Proxy: <xmx:oZX9Xy4RajQWTV6KE8hcTlbgs7ZTqiRPWeTuWSEeeYnhYCIKO6OU_A>
+    <xmx:oZX9X70Q5Jta_n-lFTIOTXTGBQk5EMVd67J2jJWMSHK0ApehaMUPcw>
+    <xmx:oZX9X9GypNdBiqeqLhMOmF1ivk58lQd6RFSD5oroLNfr6fHrijqWgg>
+    <xmx:oZX9XxgZVeA5g3L5OVevnGNOYN4z7GlVlVpay19DjLEfwwx84q7NjA>
 Received: from vm-mail.pks.im (dynamic-077-013-052-093.77.13.pool.telefonica.de [77.13.52.93])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 91B4B24005E;
-        Tue, 12 Jan 2021 07:27:31 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 8577E1080057;
+        Tue, 12 Jan 2021 07:27:12 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 3b266813 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 12 Jan 2021 12:27:30 +0000 (UTC)
-Date:   Tue, 12 Jan 2021 13:27:29 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 3d164d5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 12 Jan 2021 12:27:11 +0000 (UTC)
+Date:   Tue, 12 Jan 2021 13:27:10 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 0/5] fetch: implement support for atomic reference updates
-Message-ID: <cover.1610454262.git.ps@pks.im>
-References: <cover.1610027375.git.ps@pks.im>
+Cc:     Simon Ruderich <simon@ruderich.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: [PATCH v8 7/8] environment: make `getenv_safe()` a public function
+Message-ID: <28cc229adeb4eaf8994821f0312ba7b84a6d618e.1610453228.git.ps@pks.im>
+References: <cover.1606214397.git.ps@pks.im>
+ <cover.1610453228.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/h22/Y+T7Utgmd9y"
+        protocol="application/pgp-signature"; boundary="DrmLjoQvWRL6bnSG"
 Content-Disposition: inline
-In-Reply-To: <cover.1610027375.git.ps@pks.im>
+In-Reply-To: <cover.1610453228.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/h22/Y+T7Utgmd9y
+--DrmLjoQvWRL6bnSG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The `getenv_safe()` helper function helps to safely retrieve multiple
+environment values without the need to depend on platform-specific
+behaviour for the return value's lifetime. We'll make use of this
+function in a following patch, so let's make it available by making it
+non-static and adding a declaration.
 
-this is the fourth version of my patch series to implement support for
-atomic reference updates for git-fetch(1). It's similar to `git push
---atomic`, only that it applies to the local side. That is the fetch
-will either succeed and update all remote references or it will fail and
-update none.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ environment.c |  7 ++-----
+ environment.h | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 5 deletions(-)
+ create mode 100644 environment.h
 
-Changes compared to v3:
-
-    - Fixed indentation of the switch statement in 1/5.
-
-    - Added my missing SOB to 2/5 and fixed a typo in the commit
-      message.
-
-Please see the attached range-diff for more details.
-
-Patrick
-
-
-Patrick Steinhardt (5):
-  fetch: extract writing to FETCH_HEAD
-  fetch: use strbuf to format FETCH_HEAD updates
-  fetch: refactor `s_update_ref` to use common exit path
-  fetch: allow passing a transaction to `s_update_ref()`
-  fetch: implement support for atomic reference updates
-
- Documentation/fetch-options.txt |   4 +
- builtin/fetch.c                 | 228 +++++++++++++++++++++++---------
- remote.h                        |   2 +-
- t/t5510-fetch.sh                | 168 +++++++++++++++++++++++
- 4 files changed, 342 insertions(+), 60 deletions(-)
-
-Range-diff against v3:
-1:  61dc19a1ca ! 1:  9fcc8b54de fetch: extract writing to FETCH_HEAD
-    @@ builtin/fetch.c: static int iterate_ref_map(void *cb_data, struct ob=
-ject_id *oid
-     +		return;
-     +
-     +	switch (fetch_head_status) {
-    -+		case FETCH_HEAD_NOT_FOR_MERGE:
-    -+			merge_status_marker =3D "not-for-merge";
-    -+			break;
-    -+		case FETCH_HEAD_MERGE:
-    -+			merge_status_marker =3D "";
-    -+			break;
-    -+		default:
-    -+			/* do not write anything to FETCH_HEAD */
-    -+			return;
-    ++	case FETCH_HEAD_NOT_FOR_MERGE:
-    ++		merge_status_marker =3D "not-for-merge";
-    ++		break;
-    ++	case FETCH_HEAD_MERGE:
-    ++		merge_status_marker =3D "";
-    ++		break;
-    ++	default:
-    ++		/* do not write anything to FETCH_HEAD */
-    ++		return;
-     +	}
-     +
-     +	fprintf(fetch_head->fp, "%s\t%s\t%s",
-2:  a19762690e ! 2:  fb8542270a fetch: use strbuf to format FETCH_HEAD upda=
-tes
-    @@ Commit message
-         This commit refactors `append_fetch_head()` to use a `struct strbu=
-f` for
-         formatting the update which we're about to append to the FETCH_HEAD
-         file. While the refactoring doesn't have much of a benefit right n=
-ow, it
-    -    servers as a preparatory step to implement atomic fetches where we=
- need
-    +    serves as a preparatory step to implement atomic fetches where we =
-need
-         to buffer all updates to FETCH_HEAD and only flush them out if all
-         reference updates succeeded.
-    =20
-         No change in behaviour is expected from this commit.
-    =20
-    +    Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    +
-      ## builtin/fetch.c ##
-     @@ builtin/fetch.c: static int iterate_ref_map(void *cb_data, struct o=
-bject_id *oid)
-     =20
-    @@ builtin/fetch.c: static int open_fetch_head(struct fetch_head *fetch=
-_head)
-      		fetch_head->fp =3D NULL;
-      	}
-     @@ builtin/fetch.c: static void append_fetch_head(struct fetch_head *f=
-etch_head,
-    - 			return;
-    + 		return;
-      	}
-     =20
-     -	fprintf(fetch_head->fp, "%s\t%s\t%s",
-3:  c411f30e09 =3D 3:  ba6908aa8c fetch: refactor `s_update_ref` to use com=
-mon exit path
-4:  865d357ba7 =3D 4:  7f820f6f83 fetch: allow passing a transaction to `s_=
-update_ref()`
-5:  6a79e7adcc =3D 5:  0b57d7a651 fetch: implement support for atomic refer=
-ence updates
+diff --git a/environment.c b/environment.c
+index bb518c61cd..2234af462c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -9,6 +9,7 @@
+  */
+ #include "cache.h"
+ #include "branch.h"
++#include "environment.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "refs.h"
+@@ -152,11 +153,7 @@ static char *expand_namespace(const char *raw_namespac=
+e)
+ 	return strbuf_detach(&buf, NULL);
+ }
+=20
+-/*
+- * Wrapper of getenv() that returns a strdup value. This value is kept
+- * in argv to be freed later.
+- */
+-static const char *getenv_safe(struct strvec *argv, const char *name)
++const char *getenv_safe(struct strvec *argv, const char *name)
+ {
+ 	const char *value =3D getenv(name);
+=20
+diff --git a/environment.h b/environment.h
+new file mode 100644
+index 0000000000..d438b5c8f3
+--- /dev/null
++++ b/environment.h
+@@ -0,0 +1,12 @@
++#ifndef ENVIRONMENT_H
++#define ENVIRONMENT_H
++
++#include "strvec.h"
++
++/*
++ * Wrapper of getenv() that returns a strdup value. This value is kept
++ * in argv to be freed later.
++ */
++const char *getenv_safe(struct strvec *argv, const char *name);
++
++#endif
 --=20
 2.30.0
 
 
---/h22/Y+T7Utgmd9y
+--DrmLjoQvWRL6bnSG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lbAACgkQVbJhu7ck
-PpS8ZhAAjEMT7Trw9sWZILq8oxCFmK6U3m0JFbQiaBOLwTnzkr7dMAIhVuqAims9
-ljPez//lCLWYdF6paG6SomI4O5wqk0CU3dOHl7ctG4UfP1sBlCd9rL8/XzG0iGMR
-Il1VOS5Rp5Rdn4Ns/qsQj1cy/6ITo8y8lVqO8eyed79pp4+2Ul7sSaCFrEET096m
-Txr7CVWcbcuufrhzMl/UrAiwBYd2Jn+HXJ8FDdjJ3iNOxYdA7fyntvGSpSGmXTV9
-AcfVWvTsHhr/2bDIo0vGGzbDyJD+lxKWO/8SDIDkXOBKnaYlVcMiIWoh/tw7nLn2
-nau+Fsp0GQY/X7LaWvlgWO4Ibs3zVuuUDf13QChTi7RHF3WKJdYdxBVWiLkqqXMv
-t0PjJKsY4ArIUO2qn2qC0qZupGti8DILCl2UoWe0jYyAP1obp/eHsae5XgzwZbIS
-/nnBHGDjbCuecEQiJL190Z0F0aMxjWvcnVbHvSp3pObWtLgF6P0fFBx4Af60gu4q
-qRMSMpWrPyMQA6JuOqTQTEFR9chqanacjKgaEivZWqICYdlr6ChlUBJf6gR1sWE+
-Bn/9NsvsSlo7UtSQx0hyoebqWE7IgcqyG01xaCCbnKsreTKKkxYeNbs8WQSmfWMn
-TUzHt1XVW0FOQrJzHkFdC6ZPxpZ5UK/h7oS83SBnZDkpNyCLaJ0=
-=KeZo
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lZ0ACgkQVbJhu7ck
+PpT4cxAAojjOflWdzqtWX/oo+Q5/NNmJiV+1SpcQyeJkRqvyKPpL4GrfLw30W+/l
+dKACsdCCGKSn4ASCKs+hQje1n5AeMwOWCG0y11xJThO7uDbU2J1AQwL6qPu1ZO10
+pW2klP84vJ1ON+5svR1Clz07JWJb5mLqnubPPccnYbMoSPi5OjI9xIL1mu0J85zM
+ytQVGqFSk9tMzl1XnCzka6gmIimG6f5xSjPIw4U3FCHjKmrgIO9Iet9vIt7FFDZL
+vM9lYefqZ831k9cUeGArMBWtR0rXNe6Z7Ey6XY96bg12a7Az9+4QX/rdC3XLGmc8
+ukIrzoK3Q7h+4W/ugnRIS2Va6F0hk4Q21CakEkVB4FSltRg9VX/Px8XG1TpeOisy
+e/CtCl5ipCxHhBlkXsGMU6OjEmB/mohhmVn/s5jnfYVum4ga7nyjmZ6iwQSf6cTq
+wT9rlstaiZeYdeh6Psv7r5dsCq2/XlTVyv8ds4Hypi8tjC+jX3iqnCkpdv1Gd9Dm
+N8mr7q5kqiXxJacBnLHrM2hibg1ILUZxM39kPfFWCxdaNFJdfftc8slACFoXN1ky
+bKp7ZAV+MtJe7Gp4H5LnEdSw+F7axP8LxX/dmevSI03VqHbUtgFbaGLoKtqq+X8C
+N1onUFnXzclD5styo5pwd3RUrwtgD5TDHaXF3U5U2EwJevy9QeM=
+=aW5g
 -----END PGP SIGNATURE-----
 
---/h22/Y+T7Utgmd9y--
+--DrmLjoQvWRL6bnSG--
