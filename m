@@ -6,84 +6,86 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42575C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 11:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C92DC43331
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 11:35:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E484A23109
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 11:23:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30EAA22CBE
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 11:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726607AbhALLXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 06:23:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53234 "EHLO cloud.peff.net"
+        id S1729396AbhALLfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 06:35:20 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53254 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726136AbhALLXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 06:23:12 -0500
-Received: (qmail 8832 invoked by uid 109); 12 Jan 2021 11:22:32 -0000
+        id S1728953AbhALLfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 06:35:19 -0500
+Received: (qmail 8939 invoked by uid 109); 12 Jan 2021 11:34:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 11:22:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 11:34:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12274 invoked by uid 111); 12 Jan 2021 11:22:34 -0000
+Received: (qmail 12512 invoked by uid 111); 12 Jan 2021 11:34:41 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 06:22:34 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 06:34:41 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Jan 2021 06:22:31 -0500
+Date:   Tue, 12 Jan 2021 06:34:38 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Should you use test_i18ngrep or GIT_TEST_GETTEXT_POISON=false?
-Message-ID: <X/2Gd9J/zWqK2wLn@coredump.intra.peff.net>
-References: <20201223013606.7972-1-avarab@gmail.com>
- <20210105194252.627-13-avarab@gmail.com>
- <20210110132155.GT8396@szeder.dev>
- <87y2h062jd.fsf@evledraar.gmail.com>
- <xmqqczyca6vq.fsf@gitster.c.googlers.com>
- <87pn2b6eyb.fsf@evledraar.gmail.com>
- <xmqqim836v6m.fsf@gitster.c.googlers.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 00/11] [RFH] Introduce support for GETTEXT_POISON=rot13
+Message-ID: <X/2JTsoUj3nAQcMi@coredump.intra.peff.net>
+References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqim836v6m.fsf@gitster.c.googlers.com>
+In-Reply-To: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11, 2021 at 01:05:37PM -0800, Junio C Hamano wrote:
+On Tue, Jan 12, 2021 at 08:47:31AM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> Ævar suggested recently
+> [https://lore.kernel.org/git/xmqqim836v6m.fsf@gitster.c.googlers.com/T/#m6fdc43d4f1eb3f20f841096c59e985b69c84875e]
+> that this whole GETTEXT_POISON business is totally useless.
 > 
-> > What do you think about just removing it? I.e. make setting it a noop?
+> I do not believe that it is useless. To back up my belief with something
+> tangible, I implemented a GETTEXT_POISON=rot13 mode and ran the test suite
+> to see whether we erroneously expect translated messages where they aren't,
+> and related problems.
 > 
-> I have been seeing occasional CI job failures from new tests that
-> forget to use test_i18ngrep.  I actually think marking such a grep
-> as "this is looking for a string that is meant for humans" a good
-> way to document the interface and expected end-user interaction,
-> so I am not sure about just removing it.
-> 
-> So after all, test_i18ngrep may make more sense than setting
-> GIT_TEST_GETTEXT_POISON to false.  I dunno.
+> And the experiment delivered. It is just a demonstration (I only addressed a
+> handful of the test suite failures, 124 test scripts still need to be
+> inspected to find out why they fail), of course. Yet I think that finding
+> e.g. the missing translations of sha1dc-cb and parse-options show that it
+> would be very useful to complete this patch series and then use the rot13
+> mode in our CI jobs (instead of the current GETTEXT_POISON=true mode, which
+> really is less useful).
 
-I agree that test_i18ngrep is preferable to setting
-GIT_TEST_GETTEXT_POISON. Since it's tied to the comparison itself, I
-think it's easier to see which messages we're expecting as
-human-readable. It's also shorter and more readable IMHO (you'd already
-be calling grep or test_cmp, so it is only a little longer).
+I'm not entirely convinced by this. The original point of the poison
+code was not to find opportunities to translate strings, but to make
+sure we did not accidentally translate a string that some script was
+relying on. And I don't see any fixes for the latter here (and as Ævar
+suggested in the linked thread, the fact that we're not combing through
+existing code looking for translations makes such an error a lot less
+likely).
 
-I am on the fence on whether the presence of something like
-test_i18ngrep in the test suite is really serving as a useful indication
-of what was meant to be translated and what wasn't. It's such an
-incomplete coverage of the total set of messages we generate that I
-wouldn't trust it. I'd be more likely to look at the source to see if a
-message is actually translated, or just assume we follow some basic
-rules (in general, things to stderr are translatable; I think the
-plumbing outputs from unpack_trees() were really the exception).
+Which isn't to say repurposing it in the other direction might not be
+worthwhile. But I suspect a lot of the test failures are just false
+positives. Until now it was always reasonable to conservatively use
+test_i18ngrep for cases which could reasonably translated, even if they
+were not yet.
 
-So I'm open to the idea that the whole poison mechanism has just
-outlived its usefulness.
+Likewise, I'm not sure that one can reliably rot13 an output for
+test_i18ncmp. It could contain mixed translated and untranslated bits
+from different messages.
+
+So I dunno. You did find two spots where translations could be used.
+But if nobody actually saw them to care that they got translated, were
+they important? I may be a bit biased as somebody who would not use the
+translations in the first place, of course.
 
 -Peff
