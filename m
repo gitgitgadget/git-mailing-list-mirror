@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11B01C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6EFC433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAEE423123
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A06FD23127
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438115AbhALVhZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 16:37:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56376 "EHLO
+        id S2438125AbhALVh0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 16:37:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436878AbhALUTk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2436877AbhALUTk (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Jan 2021 15:19:40 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19137C0617B0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:39 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id y17so3812376wrr.10
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:39 -0800 (PST)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87AF1C0617AB
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:37 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id n16so2400773wmc.0
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ke29G83NNsmb6HLJxtPdUXwXpHHhGnuKUg6jtsexGtE=;
-        b=InDWQbd9iodNQUnBlM2AgZGB14qvhSX3e8DPyxbPg2/UcNVwVyF42DTWRzLOeGHPxt
-         L0El7ReU+u90vaVs9GLLLzBmZ7BvK6FTxxfjH8qv7KB3WLCRzx7xuvXRaPAjpIpcpOmv
-         tlJ1NiTUplc1CAwb5q5TeAzRXcn7i5jaSOYmJL/Y2nnuLOUlARBWAy2XjB0uFpzkV939
-         nFqBiIg+jOsrXy7axN7l8RiRTgAzBrhr7HjMNDsNOj64OI3Ycl8VGzYZUY3pA3WDvQ9p
-         pzFHEIV205/GPKMB+QEZVbsKSzwim0YeEqF25XLtLaqxtGH4ymm32oAV2x0NoU6jUZXm
-         OspA==
+        bh=XJWKJ/CIVB8URp+6npPRrveo3/JUVRe7nRgR27ox9IA=;
+        b=hbrW8NOks0MakctKNoASaHFWDk5/MK9l34JuhLBgcZBDfPLqxk0dboAmZo2C7Quddk
+         K7hkz4ymp56AbUM7D988aJXvlb5QttRZJgSP+m3sw3o+n6doXZXg10pi4I1R5DDtmrXQ
+         N9GpHMLT2vNLOiqio/0tFuCUg6xG+ZVzZfFw1dt/Ujemq1yToZvQMxw57kLPXbKBqkes
+         vMSc1tQ5z4qSI26/qTr8LGsUNnMVSgtg1bob/unf9m3gHmfNjB+LaRa4EjhwzfN++Obc
+         uQxEst4fH0rdo9bIWYYmGhLHKilfXKQafQxUL+704Nsco9yjiiz/a2mZXh5flKIY2H7C
+         YDYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ke29G83NNsmb6HLJxtPdUXwXpHHhGnuKUg6jtsexGtE=;
-        b=JrxaYh5BHEW8sJnwaTLdx2SQUOJANrDk4QurCIv/qdT2Hw6/Wdg5vj+lWZidzDpy4z
-         WWgRbsuBkI+4TBkAKlitZYz/c5UE+N7kYZ6MpfhOWKdgkzHfMFaaOcohZga7LGWRu7Jv
-         qeKh0qFwxdVEBPJHGP48XnXOjqV8JpHl2VMo+cqh/IqhxACMTGOipyYLSuISS0Alafgh
-         be4iRkFxAuSmavz5f8Cf6jSAvQzDvVh5uxPiJiXSYBJv51oPFCuyLZCKNmPVFmh0lkeQ
-         Kh5hzkXiqjh64CWKlr8Jb9l+v49FT075RRoVSLEKh5WHwm8JQhljJ3WYxhLZ0iccpJjo
-         OBZQ==
-X-Gm-Message-State: AOAM5329Gt5oY0HZE+lTSMJKzL7uVV7y7vaurcTmKsisGpZFJ6ioQ5AQ
-        GdiMK47jeskqH+MtEndR8loJ4ipN+A399g==
-X-Google-Smtp-Source: ABdhPJyymzidtWMbFIR5nwG8Oq22iKXdHO1ZmEjpqIIRXNLt7pLOlxYlDq2e9SfGT/4eS0zQnE3giw==
-X-Received: by 2002:adf:c403:: with SMTP id v3mr531076wrf.55.1610482717479;
-        Tue, 12 Jan 2021 12:18:37 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=XJWKJ/CIVB8URp+6npPRrveo3/JUVRe7nRgR27ox9IA=;
+        b=XctL+tWaRwvfyJkvLm0bM3ZbjBcrFVVTsKKSOUiXPsIMA0rsZxqp+u6IzGoL+Gs6Ao
+         LotRR5Nfyk6XYkNBWm6az6jsMLQ/9q8TOWQ/PfhzAiEEIhCkTuMiYjRLaPZr4HJkyBnd
+         Esq37hV5AS5CxEQ/SdSfQ9N4FfB7WQ9SvJk3tUOulNlJ8Hqj+zxPRot2WkCjdLl6pUg7
+         XJDri1LlfYseJ/3avIIb7+1vh7aM01uJPK2l1tX2xW01wSx2lSMKdPblB78BRWTqhgU5
+         kPfwK1ommGdk9+KLdhrI33QFySCcOIBwPrxXG8/6eO/fEKXnuh5C+po2I5pzQmHGOULY
+         G7BQ==
+X-Gm-Message-State: AOAM532JaI3tf2jMPXqbjlYgO7P5XhAYcnGw+jFKqcjsGIKsB0EkFDUr
+        YvdDL4LlV4hBf1M/rlFnq/nu6915Xtm79g==
+X-Google-Smtp-Source: ABdhPJw8AXqTkuCA311crKyklOyX3GW8ZKo3/YfwDJ2NTTLKf2L1gomSc1H/Ezx4biXEUZTZXTWA8g==
+X-Received: by 2002:a7b:c246:: with SMTP id b6mr897082wmj.154.1610482716064;
         Tue, 12 Jan 2021 12:18:36 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 12:18:35 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/22] test-lib functions: add --author support to test_commit
-Date:   Tue, 12 Jan 2021 21:17:58 +0100
-Message-Id: <20210112201806.13284-15-avarab@gmail.com>
+Subject: [PATCH 13/22] test-lib functions: document arguments to test_commit
+Date:   Tue, 12 Jan 2021 21:17:57 +0100
+Message-Id: <20210112201806.13284-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20210105130359.21139-1-avarab@gmail.com>
 References: <20210105130359.21139-1-avarab@gmail.com>
@@ -77,80 +77,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for --author to "test_commit". This will simplify some
-current and future tests, one of those is being changed here.
+The --notick argument was added in [1] and was followed by --signoff
+in [2], but neither of these commits added any documentation for these
+options. When -C was added in [3] a comment was added to document it,
+but not the other options. Let's document all of these options.
 
-Let's also line-wrap the "git commit" command invocation to make diffs
-that add subsequent options easier to add, as they'll only need to add
-a new option line.
+1. 44b85e89d7 (t7003: add test to filter a branch with a commit at
+   epoch, 2012-07-12),
+2. 5ed75e2a3f (cherry-pick: don't forget -s on failure, 2012-09-14).
+3. 6f94351b0a (test-lib-functions.sh: teach test_commit -C <dir>,
+   2016-12-08)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7509-commit-authorship.sh |  7 ++-----
- t/test-lib-functions.sh      | 11 ++++++++++-
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ t/test-lib-functions.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t7509-commit-authorship.sh b/t/t7509-commit-authorship.sh
-index 500ab2fe72..ee6c47416e 100755
---- a/t/t7509-commit-authorship.sh
-+++ b/t/t7509-commit-authorship.sh
-@@ -18,11 +18,8 @@ message_body () {
- }
- 
- test_expect_success '-C option copies authorship and message' '
--	echo "Initial" >foo &&
--	git add foo &&
--	test_tick &&
--	git commit -m "Initial Commit" --author Frigate\ \<flying@over.world\> &&
--	git tag Initial &&
-+	test_commit --author Frigate\ \<flying@over.world\> \
-+		"Initial Commit" foo Initial Initial &&
- 	echo "Test 1" >>foo &&
- 	test_tick &&
- 	git commit -a -C Initial &&
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 194b601bc0..529f6264fe 100644
+index 396e039d2a..194b601bc0 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -185,6 +185,8 @@ debug () {
- #	Do not call test_tick before making a commit
- #   --signoff
- #	Invoke "git commit" with --signoff
-+#   --author=<author>
-+#	Invoke "git commit" with --author=<author>
+@@ -181,6 +181,10 @@ debug () {
+ # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
+ #   -C <dir>:
+ #	Run all git commands in directory <dir>
++#   --notick
++#	Do not call test_tick before making a commit
++#   --signoff
++#	Invoke "git commit" with --signoff
  #
  # This will commit a file with the given contents and the given commit
  # message, and tag the resulting commit with the given tag name.
-@@ -193,6 +195,7 @@ debug () {
- 
- test_commit () {
- 	notick= &&
-+	author= &&
- 	signoff= &&
- 	indir= &&
- 	while test $# != 0
-@@ -201,6 +204,10 @@ test_commit () {
- 		--notick)
- 			notick=yes
- 			;;
-+		--author)
-+			author="$2"
-+			shift
-+			;;
- 		--signoff)
- 			signoff="$1"
- 			;;
-@@ -222,7 +229,9 @@ test_commit () {
- 	then
- 		test_tick
- 	fi &&
--	git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
-+	git ${indir:+ -C "$indir"} commit \
-+	    ${author:+ --author "$author"} \
-+	    $signoff -m "$1" &&
- 	git ${indir:+ -C "$indir"} tag "${4:-$1}"
- }
- 
 -- 
 2.29.2.222.g5d2a92d10f8
 
