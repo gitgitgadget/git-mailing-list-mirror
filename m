@@ -6,74 +6,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD41AC433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67ADAC433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:46:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D49C23107
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:42:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18B5B230FC
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732748AbhALJmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 04:42:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53192 "EHLO cloud.peff.net"
+        id S1729295AbhALJq3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 04:46:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53206 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726405AbhALJmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 04:42:36 -0500
-Received: (qmail 7468 invoked by uid 109); 12 Jan 2021 09:41:55 -0000
+        id S1726451AbhALJq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 04:46:29 -0500
+Received: (qmail 7589 invoked by uid 109); 12 Jan 2021 09:45:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:41:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:45:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11431 invoked by uid 111); 12 Jan 2021 09:41:57 -0000
+Received: (qmail 11466 invoked by uid 111); 12 Jan 2021 09:45:50 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:41:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:45:50 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Jan 2021 04:41:55 -0500
+Date:   Tue, 12 Jan 2021 04:45:47 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH 01/20] pack-revindex: introduce a new API
-Message-ID: <X/1u46v1dhu0Aj8G@coredump.intra.peff.net>
+Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
+Message-ID: <X/1vy3D10wDEZNva@coredump.intra.peff.net>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <fa6b8309088fd04410ca7276c5cf14db0fb82fb2.1610129796.git.me@ttaylorr.com>
- <X/1guCOGWybOzIS7@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <X/1guCOGWybOzIS7@coredump.intra.peff.net>
+In-Reply-To: <cover.1610129796.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 03:41:28AM -0500, Jeff King wrote:
+On Fri, Jan 08, 2021 at 01:16:39PM -0500, Taylor Blau wrote:
 
-> > +int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
-> > +{
-> > +	int ret;
-> > +
-> > +	if (load_pack_revindex(p) < 0)
-> > +		return -1;
+> Generating the reverse index in memory for repositories with large packs has two
+> significant drawbacks:
 > 
-> This one lazy-loads the revindex for us, which seems handy...
+>   - It requires allocating sizeof(struct revindex_entry) per packed object.
 > 
-> > +uint32_t pack_pos_to_index(struct packed_git *p, uint32_t pos)
-> > +{
-> > +	if (!p->revindex)
-> > +		BUG("pack_pos_to_index: reverse index not yet loaded");
-> > +	if (pos >= p->num_objects)
-> > +		BUG("pack_pos_to_index: out-of-bounds object at %"PRIu32, pos);
-> > +	return p->revindex[pos].nr;
-> > +}
-> 
-> But these ones don't. I'm glad we at least catch it with a BUG(), but it
-> makes the API a little funny. Returning an error here would require a
-> similarly awkward out-parameter, I guess.
+>   - It requires us to sort the entries by their pack offset. This is implemented
+>     in sort_revindex() using a radix sort, but still takes considerable time (as
+>     benchmarks found in the second series demonstrate).
 
-Having now looked at the callers through the series, I think adding an
-error return to pack_pos_to_index() would be really awkward (since it
-cannot currently fail).
+Or thinking about it more fundamentally: any operation which touches the
+revindex is now O(nr_objects_in_repo), even if it only cares about a few
+objects. Ideally this will eventually be this O(log nr_objects_in_repo);
+we can't do much better than that because of object lookups (unless we
+replace the .idx with a perfect hash or something).
 
-We _could_ insist that callers of offset_to_pack_pos() also make sure
-the revindex is loaded themselves. But it would be annoying and
-error-prone to check the existing callers. So I'm OK with leaving this
-asymmetry in the API.
+> The goal of this series is to remove direct access of the `struct
+> revindex_entry` type, as well as `struct packed_git`'s `revindex` field. The
+> on-disk format will be mmap'd and accessed directly, but the format is
+> sufficiently different that the whole `revindex` array can't be written as-is.
+
+It looks good overall to me. I left a few nits around documentation and
+integer types that I think are worth a re-roll, but I think after
+addressing those it should be good.
 
 -Peff
