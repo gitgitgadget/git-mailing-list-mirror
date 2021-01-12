@@ -2,167 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50326C43381
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 02:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24382C433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 04:59:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11B8022D5B
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 02:28:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCEDE22226
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 04:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730460AbhALC1y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 11 Jan 2021 21:27:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729488AbhALC1w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Jan 2021 21:27:52 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FDF9C061794
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 18:27:12 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id b3so135007pft.3
-        for <git@vger.kernel.org>; Mon, 11 Jan 2021 18:27:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=I9Ygqg2t8YBYHq4iYhbr64QHVFjSLLX/XSZIkTqLHak=;
-        b=f5OPmQbwvZGcpFgCeORSU2LNTETJykmEq/PmtYUp3YSHgpkFtgxHiuHC3/cIvM/tLI
-         eaUpd8i5MppG3fx2z3B5DKb18UgPtQ8RpTOMRmLKf4IJ1OvweDORQ0HT8Inzxg5SaYxt
-         EqQ+6VRv/AOvQhnrd1UiJLf8++tdVtRXqlv3Gscp9Wl5+uW2eSIKV02hql0mRhuNBuzX
-         ht35DhT+rKAIjhJRHyRQbkcw2bHTxJwfXc3BWGSwfy6G1FXBolEY/df0rvua0D9c4F6t
-         vhu1g9iIKzr/vQ5baI2nf0CGlJ3J1NcfSCPoPloSIoZbigLw6MuQ+oUbvmdDNzlTzVW9
-         up0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I9Ygqg2t8YBYHq4iYhbr64QHVFjSLLX/XSZIkTqLHak=;
-        b=qC1liIw1N8bT9j/fZeMLh99TuoMnILk0i6w0sBW/4/I+HkTjJJGV+BN9x7eXt+aig5
-         L3inrHwEFYGvgK4LD+Y3CHI/s37RIheHufcSXAkKoMJ1OrUJQgRd+Io1fdyTjQpvSR6V
-         hgDEV9Y99mFMNVykt161b4PcR9ghDRG+qEWN/9WDdpZnwbvNmUrJu5mSxOLx9gEkTd/H
-         VP3VhZ4XNAQUHs6qkASwz1y+/O2yghiH+bDKYUxPPCsMOAKHGTR8GlfZ4NRXjkUWjJEo
-         /RhGcFr2Zg/rubvOEWGl9O5Cz3x4c9Z1q03ArNeOz6t3d4WVkBey1wkSjr8Fgf/JeGxi
-         az0w==
-X-Gm-Message-State: AOAM533N0OqBgVg2kFVuxy36xhlysoWQ1EtVO86ZPWjQUSds7P1RyZlp
-        ViQWFjCLCAOM+Gn5ykzC593PHZeMxxI=
-X-Google-Smtp-Source: ABdhPJyxFqAgm5TEqDFXvdQDPtv1VUNVjzbiX1hDaSKKRvhIj+XvFdKF1oyOP5/LhWWcvIxpD52a3A==
-X-Received: by 2002:a65:6290:: with SMTP id f16mr2384618pgv.69.1610418431686;
-        Mon, 11 Jan 2021 18:27:11 -0800 (PST)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id cq15sm813134pjb.27.2021.01.11.18.27.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Jan 2021 18:27:11 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v6 2/3] bundle: lost objects when removing duplicate pendings
-Date:   Mon, 11 Jan 2021 21:27:02 -0500
-Message-Id: <20210112022703.1884-3-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
-In-Reply-To: <xmqq1rer8cbz.fsf@gitster.c.googlers.com>
-References: <xmqq1rer8cbz.fsf@gitster.c.googlers.com>
+        id S2387991AbhALE7o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 11 Jan 2021 23:59:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58505 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727895AbhALE7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Jan 2021 23:59:43 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C08D0F9C8B;
+        Mon, 11 Jan 2021 23:59:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cYVLmwVk5vvFFjExFxFSJEd7S2U=; b=S272Fl
+        yps5QeGEZxX22yDf9HAGYL/9kJdIzp0j4T8vHxDguBpUIJ8Qw3NIHqLM+jvJRYQ7
+        RWO6jOcYmqQ8BkQ71KUAb69+50LksA/TBOwV70yilKmfmSnJ+JNlnyX8tkxUduUB
+        lbxDVHns+Ch+trcH/y4i1Ua2NoHIWY2OiZ2Qw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OE//8/m1gSCo1tjvFMQr95cG8e0kNaxd
+        26SJFCKTOdkgQ2sH5fHWXl3o2KmmlQgK9Lsv+RcqcWOwug85reCLqhwG4jM4kfgX
+        /WnooegVJO5PofEOmZAYQXiL/JuzMaAT/GkK9pnXmounZWd3usuvXSCG0JtsP6fu
+        IXXbX3jyRfw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ACFF2F9C8A;
+        Mon, 11 Jan 2021 23:59:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E8985F9C88;
+        Mon, 11 Jan 2021 23:58:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/5] gpg-interface: improve interface for parsing tags
+References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
+        <20210111003740.1319996-3-sandals@crustytoothpaste.net>
+Date:   Mon, 11 Jan 2021 20:58:57 -0800
+In-Reply-To: <20210111003740.1319996-3-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 11 Jan 2021 00:37:35 +0000")
+Message-ID: <xmqqbldu699q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E178D98E-5492-11EB-A837-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-`git rev-list` will list one commit for the following command:
+> diff --git a/ref-filter.c b/ref-filter.c
+> index aa260bfd09..8d8baec1b5 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1215,7 +1215,13 @@ static void find_subpos(const char *buf,
+>  			unsigned long *nonsiglen,
+>  			const char **sig, unsigned long *siglen)
+>  {
+> +	struct strbuf payload = STRBUF_INIT;
+> +	struct strbuf signature = STRBUF_INIT;
+>  	const char *eol;
+> +	const char *end = buf + strlen(buf);
+> +	const char *sigstart;
+> +
+> +
+>  	/* skip past header until we hit empty line */
+>  	while (*buf && *buf != '\n') {
+>  		eol = strchrnul(buf, '\n');
+> @@ -1228,14 +1234,15 @@ static void find_subpos(const char *buf,
+>  		buf++;
+>  
+>  	/* parse signature first; we might not even have a subject line */
+> -	*sig = buf + parse_signature(buf, strlen(buf));
+> -	*siglen = strlen(*sig);
+> +	parse_signature(buf, end - buf, &payload, &signature);
+> +	*sig = strbuf_detach(&signature, siglen);
 
-    $ git rev-list 'main^!'
-    <tip-commit-of-main-branch>
+"unsigned long *siglen" may not be the same as "size_t *siglen", and
+the latter is what strbuf_detach() expects to see.  This breaks
+32-bit builds e.g. [*1*].
 
-But providing the same rev-list args to `git bundle`, fail to create
-a bundle file.
+I suspect that all these ${foo}len, including the parameter to this
+function but also the four local variables in its sole caller, would
+want to become size_t.
 
-    $ git bundle create - 'main^!'
-    # v2 git bundle
-    -<OID> <one-line-message>
+Thanks.
 
-    fatal: Refusing to create empty bundle.
 
-This is because when removing duplicate objects in function
-`object_array_remove_duplicates()`, one unique pending object which has
-the same name is deleted by mistake.  The revision arg 'main^!' in the
-above example is parsed by `handle_revision_arg()`, and at lease two
-different objects will be appended to `revs.pending`, one points to the
-parent commit of the "main" branch, and the other points to the tip
-commit of the "main" branch.  These two objects have the same name
-"main".  Only one object is left with the name "main" after calling the
-function `object_array_remove_duplicates()`.
+[Reference]
 
-And what's worse, when adding boundary commits into pending list, we use
-one-line commit message as names, and the arbitory names may surprise
-git-bundle.
-
-Only comparing objects themselves (".item") is also not good enough,
-because user may want to create a bundle with two identical objects but
-with different reference names, such as: "HEAD" and "refs/heads/main".
-
-Add new function `contains_object()` which compare both the address and
-the name of the object.
-
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- object.c               | 10 ++++++----
- t/t6020-bundle-misc.sh |  2 +-
- 2 files changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/object.c b/object.c
-index 68f80b0b3d..98017bed8e 100644
---- a/object.c
-+++ b/object.c
-@@ -412,15 +412,16 @@ void object_array_clear(struct object_array *array)
- }
- 
- /*
-- * Return true iff array already contains an entry with name.
-+ * Return true if array already contains an entry.
-  */
--static int contains_name(struct object_array *array, const char *name)
-+static int contains_object(struct object_array *array,
-+			   const struct object *item, const char *name)
- {
- 	unsigned nr = array->nr, i;
- 	struct object_array_entry *object = array->objects;
- 
- 	for (i = 0; i < nr; i++, object++)
--		if (!strcmp(object->name, name))
-+		if (item == object->item && !strcmp(object->name, name))
- 			return 1;
- 	return 0;
- }
-@@ -432,7 +433,8 @@ void object_array_remove_duplicates(struct object_array *array)
- 
- 	array->nr = 0;
- 	for (src = 0; src < nr; src++) {
--		if (!contains_name(array, objects[src].name)) {
-+		if (!contains_object(array, objects[src].item,
-+				     objects[src].name)) {
- 			if (src != array->nr)
- 				objects[array->nr] = objects[src];
- 			array->nr++;
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 201f34b5c3..b554538e00 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -167,7 +167,7 @@ test_expect_success 'setup' '
- 	test_commit_setvar P "Commit P" main.txt
- '
- 
--test_expect_failure 'create bundle from special rev: main^!' '
-+test_expect_success 'create bundle from special rev: main^!' '
- 	git bundle create special-rev.bdl "main^!" &&
- 
- 	git bundle list-heads special-rev.bdl |
--- 
-2.28.0.15.gba9e81f0bd
-
+*1* https://github.com/git/git/runs/1685453231?check_suite_focus=true#step:5:519
