@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1B04C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 425CEC4332B
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7798E22E01
+	by mail.kernel.org (Postfix) with ESMTP id F193622D58
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405694AbhALItI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 03:49:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
+        id S2405706AbhALItP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 03:49:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405688AbhALItI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 03:49:08 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C3DC0617A5
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:53 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id a12so1545576wrv.8
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:53 -0800 (PST)
+        with ESMTP id S2405698AbhALItO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 03:49:14 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4391C0617A7
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:54 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id r7so1558408wrc.5
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5uOXbBWanfZ4W7LK+y1W9oyHc5mduS3MgBnRr/g/w2U=;
-        b=Yd2YTOtKeNDq+jwWqRHIYxh9VgbQt9ry2f+KbyWREJ2fZLBgga1KnCDv1nLMDtzCy2
-         mgXbr8VtBTDbD9x9kN+ZcK/9plhxgC7Xp8MpV3NUx1XwC6D9paEO9wqmxUiO9T0W7ngz
-         BwCEwWDz3fxp6A/EPd6NU2Z6AlEY2cVrGdtIMBQ34JISs1z6nduYNjJTTDUUwxfDmCEr
-         tNE5wqcOZa4BBwAC2GX3FB+tiaPxevPWEM1onJDcmDSkzt7KBL0LyKDqFQ2X6XayaVN0
-         7/FouCTxganVQ29WcRdgeMDfkZsxOkyjY6mNfFKjR0ECwwJGRFRtX63CDLvyn/8Kq8wc
-         CAKg==
+        bh=NU5cRWKPa7y72/DAFZ0IkJ1rHgTHjR0ZzUrJGlMlpPc=;
+        b=DWH3Gu2SOuLILdNezAXyAY7a5Zd2qzdtTHTJA3fqRbCgpc46/pR/sUk+nQW7yV7WRI
+         5RBRFDWEGUw5/WTMXDMdW5DHwzAiNda/0Z9t3mr/bitvw7VmPyPSbSnXFLV9d37kLk8s
+         u5d3H+OqdeD+Vyo2VukMdbccR6ai17LCz1JvFrDRF2+pdkgCYblI9IsYXDtTCFWkWN0C
+         /hr468GchNorpLMWENlYXNdY/jdBNRfV37bcejhcKbPtNAuj8GACZlC55DUm4hJnTBN+
+         /SH+1XbtsJL/u+9tCifllupnJf1U9R89Wh3ZD8WKLFasC7x9m1Wt3hlSp/SXYSJkOHup
+         uTZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5uOXbBWanfZ4W7LK+y1W9oyHc5mduS3MgBnRr/g/w2U=;
-        b=huIySEgrAUeYHEbpx71jpD9gwDNCNabfbN305aHnbeMDuSLuuxPOpVddsR2v04BNNZ
-         m25d6VQdVIWGiFf2W4LCV4y+seOdpoUn9tg5uFJAzNzl3OHORrN+b4rBFCUFkrolEk5x
-         R8Yi8t9NZnQ0ivYSRz8DwcJcj+hzAuvLioLN4JWTpcCKoZ7GCSTpUS4KqzX6io6ZIJQ9
-         4Sz+Hme7JG395k1pvw97DAfle1w1FQ2048Q16+a/dRjsGJq7dIqGVUtyUQ69Llu5e1XL
-         mOUpjkfdCHEd2IJEPxWiyixrUPP5I0RhA+NQjhSU4G9qqgFlbh/howUTbAVsZDMi76Pd
-         lfEg==
-X-Gm-Message-State: AOAM530fJeNgHjM/Jq+XXcHx7GrWP4aBUDZV0+M0T1ycvY20QwpfKXlk
-        WeLiRUmKm759Fvb1rh/gCC6ursF55gY=
-X-Google-Smtp-Source: ABdhPJzg2TB5+yBVhA83rWI+RENfqqBN5afHqllrrfYvHzvJ4gRKePAegmhS/jGN4fC5Nlyx3BEQpQ==
-X-Received: by 2002:adf:a495:: with SMTP id g21mr3230947wrb.198.1610441271752;
-        Tue, 12 Jan 2021 00:47:51 -0800 (PST)
+        bh=NU5cRWKPa7y72/DAFZ0IkJ1rHgTHjR0ZzUrJGlMlpPc=;
+        b=Uiadoxwoopb6kxSOMU4XEMVXvtb0cCHix/yXZLJi0nk13/DaoN5+nGZcwd6TfnBs2C
+         F0JDhtuBjZB1j0O9uRQnFLvXzXqYrUqTLzZ/owB7rNeESbr7a2ujcPIDzyYamJFHt3to
+         PeI3jGO4vuNs6voajfvvkb6JdNbGItjRS05GqpQITj4uGFzPL55QAzUwSaiFIJMrpoHY
+         Z2skj5JrbCJ/lIKDcaSfqO8wHCPA1uqIxbJWcdJFlO54pL/IcFVjYYHTdXZcbSdtq2P8
+         Uln57BwG7n1aplx8hPjvaMDltqvzk3yzYe4/9mFfvo9TPhqJNICjXy5V0uPyI65eStz6
+         KuPA==
+X-Gm-Message-State: AOAM533o5A2AkVHj4t+81eYQmbNn8SMy78tu3y8VdDq3gyFcKgYR0wyc
+        3/QAxAGJ0Jx2ytKIHkzX9aiZUL+kkK4=
+X-Google-Smtp-Source: ABdhPJzERHDziXVDH+KssatenSJ0bxX4yCDvwe9ycpFeNu/xEbx1JKkB6cjbqz60VhYpK73fjXPUng==
+X-Received: by 2002:adf:9d48:: with SMTP id o8mr3117936wre.408.1610441273385;
+        Tue, 12 Jan 2021 00:47:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q15sm3456161wrw.75.2021.01.12.00.47.51
+        by smtp.gmail.com with ESMTPSA id j7sm2867346wmb.40.2021.01.12.00.47.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 00:47:51 -0800 (PST)
-Message-Id: <82e38c68f4406cb5bbaea3b4102b33097e29ea67.1610441263.git.gitgitgadget@gmail.com>
+        Tue, 12 Jan 2021 00:47:52 -0800 (PST)
+Message-Id: <0a56ebfcad79a03a6a8701db367cabb7953a5fa4.1610441263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 Jan 2021 08:47:39 +0000
-Subject: [PATCH 08/11] t6301: do not expect the output of `for-each-ref` to be
- translated
+Date:   Tue, 12 Jan 2021 08:47:41 +0000
+Subject: [PATCH 10/11] GETTEXT_POISON=rot13: perform actual checks in
+ `test_i18ngrep`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,27 +80,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `test_i18ncmp` function is reserved for output that we expect to be
-translated.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t6301-for-each-ref-errors.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/helper/test-i18n.c    | 42 ++++++++++++++++++++++++++++++++++++++++-
+ t/test-lib-functions.sh |  6 ++++++
+ 2 files changed, 47 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6301-for-each-ref-errors.sh b/t/t6301-for-each-ref-errors.sh
-index 809854fc0ce..0cf2a41c26c 100755
---- a/t/t6301-for-each-ref-errors.sh
-+++ b/t/t6301-for-each-ref-errors.sh
-@@ -20,7 +20,7 @@ test_expect_success 'Broken refs are reported correctly' '
- 	test_when_finished "rm -f .git/$r" &&
- 	echo "warning: ignoring broken ref $r" >broken-err &&
- 	git for-each-ref >out 2>err &&
--	test_i18ncmp full-list out &&
-+	test_cmp full-list out &&
- 	test_i18ncmp broken-err err
- '
+diff --git a/t/helper/test-i18n.c b/t/helper/test-i18n.c
+index 4b572e6efad..8a16df6b40f 100644
+--- a/t/helper/test-i18n.c
++++ b/t/helper/test-i18n.c
+@@ -1,8 +1,10 @@
+ #include "test-tool.h"
+ #include "cache.h"
++#include "grep.h"
  
+ static const char *usage_msg = "\n"
+-"  test-tool i18n cmp <file1> <file2>\n";
++"  test-tool i18n cmp <file1> <file2>\n"
++"  test-tool i18n grep <regex> <file>\n";
+ 
+ static inline char do_rot13(char c)
+ {
+@@ -75,6 +77,42 @@ static int i18n_cmp(const char **argv)
+ 	return 0;
+ }
+ 
++static int i18n_grep(const char **argv)
++{
++	int dont_match = 0;
++	const char *pattern, *path;
++
++	struct grep_opt opt;
++	struct grep_source source;
++	struct strbuf buf = STRBUF_INIT;
++	int hit;
++
++	if (*argv && !strcmp("!", *argv)) {
++		dont_match = 1;
++		argv++;
++	}
++
++	pattern = *(argv++);
++	path = *(argv++);
++
++	if (!pattern || !path || *argv)
++		usage(usage_msg);
++
++	grep_init(&opt, the_repository, NULL);
++	append_grep_pattern(&opt, pattern, "command line", 0, GREP_PATTERN);
++	compile_grep_patterns(&opt);
++
++	if (strbuf_read_file(&buf, path, 0) < 0)
++		die_errno("could not read %s", path);
++	unrot13_strbuf(&buf);
++	grep_source_init(&source, GREP_SOURCE_BUF, path, path, path);
++	source.buf = buf.buf;
++	source.size = buf.len;
++	hit = grep_source(&opt, &source);
++	strbuf_release(&buf);
++	return dont_match ^ !hit;
++}
++
+ int cmd__i18n(int argc, const char **argv)
+ {
+ 	argv++;
+@@ -82,6 +120,8 @@ int cmd__i18n(int argc, const char **argv)
+ 		usage(usage_msg);
+ 	if (!strcmp(*argv, "cmp"))
+ 		return i18n_cmp(argv+1);
++	else if (!strcmp(*argv, "grep"))
++		return i18n_grep(argv+1);
+ 	else
+ 		usage(usage_msg);
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 08731bae854..394fd2ef5be 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1021,6 +1021,12 @@ test_i18ngrep () {
+ 
+ 	if test_have_prereq !C_LOCALE_OUTPUT
+ 	then
++		if test rot13 = "$GIT_TEST_GETTEXT_POISON"
++		then
++			test-tool i18n grep "$@"
++			return $?
++		fi
++
+ 		# pretend success
+ 		return 0
+ 	fi
 -- 
 gitgitgadget
 
