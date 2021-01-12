@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C943C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADD0DC433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:28:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFE8122BE9
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:28:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68E5822BE9
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729301AbhALM2A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:28:00 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:51241 "EHLO
+        id S1727312AbhALM2V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 07:28:21 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:49507 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726275AbhALM17 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:27:59 -0500
+        by vger.kernel.org with ESMTP id S1726275AbhALM2V (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:28:21 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 576BA1B58;
-        Tue, 12 Jan 2021 07:26:53 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id BDE951525;
+        Tue, 12 Jan 2021 07:27:09 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:26:53 -0500
+  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:27:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=xgbFHpLhJsUiGBhQ4u/GLhHevvf
-        U+ADpnaT/fOqcdao=; b=Qpu6XdO/2KDulT8zUWvAsku6hM3RRkuYy2+hYwew2w7
-        amfgsIaQq2upv9Zb56kmoJjFIw+ifATnPVSJVVAA+33PSd38wwrDPcrhWYPUhYTe
-        D7EYAUC+FBXEg57Dave+ojxMqICybDipKoEA4ueMU6ITI1G0wbrXAQcjnuSK7u39
-        jgrJV5Dk21HTWiFpZ7o20pBFu+CrmVn4PsEsJ0aO6i3U4O8A3FBMqEP5ZbVouiUe
-        P4P4w7N+/6K2LVDTciY4RldKInBumvzPJA0rlShMde3aG3YKwe+S0xh5/Fo8W6/J
-        60v16Z+oOlQvzHte7BbvuSPerlRkYXZ62SHjII5lQ2A==
+        :content-type:in-reply-to; s=fm3; bh=+82KNILWNeTZMZbbHiHV5Hhv/zl
+        m2vuCVZPq6y0gkbA=; b=i2T4kPaq51kGxN6P3OLGQ5UO3+pVMzHemngEWoF39w0
+        eG8FRU6V1Kmp7ebHriEgGy9aQvRRhg9BqlbB3jHl2sDttK+Wu3NZ/3MgmR2gOrjj
+        rdci4jxaDuSYAzhZIN+85+omyvgx3kHDf5t/hnL2si3nOZ+876ldizKUJ31bH2FC
+        32ypkJUnPkjH5faIJbNJzKOPGrkWE921o5Q1o7x0dfEWX5kF9+u/GulA8f0kamH8
+        pVCCv4FCaGx5JI4hY3lIZUj4xmpeuiF61oFwfQerfIekdD23HldJc7E36c3CiMGX
+        RqMpkr0SwC3e+pyjF7Eizy+s/krxO+/jrWPU5i4v5Jw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=xgbFHp
-        LhJsUiGBhQ4u/GLhHevvfU+ADpnaT/fOqcdao=; b=ieIhcjvAMFc1XzREy8ufFB
-        I2BgOJbjnzMTNQChKJ8kdGTw6SJypIWCycm9Uo/JITTyNTd6Y800xe+GDSBqhArl
-        T1PQVhMVzt2vfKRIZd7koB6EzZCq8nL2TKaWYsJOcd9qgOdGUu78hVzlXoOcvv9v
-        WhT7wkxT9wPzCt+iQO9PZr29z5aoaRIEXgBYWo9gkaxis91iXRgS10cT8AvDBWiV
-        bHRdzbNk7VixPwyzJ10CnRP4BwQnLMK0rZ+38AXufI+Gs+WbE4A0orx5gllAH42B
-        kulE/WnUPfVikAWZ9G/fBhqoyLrH2gywyKNpZtrtlquGwrUBe/Rvv5EBoQYZ5YsA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+82KNI
+        LWNeTZMZbbHiHV5Hhv/zlm2vuCVZPq6y0gkbA=; b=jFZQf7/uoKKzu4nm1Dlsw6
+        yeqfGa2EihPZ3gNc124ar5r2v+K9FHCmG91dunDT6RLJDRmEvs3MhcD7qB9vQarQ
+        qVOvikP5VrqRZFpfQlwmotAIP7FQe86w0zr84NwnhrWikpY5geAFK5m39Cjaobew
+        A9j7OlDv9ew3JEDwBL15uPUTsLZ3qpSyC6o4tZiIIW4jF0CLARTNSs4uAw29sgJT
+        T84gzm1sF0+nnffsHodxw7Pm6H16r6naxKpZtEglURhrWZ7GfNN8Jl9vQ5u2hCoC
+        H8/YOVPj+4dB+JuSthC75w4d7kqX+9yoFFD4/zLAcq7LkB+nwg2ufCWuxobu+EcQ
         ==
-X-ME-Sender: <xms:jJX9X7lESO2g8l2oaKTUnNEHssmnIoNtlO2VeBCA_ObNa_WkLBvw4A>
-    <xme:jJX9X-2UBQaNNtP_BJbryH82lkh5dunrGmbCN7r9jF5RomBsFd7uBIhQ_A46JQ95r
-    77I3Ugs8RROqo-EAA>
+X-ME-Sender: <xms:nZX9Xz_RuJjw4dlVp-bv3dPE8FiZWwTGXpaf1TWVOAzKHe21yxmnug>
+    <xme:nZX9X_vNueLwNp0KXI3H8xLODp6Hq1ty4QGtT_L7uDHpiEm_0SeNewSuvl7r2F1lr
+    iykxL5l52N44YYnQQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrg
+    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgepheenucfrrghrrg
     hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:jJX9XxqvCVxgHlWcgnt2TIoQ8_5f3DefZlvm6bha3eiQIXW8O3AgxA>
-    <xmx:jJX9XzlWTCCM-avwCcmIUrgWnT3RdiMfF_WTqWNAfHkWBdQq6byzyQ>
-    <xmx:jJX9X52wx3zilh_7ci96NMXoneVQPInsfl8VO1wqJgueIG3RkvguMg>
-    <xmx:jJX9X0QT0lEUzXO87Z0rXcBL0dTY9sTT4lx4dz5EuBx0RHjvHhx3PQ>
+X-ME-Proxy: <xmx:nZX9XxCO8PxbGxyyR1IgNXbn0aK-1OHQbCeWv7vKGudFu2267ba3FA>
+    <xmx:nZX9X_dIsu1Zs6p98BzPvhRe4KWKWHkJO2Z-rkcGOa0-EC1GL9LBgw>
+    <xmx:nZX9X4O_bhTOE898aw16m4ucflvYino81g2uKyAbM07k_jip2VAOsQ>
+    <xmx:nZX9X1qg-khBGSduVeBD-cG1lcUbzv2Laob3SXuNPat_7qKyponuhA>
 Received: from vm-mail.pks.im (dynamic-077-013-052-093.77.13.pool.telefonica.de [77.13.52.93])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E8275108005C;
-        Tue, 12 Jan 2021 07:26:51 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 650541080063;
+        Tue, 12 Jan 2021 07:27:08 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id ade4ca2e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 12 Jan 2021 12:26:50 +0000 (UTC)
-Date:   Tue, 12 Jan 2021 13:26:49 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 510d6177 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 12 Jan 2021 12:27:07 +0000 (UTC)
+Date:   Tue, 12 Jan 2021 13:27:06 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Simon Ruderich <simon@ruderich.org>,
@@ -74,13 +74,14 @@ Cc:     Simon Ruderich <simon@ruderich.org>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v8 3/8] quote: make sq_dequote_step() a public function
-Message-ID: <7a7a4ae234d30c56e04c19a5e5b47afaa8680c72.1610453228.git.ps@pks.im>
+Subject: [PATCH v8 6/8] config: parse more robust format in
+ GIT_CONFIG_PARAMETERS
+Message-ID: <d67a3c0f9f37288e2d5e2ab6dbe88c2bb8971fc2.1610453228.git.ps@pks.im>
 References: <cover.1606214397.git.ps@pks.im>
  <cover.1610453228.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Sd6kZEpNELvvLYpa"
+        protocol="application/pgp-signature"; boundary="o0pKXYCiGryJwnDF"
 Content-Disposition: inline
 In-Reply-To: <cover.1610453228.git.ps@pks.im>
 Precedence: bulk
@@ -88,132 +89,302 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Sd6kZEpNELvvLYpa
+--o0pKXYCiGryJwnDF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 =46rom: Jeff King <peff@peff.net>
 
-We provide a function for dequoting an entire string, as well as one for
-handling a space-separated list of quoted strings. But there's no way
-for a caller to parse a string like 'foo'=3D'bar', even though it is easy
-to generate one using sq_quote_buf() or similar.
+When we stuff config options into GIT_CONFIG_PARAMETERS, we shell-quote
+each one as a single unit, like:
 
-Let's make the single-step function available to callers outside of
-quote.c. Note that we do need to adjust its implementation slightly: it
-insists on seeing whitespace between items, and we'd like to be more
-flexible than that. Since it only has a single caller, we can move that
-check (and slurping up any extra whitespace) into that caller.
+  'section.one=3Dvalue1' 'section.two=3Dvalue2'
+
+On the reading side, we de-quote to get the individual strings, and then
+parse them by splitting on the first "=3D" we find. This format is
+ambiguous, because an "=3D" may appear in a subsection. So the config
+represented in a file by both:
+
+  [section "subsection=3Dwith=3Dequals"]
+  key =3D value
+
+and:
+
+  [section]
+  subsection =3D with=3Dequals.key=3Dvalue
+
+ends up in this flattened format like:
+
+  'section.subsection=3Dwith=3Dequals.key=3Dvalue'
+
+and we can't tell which was desired. We have traditionally resolved this
+by taking the first "=3D" we see starting from the left, meaning that we
+allowed arbitrary content in the value, but not in the subsection.
+
+Let's make our environment format a bit more robust by separately
+quoting the key and value. That turns those examples into:
+
+  'section.subsection=3Dwith=3Dequals.key'=3D'value'
+
+and:
+
+  'section.subsection'=3D'with=3Dequals.key=3Dvalue'
+
+respectively, and we can tell the difference between them. We can detect
+which format is in use for any given element of the list based on the
+presence of the unquoted "=3D". That means we can continue to allow the
+old format to work to support any callers which manually used the old
+format, and we can even intermingle the two formats. The old format
+wasn't documented, and nobody was supposed to be using it. But it's
+likely that such callers exist in the wild, so it's nice if we can avoid
+breaking them. Likewise, it may be possible to trigger an older version
+of "git -c" that runs a script that calls into a newer version of "git
+-c"; that new version would see the intermingled format.
+
+This does create one complication, which is that the obvious format in
+the new scheme for
+
+  [section]
+  some-bool
+
+is:
+
+  'section.some-bool'
+
+with no equals. We'd mistake that for an old-style variable. And it even
+has the same meaning in the old style, but:
+
+  [section "with=3Dequals"]
+  some-bool
+
+does not. It would be:
+
+  'section.with=3Dequals=3Dsome-bool'
+
+which we'd take to mean:
+
+  [section]
+  with =3D equals=3Dsome-bool
+
+in the old, ambiguous style. Likewise, we can't use:
+
+  'section.some-bool'=3D''
+
+because that's ambiguous with an actual empty string. Instead, we'll
+again use the shell-quoting to give us a hint, and use:
+
+  'section.some-bool'=3D
+
+to show that we have no value.
+
+Note that this commit just expands the reading side. We'll start writing
+the new format via "git -c" in a future patch. In the meantime, the
+existing "git -c" tests will make sure we didn't break reading the old
+format. But we'll also add some explicit coverage of the two formats to
+make sure we continue to handle the old one after we move the writing
+side over.
+
+And one final note: since we're now using the shell-quoting as a
+semantically meaningful hint, this closes the door to us ever allowing
+arbitrary shell quoting, like:
+
+  'a'shell'would'be'ok'with'this'.key=3Dvalue
+
+But we have never supported that (only what sq_quote() would produce),
+and we are probably better off keeping things simple, robust, and
+backwards-compatible, than trying to make it easier for humans. We'll
+continue not to advertise the format of the variable to users, and
+instead keep "git -c" as the recommended mechanism for setting config
+(even if we are trying to be kind not to break users who may be relying
+on the current undocumented format).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- quote.c | 15 ++++++++++-----
- quote.h | 18 ++++++++++++++++--
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ config.c          | 69 +++++++++++++++++++++++++++++++++++------------
+ t/t1300-config.sh | 52 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 104 insertions(+), 17 deletions(-)
 
-diff --git a/quote.c b/quote.c
-index 69f4ca45da..8a3a5e39eb 100644
---- a/quote.c
-+++ b/quote.c
-@@ -116,7 +116,7 @@ void sq_append_quote_argv_pretty(struct strbuf *dst, co=
-nst char **argv)
- 	}
+diff --git a/config.c b/config.c
+index 7f7da60574..99062915d7 100644
+--- a/config.c
++++ b/config.c
+@@ -545,14 +545,62 @@ int git_config_parse_parameter(const char *text,
+ 	return ret;
  }
 =20
--static char *sq_dequote_step(char *arg, char **next)
-+char *sq_dequote_step(char *arg, char **next)
- {
- 	char *dst =3D arg;
- 	char *src =3D arg;
-@@ -153,11 +153,8 @@ static char *sq_dequote_step(char *arg, char **next)
- 			}
- 		/* Fallthrough */
- 		default:
--			if (!next || !isspace(*src))
-+			if (!next)
- 				return NULL;
--			do {
--				c =3D *++src;
--			} while (isspace(c));
- 			*dst =3D 0;
- 			*next =3D src;
- 			return arg;
-@@ -182,6 +179,14 @@ static int sq_dequote_to_argv_internal(char *arg,
- 		char *dequoted =3D sq_dequote_step(next, &next);
- 		if (!dequoted)
- 			return -1;
-+		if (next) {
-+			char c;
-+			if (!isspace(*next))
-+				return -1;
-+			do {
-+				c =3D *++next;
-+			} while (isspace(c));
-+		}
- 		if (argv) {
- 			ALLOC_GROW(*argv, *nr + 1, *alloc);
- 			(*argv)[(*nr)++] =3D dequoted;
-diff --git a/quote.h b/quote.h
-index 4b72a583cf..768cc6338e 100644
---- a/quote.h
-+++ b/quote.h
-@@ -42,12 +42,26 @@ void sq_quote_buf_pretty(struct strbuf *, const char *s=
-rc);
- void sq_quote_argv_pretty(struct strbuf *, const char **argv);
- void sq_append_quote_argv_pretty(struct strbuf *dst, const char **argv);
-=20
--/* This unwraps what sq_quote() produces in place, but returns
-+/*
-+ * This unwraps what sq_quote() produces in place, but returns
-  * NULL if the input does not look like what sq_quote would have
-- * produced.
-+ * produced (the full string must be a single quoted item).
-  */
- char *sq_dequote(char *);
-=20
-+/*
-+ * Like sq_dequote(), but dequote a single item, and leave "next" pointing=
- to
-+ * the next character. E.g., in the string:
-+ *
-+ *   'one' 'two' 'three'
-+ *
-+ * after the first call, the return value would be the unquoted string "on=
-e",
-+ * with "next" pointing to the space between "one" and "two"). The caller =
-is
-+ * responsible for advancing the pointer to the start of the next item bef=
-ore
-+ * calling sq_dequote_step() again.
-+ */
-+char *sq_dequote_step(char *src, char **next);
++static int parse_config_env_list(char *env, config_fn_t fn, void *data)
++{
++	char *cur =3D env;
++	while (cur && *cur) {
++		const char *key =3D sq_dequote_step(cur, &cur);
++		if (!key)
++			return error(_("bogus format in %s"),
++				     CONFIG_DATA_ENVIRONMENT);
 +
- /*
-  * Same as the above, but can be used to unwrap many arguments in the
-  * same string separated by space. Like sq_quote, it works in place,
++		if (!cur || isspace(*cur)) {
++			/* old-style 'key=3Dvalue' */
++			if (git_config_parse_parameter(key, fn, data) < 0)
++				return -1;
++		}
++		else if (*cur =3D=3D '=3D') {
++			/* new-style 'key'=3D'value' */
++			const char *value;
++
++			cur++;
++			if (*cur =3D=3D '\'') {
++				/* quoted value */
++				value =3D sq_dequote_step(cur, &cur);
++				if (!value || (cur && !isspace(*cur))) {
++					return error(_("bogus format in %s"),
++						     CONFIG_DATA_ENVIRONMENT);
++				}
++			} else if (!*cur || isspace(*cur)) {
++				/* implicit bool: 'key'=3D */
++				value =3D NULL;
++			} else {
++				return error(_("bogus format in %s"),
++					     CONFIG_DATA_ENVIRONMENT);
++			}
++
++			if (config_parse_pair(key, value, fn, data) < 0)
++				return -1;
++		}
++		else {
++			/* unknown format */
++			return error(_("bogus format in %s"),
++				     CONFIG_DATA_ENVIRONMENT);
++		}
++
++		if (cur) {
++			while (isspace(*cur))
++				cur++;
++		}
++	}
++	return 0;
++}
++
+ int git_config_from_parameters(config_fn_t fn, void *data)
+ {
+ 	const char *env =3D getenv(CONFIG_DATA_ENVIRONMENT);
+ 	int ret =3D 0;
+ 	char *envw;
+-	const char **argv =3D NULL;
+-	int nr =3D 0, alloc =3D 0;
+-	int i;
+ 	struct config_source source;
+=20
+ 	if (!env)
+@@ -565,21 +613,8 @@ int git_config_from_parameters(config_fn_t fn, void *d=
+ata)
+=20
+ 	/* sq_dequote will write over it */
+ 	envw =3D xstrdup(env);
++	ret =3D parse_config_env_list(envw, fn, data);
+=20
+-	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
+-		ret =3D error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
+-		goto out;
+-	}
+-
+-	for (i =3D 0; i < nr; i++) {
+-		if (git_config_parse_parameter(argv[i], fn, data) < 0) {
+-			ret =3D -1;
+-			goto out;
+-		}
+-	}
+-
+-out:
+-	free(argv);
+ 	free(envw);
+ 	cf =3D source.prev;
+ 	return ret;
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 25437324c1..3f6778d474 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1294,6 +1294,58 @@ test_expect_success 'git -c is not confused by empty=
+ environment' '
+ 	GIT_CONFIG_PARAMETERS=3D"" git -c x.one=3D1 config --list
+ '
+=20
++test_expect_success 'GIT_CONFIG_PARAMETERS handles old-style entries' '
++	v=3D"${SQ}key.one=3Dfoo${SQ}" &&
++	v=3D"$v  ${SQ}key.two=3Dbar${SQ}" &&
++	v=3D"$v ${SQ}key.ambiguous=3Dsection.whatever=3Dvalue${SQ}" &&
++	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
++	cat >expect <<-EOF &&
++	key.one foo
++	key.two bar
++	key.ambiguous section.whatever=3Dvalue
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'GIT_CONFIG_PARAMETERS handles new-style entries' '
++	v=3D"${SQ}key.one${SQ}=3D${SQ}foo${SQ}" &&
++	v=3D"$v  ${SQ}key.two${SQ}=3D${SQ}bar${SQ}" &&
++	v=3D"$v ${SQ}key.ambiguous=3Dsection.whatever${SQ}=3D${SQ}value${SQ}" &&
++	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
++	cat >expect <<-EOF &&
++	key.one foo
++	key.two bar
++	key.ambiguous=3Dsection.whatever value
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'old and new-style entries can mix' '
++	v=3D"${SQ}key.oldone=3Doldfoo${SQ}" &&
++	v=3D"$v ${SQ}key.newone${SQ}=3D${SQ}newfoo${SQ}" &&
++	v=3D"$v ${SQ}key.oldtwo=3Doldbar${SQ}" &&
++	v=3D"$v ${SQ}key.newtwo${SQ}=3D${SQ}newbar${SQ}" &&
++	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
++	cat >expect <<-EOF &&
++	key.oldone oldfoo
++	key.newone newfoo
++	key.oldtwo oldbar
++	key.newtwo newbar
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'old and new bools with ambiguous subsection' '
++	v=3D"${SQ}key.with=3Dequals.oldbool${SQ}" &&
++	v=3D"$v ${SQ}key.with=3Dequals.newbool${SQ}=3D" &&
++	GIT_CONFIG_PARAMETERS=3D$v git config --get-regexp "key.*" >actual &&
++	cat >expect <<-EOF &&
++	key.with equals.oldbool
++	key.with=3Dequals.newbool
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'detect bogus GIT_CONFIG_PARAMETERS' '
+ 	cat >expect <<-\EOF &&
+ 	env.one one
 --=20
 2.30.0
 
 
---Sd6kZEpNELvvLYpa
+--o0pKXYCiGryJwnDF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lYgACgkQVbJhu7ck
-PpSbhRAAgtzI7j/sTf5MhYONTJXWK+YJJzQEeeWN5hHDHl7COmXxwdXPpSh+Ec/U
-Gig6fBdbtKeI6gSjDCCGbWXPuGWebprX4ycgVUP+xX6utuZG0ijuB9+UbU+/6O/n
-RiBUStZOdX/ivaQfSMRCQY+gNSHblMZIEX7Kxfe/BAsaA0AqP5SsIlD7/x95WOnd
-PMOHDXlU3XWVBNT3Sh9NR4KiVsE7VI3Dw/PvlgrC2+pHSRxgseBkhWcmqLmuK7kK
-ECQvjwtBy50Mc21hUz+Yswe5TFCTlWjKxT0nr70op9T1oD9WMsLzVWNkEcHctU7j
-srEq4hL4m/6ggvEynUNnaVFc9IoVz9E6BtLYAbZP4MO5t4cZBRYolRTA0KndxiYT
-+NNQ4ITr83VJ/d9mL1DJynvblmHqOMPrbjebTUhq4R8LZNXFbbV4Dpjc+jKKlJbb
-C6+1GTP5tU1XrVhA0G1kF3yIcYAYsWql92Ww3VJgxuZaxRWsoPrZa6uN8jYnOzyK
-bTYhR36hxWHtLtQwZJmy/cDlv0+8ZDOEKHHZYqkVS4mOC8M7zblUbHitx76xXbdm
-/9c+FvKgQ2RPsrGp+R8w0T/nM1GgrrrpotCEVuTdmO62Y7cGkOwKVeFRHSsypCF5
-DboZTN0oETD8CfleEZnyROxwnSfzCxiKZgmJtcszOQkF92a4GKk=
-=BZbJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lZkACgkQVbJhu7ck
+PpQoIQ//Zi9dgBQotMrhJoiVRY8K86Uzilzov1toCXWxy1Lc80kO84mcBNEVE/g5
+d5qlOl6n0rjaPQy5rMe5/5U8c0HGWz5L7cuSP3R5jEo44wlYXAnAAPbH6fOQALxw
+rs+FUzl/8+uu5/rlohC/FYkbstq0x8RYzcbG+jtpGY7LLy4ZGFaXXJx/zDdc64yj
+bHyDLcWDgsNcA1HVETrY1xJ1/0cxs+8TBAd5mqVMabejwAlzp+S2UJwT1/1sVq5Z
+Re3wNqbh3K8ABwH0s0K43Ha/0uED7WYCy7XKvoShFi8qCSxKkuBMIr8XZdPs+KjP
+7DvzVjzxLgypBHBVWRNjFVPfocB2hn5MsBeizTO2I/gFt6KpbAXjPuAs7noz92Ob
+aJJcA7t2k9q+DNkg8K9UBUsEJJO3AfsMtSXH4Jadks3yy4JtlK1lrV7u/g5A4Ff6
+XqOpYfxFL1hsuKnShQKiwhC70QzV1NM+BId3EJiGK3Z4yJWBIHFVcQ3XLFPv/l0C
+mpmY6QWpoKdkuCra2NTVJitU8Pg7fJxuOKi+/iQTkdGhIc7NUZTV15w+zhhFEd/f
+E0td/X25gvbBMq3tmcWe+bOs4fJBg95pfY7Cipa0u1EfADuc4KaeglSXaggUg9gW
+U2Nds2snq41AKIZK4JncR/PPtMOx/yaqOsSdDLU6HhfmvNu7pAY=
+=yAy8
 -----END PGP SIGNATURE-----
 
---Sd6kZEpNELvvLYpa--
+--o0pKXYCiGryJwnDF--
