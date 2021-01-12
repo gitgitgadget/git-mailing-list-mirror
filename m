@@ -2,127 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A10F5C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CD5C433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:18:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58D1B22E03
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:09:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9546323121
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731579AbhALOJc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 09:09:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726929AbhALOJc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 09:09:32 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1412C061575
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 06:08:51 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id dk8so2469278edb.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 06:08:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XmoDr4YFXOBudGf/p1qbrAfI6BZyFWJ6xMw09O6o/iY=;
-        b=q6E5vLrvlnumLenGfHnYUhnqad4niO94aFXQyPrFpyoL8BhA6EpOctLn8ewgDOWiNm
-         vmDItcwgfPCeyJqfZdgCQfu0/zddfVzsdhPBnaUQK/UX5pGkvBu2mZvUR8W7kVcKi9lL
-         QgjdlH2iHvCJTGbRBpTMPRO2zK9ev5cMohKk6SAFfzP9qDZZZEaSpSfrctLAf9XiyR3a
-         FLDb9roIzfGHZcNQJOd5wXyFLs9RW+3fJ1UTtK010EJ6Ll4ZNWsZy8vQf72c6T4B9gFd
-         8x85M4e7gWwe+YLs2LMza2yIH+QnaBYazEUwxeSvb0yAlKP8XiYXHOu6qOmhfWSSJVaE
-         wypA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XmoDr4YFXOBudGf/p1qbrAfI6BZyFWJ6xMw09O6o/iY=;
-        b=iT/krRTxEJFRrxAM9l/EojwA5PyRNSIFxHiKvmzqOl7IX8f73Fpw2CzZXoIcUELIrr
-         BRAle5BSLlpCgLH/x3GXPo2lIzr+JWDDt5yGYohk8q+F8IO7BILB7QfLwvG9WbOUNMiF
-         EyEjtZTxfhdtELwigSnkxq5XTdSHGRqnwSjRluklJNNNeZFi0rNgr/l5yUQaWiwgSCBs
-         6gxmjsEgapPCJZzUxRM3OekUwK1/zfSWS+FykVBaro0sYWK6gpEq3iXvDIghBNeSZQWC
-         oSnLjL8w/UihzguH7Bfhi8ZrcetzX735wX5y8iURAlTkoyOK6Fv43ejp4tASuh9m5wcA
-         ayCA==
-X-Gm-Message-State: AOAM532rSX3FZ6qFEcTlk4FyGMu3BftqpkxxgosW25m/dJaw5TRDG/Kp
-        cAp2IowHaMg+V1UJElMaSiw=
-X-Google-Smtp-Source: ABdhPJweY/7Gu+qUqPi37PC3T+osWofvPjYIlmIya9hb8ISSq9wg+YehLAmKNiQcJ4IxxLMc+G83eA==
-X-Received: by 2002:a05:6402:1748:: with SMTP id v8mr3674062edx.136.1610460530409;
-        Tue, 12 Jan 2021 06:08:50 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id k3sm1509994eds.87.2021.01.12.06.08.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 06:08:49 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/5] mailmap: use case-sensitive comparisons for
- local-parts and names
-References: <20210103211849.2691287-1-sandals@crustytoothpaste.net>
- <20210103211849.2691287-5-sandals@crustytoothpaste.net>
- <87czykvg19.fsf@evledraar.gmail.com>
- <xmqq8s96yjs7.fsf@gitster.c.googlers.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <xmqq8s96yjs7.fsf@gitster.c.googlers.com>
-Date:   Tue, 12 Jan 2021 15:08:48 +0100
-Message-ID: <87h7nm5jtb.fsf@evledraar.gmail.com>
+        id S1728519AbhALOST (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 09:18:19 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53452 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725372AbhALOSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 09:18:18 -0500
+Received: (qmail 10595 invoked by uid 109); 12 Jan 2021 14:17:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 14:17:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14840 invoked by uid 111); 12 Jan 2021 14:17:37 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 09:17:37 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Jan 2021 09:17:37 -0500
+From:   Jeff King <peff@peff.net>
+To:     Arnaud Morin <arnaud.morin@gmail.com>
+Cc:     git@vger.kernel.org, Kevin Willford <kewillf@microsoft.com>
+Subject: Re: rev-list with multiple commits sharing same patch-id
+Message-ID: <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
+References: <20210109162440.GM31701@sync>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20210109162440.GM31701@sync>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Jan 09, 2021 at 04:24:40PM +0000, Arnaud Morin wrote:
 
-On Wed, Jan 06 2021, Junio C Hamano wrote:
+> After digging a little bit, the thing is that this commit is having the
+> following patch-id:
+> $ git show dbf86d8aafc897a25a3093139b4237a62395041e | git patch-id
+> 20f4ace68e80a751b07d78a27c94e83d6c5314bc dbf86d8aafc897a25a3093139b4237a62395041e
+> 
+> Which is also already existing in an other commit:
+> $ for c in $(git rev-list HEAD) ; do git show $c |git patch-id |grep 20f4ace68e80a751b07d78a27c94e83d6c5314bc; done
+> 20f4ace68e80a751b07d78a27c94e83d6c5314bc dbf86d8aafc897a25a3093139b4237a62395041e
+> 20f4ace68e80a751b07d78a27c94e83d6c5314bc 8969d3fa9159730fd3b23199873bfb26e3d20027
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Sun, Jan 03 2021, brian m. carlson wrote:
->>
->> We just have to worry about cases where you're not all of these people
->> in one project's commit metadata and/or .mailmap, and thus mailmap rules
->> would match too generously:
->>
->>     "brian m. carlson" <sandals@crustytoothpaste.net>
->>     "brian m. carlson" <SANDALS@crustytoothpaste.net>
->>     "BRIAN M. CARLSON" <sandals@crustytoothpaste.net>
->>     "BRIAN M. CARLSON" <SANDALS@crustytoothpaste.net>
->>
->> Is that really plausible? In any case, neither of these two patches make
->> reference to us already having changed this in the past in 1.6.2 and &
->> there being reports on the ML about the bug & us changing it back. See
->> https://lore.kernel.org/git/f182fb1700e8dea15459fd02ced2a6e5797bec99.123=
-8458535u.git.johannes.schindelin@gmx.de/
->>
->> Maybe we should still do this, but I think for a v3 it makes sense to
->> summarize that discussion etc.
->
-> After reading the old discussion again, I am not sure if this is
-> worth doing.  To many people, it is a promise we've made and kept
-> that we treat addresses including the local part case-insensitively
-> when summarising commits by ident strings.
->
-> I'd really wish that this series were structured to have 5/5 early
-> and 3&4/5 squashed into a single final patch.
+A slight nit first. Those two commits have the same patch-id, but in
+your graph they are on the same branch ("master", not "B"):
 
-Something that I only realized after I sent
-<87czykvg19.fsf@evledraar.gmail.com>: Any problems .mailmap has with
-Turkish "dotless I" we have already with "git log --author=3D<name> -i".
+> The commits in B are cherry-picked from master.
+> Here is the graph:
+> $ git log --graph --oneline --all
+> * ae2e3c4 (origin/B, B) remove line2 and add line4 (bis)
+> * a7a0339 remove line4
+> * caa4aad restore line2
+> * d7dc596 remove line2 add line4
+> * 44bcfd4 add line3
+> * e372641 b
+> | * dbf86d8 (HEAD -> master, origin/master) remove line2 and add line4 (bis)
+> | * 4017282 remove line4
+> | * 0f2a449 restore line2
+> | * 8969d3f remove line2 add line4
+> | * e73b420 add line3
+> | * fe5a75a b
+> |/  
+> * 6192505 a
+> * b4089e1 init
 
-Not to say that there isn't some problem to solve here, just that if we
-do it's a more general issue than mailmap.
+And --cherry-pick is only looking for matches between the two sides of
+the symmetric difference.
 
-As can be inferred from my upthread reply I thought that was ASCII-only,
-but it turns out we do set LC_CTYPE based on the user's locale, and it
-also applies for English-speakers. E.g. in LANG=3Den_US.UTF-8
-"--author=3D=C3=A6var -i" will work.
+However, I think that patch-id does exist on the other side (it appears
+again twice in fact, which is not surprising):
 
-Of course that doesn't address the point of whether we should be
-DWYM-ing E-Mail addresses, just the sub-claim that one reason we
-shouldn't is because of impossible-to-solve Unicode edge cases.
+  $ git rev-list --all | git diff-tree --stdin -p | git patch-id | grep 20f4ace68e80
+  20f4ace68e80a751b07d78a27c94e83d6c5314bc ae2e3c4754f53440cc4612d35f80d795a695c862
+  20f4ace68e80a751b07d78a27c94e83d6c5314bc dbf86d8aafc897a25a3093139b4237a62395041e
+  20f4ace68e80a751b07d78a27c94e83d6c5314bc d7dc596fcc34662cba35363febc846bfcab1e4be
+  20f4ace68e80a751b07d78a27c94e83d6c5314bc 8969d3fa9159730fd3b23199873bfb26e3d20027
+
+So the entries should be suppressed from both sides.
+
+It looks like this was broken in v2.10.0, via dfb7a1b4d0 (patch-ids:
+stop using a hand-rolled hashmap implementation, 2016-07-29).
+
+I think the issue is that it is allowing duplicate entries in the
+hashmap. The algorithm is something like:
+
+  - iterate over left-hand commits, inserting patch-id for each into
+    hashmap
+
+  - iterate over right-hand commits, seeing if any are present in
+    hashmap. If so, we exclude the commit _and_ mark the patch-id as
+    "seen"
+
+  - iterate again over left-hand commits, omitting any whose patch-ids
+    are marked as "seen"
+
+So if two commits on the left-hand side have the same patch-id, if we
+insert two entries into the hashmap, then only one of them is going to
+get its "seen" flag marked in the middle step.
+
+-Peff
