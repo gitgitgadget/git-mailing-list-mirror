@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6EFC433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1CE0C07D5B
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A06FD23127
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9997F23123
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438125AbhALVh0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 16:37:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56374 "EHLO
+        id S2438077AbhALVhV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 16:37:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436877AbhALUTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 15:19:40 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87AF1C0617AB
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:37 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id n16so2400773wmc.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:37 -0800 (PST)
+        with ESMTP id S2436873AbhALUTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 15:19:37 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648C8C0617A9
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:32 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r7so3844897wrc.5
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XJWKJ/CIVB8URp+6npPRrveo3/JUVRe7nRgR27ox9IA=;
-        b=hbrW8NOks0MakctKNoASaHFWDk5/MK9l34JuhLBgcZBDfPLqxk0dboAmZo2C7Quddk
-         K7hkz4ymp56AbUM7D988aJXvlb5QttRZJgSP+m3sw3o+n6doXZXg10pi4I1R5DDtmrXQ
-         N9GpHMLT2vNLOiqio/0tFuCUg6xG+ZVzZfFw1dt/Ujemq1yToZvQMxw57kLPXbKBqkes
-         vMSc1tQ5z4qSI26/qTr8LGsUNnMVSgtg1bob/unf9m3gHmfNjB+LaRa4EjhwzfN++Obc
-         uQxEst4fH0rdo9bIWYYmGhLHKilfXKQafQxUL+704Nsco9yjiiz/a2mZXh5flKIY2H7C
-         YDYQ==
+        bh=maAeeEQVtyl0NBRV/WsprOcQIO71et3ouvCpkbhWTK4=;
+        b=fbGEbhjBuHqohPGiozyshKkAm91rZ6HVSgLYe55f0zDmoKpcU3v6GJhLKWkbR7AqJb
+         I/sOzSkZXGpIn9J0BoRYyHDumXWqlvQlvcMly34KvPz7VDNEvJhM/mLzuv0fY2O5r1Cn
+         5kdMHSCzQXnc8ZlRS+LH5MhxO1MzkrUooMi2Mwwnzxi1HyiKOEXVa7LtHY0dwdRIWWtT
+         IuuKGhvmF+G6h7dFPuNEklS0wiXBRlMlJ6Jw6mQe8bzAET9T+UKB4gZq+PKS5oD6f5ui
+         mBzEtOEwpmVS2z/kNVILjW9NtLA8YmV6fdh+CIpC3W5f6WlzxmU5F7Z27CeYsBQpmolL
+         SyPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XJWKJ/CIVB8URp+6npPRrveo3/JUVRe7nRgR27ox9IA=;
-        b=XctL+tWaRwvfyJkvLm0bM3ZbjBcrFVVTsKKSOUiXPsIMA0rsZxqp+u6IzGoL+Gs6Ao
-         LotRR5Nfyk6XYkNBWm6az6jsMLQ/9q8TOWQ/PfhzAiEEIhCkTuMiYjRLaPZr4HJkyBnd
-         Esq37hV5AS5CxEQ/SdSfQ9N4FfB7WQ9SvJk3tUOulNlJ8Hqj+zxPRot2WkCjdLl6pUg7
-         XJDri1LlfYseJ/3avIIb7+1vh7aM01uJPK2l1tX2xW01wSx2lSMKdPblB78BRWTqhgU5
-         kPfwK1ommGdk9+KLdhrI33QFySCcOIBwPrxXG8/6eO/fEKXnuh5C+po2I5pzQmHGOULY
-         G7BQ==
-X-Gm-Message-State: AOAM532JaI3tf2jMPXqbjlYgO7P5XhAYcnGw+jFKqcjsGIKsB0EkFDUr
-        YvdDL4LlV4hBf1M/rlFnq/nu6915Xtm79g==
-X-Google-Smtp-Source: ABdhPJw8AXqTkuCA311crKyklOyX3GW8ZKo3/YfwDJ2NTTLKf2L1gomSc1H/Ezx4biXEUZTZXTWA8g==
-X-Received: by 2002:a7b:c246:: with SMTP id b6mr897082wmj.154.1610482716064;
-        Tue, 12 Jan 2021 12:18:36 -0800 (PST)
+        bh=maAeeEQVtyl0NBRV/WsprOcQIO71et3ouvCpkbhWTK4=;
+        b=ESppSWuDrX/1Dc7tz18gXcgafbreLXjJUjmbiUvjG5S38Bo/xj3UfrSFedryMPNbrS
+         aH3qhwtLouU3D+G1JO55brfBjTadv7x/PMVR+J3W2MUM98y73MUBDYhVI0uBwIMmUQzX
+         4J4MpfY/7ocvJC8OUT4zcUYAqk8zEmW0KZB1smxYUfzgsxN3v+HRPT6LC2bTajOEGVRr
+         9j940wJUrKset7qAEttC1fDmQV+JIdjYfDFJwW3HwjTZGNgUKQFo0MwIY9312ZZvq90G
+         hx63RvWSh66XD8TOwGvXzErytyfjFJWT9QiLNdLXiuwnJsbbupkWFT8grkRvklNwCaqN
+         gzEQ==
+X-Gm-Message-State: AOAM533YHIITZk+GzNRwMiL9rOaypMrsmDT3RAdtjy1Hnyz+fmGpbCjZ
+        pXURGNpYXUjyVt0IoVwzCISmeByTEg0Vog==
+X-Google-Smtp-Source: ABdhPJxFn/R3aP+iKMgOPnYpr0c77PzFq6r73FKlaRc1LnqeX49vc0liXvVLm9hKPn5FdtRbHOH9oQ==
+X-Received: by 2002:adf:e348:: with SMTP id n8mr572242wrj.148.1610482710838;
+        Tue, 12 Jan 2021 12:18:30 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.34
+        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 12:18:35 -0800 (PST)
+        Tue, 12 Jan 2021 12:18:29 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/22] test-lib functions: document arguments to test_commit
-Date:   Tue, 12 Jan 2021 21:17:57 +0100
-Message-Id: <20210112201806.13284-14-avarab@gmail.com>
+Subject: [PATCH 10/22] mailmap tests: get rid of overly complex blame fuzzing
+Date:   Tue, 12 Jan 2021 21:17:54 +0100
+Message-Id: <20210112201806.13284-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20210105130359.21139-1-avarab@gmail.com>
 References: <20210105130359.21139-1-avarab@gmail.com>
@@ -77,37 +77,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The --notick argument was added in [1] and was followed by --signoff
-in [2], but neither of these commits added any documentation for these
-options. When -C was added in [3] a comment was added to document it,
-but not the other options. Let's document all of these options.
+Change a test that used a custom fuzzing function since
+bfdfa3d414 (t4203 (mailmap): stop hardcoding commit ids and dates,
+2010-10-15) to just use the "blame --porcelain" output instead.
 
-1. 44b85e89d7 (t7003: add test to filter a branch with a commit at
-   epoch, 2012-07-12),
-2. 5ed75e2a3f (cherry-pick: don't forget -s on failure, 2012-09-14).
-3. 6f94351b0a (test-lib-functions.sh: teach test_commit -C <dir>,
-   2016-12-08)
+We could use the same pattern as 0ba9c9a0fb (t8008: rely on
+rev-parse'd HEAD instead of sha1 value, 2017-07-26) does to do this,
+but there wouldn't be any point. We're not trying to test "blame"
+output here in general, just that "blame" pays attention to the
+mailmap.
+
+So it's sufficient to get the blamed line(s) and authors from the
+output, which is much easier with the "--porcelain" option.
+
+It would still be possible for there to be a bug in "blame" such that
+it uses the mailmap for its "--porcelain" output, but not the regular
+output. Let's test for that simply by checking if specifying the
+mailmap changes the output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/test-lib-functions.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+ t/t4203-mailmap.sh | 50 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 30 insertions(+), 20 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 396e039d2a..194b601bc0 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -181,6 +181,10 @@ debug () {
- # Usage: test_commit [options] <message> [<file> [<contents> [<tag>]]]
- #   -C <dir>:
- #	Run all git commands in directory <dir>
-+#   --notick
-+#	Do not call test_tick before making a commit
-+#   --signoff
-+#	Invoke "git commit" with --signoff
- #
- # This will commit a file with the given contents and the given commit
- # message, and tag the resulting commit with the given tag name.
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 78d56e0566..a42b454756 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -4,14 +4,6 @@ test_description='.mailmap configurations'
+ 
+ . ./test-lib.sh
+ 
+-fuzz_blame () {
+-	sed "
+-		s/$_x05[0-9a-f][0-9a-f][0-9a-f]/OBJID/g
+-		s/$_x05[0-9a-f][0-9a-f]/OBJI/g
+-		s/[-0-9]\{10\} [:0-9]\{8\} [-+][0-9]\{4\}/DATE/g
+-	" "$@"
+-}
+-
+ test_expect_success 'setup commits and contacts file' '
+ 	echo one >one &&
+ 	git add one &&
+@@ -630,24 +622,42 @@ test_expect_success 'Only grep replaced author with --use-mailmap' '
+ 	test_must_be_empty actual
+ '
+ 
+-test_expect_success 'Blame output (complex mapping)' '
++test_expect_success 'Blame --porcelain output (complex mapping)' '
+ 	test_config mailmap.file complex.map &&
+ 
+ 	cat >expect <<-EOF &&
+-	^OBJI ($GIT_AUTHOR_NAME     DATE 1) one
+-	OBJID (Some Dude    DATE 2) two
+-	OBJID (Other Author DATE 3) three
+-	OBJID (Other Author DATE 4) four
+-	OBJID (Santa Claus  DATE 5) five
+-	OBJID (Santa Claus  DATE 6) six
+-	OBJID (CTO          DATE 7) seven
+-	EOF
+-
+-	git blame one >actual &&
+-	fuzz_blame actual >actual.fuzz &&
++	1 1 1
++	A U Thor
++	2 2 1
++	Some Dude
++	3 3 1
++	Other Author
++	4 4 1
++	Other Author
++	5 5 1
++	Santa Claus
++	6 6 1
++	Santa Claus
++	7 7 1
++	CTO
++	EOF
++
++	git blame --porcelain one >actual.blame &&
++	grep -E \
++		-e "[0-9]+ [0-9]+ [0-9]+$" \
++		-e "^author .*$" \
++		actual.blame >actual.grep &&
++	cut -d " " -f2-4 <actual.grep >actual.fuzz &&
+ 	test_cmp expect actual.fuzz
+ '
+ 
++test_expect_success 'Blame output (complex mapping)' '
++	git -c mailmap.file=complex.map blame one >a &&
++	git blame one >b &&
++	test_file_not_empty a &&
++	! cmp a b
++'
++
+ test_expect_success 'commit --author honors mailmap' '
+ 	test_config mailmap.file complex.map &&
+ 
 -- 
 2.29.2.222.g5d2a92d10f8
 
