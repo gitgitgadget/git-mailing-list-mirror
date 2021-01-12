@@ -6,59 +6,59 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B84BCC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FBBFC433DB
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 22:35:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77FCF23130
+	by mail.kernel.org (Postfix) with ESMTP id 4D45C2312E
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 22:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405322AbhALWfA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 17:35:00 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56218 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730069AbhALWe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2405319AbhALWe7 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 12 Jan 2021 17:34:59 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 908E71011A0;
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54598 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405306AbhALWe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 17:34:58 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C235A9E07C;
         Tue, 12 Jan 2021 17:34:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=yoeWjWpTIGGzAvBiNb3NspG+z
-        g0=; b=j1NHlufU8wNLGjWEj2X24Te/FC4/RDBQ1nCA8s8gH52R8IJPR5qGfqUwW
-        5pfWU6v99Ci9R1PEjYEdr8DH8ce7tgbMJI8OU9khSCV0d04rmciTyWIFHTMtrTr8
-        RGcnWQyOxVuRgV3FjQdjDAbTgRuROXXBnwpV4OwUSP29obGsys=
+        :content-transfer-encoding; s=sasl; bh=woo55GUbQHVRoko4Q8eq6n9cX
+        QA=; b=SI00JKWzz1BWQ2l1nF/2vzY9DvJZ07c+frUEZ+8/s79AzNuBEQRE2ZWLl
+        IldEUSff2awaxhP8w97dAi8PmdXtNKKAwT9X6gKmXAGw6Wh3JLKsQ1/A+XV7Xcn9
+        DKi18PZX9Axea+8Epl+ssF+cznVusFijKkhEkK52kPATJJDNmo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=Sn5DSqxUu7a8gVdKTgH
-        S27lvJ4dcl1V70xK7mSrcN1/1eKUAbf9MOvpV6jj2cISIA+xJqItWQSit07ow+CZ
-        Qc2vHshFWXhvysI4ThpYCAvPGKj6Htxg5b1FlAL2etkgHBz0xPaa5Mo05ufRxuGJ
-        rRfc5qBOiazYW1eunl6ojmrA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8983210119C;
+        :content-transfer-encoding; q=dns; s=sasl; b=C1SLuC1RoE61PQ++RBo
+        kVagV5+lsOgdYIVTqFKr14swfYlMJXWhJKsTIkzYGDmh3XVf4veq/1Amhl2lSjT8
+        56qOqoP2vY0OQVHGMQUizDc3yImrUJjnbx1d0GlhhVRQckwkT1qEaZXgEcJEn/hC
+        O7yLmXAo/bcwwJCl4KYuhhvw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B91729E07B;
         Tue, 12 Jan 2021 17:34:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CFB8410119A;
-        Tue, 12 Jan 2021 17:34:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FEDA9E07A;
+        Tue, 12 Jan 2021 17:34:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 14/22] test-lib functions: add --author support to
- test_commit
+Subject: Re: [PATCH 10/22] mailmap tests: get rid of overly complex blame
+ fuzzing
 References: <20210105130359.21139-1-avarab@gmail.com>
-        <20210112201806.13284-15-avarab@gmail.com>
-Date:   Tue, 12 Jan 2021 14:34:13 -0800
-Message-ID: <xmqqr1mp23a2.fsf@gitster.c.googlers.com>
+        <20210112201806.13284-11-avarab@gmail.com>
+Date:   Tue, 12 Jan 2021 14:34:16 -0800
+Message-ID: <xmqqlfcx239z.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4CB01F6C-5526-11EB-B09C-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4E2038B4-5526-11EB-985F-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,20 +66,24 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Add support for --author to "test_commit". This will simplify some
-> current and future tests, one of those is being changed here.
->
-> Let's also line-wrap the "git commit" command invocation to make diffs
-> that add subsequent options easier to add, as they'll only need to add
-> a new option line.
+> +	6 6 1
+> +	Santa Claus
+> +	7 7 1
+> +	CTO
+> +	EOF
+> +
+> +	git blame --porcelain one >actual.blame &&
+> +	grep -E \
+> +		-e "[0-9]+ [0-9]+ [0-9]+$" \
+> +		-e "^author .*$" \
+> +		actual.blame >actual.grep &&
+> +	cut -d " " -f2-4 <actual.grep >actual.fuzz &&
 
-Makes sense.
+An approach along the lines of ...
 
-> -	git commit -m "Initial Commit" --author Frigate\ \<flying@over.world\=
-> &&
-> -	git tag Initial &&
-> +	test_commit --author Frigate\ \<flying@over.world\> \
-> +		"Initial Commit" foo Initial Initial &&
+	NUM=3D"[0-9][0-9]*"
+	sed -n -e "s/^author //p" \
+	-e "s/^$OID_REGEX \($NUM $NUM $NUM\)$/\1/p"
 
-Why not fix the value of the author while at it to be more readable?
-E.g. --author "Frigate <flying@over.world>"
+... would allow you to drop "cut" and also not assume that names do
+not have more than 3 tokens.
