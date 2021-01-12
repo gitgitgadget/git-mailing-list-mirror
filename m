@@ -2,119 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D18B3C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DFB5C433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:12:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91B73223E8
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2761022D2A
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387825AbhALJHx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 04:07:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727750AbhALJHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 04:07:52 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81E6C061794
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 01:07:11 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id k10so1201153wmi.3
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 01:07:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UBZqa/OdvJ9JMaBWYCUGu64VgZWa3o8EMAzryiXGEkE=;
-        b=KlRwLQWRQjf7tmJkJKh39YuF0e+o9KGwErsGv0b0J1wYnC0Ve6wp1M37n4hcaBgct1
-         jr/BtSRG4TVbpdhHKoY+gqaAToSeAsRVJQb7eX+5KVYFZjCFQmToAhOmakUAX3/qp5Pq
-         XM0aAJsaksCBDV6JP0O9IDA8K3ibSLjCMA8zJt9OopxjBM8TSRpqeM9vzNWyN4mlFM/o
-         lArqkblduZjCEs5XkXbO30V8DmfkezbY4380/4z5buAYufDdCLLE5Ek789FaaChehGxe
-         UVwo2qgF0IChTY/SBxFiQpAPnlZS6mPIa5aep4IStk9IpvtTc8A+2qh6MFhdUr7T1X9o
-         BcAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UBZqa/OdvJ9JMaBWYCUGu64VgZWa3o8EMAzryiXGEkE=;
-        b=au3nKgRUIdIaky6+gPC0H4QBtVH62iedGkqTYdm/rSCwqjgVDA+GRRllmZN88DHOL8
-         5AXQb+nIhnzQocPheHNdeIHwrWZyryJd7QaKmsbKOPD9q1y4KaXu6Lb+TJY7gBFC5ai6
-         5/o0JHRUFYsRLwd4vhJFCFlSs9p2DyW4GjCgN6C7f10qLiQKpkGlfsqfcOKnY906jiu9
-         kCVY/SHvpYLJz/sLGegq7EeI+otyKdf9XalcF/+r5dmcU0zTQSzLL7RvmYgpAlzCwIu2
-         bSWN8nFZfzAV0PFtiwsGDbZkpI2/hiGT6iUju7KfsMQzjN460NIYUdyi4R5PGcJXvZ51
-         1VoQ==
-X-Gm-Message-State: AOAM532bJqVhs4ad5WlbvD8r6At78igHe2ZAvsmnJhhoDGLakzDyMpgY
-        fOUydco9JX6t5U1N2+gspds=
-X-Google-Smtp-Source: ABdhPJx+s8XfNXhbvQzcYvIRRuleQY1MzXEdhSLpfGSwYDGoS6QHePAs7aTfgbtoLCFTUekWVo/6uw==
-X-Received: by 2002:a1c:790f:: with SMTP id l15mr2564677wme.188.1610442430267;
-        Tue, 12 Jan 2021 01:07:10 -0800 (PST)
-Received: from szeder.dev (84-236-109-1.pool.digikabel.hu. [84.236.109.1])
-        by smtp.gmail.com with ESMTPSA id m82sm2840695wmf.29.2021.01.12.01.07.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Jan 2021 01:07:10 -0800 (PST)
-Date:   Tue, 12 Jan 2021 10:07:08 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 01/11] tests: remove unnecessary
- GIT_TEST_GETTEXT_POISON=false constructs
-Message-ID: <20210112090708.GW8396@szeder.dev>
-References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
- <004f90026031cb7ce71689481fabd27aa63485dd.1610441263.git.gitgitgadget@gmail.com>
+        id S2389610AbhALJMl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 04:12:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53116 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730788AbhALJMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 04:12:40 -0500
+Received: (qmail 6717 invoked by uid 109); 12 Jan 2021 09:12:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:12:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11099 invoked by uid 111); 12 Jan 2021 09:12:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:12:02 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Jan 2021 04:11:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH 13/20] packed_object_info(): convert to new revindex API
+Message-ID: <X/1n36/HtqAoKXrH@coredump.intra.peff.net>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <eab7ab1f35fa9703f56a99fa539839869fe4e54c.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <004f90026031cb7ce71689481fabd27aa63485dd.1610441263.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <eab7ab1f35fa9703f56a99fa539839869fe4e54c.1610129796.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 08:47:32AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> The idea of the `GETTEXT_POISON` mode is to test translated messages, at
-> least _somewhat_.
-> 
-> There is not really any point in turning off that mode by force, except
-> _maybe_ to test the mode itself.
-> 
-> So let's avoid overriding `GIT_TEST_GETTEXT_POISON` in the test suite
-> unless testing the `GETTEXT_POISON` functionality itself.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+On Fri, Jan 08, 2021 at 01:17:34PM -0500, Taylor Blau wrote:
 
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index a1c4f1f6d40..e5adee27d41 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2363,7 +2363,6 @@ test_expect_success 'sourcing the completion script clears cached commands' '
->  '
->  
->  test_expect_success 'sourcing the completion script clears cached merge strategies' '
-> -	GIT_TEST_GETTEXT_POISON=false &&
-
-I think this change caused the failure in t9902 that you mentioned in
-the cover letter.  
-
-If 'git merge' is invoked with a nonexisting merge strategy, then it
-errors out with an error message that contains a list of available
-merge strategies.  The completion script relies on this behavior and
-"parses" this error message to get the available merge strategies, but
-it breaks when it can't find the expected text because it was
-poisoned.
-
->  	__git_compute_merge_strategies &&
->  	verbose test -n "$__git_merge_strategies" &&
->  	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> -- 
-> gitgitgadget
+> Convert another call of 'find_pack_revindex()' to its replacement
+> 'pack_pos_to_offset()'. Likewise:
 > 
+>   - Avoid manipulating `struct packed_git`'s `revindex` pointer directly
+>     by removing the pointer-as-array indexing.
+
+Good.
+
+>   - Add an additional guard to check that the offset 'obj_offset()'
+>     points to a real object. This should be the case with well-behaved
+>     callers to 'packed_object_info()', but isn't guarenteed.
+>
+>     Other blocks that fill in various other values from the 'struct
+>     object_info' request handle bad inputs by setting the type to
+>     'OBJ_BAD' and jumping to 'out'. Do the same when given a bad offset
+>     here.
+
+Also good. I wonder if we need to call error() here, too. The caller
+will probably say something like "bad object" or whatever, but the user
+will have no clue that it's related to the revindex.
+
+That would match other parts of the function (e.g., calling into
+unpack_entry() can generate lots of descriptive errors about exactly
+what went wrong).
+
+>     The previous code would have segfaulted when given a bad
+>     'obj_offset' value, since 'find_pack_revindex()' would return
+>     'NULL', and then the line that fills 'oi->disk_sizep' would try to
+>     access 'NULL[1]' with a stride of 16 bytes (the width of 'struct
+>     revindex_entry)'.
+
+Yep. Again, I'm really happy to see these "should never happen" cases
+converted to real errors or even BUG()s.
+
+-Peff
