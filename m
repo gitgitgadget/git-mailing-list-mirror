@@ -2,123 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCE2C433E9
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C77F2C43381
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:35:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3ED252311C
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:19:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6AB52311D
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392828AbhALRTL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 12:19:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45298 "EHLO
+        id S1726387AbhALRf2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 12:35:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392813AbhALRTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 12:19:11 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96421C061794
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:18:30 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id u19so3204389edx.2
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:18:30 -0800 (PST)
+        with ESMTP id S1726184AbhALRf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 12:35:27 -0500
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D70ECC0617A2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:34:43 -0800 (PST)
+Received: by mail-qk1-x729.google.com with SMTP id c7so2593685qke.1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:34:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=xAt2Wg8TekSDkRtVoUpAYRHMMLAuHVKaRKA+HHtKDHg=;
-        b=Uquu+MXJa59doReZ4uyTCJsY7trX7a17+El05lOxVWyisQmWt1jDtYM83aOjgVeOEd
-         hNs+CGxNJ662lCbRXnXt3ykLuKjyt+pEPmoF6/NkhjzwOq30Yc+0n4BE37Jdh8m3MlvO
-         /213L32Dk8tRPNqV4pHV/wwE041O7pILbhVz3vIoA8npHuw6MGcv2HK8qfllvY3DCR4G
-         tk1/oY1wFyPsZIb82NfhBaA7aomFCfY6MpsHagrJgF9CKrzMhbbQMsSInaFVlU32kxX7
-         KTuPnFXIiARCJ61S0IVpeQWZuMTEjTCRTbSSK58YX7MmZryX/NSiC1dt+ZF7XoW6s4P6
-         U11Q==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Ui5teW7RkBio/qqJ+tD3wZfB6IwYYXToJmROwDUPyRA=;
+        b=PZf5pTKSTJ7kJGKpw/5a/wzGRwVkYIZfAfuyds3Mep2nOZiq+VFDcHgj1unRwkX/LW
+         QKsSHGwVzKUAF1aPxL7kJ0jt3Ki+6Rr9q8pZFAd6UYgA6fHX1A+B+77ojS8k9i5VE5Ic
+         bbljypIj4QdoX5LZ2M9QzSa80SgqP+62ImAuJJk4Z21MNijowHmT1V7Wb6Hrj0S5fDjv
+         6d119M72P+kRod9zNcElcZyOmBlEGRd7nohLjAGwk3Mqu3ZLHZXgyZK6hFkRAqHLJ9pM
+         7rr360dqmNPqUWCuMVtAalZntoNWlZxI1xsqvB0NzTFqfT/3+sjhNQXMnqnW9WbOUYzA
+         fAvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=xAt2Wg8TekSDkRtVoUpAYRHMMLAuHVKaRKA+HHtKDHg=;
-        b=XPbGFfFsmBT+sMk6kS8mE0sxMhkiqad1YipKsrtgKXZeo4ZplY8MCMD4N3ri1Gmz8u
-         p4Zx1xkk6OjBDEwjZvZy7zWApGEpg5FtYtHUNsW0UzWD2Y6NUCAyV8H3lIwaTaVuNJp8
-         05THLdc7SCbTtlMrX82xO30Rc8VSrnWV6vwlnAXYRqOKhjl6K1X2XWZmzuoO1XK3XqaV
-         Ufe8YAPtQa0kjC++8Musb6p/UuYydcxbcYhCELJ5l+J131A6I9MjoKqZG0c134EhaZ8G
-         H3uDrbrI6o5UVyq33fiCrlI4hyOR754yhaj9p0Bv3/M1Xt7E55GUijwzO1iEzBog4mnH
-         VxXw==
-X-Gm-Message-State: AOAM530xCOqFtf7guEuKCHWNMaNnf/RupXsxZyqIEc7msRvZgw+2DC0r
-        s/3tpQhggZYy94Vsj1h7HwEJlhh5Z9Q=
-X-Google-Smtp-Source: ABdhPJwcL6kfgCF386TAGw/+qItpA2MDY1gfNMOpLeUmF9U2TfHLEMqhMnT2oWTk8o/6OOOcpiKrNw==
-X-Received: by 2002:a50:b586:: with SMTP id a6mr152167ede.206.1610471909316;
-        Tue, 12 Jan 2021 09:18:29 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id n13sm1436202ejr.93.2021.01.12.09.18.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ui5teW7RkBio/qqJ+tD3wZfB6IwYYXToJmROwDUPyRA=;
+        b=LaKWq/4IGZI7LrAa/F/6FRzJgZGJG/F9ZyqBEGRj/C/Cvb8/6XpqAWVb7ET/17Epu6
+         YF1RasocIbvosKxhLXM0JPEYCb1ukNcmqjBvCXXVh/9cZg9xGzZHM9x2Zo6wfRxjRkzA
+         6sv82vDc1Labd+UG1Rb8Vf4ACUW+XIZ5g4/SLCzxH8dRmNoSfrbtYz5JS9wtrsFZgC6B
+         k14DCt4pHQO0n1JsV4hmCiDUDFJthbAaHzXMi89/JB4ji0hVm3jkc3iJpoFUDjPU8RFs
+         ZrRFcKneK5kibnT2wBgmlfExWP8sTSj/XM7sc+xc3QmUxNVGreOHajK7IGPmq0jfs5ha
+         536g==
+X-Gm-Message-State: AOAM532mAnMS/aQbe+amRHXO9B64jbORns7OygKxQ/tISvFojU3hUavP
+        kiP8iy5q0kOKa3HzDShyoiwcGw==
+X-Google-Smtp-Source: ABdhPJzVvoOd8WjTV+/an3PTRW3yTbvGRru9B7/pOPO1vj5r6u21fb7FCxLfH5HXSvI9oX8mV/sfyQ==
+X-Received: by 2002:a05:620a:570:: with SMTP id p16mr436074qkp.106.1610472883142;
+        Tue, 12 Jan 2021 09:34:43 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:42e2:d139:3745:d47])
+        by smtp.gmail.com with ESMTPSA id c8sm1656496qkc.12.2021.01.12.09.34.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 09:18:28 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
+        Tue, 12 Jan 2021 09:34:42 -0800 (PST)
+Date:   Tue, 12 Jan 2021 12:34:39 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
 Subject: Re: [PATCH 7/8] t: support GIT_TEST_WRITE_REV_INDEX
+Message-ID: <X/3dr8oGCX7XR2Wc@nand.local>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <3525c4d114c8655953aca44d8effa1652ccc93d3.1610129989.git.me@ttaylorr.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <3525c4d114c8655953aca44d8effa1652ccc93d3.1610129989.git.me@ttaylorr.com>
-Date:   Tue, 12 Jan 2021 18:18:28 +0100
-Message-ID: <875z425b17.fsf@evledraar.gmail.com>
+ <9879225b-216a-574b-7bf8-a5f772732182@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9879225b-216a-574b-7bf8-a5f772732182@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jan 12, 2021 at 11:49:40AM -0500, Derrick Stolee wrote:
+> Should this also be added to the second run of the test
+> suite with optional variables?
 
-On Fri, Jan 08 2021, Taylor Blau wrote:
+Ah, I wasn't aware of this script myself. Yes, it should be there,
+thanks.
 
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  builtin/index-pack.c   | 5 ++++-
->  builtin/pack-objects.c | 2 ++
->  pack-revindex.h        | 2 ++
->  t/README               | 3 +++
->  4 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 03408250b1..0bde325a8b 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1748,7 +1748,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->  	if (prefix && chdir(prefix))
->  		die(_("Cannot come back to cwd"));
->  
-> -	rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
-> +	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
-> +		rev_index = 1;
-> +	else
-> +		rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
-
-Why not make an explicit GIT_TEST_WRITE_REV_INDEX=false meaningful? It's
-also sometimes handy to turn these off in the tests.
-
-    rev_index = git_env_bool("GIT_TEST_WRITE_REV_INDEX",
-    	!!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV)));
-
-> +#define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
-
-Micro style nit: FWIW I'm not a fan of this macro->string indirection a
-few GIT_TEST_* names have had since 859fdc0c3c (commit-graph: define
-GIT_TEST_COMMIT_GRAPH, 2018-08-29).
-
-Most of them just use git_env_bool("GIT_TEST_[...]") which IMO makes it
-easier to eyeball a "git grep"
-
-> +GIT_TEST_WRITE_REV_INDEX=<boolean>, when true enables the
-> +'pack.writeReverseIndex' setting.
-> +
-
-Re the git_env_bool() default value comment above: I see our other
-boolean GIT_TEST_* docs say "when true", but mostly they mean things
-like:
-
-    GIT_TEST_WRITE_REV_INDEX=<boolean>, when set, configures the
-    'pack.writeReverseIndex' setting. Defaults to 'false'.
+Thanks,
+Taylor
