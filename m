@@ -2,140 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7166C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C7F9C433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:36:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A95FE22DFA
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:19:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C280F2311F
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392944AbhALSSm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 13:18:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392936AbhALSSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 13:18:42 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C7DC061786
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 10:18:02 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id r9so2178704qtp.11
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 10:18:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=kHjhqjBZDdosos08hwPlZTXlcLhSKaneEKKMsjGxXwQ=;
-        b=Vl56cu2DTM95B+Qm75RC2Lcmr85VyfTZabovpBz39XcH4Ef3F1Lf0XTur9Zc+0mpLH
-         E0QSf57gVcb+gij4JBpI4K0ZAi+F2RgJa/7zpqxEm8+FMSfKkqsxxHDJkd9tyQqmWEaY
-         pyOxnf0isBqAV7N45TVgZSISFnH0QCnls3QmMJID/7WRQJD4D+P/HlvAZUmJMzmJD6DR
-         x9fK7RiogzyYqToRml93GlMU3QxsQESofsIQTWUvBEd295HOq3CMDALh2tKXEk8fKot2
-         9RB2GXVYDratnzquepHcsmgNNQ0OuzBXtq/d2EwFndpdHo6abQkmIRPoVuIk/H9Laf9v
-         9+qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=kHjhqjBZDdosos08hwPlZTXlcLhSKaneEKKMsjGxXwQ=;
-        b=r7Isi9BhcKnyUA/zgfCH2Fg5vG+knFRoiBF8HJ7IQwuNcUE1ejjZ9HgV6bNpizhrJ3
-         UUwYv+VosSCxfwbaGqK5GLm2Ht2dkfB3pMiLsrticoszJ//4iI8gANdh3ZJi7N58JJEI
-         SZkwDXnA6NplgIK1mYsTuFqq4s0MktAcXgx5MdZJB9mGK8vVIiGpg3sOSF2hjDdOAVpL
-         67LQ2+i9dmXniie6OxClAIabwDLNfemqq3m2p9RZ2vsZGZ0s43YAfmZ+RJFGhkK21ezz
-         c1bvGV1vgbRPJ99eI5e8FeCqYKr3cO/oPUK5prE7KiNcMuAYRorcxRoQqvbmfA/IU0zo
-         GQ7A==
-X-Gm-Message-State: AOAM532kUvXFrk6q6k8pw08a9CEwUZmjfmnnTup1A+h4i0IIMQRHvPrv
-        OSaQPu48zEij3LDMLorLCsZhxQ==
-X-Google-Smtp-Source: ABdhPJyoeVk8oszeYDu104KJLvYI8MrUdaJJ05EaBQtHJ6OlCt2RB5MF9mc72LdzATzPoEWVq85h/g==
-X-Received: by 2002:ac8:37f4:: with SMTP id e49mr227325qtc.193.1610475481271;
-        Tue, 12 Jan 2021 10:18:01 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:f17c:3911:cace:ed91])
-        by smtp.gmail.com with ESMTPSA id b67sm1669297qkc.44.2021.01.12.10.18.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 10:18:00 -0800 (PST)
-Date:   Tue, 12 Jan 2021 13:17:58 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
-Subject: Re: [PATCH 7/8] t: support GIT_TEST_WRITE_REV_INDEX
-Message-ID: <X/3n1pbZuNOIfmSr@nand.local>
-References: <cover.1610129989.git.me@ttaylorr.com>
- <3525c4d114c8655953aca44d8effa1652ccc93d3.1610129989.git.me@ttaylorr.com>
- <875z425b17.fsf@evledraar.gmail.com>
- <077f1a42-f37a-c7b4-b05f-fba424ac7f17@gmail.com>
+        id S2392166AbhALSge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 13:36:34 -0500
+Received: from siwi.pair.com ([209.68.5.199]:58352 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726262AbhALSgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 13:36:33 -0500
+X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jan 2021 13:36:33 EST
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 716CA3F40F5;
+        Tue, 12 Jan 2021 13:26:00 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 22A153F40F4;
+        Tue, 12 Jan 2021 13:26:00 -0500 (EST)
+Subject: Re: [PATCH 00/10] [RFC] Simple IPC Mechanism
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Ben Peart <benpeart@microsoft.com>
+References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
+ <87bldu5cbh.fsf@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <7b32caeb-0989-d638-5830-89ea4a2be506@jeffhostetler.com>
+Date:   Tue, 12 Jan 2021 13:25:59 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <87bldu5cbh.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <077f1a42-f37a-c7b4-b05f-fba424ac7f17@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 12:39:37PM -0500, Derrick Stolee wrote:
-> On 1/12/2021 12:18 PM, Ævar Arnfjörð Bjarmason wrote:
-> >
-> > On Fri, Jan 08 2021, Taylor Blau wrote:
-> >> -	rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
-> >> +	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
-> >> +		rev_index = 1;
-> >> +	else
-> >> +		rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
-> >
-> > Why not make an explicit GIT_TEST_WRITE_REV_INDEX=false meaningful? It's
-> > also sometimes handy to turn these off in the tests.
-> >
-> >     rev_index = git_env_bool("GIT_TEST_WRITE_REV_INDEX",
-> >     	!!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV)));
->
-> This will cause tests that explicitly request a rev-index to fail when
-> GIT_TEST_WRITE_REF_INDEX=false. I'm not sure that's a good pattern to
-> follow.
 
-I agree that this wouldn't work; the second parameter is the default
-value, not a substitute for "false".
 
-It _would_ work currently, since there aren't any tests in this series
-that explicitly
+On 1/12/21 11:50 AM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Jan 12 2021, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> This series introduces a multi-threaded IPC mechanism called "Simple IPC".
+>> This is a library-layer feature to make it easy to create very long running
+>> daemon/service applications and for unrelated Git commands to communicate
+>> with them. Communication uses pkt-line messaging over a Windows named pipe
+>> or Unix domain socket.
+>>
+>> On the server side, Simple IPC implements a (platform-specific) connection
+>> listener and worker thread-pool to accept and handle a series of client
+>> connections. The server functionality is completely hidden behind the
+>> ipc_server_run() and ipc_server_run_async() APIs. The daemon/service
+>> application only needs to define an application-specific callback to handle
+>> client requests.
+>>
+>> Note that Simple IPC is completely unrelated to the long running process
+>> feature (described in sub-process.h) where the lifetime of a "sub-process"
+>> child is bound to that of the invoking parent process and communication
+>> occurs over the child's stdin/stdout.
+>>
+>> Simple IPC will serve as a basis for a future builtin FSMonitor daemon
+>> feature.
+> 
+> I only skimmed this so far. In the past we had a git-read-cache--daemon
+> -> git-index-helper[1] -> watchman. The last iteration of that seems to
+> be the [3] re-roll from Ben Peart in 2017. I used/tested that for a
+> while and had some near-production use-cases of it.
+> 
+> How does this new series relate to that past work (if at all), and (not
+> having re-read the old threads) were there reasons those old patch
+> serieses weren't merged in that are addressed here, mitigated etc?
+> 
+> 1. https://lore.kernel.org/git/1402406665-27988-1-git-send-email-pclouds@gmail.com/
+> 2. https://lore.kernel.org/git/1457548582-28302-1-git-send-email-dturner@twopensource.com/
+> 3. https://lore.kernel.org/git/20170518201333.13088-1-benpeart@microsoft.com/
+> 4. https://lore.kernel.org/git/87bmhfwmqa.fsf@evledraar.gmail.com/
+> 
 
-    export GIT_TEST_WRITE_REF_INDEX=false
+I'm starting with the model used by the existing FSMonitor feature
+that Ben Peart and Kevin Willford added to Git.
 
-t5325 does 'sane_unset GIT_TEST_WRITE_REV_INDEX', which accomplishes
-the same thing without setting a value. If we instead used the export
-form, this would break, so I think the implementation is more robust
-as-is.
+Item [3] looks to be an earlier draft of that effort.  The idea there
+was to add the fsmonitor hook that could talk to a daemon like Watchman
+and quickly update the in-memory cache-entry flags without the need to
+lstat() and similarly update the untracked-cache.  An index extension
+was added to remember the last fsmonitor response processed.
 
-> >> +#define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
-> >
-> > Micro style nit: FWIW I'm not a fan of this macro->string indirection a
-> > few GIT_TEST_* names have had since 859fdc0c3c (commit-graph: define
-> > GIT_TEST_COMMIT_GRAPH, 2018-08-29).
-> >
-> > Most of them just use git_env_bool("GIT_TEST_[...]") which IMO makes it
-> > easier to eyeball a "git grep"
->
-> In the case of GIT_TEST_COMMIT_GRAPH, there are multiple places that
-> check the environment variable, and it is probably best to have the
-> strings consistent through a macro.
->
-> For something like GIT_TEST_WRITE_REV_INDEX, this macro is less
-> important because it is checked only once.
+Currently in Git, we have a fsmonitor hook (usually a perl script) that
+talks to Watchman and translates the Watchman response back into
+something that the Git client can understand.  This comes back as a
+list of files that have changed since some timestamp (or in V2, relative
+to some daemon-specific token).
 
-FWIW, I'm not a huge fan of the indirection either, but I think that its
-use here is warranted, since it is checked twice (in index-pack, and
-pack-objects).
+Items [1,2] are not related to that.  That was a different effort to
+quickly fetch a read-only copy of an already-parsed index via shared
+memory.  In the last version I saw, there were 2 daemons.  index-helper
+kept a fresh view of the index in shared memory and could give it to
+the Git client.  The client could just mmap the pre-parsed index and
+avoid calling `read_index()`.  Index-helper would drive Watchman to
+keep track of cache-entries as they changed and handle the lstat's.
 
-It _could_ be checked lower in the call stack, but I tried this when
-developing this series and it ended up being far messier than what is
-presented here. The trickiness is with the extra verification mode
-(which ensures that an existing '.rev' file was written correctly), and
-having to indicate that at each caller.
+I'm not familiar with [4] (and I only quickly scanned it).  There are
+several ideas for finding slow spots while reading the index.  I don't
+want to go into all of them, but several are obsolete now.  They didn't
+contribute to the current effort.
 
-> Thanks,
-> -Stolee
 
-Thanks,
-Taylor
+The Simple IPC series (and a soon to be submitted fsmonitor--daemon
+series) are intended to be a follow on to FSMonitor effort that is
+currently in Git.
+
+1. Build a git-native daemon to watch the file system and avoid needing
+a third-party tool.  This doesn't preclude the use of Watchman, but
+having a builtin tool might simplify engineering support costs when
+deploying to a large team.
+
+2. Use direct IPC between the Git command and the daemon to avoid the
+expense of the Hook API (which is expensive on Windows).
+
+3. Make the daemon Git-aware.  For example, it might want to pre-filter
+ignored files.  (This might not be present in V1.  And we might extend
+the daemon to do more of this as we improve performance.)
+
+Jeff
