@@ -2,139 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C7F9C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D7C4C433E6
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:41:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C280F2311F
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:36:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F1A2225AC
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 18:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392166AbhALSge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 13:36:34 -0500
-Received: from siwi.pair.com ([209.68.5.199]:58352 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726262AbhALSgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 13:36:33 -0500
-X-Greylist: delayed 592 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Jan 2021 13:36:33 EST
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 716CA3F40F5;
-        Tue, 12 Jan 2021 13:26:00 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 22A153F40F4;
-        Tue, 12 Jan 2021 13:26:00 -0500 (EST)
-Subject: Re: [PATCH 00/10] [RFC] Simple IPC Mechanism
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Ben Peart <benpeart@microsoft.com>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
- <87bldu5cbh.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7b32caeb-0989-d638-5830-89ea4a2be506@jeffhostetler.com>
-Date:   Tue, 12 Jan 2021 13:25:59 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S2406187AbhALSld (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 13:41:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729952AbhALSlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 13:41:32 -0500
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF3AC061786
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 10:40:52 -0800 (PST)
+Received: by mail-qv1-xf32.google.com with SMTP id l14so1379783qvh.2
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 10:40:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=xv5ewCMrccvg/WqbrGWmeq15kVMadj1ZHkarNUQr/wo=;
+        b=gkBbKhzwXJbFPa8H9cy9QsDbgGrtkGXynX2FU5SQGTS4P04JxW/2lxw1GW34Kzgcf5
+         Spt0vq9Kntc8XWvpAyTxsm7MbJ8ERv51f3IW42wtcwrN5T6e5VZvZ+LVAqE/RrqojfwD
+         TypCdsdv6ViZzmrhxVi9eJVFc+Re/VduSpDrJ6CACD+rR9D5CpI4BfCWozNPqo2VJrnS
+         YYiV4I3EFfFBJ3WUF2sgB/aDx7aW7WnYsYQADuIGJPEEupjGfmjUjtIwZIegixWc7NUE
+         qrxuij9skg2hzZUV/llDMCokalQV4NGvjbcUoRVweQPvXbk3VnIYAoudXJbG7POTaC+h
+         gLWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=xv5ewCMrccvg/WqbrGWmeq15kVMadj1ZHkarNUQr/wo=;
+        b=r8vtd2MvZ9/KYBqPYRTSShCE+p7gIPsSf1CaPt7F1BjkU8frYOVnzQJ79K8RNj8tyV
+         hEhoZGA6HTm0S8KWuf2gPMguu/iuVuNtEQ8PrJ/rRDSFA+b7i5erAF/I7OXY/WJrbZsA
+         VQOOnSVrG5y/XcTld+cdcvuafPv+59qwDOUnGgjURyNT+ZuDxPaOkpubVNNKdc+uaMb6
+         /Fz82gt0mdHJUKvuzlr8lwQUXuhZokSd0u5oUkNvCFIxm7zZeUYLPDm0rM+4t3lOClLh
+         llZvYlmNzk5kpQStjfzxqZ8/sJzTXZ6Un8Hk7KT54SQUoC81oPnyLWk+28WZFEMJGqfP
+         6VBQ==
+X-Gm-Message-State: AOAM5300NLv1uQd2xuLvuqmcJUmGF/m/QMcyUyXPI/+FXtPDKjLNSjlD
+        D2IvN5J6hUnttrwSQ4tlCzRzNw==
+X-Google-Smtp-Source: ABdhPJzcMHTi2J/t6t2xwRbIi3VgBG6gCLHFUoyNBZoMrTWDmPHVpVmv+Hr+MZ6zAYQuiCAQjqSvRA==
+X-Received: by 2002:a05:6214:4c7:: with SMTP id ck7mr776998qvb.7.1610476851721;
+        Tue, 12 Jan 2021 10:40:51 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:f17c:3911:cace:ed91])
+        by smtp.gmail.com with ESMTPSA id l204sm1785924qke.56.2021.01.12.10.40.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 10:40:51 -0800 (PST)
+Date:   Tue, 12 Jan 2021 13:40:48 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
+Subject: Re: [PATCH 6/8] t: prepare for GIT_TEST_WRITE_REV_INDEX
+Message-ID: <X/3tMHdgS7tmMduS@nand.local>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <2288571fbeb83d6bd98917f4788c3221aa973c81.1610129989.git.me@ttaylorr.com>
+ <878s8y5bdn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87bldu5cbh.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <878s8y5bdn.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar,
 
+Your suggestions are quite helpful, and I'm glad to apply them,
+especially if it means that this "clean up" patch can actually harden us
+from similar changes in the future.
 
-On 1/12/21 11:50 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Jan 12 2021, Jeff Hostetler via GitGitGadget wrote:
-> 
->> This series introduces a multi-threaded IPC mechanism called "Simple IPC".
->> This is a library-layer feature to make it easy to create very long running
->> daemon/service applications and for unrelated Git commands to communicate
->> with them. Communication uses pkt-line messaging over a Windows named pipe
->> or Unix domain socket.
->>
->> On the server side, Simple IPC implements a (platform-specific) connection
->> listener and worker thread-pool to accept and handle a series of client
->> connections. The server functionality is completely hidden behind the
->> ipc_server_run() and ipc_server_run_async() APIs. The daemon/service
->> application only needs to define an application-specific callback to handle
->> client requests.
->>
->> Note that Simple IPC is completely unrelated to the long running process
->> feature (described in sub-process.h) where the lifetime of a "sub-process"
->> child is bound to that of the invoking parent process and communication
->> occurs over the child's stdin/stdout.
->>
->> Simple IPC will serve as a basis for a future builtin FSMonitor daemon
->> feature.
-> 
-> I only skimmed this so far. In the past we had a git-read-cache--daemon
-> -> git-index-helper[1] -> watchman. The last iteration of that seems to
-> be the [3] re-roll from Ben Peart in 2017. I used/tested that for a
-> while and had some near-production use-cases of it.
-> 
-> How does this new series relate to that past work (if at all), and (not
-> having re-read the old threads) were there reasons those old patch
-> serieses weren't merged in that are addressed here, mitigated etc?
-> 
-> 1. https://lore.kernel.org/git/1402406665-27988-1-git-send-email-pclouds@gmail.com/
-> 2. https://lore.kernel.org/git/1457548582-28302-1-git-send-email-dturner@twopensource.com/
-> 3. https://lore.kernel.org/git/20170518201333.13088-1-benpeart@microsoft.com/
-> 4. https://lore.kernel.org/git/87bmhfwmqa.fsf@evledraar.gmail.com/
-> 
+On Tue, Jan 12, 2021 at 06:11:00PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>
+> On Fri, Jan 08 2021, Taylor Blau wrote:
+>
+> > For now, sprinkle these locations with a 'grep -v "\.rev$"' to ignore
+> > them. Once the pack.writeReverseIndex option has been thoroughly
+> > tested, we will default it to 'true', removing GIT_TEST_WRITE_REV_INDEX,
+> > and making it possible to revert this patch.
+>
+> Maybe some of it we can change/revert, but some of it just seems to be
+> test warts we can fix:
+>
+> > diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+> > index 297de502a9..9696f88c2f 100755
+> > --- a/t/t5319-multi-pack-index.sh
+> > +++ b/t/t5319-multi-pack-index.sh
+> > @@ -710,7 +710,7 @@ test_expect_success 'expire respects .keep files' '
+> >  		PACKA=$(ls .git/objects/pack/a-pack*\.pack | sed s/\.pack\$//) &&
+> >  		touch $PACKA.keep &&
+> >  		git multi-pack-index expire &&
+> > -		ls -S .git/objects/pack/a-pack* | grep $PACKA >a-pack-files &&
+> > +		ls -S .git/objects/pack/a-pack* | grep $PACKA | grep -v "\.rev$" >a-pack-files &&
+>
+> This seems to be testing "a *.keep file made my pack not expire". Can't
+> it just check for *.{pack,idx,keep} or even just *.pack?
 
-I'm starting with the model used by the existing FSMonitor feature
-that Ben Peart and Kevin Willford added to Git.
+Yeah, and I think the simplest thing to do here is just check that these
+files exist at all. Something like:
 
-Item [3] looks to be an earlier draft of that effort.  The idea there
-was to add the fsmonitor hook that could talk to a daemon like Watchman
-and quickly update the in-memory cache-entry flags without the need to
-lstat() and similarly update the untracked-cache.  An index extension
-was added to remember the last fsmonitor response processed.
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 9696f88c2f..f5e50508c9 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -710,7 +710,9 @@ test_expect_success 'expire respects .keep files' '
+ 		PACKA=$(ls .git/objects/pack/a-pack*\.pack | sed s/\.pack\$//) &&
+ 		touch $PACKA.keep &&
+ 		git multi-pack-index expire &&
+-		ls -S .git/objects/pack/a-pack* | grep $PACKA | grep -v "\.rev$" >a-pack-files &&
++		test_is_file .git/objects/pack/pack-a-$PACKA.idx &&
++		test_is_file .git/objects/pack/pack-a-$PACKA.keep &&
++		test_is_file .git/objects/pack/pack-a-$PACKA.pack &&
+ 		test_line_count = 3 a-pack-files &&
+ 		test-tool read-midx .git/objects | grep idx >midx-list &&
+ 		test_line_count = 2 midx-list
 
-Currently in Git, we have a fsmonitor hook (usually a perl script) that
-talks to Watchman and translates the Watchman response back into
-something that the Git client can understand.  This comes back as a
-list of files that have changed since some timestamp (or in V2, relative
-to some daemon-specific token).
+> > diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
+> > index 2f7be23044..d064426d03 100755
+> > --- a/t/t5604-clone-reference.sh
+> > +++ b/t/t5604-clone-reference.sh
+> > @@ -318,7 +318,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked or unknown files at obje
+> >  		test_cmp T.objects T$option.objects &&
+> >  		(
+> >  			cd T$option/.git/objects &&
+> > -			find . -type f | sort >../../../T$option.objects-files.raw &&
+> > +			find . -type f | grep -v \.rev$ | sort >../../../T$option.objects-files.raw &&
+> >  			find . -type l | sort >../../../T$option.objects-symlinks.raw
+>
+> There's an existing loop just below that where we grep out
+> /commit-graph/, /multi-pack-index/ etc. whith other test modes add to
+> the objects directory with sed. Seems like this belongs there, not in
+> the find above it.
 
-Items [1,2] are not related to that.  That was a different effort to
-quickly fetch a read-only copy of an already-parsed index via shared
-memory.  In the last version I saw, there were 2 daemons.  index-helper
-kept a fresh view of the index in shared memory and could give it to
-the Git client.  The client could just mmap the pre-parsed index and
-avoid calling `read_index()`.  Index-helper would drive Watchman to
-keep track of cache-entries as they changed and handle the lstat's.
+Much cleaner! Thank you.
 
-I'm not familiar with [4] (and I only quickly scanned it).  There are
-several ideas for finding slow spots while reading the index.  I don't
-want to go into all of them, but several are obsolete now.  They didn't
-contribute to the current effort.
+> > diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> > index 7d5b17909b..9ebf045739 100755
+> > --- a/t/t5702-protocol-v2.sh
+> > +++ b/t/t5702-protocol-v2.sh
+> > @@ -848,7 +848,7 @@ test_expect_success 'part of packfile response provided as URI' '
+> >  	test -f h2found &&
+> >
+> >  	# Ensure that there are exactly 6 files (3 .pack and 3 .idx).
+> > -	ls http_child/.git/objects/pack/* >filelist &&
+> > +	ls http_child/.git/objects/pack/* | grep -v \.rev$ >filelist &&
+> >  	test_line_count = 6 filelist
+> >  '
+>
+> Maybe just check *.{pack,idx,keep}. I was looking at that code the other
+> day and it's really just being overly specific. It really just cares
+> about the *.pack files.
 
+I think here and in t6500 as well as t9300 the easiest thing to do is
+just
 
-The Simple IPC series (and a soon to be submitted fsmonitor--daemon
-series) are intended to be a follow on to FSMonitor effort that is
-currently in Git.
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 9ebf045739..73cd9e3ff6 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -848,8 +848,10 @@ test_expect_success 'part of packfile response provided as URI' '
+ 	test -f h2found &&
 
-1. Build a git-native daemon to watch the file system and avoid needing
-a third-party tool.  This doesn't preclude the use of Watchman, but
-having a builtin tool might simplify engineering support costs when
-deploying to a large team.
+ 	# Ensure that there are exactly 6 files (3 .pack and 3 .idx).
+-	ls http_child/.git/objects/pack/* | grep -v \.rev$ >filelist &&
+-	test_line_count = 6 filelist
++	ls http_child/.git/objects/pack/*.pack >packlist &&
++	ls http_child/.git/objects/pack/*.idx >idxlist &&
++	test_line_count = 3 idxlist &&
++	test_line_count = 3 packlist
+ '
 
-2. Use direct IPC between the Git command and the daemon to avoid the
-expense of the Hook API (which is expensive on Windows).
+> > diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> > index 308c1ef42c..100df52a71 100755
+> > --- a/t/t9300-fast-import.sh
+> > +++ b/t/t9300-fast-import.sh
+> > @@ -1629,7 +1629,7 @@ test_expect_success 'O: blank lines not necessary after other commands' '
+> >  	INPUT_END
+> >
+> >  	git fast-import <input &&
+> > -	test 8 = $(find .git/objects/pack -type f | grep -v multi-pack-index | wc -l) &&
+> > +	test 8 = $(find .git/objects/pack -type f \( -name "*.idx" -o -name "*.pack" \) | wc -l) &&
+>
+> Yay, there the existing multi-pack-index case is amended in a
+> future-proof way :)
 
-3. Make the daemon Git-aware.  For example, it might want to pre-filter
-ignored files.  (This might not be present in V1.  And we might extend
-the daemon to do more of this as we improve performance.)
+Here's actually a spot where I'm unhappy with the resulting complexity,
+and I think that it would be much cleaner if we did the same
+packlist+idxlist thing and then checked the line count of each.
 
-Jeff
+Thanks,
+Taylor
