@@ -2,81 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C77F2C43381
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C5DAC433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:40:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A6AB52311D
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:35:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7C8A22CBE
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:40:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726387AbhALRf2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 12:35:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48854 "EHLO
+        id S1729481AbhALRkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 12:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726184AbhALRf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 12:35:27 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D70ECC0617A2
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:34:43 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id c7so2593685qke.1
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:34:43 -0800 (PST)
+        with ESMTP id S1726259AbhALRkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 12:40:20 -0500
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05BD7C061786
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:39:40 -0800 (PST)
+Received: by mail-oo1-xc2e.google.com with SMTP id i18so774119ooh.5
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 09:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Ui5teW7RkBio/qqJ+tD3wZfB6IwYYXToJmROwDUPyRA=;
-        b=PZf5pTKSTJ7kJGKpw/5a/wzGRwVkYIZfAfuyds3Mep2nOZiq+VFDcHgj1unRwkX/LW
-         QKsSHGwVzKUAF1aPxL7kJ0jt3Ki+6Rr9q8pZFAd6UYgA6fHX1A+B+77ojS8k9i5VE5Ic
-         bbljypIj4QdoX5LZ2M9QzSa80SgqP+62ImAuJJk4Z21MNijowHmT1V7Wb6Hrj0S5fDjv
-         6d119M72P+kRod9zNcElcZyOmBlEGRd7nohLjAGwk3Mqu3ZLHZXgyZK6hFkRAqHLJ9pM
-         7rr360dqmNPqUWCuMVtAalZntoNWlZxI1xsqvB0NzTFqfT/3+sjhNQXMnqnW9WbOUYzA
-         fAvg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=RlStIJXzJ8u7wdrqsW6L19T3Eb0IQsI60dX5yHd6tqY=;
+        b=jViW3ApEMQKnRDj3xwnhBGVjnpqFoxLeuYSVeUcJVOws4+FK/bu4lA1CJ74Gv6eGak
+         DjOGw8snCBfl9DWjPvfzfEYAihGgrLnYdsiy5b/mNZ0upzzjxdNDIwSfU7atzpeqOunf
+         ZiiBCqd6C6tFaTDyyCmNVXFLTrvEVlNSLiFONOHNXQAUeU0c3534qQp7B6UNEfa8PcjB
+         T64ilHbNaIeS6iEuHef03rdEurHPLjyFlaysoi5tFJszHsXhOY8wqlBLRLl1L+qTrb+c
+         qxoHYuW8ikVFg/+aSxE6nF7OPqyyQjxkXGRcet2h7Z+hMXp1c/ugTSzqnm31AT+m748L
+         Rnwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ui5teW7RkBio/qqJ+tD3wZfB6IwYYXToJmROwDUPyRA=;
-        b=LaKWq/4IGZI7LrAa/F/6FRzJgZGJG/F9ZyqBEGRj/C/Cvb8/6XpqAWVb7ET/17Epu6
-         YF1RasocIbvosKxhLXM0JPEYCb1ukNcmqjBvCXXVh/9cZg9xGzZHM9x2Zo6wfRxjRkzA
-         6sv82vDc1Labd+UG1Rb8Vf4ACUW+XIZ5g4/SLCzxH8dRmNoSfrbtYz5JS9wtrsFZgC6B
-         k14DCt4pHQO0n1JsV4hmCiDUDFJthbAaHzXMi89/JB4ji0hVm3jkc3iJpoFUDjPU8RFs
-         ZrRFcKneK5kibnT2wBgmlfExWP8sTSj/XM7sc+xc3QmUxNVGreOHajK7IGPmq0jfs5ha
-         536g==
-X-Gm-Message-State: AOAM532mAnMS/aQbe+amRHXO9B64jbORns7OygKxQ/tISvFojU3hUavP
-        kiP8iy5q0kOKa3HzDShyoiwcGw==
-X-Google-Smtp-Source: ABdhPJzVvoOd8WjTV+/an3PTRW3yTbvGRru9B7/pOPO1vj5r6u21fb7FCxLfH5HXSvI9oX8mV/sfyQ==
-X-Received: by 2002:a05:620a:570:: with SMTP id p16mr436074qkp.106.1610472883142;
-        Tue, 12 Jan 2021 09:34:43 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:42e2:d139:3745:d47])
-        by smtp.gmail.com with ESMTPSA id c8sm1656496qkc.12.2021.01.12.09.34.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 09:34:42 -0800 (PST)
-Date:   Tue, 12 Jan 2021 12:34:39 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=RlStIJXzJ8u7wdrqsW6L19T3Eb0IQsI60dX5yHd6tqY=;
+        b=egFDNeZeoMP9+usn9qf53SznMuuVOChW7O2iG2Qqnhy6EVqmuVSHFwwE1aoF0XyXk5
+         DTJLdixTXOOAbb5T2ZSzDzsryAtAA7wmHzMLGMgAWnb2DPDpB+wegN103vzhnhzLM0WW
+         Fi+pAzIW40bIgJXRPEsMithL9qgy3/p6or61IOJwDD3LyyLsuLcxLwJKAzsuCe94zIfU
+         6gcaWeAGXc5lze+ERklZAzPBkr+WPA6L6nhny7NlZJcXt26OCJdDHkif2MNdIjHUGpL7
+         rW5kn7YzjQj6IAwNI/B1PBQObLcOYQoj9WQ3iJWknoHFkqThCZL5q7SJ/aivoAFhvUyl
+         tMGw==
+X-Gm-Message-State: AOAM530mAdUomY26ho126nNYKJYwufs6AteDtbKPYkcWfnKN1AP4JjZ1
+        jTTWyqRRW7nMi4AgG57SHMk=
+X-Google-Smtp-Source: ABdhPJyivM04sk59F7T0PLbMHcKpg2zYUbJ+dZ9DMlEA+jNGsgQgIdZbH99iQXecHB7j3UMMEDK+IA==
+X-Received: by 2002:a4a:e963:: with SMTP id i3mr109416ooe.37.1610473179232;
+        Tue, 12 Jan 2021 09:39:39 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id j9sm697766ooq.1.2021.01.12.09.39.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Jan 2021 09:39:38 -0800 (PST)
 Subject: Re: [PATCH 7/8] t: support GIT_TEST_WRITE_REV_INDEX
-Message-ID: <X/3dr8oGCX7XR2Wc@nand.local>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
 References: <cover.1610129989.git.me@ttaylorr.com>
  <3525c4d114c8655953aca44d8effa1652ccc93d3.1610129989.git.me@ttaylorr.com>
- <9879225b-216a-574b-7bf8-a5f772732182@gmail.com>
+ <875z425b17.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <077f1a42-f37a-c7b4-b05f-fba424ac7f17@gmail.com>
+Date:   Tue, 12 Jan 2021 12:39:37 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9879225b-216a-574b-7bf8-a5f772732182@gmail.com>
+In-Reply-To: <875z425b17.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 11:49:40AM -0500, Derrick Stolee wrote:
-> Should this also be added to the second run of the test
-> suite with optional variables?
+On 1/12/2021 12:18 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Jan 08 2021, Taylor Blau wrote:
+>> -	rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
+>> +	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
+>> +		rev_index = 1;
+>> +	else
+>> +		rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
+> 
+> Why not make an explicit GIT_TEST_WRITE_REV_INDEX=false meaningful? It's
+> also sometimes handy to turn these off in the tests.
+> 
+>     rev_index = git_env_bool("GIT_TEST_WRITE_REV_INDEX",
+>     	!!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV)));
+ 
+This will cause tests that explicitly request a rev-index to fail when
+GIT_TEST_WRITE_REF_INDEX=false. I'm not sure that's a good pattern to
+follow.
 
-Ah, I wasn't aware of this script myself. Yes, it should be there,
-thanks.
+>> +#define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
+> 
+> Micro style nit: FWIW I'm not a fan of this macro->string indirection a
+> few GIT_TEST_* names have had since 859fdc0c3c (commit-graph: define
+> GIT_TEST_COMMIT_GRAPH, 2018-08-29).
+> 
+> Most of them just use git_env_bool("GIT_TEST_[...]") which IMO makes it
+> easier to eyeball a "git grep"
+
+In the case of GIT_TEST_COMMIT_GRAPH, there are multiple places that
+check the environment variable, and it is probably best to have the
+strings consistent through a macro.
+
+For something like GIT_TEST_WRITE_REV_INDEX, this macro is less
+important because it is checked only once.
 
 Thanks,
-Taylor
+-Stolee
