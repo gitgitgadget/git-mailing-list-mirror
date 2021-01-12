@@ -6,62 +6,77 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AA76C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03185C433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:33:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E404222DFB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:29:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B644E22CA1
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392655AbhALJ2o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 04:28:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53140 "EHLO cloud.peff.net"
+        id S2392614AbhALJdV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 04:33:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53156 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2391143AbhALJ2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 04:28:44 -0500
-Received: (qmail 7115 invoked by uid 109); 12 Jan 2021 09:28:03 -0000
+        id S2390802AbhALJdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 04:33:21 -0500
+Received: (qmail 7232 invoked by uid 109); 12 Jan 2021 09:32:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:28:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:32:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11250 invoked by uid 111); 12 Jan 2021 09:28:05 -0000
+Received: (qmail 11290 invoked by uid 111); 12 Jan 2021 09:32:41 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:28:05 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:32:41 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Jan 2021 04:28:03 -0500
+Date:   Tue, 12 Jan 2021 04:32:39 -0500
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 16/20] builtin/gc.c: guess the size of the revindex
-Message-ID: <X/1roycRbYPjnI3l@coredump.intra.peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH 18/20] pack-revindex: remove unused
+ 'find_revindex_position()'
+Message-ID: <X/1st6SrJXysoejt@coredump.intra.peff.net>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <7c17db7a7df8b524f13969efd1cb5e6e95de5a2d.1610129796.git.me@ttaylorr.com>
- <87cd1b2c-7a28-da77-4ae4-99ffbbdfda72@gmail.com>
- <X/x7mrcwfxGO8xH7@nand.local>
- <13c28eca-81d5-10c9-c92c-162547416014@gmail.com>
+ <d60411d524656f4680ac578765b2a8704325a060.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <13c28eca-81d5-10c9-c92c-162547416014@gmail.com>
+In-Reply-To: <d60411d524656f4680ac578765b2a8704325a060.1610129796.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11, 2021 at 12:09:27PM -0500, Derrick Stolee wrote:
+On Fri, Jan 08, 2021 at 01:17:57PM -0500, Taylor Blau wrote:
 
-> > The reason I didn't pursue it here was that we haven't yet loaded the
-> > reverse index by this point. So, you'd want a function that at least
-> > stats the '*.rev' file (and either does or doesn't parse it [1]), or
-> > aborts early to indicate otherwise.
+> Now that all 'find_revindex_position()' callers have been removed (and
+> converted to the more descriptive 'offset_to_pack_pos()'), it is almost
+> safe to get rid of 'find_revindex_position()' entirely. Almost, except
+> for the fact that 'offset_to_pack_pos()' calls
+> 'find_revindex_position()'.
 > 
-> In this patch, I would expect it to use sizeof(struct revindex_entry).
-> Later, the method would know if a .rev file exists and do the right
-> thing instead. (Also, should mmap'd data count towards this estimate?)
+> Inline 'find_revindex_position()' into 'offset_to_pack_pos()', and
+> then remove 'find_revindex_position()' entirely.
 
-Yeah, I think if we care about memory pressure, then the mmap would
-count anyway. I agree that letting the revindex code decide which to use
-would be the most accurate thing, but given that this whole chunk of
-code is an estimate (that does not even seem to take into account the
-memory used for the delta search!), I don't think it's worth trying to
-get to accurate.
+Sounds good.
+
+> This is a straightforward refactoring with one minor snag.
+> 'offset_to_pack_pos()' used to load the index before calling
+> 'find_revindex_position()'. That means that by the time
+> 'find_revindex_position()' starts executing, 'p->num_objects' can be
+> safely read. After inlining, be careful to not read 'p->num_objects'
+> until _after_ 'load_pack_revindex()' (which loads the index as a
+> side-effect) has been called.
+
+Good catch. We might want to drop the initialization of "lo":
+
+>  	int lo = 0;
+> -	int hi = p->num_objects + 1;
+
+down to here:
+
+> +	hi = p->num_objects + 1;
+
+to maintain symmetry (though it's quite a minor point).
+
+I notice these are signed ints, but we've taken care to use uint32_t
+elsewhere for positions. Shouldn't these be uint32_t, also (or at least
+unsigned)?
 
 -Peff
