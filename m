@@ -2,142 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 329ECC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D0AC4332E
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3B6923122
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 386AC23123
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407018AbhALVhr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 16:37:47 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62161 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436904AbhALUXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 15:23:14 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1820DFFED8;
-        Tue, 12 Jan 2021 15:22:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7c4GP/nBP4RCxftexq/GkCcDQKQ=; b=ivPlXz
-        dwOLbZQG7qoJr6E+t6AY9b/hcnC795KWwR1fuXMbNX5znZAcnZXv9mNcb9p8jZrP
-        dyfhgYeHtU4LTJ3LMPg+qUfC5xorI//OSa/UQLNxvVoj/uz0k30htvg55dd4TkXz
-        r3WxpE6DsSvPzsobQYlNW9a3kDyp6R7Sz1llE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=G9vPKcZN3Hok9FfApq+Wz2tXzG2SItjH
-        3z0fIdcRNvSUYINEGG5PX/vY8KwOVAkdo255yWY5geltNxx9xTUerehQp82GX78j
-        ZME/QrH7hF4ysvGklDUijubEQFlunoRZnJV9vwmmZFg2q2RbSBBsjV78HEx7jgar
-        /bPl5vYU3aw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 11276FFED7;
-        Tue, 12 Jan 2021 15:22:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38335FFED6;
-        Tue, 12 Jan 2021 15:22:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 2/2] fetch-pack: refactor writing promisor file
-References: <20210112082159.2277214-1-chriscool@tuxfamily.org>
-        <20210112082159.2277214-2-chriscool@tuxfamily.org>
-Date:   Tue, 12 Jan 2021 12:22:26 -0800
-In-Reply-To: <20210112082159.2277214-2-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Tue, 12 Jan 2021 09:21:59 +0100")
-Message-ID: <xmqq1rep52il.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2406967AbhALVhp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 16:37:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56432 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436889AbhALUTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 15:19:55 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEF3FC0617BC
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:51 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id w5so3822725wrm.11
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=/GbiPcxVPtVHZEDZbn05l7tKilW9oowR0P27rayiY/s=;
+        b=hr4o0L4gv/mnclfvo410tYKKr8RfWlI+rdBcthIJD5eeYBu+QOojS42b5fKcjsyzoa
+         cVItsAaIPlpQVo0qVYY1TJ0O5p5irWij7zhpYhTNdotm1Lc7CCRjl7Y5B3D00hQoCgh4
+         XsnISXVfgq5VPdyTYBZ7dkpvNeiIb582BWx15u2nII0aY5cimqGTb+yi1OOwRfLUPCq6
+         GGm/0tp+PuwF8Rv84Ii8qlR9qmBhQ7jWaknpoe70mUo5jm4t9VooQC2/O5Y2//j0APx6
+         lsj6Drr2Z2SImGRkTRO9dbyjt3yI2R79lhX2JQaLnYpZVoeL5BgMooqRK1AlVBTg5uaa
+         xmgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=/GbiPcxVPtVHZEDZbn05l7tKilW9oowR0P27rayiY/s=;
+        b=K0Y6XIhUBco4W9bcZmHNrQmX36IXiNus3XjI+QKKsCN0xgXrQNYmS9TbLED6pMnIko
+         6SECZFxWBr4HTQ4HRALfgqiK/vYwjz6HKiDypgMszQUizNYRoG8Xd7lbci1OXTh1/wgO
+         gQV2631cfC41QX/HnGYTdjZtIXRLRSXlnVQpuzVOBx55Ug1//HhAJ5HSBNiefLDIMrGm
+         DEUveimdnymM2qoSgV7z0onEV5P72ZurI7iSYiReZ6x0PAUkocDL03nTn+ZJs3YYVZGw
+         rRM9HhFmZpzw5YRcXjEV5N1qTluzg64wfzRdDwMWkW0Fl8/h7cV+yhs8V04/hiiksnxa
+         szuw==
+X-Gm-Message-State: AOAM533QTxtCbVhFRq0nr3U8hkIOVeIh9YXt/iuDh8Y0DThvRp3ilek9
+        CvS1NGKviub13I2WdJx4Uk8gx8UEoCY3Iw==
+X-Google-Smtp-Source: ABdhPJywfGVUiaizldQEj9TXdmeDiKp/6pE+NQ0oC/9qfeMCTekk6pAwQMuiiyT2hPUhvOu0ZCHmNw==
+X-Received: by 2002:adf:8285:: with SMTP id 5mr500454wrc.289.1610482730236;
+        Tue, 12 Jan 2021 12:18:50 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Jan 2021 12:18:47 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 19/22] mailmap tests: add tests for whitespace syntax
+Date:   Tue, 12 Jan 2021 21:18:03 +0100
+Message-Id: <20210112201806.13284-20-avarab@gmail.com>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
+In-Reply-To: <20210105130359.21139-1-avarab@gmail.com>
+References: <20210105130359.21139-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E3F96170-5513-11EB-A841-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Add tests for mailmap's handling of whitespace, i.e. how it trims
+space within "<>" and around author names.
 
-> Let's replace the 2 different pieces of code that write a
-> promisor file in 'builtin/repack.c' and 'fetch-pack.c'
-> with a new function called 'write_promisor_file()' in
-> 'pack-write.c' and 'pack.h'.
->
-> This might also help us in the future, if we want to put
-> back the ref names and associated hashes that were in
-> the promisor files we are repacking in 'builtin/repack.c'
-> as suggested by a NEEDSWORK comment just above the code
-> we are refactoring.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t4203-mailmap.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-As soon as you say "might", my reading goes "Meh", but the real
-issue/question I have about this is 
-
-> +void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
-> +{
-> +	int i;
-> +	FILE *output = xfopen(promisor_name, "w");
-> +
-> +	for (i = 0; i < nr_sought; i++)
-> +		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
-> +			sought[i]->name);
-> +	fclose(output);
-> +}
-
-If this function is so useful to be factored out, it must have
-potential use cases where callers would want to write out the
-promisor file [*1*].  Is it reasonable to assume that all of these
-callers have an array of refs, or even _know_ about what "ref" is?
-There still is just one "real" caller to this helper after this
-patch, so it is too early to tell.
-
-Seeing that the declaration (below) is made in <pack.h>, I think it
-is fair to assume all the callers would know what "struct oid" is,
-but I do not get the feeling that "an array of ='struct ref' pointers"
-is something we can expect callers to have commonly.  And expecting
-and/or requiring the potential callers to have its data in an unusual
-shape would be a barrier for the helper's adoption.
-
-Let's not do this change (yet) before we see a new potential caller
-or two and know what kind of API they want this helper to have.
-Without knowing them, my gut reaction is that it would be more
-widely usable if it took an array of "struct object_id" pointers,
-but if we make this function to take "struct object_id **sought"
-plus "int nr_sought", it would mean that the only real caller that
-currently exists needs to prepare a separate array out of the array
-of "struct ref" poihtners it has.  That is way too premature
-generalization.
-
-
-> diff --git a/pack.h b/pack.h
-> index 9fc0945ac9..9ae640f417 100644
-> --- a/pack.h
-> +++ b/pack.h
-> @@ -87,6 +87,10 @@ off_t write_pack_header(struct hashfile *f, uint32_t);
->  void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
->  char *index_pack_lockfile(int fd);
->  
-> +struct ref;
-> +
-> +void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
-> +
->  /*
->   * The "hdr" output buffer should be at least this big, which will handle sizes
->   * up to 2^67.
-
-
-[Footnote]
-
-*1* The "we just make sure the file exists by calling this function
-with no information about any objects" case I do not count as an
-interesting caller---it could just have been done with a simple
-"touch".
-
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 10e672e006..4f61655c04 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -786,4 +786,56 @@ test_expect_success 'comment syntax: setup' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'whitespace syntax: setup' '
++	test_create_repo space &&
++	test_commit -C space --author "A <a@example.com>" A &&
++	test_commit -C space --author "B <b@example.com>" B &&
++	test_commit -C space --author " C <c@example.com>" C &&
++	test_commit -C space --author " D  <d@example.com>" D &&
++	test_commit -C space --author "E E <e@example.com>" E &&
++	test_commit -C space --author "F  F <f@example.com>" F &&
++	test_commit -C space --author "G   G <g@example.com>" G &&
++	test_commit -C space --author "H   H <h@example.com>" H &&
++
++	test_config -C space mailmap.file ../space.map &&
++	cat >>space.map <<-\EOF &&
++	Ah <ah@example.com> < a@example.com >
++	Bee <bee@example.com  > <  b@example.com  >
++	Cee <cee@example.com> C <c@example.com>
++	dee <dee@example.com>  D  <d@example.com>
++	eee <eee@example.com> E E <e@example.com>
++	eff <eff@example.com> F  F <f@example.com>
++	gee <gee@example.com> G   G <g@example.com>
++	aitch <aitch@example.com> H  H <h@example.com>
++	EOF
++
++	cat >expect <<-\EOF &&
++	Author A <a@example.com> maps to A <a@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author B <b@example.com> maps to B <b@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author C <c@example.com> maps to Cee <cee@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author D <d@example.com> maps to dee <dee@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author E E <e@example.com> maps to eee <eee@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author F  F <f@example.com> maps to eff <eff@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author G   G <g@example.com> maps to gee <gee@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++
++	Author H   H <h@example.com> maps to H   H <h@example.com>
++	Committer C O Mitter <committer@example.com> maps to C O Mitter <committer@example.com>
++	EOF
++	git -C space log --reverse --pretty=format:"Author %an <%ae> maps to %aN <%aE>%nCommitter %cn <%ce> maps to %cN <%cE>%n" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.29.2.222.g5d2a92d10f8
 
