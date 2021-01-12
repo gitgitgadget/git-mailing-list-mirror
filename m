@@ -7,65 +7,65 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A532C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A43C433E6
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A63DB22BE9
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:27:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 163512310D
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728467AbhALM1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:27:35 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:41755 "EHLO
+        id S1728882AbhALM1o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 07:27:44 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:58719 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727855AbhALM1e (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:27:34 -0500
+        by vger.kernel.org with ESMTP id S1727855AbhALM1n (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:27:43 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 3795C1AD9;
-        Tue, 12 Jan 2021 07:26:48 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id 899BD174E;
+        Tue, 12 Jan 2021 07:26:57 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:26:48 -0500
+  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:26:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=At9oS3BpmSJJZUD5TI3tBCfB8Dl
-        OuHO+/1KiqIy69+4=; b=KoTOghGAUn8NnJ/hJy6YiHv96czxkEMPCRCiCtkEyTZ
-        KTPPb6tJZWwWbXUHOQz1UTBOop8+rW2tk5Tv8DmRwdnU29VpQiWjt92xh7gE3hmW
-        rmyfOYSfEE7tcE8hciPTt0NS1IeyzDao27JcgoXOQcEtAZX76riqu5vRsN3ovqr3
-        i31iiYoYUgmeTEvudwtybCRDfwC7ayigjWraJfEQ1fMFw3hzL1u/bM+Qb4uiQ7KS
-        LxRxcaa7bXs+kImLtUl4fe5ozceLdHO315y21TPUzeAfkJlIrrZG2dXKe9jH8vuT
-        VrNyKZHRcSRr7wLdFF5UCLr875WIdjxAHYPKpkWpmBw==
+        :content-type:in-reply-to; s=fm3; bh=2+dg0QZPrPQRHWyaJFhjhjDVGMA
+        9rAliLC8XsYCL8O8=; b=sRc+68NPa3MepfFLQphzGI8F9xPk+zP3b2cCiaOYPtS
+        pRdPKMO5SgCNNdULeFsVKJt7/W0CqPrYX9C9JJY5erdxVzY4QhGCr1D/scFRadsi
+        1FGjykn8yO30jZsjvWkwoHF8xJlfV8oz5Om2ho6sxDDMkcHcWzVPWK+tXZ/KpfPh
+        aU/RIx055lbCV8cxieD5jyhJho0vThKh93zmtjnN/Al7J+0BWUtz8x0mw8+956W3
+        sGz2azIQ/JKlL3YYfLS/W5QrmCOG8GYwfOuFNK+SbstWFjByXlz2sOkpMK6CDbNK
+        hncjjv8y9VSRWSi6fCcWnU48S91zlgJIRu5nFrnZ45w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=At9oS3
-        BpmSJJZUD5TI3tBCfB8DlOuHO+/1KiqIy69+4=; b=a1jYk0ERq712cUVDGRWUKz
-        I8o4HjLuHV4V9/iPEkeh+ABi5nPoERNnGDyc4qdbZdP75cAgkJiOK0/FeyoMnNN/
-        YoleW5mxdmf9G7Ns6etFo13TanuKhqx87R6bud1F5AIzLs4T3PC0+j9Dg5rC1S1x
-        vmoJdHOcLE9bOWHLa65gu7n30u8Gg0ZpRTPYDMPpKcUlx5iQy3IcC5D0kgL7+8Sp
-        q7UCViatebXd111TJPMaSBQWle9Q5QJr/+ad+GnvU1DUef/9H+G2ik6Bj2QtTSoT
-        R1N1GDWen+vOVyB4XxCeKRFC58lBhKKffsgnP8+TuNX/0RzjzhYZgA988x84oNWg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2+dg0Q
+        ZPrPQRHWyaJFhjhjDVGMA9rAliLC8XsYCL8O8=; b=fg9Wp9D94oY3HNblRkdEgC
+        GKKimhPdC9zh1ZB2JRKZ5tQj64AU8RlhOgV5Ke4ysbBMjLPL7LSB9I9lX4G+4FOl
+        TBwcS1XaA2TjXrwjwd7r4iMPW4/FasamT4EAvkt1Ftw7GNtUjF/mqRkCiK5phjzW
+        iVdpWG2OdWLbdZdDoYSIj1AqLlmELRTTubNTwEicx4MJiv4EXCTPdSSYIPIV2m1G
+        ++CJtBcB91JwvAgQVadCmu1PtkXOlHXrNVawG23qdh7tQQgOUTIcEZEUnkamAzYe
+        jwUkB2L88Fs+4aU6333gyRB+nHoQtuUZmImE/Dxw6/RsPKKFO21gCTTW5Spt5tDg
         ==
-X-ME-Sender: <xms:h5X9XzBERgHQqp7lYMBgUcngnm2WNzFGlwij8BmaOgIQXVbkvik3Fw>
-    <xme:h5X9X5hEZHCV8CMY8FNx8C0YKrtJxFM31D9jEGclBKB7cs7YSQISZdLf8NyhqTmWw
-    pdnS8w3S2xXWBq26Q>
+X-ME-Sender: <xms:kZX9X6jJIYm1O189PQZ3qX1RqkYCQ6cpXnGb3bpiyz2PrztFV4Chjw>
+    <xme:kZX9X7DoZZ2JomEX-Hg_9J8FDa-LLKJJBVarriuHuEDd4DNwvKZoEXTm-wL_ACykH
+    vPzbqM4tR8b-BDfpg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrg
+    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrg
     hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:h5X9X-kc0vOOXJdu2F9A_bsEx8Z_xW7yk5HBFpAEBAgYnsgbAacfIw>
-    <xmx:h5X9X1wRH5AtJGAld3ET_8GD8tM27GwIHa7XyqU8MMVTLhNaTEyMIg>
-    <xmx:h5X9X4TQ5kvOgViqE0-23DxIH1tem0wEMqrIJv9Kx-UeqCXEdDYECQ>
-    <xmx:h5X9X-NHr4XGphSJrrLlweF7bZL1JTrNYMV6bOIfVz2rXG-_XtoOeg>
+X-ME-Proxy: <xmx:kZX9XyGLEq3VSptXMwB0Epy6hzbBr_Ch_hpZ9zmkBHUS1XTo1vuozg>
+    <xmx:kZX9XzRPNH-LvjB9ANdD9BLsVzj23CzbdPMt4SEjq9Z2EKqWHQxPcQ>
+    <xmx:kZX9X3w1ooCICUtbYfmLZG6k8hd4SVr_8Altbbwt13AThh3g9pe_mg>
+    <xmx:kZX9X5vg0bDZc_rgGNwy_9eQM19OmRSap1NaxKjOZyr-mdmWpUoPyg>
 Received: from vm-mail.pks.im (dynamic-077-013-052-093.77.13.pool.telefonica.de [77.13.52.93])
-        by mail.messagingengine.com (Postfix) with ESMTPA id C64E7108005C;
-        Tue, 12 Jan 2021 07:26:46 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 15C891080057;
+        Tue, 12 Jan 2021 07:26:55 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e20d97e7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 12 Jan 2021 12:26:46 +0000 (UTC)
-Date:   Tue, 12 Jan 2021 13:26:45 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 5db12c59 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 12 Jan 2021 12:26:55 +0000 (UTC)
+Date:   Tue, 12 Jan 2021 13:26:54 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Simon Ruderich <simon@ruderich.org>,
@@ -74,13 +74,13 @@ Cc:     Simon Ruderich <simon@ruderich.org>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v8 2/8] config: add new way to pass config via `--config-env`
-Message-ID: <470396d36f938f0070b8c849a85b1a30949056e3.1610453228.git.ps@pks.im>
+Subject: [PATCH v8 4/8] config: extract function to parse config pairs
+Message-ID: <39552eb8b931442e656d0287447fce3b2cffa87a.1610453228.git.ps@pks.im>
 References: <cover.1606214397.git.ps@pks.im>
  <cover.1610453228.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8kDk4fJgTBeViDMS"
+        protocol="application/pgp-signature"; boundary="9hDjZ4jj3ilUXNyv"
 Content-Disposition: inline
 In-Reply-To: <cover.1610453228.git.ps@pks.im>
 Precedence: bulk
@@ -88,242 +88,92 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---8kDk4fJgTBeViDMS
+--9hDjZ4jj3ilUXNyv
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While it's already possible to pass runtime configuration via `git -c
-<key>=3D<value>`, it may be undesirable to use when the value contains
-sensitive information. E.g. if one wants to set `http.extraHeader` to
-contain an authentication token, doing so via `-c` would trivially leak
-those credentials via e.g. ps(1), which typically also shows command
-arguments.
+The function `git_config_parse_parameter` is responsible for parsing a
+`foo.bar=3Dbaz`-formatted configuration key, sanitizing the key and then
+processing it via the given callback function. Given that we're about to
+add a second user which is going to process keys which already has keys
+and values separated, this commit extracts a function
+`config_parse_pair` which only does the sanitization and processing
+part as a preparatory step.
 
-To enable this usecase without leaking credentials, this commit
-introduces a new switch `--config-env=3D<key>=3D<envvar>`. Instead of
-directly passing a value for the given key, it instead allows the user
-to specify the name of an environment variable. The value of that
-variable will then be used as value of the key.
-
-Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git.txt | 24 +++++++++++++++++++++-
- config.c              | 25 ++++++++++++++++++++++
- config.h              |  1 +
- git.c                 |  4 +++-
- t/t1300-config.sh     | 48 +++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 100 insertions(+), 2 deletions(-)
+ config.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index a6d4ad0818..d36e6fd482 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
-     [--exec-path[=3D<path>]] [--html-path] [--man-path] [--info-path]
-     [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=3D<name>]
--    [--super-prefix=3D<path>]
-+    [--super-prefix=3D<path>] [--config-env <name>=3D<envvar>]
-     <command> [<args>]
-=20
- DESCRIPTION
-@@ -80,6 +80,28 @@ config file). Including the equals but with an empty val=
-ue (like `git -c
- foo.bar=3D ...`) sets `foo.bar` to the empty string which `git config
- --type=3Dbool` will convert to `false`.
-=20
-+--config-env=3D<name>=3D<envvar>::
-+	Like `-c <name>=3D<value>`, give configuration variable
-+	'<name>' a value, where <envvar> is the name of an
-+	environment variable from which to retrieve the value. Unlike
-+	`-c` there is no shortcut for directly setting the value to an
-+	empty string, instead the environment variable itself must be
-+	set to the empty string.  It is an error if the `<envvar>` does not exist
-+	in the environment. `<envvar>` may not contain an equals sign
-+	to avoid ambiguity with `<name>`s which contain one.
-++
-+This is useful for cases where you want to pass transitory
-+configuration options to git, but are doing so on OS's where
-+other processes might be able to read your cmdline
-+(e.g. `/proc/self/cmdline`), but not your environ
-+(e.g. `/proc/self/environ`). That behavior is the default on
-+Linux, but may not be on your system.
-++
-+Note that this might add security for variables such as
-+`http.extraHeader` where the sensitive information is part of
-+the value, but not e.g. `url.<base>.insteadOf` where the
-+sensitive information can be part of the key.
-+
- --exec-path[=3D<path>]::
- 	Path to wherever your core Git programs are installed.
- 	This can also be controlled by setting the GIT_EXEC_PATH
 diff --git a/config.c b/config.c
-index 1137bd73af..fd8c0c4dfc 100644
+index fd8c0c4dfc..b7a8129f6c 100644
 --- a/config.c
 +++ b/config.c
-@@ -345,6 +345,31 @@ void git_config_push_parameter(const char *text)
- 	strbuf_release(&env);
+@@ -462,11 +462,26 @@ int git_config_key_is_valid(const char *key)
+ 	return !git_config_parse_key_1(key, NULL, NULL, 1);
  }
 =20
-+void git_config_push_env(const char *spec)
++static int config_parse_pair(const char *key, const char *value,
++			  config_fn_t fn, void *data)
 +{
-+	struct strbuf buf =3D STRBUF_INIT;
-+	const char *env_name;
-+	const char *env_value;
++	char *canonical_name;
++	int ret;
 +
-+	env_name =3D strrchr(spec, '=3D');
-+	if (!env_name)
-+		die(_("invalid config format: %s"), spec);
-+	env_name++;
-+	if (!*env_name)
-+		die(_("missing environment variable name for configuration '%.*s'"),
-+		    (int)(env_name - spec - 1), spec);
++	if (!strlen(key))
++		return error(_("empty config key"));
++	if (git_config_parse_key(key, &canonical_name, NULL))
++		return -1;
 +
-+	env_value =3D getenv(env_name);
-+	if (!env_value)
-+		die(_("missing environment variable '%s' for configuration '%.*s'"),
-+		    env_name, (int)(env_name - spec - 1), spec);
-+
-+	strbuf_add(&buf, spec, env_name - spec);
-+	strbuf_addstr(&buf, env_value);
-+	git_config_push_parameter(buf.buf);
-+	strbuf_release(&buf);
++	ret =3D (fn(canonical_name, value, data) < 0) ? -1 : 0;
++	free(canonical_name);
++	return ret;
 +}
 +
- static inline int iskeychar(int c)
+ int git_config_parse_parameter(const char *text,
+ 			       config_fn_t fn, void *data)
  {
- 	return isalnum(c) || c =3D=3D '-';
-diff --git a/config.h b/config.h
-index c1449bb790..19a9adbaa9 100644
---- a/config.h
-+++ b/config.h
-@@ -138,6 +138,7 @@ int git_config_from_mem(config_fn_t fn,
- int git_config_from_blob_oid(config_fn_t fn, const char *name,
- 			     const struct object_id *oid, void *data);
- void git_config_push_parameter(const char *text);
-+void git_config_push_env(const char *spec);
- int git_config_from_parameters(config_fn_t fn, void *data);
- void read_early_config(config_fn_t cb, void *data);
- void read_very_early_config(config_fn_t cb, void *data);
-diff --git a/git.c b/git.c
-index 5a8ff12f87..b5f63d346b 100644
---- a/git.c
-+++ b/git.c
-@@ -29,7 +29,7 @@ const char git_usage_string[] =3D
- 	   "           [--exec-path[=3D<path>]] [--html-path] [--man-path] [--inf=
-o-path]\n"
- 	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects]=
- [--bare]\n"
- 	   "           [--git-dir=3D<path>] [--work-tree=3D<path>] [--namespace=
-=3D<name>]\n"
--	   "           [--super-prefix=3D<path>]\n"
-+	   "           [--super-prefix=3D<path>] [--config-env=3D<name>=3D<envvar=
->]\n"
- 	   "           <command> [<args>]");
+ 	const char *value;
+-	char *canonical_name;
+ 	struct strbuf **pair;
+ 	int ret;
 =20
- const char git_more_info_string[] =3D
-@@ -255,6 +255,8 @@ static int handle_options(const char ***argv, int *argc=
-, int *envchanged)
- 			git_config_push_parameter((*argv)[1]);
- 			(*argv)++;
- 			(*argc)--;
-+		} else if (skip_prefix(cmd, "--config-env=3D", &cmd)) {
-+			git_config_push_env(cmd);
- 		} else if (!strcmp(cmd, "--literal-pathspecs")) {
- 			setenv(GIT_LITERAL_PATHSPECS_ENVIRONMENT, "1", 1);
- 			if (envchanged)
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 97a04c6cc2..853f2509c5 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1316,6 +1316,54 @@ test_expect_success 'detect bogus GIT_CONFIG_PARAMET=
-ERS' '
- 		git config --get-regexp "env.*"
- '
+@@ -487,12 +502,7 @@ int git_config_parse_parameter(const char *text,
+ 		return error(_("bogus config parameter: %s"), text);
+ 	}
 =20
-+test_expect_success 'git --config-env=3Dkey=3Denvvar support' '
-+	cat >expect <<-\EOF &&
-+	value
-+	value
-+	false
-+	EOF
-+	{
-+		ENVVAR=3Dvalue git --config-env=3Dcore.name=3DENVVAR config core.name &&
-+		ENVVAR=3Dvalue git --config-env=3Dfoo.CamelCase=3DENVVAR config foo.came=
-lcase &&
-+		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.flag
-+	} >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git --config-env fails with invalid parameters' '
-+	test_must_fail git --config-env=3Dfoo.flag config --bool foo.flag 2>error=
- &&
-+	test_i18ngrep "invalid config format: foo.flag" error &&
-+	test_must_fail git --config-env=3Dfoo.flag=3D config --bool foo.flag 2>er=
-ror &&
-+	test_i18ngrep "missing environment variable name for configuration ${SQ}f=
-oo.flag${SQ}" error &&
-+	sane_unset NONEXISTENT &&
-+	test_must_fail git --config-env=3Dfoo.flag=3DNONEXISTENT config --bool fo=
-o.flag 2>error &&
-+	test_i18ngrep "missing environment variable ${SQ}NONEXISTENT${SQ} for con=
-figuration ${SQ}foo.flag${SQ}" error
-+'
-+
-+test_expect_success 'git -c and --config-env work together' '
-+	cat >expect <<-\EOF &&
-+	bar.cmd cmd-value
-+	bar.env env-value
-+	EOF
-+	ENVVAR=3Denv-value git \
-+		-c bar.cmd=3Dcmd-value \
-+		--config-env=3Dbar.env=3DENVVAR \
-+		config --get-regexp "^bar.*" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git -c and --config-env override each other' '
-+	cat >expect <<-\EOF &&
-+	env
-+	cmd
-+	EOF
-+	{
-+		ENVVAR=3Denv git -c bar.bar=3Dcmd --config-env=3Dbar.bar=3DENVVAR config=
- bar.bar &&
-+		ENVVAR=3Denv git --config-env=3Dbar.bar=3DENVVAR -c bar.bar=3Dcmd config=
- bar.bar
-+	} >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git config --edit works' '
- 	git config -f tmp test.value no &&
- 	echo test.value=3Dyes >expect &&
+-	if (git_config_parse_key(pair[0]->buf, &canonical_name, NULL)) {
+-		ret =3D -1;
+-	} else {
+-		ret =3D (fn(canonical_name, value, data) < 0) ? -1 : 0;
+-		free(canonical_name);
+-	}
++	ret =3D config_parse_pair(pair[0]->buf, value, fn, data);
+ 	strbuf_list_free(pair);
+ 	return ret;
+ }
 --=20
 2.30.0
 
 
---8kDk4fJgTBeViDMS
+--9hDjZ4jj3ilUXNyv
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lYQACgkQVbJhu7ck
-PpQEnQ//Qe8GKF4jmJuC3Iq6WXIQQ+w/apzhb56FQAjL6upp6O8P/stoq++vPVO4
-WdThrs+wrVTwhA49kUC9iGf1OnTfQ0+WlmNKJ4360DU/w89JgoIeltdoZX2v+hPW
-FpUQF2gJ9i7Fr9tn70jjocFCJeZiHrs16CkKcNv9EL665zPRPlWW33oigtf/LJEM
-2vCxCeQ6P3BU0Z4uOU5Nib4CjLa4TegPr9Tv2XXs4fHbIEmcWPQMcmDYV0a2qf1n
-sLvMm0VhDy50u0CadG0efIr++okMF/P9mXVK0hgOJorX4huhPqerRPAg+ItC/tTu
-pRNSsMFY7zFBXdKP1vMarETF5okvJGu8Ly277OsAaVmFSBI952UFV2579JkeJo81
-OTMUp0oprGmNRog+1i1ynjpY5DcPhdTrNcSR+2ih2vX5KMqPXURJjrbdaiYyKrv4
-/XcZEkp8eNb/5dWAc5wh+14/akxKRfzymSquUv/gHkl1iUtfSxBr0rMAPr6aRtbk
-sLNCOusDSHxPBFuZj6fQTzodPxbpJcSuA5DoD749G0ZLX9ubQbuu6a5phyiXv548
-sSYTOXA/UWLirOQCxgAtpsxzVUu3h4BuEQF0jGsfCK7xHv5cVZm9Cg6YgyxRTbdF
-2zRvSGQUPiTJnaaidtrXjvrYf5SYNtv4FLjsIvBS5P7RfvICH5w=
-=Qbxi
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lY0ACgkQVbJhu7ck
+PpT5LhAAiLHA4Q8HFX5Je0NwQ/wjJJaThgKgarSxWKWC2WC/vbyyiWDl8+KyykS/
+mT1TOCJRz21/meEsvayJhS0QQxp0nyN22W1J85AQ+nAS34BL7k6k5lzTayaPF+sG
+2JZQ5OpFFe23zvBEDzyAfXKupMw8jmsIysrxM9ztOL/HQARukkTnTAt7Lh6KfIR2
+9vTtohkmkdt9A9ARuaygQzFkHp/vhoyRs0PbadU3FXjnBMVV7ntlPGudzhubSJL5
+4F7wsMCtShp9VK4UoICY49+BCLOG3FTMVmdv3m5Zl//4OdUbyRykajE5eJi24vXM
+06ncKsHOVFRp5ciAQj/eKYJLsRq+F1Gdh8NNlR+CJQoCThjlwcQjIUJJTJPx5C2o
+9DG8CAL/k4vRsD/lHmWvmHO6avam5OUjCaoNf7f0QxFUQqJLVtlhPjK6QZZ5JnQr
+yfHxLHy1Ieqlbz3RMNJnMJ7GMxeey+2Yoj5K2KuVPIWQgkJU7wQ57dwRUOD3gBlr
+7tRf8YKZr/o+WGnbiqGAT0qVrwm+mTp/QrLvAD/QjeMGnD8Cyqk0OzPrSxkfWRNG
+T5SqKwOwwEAc9p6oabuu7kxW9PlIB9tC6AiuSwsQzio7ZAzbOQ1zVdMZsHI0t1Wb
+bX4DucwSb3euzVEdF5nngiic9/mWmKOhujvxduXJGdNKySYTS/g=
+=O9G/
 -----END PGP SIGNATURE-----
 
---8kDk4fJgTBeViDMS--
+--9hDjZ4jj3ilUXNyv--
