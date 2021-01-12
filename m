@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 425CEC4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7500AC4332D
 	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F193622D58
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28CD722E00
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405706AbhALItP (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2405703AbhALItP (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 12 Jan 2021 03:49:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48218 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405698AbhALItO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2405681AbhALItO (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Jan 2021 03:49:14 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4391C0617A7
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:54 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id r7so1558408wrc.5
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:54 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11EBC0617A6
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:53 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 3so1262371wmg.4
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 00:47:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NU5cRWKPa7y72/DAFZ0IkJ1rHgTHjR0ZzUrJGlMlpPc=;
-        b=DWH3Gu2SOuLILdNezAXyAY7a5Zd2qzdtTHTJA3fqRbCgpc46/pR/sUk+nQW7yV7WRI
-         5RBRFDWEGUw5/WTMXDMdW5DHwzAiNda/0Z9t3mr/bitvw7VmPyPSbSnXFLV9d37kLk8s
-         u5d3H+OqdeD+Vyo2VukMdbccR6ai17LCz1JvFrDRF2+pdkgCYblI9IsYXDtTCFWkWN0C
-         /hr468GchNorpLMWENlYXNdY/jdBNRfV37bcejhcKbPtNAuj8GACZlC55DUm4hJnTBN+
-         /SH+1XbtsJL/u+9tCifllupnJf1U9R89Wh3ZD8WKLFasC7x9m1Wt3hlSp/SXYSJkOHup
-         uTZw==
+        bh=xz55P/En6olgyu71iHfy6aERihi8PJcXRqGmfbltiuk=;
+        b=gTV0+Jq+R8fE56FmvQDaNU/HdMHSETNIuWLnQfR9/l4Yaf+0PDpLKcv2NnUkdlO7Ji
+         L4a3wWq02XaH/EXvNJtSJRKCNJJE6goVPWbXTn7KZLV1yso8lsEmKkQBeW0Ts3FDd/cV
+         yjqv9/c1oLdgOTaniqFJBEcXgtRh3vVHbbpeNkM/SKjj/2Nps9SuSftOc4Zb/oOpEk07
+         6sgvss6tGoxW+e6r85SZ0gs2Zxgjef6xf0CrPFJ8LQqjt7nb8h5JD2BSmsp4nYrRuX4p
+         ROCXtrnByNcDRHrRykxauElK6Q4XQEKWKSjZDkLzOPECo6EPP0g0p4h7EjsxHaeEm0zw
+         vuFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NU5cRWKPa7y72/DAFZ0IkJ1rHgTHjR0ZzUrJGlMlpPc=;
-        b=Uiadoxwoopb6kxSOMU4XEMVXvtb0cCHix/yXZLJi0nk13/DaoN5+nGZcwd6TfnBs2C
-         F0JDhtuBjZB1j0O9uRQnFLvXzXqYrUqTLzZ/owB7rNeESbr7a2ujcPIDzyYamJFHt3to
-         PeI3jGO4vuNs6voajfvvkb6JdNbGItjRS05GqpQITj4uGFzPL55QAzUwSaiFIJMrpoHY
-         Z2skj5JrbCJ/lIKDcaSfqO8wHCPA1uqIxbJWcdJFlO54pL/IcFVjYYHTdXZcbSdtq2P8
-         Uln57BwG7n1aplx8hPjvaMDltqvzk3yzYe4/9mFfvo9TPhqJNICjXy5V0uPyI65eStz6
-         KuPA==
-X-Gm-Message-State: AOAM533o5A2AkVHj4t+81eYQmbNn8SMy78tu3y8VdDq3gyFcKgYR0wyc
-        3/QAxAGJ0Jx2ytKIHkzX9aiZUL+kkK4=
-X-Google-Smtp-Source: ABdhPJzERHDziXVDH+KssatenSJ0bxX4yCDvwe9ycpFeNu/xEbx1JKkB6cjbqz60VhYpK73fjXPUng==
-X-Received: by 2002:adf:9d48:: with SMTP id o8mr3117936wre.408.1610441273385;
-        Tue, 12 Jan 2021 00:47:53 -0800 (PST)
+        bh=xz55P/En6olgyu71iHfy6aERihi8PJcXRqGmfbltiuk=;
+        b=NZCmpAPRnneTAU09k3BNVY2DsnFSN1LwhfrLUbqn6LBQqVR4Qppn9R+RLxhb7CkxEg
+         WCx11QY4AfYyvEZPq5PuAUN3JJbPTVAUebUFSxGtYZv6LksQiJ5bELUtIttRR2wWxL23
+         9MCf/UboIJasUz0TE0P0SIzfo+P1CVtJyKMrVBkRBiJeU2LSWR463p0SVg6jX97Qn2lU
+         TA+SrnNgC14/lqCHr0PDj+9D5H8u421YwwAC+fPtyF71ZScXiVP30lLUkZDEb1m27vP0
+         4x/sm82KAe4HiHdn6nCCuztB5PEuG9QCQ5D9S50MMmAlLrTMC2Swnyb14ZwyXwRSsigZ
+         ZlsA==
+X-Gm-Message-State: AOAM531qaGk7VcgJmdxv4vYRCwbEppD9EhaZDEQk+uaD/90Ufcmw66dz
+        AHEkkAG4UPB4b0mXe6qDLjcXtbsbTcw=
+X-Google-Smtp-Source: ABdhPJxZQWw3QlsmgQzY8LUmW9aZp30aEkLfP5zTWWY9a0xZGJKTIg00M6GHMOjZG8HiqiFANJ52Lg==
+X-Received: by 2002:a1c:2bc2:: with SMTP id r185mr2389321wmr.13.1610441272465;
+        Tue, 12 Jan 2021 00:47:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7sm2867346wmb.40.2021.01.12.00.47.52
+        by smtp.gmail.com with ESMTPSA id y63sm3033834wmd.21.2021.01.12.00.47.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 12 Jan 2021 00:47:52 -0800 (PST)
-Message-Id: <0a56ebfcad79a03a6a8701db367cabb7953a5fa4.1610441263.git.gitgitgadget@gmail.com>
+Message-Id: <4669ccbb1ae40f0c58a2d8e3c8b3a34d82176c7a.1610441263.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 12 Jan 2021 08:47:41 +0000
-Subject: [PATCH 10/11] GETTEXT_POISON=rot13: perform actual checks in
- `test_i18ngrep`
+Date:   Tue, 12 Jan 2021 08:47:40 +0000
+Subject: [PATCH 09/11] GETTEXT_POISON=rot13: do compare the output in
+ `test_i18ncmp`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,95 +82,177 @@ From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-i18n.c    | 42 ++++++++++++++++++++++++++++++++++++++++-
- t/test-lib-functions.sh |  6 ++++++
- 2 files changed, 47 insertions(+), 1 deletion(-)
+ Makefile                |  1 +
+ t/helper/test-i18n.c    | 89 +++++++++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c    |  1 +
+ t/helper/test-tool.h    |  1 +
+ t/test-lib-functions.sh |  8 +++-
+ t/test-lib.sh           |  1 +
+ 6 files changed, 100 insertions(+), 1 deletion(-)
+ create mode 100644 t/helper/test-i18n.c
 
+diff --git a/Makefile b/Makefile
+index 7b64106930a..d49f80cb524 100644
+--- a/Makefile
++++ b/Makefile
+@@ -710,6 +710,7 @@ TEST_BUILTINS_OBJS += test-genzeros.o
+ TEST_BUILTINS_OBJS += test-hash-speed.o
+ TEST_BUILTINS_OBJS += test-hash.o
+ TEST_BUILTINS_OBJS += test-hashmap.o
++TEST_BUILTINS_OBJS += test-i18n.o
+ TEST_BUILTINS_OBJS += test-index-version.o
+ TEST_BUILTINS_OBJS += test-json-writer.o
+ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
 diff --git a/t/helper/test-i18n.c b/t/helper/test-i18n.c
-index 4b572e6efad..8a16df6b40f 100644
---- a/t/helper/test-i18n.c
+new file mode 100644
+index 00000000000..4b572e6efad
+--- /dev/null
 +++ b/t/helper/test-i18n.c
-@@ -1,8 +1,10 @@
- #include "test-tool.h"
- #include "cache.h"
-+#include "grep.h"
- 
- static const char *usage_msg = "\n"
--"  test-tool i18n cmp <file1> <file2>\n";
-+"  test-tool i18n cmp <file1> <file2>\n"
-+"  test-tool i18n grep <regex> <file>\n";
- 
- static inline char do_rot13(char c)
- {
-@@ -75,6 +77,42 @@ static int i18n_cmp(const char **argv)
- 	return 0;
- }
- 
-+static int i18n_grep(const char **argv)
+@@ -0,0 +1,89 @@
++#include "test-tool.h"
++#include "cache.h"
++
++static const char *usage_msg = "\n"
++"  test-tool i18n cmp <file1> <file2>\n";
++
++static inline char do_rot13(char c)
 +{
-+	int dont_match = 0;
-+	const char *pattern, *path;
-+
-+	struct grep_opt opt;
-+	struct grep_source source;
-+	struct strbuf buf = STRBUF_INIT;
-+	int hit;
-+
-+	if (*argv && !strcmp("!", *argv)) {
-+		dont_match = 1;
-+		argv++;
-+	}
-+
-+	pattern = *(argv++);
-+	path = *(argv++);
-+
-+	if (!pattern || !path || *argv)
-+		usage(usage_msg);
-+
-+	grep_init(&opt, the_repository, NULL);
-+	append_grep_pattern(&opt, pattern, "command line", 0, GREP_PATTERN);
-+	compile_grep_patterns(&opt);
-+
-+	if (strbuf_read_file(&buf, path, 0) < 0)
-+		die_errno("could not read %s", path);
-+	unrot13_strbuf(&buf);
-+	grep_source_init(&source, GREP_SOURCE_BUF, path, path, path);
-+	source.buf = buf.buf;
-+	source.size = buf.len;
-+	hit = grep_source(&opt, &source);
-+	strbuf_release(&buf);
-+	return dont_match ^ !hit;
++	if (c >= 'a' && c <= 'm')
++		return c + 'n' - 'a';
++	if (c >= 'n' && c <= 'z')
++		return c + 'a' - 'n';
++	if (c >= 'A' && c <= 'M')
++		return c + 'N' - 'A';
++	if (c >= 'N' && c <= 'Z')
++		return c + 'A' - 'N';
++	return c;
 +}
 +
- int cmd__i18n(int argc, const char **argv)
- {
- 	argv++;
-@@ -82,6 +120,8 @@ int cmd__i18n(int argc, const char **argv)
- 		usage(usage_msg);
- 	if (!strcmp(*argv, "cmp"))
- 		return i18n_cmp(argv+1);
-+	else if (!strcmp(*argv, "grep"))
-+		return i18n_grep(argv+1);
- 	else
- 		usage(usage_msg);
- 
++static size_t unrot13(char *buf)
++{
++	char *p = buf, *q = buf;
++
++	while (*p) {
++		const char *begin = strstr(p, "<rot13>"), *end;
++
++		if (!begin)
++			break;
++
++		while (p != begin)
++			*(q++) = *(p++);
++
++		p += strlen("<rot13>");
++		end = strstr(p, "</rot13>");
++		if (!end)
++			BUG("could not find </rot13> in\n%s", buf);
++
++		while (p != end)
++			*(q++) = do_rot13(*(p++));
++		p += strlen("</rot13>");
++	}
++
++	while (*p)
++		*(q++) = *(p++);
++
++	return q - buf;
++}
++
++static void unrot13_strbuf(struct strbuf *buf)
++{
++	size_t len = unrot13(buf->buf);
++
++	if (len == buf->len)
++		die("not ROT13'ed:\n%s", buf->buf);
++	buf->len = len;
++}
++
++static int i18n_cmp(const char **argv)
++{
++	const char *path1 = *(argv++), *path2 = *(argv++);
++	struct strbuf a = STRBUF_INIT, b = STRBUF_INIT;
++
++	if (!path1 || !path2 || *argv)
++		usage(usage_msg);
++
++	if (strbuf_read_file(&a, path1, 0) < 0)
++		die_errno("could not read %s", path1);
++	if (strbuf_read_file(&b, path2, 0) < 0)
++		die_errno("could not read %s", path2);
++	unrot13_strbuf(&b);
++
++	if (a.len != b.len || memcmp(a.buf, b.buf, a.len))
++		return 1;
++
++	return 0;
++}
++
++int cmd__i18n(int argc, const char **argv)
++{
++	argv++;
++	if (!*argv)
++		usage(usage_msg);
++	if (!strcmp(*argv, "cmp"))
++		return i18n_cmp(argv+1);
++	else
++		usage(usage_msg);
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 9d6d14d9293..7e1680ac108 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -34,6 +34,7 @@ static struct test_cmd cmds[] = {
+ 	{ "genzeros", cmd__genzeros },
+ 	{ "hashmap", cmd__hashmap },
+ 	{ "hash-speed", cmd__hash_speed },
++	{ "i18n", cmd__i18n },
+ 	{ "index-version", cmd__index_version },
+ 	{ "json-writer", cmd__json_writer },
+ 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index a6470ff62c4..43282a520ea 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -24,6 +24,7 @@ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
+ int cmd__hash_speed(int argc, const char **argv);
++int cmd__i18n(int argc, const char **argv);
+ int cmd__index_version(int argc, const char **argv);
+ int cmd__json_writer(int argc, const char **argv);
+ int cmd__lazy_init_name_hash(int argc, const char **argv);
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 08731bae854..394fd2ef5be 100644
+index 999982fe4a9..08731bae854 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -1021,6 +1021,12 @@ test_i18ngrep () {
+@@ -993,7 +993,13 @@ test_cmp_bin () {
+ # under GIT_TEST_GETTEXT_POISON this pretends that the command produced expected
+ # results.
+ test_i18ncmp () {
+-	! test_have_prereq C_LOCALE_OUTPUT || test_cmp "$@"
++	if test rot13 = "$GIT_TEST_GETTEXT_POISON"
++	then
++		test-tool i18n cmp "$@"
++	elif test_have_prereq C_LOCALE_OUTPUT
++	then
++		test_cmp "$@"
++	fi
+ }
  
- 	if test_have_prereq !C_LOCALE_OUTPUT
- 	then
-+		if test rot13 = "$GIT_TEST_GETTEXT_POISON"
-+		then
-+			test-tool i18n grep "$@"
-+			return $?
-+		fi
-+
- 		# pretend success
- 		return 0
- 	fi
+ # Use this instead of "grep expected-string actual" to see if the
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 9fa7c1d0f6d..c9f9e2804fd 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1537,6 +1537,7 @@ then
+ fi
+ 
+ test_lazy_prereq C_LOCALE_OUTPUT '
++	test rot13 != "$GIT_TEST_GETTEXT_POISON" &&
+ 	! test_bool_env GIT_TEST_GETTEXT_POISON false
+ '
+ 
 -- 
 gitgitgadget
 
