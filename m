@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D73B1C4360C
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79811C07D5A
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:42:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ACEDA23121
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:42:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 478AA23122
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:42:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437101AbhALVh1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2438135AbhALVh1 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 12 Jan 2021 16:37:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2436883AbhALUTm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2436879AbhALUTm (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Jan 2021 15:19:42 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EED5C0617B9
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:43 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id t16so3865690wra.3
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:43 -0800 (PST)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 228AFC0617B1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:41 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id 3so3311870wmg.4
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 12:18:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z4Ume2w83CGfLz5W95CZmWjd4oB3YWF7eatdtPXwYK4=;
-        b=IA194zY+dLGA8iN9j3YaU6Z0EiiYlW8W1OpzakBlaZ1T/LlmoNBsyoW5O91jt4MHbl
-         6nfEGB+htrqXI/TbJ5oBYriRMmUCBk/uWTHvNtr6LI1iTH6VD5G2hPPHNjQ2tX70MGy0
-         sR+1mOnRbjWf/QSpUg9CpGYGdWc4SW6iLIEj6BF0C6CsxxDVyfxl1sEIxP+YYjZYUsUl
-         f7YuUQqkRJM4dhVMwao7OCcBPS9bQ8TSeV4sF6NLpMs5VckeksenZegbTOJJY1tz0znZ
-         tZVh+v81CbI+xGImyvMf0SiUn5oj1BF9Hp4gNIzjJr17HS9xvK8oSo0aIa4M3rfGXGyo
-         UG2A==
+        bh=FgDqqsHnnRDTaA/0ja+ZvMf8GdOBArz+IBlJ8/zn0hU=;
+        b=peWbWB3Z7l5Xh7WbbaLkP6ex0xBH8RzoW4qJ+A1BLce4QSHH5sypm3/pQ1nKtBfWxo
+         mjoSQXc2BDa9MZN/Omb9klsjghpnDU9aydcyCh8Ro0tx17eVZQH3nXtyB1JxP/gyu68F
+         QdmP396sW7k/roy3L9AEOyHSYc6ZDlyV2ktGuuXgKSFI0PLU744uEI6/OHWjYhcjGX/4
+         fSRe5FbT7c93jribjvk0lQyQxkGUc+Ev7CxnMLEHLw/n7v9PPgeXj7Z3eRPlkTu4asyc
+         s+uoDxltF2QJ4ohmh3okc4cGhWgyM7S8kT1D1vWQkPOC1RcZOQdMq0ZVIQev/8rdgCBS
+         jHCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z4Ume2w83CGfLz5W95CZmWjd4oB3YWF7eatdtPXwYK4=;
-        b=cCAnx5J2tKuKFaa+xk2KWThFFJmtX0YY1d/J4GD/6CYDx5twaY9GXuGX613HVnxLOz
-         dtaWiaxwPpyffarIp8FgD+qvQlJLNsOYR+H5rr1MKMhDAomxHMcDK2Zapmo0BGoVP62f
-         tNu2d2HmV7B8nzgp7j8QJ7VLfoETjq4YWhDDn/vKO316f7aqNxjzRRuV1j5/huDBtC+J
-         xh+91/eQuByPldkSb5JsDma+8wjv/OCPjqRHu2cew23iWVUyqnFJU+SdpPnFr2/TdAEL
-         7klITYZ/Mhymb4oSyIyEosnoW/Z73jWhhf7bnWGtsFPa2Q0Ny1Fy1E7XHpz6w0TFu0zG
-         7DZw==
-X-Gm-Message-State: AOAM531POdFpbVHqFH0R+GR9J12y/6QLv7kdb/Ky7JGMPXos5hVxGvc4
-        4FdJ/DATzXMbdiEc5g/kob5bGpfMR4VMEw==
-X-Google-Smtp-Source: ABdhPJz20RqqXOiERgJuFcsY65Fu0DE+Hcs1kFtiJDxiHsFb/xmYibHE6c8kD/DuiadAz01AjoaGIA==
-X-Received: by 2002:a5d:5227:: with SMTP id i7mr587743wra.68.1610482721711;
-        Tue, 12 Jan 2021 12:18:41 -0800 (PST)
+        bh=FgDqqsHnnRDTaA/0ja+ZvMf8GdOBArz+IBlJ8/zn0hU=;
+        b=TFVz+lR0F7zDAeClCsjXQRgs0dYbaxjJqNv20+Nyq5qWri5BD3k26+57Wrg8GL9CbL
+         AQ206JaaT4+vV/pJbAc7FzVYY4Ik3gR5sMQGQT4HLqZeqFmqvM6fmz6MOMvzpvjcdnE/
+         +RSsuq8vvU223I2A3Z+IQeONCmi6fFeB0EY/CvnFY/znrverso7gCu+y7NNDFz6KLK9/
+         QYAWMH/mU/40lWz1NpQIbS4Mq8mT5RAS2aDYQ+Hhp4o6N7GsOBd1vgJ4uc1qkPZNWK7r
+         0tFB77fB5fzJ6N+3m7qxhHzvESEvGByED534eBc2p/4Z0C6so7p39BpmA4UAK6hNg0R3
+         gC7g==
+X-Gm-Message-State: AOAM5320EiFKN8Juj4znr4PY2/nRd4lCbUoq+e2kPewfYBd8vGw/Mt8Z
+        0T8jRZs7sxJDGRF+eGOkiKxfGc8cWIaSbw==
+X-Google-Smtp-Source: ABdhPJw5XBrLS+ZaOPG3d0XAE/sgLjVhdTAhE/pMEMKegL8Pck3D7m4Py4PNpibONnrw9G/P4UZyYA==
+X-Received: by 2002:a1c:4489:: with SMTP id r131mr936266wma.24.1610482719560;
+        Tue, 12 Jan 2021 12:18:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.39
+        by smtp.gmail.com with ESMTPSA id c10sm7095374wrb.92.2021.01.12.12.18.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 12:18:40 -0800 (PST)
+        Tue, 12 Jan 2021 12:18:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 16/22] tests: refactor a few tests to use "test_commit --append"
-Date:   Tue, 12 Jan 2021 21:18:00 +0100
-Message-Id: <20210112201806.13284-17-avarab@gmail.com>
+Subject: [PATCH 15/22] test-lib functions: add an --append option to test_commit
+Date:   Tue, 12 Jan 2021 21:17:59 +0100
+Message-Id: <20210112201806.13284-16-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20210105130359.21139-1-avarab@gmail.com>
 References: <20210105130359.21139-1-avarab@gmail.com>
@@ -77,95 +77,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor a few more tests to use the new "--append" option to
-"test_commit". I added it for use in the mailmap tests, but this
-demonstrates how useful it is in general.
+Add an --append option to test_commit to append <contents> to the
+<file> we're writing to. This simplifies a lot of test setup, as shown
+in some of the tests being changed here.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1412-reflog-loop.sh   |  7 ++-----
- t/t2012-checkout-last.sh | 12 +++---------
- t/t7810-grep.sh          | 18 +++---------------
- 3 files changed, 8 insertions(+), 29 deletions(-)
+ t/t4203-mailmap.sh      | 39 +++++++--------------------------------
+ t/test-lib-functions.sh | 14 +++++++++++++-
+ 2 files changed, 20 insertions(+), 33 deletions(-)
 
-diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
-index 3acd895afb..977603f7f1 100755
---- a/t/t1412-reflog-loop.sh
-+++ b/t/t1412-reflog-loop.sh
-@@ -4,11 +4,8 @@ test_description='reflog walk shows repeated commits again'
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 2b342d7f7c..5d92880a5a 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -5,14 +5,8 @@ test_description='.mailmap configurations'
  . ./test-lib.sh
  
- test_expect_success 'setup commits' '
+ test_expect_success 'setup commits and contacts file' '
+-	echo one >one &&
+-	git add one &&
 -	test_tick &&
--	echo content >file && git add file && git commit -m one &&
--	git tag one &&
--	echo content >>file && git add file && git commit -m two &&
--	git tag two
-+	test_commit one file content &&
-+	test_commit --append two file content
- '
- 
- test_expect_success 'setup reflog with alternating commits' '
-diff --git a/t/t2012-checkout-last.sh b/t/t2012-checkout-last.sh
-index e7ba8c505f..c95aa3e78f 100755
---- a/t/t2012-checkout-last.sh
-+++ b/t/t2012-checkout-last.sh
-@@ -5,13 +5,9 @@ test_description='checkout can switch to last branch and merge base'
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
--	echo hello >world &&
--	git add world &&
 -	git commit -m initial &&
-+	test_commit initial world hello &&
- 	git branch other &&
--	echo "hello again" >>world &&
--	git add world &&
--	git commit -m second
-+	test_commit --append second world "hello again"
- '
- 
- test_expect_success '"checkout -" does not work initially' '
-@@ -93,9 +89,7 @@ test_expect_success 'switch to twelfth from the last' '
- 
- test_expect_success 'merge base test setup' '
- 	git checkout -b another other &&
--	echo "hello again" >>world &&
--	git add world &&
--	git commit -m third
-+	test_commit --append third world "hello again"
- '
- 
- test_expect_success 'another...master' '
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 991d5bd9c0..312e0f8cb4 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -687,21 +687,9 @@ test_expect_success 'grep -C1 hunk mark between files' '
- '
- 
- test_expect_success 'log grep setup' '
--	echo a >>file &&
+-	echo two >>one &&
+-	git add one &&
 -	test_tick &&
--	GIT_AUTHOR_NAME="With * Asterisk" \
--	GIT_AUTHOR_EMAIL="xyzzy@frotz.com" \
--	git commit -a -m "second" &&
+-	git commit --author "nick1 <bugs@company.xx>" -m second
++	test_commit initial one one &&
++	test_commit --author "nick1 <bugs@company.xx>" --append second one two
+ '
+ 
+ test_expect_success 'check-mailmap no arguments' '
+@@ -436,30 +430,11 @@ test_expect_success 'Shortlog output (complex mapping)' '
+ 	Santa Claus <santa.claus@northpole.xx> <me@company.xx>
+ 	EOF
+ 
+-	echo three >>one &&
+-	git add one &&
+-	test_tick &&
+-	git commit --author "nick2 <bugs@company.xx>" -m third &&
 -
--	echo a >>file &&
+-	echo four >>one &&
+-	git add one &&
 -	test_tick &&
--	git commit -a -m "third" &&
+-	git commit --author "nick2 <nick2@company.xx>" -m fourth &&
 -
--	echo a >>file &&
+-	echo five >>one &&
+-	git add one &&
 -	test_tick &&
--	GIT_AUTHOR_NAME="Night Fall" \
--	GIT_AUTHOR_EMAIL="nitfol@frobozz.com" \
--	git commit -a -m "fourth"
-+	test_commit --append --author "With * Asterisk <xyzzy@frotz.com>" second file a &&
-+	test_commit --append third file a &&
-+	test_commit --append --author "Night Fall <nitfol@frobozz.com>" fourth file a
- '
+-	git commit --author "santa <me@company.xx>" -m fifth &&
+-
+-	echo six >>one &&
+-	git add one &&
+-	test_tick &&
+-	git commit --author "claus <me@company.xx>" -m sixth &&
+-
+-	echo seven >>one &&
+-	git add one &&
+-	test_tick &&
+-	git commit --author "CTO <cto@coompany.xx>" -m seventh &&
++	test_commit --author "nick2 <bugs@company.xx>" --append third one three &&
++	test_commit --author "nick2 <nick2@company.xx>" --append fourth one four &&
++	test_commit --author "santa <me@company.xx>" --append fifth one five &&
++	test_commit --author "claus <me@company.xx>" --append sixth one six &&
++	test_commit --author "CTO <cto@coompany.xx>" --append seventh one seven &&
  
- test_expect_success 'log grep (1)' '
+ 	cat >expect <<-EOF &&
+ 	$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> (1):
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 529f6264fe..b0a5d74dc7 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -183,6 +183,9 @@ debug () {
+ #	Run all git commands in directory <dir>
+ #   --notick
+ #	Do not call test_tick before making a commit
++#   --append
++#	Use "echo >>" instead of "echo >" when writing "<contents>" to
++#	"<file>"
+ #   --signoff
+ #	Invoke "git commit" with --signoff
+ #   --author=<author>
+@@ -195,6 +198,7 @@ debug () {
+ 
+ test_commit () {
+ 	notick= &&
++	append= &&
+ 	author= &&
+ 	signoff= &&
+ 	indir= &&
+@@ -204,6 +208,9 @@ test_commit () {
+ 		--notick)
+ 			notick=yes
+ 			;;
++		--append)
++			append=yes
++			;;
+ 		--author)
+ 			author="$2"
+ 			shift
+@@ -223,7 +230,12 @@ test_commit () {
+ 	done &&
+ 	indir=${indir:+"$indir"/} &&
+ 	file=${2:-"$1.t"} &&
+-	echo "${3-$1}" > "$indir$file" &&
++	if test -n "$append"
++	then
++		echo "${3-$1}" >>"$indir$file"
++	else
++		echo "${3-$1}" >"$indir$file"
++	fi &&
+ 	git ${indir:+ -C "$indir"} add "$file" &&
+ 	if test -z "$notick"
+ 	then
 -- 
 2.29.2.222.g5d2a92d10f8
 
