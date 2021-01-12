@@ -2,72 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C1D0C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 13:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBC7C433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:01:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AF8A22285
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 13:33:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EAD52312C
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 14:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731395AbhALNdZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 08:33:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S2387616AbhALOBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 09:01:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730958AbhALNdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 08:33:24 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51C5C061794
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 05:32:43 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id lt17so3567218ejb.3
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 05:32:43 -0800 (PST)
+        with ESMTP id S1728482AbhALOBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 09:01:14 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB64CC061575
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 06:00:33 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id t16so3602558ejf.13
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 06:00:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=EnIo5esE37W6S9SYICP3hUVCZBpwHE4qKxgruqvFhGI=;
-        b=MxRofpkyNTwzT7FbBGvsmggqJSKWO6lDA58/AAuHr8mjwMnx9BqLcUoaPoQPSM9El6
-         MV6Nn38+7kFbrDe/0huVuh1oXJUliMjPssxCeyCHZ6ThUtwHVNZukrMn9WlietUWcGJM
-         OzNTlGDOOjI9MSjqgWLV5+GIzRERCVScjxMeQgNffwxkQY63TUDKCroPLY9x+l/Dp25q
-         wG8AJ8uX0ugEKp+yTQ+KLoOAcsJ4QBbMkKgr/VWNigwp1nbczaWBM/GDJbtlZpN1g++e
-         /BCFUdPDZw0fB3hHWqk9+THPoN8+nlL0YuiU6xCJAcGZV2pEgoU5qybIMbAn2aCtXEXG
-         ECQg==
+        bh=dOW6X2x4PK/bv3KiTRf2yPqQPcdMVAeBsnifWZRWDp4=;
+        b=o8OrVKDbQhpGJDg9ihAzsyR/FXG9Je+W5Jj/DK7ZHGFwNusKSIKmE8m3/WfQTkR336
+         py2mA2Bw741hTrjhr0DfW1PuMvL6V/nNMhn+nfGO7qifeXWizJRPork2EUr2lAGyNnx0
+         KAw6+RopfwWCzEnU14WydvMlHSKjyw14A12ZLDKbMyz8Amz86NMcY3rVukcM4qyuyBHm
+         1VG/Yec1U95pLV3kpUUoEdEgdKqcysPgdKdWrLS9tNtWmACKKr9oMOizpV95mz034ojv
+         gTFzqTbB77MG2VJwTox0mIUe1seXc0jf5UnhWyd0GbM2NRfypNvBk8DD986de+8ngbKf
+         iqAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=EnIo5esE37W6S9SYICP3hUVCZBpwHE4qKxgruqvFhGI=;
-        b=uPt92nN2/nRUC3gRO7EKW/kxPV16qDaHCeB7pEYifuqR2NNfEjEhv2G6xOsTW7eup8
-         7YKZr5dVNlwrzZWLftanT2V27xrDq6Wo7uagVxCQSLHO/Hs4M0EayqpRDoFKufXVi5w8
-         zkPDw+srwdgGMGtZ+qlYTiLdn8kDKOwpXuqRvAwk3AcqCeaN9Bkm1f14DWuqoPy7NiV8
-         dZoToIdJAVAaeK9E8tY7KnX98vTDHreEaEjSiAEQzneLom1d3CDm37J2E21vNdCw5mOP
-         9FM6UarJoDhV+0pn5PC02JMD+xbTu1XkGpsS3mawZbIsuSaTW6PUBMg1CfTsyy6BhGPc
-         XEtQ==
-X-Gm-Message-State: AOAM531t7TuejjKLoNbrIk4qXmNL/vvHcgyFMJOLN4hiNJyLq9B3hhOj
-        vInT19WtrBJ1BtZRAnZ7OOceK598nlxrwg==
-X-Google-Smtp-Source: ABdhPJzplmcWcFVXGIkixsR/Zcuq1/FcroKRAWBBZR71aMVaBGRMqfrSM2zaLjVeSB/eg3x0/kFMyg==
-X-Received: by 2002:a17:906:7f91:: with SMTP id f17mr3150470ejr.81.1610458362161;
-        Tue, 12 Jan 2021 05:32:42 -0800 (PST)
+        bh=dOW6X2x4PK/bv3KiTRf2yPqQPcdMVAeBsnifWZRWDp4=;
+        b=FIZuYd3ZChLNa1QGVu8oAcWJH2NfI8tLrDqNxwNTwN5kR6Ft1N0l16hpcJF2sgBi/h
+         fQHwJFsXVeimC6foPX+KbYTU0WvZibBlVUTizOm6ErFGzWeTME0Gv+rmbhtlWpyec9k3
+         ZF7ARa368ILtuBZK/NBDhVDZdyjVx6E3pbOykYYduS+rSCm3SMknMrkiipkrmhtShHrM
+         UnnWeeGA8UMzCiK+E9HHa8JBp9pm1eoYpsNlRyMxtbk0HsFKv6AMoFZeQHzS5Ub4xoUU
+         cmcUH2cyEDiEnc4hE6NTuYrPKnfcZHjSFw+Fgt2JR6sp3M3605T4GfaxxEZggR+rzEj+
+         ET3A==
+X-Gm-Message-State: AOAM532To1EgAiJ1nkjjAynmBHahAlzb+uAJX1AlBAjDqD+nB6NIsyPN
+        0qoguS/hbaj3mYKas6lp5AjR/hU7TOpmwg==
+X-Google-Smtp-Source: ABdhPJwoUKymZS8D5IkAsRZa37cvrn0W6UHVGeKR6AdFHpPfKM+XhuEWet2gGJU7isNYongwl7JhPg==
+X-Received: by 2002:a17:906:90d6:: with SMTP id v22mr3379703ejw.88.1610460032418;
+        Tue, 12 Jan 2021 06:00:32 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id s1sm1244605ejx.25.2021.01.12.05.32.41
+        by smtp.gmail.com with ESMTPSA id h16sm287246edw.34.2021.01.12.06.00.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 05:32:41 -0800 (PST)
+        Tue, 12 Jan 2021 06:00:31 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/11] [RFH] Introduce support for GETTEXT_POISON=rot13
-References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
+References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
+ <871reu752k.fsf@evledraar.gmail.com>
+ <xmqqk0slg5ph.fsf@gitster.c.googlers.com>
+ <X/oosXBJlyt/IrOr@camp.crustytoothpaste.net>
+ <xmqq4kjpelza.fsf@gitster.c.googlers.com>
+ <X/uvhc5Hpu792qA/@camp.crustytoothpaste.net>
+ <xmqqeeir8fdg.fsf@gitster.c.googlers.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <pull.836.git.1610441262.gitgitgadget@gmail.com>
-Date:   Tue, 12 Jan 2021 14:32:40 +0100
-Message-ID: <87mtxe5lhj.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqeeir8fdg.fsf@gitster.c.googlers.com>
+Date:   Tue, 12 Jan 2021 15:00:30 +0100
+Message-ID: <87k0si5k75.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,272 +79,128 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Jan 12 2021, Johannes Schindelin via GitGitGadget wrote:
+On Mon, Jan 11 2021, Junio C Hamano wrote:
 
-> This patch series is incomplete because I lack the time to finish it, and=
- I
-> hope that there are interested developers who can help with it.
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
-> In https://lore.kernel.org/git/20181022153633.31757-1-pclouds@gmail.com/,
-> Duy proposed introducing a fake language they called "Ook" to be able to
-> test translations better. "Ook" would "translate" messages without any
-> printf format specifiers to "Eek", otherwise convert all upper-case lette=
-rs
-> to "Ook" and lower-case letters to "ook".
+>> On 2021-01-09 at 23:20:25, Junio C Hamano wrote:
+>>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>>>=20
+>>> > On 2021-01-09 at 21:28:58, Junio C Hamano wrote:
+>>> >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>> >> > FWIW there was since a re-roll on 2021-01-03, but the discussion is
+>>> >> > sort-of outstanding, so maybe that's intentional...
+>>> >>=20
+>>> >> I had an impression that those 4 or 5 patches haven't gained
+>>> >> concensus that they are good as-is.
+>>> >
+>>> > There will be another reroll.  I'm hoping to get to it this weekend.
+>>>=20
+>>> Thanks.
+>>
+>> Having read =C3=86var's latest comment, I've decided instead to drop thi=
+s, so
+>> feel free to do so whenever it's convenient.
 >
-> G=C3=A1bor replied with a different proposal that has the advantage of be=
-ing
-> bijective, i.e. it is possible to reconstruct the untranslated message fr=
-om
-> the translated one.
+> That's kind of sad.
+
+Agreed. I mean, I'm just one contributor with an opinion. I certainly
+don't mean my "meh" on a patch to be some sort of veto.
+
+If you follow this list you'll see that if you're going to take anyone's
+opinion on whether a thing should make it into git as a matter of
+empirical data on patches I submit that aren't changed meaningfully,
+then, uh, maybe pick someone else :)
+
+> I view that this is the kind of topic where perfect easily can
+> become an enemy of good, as there is by definition no perfection
+> available to us without breaking existing Git.
 >
-> =C3=86var suggested recently
-> [https://lore.kernel.org/git/xmqqim836v6m.fsf@gitster.c.googlers.com/T/#m=
-6fdc43d4f1eb3f20f841096c59e985b69c84875e]
-> that this whole GETTEXT_POISON business is totally useless.
+> I do not know about =C3=86var, but to me, my initial impression while
+> reading the discussion from sideline was that the goal was to
+> prevent a mechanical scan of a recent version of .mailmap from
+> learning that Joe used to use Jane as his/her name, and that was the
+> reason why I asked to be convinced why encoding for obfuscation was
+> insufficient.  In the above, I meant "mechanical scan" as something
+> like "a web search engine crawls and finds a .mailmap---a query for
+> Joe produces a line with some garbage on it that is not Jane." and a
+> casual attacker would stop there.
+>
+> But of course, a casual attacker who knows urlencode or whatever
+> obfuscation in use can read that "garbage" once he/she knows that
+> "garbage" is worth attacking (i.e. it is known to be associated to
+> Joe, the person the attacker is interested in).
+>
+> If your goal is to make it harder than just urlencode, even though
+> we all have to accept that scanning "git log --all" for all names
+> that appear in the history and hashing them all to see what name
+> hashes to the "garbage" in question, then @sha256:<hash> approach
+> does make sense as a stopping point.  Perhaps we need to sell this
+> with a clear definition of what kind of attackes we are protecting
+> the name data from:
+>
+>     The attacker is required to obtain sufficient amount of history
+>     in the project to uncover the obfuscation; a more casual
+>     attackers will fail to uncover, and we declare that it is better
+>     than nothing and it is good enough in practice.
+>
+> or something like that?  I am not sure if I drew the line at the
+> level you intended to draw in the above, if I think that it is good
+> enough in practice, or if I agree to a change that is better than
+> nothing but not good enough in practice, but having such a statement
+> would help to see where we agree or disagree.
 
-To clarify what I really mean, but admittedly am not always the best at
-articulating: I do not think GETTEXT_POISON is useless, it's useful.
+My reading of the general thread & brian's reply at [1] is that the
+difference in the minds of the users who want the feature (who're not
+on-list, and we're getting brian's's summary of their views) is closer
+to:
 
-The interesting question is "useful enough to bother?", or in economics
-terms "is this investment in time/money worth the opportunity cost?".
+    We want the X-Y problem of "hide this data" solved with solution "Y"
+    because git's current tooling to retrieve the data is currently
+    rather tedious & obscure.
 
-Any hoops we make people jump through when writing tests takes away time
-and attention from other things.
+So when I asked whether those users would feel the same if the tooling
+was less tedious and suggested that I might patch it to be so brian
+replied with "[yes,] we do rely on this being inconvenient".
 
-My motivation here is that I feel this whole poison business is all my
-fault. Every time some newbie submits a patch and needs to re-roll a v2
-because they used "grep" instead of "test_i18ngrep" in a case that
-clearly didn't involve a plumbing string I cringe a little about the
-technical debt.
+I do have a 20-something series patch to the mailmap code in my local
+queue that in the light of this series's status I think I'll submit
+soon.
 
-So while I still think my series (just nuke it) would be better overall,
-I'm secretly rooting for yours. If the consensus is that this is worth
-keeping and improving perhaps we haven't been mostly wasting our time :)
+It doesn't have anything to do with adding a "spew out a materialized
+map" feature currently, nor do I really plan to do that any time soon. I
+do genuinely think it would be a good addition to git for reasons that
+have nothing to do with trying to make a point about this
+series. E.g. you'd be able to more easily validate/check/fsck a mailmap
+that way. Or e.g. use a git repository's .mailmap as a source to export
+to your MTA rules or whatever.
 
-On to discussing this series:
+The external tools I referred to which consume the exported .mailmap
+data are something I worked on at a previous job, but I no longer have
+that immediate itch to scratch personally.
 
-> I do not believe that it is useless. To back up my belief with something
-> tangible, I implemented a GETTEXT_POISON=3Drot13 mode and ran the test su=
-ite
-> to see whether we erroneously expect translated messages where they aren'=
-t,
-> and related problems.
+The "march of history" point was rather that if the difference between
+URI encoding and this solution is current tooling, it seems all but
+inevitable that we'll bridge that gap sooner than later in a way that
+makes that difference useless to some of the users that want this now.
 
-I agree that rot13ing it makes it much more useful in the sense that
-before we could over-tag things with test_i18n* and we'd just "return 0"
-there in the poison mode, now we actually check if the string is
-poisoned.
+And not even because some people don't like this feature in particular
+and wish to submit patches to make it less useful. But just because we
+continue implementing stuff that's been talked about for years & is
+being generally slowly worked towards. E.g. more client<->server
+cooperation for expensive queries over protocol v2, or a filter clone
+mode where you get only commit objects.
 
-We could get most of the way there by checking e.g. if "GETTEXT POISON"
-is in the output, but it wouldn't assert that the message is 100%
-translated as this WIP series does.
+It even seems like something brian's series itself could benefit
+from. I.e. having the hashed values in the history is a performance hit
+in some cases. The patch caches the computation.
 
-In our off-list discussion you maintained that
-"GIT_TEST_GETTEXT_POISON=3Dfalse <cmd>" was an anti-pattern. Was it
-because you thought "test_i18n*" et al was actually doing some "is
-poison?" comparison as we now do, or just because you didn't
-conceptually like a pattern like:
+Another way to do it would be to just save a
+".git/objects/info/mailmap.{hash-of-original-file}". Either on the fly
+or generated by "maintenance" or whatever. It would guarantee a 0%
+performance hit. At that point we'd already have the plumbing to
+materialize the file & would need to go out of our way to make it
+inaccessible in porcelain.
 
-    GIT_TEST_GETTEXT_POISON=3Dfalse git cmd >out &&
-    grep string out
-
-Being changed later to:
-
-    GIT_TEST_GETTEXT_POISON=3Dfalse git cmd >out &&
-    grep string out &&
-    grep plumbing-string out
-
-Or whatever, as opposed to:
-
-    git cmd >out &&
-    test_i18ngrep string out &&
-    test_i18ngrep plumbing-string out
-
-I get the aesthetic preference, I'm just wondering if I'm missing
-something else about it...
-
-> And the experiment delivered. It is just a demonstration (I only addresse=
-d a
-> handful of the test suite failures, 124 test scripts still need to be
-> inspected to find out why they fail), of course. Yet I think that finding
-> e.g. the missing translations of sha1dc-cb and parse-options show that it
-> would be very useful to complete this patch series and then use the rot13
-> mode in our CI jobs (instead of the current GETTEXT_POISON=3Dtrue mode, w=
-hich
-> really is less useful).
-
-The following patch on top cuts down on the failures by more than half:
-
------------------
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index 8eef60b43f..f9239d2917 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -17,7 +17,10 @@ export TEXTDOMAINDIR
-=20
- # First decide what scheme to use...
- GIT_INTERNAL_GETTEXT_SH_SCHEME=3Dfallthrough
--if test -n "$GIT_TEST_GETTEXT_POISON" &&
-+if test -n "$GIT_TEST_GETTEXT_POISON" -a "$GIT_TEST_GETTEXT_POISON" =3D "r=
-ot13"
-+then
-+	GIT_INTERNAL_GETTEXT_SH_SCHEME=3Drot13poison
-+elif  test -n "$GIT_TEST_GETTEXT_POISON" &&
- 	    git env--helper --type=3Dbool --default=3D0 --exit-code \
- 		GIT_TEST_GETTEXT_POISON
- then
-@@ -63,6 +66,21 @@ gettext_without_eval_gettext)
- 		)
- 	}
- 	;;
-+rot13poison)
-+	# Emit garbage so that tests that incorrectly rely on translatable
-+	# strings will fail.
-+	gettext () {
-+		printf "%s" "# SHELL GETTEXT POISON #"
-+	}
-+
-+	eval_gettext () {
-+		printf "%s" "# SHELL GETTEXT POISON #"
-+	}
-+
-+	eval_ngettext () {
-+		printf "%s" "# SHELL GETTEXT POISON #"
-+	}
-+	;;
- poison)
- 	# Emit garbage so that tests that incorrectly rely on translatable
- 	# strings will fail.
-diff --git a/t/helper/test-i18n.c b/t/helper/test-i18n.c
-index 82efc66f1f..1f0fa3d041 100644
---- a/t/helper/test-i18n.c
-+++ b/t/helper/test-i18n.c
-@@ -1,6 +1,8 @@
- #include "test-tool.h"
- #include "cache.h"
- #include "grep.h"
-+#include "config.h"
-=20
- static const char *usage_msg =3D "\n"
- "  test-tool i18n cmp <file1> <file2>\n"
-@@ -34,8 +36,12 @@ static size_t unrot13(char *buf)
-=20
- 		p +=3D strlen("<rot13>");
- 		end =3D strstr(p, "</rot13>");
--		if (!end)
--			BUG("could not find </rot13> in\n%s", buf);
-+		if (!end) {
-+			if (git_env_bool("GIT_TEST_GETTEXT_POISON_PEDANTIC", 0))
-+				BUG("could not find </rot13> in\n%s", buf);
-+			else
-+				break;
-+		}
-=20
- 		while (p !=3D end)
- 			*(q++) =3D do_rot13(*(p++));
-@@ -67,8 +73,12 @@ static int i18n_cmp(const char **argv)
-=20
- 	if (strbuf_read_file(&a, path1, 0) < 0)
- 		die_errno("could not read %s", path1);
-+	if (strstr(a.buf, "# SHELL GETTEXT POISON #"))
-+		return 0;
- 	if (strbuf_read_file(&b, path2, 0) < 0)
- 		die_errno("could not read %s", path2);
-+	if (strstr(b.buf, "# SHELL GETTEXT POISON #"))
-+		return 0;
- 	unrot13_strbuf(&b);
-=20
- 	if (a.len !=3D b.len || memcmp(a.buf, b.buf, a.len))
-@@ -79,7 +89,6 @@ static int i18n_cmp(const char **argv)
-=20
- static int i18n_grep(const char **argv)
- {
--	int dont_match =3D 0;
- 	const char *pattern, *path;
-=20
- 	struct grep_opt opt;
-@@ -87,11 +96,6 @@ static int i18n_grep(const char **argv)
- 	struct strbuf buf =3D STRBUF_INIT;
- 	int hit;
-=20
--	if (*argv && !strcmp("!", *argv)) {
--		dont_match =3D 1;
--		argv++;
--	}
--
- 	pattern =3D *(argv++);
- 	path =3D *(argv++);
-=20
-@@ -104,13 +108,15 @@ static int i18n_grep(const char **argv)
-=20
- 	if (strbuf_read_file(&buf, path, 0) < 0)
- 		die_errno("could not read %s", path);
-+	if (strstr(buf.buf, "# SHELL GETTEXT POISON #"))
-+		return 0;
- 	unrot13_strbuf(&buf);
- 	grep_source_init(&source, GREP_SOURCE_BUF, path, path, path);
- 	source.buf =3D buf.buf;
- 	source.size =3D buf.len;
- 	hit =3D grep_source(&opt, &source);
- 	strbuf_release(&buf);
--	return dont_match ^ !hit;
-+	return !hit;
- }
-=20
- int cmd__i18n(int argc, const char **argv)
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 394fd2ef5b..6c580a3000 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1019,14 +1019,12 @@ test_i18ngrep () {
- 		BUG "too few parameters to test_i18ngrep"
- 	fi
-=20
--	if test_have_prereq !C_LOCALE_OUTPUT
-+	grep_cmd=3Dgrep
-+	if test "$GIT_TEST_GETTEXT_POISON" =3D=3D "rot13"
-+	then
-+		grep_cmd=3D"test-tool i18n grep"
-+	elif test_have_prereq !C_LOCALE_OUTPUT
- 	then
--		if test rot13 =3D "$GIT_TEST_GETTEXT_POISON"
--		then
--			test-tool i18n grep "$@"
--			return $?
--		fi
--
- 		# pretend success
- 		return 0
- 	fi
-@@ -1034,13 +1032,13 @@ test_i18ngrep () {
- 	if test "x!" =3D "x$1"
- 	then
- 		shift
--		! grep "$@" && return 0
-+		! $grep_cmd "$@" && return 0
-=20
--		echo >&4 "error: '! grep $@' did find a match in:"
-+		echo >&4 "error: '! $grep_cmd $@' did find a match in:"
- 	else
--		grep "$@" && return 0
-+		$grep_cmd "$@" && return 0
-=20
--		echo >&4 "error: 'grep $@' didn't find a match in:"
-+		echo >&4 "error: '$grep_cmd $@' didn't find a match in:"
- 	fi
-=20
- 	if test -s "$last_arg"
------------------
-
-I.e. most of this was because you didn't add any support for this to the
-shellscript translations.
-
-We still punt on that here, it should ideally preserve the shell
-variables like the format specifiers, but I think that's not worth the
-effort with us actively cutting down our shell code to nothing.
-
-We still have failures e.g. due to "test_i18ngrep -F fixed file" not
-being supported. Wouldn't a better/simpler approach be to just have a
-light rot13 helper, and then call the actual "cmp"/"grep" with the
-munged input/output?
+1. https://lore.kernel.org/git/X%2FtxB8b3%2FqqbwbmC@camp.crustytoothpaste.n=
+et/
