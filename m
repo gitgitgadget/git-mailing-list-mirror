@@ -6,73 +6,61 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3BCEC433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DC7CC433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:59:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66ECE208E4
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:54:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54ED2208E4
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 08:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732777AbhALIyq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 03:54:46 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53076 "EHLO cloud.peff.net"
+        id S2405640AbhALI6l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 03:58:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53088 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728080AbhALIyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 03:54:46 -0500
-Received: (qmail 6220 invoked by uid 109); 12 Jan 2021 08:54:06 -0000
+        id S1727916AbhALI6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 03:58:41 -0500
+Received: (qmail 6339 invoked by uid 109); 12 Jan 2021 08:58:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 08:54:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 08:58:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10916 invoked by uid 111); 12 Jan 2021 08:54:08 -0000
+Received: (qmail 10955 invoked by uid 111); 12 Jan 2021 08:58:02 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 03:54:08 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 03:58:02 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Jan 2021 03:54:05 -0500
+Date:   Tue, 12 Jan 2021 03:57:59 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 05/20] check_object(): convert to new revindex API
-Message-ID: <X/1jrSMU71BLWgm5@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH 07/20] show_objects_for_type(): convert to new revindex
+ API
+Message-ID: <X/1klwe44go+A+Xi@coredump.intra.peff.net>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <c47e77a30eb40d9841a60a28b620671860dc2461.1610129796.git.me@ttaylorr.com>
- <b1a6110a-a097-931f-5710-92a1f59a842b@gmail.com>
- <X/x5tdbM3PzkqbFQ@nand.local>
+ <bc67bb462ae0c87b34e46568d54b170a8aec870b.1610129796.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <X/x5tdbM3PzkqbFQ@nand.local>
+In-Reply-To: <bc67bb462ae0c87b34e46568d54b170a8aec870b.1610129796.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11, 2021 at 11:15:49AM -0500, Taylor Blau wrote:
+On Fri, Jan 08, 2021 at 01:17:09PM -0500, Taylor Blau wrote:
 
-> On Mon, Jan 11, 2021 at 06:43:23AM -0500, Derrick Stolee wrote:
-> > > @@ -1813,11 +1813,11 @@ static void check_object(struct object_entry *entry, uint32_t object_index)
-> > >  				goto give_up;
-> > >  			}
-> > >  			if (reuse_delta && !entry->preferred_base) {
-> > > -				struct revindex_entry *revidx;
-> > > -				revidx = find_pack_revindex(p, ofs);
-> > > -				if (!revidx)
-> > > +				uint32_t pos;
-> > > +				if (offset_to_pack_pos(p, ofs, &pos) < 0)
-> >
-> > The current implementation does not return a positive value. Only
-> > -1 on error and 0 on success. Is this "< 0" doing anything important?
-> > Seems like it would be easiest to do
-> >
-> > 	if (offset_to_pack_pos(p, ofs, &pos))
-> >
-> > [snip]
-> 
-> Either would work, of course. I tend to find the '< 0' form easier to
-> read, but I may be in the minority there. For me, the negative return
-> value makes clear that the function encountered an error.
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index d6861ddd4d..80c57bde73 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -711,21 +711,22 @@ static void show_objects_for_type(
+>  
+>  		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
+>  			struct object_id oid;
+> -			struct revindex_entry *entry;
+> -			uint32_t hash = 0;
+> +			uint32_t hash = 0, n;
+> +			off_t ofs;
 
-I'll throw in my opinion that "< 0" to me much more clearly signals "did
-an error occur". And that same form can be used consistently with
-functions which _do_ have a positive return value on success, too. So I
-prefer it for readability.
+A minor nit, but "n" isn't very descriptive. It's not in scope for very
+long, so that's not too bad, but there are two positions at work in this
+function: the pos/offset bit position, and the index position. Maybe
+"index_pos" would be better than "n" to keep the two clear?
 
 -Peff
