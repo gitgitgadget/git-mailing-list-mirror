@@ -2,78 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5FD8C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D18B3C433DB
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7DFD9223E8
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91B73223E8
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 09:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388965AbhALJH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 04:07:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53102 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730466AbhALJH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 04:07:27 -0500
-Received: (qmail 6586 invoked by uid 109); 12 Jan 2021 09:06:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Jan 2021 09:06:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11032 invoked by uid 111); 12 Jan 2021 09:06:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Jan 2021 04:06:48 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 12 Jan 2021 04:06:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH 09/20] try_partial_reuse(): convert to new revindex API
-Message-ID: <X/1mpl/ZmL4NPIEm@coredump.intra.peff.net>
-References: <cover.1610129796.git.me@ttaylorr.com>
- <54f4ad329f56808432549aa885f2847d5c9a8ac6.1610129796.git.me@ttaylorr.com>
+        id S2387825AbhALJHx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 04:07:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52300 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727750AbhALJHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 04:07:52 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81E6C061794
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 01:07:11 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id k10so1201153wmi.3
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 01:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UBZqa/OdvJ9JMaBWYCUGu64VgZWa3o8EMAzryiXGEkE=;
+        b=KlRwLQWRQjf7tmJkJKh39YuF0e+o9KGwErsGv0b0J1wYnC0Ve6wp1M37n4hcaBgct1
+         jr/BtSRG4TVbpdhHKoY+gqaAToSeAsRVJQb7eX+5KVYFZjCFQmToAhOmakUAX3/qp5Pq
+         XM0aAJsaksCBDV6JP0O9IDA8K3ibSLjCMA8zJt9OopxjBM8TSRpqeM9vzNWyN4mlFM/o
+         lArqkblduZjCEs5XkXbO30V8DmfkezbY4380/4z5buAYufDdCLLE5Ek789FaaChehGxe
+         UVwo2qgF0IChTY/SBxFiQpAPnlZS6mPIa5aep4IStk9IpvtTc8A+2qh6MFhdUr7T1X9o
+         BcAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UBZqa/OdvJ9JMaBWYCUGu64VgZWa3o8EMAzryiXGEkE=;
+        b=au3nKgRUIdIaky6+gPC0H4QBtVH62iedGkqTYdm/rSCwqjgVDA+GRRllmZN88DHOL8
+         5AXQb+nIhnzQocPheHNdeIHwrWZyryJd7QaKmsbKOPD9q1y4KaXu6Lb+TJY7gBFC5ai6
+         5/o0JHRUFYsRLwd4vhJFCFlSs9p2DyW4GjCgN6C7f10qLiQKpkGlfsqfcOKnY906jiu9
+         kCVY/SHvpYLJz/sLGegq7EeI+otyKdf9XalcF/+r5dmcU0zTQSzLL7RvmYgpAlzCwIu2
+         bSWN8nFZfzAV0PFtiwsGDbZkpI2/hiGT6iUju7KfsMQzjN460NIYUdyi4R5PGcJXvZ51
+         1VoQ==
+X-Gm-Message-State: AOAM532bJqVhs4ad5WlbvD8r6At78igHe2ZAvsmnJhhoDGLakzDyMpgY
+        fOUydco9JX6t5U1N2+gspds=
+X-Google-Smtp-Source: ABdhPJx+s8XfNXhbvQzcYvIRRuleQY1MzXEdhSLpfGSwYDGoS6QHePAs7aTfgbtoLCFTUekWVo/6uw==
+X-Received: by 2002:a1c:790f:: with SMTP id l15mr2564677wme.188.1610442430267;
+        Tue, 12 Jan 2021 01:07:10 -0800 (PST)
+Received: from szeder.dev (84-236-109-1.pool.digikabel.hu. [84.236.109.1])
+        by smtp.gmail.com with ESMTPSA id m82sm2840695wmf.29.2021.01.12.01.07.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Jan 2021 01:07:10 -0800 (PST)
+Date:   Tue, 12 Jan 2021 10:07:08 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 01/11] tests: remove unnecessary
+ GIT_TEST_GETTEXT_POISON=false constructs
+Message-ID: <20210112090708.GW8396@szeder.dev>
+References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
+ <004f90026031cb7ce71689481fabd27aa63485dd.1610441263.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <54f4ad329f56808432549aa885f2847d5c9a8ac6.1610129796.git.me@ttaylorr.com>
+In-Reply-To: <004f90026031cb7ce71689481fabd27aa63485dd.1610441263.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 01:17:17PM -0500, Taylor Blau wrote:
-
-> Remove another instance of direct revindex manipulation by calling
-> 'pack_pos_to_offset()' instead (the caller here does not care about the
-> index position of the object at position 'pos').
+On Tue, Jan 12, 2021 at 08:47:32AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> Somewhat confusingly, the subsequent call to unpack_object_header()
-> takes a pointer to &offset and then updates it with a new value. But,
-> try_partial_reuse() cares about the offset of both the base's header and
-> contents. The existing code made a copy of the offset field, and only
-> addresses and manipulates one of them.
+> The idea of the `GETTEXT_POISON` mode is to test translated messages, at
+> least _somewhat_.
 > 
-> Instead, store the return of pack_pos_to_offset twice: once in header
-> and another in offset. Header will be left untouched, but offset will be
-> addressed and modified by unpack_object_header().
+> There is not really any point in turning off that mode by force, except
+> _maybe_ to test the mode itself.
+> 
+> So let's avoid overriding `GIT_TEST_GETTEXT_POISON` in the test suite
+> unless testing the `GETTEXT_POISON` functionality itself.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-I had to read these second two paragraphs a few times to parse them.
-Really we are just replacing revidx->offset with "header", and "offset"
-retains its same role within the function.
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index a1c4f1f6d40..e5adee27d41 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2363,7 +2363,6 @@ test_expect_success 'sourcing the completion script clears cached commands' '
+>  '
+>  
+>  test_expect_success 'sourcing the completion script clears cached merge strategies' '
+> -	GIT_TEST_GETTEXT_POISON=false &&
 
-So it's definitely doing the right thing, but it makes more sense to me
-as:
+I think this change caused the failure in t9902 that you mentioned in
+the cover letter.  
 
-  Note that we cannot just use the existing "offset" variable to store
-  the value we get from pack_pos_to_offset(). It is incremented by
-  unpack_object_header(), but we later need the original value. Since
-  we'll no longer have revindex->offset to read it from, we'll store
-  that in a separate variable ("header" since it points to the entry's
-  header bytes).
+If 'git merge' is invoked with a nonexisting merge strategy, then it
+errors out with an error message that contains a list of available
+merge strategies.  The completion script relies on this behavior and
+"parses" this error message to get the available merge strategies, but
+it breaks when it can't find the expected text because it was
+poisoned.
 
-Another option would be to just call pack_pos_to_offset() again for the
-later call. Like the code it's replacing, it's constant-time anyway. But
-I think the "header" variable actually makes things more readable.
-
--Peff
+>  	__git_compute_merge_strategies &&
+>  	verbose test -n "$__git_merge_strategies" &&
+>  	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
+> -- 
+> gitgitgadget
+> 
