@@ -2,84 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F371AC43381
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6746CC4332D
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C23F923122
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 246D723122
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 21:41:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438157AbhALVh7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 16:37:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38542 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437113AbhALVIG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 16:08:06 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31891C061575
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 13:07:26 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id 19so3232615qkm.8
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 13:07:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=57KmgMQsyTSzqwudZ2jwxQdPLqIxJ7MaS3SLHy6LgtY=;
-        b=QMlZmE93odTEKQV0W+LravnepHNv9Tj3e5XOwg7ZqZtHj/qVP5Q75+jzzlgVlr/hJL
-         wDfxz+g4c0x0yI6KbuI06McuM2DHIJtXwMU/uE9FKZ55W1Nr/1h+wPf9TKbauDxw+7r0
-         CtST8jA/30h/DnZaDm/u4RJ2qRvk6jxOVuniMDTB7vbQfB2rDjAsqFzdwNp8qqRrZufB
-         pSh7Q8uB4bznPGEoJl2IWihcs/dpkIcKSB0b4h+xd53pVPDPf3tVk06xR1j/KTnLAbS4
-         zdAWKm0GsB1nwvsIM0lj8mQy93iaGg67/nz3fCwUivNeHubFCTnXdVldWmDByQba9uVA
-         lEGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=57KmgMQsyTSzqwudZ2jwxQdPLqIxJ7MaS3SLHy6LgtY=;
-        b=jIUGLpm93WFxC+P2QrMFK93hffs6EV7P1tUh58d3mI53nePX1+JfR5QL2Eiri81Srn
-         WEC1ar185MzoEOpMWbDN6HCtuN2/xltj+GOY7CGkIyht0TVzFIFA503JWZBBfHww8bFu
-         NfFBoetwHIjzZ5bA2ehagjZuqCl9nhpQnAp5PTW5v7QdmdJspwL4BHIcHJZBNcTDfOKQ
-         SLipMYUokALqE8YalzQtMhLw11nEkz2IOI5oApVSeGcTurO6pDEaPwGpnajO6JHReIq9
-         yllU5VUFDi/+Q5MI3l30GJKtEIlYMbLmnmslvAAZEO1LCxXGYEJ2iFXHbID2rcWKBKLb
-         dkdA==
-X-Gm-Message-State: AOAM531fnRLHIET0CGZK9Y9BXjKwgj6EA7uZyIxMGqnCeTKeFLdvDPGx
-        RKd0Ve8yPKsBMEHubmZoci4jLw==
-X-Google-Smtp-Source: ABdhPJxNDf6XM81TSW+oCKt7YIOrvTzaVii10Ww1rc9gsCAaYDBfw9ZxAfL3BjzwV7FZ11iGoR3gMw==
-X-Received: by 2002:ae9:ef88:: with SMTP id d130mr1464773qkg.92.1610485645430;
-        Tue, 12 Jan 2021 13:07:25 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:f17c:3911:cace:ed91])
-        by smtp.gmail.com with ESMTPSA id q185sm2024490qka.96.2021.01.12.13.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 13:07:24 -0800 (PST)
-Date:   Tue, 12 Jan 2021 16:07:22 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Subject: Re: [PATCH] refs: Always pass old object name to reftx hook
-Message-ID: <X/4Pin4Zdf58n1jc@nand.local>
-References: <d255c7a5f95635c2e7ae36b9689c3efd07b4df5d.1604501894.git.ps@pks.im>
- <X8n1Qf7TJyqIOE/l@ncase>
+        id S2437050AbhALVh4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 16:37:56 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52721 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2437095AbhALU74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 15:59:56 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 575629D542;
+        Tue, 12 Jan 2021 15:59:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JKxuDHiGTQ1souFqFlQeO03bvNE=; b=L0AaEf
+        NH4AbqBYgPdaMDdT4wYD9Ywub0J4cc0ZDNiqX5/oLzycq04xH39EE4F07wEXsS+z
+        PEZd/SoqOPe78vkGYbcIBlFxG76a38N/wTbrMb3sq5AHIDtT7t4CHVYnF70uJ6YP
+        uCq1MS8n8kx5fZG7xnJsMwFep3k20mqvvm+Ts=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=crTpGf6hPKFELCI+gzNDSDaPSR+Z0qsu
+        hZff5TK3lOUnSq0kFpvrYSNBxxdp6pc9EZsd7JiMe0SPpWUo93EmsvHDR8fLfdeS
+        ShHm3zUe82QMaQ9WD1LMAB/3Wtz36SpnflnL9/vcVOuq6/O069aipE6j0HA6vspT
+        huezWzXzoOs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ED839D541;
+        Tue, 12 Jan 2021 15:59:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC8539D540;
+        Tue, 12 Jan 2021 15:59:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 2/2] fetch-pack: refactor writing promisor file
+References: <20210112082159.2277214-1-chriscool@tuxfamily.org>
+        <20210112082159.2277214-2-chriscool@tuxfamily.org>
+Date:   Tue, 12 Jan 2021 12:59:13 -0800
+In-Reply-To: <20210112082159.2277214-2-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Tue, 12 Jan 2021 09:21:59 +0100")
+Message-ID: <xmqqwnwh3m8u.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X8n1Qf7TJyqIOE/l@ncase>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 069F534C-5519-11EB-AB27-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 04, 2020 at 09:37:21AM +0100, Patrick Steinhardt wrote:
-> Quick ping on this patch. Is there any interest or shall I just drop it?
+Christian Couder <christian.couder@gmail.com> writes:
 
-Apologies for completely dropping this from inbox. I am interested in
-it, and the patch looks good to me. I suspect the reason that this never
-got queued was that nobody reviewed it.
+> +void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
+> +{
+> +	int i;
+> +	FILE *output = xfopen(promisor_name, "w");
+> +
+> +	for (i = 0; i < nr_sought; i++)
+> +		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
+> +			sought[i]->name);
+> +	fclose(output);
+> +}
 
-Would you consider resubmitting this patch if you are still interested
-in pushing it forwards?
+Ah, nevermind.  This has its output format baked into the code and
+it wants to show object name and which ref it is on, so as long as
+we are happy with the format (do we read the contents and use it in
+any way, by the way?), it is reasonable to expect any new caller to
+have "struct ref" or an array of it.
 
-
-Thanks,
-Taylor
+Thanks.
