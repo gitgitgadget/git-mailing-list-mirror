@@ -2,212 +2,264 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88749C433E0
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4451AC433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A95923109
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:23:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3A572310A
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 12:27:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387436AbhALMXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 07:23:37 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:48839 "EHLO
+        id S1729077AbhALM1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 07:27:49 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:40211 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1733275AbhALMXf (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:23:35 -0500
+        by vger.kernel.org with ESMTP id S1726986AbhALM1s (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 12 Jan 2021 07:27:48 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id E1C4C1B13;
-        Tue, 12 Jan 2021 07:22:44 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id 5145AC6F;
+        Tue, 12 Jan 2021 07:26:42 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:22:45 -0500
+  by compute1.internal (MEProxy); Tue, 12 Jan 2021 07:26:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=Tg8T4zOKHsQHpffszL/qOmLcRnd
-        D2rYgREUUJmodj9s=; b=tKL+ZVZQLce0gL/V11l/vrq5TbGDCvHVXEhIANmdagT
-        JBURaOPPMXXw8BQHu/3gxfd/vfzSDsGdm7PYjiZgojfXcvY/pCuQoPUlKlIX9Im7
-        A2BX2CA6SZNJgZKuMi5S4n2S0CHApP/hM40jt6UVp1Jr4/ZyZLLE47fWuc/xACu6
-        q1a9GFYrs3y4IV/4Ved7iXF/tkiJam4agByaPOKO9Hhr/C1khQ7ZuhIEDpx3DyBF
-        bA30aR1uBMMvA8oamUL1JTim5/K13Gfo2+xRTOXQgUjBZhGVMQAUergGk9S7ezUq
-        /B6uPevj4G6l96XWQQRfrS3cUTHUhqhwjYYyH3XO9gA==
+        :content-type:in-reply-to; s=fm3; bh=+3brR5rume6RX62PCUesBzmbqiO
+        yraxM5DrGSa33K0Y=; b=St9GNoRmD7fK6F9ajgWBdSgNCD7tsWXtewSgVM8U73K
+        yFsDB51n3ekABH7pRLQxKZ81JjYaahma0EzBpb3Mof/U/Fef5FQ+VI8QOZKuhcTM
+        AvT5yj8PpB7ROKgh+bNuw8gh48zMfXq7E3Vl2ELy2I9yr+hNDCoKgKWmJnqReMSL
+        jOoExIDJ0yxiya47d0W31fRGWFlUoF/JPlW7COyWAgZBNWM2nV6HYOo/QGcaaZP0
+        Mz9+t8PAx2lCzHqYSAUZzOPJFjSAWP7Q1+nfwZyGoOvZl2KwHML0NmeOqK8HYqIz
+        49h5G+rqlfdCAFZFtO+vxuVdc8+n9FqB42NV4ttsWWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Tg8T4z
-        OKHsQHpffszL/qOmLcRndD2rYgREUUJmodj9s=; b=iGHRVWRh18yZCL17Hwop+r
-        mQGQObAyFMyRE2vSAba2Pch7VmN3ofzpUrc0urM+SDxoTcii2ixY3JQxYdOSc14Z
-        sicf3B2NjBLF0G7JIF2pQDGVKzgaNOTrrdO4K/0POEdAvdlTJWrmtF5gv1STjMJM
-        tBW8e5cPxH/G5dGxewHiyZbWZblsDhkLIeDY8cdll6OyfOjxT+jrKvpKL1swldTW
-        x3WNU4yBgQ3O98HKfukUfBhR6+076qx2NfXGpWOrIHhhO4ki+IUo+BlkJ20wfLzA
-        m/JgQ0IruVNSf5dmpJ7vfYan14TRjia857HOfUCAh7y/AFdv5WoprLAR1BQbpF+g
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+3brR5
+        rume6RX62PCUesBzmbqiOyraxM5DrGSa33K0Y=; b=q7AN0P6o1224yf8fi9BYCm
+        1mssv6Wgvmz9vcLbmgpRZX02ETWMGIPwVkYqjZ0Ry2rnKXz0snLGhkXFgcunWNR6
+        dSG9QF72nBnFozOb7YGCTE9gKw8mbhD+92JbpAFRVN8tQ4Vncg7E74oHiLZJWkGJ
+        yKqhYVtyG7FkInfDFTWqkAbu6Nmn0xmM4TRSqrbqCHKAvt+2Dsukh8WHYT6yOyXA
+        xR1TgKz479sIz45gmkV6b4FUCxCaJcr6v8utd+IcQuK+s+5RGh7uZgtRyrkCxocq
+        8Ez0VYJUSWa4Wa70nYn1XQhWH/3879vC/KKiF1eIVYM/oB2N4wL0+zAtf8Jr041A
         ==
-X-ME-Sender: <xms:k5T9X6-cO7Cv98NqWglCtsfz-sZbu6DXwqUgbZkmZQwHqkGVZc0TZw>
-    <xme:k5T9X6sMcRP0cZQAINLEj0Gx9KHLjNaZvnOgJD9l3uXUV2RcC-OGsTut8eA_u9DW4
-    2gE85CqfmWzvYNc7Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgddtjecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:gJX9XzskMImosiRRTcvL9aRjeUWErB_Yqx0b2kCq6MOIqsGcFZdhkQ>
+    <xme:gJX9X0eLZoKj_rXavWnR-7DGJkmXuC-4OeD29YuCrBZG8jzkyr0DkAg7p2pvOZ1bF
+    DxvZKJxHogYxza-Lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epiedvjeefheeiteekgeejveefffdtvedvudfgvdeuheeffeejfeetudeutdefgfegnecu
-    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepjeejrddufedrhedvrdelfeenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
-    shdrihhm
-X-ME-Proxy: <xmx:lJT9XwBfiMf-R0hs0qrwAZkfYz6MSYVbjx2UdGZkcbzaMiOuox6YSw>
-    <xmx:lJT9XyffTVPVGzTy6bsiOo71bcbVBhsDXf4WeqawTScWPV-3xs4WTQ>
-    <xmx:lJT9X_PR3DSmXlXZmpKGwwPOX-zb6tqTsEPxULh_vdWFhEN0Hn1RQg>
-    <xmx:lJT9X10Ina8j6hAp4X3OWK0Nc00S1OAKxnI_23JDS7tis65UapRLMQ>
+    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
+    kfhppeejjedrudefrdehvddrleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:gJX9X2xvn5W_ophm8oCvgNcl7e51LhiDMlLrQQO0NScxJsi9v-BJ3g>
+    <xmx:gJX9XyPlcJc0fQql-VAicQcKPsq4G5NxNihSsFc34IS7kVRG5RSOZg>
+    <xmx:gJX9Xz_GdrtofyN4gzhaPnCOxhQK8IQucbL2RW3K5_cAKFUS0mJutg>
+    <xmx:gZX9X_aCrgXp0W9pnihw0akIBQmk55mE203Cvydzna90KjpoTGFgfA>
 Received: from vm-mail.pks.im (dynamic-077-013-052-093.77.13.pool.telefonica.de [77.13.52.93])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 53E7724005A;
-        Tue, 12 Jan 2021 07:22:43 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id D3CFD24005E;
+        Tue, 12 Jan 2021 07:26:39 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6734560e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 12 Jan 2021 12:22:41 +0000 (UTC)
-Date:   Tue, 12 Jan 2021 13:22:40 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7f7df4d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 12 Jan 2021 12:26:37 +0000 (UTC)
+Date:   Tue, 12 Jan 2021 13:26:35 +0100
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/4] fetch: implement support for atomic reference
- updates
-Message-ID: <X/2UkKS0AhT6jLXj@ncase>
-References: <cover.1610027375.git.ps@pks.im>
- <cover.1610107599.git.ps@pks.im>
- <53705281b60285837905137f45fc8607012d2f19.1610107599.git.ps@pks.im>
- <xmqq7dongeji.fsf@gitster.c.googlers.com>
- <X/wrgYYcZfYZj+4/@ncase>
- <xmqq5z438ddv.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Simon Ruderich <simon@ruderich.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: [PATCH v8 0/8] config: allow specifying config entries via envvar
+ pairs
+Message-ID: <cover.1610453228.git.ps@pks.im>
+References: <cover.1606214397.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="clkeI2uOA+fTKPUP"
+        protocol="application/pgp-signature"; boundary="BJKJE8VX8rbuWjZn"
 Content-Disposition: inline
-In-Reply-To: <xmqq5z438ddv.fsf@gitster.c.googlers.com>
+In-Reply-To: <cover.1606214397.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---clkeI2uOA+fTKPUP
+--BJKJE8VX8rbuWjZn
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 11, 2021 at 11:47:08AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >> It would be much more preferrable to see this series go like so:
-> >>=20
-> >>     [1/4] create append_fetch_head() that writes out to
-> >>           fetch_head->fp
-> >>=20
-> >>     [1.5/4] convert append_fetch_head() to ALWAYS accumulate in
-> >>             fetch_head->buf, and ALWAYS flushes what is accumulated
-> >>             at the end.
-> >
-> > This is a change I'm hesitant to make. The thing is that FETCH_HEAD is
-> > quite weird as the current design allows different `git fetch --append`
-> > processes to write to FETCH_HEAD at the same time.
->=20
-> Hmph, do you mean=20
->=20
-> 	git fetch --append remote-a & git fetch --append remote-b
->=20
-> or something else [*1*]?
+Hi,
 
-That's what I mean.
+this is the eighth version of my patch series which aims to implement a
+way to pass config entries via the environment while avoiding any
+requirements to perform shell quoting on the user's side.
 
-> With the current write-out codepath, there is no guarantee that ...
->=20
-> > > +		fprintf(fetch_head->fp, "%s\t%s\t%s",
-> > > +			old_oid, merge_status_marker, note);
-> > > +		for (i =3D 0; i < url_len; ++i)
-> > > +			if ('\n' =3D=3D url[i])
-> > > +				fputs("\\n", fetch_head->fp);
-> > > +			else
-> > > +				fputc(url[i], fetch_head->fp);
-> > > +		fputc('\n', fetch_head->fp);
->=20
-> ... these stdio operations for a single record would result in a
-> single atomic write() that would not compete with writes by other
-> processes.  So I wouldn't call "the current design allows ... at the
-> same time."  It has been broken for years and nobody complained.
+Changes were all proposed by Junio and are solely in patch 2/8:
 
-Fair enough. I somehow blindly assumed that `git fetch --all`, which
-does invoke `git fetch --append`, did perform the fetch in parallel. If
-that's not the case: all the better.
+    - Improved the error message to include the the config key when the
+      environment variable name is missing.
 
-> > If we change to
-> > always accumulate first and flush once we're done, then we essentially
-> > have a change in behaviour as FETCH_HEADs aren't written in an
-> > interleaving fashion anymore, but only at the end.
->=20
-> I view it a good thing, actually, for another reason [*2*], but that
-> would take a follow-up fix that is much more involved, so let's not
-> go there (yet).  At least buffering a single line's worth of output
-> in a buffer and writing it out in a single write() would get us much
-> closer to solving the "mixed up output" from multiple processes
-> problem the current code seems to already have.
+    - Dropped needless use of env(1) in added tests.
 
-The buffering of a single line is exactly what we're doing now in the
-non-atomic case. Previously there had been multiple writes, now we only
-call `strbuf_write()` once on the buffer for each reference.
+    - The NONEXISTENT envvar is being unset now to fix the case where
+      tests may be run with that variable being set by the user.
 
-> > Also, if there is any
-> > unexpected error in between updating references which causes us to die,
-> > then we wouldn't have written the already updated references to
-> > FETCH_HEAD now.
->=20
-> That one may be a valid concern.
->=20
-> Thanks.
-
-Just to be explicit: are you fine with changes in this patch as-is? They
-don't solve concurrent writes to FETCH_HEAD, but they should make it
-easier to solve that if we ever need to.
+Please see the attached range-diff for more details.
 
 Patrick
 
->=20
-> [Footnote]
->=20
-> *1* "git fetch --all/--multiple" was strictly serial operation to
->     avoid such a mixed-up output problem, but perhaps we weren't
->     careful enough when we introduced parallel fetch and broke it?
->=20
-> *2* When fetching from a single remote, the code makes sure that a
->     record that is not marked as 'not-for-merge' is listed first by
->     reordering the records, but it does not work well when fetching
->     from multiple remotes.  Queuing all in the buffer before showing
->     them would give us an opportunity to sort, but as I said, it
->     takes coordination among the processes---instead of each process
->     writing to FETCH_HEAD on their own, somebody has to collect the
->     records from them, reorder as needed and write them all out.
->=20
->     cf. https://lore.kernel.org/git/X8oL190Vl03B0cQ%2F@coredump.intra.pef=
-f.net/
->=20
->    =20
 
---clkeI2uOA+fTKPUP
+Jeff King (2):
+  quote: make sq_dequote_step() a public function
+  config: parse more robust format in GIT_CONFIG_PARAMETERS
+
+Patrick Steinhardt (6):
+  git: add `--super-prefix` to usage string
+  config: add new way to pass config via `--config-env`
+  config: extract function to parse config pairs
+  config: store "git -c" variables using more robust format
+  environment: make `getenv_safe()` a public function
+  config: allow specifying config entries via envvar pairs
+
+ Documentation/git-config.txt |  16 +++
+ Documentation/git.txt        |  24 +++-
+ cache.h                      |   1 +
+ config.c                     | 209 ++++++++++++++++++++++++++++----
+ config.h                     |   1 +
+ environment.c                |   8 +-
+ environment.h                |  12 ++
+ git.c                        |   3 +
+ quote.c                      |  15 ++-
+ quote.h                      |  18 ++-
+ t/t1300-config.sh            | 223 ++++++++++++++++++++++++++++++++++-
+ 11 files changed, 491 insertions(+), 39 deletions(-)
+ create mode 100644 environment.h
+
+Range-diff against v7:
+1:  55fa4d0d11 =3D 1:  55fa4d0d11 git: add `--super-prefix` to usage string
+2:  b9cf47afe8 ! 2:  470396d36f config: add new way to pass config via `--c=
+onfig-env`
+    @@ config.c: void git_config_push_parameter(const char *text)
+     +		die(_("invalid config format: %s"), spec);
+     +	env_name++;
+     +	if (!*env_name)
+    -+		die(_("missing value for --config-env"));
+    ++		die(_("missing environment variable name for configuration '%.*s'"),
+    ++		    (int)(env_name - spec - 1), spec);
+     +
+     +	env_value =3D getenv(env_name);
+     +	if (!env_value)
+    @@ t/t1300-config.sh: test_expect_success 'detect bogus GIT_CONFIG_PARA=
+METERS' '
+     +	false
+     +	EOF
+     +	{
+    -+		env ENVVAR=3Dvalue git --config-env=3Dcore.name=3DENVVAR config cor=
+e.name &&
+    -+		env ENVVAR=3Dvalue git --config-env=3Dfoo.CamelCase=3DENVVAR config=
+ foo.camelcase &&
+    -+		env ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool fo=
+o.flag
+    ++		ENVVAR=3Dvalue git --config-env=3Dcore.name=3DENVVAR config core.na=
+me &&
+    ++		ENVVAR=3Dvalue git --config-env=3Dfoo.CamelCase=3DENVVAR config foo=
+=2Ecamelcase &&
+    ++		ENVVAR=3D git --config-env=3Dfoo.flag=3DENVVAR config --bool foo.fl=
+ag
+     +	} >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+     +test_expect_success 'git --config-env fails with invalid parameters' '
+     +	test_must_fail git --config-env=3Dfoo.flag config --bool foo.flag 2>=
+error &&
+    -+	test_i18ngrep "invalid config format" error &&
+    ++	test_i18ngrep "invalid config format: foo.flag" error &&
+     +	test_must_fail git --config-env=3Dfoo.flag=3D config --bool foo.flag=
+ 2>error &&
+    -+	test_i18ngrep "missing value for --config-env" error &&
+    ++	test_i18ngrep "missing environment variable name for configuration $=
+{SQ}foo.flag${SQ}" error &&
+    ++	sane_unset NONEXISTENT &&
+     +	test_must_fail git --config-env=3Dfoo.flag=3DNONEXISTENT config --bo=
+ol foo.flag 2>error &&
+     +	test_i18ngrep "missing environment variable ${SQ}NONEXISTENT${SQ} fo=
+r configuration ${SQ}foo.flag${SQ}" error
+     +'
+    @@ t/t1300-config.sh: test_expect_success 'detect bogus GIT_CONFIG_PARA=
+METERS' '
+     +	bar.cmd cmd-value
+     +	bar.env env-value
+     +	EOF
+    -+	env ENVVAR=3Denv-value git \
+    ++	ENVVAR=3Denv-value git \
+     +		-c bar.cmd=3Dcmd-value \
+     +		--config-env=3Dbar.env=3DENVVAR \
+     +		config --get-regexp "^bar.*" >actual &&
+    @@ t/t1300-config.sh: test_expect_success 'detect bogus GIT_CONFIG_PARA=
+METERS' '
+     +	cmd
+     +	EOF
+     +	{
+    -+		env ENVVAR=3Denv git -c bar.bar=3Dcmd --config-env=3Dbar.bar=3DENVV=
+AR config bar.bar &&
+    -+		env ENVVAR=3Denv git --config-env=3Dbar.bar=3DENVVAR -c bar.bar=3Dc=
+md config bar.bar
+    ++		ENVVAR=3Denv git -c bar.bar=3Dcmd --config-env=3Dbar.bar=3DENVVAR c=
+onfig bar.bar &&
+    ++		ENVVAR=3Denv git --config-env=3Dbar.bar=3DENVVAR -c bar.bar=3Dcmd c=
+onfig bar.bar
+     +	} >actual &&
+     +	test_cmp expect actual
+     +'
+3:  1b47f0db98 =3D 3:  7a7a4ae234 quote: make sq_dequote_step() a public fu=
+nction
+4:  b9565a050e =3D 4:  39552eb8b9 config: extract function to parse config =
+pairs
+5:  8f998ac81a ! 5:  36c2a51b13 config: store "git -c" variables using more=
+ robust format
+    @@ config.c: void git_config_push_parameter(const char *text)
+     +	key =3D xmemdupz(spec, env_name - spec);
+      	env_name++;
+      	if (!*env_name)
+    - 		die(_("missing value for --config-env"));
+    + 		die(_("missing environment variable name for configuration '%.*s'"),
+     @@ config.c: void git_config_push_env(const char *spec)
+      		die(_("missing environment variable '%s' for configuration '%.*s'"),
+      		    env_name, (int)(env_name - spec - 1), spec);
+6:  e7b073c9dc =3D 6:  d67a3c0f9f config: parse more robust format in GIT_C=
+ONFIG_PARAMETERS
+7:  6c1800a18f =3D 7:  28cc229ade environment: make `getenv_safe()` a publi=
+c function
+8:  ac9e778704 =3D 8:  07697b0c21 config: allow specifying config entries v=
+ia envvar pairs
+--=20
+2.30.0
+
+
+--BJKJE8VX8rbuWjZn
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lI8ACgkQVbJhu7ck
-PpQ3Mg/8CMucFarcrXxcV1A79jgVY09QDZQvvSbRdRBqiLUZWGwuHlXU5pD0Fixb
-Z3ODypPm/gpW1Rjfoqa3oydiVb+2ad8dcIokapCBhdAsCnd2kwhNjgNzIlhH/s15
-zCM/kJTId8wHgxrGpRN/G7SxcANCZPuGvrSRr/VSfKDJxWKdhge9S6vVLhacPsfH
-0y3AKTD/7JYD7OXGutZ5V1aG+ySjihaKLLfLFYcZ1G17NZlPUZcHXpz6dHdcgglh
-Rc8hVYPmzGRxY7LIqL3ZTEr9oiKIV+UVnq2ErrHe3elB/beosuzgsPvmaE+YdRp7
-GLKCmfGLsiu1roJPTek1VgFasHpWhcgqenIHb5Bpsp3t4U61V1CUJ5PQz4Ut/4bm
-8G9v0Uu+CEM1yin9gkS6QTZgNYL/3oU/SC9NV6yZirm07Z4sOcmIcKIqivXd7V7L
-AGVkp+5whHTcfFWp8YFH5USlhydsr/i3+lfm7akwD7SsjqZ6ieio6bkMmefutKmg
-0avbWajl7AspEbmkLuXBmr21dgQUrwjGQj27+ND5/w8diSJ16Gspk8IEvpCq6JP7
-3Vf+3KeKf4RrmJ4kJQhIz6tEDNN3rXdw5pF6gY8iIJ7QWi7bvl6GQEQ3HIH4N965
-bZFIYrbWFm3/Fem7xj2J37NeCikeIJk4gQmfshTJHZEDQtg+aEU=
-=HQ7+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/9lXoACgkQVbJhu7ck
+PpRPSQ/9GcHVyljwZ8AJM8vrWd87IDlK4g2X9kpiMGF1RCDDD9ZGwWRjvmrE4lwQ
+CMxghDiDKX9S6pT7D7TgVwOUafHVPkYnWAaD4WDCxOjHtHtIFjHIBWGiWWezt8Z5
+5hJuy69FwfO0IapEfuk3T9FtEfHjPY1sfmkc+EX5RxFv/UDkQADMWaOWZtQQx03d
+xXsy1vJWYNlIql7tPZxfOyjjP5cPObvXCwLHr3v4ZbzzX4/vemDTIINGIEwSG8Dj
+7x+zmPcQ6swlTox0sz1nQ6TbVNirWqDi8BIQFxSVpy/KbVcCyynIJm/U3ov4pJG7
+SOrQgCM4vzdKIUsr1Z0DsG3LChtD4M8hbZx77BTzH1nASAzfkVvdlvm0BFf7MeRe
+20kEvi6wxSwMFaQzwoVcJw0fyzXOJ50gLcpEOzOyPdypw7SIbly0XiXbChwi8CbN
+3aMuoG11txHwac25VZ2IhOYdhBvJ1mr4jX7UNcJSmQysDMnyY1HtOFh7kEu76ygP
+2RxtfF/9iej4Q7aW6x+mM7PqPNsYzzRD+HbbfCbsHHtKvB+NoYy4tl1Gq1kMOeeT
+uwXRyuX0VTajOsETYRidt+Trf/oMXDbQ5L3GMq/VE/9Bq8IOdDaoPbp7FzfjGCNr
+k8sr7fXgjuklRptzpCGLU0LqvPfr+rnJpHnZPTDUcUeXlCJCeyw=
+=D4P1
 -----END PGP SIGNATURE-----
 
---clkeI2uOA+fTKPUP--
+--BJKJE8VX8rbuWjZn--
