@@ -6,106 +6,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37A18C433DB
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 16:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B903C433E0
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:00:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F18E12311D
-	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 16:57:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42E172311B
+	for <git@archiver.kernel.org>; Tue, 12 Jan 2021 17:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390934AbhALQ5V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 11:57:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40560 "EHLO
+        id S2405515AbhALRA1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 12:00:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725843AbhALQ5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 11:57:20 -0500
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2F0C061786
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:56:40 -0800 (PST)
-Received: by mail-qv1-xf35.google.com with SMTP id a13so1202985qvv.0
-        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:56:40 -0800 (PST)
+        with ESMTP id S2388731AbhALRA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 12:00:26 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8439AC061786
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:59:46 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id c7so2467915qke.1
+        for <git@vger.kernel.org>; Tue, 12 Jan 2021 08:59:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WAP1eFRBpQYQXA5H6yQYRCBcsBnyp2X6IrHxs+16ESQ=;
-        b=FTJw8B0B/0uoImcEpe01V1R+82tBr/5b+FATNnLrdk/fibbzEVZvFLzNI4muX7eLM0
-         XHIKo1lBIybzk467BZNI8kLAL36nK/e4vtPjDUZTTsgLHwUTsv4qbQbmTmabmSqs7VK3
-         xkooAU7sOV/0CoR/hD8AXFFlQbjlIFz/E8xrB6VK2UijJ+Q8Kvzwf4TVw805Ob21eJos
-         t1HEnMqHgspEbE3kkiFlF+wysVNjHcYbKtaXDN1g3OZ56z/1PSA0GgmiiaV7vglxVlpq
-         X4zNjgscPN71rExbhZ3T0KdiyOKt7ZJIEIwNEOutZ/0fHslbwSHetg8V1gTFyampyu5/
-         rvQw==
+        bh=M2LEW1PyhgKxM/qgf+1WrRgVPMa3ysdJ6mH5h6ssmvA=;
+        b=YzRKi+sU/MOj6uGPZnCL80QKd1jR/PWt0hwbmSSereCaHwTKJY/R5eUcimRYr+dA75
+         XpQaXXh5SushY/mtMuCrIAKJ8GWK4o6oVFe9mR6POxCKQcou22Xg8Jo03rkBF858aehy
+         aqEb89+EsEnGWd3YOnL2H7vY5z8hNuoanAesTVUadFsroMplgY6XC8VQ4L5UcsrmwbRM
+         HCOp7ths9Gg/P7j2M5WxsSZTdn3gou0BnOSUBKXtjpy0B7wxkwtbykoTQ1uVDYGu0r0b
+         3JKBG5y50D4Nxku9d9YR+18n8+ZNb1zxrNSk3WBSMibykDG+pYnoqdRzg9MY71tTIefJ
+         XdMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WAP1eFRBpQYQXA5H6yQYRCBcsBnyp2X6IrHxs+16ESQ=;
-        b=GY2XJZMybntdnbPTKeLU460G25JID2C/1Iau/83NT/TcQ4skTVLBoZ8lmCdpDte2Z/
-         GMy0BbZkaHWlwJ7fhSpvR3NMoW7CKLYwAq9R+UStvakhuNHONWhtrnekoGfVCljrN/+a
-         Zbm+5IPZk/2nsDzs/+NRco3pneFtBDNzwfSkzED6qYp4g+6N0+0cjfTdtr/upHdHCiq6
-         i66kyfhv9TvM9VHGN85UorTsjVNtObAlyIy+dYebmbUthk5JgB/B074FwoSdSudTvT7D
-         byJ810dySNCPhg/Pok7GjwIUCtNXbBUoJetbMRnejS4Iv6G1TF/wqwrlADDuf8orUlv7
-         wd5A==
-X-Gm-Message-State: AOAM530S7bjeBncYR+SO9AIcWV6+LlEwjaZZYzo2vlaI+v1gDtOEk/Ew
-        Q8xY46ksV2iuNmkwvaAF+QW4ISdYRfNkqA==
-X-Google-Smtp-Source: ABdhPJwWOsgNMWKMN3j6J7dtuvuPh+/5v7C8FI3JjkA6Adqf380m3usjZlbXkFkQM/Xei5uuW7qQ4g==
-X-Received: by 2002:a0c:a541:: with SMTP id y59mr271588qvy.61.1610470599983;
-        Tue, 12 Jan 2021 08:56:39 -0800 (PST)
+        bh=M2LEW1PyhgKxM/qgf+1WrRgVPMa3ysdJ6mH5h6ssmvA=;
+        b=M4MV4ondIqb+oq8COCEn0DtMa679dne7+e22LOLdybaxxO9+4DA098rtlpOCENP04z
+         YY6XACzpEN4RqPsGNXM/E4zHcBzbq/xgqZj0TjQFd1V4l2rf5oNP0aYcHKwyDpNg4P8c
+         rmG3zS0mQgzBCbsnXRzMniGxqhanwkctzLupK5UIMV/iN3p7ZinF8pVNgUa9tOUfA8HX
+         1pLTQOmvqdppferRE5ppZBFxa081PdgN82QfarAirLF6aP3z1u2kv7aW5uRmfhxjc1H4
+         lG92TkYvDrIILqpu6PDxnSuSKWVJpDRCwAiAfKpqvGzZeC6r18nYYiB/sfiEFV4WYXoY
+         rYnw==
+X-Gm-Message-State: AOAM532eW5XUXPn0blnqYjKpfsWn1TGnFk3hAu7BGvdU8a3APTWlk+4a
+        nzCW0B/S1zkSjO9BRF1hLjfeag==
+X-Google-Smtp-Source: ABdhPJzBph+eL2grlF64/do3CvMKkh6QGFoRKNbaVF1J4Q3XGbO3GZQAWTgmKTjMMJIktYvIBA9haw==
+X-Received: by 2002:ae9:f402:: with SMTP id y2mr238040qkl.356.1610470785823;
+        Tue, 12 Jan 2021 08:59:45 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:42e2:d139:3745:d47])
-        by smtp.gmail.com with ESMTPSA id 127sm1592655qkj.51.2021.01.12.08.56.39
+        by smtp.gmail.com with ESMTPSA id h22sm1333070qth.55.2021.01.12.08.59.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Jan 2021 08:56:39 -0800 (PST)
-Date:   Tue, 12 Jan 2021 11:56:36 -0500
+        Tue, 12 Jan 2021 08:59:45 -0800 (PST)
+Date:   Tue, 12 Jan 2021 11:59:42 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         jrnieder@gmail.com
-Subject: Re: [PATCH 14/20] unpack_entry(): convert to new revindex API
-Message-ID: <X/3UxI01yNmgQ0hq@nand.local>
+Subject: Re: [PATCH 18/20] pack-revindex: remove unused
+ 'find_revindex_position()'
+Message-ID: <X/3VfteeF3Ok2C+S@nand.local>
 References: <cover.1610129796.git.me@ttaylorr.com>
- <13c49ed40ca72b7ab50939244616f0a90b5bf7f6.1610129796.git.me@ttaylorr.com>
- <X/1qUphaPD1Pvk+X@coredump.intra.peff.net>
+ <d60411d524656f4680ac578765b2a8704325a060.1610129796.git.me@ttaylorr.com>
+ <X/1st6SrJXysoejt@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <X/1qUphaPD1Pvk+X@coredump.intra.peff.net>
+In-Reply-To: <X/1st6SrJXysoejt@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 12, 2021 at 04:22:26AM -0500, Jeff King wrote:
-> We have "pos" and "nr". What's the difference? :)
+On Tue, Jan 12, 2021 at 04:32:39AM -0500, Jeff King wrote:
+> Good catch. We might want to drop the initialization of "lo":
 >
-> I think pack_pos and index_pos might be harder to get confused.
-
-Much clearer, thanks.
-
-> > +			off_t len;
-> > +
-> > +			if (offset_to_pack_pos(p, obj_offset, &pos) < 0) {
-> > +				data = NULL;
-> > +				goto out;
-> > +			}
+> >  	int lo = 0;
+> > -	int hi = p->num_objects + 1;
 >
-> Nice to see the error check here. As with the previous commit, we
-> probably want to error(), just as we would for errors below.
-
-Yup, good call.
-
-> Do we also need to call mark_bad_packed_object()? I guess we can't,
-> because we only have the offset, and not the oid (the code below uses
-> nth_packed_object_id(), but it is relying on the revindex, which we know
-> just failed to work).
+> down to here:
 >
-> I'm just wondering if an error here is going to put us into an infinite
-> loop of retrying the lookup in the same pack over and over. Let's
-> see...our caller is ultimately packed_object_info(), but it too does not
-> have the oid. It returns an error up to do_oid_object_info_extended().
-> Which yes, does mark_bad_packed_object() itself. Good. So I think we are
-> fine, and arguably these lower-level calls to mark_bad_packed_object()
-> are not necessary. But they do not hurt either.
+> > +	hi = p->num_objects + 1;
 
-Thanks, this rationale is helpful to have. I included an abridged
-version of it in the patch message.
+> to maintain symmetry (though it's quite a minor point).
+
+:-). I agree it's a minor point, but I think that the symmetry is nice,
+so it's worth doing.
+
+> I notice these are signed ints, but we've taken care to use uint32_t
+> elsewhere for positions. Shouldn't these be uint32_t, also (or at least
+> unsigned)?
+
+I'll let both of these be an raw unsigned, since the midpoint is already
+labeled as an unsigned.
 
 > -Peff
 
