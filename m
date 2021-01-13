@@ -2,116 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CE2C433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA59EC433DB
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9458722795
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7021822ADF
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728968AbhAMUXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 15:23:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55108 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728804AbhAMUXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 15:23:23 -0500
-Received: (qmail 26250 invoked by uid 109); 13 Jan 2021 20:22:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jan 2021 20:22:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2129 invoked by uid 111); 13 Jan 2021 20:22:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jan 2021 15:22:43 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 13 Jan 2021 15:22:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
-Message-ID: <X/9WkdHzSW9jAJ3k@coredump.intra.peff.net>
-References: <cover.1610129796.git.me@ttaylorr.com>
- <xmqqk0shznvf.fsf@gitster.c.googlers.com>
- <X/5ER+ml/MhDjROA@nand.local>
- <xmqqft35ziog.fsf@gitster.c.googlers.com>
- <X/5nsw6uqKDCHGql@nand.local>
- <xmqq4kjlz1qf.fsf@gitster.c.googlers.com>
- <X/7yFdqUmSmRE8A0@coredump.intra.peff.net>
- <X/8THO3ck3bjJH+K@nand.local>
- <xmqqft34y53j.fsf@gitster.c.googlers.com>
+        id S1728984AbhAMUeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 15:34:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54843 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728980AbhAMUeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 15:34:04 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D852A68A5;
+        Wed, 13 Jan 2021 15:33:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oAx0CgZQohAwV81nQkHF9N+oPA4=; b=kwNCH4
+        0ISasK1eWN70c0jnc/70vAYH5+3DP4jmbnLtvcLHf0WQSC8q8LU7Fq0jtYu9aLVx
+        ckhCwL6+7VW45TOgqiycWvGMt5vnVEOjWhhJDBWCMVUXkhSln0DbmJSQn+fVCwbn
+        uSFDsg0hbBgskeecnJANWS3eUvIdSCTASSQc0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UUgZfDWtqcxIJ7XZoiJmsHFJ579PlvHJ
+        s48+xlXaQ8Y57ozM93KN7l0NPgQjWzwMSQZlblmG+sZ7FKN0vkE7utUtljXCcmF4
+        I56Nv206yPlStpOz0agL5QtQUHnK19TskyeZryhN5pu681KNcy1hjvpsffIW8O36
+        39rzXw5XEhU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2565CA68A4;
+        Wed, 13 Jan 2021 15:33:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC165A68A3;
+        Wed, 13 Jan 2021 15:33:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Michael S. Tsirkin" <mst@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git am fails because of weird text in commit log
+References: <20210113085846-mutt-send-email-mst@kernel.org>
+Date:   Wed, 13 Jan 2021 12:33:21 -0800
+In-Reply-To: <20210113085846-mutt-send-email-mst@kernel.org> (Michael
+        S. Tsirkin's message of "Wed, 13 Jan 2021 09:01:16 -0500")
+Message-ID: <xmqqzh1cwp9q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqft34y53j.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 93E39B44-55DE-11EB-B729-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 13, 2021 at 12:06:08PM -0800, Junio C Hamano wrote:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> Taylor Blau <me@ttaylorr.com> writes:
-> 
-> >> > That way, the bottom part can be merged sooner to 'next' than the
-> >> > rest.  It always is cumbersome to have some part of the series in
-> >> > 'next' and remainder in 'seen', so at that point, the lower half
-> >> > would naturally gain a different name before it gets merged to
-> >> > 'next', I would think.
-> >>
-> >> That seems to me like it ends up being _more_ work than just making them
-> >> into two branches in the first place.
-> 
-> More work to contributors?  How?
+> So someone sends me a patch with --- in the commit log, like this below.
+> Result: git am gets confused and can't apply the patch.
 
-The quoted part is from me, so I'll respond: I didn't mean contributors,
-but it seems like more work to you. I.e., you are ending up with the
-same multi-branch config _and_ you have to split the branches yourself
-later after seeing review.
+Quite understandable.
 
-But reading what you wrote below, the advantage is that if this does not
-happen until the first part hits "next", then there is no chance of it
-being rebased at that point (and thus getting rewritten out from under
-the second topic).
+> Shouldn't git format-patch at least complain about commit log
+> like this, if not mangle it in some way?
 
-> The worst case that happened in the past was that a quite minor
-> tweak was made to a bottom topic that was depended on another topic,
-> so I just queued the new iteration of the bottom topic again,
-> without realizing that the other one needed to be rebased.  We ended
-> up two copies of the bottom topic commits in 'pu' (these days we
-> call it 'seen') as the tweak was so minor that the two topics
-> cleanly merged into 'pu' without causing conflict.  The next bad
-> case was a similar situation with larger rewrite of the bottom
-> topic, which caused me to look at quite a big conflict and waste my
-> time until I realized that I was missing an updated top half.
+It probably is too early to warn, mangle or quote in "git commit".
+I agree with you that "git format-patch" would be the best step in a
+typical workflow to warn, mangle or quote.
 
-I somehow assumed you had more automation there. On my end, since I
-rebase my topics aggressively, it is just a matter of pointing the
-branch upstream in the right place. But of course that is not your
-workflow at all.
+The solution would probably begin with identifying the lines in the
+commit log that mailinfo.c::patchbreak() considers the beginning of
+the patch part.  After finding such a line:
 
-I know you do have the "this branches uses" logic in your what's cooking
-emails. In theory it could remind you of the situation, but I'm not sure
-where in the workflow you'd insert it (by the time you run the WC
-script, it is hard to realize the rebasing that _should_ have been done
-earlier, unless you collate patch-ids, and even that is not 100%).
+ - Warning is easy.  
 
-I do wonder if setting the dependent branch's @{upstream} would be
-helpful here. You do not rebase all of your topics, but the ones with a
-local-branch @{u} would be candidates for doing so.
+ - Mangling the line by prefixing something like " " in front of it
+   would also be easy.
 
-All that said, I am also sensitive that my armchair "you could do it
-like this..." suggesting may not be fully informed. So take it as idle
-thoughts, not necessarily arguments. :)
+ - Quoting thru to the end of "patch that shouldn't have been there"
+   in possibly a reversible way is probably too hard.
 
-> >> So I guess I remain skeptical that ad-hoc splitting of longer series is
-> >> easier than doing so up front.
-> 
-> Nobody suggested ad-hoc splitting.  I was saying that splitting
-> would naturally grow out of reviews toward stabilization.
+Mangling or quoting should be hidden behind an option, I would
+think.
 
-This quote is me again. By "ad-hoc" I meant exactly this "after we see
-some reviews" (as opposed to drawing a line up front).
+Patches welcome.
 
--Peff
+Thanks.
