@@ -4,113 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6828DC433E0
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FEE7C433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:07:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 213D7204EF
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:29:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49FFE208B8
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728824AbhAMT3Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 14:29:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61622 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728809AbhAMT3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 14:29:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3E1CA6105;
-        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        id S1728754AbhAMUG6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 15:06:58 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61739 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728734AbhAMUG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 15:06:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AEF60109C5F;
+        Wed, 13 Jan 2021 15:06:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qGG9HmRXoi2CXky2hVSLJnpRkQ8=; b=yH6mpR
-        rIVt/b9Vfbl+eVtn6/vgtHnPYvx61W42twNFNxUcGGbRazYOWp63BCHAUpBbvESe
-        02EPKNafTHdHlsEgkzyKI6vp/PsYM2tUy6Eg5SBbeQQ/B/bMBe9gx4ZRxeSWLaW+
-        lJEbkFzaM+SM8aILOSChGAIVPWHZrAYnv5gNo=
+        :content-type; s=sasl; bh=FWpIV8D8HcpJtDdetVMo7K72jew=; b=V/2fkm
+        ovUJk3J5V3uwQH2ouLS2FUyuY6WGtxF4Cr65GlapqvvTrF5Chjtac7UD5QPPJ9Sh
+        F8a/agyeHq+VC3rz5v8QYLpuhyd+OO3gdi+dPSh+MNYcKLCq8DY6aQEph5wEuTfU
+        xZgB3a+jFLbrm2o8dwQ4XKIGse8LkRs+vIp4k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VQJpKtWoGYEHl26QjpYCr0aByy9abthm
-        vhNFsNLqXLGnrVmm4YXfi2eGqYuCknknUvtWtcLfCN3tIGI40+MioNE/g8z5Xjn6
-        nTcPLKZWx03TP6mBKGOrDqTBcQ8djQxMBTNI+FEjXjkBCX81oHvm2DBatXLhNk3q
-        nS10ZdM4aYY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A37FA6104;
-        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=QRpwsHas85Hy5pDJOXIJExGyDzx+6YGI
+        uSjaUk1RV9jDjRXoREW77lcuF7EkRupAMJHh8NCfp8m7Wl73swAgyC0b/pEvNUQb
+        6jFHiBnxUCNi1QKltNFCELMEg55yln7+oofTtcOs6E1jCV7D4Lx+yy61CgjmcC3A
+        hYALcrMc4AQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A79F8109C5E;
+        Wed, 13 Jan 2021 15:06:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FB16A6103;
-        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EE82A109C5C;
+        Wed, 13 Jan 2021 15:06:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Arnaud Morin <arnaud.morin@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
-References: <20210109162440.GM31701@sync>
-        <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
-        <X/28IXBpse2dNZQH@coredump.intra.peff.net>
-        <20210112153438.GC32482@sync>
-        <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
-        <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
-        <20210113092448.GE32482@sync>
-Date:   Wed, 13 Jan 2021 11:28:40 -0800
-In-Reply-To: <20210113092448.GE32482@sync> (Arnaud Morin's message of "Wed, 13
-        Jan 2021 09:24:48 +0000")
-Message-ID: <xmqqk0sgy6tz.fsf@gitster.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
+References: <cover.1610129796.git.me@ttaylorr.com>
+        <xmqqk0shznvf.fsf@gitster.c.googlers.com>
+        <X/5ER+ml/MhDjROA@nand.local>
+        <xmqqft35ziog.fsf@gitster.c.googlers.com>
+        <X/5nsw6uqKDCHGql@nand.local>
+        <xmqq4kjlz1qf.fsf@gitster.c.googlers.com>
+        <X/7yFdqUmSmRE8A0@coredump.intra.peff.net>
+        <X/8THO3ck3bjJH+K@nand.local>
+Date:   Wed, 13 Jan 2021 12:06:08 -0800
+In-Reply-To: <X/8THO3ck3bjJH+K@nand.local> (Taylor Blau's message of "Wed, 13
+        Jan 2021 10:34:52 -0500")
+Message-ID: <xmqqft34y53j.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8AD98076-55D5-11EB-9E6E-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C74DA474-55DA-11EB-AEC4-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Arnaud Morin <arnaud.morin@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Without this patch, that's even worst, consistency is broken.
-> Let me explain.
->
-> With your history example:
->
->      ---o---o---M---o---o---W---o---o---M---o--- branch
->          \
->           o---o---o---M---o--- master
->
-> # WITHOUT PATCH
-> If we imagine that master is having more commits count than branch.
-> The result of rev-list will be like you described:
-> $ git rev-list --left-right --cherry-pick branch...master
-> <M
-> <W
->
-> In other words, it's showing both W and M.
+>> > That way, the bottom part can be merged sooner to 'next' than the
+>> > rest.  It always is cumbersome to have some part of the series in
+>> > 'next' and remainder in 'seen', so at that point, the lower half
+>> > would naturally gain a different name before it gets merged to
+>> > 'next', I would think.
+>>
+>> That seems to me like it ends up being _more_ work than just making them
+>> into two branches in the first place.
 
-So, at least they cancel out and the reader can tell that the net
-effect was none --- that is "sort of understandable" result.
+More work to contributors?  How?
 
-> BUT, if we imagine now that master is having less commits count than branch.
-> $ git rev-list --left-right --cherry-pick branch...master
-> <W
->
-> It's only showing W!
+As long as each of 20-patch and 8-patch series is marked clearly to
+manage the risk of mistakes and confusion down to the same level as
+a single long series, I am perfectly OK.
 
-Which is what I felt misleading.
+Examples of help contributors could have made, which would have
+avoided past confusion (these are not "potential" ones, but I had to
+redo day's intergration in the past because of one long topic
+building on top of another) are:
 
-> # WITH PATCH
-> With the patch, everything is consistent, and only W is kept in ouptut,
-> no matter the size of history:
-> $ git.p rev-list --left-right --cherry-pick branch...master
-> <W
+ - When sending either topic, not limited to the initial round but
+   in all the subsequent rounds, remind that the top topic is to be
+   applied on top of the bottom topic.
 
-So with the patch, the former case is made the same as the latter
-misleading result, which would mean that they are consistently
-misleading?
+ - When updating the bottom topic (e.g. 20-patch one in this case),
+   send out the top one (e.g. 8-patch one), too (or instruct me to
+   discard the top one tentatively).
 
-I guess that it is better to be misleading all the time than being
-"sort of understandable" half the time and misleading the rest of
-time.  At least that is consistent.
+The worst case that happened in the past was that a quite minor
+tweak was made to a bottom topic that was depended on another topic,
+so I just queued the new iteration of the bottom topic again,
+without realizing that the other one needed to be rebased.  We ended
+up two copies of the bottom topic commits in 'pu' (these days we
+call it 'seen') as the tweak was so minor that the two topics
+cleanly merged into 'pu' without causing conflict.  The next bad
+case was a similar situation with larger rewrite of the bottom
+topic, which caused me to look at quite a big conflict and waste my
+time until I realized that I was missing an updated top half.
 
-Thanks.
+If the inter-dependent topics that caused me trouble were managed as
+a single long patch series, either with "this is a full replacement
+of the new iteration" or "these are to update only the last 8
+patches; apply them after rewinding the topic to commit f0e1d2c3
+(gostak: distim doshes, 2021-01-08)", would have had a lot less risk
+to introduce human error on this end.
+
+> I agree, but I also wasn't aware that you would consider queuing part of
+> a series. If that's the route you want to take, I'm OK with that.
+
+Discarding broken part of a series and only queuing a good part can
+happen with or without multiple topics.  Merging one topic to 'next'
+but not the other also happens.  Merging early part of a topic to
+'next' while leaving the rest to 'seen' is possible but I'd prefer
+to avoid it.  Because of the last one, a single long topic, when a
+bottom part stabilizes enough, would likely to gain a separate name
+and its tip would be merged to 'next'.
+
+> But I
+> tend to agree with Peff that (in this case since a clear deliniation
+> already exists) it may save us time to just send two separate series
+> from the get-go.
+
+As long as the two serieses are marked as such clearly, not just in
+the initial round but in all subsequent rounds, it is OK.  But in an
+unproven initial round, you may regret having to move a patch across
+topics, from the bottom one to the top one or vice versa, instead of
+just reordering inside a single topic.
+
+>> So I guess I remain skeptical that ad-hoc splitting of longer series is
+>> easier than doing so up front.
+
+Nobody suggested ad-hoc splitting.  I was saying that splitting
+would naturally grow out of reviews toward stabilization.
