@@ -2,99 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FE9C433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CE2C433DB
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6460622ADF
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:22:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9458722795
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728949AbhAMUWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 15:22:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64661 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728757AbhAMUWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 15:22:14 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0064893FC1;
-        Wed, 13 Jan 2021 15:21:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E1SQV296f8Een+Xq4yNFGDaaR2s=; b=accfbi
-        2XZHR7v2gBDtuKE2JuoI2tAO9kIirp5p8TOd6T3CN3Wy4BzscJnjVPT4VGTEJgWZ
-        U1a6Kmvdj+P1JYtYpcYR7HfgjLKxGVAC9SH9nawA6tnhkmsQtH1a0JvW9y/1J3R6
-        7SAqxw7TJS6CwIjERUPgXRbEobZD9HUhBv+0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rZG2KRx+GP5MJii1NqhNFWbeh0niECzS
-        /84TOybyD6vIeAsrjQp/KO8Jy9xgpYZ01ZwGNfOgZQ+IpTV79A2TtKg/yG1PC+k/
-        xjPlBHgcB4nzPcGBlJqvlzy/5Aw4qR0WxlBUgUynx+VqeL+3yToEWWTJtnv1x1Dq
-        w4u+Qwvf2YQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ECB9893FC0;
-        Wed, 13 Jan 2021 15:21:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 74F5593FBF;
-        Wed, 13 Jan 2021 15:21:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Arnaud Morin <arnaud.morin@gmail.com>, git@vger.kernel.org,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
-References: <20210109162440.GM31701@sync>
-        <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
-        <X/28IXBpse2dNZQH@coredump.intra.peff.net>
-        <20210112153438.GC32482@sync>
-        <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
-        <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
-        <20210113092448.GE32482@sync>
-        <X/7ur/IcCg1AqTdZ@coredump.intra.peff.net>
-Date:   Wed, 13 Jan 2021 12:21:30 -0800
-In-Reply-To: <X/7ur/IcCg1AqTdZ@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 13 Jan 2021 07:59:27 -0500")
-Message-ID: <xmqq7dogy4dx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728968AbhAMUXX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 15:23:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55108 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728804AbhAMUXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 15:23:23 -0500
+Received: (qmail 26250 invoked by uid 109); 13 Jan 2021 20:22:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jan 2021 20:22:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2129 invoked by uid 111); 13 Jan 2021 20:22:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jan 2021 15:22:43 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 13 Jan 2021 15:22:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
+Message-ID: <X/9WkdHzSW9jAJ3k@coredump.intra.peff.net>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <xmqqk0shznvf.fsf@gitster.c.googlers.com>
+ <X/5ER+ml/MhDjROA@nand.local>
+ <xmqqft35ziog.fsf@gitster.c.googlers.com>
+ <X/5nsw6uqKDCHGql@nand.local>
+ <xmqq4kjlz1qf.fsf@gitster.c.googlers.com>
+ <X/7yFdqUmSmRE8A0@coredump.intra.peff.net>
+ <X/8THO3ck3bjJH+K@nand.local>
+ <xmqqft34y53j.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EC9043CA-55DC-11EB-AABF-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqft34y53j.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 13, 2021 at 12:06:08PM -0800, Junio C Hamano wrote:
 
-> Right. There's definitely a question of whether --cherry-pick is the
-> most useful thing in such a situation, but the current behavior was
-> simply broken. It did not behave as advertised, and it treated one side
-> of the history different from the other. So whether we want to do
-> anything else to help that case, I think this at least makes
-> --cherry-pick sane. :)
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+> >> > That way, the bottom part can be merged sooner to 'next' than the
+> >> > rest.  It always is cumbersome to have some part of the series in
+> >> > 'next' and remainder in 'seen', so at that point, the lower half
+> >> > would naturally gain a different name before it gets merged to
+> >> > 'next', I would think.
+> >>
+> >> That seems to me like it ends up being _more_ work than just making them
+> >> into two branches in the first place.
+> 
+> More work to contributors?  How?
 
-Yes; I think "sane" does not always equal to "useful", though ;-)
+The quoted part is from me, so I'll respond: I didn't mean contributors,
+but it seems like more work to you. I.e., you are ending up with the
+same multi-branch config _and_ you have to split the branches yourself
+later after seeing review.
 
-> Here are two related histories to think about.
-> ...
-> I suspect for most operations we care less about "remove all
-> cherry-picks from both sides", but rather "give me one side, omitting
-> commits that are already on the other side" (because you want to rebase
-> or cherry-pick some subset).
+But reading what you wrote below, the advantage is that if this does not
+happen until the first part hits "next", then there is no chance of it
+being rebased at that point (and thus getting rewritten out from under
+the second topic).
 
-Yes again.  It means "--cherry-pick" inherently is not symmetric.
-One side is the reference side (i.e. mainline), and the goal is to
-remove from the other side what is in the reference side.
+> The worst case that happened in the past was that a quite minor
+> tweak was made to a bottom topic that was depended on another topic,
+> so I just queued the new iteration of the bottom topic again,
+> without realizing that the other one needed to be rebased.  We ended
+> up two copies of the bottom topic commits in 'pu' (these days we
+> call it 'seen') as the tweak was so minor that the two topics
+> cleanly merged into 'pu' without causing conflict.  The next bad
+> case was a similar situation with larger rewrite of the bottom
+> topic, which caused me to look at quite a big conflict and waste my
+> time until I realized that I was missing an updated top half.
 
-What we are seeing in this discussion is that "--cherry-pick" and
-symmetric difference do not conceptually play well together.
+I somehow assumed you had more automation there. On my end, since I
+rebase my topics aggressively, it is just a matter of pointing the
+branch upstream in the right place. But of course that is not your
+workflow at all.
 
-But the behaviour with the patch makes the most sense when
-cherry-pick is applied to a symmetric difference (provided that
-doing so makes sense in the first place, that is).
+I know you do have the "this branches uses" logic in your what's cooking
+emails. In theory it could remind you of the situation, but I'm not sure
+where in the workflow you'd insert it (by the time you run the WC
+script, it is hard to realize the rebasing that _should_ have been done
+earlier, unless you collate patch-ids, and even that is not 100%).
+
+I do wonder if setting the dependent branch's @{upstream} would be
+helpful here. You do not rebase all of your topics, but the ones with a
+local-branch @{u} would be candidates for doing so.
+
+All that said, I am also sensitive that my armchair "you could do it
+like this..." suggesting may not be fully informed. So take it as idle
+thoughts, not necessarily arguments. :)
+
+> >> So I guess I remain skeptical that ad-hoc splitting of longer series is
+> >> easier than doing so up front.
+> 
+> Nobody suggested ad-hoc splitting.  I was saying that splitting
+> would naturally grow out of reviews toward stabilization.
+
+This quote is me again. By "ad-hoc" I meant exactly this "after we see
+some reviews" (as opposed to drawing a line up front).
+
+-Peff
