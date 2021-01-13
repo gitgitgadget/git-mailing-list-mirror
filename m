@@ -2,90 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ECAAC43331
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 00:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FD98C433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 00:47:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 055452312A
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 00:46:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 508CC2312A
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 00:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393915AbhAMAnP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 12 Jan 2021 19:43:15 -0500
-Received: from siwi.pair.com ([209.68.5.199]:36543 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392383AbhAMAdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Jan 2021 19:33:21 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id EF0A53F40FA;
-        Tue, 12 Jan 2021 19:32:39 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S2393769AbhAMAnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 12 Jan 2021 19:43:13 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51318 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392349AbhAMAXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Jan 2021 19:23:51 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C0C99ED2F;
+        Tue, 12 Jan 2021 19:23:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=usr+97APonGqG37VDwcaGv1D8DU=; b=clVnwf
+        Mo6XsE+27n3q9tWC71Y2B89Y/WeITTdMVaMCpVniD3SSmnLnvkupxoJCqOuUWqAz
+        VgHVybO7KcfQby1aCFBsw3A+p7uX3/odK82jYlIu6hub8C2TWwH4seu9jVOGfAft
+        xe0wF2mg2uWUFnSxqML98ihcpcMnWFxTYmsA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=a/hWJd0FHsGlegQfRq3I9QJUdK66LLCl
+        FFE/juKWpBdHe7IkCGKToCR15zHshqK6b2sXwelOF4Gh3o7Q8WIDwYJ9t/LdMOTg
+        NUleBf56keOz/HryOvXJqr1xFKvesmuOWuPo2odVNHX35778kl1UDMJ+o02sUAXq
+        65xfVcPBozk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4218D9ED2D;
+        Tue, 12 Jan 2021 19:23:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BA5803F40F4;
-        Tue, 12 Jan 2021 19:32:39 -0500 (EST)
-Subject: Re: [PATCH 00/10] [RFC] Simple IPC Mechanism
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
- <xmqq5z4153gq.fsf@gitster.c.googlers.com>
- <cee527cb-7962-1528-0c70-583ad805e624@jeffhostetler.com>
- <xmqqo8htzoba.fsf@gitster.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <968235ae-4b31-f06c-149a-c581e64b318b@jeffhostetler.com>
-Date:   Tue, 12 Jan 2021 19:32:38 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD4EF9ED2B;
+        Tue, 12 Jan 2021 19:23:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com
+Subject: Re: [PATCH 00/20] pack-revindex: prepare for on-disk reverse index
+References: <cover.1610129796.git.me@ttaylorr.com>
+Date:   Tue, 12 Jan 2021 16:23:00 -0800
+In-Reply-To: <cover.1610129796.git.me@ttaylorr.com> (Taylor Blau's message of
+        "Fri, 8 Jan 2021 13:16:39 -0500")
+Message-ID: <xmqqk0shznvf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8htzoba.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7F0072AA-5535-11EB-9D21-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
+> This is the first of two series to introduce an on-disk alternative to the
+> reverse index which is currently generated once per-process and stored in
+> memory.
 
-On 1/12/21 7:13 PM, Junio C Hamano wrote:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
->> On Windows a local named pipe is created by the server side.  It rejects
->> remote connections.  I did not put an ACL, so it should inherit the
->> system default which grants the user RW access (since the daemon is
->> implicitly started by the first foreground client command that needs
->> to talk to it.)  Other users in the user's group and the anonymous
->> user should have R but not W access to it, so they could not be able
->> to connect.  The name pipe is kept in the local Named Pipe File System
->> (NPFS) as `\\.\pipe\<unique-path>` so it is globally visible on the
->> system, but I don't think it is a problem.
-> 
-> It is not intuitively obvious why globalluy visible thing is OK to
-> me, but I'll take your word for it on stuff about Windows.
+Queued; seems to be killed on Windows but otherwise looking good.
+  
+  https://github.com/git/git/runs/1691849288?check_suite_focus=true#step:6:164
 
-Sorry, that's a quirk of Windows.  Windows has a funky virtual drive
-where named pipes are stored -- kind of like a magic directory in /proc
-on Linux.  All local named pipes have the "\\.\pipe\" path prefix.
-
-So they are globally visible as a side-effect of that "namespace"
-restriction.
-
-> 
->> On the Unix side, the socket is created inside the .git directory
->> by the daemon.  Potential clients would have to have access to the
->> working directory and the .git directory to connect to the socket,
->> so in normal circumstances they would be able to read everything in
->> the WD anyway.  So again, I don't think it is a problem.
-> 
-> OK, yes, writability to .git would automatically mean that
-> everything is a fair game to those who can talk to the daemon, so
-> there is no new issue here, as long as the first process that
-> creates the socket is careful not to loosen the permission.
-> 
-> Thanks.
-> 
+Thanks.
