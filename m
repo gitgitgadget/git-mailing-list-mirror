@@ -2,115 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1DAC433E6
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD30DC433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:38:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A27E22BEA
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64E3F22D05
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729008AbhAMUeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 15:34:37 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55148 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725885AbhAMUeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 15:34:37 -0500
-Received: (qmail 26368 invoked by uid 109); 13 Jan 2021 20:33:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jan 2021 20:33:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2287 invoked by uid 111); 13 Jan 2021 20:33:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jan 2021 15:33:57 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 13 Jan 2021 15:33:56 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Arnaud Morin <arnaud.morin@gmail.com>, git@vger.kernel.org,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
-Message-ID: <X/9ZNM9KxZaQ2it+@coredump.intra.peff.net>
-References: <20210109162440.GM31701@sync>
- <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
- <X/28IXBpse2dNZQH@coredump.intra.peff.net>
- <20210112153438.GC32482@sync>
- <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
- <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
- <20210113092448.GE32482@sync>
- <X/7ur/IcCg1AqTdZ@coredump.intra.peff.net>
- <xmqq7dogy4dx.fsf@gitster.c.googlers.com>
+        id S1728179AbhAMUi2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 15:38:28 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61464 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726686AbhAMUi2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 15:38:28 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F2348105FEA;
+        Wed, 13 Jan 2021 15:37:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ifNw7Qis6jO2bqnFJJlkSlkFz/M=; b=S6mCso
+        RT1cDxOff3mKQ96iu7PgUeHe7IoyYMZifXMAMrY37Dfi8+QVFrC4KKvLcRG8r71G
+        5dOepKovJifgzmndbXu06Sa3OBS4oghGsiz8Z97KoqB8e01F94IfxBQtstuiNwLc
+        7gfZejGkSrU7vyAroKsgL8U6yoxJGYJf6v+WI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qqe3CwjA8bpK/7Fax/D0otsQgR9Qx+km
+        g5UMxT/cDB8qBNdn70FITCuXH+n8DIIVe4Uv6mNEAFBUaLaPQB8ISmraWJCPtnz5
+        6QV2i6RFTBpnAMdNmLXngYuhGmQ+8vF/No3KtE2TLpDsk6apAQ4TQHB7Kec+EtRP
+        lnhp3W0h+NU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9312105FE9;
+        Wed, 13 Jan 2021 15:37:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 09C89105FE3;
+        Wed, 13 Jan 2021 15:37:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Charvi Mendiratta <charvi077@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, phillip.wood@dunelm.org.uk,
+        Johannes.Schindelin@gmx.de,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [RFC PATCH 5/9] sequencer: use const variable for commit
+ message comments
+References: <20210108092345.2178-1-charvi077@gmail.com>
+        <20210108092345.2178-6-charvi077@gmail.com>
+        <X/9GrVjBmnJUZcGn@nand.local>
+Date:   Wed, 13 Jan 2021 12:37:41 -0800
+In-Reply-To: <X/9GrVjBmnJUZcGn@nand.local> (Taylor Blau's message of "Wed, 13
+        Jan 2021 14:14:53 -0500")
+Message-ID: <xmqqv9c0wp2i.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq7dogy4dx.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2FA8B686-55DF-11EB-9FA8-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 13, 2021 at 12:21:30PM -0800, Junio C Hamano wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> > I suspect for most operations we care less about "remove all
-> > cherry-picks from both sides", but rather "give me one side, omitting
-> > commits that are already on the other side" (because you want to rebase
-> > or cherry-pick some subset).
-> 
-> Yes again.  It means "--cherry-pick" inherently is not symmetric.
-> One side is the reference side (i.e. mainline), and the goal is to
-> remove from the other side what is in the reference side.
-> 
-> What we are seeing in this discussion is that "--cherry-pick" and
-> symmetric difference do not conceptually play well together.
-> 
-> But the behaviour with the patch makes the most sense when
-> cherry-pick is applied to a symmetric difference (provided that
-> doing so makes sense in the first place, that is).
+> Two nit-picks here. The line break after the '=' is a little awkward,
+> since two of these lines are less than 80 characters combined, and the
+> other two are just slightly longer than 80 characters. The other nitpick
+> is that its typical to see 'char *foo' instead of 'char foo[]'.
+>
+> So, I'd write these as:
+>
+>     static const char *first_commit_msg_str = N_("This is the 1st commit message:");
+>     static const char *nth_commit_msg_fmt = N_("This is the commit message #%d:");
+>     static const char *skip_nth_commit_msg_fmt = N_("The commit message #%d will be skipped:");
+>     static const char *combined_commit_msg_str = N_("This is a combination of %d commits.");
 
-I didn't realize --cherry-pick would work without a symmetric
-difference. The documentation says:
+I actually am OK with []; it saves sizeof(char*) bytes from each of
+the variable, doesn't it?
 
-  Omit any commit that introduces the same change as another commit on
-  the “other side” when the set of commits are limited with symmetric
-  difference.
+> I also noticed that you suffix these with _fmt or _str depending on
+> whether or not there are arguments that get filled in later on. That
+> makes 'combined_commit_msg_str' labeled incorrectly (it should be
+> 'combined_commit_msg_fmt').
 
-And indeed, I think it silently does nothing with:
+Good eyes.
 
-  git rev-list --cherry-pick A..B
-
-(because there is nothing on the "other" side to match).
-
-So you do need some symmetric difference in order to define the two
-sets, but you might only want to see one of the sides.  And that is
-basically what --cherry does. But having looked at the implementation of
-cherry_pick_list(), it is quite happy to swap the sides internally. I
-guess if we were going to make the output unsymmetric, the first thing
-would be to stop doing that swap. :)
-
-For the specifics of reverts and replays, though, I think the weirdness
-has nothing to do with left/right, or showing one side. It's the
-mismatched count. So if we were to make any change, it would be to keep
-a count of how many times each commit appears on the other side, and
-cancel them one for one.
-
-I.e., this:
-
-  o--M--W--M--o--
-   \
-    o--M--o---
-
-might plausibly want to show "M" once on the upper branch. But:
-
-  o--M--W--M--o--
-   \
-    o--M--W--M--o--
-
-should never show M, I wouldn't think.
-
-I'm not sure if that would be violating what existing callers expect
-from "--cherry-pick", though (i.e., if it would need another name, or an
-extra option to trigger).
-
--Peff
+Thanks.
