@@ -2,129 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22DFEC433E0
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 17:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1572C433DB
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 17:56:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E44FB23370
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 17:43:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD24F2337F
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 17:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728101AbhAMRnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 12:43:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([216.205.24.124]:21212 "EHLO
-        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727998AbhAMRnC (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 13 Jan 2021 12:43:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1610559695;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type;
-        bh=IbypQFshSl+0930NSjfhBXAow8ynZXKqhe73tu0S9As=;
-        b=X6ah6ICnfAnDgrn54owV92vM9ShjN2cg8+eqKfAIrwu/Q4wrPGbrUqfxHcQxmm+5EYqumO
-        2u7RYhuK987hlqsu1FxILSjp/GJZMu6gUyfC7Gz+i+5ydhLL9TIEwR3DiOPVpNjTRpezxP
-        Pd/IQR9zZGQ2xwbT6tnwvx4yYY8uYWo=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-587-VeS36MJkNYyEJ7qK6jXwFQ-1; Wed, 13 Jan 2021 12:41:32 -0500
-X-MC-Unique: VeS36MJkNYyEJ7qK6jXwFQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com [10.5.11.13])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3FA3119611A0
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 17:41:31 +0000 (UTC)
-Received: from [10.36.114.92] (ovpn-114-92.ams2.redhat.com [10.36.114.92])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id 98DEC60938
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 17:41:30 +0000 (UTC)
-Message-ID: <e2dbe996f6a7285fe0487e34d65eccf712867547.camel@redhat.com>
-Subject: [bug] git-ls-files sometimes does not list files with pathspec
- magic ":(exclude)"
-From:   Thomas Haller <thaller@redhat.com>
-To:     git@vger.kernel.org
-Date:   Wed, 13 Jan 2021 18:41:28 +0100
-Organization: Red Hat
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-bjpK6kouL2JWG9llgzhn"
-User-Agent: Evolution 3.38.2 (3.38.2-1.fc33) 
+        id S1728269AbhAMR4N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 12:56:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54968 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728087AbhAMR4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 12:56:13 -0500
+Received: (qmail 24681 invoked by uid 109); 13 Jan 2021 17:55:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jan 2021 17:55:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 725 invoked by uid 111); 13 Jan 2021 17:55:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jan 2021 12:55:33 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 13 Jan 2021 12:55:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] CoC: update to version 2.0 + local changes
+Message-ID: <X/80FBlnrTlykI4B@coredump.intra.peff.net>
+References: <xmqqzh1dxmlo.fsf@gitster.c.googlers.com>
+ <xmqqr1mpxl4q.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqr1mpxl4q.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jan 13, 2021 at 01:05:09AM -0800, Junio C Hamano wrote:
 
---=-bjpK6kouL2JWG9llgzhn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Acked-by: Christian Couder <chriscool@tuxfamily.org>
+> > Acked-by: Derrick Stolee <dstolee@microsoft.com>
+> > Acked-by: Elijah Newren <newren@gmail.com>
+> > Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+> > Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> 
+> I guess I should lead by an example ;-)  The above misses mine and
+> Signed-off-by means a totally different thing [*1*] from Acked-by.
+> 
+>     Acked-by: Junio C Hamano <gitster@pobox.com>
 
-Hi,
+I thought your "From" would be enough, but I see this re-wrapped version
+if "From: Ævar" (so I guess my same argument applies for him ;) ).
 
+Thanks for reposting this; I was trying hard not to look at my email
+during the week of the original thread.
 
-It seems git-ls-files has an issue together with certain ":(exclude)"
-tags.
+I agree with the sentiment expressed earlier that the "consequences" are
+a little funny for us, since our decentralized infrastructure makes
+things like banning a bit confusing. But that was already present to
+some degree in the older version, and I do like the notion that we'd
+stick to the original as closely as possible. So:
 
-For example, on NetworkManager's git tree (top-level directory) I run
+  Acked-by: Jeff King <peff@peff.net>
 
-  git ls-files -- src/platform/ ":(exclude)shared/n-acd"
-
-which wrongly lists not files. It seems to be some
-relation between the exclude and the search path because a different
-path/exclude does not exhibit the problem.
-
-I also tested current git-master (72c4083ddf91b489b7b7b812df67ee8842177d98)
-which has the same issue.
-
-Here is a reproducer (in a container run on Fedora 33/x86_64):
-
-  podman run -ti alpine:latest \
-    sh -c '
-      apk add git &&
-      git clone https://gitlab.freedesktop.org/NetworkManager/NetworkManage=
-r.git &&
-      cd NetworkManager &&
-      git checkout -B tmp cd754680a6a0e35b286d4157269053ccc3996a32 &&
-      echo ">>>>>>now BAD1..." &&
-      git ls-files -- src/platform/ ":(exclude)shared/n-acd"
-      echo ">>>>>>now GOOD1..." &&
-      git ls-files -- src/platform/ ":(exclude)shared/c-list"
-      echo ">>>>>>now GOOD2..." &&
-      git ls-files -- src/platform ":(exclude)shared/n-acd"
-      echo ">>>>>>now GOOD3..." &&
-      git ls-files -- src/vpn/ ":(exclude)shared/n-acd"
-   '
-
-Note that only the first call in the reproducer has the unexpected
-result.
-
-
-best,
-Thomas
-
-
---=-bjpK6kouL2JWG9llgzhn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEESep8Zw4IUOdBlRT2KcI2bk38VygFAl//MMgACgkQKcI2bk38
-VyhpfxAAm0ewT/FMFHKSjMH6VmhU0lFhBtzi7y9tRt0+y+TT7lBEszoy82dwhqVe
-IigBCIrGqFXIXrhq0BsKLbW3rRLx6l791alVd5FoontswyZ51LaLWyCKj2+Ys/zl
-PVWKpfW6WeO37lKSF312lnRXHtgauLvvmJdCN22iXK8TPUFfwG94y4gpIeVC8roo
-r7kInGQ5oOmG06tAc2jq4Ey1WexqIECUdp6Yi9AeDW1IKmNMFNbimvq+t0HMC7qi
-U34MIu57pq7p1W5oHMz0RsaqITtUEns19iQDpTwa+BhxgM0psoNhK7PPFlYstdg0
-P7r8cuc+DezlEADP2TvfXSX/0I/gQBARCqrpHcu1f7PRJYZUTCB/jsSGiZHqLRp1
-ooOVy5EFG8EkhuZrhOlgRMC8KKyJor/bkMyJNBar3Xad4zUcfG2fwqi/fmYteFUw
-7PAtyw4rAK0sQZmqaXrA2u9aMsvRTgL9ZH0AhaNEE5HPLUGERWNgUzjEWJDbSx3d
-yXyu+Y5GC5jeBGj0gciiuG/r7COtm9EpCKGTieXBu5tkt4xWNo6A3Z2jbn47dYxU
-mE1JUoW7cvjGBc0JyPrue6PYhwbT0gm4SjpKhovFyqEFnpfyVFTckdGvRoS+UcgI
-qI5kNv38X4c2SOgfVB6BNPYHHyUAlU5kmu3mlyLweYBethewCeQ=
-=aifL
------END PGP SIGNATURE-----
-
---=-bjpK6kouL2JWG9llgzhn--
-
+-Peff
