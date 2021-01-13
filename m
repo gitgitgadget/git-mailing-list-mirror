@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F80C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C764C433E0
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:06:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08B3C23447
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:06:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E06EC23442
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729870AbhANCF7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 21:05:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55376 "EHLO
+        id S1729847AbhANCF5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 21:05:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727610AbhAMWZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 17:25:51 -0500
+        with ESMTP id S1727396AbhAMWZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 17:25:42 -0500
 Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57DD5C0617A7
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:24:31 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id d11so1553247qvo.11
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:24:31 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5099C0617A5
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:59 -0800 (PST)
+Received: by mail-qv1-xf2a.google.com with SMTP id l7so1565868qvt.4
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YLvmRTXhb3illIomvZeL4AS45p4cH2WTpKemzSExl2M=;
-        b=p7KtcP29e3AzF3cjcTCtRON5fyZHTfPHe617YDyIAz6mAMi6tnzaY3kiq/YnYrrqwo
-         7IzCkN94IHP3XM/l6E6ZZrIM5a5FLVDY3XVyya+VAlo346qO+QqkQn0gHRkprxDyaNdn
-         1WtNVEY10J+uRL4In5Ncop1ul/Zbc+HQCNbIsS8Z6pfA1iORpS7nbIDySocqOrH7/6Tv
-         QJtgTX69covomaqHEgDaisOiMTvHERhEar6NxiKS9NU/M9SdW629VqYTjJa+FwbuwEfS
-         xqKmGzj9lD5GjjkuXQQ0l+Gp7XnAMe0A7MvfDP+bKbjdUjBDeOTkURB/TVe97spPDXcx
-         MW3Q==
+        bh=GosB9Yjgb0Kn5JVNBnzEWD9cZazhce4gUyaHBUupnbg=;
+        b=QrvlDMnXOl+m+xX01Mq+NhkjTzQIwfofj3rJYFLsK65rF1inEnlG31riilYNOVjZG+
+         kO6Xs/vdTFKArGRtpzQU8vjEu9tCKHQ9iA1T2DJf3lcYMxuMr/X38vpWS4+VlF/ly48c
+         PtqIBaKy+P6EGVXfi3UcMPDdXRfCu+iA3+BqTSwP88xIQB8H/m0acx3JFwKh2TIKMpuk
+         QUxTWICMH8DW5zFP4qfPzYLHbcfrp5ed6asv9uY/G+5nX7sM8hRYEmhZy72y/hfAnFnL
+         NKxJcq3HDo6U8s7J6Hc8vrYBYO07Cb827p3DnBaIftZKDgxCrBfy7+m3iQ9znp0/iGFc
+         mAcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YLvmRTXhb3illIomvZeL4AS45p4cH2WTpKemzSExl2M=;
-        b=ClmThFIVKiNJL3oq+VxfLs8BLH4y9/hMDOTdmSNFLs30MXQPJSUWZQFCw4+dio1Jtw
-         WMUfWtw2c3bNex2S3zOQIbT90zxO7sM7709cnjEy+Em5uGMMebFllKalqW0Hv1qIgqrh
-         mv66HbYxc8TfvTeoewakHR0TpduDoQETOqyP0wCxiqYZNhdVJTKeraqBUIAn/DSyVAS7
-         Fd6ZHCa/ONbXibvhjz7/U+qIEgP9IdQoElJR0TtnaiCZ+t7IBF7Z/oSaVqsy4Gh1aWan
-         sC50KnuY/32hH7tDomVJHBAkWyEirpqA/aF7fK0ybgupYuLEVvHheduU1aIYn0wxvyi2
-         JUzQ==
-X-Gm-Message-State: AOAM531VVy8rEKiQj7J36AAlAaym/6Ue7SQRTzw3lMiVEP99j5WPAFKT
-        427p66JnBNp1QMwHOXfkOfe8nnFIjFvYVw==
-X-Google-Smtp-Source: ABdhPJysfPwPW0htuWs4aZ8s343mIVLGZpiW5G3I/U1ybbFmEYVymHcLgT80Zfb15dxXdAqkulFlJw==
-X-Received: by 2002:ad4:54a3:: with SMTP id r3mr4640665qvy.26.1610576670441;
-        Wed, 13 Jan 2021 14:24:30 -0800 (PST)
+        bh=GosB9Yjgb0Kn5JVNBnzEWD9cZazhce4gUyaHBUupnbg=;
+        b=FyvT9c6fKXa4rj0rRyDc5tQem4+O3fbssZ7r2eoOK9ZmUNFUrYyFA9MZ0hECGNHWYB
+         kePBe4GjHHETZasy5zbzVGxv45zgKEtPqsnG4E9VHig5kk+oQhuxU5YOcoklRM+26E92
+         mBQeiSBuh5eMn8L+LrDo0ruR8+f758VjTOU3b3cpYSVfOHdNyYnqhRq02X8mU+zSpLkb
+         beIR8A9uFOfpU1Rpr6jhGcU18whTvcVHb03zUao2NxEo9czWzp8HXqJkzy6EpASMOudo
+         Kiu8Tdnk2WZLjYcsTYOTBEmdKtzRTC+xdjlozKaqOAd4xah8b9M7wf5NiioUkCkupAJi
+         U5uA==
+X-Gm-Message-State: AOAM532oabY5Jwp4tV54N+RnmbWSOwFdzbyL9zSZ16zkrm2Kvsq+9Y0t
+        e6rsIMhdHC8PEplbxj+qCZxIz0d386eXkw==
+X-Google-Smtp-Source: ABdhPJyTMomxbJ/gFBs6ZyZIhKAqmetid1wP46P9X2oYYxhKM+a6zaaKAQJybpoMks94VnzR6vshoQ==
+X-Received: by 2002:a0c:80ca:: with SMTP id 68mr4495603qvb.28.1610576638958;
+        Wed, 13 Jan 2021 14:23:58 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id k7sm1829834qtg.65.2021.01.13.14.24.29
+        by smtp.gmail.com with ESMTPSA id j30sm1876108qtl.43.2021.01.13.14.23.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 14:24:29 -0800 (PST)
-Date:   Wed, 13 Jan 2021 17:24:27 -0500
+        Wed, 13 Jan 2021 14:23:58 -0800 (PST)
+Date:   Wed, 13 Jan 2021 17:23:56 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 10/20] rebuild_existing_bitmaps(): convert to new revindex
- API
-Message-ID: <569acdca7f4a5aa25b625280266dfe40dc4fdefe.1610576604.git.me@ttaylorr.com>
+Subject: [PATCH v2 07/20] show_objects_for_type(): convert to new revindex API
+Message-ID: <68794e9484d303b832e8a9f7163cf89e2c506479.1610576604.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
  <cover.1610576604.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,33 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove another instance of looking at the revindex directly by instead
-calling 'pack_pos_to_index()'. Unlike other patches, this caller only
-cares about the index position of each object in the loop.
+Avoid storing the revindex entry directly, since this structure will
+soon be removed from the public interface. Instead, store the offset and
+index position by calling 'pack_pos_to_offset()' and
+'pack_pos_to_index()', respectively.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ pack-bitmap.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 1fdf7ce20a..60fe20fb87 100644
+index d6861ddd4d..27a7a8ac4c 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1392,11 +1392,10 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
+@@ -711,21 +711,22 @@ static void show_objects_for_type(
  
- 	for (i = 0; i < num_objects; ++i) {
- 		struct object_id oid;
--		struct revindex_entry *entry;
- 		struct object_entry *oe;
+ 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
+ 			struct object_id oid;
+-			struct revindex_entry *entry;
+-			uint32_t hash = 0;
++			uint32_t hash = 0, index_pos;
++			off_t ofs;
  
--		entry = &bitmap_git->pack->revindex[i];
--		nth_packed_object_id(&oid, bitmap_git->pack, entry->nr);
-+		nth_packed_object_id(&oid, bitmap_git->pack,
-+				     pack_pos_to_index(bitmap_git->pack, i));
- 		oe = packlist_find(mapping, &oid);
+ 			if ((word >> offset) == 0)
+ 				break;
  
- 		if (oe)
+ 			offset += ewah_bit_ctz64(word >> offset);
+ 
+-			entry = &bitmap_git->pack->revindex[pos + offset];
+-			nth_packed_object_id(&oid, bitmap_git->pack, entry->nr);
++			index_pos = pack_pos_to_index(bitmap_git->pack, pos + offset);
++			ofs = pack_pos_to_offset(bitmap_git->pack, pos + offset);
++			nth_packed_object_id(&oid, bitmap_git->pack, index_pos);
+ 
+ 			if (bitmap_git->hashes)
+-				hash = get_be32(bitmap_git->hashes + entry->nr);
++				hash = get_be32(bitmap_git->hashes + index_pos);
+ 
+-			show_reach(&oid, object_type, 0, hash, bitmap_git->pack, entry->offset);
++			show_reach(&oid, object_type, 0, hash, bitmap_git->pack, ofs);
+ 		}
+ 	}
+ }
 -- 
 2.30.0.138.g6d7191ea01
 
