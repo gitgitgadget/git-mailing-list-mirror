@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87FCBC4361A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67787C43603
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:09:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6734F235FA
+	by mail.kernel.org (Postfix) with ESMTP id 4B536235F8
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730124AbhANCJx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 21:09:53 -0500
+        id S1730085AbhANCJv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 21:09:51 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726864AbhAMWYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 17:24:51 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63147C0617A2
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:47 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id 2so2287571qtt.10
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:47 -0800 (PST)
+        with ESMTP id S1729207AbhAMWZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 17:25:25 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A741EC0617A4
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:55 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id 186so4451004qkj.3
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bm5o9vq3zI1B3K20xzsSXf0x0nbi7y6y2CnAt9jUucg=;
-        b=a9Bm5s679fMBO50VlMdbJPAD6Eh/8HPkDHXHgV8jqUiXuDKvh6MMNw8GjFiFIVejCT
-         Y9LhlvzYPRQxH2C0NzCVNIAGSGTf7KQwF6km29uy0O2ijpFoPeAbU3nbZ4ZhNfZXbJYF
-         IipaPqQOpbFbiRQYKcUiGXAZi+PhaoaegPlbEtpkIS0ghxeSJ704ZX+AGQLOcNEG1ggb
-         XwSpLsTOhXnaFCOwQkRcm5n3WALM/wMmfnp9b2uWiFCIxMHDE9+liuXq0F9LIIUD5kYc
-         yf4BAracOWh6gBNE5qNYbb+4qTN3IoADmKVCDe4jkhCp1zuzHF0gyoNBkSVj/rtJywPS
-         elBA==
+        bh=eOAfwdgszWE6+IKgpnVgHm09fwsqu7Q3acsEhFfnltQ=;
+        b=QbYuIw+k2+8DM4CaOLUnh5rBCFSJxvyZYTikWKVVchFpr+TrlhwYDnkvWLNwUNuMTE
+         YGXrDevu+wMg5MBCL6UjziknmrcZTjsqtWi4E9Uk6YY56+B9qHM4I6LHM1QAg3Wjq/VH
+         Mevzv7JoFlq508g3qRw5feYRQSBSachGL7HNyVXi2uW8ZgZ/w7qkCh7EH3HvGTCLXa0x
+         0XJCgvGqqI9CdtQ/7lR1kqi35N8d041lzSEPu7ExafwD1AkM8rM3warFoxdniR4cSgew
+         B1DS0oBx04nUommbKyY3tQz0z8+yqw3tB0H7c0m5p4puiOkGCUYVVhdjacPGMLG6ysQY
+         Ot1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bm5o9vq3zI1B3K20xzsSXf0x0nbi7y6y2CnAt9jUucg=;
-        b=Rv2dnvXVizgQ3Jx86latKdpSEKgssSnPM8nrVdpzMVqX0mI90uXNlFggB8vO6JMvFs
-         EmMWwFRzazP2UmmVrs47DEDbO8pGgm3Dv61SXcLlGWru+un6MDK8Vlow4ViA+Wt8Wdo9
-         dgD+/+Z9ahE02EWfxThv2/NDso+QpLWqpFd6w2rvCybii4s+mG/QyvzK+NLQ4QeSsWFw
-         GazW12y1/LQ+UmZwBsLGE01HvjzYin4fh0cu8uVEaX5HbgwAtmRIhbBhWPd9Sb0KwchZ
-         o2RVHDJWHaiSlg5PueGKM5oXpbHppCTmYdhPQP+rYQ/IoJ1a1GZF7e1Ccz7BCMgoMhAO
-         /TSg==
-X-Gm-Message-State: AOAM531kBxW7Fb8FYfj0UxJqzjoeDcnXfgNLDSKaxHFi6QEf8/NrTKTg
-        k4gkBVTth8RK6YMV0NYeaN5wQyj4Evf9yg==
-X-Google-Smtp-Source: ABdhPJzcAC8LFQKU0nZtImt3bZ8px4YzMKoiVG0INVpzpG9ZkjCgqIGBc2xWi9q6BXgUFPIiahIQ/Q==
-X-Received: by 2002:ac8:5a43:: with SMTP id o3mr4452233qta.222.1610576626358;
-        Wed, 13 Jan 2021 14:23:46 -0800 (PST)
+        bh=eOAfwdgszWE6+IKgpnVgHm09fwsqu7Q3acsEhFfnltQ=;
+        b=hrvjH+NAct9cMHFi4tnXuFjgdXroGzlmoCqZMSpN4EkowduAXBbLtGUtnhtJ5CKjHE
+         xxkgdZafndHMxD6FnMnyfSibtpOjuOkNvKnWO9kuAgiHEztUzxaRCVM8iR2pVtGmcTa7
+         gANl89PKuR0fJ5iF9tqGh4s2rJldOnIqq/BP8orqsZ528Lcuql+gG3/RzeXcq92nDZSJ
+         IFzTKWaUt1L29F4w4jTQhfy8wTrwPdt8+aKcFsVMf63PhZv4dsXI6oWiIMyi5QtqSuD8
+         vHK1Yy/CxGUYvcl4vvySSDGk8EGH/VcdXJhdleAxEzn0Tu+IJTSVugo0NAZpIdgBteKy
+         BokA==
+X-Gm-Message-State: AOAM5324BQLpoQnfAaG5LeyVRzp2kiihvlzy83HWkOfx6gqmtPCDBfBv
+        7PzOdCqqdie9OkBZccnHEkelf4pccpyRUQ==
+X-Google-Smtp-Source: ABdhPJykKNXck0n3GZhUJBjaSLIm3YmLD5qKME6jWGc2U0sMpTuBssXdPjlYymS858ruq5NW5xEIcw==
+X-Received: by 2002:a37:9b95:: with SMTP id d143mr4232046qke.215.1610576634711;
+        Wed, 13 Jan 2021 14:23:54 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id q73sm1939483qke.16.2021.01.13.14.23.45
+        by smtp.gmail.com with ESMTPSA id e19sm1796589qtc.61.2021.01.13.14.23.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 14:23:45 -0800 (PST)
-Date:   Wed, 13 Jan 2021 17:23:43 -0500
+        Wed, 13 Jan 2021 14:23:54 -0800 (PST)
+Date:   Wed, 13 Jan 2021 17:23:52 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 04/20] write_reused_pack_verbatim(): convert to new
- revindex API
-Message-ID: <dd7133fdb76761b2758ff6986421e4a7755c54a9.1610576604.git.me@ttaylorr.com>
+Subject: [PATCH v2 06/20] bitmap_position_packfile(): convert to new revindex
+ API
+Message-ID: <084bbf2145735ef1affb0bc051b09dcff8f306ce.1610576604.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
  <cover.1610576604.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,27 +73,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace a direct access to the revindex array with
-'pack_pos_to_offset()'.
+Replace find_revindex_position() with its counterpart in the new API,
+offset_to_pack_pos().
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 8e40b19ee8..77ce5583a2 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -952,7 +952,7 @@ static size_t write_reused_pack_verbatim(struct hashfile *out,
- 		off_t to_write;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d88745fb02..d6861ddd4d 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -407,11 +407,14 @@ static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
+ static inline int bitmap_position_packfile(struct bitmap_index *bitmap_git,
+ 					   const struct object_id *oid)
+ {
++	uint32_t pos;
+ 	off_t offset = find_pack_entry_one(oid->hash, bitmap_git->pack);
+ 	if (!offset)
+ 		return -1;
  
- 		written = (pos * BITS_IN_EWORD);
--		to_write = reuse_packfile->revindex[written].offset
-+		to_write = pack_pos_to_offset(reuse_packfile, written)
- 			- sizeof(struct pack_header);
+-	return find_revindex_position(bitmap_git->pack, offset);
++	if (offset_to_pack_pos(bitmap_git->pack, offset, &pos) < 0)
++		return -1;
++	return pos;
+ }
  
- 		/* We're recording one chunk, not one object. */
+ static int bitmap_position(struct bitmap_index *bitmap_git,
 -- 
 2.30.0.138.g6d7191ea01
 
