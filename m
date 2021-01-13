@@ -2,141 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 564EBC433E9
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6828DC433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:29:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 243FF217BA
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:15:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 213D7204EF
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 19:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728705AbhAMTPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 14:15:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728579AbhAMTPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 14:15:38 -0500
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF626C061795
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 11:14:57 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id p14so3460632qke.6
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 11:14:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VsSN1CzZSufgMbbB6GLAxCSPhq+MNfuXwi1ekys+vyU=;
-        b=LqNy1V4VXJuONuZeDswqZpxrCjkHe3gQ8PK9ZRnEI44Vy+x/4x7SGxfUXea/EoDv4j
-         w3Q24uBSzeSazQfbWwjE+GPDuYECs8mWhQHFgJ+fu3B9Nf+ZNGeOf/1rmAUz03ceSlsv
-         +3wdOAguJRoletvcL4VBrGyJDUjak7LAFEMAH3OXiJYiPZa2iB2tguQV8xfoTbApt/01
-         oIYF0P0VsP3tnpskuaGMsOApt3SljcCfid8Nx9LMy72Pu2yFhpyEOBQSgIhPg0pAaq6N
-         sRxXq9Y3gdoCDIut6wVwgWXUTep9dzcNYDCmcVTQR7veYK/vKJJN+XscOnc0uuiYRoZp
-         YaEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VsSN1CzZSufgMbbB6GLAxCSPhq+MNfuXwi1ekys+vyU=;
-        b=P5RhpYQnlXRh8rAulvOAWHCwmUyw+mbU99chP/ExdgCK/hPWolELESUJ7r7JHkZIW8
-         eQcLLwxW4iGH36dx1etT049mS5va5jArn7TvGJwZkmQTKrrk6ofDI+EQBi/A+5ooWECW
-         241Dm4XJRw19hvYU7lI/NK1MjWUJ3JrM22+YXFsId1S787/VxS5yzi+Xg78EORBtF1Ul
-         f9oamQyocLBw1eN2v1PTxxhl3QYsMOntCkk6r1XnLsYRF9cxrv67ohVYRI0HW5GoFeDa
-         qB/gchiM/JVZ97eXFcVxOjzU29qnkdKNqBGQZUN6hyOoCBMm18guPld27j9+tyqY+8lX
-         tL3w==
-X-Gm-Message-State: AOAM530URaG2KMW0zVttDSWJmeAZ9w5v++5CQ+guwHGx6j+iogfwTMsi
-        4gDzAto/UndtnfbjPmfjMmjBAS07LxLJkg==
-X-Google-Smtp-Source: ABdhPJyQkM/DGfeD3/URybo0lcc5ghpD5mvFR3VT9Y2nRZpQ6P5bnHzeg3XIPux8JTqWfXRZj7asqQ==
-X-Received: by 2002:a37:6744:: with SMTP id b65mr3527102qkc.199.1610565297022;
-        Wed, 13 Jan 2021 11:14:57 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id p6sm1517882qtl.21.2021.01.13.11.14.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 11:14:56 -0800 (PST)
-Date:   Wed, 13 Jan 2021 14:14:53 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        phillip.wood@dunelm.org.uk, Johannes.Schindelin@gmx.de,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC PATCH 5/9] sequencer: use const variable for commit message
- comments
-Message-ID: <X/9GrVjBmnJUZcGn@nand.local>
-References: <20210108092345.2178-1-charvi077@gmail.com>
- <20210108092345.2178-6-charvi077@gmail.com>
+        id S1728824AbhAMT3Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 14:29:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61622 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728809AbhAMT3Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 14:29:24 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3E1CA6105;
+        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qGG9HmRXoi2CXky2hVSLJnpRkQ8=; b=yH6mpR
+        rIVt/b9Vfbl+eVtn6/vgtHnPYvx61W42twNFNxUcGGbRazYOWp63BCHAUpBbvESe
+        02EPKNafTHdHlsEgkzyKI6vp/PsYM2tUy6Eg5SBbeQQ/B/bMBe9gx4ZRxeSWLaW+
+        lJEbkFzaM+SM8aILOSChGAIVPWHZrAYnv5gNo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VQJpKtWoGYEHl26QjpYCr0aByy9abthm
+        vhNFsNLqXLGnrVmm4YXfi2eGqYuCknknUvtWtcLfCN3tIGI40+MioNE/g8z5Xjn6
+        nTcPLKZWx03TP6mBKGOrDqTBcQ8djQxMBTNI+FEjXjkBCX81oHvm2DBatXLhNk3q
+        nS10ZdM4aYY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A37FA6104;
+        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FB16A6103;
+        Wed, 13 Jan 2021 14:28:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Arnaud Morin <arnaud.morin@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
+References: <20210109162440.GM31701@sync>
+        <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
+        <X/28IXBpse2dNZQH@coredump.intra.peff.net>
+        <20210112153438.GC32482@sync>
+        <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
+        <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
+        <20210113092448.GE32482@sync>
+Date:   Wed, 13 Jan 2021 11:28:40 -0800
+In-Reply-To: <20210113092448.GE32482@sync> (Arnaud Morin's message of "Wed, 13
+        Jan 2021 09:24:48 +0000")
+Message-ID: <xmqqk0sgy6tz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210108092345.2178-6-charvi077@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8AD98076-55D5-11EB-9E6E-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 08, 2021 at 02:53:43PM +0530, Charvi Mendiratta wrote:
-> This makes it easier to use and reuse the comments.
+Arnaud Morin <arnaud.morin@gmail.com> writes:
+
+> Without this patch, that's even worst, consistency is broken.
+> Let me explain.
 >
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
-> ---
->  sequencer.c | 19 ++++++++++++++-----
->  1 file changed, 14 insertions(+), 5 deletions(-)
+> With your history example:
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index cdafc2e0e8..b9295b5a02 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1736,6 +1736,15 @@ static size_t subject_length(const char *body)
->  	return blank_line ? len : i;
->  }
+>      ---o---o---M---o---o---W---o---o---M---o--- branch
+>          \
+>           o---o---o---M---o--- master
 >
-> +static const char first_commit_msg_str[] =
-> +N_("This is the 1st commit message:");
-> +static const char nth_commit_msg_fmt[] =
-> +N_("This is the commit message #%d:");
-> +static const char skip_nth_commit_msg_fmt[] =
-> +N_("The commit message #%d will be skipped:");
-> +static const char combined_commit_msg_str[] =
-> +N_("This is a combination of %d commits.");
-> +
+> # WITHOUT PATCH
+> If we imagine that master is having more commits count than branch.
+> The result of rev-list will be like you described:
+> $ git rev-list --left-right --cherry-pick branch...master
+> <M
+> <W
+>
+> In other words, it's showing both W and M.
 
-Two nit-picks here. The line break after the '=' is a little awkward,
-since two of these lines are less than 80 characters combined, and the
-other two are just slightly longer than 80 characters. The other nitpick
-is that its typical to see 'char *foo' instead of 'char foo[]'.
+So, at least they cancel out and the reader can tell that the net
+effect was none --- that is "sort of understandable" result.
 
-So, I'd write these as:
+> BUT, if we imagine now that master is having less commits count than branch.
+> $ git rev-list --left-right --cherry-pick branch...master
+> <W
+>
+> It's only showing W!
 
-    static const char *first_commit_msg_str = N_("This is the 1st commit message:");
-    static const char *nth_commit_msg_fmt = N_("This is the commit message #%d:");
-    static const char *skip_nth_commit_msg_fmt = N_("The commit message #%d will be skipped:");
-    static const char *combined_commit_msg_str = N_("This is a combination of %d commits.");
+Which is what I felt misleading.
 
-I also noticed that you suffix these with _fmt or _str depending on
-whether or not there are arguments that get filled in later on. That
-makes 'combined_commit_msg_str' labeled incorrectly (it should be
-'combined_commit_msg_fmt').
+> # WITH PATCH
+> With the patch, everything is consistent, and only W is kept in ouptut,
+> no matter the size of history:
+> $ git.p rev-list --left-right --cherry-pick branch...master
+> <W
 
-I'm curious to see where down the road these messages will be used over
-again, but I'm sure that that is coming in subsequent patch(es).
+So with the patch, the former case is made the same as the latter
+misleading result, which would mean that they are consistently
+misleading?
 
- static void append_squash_message(struct strbuf *buf, const char *body,
- 				  struct replay_opts *opts)
->  static void append_squash_message(struct strbuf *buf, const char *body,
->  				  struct replay_opts *opts)
->  {
-> @@ -1745,7 +1754,7 @@ static void append_squash_message(struct strbuf *buf, const char *body,
->  	if (starts_with(body, "squash!") || starts_with(body, "fixup!"))
->  		commented_len = subject_length(body);
->  	strbuf_addf(buf, "\n%c ", comment_line_char);
-> -	strbuf_addf(buf, _("This is the commit message #%d:"),
-> +	strbuf_addf(buf, _(nth_commit_msg_fmt),
->  		    ++opts->current_fixup_count + 1);
+I guess that it is better to be misleading all the time than being
+"sort of understandable" half the time and misleading the rest of
+time.  At least that is consistent.
 
-This and the three below uses are good, since they still translate
-these messages. Nice.
-
-Thanks,
-Taylor
+Thanks.
