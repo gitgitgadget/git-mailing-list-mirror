@@ -2,103 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD6A4C433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 12:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B214C433DB
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 12:14:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A528233FB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 12:07:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 48A02233F8
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 12:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbhAMMHm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 07:07:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34702 "EHLO
+        id S1727457AbhAMMOG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 07:14:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbhAMMHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 07:07:42 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE9EC061794
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 04:07:02 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id n142so1268311qkn.2
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 04:07:02 -0800 (PST)
+        with ESMTP id S1726931AbhAMMOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 07:14:06 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01E3C061786
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 04:13:25 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id b8so980191plx.0
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 04:13:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=A7xrCHuzFRTr+Ia9isO13gJTXnl3Mn2ANqitzdlT3hs=;
-        b=TRDjEfj63ek+bfglHVjDU88vpqYKiYeHgtlgRj/tK1X7uUqNNPCmxQulNvzkswI9m9
-         lO99/8ikLjMBVZKT2YJbbVTcRCxheIDyWlZflsd1pbUtfK78IHeWN7Vym4wzqHvov4gr
-         ZRqvdXbbQlK0uksilNPkMFNa2TC5CJ5XMWTC7mt/Z9Np3IzLflHIbRoWNK+xT6BtmBST
-         7nUUQszpsr/ZM4Lb4B4r4fEKjIdXI1kZrCJ4ZtuH6JuJkOjYKo1c9KdHdjilqP3Dc8bk
-         WKxI6t+STUkPZlyCjgpjZx/6Mj9qLhFeaoikXDc8FtGsoMcvtYBdrfXnrZ2yMgT3Sc2c
-         4ZzQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=JPCRDkejd/Ycs25iVI01Hr/knS5eqgRQ17kbZodhgg8=;
+        b=s4w8tWMtoz+zgTAvBgbNq76nHuhrg6jKSb0yApJ49yuGR4UArhXngtZ9hn76H2Hr7+
+         LvQfsS0KIYgLjaK0M8gsAB8uAgDNjbLsP61J/LKHJ+8ML04zMiugQIAnkvM57SdAMiGQ
+         SECB9rCp1PDwYBGXjHzz2T7cWm3xBH4JtWL04ye0i6XXnA1AfJWnEUtQc4woRfgFeuKj
+         djot6X4BHYp0BgA3nMDWbDcrm5gg9xA5O/SBAQTEV//mpi3MM70dOn/xNRTbcWr9TlDm
+         dCRygQfgEANY1x01mqpxJP75spOx5hq9+FEHAPKGQCvGwnTV9FCErZKLMbiEWI4DeBLw
+         EQQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=A7xrCHuzFRTr+Ia9isO13gJTXnl3Mn2ANqitzdlT3hs=;
-        b=XwDPNw2E9Yh9Aqrr5dJDOoFB6ZtZDLdeepDxhmakoxLOb/rIWozLjU0JG8rDerAxps
-         KDNWq95K1fq0pbaE8nad0OSbrRAyywChzEl/R0YE2ySmbEe1mLG+CnQWmPbECREM49Lp
-         LsqxQtEUaEFOX41LyuBkDPu8ZAfK8dCUpjJPgBFN3BY3Dp5hITMJpxkPvOQeIuA1Wl4n
-         gb9EvDmrQb0n3WcOkHo8aGj0MME8XGalu9rtjBvsJ8IRWqJVkjruevxiiJvMUeOnn8iO
-         LdzuyLP8p2ZjTKYBZ0cKwPB8yiLc9+0kNz4XWUsQtvyddDSx8Rvce7nqWCBDvxWOHz7k
-         GxiQ==
-X-Gm-Message-State: AOAM530JVYREZ/8qnRunBngLdIS4vcDnBovRXFEMrSAhr/04rGtQW4HM
-        gEzHBUKFucBx8BgnIEfPwjdgk7ZnhoI=
-X-Google-Smtp-Source: ABdhPJxaeoGEZr8CasR2z7IDy9awmqReyKr1LSEbpWF+VWoW7cvJQLMjDOr226uqxJXKHfsp0ImClw==
-X-Received: by 2002:a05:620a:12b9:: with SMTP id x25mr1569615qki.421.1610539621051;
-        Wed, 13 Jan 2021 04:07:01 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:80c8:fbc9:5fb9:e8d1? ([2600:1700:e72:80a0:80c8:fbc9:5fb9:e8d1])
-        by smtp.gmail.com with UTF8SMTPSA id k141sm912089qke.38.2021.01.13.04.07.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Jan 2021 04:07:00 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=JPCRDkejd/Ycs25iVI01Hr/knS5eqgRQ17kbZodhgg8=;
+        b=PDcjDQA9zfnFsrcT+np4MepmW0L5Ie4XqwP0QMSsRGvg+rGEzVLXfozK7NJPzfFDRt
+         5um7VrfRDNDClifRIYoFtZ9de39U4Cbk9wYi0BvbdqkIfw4dywAc4TpBv2f7B7mEl0UO
+         ANWInP/UvjTVF4rvLgTwC+amOZyJCqudQ7CJfqa2cg0ANayqxZDm7CHelJRb9TSiljo4
+         rKTvOJMKv1r55PGyqww052GNPvp0hgDamK6kKN5t94euSs2xBQt3Ya0+pl86qdNkllwQ
+         cdSWNB6GKE89ycTcS/tsCOX82157EtrGC0h/zSeHxL5LNA3XEs30UwFFf9T3z5QEPCF3
+         DWdw==
+X-Gm-Message-State: AOAM531dixEUk7fz2aRWAt9/QBGN6VZunls+oALYG7alHu563r6n069A
+        4VVSs8TWvOvlYxp2Ltd6Tg0BESxBPjHLEg==
+X-Google-Smtp-Source: ABdhPJzCBPyoOIhGs0kCcp2sigxB0ixtZYYaLalxqI4YJM63Ak+iRKMDvg1Vnb5n/LoRncAf08t5FQ==
+X-Received: by 2002:a17:90a:4817:: with SMTP id a23mr2125704pjh.16.1610540005616;
+        Wed, 13 Jan 2021 04:13:25 -0800 (PST)
+Received: from localhost ([2402:800:63a8:f5bb:2516:717f:2f37:c4c0])
+        by smtp.gmail.com with ESMTPSA id iq3sm2521021pjb.57.2021.01.13.04.13.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Jan 2021 04:13:25 -0800 (PST)
+Date:   Wed, 13 Jan 2021 19:13:23 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Subject: Re: test-tool: bloom: generate_filter for multiple string?
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
+Message-ID: <X/7j4w22s3gEbm2R@danh.dev>
 References: <20201231035438.22533-1-congdanhqx@gmail.com>
- <X/3+PG2hi71tj/UA@nand.local> <X/7guF05a/Bb/VNp@danh.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <31aec25c-07ef-b3b7-2759-494ad47bcfb1@gmail.com>
-Date:   Wed, 13 Jan 2021 07:06:59 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+ <X/3+PG2hi71tj/UA@nand.local>
+ <X/7guF05a/Bb/VNp@danh.dev>
+ <31aec25c-07ef-b3b7-2759-494ad47bcfb1@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <X/7guF05a/Bb/VNp@danh.dev>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <31aec25c-07ef-b3b7-2759-494ad47bcfb1@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/13/2021 6:59 AM, Đoàn Trần Công Danh wrote:
-> On 2021-01-12 14:53:32-0500, Taylor Blau <me@ttaylorr.com> wrote:
->> On Thu, Dec 31, 2020 at 10:54:38AM +0700, Đoàn Trần Công Danh wrote:
->>> I'm reading the code for Bloom Filter to see if arXiv:2012.00472
->>> could be an improvement.
->>
->> I'm late to the party, but I'm curious to hear which part of this
->> article you think would help out the Bloom filter implementation.
+On 2021-01-13 07:06:59-0500, Derrick Stolee <stolee@gmail.com> wrote:
+> On 1/13/2021 6:59 AM, Đoàn Trần Công Danh wrote:
+> > On 2021-01-12 14:53:32-0500, Taylor Blau <me@ttaylorr.com> wrote:
+> >> On Thu, Dec 31, 2020 at 10:54:38AM +0700, Đoàn Trần Công Danh wrote:
+> >>> I'm reading the code for Bloom Filter to see if arXiv:2012.00472
+> >>> could be an improvement.
+> >>
+> >> I'm late to the party, but I'm curious to hear which part of this
+> >> article you think would help out the Bloom filter implementation.
+> > 
+> > Uhm, no. The article doesn't help the Bloom filter implementation.
+> > The article was suggesting using Bloom filter to speed-up the
+> > negotiation in fetch-pack and upload-pack. Which, in my own quick
+> > experience, doesn't help much. Maybe it's me not understand the
+> > article idea or I have made a naive implementation. However, I'm not
+> > convinced to pursued further.
 > 
-> Uhm, no. The article doesn't help the Bloom filter implementation.
-> The article was suggesting using Bloom filter to speed-up the
-> negotiation in fetch-pack and upload-pack. Which, in my own quick
-> experience, doesn't help much. Maybe it's me not understand the
-> article idea or I have made a naive implementation. However, I'm not
-> convinced to pursued further.
+> I saw that idea, and was immediately skeptical. Bloom filters still
+> have size linear to the size of the set. By using a Bloom filter to
+> describe "these are ALL the objects I have" instead of "these are
+> the TIPS I have" the size will explode to be much larger than our
+> current negotiation algorithm.
 
-I saw that idea, and was immediately skeptical. Bloom filters still
-have size linear to the size of the set. By using a Bloom filter to
-describe "these are ALL the objects I have" instead of "these are
-the TIPS I have" the size will explode to be much larger than our
-current negotiation algorithm.
+Yes, I saw that problem, too.
+
+My implementation was trying to use it from the second round,
+downstream will say: these are ALL the objects I have from our common
+objects.
+
+The result is not much different, though.
 
 Thanks,
--Stolee
 
+-- 
+Danh
