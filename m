@@ -7,143 +7,114 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D53C432C3
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DAAC433DB
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:05:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE2A123442
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:04:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEEAF23447
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727383AbhANCEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 21:04:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56366 "EHLO
+        id S1729326AbhAMW1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 17:27:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729368AbhAMWbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 17:31:39 -0500
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67534C0617AB
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:28:41 -0800 (PST)
-Received: by mail-qv1-xf36.google.com with SMTP id h13so1581247qvo.1
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:28:41 -0800 (PST)
+        with ESMTP id S1729304AbhAMWYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 17:24:51 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F3F8C06179F
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:43 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id 19so4430478qkm.8
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:23:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=F+IzFX+eJQuZjoTzcoY0Nicg1W0SyqzlGAWjYAPf4iQ=;
-        b=QHKNbPBpfrN4IarkRf0SGVkcnOUVB8oBckJL6aH+YFGjHNGGwOtD/+Jj/IOFqLLHz3
-         LuBeuAA7l1cz0JHKfnh+J1WteDjrRk6Rbd6BaI7nOqVRTCrrxjp8ak1rskDeg5QIQJIY
-         w1D/PiQPF98eGx/T76H0dbH2Fp80rMJWfSwZBuE6joMmUGyFArRQf43IEM7XEJejT0Us
-         9EkESTpF0Cf2fLQvs5p6VL2aALsMbCbdPo2266y71bEE9JmZ520mFzBZaRgJk3UQ8iQ6
-         E3XnZJnhpzuvidqWSYT9k0OtFIMe6I4tKaMxgAeklLJ7TIFG+TT3KiZm7xMJrSONWpIl
-         PD4w==
+        bh=th3JkT+WF9nKA4iSS3MEW4HqFzIjPMuj6pDG3bDURq8=;
+        b=slvD1/lsh6fK16re9sTuA+WPCz7A2NDhNSdVeMGRtp7G8jrYX0DffEb7I2t85k/o4j
+         awKlEjqN7rlzQCYNk7IIcEV2UZptuT561OZNQUebIE/THH8+8wSMF8uGXwTskDgq20DV
+         +ExKTSHp5lpr1pWp0SJ+opYgnjx+vPwXqFNZDCzxItqbfNIMB5tkG4fZp6ypH0jwRJFZ
+         Sf47+smJ4E+JkHTnQY7EftKN7jXcHFF+2cq+WxPctPI/BP2Ie94rmQFadrdsLtSoVf3e
+         IFFuJhw9bAODG1zbUH56O+sMqbwNpT0YlLp6+rBAkFQbHTBwv6iL3LqIHCTx83nYLVQt
+         SzyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=F+IzFX+eJQuZjoTzcoY0Nicg1W0SyqzlGAWjYAPf4iQ=;
-        b=ZVkx9sJs/oZQ8l0K+Ct3juYxmRD1ks1UjfXgwJAirO+4SokWS+Zb20HdSngg8YcYRT
-         einLMVaDRE22VkV+lWOkRuJTYCQ02FYk9lF6FCH6LR1S0IaENRdrNMwFywp3S7a0fZNd
-         qsZu8HyF/WhZjRXMPbP3m/3hdk9r2EsYqUJ8FciOOVU8vN9UOS4+MseMb8Ny0RJ6OIjU
-         9NP7QQADX5CuYzQ0fLhGUQhntdFOhQXbkLObMLT1kGGGfFwzKSCdiSThQ+FLBnZUcicq
-         yGWmiyIYH0SxaIB0nS7OGCEGyL42XOj8P17UFUk9YrBPQ1cnS2eYIpP2Vq4lUDkEUwJn
-         eYRg==
-X-Gm-Message-State: AOAM533ASN3nukmpunjb2LssWQY1cexEKCucyH5NRTA8W/eXD2KZUmeO
-        8kyQ9LntE10WYei0N2iZ5GdTruCRbeo15Q==
-X-Google-Smtp-Source: ABdhPJzGNSkT/PrbAgwnFWJRJiX6Bi3ay+16WRDPNNHqRl96F+5AOAH5HhNrXKJ0WIonJ4SSab6NnA==
-X-Received: by 2002:a0c:b4a8:: with SMTP id c40mr4807079qve.60.1610576920452;
-        Wed, 13 Jan 2021 14:28:40 -0800 (PST)
+        bh=th3JkT+WF9nKA4iSS3MEW4HqFzIjPMuj6pDG3bDURq8=;
+        b=Sxi/tB2pqAkzPwbW10vhOBmTYzrUqSJN2WVigmMT+TrBLB6cVQoY05h3k/14r5YRyr
+         av+M5AlYnb/a8RlRAQW/HgCx7hScpYEWFs338r4ImAo+WN3LUHP4b/PwnQjIGWrN8E5w
+         JXlokWM69Q/tCbZOKXxmLpc7HsU2u0knReiK9FL4nnZg1QRfDBFLaf0/W3zy14lAHzus
+         gQgh2bDq5hARf+Ag5PU4nREenGK8/JJpmrRqFFzruLVNBhYBweWK4uEk0nXejXHis4do
+         cKkU87mFV/5Xo+IU6OrO6mk5/IRKSbFqLf42cQNUjDc+4xJRYAcs5axjnk0Tb4hL9jui
+         zpSw==
+X-Gm-Message-State: AOAM532d2WyJNgFc9OFFpH8hv5I2BAhoSnTo7ryvEVIWztwQ28JBvU6d
+        TQjZTp141DpCEdbBGyD6B6VhjRYnzAJErQ==
+X-Google-Smtp-Source: ABdhPJzIG5mkAPMPNTYW4KTI/i26W5YX8pladSc874mTIFTgNubrSjcHm1Qz2RbshhbQWGfgnbGbJw==
+X-Received: by 2002:a37:aa57:: with SMTP id t84mr4571145qke.348.1610576622177;
+        Wed, 13 Jan 2021 14:23:42 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id c7sm1791307qtw.70.2021.01.13.14.28.39
+        by smtp.gmail.com with ESMTPSA id 128sm1933146qki.26.2021.01.13.14.23.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 14:28:39 -0800 (PST)
-Date:   Wed, 13 Jan 2021 17:28:38 -0500
+        Wed, 13 Jan 2021 14:23:41 -0800 (PST)
+Date:   Wed, 13 Jan 2021 17:23:39 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 8/8] pack-revindex: ensure that on-disk reverse indexes
- are given precedence
-Message-ID: <48926ae1821f026c00c6237b771e0f9150b8b267.1610576805.git.me@ttaylorr.com>
-References: <cover.1610129989.git.me@ttaylorr.com>
- <cover.1610576805.git.me@ttaylorr.com>
+Subject: [PATCH v2 03/20] write_reused_pack_one(): convert to new revindex API
+Message-ID: <7676822a541bfef1861be01dc55d86d3d0cad494.1610576604.git.me@ttaylorr.com>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <cover.1610576604.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1610576805.git.me@ttaylorr.com>
+In-Reply-To: <cover.1610576604.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When an on-disk reverse index exists, there is no need to generate one
-in memory. In fact, doing so can be slow, and require large amounts of
-the heap.
-
-Let's make sure that we treat the on-disk reverse index with precedence
-(i.e., that when it exists, we don't bother trying to generate an
-equivalent one in memory) by teaching Git how to conditionally die()
-when generating a reverse index in memory.
-
-Then, add a test to ensure that when (a) an on-disk reverse index
-exists, and (b) when setting GIT_TEST_REV_INDEX_DIE_IN_MEMORY, that we
-do not die, implying that we read from the on-disk one.
+Replace direct revindex accesses with calls to 'pack_pos_to_offset()'
+and 'pack_pos_to_index()'.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-revindex.c          | 4 ++++
- pack-revindex.h          | 1 +
- t/t5325-reverse-index.sh | 9 +++++++++
- 3 files changed, 14 insertions(+)
+ builtin/pack-objects.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 369812dd21..f264319f34 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -2,6 +2,7 @@
- #include "pack-revindex.h"
- #include "object-store.h"
- #include "packfile.h"
-+#include "config.h"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ab1fd853f1..8e40b19ee8 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -868,8 +868,8 @@ static void write_reused_pack_one(size_t pos, struct hashfile *out,
+ 	enum object_type type;
+ 	unsigned long size;
  
- struct revindex_entry {
- 	off_t offset;
-@@ -166,6 +167,9 @@ static void create_pack_revindex(struct packed_git *p)
+-	offset = reuse_packfile->revindex[pos].offset;
+-	next = reuse_packfile->revindex[pos + 1].offset;
++	offset = pack_pos_to_offset(reuse_packfile, pos);
++	next = pack_pos_to_offset(reuse_packfile, pos + 1);
  
- static int load_pack_revindex_from_memory(struct packed_git *p)
- {
-+	if (git_env_bool(GIT_TEST_REV_INDEX_DIE_IN_MEMORY, 0))
-+		die("dying as requested by '%s'",
-+		    GIT_TEST_REV_INDEX_DIE_IN_MEMORY);
- 	if (open_pack_index(p))
- 		return -1;
- 	create_pack_revindex(p);
-diff --git a/pack-revindex.h b/pack-revindex.h
-index 7237b2b6f8..97f5893d3a 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -17,6 +17,7 @@
-  */
+ 	record_reused_object(offset, offset - hashfile_total(out));
  
- #define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
-+#define GIT_TEST_REV_INDEX_DIE_IN_MEMORY "GIT_TEST_REV_INDEX_DIE_IN_MEMORY"
+@@ -889,11 +889,17 @@ static void write_reused_pack_one(size_t pos, struct hashfile *out,
  
- struct packed_git;
+ 		/* Convert to REF_DELTA if we must... */
+ 		if (!allow_ofs_delta) {
+-			int base_pos = find_revindex_position(reuse_packfile, base_offset);
++			uint32_t base_pos;
+ 			struct object_id base_oid;
  
-diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
-index be452bb343..a344b18d7e 100755
---- a/t/t5325-reverse-index.sh
-+++ b/t/t5325-reverse-index.sh
-@@ -85,4 +85,13 @@ test_expect_success 'pack-objects respects pack.writeReverseIndex' '
- 	test_path_is_file pack-1-*.rev
- '
- 
-+test_expect_success 'reverse index is not generated when available on disk' '
-+	test_index_pack true &&
-+	test_path_is_file $rev &&
++			if (offset_to_pack_pos(reuse_packfile, base_offset, &base_pos) < 0)
++				die(_("expected object at offset %"PRIuMAX" "
++				      "in pack %s"),
++				    (uintmax_t)base_offset,
++				    reuse_packfile->pack_name);
 +
-+	git rev-parse HEAD >tip &&
-+	GIT_TEST_REV_INDEX_DIE_IN_MEMORY=1 git cat-file \
-+		--batch-check="%(objectsize:disk)" <tip
-+'
-+
- test_done
+ 			nth_packed_object_id(&base_oid, reuse_packfile,
+-					     reuse_packfile->revindex[base_pos].nr);
++					     pack_pos_to_index(reuse_packfile, base_pos));
+ 
+ 			len = encode_in_pack_object_header(header, sizeof(header),
+ 							   OBJ_REF_DELTA, size);
 -- 
 2.30.0.138.g6d7191ea01
+
