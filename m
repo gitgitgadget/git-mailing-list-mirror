@@ -2,128 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBB43C433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 09:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3557C433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 09:25:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 840852339F
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 09:05:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3CA6233CE
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 09:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727340AbhAMJF7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 04:05:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56488 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727325AbhAMJFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 04:05:55 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F2D0A1FC8;
-        Wed, 13 Jan 2021 04:05:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=fSLBZ1DZG12y
-        fIpE95eR6Kn/D8c=; b=JdpkznTb932UjqnAxeMw9CqL5VRsYhsuX1sABi0rqtFf
-        9tsuot9kdLTaK41gX9OnFwnsR/K3sfXYLcXLLJFX1NCTrlbsVJ6ogMXr+gPqVFdj
-        +P/Xh5GoyvcipRxvOjMCD9pE9/VtUL8lU4tjuyoYBLQ/4+PFeM7TQGbsblRwV3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jqOGeB
-        sSO+cCG9qiMIAli7RVjNAd55N9/rHti79WyDRigZKNdIsb0YxltAbk0i2RpbwZMu
-        SRT/erUM4KODdZoFDnFLJdEFp5vdZeo5eXxZeSmZQYLUFF5KcdES7XbC56YOTiVm
-        bhDo2snqJp57DkdqD75B+UH7iSg1sEEUoY4WM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 17FF9A1FC7;
-        Wed, 13 Jan 2021 04:05:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CB02A1FC6;
-        Wed, 13 Jan 2021 04:05:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH] CoC: update to version 2.0 + local changes
-References: <xmqqzh1dxmlo.fsf@gitster.c.googlers.com>
-Date:   Wed, 13 Jan 2021 01:05:09 -0800
-In-Reply-To: <xmqqzh1dxmlo.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 13 Jan 2021 00:33:23 -0800")
-Message-ID: <xmqqr1mpxl4q.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726742AbhAMJZb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 04:25:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56162 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbhAMJZb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 04:25:31 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBA8AC061575
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 01:24:50 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id t16so1316858wra.3
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 01:24:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=MecyJAe7kfRdCcdfZsexcn+ezKDEDo60uYQ9XShufiU=;
+        b=SuaOFtJPyds0PMGyyKUopaBoMupAz1Y71lAGce0QkVN1E6I6/FJO32T9JMP3RTdNjH
+         U0xWwUXWGgf/1d9DIruCcexeX3UIJJcdcc0qqRRxuin1/g7oVIRlhgYsi4x0Fis0m9+N
+         fD9v7DlLL0f6tevL6kQsCSL7r2/QiIA7PFe/+JXhqZYrn9zOwGqTVVGgaf0CWaSX2M13
+         pUQkxNb9nMriDJC+Ej8+d2ySNWx5TEXd93lsdpu4nLP3mMdtk6PVbG/nrRHf3xfI8pzV
+         argt5tNoBvZL9UVAnJGHvfvux4VYy5UzbBs7+GxhqodEq5jkUcnVV93tncd3mrpQW7CS
+         mUgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=MecyJAe7kfRdCcdfZsexcn+ezKDEDo60uYQ9XShufiU=;
+        b=QD0TbdHjb4j2GF2RRdxwVWQPpHl6g3M87ehYYks0Atpiyu5j0v4ZnXp/9ELPL3Ez4v
+         o+DxZLfigFLycFcLK1gEKIz2U3YqrCfu78qlYZFREHAQTzvBfzJsuv7SjQWeHDcrO6r7
+         TulrIWX3Rjc+G03hB1m1olNfK748RLknm/btq7Z2z73vpOa1VsuX7C2U6jF9jJrF3Cnc
+         e2FZ5eYsbmPdBh9E5TDSqI5ICXYH7wXcJtRZYcM2OsBEqEXIltxLUS/HWcDE/76FrLUd
+         +IrzEUU/WFan3HGjtRX0Dpw/X81PUgUtyedc8aNYG+oHqCvimEbl0c0Jtq0TeG0Waem1
+         xpuA==
+X-Gm-Message-State: AOAM532hznW2gMONIG7jNQGtVfxrH3+qIvXmrP27bLEQ33kvaI5GdCq7
+        0LNg/KsvVYSCYoaxnlWJyQ==
+X-Google-Smtp-Source: ABdhPJx7XVMO5aJ4VoQv1zYIoL+YbnscE8tAaFw4DnxAEky5ttgj/mdAPIr7TCja/IdMrHKc4HVvdQ==
+X-Received: by 2002:a5d:688d:: with SMTP id h13mr1607052wru.28.1610529889552;
+        Wed, 13 Jan 2021 01:24:49 -0800 (PST)
+Received: from sync (90.ip-167-114-239.eu. [167.114.239.90])
+        by smtp.gmail.com with ESMTPSA id l8sm2696711wrb.73.2021.01.13.01.24.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Jan 2021 01:24:48 -0800 (PST)
+Date:   Wed, 13 Jan 2021 09:24:48 +0000
+From:   Arnaud Morin <arnaud.morin@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
+Message-ID: <20210113092448.GE32482@sync>
+References: <20210109162440.GM31701@sync>
+ <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
+ <X/28IXBpse2dNZQH@coredump.intra.peff.net>
+ <20210112153438.GC32482@sync>
+ <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
+ <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 7075A55E-557E-11EB-949B-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Without this patch, that's even worst, consistency is broken.
+Let me explain.
 
-> Here is to remind those of you who may want to add your Acked-by to
-> =C3=86var's proposed update to show your support.  I've collected ones =
-on
-> the list I saw in replies to the original proposal [*1*] but in case
-> I missed yours...
->
-> Thanks.
-> ...
-> [Reference]
->
-> *1* Message-Id: <20201228171734.30038-3-avarab@gmail.com>
->
-> ----- >8 ---------- >8 ---------- >8 ---------- >8 ---------- >8 -----
-> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Subject: [PATCH] CoC: update to version 2.0 + local changes
->
-> Update the CoC added in 5cdf2301 (add a Code of Conduct document,
-> 2019-09-24 from version 1.4 to version 2.0. This is the version found
-> at [1] with the following minor changes:
->
->  - We preserve the change to the CoC in 3f9ef874a73 (CODE_OF_CONDUCT:
->    mention individual project-leader emails, 2019-09-26)
->
->  - We preserve the custom intro added in 5cdf2301d4a (add a Code of
->    Conduct document, 2019-09-24)
->
-> This change intentionally preserves a warning emitted on "git diff
-> --check". It's better to make it easily diff-able with upstream than
-> to fix whitespace changes in our version while we're at it.
->
-> 1. https://www.contributor-covenant.org/version/2/0/code_of_conduct/cod=
-e_of_conduct.md
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> Acked-by: Christian Couder <chriscool@tuxfamily.org>
-> Acked-by: Derrick Stolee <dstolee@microsoft.com>
-> Acked-by: Elijah Newren <newren@gmail.com>
-> Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-> Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+With your history example:
 
-I guess I should lead by an example ;-)  The above misses mine and
-Signed-off-by means a totally different thing [*1*] from Acked-by.
+     ---o---o---M---o---o---W---o---o---M---o--- branch
+         \
+          o---o---o---M---o--- master
 
-    Acked-by: Junio C Hamano <gitster@pobox.com>
+# WITHOUT PATCH
+If we imagine that master is having more commits count than branch.
+The result of rev-list will be like you described:
+$ git rev-list --left-right --cherry-pick branch...master
+<M
+<W
 
+In other words, it's showing both W and M.
 
-[Footnote]
+BUT, if we imagine now that master is having less commits count than branch.
+$ git rev-list --left-right --cherry-pick branch...master
+<W
 
-*1* Most importantly, signing off is about recording provenance of
-    the change. You certify that you have enough rights to pass the
-    patch along to the project, and you agree that the fact that you
-    contributed the patch will be recorded in perpetuity.  It does
-    not mean that you agree to the change in the patch and you do
-    not assure correctness of the patch by signing it off.  I signed
-    off the above patch to say I got it from =C3=86var and committing it
-    as-is, but it does not say that I agree with the move of our CoC
-    to Contributor Covenant 2.0, hence my Ack here.
+It's only showing W!
 
+So the result is not consistent, depending on which branch is having
+more commits.
 
+# WITH PATCH
+With the patch, everything is consistent, and only W is kept in ouptut,
+no matter the size of history:
+$ git.p rev-list --left-right --cherry-pick branch...master
+<W
+
+Cheers,
+
+-- 
+Arnaud Morin
+
+On 12.01.21 - 11:13, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > At the end, we'll have eliminated commits from both sides that have a
+> > matching patch-id on the other side. But there's a subtle assumption
+> > here: for any given patch-id, we must have exactly one struct
+> > representing it. If two commits from A both have the same patch-id and
+> > we allow duplicates in the hashmap, then we run into a problem:
+> 
+> In practical terms, for one side of the history to have two
+> identical patches, the most likely scenerio for that to happen is to
+> have a patch, its reversion, and its reapplication, intermixed in
+> its history with other commits, e.g.
+> 
+>     ---o---o---M---o---o---W---o---o---M---o--- ...
+>         \
+>          o---o---o---M---o--- ...
+> 
+> where "M" are commits that does an identical change, and "W"
+> (upside-down "M") is its reversion.  On the top history, "M" was
+> introduced, the bottom history cherry-picked, the top history found
+> problems in it and reverted with "W", and later (perhaps with the
+> help of preparatory patches on top of "W"), the top history now
+> considers that "M" is safe, so reapplies it.
+> 
+> And a "--cherry-pick" output that excludes "identical patches" that
+> appear on both sides on such a history would hide all "M"'s, leaving
+> a history like
+> 
+>     ---o---o-------o---o---W---o---o-------o--- ...
+>         \
+>          o---o---o-------o--- ...
+> 
+> But is this result what the user really wanted to see, I have to
+> wonder.
+> 
+> I do not see any problem in the patch itself.  We used to hide only
+> one "M" from the history on the top half in the picture, leaving one
+> "M" and "W", while hiding the sole "M" from the bottom half.  Now if
+> we want to no longer show any "M", the updated code would correctly
+> hide all of them.
+> 
+> It just feels to me that the resulting view of the history look
+> weird, leaving only the reversion of a patch that has never been
+> applied in the first place.
