@@ -2,94 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA59EC433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1DAC433E6
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7021822ADF
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A27E22BEA
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 20:34:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728984AbhAMUeE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 15:34:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54843 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728980AbhAMUeE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 15:34:04 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D852A68A5;
-        Wed, 13 Jan 2021 15:33:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oAx0CgZQohAwV81nQkHF9N+oPA4=; b=kwNCH4
-        0ISasK1eWN70c0jnc/70vAYH5+3DP4jmbnLtvcLHf0WQSC8q8LU7Fq0jtYu9aLVx
-        ckhCwL6+7VW45TOgqiycWvGMt5vnVEOjWhhJDBWCMVUXkhSln0DbmJSQn+fVCwbn
-        uSFDsg0hbBgskeecnJANWS3eUvIdSCTASSQc0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UUgZfDWtqcxIJ7XZoiJmsHFJ579PlvHJ
-        s48+xlXaQ8Y57ozM93KN7l0NPgQjWzwMSQZlblmG+sZ7FKN0vkE7utUtljXCcmF4
-        I56Nv206yPlStpOz0agL5QtQUHnK19TskyeZryhN5pu681KNcy1hjvpsffIW8O36
-        39rzXw5XEhU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2565CA68A4;
-        Wed, 13 Jan 2021 15:33:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AC165A68A3;
-        Wed, 13 Jan 2021 15:33:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Michael S. Tsirkin" <mst@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git am fails because of weird text in commit log
-References: <20210113085846-mutt-send-email-mst@kernel.org>
-Date:   Wed, 13 Jan 2021 12:33:21 -0800
-In-Reply-To: <20210113085846-mutt-send-email-mst@kernel.org> (Michael
-        S. Tsirkin's message of "Wed, 13 Jan 2021 09:01:16 -0500")
-Message-ID: <xmqqzh1cwp9q.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729008AbhAMUeh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 15:34:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55148 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725885AbhAMUeh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 15:34:37 -0500
+Received: (qmail 26368 invoked by uid 109); 13 Jan 2021 20:33:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 13 Jan 2021 20:33:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2287 invoked by uid 111); 13 Jan 2021 20:33:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Jan 2021 15:33:57 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 13 Jan 2021 15:33:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Arnaud Morin <arnaud.morin@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] patch-ids: handle duplicate hashmap entries
+Message-ID: <X/9ZNM9KxZaQ2it+@coredump.intra.peff.net>
+References: <20210109162440.GM31701@sync>
+ <X/2vgbnxWSmst5yB@coredump.intra.peff.net>
+ <X/28IXBpse2dNZQH@coredump.intra.peff.net>
+ <20210112153438.GC32482@sync>
+ <X/3FwNPHqZqY+hv0@coredump.intra.peff.net>
+ <xmqqy2gy3r5p.fsf@gitster.c.googlers.com>
+ <20210113092448.GE32482@sync>
+ <X/7ur/IcCg1AqTdZ@coredump.intra.peff.net>
+ <xmqq7dogy4dx.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 93E39B44-55DE-11EB-B729-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq7dogy4dx.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Wed, Jan 13, 2021 at 12:21:30PM -0800, Junio C Hamano wrote:
 
-> So someone sends me a patch with --- in the commit log, like this below.
-> Result: git am gets confused and can't apply the patch.
+> > I suspect for most operations we care less about "remove all
+> > cherry-picks from both sides", but rather "give me one side, omitting
+> > commits that are already on the other side" (because you want to rebase
+> > or cherry-pick some subset).
+> 
+> Yes again.  It means "--cherry-pick" inherently is not symmetric.
+> One side is the reference side (i.e. mainline), and the goal is to
+> remove from the other side what is in the reference side.
+> 
+> What we are seeing in this discussion is that "--cherry-pick" and
+> symmetric difference do not conceptually play well together.
+> 
+> But the behaviour with the patch makes the most sense when
+> cherry-pick is applied to a symmetric difference (provided that
+> doing so makes sense in the first place, that is).
 
-Quite understandable.
+I didn't realize --cherry-pick would work without a symmetric
+difference. The documentation says:
 
-> Shouldn't git format-patch at least complain about commit log
-> like this, if not mangle it in some way?
+  Omit any commit that introduces the same change as another commit on
+  the “other side” when the set of commits are limited with symmetric
+  difference.
 
-It probably is too early to warn, mangle or quote in "git commit".
-I agree with you that "git format-patch" would be the best step in a
-typical workflow to warn, mangle or quote.
+And indeed, I think it silently does nothing with:
 
-The solution would probably begin with identifying the lines in the
-commit log that mailinfo.c::patchbreak() considers the beginning of
-the patch part.  After finding such a line:
+  git rev-list --cherry-pick A..B
 
- - Warning is easy.  
+(because there is nothing on the "other" side to match).
 
- - Mangling the line by prefixing something like " " in front of it
-   would also be easy.
+So you do need some symmetric difference in order to define the two
+sets, but you might only want to see one of the sides.  And that is
+basically what --cherry does. But having looked at the implementation of
+cherry_pick_list(), it is quite happy to swap the sides internally. I
+guess if we were going to make the output unsymmetric, the first thing
+would be to stop doing that swap. :)
 
- - Quoting thru to the end of "patch that shouldn't have been there"
-   in possibly a reversible way is probably too hard.
+For the specifics of reverts and replays, though, I think the weirdness
+has nothing to do with left/right, or showing one side. It's the
+mismatched count. So if we were to make any change, it would be to keep
+a count of how many times each commit appears on the other side, and
+cancel them one for one.
 
-Mangling or quoting should be hidden behind an option, I would
-think.
+I.e., this:
 
-Patches welcome.
+  o--M--W--M--o--
+   \
+    o--M--o---
 
-Thanks.
+might plausibly want to show "M" once on the upper branch. But:
+
+  o--M--W--M--o--
+   \
+    o--M--W--M--o--
+
+should never show M, I wouldn't think.
+
+I'm not sure if that would be violating what existing callers expect
+from "--cherry-pick", though (i.e., if it would need another name, or an
+extra option to trigger).
+
+-Peff
