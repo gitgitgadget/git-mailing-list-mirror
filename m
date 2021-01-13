@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17342C43331
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CC31C4332E
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:05:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6B8B235F8
+	by mail.kernel.org (Postfix) with ESMTP id 06AE1235E4
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 02:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730104AbhANCFh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 21:05:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        id S1730111AbhANCFj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 21:05:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729320AbhAMW1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 17:27:01 -0500
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3C4C061795
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:25:14 -0800 (PST)
-Received: by mail-qk1-x731.google.com with SMTP id 143so4408693qke.10
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:25:14 -0800 (PST)
+        with ESMTP id S1727543AbhAMWZw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 17:25:52 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076DFC0617A6
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:24:10 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id h19so2275469qtq.13
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 14:24:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ygOOxZvwT4fpebBNERIgQabv33pbsiBcH0bco8d1HdE=;
-        b=ZhJE/VlsScZDMtQ1zZ+V38BYhnG2aXL9tykAAM627F6cGxMEnrxRejw0bELlti8B+R
-         /2JI9nWHzmMMTRBKZVaa/BtvJYSoedKpdwNW5xR7fyiUpuwznbDzl5A7ywGl1NMz6l9u
-         EC2fgXhUH9IoX7qku7h2WOC6WWyDQInonkSjej/liQOSb/cXmuK+UNkvmLBiZH1GkbCt
-         rmRcW2VpDboAjLmX3Kv0uqDafAgMRzhaYS+Ubmg1pZ5by1VXVQvMnTfFBIjKz6kzSmaH
-         Wvrmd2RHGwJ6bYl5pNSaF+cGKQ2aYaGBTdoe5RaXvPzREtlQk2HbpUNTDmWMv6dbipYt
-         KbTA==
+        bh=KYD+b+Qf3QpTk8jEzVklSRxKA6eMCZRnIVnPFQom6eA=;
+        b=bJThc14WGm/MskkkM3eUloWYMTsFG3Ll20UYz9g2Qgvb4Zh6PjMHkA9rEl3SlAXEV5
+         gjUyMlfSeMesua7zjb612zGwuiImEOhR4k+HFIBeqvHQ0Wj+SAgQTjk/LWRj6IoLoE63
+         xp33Gtw/0ZQR1GZhJReUqkZXPKjbgQx2s+8xeL1oTLhrH6sVswknvGp3eHet2vPVOLxR
+         YT52W6MJleHVedOXE1mSoCw/dCQ7ojEEBXPDNO/1S+C+8zBpE03oiODF9pAqVRvBapqn
+         qpbQZMWJl3x76fp2EIRGmLhVte6rqhBeIZZ69e7GL5+bHMP447UDb0CsRw70nHK1JcNo
+         q1vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ygOOxZvwT4fpebBNERIgQabv33pbsiBcH0bco8d1HdE=;
-        b=eU0dECqcFm3Pw5VTgGpk4/8+OyKkip5FvN9SNW/Ce2PAby+CVRfcFYamXcsCi8kjjI
-         GDmeTr8ic/2FInlrknwnut9stNOUYg42L7oSfdykx9p56tdivz2Hx89HqYC4mj1lyYBK
-         V4kdez3metjTzybaLt7wUkGDi22wpe0j/JnpwTvzSTZg0M5ftwmlfYLvv+1rN0XujDRW
-         tljKI2rE18+YDBEED4/KWrOHOOq1L/UnPQVXSt1OkdBxVtw5GIKiLVpRWx4p+hKwOV/V
-         W0FmIK76xRji2Ape3Cj+9ncT+L2+cLGFZPp+U/w+6R+HWLWlbLpRqMjjDpHQBqCKRzam
-         pV5g==
-X-Gm-Message-State: AOAM531Zw4gXPQeUAAflMZMdOVGe+WadNFnqGJcNYynPyMR/MQZXJc/F
-        t+LlBVwwBobevdLTmZ1PGwYSCWGxYGJhjw==
-X-Google-Smtp-Source: ABdhPJyjHtGtzmonZEVi0zIIYmI/fd7tqg8E1R3EtoiMJilMfuX9KLEeL16/aPGNmYui68Vn6pFYsA==
-X-Received: by 2002:a37:b083:: with SMTP id z125mr4329061qke.246.1610576713182;
-        Wed, 13 Jan 2021 14:25:13 -0800 (PST)
+        bh=KYD+b+Qf3QpTk8jEzVklSRxKA6eMCZRnIVnPFQom6eA=;
+        b=Rwjbo6ouuFoEHj4+XDI+XA+o5SDoR+fSoCmaNqippwvfq8pptJVtGiqwnO9qJNnQke
+         ohhYjirHpVmAWN4SiayLpKUfWBHnjIAWKm/OIj988auu2tY4GZKQjGRAZii2PCL0OtOC
+         amYu4QzRMGjR1zA8EwhFZml/oush1N1YWfAOUnY5AO0Jd4z4zZDxK4RU+Mh1p4/ZQBoZ
+         IJjFh4ecOtNMcE/Bhi28WbPgIrOFskmY7R5HdFQSzyy+XUb8hWvY0uxs42BRw2GKuFwD
+         8WiGuTNIw1+xXCt2rj6udFzdzEkHV0kXWNL2spI55qym9TGQTl7ru5t2vj7+3tlwzYhE
+         uF4g==
+X-Gm-Message-State: AOAM533FoTk6EGSGtc6shVcqvxpqKuh6r+nVcT3mrRxhnDb75Z8WattP
+        1+PTD+IjLUuLd9oJOGdMdse8bKzS1w5KiA==
+X-Google-Smtp-Source: ABdhPJwgUWYEOXcckmcfO7/wkgrMPlUUKM9teXFxAsdr3pH0myjgpwLTzxL7iA7mQO5QiKlE4nkDSQ==
+X-Received: by 2002:aed:2ba5:: with SMTP id e34mr4599597qtd.146.1610576649048;
+        Wed, 13 Jan 2021 14:24:09 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id o201sm1984703qke.60.2021.01.13.14.25.12
+        by smtp.gmail.com with ESMTPSA id p75sm1933341qka.72.2021.01.13.14.24.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 14:25:12 -0800 (PST)
-Date:   Wed, 13 Jan 2021 17:25:10 -0500
+        Wed, 13 Jan 2021 14:24:08 -0800 (PST)
+Date:   Wed, 13 Jan 2021 17:24:05 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
         peff@peff.net
-Subject: [PATCH v2 20/20] pack-revindex.c: avoid direct revindex access in
- 'offset_to_pack_pos()'
-Message-ID: <8400ff6c9615b4c999b198c46b2e673ec0f2b14f.1610576604.git.me@ttaylorr.com>
+Subject: [PATCH v2 09/20] try_partial_reuse(): convert to new revindex API
+Message-ID: <acd80069a2bea5cede6b68302b7ff8097924dcd0.1610576604.git.me@ttaylorr.com>
 References: <cover.1610129796.git.me@ttaylorr.com>
  <cover.1610576604.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -73,54 +72,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prepare for on-disk reverse indexes, remove a spot in
-'offset_to_pack_pos()' that looks at the 'revindex' array in 'struct
-packed_git'.
+Remove another instance of direct revindex manipulation by calling
+'pack_pos_to_offset()' instead (the caller here does not care about the
+index position of the object at position 'pos').
 
-Even though this use of the revindex pointer is within pack-revindex.c,
-this clean up is still worth doing. Since the 'revindex' pointer will be
-NULL when reading from an on-disk reverse index (instead the
-'revindex_data' pointer will be mmaped to the 'pack-*.rev' file), this
-call-site would have to include a conditional to lookup the offset for
-position 'mi' each iteration through the search.
-
-So instead of open-coding 'pack_pos_to_offset()', call it directly from
-within 'offset_to_pack_pos()'.
+Note that we cannot just use the existing "offset" variable to store the
+value we get from pack_pos_to_offset(). It is incremented by
+unpack_object_header(), but we later need the original value. Since
+we'll no longer have revindex->offset to read it from, we'll store that
+in a separate variable ("header" since it points to the entry's header
+bytes).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-revindex.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ pack-bitmap.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/pack-revindex.c b/pack-revindex.c
-index a508d5f0a4..5e69bc7372 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -177,21 +177,21 @@ int load_pack_revindex(struct packed_git *p)
- int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 89a528a91b..1fdf7ce20a 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1069,23 +1069,21 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
+ 			      struct bitmap *reuse,
+ 			      struct pack_window **w_curs)
  {
- 	unsigned lo, hi;
--	const struct revindex_entry *revindex;
+-	struct revindex_entry *revidx;
+-	off_t offset;
++	off_t offset, header;
+ 	enum object_type type;
+ 	unsigned long size;
  
- 	if (load_pack_revindex(p) < 0)
- 		return -1;
+ 	if (pos >= bitmap_git->pack->num_objects)
+ 		return; /* not actually in the pack */
  
- 	lo = 0;
- 	hi = p->num_objects + 1;
--	revindex = p->revindex;
+-	revidx = &bitmap_git->pack->revindex[pos];
+-	offset = revidx->offset;
++	offset = header = pack_pos_to_offset(bitmap_git->pack, pos);
+ 	type = unpack_object_header(bitmap_git->pack, w_curs, &offset, &size);
+ 	if (type < 0)
+ 		return; /* broken packfile, punt */
  
- 	do {
- 		const unsigned mi = lo + (hi - lo) / 2;
--		if (revindex[mi].offset == ofs) {
-+		off_t got = pack_pos_to_offset(p, mi);
-+
-+		if (got == ofs) {
- 			*pos = mi;
- 			return 0;
--		} else if (ofs < revindex[mi].offset)
-+		} else if (ofs < got)
- 			hi = mi;
- 		else
- 			lo = mi + 1;
+ 	if (type == OBJ_REF_DELTA || type == OBJ_OFS_DELTA) {
+ 		off_t base_offset;
+-		int base_pos;
++		uint32_t base_pos;
+ 
+ 		/*
+ 		 * Find the position of the base object so we can look it up
+@@ -1096,11 +1094,10 @@ static void try_partial_reuse(struct bitmap_index *bitmap_git,
+ 		 * more detail.
+ 		 */
+ 		base_offset = get_delta_base(bitmap_git->pack, w_curs,
+-					     &offset, type, revidx->offset);
++					     &offset, type, header);
+ 		if (!base_offset)
+ 			return;
+-		base_pos = find_revindex_position(bitmap_git->pack, base_offset);
+-		if (base_pos < 0)
++		if (offset_to_pack_pos(bitmap_git->pack, base_offset, &base_pos) < 0)
+ 			return;
+ 
+ 		/*
 -- 
 2.30.0.138.g6d7191ea01
+
