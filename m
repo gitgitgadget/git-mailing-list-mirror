@@ -4,105 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4DB7C433DB
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 15:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D3D1C433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 15:21:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D02F2339F
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 15:14:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC36723329
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 15:21:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726984AbhAMPOf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 10:14:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46692 "EHLO
+        id S1726428AbhAMPVH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 10:21:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725846AbhAMPOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 10:14:35 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5A5C061575
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 07:13:55 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id b9so1284458qtr.2
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 07:13:55 -0800 (PST)
+        with ESMTP id S1725943AbhAMPVH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 10:21:07 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A6BC061575
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 07:20:27 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id a6so1288764qtw.6
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 07:20:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=xCcm3kzcMqA3+/d9MJawRbZzOvUQeLhWUA/0VrrPr7c=;
-        b=VJup71t6H3zLGpiS1v3emcxkes3mY3ukg06+qlEdmz5aw9fBgTUeO8W+8brzsyuktl
-         zGmNfllLjDf5oGmLqx61AVNjZZRKYEc1qBxSeV4r0pnkOtfCSYv5CHCShHYJRfnzPzRd
-         Z+54m1OENmKOjG8cCyLEPWReittfZlJEglelJ0PppVof6kstdxKzg9CS+GCYiuuSyY07
-         DxJfPNZ3kpzhp5dkDRkpWcq2zLrBdMtjbCpujs/kaNI7vf4X71L2YuJK1AyWjzuEj2MQ
-         u65dYlFpXZgq9bVJDs+JIyGok31vSlnG9Wz3YaKTCbk8Uvko6JNqxTBbw72ygyCT17fA
-         8FEw==
+         :content-disposition:in-reply-to;
+        bh=raijniS9uiolOhH275Lf0ftA3oS2J8gnxZTOa0CJC/A=;
+        b=xuVG6xrKbgQvW5u12qJKfsk0Gjr8X5HFfMBknrKUbyph84u0eScNvefkDliU4JozMO
+         CNtrzrh4SS0TNA2zlQT32x2Ihcwu4fCX0NPfRd5+SN4+9bRCx7DZglCFoT2L/WPdjnTI
+         75DjgKebKp9i8VgK2qt7YOEXL5NCFlUM3x7/Cykmh5tAgtYID8IXnu2q3J8gz1mVb1+Y
+         bGGtqAypu9arkyBtrfnM376BSZ0NhN5JfBBk+xPGJ0hYwDnND/P2cU+Ue3wT5UFQiZNb
+         NN9h0Qqo/6DPzymLyeEU0X6icHNTV6HhpGgPKcdRobhipTiVXbZIA2fiYdekas94tzNw
+         KOVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=xCcm3kzcMqA3+/d9MJawRbZzOvUQeLhWUA/0VrrPr7c=;
-        b=PSI7I7XSFrwh2rnatINUjoi4thOhNweLceP84EDCdzGsdvpnzwSgJrGxQHnRe1l3dX
-         R8JHsUXgHURFIbYLSx4U6aNQZl66bA7oNZhSeCswKwN59zA80zKWbl3w0MU67/XR1wT3
-         Av7vHmFxyNQfS2NqHukEes1LopFgjwosgQMmIwazoyWu3sD/Yfs+XWs4prZ28UsQMbtc
-         BSKzpcjYnJg8Hp/7tTNpz9s5yzCUim4k0SK23/GQcNc1qPX1aYFGZ+mBoN7Hm6Sv1lvG
-         bVRqNHgiR34IwbWb4eKUy8rY4G/vlHhP5zq2+snU65Dsa1SNS8lJVRBOXvUa1OdVVpQ3
-         3QTg==
-X-Gm-Message-State: AOAM531MBqvDKrQdPUg8JfjOJR1sNago2b4AvCe8ZXVT7dd8IqMSTzUz
-        K6KvG5hGp1JZGtL4EBRLt4PXvhqm9RzoSw==
-X-Google-Smtp-Source: ABdhPJyXSStNqFm88Q18PfftFGnlqGRXBaFJySgZrkg/1QTRaDTnBf2gi/o00/kk8eT8bYKRVwdSbA==
-X-Received: by 2002:aed:232d:: with SMTP id h42mr2676007qtc.143.1610550834054;
-        Wed, 13 Jan 2021 07:13:54 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to;
+        bh=raijniS9uiolOhH275Lf0ftA3oS2J8gnxZTOa0CJC/A=;
+        b=GxfQIzENoUeaYcpZnZdKsPGoTKbbzi5Hzw/szTwkwlHjYt+NrPumvaMnoiPxPSuNjX
+         6AD4SNmOBuarvsJPndLInmSZUCgtLMsp0yb43sPWyvdgSCmd8003BUMQzrhA5R3YXGUO
+         9aQQ3g4WT2YYJNYx5TZJydB9z7r3NkxA3CLQ6/XLq6v4nI544IFtk0BJZgrpOMIXClZ7
+         DzvKsuIrnIzu2qDdBnam6u0cZL9h0A9fbxQTLPmTfozEZonO71o85u1yQmHxFew2wSuy
+         DpAWaaHyw1p0srmRvb9IemHIm0JCYpR20Ozf1zhaSl+E7s319zj88JUvc1JBRWecTEsL
+         wJvw==
+X-Gm-Message-State: AOAM5319wru2hai+QFntCwXE6f4xtUFSDY+19LelLozwGp/aZu+BUng0
+        aYnOoIt1XlW4DjjCpq3GVSQKaQ==
+X-Google-Smtp-Source: ABdhPJwNVXkSe8nfhtfpFJ1DtSQfosn64jH91gOt48JpKS3fd+GYPFgbsPXAC/3NjRTql/6lU7S3jA==
+X-Received: by 2002:aed:3051:: with SMTP id 75mr2719431qte.64.1610551226409;
+        Wed, 13 Jan 2021 07:20:26 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:f17c:3911:cace:ed91])
-        by smtp.gmail.com with ESMTPSA id a35sm1072771qtk.82.2021.01.13.07.13.53
+        by smtp.gmail.com with ESMTPSA id l11sm1074141qtn.83.2021.01.13.07.20.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 07:13:53 -0800 (PST)
-Date:   Wed, 13 Jan 2021 10:13:50 -0500
+        Wed, 13 Jan 2021 07:20:25 -0800 (PST)
+Date:   Wed, 13 Jan 2021 10:20:22 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: test-tool: bloom: generate_filter for multiple string?
-Message-ID: <X/8OLozuyx+rxEHN@nand.local>
-References: <20201231035438.22533-1-congdanhqx@gmail.com>
- <X/3+PG2hi71tj/UA@nand.local>
- <X/7guF05a/Bb/VNp@danh.dev>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 2/2] fetch-pack: refactor writing promisor file
+Message-ID: <X/8PtpCRJ4w19zGs@nand.local>
+References: <20210112082159.2277214-1-chriscool@tuxfamily.org>
+ <20210112082159.2277214-2-chriscool@tuxfamily.org>
+ <X/701Isbo8M9W2VP@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <X/7guF05a/Bb/VNp@danh.dev>
+In-Reply-To: <X/701Isbo8M9W2VP@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 13, 2021 at 06:59:52PM +0700, Đoàn Trần Công Danh wrote:
-> On 2021-01-12 14:53:32-0500, Taylor Blau <me@ttaylorr.com> wrote:
-> > On Thu, Dec 31, 2020 at 10:54:38AM +0700, Đoàn Trần Công Danh wrote:
-> > > I'm reading the code for Bloom Filter to see if arXiv:2012.00472
-> > > could be an improvement.
-> >
-> > I'm late to the party, but I'm curious to hear which part of this
-> > article you think would help out the Bloom filter implementation.
+On Wed, Jan 13, 2021 at 08:25:40AM -0500, Jeff King wrote:
+> > +void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
+> > +{
+> > +	int i;
+> > +	FILE *output = xfopen(promisor_name, "w");
+> > +
+> > +	for (i = 0; i < nr_sought; i++)
+> > +		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
+> > +			sought[i]->name);
+> > +	fclose(output);
+> > +}
 >
-> Uhm, no. The article doesn't help the Bloom filter implementation.
-> The article was suggesting using Bloom filter to speed-up the
-> negotiation in fetch-pack and upload-pack. Which, in my own quick
-> experience, doesn't help much. Maybe it's me not understand the
-> article idea or I have made a naive implementation. However, I'm not
-> convinced to pursued further.
+> We check errors on open via xfopen(), which is good. But we would not
+> notice any problems writing via fprintf or fclose. Is it worth doing
+> something like:
+>
+>   err = ferror(output);
+>   err |= fclose(output);
+>   return err ? -1 : 0;
+>
+> ?
 
-I see. I read your "reading the code for Bloom Filter to see if ...
-could be an improvement" as trying to improve the Bloom implementation.
-Which after skimming the article, made me quite curious, since I didn't
-understand what you were getting at.
+I agree below that *not* doing this isn't a regression against the
+current code, since it doesn't check either, but this could be done
+relatively easily. It is appropriate for both callers of
+write_promisor_file() to immediately die() if they get an error, so I
+think that this is potentially worth doing.
 
-But trying to speed up the negotiation makes sense, and is in line with
-the goal of the article. It's too bad that you weren't able to produce
-the same benefits here, but I understand why.
+> (As an aside, this ferror/fclose dance is awkward enough and has caused
+> us enough questions in the past that I wonder if it is worth
+> encapsulating into a wrapper).
 
-> If you are curious, I'm attaching 2 quick-and-low-quality patches with
-> this email for your consideration.
+From a quick grep through uses of ferror, there are a reasonable handful
+of spots that I think could be improved if there was a ferror+fclose
+helper, perhaps: xfclose().
 
-Thanks. They were an interesting read.
+> The existing callers behave the same way (checking open, but not the
+> writes), so definitely not a regression. But the helper function may
+> provide an opportunity to make things more robust without adding a lot
+> of duplicated code.
+
+Yep.
+
+> -Peff
 
 Thanks,
 Taylor
