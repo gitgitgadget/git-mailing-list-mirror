@@ -2,136 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CAA7C433E0
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 14:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA51C433E0
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 14:58:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF9962360D
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 14:56:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5FAB23600
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 14:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbhAMO42 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 09:56:28 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:44108 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726792AbhAMO42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 09:56:28 -0500
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.89)
-        (envelope-from <yoh@onerussian.com>)
-        id 1kzhYo-0003BE-4s; Wed, 13 Jan 2021 09:55:46 -0500
-Date:   Wed, 13 Jan 2021 09:55:45 -0500
-From:   yoh@onerussian.com
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Adina Wagner <a.wagner@fz-juelich.de>
-Message-ID: <X/8J8ScJGL4RKBiC@lena.dartmouth.edu>
-References: <fe9babc8-a3ee-6be4-e4f8-9690cb7c79bd@fz-juelich.de>
- <e7301aaf-b341-ec0b-9e2d-ab7f60ac58da@fz-juelich.de>
- <X/ipCPFyW3gAWrHo@nand.local>
- <xmqq35z9g3pw.fsf@gitster.c.googlers.com>
- <X/ymFuUPn2POWA/p@nand.local>
- <X/3gbjQs7+wHoJpb@lena.dartmouth.edu>
- <X/3urtfn6L551gzJ@nand.local>
-MIME-Version: 1.0
+        id S1727047AbhAMO6M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 09:58:12 -0500
+Received: from pv50p00im-ztdg10011901.me.com ([17.58.6.50]:59512 "EHLO
+        pv50p00im-ztdg10011901.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727001AbhAMO6L (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 13 Jan 2021 09:58:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1610549831;
+        bh=jVUAvwEY+4eyGl2sFe/TUhKfH06N7lLkTHuO/bb2MMA=;
+        h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:To;
+        b=0/DPmxJ1QkkujdgyjWHdOYjRupTxNbH6twmRUSNPJ/+SOop29x8Bt0Rd+Y0M9prm2
+         iHEMGCekLQ4dej3hSJ26/9Sz4P+aMLAPkVkF4TsGsC1F+Ykc+107TqGheZ+q4uqPQ1
+         LJQd7bx8uMByHGmsyfx7Jo5tjFU9+7iinY4gUiH4YAfwipVz3mLHAkVwaDeqq+XMX+
+         k+avBK+nY3EK+hN2+hUlvC/16kk2l4enLEdFKg62K98MQUMjfEfIsTaFLVdbhf0QBH
+         uVT/vVop1qud+AJPRjWA8pAfpHRS6rRhCukVSwhMLwiHMQwC9DpX2bmcaJvyUDVKhw
+         D/auRHFLTBrlw==
+Received: from [192.168.1.114] (unknown [90.129.214.206])
+        by pv50p00im-ztdg10011901.me.com (Postfix) with ESMTPSA id 89CA38002F9;
+        Wed, 13 Jan 2021 14:57:10 +0000 (UTC)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X/3urtfn6L551gzJ@nand.local>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: me@ttaylorr.com, git@vger.kernel.org, a.wagner@fz-juelich.de
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: suspected race between packing and fetch (single case study)
-X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Content-Transfer-Encoding: quoted-printable
+From:   Daniel Troger <random_n0body@icloud.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: git-bugreport-2021-01-06-1209.txt (git can't deal with special characters)
+Date:   Wed, 13 Jan 2021 15:57:03 +0100
+Message-Id: <653FE799-B0D6-471A-8801-834C6CA409E3@icloud.com>
+References: <20210109172301.qkxxeeqnyrr6nyc5@tb-raspi4>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20210109172301.qkxxeeqnyrr6nyc5@tb-raspi4>
+To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-Mailer: iPad Mail (17F75)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343,18.0.737
+ definitions=2021-01-13_07:2021-01-13,2021-01-13 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=571 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-2006250000 definitions=main-2101130094
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hej Torsten,=20
 
-On Tue, 12 Jan 2021, Taylor Blau wrote:
-> > > ++
-> > > +*NOTE*: this operation can race with concurrent modification to the
-> > > +source repository, similar to running `cp -r src dst` while modifying
-> > > +`src`.
+> To clean up the repo, you can do like this, explained in a dummy repo:=20
 
-> > Couldn't `gc` be triggered by git in seemingly read-only operations,
-> > thus possibly ruining the analogy with `cp` while doing `rm` (explicit
-> > intent to modify)?
+your commands to remove one of the versions worked perfectly, thanks!
 
-> > Moreover, situation is also a bit different since a sane user script
-> > would not place `rm` into background to keep operating on original
-> > source right before doing `cp` -- and that is what is happening here:
+> And I still womder, how did you mange to create the "decomposed version of=
+ =C3=A5" ?
 
-> If you're suggesting that something is missing from the above patch, I'm
-> not sure I quite understand what you would like added.
+I created the directory with finder or atom I suppose, I did not find an mkd=
+ir command for that directory in my 290MB of bash history.
 
-Slept on it.  I think your patch (doc disclaimer) is factually correct
-and probably as good as it can get.  Not yet sure if it is worth
-explicit mentioning `gc` or `repack` as one of such concurrent
-operations.
+> I digged some hours into the stuff, add lots of debug traces, patches and s=
+tuff
 
-> All of these (background gc, explicit rm-ing) fall under the category of
-> "concurrent modification": they are changing the source directory in
-> some way while a read operation is taking place.
+If I understand correctly, you already came up with a patch? That's great ne=
+ws! It's fine if it takes time as long as it gets fixed eventually.
 
-yes.  My comment was more on how such modifications are triggered: via
-explicit actions (e.g. `rm`) intended to modify vs as a "house
-keeping running in the background", which is the case of gc in
-particular when triggered by seemingly read-only operations.
-
-> > `git` operation is presumably complete (but leaves `gc` running in the
-> > background) and script advances to the next step only to run into a race
-> > condition with that preceding `git` command which apparently triggered
-> > `gc`.  Should then any script which operates on local `git` repositories
-> > not to forget to add   -c gc.autodetach=0  for every git
-> > invocation which might be potentially effected?
-
-> If your workflow is that you are frequently cloning via the local
-> transport and there is no other synchronization going on between
-> whatever work is happening in the source repository, then yes. (But note
-> of course that you can set gc.autodetach=0 via the source repository's
-> .git/config rather than typing it each time).
-
-IMHO it affects efficiency, become cumbersome (for git users), and thus
-might be error-prone: e.g.  gc.autodetach=0 is necessity only to
-mitigate only for a possible subsequent `clone` invocation operating
-locally.  Higher level constructs siting on top of `git` would not know
-what is the next command ran in the user script (like in our case of
-datalad) to set such config variable for their invocations.  Adding
-gc.autodetach=0 to every single `git` invocation would effect our
-efficiency. User might not be made aware of such necessity for using
-`git clone` on local repositories, only after having their scripts
-deployed and at some random points in time start hitting the race
-condition and go "google" and RTFM mode to figure out what is
-going on.
-
-That is why I am more in-line with your initial comment  in
-https://lore.kernel.org/git/X%2FipCPFyW3gAWrHo@nand.local/ :
-
-> Perhaps Git could take some sort of lock when writing to the object
-> store, but an flock wouldn't work since we'd want to allow multiple
-> readers to acquire the lock simultaneously, so long as there is no
-> writer.
-
-I think it would be nice to have `clone_local()` first check that
-there is no ongoing modifications happening  before proceeding and wait
-some reasonable amount of time (up to ?0 sec?) if still ongoing, and
-then fail "informatively" if still cannot clone.  Even though it would
-not prevent race condition in full (`clone_local` might check and
-initiate, and then some process starts altering while `clone_local` is
-ongoing), it would mitigate any scripted cases of a local `git clone`
-following some heavy manipulations of original repository which triggers
-background gc.
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-WWW:   http://www.linkedin.com/in/yarik        
-
+Best regards=
