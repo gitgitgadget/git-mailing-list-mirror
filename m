@@ -2,171 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,PLING_QUERY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PLING_QUERY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81D9FC433E0
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 18:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A62DC433DB
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 18:29:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 377CD233EA
-	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 18:25:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6B38233EA
+	for <git@archiver.kernel.org>; Wed, 13 Jan 2021 18:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728272AbhAMSZS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 13 Jan 2021 13:25:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60062 "EHLO
+        id S1728397AbhAMS2o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 13 Jan 2021 13:28:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728195AbhAMSZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Jan 2021 13:25:17 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D7DC061575
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 10:24:37 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id c14so1789484qtn.0
-        for <git@vger.kernel.org>; Wed, 13 Jan 2021 10:24:37 -0800 (PST)
+        with ESMTP id S1728311AbhAMS2o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Jan 2021 13:28:44 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E28C4C061575
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 10:28:03 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id 2so1765679qtt.10
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 10:28:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=2aP1sWaD6QNATEov/dQmQcnDXa0wbR+rRGXv4MeAFAw=;
-        b=CPIi8K4hOJxGSw2PGUuRV7EOW8ksRAxx01mvdFc83KfQEduoqptyDPwKlS3br4GtWN
-         vVOqTi/kyhs23st9Zks7QqwHXlpQJgpsOrT7WXaD0BeVl3Rdmi0SGF6NxzAq8z4WvY5y
-         bhZQv8S+0PLpbyX3b009yKfu2Hr0wsrpZ96wk7sjcl3eEG4WvQYoqPGHc6XJXNFwgOyB
-         B03BPJo95rdSOYTPBiq5I2yzOgNBA9CjpaRXyn+sT9cM2OHEh/7Uzy4yYBCG7lq7Rou8
-         sm2kPhrTAR9PuqK5NKaogB7ku0isloVsM0mXXYPFjCJtssTXpljcSfwp/s09G6Y49k4f
-         K29A==
+        bh=Q1uSYFCFQlXmks76b5V1ric5hdxp7eUienkF7k7AkMs=;
+        b=TcPFYA+UNPFTem5bEhvnv5wfjsGZcvBSPYShJaVX22sQoRzX1m+QmQ07Cm0E2eoQaG
+         SEFEabHhyyyz0pkCG6jsVV5tx/Zw0seZSjN53gxGYyB8bGoEP14gRP5o1hz7NoQQ7Wtx
+         OnoO3eGTlZxUoSuWeGqfn6fipA49YvhNoNUGSk2/81ou51SQ6v/Uycv7q3tzjeHr/Xji
+         fq4e1u11tRn3s8H7TBdgzvN+ev9Qnm10grn7V1u6gfkXXZUazPdsffgdJweDHx1EHeCl
+         3JseHyoiOExSASR2W/BwFb+bUw+DG2Rs6+3mEPfQWlQq6XoUo9CIaSZIAhcvQcKCTf3y
+         tI3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2aP1sWaD6QNATEov/dQmQcnDXa0wbR+rRGXv4MeAFAw=;
-        b=r07eAekduy/qWE9EahmXvlawim5ejOWo072ldQws/8V2NHMjk/ePpYKAV385p1SEfk
-         odhw1pGQMw4+cP5w1qx0hjMtVgSf7u2fko8RQv7FHBvLprkoLyM3BAhWavmQJbjayeWF
-         PzlU2uaBbhqo8xX7p0XxtRC/MyIqU+lIHc1IWB2hGZnr+xX6rY+MID7cbke4vSDM3V7s
-         fwyFA4MeTPshXpFuKnvj6295f2G7i0TYbGZfo4aMZ/9dawjPMlLizfIPlATu+5hFVGpB
-         DjgXAsOFMfA3TT84UpotWcx5Mjm0hwngktLZ2i94GlieuGoddD1bHaby8HG4Srg88hbG
-         Vf8Q==
-X-Gm-Message-State: AOAM532jC0JQm9StwSB0UEP4rvlkKHvwvJtRt+0Dcuw2pyBcjUz9AtbS
-        BDAlIiNp37KkFokACnWGe4ZDcw==
-X-Google-Smtp-Source: ABdhPJxzw6s68MkME5XYIPng8BrtOr4gmCS0mxz9CYDN6p6x5V5qBVhAaezDaTsXOjE/BZ5MBOkFHg==
-X-Received: by 2002:ac8:3598:: with SMTP id k24mr3575936qtb.72.1610562276392;
-        Wed, 13 Jan 2021 10:24:36 -0800 (PST)
+        bh=Q1uSYFCFQlXmks76b5V1ric5hdxp7eUienkF7k7AkMs=;
+        b=dD+V56JtdLZ5PXiYVfGTigMA8foW2DWsIEzUb9F766vi8Fvm6T6ghfl1LDOUH5EnS9
+         fntGxrRiKZItDNwdPmNagdge17PaZZP2H3UcjuT8c32Z6HXl4R1mPcxrfFEyLEXdlQMR
+         9ft/MifAc0t57HOcv69h/j8CIZNq7EtfyRorJasS+zGB6gBP+HdomQ10MiGdJ3SF4UN3
+         we/6ZXj9Qg6ylxPCH8SaN1uGFt6TR7QmdACHcmdfQZVNSBVd/VDwmdRx3lsljb4Jec3j
+         QGGJvzk5gf/S/MGXosU0yYed+bPsMKr1HpmIH3Ih4ouy27MqF8cugLGViLiZIAMhIfBe
+         hkTw==
+X-Gm-Message-State: AOAM531FqL85CUwkkSstawXUC/0YizcPhYNVcC+fHLB5lk9zt6B+NxYk
+        /UkWwy4BWpnEeFam9JhLO3vxWA==
+X-Google-Smtp-Source: ABdhPJwNKO9BVzZWxgaXBNrGY9CozeiIRBmLM27L7WPgF2iATxmN4bCyQhvJq1voSQtCNy64/Y+Hcg==
+X-Received: by 2002:ac8:bc8:: with SMTP id p8mr3445787qti.135.1610562483180;
+        Wed, 13 Jan 2021 10:28:03 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
-        by smtp.gmail.com with ESMTPSA id l1sm1429377qtb.42.2021.01.13.10.24.35
+        by smtp.gmail.com with ESMTPSA id p15sm1555379qke.11.2021.01.13.10.28.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Jan 2021 10:24:35 -0800 (PST)
-Date:   Wed, 13 Jan 2021 13:24:32 -0500
+        Wed, 13 Jan 2021 10:28:02 -0800 (PST)
+Date:   Wed, 13 Jan 2021 13:27:59 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     git <git@vger.kernel.org>,
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Charvi Mendiratta <charvi077@gmail.com>, git <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 Subject: Re: How to implement the "amend!" commit ?
-Message-ID: <X/864HdPtf1km0xZ@nand.local>
+Message-ID: <X/87r7+dcYzzcus+@nand.local>
 References: <CAPSFM5c2iqBn8_Dih2id7q6RRp0q=vfCSVUHDE5AOXZ8z3Ko9w@mail.gmail.com>
  <CAPSFM5f+cm87N5TO3V+rJvWyrcazybNb_Zu_bJZ+sBH4N4iyow@mail.gmail.com>
+ <X/864HdPtf1km0xZ@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPSFM5f+cm87N5TO3V+rJvWyrcazybNb_Zu_bJZ+sBH4N4iyow@mail.gmail.com>
+In-Reply-To: <X/864HdPtf1km0xZ@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Chavri,
+On Wed, Jan 13, 2021 at 01:24:32PM -0500, Taylor Blau wrote:
+> I think that this trio is a good path forward, but...
+> `--fixup` behaving as it always has, which is good. Then it makes
+> `--fixup=amend:<commit>` insert a 'fixup -C', and `--fixup=reword:<...>`
+> insert a 'fixup -c'.
 
-On Wed, Jan 13, 2021 at 06:45:25AM +0530, Charvi Mendiratta wrote:
-> Hi Everyone,
->
-> Implementing "amend!" commit would be an alternative to the
-> fixup!/squash! commit that addresses the issue as opened here[1]. Also
-> the related patches[2], adds the options to `fixup` command in
-> interactive rebase and supports the "amend!" commit upon
-> `--autosquash`. Next, after discussing with Phillip and Christian,
-> there could be 3 possibilities to implement the "amend!" commit (UI):
-
-To make sure that I'm understanding correctly:
-
-  - Your series in [2] teaches the rebase directive 'fixup' two new
-    options: -C, and -c. Unlike of the option-less 'fixup' command,
-    these new options use the message from the fixup commit instead of
-    the original.
-
-    If I'm understanding correctly, this old-style sequence:
-
-        pick aaaaaaaaaa original
-        fixup bbbbbbbbbb fixup! new
-        exec git commit --amend -C bbbbbbbbbb --no-edit
-
-    should be equivalent to this one:
-
-        pick aaaaaaaaaa original
-        fixup -C bbbbbbbbbb fixup! new
-
-  - Separate from that, you are asking about how to implement an
-    "amend!" commit which would behave exactly as the 'fixup -C' variant
-    that you are proposing.
-
-We should clarify what you mean by "implement". I take it from the
-remainder of your message that you are really asking about how we should
-_expose_ this new 'fixup -C' command to users.
-
-> Firstly, the `--fixup=<commit>` to have option like,
-> `--fixup=reword/amend:<commit>`
->
-> So, `git commit --fixup` can have 3 options:
->
-> a) `--fixup=<commit>`, work as of now, make fixup! commit.
-> b) `--fixup=amend:<commit>`, make "amend!" commit, takes changes and
-> also opens the editor for a new message (Here it adds a new message to
-> amend! commit's message body and upon autosquash it will fixup up the
-> content and reword the original commit message i.e replaces the
-> original commit message with the "amend!" commit's message).
-> c) `--fixup=reword:<commit>`, makes (empty) "amend!" commit, do not
-> take changes and open the editor for a new message(Here, upon
-> autosquash it will just reword the original commit message).
-
-I think that this trio is a good path forward, but...
-`--fixup` behaving as it always has, which is good. Then it makes
-`--fixup=amend:<commit>` insert a 'fixup -C', and `--fixup=reword:<...>`
-insert a 'fixup -c'.
-
-> Secondly,
-> As an alternative to above, we can use `--fixup=<commit> --amend` and
-> `--fixup=<commit> --reword`.
-
-...I think that this option is even better.
-
-Here '--fixup=<commit>' with '--amend' inserts a 'fixup -C' sequencer
-comamnd, and using the same instead with '--reword' inserts a 'fixup -c'
-sequencer command.
-
-This is clear to me because '--fixup' makes a commit that is interpreted
-separately by the sequencer machinery, so any options that are given
-with it seem to indicate that they will alter how the sequencer
-interprets the resulting commit, which makes sense.
-
-Of course, it's all somewhat confusing because you have to keep track of
-which are options to 'git commit', and which are sequencer commands, but
-I like the direction that you're going in here.
-
-> Next,
-> To use only, `--fixup=<commit> --edit` to make the "amend!" commit.
-
-I don't think that this is as good a direction forward.
-
-> Also as discussed earlier[3] we are avoiding the use of additional
-> options like `git commit --amend=<commit>` inorder to avoid confusion
-> of doing similar things in different ways. So, I wonder which could be
-> the best way to proceed with or if any other way to implement "amend!"
-> commit ?
->
-> Thanks and Regards,
-> Charvi
->
-> [1] https://github.com/gitgitgadget/git/issues/259
-> [2] https://lore.kernel.org/git/20210108092345.2178-1-charvi077@gmail.com/
-> [3] https://lore.kernel.org/git/95cc6fb2-d1bc-11de-febe-c2b5c78a6850@gmail.com/
+Oops. Ignore everything after the 'but...' until the next '...' below.
 
 Thanks,
 Taylor
