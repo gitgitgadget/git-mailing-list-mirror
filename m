@@ -2,130 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CAEEC433DB
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78793C433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:36:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AA6123A59
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:19:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D64A23A6C
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730576AbhANXTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 18:19:40 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:53258 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726506AbhANXTk (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 14 Jan 2021 18:19:40 -0500
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8493660781;
-        Thu, 14 Jan 2021 23:18:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1610666309;
-        bh=dnF4ko0qoi2wLcicZrflEhEnvWG6EC4woFWuKhy03rU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=hGtbX2GdO3eJ+cfbPbmjl9zUFHXFf8ZSh/tmhcRFyjH3AWP4h4eBtsSvNXVprN+Kf
-         yA6vqtkttAqmCrUZsolcJRxW7sneK/rPlw75B/89NOMiZUPKIRc/bZ3yNhO85ROpPn
-         i4Od6YwYEYIZh/XfruV2x7Imi9/YQAEvo0nAlQs0KaGvCzsJVqS2fYXyqYp88/hYeJ
-         c1WNXliRwA9LyMXFzFBDznCWUQZIeZXcQuHcpsDCsPmpCwBss6o/Ze7tVG774Z9oOY
-         rS9/2H1wI8LME6GRLNBogme1Hr528MPYCHhEfmy6S7f12DQax7//nDkTsRd1hdNfqS
-         U0ijNUQpT7ItL2vww1+4rqMLhDZpqdAEiPx7yaGIZHGSmefgMZ+4x4GsvLF00c6ipc
-         ww8+a9H7qcST1KeWWGz63Mf/b1LDRp4uE9Bk8rhxal6tsHrvygmr33pY95MCiYrqrI
-         erQvYg4eoIdFTZ/74XuloFS3YnodWFvbgKkSO6edOWtPRMJTzCX
-Date:   Thu, 14 Jan 2021 23:18:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/5] gpg-interface: improve interface for parsing tags
-Message-ID: <YADRP22NG15AHoAB@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        id S1730999AbhANXgC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 18:36:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41750 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730570AbhANXgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 18:36:02 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C78C061575
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:21 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id 91so7508616wrj.7
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=n4S1yZ8Ud6cC86wUXXeuVL8lFF8Vk24t6NsOpNZpr1I=;
+        b=rn6kC0obgfcjWjpYjoV/84SxjDOp+OhJ4pBZ/o23a0A6IxE+FnQ+epMoHPkqSsHjpF
+         mR8C3zLR+KGiGBUfK+AOXKV0lUJ9oSk2qeQ2jB+pDL8rS6Of9pwQGuwMMtm7WRPcUoA2
+         NcuRUFhGlridBQPkJJ0Pr9RSBjZcXr7rCOemWYtoTjzJFQ42VxXzRiIjH4w4LB4DPfyI
+         gZ1s/f7Vp+BbFth81Qjv9+xM8RMXAqOMuv8WCS3uxbtOMPCWuvfmqENeCKifaqtEvHFO
+         83JS1GMpYkDhbRAcykD/Q14bXCVbASZJLFcfJEl1CpBqNMaQxql5xiRQ+f1ST8Q99ayu
+         3oPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=n4S1yZ8Ud6cC86wUXXeuVL8lFF8Vk24t6NsOpNZpr1I=;
+        b=aNKLQu72ErQCrm6p3bMrhyBvxumaSsxIF5MNyL9oKK8ZwADywsBsoxptZxxLXdAQ5n
+         vG6sG+ukw+G4vag2D9xAhFpC/hHn9jko/Mayy10Y5Woi2NC7rH6TbysWB61YOtDKMJXv
+         YG1zsPUqASJkH62bKAG2SjXuZGxebJHFdGAs2yOTyvgcbyZDcxaKfGkndf7T1VfFIkrY
+         xDqSa7PaArYZz6u3hPazXkoM6jTErO9S4eep5j95g6NvKzpIhC6C8Tw37VwDgeuPEbtl
+         20hyNh5KDbvAmFu2iv1Xc7hkBtqtqEHzgVmadB+PogOufE0JuK6khW33j+WMDPJT84Yk
+         tO4A==
+X-Gm-Message-State: AOAM530O0NZhIWQzRD0o5mWwjAjugqaPu1BdAHnDRYEtDfHu2mocylMU
+        IzGowx+O5YgAk4kj99oJYspma9/IPHC/Qw==
+X-Google-Smtp-Source: ABdhPJwlT5rXYjYnl1eVrSWdsHSpjqxIXCEF/w7kapHpG8Bkj/KIcw1DSlPIOf1ggpCRqvkvnie8sw==
+X-Received: by 2002:adf:dd92:: with SMTP id x18mr10327624wrl.311.1610667320180;
+        Thu, 14 Jan 2021 15:35:20 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id d13sm12352118wrx.93.2021.01.14.15.35.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jan 2021 15:35:19 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Denton Liu <liu.denton@gmail.com>, Jeff King <peff@peff.net>
-References: <20210111003740.1319996-1-sandals@crustytoothpaste.net>
- <20210111003740.1319996-3-sandals@crustytoothpaste.net>
- <xmqqbldu699q.fsf@gitster.c.googlers.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/6] tests: add a bash "set -o pipefail" test mode
+Date:   Fri, 15 Jan 2021 00:35:09 +0100
+Message-Id: <20210114233515.31298-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
+In-Reply-To: <20191115040909.GA21654@sigill.intra.peff.net>
+References: <20191115040909.GA21654@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Lxi/+Mz/jTrRlrSX"
-Content-Disposition: inline
-In-Reply-To: <xmqqbldu699q.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There's been past attempts to add a "set -o pipefail" test mode. I
+suspect it can't be done in any sane way the way it works in bash
+now. See 6/6 for details.
 
---Lxi/+Mz/jTrRlrSX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series makes it work because I patched it to work sanely in bash
+itself when it comes to SIGPIPE. I'm partially submitting this so I
+can prod the bash maintainer with a link to this thread.
 
-On 2021-01-12 at 04:58:57, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > diff --git a/ref-filter.c b/ref-filter.c
-> > index aa260bfd09..8d8baec1b5 100644
-> > --- a/ref-filter.c
-> > +++ b/ref-filter.c
-> > @@ -1215,7 +1215,13 @@ static void find_subpos(const char *buf,
-> >  			unsigned long *nonsiglen,
-> >  			const char **sig, unsigned long *siglen)
-> >  {
-> > +	struct strbuf payload =3D STRBUF_INIT;
-> > +	struct strbuf signature =3D STRBUF_INIT;
-> >  	const char *eol;
-> > +	const char *end =3D buf + strlen(buf);
-> > +	const char *sigstart;
-> > +
-> > +
-> >  	/* skip past header until we hit empty line */
-> >  	while (*buf && *buf !=3D '\n') {
-> >  		eol =3D strchrnul(buf, '\n');
-> > @@ -1228,14 +1234,15 @@ static void find_subpos(const char *buf,
-> >  		buf++;
-> > =20
-> >  	/* parse signature first; we might not even have a subject line */
-> > -	*sig =3D buf + parse_signature(buf, strlen(buf));
-> > -	*siglen =3D strlen(*sig);
-> > +	parse_signature(buf, end - buf, &payload, &signature);
-> > +	*sig =3D strbuf_detach(&signature, siglen);
->=20
-> "unsigned long *siglen" may not be the same as "size_t *siglen", and
-> the latter is what strbuf_detach() expects to see.  This breaks
-> 32-bit builds e.g. [*1*].
->=20
-> I suspect that all these ${foo}len, including the parameter to this
-> function but also the four local variables in its sole caller, would
-> want to become size_t.
->=20
-> Thanks.
+But also because even though you need to patch your bash to benefit
+from this new test mode, it doesn't break anything for anyone who
+doesn't have the patch (we guard it with a detection for the sane
+behavior), and at the very least 4/6 (or maybe just to 2/6) are
+generally sane fixes even without the rest.
 
-I'll reroll with the fixes for size_t and unsigned long.  Feel free to
-drop the series if it's causing CI to fail until I get around to that
-(likely this weekend).
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+1. https://lore.kernel.org/git/cover.1573779465.git.liu.denton@gmail.com/
 
---Lxi/+Mz/jTrRlrSX
-Content-Type: application/pgp-signature; name="signature.asc"
+Ævar Arnfjörð Bjarmason (6):
+  test-lib: add tests for test_might_fail
+  test-lib: add ok=* support to test_might_fail
+  test_lib: allow test_{must,might}_fail to accept non-git on "sigpipe"
+  tests: use "test_might_fail ok=sigpipe grep" when appropriate
+  tests: split up bash detection library
+  tests: add a "set -o pipefail" for a patched bash
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+ t/README                           |  6 +++++
+ t/lib-bash-detection.sh            |  8 +++++++
+ t/lib-bash.sh                      |  4 +++-
+ t/t0000-basic.sh                   | 38 ++++++++++++++++++++++++++++++
+ t/t0005-signals.sh                 |  4 ++--
+ t/t0090-cache-tree.sh              |  2 +-
+ t/t5000-tar-tree.sh                |  2 +-
+ t/t5703-upload-pack-ref-in-want.sh |  2 +-
+ t/t9151-svn-mergeinfo.sh           |  6 ++---
+ t/t9902-completion.sh              |  5 ++++
+ t/test-lib-functions.sh            | 24 ++++++++++++++++++-
+ t/test-lib.sh                      | 29 +++++++++++++++++++++++
+ 12 files changed, 120 insertions(+), 10 deletions(-)
+ create mode 100644 t/lib-bash-detection.sh
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYADRPwAKCRB8DEliiIei
-gUuVAP9gj7Clj60h0q1UAvawi4sjaK8UuB+hkOs2c8EOmTirlAD9FHAo5Q16KFxk
-8T88L/dUJoL3rEvEuLcaxz7n1+5gJgc=
-=Pgs/
------END PGP SIGNATURE-----
+-- 
+2.29.2.222.g5d2a92d10f8
 
---Lxi/+Mz/jTrRlrSX--
