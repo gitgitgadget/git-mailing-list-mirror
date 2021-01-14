@@ -4,142 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8884EC433E0
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E68C433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:48:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D54D221FE
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:45:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3144C22A84
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728377AbhANUpg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 15:45:36 -0500
-Received: from mail.pdinc.us ([67.90.184.27]:48922 "EHLO mail1.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727248AbhANUpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 15:45:36 -0500
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail1.pdinc.us (8.14.4/8.14.4) with ESMTP id 10EKinmk022001
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 14 Jan 2021 15:44:49 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail1.pdinc.us 10EKinmk022001
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1610657089; bh=WXN1e2Kk6heDJW//ojMhJC/u1WdgDS/bjTb5gw5tLv0=;
-        h=From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=gvMie1T7WMYna4lFb+cKl6AyX8LWJxv+W/FhB7nikRs/qYTUjORxMLJ7aOciTYUrO
-         Pa3Vvru5Pr3HHnOMpNCI7o8DVNPMBjqCWy6509j//2MV5zLz6ifJkja07TQexsEm3g
-         JVWVQgsyYnNRLNcBSMDQwkfsi7WzNzPGRLbBMT1MID3TRboAFo8MtXex1dsVGDMEIo
-         xZQ8739tMfhDZID3RQuTJD+auazPyEtMOCB4kEKdAlFybMY9z2vPl/M6bRBXRjbMiq
-         luVWXU9ygbRYttP0No2wHuTCd5pQNWm4luMkgluwNVh5zRuaIJgSKx0oQ2Qi6Gb448
-         gY/JYNzdJmH+Q==
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     "Kyle Marek" <kmarek@pdinc.us>
-Cc:     "'Philippe Blain'" <levraiphilippeblain@gmail.com>,
-        <git@vger.kernel.org>
-References: <191201d6eaa3$4b585fa0$e2091ee0$@pdinc.us> <abc900c1-16cc-4ad4-4be3-c405924215cd@gmail.com>
-In-Reply-To: <abc900c1-16cc-4ad4-4be3-c405924215cd@gmail.com>
-Subject: RE: add a blank line when a commit has no parent in log output?
-Date:   Thu, 14 Jan 2021 15:44:59 -0500
-Organization: PD Inc
-Message-ID: <196101d6eab6$20714550$6153cff0$@pdinc.us>
+        id S1728863AbhANUsR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 15:48:17 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50422 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728177AbhANUsR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 15:48:17 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64E3710FBF1;
+        Thu, 14 Jan 2021 15:47:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iiWPJZs3aT4PN5wZKsvGkbhpbnw=; b=wCyOag
+        fIAADKhMFVIZJ1RtmjWVYztEB6RFYIyFOryOP7gPSsVrY+aMiVmlVwy/tgFNtvKn
+        Ak6xWkSxFrMYFspLUCtz+LdvE76GKhySFZ2FUhj03LXcqDzJxoxfX6mIqr0132OW
+        xRzz31EP9Z32qpYJC2lo0kp7ohHn02TUSjL1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=aXP+p6coyT7OdxhayGkVWgt8Dii5YhRk
+        CUsn1XyJpyu+VZHc9Mch9Etqg2rs1FFZn8Ah0oizRoGhs22exdrz7p+6zqlTMFY5
+        zJ8o+auGf76rRoA0KHaVBvHoF4al/oFp2IIEjLnGifqB70rND9Y67884JmGBMDVG
+        23p66INsC6w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D68210FBF0;
+        Thu, 14 Jan 2021 15:47:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A615D10FBEF;
+        Thu, 14 Jan 2021 15:47:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 01/20] pack-revindex: introduce a new API
+References: <cover.1610129796.git.me@ttaylorr.com>
+        <cover.1610576604.git.me@ttaylorr.com>
+        <e1aa89244ad3edb52aaeb28d6934cb2b0a0dc65a.1610576604.git.me@ttaylorr.com>
+        <xmqq1reoypzy.fsf@gitster.c.googlers.com>
+        <YAB6DNk4wPBVbGtU@nand.local>
+        <YACZLHm4NtrM3POZ@coredump.intra.peff.net>
+Date:   Thu, 14 Jan 2021 12:47:31 -0800
+In-Reply-To: <YACZLHm4NtrM3POZ@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 14 Jan 2021 14:19:08 -0500")
+Message-ID: <xmqq35z3xn30.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-us
-Thread-Index: AQLyoqkxuguiuq+K1VGd5vltUHBL9QIgpRLqp98fmwA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: B985F66E-56A9-11EB-A93F-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kyle:
+Jeff King <peff@peff.net> writes:
 
-Need you to whip up a patch (back port it to current Cygwin git too), =
-see below. It will help with cleaning up Cresaptown branches. Or if you =
-think Watson can do it, give it to him.
+> On Thu, Jan 14, 2021 at 12:06:20PM -0500, Taylor Blau wrote:
+>
+>> > > + * This function runs in time O(log N) with the number of objects in the pack.
+>> >
+>> > Is it a good idea to commit to such performance characteristics as a
+>> > promise to callers like this (the comment applies to all three
+>> > functions)?
+>> >
+>> > It depends on how a developer is helped by this comment when
+>> > deciding whether to use this function, or find other ways, to
+>> > implement what s/he wants to do.
+>> 
+>> I don't mind it. If they all had the same performance characteristics, I
+>> wouldn't be for it, but since they don't, I think that it's good to
+>> know. Peff suggested this back in [1].
+>
+> Yeah, I asked for this. As somebody who has frequently worked on the
+> code which accesses the revindex (mostly bitmap stuff), I found it
+> useful to understand how expensive the operations were.  However, I also
+> know what their runtimes are at this point, and it is not like somebody
+> interested cannot look at the implementation. So it may not be that
+> important.
+>
+> So I do still think it is useful, but if somebody feels strongly against
+> it, I don't mind it being removed.
 
-> -----Original Message-----
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
-> Sent: Thursday, January 14, 2021 2:29 PM
-> To: git@vger.kernel.org; Jason Pyeron <jpyeron@pdinc.us>
-> Subject: Re: add a blank line when a commit has no parent in log =
-output?
->=20
-> Hi Jason,
->=20
-> Le 2021-01-14 =C3=A0 13:30, Jason Pyeron a =C3=A9crit :
-> > Take this git log --format=3D"%C(auto) %h% ad%d% s%C(green)% aE" =
---graph --date=3Dshort
-> >
-> > | | | *  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> > | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) =
-Added defau
-> > | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from =
-f7daf088)
-> >
-> > One might assume 5505e019c2 and 3e658f4085 are related. But git =
-cat-file -p 5505e019c2
-> > tree 546c6b71f01e7fd086c8adb832518240b71a9075
-> > author sam swindell <xxxxxx@xxxx> 1404878701 -0400
-> > committer sam swindell <xxxxxx@xxxx> 1404878701 -0400
-> >
-> > initial
-> >
-> >
-> > Is there a way to have it look like:
-> >
-> > | | | *  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> > | | |
-> > | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) =
-Added defau
-> > | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from =
-f7daf088)
-> >
-> > Or
-> >
-> > | | | #  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> > | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) =
-Added defau
-> > | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from =
-f7daf088)
-> >
->=20
-> If you remove '--graph', then you can add '--show-linear-break' [1]. =
-Unfortunately
-> these two options do not work together. I think your suggestion to =
-have the '*'
-> be changed to '#' for root commit is a great idea.
+That won't be me.  It's not like you'd use pack_pos_to_index()
+combined with pack_pos_to_offset() instead of offset_to_pack_pos()
+because the latter is more expensive than using the other two
+functions; the comment does not help those who want to know relative
+performance of these functions for such a purpose.
 
-Patch description
+I was just curious who the comments were meant to help, that's all.
 
-When --graph is used
-
---show-linear-break converts the * to a #
-
---show-linear-break=3Dx converts the * to a x
-
->=20
-> In the mean time, I use this trick:
->=20
->      git log --date=3Dshort --format=3D'%C(auto) %h% [%<(2,trunc)%p] =
-ad%d% s%C(green)% aE'
->=20
-> This adds the abbreviated parent hashes (%p) but truncated to 2 =
-characters ([2], [3]). So
-> the brackets will be empty for root commits.
->=20
-> Cheers,
->=20
-> Philippe.
->=20
->=20
-> [1] =
-https://git-scm.com/docs/git-log#Documentation/git-log.txt---show-linear-=
-breakltbarriergt
-> [2] https://git-scm.com/docs/git-log#Documentation/git-log.txt-empem
-> [3] =
-https://git-scm.com/docs/git-log#Documentation/git-log.txt-emltltNgttrunc=
-ltruncmtruncem
-
+Thanks.
