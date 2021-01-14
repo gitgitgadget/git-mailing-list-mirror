@@ -8,228 +8,187 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A05C9C433DB
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 08:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB775C433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 08:28:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5193223359
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 08:16:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86C0723447
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 08:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727155AbhANIQi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 03:16:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41102 "EHLO
+        id S1727611AbhANI24 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 03:28:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726677AbhANIQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 03:16:37 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDBA3C061575
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 00:15:57 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id j12so4472906ota.7
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 00:15:57 -0800 (PST)
+        with ESMTP id S1726806AbhANI24 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 03:28:56 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0452BC061794
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 00:28:10 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id 15so5120376oix.8
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 00:28:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qboZ1RJHgwms9wY6OIGD/5dZkqbUPs1pjzWY4TQ3w9g=;
-        b=CcvgzWhk0jd+49JEQLfk4xwbva8OkPlbSG6K0KVcAD1HGsdqedQISzqsydVXcHHKU8
-         4XIjYG9RXbdDtAwXTWTGgLA4lOzgdpSPMte+OX/cJRsUD/sHR7rskPvonT8t7B9Aaiml
-         X5/NxMAdlwHDcd/ibc/OnDfMS6Wes7RBl/1n0rvlJ1/6ZCApH5elj1+uncOiFHzLjW3D
-         5mOJTkFBQtJveBss3VigRJptNJQQ10Vp4EnGcatLXQMSUzMxJpRgAf6QBQvQvsIvUywf
-         epsQvu2UhCrBQSYiRzM4ApMCGnIzfZLr+hDIWE1d0EqPb1orbjgFybKQNvRwp27qokCe
-         4fFA==
+         :cc;
+        bh=Vy3ZdRxMaTsNKR3tEZ+0uUZQEo/YbpzdZUeiVmvrqoQ=;
+        b=d+vVvrLXecBHVsNZleQoilJXYqdFE+lvot+kOHM2cQiMQBOxecycCkGYyAwIIFf19L
+         rozTXxHIBZaCpxIsgYZy0Q9pvjGTmG6GOCaXcncXAOFHhUWcEjCLotDCj7ft//GonV2U
+         GvT3ybGIh/KDkYWvDkNsbmODAJckMcMySGjZ5Su68L+sXFgrnna6yjfkrSS20DojHJg1
+         69xUBhQh6xHLzhXFsYq7kYHOd2GpPji4UwKYd8kGi7tOvA6RkWF7RadayztQ4xRK38TZ
+         KqBhxMIJBB8M5k/7ytM40+qBqpqku2GlEu+Xd+s/aZrv3pcoQbQydxn/fT5BreIH8trD
+         mX7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qboZ1RJHgwms9wY6OIGD/5dZkqbUPs1pjzWY4TQ3w9g=;
-        b=tOo4LnWUIWGUkbtWKwhdMSIe+LystAoE8FhlxrJjn1xCROjhmN6T92EB+Dz21ifAPO
-         MJ9o6fNkr9IAG6+Z/OGiB0151WdyGpPITH3GdI0KnsRvw5FdEsvQAYmvV1OqtOpYWtHY
-         5lmy66eOFqcjifegSRclReb7JLg7e9uy2xk4gQxmAlxirHzJFGtcIFti/WfCi6y/Bo82
-         Cx4XFrLWhKPoHNXXaUn2j/fn+ZVBWoVYCq5JayNlDYLIFoEeFF1ESU7lG1tLldb7CC2n
-         cDMEMfACMtGYPuBPWCfY2DI/RO3SgMb8MammTYrFY63q1YpQS2N8VLwXJYgGsRAJQYry
-         U7Ig==
-X-Gm-Message-State: AOAM531XxiVsCiClJ31GS7eydW1vhvHMAT5cwd5jxoZ2QxGM1dZFO4Y1
-        kR7j67ytHDX3FH6SnuVBwoRRZFxA7+oI3NOMk1yqkb2Hsb7wT8+i
-X-Google-Smtp-Source: ABdhPJy+q7eEU606R2+Z7Za5TKp9fwp/2cB0dKTSOw3ttUSiy2VLZNmregfV9FINE5cZxC5B+sSJFLOFxB1Ogseth2Q=
-X-Received: by 2002:a9d:816:: with SMTP id 22mr3881345oty.164.1610612157245;
- Thu, 14 Jan 2021 00:15:57 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=Vy3ZdRxMaTsNKR3tEZ+0uUZQEo/YbpzdZUeiVmvrqoQ=;
+        b=k86zNALBcCWOr6b+JMlfICz5R/uYXGfOS9N2doQlEwgG+KCKRom3f5I/BKXKWXRQGD
+         wN1aYnom/3Sv44SmMa6BZetm1nQ0C6s24H5KZxN3AWANqLnLX/0ZGuTIbd4ZlUD0r1KA
+         qvxssdW+Zt5o9vVlj41JfDKz2xJJxp4hvrFqQPAGXJn6gt4M2IRI6ibEbk+BOWIXhhDO
+         i6SdfTSKc8RGxaREaXX7sJXAczQFuPCTeL1LlY25Frp9V2/Wb3Ft/Pa6Sxot9PA3Kjsh
+         Fjdf7KSS3warlMRnuEYJfvRZ4JjghBXpLjZyw+StYO48lxItZ9IYyUOkLtTlAoU1jgYb
+         bumw==
+X-Gm-Message-State: AOAM533I+da6VQ1e3WoVYeBj7Tkb9om77WKMcl1Yvv6kUzDYOf3HlW/E
+        AQCSLX6lDP6lg2HZu0gPCpbkn31K43HI/A/lqxA=
+X-Google-Smtp-Source: ABdhPJyraR08j/M/qnqByxQ2fHn6TnlEVDgKAV2O8V/uonL3JC5Hsk/yWFWyg1rz80zvnDpVf5ckY49faHtkE9u4RTQ=
+X-Received: by 2002:aca:5253:: with SMTP id g80mr1929681oib.98.1610612888175;
+ Thu, 14 Jan 2021 00:28:08 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.832.git.1609923182451.gitgitgadget@gmail.com>
- <pull.832.v2.git.1610116600.gitgitgadget@gmail.com> <a09a5098aa66ea0ed89fe0fcde3f016b4a65814d.1610116600.git.gitgitgadget@gmail.com>
- <CAPig+cT+1XZbg3Nv15Hfsmc0qLTku0iMvp0dOjuebv_55D1OSQ@mail.gmail.com>
-In-Reply-To: <CAPig+cT+1XZbg3Nv15Hfsmc0qLTku0iMvp0dOjuebv_55D1OSQ@mail.gmail.com>
-From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Date:   Thu, 14 Jan 2021 16:17:21 +0800
-Message-ID: <CAOLTT8SPMA5hNF2GrbjWzQusjq1tCz1SC2842ApcYAVE9tYHew@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] builtin:ls-files.c:add git ls-file --dedup option
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210108092345.2178-4-charvi077@gmail.com>
+ <X/9DdGnYo7RQz5CE@nand.local>
+In-Reply-To: <X/9DdGnYo7RQz5CE@nand.local>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Thu, 14 Jan 2021 13:57:57 +0530
+Message-ID: <CAPSFM5fuT0QAK9wJ_HuH3t=qThPx7Opwy0GrYieVntJ8A4ARMA@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/9] rebase -i: comment out squash!/fixup! subjects
+ from squash message
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes.Schindelin@gmx.de
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You can see that the coding and documentation of GIT community are really v=
-ery
-standard, which may be one of the things I lack and need to improve ;)
-Thanks for patiently correct my errors.
-
-Eric Sunshine <sunshine@sunshineco.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8814=
-=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=882:39=E5=86=99=E9=81=93=EF=BC=
-=9A
+On Thu, 14 Jan 2021 at 00:31, Taylor Blau <me@ttaylorr.com> wrote:
 >
-> On Fri, Jan 8, 2021 at 9:36 AM ZheNing Hu via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > builtin:ls-files.c:add git ls-file --dedup option
->
-> This subject concisely explains the purpose of the patch. That's good.
-> A more typical way to write it would be:
->
->     ls-files: add --dedup option
->
-OK.I will correct it more specification.
-> > This commit standardizes the code format.
->
-> Fixing problems pointed out by reviewers is good. Normally, however,
-> when you submit a new version of your patch or patch series, you
-> should apply these fixes directly to the patch(es) which introduced
-> the problems in the first place rather than adding one or more
-> additional patches to fix problems introduced in earlier patches. To
-> do this, you typically would use `git rebase -i` or `git commit
-> --amend` to squash the fixes into the problematic patches. Thus, when
-> you re-submit the patches, they will appear to be "perfect".
->
-> For this particular two-patch series, patch [2/2] is doing two things:
-> (1) fixing style problems from patch [1/2], and (2) adding
-> documentation and tests which logically belong with the feature added
-> by patch [1/2]. Taking the above advice into account, a better
-> presentation when you re-submit this series would be to squash these
-> two patches into a single patch.
->
-I thought before this was gitgitgadget would sent duplicate patch
-over and over again. It seems like I really should go straight ahead
-and squash my commits , so I know what I should do.
-> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> On Fri, Jan 08, 2021 at 02:53:41PM +0530, Charvi Mendiratta wrote:
+> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >
+> > When squashing commit messages the squash!/fixup! subjects are not of
+> > interest so comment them out to stop them becoming part of the final
+> > message.
+> >
+> > This change breaks a bunch of --autosquash tests which rely on the
+> > "squash! <subject>" line appearing in the final commit message. This is
+> > addressed by adding a second line to the commit message of the "squash!
+> > ..." commits and testing for that.
+> >
+> > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 > > ---
-> > diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-file=
-s.txt
-> > @@ -81,6 +82,9 @@ OPTIONS
-> > +--dedup::
-> > +       Suppress duplicates entries when conflicts happen or
-> > +       specify -d -m at the same time.
->
-> For consistency with typesetting elsewhere in this file, use backticks
-> around the command-line options. It also often is a good idea to spell
-> the options using long form since it is typically easier to search for
-> the long form of an option in documentation. So, perhaps the above can
-> be written like this:
->
->     Suppress duplicate entries when `--deleted` and `--modified` are
->     combined.
->
-> > diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> > -       const struct cache_entry *last_stage=3DNULL;
-> > +       const struct cache_entry *last_stage =3D NULL;
-> > -                       if(show_cached && delete_dup){
-> > +                       if (show_cached && delete_dup) {
-> > -                                       last_stage=3Dce;
-> > +                                       last_stage =3D ce;
-> > -                       if(delete_dup){
-> > +                       if (delete_dup) {
-> > -                       if(delete_dup && show_deleted && show_modified =
-&& err)
-> > +                       if (delete_dup && show_deleted && show_modified=
- && err)
-> > -                       else{
-> > -                               if (show_deleted && err)/* you can't fi=
-nd it,so it's actually removed at all! */
-> > +                       else {
-> > +                               if (show_deleted && err)
->
-> As mentioned above, these style fixes should be squashed into the
-> first patch, rather than being done in a separate patch, so that
-> reviewers see a nicely polished patch rather than a patch which
-> requires later fixing up.
->
-> > diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
-> > @@ -0,0 +1,63 @@
-> > +test_expect_success 'master branch setup and write expect1 expect2 and=
- commit' '
->
-> We usually give this test a simple title such as "setup" so that we
-> don't have to worry about the title becoming outdated as people make
-> changes to the test itself.
->
-> > +       touch a.txt &&
-> > +       touch b.txt &&
-> > +       touch delete.txt &&
->
-> On this project, we use `touch` when the timestamp of the empty files
-> is important to the test. If the timestamp is not important, then we
-> just use `>`, like this:
->
->     >a.txt &&
->     >b.txt &&
->     >delete.txt &&
->
-OK,maybe because I always use touch to generate files.
-> > +       cat <<-EOF >expect1 &&
-> > +       M a.txt
-> > +       H b.txt
-> > +       H delete.txt
-> > +       H expect1
-> > +       H expect2
-> > +       EOF
-> > +       cat <<-EOF >expect2 &&
-> > +       C a.txt
-> > +       R delete.txt
-> > +       EOF
->
-> When no variables are being interpolated in the here-doc content, we
-> use -\EOF to let readers know that the here-doc body is literal. So:
->
->     cat >expect1 <<-\EOF &&
->     ...
->     EOF
->
-> > +       git add a.txt b.txt delete.txt expect1 expect2 &&
-> > +       git commit -m master:1
-> > +'
+> >  sequencer.c                  | 25 ++++++++++++++++++++++++-
+> >  t/t3415-rebase-autosquash.sh | 27 +++++++++++++--------------
+> >  t/t3900-i18n-commit.sh       |  4 ----
+> >  3 files changed, 37 insertions(+), 19 deletions(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 5062976d10..b050a9a212 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -1718,15 +1718,38 @@ static int is_pick_or_similar(enum todo_command command)
+> >       }
+> >  }
+> >
+> > +static size_t subject_length(const char *body)
+> > +{
+> > +     size_t i, len = 0;
+> > +     char c;
+> > +     int blank_line = 1;
+> > +     for (i = 0, c = body[i]; c; c = body[++i]) {
+> > +             if (c == '\n') {
+> > +                     if (blank_line)
+> > +                             return len;
+> > +                     len = i + 1;
+> > +                     blank_line = 1;
+> > +             } else if (!isspace(c)) {
+> > +                     blank_line = 0;
+> > +             }
+> > +     }
+> > +     return blank_line ? len : i;
+> > +}
 > > +
-> > +test_expect_success 'main commit again' '
-> > +       echo a>a.txt &&
-> > +       echo b>b.txt &&
-> > +       echo delete>delete.txt &&
-> > +       git add a.txt b.txt delete.txt &&
-> > +       git commit -m master:2
-> > +'
+>
+> OK, so this gets the length of the subject in "body", which is defined
+> as the run of characters before a newline and then a space character. So
+> "foo bar\n\nbaz" would return 7, but "foo bar\nbaz" would return 11.
+>
+> Makes sense. (Apologies for stating the obvious here, I just had to read
+> this function to myself a couple of times to make sure that I understood
+> what it was doing.)
+>
+
+Earlier while testing patch, I also went through in the same way and
+now got confirmed as you described here.
+
+> >  static void append_squash_message(struct strbuf *buf, const char *body,
+> >                                 struct replay_opts *opts)
+> >  {
+> > +     size_t commented_len = 0;
 > > +
-> > +test_expect_success 'dev commit' '
-> > +       git checkout HEAD~ &&
-> > +       git switch -c dev &&
-> > +       echo change>a.txt &&
-> > +       git add a.txt &&
-> > +       git commit -m dev:1
-> > +'
+> >       unlink(rebase_path_fixup_msg());
+> > +     if (starts_with(body, "squash!") || starts_with(body, "fixup!"))
+> > +             commented_len = subject_length(body);
+> >       strbuf_addf(buf, "\n%c ", comment_line_char);
+> >       strbuf_addf(buf, _("This is the commit message #%d:"),
+> >                   ++opts->current_fixup_count + 1);
+> >       strbuf_addstr(buf, "\n\n");
+> > -     strbuf_addstr(buf, body);
+> > +     strbuf_add_commented_lines(buf, body, commented_len);
+> > +     strbuf_addstr(buf, body + commented_len);
 >
-> These two tests following the "setup" test also seem to be doing setup
-> tasks rather than testing the new --dedup functionality. If this is
-> the case, then it probably would make sense to combine all three tests
-> into a single "setup" test.
+> Very nice; the subject gets commented when it starts with "squash!" or
+> "fixup!", but the body remains uncommented. Makes sense to me.
 >
-> > +test_expect_success 'dev merge master' '
-> > +       test_must_fail git merge master &&
-> > +       git ls-files -t --dedup >actual1 &&
-> > +       test_cmp expect1 actual1 &&
-> > +       rm delete.txt &&
-> > +       git ls-files -d -m -t --dedup >actual2 &&
-> > +       test_cmp expect2 actual2
-> > +'
+
+I agree and Thanks to Phillip, for the patch.
+
+> > @@ -224,7 +223,7 @@ test_expect_success 'auto squash that matches longer sha1' '
+> >       git cat-file blob HEAD^:file1 >actual &&
+> >       test_cmp expect actual &&
+> >       git cat-file commit HEAD^ >commit &&
+> > -     grep squash commit >actual &&
+> > +     grep "extra para" commit >actual &&
+> >       test_line_count = 1 actual
+> >  '
 >
-> Do you foresee that people will add more tests to this file which will
-> use the files and branches set up by the "setup" test(s)? If not, if
-> those branches and files are only ever going to be used by this one
-> test, then it probably would be better to combine all the above code
-> into a single test.
-No,the test file may just need only one.
+> Worth checking that "squash" doesn't appear in an uncommented part of
+> actual? Or better yet, checking that "# squash ..." _does_ appear.
+>
+> I.e., that we would leave this as:
+>
+>     -   grep squash commit >actual &&
+>     +   grep "^# squash" commit >actual &&
+>     +   grep "extra para" commit >actual &&
+>
+> > @@ -342,8 +341,8 @@ test_expect_success C_LOCALE_OUTPUT 'autosquash with custom inst format' '
+> >       git cat-file blob HEAD^:file1 >actual &&
+> >       test_cmp expect actual &&
+> >       git cat-file commit HEAD^ >commit &&
+> > -     grep squash commit >actual &&
+> > -     test_line_count = 2 actual
+> > +     grep first commit >actual &&
+> > +     test_line_count = 3 actual
+> >  '
+>
+> Ditto.
+
+Okay, I will add it .
+
+Thanks and Regards,
+Charvi
+
+>
+> Thanks,
+> Taylor
