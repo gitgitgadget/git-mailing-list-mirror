@@ -2,113 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D2EC433E6
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 15:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D3BEC4332B
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:41:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E11223B2F
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 15:51:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 749E623B1C
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729296AbhANPvL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 10:51:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54356 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728328AbhANPvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 10:51:07 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56261C0613D6
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 07:50:27 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id w5so6259149wrm.11
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 07:50:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=a+D/CZ7XXFSxfeWueHbUR9vG7dA0FCe8Pkqw/DzaESM=;
-        b=QMNPZH1bqjtS7y5y+9G3HGRwPm92jh5h97CLTXycpLuCtKtiVrVAggysS0rC/kAw1m
-         uxQN60qgbeQvV8G6MqFTXcy8Gwspn/kZWrPcwGlvQQ8u7Es4735C9IaEmH0wdMwT9HY9
-         lsETfwmEh+LH4NugGp6fhcscsDRJvQmrh3V8Hrw9SK4o+eNSdGIBkUVhxOLgcMXHrwYS
-         b4AwwFcpRCZxtbrswyPAPeDooUh09RUom/Z1vdk0lK4ImBGqI0iM38+iEZw0GRElutDq
-         R1xARw0InRdWNW1jxrvUOUBIjq5OWNOfEK6jtdc2n8yBiyhEfv/3kPlx+iZpEGb+f95E
-         WgUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=a+D/CZ7XXFSxfeWueHbUR9vG7dA0FCe8Pkqw/DzaESM=;
-        b=hLsJ9yPghgKspADkaINvoZJu7nsZjQ2iqwCgL71sm/wgZiXk0Ca+Izc+Hi0Fecc20C
-         f8M0PQP6OWmGV6bUOn5qjKTgCT4eRWM5q8bS74WqkSYKl9g0017BKqGjLVBDyVeHWnJl
-         V7BNpbyaC9ulmMwYZHfP0FPk7QyREPuonUzq6IMZ3JO+PT+66qw0w2VrkBOh3qZVXdCZ
-         TuQ9H+mTDT6Ewf7AixkTSoreYvBbwin2meLcxiXmIsPq9PUSiyy2PVGAL2tXCeg6HJLG
-         fYJWB0bDmJpD7AC7Z8mz03Zv0lFJp1GVQARimC0mYIoGM8QQ2+Zl/rJ6ccVMGhb0C+U7
-         oKGw==
-X-Gm-Message-State: AOAM532UTwDcaT7lL8sMkpLsNgEmRgPupVLhYL4RVq2imkdWyGa3hqFe
-        q3HB5/ehhd05Dt9XtYqs4gMmQsGwvyZRyw==
-X-Google-Smtp-Source: ABdhPJxSZfy+OZVoManpUTQgyIo1O8d6E1/gE46lh4b8Rbdlf+KNahoQHTVLFPhJD982uJz0HVg9+w==
-X-Received: by 2002:a05:6000:1788:: with SMTP id e8mr4891006wrg.171.1610639425931;
-        Thu, 14 Jan 2021 07:50:25 -0800 (PST)
-Received: from localhost.localdomain ([185.228.231.221])
-        by smtp.gmail.com with ESMTPSA id q7sm10170489wrx.62.2021.01.14.07.50.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 07:50:25 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 3/3] pack-write: die on error in write_promisor_file()
-Date:   Thu, 14 Jan 2021 16:50:16 +0100
-Message-Id: <20210114155016.3005932-4-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.30.0.83.g36fd80b35a.dirty
-In-Reply-To: <20210114155016.3005932-1-chriscool@tuxfamily.org>
-References: <20210114155016.3005932-1-chriscool@tuxfamily.org>
+        id S1726924AbhANQlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 11:41:11 -0500
+Received: from remote.fiveco.ch ([46.14.118.250]:9636 "EHLO remote.fiveco.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726241AbhANQlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 11:41:11 -0500
+Received: from FIVECO-MX01.fiveco.local (192.168.16.44) by
+ FIVECO-MX01.fiveco.local (192.168.16.44) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 14 Jan 2021 17:40:28 +0100
+Received: from FIVECO-MX01.fiveco.local ([fe80::c512:b974:5da:2168]) by
+ FIVECO-MX01.fiveco.local ([fe80::c512:b974:5da:2168%4]) with mapi id
+ 15.01.2106.006; Thu, 14 Jan 2021 17:40:28 +0100
+From:   Kevin Bernard <kevin.bernard@fiveco.ch>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: bug: checkout --recurse-submodules discard uncommited changes in
+ submodule
+Thread-Topic: bug: checkout --recurse-submodules discard uncommited changes in
+ submodule
+Thread-Index: AdbqUBNPEWEQfD/6RDy17JZxGXkKfgAJFt+AAAefz8A=
+Date:   Thu, 14 Jan 2021 16:40:28 +0000
+Message-ID: <1ce5bfa2e8b04bf79b831515e096a9f1@fiveco.ch>
+References: <570e77a07f0b4d4ea09307e5fa819d6f@fiveco.ch>
+ <05afbdeb-6c72-f14c-cdf0-e14894de05a3@gmail.com>
+In-Reply-To: <05afbdeb-6c72-f14c-cdf0-e14894de05a3@gmail.com>
+Accept-Language: fr-CH, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.16.29]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-write_promisor_file() already uses xfopen(), so it would die
-if the file cannot be opened for writing. To be consistent
-with this behavior and not overlook issues, let's also die if
-there are errors when we are actually writing to the file.
-
-Suggested-by: Jeff King <peff@peff.net>
-Suggested-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- pack-write.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/pack-write.c b/pack-write.c
-index db3ff9980f..e9bb3fd949 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -371,11 +371,15 @@ void finish_tmp_packfile(struct strbuf *name_buffer,
- 
- void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
- {
--	int i;
-+	int i, err;
- 	FILE *output = xfopen(promisor_name, "w");
- 
- 	for (i = 0; i < nr_sought; i++)
- 		fprintf(output, "%s %s\n", oid_to_hex(&sought[i]->old_oid),
- 			sought[i]->name);
--	fclose(output);
-+
-+	err = ferror(output);
-+	err |= fclose(output);
-+	if (err)
-+		die(_("could not write '%s' promisor file"), promisor_name);
- }
--- 
-2.30.0.83.g36fd80b35a.dirty
-
+SGkgUGhpbGlwcGUsIA0KDQpJIGhhdmUgbm8gcHJlZmVyZW5jZXMgd2hldGhlciB0aGUgY2hlY2tv
+dXQgc2hvdWxkIGZhaWwgaWYgYW55IGZpbGVzIGFyZSBtb2RpZmllZCBpbiB0aGUgc3VibW9kdWxl
+DQpvciBhbGxvdyB0aGUgY2hlY2tvdXQgdG8gc3VjY2VlZCBpZiB0aGUgbW9kaWZpY2F0aW9uIGNh
+biBiZSBjYXJyaWVkIG91dC4gDQoNCkkgd3JvdGUgYSBzdGVwIGJ5IHN0ZXAgcHJvY2VkdXJlIHRv
+IHJlcHJvZHVjZSB0aGUgYnVnLg0KDQpTdGVwIHRvIHJlcHJvZHVjZSBteSBpc3N1ZQ0KDQpnaXQg
+aW5pdCAgDQpnaXQgY2hlY2tvdXQgLWIgbWFzdGVyICANCmdpdCBzdWJtb2R1bGUgYWRkIGh0dHBz
+Oi8vZ2l0aHViLmNvbS9rYmVybmFyZC1wZXJzby9yZWN1cnNlLWJ1Zy5naXQgIA0KZ2l0IHN1Ym1v
+ZHVsZSBpbml0ICANCmdpdCBhZGQgLiAgDQpnaXQgY29tbWl0IC1tICJBZGQgc3VibW9kdWxlIiAg
+DQpjZCByZWN1cnNlLWJ1Zy8gIA0KZWNobyAiZmlsZTEgbW9kaWZpZWQiID4+IGZpbGUxLnR4dCAg
+DQpnaXQgYWRkIC4gIA0KZ2l0IGNvbW1pdCAtbSAiZmlsZTEudHh0IG1vZGlmaWVkIiAgDQpjZCAu
+LiAgDQpnaXQgYWRkIC4gIA0KZ2l0IGNvbW1pdCAtbSAiTW9kaWZpZWQgZmlsZTEgaW4gc3VibW9k
+dWxlIiAgDQpjZCByZWN1cnNlLWJ1Zy8gIA0KZWNobyAiZmlsZTIgbW9kaWZpZWQiID4+IGZpbGUy
+LnR4dCAgDQpjZCAuLiAgDQpnaXQgc3RhdHVzICANCmdpdCBjaGVja291dCAtLXJlY3Vyc2Utc3Vi
+bW9kdWxlcyBIRUFEXiAgDQpnaXQgc3RhdHVzICANCg0KVGhlIHVuY29tbWl0dGVkIG1vZGlmaWNh
+dGlvbnMgbWFkZSB3aXRoICJlY2hvICJmaWxlMiBtb2RpZmllZCIgPj4gZmlsZTIudHh0IiBhcmUg
+IA0KZGlzY2FyZGVkIGJ5IGdpdCBjaGVja291dCAtLXJlY3Vyc2Utc3VibW9kdWxlcyBIRUFEXiAg
+DQoNClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIG1ha2luZyBnaXQgYSB3b25kZXJmdWwgdG9vbCB0
+byB1c2UuDQoNCkNoZWVycywgDQoNCktldmluDQoNCi0tLS0tTWVzc2FnZSBkJ29yaWdpbmUtLS0t
+LQ0KRGXCoDogUGhpbGlwcGUgQmxhaW4gPGxldnJhaXBoaWxpcHBlYmxhaW5AZ21haWwuY29tPiAN
+CkVudm95w6nCoDogamV1ZGksIDE0IGphbnZpZXIgMjAyMSAxNDo1NQ0Kw4DCoDogS2V2aW4gQmVy
+bmFyZCA8a2V2aW4uYmVybmFyZEBmaXZlY28uY2g+OyBnaXRAdmdlci5rZXJuZWwub3JnDQpPYmpl
+dMKgOiBSZTogYnVnOiBjaGVja291dCAtLXJlY3Vyc2Utc3VibW9kdWxlcyBkaXNjYXJkIHVuY29t
+bWl0ZWQgY2hhbmdlcyBpbiBzdWJtb2R1bGUNCg0KSGkgS2V2aW4sDQoNCkxlIDIwMjEtMDEtMTQg
+w6AgMDM6MzUsIEtldmluIEJlcm5hcmQgYSDDqWNyaXTCoDoNCj4gVGhhbmsgeW91IGZvciBmaWxs
+aW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KPiBQbGVhc2UgYW5zd2VyIHRoZSBmb2xsb3dpbmcg
+cXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3VlLg0KPiANCj4gV2hhdCBk
+aWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVwcm9kdWNlIHlv
+dXIgDQo+IGlzc3VlKSBNYWtlIGEgZ2l0IHJlcG9zaXRvcnkgd2l0aCBhIHN1Ym1vZHVsZSBpbiBp
+dC4NCj4gTWFrZSB0d28gZGlmZmVyZW50IGNvbW1pdHMgaW4gdGhlIG1haW4gcmVwb3NpdG9yeSB3
+aXRoIHR3byBkaWZmZXJlbnQgDQo+IHZlcnNpb25zIG9mIHRoZSBzdWJtb2R1bGUsIG9uZSBvZiB0
+aGVtIGlzIHRoZSBoZWFkIG9mIHRoZSBicmFuY2guDQo+IENoZWNrb3V0IHRoZSBoZWFkIG9mIHRo
+ZSBicmFuY2ggaW4gdGhlIG1haW4gcmVwb3NpdG9yeSwgYW5kIG1ha2UgYSBzdWJtb2R1bGUgdXBk
+YXRlLg0KPiBNYWtlIGEgbW9kaWZpY2F0aW9uLCBkbyBub3QgY29tbWl0IGl0LCBpbiBhIHN1Ym1v
+ZHVsZSBmaWxlIHRoYXQgd2lsbCANCj4gbm90IHJlc3VsdCBpbiBhICJlcnJvcjogWW91ciBsb2Nh
+bCBjaGFuZ2VzIHRvIHRoZSBmb2xsb3dpbmcgZmlsZXMgDQo+IHdvdWxkIGJlIG92ZXJ3cml0dGVu
+IGJ5IGNoZWNrb3V0IiB3aGVuIHRoZSBvdGhlciB2ZXJzaW9uIG9mIHRoZSBsaWJyYXJ5IHdpbGwg
+YmUgY2hlY2tlZCBvdXQuDQoNCkkgYXNzdW1lIHRoYXQgeW91IGNvbmZpcm1lZCB0aGF0IGJ5IHJ1
+bm5pbmcgJ2dpdCBjaGVja291dCA8b3RoZXIgdmVyc2lvbj4nDQppbiB0aGUgc3VibW9kdWxlLCBy
+aWdodCA/DQoNCj4gR28gYmFjayB0byB0aGUgbWFpbiByZXBvc2l0b3J5IGFuZCBtYWtlIGEgY2hl
+Y2tvdXQgb2YgdGhlIG90aGVyIGNvbW1pdCANCj4gd2l0aCB0aGUgc3dpdGNoIC0tcmVjdXJzZS1z
+dWJtb2R1bGVzLg0KPiANCj4gV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3Rl
+ZCBiZWhhdmlvcikgVGhlIGNoZWNrb3V0IHdpdGggDQo+IHRoZSBzd2l0Y2ggLS1yZWN1cnNlLXN1
+Ym1vZHVsZXMgc2hvdWxkIGZhaWwgd2hlbiB0aGVyZSBhcmUgdW5jb21taXR0ZWQgDQo+IGNoYW5n
+ZXMgaW4gdGhlIHN1Ym1vZHVsZS4NCj4gDQo+IFdoYXQgaGFwcGVuZWQgaW5zdGVhZD8gKEFjdHVh
+bCBiZWhhdmlvcikgVW5jb21taXR0ZWQgY2hhbmdlcyBpbiB0aGUgDQo+IHN1Ym1vZHVsZSBhcmUg
+ZGlzY2FyZGVkIHdpdGhvdXQgYW55IG5vdGlmaWNhdGlvbnMuDQo+IA0KPiBXaGF0J3MgZGlmZmVy
+ZW50IGJldHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdoYXQgYWN0dWFsbHkgaGFwcGVuZWQ/
+DQo+IExvc3Mgb2YgdGhlIHVuY29tbWl0dGVkIGNoYW5nZXMgaW4gdGhlIHN1Ym1vZHVsZS4NCj4g
+DQo+IEFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOg0KPiBJIHN0YXkgYXQgeW91ciBkaXNw
+b3NhbCBpZiB5b3UgbmVlZCBtb3JlIGluZm9ybWF0aW9uLg0KDQoNClRoYW5rcyBmb3IgdGhlIHJl
+cG9ydC4gVGhpcyBpcyBhIGtub3duIHByb2JsZW0gdGhhdCB3YXMgcmVwb3J0ZWQgaW4gWzFdIGFu
+ZCBbMl0uDQpJJ20gY3VycmVudGx5IHdvcmtpbmcgb24gZml4aW5nIHRoYXQgYnVnLiBJJ20gbm90
+IHF1aXRlIGZpbmlzaGVkIHlldCBhcyBJIHdhbnQgdG8gcG9saXNoIHRoZSBlbmQtdXNlciBleHBl
+cmllbmNlIGEgYml0LCBidXQgaWYgeW91IHdhbnQgdG8gY29tcGlsZSBmcm9tIHNvdXJjZSwgdGhl
+IGhlYXJ0IG9mIHRoZSBmaXggaXMgdGhpcyBjaGFuZ2U6DQoNCmRpZmYgLS1naXQgYS91bnBhY2st
+dHJlZXMuYyBiL3VucGFjay10cmVlcy5jIGluZGV4IDMyMzI4MGRkNDguLmEzZTNkOThkZTEgMTAw
+NjQ0DQotLS0gYS91bnBhY2stdHJlZXMuYw0KKysrIGIvdW5wYWNrLXRyZWVzLmMNCkBAIC0xODcy
+LDcgKzE4NzIsNyBAQCBzdGF0aWMgaW50IHZlcmlmeV91cHRvZGF0ZV8xKGNvbnN0IHN0cnVjdCBj
+YWNoZV9lbnRyeSAqY2UsDQogIA0KICAJCWlmIChzdWJtb2R1bGVfZnJvbV9jZShjZSkpIHsNCiAg
+CQkJaW50IHIgPSBjaGVja19zdWJtb2R1bGVfbW92ZV9oZWFkKGNlLA0KLQkJCQkiSEVBRCIsIG9p
+ZF90b19oZXgoJmNlLT5vaWQpLCBvKTsNCisJCQkJIkhFQUQiLCBlbXB0eV90cmVlX29pZF9oZXgo
+KSwgbyk7DQogIAkJCWlmIChyKQ0KICAJCQkJcmV0dXJuIGFkZF9yZWplY3RlZF9wYXRoKG8sIGVy
+cm9yX3R5cGUsIGNlLT5uYW1lKTsNCiAgCQkJcmV0dXJuIDA7DQoNCg0KVGhpcyBzaG91bGQgZGlz
+YWxsb3cgc3dpdGNoaW5nIGJyYW5jaGVzIHdpdGggJy0tcmVjdXJzZS1zdWJtb2R1bGVzJyBpZiAq
+YW55KiBmaWxlIGluIHRoZSBzdWJtb2R1bGUgaXMgbW9kaWZpZWQuDQoNCkhvd2V2ZXIsIEknbSBh
+Y3R1YWxseSB0aGlua2luZyB0aGF0IG1heWJlIGl0IHdvdWxkIGJlIGJldHRlciB0byBsZXQgdGhl
+IGNoZWNrb3V0IHN1Y2NlZWQgaW4gdGhlIGV4YWN0IGNhc2UgeW91IG1lbnRpb24sIGkuZS4gd2hl
+biB0aGUgbW9kaWZpZWQgZmlsZXMgaW4gdGhlIHN1Ym1vZHVsZXMgYXJlIGF0IHRoZSBzYW1lIHZl
+cnNpb24gaW4gYm90aCBzdWJtb2R1bGUgY29tbWl0cyAoaS5lLiBnaXQgY2hlY2tvdXQgPG90aGVy
+IHZlcnNpb24+IGluIHRoZSBzdWJtb2R1bGUgc3VjY2VlZHMgYW5kIHRoZSBtb2RpZmllZCBmaWxl
+cyBzdGF5IG1vZGlmaWVkKSwgYW5kIGFsc28gY2Fycnkgb3ZlciB0aGUgbW9kaWZpZWQgZmlsZXMg
+aW4gdGhlIHN1Ym1vZHVsZS4gVGhpcyB3b3VsZCBtaW1pYyB0aGUgJ2dpdCBjaGVja291dCcgZXhw
+ZXJpZW5jZSB3aXRob3V0IHN1Ym1vZHVsZXMsIGkuZS4gbW9kaWZpZWQgZmlsZXMgdGhhdCBkbyBu
+b3QgY29uZmxpY3QgYXJlIGNhcnJpZWQgb3ZlciB0byB0aGUgYnJhbmNoIHlvdSBhcmUgY2hlY2tp
+bmcgb3V0Lg0KDQpJZiB5b3UgY2FuIHdyaXRlIGEgY29tcGxldGUgcmVwcm9kdWNlciAoY29tcGxl
+dGUgc3RlcHMgc3RhcnRpbmcgd2l0aCAnZ2l0IGluaXQnLA0KZXRjLikgSSB3aWxsIG1ha2Ugc3Vy
+ZSB0aGF0IHlvdXIgc2NlbmFyaW8gaXMgYWRlcXVhdGVseSB0ZXN0ZWQgaW4gbXkgcGF0Y2ggc2Vy
+aWVzLg0KDQoNCkNoZWVycywNCg0KUGhpbGlwcGUuDQoNCg0KWzFdIGh0dHBzOi8vbG9yZS5rZXJu
+ZWwub3JnL2dpdC9DQUhzRzJWVDRZQl9uZjhQckVtckh3Sy1pWS1BUW8wVkRjdlhHVnNmOGNFWVh3
+czRuaWdAbWFpbC5nbWFpbC5jb20vDQpbMl0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvZ2l0LzIw
+MjAwNTI1MDk0MDE5LjIycGFkYnp1azd1a3I1dXZAb3ZlcmRyaXZlLnRyYXR0Lm5ldC8NCg==
