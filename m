@@ -2,124 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0764BC433DB
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 19:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC43C433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 19:34:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C586A23B6C
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 19:30:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D37D623436
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 19:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726501AbhANTa0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 14:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45370 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbhANTaZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 14:30:25 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FA01C0613D6
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 11:29:29 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id h16so2854220qvu.8
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 11:29:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=dPPOOBBx4hoKWn3R7/jF7p4Qelje70URlstRHEzEZIw=;
-        b=XYLO2dpcPcws1zsX/dV86SBw2RO2oi37Wf+j8/rTwNPXaMnm9s5rXMyRG7z90a0U1r
-         e8bXSOzhSigaXZy09o5MwrnJI6lseWvxcWrEbehtnb7WDirLGrD6MKWCWD8+B8HL8+Yb
-         tY0efZJbIJ+O13fMc5QkzAeF87KlrzGz8KH3uv9oOiTyoWoabAIAO4bkMc5X/h5E6BDr
-         pC+iNTW7sziTNEoM1yV9K5w1cdpeOvM4zGHgNC5MiIC5wmSqfHxHDFu7jtd0FMnDEY30
-         BNrCeCx1aa4h5vYi/hGjs0kpJjqDoBv/VN2MyhcIViTEBWaVtLqtVCLA80psWguSvn2K
-         wxrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dPPOOBBx4hoKWn3R7/jF7p4Qelje70URlstRHEzEZIw=;
-        b=Sr8wBk3unK30bmCeWL9ILDeijKWdONaTGBbAYK9bsm8Zbke7sVoW9MAWHguNePf3FB
-         fEvEGuLQjyWFU4L2k4gPj1etNQk9bBDIIYxXvHsNW5w1oYDZXSQiExKj+gFbeDX0oQoE
-         ZLutJky5Lsm703v0F9/Cbf8kzUDdDgE50tEJwWo6hq+UAg1ej4khwCUptfQLAWEI6MQA
-         ARgR+M8DtdjtJAJMYAGy1rkjR9cAFfvi3Igobr9vXQa2f3nOaUZbGrM5XTjtVvy8F0AS
-         U1IX3fd1MLiUYcUDl1OiqBFCnZkY/2tBiMGQDQKPHDxeB3WipxPjruWSBu1MRZbyJSkv
-         jJEQ==
-X-Gm-Message-State: AOAM530V/MP+k66DUNRXFm1rZfh7/VH+GzZJtw6e39fPXq29bifbX7D5
-        vqgBou+jwSxvggFrrPtzL9fHvTnaLEmn1g==
-X-Google-Smtp-Source: ABdhPJzYpca66V/+m+OXRF+dpqjk6IAdM3fqCBBminRS5BmaQZZd4/rO3x1/nwY8kYLqPo72ILwTIw==
-X-Received: by 2002:a05:6214:533:: with SMTP id x19mr8800404qvw.20.1610652568721;
-        Thu, 14 Jan 2021 11:29:28 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id h26sm3587374qtc.81.2021.01.14.11.29.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jan 2021 11:29:28 -0800 (PST)
-Subject: Re: add a blank line when a commit has no parent in log output?
-To:     git@vger.kernel.org, Jason Pyeron <jpyeron@pdinc.us>
-References: <191201d6eaa3$4b585fa0$e2091ee0$@pdinc.us>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <abc900c1-16cc-4ad4-4be3-c405924215cd@gmail.com>
-Date:   Thu, 14 Jan 2021 14:29:27 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.1
+        id S1728327AbhANTee (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 14:34:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56332 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726198AbhANTee (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 14:34:34 -0500
+Received: (qmail 17037 invoked by uid 109); 14 Jan 2021 19:33:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Jan 2021 19:33:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17285 invoked by uid 111); 14 Jan 2021 19:33:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Jan 2021 14:33:53 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 14 Jan 2021 14:33:52 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 15/20] for_each_object_in_pack(): convert to new
+ revindex API
+Message-ID: <YACcoNY/SiEbBSgh@coredump.intra.peff.net>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <cover.1610576604.git.me@ttaylorr.com>
+ <e7574763513294b71071b032d5cd3aa0976969dd.1610576604.git.me@ttaylorr.com>
+ <xmqq8s8wyq5i.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <191201d6eaa3$4b585fa0$e2091ee0$@pdinc.us>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8s8wyq5i.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jason,
+On Wed, Jan 13, 2021 at 10:43:37PM -0800, Junio C Hamano wrote:
 
-Le 2021-01-14 à 13:30, Jason Pyeron a écrit :
-> Take this git log --format="%C(auto) %h% ad%d% s%C(green)% aE" --graph --date=short
+> >  		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
+> > -			pos = p->revindex[i].nr;
+> > +			pos = pack_pos_to_index(p, i);
 > 
-> | | | *  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
-> | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
-> 
-> One might assume 5505e019c2 and 3e658f4085 are related. But git cat-file -p 5505e019c2
-> tree 546c6b71f01e7fd086c8adb832518240b71a9075
-> author sam swindell <xxxxxx@xxxx> 1404878701 -0400
-> committer sam swindell <xxxxxx@xxxx> 1404878701 -0400
-> 
-> initial
-> 
-> 
-> Is there a way to have it look like:
-> 
-> | | | *  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> | | |
-> | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
-> | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
-> 
-> Or
-> 
-> | | | #  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
-> | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
-> 
+> It wasn't too bad before this series formally defined what
+> "position", "index" and "offset" mean, but now this has become
+> highly misleading. The variable "pos" here holds what we consider
+> "index" while "i" holds what we call "position" [*1*].
 
-If you remove '--graph', then you can add '--show-linear-break' [1]. Unfortunately
-these two options do not work together. I think your suggestion to have the '*'
-be changed to '#' for root commit is a great idea.
+I don't think "position" is a meaningful term by itself. I would say the
+useful terms are "pack position", "index position", and "offset" (or
+"pack offset" if you like). I don't think anything in the definitions
+added by earlier patches contradicts that, but perhaps we can make it
+more clear.
 
-In the mean time, I use this trick:
+So "pos" in this case is not wrong. But I agree that it could stand to
+be more clear. Saying "nth" does not help things IMHO (there is an "nth"
+pack position, as well).
 
-     git log --date=short --format='%C(auto) %h% [%<(2,trunc)%p] ad%d% s%C(green)% aE'
+But maybe this makes it more clear (or possibly just the name change
+without the comment):
 
-This adds the abbreviated parent hashes (%p) but truncated to 2 characters ([2], [3]). So
-the brackets will be empty for root commits.
+diff --git a/packfile.c b/packfile.c
+index de47c9f4f8..6035b80466 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2078,19 +2078,30 @@ int for_each_object_in_pack(struct packed_git *p,
+ 	}
+ 
+ 	for (i = 0; i < p->num_objects; i++) {
+-		uint32_t pos;
++		uint32_t index_pos;
+ 		struct object_id oid;
+ 
++		/*
++		 * We are iterating "i" from 0 up to num_objects, but its
++		 * meaning may be different:
++		 *
++		 *   - in object-name order, it is the same as the index order
++		 *     given to us by nth_packed_object_id(), and we can use it
++		 *     directly
++		 *
++		 *   - in pack-order, it is pack position, which we must
++		 *     convert to an index position in order to get the oid.
++		 */
+ 		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
+-			pos = p->revindex[i].nr;
++			index_pos = p->revindex[i].nr;
+ 		else
+-			pos = i;
++			index_pos = i;
+ 
+-		if (nth_packed_object_id(&oid, p, pos) < 0)
++		if (nth_packed_object_id(&oid, p, index_pos) < 0)
+ 			return error("unable to get sha1 of object %u in %s",
+-				     pos, p->pack_name);
++				     index_pos, p->pack_name);
+ 
+-		r = cb(&oid, p, pos, data);
++		r = cb(&oid, p, index_pos, data);
+ 		if (r)
+ 			break;
+ 	}
 
-Cheers,
 
-Philippe.
+> *1* The nth_packed_object_id() call we make later using the value we
+> obtain here should be documented to take "index" as its last
+> parameter, now that is what we call the location in the index, which
+> is in object name order.
 
+I would love to see the function given a more descriptive name. Having
+worked on the bitmap code a lot, where the norm is pack-order, saying
+"nth" is confusing and error-prone.
 
-[1] https://git-scm.com/docs/git-log#Documentation/git-log.txt---show-linear-breakltbarriergt
-[2] https://git-scm.com/docs/git-log#Documentation/git-log.txt-empem
-[3] https://git-scm.com/docs/git-log#Documentation/git-log.txt-emltltNgttruncltruncmtruncem
+But I think that's out of scope for this series.
+
+-Peff
