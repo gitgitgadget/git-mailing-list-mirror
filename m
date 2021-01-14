@@ -2,133 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D3BEC4332B
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2B0AC433E9
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:54:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 749E623B1C
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:41:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB7E723B4B
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 16:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbhANQlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 11:41:11 -0500
-Received: from remote.fiveco.ch ([46.14.118.250]:9636 "EHLO remote.fiveco.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726241AbhANQlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 11:41:11 -0500
-Received: from FIVECO-MX01.fiveco.local (192.168.16.44) by
- FIVECO-MX01.fiveco.local (192.168.16.44) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2106.2; Thu, 14 Jan 2021 17:40:28 +0100
-Received: from FIVECO-MX01.fiveco.local ([fe80::c512:b974:5da:2168]) by
- FIVECO-MX01.fiveco.local ([fe80::c512:b974:5da:2168%4]) with mapi id
- 15.01.2106.006; Thu, 14 Jan 2021 17:40:28 +0100
-From:   Kevin Bernard <kevin.bernard@fiveco.ch>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: bug: checkout --recurse-submodules discard uncommited changes in
- submodule
-Thread-Topic: bug: checkout --recurse-submodules discard uncommited changes in
- submodule
-Thread-Index: AdbqUBNPEWEQfD/6RDy17JZxGXkKfgAJFt+AAAefz8A=
-Date:   Thu, 14 Jan 2021 16:40:28 +0000
-Message-ID: <1ce5bfa2e8b04bf79b831515e096a9f1@fiveco.ch>
-References: <570e77a07f0b4d4ea09307e5fa819d6f@fiveco.ch>
- <05afbdeb-6c72-f14c-cdf0-e14894de05a3@gmail.com>
-In-Reply-To: <05afbdeb-6c72-f14c-cdf0-e14894de05a3@gmail.com>
-Accept-Language: fr-CH, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.16.29]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1727261AbhANQyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 11:54:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39750 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727025AbhANQyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 11:54:23 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 688B8C061575
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 08:53:43 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id b64so8854940qkc.12
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 08:53:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=dh3nJLcrkCiKQiZog75byYg7AyxYxK+LnMw4gcb7Wtc=;
+        b=IW5FU3lm47tnmD6LLcoPvmoV1TRxpMI/M1KVwUFFXhu2mvh9wgHA7VzI0xKDi/KsBK
+         EhbHc7jkC1TcrLJEpx8Vx4Ue1OrgBc0RXLipntP9oWOnCXhpkHeatgJ/N648jh+6CcYG
+         79i6RFL3iHjpHvgkGUrdse/FmMPLV54yp3QhSJRXTi3pkSbCqYJi1mVwB7nh3zh03vx9
+         AHVjr3cFxDYIKIF8rHcKcqCnv17mc32gKPnkcsL4VgdsfJ5WTMo7l9ZoW19YBmLSEcGC
+         /g5RZNdGpXQG8AGW0oQj8/JcnjZwcE7p/gBo8ouhYt7ZY4QTxXnQjOdVH9njC/maNonu
+         La7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dh3nJLcrkCiKQiZog75byYg7AyxYxK+LnMw4gcb7Wtc=;
+        b=nf9jZ8qUDrZtRmw6dHStn9uADaAZ0WXEFGELgOgij2Xra2w/tXfvsbfR7jct+Bn0vu
+         I/EyB/mHCd0oSgmTaZbEuKP3v/Q3b00QHRpb7aswbBzO8XW1WT3IijlOmDqkIzMWmg/0
+         gqVwWor7kHuf4xmpob1ysZKMANIXFf2Ql/5jPdYh/bwgfZersTazvrmkLvaQnHFdPZSs
+         GYcVN8owDTWd0XcjpVlrqubB3OSe3HG5Us3DzCXY2qtEICAtjg+34AqmciBC0iYyqdhW
+         rIddVluSDTJHTWI/E0LR+ysVOv/LCncDgM7Hqv+ChjqkZEBimEW91uS0e1JQuIMYj1og
+         +lpg==
+X-Gm-Message-State: AOAM533rwL0ilZVGWoUo8gy/MNXCA8fnluXZqrlroxlG3wuyWyL98Rnh
+        Jux34GodmVLGObo8cyhzz2UGCg==
+X-Google-Smtp-Source: ABdhPJyvsa+PXCFfyfa1d5xqXzKLo3JU6S261SCH7VeAaFSMZUe3ngnNz2m1/zvIwJboDskdTw2BiQ==
+X-Received: by 2002:a37:a941:: with SMTP id s62mr8017301qke.49.1610643222664;
+        Thu, 14 Jan 2021 08:53:42 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:b172:2e4c:efe4:db53])
+        by smtp.gmail.com with ESMTPSA id d1sm3334220qkf.102.2021.01.14.08.53.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Jan 2021 08:53:41 -0800 (PST)
+Date:   Thu, 14 Jan 2021 11:53:39 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, jrnieder@gmail.com, peff@peff.net
+Subject: Re: [PATCH v2 16/20] builtin/gc.c: guess the size of the revindex
+Message-ID: <YAB3E6lgOQdNgGOr@nand.local>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <cover.1610576604.git.me@ttaylorr.com>
+ <a500311e33a2f7e11a539dd0718ed946f4bd6bc8.1610576604.git.me@ttaylorr.com>
+ <xmqqwnwgyqn6.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwnwgyqn6.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgUGhpbGlwcGUsIA0KDQpJIGhhdmUgbm8gcHJlZmVyZW5jZXMgd2hldGhlciB0aGUgY2hlY2tv
-dXQgc2hvdWxkIGZhaWwgaWYgYW55IGZpbGVzIGFyZSBtb2RpZmllZCBpbiB0aGUgc3VibW9kdWxl
-DQpvciBhbGxvdyB0aGUgY2hlY2tvdXQgdG8gc3VjY2VlZCBpZiB0aGUgbW9kaWZpY2F0aW9uIGNh
-biBiZSBjYXJyaWVkIG91dC4gDQoNCkkgd3JvdGUgYSBzdGVwIGJ5IHN0ZXAgcHJvY2VkdXJlIHRv
-IHJlcHJvZHVjZSB0aGUgYnVnLg0KDQpTdGVwIHRvIHJlcHJvZHVjZSBteSBpc3N1ZQ0KDQpnaXQg
-aW5pdCAgDQpnaXQgY2hlY2tvdXQgLWIgbWFzdGVyICANCmdpdCBzdWJtb2R1bGUgYWRkIGh0dHBz
-Oi8vZ2l0aHViLmNvbS9rYmVybmFyZC1wZXJzby9yZWN1cnNlLWJ1Zy5naXQgIA0KZ2l0IHN1Ym1v
-ZHVsZSBpbml0ICANCmdpdCBhZGQgLiAgDQpnaXQgY29tbWl0IC1tICJBZGQgc3VibW9kdWxlIiAg
-DQpjZCByZWN1cnNlLWJ1Zy8gIA0KZWNobyAiZmlsZTEgbW9kaWZpZWQiID4+IGZpbGUxLnR4dCAg
-DQpnaXQgYWRkIC4gIA0KZ2l0IGNvbW1pdCAtbSAiZmlsZTEudHh0IG1vZGlmaWVkIiAgDQpjZCAu
-LiAgDQpnaXQgYWRkIC4gIA0KZ2l0IGNvbW1pdCAtbSAiTW9kaWZpZWQgZmlsZTEgaW4gc3VibW9k
-dWxlIiAgDQpjZCByZWN1cnNlLWJ1Zy8gIA0KZWNobyAiZmlsZTIgbW9kaWZpZWQiID4+IGZpbGUy
-LnR4dCAgDQpjZCAuLiAgDQpnaXQgc3RhdHVzICANCmdpdCBjaGVja291dCAtLXJlY3Vyc2Utc3Vi
-bW9kdWxlcyBIRUFEXiAgDQpnaXQgc3RhdHVzICANCg0KVGhlIHVuY29tbWl0dGVkIG1vZGlmaWNh
-dGlvbnMgbWFkZSB3aXRoICJlY2hvICJmaWxlMiBtb2RpZmllZCIgPj4gZmlsZTIudHh0IiBhcmUg
-IA0KZGlzY2FyZGVkIGJ5IGdpdCBjaGVja291dCAtLXJlY3Vyc2Utc3VibW9kdWxlcyBIRUFEXiAg
-DQoNClRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIG1ha2luZyBnaXQgYSB3b25kZXJmdWwgdG9vbCB0
-byB1c2UuDQoNCkNoZWVycywgDQoNCktldmluDQoNCi0tLS0tTWVzc2FnZSBkJ29yaWdpbmUtLS0t
-LQ0KRGXCoDogUGhpbGlwcGUgQmxhaW4gPGxldnJhaXBoaWxpcHBlYmxhaW5AZ21haWwuY29tPiAN
-CkVudm95w6nCoDogamV1ZGksIDE0IGphbnZpZXIgMjAyMSAxNDo1NQ0Kw4DCoDogS2V2aW4gQmVy
-bmFyZCA8a2V2aW4uYmVybmFyZEBmaXZlY28uY2g+OyBnaXRAdmdlci5rZXJuZWwub3JnDQpPYmpl
-dMKgOiBSZTogYnVnOiBjaGVja291dCAtLXJlY3Vyc2Utc3VibW9kdWxlcyBkaXNjYXJkIHVuY29t
-bWl0ZWQgY2hhbmdlcyBpbiBzdWJtb2R1bGUNCg0KSGkgS2V2aW4sDQoNCkxlIDIwMjEtMDEtMTQg
-w6AgMDM6MzUsIEtldmluIEJlcm5hcmQgYSDDqWNyaXTCoDoNCj4gVGhhbmsgeW91IGZvciBmaWxs
-aW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KPiBQbGVhc2UgYW5zd2VyIHRoZSBmb2xsb3dpbmcg
-cXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3VlLg0KPiANCj4gV2hhdCBk
-aWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVwcm9kdWNlIHlv
-dXIgDQo+IGlzc3VlKSBNYWtlIGEgZ2l0IHJlcG9zaXRvcnkgd2l0aCBhIHN1Ym1vZHVsZSBpbiBp
-dC4NCj4gTWFrZSB0d28gZGlmZmVyZW50IGNvbW1pdHMgaW4gdGhlIG1haW4gcmVwb3NpdG9yeSB3
-aXRoIHR3byBkaWZmZXJlbnQgDQo+IHZlcnNpb25zIG9mIHRoZSBzdWJtb2R1bGUsIG9uZSBvZiB0
-aGVtIGlzIHRoZSBoZWFkIG9mIHRoZSBicmFuY2guDQo+IENoZWNrb3V0IHRoZSBoZWFkIG9mIHRo
-ZSBicmFuY2ggaW4gdGhlIG1haW4gcmVwb3NpdG9yeSwgYW5kIG1ha2UgYSBzdWJtb2R1bGUgdXBk
-YXRlLg0KPiBNYWtlIGEgbW9kaWZpY2F0aW9uLCBkbyBub3QgY29tbWl0IGl0LCBpbiBhIHN1Ym1v
-ZHVsZSBmaWxlIHRoYXQgd2lsbCANCj4gbm90IHJlc3VsdCBpbiBhICJlcnJvcjogWW91ciBsb2Nh
-bCBjaGFuZ2VzIHRvIHRoZSBmb2xsb3dpbmcgZmlsZXMgDQo+IHdvdWxkIGJlIG92ZXJ3cml0dGVu
-IGJ5IGNoZWNrb3V0IiB3aGVuIHRoZSBvdGhlciB2ZXJzaW9uIG9mIHRoZSBsaWJyYXJ5IHdpbGwg
-YmUgY2hlY2tlZCBvdXQuDQoNCkkgYXNzdW1lIHRoYXQgeW91IGNvbmZpcm1lZCB0aGF0IGJ5IHJ1
-bm5pbmcgJ2dpdCBjaGVja291dCA8b3RoZXIgdmVyc2lvbj4nDQppbiB0aGUgc3VibW9kdWxlLCBy
-aWdodCA/DQoNCj4gR28gYmFjayB0byB0aGUgbWFpbiByZXBvc2l0b3J5IGFuZCBtYWtlIGEgY2hl
-Y2tvdXQgb2YgdGhlIG90aGVyIGNvbW1pdCANCj4gd2l0aCB0aGUgc3dpdGNoIC0tcmVjdXJzZS1z
-dWJtb2R1bGVzLg0KPiANCj4gV2hhdCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3Rl
-ZCBiZWhhdmlvcikgVGhlIGNoZWNrb3V0IHdpdGggDQo+IHRoZSBzd2l0Y2ggLS1yZWN1cnNlLXN1
-Ym1vZHVsZXMgc2hvdWxkIGZhaWwgd2hlbiB0aGVyZSBhcmUgdW5jb21taXR0ZWQgDQo+IGNoYW5n
-ZXMgaW4gdGhlIHN1Ym1vZHVsZS4NCj4gDQo+IFdoYXQgaGFwcGVuZWQgaW5zdGVhZD8gKEFjdHVh
-bCBiZWhhdmlvcikgVW5jb21taXR0ZWQgY2hhbmdlcyBpbiB0aGUgDQo+IHN1Ym1vZHVsZSBhcmUg
-ZGlzY2FyZGVkIHdpdGhvdXQgYW55IG5vdGlmaWNhdGlvbnMuDQo+IA0KPiBXaGF0J3MgZGlmZmVy
-ZW50IGJldHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdoYXQgYWN0dWFsbHkgaGFwcGVuZWQ/
-DQo+IExvc3Mgb2YgdGhlIHVuY29tbWl0dGVkIGNoYW5nZXMgaW4gdGhlIHN1Ym1vZHVsZS4NCj4g
-DQo+IEFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOg0KPiBJIHN0YXkgYXQgeW91ciBkaXNw
-b3NhbCBpZiB5b3UgbmVlZCBtb3JlIGluZm9ybWF0aW9uLg0KDQoNClRoYW5rcyBmb3IgdGhlIHJl
-cG9ydC4gVGhpcyBpcyBhIGtub3duIHByb2JsZW0gdGhhdCB3YXMgcmVwb3J0ZWQgaW4gWzFdIGFu
-ZCBbMl0uDQpJJ20gY3VycmVudGx5IHdvcmtpbmcgb24gZml4aW5nIHRoYXQgYnVnLiBJJ20gbm90
-IHF1aXRlIGZpbmlzaGVkIHlldCBhcyBJIHdhbnQgdG8gcG9saXNoIHRoZSBlbmQtdXNlciBleHBl
-cmllbmNlIGEgYml0LCBidXQgaWYgeW91IHdhbnQgdG8gY29tcGlsZSBmcm9tIHNvdXJjZSwgdGhl
-IGhlYXJ0IG9mIHRoZSBmaXggaXMgdGhpcyBjaGFuZ2U6DQoNCmRpZmYgLS1naXQgYS91bnBhY2st
-dHJlZXMuYyBiL3VucGFjay10cmVlcy5jIGluZGV4IDMyMzI4MGRkNDguLmEzZTNkOThkZTEgMTAw
-NjQ0DQotLS0gYS91bnBhY2stdHJlZXMuYw0KKysrIGIvdW5wYWNrLXRyZWVzLmMNCkBAIC0xODcy
-LDcgKzE4NzIsNyBAQCBzdGF0aWMgaW50IHZlcmlmeV91cHRvZGF0ZV8xKGNvbnN0IHN0cnVjdCBj
-YWNoZV9lbnRyeSAqY2UsDQogIA0KICAJCWlmIChzdWJtb2R1bGVfZnJvbV9jZShjZSkpIHsNCiAg
-CQkJaW50IHIgPSBjaGVja19zdWJtb2R1bGVfbW92ZV9oZWFkKGNlLA0KLQkJCQkiSEVBRCIsIG9p
-ZF90b19oZXgoJmNlLT5vaWQpLCBvKTsNCisJCQkJIkhFQUQiLCBlbXB0eV90cmVlX29pZF9oZXgo
-KSwgbyk7DQogIAkJCWlmIChyKQ0KICAJCQkJcmV0dXJuIGFkZF9yZWplY3RlZF9wYXRoKG8sIGVy
-cm9yX3R5cGUsIGNlLT5uYW1lKTsNCiAgCQkJcmV0dXJuIDA7DQoNCg0KVGhpcyBzaG91bGQgZGlz
-YWxsb3cgc3dpdGNoaW5nIGJyYW5jaGVzIHdpdGggJy0tcmVjdXJzZS1zdWJtb2R1bGVzJyBpZiAq
-YW55KiBmaWxlIGluIHRoZSBzdWJtb2R1bGUgaXMgbW9kaWZpZWQuDQoNCkhvd2V2ZXIsIEknbSBh
-Y3R1YWxseSB0aGlua2luZyB0aGF0IG1heWJlIGl0IHdvdWxkIGJlIGJldHRlciB0byBsZXQgdGhl
-IGNoZWNrb3V0IHN1Y2NlZWQgaW4gdGhlIGV4YWN0IGNhc2UgeW91IG1lbnRpb24sIGkuZS4gd2hl
-biB0aGUgbW9kaWZpZWQgZmlsZXMgaW4gdGhlIHN1Ym1vZHVsZXMgYXJlIGF0IHRoZSBzYW1lIHZl
-cnNpb24gaW4gYm90aCBzdWJtb2R1bGUgY29tbWl0cyAoaS5lLiBnaXQgY2hlY2tvdXQgPG90aGVy
-IHZlcnNpb24+IGluIHRoZSBzdWJtb2R1bGUgc3VjY2VlZHMgYW5kIHRoZSBtb2RpZmllZCBmaWxl
-cyBzdGF5IG1vZGlmaWVkKSwgYW5kIGFsc28gY2Fycnkgb3ZlciB0aGUgbW9kaWZpZWQgZmlsZXMg
-aW4gdGhlIHN1Ym1vZHVsZS4gVGhpcyB3b3VsZCBtaW1pYyB0aGUgJ2dpdCBjaGVja291dCcgZXhw
-ZXJpZW5jZSB3aXRob3V0IHN1Ym1vZHVsZXMsIGkuZS4gbW9kaWZpZWQgZmlsZXMgdGhhdCBkbyBu
-b3QgY29uZmxpY3QgYXJlIGNhcnJpZWQgb3ZlciB0byB0aGUgYnJhbmNoIHlvdSBhcmUgY2hlY2tp
-bmcgb3V0Lg0KDQpJZiB5b3UgY2FuIHdyaXRlIGEgY29tcGxldGUgcmVwcm9kdWNlciAoY29tcGxl
-dGUgc3RlcHMgc3RhcnRpbmcgd2l0aCAnZ2l0IGluaXQnLA0KZXRjLikgSSB3aWxsIG1ha2Ugc3Vy
-ZSB0aGF0IHlvdXIgc2NlbmFyaW8gaXMgYWRlcXVhdGVseSB0ZXN0ZWQgaW4gbXkgcGF0Y2ggc2Vy
-aWVzLg0KDQoNCkNoZWVycywNCg0KUGhpbGlwcGUuDQoNCg0KWzFdIGh0dHBzOi8vbG9yZS5rZXJu
-ZWwub3JnL2dpdC9DQUhzRzJWVDRZQl9uZjhQckVtckh3Sy1pWS1BUW8wVkRjdlhHVnNmOGNFWVh3
-czRuaWdAbWFpbC5nbWFpbC5jb20vDQpbMl0gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvZ2l0LzIw
-MjAwNTI1MDk0MDE5LjIycGFkYnp1azd1a3I1dXZAb3ZlcmRyaXZlLnRyYXR0Lm5ldC8NCg==
+On Wed, Jan 13, 2021 at 10:33:01PM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > 'estimate_repack_memory()' takes into account the amount of memory
+> > required to load the reverse index in memory by multiplying the assumed
+> > number of objects by the size of the 'revindex_entry' struct.
+> >
+> > Prepare for hiding the definition of 'struct revindex_entry' by removing
+> > a 'sizeof()' of that type from outside of pack-revindex.c. Instead,
+> > guess that one off_t and one uint32_t are required per object. Strictly
+> > speaking, this is a worse guess than asking for 'sizeof(struct
+> > revindex_entry)' directly, since the true size of this struct is 16
+> > bytes with padding on the end of the struct in order to align the offset
+> > field.
+>
+> Meaning that we under-estimate by 25%?
+
+In this area, yes. I'm skeptical that this estimate is all that
+important, since it doesn't seem to take into account the memory
+required to select delta/base candidates [1].
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/X%2F1roycRbYPjnI3l@coredump.intra.peff.net/
