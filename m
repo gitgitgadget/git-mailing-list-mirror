@@ -2,74 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5989DC433E6
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 07:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D060C433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 07:41:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C836239CF
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 07:27:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 483FC238EC
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 07:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726743AbhANH1o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 02:27:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64186 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726182AbhANH1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 02:27:44 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89E58AA9E3;
-        Thu, 14 Jan 2021 02:27:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qIae8oEFjt0AjUPd/7H/ZKR1LHk=; b=bbh6oS
-        d+u47vXfZnynyy1zNfPiqxpuANlf0WHE+fDTH0OE3DyBltMU8sZcwu0RgA02Gq5u
-        NZPipG1/Kcim73BBxmJmhcyEyHqzJsVxclynnSwEGa8NYabSCfyoD+KjyaPcUIVS
-        AfHiOKr6jKF+hq356zOaRtL8UfRAzsmv4BJOw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tozZPGi7eaGKy1kMYnNRXAyGg+jpj5YZ
-        kLfyiv1o7L/CxOgzVLFsAAx84wHnO9EN8+FiifMG7D50SQojOeLdaUyc7Qs4KZUU
-        dk/i7+pLbV0U/r/biediEAbvHOSNicqd40otCj+ToBy0twjz8/4yX8depKSzcjlX
-        LPWt/zc6Mik=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22688AA9E1;
-        Thu, 14 Jan 2021 02:27:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71633AA9DF;
-        Thu, 14 Jan 2021 02:27:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, jrnieder@gmail.com,
-        peff@peff.net
-Subject: Re: [PATCH v2 1/8] packfile: prepare for the existence of '*.rev'
- files
-References: <cover.1610129989.git.me@ttaylorr.com>
-        <cover.1610576805.git.me@ttaylorr.com>
-        <6742c15c84bafbcc1c06e2633de51dcda63e3314.1610576805.git.me@ttaylorr.com>
-Date:   Wed, 13 Jan 2021 23:26:59 -0800
-In-Reply-To: <6742c15c84bafbcc1c06e2633de51dcda63e3314.1610576805.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Wed, 13 Jan 2021 17:28:06 -0500")
-Message-ID: <xmqqsg74x9ks.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1727039AbhANHlT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 02:41:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33498 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbhANHlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 02:41:19 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3763C061575
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 23:40:38 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id g1so4043711edu.4
+        for <git@vger.kernel.org>; Wed, 13 Jan 2021 23:40:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=i4cd9zv2llPSZJMFu3Cf/Mwi8kB3R2HtK8+fIDRUQI0=;
+        b=of+a/p9lLBufAtNrCibZSkZ3QDgWLLxZJcbBSdOGmFn158MFyELaEF66vS3au6F5pO
+         vPbfUvRpytLUlRL+BOcBRF9AP9P3ecPZYYEfpzvENdvtAhhxjIjim1w0tmnWLpfE8Td9
+         cHikkmScwx8FmI8Ipo0A5maRR5dETZGPK6jp4jIiHyOncm7GlJ9dnzOeUNQSxceIK6jK
+         1jbyWLRrj+e5H4fm9yOphHuY3/t1NdIeipnylOI5ISo2nQXuQ1rmTi1GrWz+hJ8liUq8
+         8QtBYTmQv3kMUReOzERJfNtnkbek3zxwdznqjyiXgaLD2okTCdLGfiMyydOmwL4bQoUu
+         mqbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i4cd9zv2llPSZJMFu3Cf/Mwi8kB3R2HtK8+fIDRUQI0=;
+        b=Pj1ipnxqDgl+ZG+t0g26V9TYfABzo6YqaPCrIa1qx6TnRFhH7bBBeoEvdtE8QV7DpB
+         TU7E6PEBFd7BCU/Gi/FiHmJUsGu2vIfmA4rPXa2NV5HT//NOMGoA5LCBG5oy7rRYsi1Y
+         nnZs8R+JsC+4ZdTdW3XmOKFPRWdeBBsVQ307MXHilHLh2XZLiw8NiP0wEZAsiTk9DVnn
+         NBo8Hws1cKxSgSDJ96lX91wRHvENOfWdCA2qIMqzv+7M5vWkl7+lA3t0QS817rBfjlCZ
+         nq9lewiOttGpa52nLZiVIlnYbdPq3YDwEuXEPPihyeZwqUfJKa86TK+BUKfjq7VYwwgr
+         pssw==
+X-Gm-Message-State: AOAM532+CPOsgtK8ao8bJnnhiEVL6lBMNAs/VDG/wCKo1o57c7GQq7fm
+        EojBQNwalq0Ir8cC01chQzoUH6cyu48bglSnEU8=
+X-Google-Smtp-Source: ABdhPJy+QcViKZEI2FqsSuBPgj9IhOLP2dhEpTlztb3ZKEigdiS5kp2WCX/7w517jsl/QuaoIXfT736i70zmbtDQ9WE=
+X-Received: by 2002:a50:8744:: with SMTP id 4mr4710315edv.362.1610610037323;
+ Wed, 13 Jan 2021 23:40:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E4195094-5639-11EB-BA6F-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210108092345.2178-6-charvi077@gmail.com>
+ <X/9GrVjBmnJUZcGn@nand.local> <xmqqv9c0wp2i.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqv9c0wp2i.fsf@gitster.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 14 Jan 2021 08:40:25 +0100
+Message-ID: <CAP8UFD3yhh+UO+pQ9Zr5Rwxy8ma1HENq5dNuani3qyJBYiBKkg@mail.gmail.com>
+Subject: Re: [RFC PATCH 5/9] sequencer: use const variable for commit message comments
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        git <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Jan 13, 2021 at 9:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Taylor Blau <me@ttaylorr.com> writes:
 
-> Specify the format of the on-disk reverse index 'pack-*.rev' file, as
-> well as prepare the code for the existence of such files.
+[...]
 
-We've changed the pack .idx file format once as the file format is
-versioned.  I wonder if you considered placing the reverse index
-information in the same file, with version bump, in the .idx?
+> > The other nitpick
+> > is that its typical to see 'char *foo' instead of 'char foo[]'.
+> >
+> > So, I'd write these as:
+> >
+> >     static const char *first_commit_msg_str = N_("This is the 1st commit message:");
+> >     static const char *nth_commit_msg_fmt = N_("This is the commit message #%d:");
+> >     static const char *skip_nth_commit_msg_fmt = N_("The commit message #%d will be skipped:");
+> >     static const char *combined_commit_msg_str = N_("This is a combination of %d commits.");
+>
+> I actually am OK with []; it saves sizeof(char*) bytes from each of
+> the variable, doesn't it?
+
+Yeah, that's my understanding too.
