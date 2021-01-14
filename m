@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B4FC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 581A3C433E9
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:36:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43F7123AA7
+	by mail.kernel.org (Postfix) with ESMTP id 309B223AAA
 	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 23:36:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731029AbhANXgK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 18:36:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41782 "EHLO
+        id S1731024AbhANXgI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 18:36:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730570AbhANXgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 18:36:09 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E4CC0613D3
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:29 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id q18so7518702wrn.1
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:29 -0800 (PST)
+        with ESMTP id S1730570AbhANXgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 18:36:08 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98927C0613CF
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:27 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id q18so7518671wrn.1
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 15:35:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jNBZdogUuxiWN0YVkrO+rrGRJK3Y4RWQuE7iZOORy0c=;
-        b=r17N/o7evu5syOPvXKmLWnxMYTEotrpLnaoUvBNYdoUkzenYL57Z3O9UQ+fH3EiLPq
-         A8aydbBTVHflMvFioqGd9im0/g3A0kvl+ox1SJJH/vVxCOHJlOr6imnRqvPyd9DKavrX
-         7T6T/YZPz/4R97H5xKS3Jy64k8UacRBB39DXFO7Hc7nwXAIYXXV+nsyaZvxfc9F47lvC
-         GdCdvp2QouCm6MroGiXfHbEmi3nOYYyS3htzBYBN4MqoG13Ss4TBiEOvlmbnnlxpKo0n
-         jyiwDmxM9mTuUvsfsWw//D+cvvAgVofp7QSKsVKa5akeL3MPAd6FDt6ZDCmJ5eHQ1UG+
-         qJUg==
+        bh=VeWxTXBVSg3U8YK5gv2URbzW5x3EI6oGreNp5GPxAQk=;
+        b=tjNegOT7F3+bLmqnrygLu8kARCeqiDq51uFgGhxovp0kV68+4UW8Ztu4rTDHVgqLZb
+         op9dp7KwreWZuFYTVpgwhG0NIUFAa/XZNMRabiJcfBw/D0XVEGY8TyetkWyz4fvRETPj
+         UBcQPGP8BPh5S7BJ0Iygk1pEXh+MvPJpteKpxPK9t9bgxvsEqi0XHZB2jo4CIuNFp6XE
+         JhcXyjS2CrkX2HG/ff5mbEkboKAVHHgZzreZEpAA6BJH+o6EBT2ZPzgVsR8epKk70bVN
+         ATOiBWqI4I60WjAihoQbCoJnUw6jY14iRdZCHFz9Ruk10HEdvXt1KnBVBXrgo90gR2J3
+         5Cqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jNBZdogUuxiWN0YVkrO+rrGRJK3Y4RWQuE7iZOORy0c=;
-        b=jq3pdfCZhTC2ZuS164vWFV3YJ1ThW1OjVws16fWHZXKsifpw8zGokjem1sCM/No8QI
-         kzYuvLALjAG4EB00fAnzUFLI148giVHXq+PGa9QgOtNEEi59bqlif4QML4eXGUWVQY8r
-         SSS47RRW/IIYDremxpi0W8VS/xxmsndDgooY9pwoLXhpI2Qc/Mt0T7M2HJa4VDvfMmZh
-         tH7J5I4saoVy1fMRKUJV1WUdHmM7tKkugJ6hHE/8vU6P5UtLhQ45UAYK89SVAYobatH+
-         +rbmcO3FhXmNmaG9QvHyHcavY/RNOBH4dztuIPqQTNxkwZhDR1mQ6w5LYLX4yc84MYsW
-         JaLA==
-X-Gm-Message-State: AOAM533ExlO4TXbyI+ZbXKILAU/8hhoZdlwuXteCzBKVifPmCs0A9q9R
-        m0YGiM0UXiEw4D73TcJs1nEHq5MXARbCTg==
-X-Google-Smtp-Source: ABdhPJxUmQFKb69QaLi7VrmiTpmpmxGJn06H0v2lpkHN6L7AK0rY8o9a0MYqdXDNSQTlILu+JllSdg==
-X-Received: by 2002:adf:e941:: with SMTP id m1mr4991857wrn.240.1610667326986;
-        Thu, 14 Jan 2021 15:35:26 -0800 (PST)
+        bh=VeWxTXBVSg3U8YK5gv2URbzW5x3EI6oGreNp5GPxAQk=;
+        b=aol8rMTBTQjc3FnequH2HYR3DU4itbS5q6rr8vJSlsz+MYIiMmUKieZN9oJCaklWaP
+         NvI+gIACKDBWMfCQEzcCCbQf1HlTaaZGbPziZ/0xDkAZFgGiQTxwNc/4H0DpzCA2J3Tf
+         BCxLT1ACQSWqNsCjcnFTYol3EDSkmUcaQsA5iPx8CS71Pdi8QcHsN7mOkvK2NUWH99OT
+         ZWy++NuFqFN1kY81Bkm3VNnMaI4gKXxEALu18/TclS+/kWYpFLi4A+fP3QRgPqZXgvHg
+         wdH2n77MY05SLZ+5qoHW5Dj1HT0Dtg0HOpt6gosu5l3fn8vv0BxtCAgXIFRaUkrJ+R0W
+         oVAw==
+X-Gm-Message-State: AOAM530AbUauCqZsWyX1IuCCwoy5Pm8+OdrY+2P8gvov4AXZGFKsqTqE
+        c1B5hNzcCivjAx1c/VRJs46nhr1kkNUPKQ==
+X-Google-Smtp-Source: ABdhPJwldE97JPiHKyD07TJ84VGGdA6Es1Yf+wWWfRNmPiTnprUj1wFvNtovOHdheM+9WEfeKZ2dqg==
+X-Received: by 2002:a5d:6682:: with SMTP id l2mr10220326wru.213.1610667325693;
+        Thu, 14 Jan 2021 15:35:25 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d13sm12352118wrx.93.2021.01.14.15.35.25
+        by smtp.gmail.com with ESMTPSA id d13sm12352118wrx.93.2021.01.14.15.35.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 15:35:26 -0800 (PST)
+        Thu, 14 Jan 2021 15:35:24 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/6] tests: use "test_might_fail ok=sigpipe grep" when appropriate
-Date:   Fri, 15 Jan 2021 00:35:13 +0100
-Message-Id: <20210114233515.31298-5-avarab@gmail.com>
+Subject: [PATCH 3/6] test_lib: allow test_{must,might}_fail to accept non-git on "sigpipe"
+Date:   Fri, 15 Jan 2021 00:35:12 +0100
+Message-Id: <20210114233515.31298-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20191115040909.GA21654@sigill.intra.peff.net>
 References: <20191115040909.GA21654@sigill.intra.peff.net>
@@ -77,70 +77,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change tests where the "grep" might exit with non-zero to use our new
-"test_might_fail ok=sigpipe" wrapper. A subsequent commit will show
-how useful this is in combination with "set -o pipefail".
+As the documentation here notes you usually do not want to do:
+
+    test_might_fail grep ...
+
+But instead:
+
+    ! grep ...
+
+However, as a future commit will show it's handy to be able to do:
+
+    some | test_might_fail ok=sigpipe grep | commands | here
+
+To allow "grep" to fail in the middle of a pipe, if we're in a mode
+such as a "set -o pipefail" that knows how to accept check intra-pipe
+failures.
+
+To test this in t0000-basic.sh we don't actually need to have
+test_{might,must}_fail in the middle of a pipe, it'll just that it
+accepts e.g. "grep" when we provide ok=sigpipe.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0090-cache-tree.sh              | 2 +-
- t/t5703-upload-pack-ref-in-want.sh | 2 +-
- t/t9151-svn-mergeinfo.sh           | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ t/t0000-basic.sh        | 13 +++++++++++++
+ t/test-lib-functions.sh | 12 ++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 5a633690bf..2e69ab138b 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -22,7 +22,7 @@ generate_expected_cache_tree_rec () {
- 	# ls-files might have foo/bar, foo/bar/baz, and foo/bar/quux
- 	# We want to count only foo because it's the only direct child
- 	git ls-files >files &&
--	subtrees=$(grep / files|cut -d / -f 1|uniq) &&
-+	subtrees=$(test_might_fail ok=sigpipe grep / files |cut -d / -f 1|uniq) &&
- 	subtree_count=$(echo "$subtrees"|awk -v c=0 '$1 != "" {++c} END {print c}') &&
- 	entries=$(wc -l <files) &&
- 	printf "SHA $dir (%d entries, %d subtrees)\n" "$entries" "$subtree_count" &&
-diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-index eab966985b..44238b7409 100755
---- a/t/t5703-upload-pack-ref-in-want.sh
-+++ b/t/t5703-upload-pack-ref-in-want.sh
-@@ -16,7 +16,7 @@ get_actual_commits () {
- 	test-tool pkt-line unpack-sideband <out >o.pack &&
- 	git index-pack o.pack &&
- 	git verify-pack -v o.idx >objs &&
--	grep commit objs | cut -d" " -f1 | sort >actual_commits
-+	test_might_fail ok=sigpipe grep commit objs | cut -d" " -f1 | sort >actual_commits
- }
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index fd6cb8d5d3..930cf9d1b7 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -1337,4 +1337,17 @@ test_expect_success 'test_might_fail supports an ok=* option like test_must_fail
+ 	test_might_fail ok=success git version
+ '
  
- check_output () {
-diff --git a/t/t9151-svn-mergeinfo.sh b/t/t9151-svn-mergeinfo.sh
-index 4f6c06ecb2..dc8491c14a 100755
---- a/t/t9151-svn-mergeinfo.sh
-+++ b/t/t9151-svn-mergeinfo.sh
-@@ -18,19 +18,19 @@ test_expect_success 'load svn dump' "
++test_expect_success 'test_{must,might}_fail accept non-git on "sigpipe"' '
++	! test_must_fail grep blob <badobjects 2>err &&
++	grep "only.*git.*is allowed" err &&
++	! test_might_fail grep blob <badobjects &&
++	grep "only.*git.*is allowed" err &&
++
++	! test_must_fail ok=sigpipe grep . badobjects 2>err &&
++	test_must_be_empty err &&
++	test_might_fail ok=sigpipe grep . badobjects >out 2>err &&
++	test_must_be_empty err &&
++	test_cmp badobjects out
++'
++
+ test_done
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index e01761f7ba..f10bd6170a 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -828,6 +828,7 @@ test_must_fail_acceptable () {
+ 		return 0
+ 		;;
+ 	*)
++		list_contains "$_test_ok" sigpipe && return 0
+ 		return 1
+ 		;;
+ 	esac
+@@ -863,6 +864,17 @@ test_must_fail_acceptable () {
+ # Instead use '!':
+ #
+ #    ! grep pattern output
++#
++# An exception to this is if ok=* contains "sigpipe". Then you might
++# want to use this in a test to ignore e.g. "grep" failing due to not
++# finding anything in a multi-pipe command:
++#
++#    test_must_fail ok=success,sigpipe grep [...] | [...]
++#
++# Or, more succinctly with the test_might_fail wrapper function:
++#
++#    test_might_fail ok=sigpipe grep [...] | [...]
++#
  
- test_expect_success 'all svn merges became git merge commits' '
- 	unmarked=$(git rev-list --parents --all --grep=Merge |
--		grep -v " .* " | cut -f1 -d" ") &&
-+		test_might_fail ok=sigpipe grep -v " .* " | cut -f1 -d" ") &&
- 	[ -z "$unmarked" ]
- 	'
- 
- test_expect_success 'cherry picks did not become git merge commits' '
- 	bad_cherries=$(git rev-list --parents --all --grep=Cherry |
--		grep " .* " | cut -f1 -d" ") &&
-+		test_might_fail ok=sigpipe grep grep " .* " | cut -f1 -d" ") &&
- 	[ -z "$bad_cherries" ]
- 	'
- 
- test_expect_success 'svn non-merge merge commits did not become git merge commits' '
- 	bad_non_merges=$(git rev-list --parents --all --grep=non-merge |
--		grep " .* " | cut -f1 -d" ") &&
-+		test_might_fail ok=sigpipe grep grep " .* " | cut -f1 -d" ") &&
- 	[ -z "$bad_non_merges" ]
- 	'
- 
+ test_must_fail () {
+ 	case "$1" in
 -- 
 2.29.2.222.g5d2a92d10f8
 
