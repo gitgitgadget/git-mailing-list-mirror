@@ -2,103 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62F46C433E0
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB1FC433E0
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:11:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C6A323117
-	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:01:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 466542310F
+	for <git@archiver.kernel.org>; Thu, 14 Jan 2021 20:11:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730403AbhANUBT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 15:01:19 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56002 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726459AbhANUBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 15:01:18 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B5EF10F5E7;
-        Thu, 14 Jan 2021 15:00:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3uagkfNm8EMk
-        iYulRAJsMliQ378=; b=WRex1HwfMWHBrJH8Om7eUdA8OWmCSXGfXq/zhivGq+eS
-        HJiBwa6SWDcs1OwGePMD+2meyizAWD6CEbvZVxspOWEIsBDr2Rcvo9iYKXg+9NGA
-        pr0oYdqumUuDjRblsFpwF6wa6jz0whvKKr9jMmuxo3N7gtw0BO4RimdhxvwMnDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TuRMQC
-        6Sr48bEOKgZ/S2ArCAQ2tnZYe1oN0XoGwbNFhdxcgrDBPSqpivPZdK5eFunpiyFR
-        QeRLLGg54IeQox9I62TNNPgR+xRMY67kdQ14m9UeuX3eZfqhYXC4Drtivb3zAQ0x
-        qmv94DqYoqy9G9XVl+eKp0lk7pSbCaWIiKGuU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E8CD210F5E6;
-        Thu, 14 Jan 2021 15:00:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EDD2810F5E1;
-        Thu, 14 Jan 2021 15:00:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 06/22] mailmap tests: modernize syntax & test idioms
-References: <20210105130359.21139-1-avarab@gmail.com>
-        <20210112201806.13284-7-avarab@gmail.com>
-        <X//4ErmvlK+lIju9@generichostname>
-Date:   Thu, 14 Jan 2021 12:00:32 -0800
-In-Reply-To: <X//4ErmvlK+lIju9@generichostname> (Denton Liu's message of "Wed,
-        13 Jan 2021 23:51:46 -0800")
-Message-ID: <xmqqft33xp9b.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1727553AbhANULv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 15:11:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56426 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725869AbhANULv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 15:11:51 -0500
+Received: (qmail 17759 invoked by uid 109); 14 Jan 2021 20:11:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Jan 2021 20:11:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17718 invoked by uid 111); 14 Jan 2021 20:11:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Jan 2021 15:11:11 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 14 Jan 2021 15:11:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        dstolee@microsoft.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 15/20] for_each_object_in_pack(): convert to new
+ revindex API
+Message-ID: <YAClXle+utN/VnVZ@coredump.intra.peff.net>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <cover.1610576604.git.me@ttaylorr.com>
+ <e7574763513294b71071b032d5cd3aa0976969dd.1610576604.git.me@ttaylorr.com>
+ <xmqq8s8wyq5i.fsf@gitster.c.googlers.com>
+ <YACcoNY/SiEbBSgh@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2971950C-56A3-11EB-91FC-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YACcoNY/SiEbBSgh@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Thu, Jan 14, 2021 at 02:33:53PM -0500, Jeff King wrote:
 
-> On Tue, Jan 12, 2021 at 09:17:50PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->> @@ -480,7 +545,7 @@ test_expect_success 'log.mailmap=3Dfalse disables =
-mailmap' '
->>  	Author: nick1 <bugs@company.xx>
->>  	Author: $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>
->>  	EOF
->> -	git -c log.mailmap=3DFalse log | grep Author >actual &&
->> +	git -c log.mailmap=3Dfalse log | grep Author >actual &&
->
-> While you're doing test cleanup, here's another suggestion: we should
-> break all these pipes where git is in the upstream of a pipe. The retur=
-n
-> code of a pipe comes from the last thing run which means if git outputs
-> correctly but then somehow fails after, we won't detect the failure.
->
-> In general, I've stopped my crusade against these because it seems like
-> it's more noise than it's worth in most cases but in this case, since
-> we're exercising mailmap codepaths that aren't tested in other test
-> cases, this pipe could plausibly hide a failure that isn't seen
-> anywhere else.
+> So "pos" in this case is not wrong. But I agree that it could stand to
+> be more clear. Saying "nth" does not help things IMHO (there is an "nth"
+> pack position, as well).
+> 
+> But maybe this makes it more clear (or possibly just the name change
+> without the comment):
 
-Yeah, I agree with your assessment that it does make sense to make
-sure this "log" does not crash silently.
+Here it is again, but with a signoff and commit message, and done on top
+of your series (so if we agree this is a good resolution, it can just be
+picked up on top, but I am also happy for it to be squashed into patch
+15).
 
-I find it unlikely for "log" to crash while giving an expected
-Author line to its output stream, though.
+-- >8 --
+Subject: [PATCH] for_each_object_in_pack(): clarify pack vs index ordering
 
-Can you make your suggestion into a follow-up patch to be applied on
-top of the series?
+We may return objects in one of two orders: how they appear in the .idx
+(sorted by object id) or how they appear in the packfile itself. To
+further complicate matters, we have two ordering variables, "i" and
+"pos", and it is not clear to which order they apply.
 
-Thanks.
+Let's clarify this by using an unambiguous name where possible, and
+leaving a comment for the variable that does double-duty.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ packfile.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/packfile.c b/packfile.c
+index 7bb1750934..35d50e2c38 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2082,19 +2082,31 @@ int for_each_object_in_pack(struct packed_git *p,
+ 	}
+ 
+ 	for (i = 0; i < p->num_objects; i++) {
+-		uint32_t pos;
++		uint32_t index_pos;
+ 		struct object_id oid;
+ 
++		/*
++		 * We are iterating "i" from 0 up to num_objects, but its
++		 * meaning may be different, depending on the requested output
++		 * order:
++		 *
++		 *   - in object-name order, it is the same as the index order
++		 *     used by nth_packed_object_id(), so we can pass it
++		 *     directly
++		 *
++		 *   - in pack-order, it is pack position, which we must
++		 *     convert to an index position in order to get the oid.
++		 */
+ 		if (flags & FOR_EACH_OBJECT_PACK_ORDER)
+-			pos = pack_pos_to_index(p, i);
++			index_pos = pack_pos_to_index(p, i);
+ 		else
+-			pos = i;
++			index_pos = i;
+ 
+-		if (nth_packed_object_id(&oid, p, pos) < 0)
++		if (nth_packed_object_id(&oid, p, index_pos) < 0)
+ 			return error("unable to get sha1 of object %u in %s",
+-				     pos, p->pack_name);
++				     index_pos, p->pack_name);
+ 
+-		r = cb(&oid, p, pos, data);
++		r = cb(&oid, p, index_pos, data);
+ 		if (r)
+ 			break;
+ 	}
+-- 
+2.30.0.578.g0a9fb12091
+
