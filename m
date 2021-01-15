@@ -2,153 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78A18C433E6
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C172DC433DB
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FE3B23A04
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:37:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BE18239D4
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732215AbhAOCh3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 21:37:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52430 "EHLO
+        id S1730222AbhAOCjS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 21:39:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732214AbhAOCh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 21:37:27 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6CEC061757
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:36:47 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id w79so10441892qkb.5
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:36:47 -0800 (PST)
+        with ESMTP id S1725988AbhAOCjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 21:39:17 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E154C0613CF
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:38:37 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id v126so10417769qkd.11
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:38:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mYLAcKbHOfFeKmEZnnvwJyLSBbENW5Mb3RDWhG4KT/U=;
-        b=rpNcq5WNwJaMB40z9HpoCx7STI1gJ/EE5EVOp3NfhnpxRGjvBx0Ev7CoILLKbfXTLP
-         1xvf/cf7DtMlYmTxX7XxaIzRS5Oq++MFle1TBYYvNA02jChUaYfbllFPZx52mCbLr5Wt
-         eEIuajnTNPcMx6TjQ8AsMI5GXSTkuuGNxzbZkJ/N7KJPz5bsf2CGhv7U27qzEDAIJdv1
-         ybzl98kZCXoPw7MuV3v0asFROkL8PKl0aLp+Xw5O+MDFgV8UKi/XXXQzBsXHD0zk8Imi
-         mqGTAaxe04yKiRbMxVd3OS5El2HnTfrLUQdQYXnpCR1PBIPzPV2Rwa2UNqMf8k8eZ0uz
-         KFuA==
+        bh=bYQOlo1aGa9ukZ2Ztk0hXYRmlYsvOyq1Y9aMtKpvygg=;
+        b=RettPfUMNWr6xWX6YUrzQJT2gbXHO3qwlP8eZBbupcCXYg3NUY1VlMKve5GSijtGTO
+         8yvguMbxZo+kcRKsZTY8T+cUNnsMOyM/xkqbOC09RDs2rYCEYjvJ2hnLsZwQLnroZYK0
+         xDOQcVX/eZbpnFE6Y8pn+Ka9Yjo0dF0Ke2s9/EzpsylOUKitdVh4P6FUs71If6JzcK9v
+         1M0gISVMtGHVWXWRX4vSjrqtC++YP0yrmnArZHv8NMYf8W++UDxphQLDAcXn2IfS0tjw
+         8VyaI1bUjh/zFrwDEbfpQR6/6YmdAJe/E2r0mcmqJi460V4VUnYxGTbx8JszXgcXsr0W
+         WvfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=mYLAcKbHOfFeKmEZnnvwJyLSBbENW5Mb3RDWhG4KT/U=;
-        b=AdZgiUmEviFYvXLJelfBkv0sauFC5wrENFCbXi7fzNklmN1c++kzJRBj1QE/8CNnmj
-         wronW1sNv0m52xA5oUTdtRhFnDfuJu/UwwaExp5pDRTgOMLpwExxTAAbf+waHam5D7GJ
-         loaFm1wz9MWgQ1uYFpQktStF+W4/rFgygyIkV6tVuPP1md7W6B/nnAXni+TYTjJR2Wqz
-         w73l+p4t1qkSkYhsuY4QYKRFJSXPEmERTvQAzxIeKWClC3HeVy6ibx678dQ/K0t0fDRj
-         IHehcgY36hEKLiHvXGfmyAmwVHpnNS5zgLauxuD0M8Vhp6IVATPn3K13MF7XGWCIWuVw
-         HEAg==
-X-Gm-Message-State: AOAM533zHwvMilPQiaoBQKyBEhDqYh/28GyZHGte1aPW5OnoNyv9pCIx
-        5y7JIWwWKrFmLeTnZVvarIVAGFY5/uA=
-X-Google-Smtp-Source: ABdhPJwwG4fmwjd8kD5F9ygmAkL8fhK5x41J9X/P/Cgd3M9VQTY9bcNPzmRlMGxqy+E/WIiTc1yGIA==
-X-Received: by 2002:a05:620a:544:: with SMTP id o4mr10392151qko.19.1610678205930;
-        Thu, 14 Jan 2021 18:36:45 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:81b0:4431:6d9:fc9e? ([2600:1700:e72:80a0:81b0:4431:6d9:fc9e])
-        by smtp.gmail.com with UTF8SMTPSA id x25sm4158013qkx.88.2021.01.14.18.36.44
+        bh=bYQOlo1aGa9ukZ2Ztk0hXYRmlYsvOyq1Y9aMtKpvygg=;
+        b=DhVWw/+R3buL2iQcpfUOccD9DWCrrF0DT/LIVj/Bm/lTEYf/yoUoj6OdjNax8zwHQp
+         CYKqC7SBguxat1aDdqMNnsZD6tfYTh++G5LKn1bnZi+UX9jXjEjd6AScTcTEGMXOA//P
+         obVFwEDwXjrZfOnN5nVjgbYi4Kb5PeUhk63v1i8zJsnHNDSfNYWKCQ/ZRn83IaYcxVt1
+         hERvzLEgPetaLvuNC9FG0b0NA31vT8TKqt2iHP6U08EDVTPgZciRNHpfEQPUn+X7WXVJ
+         qS2q7wcOJOvoXIFtMRQR1WsA5fBtds01zfmW/4EZd4SKRwH1u+gVOS+WdDVYVif8LQx7
+         Un0g==
+X-Gm-Message-State: AOAM533UHoOWkM5AxzBuvT2qu9gu625GdwGZlROjqKF9lsxm/OgqJBwH
+        4/TFCG98C6FKhHc0+Fzv/X0=
+X-Google-Smtp-Source: ABdhPJw5VsgcVwxMbusbdH8xraRooYCC0P/HkWyMBDwqdlgKlTBF8XdHLr7EDUvEX1vgCnpp7f0vrQ==
+X-Received: by 2002:a37:aa57:: with SMTP id t84mr10812597qke.348.1610678316855;
+        Thu, 14 Jan 2021 18:38:36 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id a22sm4174525qkl.121.2021.01.14.18.38.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jan 2021 18:36:45 -0800 (PST)
-Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
-To:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
- <YADOf41CcaRuToD7@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <15237c6c-98eb-0d1f-e6d5-2dda91c0ce09@gmail.com>
-Date:   Thu, 14 Jan 2021 21:36:44 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        Thu, 14 Jan 2021 18:38:36 -0800 (PST)
+Subject: Re: [PATCH 01/22] mailmap doc: create a new "gitmailmap(5)" man page
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <20210105130359.21139-1-avarab@gmail.com>
+ <20210112201806.13284-2-avarab@gmail.com>
+ <a71860ee-6810-8766-b9c7-4c03ea7e6e01@gmail.com>
+ <xmqqk0sfxpd4.fsf@gitster.c.googlers.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <6612514d-051a-1e58-7ea1-c00428882f2d@gmail.com>
+Date:   Thu, 14 Jan 2021 21:38:35 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-In-Reply-To: <YADOf41CcaRuToD7@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <xmqqk0sfxpd4.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/14/2021 6:06 PM, Emily Shaffer wrote:
-> On Fri, Jan 08, 2021 at 11:22:23AM -0800, Junio C Hamano wrote:
->> * ds/maintenance-part-4 (2021-01-05) 4 commits
->>   (merged to 'next' on 2021-01-08 at 1f98c859ea)
->>  + maintenance: use Windows scheduled tasks
->>  + maintenance: use launchctl on macOS
->>  + maintenance: include 'cron' details in docs
->>  + maintenance: extract platform-specific scheduling
+Hi Junio
+
+Le 2021-01-14 à 14:58, Junio C Hamano a écrit :
+> Philippe Blain <levraiphilippeblain@gmail.com> writes:
+> 
+>>> +SYNOPSIS
+>>> +--------
+>>> +$GIT_WORK_DIR/.mailmap
 >>
->>  Follow-up on the "maintenance part-3" which introduced scheduled
->>  maintenance tasks to support platforms whose native scheduling
->>  methods are not 'cron'.
->>
->>  Will merge to 'master'.
+>> This should be GIT_WORK_TREE, gitmodules(5) is wrong as GIT_WORK_DIR
+>> does not exists (my series at [1] fixes this).
 > 
-> This series again has troubles running inside a directory with regex
-> metachars in the path. Courtesy of Jonathan Nieder, I think this fix
-> matches the intent a little better; but if we don't like this, the same
-> lines could be diffed just to add --fixed-value instead.
+> Well spotted.
 > 
-> Before this patch, the test said "Is there something configured in
-> maintenance.repo that looks like $PWD?" and after this patch, the test
-> says, "Does the config in maintenance.repo look like $PWD?" - so it is
-> not quite semantically identical but I think may be clearer.
-
-This appears to be a case of mixing up the order in which these
-submissions came into place. js/t7900-protect-pwd-in-config-get added
---fixed-value, but that was simultaneous with ds/maintenance-part-4
-which added more tests in this vein without including --fixed-value.
-
-Looking at the history, ds/maintenance-part-4 doesn't have
-js/t7900-protect-pwd-in-config-get in its history, which is probably
-why you don't include --fixed-value in your patch.
-
-Perhaps it would be better to have a --fixed-value patch on top
-of the merge that combines the two topics?
-
-> -- >8 --
-> Subject: [PATCH] maintenace: explicitly test value of maintenance.repo
-
-s/maintenace/maintenance/
-
-> Make t7900-maintenance.sh easier to debug by printing and checking the
-> value of maintenance.repo rather than using a search string. Since only
-> one maintenance.repo is configured, this is fine; in the event that
-> multiple maintenance.repo are configured during the test, instead the
-> directory under test should be provided along with '--fixed-value'.
-
-Here you mention --fixed-value as if you plan to use it. I'm all for
-that plan.
-
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
->  t/t7900-maintenance.sh | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
+> Can you make the suggestion into a follow-up patch to the
+> series to be applied on top?
 > 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 2e0c8a4c31..0edad63227 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -487,7 +487,9 @@ test_expect_success 'start and stop macOS maintenance' '
->  	GIT_TEST_MAINT_SCHEDULER=launchctl:./print-args git maintenance start &&
->  
->  	# start registers the repo
-> -	git config --get --global maintenance.repo "$(pwd)" &&
-> +	pwd >expect &&
-> +	git config --get --global maintenance.repo >actual &&
-> +	test_cmp expect actual &&
 
-Sorry again, but this (and others) would probably be better as
+I just sent [1] as a fixup! commit (is that what you meant?)
+I was not sure...) I feel it is cleaner for that commit to use
+the correct variable name from the start, hence the fixup.
 
-+	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+Philippe.
 
-Thanks,
--Stolee
+[1] https://lore.kernel.org/git/87zh1b51xk.fsf@evledraar.gmail.com/T/#m9e8e8f5458db71153c2363acf4bff959df7d0f4c
