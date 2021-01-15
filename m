@@ -2,100 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31565C433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3448DC433DB
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:30:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7BF023AA7
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:25:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1B9E23AC9
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732089AbhAOCZD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 21:25:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49760 "EHLO
+        id S1732141AbhAOCaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 21:30:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732085AbhAOCZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 21:25:02 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0FD1C061757
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:24:20 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id f26so10437448qka.0
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:24:20 -0800 (PST)
+        with ESMTP id S1732136AbhAOCaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 21:30:07 -0500
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB1BC0613C1
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:29:26 -0800 (PST)
+Received: by mail-qv1-xf32.google.com with SMTP id s6so3359781qvn.6
+        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        d=github.com; s=google;
+        h=from:date:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AO+/+7uYI/FhcY+PLfaMCoxJiDiRQ6mJZD5BaxAGzmk=;
-        b=1JkXcQYRagbWjkGSyY4HARtrO0+YL4uk2nbhZ+L9hnVU7LzCyscoUEBJMYmcU0dN3q
-         qOkjnIo92u44sZCTnYf9h1ISkZRRkSJfBmuFrxg6mzTUT8DBBTrS76+O/bQ2CDJa6f0A
-         /EwbCT5669UQ01nA2haoXrmrxB8NOuFM/75Pxg8zFVkzrWbkhOGVdCeGVScsUE4yVGHn
-         EOeKaZaCvbsuSN9FlwoE6yXal7ml9TA+nbNSUW8WB5XeqdxUh97pNMzFzZXxkW8sLDoZ
-         qk5TQ8SZfvBm6+VpDveOEQjzg463ODR/gxsnaBWQN7aHbcJbSm2eFBlZOx4h7f5fzZ+R
-         FtsA==
+        bh=elq1/vsoAEdbSf4DRAlnQsZ1QAwdW0jaO/sT8Uo3jes=;
+        b=dgWUWLU5BqxmolqsbBrcp82gqI2tyexCVotMcw0rVQApZFdZ5IfXn72DZMildHwwQ9
+         vt/Ie5l11OFECVTXyU9M7yhl7xwqsIHw2yZpIV24oSJOwBxkf6lCT/l9g3KqUj5VgexC
+         XHFskKNSllVRh+C64sfA9ID4/7cD1cQoJ2uG4xaXUmDr+roloycj969Z9DH90v8cdnTq
+         IwS3/m/l2eA0AHKKHXHh+H5hErDBqUVrkziWrMFnJQCQsOjNTEw+saNULWBBLW5PUkQ8
+         3p1/XFhzBHXnYVSrw09Des40XQeOio0Pe40T2zJvtpQ5oG6HX2KLm2lc9yHD0lMebyPL
+         SOVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AO+/+7uYI/FhcY+PLfaMCoxJiDiRQ6mJZD5BaxAGzmk=;
-        b=DAMLgI84uMJf0d++WnTV9Gshfg+pcGKG9RKCEl0ilkzbsfzpntad6as+7wU8sHW6L6
-         2BROIk4eV0yNAzPlu9XPBg0z5iZpovY8bl+44JfT44erNy8/LwXgS++C0rjWbiNw4Q1X
-         dit4w9JS0q715mIzmgCoMvGwPwn6MKs/+ZKcZ0N/w3M2+1oz4pZyfF6AfvKgPK4QRhJL
-         C3GX98HUJMtSFxV9feG5i0KqaFv8G40hSpF9GYJRrq/YhkwqqHXnf6i4WEYiGugxCToB
-         f7FDWLJKRMF0BFZBnlLK7h3XtiN+c090F2EAvdoh2ZNYPWBHxzdhFP0U1+2d0IJNeCiF
-         +0QA==
-X-Gm-Message-State: AOAM531M3eakaidY0x+SridyCNxM3zYPR8qjHvCjUV/PEPnq2Cid60jh
-        rv6SoBa0sHRkbJyN9G7GR5g45w==
-X-Google-Smtp-Source: ABdhPJwENNN3Yam2btc/sRfwa6Y4aZIzurCUjycixxIepOi6ySIzDzmxfGiDdOnzI1DNB2sdMcJiBA==
-X-Received: by 2002:a37:50c:: with SMTP id 12mr10038940qkf.296.1610677459932;
-        Thu, 14 Jan 2021 18:24:19 -0800 (PST)
+        bh=elq1/vsoAEdbSf4DRAlnQsZ1QAwdW0jaO/sT8Uo3jes=;
+        b=NjL0Uwg9gTDZOHVaWoaDWmEslwwu3idb0fA18NnVDptwWWPfW2VFy4QM8frej0PJFZ
+         KPLrm7owim86HUMTepRdOyExsCD+nN0nzEpVxqCBO1eKJdnt3xf6w+hs7jCVpBFuC6a4
+         J2vddXiCRlnLn4Qa8pwfGdcuthHt+sr5a/6rISnFPhNWpUZL0M4lr4IWUSRyNnW7XZo6
+         2f/SUh1eCnh6DkaJY5Khu6AitFR+eNgmnce3eb79Bt0b7xo8kaBAv6uVk/HRfccjUyrM
+         MTrpHkeq/VrIo64YF0IZAqzE8HrAVY0M63lkxmyVI3Db9PnbFV13V5MXsmjlHI+Bfpx7
+         Lu+A==
+X-Gm-Message-State: AOAM531NvWQ9blCSIFkB5O27PpvPv/Js8sr8to8OryC6GWwNDfr2GtM4
+        mjw/KcERtVV8Q7FuananK6dEDw==
+X-Google-Smtp-Source: ABdhPJzne7JwLI9Yg00SW9uf7JEWpJ4DCPtQ3gaoc+mM+To6SPYJp5rkC8WuygB0Tr27TWW7y0VexQ==
+X-Received: by 2002:a0c:f14c:: with SMTP id y12mr10006534qvl.23.1610677765953;
+        Thu, 14 Jan 2021 18:29:25 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:d2a9:3030:291b:4b4])
-        by smtp.gmail.com with ESMTPSA id f10sm4098820qtg.27.2021.01.14.18.24.19
+        by smtp.gmail.com with ESMTPSA id y13sm4426804qkb.17.2021.01.14.18.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Jan 2021 18:24:19 -0800 (PST)
-Date:   Thu, 14 Jan 2021 21:24:17 -0500
-From:   Taylor Blau <me@ttaylorr.com>
+        Thu, 14 Jan 2021 18:29:25 -0800 (PST)
+From:   Taylor Blau <ttaylorr@github.com>
+X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
+Date:   Thu, 14 Jan 2021 21:29:23 -0500
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
-Message-ID: <YAD80TFOn0EX24wb@nand.local>
-References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
- <YADOf41CcaRuToD7@google.com>
- <xmqqsg73ufxr.fsf@gitster.c.googlers.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, dstolee@microsoft.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 15/20] for_each_object_in_pack(): convert to new
+ revindex API
+Message-ID: <YAD983DhrWGGBMAQ@nand.local>
+References: <cover.1610129796.git.me@ttaylorr.com>
+ <cover.1610576604.git.me@ttaylorr.com>
+ <e7574763513294b71071b032d5cd3aa0976969dd.1610576604.git.me@ttaylorr.com>
+ <xmqq8s8wyq5i.fsf@gitster.c.googlers.com>
+ <YACcoNY/SiEbBSgh@coredump.intra.peff.net>
+ <YAClXle+utN/VnVZ@coredump.intra.peff.net>
+ <YACmcG4bNugX3WfK@nand.local>
+ <xmqqo8hruef3.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqsg73ufxr.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8hruef3.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 14, 2021 at 05:50:08PM -0800, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> >  	# start registers the repo
-> > -	git config --get --global maintenance.repo "$(pwd)" &&
-> > +	pwd >expect &&
-> > +	git config --get --global maintenance.repo >actual &&
-> > +	test_cmp expect actual &&
+On Thu, Jan 14, 2021 at 06:22:56PM -0800, Junio C Hamano wrote:
+> > Much appreciated. This looks good to me (and I have no opinion whether
+> > it is picked up on top, or squashed into patch 15).
+> >
+> >   Acked-by: Taylor Blau <me@ttaylorr.com>
 >
-> > Before this patch, the test said "Is there something configured in
-> > maintenance.repo that looks like $PWD?" and after this patch, the test
-> > says, "Does the config in maintenance.repo look like $PWD?" - so it is
-> > not quite semantically identical but I think may be clearer.
->
-> Sounds sensible.  Derrick (CC'ed), thoughts?
+> OK, so I'll make this 21/20 and rebase the other one...
 
-I'm not Stolee, but isn't this what 'git config --fixed-value' is for?
-ISTM that what is written here (writing the cwd into 'expect', and then
-comparing it to the value of maintenance.repo) is correct, but I think
-it may be unnecessarily verbose.
+I'm happy if you want to apply this separately on top of both series,
+since I think we all agree that this isn't strictly necessary to go
+forward.
 
-I.e., wouldn't the following do the trick?
+That said, if you do make this 21/20 and the rebase of the second series
+requires any intervention, please let me know and I'll be happy to send
+out a version myself.
 
--	git config --get --global maintenance.repo "$(pwd)" &&
-+	git config --get --fixed-value --global maintenance.repo "$(pwd)" &&
+In the meantime, I don't mind if you want to eject the latter topic from
+seen while it picks up review. The alternative (keeping it in and
+rebasing it forward), of course, is much appreciated.
+
 
 Thanks,
 Taylor
