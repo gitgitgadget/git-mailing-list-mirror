@@ -2,125 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FD36C433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72040C433DB
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 03:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43FAF23AC6
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 02:55:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 234AB23A7C
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 03:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730043AbhAOCz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 21:55:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56288 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726894AbhAOCz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 21:55:27 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08D22C061575
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:54:47 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id l200so8174982oig.9
-        for <git@vger.kernel.org>; Thu, 14 Jan 2021 18:54:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Y/811c5ZiSLhqkGzGc3R4PxHocyUny5d4c25c2KXNw8=;
-        b=UHb2RxNxtOd6MT5LiIx/1MAQkAQEXGN1+RKVe0yeLz57oi0MjhSaVJJM4Vzsn0ENl9
-         +ukoo046rGM11ZjhiI9dCajuQq/YWdL+v59p1GNTlJZXs9qHl0DaEJ8SeXoiSAA7zVar
-         qyQsbXnIGA9Ufj5DJEsbLUEZd7aI8I7ug7LL95cBDn1TY92XA4muAmD5obMvnhAZOn4S
-         j+mNtmq2DzkUuriLXIapwC5OMdmOqQNFQ/ofuxZPFePGSVv5wB3id5swxSE9tLUANR3u
-         Do39yhrM03uC9OSsRCJHjJiHeTrKf11lRIRu34wQajNysHEp8B5o0SfRiJGnk6OdU4NZ
-         Y+sQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Y/811c5ZiSLhqkGzGc3R4PxHocyUny5d4c25c2KXNw8=;
-        b=WymLTUeph/4oYX+spQi8BuK6KgBgBwfz65oYNmQ/gv0CyLJWaM0jrEQnjkCmKCRrVp
-         k7Dyc2N2xvwtVdvx1oMhVXmHMo0DPcRGF3PFygKDWzYP80IeBvudBaHaQZWzCj1teQup
-         bIZArCpLUA4KDBfYhvcA6hmlxgO4xKivwe911lyWcz+1Zev8RrGVAJEVYvgrG1B8OW+v
-         NRgVjS3E5/KDbvzlzd5ewVUURZPgDF4Kj5f0z3X2pSQqIL/VvEhjtu+RWxIszAxKgjdz
-         Zp563TLs1amlFJ4iIDtFUzony7hAoqqll/oClOG5FKYNpOIUMWUqAg2s81MSl1j3ueGK
-         IwRg==
-X-Gm-Message-State: AOAM530aT2/zhsGrfWkt81mQ4Sf3xW+OB9pTRnVb7o0YsfO4/5O+4j/2
-        uY0PA/Krdhz8SflX1X7J/GSqI8w6EYM=
-X-Google-Smtp-Source: ABdhPJztma0jobgTnuqx+F9DIhiW9q294rpCFkLqsayBrAIeXIvGEYSI1QI/Z0qH+bhPmNlfiUmvrA==
-X-Received: by 2002:a05:6808:49a:: with SMTP id z26mr4328701oid.137.1610679286084;
-        Thu, 14 Jan 2021 18:54:46 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:81b0:4431:6d9:fc9e? ([2600:1700:e72:80a0:81b0:4431:6d9:fc9e])
-        by smtp.gmail.com with UTF8SMTPSA id s66sm1501634ooa.37.2021.01.14.18.54.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Jan 2021 18:54:45 -0800 (PST)
-Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
- <YADOf41CcaRuToD7@google.com>
- <15237c6c-98eb-0d1f-e6d5-2dda91c0ce09@gmail.com>
-Message-ID: <47b76019-6e58-3f79-e927-c5c6b6e28075@gmail.com>
-Date:   Thu, 14 Jan 2021 21:54:44 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1730704AbhAODPV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 22:15:21 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50669 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726239AbhAODPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 22:15:20 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8E3F6115B81;
+        Thu, 14 Jan 2021 22:14:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=u
+        3/yTq5JnTaEJ1zv9rJvizh06WI=; b=IQoFq8XC6O2aoNgikYBknReF0NbEKBhWM
+        ZRSAcZlT7g7TL5b8scxIpchtn5jALGY2bTomLnIuLlyM32LeKP0L2C1uTVVHnVpC
+        aGFFSXjq+83pyZjRZ9/Ko1SdC4YKBnaZmxbDMkM8vn0QUecmSLktOTSgAD18AsWw
+        iujLUpiQBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=IbF
+        QWVJOfl4ffISQKtfjOq1KckpBGAyYzAJ9KxeW1pvC1Gae9mi8IcKqvAIn+B+pSHh
+        loDi1yzYPyUx26OQDQ6XRGY0LPYDtGeyWfvuquB9CVO2xwEKr6nXup3XrzdGOI36
+        tMwgTkduruL0ACkiA0GyQRHedN/A88GTfBJsqbGk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 87724115B80;
+        Thu, 14 Jan 2021 22:14:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2CE5115B7F;
+        Thu, 14 Jan 2021 22:14:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
+Date:   Thu, 14 Jan 2021 19:14:34 -0800
+Message-ID: <xmqqk0sevqlh.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <15237c6c-98eb-0d1f-e6d5-2dda91c0ce09@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CB9DAE7E-56DF-11EB-BD51-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/14/2021 9:36 PM, Derrick Stolee wrote:
-> On 1/14/2021 6:06 PM, Emily Shaffer wrote:
->> On Fri, Jan 08, 2021 at 11:22:23AM -0800, Junio C Hamano wrote:
->>> * ds/maintenance-part-4 (2021-01-05) 4 commits
->>>   (merged to 'next' on 2021-01-08 at 1f98c859ea)
->>>  + maintenance: use Windows scheduled tasks
->>>  + maintenance: use launchctl on macOS
->>>  + maintenance: include 'cron' details in docs
->>>  + maintenance: extract platform-specific scheduling
->>>
->>>  Follow-up on the "maintenance part-3" which introduced scheduled
->>>  maintenance tasks to support platforms whose native scheduling
->>>  methods are not 'cron'.
->>>
->>>  Will merge to 'master'.
->>
->> This series again has troubles running inside a directory with regex
->> metachars in the path. Courtesy of Jonathan Nieder, I think this fix
->> matches the intent a little better; but if we don't like this, the same
->> lines could be diffed just to add --fixed-value instead.
-...
->>
->> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
->> index 2e0c8a4c31..0edad63227 100755
->> --- a/t/t7900-maintenance.sh
->> +++ b/t/t7900-maintenance.sh
->> @@ -487,7 +487,9 @@ test_expect_success 'start and stop macOS maintenance' '
->>  	GIT_TEST_MAINT_SCHEDULER=launchctl:./print-args git maintenance start &&
->>  
->>  	# start registers the repo
->> -	git config --get --global maintenance.repo "$(pwd)" &&
->> +	pwd >expect &&
->> +	git config --get --global maintenance.repo >actual &&
->> +	test_cmp expect actual &&
-> 
-> Sorry again, but this (and others) would probably be better as
-> 
-> +	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+It seems that homebrew suddenly started giving us trouble, like this:
 
-Alternatively, the additional cases of "git config --get --global" in
-ds/maintenance-part-4 could actually be simply _removed_ because we
-are running all tests on all platforms. We already verify this behavior
-in the cron tests, such as 'start from empty cron table'.
+https://github.com/git/git/runs/1705953982?check_suite_focus=true#step:3:70
 
-Thanks,
--Stolee
+Here is my attempt to work it around by blindly following the
+suggested course of action in the error message, without knowing
+what I am doing X-<.  I am not a Mac person.
+
+What is frustrating is that every time we hit a minor snag like this
+to break one of the jobs, all other unrelated jobs are also taken
+down.
+
+Help by those who know what they are doing on macOS would greatly be
+appreciated.  Thanks.
+
+----- >8 ----- >8 ----- >8 ----- >8 ----- >8 ----- >8 -----
+We run "git pull" against "$cask_repo"; clarify that we are
+expecting not to have any of our own modifications and running "git
+pull" to merely update, by passing "--ff-only" on the command line.
+
+Also, the "brew cask install" command line triggers an error message
+that says:
+
+    Error: Calling brew cask install is disabled! Use brew install
+    [--cask] instead.
+
+In addition, "brew install caskroom/cask/perforce" step triggers an
+error that says:
+
+    Error: caskroom/cask was moved. Tap homebrew/cask instead.
+
+Attempt to see if blindly following the suggestion in these error
+messages gets us into a better shape.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/install-dependencies.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 0229a77f7d..0b1184e04a 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -44,13 +44,13 @@ osx-clang|osx-gcc)
+ 	test -z "$BREW_INSTALL_PACKAGES" ||
+ 	brew install $BREW_INSTALL_PACKAGES
+ 	brew link --force gettext
+-	brew cask install --no-quarantine perforce || {
++	brew install --cask --no-quarantine perforce || {
+ 		# Update the definitions and try again
+ 		cask_repo="$(brew --repository)"/Library/Taps/homebrew/homebrew-cask &&
+-		git -C "$cask_repo" pull --no-stat &&
+-		brew cask install --no-quarantine perforce
++		git -C "$cask_repo" pull --no-stat --ff-only &&
++		brew install --cask --no-quarantine perforce
+ 	} ||
+-	brew install caskroom/cask/perforce
++	brew install homebrew/cask/perforce
+ 	case "$jobname" in
+ 	osx-gcc)
+ 		brew install gcc@9
+-- 
+2.30.0-386-gfb533afdb4
+
