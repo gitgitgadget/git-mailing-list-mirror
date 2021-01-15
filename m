@@ -2,152 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PLING_QUERY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD5AAC433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 08:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58ABFC433E0
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 08:39:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6014D22C7D
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 08:38:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1ECCF22BEA
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 08:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728497AbhAOIiL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 03:38:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44846 "EHLO
+        id S1730148AbhAOIja (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 03:39:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727331AbhAOIiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 03:38:08 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823DFC0613C1
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 00:37:28 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id q25so7834611otn.10
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 00:37:28 -0800 (PST)
+        with ESMTP id S1730102AbhAOIj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 03:39:29 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35578C061757
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 00:38:49 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id w3so7816974otp.13
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 00:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=v0p5Snoaa9aXyrE2oGGfhj05C0vyM3oMD7Yn8KsRomE=;
-        b=ftdsXe6NZyGR5XHZwtSizd32knzk81bBG/i6Se5sRqL9GM5Gw+Vodk9qqGWVqiMcIh
-         mnZEb68tfRAJjQcSpmGVuQ1Ejmhj8ui2cpxnmXSCWsxzE5QE0EiEkUNMpJZJmca7b2cs
-         OzSg0K+QDi6YHN2C1C/9yd/hGXeruXFUtJSaP6vSp7TQXhT9KFYg/jJqaKC8+usmqlqI
-         hTLf5auR7dJeFIQxmVuwmp7XdXaprJHNmWtxhoqy+8ce27AmG/CMfWOVFvRSPKLGo/se
-         rT8Lz24PjECP39Wo6vLgRUFbBnPqJ7GNt2Fo+Km1oFTiZv9iarx8sjVIB5/s+oVcYcNx
-         AR/Q==
+        bh=nYAyGP9LH0WpwvgC10BLev1B6D/rFbswRYwul9XL1B4=;
+        b=FweGNdMlf7ufTXCl6rM63CxXB/qxVpetxwxInHjyHSWkvvB0NY1HUvNTR8lP5jIUl3
+         wqW+eCnOdFHYzb1JBoE2S5N9+rEhSU+Xqpjp/A653pxoXTV6BeBkgKSL0ETzwWBWlTSZ
+         YIYDwsqjAx/sAZeQmfZgA5iPSsL12vyoyR9BSW86KfMfMDW21YhEg9QKNUPTDXa2Oynh
+         mRzbfUSaf9q1zbeZJH3CVXGRbYgzj/qIX9qtUK9ZdIeDxc5goKBIxPXXE8GrqD1SFb2d
+         zky2i/yO4LreY4LeTAcQlzaMkHugAwQNHL1ACrIBRrQOEOqx6m9R4u1D/Rbz7oyOttQB
+         PjEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=v0p5Snoaa9aXyrE2oGGfhj05C0vyM3oMD7Yn8KsRomE=;
-        b=LyEpxYDBvGW7EE3GNZB0giHCj+t5A/WoV2fAfn10FDZfxemEoGwj9kJwrLddz2dZrP
-         rFeVEk9MXQrGe66xhNkGonpC6HEH6IqafFP4km0GRfVQWlC1ZL08rXBhLmbf2v4EWjP5
-         /BOAcEeiQQjLlR0O2DXJ8BiwQYPprbo5rqFa3UnuzgKpCdZd3dzBxQrEZanI7Ou2Ypt0
-         r1ZtVEDw9QRqmQZ28k65SDPyWIFjIHvwne+e+v3sTFkaShKlti72mAnIugYvUe80MTcd
-         9/Gs/Gu1QfwHm/mJdMLWneKhjmpQy0pnGv9np2Gn3Tq1EOWxhZhP7kVAVxX/b5ZjeZ1C
-         o1yw==
-X-Gm-Message-State: AOAM531j/0Zagw8JZ0JCpVm6BCWKUYzsbEjsrtiD4T74dgWs0EbcRw1T
-        V5A3f1VofDOHgAlAVA4mLcKsjaYO/0M3K72dLtk=
-X-Google-Smtp-Source: ABdhPJyiT3NguJFKRP7EpCn5ktIV10+AbQKf/jbqPzxz0ZPOVNKlFzHAgHyK/ZOCNF+MAkJSlxAf0lm90k8HvAVV/B8=
-X-Received: by 2002:a9d:741a:: with SMTP id n26mr277134otk.210.1610699847963;
- Fri, 15 Jan 2021 00:37:27 -0800 (PST)
+        bh=nYAyGP9LH0WpwvgC10BLev1B6D/rFbswRYwul9XL1B4=;
+        b=P1ibOc0BMeK/3k7IptiolqFmBRk9YmeGmKBChd0A/SR75KnyNHOFMw+OcvspTn85Fs
+         NS8SKIv4xRlXnEcVzhfjxdeDZKS/qCLZG1Cu0SICFpf5WpKA47QeVEx9Lf1eSd0TbhTG
+         7W/u1p3nP75LIsqxt+w1eO8iUmwYjs61wgkfs4j+aJeGqgEyC6yLEjFFgSIPKEQ5z//D
+         b0eoetuNJkNwol//6f9BmyKmpXsm8PnoyCMz2Yj8/62jBuB/muJcXmfMjUUKy72fSWEP
+         ZKBEav6Y+Gk0XmJ2gJxEkCJzq9fj/uhLGodZOtD35ml+LmQAYPuuTnop7zo5N6dGogAJ
+         MITA==
+X-Gm-Message-State: AOAM530W9Ayhyw0BX4T65KSXP/thjAJBG0YBA03G/9i1mWlJNX/CDYa/
+        yusbjKgIue4l0VwJHEc1vD4EZ0OosHfAszrf/X8/R/u9ZG8=
+X-Google-Smtp-Source: ABdhPJxXeQHB1nNV2ThwuXUhV+UvUK22uj5Q9gXtkKJuzH+mkAX6geCL/5Qonx7SDLf4ngmZY9QulaS6r++S9nfZuT0=
+X-Received: by 2002:a9d:741a:: with SMTP id n26mr279548otk.210.1610699928657;
+ Fri, 15 Jan 2021 00:38:48 -0800 (PST)
 MIME-Version: 1.0
-References: <CAPSFM5c2iqBn8_Dih2id7q6RRp0q=vfCSVUHDE5AOXZ8z3Ko9w@mail.gmail.com>
- <CAPSFM5f+cm87N5TO3V+rJvWyrcazybNb_Zu_bJZ+sBH4N4iyow@mail.gmail.com> <99b40665-45dd-6c4d-d46a-56c7dbf89568@gmail.com>
-In-Reply-To: <99b40665-45dd-6c4d-d46a-56c7dbf89568@gmail.com>
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210108092345.2178-2-charvi077@gmail.com>
+ <X/8/WassxF7ujqjX@nand.local> <CAPSFM5ew583ZPZO9XUWxskQPsdSv520gKCM30GH2huhdTDxb2A@mail.gmail.com>
+ <ac1691d6-e13e-2c04-b105-73a0645f4883@gmail.com>
+In-Reply-To: <ac1691d6-e13e-2c04-b105-73a0645f4883@gmail.com>
 From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Fri, 15 Jan 2021 14:07:16 +0530
-Message-ID: <CAPSFM5f2g2KwSSDQj-6fm67X=gYGSMKarkfrPsNoJJr-UyKyDw@mail.gmail.com>
-Subject: Re: How to implement the "amend!" commit ?
+Date:   Fri, 15 Jan 2021 14:08:37 +0530
+Message-ID: <CAPSFM5eBCVD9sx-AkA6Zr-PAq3JgTftcf2UhZBcBmK_00ff1+Q@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/9] rebase -i: only write fixup-message when it's needed
 To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     git <git@vger.kernel.org>,
+Cc:     Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 14 Jan 2021 at 16:09, Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Thu, 14 Jan 2021 at 16:16, Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> I've taken the liberty of adding some comments about the backwards
-> compatibility of each option
+> Hi Taylor and Charvi
 >
-> On 13/01/2021 01:15, Charvi Mendiratta wrote:
-> > Hi Everyone,
-> >
-> > Implementing "amend!" commit would be an alternative to the
-> > fixup!/squash! commit that addresses the issue as opened here[1]. Also
-> > the related patches[2], adds the options to `fixup` command in
-> > interactive rebase and supports the "amend!" commit upon
-> > `--autosquash`. Next, after discussing with Phillip and Christian,
-> > there could be 3 possibilities to implement the "amend!" commit (UI):
-> >
-> > Firstly, the `--fixup=<commit>` to have option like,
-> > `--fixup=reword/amend:<commit>`
-> >
-> > So, `git commit --fixup` can have 3 options:
-> >
-> > a) `--fixup=<commit>`, work as of now, make fixup! commit.
-> > b) `--fixup=amend:<commit>`, make "amend!" commit, takes changes and
-> > also opens the editor for a new message (Here it adds a new message to
-> > amend! commit's message body and upon autosquash it will fixup up the
-> > content and reword the original commit message i.e replaces the
-> > original commit message with the "amend!" commit's message).
-> > c) `--fixup=reword:<commit>`, makes (empty) "amend!" commit, do not
-> > take changes and open the editor for a new message(Here, upon
-> > autosquash it will just reword the original commit message).
+> On 14/01/2021 08:12, Charvi Mendiratta wrote:
+> > On Thu, 14 Jan 2021 at 00:13, Taylor Blau <me@ttaylorr.com> wrote:
+> >>
+> >> On Fri, Jan 08, 2021 at 02:53:39PM +0530, Charvi Mendiratta wrote:
+> >>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>>
+> >>> The file "$GIT_DIR/rebase-merge/fixup-message" is only used for fixup
+> >>> commands, there's no point in writing it for squash commands as it is
+> >>> immediately deleted.
+> >>>
+> >>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >>> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+> >>> ---
+> >>>   sequencer.c | 12 +++++++-----
+> >>>   1 file changed, 7 insertions(+), 5 deletions(-)
+> >>>
+> >>> diff --git a/sequencer.c b/sequencer.c
+> >>> index 8909a46770..f888a7ed3b 100644
+> >>> --- a/sequencer.c
+> >>> +++ b/sequencer.c
+> >>> @@ -1757,11 +1757,13 @@ static int update_squash_messages(struct repository *r,
+> >>>                        return error(_("could not read HEAD's commit message"));
+> >>>
+> >>>                find_commit_subject(head_message, &body);
+> >>> -             if (write_message(body, strlen(body),
+> >>> -                               rebase_path_fixup_msg(), 0)) {
+> >>> -                     unuse_commit_buffer(head_commit, head_message);
+> >>> -                     return error(_("cannot write '%s'"),
+> >>> -                                  rebase_path_fixup_msg());
+> >>> +             if (command == TODO_FIXUP) {
+> >>> +                     if (write_message(body, strlen(body),
+> >>> +                                       rebase_path_fixup_msg(), 0)) {
+> >>> +                             unuse_commit_buffer(head_commit, head_message);
+> >>> +                             return error(_("cannot write '%s'"),
+> >>> +                                          rebase_path_fixup_msg());
+> >>> +                     }
+> >>
+> >> I'm nit-picking here, but would this be clearer instead as:
+> >>
+> >>      if (command == TODO_FIXUP && write_message(...) < 0) {
+> >>        unuse_commit_buffer(...);
+> >>        // ...
+> >>      }
+> >>
+> >> There are two changes there. One is two squash the two if-statements
+> >> together, and the latter is to add a check that 'write_message()'
+> >> returns an error. This explicit '< 0' checking was discussed recently in
+> >> another thread[1], and I think makes the conditional here read more
+> >> clearly.
 >
-> This is the only option that is backwards compatible. `--fixup=:/<text>
-> ` still works and can be used with the new syntax as
-> `--fixup=amend::/<text>`. Note that we intend to allow accept any prefix
-> of "amend" and "reword" so --fixup=a:<commit> would work.
+> I don't feel that strongly but the addition of '< 0' feels like it is
+> adding an unrelated change to this commit. It also leaves a code base
+> where most callers of `write_message()` do not check the sign of the
+> return value but a couple do (there appears to be one that checks the
+> sign already and a couple that completely ignore the return value). If
+> we want to standardize on always checking the sign of the return value
+> of functions when checking for errors even when they never return a
+> positive value then I think someone in favor of that change should
+> propose a patch to the coding guidelines so it is clear what our policy
+> is. When I see a '< 0`' check I tend to think the positive value has a
+> non-error meaning.
 >
-> > Secondly,
-> > As an alternative to above, we can use `--fixup=<commit> --amend` and
-> > `--fixup=<commit> --reword`.
->
-> This is not backwards compatible. At the moment If you create a fixup
-> with `git commit --fixup=aaa` and then realize it should refer to commit
-> bbb instead you can fix it with `git commit --amend --fixup=bbb`. That
-> would no longer be possible. (You could still do `git commit --amend
-> -m'fixup! bbb'` which works with `git rebase --autosquash` but is not
-> very helpful when running `git log` or `git commit --amend -m"$(git log
-> -1 --format=%s bbb)" which is a pain to type.)
 
-I found above, "git commit --amend --fixup=bbb" as one of the hidden
-features I had never used before. I also agree to go with first one and
-working on the patch to apply it.
+Okay, I looked into the write_message(...) and agree that it does not return
+a positive value and only returns non-zero for error case and zero for
+success. So, for this patch maybe we can ignore checking '< 0' here and
+later add another patch to make this function follow the convention of
+"negative is error".
 
 Thanks and Regards,
 Charvi
 
->
-> > Next,
-> > To use only, `--fixup=<commit> --edit` to make the "amend!" commit.
->
-> This is not backwards compatible. At the moment this combination of
-> options allows the user to add some comments to the fixup commit
-> message. To do that in the future they'd have to change the subject line
-> when editing the message.
->
+
 > Best Wishes
 >
 > Phillip
 >
-> > Also as discussed earlier[3] we are avoiding the use of additional
-> > options like `git commit --amend=<commit>` inorder to avoid confusion
-> > of doing similar things in different ways. So, I wonder which could be
-> > the best way to proceed with or if any other way to implement "amend!"
-> > commit ?
+> > Okay, I got this and will change it.
 > >
 > > Thanks and Regards,
 > > Charvi
 > >
-> > [1] https://github.com/gitgitgadget/git/issues/259
-> > [2] https://lore.kernel.org/git/20210108092345.2178-1-charvi077@gmail.com/
-> > [3] https://lore.kernel.org/git/95cc6fb2-d1bc-11de-febe-c2b5c78a6850@gmail.com/
-> >
+> >> Thanks,
+> >> Taylor
+> >>
+> >> [1]: https://lore.kernel.org/git/xmqqlfcz8ggj.fsf@gitster.c.googlers.com/
 >
