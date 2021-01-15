@@ -2,84 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A63EAC433DB
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 20:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E99C433E0
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 20:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 689D7238D7
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 20:07:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0E5523603
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 20:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388334AbhAOUG7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 15:06:59 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59313 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbhAOUG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 15:06:58 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F821104357;
-        Fri, 15 Jan 2021 15:06:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pj1UvJ9esUlYSbyEOemIGGxt2XI=; b=otuCwv
-        i19Ck/qlkxv/3xUfRZvHqkrsp+/F8aNcpc2bwl0roQ/hSVGioX6WWTCUkpckZfRf
-        VuqLZp8JgKn6LXre4/JzpDWcMUVC2eauaDIrdTUhp7RtzFQQe/BzNAGY4vGonn5R
-        TXKCEbKTxwTvQ/msG3tm6B9TUGssa3H33xTi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mSL7H+UcxTc3aI844RDS1aZwJrWiKc9H
-        QoFnEakvG4tTX2Xng6qYOG59EvA7sU+goEjMbiWLCaMO2eQBKfZYLWXVeFKPlrrE
-        uMzAjEi6HlwD8ab3mLLMTNckwWCI/493nCRWsMlpurcAkEU4YLZpi4J+S8nV8nFp
-        B3TEWJ2YUBE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 48973104355;
-        Fri, 15 Jan 2021 15:06:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8F37210434C;
-        Fri, 15 Jan 2021 15:06:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Phil Hord <phil.hord@gmail.com>, Git <git@vger.kernel.org>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2] use delete_refs when deleting tags or branches
-References: <20190814024927.13167-1-phil.hord@gmail.com>
-        <CABURp0rtkmo7MSSCVrdNXT0UzV9XqV_kXOGkC23C+_vMENNJUg@mail.gmail.com>
-        <CABPp-BEUPH5Yc08uDehAXNQ5-3fJ9YeW0xscVBR45hniDe+HEg@mail.gmail.com>
-Date:   Fri, 15 Jan 2021 12:06:11 -0800
-In-Reply-To: <CABPp-BEUPH5Yc08uDehAXNQ5-3fJ9YeW0xscVBR45hniDe+HEg@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 15 Jan 2021 10:43:07 -0800")
-Message-ID: <xmqqh7nirmmk.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1730639AbhAOUIc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 15:08:32 -0500
+Received: from mail-ej1-f51.google.com ([209.85.218.51]:33908 "EHLO
+        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727808AbhAOUIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 15:08:31 -0500
+Received: by mail-ej1-f51.google.com with SMTP id hs11so12709402ejc.1
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 12:08:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vg54Z8sILYmD1HFvyG2jX1/8/qKRFKj5JQrXGFR42XM=;
+        b=qx1U7qc+VhVXSofYhXlCKeaW6fJ0tmDYdUA6AfaAPFw+cwHufiBd06QXWYTFpvyqdk
+         Yj9mTWyxgmU+DeafOZwcI9iMN52drw3CbJtwnjgDOa2GFCIGFt0V+2G0VO4QH1/ytS13
+         YQI5R23t6DTw98HK3sMwTfhuPQDApqf78CVFbbOvPMNk3Rtq2/LdgiFVF+xiqjuAMKQO
+         qgQ6Ki/0yr0xoJ8RG7wAarOgKQ/BFc2o4+Ez3kT+NDWQWHzRhvHimN7Y6JYQJwaa7RVK
+         LagcTsKXi5IbN/fZBTsWyLe/qNGdppiymdyWZDSCAUFocs3IdGsFdIMLlkXz+uTZasDk
+         4HiA==
+X-Gm-Message-State: AOAM532gNtAe3IK+QWHqci+LnL74dKCssJQVjNuLj2olVpHTo1bH2tC4
+        PN7dUka29G7MXy7zNVHdokBC+Hnmj10VzQf9r+Y=
+X-Google-Smtp-Source: ABdhPJxBexaOcp9SkgDsz2UT3BN9sctdoqmWiaBKy7lDOfyfcjyQV5WPALJvnmCvI9xVY6/fsibZN/YUWO6NjUofqWY=
+X-Received: by 2002:a17:906:2617:: with SMTP id h23mr2281390ejc.168.1610741269454;
+ Fri, 15 Jan 2021 12:07:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E47FEB2-576D-11EB-93C2-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <xmqqk0sevqlh.fsf@gitster.c.googlers.com> <YAH0G+Y4fIxoTeZa@coredump.intra.peff.net>
+In-Reply-To: <YAH0G+Y4fIxoTeZa@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 15 Jan 2021 15:07:38 -0500
+Message-ID: <CAPig+cSWa_jgUjPXVMeOUwxQV_9Qhv0f-Wyb3odJnb1UpcOcPg@mail.gmail.com>
+Subject: Re: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Jan 15, 2021 at 3:00 PM Jeff King <peff@peff.net> wrote:
+> > -     brew cask install --no-quarantine perforce || {
+> > +     brew install --cask --no-quarantine perforce || {
+>
+> On a related note, it feels like perforce is a frequent offender for
+> triggering spurious failures (both for homebrew setup, but I have
+> definitely seen racy/flaky failures from it as well). I am tempted to
+> say it is not worth the trouble, but then I do not care at all about
+> git-p4 myself in the first place, so I may be biased.
 
-> Overall, I like the patch.  Peff commented on v1 that the basic idea
-> (use the part of the refs API that batches operations) is the right
-> thing to do.
-
-I concur; I agree with the general direction.
-
-Where do we reject branch deletion based on the merged-ness?  When
-we ask to delete three branches and one is not merged yet and cannot
-be removed (let's say we are not "--force"ing) but the other two are
-OK to remove, we do want the other two branches to go.  I didn't
-check what the patch does with respect to this point, but as long as
-the updated code does not make it "all or none", it would be great.
-
-> I would say Reviewed-by, but I'd like to get Junio's comments on the
-> return code and minor race.
-
-It would have to wait a bit more.  Thanks for a review.
+To be fair to 'perforce', though, the fault of this particular problem
+is Homebrew, which doesn't seem to be all that concerned about
+backward compatibility, at least in my experience. The single
+Homebrew-related automation script I wrote for personal use has been
+broken by arbitrary Homebrew changes frustratingly often over the last
+three years.
