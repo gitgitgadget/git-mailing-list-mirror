@@ -4,104 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 049A5C433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 01:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B2D6C433DB
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 01:45:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9F0A2137B
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 01:13:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E761E23A5A
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 01:45:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726188AbhAOBMx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 14 Jan 2021 20:12:53 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53974 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726017AbhAOBMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Jan 2021 20:12:53 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 433F911513B;
-        Thu, 14 Jan 2021 20:12:11 -0500 (EST)
+        id S1731634AbhAOBpj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 14 Jan 2021 20:45:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53255 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731572AbhAOBpi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Jan 2021 20:45:38 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75047111BEE;
+        Thu, 14 Jan 2021 20:44:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l7PsSmpo9qvsozJxgWIKNbSlbV8=; b=trbGDd
-        92IiE0XnV6PZcqc5Um98WcGH/G7dnMD2WHPZiP/gACPQBXHbjyd9WRmC7bahw/cF
-        w/IdMCcQ4YtLMchSBTxzgg8KcrR0YUS5MD7xF+aEmZ4FkxGOVvERgmXqseNQE0xU
-        vtKm7eSG6oCl9CidUFeqfK94CZABP6J3//Afo=
+        :content-type; s=sasl; bh=hIYiOVOBM7+iJtyTMJKeYANlohg=; b=Vd5z3K
+        MPNlSi6JQ6VEe7uLpvSS0tFth3WJ+jC8dFjVsv6fNPcfvPOQzPpuTFBF4cbpSDKZ
+        +AoL00LMk56yUnhyNtCA49EcwPpkdd15G+9LE+sEA7ZKyIXodXu5ha7YjL3rxRZu
+        1rtEHcK87Gzgv19zr+02y/h0wQBqemdof3Fns=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O8fsEvHKXbfmERXH4EpaJq14FyWIwFuu
-        4C+zD0gVpN/PUxKzrVkYvD0GtkiVbycHvDOkBPWC3BBJef7N9aYVC1u3hOTxE1cg
-        6ZtZrgZzXZXGfAZFTmUUp7hewv91HaAxVsgGbAO9M1QwJN31Y0H1kw4qgPUpz4Se
-        2yfbghXUHxM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3BF7C11513A;
-        Thu, 14 Jan 2021 20:12:11 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=GhM/ClTuKRMst3Br6GATX+xW+HENxmZO
+        cvSvUbC8ASab/mkRZRrhdPqh56UJzIUaUCUSbwaYcgU0YHs4Gw+/saTcHDGQd/jz
+        ct1d+H5znHvNb3bLffWCCuLA6txWciYz8zkvFIz1Zy/0bEF5jMFs6WT6BWY75uGm
+        TU6NNJNUDqQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D03C111BED;
+        Thu, 14 Jan 2021 20:44:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 327C4115139;
-        Thu, 14 Jan 2021 20:12:07 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B3406111BEC;
+        Thu, 14 Jan 2021 20:44:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jason Pyeron" <jpyeron@pdinc.us>
-Cc:     <git@vger.kernel.org>
-Subject: Re: add a blank line when a commit has no parent in log output?
-References: <191201d6eaa3$4b585fa0$e2091ee0$@pdinc.us>
-Date:   Thu, 14 Jan 2021 17:12:05 -0800
-In-Reply-To: <191201d6eaa3$4b585fa0$e2091ee0$@pdinc.us> (Jason Pyeron's
-        message of "Thu, 14 Jan 2021 13:30:11 -0500")
-Message-ID: <xmqq8s8vvw9m.fsf@gitster.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
+References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
+        <871reu752k.fsf@evledraar.gmail.com>
+        <xmqqk0slg5ph.fsf@gitster.c.googlers.com>
+        <X/oosXBJlyt/IrOr@camp.crustytoothpaste.net>
+        <xmqq4kjpelza.fsf@gitster.c.googlers.com>
+        <X/uvhc5Hpu792qA/@camp.crustytoothpaste.net>
+        <xmqqeeir8fdg.fsf@gitster.c.googlers.com>
+        <87k0si5k75.fsf@evledraar.gmail.com> <YADZSsVqyGnArF0n@google.com>
+Date:   Thu, 14 Jan 2021 17:44:52 -0800
+In-Reply-To: <YADZSsVqyGnArF0n@google.com> (Emily Shaffer's message of "Thu,
+        14 Jan 2021 15:52:42 -0800")
+Message-ID: <xmqq4kjjvuqz.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AF7A5492-56CE-11EB-95A0-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 439F0C04-56D3-11EB-A1B3-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jason Pyeron" <jpyeron@pdinc.us> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Is there a way to have it look like:
+> Secondly: it seems like a restatement of the goals of this patch would
+> help guide a discussion of designs; I would be so pleased to see a
+> cleaner solution than any that's been proposed so far, because I agree
+> that this feature is not perfect. So please append what I have missed:
 >
-> | | | *  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> | | |
-> | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
-> | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
->
-> Or 
->
-> | | | #  5505e019c2 2014-07-09 initial xxxxxx@xxxx
-> | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
-> | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
+> Axiom: The current Git solution for avoiding deadnaming is insufficient.
+> Axiom: We want to improve Git's solution for avoiding deadnaming.
+> (That is, I don't think either of these statements are or should be up
+> for discussion.)
 
-This latter variant won't work.  Imagine we are showing --left-right
-for example.  Which side does '#' belong to?
+Another one [*1*]:
 
-The former is not so great in that it wastes a line, and the break
-won't be as noticeable when --graph is *not* used with --oneline.
+Axiom: It is, by nature of how Git works, impossible to come up with
+a solution that avoids deadnaming perfectly.  The best we can do is
+to aim for "good enough".
 
-It would be great to show it more like this:
+> Goal: Projects which are contributed to by trans individuals who
+> transition during their contribution period should provide a good,
+> supportive experience, which does not deadname the individual.
+> Goal: Git's performance should not suffer unduly from any change unless
+> necessary.
+> Goal: Project maintainers should have an understanding of the threat
+> model (e.g. automated tools scraping for names, malicious individuals
+> with time on their hands and experience with the project, etc)
 
- | | |   * 5505e019c2 2014-07-09 initial xxxxxx@xxxx
- | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
- | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
-
-The point being that by shifting the column for the commit to the
-right, it shows that 5505 is not a child of 3e65 (and 3e65 is the
-tip of its lineage), and its parents do not appear in the displayed
-history.  In the real life, the independent 'root' may be connected
-to the main history somehow, so you may see a graph like this:
-
- | | *  12345678 2021-01-14 merge xxxxx@xxxx into the history  
- | | |\
- | | | \
- | | *  \  23456789 2021-01-12 merge citest into the main history
- | | |\  * 5505e019c2 2014-07-09 initial xxxxxx@xxxx
- | | | *  3e658f4085 2019-09-10 (wiki/wip-citest, origin/wip-citest) Added defau
- | | | *  ad148aafe6 2019-09-10 Added default CI/CD Jenkinsfile (from f7daf088)
+Goal: the design should clearly describe the thread model it
+supports, so that "good enough" can be judged against it.
 
 
-Hmm?
+
+[Footnote]
+
+*1* This may be clear from what both you and I said about perfection
+and being good enough.  I usually do not like to see people punt for
+an imperfect solution too early without even trying, but in a case
+like this where we know perfection is theoretically impossible, it
+is a totally different story.
