@@ -2,111 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 073F8C433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 19:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10D83C433DB
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 19:58:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC8EB235F8
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 19:53:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D52CD23A56
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 19:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732952AbhAOTxk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 14:53:40 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53560 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbhAOTxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 14:53:39 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D7133118380;
-        Fri, 15 Jan 2021 14:52:57 -0500 (EST)
+        id S2387404AbhAOT6u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 14:58:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61795 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729312AbhAOT6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 14:58:49 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E327BB7370;
+        Fri, 15 Jan 2021 14:58:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ws8WOpoYy2/VXZVgA8K4qknOJ8Y=; b=rEoa+H
-        l3EEsUEsB2kAfyQV46FFeHuUp09Ru2MXzqbTJre/srSUONhEOUMXAko/+Lv2yTKW
-        Dt2SU355T2rygw45jl3Zg/Pcz+7je6j3q5MfyDX6IQpfBFfi+tsVMNS7JsT6Ecoa
-        lh43/H8Vc9Wf81k9C11erLmMxZoIctyrSqp2k=
+        :content-type; s=sasl; bh=fd5IENWWrGrj4C9C75KrY6ywYnk=; b=w4XIZS
+        e6rC7GZHtOvFTkB0JzbqV1/5qtczZYS5eCrAs1O7RvyO8KfxJZPzKxiDhGoyZsSX
+        DCMMI9lHtkOlguEBbpmhuLYQv5UBDPMScxXyEUnzWwuDCg2SBtFyCk+7SubYhnHu
+        LI1X946tG804Vsr4SCmsV6cKhiQI6Xje3NAfI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BNnOinQcyAsUf91RDIQdIjvLfOl+zURN
-        9HikweGbtXVzlLYrBkO30zZbEtYn6YkYMxD5pKPWsuqyrH6RiIvrH1OyhctFmWdw
-        aoKh7veUG32U8pEvH77X9O9KCNqXGkS2kMiODHp/QKBm6zqByXmHI1I/iTFIvA/0
-        qhdkQSTsU9E=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D117611837F;
-        Fri, 15 Jan 2021 14:52:57 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=RZbJIFiJzatUWvnMW75rYA3hIrELs+fE
+        26Qei/DS8eX24aN8WV8XpqlbyXbOTRIJfPxxfo2sHkoYTqLPtRTtLtxpAJRhtW2+
+        SYhnju6ovjRKbYPDq3rh7eZBNaLRqeN0cIaeYqjUTHDZJ9LebfbgiB1fH13K1Vq/
+        AQF4uujBfzM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4722B736F;
+        Fri, 15 Jan 2021 14:58:06 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 25A6C11837E;
-        Fri, 15 Jan 2021 14:52:55 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4EA99B736D;
+        Fri, 15 Jan 2021 14:58:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
-References: <xmqqk0sevqlh.fsf@gitster.c.googlers.com>
-        <xmqqa6tavjgm.fsf@gitster.c.googlers.com>
-        <19de3b73-80c6-ccea-9289-fd3f82c103ac@gmail.com>
-Date:   Fri, 15 Jan 2021 11:52:53 -0800
-In-Reply-To: <19de3b73-80c6-ccea-9289-fd3f82c103ac@gmail.com> (Derrick
-        Stolee's message of "Fri, 15 Jan 2021 09:27:56 -0500")
-Message-ID: <xmqqpn26rn8q.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 09/11] GETTEXT_POISON=rot13: do compare the output in
+ `test_i18ncmp`
+References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
+        <4669ccbb1ae40f0c58a2d8e3c8b3a34d82176c7a.1610441263.git.gitgitgadget@gmail.com>
+        <xmqqeeiq3pkf.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2101151643410.52@tvgsbejvaqbjf.bet>
+Date:   Fri, 15 Jan 2021 11:58:02 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2101151643410.52@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 15 Jan 2021 16:44:18 +0100 (CET)")
+Message-ID: <xmqqlfcurn05.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4260FB16-576B-11EB-BCD6-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: FAB4D19C-576B-11EB-BD4E-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 1/15/2021 12:48 AM, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->>> It seems that homebrew suddenly started giving us trouble, like this:
->>>
->>> https://github.com/git/git/runs/1705953982?check_suite_focus=true#step:3:70
->>>
->>> Here is my attempt to work it around by blindly following the
->>> suggested course of action in the error message, without knowing
->>> what I am doing X-<.  I am not a Mac person.
->>>
->>> What is frustrating is that every time we hit a minor snag like this
->>> to break one of the jobs, all other unrelated jobs are also taken
->>> down.
->>>
->>> Help by those who know what they are doing on macOS would greatly be
->>> appreciated.  Thanks.
->> 
->> After seeing 'seen' with this patch at its tip pass the tests [*1*],
->> I prepared a merge of this change into the tip of 'next' and
->> tentatively updated 'seen' with it.
->> 
->> The test is still running [*2*], but the problematic part in the
->> macOS build has already passed, so I am planning to fast-track this
->> change down to 'next', 'master' and eventually down to 'maint' to
->> keep the CI going to help other platforms catch more interesting
->> problems.
->> 
->> Help from those who are more familiar with macOS and homebrew is
->> still appreciated, though.
->> 
->> 
->> [References]
->> 
->> *1* https://github.com/git/git/actions/runs/486978562
->> *2* https://github.com/git/git/runs/1706704233?check_suite_focus=true#step:3:81
+> On Tue, 12 Jan 2021, Junio C Hamano wrote:
 >
-> We recently hit this same issue with our macOS builds for Scalar
-> and GCM core. Your solution looks very similar to how we fixed
-> the problem.
+>> > +static size_t unrot13(char *buf)
+>> > +{
+>> > +	char *p = buf, *q = buf;
+>> > +
+>> > +	while (*p) {
+>> > +		const char *begin = strstr(p, "<rot13>"), *end;
+>>
+>> AFAIR from my reading of [02/11], the encoding side did not special
+>> case the payload that has <ebg13> or </ebg13>; if we want to make it
+>> reversible conversion (which is excellent improvement over the
+>> current "# GETTEXT_POISON #" obfuscation), we'd need to do something
+>> about it, I think.
 >
-> Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+> Do you expect any message to be translated _twice_?
 
-Thanks.
+Not at all.
+
+But what I had in mind, when I wrote the above, was that the
+programmers are entitled to expect that they are allowed to say:
+
+	die(_("message with <ebg13/>, <ebg13> and <rot13> in it"));
+
+This will be rot13'd, and the entire thing will be enclosed inside
+"<rot13>...</rot13>"; I would expect that somewhere inside "..." the
+receiving end that attempts to parse it by relying on these markers
+will be confused.
+
+>> But on second thought, nobody can prevent a caller to die(_("%s", msg));
+>> to have "<rot13>" in the msg part, so perhaps punting like this
+>> series does is sufficient.  I dunno.
+
+And this comment still stands.
