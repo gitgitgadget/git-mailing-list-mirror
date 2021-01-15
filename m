@@ -2,93 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F9ABC433E0
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 16:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4DEC433E0
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 17:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 038A12339E
-	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 16:30:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A0CD2399A
+	for <git@archiver.kernel.org>; Fri, 15 Jan 2021 17:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbhAOQaX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 11:30:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57386 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725923AbhAOQaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 11:30:23 -0500
-Received: (qmail 2780 invoked by uid 109); 15 Jan 2021 16:29:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 Jan 2021 16:29:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30920 invoked by uid 111); 15 Jan 2021 16:29:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Jan 2021 11:29:42 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 15 Jan 2021 11:29:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 04/11] sha1dc: mark forgotten message for translation
-Message-ID: <YAHC9faa4ykNOWj6@coredump.intra.peff.net>
-References: <pull.836.git.1610441262.gitgitgadget@gmail.com>
- <8f2c08474a75793c24af7d4ae44d73d2b23920bc.1610441263.git.gitgitgadget@gmail.com>
- <X/2J8KL/Jig/xttF@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2101151639030.52@tvgsbejvaqbjf.bet>
+        id S1729018AbhAORXV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 12:23:21 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55783 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728569AbhAORXU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 12:23:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7906FB6516;
+        Fri, 15 Jan 2021 12:22:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m65U/35ijaWZox9g0RuLYIS9hmo=; b=yQO60j
+        2j+aZiRIEUUO2qSKu/MmLTCKQ9AES9XwIrYXNv9bndt+5XjSUU5w8dHa3fGq9+9O
+        3CfzG86GIUeKNy1EhwmglmEzaPbKgOvbA4MG9EnXE/VI9mNy/y9BaQr5el7dBcgV
+        rH70N/Bx/iqsOFoMAHcGkbizDirfgPSS6GpaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xNE55YPZJjzMtabHLIanvxdH9dNUJucx
+        It3SPR1Z1V7XWOaxEQ8LbQDHvwicAppZ8/ir6TF5VOddz1UQkPYHaHMNZKAhk2Eb
+        2S75OtAPyBcmwHUKtvi/v9k8rYEO93Lhvb+QNih8u0nv51DKKcjhHMfSTxLJgCGQ
+        hy8XKII09fg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F16EB6515;
+        Fri, 15 Jan 2021 12:22:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EA53BB6514;
+        Fri, 15 Jan 2021 12:22:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH 1/9] rebase -i: only write fixup-message when it's
+ needed
+References: <20210108092345.2178-1-charvi077@gmail.com>
+        <20210108092345.2178-2-charvi077@gmail.com>
+        <X/8/WassxF7ujqjX@nand.local>
+        <CAPSFM5ew583ZPZO9XUWxskQPsdSv520gKCM30GH2huhdTDxb2A@mail.gmail.com>
+        <ac1691d6-e13e-2c04-b105-73a0645f4883@gmail.com>
+        <CAPSFM5eBCVD9sx-AkA6Zr-PAq3JgTftcf2UhZBcBmK_00ff1+Q@mail.gmail.com>
+Date:   Fri, 15 Jan 2021 09:22:37 -0800
+In-Reply-To: <CAPSFM5eBCVD9sx-AkA6Zr-PAq3JgTftcf2UhZBcBmK_00ff1+Q@mail.gmail.com>
+        (Charvi Mendiratta's message of "Fri, 15 Jan 2021 14:08:37 +0530")
+Message-ID: <xmqqbldqt8rm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2101151639030.52@tvgsbejvaqbjf.bet>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 43B6AA16-5756-11EB-A7F3-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 15, 2021 at 04:43:05PM +0100, Johannes Schindelin wrote:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-> > > -	die("SHA-1 appears to be part of a collision attack: %s",
-> > > +	die(_("SHA-1 appears to be part of a collision attack: %s"),
-> > >  	    hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
-> >
-> > I didn't find any list discussion, but I think I may have actually left
-> > this untranslated intentionally. Like a BUG(), we'd expect it to come up
-> > basically never. And when it does, being able to search for the exact
-> > wording online may be more important than providing a translated
-> > version.
-> 
-> I disagree with that reasoning. By that rationale, any message we deem to
-> be somewhat rare should be _untranslated_.
-> 
-> A much better rule, at least from my perspective is: is the target
-> audience the Git users? If so, the message is to be translated. If not,
-> then not.
+> Okay, I looked into the write_message(...) and agree that it does not return
+> a positive value and only returns non-zero for error case and zero for
+> success. So, for this patch maybe we can ignore checking '< 0' here and
+> later add another patch to make this function follow the convention of
+> "negative is error".
 
-That's what I was getting at. The audience is really Git developers,
-just like it would be for a BUG(). We don't expect either of those
-things to happen.
+Please don't.  There is a higher cognitive cost to readers when you write
 
-> In this instance, it is quite obviously targeting the Git users who need
-> to understand why the command they tried to run was failing. The test in
-> t0013 is totally agreeing with this:
-> 
-> 	test_expect_success 'test-sha1 detects shattered pdf' '
-> 		test_must_fail test-tool sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
-> 		test_i18ngrep collision err &&
-> 		grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
-> 	'
-> 
-> Notice that `test_i18ngrep`? It tells me that we expect this message to be
-> translated.
+	if (write_message(...)) {
 
-Well, I wrote both that line and the untranslated original code, so I'm
-not sure what we can deduce from that. ;)
+The reader is forced to look at its implementation to see if it
+returns positive in a non-error situation.
 
-But yeah, I am not strongly opposed to translating this. I brought it up
-more in the line of "I don't think it's that big a deal that it was not
-translated".
+If you write it like so from the beginning
 
--Peff
+	if (write_message(...) < 0) {
+
+the reader can trust that the code follows "negative is an error"
+convention.  One fewer thing readers have to worry about.
