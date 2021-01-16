@@ -2,93 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5377C433DB
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 03:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D30BAC433DB
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:22:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B7D923A05
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 03:27:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A27F723A5E
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729347AbhAPD0i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 22:26:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33770 "EHLO
+        id S1727825AbhAPEWJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 23:22:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725919AbhAPD0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 22:26:38 -0500
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4648C061757
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 19:25:57 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id l14so5008139qvh.2
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 19:25:57 -0800 (PST)
+        with ESMTP id S1725854AbhAPEWJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 23:22:09 -0500
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEEA3C061757
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 20:21:28 -0800 (PST)
+Received: by mail-yb1-xb32.google.com with SMTP id y4so7073970ybn.3
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 20:21:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=+C7hhEeLSJxdgIXe1F7ACxtVuVlnCTQg/QJzRdHmPf0=;
-        b=D9yl7e59YzFAK63q2AHpg4UrXUA06mcftgHlYFiaRo6tY9+T2+PdFNVQ1pjt2dbQvE
-         Lm7Gm5XpMBY07Owu46NRu8SqX4Rac1Uck4S2K1o2qgkfiCwoBZooIgjGhaIMTnR2kicL
-         jc6m320dzVhe+bmqTy0i9K2hY0g7cupXI/sHj7wL6Wt6IHP6WojCaTW+j5vSdm7LBnnq
-         TA4WCi11udRQZN4nUp0IMo06YIZr5oF/oEtclEs1RSvN08tDaE16BcfoyDXiQaIsIEex
-         BbIpmIbJlVhxGLP7b0SUEJgG4SsYt32lYnqkUeDHoO5Yd9IevR/6TuAzf3ix2Ct8VCIJ
-         4gaw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ydLOKTvCEqlMmQ0/NvLpw+qMxYvp+3+ZSbNlsPog1HE=;
+        b=Q5l0QpqsWkqU5T9iOhB6atW2AZgstiYO+qDZsj3eONpLVrBe1NhNGMXTvaXtpLJjwC
+         EWJQTfQjadCesBecWiOLyOVjgkaEpP0SAfZwT7sMSrgJEl6vkCEsZyVfE46vylHKwciW
+         E0R2LjNs3rwG44UDHeyNyfMLsS+ChSOauXGE5gL/ol9Jz4QXZI1GrjAIDF8bltt+o13W
+         YhXc29yWKberYAEJLwl1Z3sa2Oyswc+kmr+OJcwEo32Ea5mlhCdROe8kk8E+fpbauFp6
+         c4+brQhPiAj3/342g8jlff4zVR6gKaG70B7VF5SwPmdi9JV7fG1ooUPyQEvSjSiAEwNX
+         KqUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=+C7hhEeLSJxdgIXe1F7ACxtVuVlnCTQg/QJzRdHmPf0=;
-        b=hnCvhk4kwheYXb4O1D0VpQghZnoyNw/0LtZRgKLzUsI5C5CVdnuLfE3hN55+AZ3mip
-         06XbEInAXr8LFd2DVRcdWic14GJ9t6SVChWnQDtzodVaU5HzkBEqGfXSjcQZl2UISe8R
-         X0cFVetVOK5cREzYNXU99BNVp68gQNxu2d87WKIilRE9GSmkNCvqRt9W0KsGr6/z/x/U
-         5sNF7qSRAwh7aJiZE3JjPW/2yVoDHO5rdmUmcdHSbZOAAJCcHie+Py2Rj2IJlwOWOupF
-         nFxwJ0KPdnhky/n1S/0rsuw+F8a+xYAv3lBNObkALbEbqCmJaUCOZDl4Mn/2lZT2aIss
-         b8rw==
-X-Gm-Message-State: AOAM531L7VxwANMfKD7AXslh32n75kUseGXC9nwbXgnwyY3iDeCc63zJ
-        nX6agVltLpMfuxy4CPgR9I9fCw==
-X-Google-Smtp-Source: ABdhPJzL6axcI2ihKkN4uhoraP0E9lS04f40iMMEwkxezmJlB2TUm+ndWzW4tmnowV5V9LIRaMF6eQ==
-X-Received: by 2002:a0c:f0d3:: with SMTP id d19mr15236402qvl.55.1610767557039;
-        Fri, 15 Jan 2021 19:25:57 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:4081:f2ff:d6a2:cb33])
-        by smtp.gmail.com with ESMTPSA id k187sm6427126qkc.74.2021.01.15.19.25.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Jan 2021 19:25:56 -0800 (PST)
-Date:   Fri, 15 Jan 2021 22:25:55 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2021, #03; Fri, 15)
-Message-ID: <YAJcwzd7HjkwAOv1@nand.local>
-References: <xmqqbldpr90k.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ydLOKTvCEqlMmQ0/NvLpw+qMxYvp+3+ZSbNlsPog1HE=;
+        b=nBhW7Y/HRdt0s+GKag1DiFLMpPjaWjcgCaNmbCWSdE7QoRBwwvzAYIbLEA4fqhr30U
+         hJB0sRh3IE287GdKHVs70wbLxHE4pwC7gd9JG4iSJnSN1W0lDeH0l6kZ3g+TBSGLT4uF
+         TnbiFdAQWksXvOOo0GzZ8lEcoQ+awr93RLS3kZA+d02jFyyBadcqsrqFz2ZF+n6B4iYw
+         P8FPli5bdvZez6+UYxI3DM/1R8hP7pLKMjv2ChBcx4f0t+ktwpTrVhhgBGydeen6I3gB
+         W3J+oCDnrw0IrWAJm0ugM4g6xxepphh9+TOGdk2CShgO9dw+RMTCQMgHRrkIrhK3syOw
+         lBGw==
+X-Gm-Message-State: AOAM532xd+Fs5BR8IyUKS8OxQqIxjoI4qF8soXrpPAGo50aQJqTlLdWL
+        oo6vYJksL2Ht9ZWmH5w6Pio/QMDOvs6zo5SU0tnCIaQK
+X-Google-Smtp-Source: ABdhPJxkTcj1CbyDkc+lnTZgXEH8ipL0NrzqhoRJ9S1SlWpgS/tgukWFxdcpTB1sfeHBDx9kQIsYmMM1d6aKC2g+qwI=
+X-Received: by 2002:a25:9906:: with SMTP id z6mr21462135ybn.238.1610770888155;
+ Fri, 15 Jan 2021 20:21:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <xmqqbldpr90k.fsf@gitster.c.googlers.com>
 In-Reply-To: <xmqqbldpr90k.fsf@gitster.c.googlers.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 16 Jan 2021 12:21:16 +0800
+Message-ID: <CANYiYbGxFt_Yxyk83-rSzXdUMHuK9+tRBtf3BTU8HnmzGrGudQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2021, #03; Fri, 15)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 15, 2021 at 05:00:11PM -0800, Junio C Hamano wrote:
-> * tb/pack-revindex-on-disk (2021-01-14) 8 commits
->  (this branch uses tb/pack-revindex-api.)
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8816=E6=97=
+=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=889:02=E5=86=99=E9=81=93=EF=BC=9A
+> * jx/bundle (2021-01-11) 3 commits
+>   (merged to 'next' on 2021-01-14 at 749a907dd2)
+>  + bundle: arguments can be read from stdin
+>  + bundle: lost objects when removing duplicate pendings
+>  + test: add helper functions for git-bundle
 >
->  Introduce an on-disk file to record revindex for packdata, which
->  traditionally was always created on the fly and only in-core.
+>  "git bundle" learns "--stdin" option to read its refs from the
+>  standard input.  Also, it now does not lose refs whey thy point at
+>  the same object.
 
-Thanks for dealing with some of the shuffle between this and the
-tb/pack-revindex-api branch. I have a string of topics in my fork
-that are based on this multi-series of patches, but I'll send them to
-the list one at a time to avoid crossing topics.
+s/whey thy/when they/
 
-I figured that sending these two at the same time would be worthwhile,
-but seeing the pain it caused was enough to not make me want to send two
-dependent topics at the same time again.
-
-(There may some semi-related fixes--especially around .keep packs--that
-I could pull out of the chain entirely, and so they could be submitted
-alongside other topics without one depending on the other. I look into
-whether or not it's possible next week.)
-
-Thanks,
-Taylor
+--
+Jiang Xin
