@@ -2,377 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DFFAC433E0
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 02:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CD31C433E0
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 02:51:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE797238D6
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 02:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE09E238D7
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 02:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726151AbhAPC2O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 21:28:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49584 "EHLO
+        id S1726123AbhAPCvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 21:51:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbhAPC2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 21:28:13 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B34D8C061757
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 18:27:32 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id k4so6883014ybp.6
-        for <git@vger.kernel.org>; Fri, 15 Jan 2021 18:27:32 -0800 (PST)
+        with ESMTP id S1725601AbhAPCvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 21:51:02 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17F12C061757
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 18:50:22 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id r5so11635353eda.12
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 18:50:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pt4cK42lH3OJorWwidHN4g8DeAietXydpGu2LBglP/M=;
-        b=cmlybYubTz05fzjTgSNKyu2dh7KG0pmy7RbQABBtFYPrwnwz/JvEHl1ogI6YgjXK1/
-         7UHIzeawUmjFIzJX5nEHJ/3D67uAiRVJbm4Stn2UMLr0LqNCXmG1H2d+XGSEaordCget
-         DPjia3TClsNXw3wUfCwF9ORGtI2MdwdcuU6Cddwilz9GvJzsBisDNf4pIOWhke8QC4cT
-         PLRuujDHDu0o0Xs350zFKqoKTTQi0mkEena64Xvck9Tw4usq3RJ1coP7q0deV2GXJQ/z
-         S2aDYjYLOD5Va666Sn3LXUI+HdJWbyBhQyTvFeII2IKiUblKmPKj2Rl9dDuInFyVTA23
-         7lTg==
+        bh=CBXbVzMJMplcbJoqwU5XZQzfh8j0NxH9CKWnruZHIMc=;
+        b=eqEJ5N7iAJ4F7au/bLOz/jE1F+z6rvTL7ufKVhdR6a6xjQCHhN+czyGjvoSyJiVUHv
+         Ce/PwiLN388+R2sbG+9/X0URMFNOLKzFgED4EF3joi23PgqUF52tkzuO556oKh7ShCzL
+         dVhy15KBEV/1ZyarbiVcQc+Ej8eFrXqdls6RhCoV9sj/hSPZdPtYqF1uPSOfnYdPlbum
+         Rnnql17F2/ISSG5GRnl7G7/iWtMLtTVYkvjUYtp/iR06WHp/pbMs0JgiH1BDAaSoZrvX
+         9lrL6WpPyXK0DzF6e/FJAAXFNidAV9QRloBo9GufR38Ljum+MTgEYgPSmclxHumLaem7
+         5sMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pt4cK42lH3OJorWwidHN4g8DeAietXydpGu2LBglP/M=;
-        b=LdcEz7JwcPI+BBdXvJrStHL0g8BI9B3k7lxZt3fgGizhEZgampJ0lGKBqNw7cE1SZI
-         QTJwvGyibJ1IFlwN/OD2rOhvsc591i47PMp4YhI9oehj0RTIg7uBhb8boUrm1vvPAijA
-         vu+c8TBYy4ndbrOXXaWVlL/MzDn56jvvoWIPUQkn/GczPpt2xOlzpLq/WNxUilW68c6R
-         gQC2UM+vg2N42xwdB6asIkeFB0iZ5RHMnLPjEKi4kFY4f+yv+R7QFnqHMvaXvp48OApS
-         vjoJ44xzjGEx+tAt9eb1mKXFgRkctqaRF9oDmQVmm/PehVviDkHLFuol6ngQaztDlU4h
-         DJ+g==
-X-Gm-Message-State: AOAM531oXAqvrmSgA5/Go5T6azDr7GEaCd4r7sSwVL3by9ZxNvGJ6c1e
-        +SOqlnIgZXsSYHCNO47gR/yBgCvaYVc/56sNz6HPXQt0y3c66Q==
-X-Google-Smtp-Source: ABdhPJxgzD7jPtBRPHvaZUGUFWYkGMdLY4mU9rXfZmH9TPyCefTS64yL5JFfshYyH6WTwaKkjZYAL5389Fn3QdTRijw=
-X-Received: by 2002:a25:bccf:: with SMTP id l15mr21775004ybm.272.1610764051229;
- Fri, 15 Jan 2021 18:27:31 -0800 (PST)
+        bh=CBXbVzMJMplcbJoqwU5XZQzfh8j0NxH9CKWnruZHIMc=;
+        b=uTn9s13fvJW3F93u0mM5OBol7n2GfUeBn6FOFW3S9S7sPxjKbQ/NKqpnx3eRObAeNT
+         z7G0vWtFCwd6x4uXpmyeJOdDyPC8ODWYmErV/pA8gc986TRk8/KbJHiLRcdBulVSumST
+         yJEQoMfs9m5UrhupTNFjpUtyM2xWuWcSegd/O5UogxmAMaEEsNIHkq0C9in/OhaE1/kM
+         4B57dZDLqvNzaShtV23Fjwc+rfhUTQRur/w0FYCMoj2U9i3xT6VEKRqol0xDirPpkRXr
+         15rsnhGWYcidAWtsHZyJgraAFbFDhimeBJOk0heR3WVwGmbb4BIkPU9IopNP497gIkhf
+         MD1w==
+X-Gm-Message-State: AOAM533K5Q79WDWZjELB9cRnJm8pHM6Y3+FOQ0h3pZ+40o8yPJoowKLw
+        wPkKiyejDegGUgs48DiDoh5715vzGRp68lmjqDjrEOcll2EHIA==
+X-Google-Smtp-Source: ABdhPJw6GVAEPn7jqEHhwf76T8nLoWN+FAZAGpDJtXxU1eQS7W86+m9lEp1XRaGPpApXcJTfHwLdVnmSrj7Ja/MHd5w=
+X-Received: by 2002:a05:6402:b5a:: with SMTP id bx26mr11669637edb.339.1610765420721;
+ Fri, 15 Jan 2021 18:50:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20190814024927.13167-1-phil.hord@gmail.com> <CABURp0rtkmo7MSSCVrdNXT0UzV9XqV_kXOGkC23C+_vMENNJUg@mail.gmail.com>
- <CABPp-BEUPH5Yc08uDehAXNQ5-3fJ9YeW0xscVBR45hniDe+HEg@mail.gmail.com>
-In-Reply-To: <CABPp-BEUPH5Yc08uDehAXNQ5-3fJ9YeW0xscVBR45hniDe+HEg@mail.gmail.com>
-From:   Phil Hord <phil.hord@gmail.com>
-Date:   Fri, 15 Jan 2021 18:27:19 -0800
-Message-ID: <CABURp0p5e7vz-5tGJ_bByqYAmDcf+TQwAtV4gjnaqsdqDx0Zow@mail.gmail.com>
-Subject: Re: [PATCH v2] use delete_refs when deleting tags or branches
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
+ <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org> <20200722074530.GB3306468@coredump.intra.peff.net>
+ <xmqqmu3r5umr.fsf@gitster.c.googlers.com> <20200723182549.GB3975154@coredump.intra.peff.net>
+In-Reply-To: <20200723182549.GB3975154@coredump.intra.peff.net>
+From:   Martin von Zweigbergk <martinvonz@gmail.com>
+Date:   Fri, 15 Jan 2021 16:50:08 -1000
+Message-ID: <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
+Subject: Re: Improving merge of tricky conflicts
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        "B. Stebler" <bono.stebler@gmail.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 15, 2021 at 10:43 AM Elijah Newren <newren@gmail.com> wrote:
+On Thu, Jul 23, 2020 at 8:27 AM Jeff King <peff@peff.net> wrote:
 >
-> Hi,
+> On Wed, Jul 22, 2020 at 10:26:04AM -0700, Junio C Hamano wrote:
 >
-> On Thu, Jan 14, 2021 at 6:00 PM Phil Hord <phil.hord@gmail.com> wrote:
+> > > The big downside here, of course, is that it's showing the diff for the
+> > > whole file, not just one hunk (on the other hand, I often find the
+> > > trickiest conflicts are ones where the changes unexpectedly span
+> > > multiple hunks).
 > >
-> > I noticed this is still only in my local branch.   Can I get an ACK/NAK?
+> > Yup, I often find myself comparing the base part (lines between |||
+> > and ===) with our part (lines between <<< and |||) and their part
+> > (lines between === and >>>) while looking at the diff3 output to see
+> > what unique change each side did, in order to come up with a
+> > conflict resolution.
+> >
+> > I do this often enough to wonder if I should write a small "filter"
+> > that I can pipe a whole "diff3" <<< ... ||| ... === ... >>> region
+> > to and convert it into to diffs, but not often enough to motivate
+> > me to actually write one ;-).
 >
-> Sorry for missing this when you posted in August.  Thanks for sending
-> in the update from v1.
->
-> For other reviewers: v1 is over here:
-> https://lore.kernel.org/git/20190808035935.30023-1-phil.hord@gmail.com/,
-> and has review comments from Martin, me, Peff, and Junio.
->
-> > On Tue, Aug 13, 2019 at 7:49 PM Phil Hord <phil.hord@gmail.com> wrote:
-> >>
-> >> From: Phil Hord <phil.hord@gmail.com>
-> >>
-> >> 'git tag -d' and 'git branch -d' both accept one or more refs to
-> >> delete, but each deletion is done by calling `delete_ref` on each argv.
-> >> This is very slow when removing from packed refs as packed-refs is
-> >> locked and rewritten each time. Use delete_refs instead so all the
-> >> removals can be done inside a single transaction with a single update.
->
-> Awesome, thanks for also fixing up git branch with v2.
->
-> >> Since delete_refs performs all the packed-refs delete operations
-> >> inside a single transaction, if any of the deletes fail then all
-> >> them will be skipped. In practice, none of them should fail since
-> >> we verify the hash of each one before calling delete_refs, but some
-> >> network error or odd permissions problem could have different results
-> >> after this change.
-> >>
-> >> Also, since the file-backed deletions are not performed in the same
-> >> transaction, those could succeed even when the packed-refs transaction
-> >> fails.
-> >>
-> >> After deleting refs, report the deletion's success only if the ref was
-> >> actually deleted. For branch deletion, remove the branch config only
-> >> if the branch ref is actually removed.
-> >>
-> >> A manual test deleting 24,000 tags took about 30 minutes using
-> >> delete_ref.  It takes about 5 seconds using delete_refs.
->
-> As I said on v1, it's really nice to have this fixed.  Thanks for doing it.
->
-> >>
-> >> Signed-off-by: Phil Hord <phil.hord@gmail.com>
-> >> ---
-> >> This reroll adds the same delete_refs change to 'git branch'. It checks
-> >> individual refs after the operation to report correctly on each whether
-> >> it was successfully deleted or not. Maybe this is an unnecessary step,
-> >> though. This handles the weird case where some file system error
-> >> prevented us from deleting refs, leaving us with an error from
-> >> delete_refs but without any idea which refs might have been affected.
-> >>
-> >>  builtin/branch.c | 50 +++++++++++++++++++++++++++++-------------------
-> >>  builtin/tag.c    | 45 +++++++++++++++++++++++++++++++++----------
-> >>  2 files changed, 65 insertions(+), 30 deletions(-)
-> >>
-> >> diff --git a/builtin/branch.c b/builtin/branch.c
-> >> index 2ef214632f..2273239f41 100644
-> >> --- a/builtin/branch.c
-> >> +++ b/builtin/branch.c
-> >> @@ -202,6 +202,9 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
-> >>         int remote_branch = 0;
-> >>         struct strbuf bname = STRBUF_INIT;
-> >>         unsigned allowed_interpret;
-> >> +       struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-> >> +       struct string_list_item *item;
-> >> +       int refname_pos = 0;
-> >>
-> >>         switch (kinds) {
-> >>         case FILTER_REFS_REMOTES:
-> >> @@ -209,12 +212,13 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
-> >>                 /* For subsequent UI messages */
-> >>                 remote_branch = 1;
-> >>                 allowed_interpret = INTERPRET_BRANCH_REMOTE;
-> >> -
-> >> +               refname_pos = 13;
-> >>                 force = 1;
-> >>                 break;
-> >>         case FILTER_REFS_BRANCHES:
-> >>                 fmt = "refs/heads/%s";
-> >>                 allowed_interpret = INTERPRET_BRANCH_LOCAL;
-> >> +               refname_pos = 11;
-> >>                 break;
-> >>         default:
-> >>                 die(_("cannot use -a with -d"));
-> >> @@ -265,30 +269,36 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
-> >>                         goto next;
-> >>                 }
-> >>
-> >> -               if (delete_ref(NULL, name, is_null_oid(&oid) ? NULL : &oid,
-> >> -                              REF_NO_DEREF)) {
-> >> -                       error(remote_branch
-> >> -                             ? _("Error deleting remote-tracking branch '%s'")
-> >> -                             : _("Error deleting branch '%s'"),
-> >> -                             bname.buf);
-> >> -                       ret = 1;
-> >> -                       goto next;
->
-> The code used to set the return code to 1 if it failed to delete a branch
->
-> >> -               }
-> >> -               if (!quiet) {
-> >> -                       printf(remote_branch
-> >> -                              ? _("Deleted remote-tracking branch %s (was %s).\n")
-> >> -                              : _("Deleted branch %s (was %s).\n"),
-> >> -                              bname.buf,
-> >> -                              (flags & REF_ISBROKEN) ? "broken"
-> >> -                              : (flags & REF_ISSYMREF) ? target
-> >> -                              : find_unique_abbrev(&oid, DEFAULT_ABBREV));
-> >> -               }
-> >> -               delete_branch_config(bname.buf);
-> >> +               item = string_list_append(&refs_to_delete, name);
-> >> +               item->util = xstrdup((flags & REF_ISBROKEN) ? "broken"
-> >> +                                   : (flags & REF_ISSYMREF) ? target
-> >> +                                   : find_unique_abbrev(&oid, DEFAULT_ABBREV));
-> >>
-> >>         next:
-> >>                 free(target);
-> >>         }
-> >>
-> >> +       delete_refs(NULL, &refs_to_delete, REF_NO_DEREF);
-> >> +
-> >> +       for_each_string_list_item(item, &refs_to_delete) {
-> >> +               char * describe_ref = item->util;
-> >> +               char * name = item->string;
-> >> +               if (ref_exists(name))
-> >> +                       ret = 1;
->
-> Now it sets the return code if the branch still exists after trying to
-> delete.  I thought that was subtly different...but I tried doing a
-> branch deletion of a non-existent branch since I thought that would be
-> the only difference -- however, that errors out earlier in the
-> codepath before even getting to the stage of deleting refs.  So I
-> think these are effectively the same.
->
-> >> +               else {
-> >> +                       char * refname = name + refname_pos;
-> >> +                       if (!quiet)
-> >> +                               printf(remote_branch
-> >> +                                       ? _("Deleted remote-tracking branch %s (was %s).\n")
-> >> +                                       : _("Deleted branch %s (was %s).\n"),
-> >> +                                       name + refname_pos, describe_ref);
->
-> Neither remote_branch nor refname_pos are changing throughout this
-> loop, which I at first thought was in error, but it looks like git
-> branch only allows you to delete one type or the other -- not a
-> mixture.  So this is correct.
->
-> >> +
-> >> +                       delete_branch_config(refname);
-> >> +               }
-> >> +               free(describe_ref);
-> >> +       }
-> >> +       string_list_clear(&refs_to_delete, 0);
-> >> +
-> >>         free(name);
-> >>         strbuf_release(&bname);
-> >>
-> >> diff --git a/builtin/tag.c b/builtin/tag.c
-> >> index e0a4c25382..0d11ffcd04 100644
-> >> --- a/builtin/tag.c
-> >> +++ b/builtin/tag.c
-> >> @@ -72,10 +72,10 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting,
-> >>  }
-> >>
-> >>  typedef int (*each_tag_name_fn)(const char *name, const char *ref,
-> >> -                               const struct object_id *oid, const void *cb_data);
-> >> +                               const struct object_id *oid, void *cb_data);
-> >>
-> >>  static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
-> >> -                            const void *cb_data)
-> >> +                            void *cb_data)
-> >>  {
-> >>         const char **p;
-> >>         struct strbuf ref = STRBUF_INIT;
-> >> @@ -97,18 +97,43 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
-> >>         return had_error;
-> >>  }
-> >>
-> >> -static int delete_tag(const char *name, const char *ref,
-> >> -                     const struct object_id *oid, const void *cb_data)
-> >> +static int collect_tags(const char *name, const char *ref,
-> >> +                       const struct object_id *oid, void *cb_data)
-> >>  {
-> >> -       if (delete_ref(NULL, ref, oid, 0))
-> >> -               return 1;
->
-> This used to return 1 if it failed to delete a ref.
->
-> >> -       printf(_("Deleted tag '%s' (was %s)\n"), name,
-> >> -              find_unique_abbrev(oid, DEFAULT_ABBREV));
-> >> +       struct string_list *ref_list = cb_data;
-> >> +
-> >> +       string_list_append(ref_list, ref);
-> >> +       ref_list->items[ref_list->nr - 1].util = oiddup(oid);
-> >>         return 0;
->
-> Now it unconditionally returns 0.
->
-> >>  }
-> >>
-> >> +static int delete_tags(const char **argv)
-> >> +{
-> >> +       int result;
-> >> +       struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
-> >> +       struct string_list_item *item;
-> >> +
-> >> +       result = for_each_tag_name(argv, collect_tags, (void *)&refs_to_delete);
-> >> +       delete_refs(NULL, &refs_to_delete, REF_NO_DEREF);
->
-> You now only look at the result of collecting the tags, and ignore the
-> result of trying to delete them...
->
-> >> +
-> >> +       for_each_string_list_item(item, &refs_to_delete) {
-> >> +               const char * name = item->string;
-> >> +               struct object_id * oid = item->util;
-> >> +               if (ref_exists(name))
-> >> +                       result = 1;
->
-> ...except that you check if the refs still exist afterward and set the
-> return code based on it.  Like with the branch case, I can't come up
-> with a case where the difference matters.  I suspect there's a race
-> condition there somewhere, but once you start going down that road I
-> think the old code may have had a bunch of races too.  It might be
-> nice to document with a comment that there's a small race condition
-> with someone else trying to forcibly re-create the ref at the same
-> time you are trying to delete, but I don't think it's a big deal.
->
-> If you did use the result of delete_refs(), you might have to double
-> check that the callers (git.c:handle_builtin() -> git.c:run_builtin()
-> -> builtin/tag.c:cmd_tag() -> builtin/tag.c:delete_tags()) are all
-> okay with the return code; it looks like handle_builtin() would pass
-> the return code to exit() and the git-tag manpage doesn't document the
-> return status, so you've at least got some leeway in terms of what
-> values are acceptable.  Or you could just normalize the return value
-> of delete_refs() down to 0 or 1.  But you'd only need to worry about
-> that if the race condition is something we're worried enough to
-> tackle.
+> I would definitely have found that useful before (usually when one side
+> made a tiny one-line change and the other side deleted or drastically
+> changed a huge chunk).
 
-Interesting. I was worried about imposing a requirement on delete_refs
-that any non-zero return must mean that something was not deleted
-which should have been. Maybe that's not such a worry, though, and it
-would be acceptable to return a 1 even if all the refs were deleted
-even though some error occurred further down the line.
-
-I tried normalizing the value and then also verifying each ref was
-removed, but that seemed wrong.  Maybe it's ok to just normalize it
-and not react to still-existing refs.
-
-> >> +               else
-> >> +                       printf(_("Deleted tag '%s' (was %s)\n"),
-> >> +                               item->string + 10,
-> >> +                               find_unique_abbrev(oid, DEFAULT_ABBREV));
-> >> +
-> >> +               free(oid);
-> >> +       }
-> >> +       string_list_clear(&refs_to_delete, 0);
-> >> +       return result;
-> >> +}
-> >> +
-> >>  static int verify_tag(const char *name, const char *ref,
-> >> -                     const struct object_id *oid, const void *cb_data)
-> >> +                     const struct object_id *oid, void *cb_data)
-> >>  {
-> >>         int flags;
-> >>         const struct ref_format *format = cb_data;
-> >> @@ -511,7 +536,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
-> >>         if (filter.merge_commit)
-> >>                 die(_("--merged and --no-merged options are only allowed in list mode"));
-> >>         if (cmdmode == 'd')
-> >> -               return for_each_tag_name(argv, delete_tag, NULL);
-> >> +               return delete_tags(argv);
-> >>         if (cmdmode == 'v') {
-> >>                 if (format.format && verify_ref_format(&format))
-> >>                         usage_with_options(git_tag_usage, options);
-> >> --
-> >> 2.23.0.rc1.174.g4cc1b04b4c
->
-> Overall, I like the patch.  Peff commented on v1 that the basic idea
-> (use the part of the refs API that batches operations) is the right
-> thing to do.  I'm not that familiar with refs-touching code, but your
-> patch makes sense to me.  I think I spotted a minor issue (you ignore
-> the return status of delete_refs(), then later check the existence of
-> the refs afterwards to determine success, which I believe is a minor
-> and unlikely race condition), but I'm not sure it's worth fixing;
-> perhaps just mark it with #leftoverbits and move on -- the faster
-> branch and tag deletion is a very nice improvement.
->
-> I notice Martin said on v1 that there was a testcase that had problems
-> with your patch; I tested v2 and it looks like you fixed any such
-> issues.  I think you also addressed the feedback from Junio, though
-> his comments about the return code and the minor race condition I
-> noticed around it might mean it'd be good to get his comments.
->
-> Anyway,
-> Acked-by: Elijah Newren <newren@gmail.com>
->
-> I would say Reviewed-by, but I'd like to get Junio's comments on the
-> return code and minor race.
-
-Thanks for the detailed review and thoughts.
+FYI, I added something similar to Mercurial recently. Instead of two
+diffs, it shows one snapshot and one diff. See
+https://phab.mercurial-scm.org/D9551 for details. I've used it for a
+few weeks and it seems to be working pretty well. The drawback is
+mostly when you want to keep the side with the diff and ignore the
+other side, since you'll then have to drop the lines prefixed with "-"
+and then enter column-selection mode or something and delete the first
+character on each remaining line.
