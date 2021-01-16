@@ -2,100 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE3FC433E0
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0F8FC433DB
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:50:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6F6E23A5E
-	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:26:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 610BB221ED
+	for <git@archiver.kernel.org>; Sat, 16 Jan 2021 04:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729345AbhAPEZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 15 Jan 2021 23:25:43 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:42018 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725854AbhAPEZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Jan 2021 23:25:42 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1l0d92-0007Bj-Mv; Fri, 15 Jan 2021 21:25:00 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1l0d91-006YBQ-JU; Fri, 15 Jan 2021 21:25:00 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 161665012C4;
-        Fri, 15 Jan 2021 21:24:59 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 43wHyg-mvjXM; Fri, 15 Jan 2021 21:24:59 -0700 (MST)
-Received: from ellen (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id AD28550120A;
-        Fri, 15 Jan 2021 21:24:57 -0700 (MST)
-Date:   Fri, 15 Jan 2021 21:24:54 -0700
-From:   Seth House <seth@eseth.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     David Aguilar <davvid@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Message-ID: <20210116042454.GA4913@ellen>
-References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
- <20210109224236.50363-1-davvid@gmail.com>
- <20210109225400.GA156779@ellen>
- <xmqqmtxhd1zx.fsf@gitster.c.googlers.com>
- <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
- <20210110072902.GA247325@ellen>
- <xmqqh7np9gqn.fsf@gitster.c.googlers.com>
+        id S1726024AbhAPEuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 15 Jan 2021 23:50:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725781AbhAPEuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Jan 2021 23:50:14 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECDC5C0613D3
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 20:49:33 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id d8so10738541otq.6
+        for <git@vger.kernel.org>; Fri, 15 Jan 2021 20:49:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cTvTeHfCcIFD2CLPgYc/fMmHPkyZqW8JfJSfZi7O7wQ=;
+        b=hFuOcxM7smfM4rRI9ZQ9zm5uWj9VzZXbD2d4zZNElQub69bSkqstqfySnvPJYmf2yf
+         26hX+Lz3LfkZyo4yNdVPR24uh9HaluJr2ftxRlJYs0CGIcRmYfcp7KVQbFqQaxYb5dhT
+         TtsHQIzOFoTZ6HPcStl72Q4nPKdytMlQok4pDLtjlC4EC6pUnGvc4xu4dyjVJBCltSke
+         psyA84B7jAuRzYuk8LEHU2MvJrhFf+F/2fiAdFF3+eXaBCRhBYqH1F77NVXw93ebBAfk
+         8Iy6a8Xfq8xwV7X5GjqldfA/0/UF6RWR7AL0lYx2kyJDk51EG7luAesnqmHktTiUOmTw
+         IS9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cTvTeHfCcIFD2CLPgYc/fMmHPkyZqW8JfJSfZi7O7wQ=;
+        b=ggWHtQoSMH4sSC890J2RE3tEdxxgeHpqOL4fPs9TlVKV3jFGLT3cHWIn3Eq/6pHARv
+         MOmWv3QN5Mm3bTCQodKPXOkxp+hKjcPXW52MAwoC7moYEN1jKxVPcxJveChygima/ugf
+         w0+afsHoTdf2w3mTUFhOi1oX+3bHd5bxPOaXfD/0XAKIcFxRUMQvvk6EAyvqnGmrd06Q
+         VHsAdSYaMeCWN9+ADKK/vk6DzRDNNywXxVQDSvxwFf3e9ffbAlhUL/+QXiM52U6Y0/yu
+         mQ0mU8fzZh/pKHFo8ZhSzPi/TNizpQTCGFWE8JoW+0t5hOXh1+SglztjuzneL+ta157u
+         G3nA==
+X-Gm-Message-State: AOAM533jqkKSf1us/l9odpPmuTYs0zo+2IlkREyUlz2IEZ7w2OVz6L38
+        vUpwv696e13XtQNe/n7ebbFYln0O5lPmo5mtlaI=
+X-Google-Smtp-Source: ABdhPJwHJfz16fwVQkHjbTtf9iEyBzHK8lHRtuDra0vj5LPa/yJj8xt7G59kEduRoSdLiWW7P5m1FwdZXqKTzLE6eZE=
+X-Received: by 2002:a9d:313:: with SMTP id 19mr2982063otv.147.1610772573391;
+ Fri, 15 Jan 2021 20:49:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh7np9gqn.fsf@gitster.c.googlers.com>
-X-XM-SPF: eid=1l0d91-006YBQ-JU;;;mid=<20210116042454.GA4913@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210108092345.2178-2-charvi077@gmail.com>
+ <X/8/WassxF7ujqjX@nand.local> <CAPSFM5ew583ZPZO9XUWxskQPsdSv520gKCM30GH2huhdTDxb2A@mail.gmail.com>
+ <ac1691d6-e13e-2c04-b105-73a0645f4883@gmail.com> <CAPSFM5eBCVD9sx-AkA6Zr-PAq3JgTftcf2UhZBcBmK_00ff1+Q@mail.gmail.com>
+ <xmqqbldqt8rm.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqbldqt8rm.fsf@gitster.c.googlers.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Sat, 16 Jan 2021 10:19:21 +0530
+Message-ID: <CAPSFM5cq6kVM5tUWWKryFvmQBbNzOaOf-SR-Q4wRvs-4Cvc-fA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/9] rebase -i: only write fixup-message when it's needed
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 10, 2021 at 03:24:48AM -0800, Junio C Hamano wrote:
-> Note that with t7800 fixed with the patch, non Windows jobs all seem
-> to pass, but t7610 seems to have problem(s) on Windows.
+Hi Junio,
 
-The autocrlf test is breaking because the sed that ships with some mingw
-versions (and also some minsys and cygwin versions) will *automatically*
-remove carriage returns:
+On Fri, 15 Jan 2021 at 22:52, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Charvi Mendiratta <charvi077@gmail.com> writes:
+>
+> > Okay, I looked into the write_message(...) and agree that it does not return
+> > a positive value and only returns non-zero for error case and zero for
+> > success. So, for this patch maybe we can ignore checking '< 0' here and
+> > later add another patch to make this function follow the convention of
+> > "negative is error".
+>
+> Please don't.  There is a higher cognitive cost to readers when you write
+>
+>         if (write_message(...)) {
+>
+> The reader is forced to look at its implementation to see if it
+> returns positive in a non-error situation.
+>
+> If you write it like so from the beginning
+>
+>         if (write_message(...) < 0) {
+>
+> the reader can trust that the code follows "negative is an error"
+> convention.  One fewer thing readers have to worry about.
 
-$ printf 'foo\r\nbar\r\n' | sed -e '/bar/d' | cat -A
-foo$
+I agree, earlier I was confused as there were many instances of
+write_message() without '< 0' in sequencer.c but considering the
+above I completely agree to follow the convention.
 
-$ printf 'foo\r\nbar\r\n' | sed -b -e '/bar/d' | cat -A
-foo^M$
-
-(Note: the -b flag above is just for comparison. We can't use it here.
-It's not in POSIX and is not present in sed for busybox or OSX.)
-
-I haven't found official docs that describe this behavior yet but
-I found a few discussions about it across a few lists. E.g.:
-https://cygwin.com/pipermail/cygwin/2017-June/233121.html
-
-Suggestions welcome.
-
-Obviously we could try to detect crlf's before the sed and then try to
-re-add them back in after sed but that strikes me as error-prone.
-
-I recall someone mentioning calling merge-file twice, once with --ours
-and once with --theirs, to independently generate each "side" of the
-conflict instead of using sed to split MERGED. Is that a viable
-approach?
-
+Thanks and Regards,
+Charvi
