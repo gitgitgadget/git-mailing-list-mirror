@@ -2,136 +2,253 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A6F8C433E0
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 20:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03957C433E0
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 21:11:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F3BF206F6
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 20:23:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C5F8C2247F
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 21:11:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729802AbhAQUX1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jan 2021 15:23:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728858AbhAQUXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jan 2021 15:23:23 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95045C061573
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 12:22:42 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id dj23so12720095edb.13
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 12:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=13jE5HPDaITjQDZc3yw8J2dmSJ8mfq8FF8uLI6InQeU=;
-        b=TjpUU7P+O0dx/Je3IF+NYypFngYqL76vDEUaNauLvclLWCG0VFzXPQkJxcmuBm5ciu
-         qjEraW6W1W+xRAMfe/4FZNmKf8X2WMnE4jFQzRD01FV9IKHb8Ebbmt8UzpwsqQ7tCGED
-         505rj5Z2j25yTIeoEDzgpkme8Yaq19DIBRVF4M9+7xfzDDW0p/Ovnr+jQoTbj7+pbTp0
-         hv0yUgKejoQNNuVJVwdA4BWRbQyvvZ7cb12PCpX/o8aqTDynq8F9FDGbLWC6Nv4p/ave
-         V0kFxl+WT8MfFI3qyy+0002Ahg4YbfGgqY3ET44m6H1miVpb6imuCIkZzRiQy5Ghf6LX
-         1VEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=13jE5HPDaITjQDZc3yw8J2dmSJ8mfq8FF8uLI6InQeU=;
-        b=FgNZUD4qeW62SqmgLixdEq9glvsT0YSMVh3VIhy7kcvyLK2JaL18YOKzKfMvtxueFh
-         ZKhu9EZT8VE4d/xXM3vR6Cp5U9n8KegcdCgma9vjhHKUpREdR5NRiVUxDMuStl8hcdbH
-         mEr0LTD0lg1J85QnfNMoQ7vDGOg8JRzfxSLIilbm85/cMizawVj2zGSet3W7OgvnlDU+
-         zyy8Z0VhvdMWanHpIE6D8Imc0P3OZd4yhqiP/7UPlaILLpAN9Ji8TbZpQ9V03sSadSaM
-         jORBJ/l6mAwm9XpO5kieGghAVurPQNaThLM6Mp+sp9etb3Ifs5LIt/3HMOxvME/Y/Phg
-         /SOg==
-X-Gm-Message-State: AOAM5325k1kjoXzZ68WqVwdlQdhTNcuViZyMQGS1QWy/m1LI1sEnJLBR
-        rYNIxT3hcjnPY34Ge5QuqW0YvT7OqVg=
-X-Google-Smtp-Source: ABdhPJyszVTbzgA6cvqXwDJGhfjr1jQ2lCi8QGtvF5UlR5BzOT6jrf/tOzasDJoK882lfjkeNyBDyQ==
-X-Received: by 2002:a05:6402:30ac:: with SMTP id df12mr17781452edb.175.1610914961174;
-        Sun, 17 Jan 2021 12:22:41 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id ce7sm104095ejb.100.2021.01.17.12.22.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jan 2021 12:22:40 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2021, #02; Fri, 8)
-References: <xmqqk0sni68g.fsf@gitster.c.googlers.com>
-        <871reu752k.fsf@evledraar.gmail.com>
-        <xmqqk0slg5ph.fsf@gitster.c.googlers.com>
-        <X/oosXBJlyt/IrOr@camp.crustytoothpaste.net>
-        <xmqq4kjpelza.fsf@gitster.c.googlers.com>
-        <X/uvhc5Hpu792qA/@camp.crustytoothpaste.net>
-        <xmqqeeir8fdg.fsf@gitster.c.googlers.com>
-        <87k0si5k75.fsf@evledraar.gmail.com> <YADZSsVqyGnArF0n@google.com>
-        <87im7w4zqt.fsf@evledraar.gmail.com>
-        <YARwrtU9u51s13S0@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <YARwrtU9u51s13S0@coredump.intra.peff.net>
-Date:   Sun, 17 Jan 2021 21:22:39 +0100
-Message-ID: <87wnwb8ga8.fsf@evledraar.gmail.com>
+        id S1730170AbhAQVKz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jan 2021 16:10:55 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64196 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729936AbhAQVKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jan 2021 16:10:48 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7643811536E;
+        Sun, 17 Jan 2021 16:10:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1PYesQH18257fbH/OM6LXKbGi08=; b=DBEHdG
+        DR+G+Gpz3xxegSx5Rp0sTZYtYsndC0a+SNV8qTvQTNceAlQl5b+88sutZMfssoK5
+        eMqDpHOrIMVSVPUgOJzQNtlDfl5OBBJECZ4bPYa4oYof2MANFWFg9av6EUmfymDJ
+        uSNyoTWP08X9OA19RXAY4cWq2zunqRESpms20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=djKqVmGjj2FVrUT078wUK47CaHkUsm9t
+        8yDmwOv4eN/CPgXFKY6VbHYFsPy3iAJPezFNCv8tKK/6iAyEoGc/2U6RUCd23o6h
+        C3KRQeTQlaLIThWr+0Ky1Wn8rj5eM01fL0a9GMW+Fbk3EeWoa10GpvnitT4EENMV
+        OKsk+fK+EXI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6FC5711536D;
+        Sun, 17 Jan 2021 16:10:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9299211536C;
+        Sun, 17 Jan 2021 16:10:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kyle Marek <kmarek@pdinc.us>
+Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 1/2] revision: Denote root commits with '#'
+References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
+        <20210117110337.429994-1-kmarek@pdinc.us>
+        <20210117110337.429994-2-kmarek@pdinc.us>
+Date:   Sun, 17 Jan 2021 13:10:01 -0800
+In-Reply-To: <20210117110337.429994-2-kmarek@pdinc.us> (Kyle Marek's message
+        of "Sun, 17 Jan 2021 06:03:36 -0500")
+Message-ID: <xmqq7dobmfrq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DF8A2CC-5908-11EB-81C6-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kyle Marek <kmarek@pdinc.us> writes:
 
-On Sun, Jan 17 2021, Jeff King wrote:
-
-> On Sat, Jan 16, 2021 at 05:23:38PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> This aids in identifying where an unrelated branch history starts when
+> using `git log --graph --oneline --all`
 >
->> > [...] especially when that pushback is "I'd like to write a tool to
->> > reverse this thing, because <vague reasons> - and I don't mean that
->> > tool maliciously so that should be OK."
->>=20
->> ... this point in particular seems to be an attempt to summarize my
->> views or motivations.
->>=20
->> I don't see how you could read my E-Mails on the subject (especially
->> what you're replying to,
->> https://lore.kernel.org/git/87k0si5k75.fsf@evledraar.gmail.com/) and
->> think that in any way reflects my views on the matter.
->>=20
->> In lieu of repeating much/any of that I'll just say that that doesn't in
->> any way reflect my views, and from having read all the rest of the
->> message traffic associated with this topic I don't see who else you
->> could be referring to with those comments.
->
-> This is sort orthogonal to what you're saying here, and possibly I
-> missed this part of the discussion, but...I'm confused about this
-> talk of a tool for unblinding the mailmap. Isn't:
->
->   git log --all --format=3D'%aE %ae'
->
-> basically that tool already?
+> Signed-off-by: Kyle Marek <kmarek@pdinc.us>
+> ---
+>  revision.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 
-Yes, but I belive from brian's mails on the topic[1][2][3] that the
-issue at hand is that doing that is just the right level of
-inconvienience in the minds of the users who want this feature, and that
-e.g. having some/any of:
+No tests?
 
-    git check-mailmap --porcelain --materialize-hashed
-    git for-each-mailmap --format=3D"%(authornamefrom:unhashed) %(authorema=
-ilfrom:unhashed) %(authornameto)"
-    git ask-remote https://github.com/chromium/chromium -- <that for-each-m=
-ailmap-command> # (or whatever..)
-    <open .mailmap in your $EDITOR and see/edit/save only materialized valu=
-es>
+> diff --git a/revision.c b/revision.c
+> index 9dff845bed..8556923de8 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -4191,9 +4191,11 @@ const char *get_revision_mark(const struct rev_info *revs, const struct commit *
+>  			return "<";
+>  		else
+>  			return ">";
+> -	} else if (revs->graph)
+> +	} else if (revs->graph) {
+> +		if (!commit->parents)
+> +			return "#";
+>  		return "*";
+> -	else if (revs->cherry_mark)
+> +	} else if (revs->cherry_mark)
+>  		return "+";
+>  	return "";
+>  }
 
-Would tip it over the edge into the territory of this
-socially-signalled-to-be-private information being too convenient to
-extract from the DAG.
+Here is what I tried to come up with, but somehow the "#" marker is
+not showing for me.
 
-1. https://lore.kernel.org/git/X%2FtxB8b3%2FqqbwbmC@camp.crustytoothpaste.n=
-et/
-2. https://lore.kernel.org/git/YADh2DHDrdAs6Jbj@camp.crustytoothpaste.net/
-3. https://lore.kernel.org/git/X9xEnpLeZ4mCjwWF@coredump.intra.peff.net/
+The "counted plus --left-right" tests stress why a single "#" is not
+good enough.  I think the patch also needs to replace "<" and ">"
+for root commits that are left and right---in the tests, I used "L"
+to denote "root that is on the left side" (and "R" for the right
+side) instead of single "#", so that we do not to lose information.
+
+By the way, as I already said in the original thread, I do not think
+the '#' marking is a good idea; I'd rather see the root commit shown
+by shifting columns.
+
+Anyway, here is to test [1/2].
+
+ t/t6020-rev-list-boundary.sh | 132 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
+
+diff --git i/t/t6020-rev-list-boundary.sh w/t/t6020-rev-list-boundary.sh
+new file mode 100755
+index 0000000000..f25e041951
+--- /dev/null
++++ w/t/t6020-rev-list-boundary.sh
+@@ -0,0 +1,132 @@
++#!/bin/sh
++
++test_description='rev-list/log boundary and root'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit A &&
++	test_commit B &&
++	git reset --hard A &&
++	test_commit C &&
++
++	git checkout --orphan side &&
++	git rm -fr . &&
++	test_commit X &&
++	test_commit Y &&
++
++	test_tick && git merge --allow-unrelated-histories -m "M" B &&
++	test_tick && git merge -m "N" C &&
++	test_commit Z
++'
++
++test_expect_success 'log with boundary' '
++	git log --graph --boundary --format='%s' ^A ^X Z >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	* Z
++	*   N
++	|\  Q
++	| * C
++	* |   M
++	|\ \  Q
++	| * | B
++	| |/  Q
++	* | Y
++	o | X
++	 /  Q
++	o A
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'log --left-right with symmetric boundary' '
++	git log --graph --left-right --boundary --format='%s' B...C >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	> C
++	| < B
++	|/  Q
++	o A
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'log --left-right with asymmetric boundary' '
++	git log --graph --left-right --boundary --format='%s' ^A ^X Z >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	> Z
++	>   N
++	|\  Q
++	| > C
++	> |   M
++	|\ \  Q
++	| > | B
++	| |/  Q
++	> | Y
++	o | X
++	 /  Q
++	o A
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_failure 'log down to root' '
++	git log --graph --format='%s' Z >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	* Z
++	*   N
++	|\  Q
++	| * C
++	* |   M
++	|\ \  Q
++	| * | B
++	| |/  Q
++	| # A
++	* Y
++	# X
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_failure 'log down to root' '
++	git log --graph --format='%s' B Y >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	* Y
++	# X
++	* B
++	# A
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_failure 'log that happens to show root' '
++	git log --graph -3 --format='%s' B Y >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	* Y
++	# X
++	* B
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_failure 'log --left-right down to root' '
++	git log --graph --left-right --format='%s' B...Y >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	> Y
++	R X
++	< B
++	L A
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_failure 'log --left-right that happens to show root' '
++	git log --graph -3 --left-right --format='%s' B...Y >actual &&
++	sed -e "s/Q$//" >expect <<-\EOF &&
++	> Y
++	R X
++	< B
++	EOF
++	test_cmp expect actual
++'
++
++test_done
