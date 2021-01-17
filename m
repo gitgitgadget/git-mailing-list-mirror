@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFCDBC433E0
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 23:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 637F2C433E6
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 23:45:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9CDE4206ED
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 23:45:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33400206E3
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 23:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730818AbhAQXoz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jan 2021 18:44:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
+        id S1730827AbhAQXpN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jan 2021 18:45:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730773AbhAQXo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jan 2021 18:44:29 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964E8C061574
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 15:43:48 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id r12so9873049ejb.9
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 15:43:48 -0800 (PST)
+        with ESMTP id S1730783AbhAQXoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jan 2021 18:44:32 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F523C0613C1
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 15:43:51 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id g3so1833768ejb.6
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 15:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XJ7/M5veml/bhfAyzkj6s4ZZQ11MxuUob48zFnDpZg4=;
-        b=Gj3fuiugaSjHxoEihVjk2wqlYIzZNUSM2VA0IQvSlFkcnxvmzudkA4oF03k14w9f25
-         xAZ9CH5zFP1uA/Y4EtAlNzF1It43VoKTtaEmFq+bsT77Hf3R+jtpjy2U7GpluB3KWIiP
-         traGcBZcuJ5PZxr7k/mZHJAwgQjhTqwBYozv3FIwmx51K5c5DyY31+YRidx+mtCqZFyO
-         SXtE4gR065neiJoux6hYM+v1vZUJIpln2nltPyn0pZuqlXVOmwu9BD+e4ay9/T7PTAQd
-         eCTsMZc6hfi/F4KdKTfZUF0Wb9z2JW2L069f9DKvSTvmYdTo6aBAoKoVmCXXSFWGZ06B
-         TTIA==
+        bh=XwhimOFkUCE/aVJgrTw6SY+VMA550OVQFWbC2+zj31Q=;
+        b=iSMlaU781+iv7mWwgCox/kY14d8KZs2gkezmtaxitIDboo/KK3nnXvsRNJ4urSZCtw
+         WiMbkzc3Q2ueX5ywvsYOJCiKZNkHXMCK/4g3eQ7inHOCeaC2AA69qU1ACrPTWv/NnbyJ
+         8MAJWFJIkDsW+DeklqPl914qebxa3bjlTQXBY34gkyVwJBlLmdcmOTS2U3eMDE6LYdMT
+         vTUuPKKBWs2mgE3teBWtIpN63Zkg28qwEOWXQr+ojyiHLqydOsedsk+039yrr5zocLff
+         3SQr5UKKDmbJsDZXoqeFKnFtVLA+Qndb71r/kRR/ln6+M4esyNJfg1c/VkxX9mxlE928
+         V7Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XJ7/M5veml/bhfAyzkj6s4ZZQ11MxuUob48zFnDpZg4=;
-        b=cbMx5Z++X7R/6hphQFMtxxefUinP4sYJa6gFFpg36C0X3HqPwom40uNM8YmkdMLpJ9
-         UlFtN5empT/GpD7o96b1oOmkGujIKjB5gpF2xnknNdlx77TsBKYA1boJeswpySUKkRVV
-         PY7jF48CyicYq5f3IAT+z1tlBLK14816iwmrZgt57MhpMUvgmIn+sNcUUYhAGx1uVQtN
-         yrM0fHzHGMfxHI67SVDTRtjssi9KWKMNFsT/Z90r8JbK0gzBTEues9iLC+IuoRjhYgQ/
-         PMNZ+eH3BmQo+1t/CZ1y+yWas0edcd3GGfe0T36dI1sJA4gxDw4MNprSVAfrd2BFC0bt
-         s4hw==
-X-Gm-Message-State: AOAM5316E7rTvGPoT4e5VFCPMmuYFQOhH5Te5jwFLD+1UBZONuW4oxjD
-        kqDH4EqcMN+nGc660vecM9++CBhYB2c=
-X-Google-Smtp-Source: ABdhPJzkO1JIl+2bSIJUUoFMIYjbE8ozQ1H1UQxQgoGOppE2rgODtHVp2Ig3zQtouBSbEt5IegNCpw==
-X-Received: by 2002:a17:906:369a:: with SMTP id a26mr14989498ejc.276.1610927026954;
-        Sun, 17 Jan 2021 15:43:46 -0800 (PST)
+        bh=XwhimOFkUCE/aVJgrTw6SY+VMA550OVQFWbC2+zj31Q=;
+        b=NxU3+Uvirw7oyhsCNtsXV2YrIP3xeh52y97aoNe4A8u94bGc4H5SqBixPiHBcB0ekt
+         3vHKC3350rNKj1WjfA0Jb4EUWcb3axdVDr2V64oQGUJzGnJzuEvFyJMRNosE5otmNUr4
+         Vj/JxMla2R3xlfHCwDjraoJ+2TrPIz4wTAJPOryz5t4ZV9hGCtDLRnSFfqEyhhdbarx1
+         ogkD9/HF5ej9eg6ZAZ+kkmF5r+KEsrGTdyFuqRQAtlLqHYtReCrjFXAW11uX1GECxJgd
+         6UEdD2oLfPMCWOedXPt/cKp8zUY6eAOF6XfS1lxMgCWY84ahzWmaihFns+hfdp8s9RZe
+         D0SA==
+X-Gm-Message-State: AOAM532sqHZvUhWGw2bK9PMR1ii3Cu+TOB9pQ5HsMRRBgKwH2LHIcB2y
+        PH+37qpguiGXHKVe+1bOWMMIzkdQS9k=
+X-Google-Smtp-Source: ABdhPJyWs4UijuiDrc4RTLR2pztnQ/ryZiyjsCSU6UBGwarlcRAT6qN50nW/j+BGJzqLFxUAe8/i6Q==
+X-Received: by 2002:a17:907:7346:: with SMTP id dq6mr3226904ejc.237.1610927029885;
+        Sun, 17 Jan 2021 15:43:49 -0800 (PST)
 Received: from localhost.localdomain ([79.140.114.246])
-        by smtp.gmail.com with ESMTPSA id f13sm8639932ejf.42.2021.01.17.15.43.45
+        by smtp.gmail.com with ESMTPSA id f13sm8639932ejf.42.2021.01.17.15.43.49
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Jan 2021 15:43:46 -0800 (PST)
+        Sun, 17 Jan 2021 15:43:49 -0800 (PST)
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH v2 1/6] worktree: libify should_prune_worktree()
-Date:   Mon, 18 Jan 2021 00:42:39 +0100
-Message-Id: <20210117234244.95106-2-rafaeloliveira.cs@gmail.com>
+Subject: [PATCH v2 4/6] worktree: teach `list --porcelain` to annotate locked worktree
+Date:   Mon, 18 Jan 2021 00:42:42 +0100
+Message-Id: <20210117234244.95106-5-rafaeloliveira.cs@gmail.com>
 X-Mailer: git-send-email 2.30.0.372.gbc7e965391
 In-Reply-To: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
 References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
@@ -74,223 +74,182 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of teaching "git worktree list" to annotate worktree that is a
-candidate for pruning, let's move should_prune_worktree() from
-builtin/worktree.c to worktree.c in order to make part of the worktree
-public API.
+Commit c57b3367be (worktree: teach `list` to annotate locked worktree,
+2020-10-11) taught "git worktree list" to annotate locked worktrees by
+appending "locked" text to its output, however, this is not listed in
+the --porcelain format.
 
-should_prune_worktree() knows how to select the given worktree for
-pruning based on an expiration date, however the expiration value is
-stored in a static file-scope variable and it is not local to the
-function. In order to move the function, teach should_prune_worktree()
-to take the expiration date as an argument and document the new
-parameter that is not immediately obvious.
+Teach "list --porcelain" to do the same and add a "locked" attribute
+followed by its reason, thus making both default and porcelain format
+consistent. If the locked reason is not available then only "locked"
+is shown.
 
-Also, change the function comment to clearly state that the worktree's
-path is returned in `wtpath` argument.
+The output of the "git worktree list --porcelain" becomes like so:
+
+    $ git worktree list --porcelain
+    ...
+    worktree /path/to/locked
+    HEAD 123abcdea123abcd123acbd123acbda123abcd12
+    detached
+    locked
+
+    worktree /path/to/locked-with-reason
+    HEAD abc123abc123abc123abc123abc123abc123abc1
+    detached
+    locked reason why it is locked
+    ...
+
+The locked reason is quoted to prevent newline characters (i.e: LF or
+CRLF) breaking the --porcelain format as each attribute is shown per
+line. For example:
+
+   $ git worktree list --porcelain
+   ...
+   locked worktree's path mounted in\nremovable device
+   ...
+
+Furthermore, let's update the documentation to state that some
+attributes in the porcelain format might be listed alone or together
+with its value depending whether the value is available or not. Thus
+documenting the case of the new "locked" attribute.
+
+Additionally, c57b3367be (worktree: teach `list` to annotate locked
+worktree, 2020-10-11) introduced a new test to ensure locked worktrees
+are listed with "locked" annotation. However, the test does not clean up
+after itself as "git worktree prune" is not going to remove the locked
+worktree in the first place. This not only leaves the test in an unclean
+state it also potentially breaks following tests that relies on the
+"git worktree list" output. Let's fix that by unlocking the worktree
+before the "prune" command.
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
 ---
- builtin/worktree.c | 75 +---------------------------------------------
- worktree.c         | 68 +++++++++++++++++++++++++++++++++++++++++
- worktree.h         | 14 +++++++++
- 3 files changed, 83 insertions(+), 74 deletions(-)
+ Documentation/git-worktree.txt | 16 ++++++++++++++--
+ builtin/worktree.c             | 13 +++++++++++++
+ t/t2402-worktree-list.sh       | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 02a706c4c0..d352a002f2 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -377,8 +377,10 @@ Porcelain Format
+ The porcelain format has a line per attribute.  Attributes are listed with a
+ label and value separated by a single space.  Boolean attributes (like `bare`
+ and `detached`) are listed as a label only, and are present only
+-if the value is true.  The first attribute of a working tree is always
+-`worktree`, an empty line indicates the end of the record.  For example:
++if the value is true.  Some attributes (like `locked`) can be listed as a label
++only or with a value depending whether a reason is available.  The first
++attribute of a working tree is always `worktree`, an empty line indicates the
++end of the record.  For example:
+ 
+ ------------
+ $ git worktree list --porcelain
+@@ -393,6 +395,16 @@ worktree /path/to/other-linked-worktree
+ HEAD 1234abc1234abc1234abc1234abc1234abc1234a
+ detached
+ 
++worktree /path/to/linked-worktree-locked
++HEAD 5678abc5678abc5678abc5678abc5678abc5678c
++branch refs/heads/locked
++locked
++
++worktree /path/to/linked-worktree-locked-with-reason
++HEAD 3456def3456def3456def3456def3456def3456b
++branch refs/heads/locked-with-reason
++locked reason why is locked
++
+ ------------
+ 
+ EXAMPLES
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 71287b2da6..dd886d5029 100644
+index dd886d5029..37ae277352 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -67,79 +67,6 @@ static void delete_worktrees_dir_if_empty(void)
- 	rmdir(git_path("worktrees")); /* ignore failed removal */
- }
+@@ -12,6 +12,7 @@
+ #include "submodule.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "quote.h"
  
--/*
-- * Return true if worktree entry should be pruned, along with the reason for
-- * pruning. Otherwise, return false and the worktree's path, or NULL if it
-- * cannot be determined. Caller is responsible for freeing returned path.
-- */
--static int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath)
--{
--	struct stat st;
--	char *path;
--	int fd;
--	size_t len;
--	ssize_t read_result;
--
--	*wtpath = NULL;
--	if (!is_directory(git_path("worktrees/%s", id))) {
--		strbuf_addstr(reason, _("not a valid directory"));
--		return 1;
--	}
--	if (file_exists(git_path("worktrees/%s/locked", id)))
--		return 0;
--	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
--		strbuf_addstr(reason, _("gitdir file does not exist"));
--		return 1;
--	}
--	fd = open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
--	if (fd < 0) {
--		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
--			    strerror(errno));
--		return 1;
--	}
--	len = xsize_t(st.st_size);
--	path = xmallocz(len);
--
--	read_result = read_in_full(fd, path, len);
--	if (read_result < 0) {
--		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
--			    strerror(errno));
--		close(fd);
--		free(path);
--		return 1;
--	}
--	close(fd);
--
--	if (read_result != len) {
--		strbuf_addf(reason,
--			    _("short read (expected %"PRIuMAX" bytes, read %"PRIuMAX")"),
--			    (uintmax_t)len, (uintmax_t)read_result);
--		free(path);
--		return 1;
--	}
--	while (len && (path[len - 1] == '\n' || path[len - 1] == '\r'))
--		len--;
--	if (!len) {
--		strbuf_addstr(reason, _("invalid gitdir file"));
--		free(path);
--		return 1;
--	}
--	path[len] = '\0';
--	if (!file_exists(path)) {
--		if (stat(git_path("worktrees/%s/index", id), &st) ||
--		    st.st_mtime <= expire) {
--			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
--			free(path);
--			return 1;
--		} else {
--			*wtpath = path;
--			return 0;
--		}
--	}
--	*wtpath = path;
--	return 0;
--}
--
- static void prune_worktree(const char *id, const char *reason)
+ static const char * const worktree_usage[] = {
+ 	N_("git worktree add [<options>] <path> [<commit-ish>]"),
+@@ -569,6 +570,8 @@ static int add(int ac, const char **av, const char *prefix)
+ 
+ static void show_worktree_porcelain(struct worktree *wt)
  {
- 	if (show_only || verbose)
-@@ -195,7 +122,7 @@ static void prune_worktrees(void)
- 		if (is_dot_or_dotdot(d->d_name))
- 			continue;
- 		strbuf_reset(&reason);
--		if (should_prune_worktree(d->d_name, &reason, &path))
-+		if (should_prune_worktree(d->d_name, &reason, &path, expire))
- 			prune_worktree(d->d_name, reason.buf);
- 		else if (path)
- 			string_list_append(&kept, path)->util = xstrdup(d->d_name);
-diff --git a/worktree.c b/worktree.c
-index 821b233479..8ae019af79 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -741,3 +741,71 @@ void repair_worktree_at_path(const char *path,
- 	strbuf_release(&realdotgit);
- 	strbuf_release(&dotgit);
++	const char *reason;
++
+ 	printf("worktree %s\n", wt->path);
+ 	if (wt->is_bare)
+ 		printf("bare\n");
+@@ -579,6 +582,16 @@ static void show_worktree_porcelain(struct worktree *wt)
+ 		else if (wt->head_ref)
+ 			printf("branch %s\n", wt->head_ref);
+ 	}
++
++	reason = worktree_lock_reason(wt);
++	if (reason && *reason) {
++		struct strbuf sb = STRBUF_INIT;
++		quote_c_style(reason, &sb, NULL, CQUOTE_NODQ);
++		printf("locked %s\n", sb.buf);
++		strbuf_release(&sb);
++	} else if (reason)
++		printf("locked\n");
++
+ 	printf("\n");
  }
-+
-+int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath, timestamp_t expire)
-+{
-+	struct stat st;
-+	char *path;
-+	int fd;
-+	size_t len;
-+	ssize_t read_result;
-+
-+	*wtpath = NULL;
-+	if (!is_directory(git_path("worktrees/%s", id))) {
-+		strbuf_addstr(reason, _("not a valid directory"));
-+		return 1;
-+	}
-+	if (file_exists(git_path("worktrees/%s/locked", id)))
-+		return 0;
-+	if (stat(git_path("worktrees/%s/gitdir", id), &st)) {
-+		strbuf_addstr(reason, _("gitdir file does not exist"));
-+		return 1;
-+	}
-+	fd = open(git_path("worktrees/%s/gitdir", id), O_RDONLY);
-+	if (fd < 0) {
-+		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
-+			    strerror(errno));
-+		return 1;
-+	}
-+	len = xsize_t(st.st_size);
-+	path = xmallocz(len);
-+
-+	read_result = read_in_full(fd, path, len);
-+	if (read_result < 0) {
-+		strbuf_addf(reason, _("unable to read gitdir file (%s)"),
-+			    strerror(errno));
-+		close(fd);
-+		free(path);
-+		return 1;
-+	}
-+	close(fd);
-+
-+	if (read_result != len) {
-+		strbuf_addf(reason,
-+			    _("short read (expected %"PRIuMAX" bytes, read %"PRIuMAX")"),
-+			    (uintmax_t)len, (uintmax_t)read_result);
-+		free(path);
-+		return 1;
-+	}
-+	while (len && (path[len - 1] == '\n' || path[len - 1] == '\r'))
-+		len--;
-+	if (!len) {
-+		strbuf_addstr(reason, _("invalid gitdir file"));
-+		free(path);
-+		return 1;
-+	}
-+	path[len] = '\0';
-+	if (!file_exists(path)) {
-+		if (stat(git_path("worktrees/%s/index", id), &st) ||
-+		    st.st_mtime <= expire) {
-+			strbuf_addstr(reason, _("gitdir file points to non-existent location"));
-+			free(path);
-+			return 1;
-+		} else {
-+			*wtpath = path;
-+			return 0;
-+		}
-+	}
-+	*wtpath = path;
-+	return 0;
-+}
-diff --git a/worktree.h b/worktree.h
-index f38e6fd5a2..818e1491c7 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -73,6 +73,20 @@ int is_main_worktree(const struct worktree *wt);
-  */
- const char *worktree_lock_reason(struct worktree *wt);
  
-+/*
-+ * Return true if worktree entry should be pruned, along with the reason for
-+ * pruning. Otherwise, return false and the worktree's path in `wtpath`, or
-+ * NULL if it cannot be determined. Caller is responsible for freeing
-+ * returned path.
-+ *
-+ * `expire` defines a grace period to prune the worktree when its path
-+ * does not exist.
-+ */
-+int should_prune_worktree(const char *id,
-+			  struct strbuf *reason,
-+			  char **wtpath,
-+			  timestamp_t expire);
-+
- #define WT_VALIDATE_WORKTREE_MISSING_OK (1 << 0)
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index 795ddca2e4..c522190feb 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -66,11 +66,43 @@ test_expect_success '"list" all worktrees with locked annotation' '
+ 	git worktree add --detach locked master &&
+ 	git worktree add --detach unlocked master &&
+ 	git worktree lock locked &&
++	test_when_finished "git worktree unlock locked" &&
+ 	git worktree list >out &&
+ 	grep "/locked  *[0-9a-f].* locked$" out &&
+ 	! grep "/unlocked  *[0-9a-f].* locked$" out
+ '
  
- /*
++test_expect_success '"list" all worktrees --porcelain with locked' '
++	test_when_finished "rm -rf locked1 locked2 unlocked out actual expect && git worktree prune" &&
++	echo "locked" >expect &&
++	echo "locked with reason" >>expect &&
++	git worktree add --detach locked1 &&
++	git worktree add --detach locked2 &&
++	git worktree add --detach unlocked &&
++	git worktree lock locked1 &&
++	git worktree lock locked2 --reason "with reason" &&
++	test_when_finished "git worktree unlock locked1 && git worktree unlock locked2" &&
++	git worktree list --porcelain >out &&
++	grep "^locked" out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '"list" all worktrees --porcelain with locked reason newline escaped' '
++	test_when_finished "rm -rf locked_lf locked_crlf out actual expect && git worktree prune" &&
++	printf "locked locked\\\\r\\\\nreason\n" >expect &&
++	printf "locked locked\\\\nreason\n" >>expect &&
++	git worktree add --detach locked_lf &&
++	git worktree add --detach locked_crlf &&
++	printf "locked\nreason\n\n" >reason_lf &&
++	printf "locked\r\nreason\n\n" >reason_crlf &&
++	git worktree lock locked_lf --reason "$(cat reason_lf)" &&
++	git worktree lock locked_crlf --reason "$(cat reason_crlf)" &&
++	test_when_finished "git worktree unlock locked_lf && git worktree unlock locked_crlf" &&
++	git worktree list --porcelain >out &&
++	grep "^locked" out >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'bare repo setup' '
+ 	git init --bare bare1 &&
+ 	echo "data" >file1 &&
 -- 
 2.30.0.372.gbc7e965391
 
