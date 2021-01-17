@@ -2,86 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0092BC433E0
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 10:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C369C433E0
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 12:07:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0CAD207AE
-	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 10:15:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B1312226A
+	for <git@archiver.kernel.org>; Sun, 17 Jan 2021 12:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728202AbhAQKO4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jan 2021 05:14:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58318 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728167AbhAQKLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jan 2021 05:11:39 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94965C0613CF
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 02:10:58 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id a9so10164330wrt.5
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 02:10:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marketingstrend.com; s=google;
-        h=mime-version:from:reply-to:to:subject:content-transfer-encoding
-         :date:message-id;
-        bh=9NV6nqppQ+hm+uhdwh/TaJGX3eAy6b2AeEnKyySUoj8=;
-        b=JVnhcst6KJdM0HH5sOp2kmYmdGqSLfrnmUtZdy3YrV8xb/N0NuLonxoPA17iW4Y3TP
-         XOW5HRdXFYuqip5Vz3w3PYdgezfzVSH4Rs0Y0pWa5onkCbjWyRBX8xwdy5tzTyZtN7ED
-         q9r4sM+pdv0A84RzX5m3DfF6e/fZy9uedF7dqZSBW0uRDCvwsH+I4K+ijM8xVwXRs1bm
-         OvFSSPa2IoX+oHPX/loiH6Dzbu5uR2QeDJRasW1WpB3Ns2N/HNTsjJHwOVPD9U2N8ZLx
-         avN6JH0kIzQsABNx7h9f3OP6pSzvR462gdKwv1/UccRSTT29k9zdaWzOg7WZm+C35FPA
-         v0eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:reply-to:to:subject
-         :content-transfer-encoding:date:message-id;
-        bh=9NV6nqppQ+hm+uhdwh/TaJGX3eAy6b2AeEnKyySUoj8=;
-        b=Aurt9cNPUq7FcjrSuyU4fiweJ81nFI1TnxXjAzEMjTQOJTComS7jG1/hd+FA/I6kxR
-         UW6OJQVD7lCXYcVC2KE5A+SkWGEUZbt9WGz2b0WJkeP3RsRKKa0sLvVmhxNsWxNKKg2s
-         koZY18jKestGOW7uD6KwDQ2WzAWT9763SnqILFOjUeCv7LVOpP1LCgMjCnJmXkcs0qTy
-         qssgdo7wv4fNP9w0FSfhttGA2c00FTrq52G7ed/NP+GSXZAd6B6rM+YOKGS/KCstLYAu
-         aQEHGN0WlVviLcaCyycDYekcVF3CM6AVKtNdWbgT4SelkeuneqM8BNqyP8BrEJnNKrPH
-         KQ6w==
-X-Gm-Message-State: AOAM530hJ5MZopbBBF13Db2l356sv+1C2vZSlUcmYkpebWdbxjDI2xsk
-        RWtxwVSoUIDuOxPPi2en5iZV5lQdY6SKjQ==
-X-Google-Smtp-Source: ABdhPJzKN4EVYbAEk2vNetW66xEwYcwtL/sSC9Ux/fGAwqBxFuygYJy/xUi0gtOGjAIgJV3jfl/rpg==
-X-Received: by 2002:adf:f58f:: with SMTP id f15mr21208093wro.388.1610878257118;
-        Sun, 17 Jan 2021 02:10:57 -0800 (PST)
-Received: from WimaxUser38169-226.wateen.net (host-3-net-99-160-119.mobilinkinfinity.net.pk. [119.160.99.3])
-        by smtp.gmail.com with ESMTPSA id o20sm9588948wmm.24.2021.01.17.02.10.55
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 17 Jan 2021 02:10:56 -0800 (PST)
+        id S1728806AbhAQMGq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jan 2021 07:06:46 -0500
+Received: from mail2.pdinc.us ([67.90.184.28]:39340 "EHLO mail2.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728271AbhAQMGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jan 2021 07:06:44 -0500
+X-Greylist: delayed 3688 seconds by postgrey-1.27 at vger.kernel.org; Sun, 17 Jan 2021 07:06:43 EST
+Received: from kyle-ppc64le.internal.gigabyteproductions.net (cpe-173-88-170-197.neo.res.rr.com [173.88.170.197])
+        (authenticated bits=0)
+        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10HB3bac002017
+        (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 17 Jan 2021 06:03:38 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10HB3bac002017
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1610881419; bh=vRcZvS6WdnoHYlm/tI2dW1aQLgZZ33Bz6QEBVDjPAx4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=BxYPU5O0ohN2tIAf/uKWG/KH1bSKNxBcjmNt+P+FexEMzbGxm23C5D+UImJHLcLrx
+         bjD5XbkHYIEF1yzkiBrWFrfDyyAbU3WvsHZpUnOtuqZA6pyMgF66fISLNVhC7t9k19
+         xGvCyBSmigAB1Sn0wG3FqbLEOTBhaK0zU5iJoz+2Bu7MWGwbqT5aNOjs73CapQjxg0
+         u9dWXsDSyRGpmUSAFrW3Hvwvmqet1cSxyWfmwIU0PVU/Y5/xLy07FDtmJb6iuRyRxx
+         Dbb2xp9PiSN/5E70KDetHTi7WJxo+n/k/lHzE0K9gzkvBPcs/MNoBKnbjoBkbFhYbb
+         UmPVRKyuQ8XVA==
+From:   Kyle Marek <kmarek@pdinc.us>
+To:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: [PATCH 1/2] revision: Denote root commits with '#'
+Date:   Sun, 17 Jan 2021 06:03:36 -0500
+Message-Id: <20210117110337.429994-2-kmarek@pdinc.us>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210117110337.429994-1-kmarek@pdinc.us>
+References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
+ <20210117110337.429994-1-kmarek@pdinc.us>
 MIME-Version: 1.0
-From:   "Jacob Grose" <jacob@marketingstrend.com>
-Reply-To: jacob@marketingstrend.com
-To:     git@vger.kernel.org
-Subject: Paid Guest Posting
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Smart_Send_3_1_6
-Date:   Sun, 17 Jan 2021 15:10:52 +0500
-Message-ID: <257922566980325555589@DESKTOP-VFC0561>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This aids in identifying where an unrelated branch history starts when
+using `git log --graph --oneline --all`
 
-I hope you're enjoying good health.
+Signed-off-by: Kyle Marek <kmarek@pdinc.us>
+---
+ revision.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-We're professional Blogger Outreach and content marketing agency. We provid=
-e long term relationships with our clients.
+diff --git a/revision.c b/revision.c
+index 9dff845bed..8556923de8 100644
+--- a/revision.c
++++ b/revision.c
+@@ -4191,9 +4191,11 @@ const char *get_revision_mark(const struct rev_info *revs, const struct commit *
+ 			return "<";
+ 		else
+ 			return ">";
+-	} else if (revs->graph)
++	} else if (revs->graph) {
++		if (!commit->parents)
++			return "#";
+ 		return "*";
+-	else if (revs->cherry_mark)
++	} else if (revs->cherry_mark)
+ 		return "+";
+ 	return "";
+ }
+-- 
+2.29.2
 
-We provide articles and non-promotional content to blogger relevant to thei=
-r website niche.
-
-You can help us by placing an article with a do-follow link on your site. I=
-f you're interested, then tell me the price to publish my article.
-
-We make payments through PayPal or Payoneer (Totally Your Choice).
-
-We=92ll be happy to hear from you soon.
