@@ -2,102 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BA73C433E9
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 21:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3F79C433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 21:10:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D062122E00
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 21:08:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC0FE229C6
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 21:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388997AbhARVHE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 16:07:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389945AbhARVD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 16:03:26 -0500
-X-Greylist: delayed 147 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 18 Jan 2021 13:02:37 PST
-Received: from dandelion.mymedia.su (unknown [IPv6:2604:180:2:1574::c9e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E662C061573
-        for <git@vger.kernel.org>; Mon, 18 Jan 2021 13:02:37 -0800 (PST)
-Received: from dandelion.mymedia.su (localhost.localdomain [127.0.0.1])
-        by dandelion.mymedia.su (8.15.2/8.15.2/Debian-3) with ESMTP id 10IL054O024920;
-        Tue, 19 Jan 2021 00:00:06 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=guriev.su; s=default;
-        t=1611003606; bh=T8i/p75Hagey49gEz3nund4g2VcBg50mFNCF73AlG2U=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=Yl5AanTQDYpOj8UvmFRq6AhLY80LRTHLBdwiByrkvZ/Jg4zaH3aT8Z0WwMURE787/
-         DZidbYrMWto0rjngV0M/Zc+EXrU5N9S96EhRexWat3yWHhSEzuGycJtqr0xU+rj1lx
-         ieNFMddvgxbQRjcSrbC7s9yci0mula5kD8S3jddA=
-Received: (from mymedia@localhost)
-        by dandelion.mymedia.su (8.15.2/8.15.2/Submit) id 10IL04DX024919;
-        Tue, 19 Jan 2021 00:00:04 +0300
-From:   Nicholas Guriev <nicholas@guriev.su>
-To:     git@vger.kernel.org
-Subject: [RFC PATCH v2 0/3] implement tabbed mode in difftools
-Date:   Tue, 19 Jan 2021 00:00:00 +0300
-Message-Id: <20210118210003.3071205-1-nicholas@guriev.su>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <2fb58fd30ae730ccd3e88ec51b5fe6d80ab7a8c7.camel@guriev.su>
-References: <2fb58fd30ae730ccd3e88ec51b5fe6d80ab7a8c7.camel@guriev.su>
+        id S2388583AbhARVKF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 16:10:05 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64478 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388538AbhARVCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 16:02:39 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D7F3611D58D;
+        Mon, 18 Jan 2021 16:01:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=042eeLOIaAGnUUPxCu6io7XpRBs=; b=LlCpAv
+        d2tC91bwsWO7+svbBjjF+Fy72+FsPofM5BgVA4Aw0jN17T5lYo66suF7GdEb0tA4
+        fZXhsTjVX4GsWJCpa9jyQ4TI9z8WGMq6pjW/3Jf282eoFe5oJEjelqcjvhLyIMpa
+        99zP6704PJK9P6Pg9RYzsIrY+mJIIoSOC9Gug=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XVlbbXRi6P4jfZkb6g3Y84wQtTtqnIxe
+        hW8chxu6qYQbjoTcOWp6iWPwraU8mrNNrL+0dqELdZVu1lnVXlRKIwXOn+hBPwtX
+        AhhEo27YPmnJiDiE+Z5FNfYNblNFIrBRkAx62GWsZKEjap8la91AVE1D3Kyr30tO
+        O44ittAvoOk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D0A3711D58C;
+        Mon, 18 Jan 2021 16:01:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 24D0111D58A;
+        Mon, 18 Jan 2021 16:01:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kyle Marek <kmarek@pdinc.us>
+Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 2/2] revision: implement --show-linear-break for --graph
+References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
+        <20210117110337.429994-1-kmarek@pdinc.us>
+        <20210117110337.429994-3-kmarek@pdinc.us>
+        <xmqqsg6zkwa8.fsf@gitster.c.googlers.com>
+        <xmqq35yzknbr.fsf@gitster.c.googlers.com>
+        <04c81462-3181-37d7-0109-4292040b84e9@pdinc.us>
+Date:   Mon, 18 Jan 2021 13:01:54 -0800
+In-Reply-To: <04c81462-3181-37d7-0109-4292040b84e9@pdinc.us> (Kyle Marek's
+        message of "Mon, 18 Jan 2021 02:56:24 -0500")
+Message-ID: <xmqqmtx6j6wt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 65D7BAE6-59D0-11EB-8E9E-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this mode the "git difftool" command opens all compared files via single
-invocation of an editor passing to it entire list of the changed files. I find
-it useful, and it allows a user to switch easily forward and back between the
-files. You will find some screenshots demonstrating the feature in my previous
-message.
+Kyle Marek <kmarek@pdinc.us> writes:
 
-The patch series looks better now, and the two problems mentioned earlier have
-been solved. I added a new static function, forget_tempfile, into the diff.c
-file. It cleans diff_temp structures and do not remove the temporary files.
-They anyway would be deleted in an atexit handler. In this way, I can collect
-content of all changed files before running the editor.
+> Me too, but I think a user-defined mark needs to be a string to
+> support Unicode characters.
 
-For solving the second problem with spaces, I am separating file names with
-line-feeds, '\n', that are less common. This restriction is the same with the
-"git mergetool" command. I think it is acceptable at the present stage.
+Ahh, I didn't even consider making it user-defined.
 
-I have also repaired prompting in the tabbed mode. In such case, the command
-asks a user only once right before starting the editor. And I have described
-briefly the new changes to the best of my ability.
-
-Alas, some other problems still remain. First, some automated tests failed that
-related to the difftool.prompt setting. I have modified its behavior a bit and
-it now contains a loop. Second, there are no new tests, yet I am going to add
-them later. And third, the main remaining problem is the method of calling of
-the difftool helper. I do not like that I have to write temporary files in the
-helper code to store its state between invocations. But maybe, someone offer a
-better solution that is easy to incorporate into the current architecture.
-
-In conclusion, the patches are still not ready for merging, and any comments or
-testing are welcome.
-
-
-Nicholas Guriev (3):
-  mergetools: support difftool.tabbed setting
-  difftool-helper: conciliate difftool.tabbed and difftool.prompt
-    settings
-  doc: describe new difftool.tabbed feature
-
- Documentation/config/difftool.txt |  6 +++
- Documentation/git-difftool.txt    | 19 ++++++++--
- Documentation/git.txt             |  4 ++
- builtin/difftool.c                |  7 +++-
- diff.c                            | 10 ++++-
- git-difftool--helper.sh           | 39 ++++++++++++-------
- git-mergetool--lib.sh             | 62 ++++++++++++++++++++++++++++++-
- mergetools/meld                   |  4 ++
- mergetools/vimdiff                | 17 +++++++++
- 9 files changed, 148 insertions(+), 20 deletions(-)
-
--- 
-2.27.0
+As it seems a lot safer to make this an optional feature, it does
+sort-of make sense to let the letters used for root & left-root be
+customizable, and it does make sense to take a multi-byte character,
+but I am not sure what implications it has if we allowed any string
+without ensuring that it occupies one display column.
 
