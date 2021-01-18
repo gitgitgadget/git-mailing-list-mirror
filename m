@@ -2,141 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA27AC433E0
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 20:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7B1C433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 20:36:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B093322573
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 20:34:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6015422E00
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 20:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394370AbhARUe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 15:34:29 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63583 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394348AbhARUeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 15:34:00 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B440FA2603;
-        Mon, 18 Jan 2021 15:33:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wdaqnOczHZvTQ2c3KHR5jaDOZ/M=; b=m22Y5/
-        yNLb5ggiCIl5APLMa8Xii9K7WT+vHy0C7rKjbMoCdpmxwvZQypPKYV+H/6dY8NLt
-        Eu3e/DMs8/y8j8g5DcWTQQ0MDimReOunPBtXrcxc7pzWLsY+YKmcFwDtk4glpyV6
-        Ew7gJbFhGEhMwH6G2BqHvOa3oGiKY0ilB4NIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eVEArBzbNi4FuUjf53UrlOYAOUarL9Oo
-        bUe1alJtjwHK58BE3kTDFDxUg/EVGs7CnYya9yZUY5aNwnWX7MTkIGzmIBEIgVye
-        nfoe1ssTHuScQHJq9YoKam+9HAcuSg75NVabG98ls1WZutJyiIE7I0sfng8dqsMJ
-        PREa2QWykGk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AB228A2602;
-        Mon, 18 Jan 2021 15:33:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 394A2A2601;
-        Mon, 18 Jan 2021 15:33:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kyle Marek <kmarek@pdinc.us>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 1/2] revision: Denote root commits with '#'
-References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
-        <20210117110337.429994-1-kmarek@pdinc.us>
-        <20210117110337.429994-2-kmarek@pdinc.us>
-        <xmqq7dobmfrq.fsf@gitster.c.googlers.com>
-        <e0264a29-2112-f8c8-f066-2be445654d8e@pdinc.us>
-        <xmqqwnwajbuj.fsf@gitster.c.googlers.com>
-Date:   Mon, 18 Jan 2021 12:33:15 -0800
-In-Reply-To: <xmqqwnwajbuj.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 18 Jan 2021 11:15:16 -0800")
-Message-ID: <xmqqr1mij88k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S2388414AbhARUgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 15:36:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48344 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389038AbhARUfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 15:35:42 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FA00C061757
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 12:35:01 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id i30so4664398ota.6
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 12:35:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JPF+6QyqBWH+DH3jRS/WCSo9TSabuL0LbgWKoOdw5ek=;
+        b=mZ1+wu4DxfEGKfP4TgZ6VJaqPwKlhm+goGUClcoXCbo7/9NDf6/mYa/4Gq3VFWxA8u
+         0cfQLH9nJol9HWsKJcBcdFTmglWJiaY6DM1Lz06kq60C+OW7uB1fpvSeF8bDKM9rUmHW
+         YLPPUW7ScQ1wrB4qXZqfvhbF0uARUpC1cjKqnGpzRWJXX55vfaZQoFjPm8V4tNGY0IVd
+         rr+1645tTQPeX9Tk78Rby6FN2HD8x/Uf/QCurpJGH9Ws1a52XNNB1CJLXMXZLRKzrlNN
+         xkUG0F5hGJXgrqSnGoFLJMpgqgwCHhSrsPAUCuOreMW5ATZV7u80IukWJdE453pMgpcw
+         mx/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JPF+6QyqBWH+DH3jRS/WCSo9TSabuL0LbgWKoOdw5ek=;
+        b=Fji971AYQty1ROYBx0OJv7dYIvs+t0UB3Z/86bpRge7NXGu1cnDCLAuIVrOUzJsDkv
+         V9WrsB/Y2v8sdEwQDaFQ7gEzJn9euDR2DU9N+LtE2frz9RbCnHditDpckyee2kVg2FZz
+         2gwVwlvbJujIxAHMyTvKp77CUv0LXnKwDibzwUFrpmcZsp/KWyaXJaEFjNZNdHCurjMq
+         SDVxuBFRjTKxY4DDEmitrqohvf7sf2xT5b3InnwC65Pn/mE7WiFbzrMGYeAF2+jNxcVb
+         1EaAFJE9HW6w/QxRe+ha4RZami9olU06M1GyEhoXRHkCLREsegvC6aOyYUjteZxOl2/1
+         oT5w==
+X-Gm-Message-State: AOAM5333lMp8MdjNJBT1oj0cMcGOM6QWHNSduYnb3EDrr2xWolJbuaBC
+        ODobkSLciG+U+hve2H3/82XAeckJPRqE9GJUZv7YqWADwjk=
+X-Google-Smtp-Source: ABdhPJzKzntd+djl39tgETMRSx/m68Q3wjB/UbJLmGApt2QPsaEHZ17yQszzsYncLz1ZdfIJLd5Ea290Xv7UhsgN9/Y=
+X-Received: by 2002:a05:6830:1610:: with SMTP id g16mr956854otr.345.1611002100588;
+ Mon, 18 Jan 2021 12:35:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 64B1929E-59CC-11EB-B9E0-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.835.git.1610049687.gitgitgadget@gmail.com>
+ <pull.835.v2.git.1610055365.gitgitgadget@gmail.com> <bb4285250cdef2fcd16a22f8540968c871302c9f.1610055365.git.gitgitgadget@gmail.com>
+ <YAXrKLM5vkkwmxjC@nand.local>
+In-Reply-To: <YAXrKLM5vkkwmxjC@nand.local>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 18 Jan 2021 12:34:49 -0800
+Message-ID: <CABPp-BEJeeX+0O+u7NjWU-qMYne75s_1FUPU9aiEr=jQ5eyptg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/17] merge-ort: add outline of get_provisional_directory_renames()
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> [Footnote]
+On Mon, Jan 18, 2021 at 12:10 PM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> *1* Stepping back a bit, I think concentrating too much on "is it
->     root?" is a wrong way to think about the problem.  Suppose you
->     have two histories, e.g. (time flows from left to right; A and X
->     are roots)
+> On Thu, Jan 07, 2021 at 09:35:53PM +0000, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > This function is based on merge-recursive.c's get_directory_renames(),
+> > except that the first half has been split out into a not-yet-implemented
+> > compute_rename_counts().  The primary difference here is our lack of the
+> > non_unique_new_dir boolean in our strmap.  The lack of that field will
+> > at first cause us to fail testcase 2b of t6423; however, future
+> > optimizations will obviate the need for that ugly field so we have just
+> > left it out.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 59 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 378ac495d09..73d3ff97f52 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -721,11 +721,69 @@ static int handle_content_merge(struct merge_options *opt,
+> >
+> >  /*** Function Grouping: functions related to directory rename detection ***/
+> >
+> > +static void compute_rename_counts(struct diff_queue_struct *pairs,
+> > +                               struct strmap *dir_rename_count,
+> > +                               struct strset *dirs_removed)
+> > +{
+> > +     die("Not yet implemented!");
+> > +}
+> > +
+> >  static void get_provisional_directory_renames(struct merge_options *opt,
+> >                                             unsigned side,
+> >                                             int *clean)
+> >  {
+> > -     die("Not yet implemented!");
+> > +     struct hashmap_iter iter;
+> > +     struct strmap_entry *entry;
+> > +     struct rename_info *renames = &opt->priv->renames;
+> > +
+> > +     compute_rename_counts(&renames->pairs[side],
+> > +                           &renames->dir_rename_count[side],
+> > +                           &renames->dirs_removed[side]);
+> > +     /*
+> > +      * Collapse
+> > +      *    dir_rename_count: old_directory -> {new_directory -> count}
+> > +      * down to
+> > +      *    dir_renames: old_directory -> best_new_directory
+> > +      * where best_new_directory is the one with the unique highest count.
+> > +      */
+> > +     strmap_for_each_entry(&renames->dir_rename_count[side], &iter, entry) {
+> > +             const char *source_dir = entry->key;
+> > +             struct strintmap *counts = entry->value;
+> > +             struct hashmap_iter count_iter;
+> > +             struct strmap_entry *count_entry;
+> > +             int max = 0;
+> > +             int bad_max = 0;
+> > +             const char *best = NULL;
+> > +
+> > +             strintmap_for_each_entry(counts, &count_iter, count_entry) {
+> > +                     const char *target_dir = count_entry->key;
+> > +                     intptr_t count = (intptr_t)count_entry->value;
+>
+> Just to make sure I understand what's going on here: you're storing the
+> whole int inside the pointer (and not pointing at it)?
 
-A shorter and more concrete example.  Start from an empty repository:
+Right, strmap just has (char *)keys and (void *)values.  The fact that
+strintmap stores integers inside those values instead of pointers
+means that I have to do casting.  That casting is often hidden behind
+strintmap_get() calls, but since I'm not calling such a function here
+but just accessing the raw strmap_entry fields, I need to cast myself.
 
-	$ git init
-	$ git commit --allow-empty -m Aroot
-	$ git checkout --orphan side
-	$ git commit --allow-empty -m Xroot
-	$ git log --all --graph --oneline
-        * a1f7cb2 (HEAD -> side) Xroot
-        * b6fb655 (master) Aroot
+> > +                     if (count == max)
+> > +                             bad_max = max;
+> > +                     else if (count > max) {
+> > +                             max = count;
+> > +                             best = target_dir;
+> > +                     }
+> > +             }
+> > +
+> > +             if (max == 0)
+> > +                     continue;
+>
+> This is new from merge_recursive.c:get_directory_renames(). What is it
+> doing here?
 
-These depict two root commits, Aroot and Xroot, and no other
-commits.  We do want to show that these two commits do not have
-parent-child relationship at all, and your (and a few proposals made
-by other in the past) solution was to show them both with "#".
+Ah, good catch.  That became necessary with an optimization I haven't
+submitted yet.  I should probably pull these two lines out of this
+patch and resubmit later with the other optimization.
 
-Continuing in the same repository:
+>
+> > +             if (bad_max == max) {
+> > +                     path_msg(opt, source_dir, 0,
+> > +                            _("CONFLICT (directory rename split): "
+> > +                              "Unclear where to rename %s to; it was "
+> > +                              "renamed to multiple other directories, with "
+> > +                              "no destination getting a majority of the "
+> > +                              "files."),
+> > +                            source_dir);
+> > +                     *clean &= 0;
+>
+> Also not a big deal, but why not simply '*clean = 0'?
 
-	$ git checkout --orphan another
-	$ git commit --allow-empty -m Oroot
-	$ git commit --allow-empty -m A
-	$ git log --graph --oneline ^another^ another side
-        * eddf116 (HEAD -> another) A
-        * a1f7cb2 (side) Xroot
+Good question.  There might be a joke in there about this being a
+dirty way of recording uncleanness, but what you suggest just looks
+cleaner.  I'll fix it up.
 
-These depict two commits, A and Xroot, and no other commits.  We
-also want to show that these two commits do not have parent-child
-relationship at all, but if we paint Xroot with "#", it still makes
-it appear that A is a child of Xroot.
+>
+> > +             } else {
+> > +                     strmap_put(&renames->dir_renames[side],
+> > +                                source_dir, (void*)best);
+>
+> Ah, answering my onw question: this is indeed shoving the int into your
+> void*. That said, shouldn't this be '(void*)(intptr_t)best'?
 
->     And the right way to look at it is "does A have any parent in
->     the part of the history being shown?", not "does A have any
->     parent?"  Then 'A' will get exactly the same treatment in the
->     two examples, and the visual problem that makes A appear as if
->     it has parent-child relationship with unrelated commit X goes
->     away.
+??  best is not an int; it's a directory name.
 
-So the condition we saw in your patches, !commit->parents, which
-attempted to see if it was root, needs to be replaced with a helper
-function that checks if there is any parent that is shown in the
-output.  Perhaps
+You are correct that we shove an int into a void* elsewhere;
+dir_rename_count is a map of {old_dir => {new_dir => int}} (as noted
+in a comment where it was declared).
 
-	int no_interesting_parents(struct commit *commit)
-	{
-		struct commit_list *parents = commit->parents;
-
-		while (parents) {
-			if (!(parents->object.flags & UNINTERESTING))
-				return 0;
-			parents = parents->next;
-		}
-		return 1;
-	}
-
-or something like that should serve as a replacement, i.e.
-
-	return !commit->parents ? "#" : "*";
-
-would become
-
-	return no_interesting_parents(commit) ? "#" : "*";
-
-Hmm?
-
+But this line of code is not for "dir_rename_count" but "dir_renames".
+dir_renames is a map of {old_dir => new_dir}.  Thus, the value for the
+strmap is meant to not be int but char*.  Here, best is a const char*
+and the cast here is just to remove the constness so I can store in a
+strmap -- I know that the strmap isn't going to modify the pointed-to
+directory.
