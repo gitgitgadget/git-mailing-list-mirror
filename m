@@ -2,96 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F89C433DB
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFDD9C433E9
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:06:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 551322222F
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:34:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A899E22517
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731727AbhARFeX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 00:34:23 -0500
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:35284 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731296AbhARFeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 00:34:14 -0500
-Received: by mail-ej1-f47.google.com with SMTP id q22so21945011eja.2
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 21:33:58 -0800 (PST)
+        id S1732405AbhARGG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 01:06:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732387AbhARGFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 01:05:07 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2780AC061573
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 22:04:26 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id i30so2300702ota.6
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 22:04:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ilL8nLXRDSXC1qFEk2O3QWbr2lOtaWzGgQuGCwac4hg=;
+        b=k65Oqq0hXOZwkCSVxsko/9suEHE3/LvWCN+oKQATs3vsPdUq2jQvYEpnLBPUQ1Nwc8
+         MwL7T1REDUdwdiyOohUWor5eusgen5wj/15pblRoQYbVJ6xxHxOje7lcGss+7WZuJEEP
+         wlfJE+nKUQjrPBdIcP3Qmm/RyX35U2SSrkI8859N/V6fWrb0woGKS0nm9Pi3y0d7r5xe
+         6aIaUa31g7dkNOFE7ca9a6Tz9R0ZDA5/MRamWAg262oriUjG33JKSpYOfK0GYGshram0
+         DXsNB01cgRiLtlmWZOgygUvRXRFsqj/Cu4obJuMNqwRN7UGIWhh6AjYnh5XS7VymH9Uf
+         4zeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AW1Z5+tOrI+TQoEmbMqUpbqJ9Nsfd5n4Ley+M9z4G9U=;
-        b=rTbFffbPXfBnpidGtyS2ig03lEJfWfkwLqKc+18Apc2IIZtFNCh15GIfjsNm6uGnsj
-         c2dVFTbnpM7A0T/Uw6MXmQWnKJqk+8CqEIHq/UIwXaKDdoYtvi4mX2T1SGvNVBu6xa1K
-         gTbNan/oFqDpdChPSbIs3w3gzwGBu0PJdjnVQD/y9MDCwQmmJeVNohqy+1E2Pf7RXRIQ
-         JFiidE22itBJP3ydnw4TPe6U2NC/JAISZHUKC601ECJZLVVShlB0oq80msQeeDztIku4
-         5h5/ycXyqv+hiebcfUVG2ELzpgDoErpVR0JLhEnHtq3YNT8o1N2Bdo8NSEHwfr9HkYn+
-         YtIA==
-X-Gm-Message-State: AOAM533AE+dxpYKoeNGK2+Vm7u8/MFMqwy41TQswkJiktyuQ5w129s/T
-        Fhm8JwBraCSkXyQFG0H79YtAuhO9SVbc+i8KsOnStzhbO5C32Q==
-X-Google-Smtp-Source: ABdhPJw4amMNfxlpNCOea0FRAS90pTX6lDsK8b7mibNwWs+VCGh6WKUmjuh4gZp6qYcvSjyu+L7UDSg25pbzkmQb7lo=
-X-Received: by 2002:a17:906:d0c1:: with SMTP id bq1mr15863658ejb.202.1610948012371;
- Sun, 17 Jan 2021 21:33:32 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ilL8nLXRDSXC1qFEk2O3QWbr2lOtaWzGgQuGCwac4hg=;
+        b=PWdQ+YRMyci1La/SQcJ4vK4W2mLrZnNAwhX3NyjpiwqiA8nTLZK/2tJl2wH0Tx3p/D
+         OhY6nNs6DCwDGUW7NOGLwfi2+BuEy/RaSe0nrSH2AAza4QlvpGJ1D5PZ+g5Z8ydM1zYR
+         oJsn5mgP6PxKGnkAYdjPSsR0FQM9enYDJ7XvNsOzU1XIi4JYqQcMqykUPCg6xp6kehC0
+         yKqsRNNBnzREuRfEwoxZyoVPR48sd/Ps5KkBAHRDgWJDQyOwmzn5Fm6bIa+zISxSMjzo
+         AS8w9i/GsE3VKGCOBmiwtKgW2wTmJSSlwXSnOjEMNATi7C3wUUDnp98ZnXH7994S0cuj
+         eBCg==
+X-Gm-Message-State: AOAM530lLRov5euppyMHGjQCuhlix1VCOmlerf4M3Xf8qhEQSshvMdbK
+        sq8VOzIlaOxslDVHq7hp1BFtUcf0x5umEypH4Rc=
+X-Google-Smtp-Source: ABdhPJykEKc1YnCBTHVoaf0sEGBHgv5ZRe0tTKNzFcfQYO/09EvAPcO5I2gjHfGe3gzxKH0VmnG6fJ1rbrG8LzBvHc0=
+X-Received: by 2002:a9d:6188:: with SMTP id g8mr16507120otk.299.1610949865551;
+ Sun, 17 Jan 2021 22:04:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com> <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 18 Jan 2021 00:33:21 -0500
-Message-ID: <CAPig+cTGxOwUN20JmeR0bBwVMM78eA3Bnaqei5GEAs2XFM2_gg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] teach `worktree list` verbose mode and prunable annotations
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.832.v3.git.1610626942677.gitgitgadget@gmail.com>
+ <pull.832.v4.git.1610856136.gitgitgadget@gmail.com> <0c7830d07db0aa1ec055b97de52bd873d05e3ab1.1610856136.git.gitgitgadget@gmail.com>
+ <xmqqbldnkuja.fsf@gitster.c.googlers.com> <CAOLTT8Syp2ZeTXW-m+e=dn2W773nScB_kwZLS3MjLTcFQ_bctw@mail.gmail.com>
+In-Reply-To: <CAOLTT8Syp2ZeTXW-m+e=dn2W773nScB_kwZLS3MjLTcFQ_bctw@mail.gmail.com>
+From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Date:   Mon, 18 Jan 2021 14:05:53 +0800
+Message-ID: <CAOLTT8QnhNqnJCgiqOZnd9cjxicAuk2Js1GKdHEJD_XK15UU+Q@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] ls-files: add --deduplicate option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 17, 2021 at 6:43 PM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> This patch series addresses some of these changes by teaching
-> `worktree list` to show "prunable" annotation, adding verbose mode and
-> extending the --porcelain format with prunable and locked annotation as
-> follow up from [1]. Additionally, it addresses one shortcoming for porcelain
-> format to escape any newline characters (LF or CRLF) for the lock reason
-> to prevent breaking the format that is mentioned in [4] and [1] during the
-> review cycle.
+Hi,Junio!
+Here I am thinking about the role of this "--deduplicate" is to
+suppress duplicate filenames rather than duplicate entries. Do you
+think I should modify this sentence?
 
-Thanks for continuing to work on this. I'm pleased to see these
-enhancements coming together so nicely.
+> > OPT_BOOL(0,"deduplicate",&skipping_duplicates,N_("suppress duplicate en=
+tries")),
 
-> The patch series is organizes as:
-
-The new organization is a nice improvement over v1.
-
-As mentioned in my review of [5/6], there may be some value in
-swapping [5/6] and [6/6] to make it easier for readers to digest the
-changes, but it's not a hard requirement.
-
-To avoid being mysterious, there's also a change in [5/6] which
-probably belongs in [3/6], as explained in my review of [5/6].
-
-My review of patch [4/6] suggests optionally splitting out a bug fix
-into its own patch, but that's a very minor issue. Use your best
-judgment whether or not to do so.
-
-> 4. The fourth patch adds the "locked" attribute for the porcelain format
->    in order to make both default and --porcelain format consistent.
-
-This patch does need a re-roll, and it's entirely my fault. In my
-review of the previous round, I said that if the lock reason contained
-special characters, we'd want to escape those characters and quote the
-string, but then I gave you a code suggestion which did the opposite
-of that. My [4/6] review goes into more detail.
-
-Aside from the one important fix in [4/6], and the possible minor
-re-organizations suggested above, all my other review comments were
-very minor and probably subjective, thus nothing to sweat over.
-
-Nicely done.
-
-[1]: https://lore.kernel.org/git/CAPig+cSH6PKt8YvDJhMBvzvePYLqbf70uVV8TERoMj+kfxJRHQ@mail.gmail.com/
+=E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B4=
+1=E6=9C=8818=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=8812:09=E5=86=99=E9=
+=81=93=EF=BC=9A
+>
+> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8818=E6=
+=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=887:34=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
+> > > new file mode 100755
+> > > index 00000000000..75877255c2c
+> > > --- /dev/null
+> > > +++ b/t/t3012-ls-files-dedup.sh
+> > > @@ -0,0 +1,57 @@
+> > > +#!/bin/sh
+> > > +
+> > > +test_description=3D'git ls-files --deduplicate test'
+> > > +
+> > > +. ./test-lib.sh
+> >
+> > We should already have a ls-files test so that we can add a handful
+> > new tests to it, instead of dedicating a whole new test script.
+> >
+> Fine,It might be easier for me to write a test file myself for the time b=
+eing.
+> But I will learn slowly.
+> > Also, don't do everything in a single 'setup'.  There are various
+> > scenarios you want to make sure ls-files to work (grep for ls-files
+> > in the following you added---I count 4 of them), and when a future
+> > developer touches the code, he or she may break one but not other
+> > three.  The purpose you write tests is to protect your new feature
+> > from such a developer *AND* help such a developer to debug and fix
+> > his or her changes.  For that, it would be a lot more sensible to
+> > have one set-up that is common, and then four separate tests.
+> >
+> > > +test_expect_success 'setup' '
+> > > +     >a.txt &&
+> > > +     >b.txt &&
+> > > +     >delete.txt &&
+> > > +     git add a.txt b.txt delete.txt &&
+> > > +     git commit -m master:1 &&
+> >
+> > Needless use of the word "master".  Observe what is going on in the
+> > project around you and avoid stepping other peoples' toes.  One of
+> > the ongoing effort is to grep for the phrase master in t/ directory
+> > and examine what happens when the default initial branch name
+> > becomes something other than 'master', so adding a needless hit like
+> > this is most unwelcome.
+> >
+> Well, I will try my best to use less "master".
+> > > +     echo a >a.txt &&
+> > > +     echo b >b.txt &&
+> > > +     echo delete >delete.txt &&
+> > > +     git add a.txt b.txt delete.txt &&
+> > > +     git commit -m master:2 &&
+> >
+> > > +     git checkout HEAD~ &&
+> > > +     git switch -c dev &&
+> >
+> > Needless mixture of checkout/switch.  If you switch branches using
+> > "git checkout", for example, consistently do so, i.e.
+> >
+> >         git checkout -b dev HEAD~1
+> >
+> > It's not like these new tests are to test checkout and switch; your
+> > mission is to protect "ls-files --dedup" feature here.
+> >
+> > > +     test_when_finished "git switch master" &&
+> > > +     echo change >a.txt &&
+> > > +     git add a.txt &&
+> > > +     git commit -m dev:1 &&
+> >
+> > I'd consider all of the above to be 'setup' that is common for
+> > subsequent tests.  It may make sense to actually do everything
+> > on the initial branch, i.e. after creating two commits, do
+> >
+> I understand it now...setup is for serve as a basis for other tests.
+> >         git tag tip &&
+> >         git reset --hard HEAD^ &&
+> >         echo change >a.txt &&
+> >         git commit -a -m side &&
+> >         git tag side
+> >
+> > You are always on the initial branch without ever switching, so
+> > there is no need for the when_finished stuff.
+> >
+> > Then the first of your test is to show the index with conflicts.
+> >
+> > > +     test_must_fail git merge master &&
+> >
+> > This will become "git merge tip" instead of 'master'.
+> >
+> use tag instead of use branch name...
+> > > +     git ls-files --deduplicate >actual &&
+> > > +     cat >expect <<-\EOF &&
+> > > +     a.txt
+> > > +     b.txt
+> > > +     delete.txt
+> > > +     EOF
+> > > +     test_cmp expect actual &&
+> >
+> > And up to this point is the first test after 'setup'.
+> >
+> > The next test should begin with:
+> >
+> >         git reset --hard side &&
+> >         test_must_fail git merge tip &&
+> >
+> > so that even when the first test is skipped, or left unmerged,
+> > you'll begin with a known state.
+> >
+> Well,I understand now that the a test_success should allow other
+> programmers to skip this test,so that we should reset to a known
+> state at the beginning of each test.
+> > > +     rm delete.txt &&
+> > > +     git ls-files -d -m --deduplicate >actual &&
+> > > +     cat >expect <<-\EOF &&
+> > > +     a.txt
+> > > +     delete.txt
+> > > +     EOF
+> > > +     test_cmp expect actual &&
+> > > +     git ls-files -d -m -t  --deduplicate >actual &&
+> > > +     cat >expect <<-\EOF &&
+> > > +     C a.txt
+> > > +     C a.txt
+> > > +     C a.txt
+> > > +     R delete.txt
+> > > +     C delete.txt
+> > > +     EOF
+> > > +     test_cmp expect actual &&
+> > > +     git ls-files -d -m -c  --deduplicate >actual &&
+> > > +     cat >expect <<-\EOF &&
+> > > +     a.txt
+> > > +     b.txt
+> > > +     delete.txt
+> > > +     EOF
+> > > +     test_cmp expect actual &&
+> >
+> > These three can be kept in the same test_expect_success, as they are
+> > exercising read-only operation on the same state but with different
+> > display options.
+> >
+> indeed so.
+> > But in this case, the preparation is not too tedious (just a failed
+> > merge plus a deletion), so you probably would prefer to split it
+> > into 3 independent tests---that may make it more helpful to future
+> > developers.
+> >
+> Thanks:)
+> > > +     git merge --abort
+> > > +'
+> > > +test_done
