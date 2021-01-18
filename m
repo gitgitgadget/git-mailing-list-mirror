@@ -8,30 +8,30 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F42C433E9
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4272C433E0
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:16:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E12022B49
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:13:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 803AA22BE9
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405958AbhARQAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 11:00:48 -0500
-Received: from mout.gmx.net ([212.227.17.20]:45087 "EHLO mout.gmx.net"
+        id S2390757AbhARQQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 11:16:23 -0500
+Received: from mout.gmx.net ([212.227.17.20]:44827 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406187AbhARQAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 11:00:36 -0500
+        id S2406552AbhARQPv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 11:15:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610985535;
-        bh=aT1zLkGbmaSgl4qocSemLhlbIRibwKFWVe5OacYp9Og=;
+        s=badeba3b8450; t=1610986458;
+        bh=sbXIJwQpl2XAS9fAhZC0EM5mEq0FJTytqCGAzBeIe88=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KJtKb4e4Ods1+PEJx2GO1V0d7Hbflp3GWcr5vSfC8k3sx66rRQD0s3vsd6x/3N7G5
-         DchG9je7FL5kHsPdw4x7iOS3dm9pB3UCxtNCbD9K2gfGWBXvV1jRe1ZOEi/n5pMYdG
-         7iVKpyzwMRT4Qg7fhV/vhM1AT3+1NB0EEbMUPgkg=
+        b=Phx3pcBqwKxW0d7kVThQnle0JyhUayRyxfZiNAQLOfT5y4rzpQk/6r+0bJxhcbJri
+         ZPd7FKPK9uSByNZGRwvwmyYqhll0wRDInp5EhZM2e68G10ppllKtXKVl4Babec0NMM
+         977KAbiYRWifNFBQh7Wpc437xNzlpOqbTzFVGgPE=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.115.203] ([89.1.215.22]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N79yG-1m6WEl0Kya-017Wfo; Mon, 18
- Jan 2021 16:58:55 +0100
-Date:   Mon, 18 Jan 2021 16:59:00 +0100 (CET)
+Received: from [172.25.115.203] ([89.1.215.22]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwfWU-1lzOqW0z3i-00y8zt; Mon, 18
+ Jan 2021 17:14:18 +0100
+Date:   Mon, 18 Jan 2021 17:14:23 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Miriam Rubio <mirucam@gmail.com>
@@ -39,32 +39,32 @@ cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 2/7] bisect--helper: reimplement `bisect_replay` shell
+Subject: Re: [PATCH v2 6/7] bisect--helper: reimplement `bisect_skip` shell
  function in C
-In-Reply-To: <20201221162743.96056-3-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2101181609480.52@tvgsbejvaqbjf.bet>
-References: <20201221162743.96056-1-mirucam@gmail.com> <20201221162743.96056-3-mirucam@gmail.com>
+In-Reply-To: <20201221162743.96056-7-mirucam@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2101181707580.52@tvgsbejvaqbjf.bet>
+References: <20201221162743.96056-1-mirucam@gmail.com> <20201221162743.96056-7-mirucam@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oXoHn2Kq6kIMAEpEsPhflTOy0VcZi8rq+PFM9ipj2biKTl0Ta56
- FgNw+R7PrFlaW6U32aJnxk6wK1k5AXlGOeleIoEtPWmmXWMEbQDZfFstLrgf682WHAEWF9p
- /QBu+fIm80TGlt7Sc/8MEubVOUkLbfsXIb2mzY27Al3EHJNi2GcRW2eBDn9rPybqJa96ITB
- nSBjh1nxGl/20TT4hA/0g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jrhzqU9zqKU=:NQmne5Ws0GB6EFO9P7RD7p
- E0Ymcc0uMCYR+smHyN1Be5bn4gSyKBY9Oi2NYAMvISvzpZwZLHXverZIm9yrPMp6ljLoopsHH
- yyXeA6t9dXtiMMdVcA8HaC43Fq8Q6TyvZIo/TIT2TyaYOnG4jjCVSeVlF3OjrN8+sdDGLsp6o
- nzSPkZXcl0Krxu/olC0U7gJuxSOyVRb3VPtYL26FhJAgN59qm2We2ZherNWmUbJkSBbDfZw0I
- IshNUQ56t3e2oByu9EZSAiCpYgL8zBsSUYvBa8TjsW5FP5/EQhDQZulCrOOSJ4tiIyYZcusZZ
- Wuz3ezP7J+cnfww6hcTmVkZF+maLnEU3EyOUlkdNLe8M68tBRRJWkQqKg8bXTqq4Py4cHe2Wl
- saRoBXnqZ2hPT1k465U0MPxGCqVBtLHopNDTOk45ObqEh238DDtebyyEp8ooNAsTo35GMIJ+G
- eHiZStSvh+LcNTeHoLxJiOyRUpcOZ1tPUZ/BpuZCJmejkjs0yDFINiaLlg3MSSitI+jFh/IcU
- sjFzYAsHiakDZYcpEjFre+uj+HaTYjp6SZ4ef4gsBWA4k32W7oR0EGtcu8L1L0wvGyReftGeM
- YzYAvjGwKIOJLHDWuQakq7hymB1+6ObSwh8Xu52/LQotsyuvRRwJqsOZ+eoC7mdh/asVMhnqy
- XET2teHtNZ8CJJiA0m/lVpXuYANsZlmPkpHhCKcxuWIYQNd5TIPLFHtyXLUq8zRcfve1OzeYq
- 9dlHO3d3bvovjsRU0hZYHVlWXEq5oaV5KO0uECTIC/hcgvQcGwl+MmYYy2PpLzOTQgmUpHjj7
- ICUNIwwlrvdbN6rWY8Cw/XJTh3iCYQN2CHxofhNecySrVX+o/l0U+gdaTKT0VhGYTuyIZf9mf
- deEaBypUWFmx79+GV6wtKASqeCWp7pF5IJ7dTXkjQ=
+X-Provags-ID: V03:K1:R8o5bISXvwbIHWqnNyWsHRayYiSBl9oSrOG+AlICBrNlYLFy3aD
+ HyhpxXR0ZrpyeYRGnpeu/v4RkgAancl8wKiHZyX39TtpofG4/nwpgSTDTQXgB8qUtFNIpPA
+ EKhLG8pX7uziCKBi4yDFJc4JQuITlukDYAyrv/rzglT41lTHZSOSj0qbokbykJfFP44eZVR
+ kTB+cdrCBNSIA8aPzFIHg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kybTOvNjN6U=:8QEZ1bNZokeJFCMhuKsCrU
+ GQDFQ4ObPd9oIJLCtxZdbGDHxc8Zwdh7T3h1NnWQrzUAbPKBVGQkzyogyGH+gko+MQqJ5c2Tv
+ nAmI2T6BndfA/mDhhrmMrag0H/AQAYa2vr0IsjWKFXxKWhIUnPVfZw2aHAKD5d3KMhryliUie
+ 0GDF4Gf6Jlq6IJ3Gh7LF6/PypVRwhAl7wS8/a67wuP5q6WYHeldB1UKmofsiMGCflVmgtLjoE
+ 4ad88SiboS3uE0UMhIRL+cHZP7FsfmOVKhIFjM1xmEBUhjQ/Fjy3Mf1cux9SqdKZXUF4vIQFS
+ lFnco8mBv84NO7C+324Kbml4CEgaU/EapO9tgzAPXfdcZScsuYjUIZ0oyt32FW/teo+BF7jhW
+ /igdRjHE+anXhXouL4Jh9BXnnWWSaB3SYg99Yw14OvaQfO20Bcs8Dfg/Vm35JKoZ0+VP/kEOj
+ pPPpRsHjEoX6YTkjn5B41dXtZJWdwf5H2yFK7twlT6UAWpYBJiJFGcphbjjy+9RRZR6cXk6xx
+ mpah43IF/uT1PZ2R3rBajodvT9qa5lENeEaNjKraACTzvqnJ8JkdVVOGDt60WXMGTSjjraV95
+ kGYVibj6ToFE059oH0NUenZkp5vWvEPnBbtJTIDt8RGcD0Qm/8631ixCMcyKne61N7lUzRpTQ
+ YZ71FaCbZcZXy1Nl33QzkZmTh1syBlBXCv9ly9DpTqFM1dqf0gfWvfA3r7ovUVjGs+Rbh4mLJ
+ GDc1hdb+jZuvWI7C+MoOwba7kJ40kvFRb1CRDI+52jgIJ8u8M+NbDNHCIU5C3cDjBOyohdqbe
+ TH7l5U+eE8HWsmXSlNkNs5+y0l5cdIJg0GHQ/gN1N1AEJWQ9qYUGGex72IIWFO3Y7GREQcdAK
+ iV3ZaS0SW+u6h87lv2u49Mx0V6gFfPBvvSsJ4tghY=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,241 +72,150 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Miriam,
 
-this patch looks pretty good to me. I just have a couple
-comments/suggestions:
-
 On Mon, 21 Dec 2020, Miriam Rubio wrote:
 
 > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 1854377fa6..92c783237d 100644
+> index d570a165de..1a6c75183a 100644
 > --- a/builtin/bisect--helper.c
 > +++ b/builtin/bisect--helper.c
-> @@ -916,6 +917,121 @@ static enum bisect_error bisect_log(void)
->  	return status ? BISECT_FAILED : BISECT_OK;
+> @@ -1030,6 +1031,43 @@ static enum bisect_error bisect_replay(struct bis=
+ect_terms *terms, const char *f
+>  	return bisect_auto_next(terms, NULL);
 >  }
 >
-> +static int get_next_word(const char *line, int pos, struct strbuf *word=
-)
+> +static enum bisect_error bisect_skip(struct bisect_terms *terms, const =
+char **argv, int argc)
 > +{
-> +	int i, len =3D strlen(line), begin =3D 0;
+> +	int i;
+> +	enum bisect_error res;
+> +	const char *pattern =3D "*..*";
+> +	struct strvec argv_state =3D STRVEC_INIT;
 > +
-> +	strbuf_reset(word);
-> +	for (i =3D pos; i < len; i++) {
-> +		if (line[i] =3D=3D ' ' && begin)
-> +			return i + 1;
+> +	strvec_push(&argv_state, "skip");
 > +
-> +		if (!begin)
-> +			begin =3D 1;
-> +		strbuf_addch(word, line[i]);
-> +	}
-> +
-> +	return i;
-> +}
+> +	for (i =3D 0; i < argc; i++) {
+> +		if (!wildmatch(pattern, argv[i], 0)) {
 
-While I have different objections than Rafael (the function seems to want
-to left-trim, but does an inadequate job at it), I do not even think that
-we need this function. See below.
+Better use `strstr()`:
 
-> +
-> +static int process_line(struct bisect_terms *terms, struct strbuf *line=
-, struct strbuf *word)
-> +{
-> +	int res =3D 0;
-> +	int pos =3D 0;
-> +
-> +	while (pos < line->len) {
-> +		pos =3D get_next_word(line->buf, pos, word);
-> +
-> +		if (!strcmp(word->buf, "git"))
-> +			continue;
-> +		else if (!strcmp(word->buf, "git-bisect"))
-> +			continue;
-> +		else if (!strcmp(word->buf, "bisect"))
-> +			continue;
+		const char *dotdot =3D strstr(argv[i], "..");
 
-This is not quite correct, as it would skip arbitrary amounts of "git" and
-"git-bisect" and "bisect", even in the middle of the line.
-
-Besides, this `while()` loop iterates over the characters of the current
-line, while the original loop iterated over the _lines_:
-
-	while read git bisect command rev
-	do
-		test "$git $bisect" =3D "git bisect" || test "$git" =3D "git-bisect" || =
-continue
-	[...]
-
-As you can see, lines that do not start with "git bisect" or "git-bisect"
-are simply ignored by `continue`ing to the next line. In the C code,
-`continue` would continue to the next _word_.
-
-I'd like to strongly suggest a very different approach, where no `while()`
-loop is used in `process_line()` (BTW can we please rename this to
-`process_replay_line()` to 1) make it less generic a name and 2) convey
-via the name what this function is about?):
-
-	const char *p;
-
-	if (!skip_prefix(line->buf, "git bisect", &p) &&
-	    !skip_prefix(line->buf, "git bisect", p))
-		return 0;
-
-As the original code used `read git bisect command rev` to parse the line,
-which automatically trims white-space, we might want to do something
-similar to that:
-
-	const char *p =3D line->buf + strspn(line->buf, " \t");
-
-	if ((!skip_prefix(p, "git bisect", &p) &&
-	     !skip_prefix(p, "git-bisect", &p)) ||
-	    !isspace(*p))
-		return 0;
-	p +=3D strspn(p, " \t");
-
-> +		else if (starts_with(word->buf, "#"))
-> +			break;
-
-Please note that the original shell code is _a lot_ more forgiving: it
-ignores _anything_ but "git bisect" and "git-bisect" at the beginning of
-the (white-space-trimmed) line. Not just comments starting with `#`. I'd
-like to return to the shell script's behavior.
-
-> +
-> +		get_terms(terms);
-
-Do we really have to read the terms for every line we replay? I guess we
-do, as every time we use new/old after good/bad (or vice versa), the terms
-file gets rewritten.
-
-We might want to address this awkwardness in the future: in C, we do not
-have to read and write the terms file _all_ the time.
-
-> +		if (check_and_set_terms(terms, word->buf))
-> +			return -1;
-> +
-> +		if (!strcmp(word->buf, "start")) {
-
-Let's use `skip_prefix()` here, too:
-
-		char *word_end =3D p + strcspn(p, " \t");
-		const char *rev =3D word_end + strspn(word_end, " \t");
-
-		*word_end =3D '\0'; /* NUL-terminate the word */
-
-		if (!strcmp("start", p)) {
-			struct strvec argv =3D STRVEC_INIT;
-			int res;
-
-			sq_dequote_to_strvec(rev, &argv);
-			res =3D bisect_start(terms, argv.v, argv.nr);
-			strvec_clear(&argv);
-			return res;
+		if (dotdot) {
+			[...]
 		}
 
-> +			struct strvec argv =3D STRVEC_INIT;
-> +			int res;
-> +			sq_dequote_to_strvec(line->buf+pos, &argv);
-> +			res =3D bisect_start(terms, argv.v, argv.nr);
-> +			strvec_clear(&argv);
-> +			if (res)
-> +				return -1;
-> +			break;
-> +		}
+> +			struct rev_info revs;
+> +			struct commit *commit;
+> +			struct strvec rev_argv =3D STRVEC_INIT;
 > +
-> +		if (one_of(word->buf, terms->term_good,
-> +			   terms->term_bad, "skip", NULL)) {
-> +			if (bisect_write(word->buf, line->buf+pos, terms, 0))
-> +				return -1;
+> +			strvec_pushl(&rev_argv, "skipped_commits", argv[i], NULL);
+> +			init_revisions(&revs, NULL);
+> +			setup_revisions(rev_argv.nr, rev_argv.v, &revs, NULL);
+> +			strvec_clear(&rev_argv);
 
-Apart from using `p` as above instead of `word->buf`, and `rev` instead of
-`line->buf+pos`, why not returning directly what `bisect_write()`
-returned?
+Since the first argument passed to `setup_revisions()` is always ignored,
+you can avoid all that `strvec` business altogether thusly:
 
-		if (one_of(p, terms->term_good, terms->term_bad, "skip", NULL))
-			return bisect_write(p, rev, terms, 0);
+			setup_revisions(2, argv + i - 1, &revs, NULL);
 
-> +			break;
-> +		}
-
-> +
-> +		if (!strcmp(word->buf, "terms")) {
-> +			struct strvec argv =3D STRVEC_INIT;
-> +			int res;
-> +			sq_dequote_to_strvec(line->buf+pos, &argv);
-> +			res =3D bisect_terms(terms, argv.nr =3D=3D 1 ? argv.v[0] : NULL);
-
-We should probably error out if `argv.nr > 1`.
-
-> +			strvec_clear(&argv);
-> +			if (res)
-> +				return -1;
-> +			break;
-
-Let's `return res` directly.
-
-> +		}
-> +
-> +		error(_("Replay file contains rubbish (\"%s\")"),
-> +		      word->buf);
-
-The shell script version does this instead:
-
-		die "$(gettext "?? what are you talking about?")" ;;
-
-We should do the same, if only to make life easier on the translators.
-
-> +		res =3D -1;
-> +	}
-> +	return res;
-> +}
-> +
-> +static int process_replay_file(FILE *fp, struct bisect_terms *terms)
-> +{
-> +	struct strbuf line =3D STRBUF_INIT;
-> +	struct strbuf word =3D STRBUF_INIT;
-> +	int res =3D 0;
-> +
-> +	while (strbuf_getline(&line, fp) !=3D EOF) {
-> +		res =3D process_line(terms, &line, &word);
-> +		if (res)
-> +			break;
-> +	}
-> +
-> +	strbuf_release(&line);
-> +	strbuf_release(&word);
-> +	return res;
-> +}
-
-A lot of this function is just boiler plate. I'd prefer to merge the code
-into `bisect_replay()` instead.
-
-> +
-> +static enum bisect_error bisect_replay(struct bisect_terms *terms, cons=
-t char *filename)
-> +{
-> +	FILE *fp =3D NULL;
-> +	enum bisect_error res =3D BISECT_OK;
-> +
-> +	if (is_empty_or_missing_file(filename))
-> +		return error(_("cannot read file '%s' for replaying"), filename);
-> +
-> +	if (bisect_reset(NULL))
-> +		return BISECT_FAILED;
-> +
-> +	fp =3D fopen(filename, "r");
-> +	if (!fp)
-> +		return BISECT_FAILED;
-> +
-> +	res =3D process_replay_file(fp, terms);
-> +	fclose(fp);
-> +
-> +	if (res)
-> +		return BISECT_FAILED;
-> +
-> +	return bisect_auto_next(terms, NULL);
-> +}
-
-The rest looks good to me!
+Other than that, this patch looks good to me.
 
 Ciao,
 Dscho
+
+> +
+> +			if (prepare_revision_walk(&revs))
+> +				die(_("revision walk setup failed\n"));
+> +			while ((commit =3D get_revision(&revs)) !=3D NULL)
+> +				strvec_push(&argv_state,
+> +						oid_to_hex(&commit->object.oid));
+> +
+> +			reset_revision_walk();
+> +		} else {
+> +			strvec_push(&argv_state, argv[i]);
+> +		}
+> +	}
+> +	res =3D bisect_state(terms, argv_state.v, argv_state.nr);
+> +
+> +	strvec_clear(&argv_state);
+> +	return res;
+> +}
+> +
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	enum {
+> @@ -1042,7 +1080,8 @@ int cmd_bisect__helper(int argc, const char **argv=
+, const char *prefix)
+>  		BISECT_NEXT,
+>  		BISECT_STATE,
+>  		BISECT_LOG,
+> -		BISECT_REPLAY
+> +		BISECT_REPLAY,
+> +		BISECT_SKIP
+>  	} cmdmode =3D 0;
+>  	int res =3D 0, nolog =3D 0;
+>  	struct option options[] =3D {
+> @@ -1064,6 +1103,8 @@ int cmd_bisect__helper(int argc, const char **argv=
+, const char *prefix)
+>  			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
+>  		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
+>  			 N_("replay the bisection process from the given file"), BISECT_REPL=
+AY),
+> +		OPT_CMDMODE(0, "bisect-skip", &cmdmode,
+> +			 N_("skip some commits for checkout"), BISECT_SKIP),
+>  		OPT_BOOL(0, "no-log", &nolog,
+>  			 N_("no log for BISECT_WRITE")),
+>  		OPT_END()
+> @@ -1126,6 +1167,10 @@ int cmd_bisect__helper(int argc, const char **arg=
+v, const char *prefix)
+>  		set_terms(&terms, "bad", "good");
+>  		res =3D bisect_replay(&terms, argv[0]);
+>  		break;
+> +	case BISECT_SKIP:
+> +		set_terms(&terms, "bad", "good");
+> +		res =3D bisect_skip(&terms, argv, argc);
+> +		break;
+>  	default:
+>  		BUG("unknown subcommand %d", cmdmode);
+>  	}
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index 79bcd31bd7..016cc34e03 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -39,21 +39,6 @@ _x40=3D"$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+>  TERM_BAD=3Dbad
+>  TERM_GOOD=3Dgood
+>
+> -bisect_skip() {
+> -	all=3D''
+> -	for arg in "$@"
+> -	do
+> -		case "$arg" in
+> -		*..*)
+> -			revs=3D$(git rev-list "$arg") || die "$(eval_gettext "Bad rev input:=
+ \$arg")" ;;
+> -		*)
+> -			revs=3D$(git rev-parse --sq-quote "$arg") ;;
+> -		esac
+> -		all=3D"$all $revs"
+> -	done
+> -	eval git bisect--helper --bisect-state 'skip' $all
+> -}
+> -
+>  bisect_visualize() {
+>  	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || ex=
+it
+>
+> @@ -162,7 +147,7 @@ case "$#" in
+>  	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
+>  		git bisect--helper --bisect-state "$cmd" "$@" ;;
+>  	skip)
+> -		bisect_skip "$@" ;;
+> +		git bisect--helper --bisect-skip "$@" || exit;;
+>  	next)
+>  		# Not sure we want "next" at the UI level anymore.
+>  		git bisect--helper --bisect-next "$@" || exit ;;
+> --
+> 2.29.2
+>
+>
