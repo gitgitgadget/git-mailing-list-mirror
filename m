@@ -2,48 +2,47 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC113C433E0
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89F89C433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:34:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9AF8922517
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:16:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 551322222F
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 05:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731646AbhARFQA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 00:16:00 -0500
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:44311 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729550AbhARFP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 00:15:59 -0500
-Received: by mail-ed1-f49.google.com with SMTP id p22so16091631edu.11
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 21:15:43 -0800 (PST)
+        id S1731727AbhARFeX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 00:34:23 -0500
+Received: from mail-ej1-f47.google.com ([209.85.218.47]:35284 "EHLO
+        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731296AbhARFeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 00:34:14 -0500
+Received: by mail-ej1-f47.google.com with SMTP id q22so21945011eja.2
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 21:33:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=61p+HT5zqNDsRuAZayAmcKs0ISkKchc/rc8RCTUM7O4=;
-        b=iVxCzQUbL21yPvVHziIFfEGn/PCIbtOyE7qJbQAyid/sE9eaK4BGnr+QRc3h/IYgN5
-         2hZ792uNhR9djTT/IPdNxSMF17xcHoMufeKXEGbBVEngRTsS7igcJCeeh4Ln834CfMYA
-         UUrlf2jGTAD+krOY5HvTVvFtmOT3C9hchsB9n0Xgqd7ni39U+ZAnsCdmznqrWTkTCmge
-         boRqP2Z8rCvt5XMeSOVaoDHWkb0vplArrFlLfBOtKNJEPMAYGvWM2o1U57smQEH/Urmq
-         e0G0M5LluRwdVkIrBQDX0oT6qPGtPzpGTccMu3EMCKWFqzIdgmN4kSnjrocN7b3McpQx
-         pSPA==
-X-Gm-Message-State: AOAM531Ge2dgbGkBn7nk6esOVDgz0uOp3ACZWZfsUoEKWluWfpbEt8mG
-        FMwfraBsxSAoEVHVvjYGhRk5xBxv0cWDVdLuhLhBWRwH4oM=
-X-Google-Smtp-Source: ABdhPJx5Q4lEzrRICsLq0ZxF4AIihdVBmjgzB9Las9vM5+7OANH/NN67JHofHBn3Z1j7Qb9CkSKxj73w3FQ/f9Qzpc4=
-X-Received: by 2002:a05:6402:b52:: with SMTP id bx18mr4593321edb.221.1610946917405;
- Sun, 17 Jan 2021 21:15:17 -0800 (PST)
+        bh=AW1Z5+tOrI+TQoEmbMqUpbqJ9Nsfd5n4Ley+M9z4G9U=;
+        b=rTbFffbPXfBnpidGtyS2ig03lEJfWfkwLqKc+18Apc2IIZtFNCh15GIfjsNm6uGnsj
+         c2dVFTbnpM7A0T/Uw6MXmQWnKJqk+8CqEIHq/UIwXaKDdoYtvi4mX2T1SGvNVBu6xa1K
+         gTbNan/oFqDpdChPSbIs3w3gzwGBu0PJdjnVQD/y9MDCwQmmJeVNohqy+1E2Pf7RXRIQ
+         JFiidE22itBJP3ydnw4TPe6U2NC/JAISZHUKC601ECJZLVVShlB0oq80msQeeDztIku4
+         5h5/ycXyqv+hiebcfUVG2ELzpgDoErpVR0JLhEnHtq3YNT8o1N2Bdo8NSEHwfr9HkYn+
+         YtIA==
+X-Gm-Message-State: AOAM533AE+dxpYKoeNGK2+Vm7u8/MFMqwy41TQswkJiktyuQ5w129s/T
+        Fhm8JwBraCSkXyQFG0H79YtAuhO9SVbc+i8KsOnStzhbO5C32Q==
+X-Google-Smtp-Source: ABdhPJw4amMNfxlpNCOea0FRAS90pTX6lDsK8b7mibNwWs+VCGh6WKUmjuh4gZp6qYcvSjyu+L7UDSg25pbzkmQb7lo=
+X-Received: by 2002:a17:906:d0c1:: with SMTP id bq1mr15863658ejb.202.1610948012371;
+ Sun, 17 Jan 2021 21:33:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
- <20210117234244.95106-1-rafaeloliveira.cs@gmail.com> <20210117234244.95106-7-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210117234244.95106-7-rafaeloliveira.cs@gmail.com>
+References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com> <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
+In-Reply-To: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 18 Jan 2021 00:15:06 -0500
-Message-ID: <CAPig+cQ4jeSkOLb-Ski0G2tvafxh0Jjv+ObB7ZkbcryVYedGZQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] worktree: teach `list` verbose mode
+Date:   Mon, 18 Jan 2021 00:33:21 -0500
+Message-ID: <CAPig+cTGxOwUN20JmeR0bBwVMM78eA3Bnaqei5GEAs2XFM2_gg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] teach `worktree list` verbose mode and prunable annotations
 To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
 Cc:     Git List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood123@gmail.com>
@@ -54,66 +53,45 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Jan 17, 2021 at 6:43 PM Rafael Silva
 <rafaeloliveira.cs@gmail.com> wrote:
-> "git worktree list" annotates each worktree according to its state such
-> as "prunable" or "locked", however it is not immediately obvious why
-> these worktrees are being annotated. For prunable worktrees a reason
-> is available that is returned by should_prune_worktree() and for locked
-> worktrees a reason might be available provided by the user via `lock`
-> command.
->
-> Let's teach "git worktree list" to output the reason why the worktrees
-> are being annotated. The reason is a text that can take virtually any
-> size and appending the text on the default columned format will make it
-> difficult to extend the command with other annotations and not fit nicely
-> on the screen. In order to address this shortcoming the annotation is
-> then moved to the next line indented followed by the reason, if the
-> reason is not available the annotation stays on the same line as the
-> worktree itself.
+> This patch series addresses some of these changes by teaching
+> `worktree list` to show "prunable" annotation, adding verbose mode and
+> extending the --porcelain format with prunable and locked annotation as
+> follow up from [1]. Additionally, it addresses one shortcoming for porcelain
+> format to escape any newline characters (LF or CRLF) for the lock reason
+> to prevent breaking the format that is mentioned in [4] and [1] during the
+> review cycle.
 
-If you're re-rolling, let's mention the new `--verbose` option
-somewhere in the commit message since that is the focus of this patch.
-The second paragraph would be a good place:
+Thanks for continuing to work on this. I'm pleased to see these
+enhancements coming together so nicely.
 
-    Let's teach "git worktree list" a --verbose mode which
-    outputs the reason...
+> The patch series is organizes as:
 
-Also, the final sentence is a bit difficult to follow due to the comma
-before "if the reason is not available". If you make the "if the
-reason is not available" a separate sentence, it becomes simple to
-understand.
+The new organization is a nice improvement over v1.
 
-> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-> @@ -135,6 +135,33 @@ test_expect_success '"list" all worktrees with prunable consistent with "prune"'
-> +test_expect_success '"list" all worktrees --verbose with locked' '
-> +       test_when_finished "rm -rf locked out actual expect && git worktree prune" &&
-> +       git worktree add locked --detach &&
-> +       git worktree lock locked --reason "with reason" &&
-> +       test_when_finished "git worktree unlock locked" &&
-> +       echo "$(git -C locked rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >expect &&
-> +       printf "\tlocked: with reason\n" >>expect &&
-> +       git worktree list --verbose >out &&
-> +       sed -n "s/  */ /g;/\/locked  *[0-9a-f].*$/,/locked: .*$/p" <out >actual &&
-> +       test_cmp actual expect
-> +'
+As mentioned in my review of [5/6], there may be some value in
+swapping [5/6] and [6/6] to make it easier for readers to digest the
+changes, but it's not a hard requirement.
 
-At first, I wondered if we would also want this test to have a
-locked-no-reason worktree to ensure that its `locked` annotation stays
-on the same line as the worktree, but that's not needed because that
-case is already covered by the existing test. Fine.
+To avoid being mysterious, there's also a change in [5/6] which
+probably belongs in [3/6], as explained in my review of [5/6].
 
-> +test_expect_success '"list" all worktrees --verbose with prunable' '
-> +       test_when_finished "rm -rf prunable out actual expect && git worktree prune" &&
-> +       git worktree add prunable --detach &&
-> +       echo "$(git -C prunable rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >expect &&
-> +       printf "\tprunable: gitdir file points to non-existent location\n" >>expect &&
-> +       rm -rf prunable &&
-> +       git worktree list --verbose >out &&
-> +       sed -n "s/  */ /g;/\/prunable  *[0-9a-f].*$/,/prunable: .*$/p" <out >actual &&
-> +       test_i18ncmp actual expect
-> +'
+My review of patch [4/6] suggests optionally splitting out a bug fix
+into its own patch, but that's a very minor issue. Use your best
+judgment whether or not to do so.
 
-An alternative would be to have a single test of --verbose which
-includes a locked-no-reason worktree, a locked-with-reason worktree,
-and a prunable worktree. However, that's a very minor and subjective
-point and certainly not worth a re-roll or changing unless you think
-it's a nice simplification.
+> 4. The fourth patch adds the "locked" attribute for the porcelain format
+>    in order to make both default and --porcelain format consistent.
+
+This patch does need a re-roll, and it's entirely my fault. In my
+review of the previous round, I said that if the lock reason contained
+special characters, we'd want to escape those characters and quote the
+string, but then I gave you a code suggestion which did the opposite
+of that. My [4/6] review goes into more detail.
+
+Aside from the one important fix in [4/6], and the possible minor
+re-organizations suggested above, all my other review comments were
+very minor and probably subjective, thus nothing to sweat over.
+
+Nicely done.
+
+[1]: https://lore.kernel.org/git/CAPig+cSH6PKt8YvDJhMBvzvePYLqbf70uVV8TERoMj+kfxJRHQ@mail.gmail.com/
