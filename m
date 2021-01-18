@@ -2,232 +2,201 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_NAME_MR_MRS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFDD9C433E9
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F51FC433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:08:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A899E22517
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:06:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42A6A22513
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 06:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732405AbhARGG0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 01:06:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58544 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732387AbhARGFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 01:05:07 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2780AC061573
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 22:04:26 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id i30so2300702ota.6
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 22:04:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ilL8nLXRDSXC1qFEk2O3QWbr2lOtaWzGgQuGCwac4hg=;
-        b=k65Oqq0hXOZwkCSVxsko/9suEHE3/LvWCN+oKQATs3vsPdUq2jQvYEpnLBPUQ1Nwc8
-         MwL7T1REDUdwdiyOohUWor5eusgen5wj/15pblRoQYbVJ6xxHxOje7lcGss+7WZuJEEP
-         wlfJE+nKUQjrPBdIcP3Qmm/RyX35U2SSrkI8859N/V6fWrb0woGKS0nm9Pi3y0d7r5xe
-         6aIaUa31g7dkNOFE7ca9a6Tz9R0ZDA5/MRamWAg262oriUjG33JKSpYOfK0GYGshram0
-         DXsNB01cgRiLtlmWZOgygUvRXRFsqj/Cu4obJuMNqwRN7UGIWhh6AjYnh5XS7VymH9Uf
-         4zeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ilL8nLXRDSXC1qFEk2O3QWbr2lOtaWzGgQuGCwac4hg=;
-        b=PWdQ+YRMyci1La/SQcJ4vK4W2mLrZnNAwhX3NyjpiwqiA8nTLZK/2tJl2wH0Tx3p/D
-         OhY6nNs6DCwDGUW7NOGLwfi2+BuEy/RaSe0nrSH2AAza4QlvpGJ1D5PZ+g5Z8ydM1zYR
-         oJsn5mgP6PxKGnkAYdjPSsR0FQM9enYDJ7XvNsOzU1XIi4JYqQcMqykUPCg6xp6kehC0
-         yKqsRNNBnzREuRfEwoxZyoVPR48sd/Ps5KkBAHRDgWJDQyOwmzn5Fm6bIa+zISxSMjzo
-         AS8w9i/GsE3VKGCOBmiwtKgW2wTmJSSlwXSnOjEMNATi7C3wUUDnp98ZnXH7994S0cuj
-         eBCg==
-X-Gm-Message-State: AOAM530lLRov5euppyMHGjQCuhlix1VCOmlerf4M3Xf8qhEQSshvMdbK
-        sq8VOzIlaOxslDVHq7hp1BFtUcf0x5umEypH4Rc=
-X-Google-Smtp-Source: ABdhPJykEKc1YnCBTHVoaf0sEGBHgv5ZRe0tTKNzFcfQYO/09EvAPcO5I2gjHfGe3gzxKH0VmnG6fJ1rbrG8LzBvHc0=
-X-Received: by 2002:a9d:6188:: with SMTP id g8mr16507120otk.299.1610949865551;
- Sun, 17 Jan 2021 22:04:25 -0800 (PST)
+        id S1732327AbhARGID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 01:08:03 -0500
+Received: from kane-il.us ([198.74.55.137]:43766 "EHLO kane-il.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732060AbhARGIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 01:08:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kane-il.us; s=mail;
+        t=1610950038; h=from:from:sender:reply-to:subject:subject:date:date:
+         message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+         content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=iYWr28eYvu3HzPrIj5dSXQ/hW+cYVg99lE0pbg+CLOQ=;
+        b=v1zYigkJHg4E2sRj3sA0EKp5LEz8P+UiLjZLA9Iph9Mzkp/42J5I80eHvRlHnXqkCNHQ8C
+        wTmHrKz+pHuG4PtZfKLSJcCmnkM3ZvmT9Hqh1C4qN7Xs9jQJ3z//YPff5J99QSAlSSw64R
+        vRqvgoTZCRR9NrLmC231PucO+TaFV+o=
 MIME-Version: 1.0
-References: <pull.832.v3.git.1610626942677.gitgitgadget@gmail.com>
- <pull.832.v4.git.1610856136.gitgitgadget@gmail.com> <0c7830d07db0aa1ec055b97de52bd873d05e3ab1.1610856136.git.gitgitgadget@gmail.com>
- <xmqqbldnkuja.fsf@gitster.c.googlers.com> <CAOLTT8Syp2ZeTXW-m+e=dn2W773nScB_kwZLS3MjLTcFQ_bctw@mail.gmail.com>
-In-Reply-To: <CAOLTT8Syp2ZeTXW-m+e=dn2W773nScB_kwZLS3MjLTcFQ_bctw@mail.gmail.com>
-From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Date:   Mon, 18 Jan 2021 14:05:53 +0800
-Message-ID: <CAOLTT8QnhNqnJCgiqOZnd9cjxicAuk2Js1GKdHEJD_XK15UU+Q@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] ls-files: add --deduplicate option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date:   Mon, 18 Jan 2021 06:07:17 +0000
+From:   "Mr. Sandor Kunyik" <sandor@kane-il.us>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org
+Subject: Re: Using Git for OpenSCAD and 3D Printing
+In-Reply-To: <a3e191a0-5c39-fe50-f57e-6b2ddeb4373d@iee.email>
+References: <cee9debaf32b69d793d0b8a3e8d4b2c6@kane-il.us>
+ <a3e191a0-5c39-fe50-f57e-6b2ddeb4373d@iee.email>
+Message-ID: <f470a4e0483e1e5c3e1961315bec5475@kane-il.us>
+X-Sender: sandor@kane-il.us
+Organization: Factory 4.0 Open Initiative, LLC.
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,Junio!
-Here I am thinking about the role of this "--deduplicate" is to
-suppress duplicate filenames rather than duplicate entries. Do you
-think I should modify this sentence?
 
-> > OPT_BOOL(0,"deduplicate",&skipping_duplicates,N_("suppress duplicate en=
-tries")),
+Hi Philip!
 
-=E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@gmail.com> =E4=BA=8E2021=E5=B9=B4=
-1=E6=9C=8818=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=8812:09=E5=86=99=E9=
-=81=93=EF=BC=9A
->
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8818=E6=
-=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=887:34=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
-> > > new file mode 100755
-> > > index 00000000000..75877255c2c
-> > > --- /dev/null
-> > > +++ b/t/t3012-ls-files-dedup.sh
-> > > @@ -0,0 +1,57 @@
-> > > +#!/bin/sh
-> > > +
-> > > +test_description=3D'git ls-files --deduplicate test'
-> > > +
-> > > +. ./test-lib.sh
-> >
-> > We should already have a ls-files test so that we can add a handful
-> > new tests to it, instead of dedicating a whole new test script.
-> >
-> Fine,It might be easier for me to write a test file myself for the time b=
-eing.
-> But I will learn slowly.
-> > Also, don't do everything in a single 'setup'.  There are various
-> > scenarios you want to make sure ls-files to work (grep for ls-files
-> > in the following you added---I count 4 of them), and when a future
-> > developer touches the code, he or she may break one but not other
-> > three.  The purpose you write tests is to protect your new feature
-> > from such a developer *AND* help such a developer to debug and fix
-> > his or her changes.  For that, it would be a lot more sensible to
-> > have one set-up that is common, and then four separate tests.
-> >
-> > > +test_expect_success 'setup' '
-> > > +     >a.txt &&
-> > > +     >b.txt &&
-> > > +     >delete.txt &&
-> > > +     git add a.txt b.txt delete.txt &&
-> > > +     git commit -m master:1 &&
-> >
-> > Needless use of the word "master".  Observe what is going on in the
-> > project around you and avoid stepping other peoples' toes.  One of
-> > the ongoing effort is to grep for the phrase master in t/ directory
-> > and examine what happens when the default initial branch name
-> > becomes something other than 'master', so adding a needless hit like
-> > this is most unwelcome.
-> >
-> Well, I will try my best to use less "master".
-> > > +     echo a >a.txt &&
-> > > +     echo b >b.txt &&
-> > > +     echo delete >delete.txt &&
-> > > +     git add a.txt b.txt delete.txt &&
-> > > +     git commit -m master:2 &&
-> >
-> > > +     git checkout HEAD~ &&
-> > > +     git switch -c dev &&
-> >
-> > Needless mixture of checkout/switch.  If you switch branches using
-> > "git checkout", for example, consistently do so, i.e.
-> >
-> >         git checkout -b dev HEAD~1
-> >
-> > It's not like these new tests are to test checkout and switch; your
-> > mission is to protect "ls-files --dedup" feature here.
-> >
-> > > +     test_when_finished "git switch master" &&
-> > > +     echo change >a.txt &&
-> > > +     git add a.txt &&
-> > > +     git commit -m dev:1 &&
-> >
-> > I'd consider all of the above to be 'setup' that is common for
-> > subsequent tests.  It may make sense to actually do everything
-> > on the initial branch, i.e. after creating two commits, do
-> >
-> I understand it now...setup is for serve as a basis for other tests.
-> >         git tag tip &&
-> >         git reset --hard HEAD^ &&
-> >         echo change >a.txt &&
-> >         git commit -a -m side &&
-> >         git tag side
-> >
-> > You are always on the initial branch without ever switching, so
-> > there is no need for the when_finished stuff.
-> >
-> > Then the first of your test is to show the index with conflicts.
-> >
-> > > +     test_must_fail git merge master &&
-> >
-> > This will become "git merge tip" instead of 'master'.
-> >
-> use tag instead of use branch name...
-> > > +     git ls-files --deduplicate >actual &&
-> > > +     cat >expect <<-\EOF &&
-> > > +     a.txt
-> > > +     b.txt
-> > > +     delete.txt
-> > > +     EOF
-> > > +     test_cmp expect actual &&
-> >
-> > And up to this point is the first test after 'setup'.
-> >
-> > The next test should begin with:
-> >
-> >         git reset --hard side &&
-> >         test_must_fail git merge tip &&
-> >
-> > so that even when the first test is skipped, or left unmerged,
-> > you'll begin with a known state.
-> >
-> Well,I understand now that the a test_success should allow other
-> programmers to skip this test,so that we should reset to a known
-> state at the beginning of each test.
-> > > +     rm delete.txt &&
-> > > +     git ls-files -d -m --deduplicate >actual &&
-> > > +     cat >expect <<-\EOF &&
-> > > +     a.txt
-> > > +     delete.txt
-> > > +     EOF
-> > > +     test_cmp expect actual &&
-> > > +     git ls-files -d -m -t  --deduplicate >actual &&
-> > > +     cat >expect <<-\EOF &&
-> > > +     C a.txt
-> > > +     C a.txt
-> > > +     C a.txt
-> > > +     R delete.txt
-> > > +     C delete.txt
-> > > +     EOF
-> > > +     test_cmp expect actual &&
-> > > +     git ls-files -d -m -c  --deduplicate >actual &&
-> > > +     cat >expect <<-\EOF &&
-> > > +     a.txt
-> > > +     b.txt
-> > > +     delete.txt
-> > > +     EOF
-> > > +     test_cmp expect actual &&
-> >
-> > These three can be kept in the same test_expect_success, as they are
-> > exercising read-only operation on the same state but with different
-> > display options.
-> >
-> indeed so.
-> > But in this case, the preparation is not too tedious (just a failed
-> > merge plus a deletion), so you probably would prefer to split it
-> > into 3 independent tests---that may make it more helpful to future
-> > developers.
-> >
-> Thanks:)
-> > > +     git merge --abort
-> > > +'
-> > > +test_done
+Thank you so much for the details! I am going to read this many times 
+over the next couple of weeks.
+I have advanced on this subject, I now have a federated forum dedicated 
+to this at https://hubzilla.factoryfouroh.net, and I have a Gitea 
+repository installed - all under YunoHost. I am going to be publishing 
+all I print (dimension, material, etc.) OpenSCAD scripts, PNG images, 
+printable models (STEP) and maybe even animation - OpenSCAD has some 
+basic but functional animation capacity.
+
+I stopped subscribing to the git mailing list as I do not want to 
+pollute with newbie questions, but your answer is really valuable to me  
+because now I have some idea about how a pro would go about this.
+Gitea it is, thanks!
+
+On 2021-01-11 12:28, Philip Oakley wrote:
+> Hi Sandor
+> 
+> I haven't used OpenSCAD but I thought it worth mentioning some personal
+> points about using Git for Engineering products, where variants
+> proliferate and build-products must be  versioned.
+>  I had a go with FreeCAD a few years ago to create an insulating spacer
+> that the mech eng had forgotten...
+> 
+> On 05/01/2021 09:57, Mr. Sandor Kunyik wrote:
+>> Greetings,
+>> 
+>> If you were to design a new workflow, what key observations would you
+>> make in regards to OpenSCAD scripts?
+> 
+> I'm sure that git is able to store and version all the scripts and
+> products, but it does need a vision about how to present the
+> organisation of the scripts and products, especially for engineered
+> items. Remember that software version control is just drawing office
+> procedure with the hard stuff ripped out ;-) [1]
+>> 
+>> As a quick illustration: I have a model with cavities to hold hex
+>> bolts and nuts. I fine-tuned the model to print on PrinterA, using
+>> FilamentA, SettingsA.
+> 
+> Is the fine tuning done via the scripts, or is it manual. If it is the
+> latter then it will need the user to record in the commit message for
+> the revision the various what/why/how aspects that aren't obvious from
+> the 'diff'. Does OpenSCAD have an informative 'diff' capability? If it
+> is just a 'compile for printerA using known-tool' then it could be an
+> automated commit message as you are storing a build product (If it was
+> regular software it's likely it's a binary..)
+> 
+>> Once in "production" I need to "freeze" all relevant scripts,
+>> especially when using multi-file structure. If the modules receive
+>> parameters I need to "remember" those parameters (such as the radius
+>> for the hex, and the dept of the cavity), and if they use hard-coded
+>> values I must remember not to change them. Otherwise I cannot
+>> repeatedly print the same model.
+> 
+> So these parameters are essentially a 'configuration file' (inc. the
+> hard coded values). If you auto generate such a file then it can easily
+> be stored within revision (commit) - It is important that the scripts
+> should be able to work directly from that config file (idempotent [2])
+> 
+>> 
+>> Now imagine this for the entire standard set of hex bolts - each of
+>> these were fine-tuned, test-printed and verified.
+> A library? Hence a sub-module perhaps. 
+>> The rationale behind this to guarantee that the models trying to
+>> conform to a standard (such as ASME B18.3) stay put, while models
+>> receiving non-standardized sizes such as Nylon 6/6/ (which have bigger
+>> hex heads) stay separated, and tweaked to work with each supplier.
+> A configurable library item? Tricky. I remember a project that need to
+> change 20,000 drawing because they changed the paint colour (green to
+> grey), and then the next major order was in the old colour! In software
+> terms its like 're-skinning' a GUI, but worse.
+> More likely you'll have a separate sub-module-library for these
+> 'specials' where the source part is cherry-picked (give give a backward
+> textual reference) and then modified locally giving git level
+> traceability. 
+>> 
+>> My question is, should I just "hardcode" everything, set up forks or
+>> branches for all past scenarios? So far I only have a few dozen models
+>> and I'm already having a hard time finding models I printed and used
+>> in the past, to print again. How do I structure all this?
+> 
+> The hard part is to be both the 'design authority' that signs off the
+> 'release' and also the day to day designer trying things where it's a
+> 'fingers crossed' hope that this 3d print run will actually produce 
+> what
+> you want and expect, but mainly it's a case of realising the mistake 
+> and
+> cycle it around.
+> You should at least use tags for the good release commits, to make them
+> easy to find.
+>> 
+>> I am a mechanical engineer not a coder, new to all these.
+> I feel you pain. Some of the above may be more suited for those who
+> actually design and contribute OpenSCAD, rather that a user getting
+> started.
+>> Maybe git or revision control is not the correct tool for this job?
+>> 
+> As an ME you will know that without [good] revision control the world
+> falls apart for anything other than bespoke item home jobs!
+> 
+> Git is great because it give you full control, and local storage,
+> without taking up too much room.
+> Git is a problem because it gives you too much control and too much
+> choice. Start simple, be open to the 'mind-shift'.
+> 
+> Add any (i.e. more) files that you use to Git. Remove them (one at a
+> time) when you stop using them. They will still be in the history!
+> 
+> Commit often: including halfway through a change - you know you will 
+> add
+> more and then more, then more tweaks before you print - have a commit
+> for each. I.e. distinguish between 'Printing' runs, and the act of
+> 'visualising the part' in the OpenSCAD viewer - both steps get a 
+> commit,
+> with concise description. (probably every 5 minutes or less!)
+> 
+> Use the 'git gui' and 'gitk' to visualise how you have developed and
+> progressed. (or a GUI of your choice -> CAD people are NOT terminal
+> people!!)
+> 
+> Git unfortunately lacks a short command to allow you to park a 
+> completed
+> items onto a 'Completed' branch that's just an easy quick way of seeing
+> those finished items (Git has the view that they [old software 
+> versions]
+> are 'gone/left behind', with just a few v# tags), so I don't have any
+> great solution for that.
+> If you have concise commit subject titles and messages, then it's 
+> easier
+> to search history for "print: insulating spacer widget v2.1" (and 
+> before
+> that "visualise: insulating spacer widget v2.1a", 1b, 1c, 1d, 1e...).
+> You may want to allow-empty commits for ease of recording!
+> 
+> Hope that helps.
+> 
+> [1] Drawing Office procedures allow for non perfect machining, serial
+> numbering, etc. Software generally asserts perfect replication,
+> repeatability and machining.
+> [2] https://en.wikipedia.org/wiki/Idempotence
+> [3] concise: adjective - giving a lot of information clearly and in a
+> few words; brief but comprehensive. "a concise account of the country's
+> history" (Git: without repeating the obvious changes shown in the 
+> diff!)
+
+-- 
+Regards,
+Mr. Sandor Kunyik
+FourOh-LLC Technology Evangelist
