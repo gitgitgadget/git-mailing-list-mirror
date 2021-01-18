@@ -2,92 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73B3EC433DB
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 02:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6542BC433E0
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 03:24:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F2D2245C
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 02:58:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D719224B1
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 03:24:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731395AbhARC6C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 17 Jan 2021 21:58:02 -0500
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:45491 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730243AbhARC54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Jan 2021 21:57:56 -0500
-Received: by mail-ej1-f47.google.com with SMTP id ke15so13939395ejc.12
-        for <git@vger.kernel.org>; Sun, 17 Jan 2021 18:57:40 -0800 (PST)
+        id S1731577AbhARDY3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 17 Jan 2021 22:24:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730501AbhARDYV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Jan 2021 22:24:21 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF8EFC061573
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 19:23:39 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id s24so4197459wmj.0
+        for <git@vger.kernel.org>; Sun, 17 Jan 2021 19:23:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=PHqdR9tCKvi4R00w4RjFeG5mLuGNP/Z3qb3sAz3fNeE=;
+        b=NwhLKLF8z2F6kTrhULzaePgRbj9TVWcHvioJmzLAy1F0buUVdpoEVDDZj9d9iQvMfn
+         L3cDfRyjNIS5fyoYrkDd6irM10t8CyCr3NUwuaDrxjOa2qmQCLu61gA1m8XU1Imp3LuD
+         NPwEIOCuhq/vLo2cwl60HTzlpHLrH9EgL6bk52p9mhvQr4n1VpI0VFCLqUolx+vquZUf
+         1frdzCl2yxjQvM2KvpdWAEwbGGA/fUwrNWxXjvEhu16MjVa0xHBWzYHZL4EM2IlZ2QKl
+         KJ4Lm6WqsaHqJI463WlXsRHviSL4gjmr+C2lCTAwrT1N7egnKKHRSPMImETPx31h4hE2
+         Pd+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J/KH15ALwExS0+6dIy46DZ+tG1sikAP/Az2Bq13llEA=;
-        b=KGQ+WpXsWjzTTp15ie4D0o5GCnZbWqrW0B8qvNHZCdUF8RKbB9+4n+QP94BS+519h0
-         69hbldLxfYQVM+8iL/LVHhyYjApeombYfUMoJWREjLwB+SSKjMpDSM3MjfxayOfIrxPC
-         bwHh0paiViC5kkq6wP16O+5iITRqgx7P5TynCNzgSJZ1CivpqyfXlXJok+BNtgGdXRHH
-         R+jnu6rl2VNU2ZLy7FH/Z0yxjF2E4UdFS5MjmVHg6l0RyMWxTywCjDFGIfGq6X0e308W
-         KeCMaC0lFrV7DiH/6v9hw6cd56QK641gSy0sS4SMYvsI3M+rfgF4M6rYntcJYff9Uw5Y
-         q4ZA==
-X-Gm-Message-State: AOAM531hbcqg11WsDAh5U9IxgjTD1ixC+WVG68VvuRL9uEYl6kWbr9I2
-        s2z/cLplhmpacwXB4zYSMwQ0ST+436bbdnAt+qM=
-X-Google-Smtp-Source: ABdhPJx/sz6jXHI/Q4XJ+txuj79Nk4i3lRtQCYuFZZ0CXPp63cxGTSuBe3wftbDz9AZac5eujtRZfEB2IB1TTeXZhHs=
-X-Received: by 2002:a17:906:4159:: with SMTP id l25mr11128507ejk.311.1610938634430;
- Sun, 17 Jan 2021 18:57:14 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PHqdR9tCKvi4R00w4RjFeG5mLuGNP/Z3qb3sAz3fNeE=;
+        b=eKcF0siFv+KbbOpmfJNtWdOnZhALz/ElBYaFfpoSzt5Et6Bvsx5NDRDOCu56wfgwdI
+         WHZkn+rEDuGP02CNxDnyuGMEmN3zb2RVX1WBH5zSd4F8+QAA25Q0DrZ68LB3WJ/0Ytnd
+         vh0YQTRKa+yHnkzUvwIPyh3xfZjuel43zpPgS1eACGDHwM0bnwrWa+ms90E4xjnME1mY
+         SFE3pjVsq8BOVqupJqWXr10XQpA14eNlEOjh4wRI8FonKp7+tRBysWeyBrjUa0Wr2Zdj
+         9BfrPN2YK8qNc+CwoISRTDey4+vtfwhRTqFD2M/nC3N5x8GYl469o278FWThxIq0cH/0
+         S1uQ==
+X-Gm-Message-State: AOAM531FZozTMy5qTqmRd0L9xr+ddX721Xd8QanaSmgKbLHMpn+n4M2k
+        yRVsDIF2SJ5O+sFAU1bb6T+IMmB5dA8=
+X-Google-Smtp-Source: ABdhPJz3qY3t9OtxMhjwJMkf3qiT8+NQIzEVkEtyrEAJPEPFqwJu/Egqft1wAIe3W2xqMHT0gVaBTg==
+X-Received: by 2002:a1c:1bcc:: with SMTP id b195mr18909899wmb.131.1610940218208;
+        Sun, 17 Jan 2021 19:23:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s25sm28639037wrs.49.2021.01.17.19.23.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 17 Jan 2021 19:23:37 -0800 (PST)
+Message-Id: <pull.838.git.1610940216.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 18 Jan 2021 03:23:34 +0000
+Subject: [PATCH 0/2] Two cleanups around 'prefetch' refs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
- <20210117234244.95106-1-rafaeloliveira.cs@gmail.com> <20210117234244.95106-3-rafaeloliveira.cs@gmail.com>
-In-Reply-To: <20210117234244.95106-3-rafaeloliveira.cs@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 17 Jan 2021 21:57:03 -0500
-Message-ID: <CAPig+cQX27n6vpGP4m3S9paUnpNw5etLLAXr=WO9rC1KSSLMmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] worktree: teach worktree to lazy-load "prunable" reason
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Eric Sunshine <sunshine@sunshineco.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 17, 2021 at 6:43 PM Rafael Silva
-<rafaeloliveira.cs@gmail.com> wrote:
-> Add worktree_prune_reason() to allow a caller to discover whether a
-> worktree is prunable and the reason that it is, much like
-> worktree_lock_reason() indicates whether a worktree is locked and the
-> reason for the lock. As with worktree_lock_reason(), retrieve the
-> prunable reason lazily and cache it in the `worktree` structure.
->
-> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
-> ---
-> diff --git a/worktree.c b/worktree.c
-> @@ -245,6 +246,25 @@ const char *worktree_lock_reason(struct worktree *wt)
-> +const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
-> +{
-> +       struct strbuf reason = STRBUF_INIT;
-> +       char *path;
+Here are a couple things that caught my eye during a recent evaluation of
+the maintenance feature:
 
-The `path` variable is uninitialized...
+ 1. 'refs/prefetch/' refs show up in 'git log' decorations. Auto-hide these.
+ 2. t7900-maintenance.sh had some scary warnings that end up being
+    unimportant.
 
-> +       if (should_prune_worktree(wt->id, &reason, &path, expire))
-> +               wt->prune_reason = strbuf_detach(&reason, NULL);
+This is based on 'master' at 66e871b (The third batch, 2021-01-15).
 
-...but the very first thing should_prune_worktree() does is
-unconditionally set it to NULL, so it's either NULL or an allocated
-string regardless of the value returned by should_prune_worktree()...
+Thanks, -Stolee
 
-> +       strbuf_release(&reason);
-> +       free(path);
+Derrick Stolee (2):
+  maintenance: set log.excludeDecoration durin prefetch
+  t7900: clean up some broken refs
 
-...which makes the behavior of `free(path)` deterministic. Good.
+ builtin/gc.c           |  6 ++++++
+ t/t7900-maintenance.sh | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
 
-I'm on the fence about whether or not we should initialize `path` to NULL:
 
-    char *path = NULL;
-
-just to make it easier for the next person to reason about it without
-having to dig into the implementation of should_prune_worktree(). This
-is a really minor point, though, not worth a re-roll.
+base-commit: 66e871b6647ffea61a77a0f82c7ef3415f1ee79c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-838%2Fderrickstolee%2Fprefetch-refs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-838/derrickstolee/prefetch-refs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/838
+-- 
+gitgitgadget
