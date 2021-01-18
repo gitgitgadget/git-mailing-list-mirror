@@ -2,127 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CC8BC433DB
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FB8C433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:59:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A0C422BEA
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:04:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D041222AAA
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405381AbhARPET (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 10:04:19 -0500
-Received: from mout.gmx.net ([212.227.17.21]:57353 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2405350AbhARPDq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 10:03:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610982132;
-        bh=/GyYffKIOACbKG5HR/oBE9f2UL2OGJDN0XcswYfwV8o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=krw27RI3PD+ZO4MiXrFbVsdgor4io9IdV3TcVKEKD3X2t+/qud54pVj/AI9C0GEuq
-         RK9bH6I9YbEgwfrwAEzFsu7UQZ8gLJnEqEVkOO/NyvQ/qAnm28SSqFKCHcrGDnEj8k
-         1ibOiiv8IWOFATFIfIZ0ibSnjQ+4qQXbK+eI34Ik=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.115.203] ([89.1.215.22]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhQC-1lmf5M1j08-00nkVC; Mon, 18
- Jan 2021 16:02:12 +0100
-Date:   Mon, 18 Jan 2021 16:02:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 1/7] bisect--helper: reimplement `bisect_log` shell
- function in C
-In-Reply-To: <20201221162743.96056-2-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2101181555200.52@tvgsbejvaqbjf.bet>
-References: <20201221162743.96056-1-mirucam@gmail.com> <20201221162743.96056-2-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2406073AbhARP7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 10:59:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44898 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406144AbhARP6d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 10:58:33 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5D6AC061573
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 07:57:51 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id v126so18997737qkd.11
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 07:57:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tZMZ553dp2FFXdPPxUWLZTYqg5ZvuktlR2uLtuHAwYM=;
+        b=mxAPC45qNuop1xirhB/pl6QvVTXpi26hUi1EfOaDnasWKoXV+0nU+uVH7IZIXF/pHb
+         AtIGkV16LYNhdXPnejtLChp9jcX9ly+15PN5cgPYEhZKgC2Ir5XjL6wr+JgNgwzehpyr
+         sNL4wFfSDz5FqplnsT14q4TNLGtNdaNFq+T+Ka2IVsotUeq/YszurP8cjblbyhRKflCJ
+         eARTa7yH1yPg+XeKBVl6bd81iamfyUNJXdiwkrg64TYj0/VA5LCa4eoXVy+fRvYOdiaJ
+         rhpipyyeWDMSAsSv3yME9ii/6L35VkYTk9eg9sduraBOzTkiQRtEY0i9ic24cn4w3wku
+         7xXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tZMZ553dp2FFXdPPxUWLZTYqg5ZvuktlR2uLtuHAwYM=;
+        b=Xr8p9do2A53YXquUAK2NKwOgpV74Zbdhkw3ianQLGp9/pYGdOL+psS1EX5SmyZmYNY
+         VpRbLqMnXZRh/lpWfj9rAxSHVooWZVAkBZr6Fv1oRusNYQ7eEng+wFtpy3BQdiwNspVj
+         CIXtWS26tgLPQPUZv9nKTbclWb7Gjq2zovYOYdtXAMg9P3gPepWv7+Usm4CgmqW1yRaX
+         C/Ba5EpOavSJFJHVH9dHU3UQ0yVx2FTFpFqxD1CMQrUy04I8r81nl/uZXb5qC+rC4EtQ
+         yYpRhF6wfT+HK+PDCow1Eunf8lNP7Srhhudrnf7vOTE++ShNxxRJrCPh3tLOmBpdCCWq
+         rUpQ==
+X-Gm-Message-State: AOAM53104144Vnis6oMjZlWgypyEDwr2QfrhplgLeIOB9eff6ZUFYGuf
+        /ZXdxS0VOVTyAecdgW0ZRSxdig==
+X-Google-Smtp-Source: ABdhPJyEcqFEQqlUfxVaeCBrnWo4Kxay71zJMgLVDbvek7+kd7BJQUxRyRUKNvO0vv9pDonVA7pdHA==
+X-Received: by 2002:ae9:e119:: with SMTP id g25mr276823qkm.124.1610985471041;
+        Mon, 18 Jan 2021 07:57:51 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:2483:e3d9:d273:1d4b])
+        by smtp.gmail.com with ESMTPSA id 190sm11098336qkf.61.2021.01.18.07.57.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jan 2021 07:57:50 -0800 (PST)
+Date:   Mon, 18 Jan 2021 10:57:47 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/2] maintenance: set log.excludeDecoration durin prefetch
+Message-ID: <YAWv+5HDxEvBK+8R@nand.local>
+References: <pull.838.git.1610940216.gitgitgadget@gmail.com>
+ <5b2ce9049a69d4c450093433e4fa15c4e5e0c412.1610940216.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0DoCwZZ/62BvXKNcVj60S42gNzPmUGByoJMPKV9norZwAf3UPSS
- z50QQwlxke79KplYAiKz1R/G6cI6lPbfsFnR0Cs2Mq1B7x/l6dFb/+fH1oyGFj6kr3PmnC7
- 0BN7D3GYGUNty76sDIP0/GOsv+Q8BFBhO3VUGNn5RjvBqUQTzTlwFxUuvpQpd8b+ew1PwDi
- 75/93GuVm++p0X3F6kPvQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xcIl427o/q8=:Ttt6KrxqdztNxwLyFPV/nS
- 4AeIC7ZJP1CVk4XQtuWKz/5nV2TjKnoS3JbQKS87pfX+47DwDI6XZeOnwpFQaoxEB1mlY6/g1
- 3nxAHiPkmhy7Fk7QOcjZrlh/3DSEigW28lS2cIVu6PuXd0jnbTTldGVa8q+wfxsffP3ghn4iA
- 9eVKFoEVB9Bkx+20ZMewYWpoAzIcGwR/94uXfP0xRIqjDjrf3Zleb0b0g93unPLSmxBO7plol
- gj8rt98ZFoAn5Mtr/NlxaM/Uxm62dK9m6yg6g9/N+T+NMfGNXVGlo319XOuovWOwTOwyyTgqA
- 8peBvqlF7BzDo1mzj0zxp3gW9Xf58NwbKf5g/UFEsgf4Vv0saUN990WrCufYoOLzYP+fZ/DYK
- FJNaObz7yRLgq1YjD9BHGi2tXhz3r5u0F9aSn8+zPRYqdL8S7Mz1ycLiImVGcEsQbTsd9HSsY
- 21ffLuD4H6ib7SKCmsyqv6Csr47fZjjNO8ibhC4X3x8/aPce+0M/nlOGWo5LmabBn46Szj54L
- rdAR+6WsfMPGfMx84bpwjdswoi/gG/QdP/3t+TGN2QsBFEQv8wF+PXtuyHnKJpI96MFfK3vMh
- fvESTbYfSmasb5FMX9ZWwD+mBwAAA+i4wKyEqi2cCADaVFKWu4DrtwI8PJNOqPGS60FOni9By
- ningGvNn/oIVL6fsoyXskU8Ct6X85EWa8kJHf/H6P78RxY630KWxll73BzehARoje6UjiY9RC
- w3pMu+sJwD6zq5MuWm99dQQkzy0yoqvHaJ9vbmsFH+kSpb3R0i71HIMlW7M8BLBHbdVrli/7r
- IlfNymoVrFjHGuKFYKVPszcm8/64tWxZWvABxnEzti9we74MPvGsL26kyfE3fGRFVFnFFLapa
- RVLFGm7H44dFKeSSmhp2ZU0SS4BDH+p/MufG9ki2s=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5b2ce9049a69d4c450093433e4fa15c4e5e0c412.1610940216.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Miriam,
+Not related to the patch below, but in the subject line: s/durin/\0g/.
 
-On Mon, 21 Dec 2020, Miriam Rubio wrote:
-
-> From: Pranit Bauva <pranit.bauva@gmail.com>
+On Mon, Jan 18, 2021 at 03:23:35AM +0000, Derrick Stolee via GitGitGadget wrote:
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index b315b2ad588..54bae7f0c4c 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -897,6 +897,12 @@ static int maintenance_task_prefetch(struct maintenance_run_opts *opts)
+>  	struct string_list_item *item;
+>  	struct string_list remotes = STRING_LIST_INIT_DUP;
 >
-> Reimplement the `bisect_log()` shell function in C and also add
-> `--bisect-log` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh .
->
-> Using `--bisect-log` subcommand is a temporary measure to port shell
-> function to C so as to use the existing test suite.
->
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> +	git_config_set_multivar_gently("log.excludedecoration",
+> +					"refs/prefetch/",
+> +					"refs/prefetch/",
+> +					CONFIG_FLAGS_FIXED_VALUE |
+> +					CONFIG_FLAGS_MULTI_REPLACE);
+> +
 
-Good. I see this was originally sent as [PATCH 20/29] in
-https://lore.kernel.org/git/20200120143800.900-21-mirucam@gmail.com/, but
-this version contains improvements:
+OK; this is a good way to ensure that you're not constantly appending
+'refs/prefetch' into the config.
 
-- It returns `BISECT_FAILED` in `bisect_log()` instead of -1 (and
-  `BISECT_OK` instead of 0)
+I did notice that we have a 'remotes' string list just above, so I
+suppose we could only ignore 'refs/prefetch/<remote>' for just the
+remotes that we know about, but I doubt that this would be all that
+useful. (I.e., are there really users that are using refs/prefetch
+already and don't want to hide the parts of it that aren't managed by
+maintenance? Doubtful.)
 
-- Instead of checking for `argc > 1` (which was wrong), it now verifies
-  that no arguments were passed via `if (argc)`
+> +test_expect_success 'prefetch and existing log.excludeDecoration values' '
+> +	git config --unset-all log.excludeDecoration &&
+> +	git config log.excludeDecoration refs/remotes/remote1/ &&
+> +	git maintenance run --task=prefetch &&
+> +
+> +	git config --get-all log.excludeDecoration >out &&
+> +	grep refs/remotes/remote1/ out &&
+> +	grep refs/prefetch/ out &&
+> +
+> +	git log --oneline --decorate --all >log &&
+> +	! grep "prefetch" log &&
+> +	! grep "remote1" log &&
+> +	grep "remote2" log &&
+> +
+> +	# a second run does not change the config
+> +	git maintenance run --task=prefetch &&
+> +	git log --oneline --decorate --all >log2 &&
+> +	test_cmp log log2
 
-- It exits from the shell script appropriately when the helper failed
+Great, this test matches what I would expect. Thank you!
 
-Just one nit:
-
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 709eb713a3..1854377fa6 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -938,6 +951,8 @@ int cmd_bisect__helper(int argc, const char **argv, =
-const char *prefix)
->  			 N_("verify the next bisection state then checkout the next bisectio=
-n commit"), BISECT_AUTO_NEXT),
->  		OPT_CMDMODE(0, "bisect-state", &cmdmode,
->  			 N_("mark the state of ref (or refs)"), BISECT_STATE),
-> +		OPT_CMDMODE(0, "bisect-log", &cmdmode,
-> +			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
-
-If this is supposed to be a more permanent subcommand (and
-https://git-scm.com/docs/git-bisect#_bisect_log_and_bisect_replay suggests
-it might be), it would probably make more sense to describe the option in
-less implementation-specific detail. Maybe something like:
-
-	list the bisection steps so far
-
-Ciao,
-Dscho
+Thanks,
+Taylor
