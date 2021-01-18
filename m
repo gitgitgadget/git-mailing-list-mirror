@@ -2,80 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F41ACC433E0
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CC8BC433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:04:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD64B22BEA
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:01:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A0C422BEA
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 15:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393231AbhARPBK convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 18 Jan 2021 10:01:10 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48]:39892 "EHLO
-        mail-ej1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393088AbhARPAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 10:00:32 -0500
-Received: by mail-ej1-f48.google.com with SMTP id g3so4705023ejb.6
-        for <git@vger.kernel.org>; Mon, 18 Jan 2021 07:00:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9NVrX2Q1PusHhpapSO7TLym3KegAVuW4A4d5Aj1hmA8=;
-        b=jA/A4iCvR6gg5H1MGOQa127jJjucgYTJ0pY+z5Ja1BSMZSld/LBWdIXPZmfuVojRuR
-         sLOo7ptKYwUNAB+xHROBZyZlQ22ebO73gRnulCexwumPE3CNSdvlkMnlFx0DK1fbz/Zw
-         d2rVY6AmTfFAze7l/UO5I0/Q61K7odNh1PPtBfs30YM5LTt6Et7ODdlqXPz82PQAJ81b
-         USrMgc6nxDrt/Hmzfb2xtAZbwdGHoIAPQP0CdEW8CJSi0uShJ8IDuJfatHWwkmPUkKfH
-         O3j5JeZVTFbWms9cIJJBoiy0hdL2WIkssq8w7nRu+oTaX4x6CTWf19/STZd2/P+cf8XT
-         kAjg==
-X-Gm-Message-State: AOAM530oEH03nuEs7Ba3bnnEsEQ09DrRIUr/yYlI4z1x8UuMS+9oQ0oP
-        vAIBkg5CNKhJYj8YVB8WIoUCM7lmKjzAIafiDdU=
-X-Google-Smtp-Source: ABdhPJyKjYYzWafLXw24jNLHjpyswjiLQzlr+m2rbPXS7W8X90sC/KTpzxGBAAH48+ccimf2c8iZ5gszYnVv6Yzh7Sw=
-X-Received: by 2002:a17:906:1ed6:: with SMTP id m22mr57663ejj.231.1610981989915;
- Mon, 18 Jan 2021 06:59:49 -0800 (PST)
+        id S2405381AbhARPET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 10:04:19 -0500
+Received: from mout.gmx.net ([212.227.17.21]:57353 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2405350AbhARPDq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 10:03:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1610982132;
+        bh=/GyYffKIOACbKG5HR/oBE9f2UL2OGJDN0XcswYfwV8o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=krw27RI3PD+ZO4MiXrFbVsdgor4io9IdV3TcVKEKD3X2t+/qud54pVj/AI9C0GEuq
+         RK9bH6I9YbEgwfrwAEzFsu7UQZ8gLJnEqEVkOO/NyvQ/qAnm28SSqFKCHcrGDnEj8k
+         1ibOiiv8IWOFATFIfIZ0ibSnjQ+4qQXbK+eI34Ik=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.115.203] ([89.1.215.22]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhQC-1lmf5M1j08-00nkVC; Mon, 18
+ Jan 2021 16:02:12 +0100
+Date:   Mon, 18 Jan 2021 16:02:17 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Miriam Rubio <mirucam@gmail.com>
+cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v2 1/7] bisect--helper: reimplement `bisect_log` shell
+ function in C
+In-Reply-To: <20201221162743.96056-2-mirucam@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2101181555200.52@tvgsbejvaqbjf.bet>
+References: <20201221162743.96056-1-mirucam@gmail.com> <20201221162743.96056-2-mirucam@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.832.v2.git.1610116600.gitgitgadget@gmail.com>
- <pull.832.v3.git.1610626942677.gitgitgadget@gmail.com> <CAPig+cQBi7jdq64==U630Ht1YDcH+9komLNv-hZMnEhQ1Q-V9A@mail.gmail.com>
- <CAOLTT8QNhz4PrMhAt9y58n+-bEjeOE+xst8rzcg-x045Amw7iw@mail.gmail.com>
- <CAPig+cQr2kMNbhZgYn3e1V79Y5QnCbDKYzQnriEdae4FomK8Aw@mail.gmail.com> <xmqqo8hnkvwo.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqo8hnkvwo.fsf@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 18 Jan 2021 09:59:38 -0500
-Message-ID: <CAPig+cRtpm=68GmHc_zjGaFX0q098-EpNfGH3AAk4uJfK7QH_w@mail.gmail.com>
-Subject: Re: [PATCH v3] ls-files.c: add --dedup option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0DoCwZZ/62BvXKNcVj60S42gNzPmUGByoJMPKV9norZwAf3UPSS
+ z50QQwlxke79KplYAiKz1R/G6cI6lPbfsFnR0Cs2Mq1B7x/l6dFb/+fH1oyGFj6kr3PmnC7
+ 0BN7D3GYGUNty76sDIP0/GOsv+Q8BFBhO3VUGNn5RjvBqUQTzTlwFxUuvpQpd8b+ew1PwDi
+ 75/93GuVm++p0X3F6kPvQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xcIl427o/q8=:Ttt6KrxqdztNxwLyFPV/nS
+ 4AeIC7ZJP1CVk4XQtuWKz/5nV2TjKnoS3JbQKS87pfX+47DwDI6XZeOnwpFQaoxEB1mlY6/g1
+ 3nxAHiPkmhy7Fk7QOcjZrlh/3DSEigW28lS2cIVu6PuXd0jnbTTldGVa8q+wfxsffP3ghn4iA
+ 9eVKFoEVB9Bkx+20ZMewYWpoAzIcGwR/94uXfP0xRIqjDjrf3Zleb0b0g93unPLSmxBO7plol
+ gj8rt98ZFoAn5Mtr/NlxaM/Uxm62dK9m6yg6g9/N+T+NMfGNXVGlo319XOuovWOwTOwyyTgqA
+ 8peBvqlF7BzDo1mzj0zxp3gW9Xf58NwbKf5g/UFEsgf4Vv0saUN990WrCufYoOLzYP+fZ/DYK
+ FJNaObz7yRLgq1YjD9BHGi2tXhz3r5u0F9aSn8+zPRYqdL8S7Mz1ycLiImVGcEsQbTsd9HSsY
+ 21ffLuD4H6ib7SKCmsyqv6Csr47fZjjNO8ibhC4X3x8/aPce+0M/nlOGWo5LmabBn46Szj54L
+ rdAR+6WsfMPGfMx84bpwjdswoi/gG/QdP/3t+TGN2QsBFEQv8wF+PXtuyHnKJpI96MFfK3vMh
+ fvESTbYfSmasb5FMX9ZWwD+mBwAAA+i4wKyEqi2cCADaVFKWu4DrtwI8PJNOqPGS60FOni9By
+ ningGvNn/oIVL6fsoyXskU8Ct6X85EWa8kJHf/H6P78RxY630KWxll73BzehARoje6UjiY9RC
+ w3pMu+sJwD6zq5MuWm99dQQkzy0yoqvHaJ9vbmsFH+kSpb3R0i71HIMlW7M8BLBHbdVrli/7r
+ IlfNymoVrFjHGuKFYKVPszcm8/64tWxZWvABxnEzti9we74MPvGsL26kyfE3fGRFVFnFFLapa
+ RVLFGm7H44dFKeSSmhp2ZU0SS4BDH+p/MufG9ki2s=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 17, 2021 at 6:04 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > On Sat, Jan 16, 2021 at 10:48 PM 胡哲宁 <adlternative@gmail.com> wrote:
-> >> Eric Sunshine <sunshine@sunshineco.com> 于2021年1月16日周六 下午3:13写道：
-> >> >     test_when_finished "git switch master" &&
-> >> >
-> >> > Or you could use `git switch -` if you don't want to hard-code the
-> >> > name "master" in the test (since there has been effort lately to
-> >> > remove that name from tests.
-> >> >
-> >> I have little confuse about I can use` test_when_finished "git switch master" `,
-> >> but I can't use` test_when_finished "git switch -" `,
-> >> why？
-> >
-> > You may use either one. I presented both as alternative approaches.
->
-> I am sensing a bit of miscommunication here.  You sound like you
-> still believe either would work OK, but to me, it sounds like that
-> the author claims the one of them does not work for him/her.
+Hi Miriam,
 
-That could be. My eye glided over the code too quickly to notice that
-it was using `git checkout HEAD~` followed immediately by `git switch
--c dev`, which means that `git switch -` would indeed not return to
-"master" (in fact, it errors out).
+On Mon, 21 Dec 2020, Miriam Rubio wrote:
+
+> From: Pranit Bauva <pranit.bauva@gmail.com>
+>
+> Reimplement the `bisect_log()` shell function in C and also add
+> `--bisect-log` subcommand to `git bisect--helper` to call it from
+> git-bisect.sh .
+>
+> Using `--bisect-log` subcommand is a temporary measure to port shell
+> function to C so as to use the existing test suite.
+>
+> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+
+Good. I see this was originally sent as [PATCH 20/29] in
+https://lore.kernel.org/git/20200120143800.900-21-mirucam@gmail.com/, but
+this version contains improvements:
+
+- It returns `BISECT_FAILED` in `bisect_log()` instead of -1 (and
+  `BISECT_OK` instead of 0)
+
+- Instead of checking for `argc > 1` (which was wrong), it now verifies
+  that no arguments were passed via `if (argc)`
+
+- It exits from the shell script appropriately when the helper failed
+
+Just one nit:
+
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 709eb713a3..1854377fa6 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -938,6 +951,8 @@ int cmd_bisect__helper(int argc, const char **argv, =
+const char *prefix)
+>  			 N_("verify the next bisection state then checkout the next bisectio=
+n commit"), BISECT_AUTO_NEXT),
+>  		OPT_CMDMODE(0, "bisect-state", &cmdmode,
+>  			 N_("mark the state of ref (or refs)"), BISECT_STATE),
+> +		OPT_CMDMODE(0, "bisect-log", &cmdmode,
+> +			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
+
+If this is supposed to be a more permanent subcommand (and
+https://git-scm.com/docs/git-bisect#_bisect_log_and_bisect_replay suggests
+it might be), it would probably make more sense to describe the option in
+less implementation-specific detail. Maybe something like:
+
+	list the bisection steps so far
+
+Ciao,
+Dscho
