@@ -2,130 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77FDCC433DB
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29950C433DB
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 17:00:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4961B22228
-	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 16:17:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF07222C9C
+	for <git@archiver.kernel.org>; Mon, 18 Jan 2021 17:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406533AbhARQQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 18 Jan 2021 11:16:55 -0500
-Received: from mout.gmx.net ([212.227.17.20]:44207 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2406436AbhARQQm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Jan 2021 11:16:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1610986510;
-        bh=ApyVocl6wnXSppZFxKOWpMvpapR9PkobEkedq2EyZzA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GKzN62vLoGvavA5k/3vE05ccm0P4WYKptu2vMuXC01H8Ko4CZTuMWYiltAPb7pscI
-         QHaTJMNQFRUsW1swl4IDF51K/Zp6DJp1wq6ec+5epxoW59y3ZtvURiUEak4TBuAmvZ
-         oZPnqeX0xE68ef5CYgq4SjeYUNHs17sc5OpHEgjI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.115.203] ([89.1.215.22]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7GM-1lD3mG2Wyo-00BfrJ; Mon, 18
- Jan 2021 17:15:10 +0100
-Date:   Mon, 18 Jan 2021 17:15:16 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 0/7] Finish converting git bisect to C part 3
-In-Reply-To: <20201221162743.96056-1-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2101181714370.52@tvgsbejvaqbjf.bet>
-References: <20201221162743.96056-1-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lcMDLnfStyRwD2nmTLVE2Zke1a1+INRG96ZHbBX2OL5/CsUC6M5
- thSseIfw12A8qAX0XZOVaLbMMCDZrOxf5R5orb6/2UdbidRfvmZgE9huT2TsvoJWkOUNU4k
- VX+jnpecm+UZGPoGO6LAl48KKMny2U0Z7BKo3YGpMp9iTaTdK+BPlc/uDq6koG3JtlA5EW8
- Acz1BQ8wf8S7ylSBv8Lfw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Jp9pGhRl85c=:7Nj/DkBRTdxdao9+PUqDVP
- 3FzuMW8XjY1u0JoLvPutigjMjxuidjSZGPVSwuxy9Jo4o8iLoog1+wsZzkSjtzv+ofSHq98ay
- 69TFUMIpXDkq6C06grWZ4cpleRUwM3ITlnY9c1/JLSGdWZNXr9xxGQ4yv3bNTitfSZR8qtn+1
- H1jaPL6MMH3g8o8cAHpTBbH9g+9T2DKpblfxomAwRWjZzPXoG94JNLzQ7if4LvGhW3UN5V/BF
- gdIRhxRFHyjbrsBR5lRMFP8+uF9K4VEDJSr+ImJKhs7D+X/0AQTGtqK/2VK7mKb9ghouASZhv
- i73bRDelvcNn3MeVTH+8+PrY4kDD21IZaexIJHil3EIjOiFlgluQ+smMqTAOf1WzMh9Ylopdp
- KmUfHmTlyerhHHfzq5eJmnOiGV6+mYSs4PyWi8BTgo7h8KHJ+KX4voGVTskGvypdpiVlEkUbJ
- R4KNYX75yDvBKmcBtKTNu1gynhCUN8RRgcOF4OTzFMDJKm1DYpW1z1iyxS9V5jNKxXvNARo1R
- GKvszvVah1AFnb5U5hbq5pW89qrNdUHfld5qf8bPqw2F2BU/9Vji3szybOl9KChR0vMhscGOZ
- BxQphfMiEyWG54rnE2XMtVJvBGNWC8akEWnyVzcyv/Hpcit7x8IXNVzGnSOeqVxOyhDR7tAmC
- 7uUr3S/dUD/UudmqVNTB0mtrYMnGNlbf84m8quEIy79HymqcjlYu8iU/O4B69Lf5nunvDgz2w
- W7kky8mhNb8nr5ZzFSEjLDM9E0EtIKsXTNDjFsJhlOYYDK0474sFTyH13xnaFiWmCcwJOMIWk
- 0wc/5zQVttzrGJ2gPg6PtWrJVBlAFiczxAe+x3zxov5J7Q0YgmuCjUh7RjC7/Qk+OqVGVnDy2
- cdAoag6QH46EJmhcxTrMK2DLkjALfI5zSfLcMymI0=
+        id S2406730AbhARRAF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 18 Jan 2021 12:00:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58048 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405978AbhARQ7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Jan 2021 11:59:41 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EF0FC061574
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 08:59:00 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id 143so19193612qke.10
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 08:59:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=9qWg8W093s9PFxaWvVyak+QbGV+pXx2RHUoBZ6Roqy8=;
+        b=jjOrOO5Yl5AqAJ9HboX2cdmHGqjiWB3sJKo0II4ueREhcY7FsmJFuqVc2A54yh0e8g
+         +xp3zcQy5lqUphhg9P9AEk9wTYQtr/rEDBCyQIla2CILqva2sLsjPEVw5ZUNzQknufll
+         KzWhQ7RwygiNzAHo2xEJ3A4ADVgE/XwMtKNtYuLV5q+WqDwiUYiUWeunguSmV4sUxhwE
+         Lz9pSC0FZOBKLaN4k/8QyXHUM7CAVt+NLTvTxI5aXYlAZ8r2cqQTJm7TdSi+JiXSQ0ch
+         NxbwzrvwTrZkvEZAFQPl2/rarqxMSK8pOUx8BMc/CQrZxbzBaM6ZCnE1ISSSCzJYzPyy
+         LbIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=9qWg8W093s9PFxaWvVyak+QbGV+pXx2RHUoBZ6Roqy8=;
+        b=boldUD8SIAzFQjjEX32qO3q5PIlC3jl4YQB6yIRQxD3qrAmBO3Ozp14QL5ltu0cT2E
+         pMTT9wKc6qzyyXyvW3In2kFE+AdHo72lBMVaEG91Vj/QgP7CLN/EZAqxEqdEIaOoYkN1
+         rziQjW/LT6l7ldNckxnorq4db8uYNYdYKOYf1gPny42RkNKwvYxcxg24nWHPC+3/TGUz
+         h92voIHbX+kEAGmNmJyETt6fq3Oc1JAELjWF4BPEJyuMaK/8hfjMNieUBQoAR4D3PS/3
+         OZPwjmPBFW6w855PYKxYF/fZx33TM4/wIgxOd9Ur+TFMpAVlpwpBdzIU6VXjDwkenvNR
+         15GQ==
+X-Gm-Message-State: AOAM530t893icUqyD4fAKa0G484PeDP17ubYOrSOenMXco0nV/ErxI0K
+        W7YqP4kaLmdoWNRMQljezlwhz6Ezt3hDaQ==
+X-Google-Smtp-Source: ABdhPJyrnYli7OpC8V4wvuTOPTMqzs3CDeEWbI88vMnZxA3TTAI8r6xZYEfBCXZoa12jdlBckcEGdA==
+X-Received: by 2002:a37:66d8:: with SMTP id a207mr503538qkc.492.1610989139346;
+        Mon, 18 Jan 2021 08:58:59 -0800 (PST)
+Received: from [192.168.103.12] (cpe00fc8d50b7d3-cm00fc8d50b7d0.cpe.net.fido.ca. [72.141.221.184])
+        by smtp.gmail.com with ESMTPSA id s49sm11048594qth.90.2021.01.18.08.58.57
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 18 Jan 2021 08:58:58 -0800 (PST)
+From:   Utku <ugultopu@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: How to commit without an index file?
+Message-Id: <A31FEB7F-0A81-4500-9B1D-F65A5F8823AA@gmail.com>
+Date:   Mon, 18 Jan 2021 11:58:56 -0500
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Miriam,
+In my program, I have the file paths, permissions and Git object IDs of
+everything that I want to appear in the next commit. Hence, I want to
+create a commit without creating an index file.
 
-On Mon, 21 Dec 2020, Miriam Rubio wrote:
+Essentially it's like to combining `--cacheinfo` from `update-index`
+with `commit` like:
 
-> These patches correspond to a third part of patch series
-> of Outreachy project "Finish converting `git bisect` from shell to C"
-> started by Pranit Bauva and Tanushree Tumane
-> (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-> continued by me.
->
-> This third part is formed by reimplementations of some `git bisect`
-> subcommands and removal of some temporary subcommands.
->
-> These patch series emails were generated from:
-> https://gitlab.com/mirucam/git/commits/git-bisect-work-part3.
+	git commit \
+		-m "Commit message" \
+		--branch my-branch \
+		--cacheinfo =
+"100644,0123456789abcdef0123456789abcdef01234567,path/to/first/file=E2=80=9D=
+ \
+		--cacheinfo =
+"100755,123456789abcdef0123456789abcdef012345670,path/to/second/file=E2=80=
+=9D \
+		--cacheinfo =
+"100644,23456789abcdef0123456789abcdef0123456701,path/to/third/file"
 
-Nice, thank you very much!
+In this example, the command would not read the index file, but would
+get the information necessary to create the commit tree as arguments (or
+from STDIN). The command would handle recursively creating trees for the
+intermediate directories. The object ID for the final tree would be used
+for the `tree` field of the commit.
 
-I offered a couple suggestions how I think this patch series could be
-improved even further.
+I tried tricks for simulating standard streams as an index file to Git,
+but they didn't work out:
 
-Looking forward to the next iteration,
-Dscho
+	$ GIT_INDEX_FILE=3D/dev/stdout git read-tree HEAD
+	fatal: Unable to create '/dev/stdout.lock': No such file or =
+directory
 
->
-> General changes
-> ---------------
-> * Rebase on master branch: 6d3ef5b467 (Git 2.30-rc1, 2020-12-18).
-> * Change argv_array structs to strvec.
->
-> Specific changes
-> ----------------
->
-> [1/7] bisect--helper: reimplement `bisect_log` shell function in C
-> * Add `|| exit` to bisect_log call in shell script.
-> ---
->
-> [2/7] bisect--helper: reimplement `bisect_replay` shell function in C
-> * Add `|| exit` to bisect_replay call in shell script.
-> ---
->
-> [6/7] bisect--helper: reimplement `bisect_skip` shell function in C
-> * Add `|| exit` to bisect_skip call in shell script.
-> ---
->
-> Pranit Bauva (7):
->   bisect--helper: reimplement `bisect_log` shell function in C
->   bisect--helper: reimplement `bisect_replay` shell function in C
->   bisect--helper: retire `--bisect-write` subcommand
->   bisect--helper: use `res` instead of return in BISECT_RESET case
->     option
->   bisect--helper: retire `--bisect-auto-next` subcommand
->   bisect--helper: reimplement `bisect_skip` shell function in C
->   bisect--helper: retire `--check-and-set-terms` subcommand
->
->  builtin/bisect--helper.c | 223 +++++++++++++++++++++++++++++++++------
->  git-bisect.sh            |  58 +---------
->  2 files changed, 195 insertions(+), 86 deletions(-)
->
-> --
-> 2.29.2
->
->
+The best I could come up with is creating a no checkout worktree for
+`my-branch` and using a FIFO for the index file, instead of a
+conventional file. The shell script equivalent of it would be as follows
+(I would be happy if you can point out any errors in this script as
+well):
+
+	set -e
+=09
+	git_dir=3D$(git rev-parse --git-dir)
+	worktree_name=3Dmy-program
+	worktree_location=3D$git_dir/$worktree_name
+=09
+	# Ran only once
+	function init_worktree {
+		branch_name=3Dmy-branch
+		worktree_gitdir=3D$git_dir/worktrees/$worktree_name
+	=09
+		git worktree add "$worktree_location" "$branch_name" =
+--no-checkout
+		rm -f "$worktree_gitdir/index=E2=80=9D
+		mkfifo "$worktree_gitdir/index=E2=80=9D
+	=09
+		echo "Initialized worktree at $worktree_location=E2=80=9D
+	}
+
+	# Ran on every commit
+	function commit_worktree {
+		cd "$worktree_location=E2=80=9D
+		git read-tree =E2=80=94empty
+		git update-index --add \
+		--cacheinfo =
+"100644,0123456789abcdef0123456789abcdef01234567,path/to/first/file=E2=80=9D=
+ \
+		--cacheinfo =
+"100755,123456789abcdef0123456789abcdef012345670,path/to/second/file=E2=80=
+=9D \
+		--cacheinfo =
+"100644,23456789abcdef0123456789abcdef0123456701,path/to/third/file=E2=80=9D=
+
+		# etc. Will be received as arguments or from STDIN.
+		git commit -m "Commit message=E2=80=9D
+	}
+
+So I guess this is the best it gets? If I wanna make it better, I guess
+I will need to use libgit2?
+
+Thank you=
