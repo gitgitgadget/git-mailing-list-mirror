@@ -2,105 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB5D2C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E76BC433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:30:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2DB823104
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:29:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1604D23104
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:30:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727010AbhASX3l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 18:29:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55720 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728227AbhASXZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 18:25:12 -0500
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41736C0613D6
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:16 -0800 (PST)
-Received: by mail-qv1-xf2f.google.com with SMTP id j18so10062159qvu.3
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mYijZNcLlp7HHkwd/etFfg07yHQuIff2NXDeqICmuX8=;
-        b=dwSGCMUsuV+LrYBuvUiCPwh2wPGjHVmTjdmtT3EmlJQ+0BgNAKbwV0jSInhSD/Kehr
-         cx8kybV4gdMogFRg+4wLxnlOaqdk4Ob2IltPUjDm47crRJYVfguags9xSL/jRlSCLuuC
-         vbqCppsngDivvUMmoL6JfJ7Qu5+M9VZInxZM+CZTKnGfc0vN+0ad+ukELGRhxHjCnjBD
-         EAze1W1wK9dt512VSeqyxIq+qSQA06Df2VhyQ+E4VeGhFJR5Vm0nOM2LKBBDbdVTAo6p
-         b3EW27x4oFvtnrvYKkngJUvgDg3i5+DrHwFAQc5tQzRfZXmNWIwsqemOfNGYIZ6hcHdq
-         xw6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mYijZNcLlp7HHkwd/etFfg07yHQuIff2NXDeqICmuX8=;
-        b=deZ5pOh4U4sNlnkZPuwlJGc7fUpQa9mkQmyDe9sbCak8yOQ5cDON6D7+G8Gx10IPng
-         pRJbrPJUl/+nQOseYxSt5/5ToYw+c+QOxW3gm3SeDukZuWgFe8NpQknxs+iysYWZgTN0
-         uhtw4QszTuu/UrG0ho1qWncypCgkxRG18EXrJdHgoguD0ei3YzCpVJNnf+Nec3izE8YZ
-         aha5jIc3FHaFByBN4PjxDIAoJHyDOuQnGRPmBkRoq5dwEk/MCdPQFHaOwsRznDehj2bB
-         sGGME8sQnslkFQ7J9nSFPimTUqLzrwdkw0JZyek3wiD9maCRDlg6nx26Xyy93vkLXEW9
-         gtxA==
-X-Gm-Message-State: AOAM532u+H+hZR/7wRo3Zd/02qn7BvQfkdqLCyFaiaiVw8C7sUAtC+5j
-        nc8PoB46L13SX5n/rpJp7BwhqvNPRw9NbQ==
-X-Google-Smtp-Source: ABdhPJwhMxdG2ZzsuUIjtMheMEHOrRzV2G/hMxCKs2pkL9ErVqrYo+p6KgjYJRjx0IoUgWJnXdP91g==
-X-Received: by 2002:a0c:a525:: with SMTP id y34mr6929954qvy.37.1611098655341;
-        Tue, 19 Jan 2021 15:24:15 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id p75sm177300qka.72.2021.01.19.15.24.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 15:24:14 -0800 (PST)
-Date:   Tue, 19 Jan 2021 18:24:13 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 04/10] p5303: add missing &&-chains
-Message-ID: <26b46dff15ce89f8ccab3866a0e230d99c538697.1611098616.git.me@ttaylorr.com>
-References: <cover.1611098616.git.me@ttaylorr.com>
+        id S1727764AbhASX3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 18:29:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60520 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730519AbhASX0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 18:26:51 -0500
+Received: (qmail 15791 invoked by uid 109); 19 Jan 2021 23:26:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Jan 2021 23:26:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14142 invoked by uid 111); 19 Jan 2021 23:26:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Jan 2021 18:26:10 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 19 Jan 2021 18:26:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] builtin/pack-objects.c: avoid iterating all refs
+Message-ID: <YAdqkYtxqeXVnzN3@coredump.intra.peff.net>
+References: <20210119143348.27535-1-jacob@gitlab.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1611098616.git.me@ttaylorr.com>
+In-Reply-To: <20210119143348.27535-1-jacob@gitlab.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+On Tue, Jan 19, 2021 at 03:33:47PM +0100, Jacob Vosmaer wrote:
 
-These are in a helper function, so the usual chain-lint doesn't notice
-them. This function is still not perfect, as it has some git invocations
-on the left-hand-side of the pipe, but it's primary purpose is timing,
-not finding bugs or correctness issues.
+> What I learned is that by default, a fetch ends up using the
+> '--include-tag' command line option of git-pack-objects. This causes
+> git-pack-objects to iterate through all the tags of the repository to
+> see if any should be included in the pack because they point to packed
+> objects. The problem is that this "iterate through all the tags" uses
+> for_each_ref which iterates through all references in the repository,
+> and in doing so loads each associated object into memory to check if
+> the ref is broken. But all we need for '--include-tag' is to iterate
+> through refs/tags/.
+> 
+> On the repo we were testing this on, there are about
+> 500,000 refs but only 2,000 tags. So we had to load a lot of objects
+> just for the sake of '--include-tag'. It was common to see more than
+> half the CPU time in git-pack-objects being spent in do_for_each_ref,
+> and that in turn was dominated by ref_resolves_to_object.
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/perf/p5303-many-packs.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Some of these details may be useful in the commit message, too. :)
 
-diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
-index f4c2ab0584..277d22ec4b 100755
---- a/t/perf/p5303-many-packs.sh
-+++ b/t/perf/p5303-many-packs.sh
-@@ -24,11 +24,11 @@ repack_into_n () {
- 	sed -n '1~5p' |
- 	head -n "$1" |
- 	perl -e 'print reverse <>' \
--	>pushes
-+	>pushes &&
- 
- 	# create base packfile
- 	head -n 1 pushes |
--	git pack-objects --delta-base-offset --revs staging/pack
-+	git pack-objects --delta-base-offset --revs staging/pack &&
- 
- 	# and then incrementals between each pair of commits
- 	last= &&
--- 
-2.30.0.138.g6d7191ea01
+Your "load a lot of objects" had me worried for a moment. We try hard
+not to load objects during such an iteration, even when peeling them
+(because the packed-refs format has a magic shortcut there). But I think
+that is all working as intended. What you were seeing was just tons of
+has_object_file() to make sure the ref was not corrupt (so finding the
+entry in a packfile, but not actually inflating the object contents).
 
+Arguably both upload-pack and pack-objects could use the INCLUDE_BROKEN
+flag to avoid even checking this. We'd notice the problem when somebody
+actually tried to fetch the object in question. That would speed things
+up further on top of your patch, because we wouldn't need to check the
+existence of even the tags. But it's definitely orthogonal, and should
+be considered separately.
+
+-Peff
