@@ -6,97 +6,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84C43C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE4CC433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:04:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60C2023109
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:02:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E19523104
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:04:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729066AbhASXBY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 18:01:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50482 "EHLO
+        id S1728210AbhASXDn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 18:03:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728885AbhASXBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 18:01:11 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6324C061793
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:00:22 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id e15so15031205qte.9
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:00:22 -0800 (PST)
+        with ESMTP id S1727819AbhASXDg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 18:03:36 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42FDCC061573
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:02:52 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id d14so23620071qkc.13
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=d6sIwKZE9/su5PDY1fTYUs2/WHnAMM3Gw+1Cqvp/Iqc=;
-        b=jBJHTm2odpv4HDroBj2v7UEqA/xZU1Jo3RmJd0SXTJmH0/7YcN8Ak4cGAu9EKQkMxm
-         hp4GP+DnBqN3LyNHMlNKN1V0acI3BkM3kOnHiXjguwHVFrlyU/P2G6QSrnKTsQDI7hoM
-         iOn/G+F6nV47AUrG4iJSMHv/cPPxU633l+aruRj2yDLv2aDbEXLouYqI+US06d09szTL
-         pr9Lir9HcAxzjsxbv3rwcTiaR+sHWjYjeUwwdWMSWj+e0waJj4oCsOiOsMUnYL6pQhca
-         HQ9AjB/wasNRM42A5FJJnNfh8C4haoq8HLn+QA05amWKHxmwe6kszBNihFHmiQsZbKvy
-         4RvA==
+        bh=j8c4qkKNMYXxJfCb7kr2Eym8kxIzNy7THrVNbErk4QQ=;
+        b=a/5lDcLI486kh/AD+ZoF70QX8JCEALlo5kni4ubJNhmFx17yxQOBFPhZSawTuMM4Gb
+         1UxMALlOj0B/KouyO7RQ4PsZe76UdXZ4WazykFm3UZObY720JYCaG+fP7l8yEa3EhmTS
+         qcIe0eDkBex4UCS/VcKxXx79m8XnNrVVc52uwJVv/P5AnSnIFP3UQkEf9ujEaRr6Txwq
+         RBVzEOcP35r4aqDAgL3xshnb9+YmaGerssNVxLxA1VUVETYvEINBoLCUsBT5rOsWoD3+
+         hit4MHizGhqoQ3C+Uj9Ld3ijWRZbPkJ2yuBD5gSrfTPwMlbmRbjkYIxJOsXlivJ0qnoh
+         iOgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=d6sIwKZE9/su5PDY1fTYUs2/WHnAMM3Gw+1Cqvp/Iqc=;
-        b=KkxVmXaP6L98ErtX9z5eULrmO9CFUV6wFzZ+G0t5k3W67EMDN/Y9+VzRGYuJ9U1Gs9
-         BgNdsoxFcRYA1qWOP94yDJEMS3w11A3zJD4UFqiRl5SrjFSuPtyTDOjia5/5vMLmUNK+
-         4g23MdjvYmRm4eTJtY8CXlDIw9flPX0bhV/ehe+8dn2O4yDNGVmdejtiUJdwP6b1JHCw
-         GBV2mxzdHCO+H1nFgD5TBvUOHFsjeR6nauxvntUvpxkHal3HZq0gWakyaMYdVL9+EnVj
-         SzRYoU9BVilaY4DLedZM6KIMDvQS5JDPCsphvSdSk0QpYsgOOHsvRwI6nr01QmgixAOe
-         H+FQ==
-X-Gm-Message-State: AOAM532s4H73E5HSdpRmKwiZX9dPJLJU17V300qIH6u3891ETDaKQz72
-        a4r6rvi6qXCT8sRJyqDr8bEUOGTZXG4Big==
-X-Google-Smtp-Source: ABdhPJzsflWQ3P/Nlz70Ut4YZ2wXNC3jPT0+nBenqJ9EEr5MFUCH/y42Ni2hxym/YfHzsW9vA5tPKw==
-X-Received: by 2002:ac8:6987:: with SMTP id o7mr6331383qtq.295.1611097222138;
-        Tue, 19 Jan 2021 15:00:22 -0800 (PST)
+        bh=j8c4qkKNMYXxJfCb7kr2Eym8kxIzNy7THrVNbErk4QQ=;
+        b=Go4NYcvoF2p8UcSqsyMjP7w07gdgcrqManA7PfM0bp24fCshudpIUd1auYHUaDz/jw
+         Ezv/z7l6wAEcYMJAm9pYf6pEUYmk0/DOUCkNcl2EaWLFlTKydNz6tc1GPZ/5U0p5ZFK3
+         xbNIP7fCScka1Nol/ltgFSMQX3qycnsxUeutFeHpenkkJBehe5xp3mBnYWMgVax4i6hR
+         iwfShORIaPD/bYDP2c0XQdVAFSMDdl1jiAUHvN3K2z+KcbOt7tpGNT8OTZYew7WnU+SU
+         qDDwLKfMbx2Mm/dtxCYHmj/fhDOxSfwCUkBkhAILOS0AalOcGJhtspu7agopFfB10NgY
+         hVuA==
+X-Gm-Message-State: AOAM531yzEwZ0SpTBTT0tS7PhWkOeARF2j+sZr4FzaJJYDeeENuWJYns
+        oxQS/9t3vn6CJDPj6im2q8rnOg==
+X-Google-Smtp-Source: ABdhPJx20FEHN/7d1SiyQRL+Aq+JjcwfuLJ4zh/WgmyQX8zf//xfzfUBB33jMIFOtt/k5uX2js5jgg==
+X-Received: by 2002:a05:620a:1368:: with SMTP id d8mr6672009qkl.101.1611097371555;
+        Tue, 19 Jan 2021 15:02:51 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id t27sm38335qtb.20.2021.01.19.15.00.21
+        by smtp.gmail.com with ESMTPSA id q3sm137929qkb.73.2021.01.19.15.02.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 15:00:21 -0800 (PST)
-Date:   Tue, 19 Jan 2021 18:00:19 -0500
+        Tue, 19 Jan 2021 15:02:50 -0800 (PST)
+Date:   Tue, 19 Jan 2021 18:02:48 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Jacob Vosmaer <jacob@gitlab.com>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH 1/1] ls-refs.c: minimize number of refs visited
-Message-ID: <YAdkg7ZijzfB8eMc@nand.local>
+Message-ID: <YAdlGMv3EC1ORUew@nand.local>
 References: <20210119144251.27924-1-jacob@gitlab.com>
  <20210119144251.27924-2-jacob@gitlab.com>
- <YAdjBC7z2eE1Z0uk@coredump.intra.peff.net>
+ <YAcE/dTuOB9PbGQU@nand.local>
+ <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
+ <YAcuUDqfvKzfHFMb@nand.local>
+ <YAdWNgF75QEYFLA7@coredump.intra.peff.net>
+ <YAdaAsP6vCQla/Ar@coredump.intra.peff.net>
+ <YAdb6GmVXWLEGkP1@nand.local>
+ <YAdik+z5yj2XU0ti@coredump.intra.peff.net>
+ <YAdkVkXOnpDy28h2@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YAdjBC7z2eE1Z0uk@coredump.intra.peff.net>
+In-Reply-To: <YAdkVkXOnpDy28h2@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 05:53:56PM -0500, Jeff King wrote:
-> Thanks for posting this. I have a vague recollection that we considered
-> this either when we did the for-each-ref prefixes, or when we added
-> ls-refs prefixes, but I can't seem to find either. At any rate, at
-> GitHub we haven't generally found it to be a problem because our
-> horrifically-large repos tend to be aggregated alternates repos, not the
-> ones people serve upload-pack out of (though I did just time it, and
-> some of our largest repos should save a few hundred milliseconds per
-> advertisement, which is certainly not nothing).
+On Tue, Jan 19, 2021 at 05:59:34PM -0500, Jeff King wrote:
+> Actually, I am not sure that we would look for "refs/tags/" in that case
+> (I did a quick test and we do not seem to). Which makes sense, as it is
+> cheaper to find the "a" and "b" hierarchies separately if there is a
+> very big "refs/tags/c" hierarchy.
 
-Great on all counts!
+Ah, makes sense. Thanks for double checking.
 
-> > This commit also fixes a bug in ls-refs.c that was not triggered
-> > before: we were using a strvec set to zero, which is not how you are
-> > supposed to initialize a strvec. We now call strvec_init after zeroing.
->
-> Good catch. It didn't matter until now because nobody relied on having a
-> NULL entry when no prefix had been added (instead, they always iterated
-> over prefixes->nr). IMHO that is worth fixing as a separate commit.
+> But I agree that this is a good reason that callers should consider it
+> as an optimization which could return more results than expected.
 
-Yeah. Even after calling it out as such myself, I promptly forgot it
-when preparing the first patch I sent back to Jacob!
-
-I didn't pull it out into its own patch, and rather folded it in to my
-2/2. It has a small call-out of its own, but if you'd prefer it by
-itself, I'm happy to resubmit it with that change included.
+Yep. Even though I couldn't quite remember when the algorithm would
+split without looking more closely, I made sure to document that it
+iterates *all* references that are descendent of the LCP of its
+arguments.
 
 > -Peff
 
