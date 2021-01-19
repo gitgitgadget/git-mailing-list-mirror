@@ -2,168 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6942C433DB
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 20:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1D2DC433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 20:16:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6715723104
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 20:01:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FD8223107
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 20:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391760AbhASUAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 15:00:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38362 "EHLO
+        id S1730269AbhASUQH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 15:16:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391966AbhASTzT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 14:55:19 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD3DC0613ED
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:54:02 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id y187so832614wmd.3
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:54:02 -0800 (PST)
+        with ESMTP id S2391717AbhASTCy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 14:02:54 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4524AC061573
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:02:14 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id l7so20595148qvp.15
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=O5wTBKeWiHf7mJrnNho3TBC79jlaWAJ7FeqyH8aQJ/4=;
-        b=bHP4ZTsnItQT2MmZX7LPWb78TTIx2ZIS1DUhG5SL8qnadpCnd63O9phqPpnlwSqxau
-         Bp1auFbyoFVhivSIr8WUsn5ThYTZ6JdC7DCCXFyM0EN2ewjIS15UksF+U/IojDxZEeNW
-         ksfQzq0s4BaPzPO3XXoZzqjNnwrnXUP0p3zbAasWeUOebQWkVg0dhWJvIuTQKnL4RFrb
-         1q+/+LXICOJVV9NHiG8MHsx+YBkJjZRxN5vA4xdmyeknu9iUn8f2T/p5TwIo4TYkj9UI
-         xZBrClDIp10AIdGpKoIzjl58lRr5DF3lgA0DmaoqGeqKSCbzTD2XRnqz6+IQLbwvqgee
-         fMRA==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=NQU3WaplyaZwyB5jjgbV3bdluv7ydrYG20vQPGlb73s=;
+        b=mMtf7knahGnd9hiqrBlO4koKnuj0BB9TL4nSgR2/hzL5PR0Al02mhvYaYX+z5aZv+b
+         M6MWEFI34PF+at6WEWSY5K2mDh05NDIxxDb7Okb+ji9sD9lQHdACquW46hB2Q0sIkrcG
+         QJ8TegIjBW97yyeCVS74kTSeebT1x4PmfjxuEZX/QWm+jCmOuMcDVWNoQMTx+45uo4lK
+         XOT5PQE5yB1IqU+6vR1pZjXGu8ABF+85ok8vzEfrCybknpjX9usftaHFt63MOIF7vpnt
+         OwVb/DJcNueN+Xgt55dDF8JKYKdCec2phTm/skxt6pQA23fC+4hhO87xA0AEZokXIMF0
+         E1HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O5wTBKeWiHf7mJrnNho3TBC79jlaWAJ7FeqyH8aQJ/4=;
-        b=Ra7dQXR1L4ffZYrpUpql+ASdwswgx5MV0sdidEPKhBRphNslqoRTZytweRxYvT5W4s
-         cMYTm7TFhISQ128E3XdIyI8GmlC+x/udYpuDQazrcMO52IguAVDH0AtoYDQreQLIApe9
-         yalC5LicZDlO8lWK9EerMNr2xwlMuEaPCCNtjJRCcqopVukZVm/MipfwMkid1wfjhk+L
-         Haa9TM7WZiZ3Sa0uPsa6EnNRrBiqndlLMTpYNp+l6d0zGfjqRFG5xplJwNJ5sHD2YABD
-         sHWgRTJboz1nKB22YTZDXJGPP1khldvWX4xNVcPPMrHglAeKKnEBVmYVVnbMXazYUgYq
-         Oirg==
-X-Gm-Message-State: AOAM532DHxNZMildCnryFsAfOdUTcb3i4BqrWh7wYtwfLDX1BvnwQbkw
-        KMRQ3cEo/plyNKz5shFcFC9RGzHnOnc=
-X-Google-Smtp-Source: ABdhPJzrgZajrhBvJ2BrkpcB7TTkd0oyVh6/0CPm/8tSnvjk5w+00NpIFlV8nNMnAAiCIqXhUfhdvg==
-X-Received: by 2002:a05:600c:1986:: with SMTP id t6mr1081558wmq.93.1611086041069;
-        Tue, 19 Jan 2021 11:54:01 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h5sm39748893wrp.56.2021.01.19.11.54.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 11:54:00 -0800 (PST)
-Message-Id: <5b5c8368174179272b67659d9babd251fbf07497.1611086033.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
-References: <pull.835.v2.git.1610055365.gitgitgadget@gmail.com>
-        <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jan 2021 19:53:43 +0000
-Subject: [PATCH v3 07/17] merge-ort: implement compute_rename_counts()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=NQU3WaplyaZwyB5jjgbV3bdluv7ydrYG20vQPGlb73s=;
+        b=pUx0M11bzs0cWeD2pzIGF12kjGjz8MRNy9CMZKhEDqGsm0TmVPMcHESXvwzmTBs381
+         TTimZsymtmuK+tkWTE+v+r4vSeTWdyVlVYcbAYgKTA34kt86+TGcutCknKcsfnOiNGlC
+         JClVRKlCTk6eIeFO+ffEgRYCtvkqvpjwsr7hsI6iIReMPBBDe2KdX7MglhdQ0eyc5bvK
+         tx07iLyDTU4yqLaJsLd2xHEv4HqSUSBuU98sQBZh+ppM/gVe/FbSCIubwcnfho/NYryS
+         Ojuw8z1NeNrbvehrHft5G2ECQGoFTg1nnC9N6/GgQWAm3fuT+v/eFSIDkof/vfrkAmie
+         DLeA==
+X-Gm-Message-State: AOAM531nO7e6Xq5b5XIxSgltX953GV/SVntL17EBOAoIibaVzPBLFxU7
+        8qc4VcApcz1JbzmmH3Cj+mJnQPpI+CLhM+WgT9ft
+X-Google-Smtp-Source: ABdhPJz33xHctq9CPFJNMkl6L0E+Y3Y/7NGLoxkUGMBC+49rdlDI1OMn3M51YrdI0+qTAJW2QouGVSTYL+RTWNbqgaMF
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:f046:: with SMTP id
+ b6mr5574935qvl.14.1611082933431; Tue, 19 Jan 2021 11:02:13 -0800 (PST)
+Date:   Tue, 19 Jan 2021 11:02:09 -0800
+In-Reply-To: <YAJcDr0EPkKk0aR/@nand.local>
+Message-Id: <20210119190209.1497399-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <YAJcDr0EPkKk0aR/@nand.local>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
+Subject: Re: RFC on packfile URIs and .gitmodules check
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     gitster@pobox.com, jonathantanmy@google.com, git@vger.kernel.org,
+        peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+> > Is this because the gitmodules blob is contained in the base image
+> > served via the pack URI mechansim, and the "dynamic" packfile for
+> > the latest part of the history refers to the gitmodules file that is
+> > unchanged, hence the latter one lacks it?
+> 
+> That seems like a likely explanation, although this seems ultimately up
+> to what the pack CDN serves.
 
-This function is based on the first half of get_directory_renames() from
-merge-recursive.c; as part of the implementation, factor out a routine,
-increment_count(), to update the bookkeeping to track the number of
-items renamed into new directories.
+In this case, yes, that is what is happening.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 54 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 52 insertions(+), 2 deletions(-)
+> > You've listed two possible solutions, i.e.
+> >
+> >  (1) punt and declare that we assume an missing and uncheckable blob
+> >      is OK,
+> >
+> >  (2) defer the check after transfer completes.
+> >
+> > Between the two, my gut feeling is that the latter is preferrable.
+> > If we assume an missing and uncheckable one is OK, then even if a
+> > blob is available to be checked, there is not much point in
+> > checking, no?
+> 
+> I'm going to second this. If this were a more benign check, then I'd
+> perhaps feel differently, but .gitmodules fsck checks seem to get
+> hardened fairly often during security releases, and so it seems
+> important to keep performing them when the user asked for it.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index eb609ab0063..8aa415c542f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -721,7 +721,6 @@ static int handle_content_merge(struct merge_options *opt,
- 
- /*** Function Grouping: functions related to directory rename detection ***/
- 
--MAYBE_UNUSED
- static void get_renamed_dir_portion(const char *old_path, const char *new_path,
- 				    char **old_dir, char **new_dir)
- {
-@@ -825,11 +824,62 @@ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
- 	*new_dir = xstrndup(new_path, end_of_new - new_path);
- }
- 
-+static void increment_count(struct strmap *dir_rename_count,
-+			    char *old_dir,
-+			    char *new_dir)
-+{
-+	struct strintmap *counts;
-+	struct strmap_entry *e;
-+
-+	/* Get the {new_dirs -> counts} mapping using old_dir */
-+	e = strmap_get_entry(dir_rename_count, old_dir);
-+	if (e) {
-+		counts = e->value;
-+	} else {
-+		counts = xmalloc(sizeof(*counts));
-+		strintmap_init_with_options(counts, 0, NULL, 1);
-+		strmap_put(dir_rename_count, old_dir, counts);
-+	}
-+
-+	/* Increment the count for new_dir */
-+	strintmap_incr(counts, new_dir, 1);
-+}
-+
- static void compute_rename_counts(struct diff_queue_struct *pairs,
- 				  struct strmap *dir_rename_count,
- 				  struct strset *dirs_removed)
- {
--	die("Not yet implemented!");
-+	int i;
-+
-+	for (i = 0; i < pairs->nr; ++i) {
-+		char *old_dir, *new_dir;
-+		struct diff_filepair *pair = pairs->queue[i];
-+
-+		/* File not part of directory rename if it wasn't renamed */
-+		if (pair->status != 'R')
-+			continue;
-+
-+		/* Get the old and new directory names */
-+		get_renamed_dir_portion(pair->one->path, pair->two->path,
-+					&old_dir,        &new_dir);
-+		if (!old_dir)
-+			/* Directory didn't change at all; ignore this one. */
-+			continue;
-+
-+		/*
-+		 * Make dir_rename_count contain a map of a map:
-+		 *   old_directory -> {new_directory -> count}
-+		 * In other words, for every pair look at the directories for
-+		 * the old filename and the new filename and count how many
-+		 * times that pairing occurs.
-+		 */
-+		if (strset_contains(dirs_removed, old_dir))
-+			increment_count(dir_rename_count, old_dir, new_dir);
-+
-+		/* Free resources we don't need anymore */
-+		free(old_dir);
-+		free(new_dir);
-+	}
- }
- 
- static void get_provisional_directory_renames(struct merge_options *opt,
--- 
-gitgitgadget
+That makes sense.
 
+> > As long as the quarantine of incoming pack works correctly,
+> > streaming the incoming packdata (and packfile downloaded out of line
+> > via a separate mechanism like pack URI) to index-pack that does not
+> > check to complete the transfer, with a separate step to check the
+> > sanity of these packs as a whole, should not harm the repository
+> > even if it is interrupted in the middle, after transfer is done but
+> > before checking says it is OK.
+> 
+> Agreed. Bear in mind that I am pretty unfamiliar with this code, and so
+> I'm not sure if it's 'easy' or not to change it in this way. The obvious
+> downside, which Jonathan notes, is that you almost certainly have to
+> reinflate all of the trees again.
+> 
+> But, since the user is asking for transfer.fsckObjects explicitly, I
+> don't think that it's a problem.
+
+We might be able to avoid the reinflate if we do it as part of the
+connectivity check or somehow teach index-pack a way to communicate the
+dangling .gitmodules links (as you suggest below).
+
+> > As a potential third option, I wonder if it is easier for everybody
+> > involved (including third-party implementation of their
+> > index-pack/fsck equivalent) if we made it a rule that a pack that
+> > has a tree that refers to .git<something> must include the blob for
+> > it?
+> 
+> Interesting, but I'm sure CDN administrators would prefer to have as few
+> restrictions in place as possible.
+
+That rule would help, but it also seems inelegant in that if we put
+commits that have the same .gitmodules in 2 or more different packs,
+there would be identical objects across those packs (besides the reason
+Taylor mentioned).
+
+> A potential fourth option that I can think of is that we can try to
+> eagerly perform the .gitmodules fsck checks as we receive objects, under
+> the assumption that the .gitmoudles blob and the tree which contains it
+> appear in the same pack.
+> 
+> If they do, then we ought to be able to check them as we currently do
+> (and avoid leaving them to the slow post-processing step). Any blobs
+> that we _can't_ find get placed into an array, and then that array is
+> iterated over after we have received all packs, including from the CDN.
+> Any blobs that couldn't be found in the pack transferred from the
+> remote, the CDN, or the local repository (and isn't explicitly excluded
+> via an object --filter) is declared missing.
+> 
+> Thoughts?
+
+The hard part is communicating this array to the parent fetch process.
+Stolee has a suggestion [1] which I will reply to directly.
+
+[1] https://lore.kernel.org/git/d2ca2fec-a353-787a-15a7-3831a665523e@gmail.com/
