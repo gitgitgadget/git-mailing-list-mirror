@@ -7,127 +7,109 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC5F1C432C3
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14727C46461
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:28:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A9D023132
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEE8622DD3
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:28:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389612AbhASQpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 11:45:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
+        id S2390985AbhASROZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 12:14:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389356AbhASQpD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 11:45:03 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 966CCC061573
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 08:44:23 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id bx12so8308347edb.8
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 08:44:23 -0800 (PST)
+        with ESMTP id S2391127AbhASROD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 12:14:03 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7738CC061573
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 09:13:22 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id q25so21906673oij.10
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 09:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version;
-        bh=JWRE+u0MRvr+ZnUx2o25tLdg5Kd12+/a687fij1+tUo=;
-        b=RepCMgbn0DDEpv2UxnTv3ucL/F2P8mpiLyxQtbaSqOqRiBN0Qir3KcecwYpmg6WZf8
-         GqdPS5JKhB+vXKPi6muBHHPivA+vhtlPjJccV5kofqYq90VP2J80qL2V+7r6G3Nb7CeT
-         UMDQpb5MjJq8A03rC6a0mUpvoShSmW9R/Qxq8uDC1jOPLLvszCanJJ+TOPNaIfvnYyaT
-         xdc2qpJm3ou+wADNoEv/dZstIIV/zw3TEYINI3yVK/G/E9zirvixhATiA7cghprUIwBi
-         RIazyguVc7lHajkX7Xgkb7nHFWz7QuZcsbllVRdOfyd+d/i2wWwjocVm2jRgAiNRcd/P
-         giUw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=npEuGY1tod3hmtlpPiR/HVekdWcDojq5OvH73ZTdTg4=;
+        b=MhnRY3Dl5olf9SXoK4AUC7qEu73u95avGuwPBzEq+G2kPP3nyHHj89Tt3C8XZZspaX
+         zwvOrxuAtJ/ni24V3Z6IBUnpSD2rFiEOvTjHQvXw19LdC2ZjHGyoKq9uCvXq1+1jGDM0
+         TVvKBt3Ov6eWH8Dq0mMeBTYlb1pW3Ndsr4KEy5eNzCcXDwNLCXi5MXxBg/ru0p3NWuPO
+         NXYDSiMoLHFHzA6OqppjfaWE3of7y5G9UQCAChF5BO/c0OjmisRlCux+R0vgQ35wOokL
+         e4aEd3QIwC131+xt0KrDkbSHmHICWEwhwdS8WKZLZ+Sd7sMg1cuef6dQ+u8KkAv6tBnd
+         zW6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version;
-        bh=JWRE+u0MRvr+ZnUx2o25tLdg5Kd12+/a687fij1+tUo=;
-        b=ev5LrPzWXTJ9rin9TMKnvEZEvmCwZzGzch1cfnhmMxr3UlLgQ7rso+TeQdHV3DEnIf
-         3sUA6XqXRnMKyaikwnya/nUqLX50k51moh0sKi+fbRFro94/IYuMScSg6Uz/IvaCEmOb
-         UZsXcQZmbJqtaWTvMluJeTQaFzCHjpKecrkNKRiWWlCpiM8DMlHzXWB9vuh2gaw7AQil
-         0F4e2I/8aMwDVUp2zBrTT0Jm6UI7A8WW8kTT2Ban2/4yNJ3L5gZ4MntL38pHX8zADHTU
-         8afAzTOZKj6xLoCp5NSUJ/+E1rXzEtNhMQGjBtJAWBAp3XBKIg9MnxcUDh/tLC5xU5ZH
-         ArHw==
-X-Gm-Message-State: AOAM533xfx0toQ2AE2RafeaZRCbrKHMyu9dp2Msfgo+T5LbdvhXdDPhB
-        Ecn7qieVWV57sGSVu2cxl1/3Neje9MY=
-X-Google-Smtp-Source: ABdhPJxMNZfAKD0ZXeFIajieNCPcEham2sHNKZCHuHhIHEuPzh6PDLuHaElRmAELr3EO2qvTKurUAg==
-X-Received: by 2002:aa7:ccc6:: with SMTP id y6mr4061580edt.226.1611074662275;
-        Tue, 19 Jan 2021 08:44:22 -0800 (PST)
-Received: from cpm12071.local ([212.86.35.161])
-        by smtp.gmail.com with ESMTPSA id gb14sm10628315ejc.61.2021.01.19.08.44.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 08:44:21 -0800 (PST)
-References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
- <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
- <CAPig+cTGxOwUN20JmeR0bBwVMM78eA3Bnaqei5GEAs2XFM2_gg@mail.gmail.com>
-User-agent: mu4e 1.4.13; emacs 27.1
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 0/6] teach `worktree list` verbose mode and prunable
- annotations
-In-reply-to: <CAPig+cTGxOwUN20JmeR0bBwVMM78eA3Bnaqei5GEAs2XFM2_gg@mail.gmail.com>
-Message-ID: <gohp6klfco6fmk.fsf@gmail.com>
-Date:   Tue, 19 Jan 2021 17:44:20 +0100
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=npEuGY1tod3hmtlpPiR/HVekdWcDojq5OvH73ZTdTg4=;
+        b=MctC36o3q+Wt8jKQyDr5mJ31e9hrzsXC4FE5a/BK1MM63Yt0RO1F0jibfHzRUpKHd9
+         a8J57JT9Si2uCmhKYBO9vgvPpKe5KkfJ/EpF1+tzIutstKTef8oXIYUHKhouz1K7RE6c
+         NesKIq1tPG/07CgHkNwH8uvfcJiac5RfQ2Cu0W1G4IoiGQblXXMgAdL8WJeTkEQ9dSKa
+         lxQWHWvvCRfKoJQSQpSB8VKXPhXgG33jM9hOrOmj27wnAQgU6chI/Y0wZvb5w2IV9m1L
+         GA7r39k//iliLeCktWFLsV//9StbhU9vFWBZfz0VAOCAQvm47YZ3AAzmf5S3Cmj47flL
+         M76A==
+X-Gm-Message-State: AOAM532GRw9FP9TgVRCVnXytZiy/eIkXl+Uz0HbveIu0ANY6sOu7/786
+        p8UVDicWo5hV1omOwihVc/QJeHpotjOFO6BYD+hQ75+n+7wfrQ==
+X-Google-Smtp-Source: ABdhPJxAc0X2zqGzeJJiWFlWt2+wWn0EBoms4gt+17xOWU7i1j6IAlmlnsOc/LHH3GblELqpHLjOKcw6lh+H18wEVmA=
+X-Received: by 2002:aca:f157:: with SMTP id p84mr449577oih.98.1611076401734;
+ Tue, 19 Jan 2021 09:13:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-10-charvi077@gmail.com>
+ <8fd2b72c-d1d0-98be-e6a5-fb7dc699d5d5@xiplink.com>
+In-Reply-To: <8fd2b72c-d1d0-98be-e6a5-fb7dc699d5d5@xiplink.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Tue, 19 Jan 2021 22:43:10 +0530
+Message-ID: <CAPSFM5euGE_bUDPgdzx4-q5zYtkDymHdJP9rw-YkVVVzpOKWkw@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] doc/git-rebase: add documentation for fixup
+ [-C|-c] options
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Marc,
 
-Eric Sunshine writes:
-
-> On Sun, Jan 17, 2021 at 6:43 PM Rafael Silva
-> <rafaeloliveira.cs@gmail.com> wrote:
->> This patch series addresses some of these changes by teaching
->> `worktree list` to show "prunable" annotation, adding verbose mode and
->> extending the --porcelain format with prunable and locked annotation as
->> follow up from [1]. Additionally, it addresses one shortcoming for porcelain
->> format to escape any newline characters (LF or CRLF) for the lock reason
->> to prevent breaking the format that is mentioned in [4] and [1] during the
->> review cycle.
+On Tue, 19 Jan 2021 at 20:07, Marc Branchaud <marcnarc@xiplink.com> wrote:
+[...]
+> >   "pick" for the second and subsequent commits with "squash" or "fixup".
+> >   If the commits had different authors, the folded commit will be
+> >   attributed to the author of the first commit.  The suggested commit
+> > -message for the folded commit is the concatenation of the commit
+> > -messages of the first commit and of those with the "squash" command,
+> > -but omits the commit messages of commits with the "fixup" command.
+> > +message for the folded commit is created as follows:
+> > +
+> > + - It is made using the commit message of a commit with the "fixup -C"
+> > +   or "fixup -c" command. In the later case an editor is opened to edit
+> > +   the commit message.
 >
-> Thanks for continuing to work on this. I'm pleased to see these
-> enhancements coming together so nicely.
->
->> The patch series is organizes as:
->
-> The new organization is a nice improvement over v1.
->
-> As mentioned in my review of [5/6], there may be some value in
-> swapping [5/6] and [6/6] to make it easier for readers to digest the
-> changes, but it's not a hard requirement.
->
-> To avoid being mysterious, there's also a change in [5/6] which
-> probably belongs in [3/6], as explained in my review of [5/6].
->
-> My review of patch [4/6] suggests optionally splitting out a bug fix
-> into its own patch, but that's a very minor issue. Use your best
-> judgment whether or not to do so.
->
->> 4. The fourth patch adds the "locked" attribute for the porcelain format
->>    in order to make both default and --porcelain format consistent.
->
-> This patch does need a re-roll, and it's entirely my fault. In my
-> review of the previous round, I said that if the lock reason contained
-> special characters, we'd want to escape those characters and quote the
-> string, but then I gave you a code suggestion which did the opposite
-> of that. My [4/6] review goes into more detail.
+> s/later/latter/
 >
 
-I kindly disagree and I actually think is my fault :).
+Thanks, will fix it.
 
-> Aside from the one important fix in [4/6], and the possible minor
-> re-organizations suggested above, all my other review comments were
-> very minor and probably subjective, thus nothing to sweat over.
+> What happens if there is more than one "fixup -C/-c" command?
 >
-> Nicely done.
->
-> [1]: https://lore.kernel.org/git/CAPig+cSH6PKt8YvDJhMBvzvePYLqbf70uVV8TERoMj+kfxJRHQ@mail.gmail.com/
 
-Thank you for reviewing this series and all the helpful suggestions. I
-will send another revision taking all of them into account.
+Upon running interactive rebase, in todo list if we use for example sequence of
+commands like `fixup -C`, `fixup -C` , `fixup -C` then it will fixup
+content of all and
+for commit message it will replace with the commit message of end `fixup -C`
 
---
-Thanks
-Rafael
+Similarly, if we have sequence like `fixup -c`, `fixup -c`, `fixup -c`
+then also it will fixup
+up all the content and here it allow user to edit the message, so
+opens the editor once
+in this case and shows the commit msg of end `fixup -c` to edit and
+also contains
+commented commit messages of complete fixup chain. So, for any sequence of fixup
+chains `fixup -c` works as similar to the `squash` command.
+
+Hope it explains the working.
+
+Thanks and Regards,
+Charvi
