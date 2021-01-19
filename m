@@ -6,43 +6,42 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FBDAC433DB
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 15:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B4FC433E6
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 15:16:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5209E221E5
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 15:09:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E966923119
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 15:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729479AbhASPIY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 10:08:24 -0500
-Received: from mail.aerusso.net ([104.225.219.13]:58032 "EHLO mail.aerusso.net"
+        id S2389994AbhASPQd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 10:16:33 -0500
+Received: from mail.aerusso.net ([104.225.219.13]:58038 "EHLO mail.aerusso.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389660AbhASOxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 09:53:53 -0500
+        id S2387620AbhASPOz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 10:14:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aerusso.net; s=default;
-        t=1611067988;
+        t=1611069248;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=k7Vm7waBrV8cxFpIvdOd1xP2OZJfF0R3c1i7BFUoMRE=;
-        b=FisDtJ2rNnVg3pQBMoatuQNs36JliSvo6QQuDuSo9D2PZ7/rE1pDZpf83XkRqMVtbmr3E0
-        QWWCpn1PPRU91XEPtNBt4Fx8/Y8i+jgjVfQmdPkZfGjY4a1KIimzi/jQMQEiug5PpgwThg
-        R/MELJv7W1WvEzSF0B63KQub2zToJsi5oXNSYdRFbvpfzJh79N2OPBVv5xtsFRROxRfnfC
-        j/j5b6VlhgWpeVPE4z9v31E+dNhD/WX+hNjOGiq3awf0xOsGQwzuwxVdLqS8JfBclToG1B
-        zCY0kZUx1EUlbzR7B19k03X4cXXWzwHuaTATpeGgJT5JMo1bLMCFvbO6eymiUQ==
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
+        bh=0mRiSYJGhq5HJp/8LuUMYigc/KgOUGBv1wdglNyFag0=;
+        b=fD/oBy/q96OHHfNiqdCuWov6qaXWE/fylhkjbYFf/W6jXIZu7iiesEKYvFya3wUbotuJG/
+        kd9pURxyuhA1dPqoW7sIACJxBykUx7fYRKTYCbCA9HLZDf7Jj8FZ1iHhmQ9Ewh8JfONWEB
+        fEKfTPEtM8e/WNb3ct12MV5nCYWwwUl+yU4TZAa1q9cHOkBxfUrV71IMCQieg514JLI3+w
+        XoKERE4ojK2RjaDjcwyLwb/Bo+fP6aVqZE+JSGr1RFgSzGI0ULH5YvQQaF8HwrmCFt3pVx
+        EeVKnbC9LWN3Qm2LIBPdZhafsyLl0tXyxS0/hBd9dEqZmlTGFcSrF2sWMomoMQ==
+To:     Derrick Stolee <stolee@gmail.com>,
         Aiyee Bee <shane.880088.supw@gmail.com>, git@vger.kernel.org
 References: <C8MJ83LNOZ1Q.OCQKHOTGHKWF@localhost>
  <38ed4389-ba9f-743a-3fa3-5ffab12ef0a9@gmail.com>
  <992cd021-d6f6-dfe4-1918-45643aa85a61@aerusso.net>
- <xmqq7do9iuqj.fsf@gitster.c.googlers.com>
+ <5e5ece7c-3f34-caa1-db87-084b42c1cb62@gmail.com>
 From:   Antonio Russo <aerusso@aerusso.net>
 Subject: Re: DEVEL: Help with feature implementation
-Message-ID: <9fc9d752-06f4-e75d-1549-f257fd34e0c3@aerusso.net>
-Date:   Tue, 19 Jan 2021 07:52:37 -0700
+Message-ID: <0a83391e-3cf3-49a7-e558-ef726b9432fb@aerusso.net>
+Date:   Tue, 19 Jan 2021 08:13:46 -0700
 MIME-Version: 1.0
-In-Reply-To: <xmqq7do9iuqj.fsf@gitster.c.googlers.com>
+In-Reply-To: <5e5ece7c-3f34-caa1-db87-084b42c1cb62@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -50,48 +49,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/18/21 6:24 PM, Junio C Hamano wrote:
-> Antonio Russo <aerusso@aerusso.net> writes:
-> 
+
+
+On 1/18/21 7:39 PM, Derrick Stolee wrote:
+> On 1/18/2021 7:54 PM, Antonio Russo wrote:
+>> On 1/18/21 1:58 PM, Derrick Stolee wrote:
+>>> On 1/18/2021 2:31 PM, Aiyee Bee wrote:
+>>>> Hi Antonio and Derrick!
+>>>>
+>>>>> I think what you really want is --full-history --simplify-merges [1]. This
+>>>>> will show the merges that "fork" the history into parallel tracks where
+>>>>> at least two of them contain interesting commits.
+>>>>
+>>>> It doesn't look like the implementation of --simplify-merges helps much
+>>>> here. That makes its decision on basis of the parents of the commit, which is
+>>>> simple to do as it's information attached freely to each commit. I think the
+>>>> problem here would be figuring out, given any commit, how many of its children
+>>>> are "relevant" commits.
+>>>
+>>> You should definitely give this a try instead of assuming things about the
+>>> implementation. The algorithm uses a lot of "simplifying" that makes it look
+>>> like the decision is a local one. However, I assure you that is not the case.
+>>
 >> As a side note, would this list be willing to look at patches that remove
 >> the need to use revs->limited?  Adding new features would be much easier if
 >> we could restrict git to use streaming algorithms for these simplifications.
 > 
-> Do you mean you will write new implementations of operations like
-> "--simplify-merges", "--ancestory-path" and all its friends without
-> the need for the "limited" bit?
-
-Yes.
-
-> Willing to look at?  I do not know about others, but sure, it would
-> make be extremely excited.
+> I would _love_ to see patches that remove that bit (without modifying
+> the behavior).
 > 
-> You may be able to rewrite some other operations that implicitly
-> require the limited bit into an incremental implementation, but I am
-> skeptical that you can do "simplify-merges" in a streaming fashion
-> in such a way that we'd dig a bit but not all the way down before
-> making decisions on which commits should be included in the output
-> and how their parenthood relationship should appear etc.  I and
-> Linus tried independently and we did not get that far in our
-> attempts (note: there wasn't commit-graph back then).
+> Fair warning: I definitely spent a few weeks attempting to do any amount
+> of reducing the depth one needs to walk in order to compute the
+> --simplify-merges history, but a sufficiently-complicated branch history
+> makes it nearly impossible to gain a benefit.
 
-Yeah, it's a big task (but, it'd be useful work, rather than doing
-another rewrite of my feature to make it work when revs->limited).
-Each of the flags (simplify-merges, ancestry-path, etc.) is its own
-little sub-project.
+The goal I had in mind was just to remove the alternate code path, making
+new features easier to write (i.e., you don't have to do them twice).
 
-I haven't thought about any one flag specifically, but the fact that
-two complete code paths exist right now just seem like a nightmare.
-I'm not necessarily interested in making the implementations faster,
-but rather getting rid of the duplicated code path.
+>>> Please assemble a test case that demonstrates the behavior you want and how
+>>> that is different from what is present in --simplify-merges.
+>>
+>> I can't figure out how to get the behavior from --simplify-merges, which is
+>> described as
+>>
+>> 	Additional option to --full-history to remove some needless
+>> 	merges from  the resulting history, as there are no selected
+>> 	commits contributing to this merge.
+>>
+>> It seems that the desired behavior is to include commits which are parents to
+>> multiple branches.  Here is an example:
+> 
+> Thank you for these examples. They clearly show that I misread your
+> ask, because you're not looking for "merge commits" but instead you
+> are looking to show the "merge bases" as history is walking.
+> 
+> Sorry for misinterpreting your request, then doubling down on it.
 
-It's also a long-term goal, but it's nice to hear that people would
-be interested in it.
+No problem! (Just to be clear, the is a request of shane.880088.supw,
+not me.)
 
-> If you are talking about precomputed stuff like commit-graph, that
-> may change the equation, but we'd prefer to have the system work
-> without requiring these auxiliary data (in other words, it would be
-> fine to use them as optimization).
+> 
+>> test_commit() {
+>>  echo >> file
+>>  git add file
+>>  git commit "$@"
+>> }
+>>
+>> git init
+>> test_commit -m a
+>> test_commit -m b
+>> test_commit -m c
+>> git checkout -b fork
+>> test_commit -m y
+>> test_commit -m z
+>> git switch master
+>> test_commit -m d
+>> test_commit -m e
+>> test_commit -m f
+>>
+>> git log --graph --oneline master fork
+>>
+>> * 08029fd f
+>> * 55b09fe e
+>> * 83b7801 d
+>> | * efc204e z
+>> | * 316219e y
+>> |/  
+>> * 3594039 c
+>> * 4321987 b
+>> * bd44220 a
+>>
+>> git log --graph --oneline --full-history --simplify-merges master fork
+>>
+>> * 08029fd f
+>> * 55b09fe e
+>> * 83b7801 d
+>> | * efc204e z
+>> | * 316219e y
+>> |/  
+>> * 3594039 c
+>> * 4321987 b
+>> * bd44220 a
+>>
+>> git log --graph --oneline --simplify-by-decoration --full-history --simplify-merges master fork
+>>
+>> * 08029fd f
+>> | * efc204e z
+>> |/  
+>> * bd44220 a
+>>
+>> git log --graph --oneline --full-history --simplify-merges master fork
+>>
+>> * 08029fd f
+>> * 55b09fe e
+>> * 83b7801 d
+>> | * efc204e z
+>> | * 316219e y
+>> |/  
+>> * 3594039 c
+>> * 4321987 b
+>> * bd44220 a
+>>
+>> git --version
+>> git version 2.30.0
+>>
+>> I can't seem to get commit c, the crucial fork, to show up with simplifications with this mechanism.
+>> Am I missing something here?
+> 
+> In your example, you are not specifying a path. In this case, you are
+> really looking for "git merge-base master fork". You could also use
+> "git log --boundary master...fork" to show everything up to and
+> including 'c'.
+> 
+> Now, if you specify a pathspec, then 'git merge-base' isn't going to
+> help. That becomes a technically interesting problem.
+> 
+> The biggest reason that "git log" doesn't show this commit 'c' easily
+> is because...it's not really that important. When that commit was
+> created, it didn't "know" that it would be a common base of two
+> diverging branches. By surfacing the commit, we are very unlikely to
+> present the user with information that is helpful.
 
-No, I understand that generation numbers can only be used as an
-optimization (i.e., they might all be GENERATION_NUMBER_INFINITY).
+I think shane.880088.supw's point was that it's importance is, exactly as
+you point out, not locally computable, only arising because it is a merge
+base.
+
+[snip (but an interesting read)]
+
+> 
+> Thanks,
+> -Stolee
+>
+Antonio
