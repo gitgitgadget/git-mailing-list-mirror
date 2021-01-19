@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D036C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 457C6C433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:28:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55CF823104
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:27:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E09D22DD3
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727768AbhASX12 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 18:27:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
+        id S1728581AbhASX15 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 18:27:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728512AbhASXZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 18:25:21 -0500
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D27C061786
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:20 -0800 (PST)
-Received: by mail-qk1-x736.google.com with SMTP id z11so23702053qkj.7
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:20 -0800 (PST)
+        with ESMTP id S1728496AbhASXZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 18:25:27 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E90FBC061573
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:32 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id h21so1068509qvb.8
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BVJqOWVbGvk12BQKPDzrUPxc1mTw9s/UzkBZ9JlrWrI=;
-        b=MVRZNk+2gSfk1BH/2JUVqDpFbs4TyaPSCJiEHMTZ5y0VXFd0xhtIeJQJv8tB+6J6ri
-         JZ2rnaybrF4+9BvnUSjV31c6Eq2X0H+gQjCrPvw21b9GY5dBcpYwLiDTOKZeKQXHI6rn
-         OlmuD+aTddxVjM+aJ721P4uoPPX3pL6k8dQzGf9r/lESVNqT3+8mJCcfKquh6dAVFTyK
-         0J4adf+p1WroK1TwQmx6M+NaPz4VvVHprsjKukrrpaaboNJ9meJ0VgPHNGhm6PDJ6+FR
-         fPLVmm3B2lMIcFVRIQHcdyCk2RhR4k7s/FLGfEIkTLlG7+mJ/amFzVzPuC0NCjt3swuR
-         XrpA==
+        bh=vMg3iNL7GQNFeaafXKuZoT1WiGmc3XlfB+ZCi3J578I=;
+        b=sp23Gr4WekDK3K4IpdNfIfTF03niCE2REtcV0TkQBMxrt0rqtnvRmx/siBgObDGrM+
+         2g9lwp2AzM5nRhgq6dRdYqZfvaVnUwKPA3JuX0Nqr5ucquYIXsPbrqsQVSnRzvUlUuOx
+         ewKUqfIcAhrd89sOXpKVA8MFATPVxR6UU6AeBePVDhSv3xL3vSH8b/ACMk1EGPa8KOoI
+         uHeenaeN+8I9MNjVC4eVsPqCGJbBshvwsmJ4By/MrX+mNuJHcgAD8bCuwa8q+NmwpEzV
+         pS8fR8u16gl55HC5f5RIO9xutwjBNV1vx9HbgwsV4tLlQYY1J1dMoqn/fAB2LrZ+dkyU
+         SO2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BVJqOWVbGvk12BQKPDzrUPxc1mTw9s/UzkBZ9JlrWrI=;
-        b=rUvQ+Se7Ht5t94dHmtzUhqo2VkZnnjYLRoCUKH1+AeDqegLpEJkrxJG5gJLT7kL2U0
-         wpVEa2K8MRDSfrv2bawZHmsptU+km+lFI45zUKA1RMFwaXIVOXJtf6wllXUXg9KFO2uq
-         D21meRANejZ93lkdcx6x96UDQmqnhUUfwDCLktc+z/Rq1f2ntrp74gzB7t42JsevaEYv
-         8xYCzBbBlQBYoFiffFN2fx2dPdRNimIy+8/TDUm5X5L8yaLPCzIUjTBczCcMhX2PF6w8
-         cFuuCygQ6tIrPG6MshJ3A/u7JV/WAY8K1pzqwsj1CxLA+ALgkOsp3yOrMUQacytuoVxY
-         AlHA==
-X-Gm-Message-State: AOAM531DlU1SepZCgR7XXQs7QoSOcWFEs68C+IPCYEsY3uWriHLjvQJU
-        GJ8V6EupKRhSQioansi55KmKR6rC81KIWA==
-X-Google-Smtp-Source: ABdhPJy3PnXyVrf50RE08diOYc1fRfkGIe7B4Yd5I4jfBhJPs8pC/ILJObo91f5MX3/OuGHonHBjxQ==
-X-Received: by 2002:ae9:e10d:: with SMTP id g13mr6985823qkm.444.1611098659404;
-        Tue, 19 Jan 2021 15:24:19 -0800 (PST)
+        bh=vMg3iNL7GQNFeaafXKuZoT1WiGmc3XlfB+ZCi3J578I=;
+        b=d/T/U2crEjNCwqURSxksRQTyetFm7k4R4SH1bi4Y1l9pO+P7Psyr/zLvrteM4X9c6o
+         w7TZYv7rIX2rNxjDh57ndA0bnke/r07HTNW6BJ2/RMAzmOjm9zanMMSSvYuhXNy+Ld7F
+         gSS4tH6X5cb4Kk/4UPQ1YJCh6Ef8VatRILXyqMFGjom674bXSspSaUkE1nuDBWKDacw4
+         CKcYVKjzmBm6hcc9030kLsFaZksgkTfWy/DP9tlA+Hjl53Tab7iyP2UkCnp/E10Hy2JW
+         w49D+Z5eWzH4oXlORyfrKqYHVfm0spF62z2Sz2GenRY9vxVzRMIJ2jAc2LJksxaT+Yyf
+         PfHQ==
+X-Gm-Message-State: AOAM5304L/2c6ex/c4dromWoH61LwTxzWVpPRrBCoj/2J7WU1q2p6huL
+        AbyojLXgIX2QK9sZpsjtGtkJ6Uo60G2uug==
+X-Google-Smtp-Source: ABdhPJyoWAWZVVvcSHuUddBGLG1FU1ZeE50kNKej9qzqZ61EwHc4wXgR3pCfyjqwNrWVUDluvJG9EQ==
+X-Received: by 2002:a0c:9e5e:: with SMTP id z30mr6955904qve.56.1611098671892;
+        Tue, 19 Jan 2021 15:24:31 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id x134sm203047qka.1.2021.01.19.15.24.18
+        by smtp.gmail.com with ESMTPSA id k7sm89748qtg.65.2021.01.19.15.24.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 15:24:18 -0800 (PST)
-Date:   Tue, 19 Jan 2021 18:24:16 -0500
+        Tue, 19 Jan 2021 15:24:31 -0800 (PST)
+Date:   Tue, 19 Jan 2021 18:24:29 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 05/10] p5303: measure time to repack with keep
-Message-ID: <b3b2574d4d9d10f226b52d81fe0e6bf1f761504e.1611098616.git.me@ttaylorr.com>
+Subject: [PATCH 08/10] builtin/pack-objects.c: teach '--keep-pack-stdin'
+Message-ID: <6547c082f8f2b696f8711295bdeb4a24a09dffe5.1611098616.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,76 +70,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Add a shortcut to specify '--keep-pack=<pack-name>' arguments over
+stdin, in case a caller wishes to indicate more kept packs than the
+argument limit will allow.
 
-This is the same as the regular repack test, except that we mark the
-single base pack as "kept" and use --assume-kept-packs-closed. The
-theory is that this should be faster than the normal repack, because
-we'll have fewer objects to traverse and process.
+Passing this option overrides any other option to 'git pack-objects'
+that takes input over stdin. For example, '--revs' still forces a
+reachability traversal, but will not accept any revision arguments over
+stdin. Use of '--keep-pack-stdin' within Git is limited to one caller
+(added in a subsequent patch) which does not pass any other input over
+stdin.
 
-And indeed, it is much faster in the single-pack case (all timings
-measured on the kernel):
+No new tests are added here, since a caller from 'git repack' will
+exercise these options in a subsequent patch.
 
-  5303.5: repack (1)                 57.29(54.88+10.39)
-  5303.6: repack with keep (1)       1.25(1.19+0.05)
-
-and in the 50-pack case:
-
-  5303.10: repack (50)               89.71(132.78+6.14)
-  5303.11: repack with keep (50)     6.92(26.93+0.58)
-
-but our improvements vanish as we approach 1000 packs.
-
-  5303.15: repack (1000)             217.14(493.76+15.29)
-  5303.16: repack with keep (1000)   209.46(387.83+8.42)
-
-That's because the code paths around handling .keep files are known to
-scale badly; they look in every single pack file to find each object.
-Our solution to that was to notice that most repos don't have keep
-files, and to make that case a fast path. But as soon as you add a
-single .keep, that part of pack-objects slows down again (even if we
-have fewer objects total to look at).
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/perf/p5303-many-packs.sh | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ Documentation/git-pack-objects.txt |  8 ++++++++
+ builtin/pack-objects.c             | 23 ++++++++++++++++++++---
+ 2 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
-index 277d22ec4b..85b077b72b 100755
---- a/t/perf/p5303-many-packs.sh
-+++ b/t/perf/p5303-many-packs.sh
-@@ -27,8 +27,11 @@ repack_into_n () {
- 	>pushes &&
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index cbe08e7415..45ecc4e9e5 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -135,6 +135,14 @@ depth is 4095.
+ 	leading directory (e.g. `pack-123.pack`). The option could be
+ 	specified multiple times to keep multiple packs.
  
- 	# create base packfile
--	head -n 1 pushes |
--	git pack-objects --delta-base-offset --revs staging/pack &&
-+	base_pack=$(
-+		head -n 1 pushes |
-+		git pack-objects --delta-base-offset --revs staging/pack
-+	) &&
-+	test_export base_pack &&
- 
- 	# and then incrementals between each pair of commits
- 	last= &&
-@@ -87,6 +90,15 @@ do
- 		  --reflog --indexed-objects --delta-base-offset \
- 		  --stdout </dev/null >/dev/null
- 	'
++--keep-pack-stdin::
++	Take a list of line-delimited `<pack-name>` arguments, treating
++	them as if they were each passed as `--keep-pack=<pack-name>`.
++	Useful for when many packs are being kept to avoid argument
++	length limitations. Requires that `--revs` be passed or implied,
++	but does not allow the caller to pass additional traversal
++	arguments over standard input.
 +
-+	test_perf "repack with keep ($nr_packs)" '
-+		git pack-objects --keep-true-parents \
-+		  --honor-pack-keep --assume-kept-packs-closed \
-+		  --keep-pack=pack-$base_pack.pack \
-+		  --non-empty --all \
-+		  --reflog --indexed-objects --delta-base-offset \
-+		  --stdout </dev/null >/dev/null
-+	'
- done
+ --assume-kept-packs-closed::
+ 	This flag causes `git rev-list` to halt the object traversal
+ 	when it encounters an object found in a kept pack. This is
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index f2c7a1e35b..f528a07d78 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3343,7 +3343,7 @@ static void record_recent_commit(struct commit *commit, void *data)
+ 	oid_array_append(&recent_objects, &commit->object.oid);
+ }
  
- # Measure pack loading with 10,000 packs.
+-static void get_object_list(int ac, const char **av)
++static void get_object_list(int ac, const char **av, int read_from_stdin)
+ {
+ 	struct rev_info revs;
+ 	struct setup_revision_opt s_r_opt = {
+@@ -3363,7 +3363,7 @@ static void get_object_list(int ac, const char **av)
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
+ 
+-	while (fgets(line, sizeof(line), stdin) != NULL) {
++	while (read_from_stdin && fgets(line, sizeof(line), stdin) != NULL) {
+ 		int len = strlen(line);
+ 		if (len && line[len - 1] == '\n')
+ 			line[--len] = 0;
+@@ -3487,6 +3487,15 @@ static int option_parse_unpack_unreachable(const struct option *opt,
+ 	return 0;
+ }
+ 
++static void collect_kept_packs(struct string_list *keep_pack_list)
++{
++	struct strbuf buf = STRBUF_INIT;
++	while (strbuf_getline(&buf, stdin) != EOF)
++		string_list_append(keep_pack_list,
++				   strbuf_detach(&buf, NULL));
++	strbuf_release(&buf);
++}
++
+ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ {
+ 	int use_internal_rev_list = 0;
+@@ -3496,6 +3505,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
+ 	int rev_list_index = 0;
+ 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
++	int keep_pack_stdin = 0;
+ 	struct option pack_objects_options[] = {
+ 		OPT_SET_INT('q', "quiet", &progress,
+ 			    N_("do not show progress meter"), 0),
+@@ -3568,6 +3578,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 			 N_("assume the union of kept packs is closed under reachability")),
+ 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
+ 				N_("ignore this pack")),
++		OPT_BOOL(0, "keep-pack-stdin", &keep_pack_stdin,
++			 N_("read the list of kept packs from stdin")),
+ 		OPT_INTEGER(0, "compression", &pack_compression_level,
+ 			    N_("pack compression level")),
+ 		OPT_SET_INT(0, "keep-true-parents", &grafts_replace_parents,
+@@ -3728,6 +3740,11 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (progress && all_progress_implied)
+ 		progress = 2;
+ 
++	if (keep_pack_stdin) {
++		if (!use_internal_rev_list)
++			die(_("--keep-pack-stdin requires --revs"));
++		collect_kept_packs(&keep_pack_list);
++	}
+ 	add_extra_kept_packs(&keep_pack_list);
+ 	if (ignore_packed_keep_on_disk) {
+ 		struct packed_git *p;
+@@ -3769,7 +3786,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (!use_internal_rev_list)
+ 		read_object_list_from_stdin();
+ 	else {
+-		get_object_list(rp.nr, rp.v);
++		get_object_list(rp.nr, rp.v, !keep_pack_stdin);
+ 		strvec_clear(&rp);
+ 	}
+ 	cleanup_preferred_base();
 -- 
 2.30.0.138.g6d7191ea01
 
