@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 671BCC433E6
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D036C433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F3692310C
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:26:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55CF823104
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729505AbhASX0O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 18:26:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55758 "EHLO
+        id S1727768AbhASX12 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 18:27:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728581AbhASXZV (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1728512AbhASXZV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 19 Jan 2021 18:25:21 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F5FC061793
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:24 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id f26so23712790qka.0
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:24 -0800 (PST)
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D27C061786
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:20 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id z11so23702053qkj.7
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=aPDrjFjNEwfv2F37kqrg1fAr9zjOV3xwkzP+vCH7HBo=;
-        b=EQKctxDZRDbIkvh1WiXZdZgn8dskO+eARDk3H8FL8GIrhzDMsINOB37kCWsqleT+Sv
-         axsB3NDLxogLQkpbv3JUca8k+tH/xnWbN/JptVCW4ZTcStlLCnDxHv8xmoghVvSLLXBV
-         Z4SC4NtnNH6IqFBvCG4potWSOPCVNmU7WnEIPQtA4eERQFNnczh4yuak7AT79JpcpSxo
-         TiAFjW3Y1GNlvjBwUIbdyu8wKLIeORcQtz4T9NggF08yFTb1OvdsfAQw0f0sv07pzDJa
-         qSmK1H/lLTNcdpLDSeLXpstFfXUuyI82KZPBcwj8zFWLO/E0rjan51/zFbvfrUckMeio
-         OX/g==
+        bh=BVJqOWVbGvk12BQKPDzrUPxc1mTw9s/UzkBZ9JlrWrI=;
+        b=MVRZNk+2gSfk1BH/2JUVqDpFbs4TyaPSCJiEHMTZ5y0VXFd0xhtIeJQJv8tB+6J6ri
+         JZ2rnaybrF4+9BvnUSjV31c6Eq2X0H+gQjCrPvw21b9GY5dBcpYwLiDTOKZeKQXHI6rn
+         OlmuD+aTddxVjM+aJ721P4uoPPX3pL6k8dQzGf9r/lESVNqT3+8mJCcfKquh6dAVFTyK
+         0J4adf+p1WroK1TwQmx6M+NaPz4VvVHprsjKukrrpaaboNJ9meJ0VgPHNGhm6PDJ6+FR
+         fPLVmm3B2lMIcFVRIQHcdyCk2RhR4k7s/FLGfEIkTLlG7+mJ/amFzVzPuC0NCjt3swuR
+         XrpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=aPDrjFjNEwfv2F37kqrg1fAr9zjOV3xwkzP+vCH7HBo=;
-        b=fdMWd9ee40DFsLF5uijnqC7OiXmhPiWN1Q6fXaEcWjZNAR/SnsJ0X32jcK128D+EWA
-         wXoPMuDIorgvzQiB4l4ZoQiXIvXCGlijel/R4sz01lPmQPzbXl0IrsyLXA4hrfPDcw4C
-         pm/W2eQfLh/YX5ltkeIWsr9bv+n3onzCjk2Lc0x9g1UheFL1i9KcN8xtOm9nHGTtI2o3
-         CO7B5CSF22NjbsQhX2BoirzvLzshCl0A/lRtSOe+Z1uR66bC8GdwynzmG6cOgx501ShN
-         68KHxezO2s2iYnUxZhoYPHxiZ8giKcsvnpkmh69FGiJF8kOdoG9m/LPSidDsOBzu9m6t
-         aN2w==
-X-Gm-Message-State: AOAM531CEG7vKDpaiU6hnseoTcrouC/J6FZxg+vc6PshZ4FjNu256Tnz
-        /Et1T/uHi7rf97Onb1E4XCofmpmb7n2xZQ==
-X-Google-Smtp-Source: ABdhPJxYmTnSjOgkRSAXKykPCiP6ZSTzs+iPOWEdFFz73fAn7Xg1XFlT7BSSi3qyhwSEGM965PGtBw==
-X-Received: by 2002:a05:620a:788:: with SMTP id 8mr6892850qka.224.1611098663778;
-        Tue, 19 Jan 2021 15:24:23 -0800 (PST)
+        bh=BVJqOWVbGvk12BQKPDzrUPxc1mTw9s/UzkBZ9JlrWrI=;
+        b=rUvQ+Se7Ht5t94dHmtzUhqo2VkZnnjYLRoCUKH1+AeDqegLpEJkrxJG5gJLT7kL2U0
+         wpVEa2K8MRDSfrv2bawZHmsptU+km+lFI45zUKA1RMFwaXIVOXJtf6wllXUXg9KFO2uq
+         D21meRANejZ93lkdcx6x96UDQmqnhUUfwDCLktc+z/Rq1f2ntrp74gzB7t42JsevaEYv
+         8xYCzBbBlQBYoFiffFN2fx2dPdRNimIy+8/TDUm5X5L8yaLPCzIUjTBczCcMhX2PF6w8
+         cFuuCygQ6tIrPG6MshJ3A/u7JV/WAY8K1pzqwsj1CxLA+ALgkOsp3yOrMUQacytuoVxY
+         AlHA==
+X-Gm-Message-State: AOAM531DlU1SepZCgR7XXQs7QoSOcWFEs68C+IPCYEsY3uWriHLjvQJU
+        GJ8V6EupKRhSQioansi55KmKR6rC81KIWA==
+X-Google-Smtp-Source: ABdhPJy3PnXyVrf50RE08diOYc1fRfkGIe7B4Yd5I4jfBhJPs8pC/ILJObo91f5MX3/OuGHonHBjxQ==
+X-Received: by 2002:ae9:e10d:: with SMTP id g13mr6985823qkm.444.1611098659404;
+        Tue, 19 Jan 2021 15:24:19 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id w42sm115717qtw.22.2021.01.19.15.24.23
+        by smtp.gmail.com with ESMTPSA id x134sm203047qka.1.2021.01.19.15.24.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 15:24:23 -0800 (PST)
-Date:   Tue, 19 Jan 2021 18:24:21 -0500
+        Tue, 19 Jan 2021 15:24:18 -0800 (PST)
+Date:   Tue, 19 Jan 2021 18:24:16 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 06/10] pack-objects: rewrite honor-pack-keep logic
-Message-ID: <4dd5076fcc94fca906b1e5471f08288b4d225cab.1611098616.git.me@ttaylorr.com>
+Subject: [PATCH 05/10] p5303: measure time to repack with keep
+Message-ID: <b3b2574d4d9d10f226b52d81fe0e6bf1f761504e.1611098616.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,207 +72,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-Now that we have find_kept_pack_entry(), we don't have to manually keep
-hunting through every pack to find a possible "kept" duplicate of the
-object. This should be faster, assuming only a portion of your total
-packs are actually kept.
+This is the same as the regular repack test, except that we mark the
+single base pack as "kept" and use --assume-kept-packs-closed. The
+theory is that this should be faster than the normal repack, because
+we'll have fewer objects to traverse and process.
 
-Note that we have to re-order the logic a bit here; we can deal with the
-"kept" situation completely, and then just fall back to the "--local"
-question. It might be worth having a similar optimized function to look
-at only local packs.
+And indeed, it is much faster in the single-pack case (all timings
+measured on the kernel):
 
-Here are the results from p5303 (measurements taken on git.git):
+  5303.5: repack (1)                 57.29(54.88+10.39)
+  5303.6: repack with keep (1)       1.25(1.19+0.05)
 
-  Test                               HEAD^                  HEAD
-  ------------------------------------------------------------------------------------
-  5303.5: repack (1)                 57.29(54.88+10.39)     56.87(54.63+10.48) -0.7%
-  5303.6: repack with keep (1)       1.25(1.19+0.05)        1.26(1.19+0.06) +0.8%
-  5303.10: repack (50)               89.71(132.78+6.14)     89.35(132.42+6.25) -0.4%
-  5303.11: repack with keep (50)     6.92(26.93+0.58)       6.73(26.61+0.59) -2.7%
-  5303.15: repack (1000)             217.14(493.76+15.29)   217.25(494.38+15.24) +0.1%
-  5303.16: repack with keep (1000)   209.46(387.83+8.42)    133.12(311.80+8.44) -36.4%
+and in the 50-pack case:
 
-So our case with many packs and a .keep is finally now faster than the
-non-keep case (because it gets the speed benefit of looking at fewer
-objects, but not as big a penalty for looking at many packs).
+  5303.10: repack (50)               89.71(132.78+6.14)
+  5303.11: repack with keep (50)     6.92(26.93+0.58)
+
+but our improvements vanish as we approach 1000 packs.
+
+  5303.15: repack (1000)             217.14(493.76+15.29)
+  5303.16: repack with keep (1000)   209.46(387.83+8.42)
+
+That's because the code paths around handling .keep files are known to
+scale badly; they look in every single pack file to find each object.
+Our solution to that was to notice that most repos don't have keep
+files, and to make that case a fast path. But as soon as you add a
+single .keep, that part of pack-objects slows down again (even if we
+have fewer objects total to look at).
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c | 125 ++++++++++++++++++++++++-----------------
- 1 file changed, 73 insertions(+), 52 deletions(-)
+ t/perf/p5303-many-packs.sh | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index a5dcd66f52..c84642df98 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1178,7 +1178,8 @@ static int have_duplicate_entry(const struct object_id *oid,
- 	return 1;
- }
+diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+index 277d22ec4b..85b077b72b 100755
+--- a/t/perf/p5303-many-packs.sh
++++ b/t/perf/p5303-many-packs.sh
+@@ -27,8 +27,11 @@ repack_into_n () {
+ 	>pushes &&
  
--static int want_found_object(int exclude, struct packed_git *p)
-+static int want_found_object(const struct object_id *oid, int exclude,
-+			     struct packed_git *p)
- {
- 	if (exclude)
- 		return 1;
-@@ -1199,22 +1200,73 @@ static int want_found_object(int exclude, struct packed_git *p)
- 	 * Otherwise, we signal "-1" at the end to tell the caller that we do
- 	 * not know either way, and it needs to check more packs.
- 	 */
--	if (!ignore_packed_keep_on_disk &&
--	    !ignore_packed_keep_in_core &&
--	    (!local || !have_non_local_packs))
-+
-+	/*
-+	 * Handle .keep first, as we have a fast(er) path there.
-+	 */
-+	if (ignore_packed_keep_on_disk || ignore_packed_keep_in_core) {
-+		/*
-+		 * Set the flags for the kept-pack cache to be the ones we want
-+		 * to ignore.
-+		 *
-+		 * That is, if we are ignoring objects in on-disk keep packs,
-+		 * then we want to search through the on-disk keep and ignore
-+		 * the in-core ones.
-+		 */
-+		unsigned flags = 0;
-+		if (ignore_packed_keep_on_disk)
-+			flags |= ON_DISK_KEEP_PACKS;
-+		if (ignore_packed_keep_in_core)
-+			flags |= IN_CORE_KEEP_PACKS;
-+
-+		if (ignore_packed_keep_on_disk && p->pack_keep)
-+			return 0;
-+		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
-+			return 0;
-+		if (has_object_kept_pack(oid, flags))
-+			return 0;
-+	}
-+
-+	/*
-+	 * At this point we know definitively that either we don't care about
-+	 * keep-packs, or the object is not in one. Keep checking other
-+	 * conditions...
-+	 */
-+
-+	if (!local || !have_non_local_packs)
- 		return 1;
--
- 	if (local && !p->pack_local)
- 		return 0;
--	if (p->pack_local &&
--	    ((ignore_packed_keep_on_disk && p->pack_keep) ||
--	     (ignore_packed_keep_in_core && p->pack_keep_in_core)))
--		return 0;
+ 	# create base packfile
+-	head -n 1 pushes |
+-	git pack-objects --delta-base-offset --revs staging/pack &&
++	base_pack=$(
++		head -n 1 pushes |
++		git pack-objects --delta-base-offset --revs staging/pack
++	) &&
++	test_export base_pack &&
  
- 	/* we don't know yet; keep looking for more packs */
- 	return -1;
- }
+ 	# and then incrementals between each pair of commits
+ 	last= &&
+@@ -87,6 +90,15 @@ do
+ 		  --reflog --indexed-objects --delta-base-offset \
+ 		  --stdout </dev/null >/dev/null
+ 	'
++
++	test_perf "repack with keep ($nr_packs)" '
++		git pack-objects --keep-true-parents \
++		  --honor-pack-keep --assume-kept-packs-closed \
++		  --keep-pack=pack-$base_pack.pack \
++		  --non-empty --all \
++		  --reflog --indexed-objects --delta-base-offset \
++		  --stdout </dev/null >/dev/null
++	'
+ done
  
-+static int want_object_in_pack_one(struct packed_git *p,
-+				   const struct object_id *oid,
-+				   int exclude,
-+				   struct packed_git **found_pack,
-+				   off_t *found_offset)
-+{
-+	off_t offset;
-+
-+	if (p == *found_pack)
-+		offset = *found_offset;
-+	else
-+		offset = find_pack_entry_one(oid->hash, p);
-+
-+	if (offset) {
-+		if (!*found_pack) {
-+			if (!is_pack_valid(p))
-+				return -1;
-+			*found_offset = offset;
-+			*found_pack = p;
-+		}
-+		return want_found_object(oid, exclude, p);
-+	}
-+	return -1;
-+}
-+
- /*
-  * Check whether we want the object in the pack (e.g., we do not want
-  * objects found in non-local stores if the "--local" option was used).
-@@ -1242,7 +1294,7 @@ static int want_object_in_pack(const struct object_id *oid,
- 	 * are present we will determine the answer right now.
- 	 */
- 	if (*found_pack) {
--		want = want_found_object(exclude, *found_pack);
-+		want = want_found_object(oid, exclude, *found_pack);
- 		if (want != -1)
- 			return want;
- 	}
-@@ -1250,53 +1302,22 @@ static int want_object_in_pack(const struct object_id *oid,
- 	for (m = get_multi_pack_index(the_repository); m; m = m->next) {
- 		struct pack_entry e;
- 		if (fill_midx_entry(the_repository, oid, &e, m)) {
--			struct packed_git *p = e.p;
--			off_t offset;
--
--			if (p == *found_pack)
--				offset = *found_offset;
--			else
--				offset = find_pack_entry_one(oid->hash, p);
--
--			if (offset) {
--				if (!*found_pack) {
--					if (!is_pack_valid(p))
--						continue;
--					*found_offset = offset;
--					*found_pack = p;
--				}
--				want = want_found_object(exclude, p);
--				if (want != -1)
--					return want;
--			}
--		}
--	}
--
--	list_for_each(pos, get_packed_git_mru(the_repository)) {
--		struct packed_git *p = list_entry(pos, struct packed_git, mru);
--		off_t offset;
--
--		if (p == *found_pack)
--			offset = *found_offset;
--		else
--			offset = find_pack_entry_one(oid->hash, p);
--
--		if (offset) {
--			if (!*found_pack) {
--				if (!is_pack_valid(p))
--					continue;
--				*found_offset = offset;
--				*found_pack = p;
--			}
--			want = want_found_object(exclude, p);
--			if (!exclude && want > 0)
--				list_move(&p->mru,
--					  get_packed_git_mru(the_repository));
-+			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset);
- 			if (want != -1)
- 				return want;
- 		}
- 	}
- 
-+	list_for_each(pos, get_packed_git_mru(the_repository)) {
-+		struct packed_git *p = list_entry(pos, struct packed_git, mru);
-+		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset);
-+		if (!exclude && want > 0)
-+			list_move(&p->mru,
-+				  get_packed_git_mru(the_repository));
-+		if (want != -1)
-+			return want;
-+	}
-+
- 	if (uri_protocols.nr) {
- 		struct configured_exclusion *ex =
- 			oidmap_get(&configured_exclusions, oid);
+ # Measure pack loading with 10,000 packs.
 -- 
 2.30.0.138.g6d7191ea01
 
