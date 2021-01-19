@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DA0CC433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77908C433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB55A23131
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3A38523131
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731320AbhASHrT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 02:47:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50452 "EHLO
+        id S1730826AbhASHsE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 02:48:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730611AbhASHpP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 02:45:15 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED561C0613CF
-        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:34 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id l23so11628036pjg.1
-        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:34 -0800 (PST)
+        with ESMTP id S1730657AbhASHpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 02:45:20 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73101C0613D3
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:40 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id n7so12499571pgg.2
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Pa7GN651VEy240z9LxKSf3B8sUbdQIIjGYh0exLbalA=;
-        b=NF1NxqnD8UnlaKbVcw3mbfQD5O/K+jnnayoWFLbITpmn3XiCCFmzIy0KaEPThJTGsj
-         z2iOk8c1yep8gfp9gQVWAOKY8o/7TFoIfgOcnJEN0Ug5Al30m5aTJtH55KptTkIPzo4n
-         lVBwAnAZhmI3JyptE8ovLJiebdKPvuiezoUZKODW5agwQO0KUpkoJiPjXSqfkOrpRxFC
-         NxiGoc0gaX63u0nvPhSV2OvMmQzNKQTkGxIi5edNa4tynn5o0nFvbY/RQHzRLYRlvOBU
-         n5YPldKPomk4NjxEEeHpinxh0/w+FjrIKTK4Je7sV6j6LLoYvRJldmtdgWdCNwnQJLmo
-         BL4A==
+        bh=6naTkIZpRW98nvH3qAFSueVtXncK2odSznG5IWp1L2g=;
+        b=jVqyoTPu4oUvdVDTdTpCfPnDI+qn9KLmuziJTtKh/nsOczpuYvBHE6YR6GYpjKbbGd
+         FkFiJocLsf6ZkW6q6gnPQC6FWeLVsFsN5hZORaGO7maAbsIkgXUQJyhiOy3u9DRvuksk
+         2mkYRLFovNkK/rT/mmiyWYKlb/sM2O1CTcsvER6EhfOskPPZEpNaX2IT4s6west02nr9
+         m8h9hcjJ4KiTogdxTFylnxvyEHR+UzU+FSR6h6pmFupHvfWyuissex0Fo+EhNC6GShc9
+         eoBT8RFmzkMB1NCHx+f1bdibTHM+GxSfWb/suVpaoAtPv+YUdSf9Ht3qhDRJ4cwKyT91
+         R/dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pa7GN651VEy240z9LxKSf3B8sUbdQIIjGYh0exLbalA=;
-        b=gLYcmNZb6mSrA/OplmztCf0ZS/JARAP1cSwKIskBQ248joZ4d+LoWYuFGJoo0AjF4s
-         Hsq/rMeX/qEMjYcWcXV7rnWXfPRRC/U3zu2aLg1H6bSZprKCzS37jYu7mbpa9LKu/B0C
-         9TABQaAPOZBhgAY7qERPKkZ+RhnEuuOKHWRzJaJXIi54gyES0CKH9+ns90cjOz3Gim0Y
-         2+OT1mUknBP4CVBfoSOEOvc1a0V8twEi67LZ+ooE1m2fJUf9+n8NqvSz5l2hTcGJJpoB
-         BE9jsbAQLDKn6RNO7Uhg5cW3izMktsSGZoCGcxEFMKXDeCBpQbNjjlz9TyzdWsrMuYVq
-         5vlA==
-X-Gm-Message-State: AOAM531lILax7KU9+N1ggllJM2GY7ryIWyQ1GckYa+sTsDXLXI57mxmr
-        pA1rJuEFvkO8Bg76uIZwMXAwDjAATJ1tjQ==
-X-Google-Smtp-Source: ABdhPJxIrDdAah39kbd3sW1tqRqxysLJSDOfiH3AhQXyrREsW8VnXuy/EqjIzpk4Nt5jFBsINp6MUA==
-X-Received: by 2002:a17:902:b692:b029:de:43aa:6537 with SMTP id c18-20020a170902b692b02900de43aa6537mr3424592pls.65.1611042274243;
-        Mon, 18 Jan 2021 23:44:34 -0800 (PST)
+        bh=6naTkIZpRW98nvH3qAFSueVtXncK2odSznG5IWp1L2g=;
+        b=kaB1hG4pIm4XEvOg8FOqmIrwKkHgn7ABmDOufg78sumyU8ZhsqvtYKHtn41TbMPtzc
+         8MReM09N4+53WbHSd7gvCsNXc7sqLr3wWl0NDjC/btLw+dq+7bqNexmo1aGGcK9lBhvR
+         HJHvu7DMQkD8GnzSchRcgcOoG24WoUzFrdemBkBw2wc2pvNCgN20W97exLwJIajdrVLs
+         8dCD5yEnKFzA6BtYPY2c6qUPzDZ7zqJO6OqjJVmQanfHwp6D+kwvn9B39rb7hGSx1kSC
+         6UKWY0gnmrlhuchG0vR5jaNJhZPMW9hPko+HmxI5IOcXbxLvVOIKKoB47ZLs+JEhrd5A
+         RvfQ==
+X-Gm-Message-State: AOAM5328OajuS/Uy1SJBKVGGXLBdab2cwrj2oOuhRfcy3Ir9gOiLdAPi
+        Ccm2Pitvlxa1zrBgkg7AfnJWs8bHk3aA9A==
+X-Google-Smtp-Source: ABdhPJwVRe4WgUs72IP5zr1aWwk2YDA4LbRpyudX8RwqHOWHphggfyN/mk4JULy9sifxhOFVh8Napw==
+X-Received: by 2002:a05:6a00:acc:b029:198:2ba6:c0f6 with SMTP id c12-20020a056a000accb02901982ba6c0f6mr3035955pfl.53.1611042279764;
+        Mon, 18 Jan 2021 23:44:39 -0800 (PST)
 Received: from localhost.localdomain ([2409:4050:2d0e:58a:55d6:8648:6f7a:9f93])
-        by smtp.googlemail.com with ESMTPSA id x1sm19201525pgj.37.2021.01.18.23.44.30
+        by smtp.googlemail.com with ESMTPSA id x1sm19201525pgj.37.2021.01.18.23.44.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jan 2021 23:44:33 -0800 (PST)
+        Mon, 18 Jan 2021 23:44:39 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     chriscool@tuxfamily.org, phillip.wood@dunelm.org.uk,
         me@ttaylorr.com, gitster@pobox.com,
         Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v2 7/9] t3437: test script for fixup [-C|-c] options in interactive rebase
-Date:   Tue, 19 Jan 2021 13:11:02 +0530
-Message-Id: <20210119074102.21598-8-charvi077@gmail.com>
+Subject: [PATCH v2 8/9] rebase -i: teach --autosquash to work with amend!
+Date:   Tue, 19 Jan 2021 13:11:03 +0530
+Message-Id: <20210119074102.21598-9-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210108092345.2178-1-charvi077@gmail.com>
 References: <20210108092345.2178-1-charvi077@gmail.com>
@@ -73,299 +73,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+If the commit subject starts with "amend!" then rearrange it like a
+"fixup!" commit and replace `pick` command with `fixup -C` command,
+which is used to fixup up the content if any and replaces the original
+commit message with amend! commit's message.
+
+Original-patch-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- t/lib-rebase.sh                 |   4 +
- t/t3437-rebase-fixup-options.sh | 190 ++++++++++++++++++++++++++++++++
- t/t3437/expected-squash-message |  51 +++++++++
- 3 files changed, 245 insertions(+)
- create mode 100755 t/t3437-rebase-fixup-options.sh
- create mode 100644 t/t3437/expected-squash-message
+ sequencer.c                     | 23 ++++++++++++++++-------
+ t/t3437-rebase-fixup-options.sh | 12 ++++++++++++
+ 2 files changed, 28 insertions(+), 7 deletions(-)
 
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index b72c051f47..e10e38060b 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -4,6 +4,7 @@
- #
- # - override the commit message with $FAKE_COMMIT_MESSAGE
- # - amend the commit message with $FAKE_COMMIT_AMEND
-+# - copy the original commit message to a file with $FAKE_MESSAGE_COPY
- # - check that non-commit messages have a certain line count with $EXPECT_COUNT
- # - check the commit count in the commit message header with $EXPECT_HEADER_COUNT
- # - rewrite a rebase -i script as directed by $FAKE_LINES.
-@@ -33,6 +34,7 @@ set_fake_editor () {
- 			exit
- 		test -z "$FAKE_COMMIT_MESSAGE" || echo "$FAKE_COMMIT_MESSAGE" > "$1"
- 		test -z "$FAKE_COMMIT_AMEND" || echo "$FAKE_COMMIT_AMEND" >> "$1"
-+		test -z "$FAKE_MESSAGE_COPY" || cat "$1" >"$FAKE_MESSAGE_COPY"
- 		exit
- 		;;
- 	esac
-@@ -51,6 +53,8 @@ set_fake_editor () {
- 			action="$line";;
- 		exec_*|x_*|break|b)
- 			echo "$line" | sed 's/_/ /g' >> "$1";;
-+		merge_*|fixup_*)
-+			action=$(echo "$line" | sed 's/_/ /g');;
- 		"#")
- 			echo '# comment' >> "$1";;
- 		">")
+diff --git a/sequencer.c b/sequencer.c
+index 3c0cd487f9..2a3f8d2fae 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5664,6 +5664,12 @@ static int subject2item_cmp(const void *fndata,
+ 
+ define_commit_slab(commit_todo_item, struct todo_item *);
+ 
++static inline int skip_fixup_amend_squash(const char *subject, const char **p) {
++	return skip_prefix(subject, "fixup! ", p) ||
++	       skip_prefix(subject, "amend! ", p) ||
++	       skip_prefix(subject, "squash! ", p);
++}
++
+ /*
+  * Rearrange the todo list that has both "pick commit-id msg" and "pick
+  * commit-id fixup!/squash! msg" in it so that the latter is put immediately
+@@ -5722,15 +5728,13 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 		format_subject(&buf, subject, " ");
+ 		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
+ 		unuse_commit_buffer(item->commit, commit_buffer);
+-		if ((skip_prefix(subject, "fixup! ", &p) ||
+-		     skip_prefix(subject, "squash! ", &p))) {
++		if (skip_fixup_amend_squash(subject, &p)) {
+ 			struct commit *commit2;
+ 
+ 			for (;;) {
+ 				while (isspace(*p))
+ 					p++;
+-				if (!skip_prefix(p, "fixup! ", &p) &&
+-				    !skip_prefix(p, "squash! ", &p))
++				if (!skip_fixup_amend_squash(p, &p))
+ 					break;
+ 			}
+ 
+@@ -5760,9 +5764,14 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 		}
+ 		if (i2 >= 0) {
+ 			rearranged = 1;
+-			todo_list->items[i].command =
+-				starts_with(subject, "fixup!") ?
+-				TODO_FIXUP : TODO_SQUASH;
++			if (starts_with(subject, "fixup!")) {
++				todo_list->items[i].command = TODO_FIXUP;
++			} else if (starts_with(subject, "amend!")) {
++				todo_list->items[i].command = TODO_FIXUP;
++				todo_list->items[i].flags = TODO_REPLACE_FIXUP_MSG;
++			} else {
++				todo_list->items[i].command = TODO_SQUASH;
++			}
+ 			if (tail[i2] < 0) {
+ 				next[i] = next[i2];
+ 				next[i2] = i;
 diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
-new file mode 100755
-index 0000000000..9e62d74249
---- /dev/null
+index 9e62d74249..532dc1c11b 100755
+--- a/t/t3437-rebase-fixup-options.sh
 +++ b/t/t3437-rebase-fixup-options.sh
-@@ -0,0 +1,190 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2018 Phillip Wood
-+#
-+
-+test_description='git rebase interactive fixup options
-+
-+This test checks the "fixup [-C|-c]" command of rebase interactive.
-+In addition to amending the contents of the commit, "fixup -C"
-+replaces the original commit message with the message of the fixup
-+commit. "fixup -c" also replaces the original message, but opens the
-+editor to allow the user to edit the message before committing.
-+'
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+EMPTY=""
-+
-+test_commit_message () {
-+	rev="$1" && # commit or tag we want to test
-+	file="$2" && # test against the content of a file
-+	git show --no-patch --pretty=format:%B "$rev" >actual-message &&
-+	if test "$2" = -m
-+	then
-+		str="$3" && # test against a string
-+		printf "%s\n" "$str" >tmp-expected-message &&
-+		file="tmp-expected-message"
-+	fi
-+	test_cmp "$file" actual-message
-+}
-+
-+get_author () {
-+	rev="$1" &&
-+	git log -1 --pretty=format:"%an %ae" "$rev"
-+}
-+
-+test_expect_success 'setup' '
-+	cat >message <<-EOF &&
-+		amend! B
-+		${EMPTY}
-+		new subject
-+		${EMPTY}
-+		new
-+		body
-+		EOF
-+
-+	sed "1,2d" message >expected-message &&
-+
-+	test_commit A A &&
-+	test_commit B B &&
-+	get_author HEAD >expected-author &&
-+	ORIG_AUTHOR_NAME="$GIT_AUTHOR_NAME" &&
-+	ORIG_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" &&
-+	GIT_AUTHOR_NAME="Amend Author" &&
-+	GIT_AUTHOR_EMAIL="amend@example.com" &&
-+	test_commit "$(cat message)" A A1 A1 &&
-+	test_commit A2 A &&
-+	test_commit A3 A &&
-+	GIT_AUTHOR_NAME="$ORIG_AUTHOR_NAME" &&
-+	GIT_AUTHOR_EMAIL="$ORIG_AUTHOR_EMAIL" &&
-+	git checkout -b conflicts-branch A &&
-+	test_commit conflicts A &&
-+
-+	set_fake_editor &&
-+	git checkout -b branch B &&
-+	echo B1 >B &&
-+	test_tick &&
-+	git commit --fixup=HEAD -a &&
-+	test_tick &&
-+	git commit --allow-empty -F - <<-EOF &&
-+		amend! B
-+		${EMPTY}
-+		B
-+		${EMPTY}
-+		edited 1
-+		EOF
-+	test_tick &&
-+	git commit --allow-empty -F - <<-EOF &&
-+		amend! amend! B
-+		${EMPTY}
-+		B
-+		${EMPTY}
-+		edited 1
-+		${EMPTY}
-+		edited 2
-+		EOF
-+	echo B2 >B &&
-+	test_tick &&
-+	FAKE_COMMIT_AMEND="edited squash" git commit --squash=HEAD -a &&
-+	echo B3 >B &&
-+	test_tick &&
-+	git commit -a -F - <<-EOF &&
-+		amend! amend! amend! B
-+		${EMPTY}
-+		B
-+		${EMPTY}
-+		edited 1
-+		${EMPTY}
-+		edited 2
-+		${EMPTY}
-+		edited 3
-+		EOF
-+
-+	GIT_AUTHOR_NAME="Rebase Author" &&
-+	GIT_AUTHOR_EMAIL="rebase.author@example.com" &&
-+	GIT_COMMITTER_NAME="Rebase Committer" &&
-+	GIT_COMMITTER_EMAIL="rebase.committer@example.com"
-+'
-+
-+test_expect_success 'simple fixup -C works' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout --detach A2 &&
-+	FAKE_LINES="1 fixup_-C 2" git rebase -i B &&
-+	test_cmp_rev HEAD^ B &&
-+	test_cmp_rev HEAD^{tree} A2^{tree} &&
-+	test_commit_message HEAD -m "A2"
-+'
-+
-+test_expect_success 'simple fixup -c works' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout --detach A2 &&
-+	git log -1 --pretty=format:%B >expected-fixup-message &&
-+	test_write_lines "" "Modified A2" >>expected-fixup-message &&
-+	FAKE_LINES="1 fixup_-c 2" \
-+		FAKE_COMMIT_AMEND="Modified A2" \
-+		git rebase -i B &&
-+	test_cmp_rev HEAD^ B &&
-+	test_cmp_rev HEAD^{tree} A2^{tree} &&
-+	test_commit_message HEAD expected-fixup-message
-+'
-+
-+test_expect_success 'fixup -C removes amend! from message' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout --detach A1 &&
-+	FAKE_LINES="1 fixup_-C 2" git rebase -i A &&
-+	test_cmp_rev HEAD^ A &&
-+	test_cmp_rev HEAD^{tree} A1^{tree} &&
-+	test_commit_message HEAD expected-message &&
-+	get_author HEAD >actual-author &&
-+	test_cmp expected-author actual-author
-+'
-+
-+test_expect_success 'fixup -C with conflicts gives correct message' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout --detach A1 &&
-+	test_must_fail env FAKE_LINES="1 fixup_-C 2" git rebase -i conflicts &&
-+	git checkout --theirs -- A &&
-+	git add A &&
-+	FAKE_COMMIT_AMEND=edited git rebase --continue &&
-+	test_cmp_rev HEAD^ conflicts &&
-+	test_cmp_rev HEAD^{tree} A1^{tree} &&
-+	test_write_lines "" edited >>expected-message &&
-+	test_commit_message HEAD expected-message &&
-+	get_author HEAD >actual-author &&
-+	test_cmp expected-author actual-author
-+'
-+
-+test_expect_success 'skipping fixup -C after fixup gives correct message' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout --detach A3 &&
-+	test_must_fail env FAKE_LINES="1 fixup 2 fixup_-C 4" git rebase -i A &&
-+	git reset --hard &&
-+	FAKE_COMMIT_AMEND=edited git rebase --continue &&
-+	test_commit_message HEAD -m "B"
-+'
-+
-+test_expect_success 'sequence of fixup, fixup -C & squash --signoff works' '
+@@ -187,4 +187,16 @@ test_expect_success 'first fixup -C commented out in sequence fixup fixup -C fix
+ 	test_commit_message HEAD expected-message
+ '
+ 
++test_expect_success 'fixup -C works upon --autosquash with amend!' '
 +	git checkout --detach branch &&
-+	FAKE_LINES="1 fixup 2 fixup_-C 3 fixup_-C 4 squash 5 fixup_-C 6" \
-+		FAKE_COMMIT_AMEND=squashed \
++	FAKE_COMMIT_AMEND=squashed \
 +		FAKE_MESSAGE_COPY=actual-squash-message \
-+		git -c commit.status=false rebase -ik --signoff A &&
++		git -c commit.status=false rebase -ik --autosquash \
++						--signoff A &&
 +	git diff-tree --exit-code --patch HEAD branch -- &&
 +	test_cmp_rev HEAD^ A &&
 +	test_i18ncmp "$TEST_DIRECTORY/t3437/expected-squash-message" \
 +		actual-squash-message
 +'
 +
-+test_expect_success 'first fixup -C commented out in sequence fixup fixup -C fixup -C' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout branch && git checkout --detach branch~2 &&
-+	git log -1 --pretty=format:%b >expected-message &&
-+	FAKE_LINES="1 fixup 2 fixup_-C 3 fixup_-C 4" git rebase -i A &&
-+	test_cmp_rev HEAD^ A &&
-+	test_commit_message HEAD expected-message
-+'
-+
-+test_done
-diff --git a/t/t3437/expected-squash-message b/t/t3437/expected-squash-message
-new file mode 100644
-index 0000000000..ab2434f90e
---- /dev/null
-+++ b/t/t3437/expected-squash-message
-@@ -0,0 +1,51 @@
-+# This is a combination of 6 commits.
-+# The 1st commit message will be skipped:
-+
-+# B
-+#
-+# Signed-off-by: Rebase Committer <rebase.committer@example.com>
-+
-+# The commit message #2 will be skipped:
-+
-+# fixup! B
-+
-+# The commit message #3 will be skipped:
-+
-+# amend! B
-+#
-+# B
-+#
-+# edited 1
-+#
-+# Signed-off-by: Rebase Committer <rebase.committer@example.com>
-+
-+# This is the commit message #4:
-+
-+# amend! amend! B
-+
-+B
-+
-+edited 1
-+
-+edited 2
-+
-+Signed-off-by: Rebase Committer <rebase.committer@example.com>
-+
-+# This is the commit message #5:
-+
-+# squash! amend! amend! B
-+
-+edited squash
-+
-+# This is the commit message #6:
-+
-+# amend! amend! amend! B
-+
-+B
-+
-+edited 1
-+
-+edited 2
-+
-+edited 3
-+squashed
+ test_done
 -- 
 2.29.0.rc1
 
