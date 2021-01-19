@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87433C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9A1EC433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:59:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 382692310B
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:59:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 941432310B
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730139AbhAST7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 14:59:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38396 "EHLO
+        id S2390820AbhAST7Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 14:59:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392086AbhASTzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2392077AbhASTzZ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 19 Jan 2021 14:55:25 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF3AAC061798
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1845CC061796
         for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:54:07 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id v184so846243wma.1
+Received: by mail-wm1-x335.google.com with SMTP id u14so828412wmq.4
         for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:54:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BHbeRbrue7+N3V7H9FmoaCX8vFmbG0wcwDK4/486DF4=;
-        b=Mcceieorw1UQA3TKX9aM41d0MVajzvQ3UUwBzGxJa39vmwCz52MBiljiE9hRyNl/od
-         ba+6oUvmAga9g8XX3PdKojeAHDi/nZKaDCvx5em6W2SZaCTqvJoyEVBD2Kvzrd0lPw5V
-         dG4jG3U9k/OOIUTWjBrKrrVB/lQbaWd3XpckfwYcd2iwOHfe8BtUCQDAglu1pU7GI26M
-         lcmdrN7v5+gETfl8q9yO5kLmg89TCXg9HZjQ8cr5emK8KQgTCpM3AfWsDqckHD44Nj2c
-         KbvBRkJd7Xdo1FTDHNCr3//WhAFdweMuUSTGO46FB0Pj1SMcr1/Rm/02sP6/HykRR3yR
-         QFQQ==
+        bh=yYjdeMwcEkwlwbV0E3MXEBcoSxWoEC30fUk9SMydLaA=;
+        b=g+KsP0cw6mTdndGJg9sBZKVtloIvLn94EK7VP47gABEasp8uWuNe1T00GPfXreAxjU
+         ovVai7oyLv0YHcmxQ59YkcGtzbq0S6kfzLiF7bFTq9nzWdAYVy+w4k9A1cqtkfPCuOdS
+         QEEL23l1yDK2NY7Q0VCOc3X8n5h/sN+7n4/9oJqAFuiBEEgt0JpsSEOeLcCYcsmA5RH+
+         sF3TuiLkAHEcYgg7vQHW0jMHJeMatv0zPzN1BY4wZLklC+DDHA8VPB+/+3wnfWvmjZdh
+         5fbeOCmsQLlyEtPhjyj16+XEQd6UJ3weDWKnx2r91Wepeyzc4jCn3nWEI1t3e1C3O3Eu
+         iqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BHbeRbrue7+N3V7H9FmoaCX8vFmbG0wcwDK4/486DF4=;
-        b=TJEfTP77mwzidMuKds2jQL3uwewJCaSnCg+1e5OLAn7Tq65W6vvz+Xz+8UqrMWKv5R
-         siJE90MM4Vx+nKDSw5cHx66fhWogAnB5gWu3L2dJITzOCq+UCRGvZf715NThL5AY4UEI
-         xGtU+zg3NoeM5BsNwSxD1ocWJz57NN/b0MAJDFBjpYuK48wveeDbymltn6aa2VirpHaX
-         anc7oQQt5c7BPFAULX/O9s3LT6iG9/qppq/VY98zCZeTQfoUsb2UjuYip+Pz/Anc6zDl
-         beTs+lAAJDeB2Iq7t3d59FP4fnhP9yZ4nzaGrEInHdpXIZJbop0s3Bucn0I0r70m1PyD
-         6gzQ==
-X-Gm-Message-State: AOAM530GdMrjE7X9HiSmp6qpIVn1hE2ONmcErmmLEVR6ODZ8CjAcUJ7B
-        bxSNgK31E1jodaD6/8UBEdZFdYoIfM0=
-X-Google-Smtp-Source: ABdhPJwOcFp2rtwF6Ia5ObMtewxqDpmTblcX2HjS0nuEXg4QToqNAc79gIEsnJ0eQywtkkDX0ghxMw==
-X-Received: by 2002:a1c:2945:: with SMTP id p66mr1126945wmp.110.1611086046503;
-        Tue, 19 Jan 2021 11:54:06 -0800 (PST)
+        bh=yYjdeMwcEkwlwbV0E3MXEBcoSxWoEC30fUk9SMydLaA=;
+        b=AmRad4nEKGXMUNiddj5wjjUUqoTb4fDhoAyVO4XnRIPsnfqbf0pfviP/XlkPVTNKem
+         lfu/skt5Ntzr/iANAhUJLJhGo+ct+zVIeWUQ6vQ7JWHmKZWBNLZmG4yfLCLBSPM0CrD7
+         ko9X2zT3xayFZ0JdR6ooY8JInCAqg8bAi+uO3rSqSdSj50/EkWDpfQ/i37uI15CYf+TC
+         ZPio1MKR4/mnl9OOz0lxSTSJXC4mWY7LdjWH28nlnrGfDIIYjgwe4GuRR0be19EIlgvB
+         wvZQvnNzA2z5bN17oQ+PGNGDafWNlYIeTcHYkRFJrjRRucrWVpA5YtO/RCEYG5E/77UG
+         npJA==
+X-Gm-Message-State: AOAM532SeTDpTgil43gwMwTlo+4szUIR6C1PbiNmocd6XPM+FhWxllE8
+        X/vv1lyeW3abLxOGmwGczqOcWHgn4t0=
+X-Google-Smtp-Source: ABdhPJx5PSn/7/UVJnSx8//NPkn81GqPgKkM0LcW0U0IKn/F59nzKQop12RhUU0lTYNEtASfGC2c4Q==
+X-Received: by 2002:a05:600c:4ec6:: with SMTP id g6mr1169135wmq.2.1611086045678;
+        Tue, 19 Jan 2021 11:54:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm5573515wmg.43.2021.01.19.11.54.05
+        by smtp.gmail.com with ESMTPSA id m2sm5777509wml.34.2021.01.19.11.54.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 11:54:06 -0800 (PST)
-Message-Id: <1bece72e37ae269c81336a7e8406db1131684383.1611086033.git.gitgitgadget@gmail.com>
+        Tue, 19 Jan 2021 11:54:05 -0800 (PST)
+Message-Id: <ad08c6ece4d1a3bbe90f48201e3006203ddcc3e9.1611086033.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
 References: <pull.835.v2.git.1610055365.gitgitgadget@gmail.com>
         <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Jan 2021 19:53:49 +0000
-Subject: [PATCH v3 13/17] merge-ort: implement handle_path_level_conflicts()
+Date:   Tue, 19 Jan 2021 19:53:48 +0000
+Subject: [PATCH v3 12/17] merge-ort: implement check_for_directory_rename()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,109 +78,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This is copied from merge-recursive.c, with minor tweaks due to:
-  * using strmap API
-  * merge-ort not using the non_unique_new_dir field, since it'll
-    obviate its need entirely later with performance improvements
-  * adding a new path_in_way() function that uses opt->priv->paths
-    instead of doing an expensive tree_has_path() lookup to see if
-    a tree has a given path.
+This is copied from merge-recursive.c, with minor tweaks due to using strmap
+API and the fact that it can use opt->priv->paths to get all pathnames that
+exist instead of taking a tree object.
+
+This depends on a new function, handle_path_level_conflicts(), which
+just has a placeholder die-not-yet-implemented implementation for now; a
+subsequent patch will implement it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 71 insertions(+), 1 deletion(-)
+ merge-ort.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 86d2214006e..ad8ecb7e448 100644
+index db922272edf..86d2214006e 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -864,6 +864,16 @@ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
+@@ -864,6 +864,21 @@ static void get_renamed_dir_portion(const char *old_path, const char *new_path,
  	*new_dir = xstrndup(new_path, end_of_new - new_path);
  }
  
-+static int path_in_way(struct strmap *paths, const char *path, unsigned side_mask)
++/*
++ * See if there is a directory rename for path, and if there are any file
++ * level conflicts on the given side for the renamed location.  If there is
++ * a rename and there are no conflicts, return the new name.  Otherwise,
++ * return NULL.
++ */
++static char *handle_path_level_conflicts(struct merge_options *opt,
++					 const char *path,
++					 unsigned side_index,
++					 struct strmap_entry *rename_info,
++					 struct strmap *collisions)
 +{
-+	struct merged_info *mi = strmap_get(paths, path);
-+	struct conflict_info *ci;
-+	if (!mi)
-+		return 0;
-+	INITIALIZE_CI(ci, mi);
-+	return mi->clean || (side_mask & (ci->filemask | ci->dirmask));
++	die("Not yet implemented");
 +}
 +
- /*
-  * See if there is a directory rename for path, and if there are any file
-  * level conflicts on the given side for the renamed location.  If there is
-@@ -876,7 +886,67 @@ static char *handle_path_level_conflicts(struct merge_options *opt,
- 					 struct strmap_entry *rename_info,
- 					 struct strmap *collisions)
+ static void increment_count(struct strmap *dir_rename_count,
+ 			    char *old_dir,
+ 			    char *new_dir)
+@@ -1078,7 +1093,57 @@ static char *check_for_directory_rename(struct merge_options *opt,
+ 					struct strmap *collisions,
+ 					int *clean_merge)
  {
--	die("Not yet implemented");
+-	die("Not yet implemented.");
 +	char *new_path = NULL;
-+	struct collision_info *c_info;
-+	int clean = 1;
-+	struct strbuf collision_paths = STRBUF_INIT;
++	struct strmap_entry *rename_info;
++	struct strmap_entry *otherinfo = NULL;
++	const char *new_dir;
++
++	if (strmap_empty(dir_renames))
++		return new_path;
++	rename_info = check_dir_renamed(path, dir_renames);
++	if (!rename_info)
++		return new_path;
++	/* old_dir = rename_info->key; */
++	new_dir = rename_info->value;
 +
 +	/*
-+	 * entry has the mapping of old directory name to new directory name
-+	 * that we want to apply to path.
++	 * This next part is a little weird.  We do not want to do an
++	 * implicit rename into a directory we renamed on our side, because
++	 * that will result in a spurious rename/rename(1to2) conflict.  An
++	 * example:
++	 *   Base commit: dumbdir/afile, otherdir/bfile
++	 *   Side 1:      smrtdir/afile, otherdir/bfile
++	 *   Side 2:      dumbdir/afile, dumbdir/bfile
++	 * Here, while working on Side 1, we could notice that otherdir was
++	 * renamed/merged to dumbdir, and change the diff_filepair for
++	 * otherdir/bfile into a rename into dumbdir/bfile.  However, Side
++	 * 2 will notice the rename from dumbdir to smrtdir, and do the
++	 * transitive rename to move it from dumbdir/bfile to
++	 * smrtdir/bfile.  That gives us bfile in dumbdir vs being in
++	 * smrtdir, a rename/rename(1to2) conflict.  We really just want
++	 * the file to end up in smrtdir.  And the way to achieve that is
++	 * to not let Side1 do the rename to dumbdir, since we know that is
++	 * the source of one of our directory renames.
++	 *
++	 * That's why otherinfo and dir_rename_exclusions is here.
++	 *
++	 * As it turns out, this also prevents N-way transient rename
++	 * confusion; See testcases 9c and 9d of t6043.
 +	 */
-+	new_path = apply_dir_rename(rename_info, path);
-+	if (!new_path)
-+		BUG("Failed to apply directory rename!");
-+
-+	/*
-+	 * The caller needs to have ensured that it has pre-populated
-+	 * collisions with all paths that map to new_path.  Do a quick check
-+	 * to ensure that's the case.
-+	 */
-+	c_info = strmap_get(collisions, new_path);
-+	if (c_info == NULL)
-+		BUG("c_info is NULL");
-+
-+	/*
-+	 * Check for one-sided add/add/.../add conflicts, i.e.
-+	 * where implicit renames from the other side doing
-+	 * directory rename(s) can affect this side of history
-+	 * to put multiple paths into the same location.  Warn
-+	 * and bail on directory renames for such paths.
-+	 */
-+	if (c_info->reported_already) {
-+		clean = 0;
-+	} else if (path_in_way(&opt->priv->paths, new_path, 1 << side_index)) {
-+		c_info->reported_already = 1;
-+		strbuf_add_separated_string_list(&collision_paths, ", ",
-+						 &c_info->source_files);
-+		path_msg(opt, new_path, 0,
-+			 _("CONFLICT (implicit dir rename): Existing file/dir "
-+			   "at %s in the way of implicit directory rename(s) "
-+			   "putting the following path(s) there: %s."),
-+		       new_path, collision_paths.buf);
-+		clean = 0;
-+	} else if (c_info->source_files.nr > 1) {
-+		c_info->reported_already = 1;
-+		strbuf_add_separated_string_list(&collision_paths, ", ",
-+						 &c_info->source_files);
-+		path_msg(opt, new_path, 0,
-+			 _("CONFLICT (implicit dir rename): Cannot map more "
-+			   "than one path to %s; implicit directory renames "
-+			   "tried to put these paths there: %s"),
-+		       new_path, collision_paths.buf);
-+		clean = 0;
-+	}
-+
-+	/* Free memory we no longer need */
-+	strbuf_release(&collision_paths);
-+	if (!clean && new_path) {
-+		free(new_path);
++	otherinfo = strmap_get_entry(dir_rename_exclusions, new_dir);
++	if (otherinfo) {
++		path_msg(opt, rename_info->key, 1,
++			 _("WARNING: Avoiding applying %s -> %s rename "
++			   "to %s, because %s itself was renamed."),
++			 rename_info->key, new_dir, path, new_dir);
 +		return NULL;
 +	}
++
++	new_path = handle_path_level_conflicts(opt, path, side_index,
++					       rename_info, collisions);
++	*clean_merge &= (new_path != NULL);
 +
 +	return new_path;
  }
  
- static void increment_count(struct strmap *dir_rename_count,
+ static void apply_directory_rename_modifications(struct merge_options *opt,
 -- 
 gitgitgadget
 
