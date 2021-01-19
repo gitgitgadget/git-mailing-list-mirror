@@ -2,158 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC12BC433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0746C433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:59:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B5ED230FE
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:56:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86755230FE
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731046AbhASHqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 02:46:46 -0500
-Received: from mail2.pdinc.us ([67.90.184.28]:46746 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729629AbhASHpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 02:45:08 -0500
-Received: from [10.42.0.115] (cpe-173-88-170-197.neo.res.rr.com [173.88.170.197])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10J7hw46011490
-        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO);
-        Tue, 19 Jan 2021 02:43:59 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10J7hw46011490
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1611042240; bh=R+nMSApAcDZ+R2w3icpKF//d2XOsLRW3iE3peoLLNLU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=HW18pggm2Hll36HyHFXNPpFIwhwZP2V+M2AuZeUYOP2lG9X3nMwGvFbfrlOFgGfyX
-         qTKJwJyMh+5MkUvaugjG3KpJ38oYnHCEzl/JOill7sotuFONnljCmnLSG87S6V42Hc
-         OBujmvn82FWweei+hWEHkkpvWsvzPKPQ2pZqdto/ievRnaECFj/OM88UsgQ8edTE3y
-         vFVf4BlYIeTEgjiARccDhLptrFKEQVUDmxGrIOfs297pz8DoSyEhErF/wLJqqp7SGd
-         rZlgGRz/opdIbXzUDqFrqlNrcxqjEyXTRb9z/x72n0mQWwTUC4Ph9PLpYetUTTvN4T
-         KqgDvIfwn8c7Q==
-Subject: Re: [PATCH 1/2] revision: Denote root commits with '#'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
- <20210117110337.429994-1-kmarek@pdinc.us>
- <20210117110337.429994-2-kmarek@pdinc.us>
- <xmqq7dobmfrq.fsf@gitster.c.googlers.com>
- <e0264a29-2112-f8c8-f066-2be445654d8e@pdinc.us>
- <xmqqwnwajbuj.fsf@gitster.c.googlers.com>
- <xmqqr1mij88k.fsf@gitster.c.googlers.com>
-From:   Kyle Marek <kmarek@pdinc.us>
-Message-ID: <237aeef3-239f-bff4-fa17-5581092c8f51@pdinc.us>
-Date:   Tue, 19 Jan 2021 02:43:57 -0500
-User-Agent: Mozilla/5.0 (X11; Linux ppc64le; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1731060AbhASH6u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 02:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730780AbhASH62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 02:58:28 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C87C061574
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:57:47 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id u19so20389102edx.2
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:57:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=8WE3C3j/6ueCdIJo0zqpgWGCYCPcYsGd7bIFlfUlEG0=;
+        b=HIXIbQGCioxDtk1ZuEvev2leyK6IGEoKasJelUOTxpkGOeEqll9GlYD5q36oTC04ZC
+         UvAnqG5lNz/2Sxu7EDsv8MuKIkVkJWxBbRYOe0xpwDHZ87BhK7OaCHgJPAA8T5tGP7hk
+         q7eMCFKJNsq7DKp/Tcm5OfWstAooa7pF6jC/izbHIAk1nThUoBod+z8hCJ5tzeWMDp0P
+         6DdB3/AC3H7/tfmMfqKA2PcPoQiqtJe3e22fmS+GZ6Uw9MmCcCJI86gGqG8JwvTFmT5E
+         nVJ/rz6338U6c/eXxBugQfSW43Xry/L1smlvWfDNjUOWEkL7uO2oAFr5d2IFpsWSe5WK
+         FX8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=8WE3C3j/6ueCdIJo0zqpgWGCYCPcYsGd7bIFlfUlEG0=;
+        b=nxt8v097qT4itG0OsEiFWn1CAaOEtG5ruViNR5r0ZPOJvylqd3Yx9DO9xiLS1INNBV
+         nGgaqZbwwoMlIPpSz5z/dbLjnJO5Dn+AC81jgBY7PN4W4VUz51CK2OPcDQSRbM60OtEx
+         jeynBO6JikAD/JJkL8nmWZkprLvMSmhlw0wJJAwlwcZeb8dnQsxChyiv8rrwtGSPXwNM
+         4nw+0KvRP1rhEuKTzXPWwN5jEF/cP108uq/c3pqWMcZTMRT1zJwMqDt/86lsEwHTTtaB
+         gpe49zmLHXb9ug/ZbzX5oD3fp7ujZQ0zL/6J6+3i6P0Y6j30JAXxUjYe6yQh2xobIW7c
+         ppVA==
+X-Gm-Message-State: AOAM531zB4zoS2DeiuLuMi8frVreIc60f77pv/ENkl38ZknDI9pe9/fu
+        ygGH3CQrEoWHyj3CJchQ1E+M8XVwi/Y=
+X-Google-Smtp-Source: ABdhPJx+0IR4cO0FOQZvYfNdjDZ+Mh5iRD6srIYWodIXs/haqEalU0s0GZWVQPQ9Q57Y19bwkx+6PQ==
+X-Received: by 2002:a05:6402:d0a:: with SMTP id eb10mr2408369edb.249.1611043066514;
+        Mon, 18 Jan 2021 23:57:46 -0800 (PST)
+Received: from cpm12071.local ([212.86.35.161])
+        by smtp.gmail.com with ESMTPSA id o11sm5653268eds.19.2021.01.18.23.57.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jan 2021 23:57:45 -0800 (PST)
+References: <20210104162128.95281-1-rafaeloliveira.cs@gmail.com>
+ <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
+ <20210117234244.95106-3-rafaeloliveira.cs@gmail.com>
+ <CAPig+cQX27n6vpGP4m3S9paUnpNw5etLLAXr=WO9rC1KSSLMmQ@mail.gmail.com>
+User-agent: mu4e 1.4.13; emacs 27.1
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 2/6] worktree: teach worktree to lazy-load "prunable"
+ reason
+In-reply-to: <CAPig+cQX27n6vpGP4m3S9paUnpNw5etLLAXr=WO9rC1KSSLMmQ@mail.gmail.com>
+Message-ID: <gohp6k5z3te4ug.fsf@gmail.com>
+Date:   Tue, 19 Jan 2021 08:57:45 +0100
 MIME-Version: 1.0
-In-Reply-To: <xmqqr1mij88k.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/18/21 3:33 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> [Footnote]
+
+Eric Sunshine writes:
+
+> On Sun, Jan 17, 2021 at 6:43 PM Rafael Silva
+> <rafaeloliveira.cs@gmail.com> wrote:
+>> Add worktree_prune_reason() to allow a caller to discover whether a
+>> worktree is prunable and the reason that it is, much like
+>> worktree_lock_reason() indicates whether a worktree is locked and the
+>> reason for the lock. As with worktree_lock_reason(), retrieve the
+>> prunable reason lazily and cache it in the `worktree` structure.
 >>
->> *1* Stepping back a bit, I think concentrating too much on "is it
->>      root?" is a wrong way to think about the problem.  Suppose you
->>      have two histories, e.g. (time flows from left to right; A and X
->>      are roots)
-> A shorter and more concrete example.  Start from an empty repository:
+>> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+>> ---
+>> diff --git a/worktree.c b/worktree.c
+>> @@ -245,6 +246,25 @@ const char *worktree_lock_reason(struct worktree *wt)
+>> +const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
+>> +{
+>> +       struct strbuf reason = STRBUF_INIT;
+>> +       char *path;
 >
-> 	$ git init
-> 	$ git commit --allow-empty -m Aroot
-> 	$ git checkout --orphan side
-> 	$ git commit --allow-empty -m Xroot
-> 	$ git log --all --graph --oneline
->          * a1f7cb2 (HEAD -> side) Xroot
->          * b6fb655 (master) Aroot
+> The `path` variable is uninitialized...
 >
-> These depict two root commits, Aroot and Xroot, and no other
-> commits.  We do want to show that these two commits do not have
-> parent-child relationship at all, and your (and a few proposals made
-> by other in the past) solution was to show them both with "#".
+>> +       if (should_prune_worktree(wt->id, &reason, &path, expire))
+>> +               wt->prune_reason = strbuf_detach(&reason, NULL);
 >
-> Continuing in the same repository:
+> ...but the very first thing should_prune_worktree() does is
+> unconditionally set it to NULL, so it's either NULL or an allocated
+> string regardless of the value returned by should_prune_worktree()...
 >
-> 	$ git checkout --orphan another
-> 	$ git commit --allow-empty -m Oroot
-> 	$ git commit --allow-empty -m A
-> 	$ git log --graph --oneline ^another^ another side
->          * eddf116 (HEAD -> another) A
->          * a1f7cb2 (side) Xroot
+>> +       strbuf_release(&reason);
+>> +       free(path);
 >
-> These depict two commits, A and Xroot, and no other commits.  We
-> also want to show that these two commits do not have parent-child
-> relationship at all, but if we paint Xroot with "#", it still makes
-> it appear that A is a child of Xroot.
+> ...which makes the behavior of `free(path)` deterministic. Good.
 >
->>      And the right way to look at it is "does A have any parent in
->>      the part of the history being shown?", not "does A have any
->>      parent?"  Then 'A' will get exactly the same treatment in the
->>      two examples, and the visual problem that makes A appear as if
->>      it has parent-child relationship with unrelated commit X goes
->>      away.
-> So the condition we saw in your patches, !commit->parents, which
-> attempted to see if it was root, needs to be replaced with a helper
-> function that checks if there is any parent that is shown in the
-> output.  Perhaps
+> I'm on the fence about whether or not we should initialize `path` to NULL:
 >
-> 	int no_interesting_parents(struct commit *commit)
-> 	{
-> 		struct commit_list *parents = commit->parents;
+>     char *path = NULL;
 >
-> 		while (parents) {
-> 			if (!(parents->object.flags & UNINTERESTING))
-> 				return 0;
-> 			parents = parents->next;
-> 		}
-> 		return 1;
-> 	}
->
-> or something like that should serve as a replacement, i.e.
->
-> 	return !commit->parents ? "#" : "*";
->
-> would become
->
-> 	return no_interesting_parents(commit) ? "#" : "*";
->
-> Hmm?
+> just to make it easier for the next person to reason about it without
+> having to dig into the implementation of should_prune_worktree(). This
+> is a really minor point, though, not worth a re-roll.
 
-Okay, I see what you mean. Fixing --graph to avoid implying ancestry 
-sounds like a better approach to me.
-
-That being said, I spoke to Jason recently, and he expressed interest in 
-optionally marking root commits so they are easy to search for in a 
-graph with something like /# in `less`. I see value in this, too.
-
-So would you be open to my modifying of the patch in question (patch 1+2 
-squashed, I guess) to instead use "--mark-roots=<mark>" to optionally 
-mark root commits with a string <mark>, and pursue fixing the --graph 
-rendering issue in another series?
-
-If so, what would you like to see out of the --left-right issue? Maybe 
-"--mark-left-root=<mark>" and "--mark-right-root=<mark>", so multi-byte 
-strings may be used? Can there be more than one root on either side? (so 
-the option would use a plural "roots" instead of "root"?)
+This is a good point and totally agreed. I'm going to include this
+change in the next revision.
 
 -- 
-
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Kyle Marek                        PD Inc. http://www.pdinc.us -
-- Jr. Developer                     10 West 24th Street #100    -
-- +1 (443) 269-1555 x361            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
+Thanks
+Rafael
