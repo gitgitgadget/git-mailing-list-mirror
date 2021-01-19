@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A05AC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36BFEC433DB
 	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 21:30:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1016722D71
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 21:30:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DAC8722D08
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 21:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729273AbhASVaA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 16:30:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58712 "EHLO
+        id S1729449AbhASV3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 16:29:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728883AbhASV26 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 16:28:58 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286E1C061575
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 13:28:18 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id d26so21128487wrb.12
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 13:28:18 -0800 (PST)
+        with ESMTP id S1729161AbhASV3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 16:29:10 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A2DFC061796
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 13:28:22 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id v184so1040603wma.1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 13:28:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iizqHUX2jzrwgDtQtta8EOZZSEuSd8m6ozy7F8qnSOo=;
-        b=gIJ9EDsgJdrTRbdeGtYhH9rsC1Av8B6hv9k5eLECLsZy+UJQoOIf4Znga6CrUss8lR
-         4TCGKZt/77PaUGXkOgMGVy17UYdvcZ0RnO196PxQGKQ9oALGZyH3PXd0hGuq+mtVSXTt
-         uq64ezoPwEXXhtxBeX/p4tJCJmLO6nSYmsBbpZhJHpHXfYdKPPQx7/X3sfS/CvE6HP2y
-         sWwxqEglzJFYCyNKKGccbc/wsXDwzHpOuqG13mqysPNuP8Gv6exF/aA88aNrEul5pVs/
-         X8b/V3k2r9RNvCyWt8HajNKdBxElQs15sPtX9CnYWh+zyZ33ewe6J3C4/NngVpbK6k+S
-         LTGQ==
+        bh=YmQ+BE2KU76AhU11jUK+D8ysRFHmxCZr03Qr/BS8cCM=;
+        b=AFMYiurio5CIaR/yIGjx/um6YTVtwK9gjfSioMtlg4m8a8h5B0hbDuzh/pEUlpgyhG
+         mb9PFnQKNnPt22S3BK2e73/mFvyuaqVRgfFHxGocp0QMOZEkxcdIieodr3Foea+hCTRh
+         tx3r8hf9fSinfolM3qev3og1P9sS71Eh0AGTcUywwcDbAkFuPJMkOwEyBpxfJ8JHXKAU
+         wfC+QJMnPMB5oRfZgLFbSZqwq7IeCxN6ZbPf43mxkFFtVPgzmrO46ckmN5e+PN4SncAH
+         d6B1xfELuHpXNiE8gdFM9F2pm0xRgQjRCjvdsK1OdWAvf/I6i8cfnbe/ggYbdvDkBFsV
+         YRBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iizqHUX2jzrwgDtQtta8EOZZSEuSd8m6ozy7F8qnSOo=;
-        b=N81u3nu+1nn6fo03qoL+Rbn74nvtW9ZRbzTOlegkKM8/c+ynwt1jZNZsLLmKzAIJ0J
-         9IEs3D+9t6yYTj/rusQ1hT2/B0IrDVtK5xxsojD0StBTyy7FXpsCZ6eBrRO/vaA7rKYW
-         9U0gioVGBgpaBCceV+yQ1/hoS8X7fnD0DLPixSMNQ/nfyp1e9GMg1cmVGeAkY22unhPG
-         fRP45FludVtE4qL5U5pDuhNEv2pP7fHedYllIAPqhxk2huXC+4mLpehfTySG7vzrnzMr
-         kCEpvUaD7scx3cpzqToSWU7FssirQGuqGD+WZRhsQLjN9C+euuxxFhW/zbhc5I13IOlh
-         tsHg==
-X-Gm-Message-State: AOAM533wDW+0jE1xpH6gYxOpQi0YDIfbxzWuCBKv1KTcG0xzpalfDR5j
-        Gqy1y89s3chioMJiz1xD1ixrJvtUm84=
-X-Google-Smtp-Source: ABdhPJxJ4TnzRfusda5HGRLqhw6krUgPrBj9G8xqe3Q9CcwYpyQ9rq1thDJrVAEEn0qXt2d2ivtJdA==
-X-Received: by 2002:a5d:43d2:: with SMTP id v18mr6208470wrr.326.1611091696390;
-        Tue, 19 Jan 2021 13:28:16 -0800 (PST)
+        bh=YmQ+BE2KU76AhU11jUK+D8ysRFHmxCZr03Qr/BS8cCM=;
+        b=PNq+GN+nfUe/BGkcbkPBAjumdwtKuMnoHWadDt6eMN9xVizZd4jW7+nmYqV+EUmEJ5
+         RcMyYEsYfU6ycog7XpOGGB5wFRiBgfnALaFWvbZ9WBxAUPohA3Vax5CBh3gAzdHcDATy
+         2aP4oBra0eztPr+o+vTt7PzLAF5N1gU7oyjW26h2ngVNdpMX3pAzjFWcyprXlNqwq9fa
+         OpIUI7G07oFz0Ezv9gUxF2C9l7J1JCKb4uL/yyNx3euKHj0Vlir5MFQoXYgvCyCKI7qP
+         N15FzV2gll+ARe0pjz1wj1ur4+aL3n+KsKlYDH/drT17U6DcunbSq7mws8Euz+h/ZvuB
+         jh/g==
+X-Gm-Message-State: AOAM530CCqad2471KmkWFmejFGrmjBlzV5lPfJRxHS7Rs7o24r8Nnda6
+        lswM5RJmMyhsc3m+gehf7tVw2ZUBde0=
+X-Google-Smtp-Source: ABdhPJwx1x3YtqAc2kZ071lfuuHzizqH/JXE+08HC3jE5fl+4Wzo3q7qJ75GNpu6NaL5MWTVtWf5Tw==
+X-Received: by 2002:a1c:f30e:: with SMTP id q14mr1359397wmq.87.1611091700798;
+        Tue, 19 Jan 2021 13:28:20 -0800 (PST)
 Received: from localhost.localdomain ([212.86.35.161])
-        by smtp.gmail.com with ESMTPSA id r2sm39448819wrn.83.2021.01.19.13.28.15
+        by smtp.gmail.com with ESMTPSA id r2sm39448819wrn.83.2021.01.19.13.28.19
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Jan 2021 13:28:15 -0800 (PST)
+        Tue, 19 Jan 2021 13:28:20 -0800 (PST)
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH v3 2/7] worktree: teach worktree to lazy-load "prunable" reason
-Date:   Tue, 19 Jan 2021 22:27:34 +0100
-Message-Id: <20210119212739.77882-3-rafaeloliveira.cs@gmail.com>
+Subject: [PATCH v3 6/7] worktree: teach `list` to annotate prunable worktree
+Date:   Tue, 19 Jan 2021 22:27:38 +0100
+Message-Id: <20210119212739.77882-7-rafaeloliveira.cs@gmail.com>
 X-Mailer: git-send-email 2.30.0.421.g32f838e276
 In-Reply-To: <20210119212739.77882-1-rafaeloliveira.cs@gmail.com>
 References: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
@@ -74,89 +74,192 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add worktree_prune_reason() to allow a caller to discover whether a
-worktree is prunable and the reason that it is, much like
-worktree_lock_reason() indicates whether a worktree is locked and the
-reason for the lock. As with worktree_lock_reason(), retrieve the
-prunable reason lazily and cache it in the `worktree` structure.
+The "git worktree list" command shows the absolute path to the worktree,
+the commit that is checked out, the name of the branch, and a "locked"
+annotation if the worktree is locked, however, it does not indicate
+whether the worktree is prunable.
+
+The "prune" command will remove a worktree if it is prunable unless
+`--dry-run` option is specified. This could lead to a worktree being
+removed without the user realizing before it is too late, in case the
+user forgets to pass --dry-run for instance. If the "list" command shows
+which worktree is prunable, the user could verify before running
+"git worktree prune" and hopefully prevents the working tree to be
+removed "accidentally" on the worse case scenario.
+
+Let's teach "git worktree list" to show when a worktree is a prunable
+candidate for both default and porcelain format.
+
+In the default format a "prunable" text is appended:
+
+    $ git worktree list
+    /path/to/main      aba123 [main]
+    /path/to/linked    123abc [branch-a]
+    /path/to/prunable  ace127 (detached HEAD) prunable
+
+In the --porcelain format a prunable label is added followed by
+its reason:
+
+    $ git worktree list --porcelain
+    ...
+    worktree /path/to/prunable
+    HEAD abc1234abc1234abc1234abc1234abc1234abc12
+    detached
+    prunable gitdir file points to non-existent location
+    ...
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
 ---
- worktree.c | 20 ++++++++++++++++++++
- worktree.h |  9 +++++++++
- 2 files changed, 29 insertions(+)
+ Documentation/git-worktree.txt | 26 ++++++++++++++++++++++++--
+ builtin/worktree.c             | 10 ++++++++++
+ builtin/worktree.cc            |  0
+ t/t2402-worktree-list.sh       | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 66 insertions(+), 2 deletions(-)
+ create mode 100644 builtin/worktree.cc
 
-diff --git a/worktree.c b/worktree.c
-index 8ae019af79..fb3e286996 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -15,6 +15,7 @@ void free_worktrees(struct worktree **worktrees)
- 		free(worktrees[i]->id);
- 		free(worktrees[i]->head_ref);
- 		free(worktrees[i]->lock_reason);
-+		free(worktrees[i]->prune_reason);
- 		free(worktrees[i]);
- 	}
- 	free (worktrees);
-@@ -245,6 +246,25 @@ const char *worktree_lock_reason(struct worktree *wt)
- 	return wt->lock_reason;
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 7cb8124f28..e0dd291e30 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -97,8 +97,9 @@ list::
+ List details of each working tree.  The main working tree is listed first,
+ followed by each of the linked working trees.  The output details include
+ whether the working tree is bare, the revision currently checked out, the
+-branch currently checked out (or "detached HEAD" if none), and "locked" if
+-the worktree is locked.
++branch currently checked out (or "detached HEAD" if none), "locked" if
++the worktree is locked, "prunable" if the worktree can be pruned by `prune`
++command.
+ 
+ lock::
+ 
+@@ -234,6 +235,9 @@ This can also be set up as the default behaviour by using the
+ 
+ --expire <time>::
+ 	With `prune`, only expire unused working trees older than `<time>`.
+++
++With `list`, annotate missing working trees as prunable if they are
++older than `<time>`.
+ 
+ --reason <string>::
+ 	With `lock`, an explanation why the working tree is locked.
+@@ -372,6 +376,19 @@ $ git worktree list
+ /path/to/other-linked-worktree  1234abc  (detached HEAD)
+ ------------
+ 
++The command also shows annotations for each working tree, according to its state.
++These annotations are:
++
++ * `locked`, if the working tree is locked.
++ * `prunable`, if the working tree can be pruned via `git worktree prune`.
++
++------------
++$ git worktree list
++/path/to/linked-worktree    abcd1234 [master]
++/path/to/locked-worktreee   acbd5678 (brancha) locked
++/path/to/prunable-worktree  5678abc  (detached HEAD) prunable
++------------
++
+ Porcelain Format
+ ~~~~~~~~~~~~~~~~
+ The porcelain format has a line per attribute.  Attributes are listed with a
+@@ -405,6 +422,11 @@ HEAD 3456def3456def3456def3456def3456def3456b
+ branch refs/heads/locked-with-reason
+ locked reason why is locked
+ 
++worktree /path/to/linked-worktree-prunable
++HEAD 1233def1234def1234def1234def1234def1234b
++detached
++prunable gitdir file points to non-existent location
++
+ ------------
+ 
+ EXAMPLES
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 98177f91d4..20944c266e 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -592,6 +592,10 @@ static void show_worktree_porcelain(struct worktree *wt)
+ 	} else if (reason)
+ 		printf("locked\n");
+ 
++	reason = worktree_prune_reason(wt, expire);
++	if (reason)
++		printf("prunable %s\n", reason);
++
+ 	printf("\n");
  }
  
-+const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire)
-+{
-+	struct strbuf reason = STRBUF_INIT;
-+	char *path = NULL;
-+
-+	if (is_main_worktree(wt))
-+		return NULL;
-+	if (wt->prune_reason_valid)
-+		return wt->prune_reason;
-+
-+	if (should_prune_worktree(wt->id, &reason, &path, expire))
-+		wt->prune_reason = strbuf_detach(&reason, NULL);
-+	wt->prune_reason_valid = 1;
-+
-+	strbuf_release(&reason);
-+	free(path);
-+	return wt->prune_reason;
-+}
-+
- /* convenient wrapper to deal with NULL strbuf */
- static void strbuf_addf_gently(struct strbuf *buf, const char *fmt, ...)
- {
-diff --git a/worktree.h b/worktree.h
-index 818e1491c7..8b7c408132 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -11,11 +11,13 @@ struct worktree {
- 	char *id;
- 	char *head_ref;		/* NULL if HEAD is broken or detached */
- 	char *lock_reason;	/* private - use worktree_lock_reason */
-+	char *prune_reason;     /* private - use worktree_prune_reason */
- 	struct object_id head_oid;
- 	int is_detached;
- 	int is_bare;
- 	int is_current;
- 	int lock_reason_valid; /* private */
-+	int prune_reason_valid; /* private */
- };
+@@ -620,6 +624,9 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 	if (worktree_lock_reason(wt))
+ 		strbuf_addstr(&sb, " locked");
  
- /*
-@@ -73,6 +75,13 @@ int is_main_worktree(const struct worktree *wt);
-  */
- const char *worktree_lock_reason(struct worktree *wt);
- 
-+/*
-+ * Return the reason string if the given worktree should be pruned, otherwise
-+ * NULL if it should not be pruned. `expire` defines a grace period to prune
-+ * the worktree when its path does not exist.
-+ */
-+const char *worktree_prune_reason(struct worktree *wt, timestamp_t expire);
++	if (worktree_prune_reason(wt, expire))
++		strbuf_addstr(&sb, " prunable");
 +
- /*
-  * Return true if worktree entry should be pruned, along with the reason for
-  * pruning. Otherwise, return false and the worktree's path in `wtpath`, or
+ 	printf("%s\n", sb.buf);
+ 	strbuf_release(&sb);
+ }
+@@ -663,9 +670,12 @@ static int list(int ac, const char **av, const char *prefix)
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
++		OPT_EXPIRY_DATE(0, "expire", &expire,
++				N_("add 'prunable' annotation to worktrees older than <time>")),
+ 		OPT_END()
+ 	};
+ 
++	expire = TIME_MAX;
+ 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
+ 	if (ac)
+ 		usage_with_options(worktree_usage, options);
+diff --git a/builtin/worktree.cc b/builtin/worktree.cc
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index 1fe53c3309..9e342d6c66 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -102,6 +102,38 @@ test_expect_success '"list" all worktrees --porcelain with locked reason newline
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '"list" all worktrees with prunable annotation' '
++	test_when_finished "rm -rf prunable unprunable out && git worktree prune" &&
++	git worktree add --detach prunable &&
++	git worktree add --detach unprunable &&
++	rm -rf prunable &&
++	git worktree list >out &&
++	grep "/prunable  *[0-9a-f].* prunable$" out &&
++	! grep "/unprunable  *[0-9a-f].* prunable$"
++'
++
++test_expect_success '"list" all worktrees --porcelain with prunable' '
++	test_when_finished "rm -rf prunable out && git worktree prune" &&
++	git worktree add --detach prunable &&
++	rm -rf prunable &&
++	git worktree list --porcelain >out &&
++	sed -n "/^worktree .*\/prunable$/,/^$/p" <out >only_prunable &&
++	test_i18ngrep "^prunable gitdir file points to non-existent location$" only_prunable
++'
++
++test_expect_success '"list" all worktrees with prunable consistent with "prune"' '
++	test_when_finished "rm -rf prunable unprunable out && git worktree prune" &&
++	git worktree add --detach prunable &&
++	git worktree add --detach unprunable &&
++	rm -rf prunable &&
++	git worktree list >out &&
++	grep "/prunable  *[0-9a-f].* prunable$" out &&
++	! grep "/unprunable  *[0-9a-f].* unprunable$" out &&
++	git worktree prune --verbose >out &&
++	test_i18ngrep "^Removing worktrees/prunable" out &&
++	test_i18ngrep ! "^Removing worktrees/unprunable" out
++'
++
+ test_expect_success 'bare repo setup' '
+ 	git init --bare bare1 &&
+ 	echo "data" >file1 &&
 -- 
 2.30.0.421.g32f838e276
 
