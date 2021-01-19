@@ -2,90 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2E80C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66C4CC433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B978423131
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 343CA23131
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 07:48:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731460AbhASHsP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 02:48:15 -0500
-Received: from mail2.pdinc.us ([67.90.184.28]:46756 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729440AbhASHpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 02:45:02 -0500
-Received: from [10.42.0.115] (cpe-173-88-170-197.neo.res.rr.com [173.88.170.197])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10J7i22F011495
-        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO);
-        Tue, 19 Jan 2021 02:44:03 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10J7i22F011495
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1611042244; bh=8HfdA+UROvoQHQvR7USUSP8SaroV0yxbPg7gJqum4NU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=Bvm6AYwuqvV2hTl175J6zve+VmicHChMx1pDbfrWRl+mb2j+dK4VyQVyb8U9AdIJT
-         27YR0Pfu0b/e8O2dacmxmkdBpUsjxpP2DDBaX7wVs68HhbKOXg1N0Ut0VgR2Ae08pQ
-         ys6F3rkhyTgBeIAznsNM05dxvOnoyBPr4SYGaZ92zrWrmWIarEzRFxO6XxJNBtpQ9q
-         KOt/45GTOZgDEvDFjIG9XhCAULNgG1QKmKiuMn5EigB+/5K2fdlB5W4SZknOBu+BJk
-         DzSJMLfleKfg/o8NN2MWH1vVP/DTKVG0QoqdQWwdRs+FSLV26xrdjWuJLEy8JukmiG
-         UBrX2gO64hWzw==
-Subject: Re: [PATCH 2/2] revision: implement --show-linear-break for --graph
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
- <20210117110337.429994-1-kmarek@pdinc.us>
- <20210117110337.429994-3-kmarek@pdinc.us>
- <xmqqsg6zkwa8.fsf@gitster.c.googlers.com>
- <xmqq35yzknbr.fsf@gitster.c.googlers.com>
- <04c81462-3181-37d7-0109-4292040b84e9@pdinc.us>
- <xmqqmtx6j6wt.fsf@gitster.c.googlers.com>
-From:   Kyle Marek <kmarek@pdinc.us>
-Message-ID: <04380a95-b8cf-f246-e496-dc469f617eb5@pdinc.us>
-Date:   Tue, 19 Jan 2021 02:44:02 -0500
-User-Agent: Mozilla/5.0 (X11; Linux ppc64le; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1731462AbhASHsX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 02:48:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50504 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730703AbhASHp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 02:45:29 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF0D9C0613D6
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:48 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id kx7so1993595pjb.2
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 23:44:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=v06s6aZ+KsNyeYsi4lspk3/ZKiIaKcsSjXUrM9gZ5v8=;
+        b=D5TPk44OUbeWFTrTMNXonRZ8+Jtt3l8we9NpaCe7xNJKHFt9qxNGLGRHwj8NuM2kMO
+         H+RdJr8OYtgT5c/sfINaC4iqI5PHztMWwIT3ZnNa5SAz4XhL9j3pNqNUeJvWYUzbtUdd
+         i+3p0bq0EtgHCBiSIHWM2uhATD6iIugi4WPwxpYDFxyIyqW+fCjmaeU7k9LEW5n3v2Dt
+         SvvtzXGKZMGUptuZRg19zSVqh31x57U5glJTB89SHJQd/0eLRS+HfFRDgTcD4ZOKtjHs
+         dn7ctbj3TC72EsSH9AWEAcmw0jD7vxeyjXknI/9rZFZeb/++VJzMEqEX5FvPmTUvPgRX
+         9/fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=v06s6aZ+KsNyeYsi4lspk3/ZKiIaKcsSjXUrM9gZ5v8=;
+        b=at5oPMLlMianOp7pjMlgTFS/cC1e2yX7i9NeBJdyd7rVRtq7HvwVsG+XM0pghN1mIF
+         sUJrhqBchiEYf5S+d7v4gc8WOaYmdV55ztiGZsTrQDWBNtVIItcGktUtrOWqgOFoQaiL
+         cxhQJrWvUFc24DBBK7HTUx18GeWya1e9YfTwWMOJPusV5rcYpuD5ngRaPkEEvIYgt+At
+         nR8nUvrqQloH+i6qAYZMOmLPM2bxW/TTaVUBLU0hiaXo1wO6hZSXT95tscT48GN0D3hz
+         FlBQbF/Q2pwaf1mRWkF+JTt44Uj8R4KVVyiNEczZMtxk6M0IZEIhuOzz8aPMoO+HNgDh
+         +Q3A==
+X-Gm-Message-State: AOAM530Di+odVw4+WUTf52RTUnEQgWl9Bd98Uy9MwSowpTEa2lDnEthi
+        gXrMvVmG+U5b47njvOQnqHySPnOPvssLKg==
+X-Google-Smtp-Source: ABdhPJzS3oSUdUfFy3WTbmpH1ye86Rk22E+JlyjOWOnKwIEJSHGpFKIQHWzdxmRWWsMLdDn+rghoIg==
+X-Received: by 2002:a17:90a:be05:: with SMTP id a5mr3987101pjs.142.1611042288103;
+        Mon, 18 Jan 2021 23:44:48 -0800 (PST)
+Received: from localhost.localdomain ([2409:4050:2d0e:58a:55d6:8648:6f7a:9f93])
+        by smtp.googlemail.com with ESMTPSA id x1sm19201525pgj.37.2021.01.18.23.44.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jan 2021 23:44:47 -0800 (PST)
+From:   Charvi Mendiratta <charvi077@gmail.com>
+To:     git@vger.kernel.org
+Cc:     chriscool@tuxfamily.org, phillip.wood@dunelm.org.uk,
+        me@ttaylorr.com, gitster@pobox.com,
+        Charvi Mendiratta <charvi077@gmail.com>
+Subject: [PATCH v2 9/9] doc/git-rebase: add documentation for fixup [-C|-c] options
+Date:   Tue, 19 Jan 2021 13:11:04 +0530
+Message-Id: <20210119074102.21598-10-charvi077@gmail.com>
+X-Mailer: git-send-email 2.29.0.rc1
+In-Reply-To: <20210108092345.2178-1-charvi077@gmail.com>
+References: <20210108092345.2178-1-charvi077@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmtx6j6wt.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/18/21 4:01 PM, Junio C Hamano wrote:
-> Kyle Marek <kmarek@pdinc.us> writes:
->
->> Me too, but I think a user-defined mark needs to be a string to
->> support Unicode characters.
-> Ahh, I didn't even consider making it user-defined.
->
-> As it seems a lot safer to make this an optional feature, it does
-> sort-of make sense to let the letters used for root & left-root be
-> customizable, and it does make sense to take a multi-byte character,
-> but I am not sure what implications it has if we allowed any string
-> without ensuring that it occupies one display column.
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+---
+ Documentation/git-rebase.txt | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-Does git, or a dependency library, have the ability to interpret TERM 
-and locale to determine on-screen character count/size?
-
-If not, maybe let users use multi-character strings, but call it misuse 
-of the option that will mess offset that row of the --graph output until 
-we have something to determine on-screen size.
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index a0487b5cc5..776507e0cc 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -887,9 +887,15 @@ If you want to fold two or more commits into one, replace the command
+ "pick" for the second and subsequent commits with "squash" or "fixup".
+ If the commits had different authors, the folded commit will be
+ attributed to the author of the first commit.  The suggested commit
+-message for the folded commit is the concatenation of the commit
+-messages of the first commit and of those with the "squash" command,
+-but omits the commit messages of commits with the "fixup" command.
++message for the folded commit is created as follows:
++
++ - It is made using the commit message of a commit with the "fixup -C"
++   or "fixup -c" command. In the later case an editor is opened to edit
++   the commit message.
++ - Otherwise it's the concatenation of the commit messages of the first
++   commit and of those with the "squash" command.
++ - It omits the commit messages of commits with the "fixup"
++   (without -C or -c) command.
+ 
+ 'git rebase' will stop when "pick" has been replaced with "edit" or
+ when a command fails due to merge errors. When you are done editing
 -- 
-
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Kyle Marek                        PD Inc. http://www.pdinc.us -
-- Jr. Developer                     10 West 24th Street #100    -
-- +1 (443) 269-1555 x361            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+2.29.0.rc1
 
