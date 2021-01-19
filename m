@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 334D6C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 412ECC433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:26:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 09C6323109
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:25:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DDD623104
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 23:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728901AbhASXZZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 18:25:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55632 "EHLO
+        id S1728179AbhASXZd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 18:25:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726110AbhASXYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 18:24:50 -0500
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F877C0613CF
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:08 -0800 (PST)
-Received: by mail-qv1-xf31.google.com with SMTP id et9so10050624qvb.10
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:08 -0800 (PST)
+        with ESMTP id S1727775AbhASXYp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 18:24:45 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71397C0613C1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:04 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id c1so15084384qtc.1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 15:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=PqU+6DTH9aRvSUUcaLWg7iqC3AzZv+L1Enj2sn/bebI=;
-        b=olnww4AJ3puGhKJ0D56vqgAw9e2t4idsXGEIyIqfbxa0cOffzLk1jVEJPdNYqoMpf6
-         DCIHWDb9RbOTJaw2iXaGVy+HcGUuS8Yp/KhIE8p/B4cS1/k8umaVNcp9Okfyy9fW/8Af
-         SiopjXF7uIc56r5m0xn1W//0wGjL5NXDiXlKGyj2kiYg5MGqPDxd/WmiTT4IzDRoW81C
-         M7TRDyUWA5bfB7iMl8kisr/MIUCoRcIaBsB/6WrrRx52//TrFIu4Euujht/NDjCa7ulB
-         W0clyHuo+u94/MuyZFZTq6aO7UkKitk4J4cnxjAI0lnwt/EIqs7RhQszi+TDhOzFWFKs
-         +fYA==
+        bh=PcVhayTf7fnq2JBG6Qp5ng2A2l0h8mJH3Hk6zzczxWQ=;
+        b=zwSkl8MKQXDFlZ01FmnYvUvRHIJy5S163fBA6l50G1cxPEtGgGNLe/Hsi7rqPgda28
+         G9yUzbwH7+5wNNpD30lBZS8Eg8vxChlHvpzKsEn5TTcNCYfEVIdxuvl4bwgoVtBKhvwB
+         MZZnAHsZoZkm4l2SZeHRzCyKOQet0pvD0jhRmlTNae1emE42tS/BNt97NghDJBNSOwJG
+         x6RlQBwqhs9U1/CCPDe81xA9EiosF8SRg1IcEyKjSR1ET81nmWxzHcx4/O/AQCUn19Sd
+         5R3NqVY+6YoQoOn/HllrQeFRYUS4+HILHXQuTQnKYRdQEb+VkaLToIcM4d/sA/58Dlas
+         GhIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=PqU+6DTH9aRvSUUcaLWg7iqC3AzZv+L1Enj2sn/bebI=;
-        b=rMUmWQGaShulji7Jf/WzCSPsInzOUleLBMXeI4L+90otZw62ewHvSQHoHxTHbnViBE
-         BmmhXI+7PsaKSvQJ5QKC0ufLoyXBndEq4V/acyTgf/9tFRgAn7YBIJvz3OSn+xMBN0EE
-         T+Wd/8Jo7Ih8qc2cZp8ScFm9sk1gkfUm4h3jNo1v3MZVoJ71XEoqASLlxLYU/pVOLRs9
-         NLOW10C2VILHMn6FYrVoXBaxhBsjYkuZvkko8yhzn/ZoErrby7nEhTqm9FTCTwuAF5Hw
-         yf3MWwFpGlyH4j0rPJHt1P4ByqfWvu+oEIgj8YhaX3tAoIwcJsdWAD9WYSoNlAW23apY
-         uVcQ==
-X-Gm-Message-State: AOAM530QE2Ac2lNsWYZ015UFrR0X+K7J4wRRYzAIJSY4fTiUCkaYoJER
-        2WOFDdWcBLYGOF4D7GkmS+mp+WmoBZDi9w==
-X-Google-Smtp-Source: ABdhPJz7BmRROOQHSNRA33KRnTfOnBAJVUFWkCr5g/Fa7mesCEccNyfknP98bD9vk23/CmKSctvT+g==
-X-Received: by 2002:a05:6214:11e7:: with SMTP id e7mr2331524qvu.47.1611098647170;
-        Tue, 19 Jan 2021 15:24:07 -0800 (PST)
+        bh=PcVhayTf7fnq2JBG6Qp5ng2A2l0h8mJH3Hk6zzczxWQ=;
+        b=Ft5EQaC90EUnkgwjcaWute3KXntem52AhdLuOOhSZFMdLlLp5u+uYZd61q5VBetAJ3
+         ZD8/PxOpSGmM4/KTR8mrhLv86Bzd5w0ZaMwaNo4dkWyoaxs6WwxHwDTRMMZEVbAe/IGJ
+         rdWpl927fhezGG2dz2pbXXfWRi9MfVYVapHtBa4FE4arYw2+cbajvD7BxhztRNuxr1Tw
+         rwlaKeNdRokaio4bU1xr9N3MTsdGQnt5zGyUHuW0LVX8V8jQGHtXv0vbf9VmcebeTs2v
+         jysbZDVORwfBKjeEP6UF0ebujqeaWG5V3Ta1meO2Y/zklvPP7puekYkpX/RNR/VgHVdv
+         GwGg==
+X-Gm-Message-State: AOAM530gaIuX4oDCGiGAj7gGmNj7spQPWC4y+DC7F1+dkoBGmYNL7x01
+        Hz7lueItguK3l7UJOZHqNSy607hGPKp83Q==
+X-Google-Smtp-Source: ABdhPJz4uy7gbuaqby4lA+p+nZ/u8Jy7B9gP6V7jW2ObZuAJu7WTylxe50j3zbOYqbSpw6+JomPqqw==
+X-Received: by 2002:ac8:110e:: with SMTP id c14mr6358747qtj.293.1611098643348;
+        Tue, 19 Jan 2021 15:24:03 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id h75sm154161qke.130.2021.01.19.15.24.06
+        by smtp.gmail.com with ESMTPSA id m64sm164972qkb.90.2021.01.19.15.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 15:24:06 -0800 (PST)
-Date:   Tue, 19 Jan 2021 18:24:05 -0500
+        Tue, 19 Jan 2021 15:24:02 -0800 (PST)
+Date:   Tue, 19 Jan 2021 18:24:00 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH 02/10] revision: learn '--no-kept-objects'
-Message-ID: <4184529648abe7451b5c7b772493df8c067cec82.1611098616.git.me@ttaylorr.com>
+Subject: [PATCH 01/10] packfile: introduce 'find_kept_pack_entry()'
+Message-ID: <dc7fa4c7a61f657e779e10385d3e8076d6dac36c.1611098616.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,200 +70,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some callers want to perform a reachability traversal that terminates
-when an object is found in a kept pack. The closest existing option is
-'--honor-pack-keep', but this isn't quite what we want. Instead of
-halting the traversal midway through, a full traversal is always
-performed, and the results are only trimmed afterwords.
+Future callers will want a function to fill a 'struct pack_entry' for a
+given object id but _only_ from its position in any kept pack(s). They
+could accomplish this by calling 'find_pack_entry()' and checking
+whether the found pack is kept or not, but this is insufficient, since
+there may be duplicate objects (and the mru cache makes it unpredictable
+which variant we'll get).
 
-Besides needing to introduce a new flag (since culling results
-post-facto can be different than halting the traversal as it's
-happening), there is an additional wrinkle handling the distinction
-in-core and on-disk kept packs. That is: what kinds of kept pack should
-stop the traversal?
+Teach this new function to treat the two different kinds of kept packs
+(on disk ones with .keep files, as well as in-core ones which are set by
+manually poking the 'pack_keep_in_core' bit) separately. This will
+become important for callers that only want to respect a certain kind of
+kept pack.
 
-Introduce '--no-kept-objects[=<on-disk|in-core>]' to specify which kinds
-of kept packs, if any, should stop a traversal. This can be useful for
-callers that want to perform a reachability analysis, but want to leave
-certain packs alone (for e.g., when doing a geometric repack that has
-some "large" packs it wants to leave alone).
+Introduce 'find_kept_pack_entry()' which behaves like
+'find_pack_entry()', except that it skips over packs which are not
+marked kept. Callers will be added in subsequent patches.
 
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/rev-list-options.txt |  7 +++
- list-objects.c                     |  7 +++
- revision.c                         | 15 +++++++
- revision.h                         |  4 ++
- t/t6114-keep-packs.sh              | 69 ++++++++++++++++++++++++++++++
- 5 files changed, 102 insertions(+)
- create mode 100755 t/t6114-keep-packs.sh
+ packfile.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++-----
+ packfile.h |  6 +++++
+ 2 files changed, 65 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 002379056a..817419d552 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -856,6 +856,13 @@ ifdef::git-rev-list[]
- 	Only useful with `--objects`; print the object IDs that are not
- 	in packs.
+diff --git a/packfile.c b/packfile.c
+index 62d92e0c7c..30f43a1a35 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2015,7 +2015,10 @@ static int fill_pack_entry(const struct object_id *oid,
+ 	return 1;
+ }
  
-+--no-kept-objects[=<kind>]::
-+	Halts the traversal as soon as an object in a kept pack is
-+	found. If `<kind>` is `on-disk`, only packs with a corresponding
-+	`*.keep` file are ignored. If `<kind>` is `in-core`, only packs
-+	with their in-core kept state set are ignored. Otherwise, both
-+	kinds of kept packs are ignored.
+-int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
++static int find_one_pack_entry(struct repository *r,
++			       const struct object_id *oid,
++			       struct pack_entry *e,
++			       int kept_only)
+ {
+ 	struct list_head *pos;
+ 	struct multi_pack_index *m;
+@@ -2025,26 +2028,77 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
+ 		return 0;
+ 
+ 	for (m = r->objects->multi_pack_index; m; m = m->next) {
+-		if (fill_midx_entry(r, oid, e, m))
++		if (!(fill_midx_entry(r, oid, e, m)))
++			continue;
 +
- --object-names::
- 	Only useful with `--objects`; print the names of the object IDs
- 	that are found. This is the default behavior.
-diff --git a/list-objects.c b/list-objects.c
-index e19589baa0..b06c3bfeba 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -338,6 +338,13 @@ static void traverse_trees_and_blobs(struct traversal_context *ctx,
- 			ctx->show_object(obj, name, ctx->show_data);
- 			continue;
- 		}
-+		if (ctx->revs->no_kept_objects) {
-+			struct pack_entry e;
-+			if (find_kept_pack_entry(ctx->revs->repo, &obj->oid,
-+						 ctx->revs->keep_pack_cache_flags,
-+						 &e))
-+				continue;
++		if (!kept_only)
++			return 1;
++
++		if (((kept_only & ON_DISK_KEEP_PACKS) && e->p->pack_keep) ||
++		    ((kept_only & IN_CORE_KEEP_PACKS) && e->p->pack_keep_in_core))
+ 			return 1;
+ 	}
+ 
+ 	list_for_each(pos, &r->objects->packed_git_mru) {
+ 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
+-		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
+-			list_move(&p->mru, &r->objects->packed_git_mru);
+-			return 1;
++		if (p->multi_pack_index && !kept_only) {
++			/*
++			 * If this pack is covered by the MIDX, we'd have found
++			 * the object already in the loop above if it was here,
++			 * so don't bother looking.
++			 *
++			 * The exception is if we are looking only at kept
++			 * packs. An object can be present in two packs covered
++			 * by the MIDX, one kept and one not-kept. And as the
++			 * MIDX points to only one copy of each object, it might
++			 * have returned only the non-kept version above. We
++			 * have to check again to be thorough.
++			 */
++			continue;
 +		}
- 		if (!path)
- 			path = "";
- 		if (obj->type == OBJ_TREE) {
-diff --git a/revision.c b/revision.c
-index 1bb590ece7..ff1ea77224 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2334,6 +2334,16 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->unpacked = 1;
- 	} else if (starts_with(arg, "--unpacked=")) {
- 		die(_("--unpacked=<packfile> no longer supported"));
-+	} else if (!strcmp(arg, "--no-kept-objects")) {
-+		revs->no_kept_objects = 1;
-+		revs->keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+		revs->keep_pack_cache_flags |= ON_DISK_KEEP_PACKS;
-+	} else if (skip_prefix(arg, "--no-kept-objects=", &optarg)) {
-+		revs->no_kept_objects = 1;
-+		if (!strcmp(optarg, "in-core"))
-+			revs->keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+		if (!strcmp(optarg, "on-disk"))
-+			revs->keep_pack_cache_flags |= ON_DISK_KEEP_PACKS;
- 	} else if (!strcmp(arg, "-r")) {
- 		revs->diff = 1;
- 		revs->diffopt.flags.recursive = 1;
-@@ -3822,6 +3832,11 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 		return commit_ignore;
- 	if (revs->unpacked && has_object_pack(&commit->object.oid))
- 		return commit_ignore;
-+	if (revs->no_kept_objects) {
-+		if (has_object_kept_pack(&commit->object.oid,
-+					 revs->keep_pack_cache_flags))
-+			return commit_ignore;
-+	}
- 	if (commit->object.flags & UNINTERESTING)
- 		return commit_ignore;
- 	if (revs->line_level_traverse && !want_ancestry(revs)) {
-diff --git a/revision.h b/revision.h
-index 086ff10280..15d0e6aee5 100644
---- a/revision.h
-+++ b/revision.h
-@@ -148,6 +148,7 @@ struct rev_info {
- 			edge_hint_aggressive:1,
- 			limited:1,
- 			unpacked:1,
-+			no_kept_objects:1,
- 			boundary:2,
- 			count:1,
- 			left_right:1,
-@@ -312,6 +313,9 @@ struct rev_info {
- 	 * This is loaded from the commit-graph being used.
- 	 */
- 	struct bloom_filter_settings *bloom_filter_settings;
-+
-+	/* misc. flags related to '--no-kept-objects' */
-+	unsigned keep_pack_cache_flags;
- };
++		if (!kept_only ||
++		    (((kept_only & ON_DISK_KEEP_PACKS) && p->pack_keep) ||
++		     ((kept_only & IN_CORE_KEEP_PACKS) && p->pack_keep_in_core))) {
++			if (fill_pack_entry(oid, e, p)) {
++				list_move(&p->mru, &r->objects->packed_git_mru);
++				return 1;
++			}
+ 		}
+ 	}
+ 	return 0;
+ }
  
- int ref_excluded(struct string_list *, const char *path);
-diff --git a/t/t6114-keep-packs.sh b/t/t6114-keep-packs.sh
-new file mode 100755
-index 0000000000..9239d8aa46
---- /dev/null
-+++ b/t/t6114-keep-packs.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='rev-list with .keep packs'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit loose &&
-+	test_commit packed &&
-+	test_commit kept &&
-+
-+	KEPT_PACK=$(git pack-objects --revs .git/objects/pack/pack <<-EOF
-+	refs/tags/kept
-+	^refs/tags/packed
-+	EOF
-+	) &&
-+	MISC_PACK=$(git pack-objects --revs .git/objects/pack/pack <<-EOF
-+	refs/tags/packed
-+	^refs/tags/loose
-+	EOF
-+	) &&
-+
-+	touch .git/objects/pack/pack-$KEPT_PACK.keep
-+'
-+
-+rev_list_objects () {
-+	git rev-list "$@" >out &&
-+	sort out
++int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
++{
++	return find_one_pack_entry(r, oid, e, 0);
 +}
 +
-+idx_objects () {
-+	git show-index <$1 >expect-idx &&
-+	cut -d" " -f2 <expect-idx | sort
++int find_kept_pack_entry(struct repository *r,
++			 const struct object_id *oid,
++			 unsigned flags,
++			 struct pack_entry *e)
++{
++	/*
++	 * Load all packs, including midx packs, since our "kept" strategy
++	 * relies on that. We're relying on the side effect of it setting up
++	 * r->objects->packed_git, which is a little ugly.
++	 */
++	get_all_packs(r);
++	return find_one_pack_entry(r, oid, e, flags);
 +}
 +
-+test_expect_success '--no-kept-objects excludes trees and blobs in .keep packs' '
-+	rev_list_objects --objects --all --no-object-names >kept &&
-+	rev_list_objects --objects --all --no-object-names --no-kept-objects >no-kept &&
+ int has_object_pack(const struct object_id *oid)
+ {
+ 	struct pack_entry e;
+ 	return find_pack_entry(the_repository, oid, &e);
+ }
+ 
++int has_object_kept_pack(const struct object_id *oid, unsigned flags)
++{
++	struct pack_entry e;
++	return find_kept_pack_entry(the_repository, oid, flags, &e);
++}
 +
-+	idx_objects .git/objects/pack/pack-$KEPT_PACK.idx >expect &&
-+	comm -3 kept no-kept >actual &&
+ int has_pack_index(const unsigned char *sha1)
+ {
+ 	struct stat st;
+diff --git a/packfile.h b/packfile.h
+index a58fc738e0..624327f64d 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -161,13 +161,19 @@ int packed_object_info(struct repository *r,
+ void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
+ const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1);
+ 
++#define ON_DISK_KEEP_PACKS 1
++#define IN_CORE_KEEP_PACKS 2
++#define ALL_KEEP_PACKS (ON_DISK_KEEP_PACKS | IN_CORE_KEEP_PACKS)
 +
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--no-kept-objects excludes kept non-MIDX object' '
-+	test_config core.multiPackIndex true &&
-+
-+	# Create a pack with just the commit object in pack, and do not mark it
-+	# as kept (even though it appears in $KEPT_PACK, which does have a .keep
-+	# file).
-+	MIDX_PACK=$(git pack-objects .git/objects/pack/pack <<-EOF
-+	$(git rev-parse kept)
-+	EOF
-+	) &&
-+
-+	# Write a MIDX containing all packs, but use the version of the commit
-+	# at "kept" in a non-kept pack by touching $MIDX_PACK.
-+	touch .git/objects/pack/pack-$MIDX_PACK.pack &&
-+	git multi-pack-index write &&
-+
-+	rev_list_objects --objects --no-object-names --no-kept-objects HEAD >actual &&
-+	(
-+		idx_objects .git/objects/pack/pack-$MISC_PACK.idx &&
-+		git rev-list --objects --no-object-names refs/tags/loose
-+	) | sort >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_done
+ /*
+  * Iff a pack file in the given repository contains the object named by sha1,
+  * return true and store its location to e.
+  */
+ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e);
++int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsigned flags, struct pack_entry *e);
+ 
+ int has_object_pack(const struct object_id *oid);
++int has_object_kept_pack(const struct object_id *oid, unsigned flags);
+ 
+ int has_pack_index(const unsigned char *sha1);
+ 
 -- 
 2.30.0.138.g6d7191ea01
 
