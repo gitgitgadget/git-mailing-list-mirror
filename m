@@ -2,143 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E5C6C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA0E9C433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:23:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1567620706
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:12:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71036216FD
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 19:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729468AbhASTLs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 14:11:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56788 "EHLO
+        id S1728606AbhASTWp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 14:22:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729396AbhASTJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 14:09:48 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59E11C061574
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:09:08 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id z11so22955791qkj.7
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:09:08 -0800 (PST)
+        with ESMTP id S1729746AbhASTNt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 14:13:49 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5625AC061575
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:13:09 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id t17so16321054pgu.1
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 11:13:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=BuGr0S3IjzAnhbG7ubkFP+eBFWabAa0J+zEzm4pJT0A=;
-        b=UGkk/gsGCM/I26ON1KSgiyQbADyMa35iw0FT2wFbZWkPpoqgAs03opJWEvktmlF+yQ
-         2+4Kqk0a0+VbMHwdRreCoa5L5LOuygSABcgyB31H5DHGJ9E5UKoLH1GM5P6J3yQTBHB4
-         5fv7+WgpI66IU5Uw/jzpI4xkoI8sEcAp9YbvON+0FLOPJ/8dDwi70EQikikVNSozpH1M
-         EiD3+/Izaj18Z7q71uGMzqJhPvBQJuWt6YONeqOCFAp3PMIlHh+yzW+3IunMBi1j4R7r
-         pXzg0ay9zAnkG+9X10l7ppLS1DzcVSPOu/GOqN4weJ97pBWpUhLfF8/GSSD8u2MktRCu
-         0ytQ==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=0WST5k4ASI4GN2B2jlVxNCQ/elx1rCpHcr1NlPdpt64=;
+        b=uquR4wyMokACam870AQZMyuu/BjAIHv0R13vHTEc6Pi4DLHraIfK/t1P6qSk77KkCr
+         zNm4rtA3FykdehplRP1W0AWj1soEGrkFNwpTZc4iXNTqeaQ2jcdLpyjcfJTn+jdxNofO
+         vn9zfoXP37F0Cd5gyV0JEFp/aKEfDJeahA9l4taZWITsZeCAm7Ik0dkgrWKu9vOA6Gkq
+         jaetjEaswCfmIpO9DaqIeaxEO58kDPi3zAWJQEqMjD0V6jGRTv9YSf6w4vuOzbJ/7ZgU
+         fufLc2VeADoiwvAsO+yRxH4a4iodk9D0146Jl6pH+co7OAEQ3A0tDVZi3A8X4fOCk4Vp
+         w4Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BuGr0S3IjzAnhbG7ubkFP+eBFWabAa0J+zEzm4pJT0A=;
-        b=pCk94OGg3HRPuKHIwcyTS5DpVIroJiyjeYDb7XejkD1qceqvl/oWjGpQlJ98fMJSgr
-         odyJGZsj0SKz3zDbKCS40TcsJGjsi0jSd79f2os5zDO3slH4weOCgyqSVMA42Mso/wE6
-         kTDsQ9D6DGv2LTc5F55jDKsN2p+dByF0vYCGRwvYkui0uP6NWJcl9C01e572F0tGWent
-         hNhzhGvbfc4HSN+NSwvm3I5mxgQYOPE0g9KXj105cE8Kf7fXJXvq0DMAm+febOATfvvf
-         iXNUDHRQY5UQKNSErxaoyY+EGa2c/1FKcSXPI8ZLWFauDjOZiz8+UMfvAtKUiDiTLa6h
-         JyIQ==
-X-Gm-Message-State: AOAM531lN3pXBGwwZFVFcCLUXztZD8wZvaEmjL+7Z6S7DI9/Bdbc6f5/
-        s3il62gN+TCx5P7XMTGnmCTRLg==
-X-Google-Smtp-Source: ABdhPJxiQWG96CelgYMHaWy3Lh3E/m5/oQ3pTbcZSRqo601bV5sR1cPtXXMXUDRsEkyfoBFc7o173g==
-X-Received: by 2002:ae9:e50b:: with SMTP id w11mr5792366qkf.306.1611083347608;
-        Tue, 19 Jan 2021 11:09:07 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id l20sm13587055qtu.25.2021.01.19.11.09.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 11:09:06 -0800 (PST)
-Date:   Tue, 19 Jan 2021 14:09:04 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] ls-refs.c: minimize number of refs visited
-Message-ID: <YAcuUDqfvKzfHFMb@nand.local>
-References: <20210119144251.27924-1-jacob@gitlab.com>
- <20210119144251.27924-2-jacob@gitlab.com>
- <YAcE/dTuOB9PbGQU@nand.local>
- <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=0WST5k4ASI4GN2B2jlVxNCQ/elx1rCpHcr1NlPdpt64=;
+        b=hX03cHE1d1HTc+SqU0MEsjvSuUIbCQyZ9flKdJ0QrkNPNwfcpx3QskPD8VB+OlmbVS
+         K+TpPqr8RZRb95oCOuaQ7Y87130xAHd1i+OvbSSWATVg9vygoXLbP+Ijx2TO3rt7foFz
+         FOo0jMte/3ML4rqEDPheOJJHehBlGlAoWx6mmsOkXNWw/UFATAwa0Lw+TsG1TAdsT3Go
+         J5zl3CoZxUxwcVkhbohGn3RVBTMb4rg75DN6tA2rfrmIiynssMQonPOAXRkwB46BqaiV
+         0PYEy29oOPPrlny7YVCJaP1EjnbJwWTcrxUPl0Ys7z2kuu3Tcy9vOOJglSAWBeBaX9OB
+         xMYQ==
+X-Gm-Message-State: AOAM530h6fPagL+9+2XNBpYTu/7e7WAvuGowzsVNwH36O3iMJFFWPAH7
+        g4+fOdkXwYNravZKNrY7qal+4R34piSIWoc4iSwK
+X-Google-Smtp-Source: ABdhPJwwAwAwlqaCDMhlbHHhMYyMc4+9KOL6A+jWqu7EdkSNCp+vrJ/zPKaJCnLrEYN9N7RcUy7oIf/LqWn0uIKIsucT
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:ac93:b029:db:c725:e321 with
+ SMTP id h19-20020a170902ac93b02900dbc725e321mr6333688plr.41.1611083588666;
+ Tue, 19 Jan 2021 11:13:08 -0800 (PST)
+Date:   Tue, 19 Jan 2021 11:13:06 -0800
+In-Reply-To: <d2ca2fec-a353-787a-15a7-3831a665523e@gmail.com>
+Message-Id: <20210119191306.1500480-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <d2ca2fec-a353-787a-15a7-3831a665523e@gmail.com>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
+Subject: Re: RFC on packfile URIs and .gitmodules check
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     stolee@gmail.com
+Cc:     me@ttaylorr.com, gitster@pobox.com, jonathantanmy@google.com,
+        git@vger.kernel.org, peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 06:42:56PM +0100, Jacob Vosmaer wrote:
-> Hi Taylor,
->
-> Thanks for your reply. That sounds like a great idea!
->
-> On Tue, Jan 19, 2021 at 5:12 PM Taylor Blau <me@ttaylorr.com> wrote:
-> > But, I think that we could get pretty far by treating the prefixes as
-> > refs so that we can call ref-filter.c:find_longest_prefixes(). For its
-> > purposes, it doesn't really care about whether or not the arguments
-> > actually are references. It simply returns the longest common prefix
-> > among all of its arguments (delimited by '/' characters).
->
-> What does "delimited by /" mean?
+> I'm contributing a quick suggestion for just this item:
+> 
+> >>> This happens because the fsck part is currently being done in
+> >>> index-pack, which operates on one pack at a time. When index-pack sees
+> >>> the tree, it runs fsck on it (like any other object), and the fsck
+> >>> subsystem remembers the .gitmodules target (specifically, in
+> >>> gitmodules_found in fsck.c). Later, index-pack runs fsck_finish() which
+> >>> checks if the target exists, but it doesn't, so it reports the failure.
+> >>
+> >> Is this because the gitmodules blob is contained in the base image
+> >> served via the pack URI mechansim, and the "dynamic" packfile for
+> >> the latest part of the history refers to the gitmodules file that is
+> >> unchanged, hence the latter one lacks it?
+> > 
+> > That seems like a likely explanation, although this seems ultimately up
+> > to what the pack CDN serves.
+> >> You've listed two possible solutions, i.e.
+> >>
+> >>  (1) punt and declare that we assume an missing and uncheckable blob
+> >>      is OK,
+> >>
+> >>  (2) defer the check after transfer completes.
+> >>
+> >> Between the two, my gut feeling is that the latter is preferrable.
+> >> If we assume an missing and uncheckable one is OK, then even if a
+> >> blob is available to be checked, there is not much point in
+> >> checking, no?
+> > 
+> > I'm going to second this. If this were a more benign check, then I'd
+> > perhaps feel differently, but .gitmodules fsck checks seem to get
+> > hardened fairly often during security releases, and so it seems
+> > important to keep performing them when the user asked for it.
+> 
+> It might be nice to teach 'index-pack' a mode that says certain
+> errors should be reported as warnings by writing the problematic
+> OIDs to stdout/stderr. Then, the second check after all packs are
+> present can focus on those problematic objects instead of
+> re-scanning everything.
 
-Ah, I just meant that it looks for the longest common prefix where it
-will only split at '/' characters. But, that's not right at all:
-find_longest_prefixes_1() will happily split anywhere there is a
-difference.
-
-> Without really understanding the longest common prefix code in
-> ref-filter.c, my intuitive concern is that the specifics of glob
-> matching and special treatment of '/' may bite us. I suppose we'll be
-> fine because ls-refs has its own matching logic. So long as
-> for_each_fullref_in_prefixes yield enough prefixes, the end result
-> would remain the same.
-
-Right. We can ignore the concern about '/' (seeing my comment above),
-and note that find_longest_prefixes_1() breaks on glob metacharacters,
-so we'll only match or overmatch the desired set (and we'll never
-undermatch).
-
-I made sure to write in the second patch downthread that
-ls-refs.c:send_ref() correctly handles receiving too many refs (and it
-discards ones that it doesn't want).
-
-> The question is then, does for_each_fullref_in_prefixes yield
-> everything we need?
-
-For the reasons above, yes: it will.
-
-> I think my approach would be to expose the new
-> for_each_fullref_in_prefixes iterator you propose through test-tool,
-> and unit test it so we can be sure it handles both contexts
-> (for-each-refs with globs and special '/', and ls-refs without any
-> special character behavior) correctly.
->
-> I may be overly cautious here, take this with a grain of salt because
-> I am not an experienced Git contributor. On that topic, apologies if
-> I'm botching my inline replies in this email.
-
-I do appreciate your caution, but I'm not sure exposing a test-tool is
-necessary, since we already test this behavior extensively in t6300 (and
-now t5701, t5702 and t5704, too).
-
-> Regarding your patch: it works correctly and as fast as expected for
-> my development "many refs" test case. Yay! It also segfaults and fails
-> some tests but see my comments below.
->
-> All in all: thanks, great idea, yes we should reuse, I only lack
-> confidence on correctness because I don't fully grasp your
-> longest-common-prefix algorithm yet.
-
-:-). Thanks for the pointers on the spots that I had missed (as I
-mentioned, I only compiled it before sending, so having an additional
-set of more careful eyes was quite helpful).
-
-
-Thanks,
-Taylor
+My initial reaction was that stdout is already used to report the hash
+part of the generated name and that stderr is already used for whatever
+warnings there are, but looking at the documentation, index-pack
+--fsck-objects is "[for] internal use only", so it might be fine to
+extend the output format in this case and report the problematic OIDs
+after the hash. I'll take a look.
