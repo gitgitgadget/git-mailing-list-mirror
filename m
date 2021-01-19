@@ -2,142 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 818C7C43331
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C01C43603
 	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:30:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59AE922AAA
+	by mail.kernel.org (Postfix) with ESMTP id 98C8A22AAA
 	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 18:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733193AbhASSWp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 13:22:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46010 "EHLO
+        id S1726363AbhASSXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 13:23:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392531AbhASSUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 13:20:02 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0F6C061757
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 10:19:20 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id v5so14381421qtv.7
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 10:19:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hi4N2WNwddO33w2ira543eAG0bSqGyiGjl0UrnoQOCU=;
-        b=riaju/HPvsymt20f+bdw+Bl8g/VQH/DD3Q455q7EWI8YzRs2ZR0Gq2Xb5I2Mkm057c
-         3eaa880jit/CIZ/IOpjtncGGMK5pEftp1GmOiCXX2xKJDOyF7825XofJc8SO0+JFNySb
-         q3yFcI91JoDwj9v82hFEgEs9iSPb4UB3oCmMPRKFwbQgFY6ElXgVELtG8oLnmdRyKIRL
-         N1aWo+DFMwZdfW72JLwnG7YnJ01Zl0+tBkHDqB9rD5IVGTgJVUyJyLn9VldxfG/eBoPK
-         0F617rAKyFeqnBqvYUEpC0I7XzaOkmZidoEiTqhkLesDL5XHNSo1Sdt2un9EAXzauUiF
-         GF9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hi4N2WNwddO33w2ira543eAG0bSqGyiGjl0UrnoQOCU=;
-        b=qLfKRym99/1HWaFRkkLYD8QKvoa0j8C+DdSCpj4tHwmFevG9G2Sv651ZCffjnlLiGI
-         IPJ3YLJFWDL0/TSuYkMKc5O6FnarLdzMbtKn8ktPz9vaCf6SK0YBJu0khhnfYvCpp8h7
-         QtuVQnGrSD7Q8nPhSvhJK3ym29+eheu87XD+6U4sp7yPpCgaiHeRJiHWFxjdWxhxZqe6
-         iQohUVmIs8NAv1Ix4X5zFfBE0kOfOG1YPq+X901PMzhYL7VboQnjkmNTTqEjccrbyxJw
-         jv4aG1tS+loyQXCCOFkUhdGtzuA3xDjj5DUWLoergQo3rASsfuWTV0QDuiZ85//P7KjQ
-         zj6A==
-X-Gm-Message-State: AOAM531YnMT6Yh1oTB0LSjDB/pCFe+k1fND0CPHv5NuQPkdMY3fPy21A
-        9CRFZOc1X2/Ek2MDizehNTKF09BhD31P0g==
-X-Google-Smtp-Source: ABdhPJyERZgMvqZGDcTWRfaY7bWtY3Tetip3RJUqzUMjnpz2YnVW97qV79by/AADlC/sc6Bwvk3gmA==
-X-Received: by 2002:ac8:6d05:: with SMTP id o5mr5571018qtt.6.1611080359648;
-        Tue, 19 Jan 2021 10:19:19 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id k64sm13623723qkc.110.2021.01.19.10.19.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 10:19:19 -0800 (PST)
-Date:   Tue, 19 Jan 2021 13:19:17 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     jacob@gitlab.com, peff@peff.net
-Subject: [PATCH 2/2] ls-refs.c: traverse longest common ref prefix
-Message-ID: <fb8681d12864d724108c524834f9498d91e270e6.1611080326.git.me@ttaylorr.com>
-References: <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
- <cover.1611080326.git.me@ttaylorr.com>
+        with ESMTP id S2392490AbhASSXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 13:23:03 -0500
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [IPv6:2001:67c:2050::465:101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DEB8C061575
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 10:22:23 -0800 (PST)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4DKxp34dRFzQkKN;
+        Tue, 19 Jan 2021 19:22:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maddes.net; s=MBO0001;
+        t=1611080537;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=vXHq6voZRKiKKBPncUgIK9GgVTVCCfJFIi5BDuv83E8=;
+        b=S+aqo+rGyT/dgUR4gprczNVWxlccZ8iGRbTGGasgTL6OMnKWrI1VIJbDbsoq06C26RMLKP
+        5Q2lDs+Sb5il9N2wTf7UqJ+x+Op7u0eTCMjTqBuLB7O0JkIvVCfCtRS/4kum2m6VQS347P
+        1ddmUfbxIa6SUxiUFz3IphROdkxCeRzCCH7SjQiptUFz5bFgytgIA1kmbAEUPEp77GSXn4
+        ryv5PUWUM84I1Cmg9YpIJOeSmHDvcNpSYbaM+2rzxzpuuEad70LlKvXiprgPZCJx0Akx6I
+        AmKA3p+bICk76xLvyLYZ5rTluXsXP+qVoRggDHRJ6xN/RWxQUprh8SvilAs/Ag==
+Received: from smtp1.mailbox.org ([80.241.60.240])
+        by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173]) (amavisd-new, port 10030)
+        with ESMTP id pdWTOV8kXd2q; Tue, 19 Jan 2021 19:22:15 +0100 (CET)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1611080326.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 19 Jan 2021 19:22:14 +0100
+From:   "M. Buecher" <maddes+git@maddes.net>
+To:     Harley Paterson <harley.paterson@hotmail.co.nz>
+Cc:     git@vger.kernel.org
+Subject: Re: False negative authentication with multiple accounts on a SSH-GIT
+ server
+In-Reply-To: <DB8P189MB10460B9A3CA31ADF5C05A39FF9A30@DB8P189MB1046.EURP189.PROD.OUTLOOK.COM>
+References: <DB8P189MB10460B9A3CA31ADF5C05A39FF9A30@DB8P189MB1046.EURP189.PROD.OUTLOOK.COM>
+Message-ID: <ddf34d963a57971c13d12d8f0c04a0fc@mailbox.org>
+X-Sender: maddes+git@maddes.net
+X-MBO-SPAM-Probability: 
+X-Rspamd-Score: -4.99 / 15.00 / 15.00
+X-Rspamd-Queue-Id: 561721848
+X-Rspamd-UID: 99c255
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ls-refs performs a single revision walk over the whole ref namespace,
-and sends ones that match with one of the given ref prefixes down to the
-user.
+Hi there,
 
-This can be expensive if there are many refs overall, but the portion of
-them covered by the given prefixes is small by comparison.
+you can use GIT_SSH_COMMAND or config 'core.sshCommand'.
+For more flexibility use wrappers like ssh-ident.
 
-To attempt to reduce the difference between the number of refs
-traversed, and the number of refs sent, only traverse references which
-are in the longest common prefix of the given prefixes. This is very
-reminiscent of the approach taken in b31e2680c4 (ref-filter.c: find
-disjoint pattern prefixes, 2019-06-26) which does an analogous thing for
-multi-patterned 'git for-each-ref' invocations.
+Recommended read: https://superuser.com/a/1616186/557798
 
-The only difference here is that we are operating on ref prefixes, which
-do not necessarily point to a single reference. That is just fine, since
-all we care about is finding the longest common prefix among prefixes
-which can be thought of as refspecs for our purposes here.
+Hope this helps
+Kind regards
+Maddes
 
-Similarly, for_each_fullref_in_prefixes may return more results than the
-caller asked for (since the longest common prefix might match something
-that a longer prefix in the same set wouldn't match) but
-ls-refs.c:send_ref() discards such results.
 
-The code introduced in b31e2680c4 is resilient to stop early (and
-return a shorter prefix) when it encounters a metacharacter (as
-mentioned in that patch, there is some opportunity to improve this, but
-nobody has done it).
-
-There are two remaining small items in this patch:
-
-  - If no prefixes were provided, then implicitly add the empty string
-    (which will match all references).
-
-  - Since we are manually munging the prefixes, make sure that we
-    initialize it ourselves (previously this wasn't necessary since the
-    first strvec_push would do so).
-
-Original-patch-by: Jacob Vosmaer <jacob@gitlab.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- ls-refs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/ls-refs.c b/ls-refs.c
-index a1e0b473e4..eaaa36d0df 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -90,6 +90,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
- 	struct ls_refs_data data;
- 
- 	memset(&data, 0, sizeof(data));
-+	strvec_init(&data.prefixes);
- 
- 	git_config(ls_refs_config, NULL);
- 
-@@ -109,7 +110,10 @@ int ls_refs(struct repository *r, struct strvec *keys,
- 		die(_("expected flush after ls-refs arguments"));
- 
- 	head_ref_namespaced(send_ref, &data);
--	for_each_namespaced_ref(send_ref, &data);
-+	if (!data.prefixes.nr)
-+		strvec_push(&data.prefixes, "");
-+	for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
-+				     send_ref, &data, 0);
- 	packet_flush(1);
- 	strvec_clear(&data.prefixes);
- 	return 0;
--- 
-2.30.0.138.g6d7191ea01
+On 2021-01-19 07:17, Harley Paterson wrote:
+> Hello,
+> 
+> I've noticed an edge case in Git when a user has two Git accounts on a
+> single server - as might be common for a personal account and a work
+> account on a Git forge (Github, GitLab, Bitbucket...)
+> 
+> When attempting SSH login, `ssh` and Git will eagerly connect with the
+> first matching key. This may or may not be the key right key for the
+> repository the user needs. As a result, Git clones, pulls, and pushes
+> will fail with the `Repository not found` if the wrong key is tried
+> first.
+> 
+> For example, the user `alice` has two accounts on the host
+> `git-server.com`. `alice`'s accounts are `alice-work`, and
+> `alice-personal`. `alice-work` has access to the `foo` repository, and
+> `alice-personal` has access to the `bar` repository.
+> 
+> `alice` attempts to clone `foo` with both her `alice-work` and
+> `alice-personal` keys in her SSH Agent. SSH Agent does not define
+> which key it will attempt first, so SSH may connect successfully to
+> `git-server.com` with her `alice-personal` keys, which do not have
+> access to the `foo` repository.
+> 
+> I'd be interested in your opinions for fixes to this. I am willing to
+> make a patch, although my knowledge of the Git codebase isn't perfect.
+> 
+> - Should Git servers provide distinctly different error messages for
+> `access denied`, and `repository does not exist`? Currently the server
+> immediately closes the connection in this case, so
+> `transport.c:handshake()` with fail when attempting to
+> `discover_version()` because the reader hits the EOF. Perhaps the
+> server could send a hypothetical access denied packet here, and a more
+> appropriate error generated?
+> 
+> Can anyone point me to where in the Git codebase the daemon receives
+> and responds to these requests? I haven't found it yet, if I wanted to
+> patch this.
+> 
+> - Should Git provide a `-i` option to allow the user to choose an SSH
+> key, which could be added to the SSH subprocess's command line?
+> 
+> - Should Git attempt to iterate over all keys in the SSH Agent when
+> the connection is setup, testing the connection to check if each
+> connected key has access to the target repository, before giving up
+> and reporting an error? This may be difficult looking at the current
+> behavior of `ssh` and `ssh-agent`. `ssh-add -l` no longer lists paths
+> to files (which could be plugged into `ssh -i`), just the key
+> signature. Does anyone know of any SSH/SSH-Agent tricks which might
+> help with this?
+> 
+> All the best,
+> 
+> 
+> 
+> H Paterson.
