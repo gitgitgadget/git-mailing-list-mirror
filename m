@@ -2,113 +2,304 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 533A4C433DB
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 06:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27344C433DB
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 06:32:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E46D23101
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 06:24:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE92E22CB1
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 06:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729217AbhASGX7 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 19 Jan 2021 01:23:59 -0500
-Received: from mail-oln040092068073.outbound.protection.outlook.com ([40.92.68.73]:19494
-        "EHLO EUR02-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729475AbhASGSL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 01:18:11 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZizvUWGlNcdSD49yqJZr1owZbE8X57ohQKhkhFXiLE1VbW3OXGWdcSI4TXmi8tSY5mTgIGNaCH+otQVal+sZUirNsWwbik00Yuv5IfblPmKL4FMwY2sPodXo2WLdxQ21qwO5FBk8Ne+WjljKejxn4Q6ovIb/m/HSAaJijLUMEGzROke/ka2oP7+kqTM9SGumdYDlwfmZL9pmWcKmqEn9HYuyaO0+/cPO33rwirFg0u/XSMNSwnQ6F6bN85pyHAx585iX1Mq/4WLOzgkbuo/trBWtmvSXgCWpmBVi3GwLcr2ck6GbuLjT54a8yOuw5jkSXhKmvJ8jjmH/E6OmNmCUfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PGnheAdUGUJIuRPEPwdy3DJ+L0ffyW63vrOb7mayAV4=;
- b=jUYEL8yp3tKL47dSXmXEkkyXzTu1pEu8vDLTamaHvOUXUNAe1hT60JkRuynAbvQcsx/FZUwQhBQloWhQxc1d8W9eLxeth1LL1niS6DXzMnGAqXZNV1KqM5VmgIsAht4970jlqkX3UjQnr9xEx44k8fh/d5SleSKQAIjoZeNUKU73O3cdz5/7oPOwTLPsnXOmbg2T1Oe77Uek7vIrOeQi0IlViNmenPfB4AbZERpWZOuS4yHhvnC1/Hmo2wUEt+m5jh6ZNA72xVBI1zEAZcPqFzKH0cG8rSZlmxx6dZYeKVEpEb0tg5Lpg1hdnlnlCGyNFaTffufYKN5ptaDZm6ILtg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-Received: from VE1EUR02FT055.eop-EUR02.prod.protection.outlook.com
- (2a01:111:e400:7e1e::44) by
- VE1EUR02HT065.eop-EUR02.prod.protection.outlook.com (2a01:111:e400:7e1e::275)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3763.10; Tue, 19 Jan
- 2021 06:17:21 +0000
-Received: from DB8P189MB1046.EURP189.PROD.OUTLOOK.COM (2a01:111:e400:7e1e::43)
- by VE1EUR02FT055.mail.protection.outlook.com (2a01:111:e400:7e1e::290) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3763.12 via Frontend
- Transport; Tue, 19 Jan 2021 06:17:21 +0000
-Received: from DB8P189MB1046.EURP189.PROD.OUTLOOK.COM
- ([fe80::90c3:9e51:1c92:5464]) by DB8P189MB1046.EURP189.PROD.OUTLOOK.COM
- ([fe80::90c3:9e51:1c92:5464%7]) with mapi id 15.20.3763.014; Tue, 19 Jan 2021
- 06:17:21 +0000
-From:   Harley Paterson <harley.paterson@hotmail.co.nz>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: False negative authentication with multiple accounts on a SSH-GIT
- server
-Thread-Topic: False negative authentication with multiple accounts on a
- SSH-GIT server
-Thread-Index: AQHW7iZGAHFuVSSO1Uqz0Q5kDb1cxg==
-Date:   Tue, 19 Jan 2021 06:17:21 +0000
-Message-ID: <DB8P189MB10460B9A3CA31ADF5C05A39FF9A30@DB8P189MB1046.EURP189.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:2E9F423369C5F6EC83BD09C5C909D4702CD91E8C657F03EC4054855B3347ACA1;UpperCasedChecksum:D9BFCC7BA75DC82C63DA9308D5C401C982583384E2508D13004852803DC59458;SizeAsReceived:6733;Count:42
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn:  [zr/w/8dj4QrcRP+oxLdRceKWyLtdygIx]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 156a23a5-5073-4aa8-7772-08d8bc41e15f
-x-ms-traffictypediagnostic: VE1EUR02HT065:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: SWp9gUIRiOdACyNitoMv9Iwg9IBNCR756UVTG6u+QpAzBZlGtR65GPzzMRj7/V3PGG6Kh4s4DaHvzwOXYi/ppCbH0PdeWmu898LegONxJdvEEPA+NGN5fJRq7mbEqHg2jun7Z1L1ggRPyhVj6S/LCz/QSMkwWmxx4mjRkmLE0iplgEhIKmE5DGEkCsy4WPUe3+uPHxEJg+oS31k9V00YbUQm2MtTwJ2wS36Z1/+VFZCF4pggFz9vJPL8ScbU1n1i3+KdoMjqEVJzoO+DA9wO5zPMQhZE7wbLbRTXGtWBtesaHA8bsnDQAgWNw8LCzesmUomJr/7fUcUe+uF9UAdnmJJgkTTNbny2YS/36Deq6LSWD9cE6V5K1qzAoMFPe+JGFuL7d57cv6SCt7yCMlKPrw==
-x-ms-exchange-antispam-messagedata: RYhq4rk52cO8S7aCQQKCJJ3J/YFBknAtFQkAh+hY6fsAkYG2l1Cv7bd5SiGBkBKBvSt1i0hEyU7d4BnhLzZ15YaVf3kpqGV0w9YKsba+SBG4HYkidLVt+XjU3DGy0yMNfppc9ktExwN8FwNDAw42yA==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1729998AbhASGcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 01:32:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730713AbhASGbc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 01:31:32 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4269C0613C1
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 22:30:51 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id m4so18535134wrx.9
+        for <git@vger.kernel.org>; Mon, 18 Jan 2021 22:30:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=jKQ5PzAJNmWCwCKL2is40P8yR4Yksrb6Fp1ldLEJbbI=;
+        b=fdD0z/kC/Cd6Fj75ax6tuKOfL1aQ5vIJW0xsZE3ScJemM6NOwyL+HexkdkHVWvEAFR
+         OlVyInvV5FzsdG7Uo+7f5Zx6l5tuOJuno6Dj5722aaT1rjtb5O5+0iPO9LU5oV1aVUPF
+         DVDuHoImUQ/yKabPMhCytng00LY7ulInEHr8U7XVeqrxQIvLC7i3Z67LTcK4eF5hcYbT
+         q4GPqK1m5P2mS7K6Z8TgUISeW1rLTJmnmpfTfX3lS+ct4Sit9VuEgVXmFcqPCd7Uy3WZ
+         5N7maK0VUweI+j44cFyZoPL0hCnz0AcQFB+wGXoJgymeL/gwz58/DHyNzuAQDx68RPs+
+         Uouw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=jKQ5PzAJNmWCwCKL2is40P8yR4Yksrb6Fp1ldLEJbbI=;
+        b=MKrQJcn140YAji3nYNVvEJzNUQ6fSE+MMnBGtPF+a3C1xcd/lLvs9jp6cqn0DD+zRR
+         BdrnQ8/KJTc3SVf2dOdW0rxxwp8FWI8AuJ+dMXzHdtk7qipK6o7hWyqmQCP9blw7q1lf
+         79iNoNlGYspmAY7YmXHm2lCxh7iZ/cnArWCoGZtwV65cw9jiGMYekQjwoc/RUusL3dAN
+         oj0M6v+Nw1Oov5Ip9TCX44rmwhjcl2pAcBbw8WK18UAMrr6vrgiEaquGkIxeje678gBl
+         KErWef03l+TVAj6rQ3CXJawC24pn4TEM1KSH2xELlsJLdENxmC7bzY/b6MA5zKh1Uh4/
+         Bk5w==
+X-Gm-Message-State: AOAM530UT2QCWV+9UcUu+f767aV8STxl5r6ZzdwhQjkdoi5GBCslNezb
+        EE+Vzk23RksqH58KjWDmNJUTTbhyKd0=
+X-Google-Smtp-Source: ABdhPJzSemDUPCF4j538trDWRSQtq6/1AddLDnB2oB7/tOF2LmSayr1XykX4wpLtA0ceL72qTQshEw==
+X-Received: by 2002:a5d:540f:: with SMTP id g15mr2671700wrv.397.1611037850171;
+        Mon, 18 Jan 2021 22:30:50 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t25sm2870186wmj.39.2021.01.18.22.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Jan 2021 22:30:49 -0800 (PST)
+Message-Id: <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
+References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com>
+        <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 19 Jan 2021 06:30:46 +0000
+Subject: [PATCH v5 3/3] ls-files.c: add --deduplicate option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-AuthSource: VE1EUR02FT055.eop-EUR02.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 156a23a5-5073-4aa8-7772-08d8bc41e15f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jan 2021 06:17:21.2573
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1EUR02HT065
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=E8=83=A1=E5=93=B2=E5=AE=81?= <adlternative@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+From: ZheNing Hu <adlternative@gmail.com>
 
-I've noticed an edge case in Git when a user has two Git accounts on a single server - as might be common for a personal account and a work account on a Git forge (Github, GitLab, Bitbucket...)
+In order to provide users a better experience
+when viewing information about files in the index
+and the working tree, the `--deduplicate` option will suppress
+some duplicate name under some conditions.
 
-When attempting SSH login, `ssh` and Git will eagerly connect with the first matching key. This may or may not be the key right key for the repository the user needs. As a result, Git clones, pulls, and pushes will fail with the `Repository not found` if the wrong key is tried first.
+In a merge conflict, one file name of "git ls-files" output may
+appear multiple times. For example,now there is an unmerged path
+`a.c`,`a.c` will appear three times in the output of
+"git ls-files".We can use "git ls-files --deduplicate" to output
+`a.c` only one time.(unless `--stage` or `--unmerged` is
+used to view all the detailed information in the index)
 
-For example, the user `alice` has two accounts on the host `git-server.com`. `alice`'s accounts are `alice-work`, and `alice-personal`. `alice-work` has access to the `foo` repository, and `alice-personal` has access to the `bar` repository.
+In addition, if you use both `--delete` and `--modify` at
+the same time, The `--deduplicate` option
+can also suppress file name output.
 
-`alice` attempts to clone `foo` with both her `alice-work` and `alice-personal` keys in her SSH Agent. SSH Agent does not define which key it will attempt first, so SSH may connect successfully to `git-server.com` with her `alice-personal` keys, which do not have access to the `foo` repository.
+Additional instructions:
+In order to display entries information,`deduplicate` suppresses
+the output of duplicate file names, not the output of duplicate
+entries information, so under the option of `-t`, `--stage`, `--unmerge`,
+`--deduplicate` will have no effect.
 
-I'd be interested in your opinions for fixes to this. I am willing to make a patch, although my knowledge of the Git codebase isn't perfect.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+ Documentation/git-ls-files.txt |  5 +++
+ builtin/ls-files.c             | 32 ++++++++++++++---
+ t/t3012-ls-files-dedup.sh      | 66 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 98 insertions(+), 5 deletions(-)
+ create mode 100755 t/t3012-ls-files-dedup.sh
 
-- Should Git servers provide distinctly different error messages for `access denied`, and `repository does not exist`? Currently the server immediately closes the connection in this case, so `transport.c:handshake()` with fail when attempting to `discover_version()` because the reader hits the EOF. Perhaps the server could send a hypothetical access denied packet here, and a more appropriate error generated? 
-
-Can anyone point me to where in the Git codebase the daemon receives and responds to these requests? I haven't found it yet, if I wanted to patch this.
-
-- Should Git provide a `-i` option to allow the user to choose an SSH key, which could be added to the SSH subprocess's command line?
-
-- Should Git attempt to iterate over all keys in the SSH Agent when the connection is setup, testing the connection to check if each connected key has access to the target repository, before giving up and reporting an error? This may be difficult looking at the current behavior of `ssh` and `ssh-agent`. `ssh-add -l` no longer lists paths to files (which could be plugged into `ssh -i`), just the key signature. Does anyone know of any SSH/SSH-Agent tricks which might help with this?
-
-All the best,
-
-
-
-H Paterson.
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index cbcf5263dd0..d11c8ade402 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 		(--[cached|deleted|others|ignored|stage|unmerged|killed|modified])*
+ 		(-[c|d|o|i|s|u|k|m])*
+ 		[--eol]
++		[--deduplicate]
+ 		[-x <pattern>|--exclude=<pattern>]
+ 		[-X <file>|--exclude-from=<file>]
+ 		[--exclude-per-directory=<file>]
+@@ -81,6 +82,10 @@ OPTIONS
+ 	\0 line termination on output and do not quote filenames.
+ 	See OUTPUT below for more information.
+ 
++--deduplicate::
++	Suppress duplicate entries when there are unmerged paths in index
++	or `--deleted` and `--modified` are combined.
++
+ -x <pattern>::
+ --exclude=<pattern>::
+ 	Skip untracked files matching pattern.
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 1454ab1ae6f..709d727c574 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -35,6 +35,7 @@ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
+ static int recurse_submodules;
++static int skipping_duplicates;
+ 
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -301,6 +302,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ {
+ 	int i;
+ 	struct strbuf fullname = STRBUF_INIT;
++	const struct cache_entry *last_shown_ce;
+ 
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+@@ -314,6 +316,7 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 	}
+ 	if (! (show_cached || show_stage || show_deleted || show_modified))
+ 		return;
++	last_shown_ce = NULL;
+ 	for (i = 0; i < repo->index->cache_nr; i++) {
+ 		const struct cache_entry *ce = repo->index->cache[i];
+ 		struct stat st;
+@@ -321,30 +324,46 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+ 
+ 		construct_fullname(&fullname, repo, ce);
+ 
++		if (skipping_duplicates && last_shown_ce &&
++			!strcmp(last_shown_ce->name,ce->name))
++				continue;
+ 		if ((dir->flags & DIR_SHOW_IGNORED) &&
+ 			!ce_excluded(dir, repo->index, fullname.buf, ce))
+ 			continue;
+ 		if (ce->ce_flags & CE_UPDATE)
+ 			continue;
+ 		if (show_cached || show_stage) {
++			if (skipping_duplicates && last_shown_ce &&
++				!strcmp(last_shown_ce->name,ce->name))
++					continue;
+ 			if (!show_unmerged || ce_stage(ce))
+ 				show_ce(repo, dir, ce, fullname.buf,
+ 					ce_stage(ce) ? tag_unmerged :
+ 					(ce_skip_worktree(ce) ? tag_skip_worktree :
+ 						tag_cached));
++			if (show_cached && skipping_duplicates)
++				last_shown_ce = ce;
+ 		}
+ 		if (ce_skip_worktree(ce))
+ 			continue;
++		if (skipping_duplicates && last_shown_ce &&
++			!strcmp(last_shown_ce->name,ce->name))
++				continue;
+ 		err = lstat(fullname.buf, &st);
+ 		if (err) {
+-			if (errno != ENOENT && errno != ENOTDIR)
+-				error_errno("cannot lstat '%s'", fullname.buf);
+-			if (show_deleted)
++			if (skipping_duplicates && show_deleted && show_modified)
+ 				show_ce(repo, dir, ce, fullname.buf, tag_removed);
+-			if (show_modified)
+-				show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			else {
++				if (errno != ENOENT && errno != ENOTDIR)
++					error_errno("cannot lstat '%s'", fullname.buf);
++				if (show_deleted)
++					show_ce(repo, dir, ce, fullname.buf, tag_removed);
++				if (show_modified)
++					show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			}
+ 		} else if (show_modified && ie_modified(repo->index, ce, &st, 0))
+ 			show_ce(repo, dir, ce, fullname.buf, tag_modified);
++		last_shown_ce = ce;
+ 	}
+ 
+ 	strbuf_release(&fullname);
+@@ -571,6 +590,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			N_("pretend that paths removed since <tree-ish> are still present")),
+ 		OPT__ABBREV(&abbrev),
+ 		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
++		OPT_BOOL(0,"deduplicate",&skipping_duplicates,N_("suppress duplicate entries")),
+ 		OPT_END()
+ 	};
+ 
+@@ -610,6 +630,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		 * you also show the stage information.
+ 		 */
+ 		show_stage = 1;
++	if (show_tag || show_stage)
++		skipping_duplicates = 0;
+ 	if (dir.exclude_per_dir)
+ 		exc_given = 1;
+ 
+diff --git a/t/t3012-ls-files-dedup.sh b/t/t3012-ls-files-dedup.sh
+new file mode 100755
+index 00000000000..2682b1f43a6
+--- /dev/null
++++ b/t/t3012-ls-files-dedup.sh
+@@ -0,0 +1,66 @@
++#!/bin/sh
++
++test_description='git ls-files --deduplicate test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	>a.txt &&
++	>b.txt &&
++	>delete.txt &&
++	git add a.txt b.txt delete.txt &&
++	git commit -m base &&
++	echo a >a.txt &&
++	echo b >b.txt &&
++	echo delete >delete.txt &&
++	git add a.txt b.txt delete.txt &&
++	git commit -m tip &&
++	git tag tip &&
++	git reset --hard HEAD^ &&
++	echo change >a.txt &&
++	git commit -a -m side &&
++	git tag side
++'
++
++test_expect_success 'git ls-files --deduplicate to show unique unmerged path' '
++	test_must_fail git merge tip &&
++	git ls-files --deduplicate >actual &&
++	cat >expect <<-\EOF &&
++	a.txt
++	b.txt
++	delete.txt
++	EOF
++	test_cmp expect actual &&
++	git merge --abort
++'
++
++test_expect_success 'git ls-files -d -m --deduplicate with different display options' '
++	git reset --hard side &&
++	test_must_fail git merge tip &&
++	rm delete.txt &&
++	git ls-files -d -m --deduplicate >actual &&
++	cat >expect <<-\EOF &&
++	a.txt
++	delete.txt
++	EOF
++	test_cmp expect actual &&
++	git ls-files -d -m -t --deduplicate >actual &&
++	cat >expect <<-\EOF &&
++	C a.txt
++	C a.txt
++	C a.txt
++	R delete.txt
++	C delete.txt
++	EOF
++	test_cmp expect actual &&
++	git ls-files -d -m -c --deduplicate >actual &&
++	cat >expect <<-\EOF &&
++	a.txt
++	b.txt
++	delete.txt
++	EOF
++	test_cmp expect actual &&
++	git merge --abort
++'
++
++test_done
+-- 
+gitgitgadget
