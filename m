@@ -2,86 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD014C433E0
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 22:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBB1EC433E0
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 22:53:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D56623104
-	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 22:50:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C207323108
+	for <git@archiver.kernel.org>; Tue, 19 Jan 2021 22:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728973AbhASWuR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 17:50:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728071AbhASWti (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 17:49:38 -0500
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF32C061573
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 14:48:57 -0800 (PST)
-Received: by mail-qv1-xf2d.google.com with SMTP id et9so10009872qvb.10
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 14:48:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IGPM3kIQ3cH8DVRktTqCQ+pgb722U7zLxU+yB5IFwMU=;
-        b=fmbnCJGlLR8GL2JdCyC0MIuzOfa7ov6RrpmJYGZw6GdzrofVo9kcYVw+hMwLF9aOgt
-         7lSGg/BG9JMAT4zk2sQ6uIrz3FYB3t4EncjNiuFZoVEqBQhpFFyeTOp89yoQy/qNXO/K
-         6bsmmiN8juaUoXGC4daezXXLG0cqPlNevp2QdhTrOqQejCNfKkw5td6sI2LnwVEOBJa2
-         8Yoh48ridkUx1qoZ+zAzi6M8JGopn0zW/DRabwiM/qECk6MLaYXnjdLB59TGLHYEUhDk
-         POmJEJDMubEW7OCMTFDFsgvDStMQu81KlQlCK7yZVNeky3STq24I/GM158pByhi3xDFV
-         zRIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IGPM3kIQ3cH8DVRktTqCQ+pgb722U7zLxU+yB5IFwMU=;
-        b=Qlxl8xmKUnRK73+sui6dYUxKjkVHWtaPBHHiURezkZ5HfYF8K0N3yHFPxrNj1XxQT8
-         VTVkmb/3YkFZJyNgKcRprVcEoEa3OOUrW+g51xU4XTEWWkZUurerDcc9Ed0C24teD0pI
-         XuYARcbxR59rrrBJokcYoP2VUg69Wh3OlWVOm4EXPm1fXxf6/Bd3O9A84HxwKpfbZwRA
-         o7kn2qOPqWWTbsrQL3ea6fwjscqJCkq56vmU4ZDjPtRIxONzidnkRE2xP7d4zyj7lMda
-         LdCZI9R9uesT10rftfVoB2TKHr6C30GUj0j/XNYSBG40h+pALT4f74kZCB1YbSqeYoe+
-         PVkw==
-X-Gm-Message-State: AOAM531HLkq377vU8vlRvw2hY91dlJldaGYQVHoszF1ugE+KEjU6DUru
-        5J+E4Ub6Ppzgv4O82o/k+wIRbA==
-X-Google-Smtp-Source: ABdhPJy7O1QslkLDvH22wHCYExA/34tftyEk46TXIYfdwDnUE7UkiPisWvzVr1G0W1F9F3hDLzuzPA==
-X-Received: by 2002:ad4:5b8f:: with SMTP id 15mr6591264qvp.1.1611096536729;
-        Tue, 19 Jan 2021 14:48:56 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:ed38:94a5:e78e:2d58])
-        by smtp.gmail.com with ESMTPSA id s30sm57284qte.44.2021.01.19.14.48.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 14:48:56 -0800 (PST)
-Date:   Tue, 19 Jan 2021 17:48:53 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 00/17] Add directory rename detection to merge-ort
-Message-ID: <YAdh1XTvDhRzGTiC@nand.local>
-References: <pull.835.v2.git.1610055365.gitgitgadget@gmail.com>
- <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
+        id S1727781AbhASWx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 17:53:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60378 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727816AbhASWxJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 17:53:09 -0500
+Received: (qmail 15350 invoked by uid 109); 19 Jan 2021 22:52:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Jan 2021 22:52:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13487 invoked by uid 111); 19 Jan 2021 22:52:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Jan 2021 17:52:05 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 19 Jan 2021 17:52:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jacob Vosmaer <jacob@gitlab.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] ls-refs.c: minimize number of refs visited
+Message-ID: <YAdik+z5yj2XU0ti@coredump.intra.peff.net>
+References: <20210119144251.27924-1-jacob@gitlab.com>
+ <20210119144251.27924-2-jacob@gitlab.com>
+ <YAcE/dTuOB9PbGQU@nand.local>
+ <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
+ <YAcuUDqfvKzfHFMb@nand.local>
+ <YAdWNgF75QEYFLA7@coredump.intra.peff.net>
+ <YAdaAsP6vCQla/Ar@coredump.intra.peff.net>
+ <YAdb6GmVXWLEGkP1@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.835.v3.git.1611086033.gitgitgadget@gmail.com>
+In-Reply-To: <YAdb6GmVXWLEGkP1@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 07:53:36PM +0000, Elijah Newren via GitGitGadget wrote:
-> Changes since v2:
+On Tue, Jan 19, 2021 at 05:23:36PM -0500, Taylor Blau wrote:
 
-Thanks, all of these look good to me. I appreciate you addressing all of
-my nits :-).
+> > Having now looked carefully at the ls-refs code, it's a pure
+> > prefix-match, too. So I think we _could_ rely on for_each_fullref_in()
+> > returning us the correct full results, and not checking it further in
+> > send_ref(). But I kind of like keeping it there as an extra check (and
+> > one which could in theory grow more logic later).
+> 
+> Hmm. What if the caller asks for:
+> 
+>   ref-prefix refs/tags/a
+>   ref-prefix refs/tags/b
+> 
+> ?
+> 
+> The LCP between those two is refs/tags, so send_ref() will presumably
+> get lots of reuslts that it doesn't care about (assuming there are tags
+> besides a and b).
 
-I couldn't find anything to write about in the last clump of patches, so
-with these recent cleanups this series LGTM.
+Oh, you're right, of course. Ignore me. :)
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
-
-Thanks,
-Taylor
+-Peff
