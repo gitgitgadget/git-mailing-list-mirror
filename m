@@ -4,181 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 784B0C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0527DC433E6
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:48:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2946423718
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:26:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEC6F23730
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392967AbhAUA0E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 19:26:04 -0500
-Received: from mail-02.mail-europe.com ([51.89.119.103]:45260 "EHLO
-        mail-02.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403848AbhATXTp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 18:19:45 -0500
-Date:   Wed, 20 Jan 2021 23:17:37 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1611184662;
-        bh=sarW6sRfwypjPnoS7hhKJwtwOCbduIyid3Qnxn8wDzE=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=UDZECVZdP3rYTFP237cpOpVbkROM6gcmK+/mEV+8vW1G1fBU3EcRqEQ209WA7PFm8
-         yq81pq7Atzp8Cww3aX6aVDhihzJpdh4pFhxaheOdfR+5+PRVwedqWgiYjQmEoihrqr
-         +HgAQz45Np6ky+PmVJoiiJ5KLLYoTW54Gkh0vbnk=
-To:     Jonathan Nieder <jrnieder@gmail.com>
-From:   Joey Salazar <jgsal@protonmail.com>
-Cc:     Developer support list for Wireshark 
-        <wireshark-dev@wireshark.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Reply-To: Joey Salazar <jgsal@protonmail.com>
-Subject: Re: [Wireshark-dev] Multiple-line parsing of packets dissected over HTTP
-Message-ID: <aCtJaGp2bmtHdiu65J9Z3vSEeFMfN9OvOzv-eXNbnXUVKpH-f7q48QJpTklEWoOEaAt4ctixkpOIC8vMTmBP7er36t-y8HHFRA17vXzB-UE=@protonmail.com>
-In-Reply-To: <YAd0044tbht/DOKq@google.com>
-References: <s1Sx5qZaXOlypsQCtHxGBayhdqUl1j2vuywQN6cG59KarFM9HZu32n0CEtcje206DeKXAYuqBoNbDOA8bgwXZI3u_3nwPxYFme2GcqV0I3s=@protonmail.com> <CAGka-81Ze71igsW2zsfzYqqkr+sz5FE6YYo3mEpdEQUSUxZvaw@mail.gmail.com> <YAd0044tbht/DOKq@google.com>
+        id S2392999AbhAUA0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 19:26:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55642 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404166AbhATXZw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 18:25:52 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B935FC061348
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 15:13:48 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id m25so36429956lfc.11
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 15:13:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=G55qiNCoC70F6VBO6S0JScqaAmfM6NEy2YEL+LMcALA=;
+        b=kyCxizrg4/kVZvTRM8uM3ZD1jVzSt14Xdmv8/YZF+cACB98IefqPmpayl/tQoYhnwW
+         HCEOIgbk7yU/eF3ulOu7PRAY5mihAtRIpv3cGGK6oO8YkUiGzuagK3P/FhET8BR2FUOe
+         MQhMJLOgAtC57pw4/uTYYiZ+5GAiUQLjmQIKhyLGBR28LwKGJKE1+v8OkiCUm+OQ+F+/
+         2rPxh50fS3HGZwKHn3/O78FVTYxnebNmLbVJG2q17ZIfKvldLYjRaPyQ4pKC2UforZtH
+         wCwDKSnctxaGaFDf69pVUhz7tvXAbrxiHyvlPjRKAgtMHl0bbqMG8037vIY5c0OljqDl
+         cPCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=G55qiNCoC70F6VBO6S0JScqaAmfM6NEy2YEL+LMcALA=;
+        b=FckZKIqmr/ufmimGxlyUVhDn/JuJDMSwZowJQbt6yFgrEpYwXZukUTOriy1FoLyWjh
+         mAqQ8A9GeFMMpblR6JijBMEsNAV3aWWBnCdrJWACWUP9Apkvy5SQ6oQI1CB4GyPmjO0Y
+         0FhkrnzibKYlzYLDOZoibTxnbs+KAl/9Y/ef4KwT1dNz9BIXoqisa0ywxvdT5T6s8igm
+         aMW0oQnNc5oLnLqQLIvZSWktQ2gC/R09vX1WTAJXEjng5+QV29ScB83gIrqYZ2avyRHp
+         auTYkFn+cHH59a3Y6MgYgEWi/9YxNVSOU3Q6pMFlxAMmuc9k5ejAjhFy5U6+X2FQgRHX
+         iqoQ==
+X-Gm-Message-State: AOAM530spca2mFgMK+glZpzOc3is1L4mKlr4ujLQYAlw4lFlf6YjJBWg
+        yHSDgheNN/e1DC4R3gEHL32e/QpimTfONm/gQmBe9+C8sP0=
+X-Google-Smtp-Source: ABdhPJyqUksFXV6EuU1ww6nyna5DNsJNE8LzqTcgilWZkzF9XRZRz0RHfL5Di4qQ42vVRbq9glkjH6h5OIRBIx091r0=
+X-Received: by 2002:a05:6512:491:: with SMTP id v17mr5196112lfq.148.1611184427248;
+ Wed, 20 Jan 2021 15:13:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20210120044435.53509-1-alexhenrie24@gmail.com> <xmqqturbdxi2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqturbdxi2.fsf@gitster.c.googlers.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 20 Jan 2021 16:13:35 -0700
+Message-ID: <CAMMLpeQM7JCP0=TMqf0DxDCVJvkCGDEPSKN6vYTU_xc7+QaA1Q@mail.gmail.com>
+Subject: Re: [PATCH] rebase: add a config option for --no-fork-point
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all, Jonathan,
+On Wed, Jan 20, 2021 at 4:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > @@ -1095,6 +1097,12 @@ static int rebase_config(const char *var, const char *value, void *data)
+> >               return 0;
+> >       }
+> >
+> > +     if (!strcmp(var, "rebase.forkpoint")) {
+> > +             if (!git_config_bool(var, value))
+> > +                     opts->fork_point = 0;
+> > +             return 0;
+> > +     }
+>
+> It is curious that this code seems to deliberatly ignore
+>
+>         [rebase] forkpoint = true
+>
+> but honors
+>
+>         [rebase] forkpoint = false
+>
+> Intended?  IOW, why isn't this just like this?
+>
+>         if (!strcmp(var, "rebase.forkpoint")) {
+>                 opts->fork_point = git_config_bool(var, value);
+>                 return 0;
+>         }
+>
+> > @@ -1306,7 +1314,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >       const char *gpg_sign = NULL;
+> >       struct string_list exec = STRING_LIST_INIT_NODUP;
+> >       const char *rebase_merges = NULL;
+> > -     int fork_point = -1;
+> >       struct string_list strategy_options = STRING_LIST_INIT_NODUP;
+> >       struct object_id squash_onto;
+> >       char *squash_onto_name = NULL;
+> > @@ -1406,7 +1413,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >                       N_("mode"),
+> >                       N_("try to rebase merges instead of skipping them"),
+> >                       PARSE_OPT_OPTARG, NULL, (intptr_t)""},
+> > -             OPT_BOOL(0, "fork-point", &fork_point,
+> > +             OPT_BOOL(0, "fork-point", &options.fork_point,
+> >                        N_("use 'merge-base --fork-point' to refine upstream")),
+> >               OPT_STRING('s', "strategy", &options.strategy,
+> >                          N_("strategy"), N_("use the given merge strategy")),
+> > @@ -1494,7 +1501,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >                       die(_("cannot combine '--keep-base' with '--root'"));
+> >       }
+> >
+> > -     if (options.root && fork_point > 0)
+> > +     if (options.root && options.fork_point > 0)
+> >               die(_("cannot combine '--root' with '--fork-point'"));
+>
+> Is that because of this code?
 
-On Tuesday, January 19, 2021 6:09 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
+Yes. I was trying to avoid annoying the user with errors when
+rebase.forkPoint is set to "true" and --root is given on the command
+line.
 
-> Hi,
->
-> Pascal Quantin wrote:
->
-> > Le mar. 19 janv. 2021 =C3=A0 17:45, Joey Salazar via Wireshark-dev <
-> > wireshark-dev@wireshark.org> a =C3=A9crit :
->
-> > > In commit 33af2649 [1] we can keep dissecting the contents of the req=
-,
-> > > adv, and res packets by setting
-> > > while (plen > 0) { }
-> > > either in `dissect_git_pdu()` or in `dissect_one_pkt_line()`, but for=
- now
-> > > in `dissect_git_pdu()` it'd be a bit messy, so wanted to ask for your
-> > > feedback for getting `dissect_one_pkt_line()` to work properly first.
-> > > As you can see in pcap 169 [2], it correctly parses the length of the
-> > > first line as 0x0014 (20 bytes) until `0x0a`, then it's supposed to g=
-et the
-> > > length of the next line by the first 4 hex bytes in that line, but in=
-stead
-> > > of reading the length as 0x0018 (24 bytes) it's reading it as 0x0010 =
-(16
-> > > bytes), and anyways, this particular line's length actually is 59 byt=
-es.
->
-> Interesting. Let me summarize your question: getting the information
-> in one place here, the relevant code at line 114 looks like
->
-> | + while (plen > 0) {
-> | + proto_tree_add_uint(git_tree, hf_git_packet_len, tvb, offset, 4, plen=
-);
-> | + offset +=3D 4;
-> | + plen -=3D 4;
-> | +
-> | + proto_tree_add_item(git_tree, hf_git_packet_data, tvb, offset, plen, =
-ENC_NA);
-> | + offset +=3D plen;
-> | + // To-do: add lines for parsing of terminator packet 0000
-> | + }
->
-> The relevant part of the pcap is shown in an image; transcribing
-> imperfectly, I see
->
-> | 0014command=3Dls-refs\n
-> | 0018agent=3Dgit/2.29.0.rc2
-> | 0016object-format=3Dsha1
-> | 0001
-> [etc]
->
-> where \n denotes a newline byte and there are no newlines between
-> these pkt-lines.
->
-> That first pkt-line has 4 bytes for the length, followed by 12 bytes
-> for "command=3Dls-refs\n", including newline. So why does this parse as
->
-> packet-length: 0x0014
-> packet data: "command=3Dls-refs\n"
-> packet-length: 0x0010
-> packet data: "agent=3D[etc]"
->
-> ?
->
-> [...]
->
-> > So what is the code leading to this dissection? It does not seem to be
-> > https://gitlab.com/joeysal/wireshark/-/commit/33af2649927cb5660d4aeb64b=
-9a9e9a58a1823aa
-> > as dissect_one_pkt_line() seem to read only one line (BTW using a while
-> > loop in this commit is useless as you are incrementing offset by plen, =
-and
-> > the code you shared considers that plen includes the 4 bytes of the pac=
-ket
-> > length field while your screenshot does not assume that).
->
-> This reply is a bit dense, but it contains the hints to move forward:
->
-> First, there's the matter of the contract of the dissect_one_pkt_line()
-> function. The name suggests it would dissect a single pkt-line, but
-> it has this loop in it. What does it actually do? And what do we
-> want it to do?
->
-> That second question is easy to answer: this code will be much easier
-> to read if dissect_one_pktline dissects a single pkt-line! For
-> example, if we imagine a contract like
->
-> /** Dissects a single pkt-line.
-> *
-> * @param[in] tvb Buffer containing a pkt-line.
-> * @param offset Offset at which to start reading.
-> * @param[out] tree Tree to attach the dissected pkt-line to.
-> * @return Number of bytes dissected, or -1 on error.
-> */
-> static int dissect_one_pkt_line(tvbuff_t *tvb, int offset, proto_tree *tr=
-ee)
->
-> then we could call this in a loop, like:
->
-> int offset =3D 0;
->
-> while (offset < total length)
-> offset +=3D dissect_one_pkt_line(tvb, offset, tree);
->
-> Obtaining the total length and including some error handling left as
-> an exercise to the reader.
->
-> As for the first question: what does the current code do? The loop at
-> l114 doesn't modify plen except by subtracting 4 from it. So instead
-> of reading the pkt-length from the next pkt-line, it assumes it is 4
-> bytes less. 0x14 - 4 is 0x10, hence the 0x10 as pkt length
-> assumption.
+> If so, perhaps the configuration parser should set the .fork_point
+> to (-1), so that "[rebase] forkpoint = false" that appears in your
+> ~/.gitconfig file can be countermanded with "[rebase] forkpoint"
+> that is placed in .git/config for one particular project that you do
+> not mind using the feature?
 
-This was most helpful, thank you, in some cases I couldn't understand why `=
-pkt-length` was being parsed the one it was.
-Apologies to all for my poor explanation of what I wanted the code to do!
+That's a great point. I will make that change and resubmit. Thanks!
 
-I've updated the commit and it now is 9342d7fb [1], it is now reading the s=
-ize of each pkt-line before checking for `0000` Flush Packet (checking for =
-`0001` delimiter could be added in line 131) and jumping to the next pkt-li=
-ne.
-
-However, I understand now that `while (plen > 0)` in line 119 should not be=
- doing that since that `plen` is for the first pkt-line only, making this a=
-n unsuitable approach.
-
-I'll start working on the approach suggested above by Jonathan. All your fe=
-edback and observations most welcome.
-
-Thank you all for the input and time invested so far,
-Joey
-
-[1] gitlab.com/joeysal/wireshark/-/commit/9342d7fbc15fad4ec7765bbbb0f167231=
-9dc705a
+-Alex
