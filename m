@@ -4,112 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D613C433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 15:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B7A0C43331
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 15:38:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 673A723358
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 15:34:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BAA2233A2
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 15:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390257AbhATPev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 10:34:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38658 "EHLO
+        id S1732981AbhATOvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 09:51:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732346AbhATPdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 10:33:51 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8843DC061757
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 07:33:10 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id bx12so12244632edb.8
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 07:33:10 -0800 (PST)
+        with ESMTP id S2389850AbhATOa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 09:30:26 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A82BBC0613D3
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 06:29:45 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id c124so3012479wma.5
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 06:29:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=YIG+J7MiB5sS9rWPyNto+7moWAPbQjN1aO1bYsWW0jg=;
-        b=I/vbHC8qXkW1bRpkPG/s8aaiStQZ3ZBpyXHbVnqgdcKsnsz21uPjMHSVkewktPS/U2
-         zZDz1IZ8i2munIbdRepxRHmWlyE3sLEdokINcjzohGxEF0WokJy7t0T2DmK2Bo6BtTIl
-         xEwhvjZ5N1NCvaxUiTTRYQG9gKQ/WapoixWWGmnCJWq5g+3zIMN1puNiGRIqXs1JKS4z
-         EiBbB3lxAsjKwI9jBbNWzKgCIyMF6+/0Xb00yXxVWMhMVmUcqFxQ681xIs5lw718M+x8
-         D74uLF7qdcNYaE0JdeVpghmxrasp6gPQ/l9rGJxBaa9FP1HplZ48lWogMoTiB9iwQ+A+
-         R8Dw==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tgRXFEu3s1uhTfyeoMqtDFgV8ehw0xGXfEMZPjOJFgY=;
+        b=qhUOTM+HTgPR06+NAO5fOGPCWLOCCTpVcB/fr1RJVpk71gBOnAgHnMR1Q1Ank42bVo
+         NpiN8bW1NcAd98wq26tL+nGewIqywf03nw+0IBjfVKfOLJ/yNgBMdwymzzvVw3oo6Ubi
+         52DekYyC/evlndc9SFMZmcU97RO1WFyvtzjjrgCFOOsX/eOghSLzA9xGUX4PlJJqEqrP
+         EnGOn2YSRx1J8js6HjdY8jfCYq6kezT8oORTLwCxTCC288yBM+XVkiVmwoM37mpkIK9T
+         WCVG83S6FvlXz+f+yVrLK01qpdpvVJjZN8qmMNz7L0uRLDj2uBuy4G7CyCDgzdY/CQmD
+         bwHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=YIG+J7MiB5sS9rWPyNto+7moWAPbQjN1aO1bYsWW0jg=;
-        b=sgkxgeuThFnimWNADWrrlaJrdW7JDlihKgackjhYD1Rn4+rIkaIRtqUzbnqA6tndtv
-         hYS9X1Gykrmc5QNIitogijzbc6VpyDOI1GKED5BlFwavsnPsx5Q/L/OTPHm30lJs1eq5
-         +M0ex8w/nnVjT5dpjldJ9vQdo9Lt/SmH3kcU35vHPqUmfuo49tkQ2bSgK5Sj5C5zmzcz
-         iyLW5KV79ks8VXFZnM7Z7l+lttMwjAdPhq4xQm3JUejDKACo45aTYJmL+StYikSzVT92
-         +k+Dfw5qswqUgIYW9VVJhplJI5XVTOd7IoSG+u3sTnZiSnJ8pPzF1+ikAlo455UYHErJ
-         uufw==
-X-Gm-Message-State: AOAM532rRI1HMqnBcuB8ABfFZ0mlxLSCR5gj/qnPoVXehOmfo85A/AUC
-        gT9joTIsBDIF6Anu1KVHBp4=
-X-Google-Smtp-Source: ABdhPJzC/ZXPBhnIE3Gdh0AeSggK3DjI/pkKk0MgisqVMO562mjm9foWC04idxRxAeb6kxQgBI875g==
-X-Received: by 2002:a05:6402:34c5:: with SMTP id w5mr7857094edc.65.1611156789038;
-        Wed, 20 Jan 2021 07:33:09 -0800 (PST)
-Received: from szeder.dev (92-249-246-25.pool.digikabel.hu. [92.249.246.25])
-        by smtp.gmail.com with ESMTPSA id i4sm1042698eje.90.2021.01.20.07.33.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jan 2021 07:33:08 -0800 (PST)
-Date:   Wed, 20 Jan 2021 16:33:07 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 0/6] Remove GIT_TEST_GETTEXT_POISON facility
-Message-ID: <20210120153307.GD8396@szeder.dev>
-References: <87pn2b6eyb.fsf@evledraar.gmail.com>
- <20210111144740.6092-1-avarab@gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=tgRXFEu3s1uhTfyeoMqtDFgV8ehw0xGXfEMZPjOJFgY=;
+        b=d+uz+FplXobg7Jv5MS7JrRXl16FYhffy+Laq9LYrQMZP8bqYQwkoxhXROhPlIm3Ht/
+         KhWCltu5/amfkelNwH8E6V8Fz03laCjTG2abiLbMaWd9CPqhLaaaJrnE1NWpQTlJYVwj
+         nnQgA0aAoOLUXgOQR3ZQ4+yAFzWMSKWsARzMC5Nsl/G/2PqFvd1E86tjdM5Yu01VjueS
+         Q5a1/CTNqn5bn//UpAIrT4+T0M0dxkhLFOzaUUiqfH0vh3dCBgVLvCTlUUXyANJer2Cj
+         xj6R9uZ6LGDKJhWLd7h2bXCyJnjr20jPhczduvaHcq9oHor9Z1xlchXNkfRMKMSenY3o
+         +mdQ==
+X-Gm-Message-State: AOAM532S/UZHTzHavsLTExwxhaWIJCaDj/2X/7pSOLQA42jhizPl3W0F
+        oiwAbFhtYVirMPHpj313os1usTx7GD4=
+X-Google-Smtp-Source: ABdhPJw6pEbq1+rYjCtsUYYgYrlhNBQUIbgVtFepWiJLm7vNpi3e5kb2qts7zpM1M6/+PkfDcrg8Tg==
+X-Received: by 2002:a1c:ed0b:: with SMTP id l11mr2232847wmh.47.1611152984498;
+        Wed, 20 Jan 2021 06:29:44 -0800 (PST)
+Received: from [192.168.1.240] (112.16.7.51.dyn.plus.net. [51.7.16.112])
+        by smtp.gmail.com with ESMTPSA id c7sm4808011wro.16.2021.01.20.06.29.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jan 2021 06:29:32 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 9/9] doc/git-rebase: add documentation for fixup
+ [-C|-c] options
+To:     Charvi Mendiratta <charvi077@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20210108092345.2178-1-charvi077@gmail.com>
+ <20210119074102.21598-10-charvi077@gmail.com>
+ <8fd2b72c-d1d0-98be-e6a5-fb7dc699d5d5@xiplink.com>
+ <CAPSFM5euGE_bUDPgdzx4-q5zYtkDymHdJP9rw-YkVVVzpOKWkw@mail.gmail.com>
+ <7c11da69-d2f1-0aab-80bc-d8ae8735f8ca@gmail.com>
+ <CAPSFM5f9JJk5xY-f2mNwHjZZfo-=LzSCpA2Q73T-ASGMxfqqeg@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <fda55ef5-ce37-67c0-f49b-fc2e5172853b@gmail.com>
+Date:   Wed, 20 Jan 2021 14:29:12 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210111144740.6092-1-avarab@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CAPSFM5f9JJk5xY-f2mNwHjZZfo-=LzSCpA2Q73T-ASGMxfqqeg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 11, 2021 at 03:47:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> As argued upthread and in 2/6 this test setup has outrun its
-> usefulness.
-> 
-> This series begins to remove it in a way that's very careful about not
-> stepping on the toes of any other in-flight patches. In particular
-> "master" isn't anywhere in the diff context here to avoid conflicts
-> with the series to do that mass-replacement in t/. 
-> 
-> This series merges and tests cleanly in combination with the current
-> "seen" branch.
-> 
-> At the end we're left with a bunch of tests still using
-> test_i18n{cmp,grep}, but I think that's preferable to having in-flight
-> conflicts. It'll be trivial to search-replace those at some point in
-> the future where we don't have another search-replacement series
-> amending t/ in-flight.
-> 
-> Ævar Arnfjörð Bjarmason (6):
->   ci: remove GETTEXT_POISON jobs
->   tests: remove support for GIT_TEST_GETTEXT_POISON
->   tests: remove misc use of test_i18n{cmp,grep}
->   tests: (almost) remove use of "test_i18ngrep !"
->   tests: (almost) remove C_LOCALE_OUTPUT prerequisites
->   tests: remove uses of GIT_TEST_GETTEXT_POISON=false
+Hi Charvi
 
-At the end of this patch series there are still a couple of remnants
-left:
+On 20/01/2021 12:31, Charvi Mendiratta wrote:
+> Hi Phillip,
+> 
+> On Wed, 20 Jan 2021 at 16:34, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> 
+>>> [...]
+>>> Similarly, if we have sequence like `fixup -c`, `fixup -c`, `fixup -c`
+>>> then also it will fixup
+>>> up all the content and here it allow user to edit the message, so
+>>> opens the editor once
+>>
+>> It is good that we only open the editor once in this case - I'd not
+>> thought about chains of `fixup -c` before reading this. Do we have a
+>> test to verify that the editor is only opened once?
+>>
+> 
+> No, we don't. But I also agree, it's a good idea to add a test for it.
+> I think may be one sequence with 'fixup -C', 'fixup -c', 'fixup -c'
+> and the other 'squash' , 'fixup -C', 'fixup -c', is sufficient for
+> testing.
 
-  - t3406: has a comment about gettext poisoning.
+Those are both good sequences to test. I think we should check 'fixup 
+-c' 'fixup' as well - with 'squash' 'fixup' we open the editor after the 
+fixup so the user can see all the changes that will be committed when 
+they edit the message, we should do the same for 'fixup -c' 'fixup'. 
+Also 'fixup -c' 'squash' might be worth testing as well.
 
-  - Makefile still has a warning about for the GETTEXT_POISON build
-    knob referring to GIT_TEST_GETTEXT_POISON and t/README.
+Best Wishes
 
-I think both can be simply removed.
+Phillip
+
+
+  Or any other suggestions for testing it ?
+> 
+> Thanks and regards,
+> Charvi
+> 
