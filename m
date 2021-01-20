@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DE9C433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9EF4C433E6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:49:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B98BD2242A
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:48:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B1BF223E0
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:49:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732629AbhATRro (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 12:47:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39110 "EHLO
+        id S1732767AbhATRs4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 12:48:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732467AbhATRq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:46:57 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C624C061575
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:46:17 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id f6so14936710ots.9
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:46:17 -0800 (PST)
+        with ESMTP id S1731598AbhATRso (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:48:44 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B44C0613C1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:48:02 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id q25so25875204oij.10
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:48:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pP51brDfaNMxTT48f7d1TrtEQhHFG96DV4fgSFjofMg=;
-        b=egqc5qav+gRR5w5/39WtOMJxJ+qkke9iHPaORjvp3QtRKib4IVLWpuRYoNoB+yqzdD
-         +Pzn/0CkDTMDgXtyspZumbGTP0EmSQgOnc7uDcMjxDCFLHfN0vEuvZSYT90yp9fh1Rq5
-         kDAEOndxn4tsqffIugIRoXlMWwsKh4z+03HZ+rX4sv4kAoiITHlls3dkSB/EVDR6Ke2N
-         65zawWIuiA/OIqWRNtSpJqk90KMlcU6AgFPamNvxHZ5V2L/fg6AzPDixOULXm+CDyVp1
-         dL/GPy7g2vBiAIzSqbIruqVV6KEJCwgf1uTaY5T12VwHH330w5MyUeMGMYPnsnhMPmZD
-         9BaA==
+        bh=yPYSIVowYOtVFeW8R0APLoJ9DWUvM3bgz35+ypZi3Us=;
+        b=jY/iuj3CixyFuRYzWqPNp9vcAIaSzaHOa6801SvIDp1XlEQB0djlBR3PqGsdtDUr7W
+         1krEVmT/4hahBrWSHIbfDTayxBZrEUMB7H2FvfeS8AexHNRWTYsMQzeRLrWtHe0wHAiy
+         PYq8dQAa5nQ+sLvnU9wenWm9oNUEBbat1zgHwA4EuPHrBopauIwJWcenwPFeLhTHW0K0
+         rRDJR2xty1LG6CMjuZthQA0HtOxZRTccq2D4MYpu3sxVO9MxKbEjhHlkm4rCA7m1q/n8
+         8r3XUanj52WCGiiTgA6IAdUp7ead8lXcAvgJXqp3W5Q11AdLNKbS2vmzQnvWNTGN2J8r
+         c7vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pP51brDfaNMxTT48f7d1TrtEQhHFG96DV4fgSFjofMg=;
-        b=KyzCrN5hDIQxT8JJVL4BbMYO+0YQ2AEcdpao/+sjo+4O4hb2pXDyInCcdeGnAPj1Na
-         3A0I7o69MUsmNwY7ue/81zzFSktJ2KwdEtefFFCVZKPCUF7ydFTTyvf2J/Uk/smKhVHE
-         P8K8iS9C7AaFTEYj546Az5MgDXMg+ZslICw2YDoXw7kjPlbO1wQGsTPJVLEM0lBlrU8V
-         8xUXUiboXObS6En80VJVGdw9Mez3bW5p0bOO58v7kWT0e8VZ6Pi0vE58p0Pjaf+xrwiQ
-         n5iWZHcOA1mRhtz3hqIQoegYu3kvfQtjUMFPqbf4o3HWv7p82BxWsk0IHzrM/yARIEWg
-         bWPQ==
-X-Gm-Message-State: AOAM532lYjy2yoewyV1WnquMeA4rzV4GOdZ4uITRK8JDPUUMgWmil+HE
-        K94PjCY1SE2g5JkGq41ehNQmoBv+qXm4QyxOkkI=
-X-Google-Smtp-Source: ABdhPJwaaBD297BQFP1C4TXjRpE+u6KJjx7vH7Sbmfdz/CxJh1aAwjdOaX4JSBFSnL+o8PZ0owe4CnMahU4SL6Fg6eo=
-X-Received: by 2002:a05:6830:402f:: with SMTP id i15mr5764202ots.345.1611164777026;
- Wed, 20 Jan 2021 09:46:17 -0800 (PST)
+        bh=yPYSIVowYOtVFeW8R0APLoJ9DWUvM3bgz35+ypZi3Us=;
+        b=ZF8TH/Wklg6UnpadnrD/ZIIx4RMhipHgxappY9ozZXJ6YWlX36y80SLEsjM283SVfT
+         Y5NEp8odr+0b5OGAYN7mqFrUJ0ukA+my1HfB32uXH8s3EuaqZCV/sbWJ58LWwRJ2Yydf
+         516pPiZ0VcXZnZmnI6Qnz8UbgMyqvpUBLfSmYN81hO8io/ugqDEAH9Xg7WFG+sSUDqdV
+         GNhdEfROc8LzZazJ5YMkNC9Soh9vpb/7gtMh+5Idz0yncsYDD+YGsHnQ/jhES9R5H3Dd
+         mUWCYAwDw+opKmAJNWA5Q6mtMX5vLU+AFtAQo0rm8fi8kSUzsPwxhBB1ouLQxLKBRVn9
+         wUjA==
+X-Gm-Message-State: AOAM532/z8FqPgo25O65glCmCYBT2J8qOyilcRBPJs5lFsPWLPAsYoMC
+        ZQrtI84u8z1TDuSX4yxFAyqEE2L7zYB942PqPw0=
+X-Google-Smtp-Source: ABdhPJxvD41QLmSO+BoA2infHOG+OzMclswc+kYL3CLC83DKJe3FBIRenDkZba+HxbtlxKt04hY0qZmSWmx5TzfQ0TI=
+X-Received: by 2002:a05:6808:83:: with SMTP id s3mr3650487oic.31.1611164881792;
+ Wed, 20 Jan 2021 09:48:01 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <d4ff0468fc0e22fe3ef82f74603ac781fd7711e1.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <d4ff0468fc0e22fe3ef82f74603ac781fd7711e1.1611161639.git.gitgitgadget@gmail.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <3ba4b35f09cf3dc313787cdec6856286fe97d8a8.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <3ba4b35f09cf3dc313787cdec6856286fe97d8a8.1611161639.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 09:46:05 -0800
-Message-ID: <CABPp-BGOVUDqDvTi0VOK7fD1EeFrhjCfZm241BqgA5_yMDH-VQ@mail.gmail.com>
-Subject: Re: [PATCH 4/9] repository: add repo reference to index_state
+Date:   Wed, 20 Jan 2021 09:47:50 -0800
+Message-ID: <CABPp-BEhJDd=Om49Cpb2CuuHn_UBuNaxJjGKZEhWfY3r3vcefA@mail.gmail.com>
+Subject: Re: [PATCH 5/9] name-hash: use trace2 regions for init
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <derrickstolee@github.com>,
@@ -73,80 +73,50 @@ On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> It will be helpful to add behavior to index opertations that might
-
-s/opertations/operations/
-
-> trigger an object lookup. Since each index belongs to a specific
-> repository, add a 'repo' pointer to struct index_state that allows
-> access to this repository.
+> The lazy_init_name_hash() populates a hashset with all filenames and
+> another with all directories represented in the index. This is run only
+> if we need to use the hashsets to check for existence or case-folding
+> renames.
 >
-> This will prevent future changes from needing to pass an additional
-> 'struct repository *repo' parameter and instead rely only on the 'struct
-> index_state *istate' parameter.
+> Place trace2 regions where there is already a performance trace.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  cache.h      | 1 +
->  repository.c | 4 ++++
->  2 files changed, 5 insertions(+)
+>  name-hash.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> diff --git a/cache.h b/cache.h
-> index 71097657489..f9c7a603841 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -328,6 +328,7 @@ struct index_state {
->         struct ewah_bitmap *fsmonitor_dirty;
->         struct mem_pool *ce_mem_pool;
->         struct progress *progress;
-> +       struct repository *repo;
->  };
+> diff --git a/name-hash.c b/name-hash.c
+> index 5d3c7b12c18..4e03fac9bb1 100644
+> --- a/name-hash.c
+> +++ b/name-hash.c
+> @@ -7,6 +7,7 @@
+>   */
+>  #include "cache.h"
+>  #include "thread-utils.h"
+> +#include "trace2.h"
 >
->  /* Name hashing */
-> diff --git a/repository.c b/repository.c
-> index a4174ddb062..67a4c1da2d9 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -264,6 +264,10 @@ int repo_read_index(struct repository *repo)
->         if (!repo->index)
->                 repo->index = xcalloc(1, sizeof(*repo->index));
+>  struct dir_entry {
+>         struct hashmap_entry ent;
+> @@ -577,6 +578,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+>         if (istate->name_hash_initialized)
+>                 return;
+>         trace_performance_enter();
+> +       trace2_region_enter("index", "name-hash-init", istate->repo);
+>         hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
+>         hashmap_init(&istate->dir_hash, dir_entry_cmp, NULL, istate->cache_nr);
 >
-> +       /* Complete the double-reference */
-> +       if (!repo->index->repo)
-> +               repo->index->repo = repo;
-> +
->         return read_index_from(repo->index, repo->index_file, repo->gitdir);
+> @@ -597,6 +599,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+>         }
+>
+>         istate->name_hash_initialized = 1;
+> +       trace2_region_leave("index", "name-hash-init", istate->repo);
+>         trace_performance_leave("initialize name hash");
 >  }
 >
 > --
 > gitgitgadget
 
-Since we have repo->index and we have index->repo, which are intended
-to be circular...what if they aren't?  Do we want or need to add
-assertions anywhere that repo == repo->index->repo or that index ==
-index->repo->index ?
+Yaay for trace2.  :-)
 
-My initial implementations of --remerge-diff[1] played around with
-creating a second repo, with a different primary object store but
-everything else the same.  The index for the two repository objects
-was thus the same, and thus clearly would have violated this assumed
-invariant for one of the two repos.  I discarded that initial
-implementation (which I didn't quite have working) because I
-discovered tmp-objdir.h and was able to add some
-tmp_objdir_make_primary() and tmp_objdir_remove_as_primary() functions
-that merely altered the existing repo's primary object store, but I'm
-curious if there might be other cases of folks doing stuff that might
-have weird failures with this new invariant.
-
-It's entirely possible that --remerge-diff was just so different, and
-I was so unfamiliar with repo objects (and still kind of am) that I
-was just doing weird stuff no one has done before, so perhaps no
-additional checks are needed -- I'm just throwing my gut question out
-there as food for thought.
-
-
-
-[1] I have not yet submitted `--remerge-diff` to the list; you haven't
-missed anything.  I'm waiting for merge-ort to be submitted, reviewed,
-and merged first.  It's the remerge-diff branch in my fork on GitHub
-if anyone is curious, though.
+Total sidenote: Are we ever going to get rid of the trace1 stuff?  I'm
+sure this was discussed somewhere, but I don't know where.
