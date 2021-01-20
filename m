@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67114C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87847C433E6
 	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 302232070A
+	by mail.kernel.org (Postfix) with ESMTP id 5C46C22473
 	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388828AbhATRdM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 12:33:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
+        id S1731653AbhATRdS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 12:33:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbhATRYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:24:35 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7832CC061757
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:23:55 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id w8so4014397oie.2
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:23:55 -0800 (PST)
+        with ESMTP id S1727690AbhATR1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:27:36 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227B3C061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:26:51 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id x23so5969165oop.1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:26:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=D+RpBB6vsplLnlFDQevsR0NQg9z4WVCbs1tyfRU7u7w=;
-        b=aZcdzxl9+7QivbLQ91vMcNs3/S+AzSo3HLOim023UhQoD29I/H3PomUCwQLofg5gAh
-         lmvitOERWQnYtijCC2t8iaQ0BASU3zLtsyhT/W39Vucq8z+XnKGDtKecy38RsKQ+i4sk
-         zW9nd1xmvKjRuoJDHH6leMVRJIeZd1nMcQEJ5M0RFeQ9awTEE2UX15iWz1zA8tlfB/qU
-         qtDfszbh2J4CIrUDYGtyxLHTen/S+eaj+AHGIWjCMW0IJzspVn3t1MsEWwJAqdU+ZfDz
-         ZpAAuDFpCA8rMFSIK6Mib3FTvACz1Sa5rTL97p2dV4p4cJz3IHPgemq5PAtvMpxeTJ6I
-         CVwA==
+        bh=01RfTKv+5nprwLlepLYdtSmosshbsMMNQMkDq68+whA=;
+        b=ltvuKE3SS7lmwF9EM7ZC3jv68nUvZRhL0nsNSozS8ZQunnuebkVk4h2Owf5r4hRgSv
+         9tnrh3A2Hqj6hJXPjJdbmWYJkfxgo08ZEFArYRwWFIbtufHIV5BdAAZyIeVQ953eex3j
+         jJpdX20MbDejE8mCTseJ/jH6Rwmb94LPni09xASFdxWccGzQkT8c6HKOle1Q6rZBWt8+
+         z/uXZrtv3fyvX4n3XYcMNOsguCHqExgAUFnYVGwMln2DjPFw0YsnMTe284qo0Q6LIorY
+         1L30aQqhOVOxFeQh3xTsUKSAzqAPNSNdLevnWes5NCDCTSn2BRv7m0nihVkhJOsoMCGQ
+         HTKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=D+RpBB6vsplLnlFDQevsR0NQg9z4WVCbs1tyfRU7u7w=;
-        b=E42KS/dXpz8j3iuJ0/UC4WMj+poROP5ev8V1zegzJM8Prsmbb7Vef6w8GuKBWLKrel
-         FB7rmbL7uYsc25qoi7qLJRMZ/u2QzNqR9F5bnO2L7NLiZGUAqSO6+J8fKu/aqSfm2qBH
-         0a+YOM3vre1HVhTT+EQHRBsof6+tsNEtzMjJADxLGe96M5Flt7ZhGm2jhnOWVhSr6Iee
-         Ls8rjqflhXo/qAyGmtOGTzSzuPxERsg9goQzV8iJBgtlH62f+Q2tOtO90EP61KwT53/q
-         zqIQ/TTqBMWmcPvg3qHo3Ag/97/w7MxajZiMTQJF1iopaQqZjZygqj7ikK0v29X5em9j
-         Qymg==
-X-Gm-Message-State: AOAM531eY5KPVOFTWTO+RRZ+nlbeVKdTgGBR9jy23dD9x080TCuqxxp5
-        N8QFxJLngm7KzSmwAmzmEOsbiPQFqh4I6L+AbTc=
-X-Google-Smtp-Source: ABdhPJzPddDiESfvNWdXHQBmddztIR2+nMHm/Z2HhP94HZkNR8CgVsmXjWnKyi03lPiuez4VIul0ucrkwtcYgbofS90=
-X-Received: by 2002:aca:cf03:: with SMTP id f3mr3513004oig.39.1611163434900;
- Wed, 20 Jan 2021 09:23:54 -0800 (PST)
+        bh=01RfTKv+5nprwLlepLYdtSmosshbsMMNQMkDq68+whA=;
+        b=kJFqm3ozBMN/sONlD/BYXC3rCcn5b+4MZ05BMu8nrgcWr9VSi9bynZhUFACnW/zz3e
+         Boa7CGvnW8d8yWiih8HV0n0EUtFKhzZ22FW9czpOYpCocVQgELfll7N7YTMZPIuyCGAL
+         xCCR6bkTAVKayn0U3C7w/tE670CJ6LQmaxNldUOdXiao1xwRAankeJHf7vwsy076/aFM
+         rFWpup1n8AuRaCBKuwn1M+wJl3bqWUMbl7IG17850ok5AiefhyjVUsL7EccABXOwwarh
+         7K6pEVrBS5bZMydHtEtOdMN8is7jnn5eCGnaQfrPhTga2oAg0LVJfkKXkKRTtyc5O7Wd
+         unbg==
+X-Gm-Message-State: AOAM530iOE/cWyRmudJfthn+UxMfTasgobKgAE6mW79TeAEnv4lkqOj+
+        J5afj8W5prULDO7gFwVMioO5DwqtIvRR1aloyhZM2tDMZDc=
+X-Google-Smtp-Source: ABdhPJzHrvtD+YmfA39cSAz7VDxF/5xGUFJbIy32NX13CJECKDGVcY2FyyzQc2eWdR+XM0yzd7Q7qq3i1oRd4k/K0qA=
+X-Received: by 2002:a4a:b2c6:: with SMTP id l6mr6775865ooo.7.1611163610450;
+ Wed, 20 Jan 2021 09:26:50 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <a6f2406a79512f517a1bc2700f806c546bbe9ed6.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <a6f2406a79512f517a1bc2700f806c546bbe9ed6.1611161639.git.gitgitgadget@gmail.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <838922de2e9756c00f4a159b2b8722ae4d28b011.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <838922de2e9756c00f4a159b2b8722ae4d28b011.1611161639.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 09:23:43 -0800
-Message-ID: <CABPp-BH7K3ddUEJ2aKqZ4D5bkNh43JNm5LuvDRbC5e2nQfVa0g@mail.gmail.com>
-Subject: Re: [PATCH 2/9] cache-tree: extract subtree_pos()
+Date:   Wed, 20 Jan 2021 09:26:38 -0800
+Message-ID: <CABPp-BEL=tjCx_x1z0NpNTmt3q9_CHtufwWg9FtqKBWWub00UQ@mail.gmail.com>
+Subject: Re: [PATCH 3/9] fsmonitor: de-duplicate BUG()s around dirty bits
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <derrickstolee@github.com>,
@@ -73,62 +73,93 @@ On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> This method will be helpful to use outside of cache-tree.c in a later
-> feature. The implementation is subtle due to subtree_name_cmp() sorting
-> by length and then lexicographically.
+> The index has an fsmonitor_dirty bitmap that records which index entries
+> are "dirty" based on the response from the FSMonitor. If this bitmap
+> ever grows larger than the index, then there was an error in how it was
+> constructed, and it was probably a developer's bug.
+>
+> There are several BUG() statements that are very similar, so replace
+> these uses with a simpler assert_index_minimum(). Since there is one
+> caller that uses a custom 'pos' value instead of the bit_size member, we
+> cannot simplify it too much. However, the error string is identical in
+> each, so this simplifies things.
+>
+> The end result is that the code is simpler to read while also preserving
+> these assertions for developers in the FSMonitor space.
+
+Indeed, looking through the patch, the end result is simpler to read.
+Nice cleanup.
+
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  cache-tree.c | 6 +++---
->  cache-tree.h | 2 ++
->  2 files changed, 5 insertions(+), 3 deletions(-)
+>  fsmonitor.c | 27 +++++++++++++--------------
+>  1 file changed, 13 insertions(+), 14 deletions(-)
 >
-> diff --git a/cache-tree.c b/cache-tree.c
-> index c1e49901c17..2b130dd5e19 100644
-> --- a/cache-tree.c
-> +++ b/cache-tree.c
-> @@ -45,7 +45,7 @@ static int subtree_name_cmp(const char *one, int onelen,
->         return memcmp(one, two, onelen);
->  }
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index ca031c3abb8..52a50a9545a 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -13,14 +13,19 @@
 >
-> -static int subtree_pos(struct cache_tree *it, const char *path, int pathlen)
-> +int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen)
->  {
->         struct cache_tree_sub **down = it->down;
->         int lo, hi;
-> @@ -72,7 +72,7 @@ static struct cache_tree_sub *find_subtree(struct cache_tree *it,
->                                            int create)
->  {
->         struct cache_tree_sub *down;
-> -       int pos = subtree_pos(it, path, pathlen);
-> +       int pos = cache_tree_subtree_pos(it, path, pathlen);
->         if (0 <= pos)
->                 return it->down[pos];
->         if (!create)
-> @@ -123,7 +123,7 @@ static int do_invalidate_path(struct cache_tree *it, const char *path)
->         it->entry_count = -1;
->         if (!*slash) {
->                 int pos;
-> -               pos = subtree_pos(it, path, namelen);
-> +               pos = cache_tree_subtree_pos(it, path, namelen);
->                 if (0 <= pos) {
->                         cache_tree_free(&it->down[pos]->cache_tree);
->                         free(it->down[pos]);
-> diff --git a/cache-tree.h b/cache-tree.h
-> index 639bfa5340e..8efeccebfc9 100644
-> --- a/cache-tree.h
-> +++ b/cache-tree.h
-> @@ -27,6 +27,8 @@ void cache_tree_free(struct cache_tree **);
->  void cache_tree_invalidate_path(struct index_state *, const char *);
->  struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+>  struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
 >
-> +int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
+> +static void assert_index_minimum(struct index_state *istate, size_t pos)
+> +{
+> +       if (pos > istate->cache_nr)
+> +               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> +                   (uintmax_t)pos, istate->cache_nr);
+> +}
 > +
->  void cache_tree_write(struct strbuf *, struct cache_tree *root);
->  struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+>  static void fsmonitor_ewah_callback(size_t pos, void *is)
+>  {
+>         struct index_state *istate = (struct index_state *)is;
+>         struct cache_entry *ce;
 >
+> -       if (pos >= istate->cache_nr)
+> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
+> -                   (uintmax_t)pos, istate->cache_nr);
+> +       assert_index_minimum(istate, pos);
+>
+>         ce = istate->cache[pos];
+>         ce->ce_flags &= ~CE_FSMONITOR_VALID;
+> @@ -82,10 +87,8 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+>         }
+>         istate->fsmonitor_dirty = fsmonitor_dirty;
+>
+> -       if (!istate->split_index &&
+> -           istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +       if (!istate->split_index)
+> +               assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>
+>         trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
+>         return 0;
+> @@ -110,10 +113,8 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
+>         uint32_t ewah_size = 0;
+>         int fixup = 0;
+>
+> -       if (!istate->split_index &&
+> -           istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +       if (!istate->split_index)
+> +               assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>
+>         put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
+>         strbuf_add(sb, &hdr_version, sizeof(uint32_t));
+> @@ -335,9 +336,7 @@ void tweak_fsmonitor(struct index_state *istate)
+>                         }
+>
+>                         /* Mark all previously saved entries as dirty */
+> -                       if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -                               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -                                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +                       assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>                         ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
+>
+>                         refresh_fsmonitor(istate);
 > --
 > gitgitgadget
-
-Simple, straight-forward patch for exposing the function outside the
-file scope; looks good.
+>
