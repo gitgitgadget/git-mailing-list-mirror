@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28B38C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 449B0C433E9
 	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:57:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF329233E2
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FD5B233F6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391387AbhATQ4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 11:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
+        id S2391592AbhATQ5B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 11:57:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404076AbhATQz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2404077AbhATQz1 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 20 Jan 2021 11:55:27 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9319BC061786
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:08 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id 7so16513968wrz.0
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:08 -0800 (PST)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F57CC061793
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:09 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id a1so2462180wrq.6
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nNuAXab2vPlq3R+IaBIQjsjYiHa8LdjqA99dbgGHa1g=;
-        b=Ljx3q2wyCnYRvha0sINwvfScRgherWCcDB+tSOmsnRigCWvEbE0iV9zd68PcxegLY4
-         2FG8TJT6HSnSv53eHCTB3h+CDYClmY6IUMP3nUNh0bwSVU5WvZ62LonlebRzpENjxhnc
-         al0QdF+EmqkbuQBM6GgDQlsqvo5iTS5WTBDukL37hCoD4H05ASLUf5uaWUF2Ods31VE1
-         5Iz5gwEj2A5BhshyAgZnWuWlXuVRbrb5uFGxNNzri3Xevqt1SG3o8M910tML88RrtY6Z
-         JzsPivyVJQ79kaLttBWTOMl0jNAihoIsgJlwsRsytInXgDdEWf6vjkuLpCfjTofAjae7
-         01Qg==
+        bh=g5rYqLWoWL2WCFNwvHUDqPp3kEwXKkEJegs8hgz8btI=;
+        b=SEWO7wK84/SBeLS0loo6nDxNPfVqJko54rPtLBkRNCRL+DLA7Y9SrD8CCZU+MfmZl7
+         ibu/ONw5wgRuz1Mc9wsIKTTZV/EYR4gfYsCSxh2pXtfmLl4yaJOr1l/B8DGy7vYxF+Ll
+         GN+b6fvZHJ/VBmX737DRbMaq5qsS6EWtc1tto3X1aw/lSmdkl+Y7RAuRAWH3sJ9pymQK
+         N36ODdwzOvXTGdWYVcqw4KgS+fN+b8ypp4dSko5duL8iXVDzYd83bdvtbxB9FgcRL2+M
+         p+8Yn3ZOUHgFv6R07DUhnbI72cACp6JZWXZ3RcEYIMRmf+p9tPQHENL8WHXKa0Qnlo1M
+         vTQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nNuAXab2vPlq3R+IaBIQjsjYiHa8LdjqA99dbgGHa1g=;
-        b=RYcM6LWUZgCVqGyzghEibymRCGZpXC+TiWYYtNNE/yxBz1aZW119v2NuoJCB85KDYs
-         rpli3Dn9Kc4dpnwgnvz274/T2Xqu362KqHK3VZ3U2SRMaKgsBZox4esdtVoyka7I/7QY
-         JIj9Flwbv/UWDVwe8MQvyMDPSxvXg6y5reRa01iXnSIYJkAC1Ay8310TTR//2qgAGPYt
-         XgquBSMzbblSXbjmcsA3Mc/PARlzOEc8AEu7BB0ZzpyYCUtW6vaVPEByMXniY3LNpSrY
-         nUY/tUOJzaLFmVNpuIF5IgwqKQZd2lcg1Abb9yeYULNWqygyYyIhwSoWEl/FI0F9YQbU
-         nTqQ==
-X-Gm-Message-State: AOAM530wz3/0y/cUjP5La9W+T7kpBPvCmNdE8bzeyWqDYLVvEv9sc+hx
-        lla2efVhFeWgV9fNLWAlBA2S+Tu93nE=
-X-Google-Smtp-Source: ABdhPJzlyFJqlnyqQImnsmylu5vPMOla+N7A4or3ox/X2gZ3IxupumUYyjWyueQuDTAAHA1tHEZYeg==
-X-Received: by 2002:adf:fbd2:: with SMTP id d18mr10414272wrs.222.1611161647232;
+        bh=g5rYqLWoWL2WCFNwvHUDqPp3kEwXKkEJegs8hgz8btI=;
+        b=jLDkgAS5PwXJHejGDBhn/zAvvKlWr/HSSvcPq9vEwKBi3QWFtwXCTU6+KqY4KQtBY+
+         X8o8CcU/NxiGJJxomYIyZlJfSRALmIH+inbgx5QJfeS/tqm+xcYcRm02Dt/JsANDY9h3
+         7NQfEPI4/YQTv7XBUc+dRnEDr0/YuG9MYJ3Bcfbdj0ucl81X4rKqQbKEVc6MEMduR8L/
+         nWFD2n/7rWaI584CLzfHVYmDgn84iEbV9GTQQ30guoArmBsO8lWi/XxI9JMCgR8SCJoG
+         FP7glPveWPINcnsrbKybCjxcxGQ9sRAVkJYiRRQ9l+Dmn02sosJeg7tG6XgrVKZzjI4+
+         hQWA==
+X-Gm-Message-State: AOAM532ZyqPEYs3BL1s5R8rcivmxi1QfBI3cT4nNLLkgU3MGYtTt9RYJ
+        VQ8KJRL7A9nFHfki1TAUATF0M0R6hFc=
+X-Google-Smtp-Source: ABdhPJy8+4R1jFIMFeTXKcq38FVYbcAK+bjEhE0NFFYGRRagsGov6IlQ4zpctb3oKVI1qZgr22xvtg==
+X-Received: by 2002:a5d:6cc9:: with SMTP id c9mr9995416wrc.411.1611161647991;
         Wed, 20 Jan 2021 08:54:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a24sm4591339wmj.17.2021.01.20.08.54.06
+        by smtp.gmail.com with ESMTPSA id h9sm5229274wre.24.2021.01.20.08.54.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 08:54:06 -0800 (PST)
-Message-Id: <91344f5108c835a48b2460b9de75c489045b9cce.1611161639.git.gitgitgadget@gmail.com>
+        Wed, 20 Jan 2021 08:54:07 -0800 (PST)
+Message-Id: <8326a9b5320e1e774caef568fcce2bfd2ec13cb1.1611161639.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.839.git.1611161639.gitgitgadget@gmail.com>
 References: <pull.839.git.1611161639.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 20 Jan 2021 16:53:57 +0000
-Subject: [PATCH 7/9] sparse-checkout: hold pattern list in index
+Date:   Wed, 20 Jan 2021 16:53:58 +0000
+Subject: [PATCH 8/9] test-lib: test_region looks for trace2 regions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,101 +75,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-As we modify the sparse-checkout definition, we perform index operations
-on a pattern_list that only exists in-memory. This allows easy backing
-out in case the index update fails.
+Most test cases can verify Git's behavior using input/output
+expectations or changes to the .git directory. However, sometimes we
+want to check that Git did or did not run a certain section of code.
+This is particularly important for performance-only features that we
+want to ensure have been enabled in certain cases.
 
-However, if the index write itself cares about the sparse-checkout
-pattern set, we need access to that in-memory copy. Place a pointer to
-a 'struct pattern_list' in the index so we can access this on-demand.
+Add a new 'test_region' function that checks if a trace2 region was
+entered and left in a given trace2 event log.
+
+There is one existing test (t0500-progress-display.sh) that performs
+this check already, so use the helper function instead. More uses will
+be added in a later change.
+
+t6423-merge-rename-directories.sh also greps for region_enter lines, but
+it verifies the number of such lines, which is not the same as an
+existence check.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c | 17 ++++++++++-------
- cache.h                   |  2 ++
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ t/t0500-progress-display.sh |  3 +--
+ t/test-lib-functions.sh     | 40 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 2306a9ad98e..e00b82af727 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -110,6 +110,8 @@ static int update_working_directory(struct pattern_list *pl)
- 	if (is_index_unborn(r->index))
- 		return UPDATE_SPARSITY_SUCCESS;
+diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
+index 1ed1df351cb..c461b89dfaf 100755
+--- a/t/t0500-progress-display.sh
++++ b/t/t0500-progress-display.sh
+@@ -303,8 +303,7 @@ test_expect_success 'progress generates traces' '
+ 		"Working hard" <in 2>stderr &&
  
-+	r->index->sparse_checkout_patterns = pl;
+ 	# t0212/parse_events.perl intentionally omits regions and data.
+-	grep -e "region_enter" -e "\"category\":\"progress\"" trace.event &&
+-	grep -e "region_leave" -e "\"category\":\"progress\"" trace.event &&
++	test_region category progress trace.event &&
+ 	grep "\"key\":\"total_objects\",\"value\":\"40\"" trace.event &&
+ 	grep "\"key\":\"total_bytes\",\"value\":\"409600\"" trace.event
+ '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 999982fe4a9..c878db93013 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1655,3 +1655,43 @@ test_subcommand () {
+ 		grep "\[$expr\]"
+ 	fi
+ }
 +
- 	memset(&o, 0, sizeof(o));
- 	o.verbose_update = isatty(2);
- 	o.update = 1;
-@@ -138,6 +140,7 @@ static int update_working_directory(struct pattern_list *pl)
- 	else
- 		rollback_lock_file(&lock_file);
- 
-+	r->index->sparse_checkout_patterns = NULL;
- 	return result;
- }
- 
-@@ -517,19 +520,18 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
- {
- 	int result;
- 	int changed_config = 0;
--	struct pattern_list pl;
--	memset(&pl, 0, sizeof(pl));
-+	struct pattern_list *pl = xcalloc(1, sizeof(*pl));
- 
- 	switch (m) {
- 	case ADD:
- 		if (core_sparse_checkout_cone)
--			add_patterns_cone_mode(argc, argv, &pl);
-+			add_patterns_cone_mode(argc, argv, pl);
- 		else
--			add_patterns_literal(argc, argv, &pl);
-+			add_patterns_literal(argc, argv, pl);
- 		break;
- 
- 	case REPLACE:
--		add_patterns_from_input(&pl, argc, argv);
-+		add_patterns_from_input(pl, argc, argv);
- 		break;
- 	}
- 
-@@ -539,12 +541,13 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
- 		changed_config = 1;
- 	}
- 
--	result = write_patterns_and_update(&pl);
-+	result = write_patterns_and_update(pl);
- 
- 	if (result && changed_config)
- 		set_config(MODE_NO_PATTERNS);
- 
--	clear_pattern_list(&pl);
-+	clear_pattern_list(pl);
-+	free(pl);
- 	return result;
- }
- 
-diff --git a/cache.h b/cache.h
-index f9c7a603841..bf4ec3de4b0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -305,6 +305,7 @@ static inline unsigned int canon_mode(unsigned int mode)
- struct split_index;
- struct untracked_cache;
- struct progress;
-+struct pattern_list;
- 
- struct index_state {
- 	struct cache_entry **cache;
-@@ -329,6 +330,7 @@ struct index_state {
- 	struct mem_pool *ce_mem_pool;
- 	struct progress *progress;
- 	struct repository *repo;
-+	struct pattern_list *sparse_checkout_patterns;
- };
- 
- /* Name hashing */
++# Check that the given command was invoked as part of the
++# trace2-format trace on stdin.
++#
++#	test_region [!] <category> <label> git <command> <args>...
++#
++# For example, to look for trace2_region_enter("index", "do_read_index", repo)
++# in an invocation of "git checkout HEAD~1", run
++#
++#	GIT_TRACE2_EVENT="$(pwd)/trace.txt" GIT_TRACE2_EVENT_NESTING=10 \
++#		git checkout HEAD~1 &&
++#	test_region index do_read_index <trace.txt
++#
++# If the first parameter passed is !, this instead checks that
++# the given region was not entered.
++#
++test_region () {
++	local expect_exit=0
++	if test "$1" = "!"
++	then
++		expect_exit=1
++		shift
++	fi
++
++	grep -e "region_enter" -e "\"category\":\"$1\",\"label\":\"$2\"" "$3"
++	exitcode=$?
++
++	if test $exitcode != $expect_exit
++	then
++		return 1
++	fi
++
++	grep -e "region_leave" -e "\"category\":\"$1\",\"label\":\"$2\"" "$3"
++	exitcode=$?
++
++	if test $exitcode != $expect_exit
++	then
++		return 1
++	fi
++}
 -- 
 gitgitgadget
 
