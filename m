@@ -2,83 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F173C433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FD11C433E6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:17:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D546123442
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6B1323444
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:17:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389791AbhATUO0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 15:14:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
+        id S2387954AbhATUQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 15:16:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389750AbhATUOO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 15:14:14 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7C0C0613CF
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:13:24 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id k193so5492013qke.6
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:13:24 -0800 (PST)
+        with ESMTP id S1733266AbhATOA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 09:00:57 -0500
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7687C061798
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:59:50 -0800 (PST)
+Received: by mail-oo1-xc2c.google.com with SMTP id x203so5786571ooa.9
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:59:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=yPMZUiYkT5eyf19skDJGb2ZWnyeepCf/AMrE0axU90Q=;
-        b=D+P8EJS6HRIj/QrmNxg1Aur37zPRN4PJfgUTuP9k59WvsNXVzDfVPO66cVHUJ3+RvI
-         YSCMUXXYHvFvnfVYGJnRMEHlSUy9CVh/ggqEthXyPkWkt2VS05sE2e/ocSTXpzQmhVsm
-         TnGPSNuOfiyYt6jmuBXdcFmlE5jPFcCW8ZxesahMyhxY033AhW3ZbOHBX7sBMGzG+fE7
-         ifKxnuEDi9MJ3veEgEW8t1Uy956JLEwn9XtrX0GO0srbT3lpRLlmsafvSjmQrDOQQk4q
-         PTG8E8KeOu8/wFYBfnI52sbyX+2bmj8vH8zHEVdNL+N5CgnSRksyAijKF66wgbq2Y9Dq
-         6Uwg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=5xQ3KEinywvLRJCulofbeu9yI7VXNS2seqw97guXw20=;
+        b=Hk8JKzkzkHIsECd/hxR6CNrhCYcB/n+jjES/mhE5edA8/Lj/4+jus3uZrp1FNLXDps
+         gS54k5EF6nY3QW1iOAI6wvViwAO/VpUywvnwpvAlXHRHROzDkFArbczxLk06b3hs/F1W
+         d0A5keqSvKDbDhVH3XXHUD+5KKwmViBWBunrCKbhy8unaDX4F4Q4Z4BbbCJFUaXREbqe
+         PC7Uj+mtNWeEVF0R1NrJNFy3KYjIumeIgJDgZnvPjPCuvtklQwPHM5rgbkIknTXl7hix
+         fEIdMyB9NgY/z8XvSFSoqxGlYAcygEaaXU5E6HuE4iVhYQKXhrSv9JsXPP7AJy5oKJ3r
+         3sCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=yPMZUiYkT5eyf19skDJGb2ZWnyeepCf/AMrE0axU90Q=;
-        b=g4SHqNxnp2LPzluB1iNqD1TeZ2RsV9vQ1TusNctpka6NK1+/vGDQz8XQRqRmShCJI+
-         J+Qa30tz09a3lpAqyzypLnN1TCfKLHgyRmihvg7pxHQt6G/L0a+Qyf7NTypm2vLZTHJW
-         Nd4smMzA9wbSi2XbA+C5ZmKCkAklLVsCLOdy6SFR/pZPNGitW+cFQGJJksH0+8tFWgOX
-         UjazQd/d79xVpY/6YJ8nVI8eWDB1i921kaNHP34bCc4x4tX9VfflBdYbs5wpW39R8RSb
-         AmLvjpdoLMWVQBrhTA5hIWcxkUFSkcA8ciHdlxLP/241/9CbI9gInF2RTA1TW9fyllOU
-         xxaQ==
-X-Gm-Message-State: AOAM531l1OIrOIPJGyBCGUzoaLkTOURZtCvXgv/A1ReVeaBR+vGPn1Tk
-        Mb99QMFmbEYPePZBKfCpPthgDg==
-X-Google-Smtp-Source: ABdhPJyFK8LrUwR0w+66DzYMUgO9qOQKXce+eVxRUkngzq15MTiiH5NC5QJUYlgsBt5KtesjaFcHJA==
-X-Received: by 2002:a05:620a:2104:: with SMTP id l4mr10725148qkl.35.1611173603898;
-        Wed, 20 Jan 2021 12:13:23 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:7d49:7932:5c79:ddd4])
-        by smtp.gmail.com with ESMTPSA id c12sm1898814qtq.76.2021.01.20.12.13.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 12:13:23 -0800 (PST)
-Date:   Wed, 20 Jan 2021 15:13:20 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jacob@gitlab.com
-Subject: Re: [PATCH v2 2/3] ls-refs.c: initialize 'prefixes' before using it
-Message-ID: <YAiO4Ez5x/ycZ5l+@nand.local>
-References: <cover.1611080326.git.me@ttaylorr.com>
- <cover.1611158549.git.me@ttaylorr.com>
- <5fc081b2d554db305400ec52fac8683a3ed59597.1611158549.git.me@ttaylorr.com>
- <YAiLXUDTdMpdGG5b@coredump.intra.peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=5xQ3KEinywvLRJCulofbeu9yI7VXNS2seqw97guXw20=;
+        b=pk7IaXLNAa4C6T34KNV8wY9wKSyWo9yIlHmOwxk8D+WMHueov84l9lJYsGnVLQxvFy
+         jW5+lfniBjcKq94nKnETdWNAa++jbuHhZXtjC1c4SaOqn4EmjAclnNTd6HZA/JmTYnCg
+         uOMP/m6JwDMXejXRV6T3+41zSgvSZCP39DWfzTORom1Sss4DOJoHNtfj2Ia4Ts1vULfp
+         MirpcYy1eEpBFEKfxA/exHxZYlHX0y4/yBlFjTQfMSRsj78Q1z553RxAeiMlwENdoDlZ
+         /GHRcDggwrOUF7LCmER0FRpk9mwasTNcIzLgMvHx4K5elud0iOC2DOl8B6eys+p1Yjmt
+         Z9uA==
+X-Gm-Message-State: AOAM533eKvaEcJt/pnLg23yU+QI/I7Qam+QMVC3Lm4CaOtVTsJnuZmoT
+        16gX/lk36rKAD2e+yo+hDZlLNxwAlaw=
+X-Google-Smtp-Source: ABdhPJz1MTCeym6QwpYgVF4Q605rkWmqJeX5rYd6dG3oOL/L3zZdoujI3SLDoi0grrUpdpa//fqxYg==
+X-Received: by 2002:a4a:9c01:: with SMTP id y1mr6199674ooj.15.1611151189969;
+        Wed, 20 Jan 2021 05:59:49 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:710c:cecb:a7d:75ab? ([2600:1700:e72:80a0:710c:cecb:a7d:75ab])
+        by smtp.gmail.com with UTF8SMTPSA id r26sm370732oij.3.2021.01.20.05.59.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jan 2021 05:59:49 -0800 (PST)
+Subject: Re: [PATCH 09/10] builtin/repack.c: extract loose object handling
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     peff@peff.net, dstolee@microsoft.com
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <a808fbdf31afc9ad9ba0ab27ce889e5a2d1a01ae.1611098616.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <98c65017-8c22-a21f-0e86-a15d91bd7f70@gmail.com>
+Date:   Wed, 20 Jan 2021 08:59:48 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YAiLXUDTdMpdGG5b@coredump.intra.peff.net>
+In-Reply-To: <a808fbdf31afc9ad9ba0ab27ce889e5a2d1a01ae.1611098616.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 02:58:21PM -0500, Jeff King wrote:
-> That nit (and the one I mentioned in the previous patch) aside, these
-> patches look good to me (and I am OK with or without the nits
-> addressed).
+On 1/19/2021 6:24 PM, Taylor Blau wrote:
+> 'git repack -g' will have to learn about unreachable loose objects that
 
-Thanks, as always, for your review :-).
+This reference to the '-g' option is one patch too early. Perhaps
+say
+
+  An upcoming patch will introduce geometric repacking. This will
+  require removing unreachable loose objects in a separate path
+  from the existing checks.
+
+or similar?
 
 Thanks,
-Taylor
+-Stolee
+
