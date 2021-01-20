@@ -2,95 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 437BDC433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FD3C433E6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 19:11:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E12E5233CE
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:54:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16ACE23406
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 19:11:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392122AbhATSyL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 13:54:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52902 "EHLO
+        id S2388276AbhATTLc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 14:11:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392224AbhATSvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 13:51:12 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF83C06179E
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:49:37 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id h19so16983452qtq.13
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:49:37 -0800 (PST)
+        with ESMTP id S2392605AbhATTLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 14:11:13 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9ABCC061757
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 11:10:32 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id f132so26163150oib.12
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 11:10:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KmDBht7K1zuPMkGfhC9SgNYdqtq0QVfgiIaqOu9MQWs=;
-        b=d8k+06gw339NC6vFk7d0iKaEy2uNu03CuDDHW0vQfkyUSIbb5R3+bTEn0Rr3Q11bp+
-         NMvvmLxaOW+Zjg9U9anPEuw/Impd9O9taf9jl9NplCkCJmkj9tUTWx+rRiNX38JdSLxN
-         Lou/MnnH5LN8aIPttF5vtFc7m+gjPcnYKaozw=
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GOJ5/KMMRjYVhTSi5SpYFpEh8pnW7WHeiN8pwV7Y1oY=;
+        b=TJRelPMdITvLlSTnHFGS8ZQKkKVCT56yshaNr7T3sHmU0ljmjn4sEClXFNPaqFWqGl
+         A3sz6ATIsMmMAvTQ5I8VFsjZ/NiED6+y4kM9du0lDY2Vtmhufb0miHyISEeBYjiZLM9H
+         WNeZgu3gcPeUKIH0Qhg3hgdIgLxKAkKkI6LC5WqYP6V5MlXkI1wRVWeyyA6ADNkYTnD+
+         XwhEi25D4x+FW8Fwix7qZcXkwlkHUgzJxSh9804zcLstqZebPVzg0nWs6gdS3NqMHK58
+         tRM966qLnThUKm4GcvlL+kgpHaCMS1Q0xVAatoh4fefTMQDr5i8i8Kxwu6q3d0TOG8qi
+         sDNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KmDBht7K1zuPMkGfhC9SgNYdqtq0QVfgiIaqOu9MQWs=;
-        b=rNXCVOpUWO6e1qkrshXjXMVt6Efykum8nYlztW4rUP2Z/lBcyPaNjffsDK13wNsrA3
-         f6CTHdXUbMwlTV8x7WVQOaigonp+RuBljgd70qzxIvvl96vO3v81dUQMtDEKD2lQiY7j
-         fp0gKTZHC+uizlLgFZv+lA+g9+OuwCAMN0d7zetYzRF+Xnn1NTJacsM/2gzr4OfipZbA
-         IvLLN24MTMgp089zN2TbRvoBPCvIfvyxp/2DtLXMpq+sYJht3x2ED+9Wg/l49nE+y8bu
-         nRLbIPOdxcT1UjPGjDJfsuGvg17nM1XUlz2noMgxYiY0sOipEGENiVZeXorKiDcaaxyo
-         SlLg==
-X-Gm-Message-State: AOAM531HwtNzIA63yuBCZIL4j9haNSrTZ0224XX5AXecgd0KxLX9owO+
-        K4uAziwABzJMBRAaPOTfGN5IrLkxhC0w1H4w9yvUAA==
-X-Google-Smtp-Source: ABdhPJzQbPxjCEMIli+jK1Pi5+TpoAHQnqnagDkWZO8OcU+1yz9v72ONnHerXF41k7FKvEna4RNltpQRZgUq2TpOLoQ=
-X-Received: by 2002:ac8:dc5:: with SMTP id t5mr1150526qti.246.1611168577223;
- Wed, 20 Jan 2021 10:49:37 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GOJ5/KMMRjYVhTSi5SpYFpEh8pnW7WHeiN8pwV7Y1oY=;
+        b=KHo56UDWFog6qATv6DHb1SOxrFyeNk1hMrSLdxgM/vG1h4Jdm3AD8PRQAsBKQ7KWss
+         yIpqMGfszBTO83rYEsrCtI3jRNGc41EP0y83aAYn8W8rrNTzlyXNSMt1KCge6tK1rN0F
+         pcUdJmej7qFUJIzG9uCasg/07Ih8QZ02g+0Pz/g5ZSaEMddTP0Hs9RnOIN/TKBdko+0d
+         3XKH8zctVMYbaonYZEE9NymVXFAFXR1ir/OOFpK8lnW3GjfYy3TOGfmwEieNVyddO4Yx
+         Jlil+vmKbzNbrkyLFz9OZyvy8XWl91+vlRt9xLmw8DVkGBtVcvyHHpyLZGVBCtB7nBU3
+         LWDw==
+X-Gm-Message-State: AOAM532n5cDft/IcQIvFPb8zCS+PYhiH376f4LKQbWejwJB15B9qPa2h
+        7TuKy8nFv2EtBd56Z3/5j+SHurtYhWI=
+X-Google-Smtp-Source: ABdhPJyW530MR2se8r4lIPw3BIPey9tCRFztSFkKMMgA3LVHC2HO4WEyctF5pQvCB91fEfqhiAUmJw==
+X-Received: by 2002:aca:2301:: with SMTP id e1mr3820143oie.22.1611169832048;
+        Wed, 20 Jan 2021 11:10:32 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:710c:cecb:a7d:75ab? ([2600:1700:e72:80a0:710c:cecb:a7d:75ab])
+        by smtp.gmail.com with UTF8SMTPSA id e205sm538836oia.16.2021.01.20.11.10.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Jan 2021 11:10:31 -0800 (PST)
+Subject: Re: [PATCH 1/9] cache-tree: clean up cache_tree_update()
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com>
+ <0bccfd34ae5924aef0432fd6727debb75c052da5.1611161639.git.gitgitgadget@gmail.com>
+ <CABPp-BFiNvPaAffQ0uBfpkHY1WM2gR3ssvpwzxpDhrZmZZjiDA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <bbed0d73-fa9d-92a0-3bc4-1d44263bb2fb@gmail.com>
+Date:   Wed, 20 Jan 2021 14:10:30 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-References: <20210120124514.49737-1-jacob@gitlab.com> <20210120124514.49737-2-jacob@gitlab.com>
- <YAhC8Gsp4H17e28n@nand.local> <YAhXw9Gvn5Pyvacq@coredump.intra.peff.net> <YAhYHUcdynbWyhwo@nand.local>
-In-Reply-To: <YAhYHUcdynbWyhwo@nand.local>
-From:   Jacob Vosmaer <jacob@gitlab.com>
-Date:   Wed, 20 Jan 2021 19:49:26 +0100
-Message-ID: <CADMWQoPwNQafPcr2NvRcGzcWDwku1VYoGsKaKiBWSCRCvqY4Tg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] builtin/pack-objects.c: avoid iterating all refs
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CABPp-BFiNvPaAffQ0uBfpkHY1WM2gR3ssvpwzxpDhrZmZZjiDA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I also spent time being confused about what is going on, and wondering
-if that other ref iteration ever worked. I went as far as inspecting
-git-verify-pack -v output to look at object order. :)
+On 1/20/2021 12:21 PM, Elijah Newren wrote:
+> On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:...
+>> +
+>> +       if (!istate->cache_tree)
+>> +               istate->cache_tree = cache_tree();
+> 
+> This is the only substantive change.  It seems fairly innocuous, but
+> it makes me wonder the reasoning...I don't know/remember enough about
+> cache_tree handling to know when this would or wouldn't have already
+> been allocated.  It seems that this would have had to segfault below
+> if istate->cache_tree were ever NULL, and I don't see you mentioning
+> any bug you are fixing, so I presume this means you are going to be
+> adding new codepaths somewhere that cause this function to be reached
+> under different circumstances than previously had been and you need it
+> to be more safe for those.  Is that correct?  Or is it just an
+> abundance of caution thing that you're adding?  If the latter, any
+> reason you chose to allocate one rather than assume it's a violation
+> of design invariants and BUG() instead?  (Perhaps the commit message
+> could add a sentence about the rationale for the extra safety?)
 
-On the other hand, through working on this I learned that include-tag
-has pretty effective test coverage so if peel_ref didn't work or
-stopped working, we'd find out.
+It's something I need in the future when I use the cache_tree_update()
+in more places. I think I call it two times, and either I need to
+initialize the cache_tree member outside of both, or just make it a
+feature of the method that it will re-initialize the cache-tree.
 
-If there is a better way to write "for each tag + peel ref" I am happy
-to change the patch, just let me know what it should look like.
+Note: the implementation treats an initialized, but empty cache-tree
+as "invalid" so update_one() correctly populates the full tree.
 
-Best regards,
+Thanks,
+-Stolee
 
-Jacob Vosmaer
-GitLab, Inc.
-
-On Wed, Jan 20, 2021 at 5:19 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Wed, Jan 20, 2021 at 11:18:11AM -0500, Jeff King wrote:
-> > So I think both the existing and the new calls using for_each_tag_ref()
-> > are OK here.
->
-> Indeed, I followed the same trail of calls as you did and reached the
-> same conclusion, but didn't write any of it down here since I thought it
-> wasn't worthwhile.
->
-> But, yes, I agree that both are safe.
->
-> Thanks,
-> Taylor
