@@ -2,223 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A2AC433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A96E7C433E0
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:43:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4A7023121
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:27:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69EFC23110
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:43:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728373AbhATD04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 22:26:56 -0500
-Received: from mail2.pdinc.us ([67.90.184.28]:39226 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728099AbhATD0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 22:26:39 -0500
-Received: from [10.42.0.115] (cpe-173-88-170-197.neo.res.rr.com [173.88.170.197])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10K3PmmL022352
-        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO);
-        Tue, 19 Jan 2021 22:25:49 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10K3PmmL022352
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1611113149; bh=+QlOFOvvNTrBs0Lyf9CSMCXoQ8scWA28mHRRiVzbZ00=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
-        b=tcdI8UIzPvXJ1qFtGlOoIEjqVxP1yOWc+9FqlL/bXaAOB3mc5VD8Z7ffqKMtt06NW
-         gsZ5eovJ1h6gBs1dwDcRePp6RImU9GWXFFlzSaMEt53GUrLmFznk9qX9X6ZUBVYz1G
-         UgZlbmybLKaF2ydT1SxI46dxCcQPOVmJ5bb2nrfk2YVutWKIkOOWJpSAch1mWprp3h
-         BPEPS7WSiMO19/XhsgSEV2q8zVTOJ+LpPOvDqS9RGo/hwfWKJuweZRBlwsa/i8V1WJ
-         IExse6FNlyYjV2HdqmOUVNwyYUGN6B+WYvA4GYBVzUNUUDJig+/ANGNaNgLflfKUtJ
-         C9nD55Xm643dg==
-Subject: Re: [PATCH 1/2] revision: Denote root commits with '#'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
- <20210117110337.429994-1-kmarek@pdinc.us>
- <20210117110337.429994-2-kmarek@pdinc.us>
- <xmqq7dobmfrq.fsf@gitster.c.googlers.com>
- <e0264a29-2112-f8c8-f066-2be445654d8e@pdinc.us>
- <xmqqwnwajbuj.fsf@gitster.c.googlers.com>
- <xmqqr1mij88k.fsf@gitster.c.googlers.com>
- <237aeef3-239f-bff4-fa17-5581092c8f51@pdinc.us>
- <xmqq1reginnq.fsf@gitster.c.googlers.com>
-From:   Kyle Marek <kmarek@pdinc.us>
-Message-ID: <460257a2-478a-eb4c-f6fa-b1cc55384cd5@pdinc.us>
-Date:   Tue, 19 Jan 2021 22:25:48 -0500
-User-Agent: Mozilla/5.0 (X11; Linux ppc64le; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1727426AbhATDm6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 22:42:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54584 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729314AbhATDlC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 22:41:02 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A00B6C061575
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 19:40:21 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id d85so31401qkg.5
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 19:40:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=7Gm+oyAWbLY83TATAKsJcumrV9/AyMWW3CBXWUdrjyw=;
+        b=Ws3DXUCTe1qsFtUGTVQXmfJMObcVDQjgNlbQiH1JODJz5bLb/GkjU4Wa3yKl9wzl3c
+         v2ytZMPYBc8T1ZK7jPi8vWYtjjj+HDeB1YiYF7tIc2xxOEdfAb1oSP/HOruk3lMWAK85
+         WVNHgcQw/DMptLbxmXSeLlW3UGpzzTcjvBKBaGWhCZ8eMX7k/rjs+RUe3bXxff3VhcJW
+         Kfkgw+Aol1wBsvTZXMC540dmgOluJbZ5skQtWM8tBDEJ7/QzT3uEZJBZ2X0DBROq+hU4
+         R6Ei3xEvU1ohKQPIKw4tQ5/53zrrIQXv+0CkaCCaTwacyxDgTvyaOtrwuX2/pAZeFekK
+         zb1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=7Gm+oyAWbLY83TATAKsJcumrV9/AyMWW3CBXWUdrjyw=;
+        b=g49haB4x+1ElqNFy0N4X50kitpyi4pMEYT7nhNH2eiiA/5d/r+TnZ8T36jbzeczMbC
+         dzS9N4zPtdXIwCo8Hn5+XcBnrHV6RITjKehtle56/0LfXazlotF7yWdNPpvlMQvgm28D
+         OrbEWGvC8GYVARaCLm9TpS5sR3Vb4TzlIbvoeEqLpktRERPAtlsiFdmHDTlI/cECxVQi
+         bRmeGWvqT0SftyJEEDL3T9JMPmWEOWR8HP2C0emTe3BMC8T6ymebY86xVik94la0ouos
+         UEXaDcIMdiOh+Qnj602SyezXO4vDYs51L6It7r9C/jV+tUjax/k1n9sDCz4ZXzJ297Ks
+         FkEg==
+X-Gm-Message-State: AOAM532W2ggq/2nhYHNUYW+GQtjNkqMmoqgiKDskKU1pvHwOdMt0cmw9
+        TwT0fCLUM9rzE0P94M2Nq4FNvUuk0XA=
+X-Google-Smtp-Source: ABdhPJzY9XTdGubRGGics2mllNw9b8FG3idKoFSwaIaTOUqmY4DLc+EhOX8zTu5X0xeiVXKs3hg0sQ==
+X-Received: by 2002:a37:809:: with SMTP id 9mr7615471qki.156.1611114019798;
+        Tue, 19 Jan 2021 19:40:19 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id e38sm441243qtb.30.2021.01.19.19.40.19
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Jan 2021 19:40:19 -0800 (PST)
+To:     Git mailing list <git@vger.kernel.org>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Question about 'git log', custom formats, and '--left-right' and
+ friends
+Message-ID: <24504597-7c14-70aa-393b-2e18df2a51bb@gmail.com>
+Date:   Tue, 19 Jan 2021 22:40:18 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-In-Reply-To: <xmqq1reginnq.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Language: fr
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/19/21 5:10 PM, Junio C Hamano wrote:
-> Kyle Marek <kmarek@pdinc.us> writes:
->
->>> So the condition we saw in your patches, !commit->parents, which
->>> attempted to see if it was root, needs to be replaced with a helper
->>> function that checks if there is any parent that is shown in the
->>> output.
->>> ...
->>> Hmm?
->> Okay, I see what you mean. Fixing --graph to avoid implying ancestry
->> sounds like a better approach to me.
-> Sorry, I do not know how you drew that conclusion from my
-> description.
->
-> All I meant to convey is "roots are not special at all, commits that
-> do not have parents in the parts of the history shown are, and care
-> must be taken to ensure that they do not appear to have parents".
+Hi everyone,
 
-Yeah, I guess I am confused. I thought "Fixing --graph to avoid implying 
-ancestry" was reaching the same point as "care must be taken to ensure 
-that [commits without parents shown] do not appear to have parents". (I 
-wasn't just talking about root commits at that point)
+I think I've come across a limitation of using custom pretty formats
+along with the '--left-right', '--boundary', '--cherry-mark'
+options to 'git log'.
 
-> And the argument applies equally to either of two approaches.
-> Whether the solution chosen is
->
->   (1) to use special set of markers "{#}" for commits that do not
->       have parents in the displayed part of the history instead of
->       the usual "<*>", or
->
->   (2) to stick to the normal set of markers "<*>" but shift the graph
->       to avoid false ancestry.
->
-> we shouldn't be special casing "root commits" just because they are
-> roots.  Exactly the same issue exists for non-root commits whose
-> parents are not shown in the output, if commits from unrelated
-> ancestry is drawn directly below them.
+I'm trying to replicate the behaviour of the 'oneline' pretty format when it
+is used with or without the options above and a symmetric difference. When not
+using any of the options above, no mark is added before the commit hash in
+non-graph mode, and a '*' is added in graph-mode. When using the options above,
+the corresponding marks are used: '>', '<', for left/right, '-' for boundary ('o'
+in graph mode), '+' and '=' for cherry-mark, etc.
 
-I understand. Coming back to the "root commit" situation below.
+I'd like to get this behaviour with a custom pretty format (I use it to add some
+more informations to what '--oneline' shows), but it seems it is not possible. And
+the '%m' placeholder does not help a lot, as it's 'always on'. The script below demonstrates
+what I'm talking about:
 
->> That being said, I spoke to Jason recently, and he expressed interest
->> in optionally marking root commits so they are easy to search for in a
->> graph with something like /# in `less`. I see value in this,
-> I do not mind to denote the "this commit may appear directly on top
-> of another commit, but there is no ancestry" situation with a
-> special set of markers that is different from the usual "<*>" (for
-> left, normal and right) set.  I agree pagers are good ways to /search
-> things in the output.
->
->> So would you be open to my modifying of the patch in question (patch
->> 1+2 squashed, I guess) to instead use "--mark-roots=<mark>" to
->> optionally mark root commits with a string <mark>, and pursue fixing
->> the --graph rendering issue in another series?
-> I do not mind if the graph rendering fix does not happen yet again;
-> IIRC the past contributors couldn't implement it, either.
->
-> I think this new feature should be made opt-in by introducing a new
-> option (without giving it a configuration variable), with explicit
-> "--no-<option>" supported to countermand a "--<option>=#" that may
-> appear earlier on the command line (or prepare your scripts for
-> later introduction of such a configuration variable).
+~~~
+#!/bin/sh
 
-Okay
+run () {
+echo
+echo "RUNNING: $@"
+"$@"
+}
 
-> I do find it troubling if the <option> has "root" in its name, and I
-> would find it even more troubling if the feature somehow treated
-> root commits specially but not other commits that do not have their
-> parents shown.  It was the primary point I wanted to stress in the
-> previous two message [*1*].
+rm -rf test
+mkdir test
+cd test
 
-I'll come back to this below.
+git init -b master remote
+echo data>remote/file && git -C remote add file && git -C remote commit -m root
+git clone remote clone
+echo dato>remote/file && git -C remote add file && git -C remote commit -m L
+echo date>clone/file  && git -C clone  add file && git -C clone  commit -m R
+git -C clone fetch
+git -C clone config pretty.ol     '%h %s'
+git -C clone config pretty.ol2 '%m %h %s'
 
-> I am hoping that a single option can give three-tuple that replaces
-> the usual "<*>", with perhaps the default of "{#}" or something.
+run git -C clone log --oneline --no-decorate --left-right @{u}...
+run git -C clone log --format=ol  --left-right @{u}...
+run git -C clone log --format=ol2 --left-right @{u}...
 
-I thought about that, but can we handle any of the three markers being 
-multi-byte characters?
+run git -C clone log --graph --oneline --no-decorate --left-right @{u}...
+run git -C clone log --graph --format=ol  --left-right @{u}...
+run git -C clone log --graph --format=ol2 --left-right @{u}...
 
-> I however offhand do not think of a way to make "left root" appear
-> in the output, but because we'd need "right root" that looks
-> different from ">" anyway, it may make sense to allow specifying
-> "left root" just for symmetry.
+run git -C clone log --oneline --no-decorate @{u}...
+run git -C clone log --format=ol  @{u}...
+run git -C clone log --format=ol2 @{u}...
 
-I'm thinking on that one. I need to learn more about --left-right. I 
-don't know how/when to use it yet.
+run git -C clone log --graph --oneline --no-decorate @{u}...
+run git -C clone log --graph --format=ol  @{u}...
+run git -C clone log --graph --format=ol2 @{u}...
+~~~
 
-> [Footnote]
->
-> *1* But if we do not think of a good option name without the word
->      "root" in it, I might be talked into a name with "root", as long
->      as we clearly describe (1) that commits that has parents that
->      are not shown in the history are also shown with these letters,
->      and (2) that new contributors are welcome to try coming up with
->      a new name for the option to explain the behaviour better, but
->      are not welcome to argue that the option should special case
->      root commits only because the option is named with "root" in it.
+the (commented) output looks like:
+---
+RUNNING: git -C clone log --oneline --no-decorate --left-right @{u}...
+< 10f70d1 L
+> 31e5b8e R
 
-So, on the root vs parents-not-shown commits issue:
+RUNNING: git -C clone log --format=ol --left-right @{u}...
+10f70d1 L
+31e5b8e R
 
-You're right. Commits with their parents hidden by the range specifiers 
-have the same graphing issue as root commits.
+-> NOT OK: no marks shown
 
-While root commits are not a special case in the sense that --graph 
-makes ancestor implications for more than just root commits, root 
-commits are a special case when we think about interpreting the presence 
-of hidden lineage in --graph output.
+RUNNING: git -C clone log --format=ol2 --left-right @{u}...
+< 10f70d1 L
+> 31e5b8e R
 
-Considering one of your examples:
+-> OK: marks shown
 
-           C
-          /
-         O---A---B
-                  \
-           X---Y---Z
+RUNNING: git -C clone log --graph --oneline --no-decorate --left-right @{u}...
+< 10f70d1 L
+> 31e5b8e R
 
-When graphing C..Z, git produces output like:
+RUNNING: git -C clone log --graph --format=ol --left-right @{u}...
+< 10f70d1 L
+> 31e5b8e R
 
-*   0fbb0dc (HEAD -> z) Z
-|\
-| * 11be529 (master) B
-| * 8dd1b85 A
-* 851a915 Y
-* 27d3ed0 (x) X
+-> OK: marks shown
 
-We cannot tell from the above graph alone that X is a root and A is not.
+RUNNING: git -C clone log --graph --format=ol2 --left-right @{u}...
+< < 10f70d1 L
+> > 31e5b8e R
 
-So I think it might be useful if I could do --mark-roots='#' 
---mark-hidden-lineage=$'\u22ef' (Unicode Midline Horizontal Ellipsis) to 
-produce the following:
+-> NOT OK: marks shown twice
 
-*   0fbb0dc (HEAD -> z) Z
-|\
-| * 11be529 (master) B
-| ⋯ 8dd1b85 A
-* 851a915 Y
-# 27d3ed0 (x) X
+RUNNING: git -C clone log --oneline --no-decorate @{u}...
+10f70d1 L
+31e5b8e R
 
-Alternatively, it could be argued that --boundary can be used to 
-indicate a hidden lineage, since root commits do not have boundary 
-commits listed below them. But --boundary draws one more commit than 
-necessary, and there still isn't an easy way to search for roots in the 
-pager.
+RUNNING: git -C clone log --format=ol @{u}...
+10f70d1 L
+31e5b8e R
 
-I understand that I am now leaving the original scope of the issue, but 
-I think it is worth considering.
+-> OK: no marks shown
 
-Of course, I would also like to try fixing the original graphing issue 
-in general.
+RUNNING: git -C clone log --format=ol2 @{u}...
+< 10f70d1 L
+> 31e5b8e R
 
-Thoughts?
+-> NOT OK: marks shown
 
--- 
+RUNNING: git -C clone log --graph --oneline --no-decorate @{u}...
+* 10f70d1 L
+* 31e5b8e R
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Kyle Marek                        PD Inc. http://www.pdinc.us -
-- Jr. Developer                     10 West 24th Street #100    -
-- +1 (443) 269-1555 x361            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+RUNNING: git -C clone log --graph --format=ol @{u}...
+* 10f70d1 L
+* 31e5b8e R
 
+-> OK: no marks shown
+
+RUNNING: git -C clone log --graph --format=ol2 @{u}...
+* < 10f70d1 L
+* > 31e5b8e R
+
+-> NOT OK: different marks shown twice
+---
+
+
+Am I missing something here ? Is this a known limitation ?
+
+
+Thanks and cheers,
+
+Philippe.
