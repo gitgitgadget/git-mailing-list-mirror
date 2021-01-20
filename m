@@ -2,123 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99F3FC433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67114C433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A98D233EF
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:27:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 302232070A
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390104AbhATOIr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 09:08:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58950 "EHLO
+        id S2388828AbhATRdM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 12:33:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731383AbhATMqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 07:46:35 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F09C0613D3
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:45:55 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id l9so27633469ejx.3
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:45:55 -0800 (PST)
+        with ESMTP id S1726920AbhATRYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:24:35 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7832CC061757
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:23:55 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id w8so4014397oie.2
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:23:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cPxhHu6rS+/fDIgAPAQw2WZPqwoybYnBs32LhAegb2c=;
-        b=WXnWCh8lY0ZAJcqpVvKQZs9ziNiG6j8+qnBq+tEARq/wAfntjGVARTST35+M+JU1Cz
-         stBwviPc3oQVznUqLwRHKtPIYPiuLjd5nXjSahifjClha2qXt3FHSmBC+slaqtmtrsT6
-         tatRZNdle1s1Q+wT59BPBPN02cMpv4jOaq6jM=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=D+RpBB6vsplLnlFDQevsR0NQg9z4WVCbs1tyfRU7u7w=;
+        b=aZcdzxl9+7QivbLQ91vMcNs3/S+AzSo3HLOim023UhQoD29I/H3PomUCwQLofg5gAh
+         lmvitOERWQnYtijCC2t8iaQ0BASU3zLtsyhT/W39Vucq8z+XnKGDtKecy38RsKQ+i4sk
+         zW9nd1xmvKjRuoJDHH6leMVRJIeZd1nMcQEJ5M0RFeQ9awTEE2UX15iWz1zA8tlfB/qU
+         qtDfszbh2J4CIrUDYGtyxLHTen/S+eaj+AHGIWjCMW0IJzspVn3t1MsEWwJAqdU+ZfDz
+         ZpAAuDFpCA8rMFSIK6Mib3FTvACz1Sa5rTL97p2dV4p4cJz3IHPgemq5PAtvMpxeTJ6I
+         CVwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cPxhHu6rS+/fDIgAPAQw2WZPqwoybYnBs32LhAegb2c=;
-        b=SX2UVr5PE4E74nxnSp8POnWStGjwB0dOtEu69WorukreWx1PlLtB0hWzKXsxRKtJrm
-         YpnukVk/YJUOkrsLC7qcr+ZZ1mzBopQS/fWftYpwcJ0few6h4Sum4NakamI4Hj/i4E5U
-         2yh2Pje9MaIoQjznaAyCeT3YFl0shqI5FhmdpKZ8VPaV7LDSjGd5YaNiLDTEkIUXBeBJ
-         3AmaiwIT8Tk9WDSDqGHbYdonVBae80qgnL1H90U5OSzvqlEnoOZH0ZK788ElR0GZZZaW
-         VdYIaHVfCciTCq9+VD1dvPqSAs1QFwTW0DzKg5vvT0nHHnAR70W25FasLFreQT+B69Wf
-         Tgpg==
-X-Gm-Message-State: AOAM530DvPQPwWAgnL5bfHvDqisDuAXVcQ/yNtSjdIimEOLGFXJO0x3A
-        rAwSkfzm+LqhE7LDhOi111Dp7sNSGRio0MSW
-X-Google-Smtp-Source: ABdhPJxRoZMQunF3E+BI3smF9Y8YTOU/X0x8vLMR0a5QlAl1Mt76jPbPlpHQt70YwXmsLm4MyqpUKQ==
-X-Received: by 2002:a17:906:7f83:: with SMTP id f3mr5776771ejr.282.1611146753600;
-        Wed, 20 Jan 2021 04:45:53 -0800 (PST)
-Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
-        by smtp.gmail.com with ESMTPSA id dh14sm1033351edb.11.2021.01.20.04.45.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 20 Jan 2021 04:45:53 -0800 (PST)
-From:   Jacob Vosmaer <jacob@gitlab.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, peff@peff.net, me@ttaylorr.com,
-        Jacob Vosmaer <jacob@gitlab.com>
-Subject: [PATCH v2 1/1] builtin/pack-objects.c: avoid iterating all refs
-Date:   Wed, 20 Jan 2021 13:45:14 +0100
-Message-Id: <20210120124514.49737-2-jacob@gitlab.com>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210120124514.49737-1-jacob@gitlab.com>
-References: <20210120124514.49737-1-jacob@gitlab.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D+RpBB6vsplLnlFDQevsR0NQg9z4WVCbs1tyfRU7u7w=;
+        b=E42KS/dXpz8j3iuJ0/UC4WMj+poROP5ev8V1zegzJM8Prsmbb7Vef6w8GuKBWLKrel
+         FB7rmbL7uYsc25qoi7qLJRMZ/u2QzNqR9F5bnO2L7NLiZGUAqSO6+J8fKu/aqSfm2qBH
+         0a+YOM3vre1HVhTT+EQHRBsof6+tsNEtzMjJADxLGe96M5Flt7ZhGm2jhnOWVhSr6Iee
+         Ls8rjqflhXo/qAyGmtOGTzSzuPxERsg9goQzV8iJBgtlH62f+Q2tOtO90EP61KwT53/q
+         zqIQ/TTqBMWmcPvg3qHo3Ag/97/w7MxajZiMTQJF1iopaQqZjZygqj7ikK0v29X5em9j
+         Qymg==
+X-Gm-Message-State: AOAM531eY5KPVOFTWTO+RRZ+nlbeVKdTgGBR9jy23dD9x080TCuqxxp5
+        N8QFxJLngm7KzSmwAmzmEOsbiPQFqh4I6L+AbTc=
+X-Google-Smtp-Source: ABdhPJzPddDiESfvNWdXHQBmddztIR2+nMHm/Z2HhP94HZkNR8CgVsmXjWnKyi03lPiuez4VIul0ucrkwtcYgbofS90=
+X-Received: by 2002:aca:cf03:: with SMTP id f3mr3513004oig.39.1611163434900;
+ Wed, 20 Jan 2021 09:23:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <a6f2406a79512f517a1bc2700f806c546bbe9ed6.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <a6f2406a79512f517a1bc2700f806c546bbe9ed6.1611161639.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 20 Jan 2021 09:23:43 -0800
+Message-ID: <CABPp-BH7K3ddUEJ2aKqZ4D5bkNh43JNm5LuvDRbC5e2nQfVa0g@mail.gmail.com>
+Subject: Re: [PATCH 2/9] cache-tree: extract subtree_pos()
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In git-pack-objects, we iterate over all the tags if the --include-tag
-option is passed on the command line. For some reason this uses
-for_each_ref which is expensive if the repo has many refs. We should
-use for_each_tag_ref instead.
+On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> This method will be helpful to use outside of cache-tree.c in a later
+> feature. The implementation is subtle due to subtree_name_cmp() sorting
+> by length and then lexicographically.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  cache-tree.c | 6 +++---
+>  cache-tree.h | 2 ++
+>  2 files changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index c1e49901c17..2b130dd5e19 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -45,7 +45,7 @@ static int subtree_name_cmp(const char *one, int onelen,
+>         return memcmp(one, two, onelen);
+>  }
+>
+> -static int subtree_pos(struct cache_tree *it, const char *path, int pathlen)
+> +int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen)
+>  {
+>         struct cache_tree_sub **down = it->down;
+>         int lo, hi;
+> @@ -72,7 +72,7 @@ static struct cache_tree_sub *find_subtree(struct cache_tree *it,
+>                                            int create)
+>  {
+>         struct cache_tree_sub *down;
+> -       int pos = subtree_pos(it, path, pathlen);
+> +       int pos = cache_tree_subtree_pos(it, path, pathlen);
+>         if (0 <= pos)
+>                 return it->down[pos];
+>         if (!create)
+> @@ -123,7 +123,7 @@ static int do_invalidate_path(struct cache_tree *it, const char *path)
+>         it->entry_count = -1;
+>         if (!*slash) {
+>                 int pos;
+> -               pos = subtree_pos(it, path, namelen);
+> +               pos = cache_tree_subtree_pos(it, path, namelen);
+>                 if (0 <= pos) {
+>                         cache_tree_free(&it->down[pos]->cache_tree);
+>                         free(it->down[pos]);
+> diff --git a/cache-tree.h b/cache-tree.h
+> index 639bfa5340e..8efeccebfc9 100644
+> --- a/cache-tree.h
+> +++ b/cache-tree.h
+> @@ -27,6 +27,8 @@ void cache_tree_free(struct cache_tree **);
+>  void cache_tree_invalidate_path(struct index_state *, const char *);
+>  struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+>
+> +int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
+> +
+>  void cache_tree_write(struct strbuf *, struct cache_tree *root);
+>  struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+>
+> --
+> gitgitgadget
 
-Because the add_ref_tag callback will now only visit tags we
-simplified it a bit.
-
-The motivation for this change is that we observed performance issues
-with a repository on gitlab.com that has 500,000 refs but only 2,000
-tags. The fetch traffic on that repo is dominated by CI, and when we
-changed CI to fetch with 'git fetch --no-tags' we saw a dramatic
-change in the CPU profile of git-pack-objects. This lead us to this
-particular ref walk. More details in:
-https://gitlab.com/gitlab-com/gl-infra/scalability/-/issues/746#note_483546598
-
-Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
----
- builtin/pack-objects.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 2a00358f34..ad52c91bdb 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2803,13 +2803,11 @@ static void add_tag_chain(const struct object_id *oid)
- 	}
- }
- 
--static int add_ref_tag(const char *path, const struct object_id *oid, int flag, void *cb_data)
-+static int add_ref_tag(const char *tag, const struct object_id *oid, int flag, void *cb_data)
- {
- 	struct object_id peeled;
- 
--	if (starts_with(path, "refs/tags/") && /* is a tag? */
--	    !peel_ref(path, &peeled)    && /* peelable? */
--	    obj_is_packed(&peeled)) /* object packed? */
-+	if (!peel_ref(tag, &peeled) && obj_is_packed(&peeled))
- 		add_tag_chain(oid);
- 	return 0;
- }
-@@ -3740,7 +3738,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	}
- 	cleanup_preferred_base();
- 	if (include_tag && nr_result)
--		for_each_ref(add_ref_tag, NULL);
-+		for_each_tag_ref(add_ref_tag, NULL);
- 	stop_progress(&progress_state);
- 	trace2_region_leave("pack-objects", "enumerate-objects",
- 			    the_repository);
--- 
-2.30.0
-
+Simple, straight-forward patch for exposing the function outside the
+file scope; looks good.
