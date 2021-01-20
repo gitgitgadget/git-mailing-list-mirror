@@ -2,191 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE5B6C433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CCB8C433E6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:15:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0DC52311C
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:06:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00AA523432
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391823AbhATSFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 13:05:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42874 "EHLO
+        id S2404338AbhATSPS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 13:15:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727499AbhATSE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 13:04:29 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A32BC0613C1
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:03:32 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id v1so6150782ott.10
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:03:32 -0800 (PST)
+        with ESMTP id S2404232AbhATSOL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 13:14:11 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09CFEC061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:13:30 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id f1so12750458edr.12
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 10:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nDNJGxuYZ6y6bpBGg483nyYcTGFhiC9Am+FOY4MpUx0=;
-        b=j35wIV3eQGjACilna3RoJx6VKZ2dLX5krh9h/LKFICqwWk4h9L7Q/RjHGiwiRWP9FU
-         TMjETYYtVxhe5FsppD5F7ZjDy7Eot/HzH+av/kc4Ejyy95FweOAH8FFEnSrnPLUtLZ2M
-         CX1AoeDzLOH46Va7zQSfVYoU6NWw0balcwrpIxONF4uoXE1VsL5lL4hk6mkY8xoYJITn
-         ivA50h1I3XXaRWa/GwV38vEDZc2FLh4I2wfYcCeLRJznbwPllnqiDgN6CCCnfgZsY9Pv
-         C8QBffe4A1e2F9Vnh1EuyOpvrJKSQ8UCX7fcGp/IgafGHQGuDzKFY0SZRCeJqNe1TBl3
-         XEwQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=XIGs4CJIw/ngGj5UGtQ/2pM7GSSEjHVKGybgO416fko=;
+        b=m28L2UGBiJQ4frdciGfIVA53T/ZFLj7fjJfEx9OhgC8OypbQ8dl1yFf3QjrBykbTL1
+         mRynjNKbkpar0SuzA9hEfaOsAAcv7hfhcoH5ZUV2001C7+k1lk6kEvkWEe8Hna0Ir5/C
+         KGyHINJhB4+JvR//3zgHdabirwmqLDVT02RVW+Zy/VP937Q01SxpmcxiSM+fMpc8Cuzs
+         4K6JvG6g1S71pbfbKH+j8ev6rJG3gFr/GxDxuGacwDznkxoqb2nF0SfiG0d/gjzyGGl0
+         0MwYk0vnU8ILwu7TaZdZL94G7A22SQL5JNPWCCEr0RM4NyE2lUQNcpT5GAc2WNBstwNA
+         4nsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nDNJGxuYZ6y6bpBGg483nyYcTGFhiC9Am+FOY4MpUx0=;
-        b=F915joKi/H/1h0DwYgpiJXtfxZ6hccVPdPljTans0huLg/VmqKdhojKtclOBhtx/6S
-         PoTFX3tLOYnqf/7KaKz2XTEzV5ttJ5z4NhP0I6YLAFchciwWY+9xAHR3ObF8wzLZS1on
-         W0aKzdmeq886X5oVWUUXsrSac/u2Ehp51p1z30Ug5uH8eWul97ia30a2NrGcHENhWvms
-         dFIpYssgfPbftt3R2jXxUJA3ZIwZEJpcIKIe90W9RpAhLseayUqdUS5EiJhttXa9SJP4
-         hie0gb7AL5W+8xkObA2H0MVbGGvsIFaQRyIcVk8w4Bm1ADR9XOFWTxVgSyMLlODbyRTM
-         wHWg==
-X-Gm-Message-State: AOAM532gRNNquyF+AVyOre6V71y6lUVTsJMn9NOGNs7w8sLtt7RZmwoe
-        JOVIRcIBKWgrc9y4ctr9wAdzIKN8TdMDb8uPjIgYKmGNo101Xg==
-X-Google-Smtp-Source: ABdhPJwJNdqeo1r/Z/7ght+p1LvDdka+YgLTVI86fouCChtxtNbMJZvICW1ApYKKz5SRon+RBkLGgUnYEoP0wPbDk6c=
-X-Received: by 2002:a9d:506:: with SMTP id 6mr489012otw.162.1611165811644;
- Wed, 20 Jan 2021 10:03:31 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=XIGs4CJIw/ngGj5UGtQ/2pM7GSSEjHVKGybgO416fko=;
+        b=s9n2h/wQJ0KKecw8vUvVWPTLvL1NFDv1KNYJ0t/KEtedi7yfyafkpUJAQLX9alzI6f
+         nDqT7EbvNW0WMZWEAVtq4WpUSh1r8X+XOZXdLvREFhEQQqi2qA3HilMCPwjkhjDCMIj3
+         ZWsGY1Yy+n7KcbtARtwQ9fXkBBLSQ0wO49z9DtYRtW0SySUFtUeaUGMYR1RGTvBxYK1H
+         x8FQn4mGYeRQEUmU9bbHI1xPHfSEOhBBc9Q73up/KWmKUIRyvwvIMnAInYXxiyqBth5K
+         yWUObl0Fl96u44xWjjnLZDB5I9pZEtx+fERNDL63d3Cjr6zLxJnu7SNqKuZpSKrjhecC
+         5PoQ==
+X-Gm-Message-State: AOAM530QUwlvECgb+u54JFc3Jtzv97AwMQNWI5BQkqH0q5zhNoU9K1xS
+        CPXUZ2smHFn3PfZxZ3qUuMJS/yX1KWQ=
+X-Google-Smtp-Source: ABdhPJxaZ/9jToCgh/8FfSs0W2l4FJBc4cnPM4hMxEbTfD4JV6gttMb6dCZfszTyZCHBFsKjewT1Fg==
+X-Received: by 2002:a50:aac8:: with SMTP id r8mr8082977edc.9.1611166408570;
+        Wed, 20 Jan 2021 10:13:28 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id dj25sm1474641edb.5.2021.01.20.10.13.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 10:13:27 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>, Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 0/6] Remove GIT_TEST_GETTEXT_POISON facility
+References: <87pn2b6eyb.fsf@evledraar.gmail.com>
+ <20210111144740.6092-1-avarab@gmail.com>
+ <20210120153307.GD8396@szeder.dev>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <20210120153307.GD8396@szeder.dev>
+Date:   Wed, 20 Jan 2021 19:13:27 +0100
+Message-ID: <877do78ojc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <91344f5108c835a48b2460b9de75c489045b9cce.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <91344f5108c835a48b2460b9de75c489045b9cce.1611161639.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 10:03:20 -0800
-Message-ID: <CABPp-BEeDj4v4t8w6giy-yo8ET0mnD3es95aGQJvw7g8_jkjzA@mail.gmail.com>
-Subject: Re: [PATCH 7/9] sparse-checkout: hold pattern list in index
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> As we modify the sparse-checkout definition, we perform index operations
-> on a pattern_list that only exists in-memory. This allows easy backing
-> out in case the index update fails.
->
-> However, if the index write itself cares about the sparse-checkout
-> pattern set, we need access to that in-memory copy. Place a pointer to
-> a 'struct pattern_list' in the index so we can access this on-demand.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/sparse-checkout.c | 17 ++++++++++-------
->  cache.h                   |  2 ++
->  2 files changed, 12 insertions(+), 7 deletions(-)
->
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 2306a9ad98e..e00b82af727 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -110,6 +110,8 @@ static int update_working_directory(struct pattern_list *pl)
->         if (is_index_unborn(r->index))
->                 return UPDATE_SPARSITY_SUCCESS;
->
-> +       r->index->sparse_checkout_patterns = pl;
-> +
->         memset(&o, 0, sizeof(o));
->         o.verbose_update = isatty(2);
->         o.update = 1;
-> @@ -138,6 +140,7 @@ static int update_working_directory(struct pattern_list *pl)
->         else
->                 rollback_lock_file(&lock_file);
->
-> +       r->index->sparse_checkout_patterns = NULL;
->         return result;
 
-The setting back to NULL made me curious; we don't want this
-information to remain available later?  Is it only going to be used
-for the updating of the working directory?
+On Wed, Jan 20 2021, SZEDER G=C3=A1bor wrote:
 
-I dug a bit into the callers, and didn't find the answer to my
-question...but I did notice that modify_pattern_list() will correctly
-free the patterns after write_patterns_and_update() via calling
-clear_pattern_list(&pl), but sparse_checkout_init() appears to leak
-the patterns it allocates.  That's a separate issue from this patch,
-but do you want to fix that up while working in this area (so I avoid
-stepping on your toes with all your other patches)?
+> On Mon, Jan 11, 2021 at 03:47:34PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> As argued upthread and in 2/6 this test setup has outrun its
+>> usefulness.
+>>=20
+>> This series begins to remove it in a way that's very careful about not
+>> stepping on the toes of any other in-flight patches. In particular
+>> "master" isn't anywhere in the diff context here to avoid conflicts
+>> with the series to do that mass-replacement in t/.=20
+>>=20
+>> This series merges and tests cleanly in combination with the current
+>> "seen" branch.
+>>=20
+>> At the end we're left with a bunch of tests still using
+>> test_i18n{cmp,grep}, but I think that's preferable to having in-flight
+>> conflicts. It'll be trivial to search-replace those at some point in
+>> the future where we don't have another search-replacement series
+>> amending t/ in-flight.
+>>=20
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (6):
+>>   ci: remove GETTEXT_POISON jobs
+>>   tests: remove support for GIT_TEST_GETTEXT_POISON
+>>   tests: remove misc use of test_i18n{cmp,grep}
+>>   tests: (almost) remove use of "test_i18ngrep !"
+>>   tests: (almost) remove C_LOCALE_OUTPUT prerequisites
+>>   tests: remove uses of GIT_TEST_GETTEXT_POISON=3Dfalse
+>
+> At the end of this patch series there are still a couple of remnants
+> left:
+>
+>   - t3406: has a comment about gettext poisoning.
+>
+>   - Makefile still has a warning about for the GETTEXT_POISON build
+>     knob referring to GIT_TEST_GETTEXT_POISON and t/README.
+>
+> I think both can be simply removed.
 
->  }
->
-> @@ -517,19 +520,18 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
->  {
->         int result;
->         int changed_config = 0;
-> -       struct pattern_list pl;
-> -       memset(&pl, 0, sizeof(pl));
-> +       struct pattern_list *pl = xcalloc(1, sizeof(*pl));
->
->         switch (m) {
->         case ADD:
->                 if (core_sparse_checkout_cone)
-> -                       add_patterns_cone_mode(argc, argv, &pl);
-> +                       add_patterns_cone_mode(argc, argv, pl);
->                 else
-> -                       add_patterns_literal(argc, argv, &pl);
-> +                       add_patterns_literal(argc, argv, pl);
->                 break;
->
->         case REPLACE:
-> -               add_patterns_from_input(&pl, argc, argv);
-> +               add_patterns_from_input(pl, argc, argv);
-
-Slightly annoying that the other functions are (argc, argv, pl) and
-this one is (pl, argc, argv).  But again, that's outside the scope of
-this patch and might not be worth the churn to fix.
-
->                 break;
->         }
->
-> @@ -539,12 +541,13 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
->                 changed_config = 1;
->         }
->
-> -       result = write_patterns_and_update(&pl);
-> +       result = write_patterns_and_update(pl);
->
->         if (result && changed_config)
->                 set_config(MODE_NO_PATTERNS);
->
-> -       clear_pattern_list(&pl);
-> +       clear_pattern_list(pl);
-> +       free(pl);
->         return result;
->  }
->
-> diff --git a/cache.h b/cache.h
-> index f9c7a603841..bf4ec3de4b0 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -305,6 +305,7 @@ static inline unsigned int canon_mode(unsigned int mode)
->  struct split_index;
->  struct untracked_cache;
->  struct progress;
-> +struct pattern_list;
->
->  struct index_state {
->         struct cache_entry **cache;
-> @@ -329,6 +330,7 @@ struct index_state {
->         struct mem_pool *ce_mem_pool;
->         struct progress *progress;
->         struct repository *repo;
-> +       struct pattern_list *sparse_checkout_patterns;
->  };
->
->  /* Name hashing */
-> --
-> gitgitgadget
-
-Otherwise, this patch looks good to me.
+The Makefile comment was in the 20210111131451.7084-1-avarab@gmail.com
+sibling series, but I'll fix the other one in this one. Thanks!
