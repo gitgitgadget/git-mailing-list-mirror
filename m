@@ -2,123 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 709D7C433E9
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 21:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20C74C433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 21:38:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 445C123443
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 21:36:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCBB923443
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 21:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730257AbhATV2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 16:28:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729266AbhATNlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 08:41:24 -0500
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A416CC061798
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:40:24 -0800 (PST)
-Received: by mail-qt1-x82c.google.com with SMTP id d15so10788089qtw.12
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:40:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MJ0fOfpOMutMls6RT2UB9bkX9ISojWngtuzjEdm40WQ=;
-        b=ciM4aJqBVYf+MkWCcbSBueZYA4nsjmEEJFyESLzO3rMiqUFqbWB6fUpMeFIiTpdx/O
-         zqgH5Zb3pTjWC2uphOFtcxlrSqhwJPcBg09mdCpFH1Y/lAS0umAjmZnoSzh73VBPiLxI
-         ca1FLriQrJbRT7aSyIzQMF5InjBmW6K45lnJxV+OGLFoOSkIGNtT5pfjCTgHym4vguEV
-         tLKMzgQp5PlpiQyAehVVVvmaC3EMGQVlUxgcz1YyZQIDjsrmPFu59lQVJvA5l6JTdw+s
-         r+84ZsCQqAO4mj4xYsvQrqUkITGOM9E9z4gkEgJ8xtd7wQXpUw22zbMVkkJiyC26GhfY
-         cauQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MJ0fOfpOMutMls6RT2UB9bkX9ISojWngtuzjEdm40WQ=;
-        b=dS5kMQOFEZadO9Y2YkY06hFE0u7bGwVNKSyu6EIgil+KexITpFnogIvA9FZR/0kDW0
-         YqwkwTZTF6srBfgaOH2BEKdgrOWlSCyrqHkGRbN/V+iTzI0VfNU0nulfcZb42Znlo9ms
-         ToLw0k9MexoXcNaYTW4J4g6t8PaaaEwKSJ5RiuhThZ8QpksBdwOOkmHbWEVv2y2i7KMG
-         1KPT9IPqpRJlCz3MFgo44NcUPA2pKk1yeN+ikHcgTI3G5RlJUmoWW/1LidijjIWECREY
-         aqKLKDU3zMlZ1NJO4gPL7P4uPpCSXvfmILcyPGXVTRaED+y7m9QFpCcoAunPM3HXR95z
-         n4/A==
-X-Gm-Message-State: AOAM530u8HVbY1/BAt6sluQNgdRwMSBvdlZFZ2LnA+/iCGC0zut7Qj5l
-        8NEuqwn8OrJ2ldh9tSkrWko=
-X-Google-Smtp-Source: ABdhPJy8i4vPu1ALF6CTSD+8xWibVGlt60I8OVL6MZRx0btR+5wfSr1PJgsERi1M16mVWgUFXb6clQ==
-X-Received: by 2002:ac8:5a01:: with SMTP id n1mr8840200qta.107.1611150023777;
-        Wed, 20 Jan 2021 05:40:23 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:710c:cecb:a7d:75ab? ([2600:1700:e72:80a0:710c:cecb:a7d:75ab])
-        by smtp.gmail.com with UTF8SMTPSA id r20sm1203088qke.92.2021.01.20.05.40.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jan 2021 05:40:22 -0800 (PST)
-Subject: Re: [PATCH 01/10] packfile: introduce 'find_kept_pack_entry()'
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com
-References: <cover.1611098616.git.me@ttaylorr.com>
- <dc7fa4c7a61f657e779e10385d3e8076d6dac36c.1611098616.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <607e7ebd-240d-f2dc-42ef-1d5a5a0b7f51@gmail.com>
-Date:   Wed, 20 Jan 2021 08:40:22 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1726777AbhATVhH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 16:37:07 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54488 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728807AbhATV1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 16:27:24 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFCE0FEE6E;
+        Wed, 20 Jan 2021 16:26:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uZkHzRox6ypBgkxp4SGtn5AqImc=; b=vJ4JPb
+        Ik24hceJ0AxgBYNAItUhrHAOnjrYR4JtEswHzFpHyyHSpZSjwICgRc0JcxE3f6nS
+        H/3wsQceSogkzysDph21/4p9A8nNaABBKJEzL3MHA3aEEN4tAUc+6YHOP6iI1HAH
+        QJrXZ3GeqTVm68xcef7f1yst8kIxY3ljpf/4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VX35qae/KVO3R2q/BjMngJblZ4zeXBQC
+        rfx0QMrkGAiHbxq2dRSTFjaW6NvMPHFPvxKRfx9CS+ivScWA8f1PqJUnH2rPbzzl
+        DNZvt++2B0sQ8KgqIRj3gNSNb2Yq3uE5wRDAT5eBdipRoLR6ns3mPlunLUW9TmDZ
+        gOkYatnKZWI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8CB4FEE6D;
+        Wed, 20 Jan 2021 16:26:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A500DFEE66;
+        Wed, 20 Jan 2021 16:26:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Subject: Re: [PATCH v5 3/3] ls-files.c: add --deduplicate option
+References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com>
+        <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
+        <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com>
+Date:   Wed, 20 Jan 2021 13:26:00 -0800
+In-Reply-To: <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com>
+        (ZheNing Hu via GitGitGadget's message of "Tue, 19 Jan 2021 06:30:46
+        +0000")
+Message-ID: <xmqq7do7fggn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <dc7fa4c7a61f657e779e10385d3e8076d6dac36c.1611098616.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 18DDA466-5B66-11EB-AA99-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/19/2021 6:24 PM, Taylor Blau wrote:
->  	for (m = r->objects->multi_pack_index; m; m = m->next) {
-> -		if (fill_midx_entry(r, oid, e, m))
-> +		if (!(fill_midx_entry(r, oid, e, m)))
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-nit: we don't need extra parens around fill_midx_entry().
+> @@ -321,30 +324,46 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+>  
+>  		construct_fullname(&fullname, repo, ce);
+>  
+> +		if (skipping_duplicates && last_shown_ce &&
+> +			!strcmp(last_shown_ce->name,ce->name))
+> +				continue;
 
-> -		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
-> -			list_move(&p->mru, &r->objects->packed_git_mru);
-> -			return 1;
-> +		if (p->multi_pack_index && !kept_only) {
-> +			/*
-> +			 * If this pack is covered by the MIDX, we'd have found
-> +			 * the object already in the loop above if it was here,
-> +			 * so don't bother looking.
-> +			 *
-> +			 * The exception is if we are looking only at kept
-> +			 * packs. An object can be present in two packs covered
-> +			 * by the MIDX, one kept and one not-kept. And as the
-> +			 * MIDX points to only one copy of each object, it might
-> +			 * have returned only the non-kept version above. We
-> +			 * have to check again to be thorough.
-> +			 */
-> +			continue;
-> +		}
-> +		if (!kept_only ||
-> +		    (((kept_only & ON_DISK_KEEP_PACKS) && p->pack_keep) ||
-> +		     ((kept_only & IN_CORE_KEEP_PACKS) && p->pack_keep_in_core))) {
-> +			if (fill_pack_entry(oid, e, p)) {
-> +				list_move(&p->mru, &r->objects->packed_git_mru);
-> +				return 1;
+Style.  Missing SP after comma.
+
+>  		if ((dir->flags & DIR_SHOW_IGNORED) &&
+>  			!ce_excluded(dir, repo->index, fullname.buf, ce))
+>  			continue;
+>  		if (ce->ce_flags & CE_UPDATE)
+>  			continue;
+>  		if (show_cached || show_stage) {
+> +			if (skipping_duplicates && last_shown_ce &&
+> +				!strcmp(last_shown_ce->name,ce->name))
+> +					continue;
+
+OK.  When show_stage is set, skipping_duplicates is automatically
+turned off (and show_unmerged is automatically covered as it turns
+show_stage on automatically).  So this feature has really become
+"are we showing only names, and if so, did we show an entry of the
+same name before?".
+
+>  			if (!show_unmerged || ce_stage(ce))
+>  				show_ce(repo, dir, ce, fullname.buf,
+>  					ce_stage(ce) ? tag_unmerged :
+>  					(ce_skip_worktree(ce) ? tag_skip_worktree :
+>  						tag_cached));
+> +			if (show_cached && skipping_duplicates)
+> +				last_shown_ce = ce;
+
+The code that calls show_ce() belonging to a totally separate if()
+statement makes my stomach hurt---how are we going to guarantee that
+"last shown" really will keep track of what was shown last?
+
+Shouldn't the above be more like this?
+
+- 			if (!show_unmerged || ce_stage(ce))
++ 			if (!show_unmerged || ce_stage(ce)) {
+ 				show_ce(repo, dir, ce, fullname.buf,
+ 					ce_stage(ce) ? tag_unmerged :
+ 					(ce_skip_worktree(ce) ? tag_skip_worktree :
+ 						tag_cached));
++				last_shown_ce = ce;
++			}
+
+It does maintain last_shown_ce even when skipping_duplicates is not
+set, but I think that is overall win.  Assigning unconditionally
+would be cheaper than making a conditional jump on the variable and
+make assignment (or not).
+
+>  		}
+>  		if (ce_skip_worktree(ce))
+>  			continue;
+> +		if (skipping_duplicates && last_shown_ce &&
+> +			!strcmp(last_shown_ce->name,ce->name))
+> +				continue;
+
+Style.  Missing SP after comma.
+
+OK, if we've shown an entry of the same name under skip-duplicates
+mode, and the code that follows will show the same entry (if they
+decide to show it), so we can go to the next entry early.
+
+>  		err = lstat(fullname.buf, &st);
+>  		if (err) {
+> -			if (errno != ENOENT && errno != ENOTDIR)
+> -				error_errno("cannot lstat '%s'", fullname.buf);
+> -			if (show_deleted)
+> +			if (skipping_duplicates && show_deleted && show_modified)
+>  				show_ce(repo, dir, ce, fullname.buf, tag_removed);
+> -			if (show_modified)
+> -				show_ce(repo, dir, ce, fullname.buf, tag_modified);
+> +			else {
+> +				if (errno != ENOENT && errno != ENOTDIR)
+> +					error_errno("cannot lstat '%s'", fullname.buf);
+> +				if (show_deleted)
+> +					show_ce(repo, dir, ce, fullname.buf, tag_removed);
+> +				if (show_modified)
+> +					show_ce(repo, dir, ce, fullname.buf, tag_modified);
 > +			}
+>  		} else if (show_modified && ie_modified(repo->index, ce, &st, 0))
+>  			show_ce(repo, dir, ce, fullname.buf, tag_modified);
 
-Here is the meat of your patch. The comment helps a lot.
+This part will change shape quite a bit when we follow the
+suggestion I made on 1/3, so I won't analyze how correct this
+version is.
 
-This might have been easier if the MIDX had preferred kept packs
-over non-kept packs (before sorting by modified time). Perhaps
-the MIDX could get an extra field to say "I preferred kept packs"
-which would let us trust the MIDX return here without the pack
-loop.
+> +		last_shown_ce = ce;
+>  	}
+>  
+>  	strbuf_release(&fullname);
+> @@ -571,6 +590,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+>  			N_("pretend that paths removed since <tree-ish> are still present")),
+>  		OPT__ABBREV(&abbrev),
+>  		OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data")),
+> +		OPT_BOOL(0,"deduplicate",&skipping_duplicates,N_("suppress duplicate entries")),
+>  		OPT_END()
+>  	};
+>  
+> @@ -610,6 +630,8 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+>  		 * you also show the stage information.
+>  		 */
+>  		show_stage = 1;
+> +	if (show_tag || show_stage)
+> +		skipping_duplicates = 0;
 
-(Note: we can't just change the MIDX selection and then start
-trusting all MIDXs to have the right tie-breakers because of
-existing files in the wild.)
+OK.
 
-Thanks,
--Stolee
+>  	if (dir.exclude_per_dir)
+>  		exc_given = 1;
+>  
+
+Thanks.
