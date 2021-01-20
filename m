@@ -2,145 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AFFFC43381
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 11:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68295C433E6
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1C9723383
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 11:51:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2083323380
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729221AbhATLer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 06:34:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36528 "EHLO
+        id S2388878AbhATM7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 07:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726423AbhATLBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 06:01:48 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5780CC061757
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 03:01:08 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id r9so15926500qtp.11
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 03:01:08 -0800 (PST)
+        with ESMTP id S2388001AbhATMc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 07:32:27 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A0BC061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:31:47 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id d189so24795844oig.11
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:31:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KK/ApKvTHJQkR/KdlI2hiSuetA3XmPQXdA2BIEkRKUI=;
-        b=HaaoCL+uapaPcnO0H55YIcbU6hNffDJu+WTmAEI38znG4mVaX+9q0BZYwHnlI0iY9m
-         0zxdpjoF/a7+P5QIzaDOdMWKlGWLK1w9XolEWh/vHz1szT+Ga2Nj1lnAncMv8+292VP8
-         nMt+dlGyQszl9nZkAWQy/50J/TOn8KiaL/0oE=
+        bh=0OXst9burjnpEQSq/OEiZy2onkNVe11HBqO9FTRdh4k=;
+        b=pVXCNSOKu6jmdJ3HVr03xwAVpXDCmv5svsBbNXVju2AMg203bP9J1g/I6VfQj0vYJm
+         LROdlpR+Jv6umsEZbQrAkujs2moOUfxCsU+hBX0NQltj0HCKf8KJaK80viDnJkKrvXUX
+         6fdACJyuXGlqjScFzomjackJVHWk3ysIw/Qi5eIS7oFcccuBnHeRAoTKaK8w6kvSpDVn
+         51Dt6fUDMF+2IbCII4q7Pndtoea6mJ1VKCx/s5E3K/8q5zJG9pVWVH+gtnRDy95ebjiF
+         I0LhvX5tfstGXzFMTnBhi3WqoBxpUGMU0owTMxWfmb30nP32Lm6hrkEkwFyaUOMqFNWz
+         v07g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KK/ApKvTHJQkR/KdlI2hiSuetA3XmPQXdA2BIEkRKUI=;
-        b=HLvo+JB0+mY4r/rMXSku/RZ25MvEry1Td2rYUO5LrAQJTGu3JYf+SbHTfSWoS2R5UE
-         zVBufaMXawS642oij6PhykaRL7YJaWmvuIPOHp3PldfdE4yjF9raL+OyCV42tpUmP1vz
-         DpQUVgcTwDzOSGe6u4qaAQ/CBQUNF0otvPc2u/G2nqwI4KJEi+QWdHkj3/2bgSQJcNpq
-         uI7D45iEYXJN89xMh8iwvyKTwXiSXN/piU4Y5guCwKcv7BUuAvTZTEuSyE4sTEA7ZxJU
-         Vd7Mxu2bERUijjwroTL9UMpwirNCvog24wBm2oiXbDdEnheWVaoWyPR0KHR8EszDh+3i
-         sJpA==
-X-Gm-Message-State: AOAM530VBIuIfeNo6KpzgylSztJXd4gogwt7uuK6ycNfFhoEOvHVQzOK
-        /cqstjfXJAUSkl6/Hq2tyGV2s54nY2mcX5D6ED+raA==
-X-Google-Smtp-Source: ABdhPJyE7VqEklo83WYgRPGU4GsgqgvoiAytYMmiZ8lCPZZCSFljgdgEa44KrWVb62G7Qx2A1ZK1rthUfodTl+002G0=
-X-Received: by 2002:ac8:4711:: with SMTP id f17mr8378192qtp.256.1611140467417;
- Wed, 20 Jan 2021 03:01:07 -0800 (PST)
+        bh=0OXst9burjnpEQSq/OEiZy2onkNVe11HBqO9FTRdh4k=;
+        b=LmeJorMXsQ5KO86kuXvgHq2ALPDnhTf/HbWjVa332/6poetm6155JxTmYLToHnH1ba
+         tnIeF4GrpEgAd0RhSjT65Q50oVQmXnEZeuSesDFD9+vdg9ZnoAxwD2gT1cgpsgcYS4Ow
+         c60K5xVmfElxpMjXNeFc9lpRv/4lbjpzurql3CHwauzF2Ae7LCU5LjKjnMJjfpD6ytGS
+         6vsBTDFIGrW/xr87n/tIw7WC9A1/+N+jgQha3ObPoJ2CC9RKMYeTTzewyKN/rneqfoQD
+         9U6o4pvTwBd3jVOkhkzvKdHzWD4QhGzvGuCEWN3aJigz0R8rf0K3YHuvwFDs2Fiw5qP4
+         Wv1w==
+X-Gm-Message-State: AOAM532xcW0eCaxg+TjKXwonv5aW4A3mAj1FxqgdScimAJjC47/ccg6a
+        SO3O9FFEslkWu4ZYwiVK/JzT23INq9pFFEEGCy4=
+X-Google-Smtp-Source: ABdhPJyuodz+CtZS7HkDZ7vq/Tx8bMokNeARqtYQT56zsPe4aL4vNrty5nsPaoCZQo7Ky2UVg1+z8MhTwkVNZkQ4NgI=
+X-Received: by 2002:a54:479a:: with SMTP id o26mr2691665oic.48.1611145906354;
+ Wed, 20 Jan 2021 04:31:46 -0800 (PST)
 MIME-Version: 1.0
-References: <CADMWQoPREhirr+RJPkJJV2U+8VG=DFotvTBCDSXFhn-3pn2X-A@mail.gmail.com>
- <cover.1611080326.git.me@ttaylorr.com> <fb8681d12864d724108c524834f9498d91e270e6.1611080326.git.me@ttaylorr.com>
-In-Reply-To: <fb8681d12864d724108c524834f9498d91e270e6.1611080326.git.me@ttaylorr.com>
-From:   Jacob Vosmaer <jacob@gitlab.com>
-Date:   Wed, 20 Jan 2021 12:00:56 +0100
-Message-ID: <CADMWQoO+163mJBXctb+GHFebGCbKQRPAtMJ676_GwfEt-BedAw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ls-refs.c: traverse longest common ref prefix
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-10-charvi077@gmail.com>
+ <8fd2b72c-d1d0-98be-e6a5-fb7dc699d5d5@xiplink.com> <CAPSFM5euGE_bUDPgdzx4-q5zYtkDymHdJP9rw-YkVVVzpOKWkw@mail.gmail.com>
+ <7c11da69-d2f1-0aab-80bc-d8ae8735f8ca@gmail.com>
+In-Reply-To: <7c11da69-d2f1-0aab-80bc-d8ae8735f8ca@gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Wed, 20 Jan 2021 18:01:35 +0530
+Message-ID: <CAPSFM5f9JJk5xY-f2mNwHjZZfo-=LzSCpA2Q73T-ASGMxfqqeg@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] doc/git-rebase: add documentation for fixup
+ [-C|-c] options
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 19, 2021 at 7:19 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> ls-refs performs a single revision walk over the whole ref namespace,
-> and sends ones that match with one of the given ref prefixes down to the
-> user.
->
-> This can be expensive if there are many refs overall, but the portion of
-> them covered by the given prefixes is small by comparison.
->
-> To attempt to reduce the difference between the number of refs
-> traversed, and the number of refs sent, only traverse references which
-> are in the longest common prefix of the given prefixes. This is very
-> reminiscent of the approach taken in b31e2680c4 (ref-filter.c: find
-> disjoint pattern prefixes, 2019-06-26) which does an analogous thing for
-> multi-patterned 'git for-each-ref' invocations.
->
-> The only difference here is that we are operating on ref prefixes, which
-> do not necessarily point to a single reference. That is just fine, since
-> all we care about is finding the longest common prefix among prefixes
-> which can be thought of as refspecs for our purposes here.
->
-> Similarly, for_each_fullref_in_prefixes may return more results than the
-> caller asked for (since the longest common prefix might match something
-> that a longer prefix in the same set wouldn't match) but
-> ls-refs.c:send_ref() discards such results.
->
-> The code introduced in b31e2680c4 is resilient to stop early (and
-> return a shorter prefix) when it encounters a metacharacter (as
-> mentioned in that patch, there is some opportunity to improve this, but
-> nobody has done it).
->
-> There are two remaining small items in this patch:
->
->   - If no prefixes were provided, then implicitly add the empty string
->     (which will match all references).
->
->   - Since we are manually munging the prefixes, make sure that we
->     initialize it ourselves (previously this wasn't necessary since the
->     first strvec_push would do so).
->
-> Original-patch-by: Jacob Vosmaer <jacob@gitlab.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  ls-refs.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/ls-refs.c b/ls-refs.c
-> index a1e0b473e4..eaaa36d0df 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -90,6 +90,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
->         struct ls_refs_data data;
->
->         memset(&data, 0, sizeof(data));
-> +       strvec_init(&data.prefixes);
->
->         git_config(ls_refs_config, NULL);
->
-> @@ -109,7 +110,10 @@ int ls_refs(struct repository *r, struct strvec *keys,
->                 die(_("expected flush after ls-refs arguments"));
->
->         head_ref_namespaced(send_ref, &data);
-> -       for_each_namespaced_ref(send_ref, &data);
-> +       if (!data.prefixes.nr)
-> +               strvec_push(&data.prefixes, "");
+Hi Phillip,
 
-The old code, with for_each_namespaced_ref, would walk
-"${NAMESPACE}refs/". The new code would walk "${NAMESPACE}" because
-we're pushing "" onto data.prefixes. So if there is anything in the
-namespace that does not start with "refs/" it will get yielded.
+On Wed, 20 Jan 2021 at 16:34, Phillip Wood <phillip.wood123@gmail.com> wrote:
 
-Does that matter?
+> >[...]
+> > Similarly, if we have sequence like `fixup -c`, `fixup -c`, `fixup -c`
+> > then also it will fixup
+> > up all the content and here it allow user to edit the message, so
+> > opens the editor once
+>
+> It is good that we only open the editor once in this case - I'd not
+> thought about chains of `fixup -c` before reading this. Do we have a
+> test to verify that the editor is only opened once?
+>
 
-> +       for_each_fullref_in_prefixes(get_git_namespace(), data.prefixes.v,
-> +                                    send_ref, &data, 0);
->         packet_flush(1);
->         strvec_clear(&data.prefixes);
->         return 0;
-> --
-> 2.30.0.138.g6d7191ea01
+No, we don't. But I also agree, it's a good idea to add a test for it.
+I think may be one sequence with 'fixup -C', 'fixup -c', 'fixup -c'
+and the other 'squash' , 'fixup -C', 'fixup -c', is sufficient for
+testing. Or any other suggestions for testing it ?
+
+Thanks and regards,
+Charvi
