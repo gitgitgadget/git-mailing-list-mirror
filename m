@@ -2,108 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 683EEC433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 22:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C75EC4360C
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 23:42:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 39A38221FE
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 22:30:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3FE123619
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 23:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729654AbhATW3V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 17:29:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35244 "EHLO
+        id S1732309AbhATWbw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 17:31:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731143AbhATVvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 16:51:41 -0500
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FBB6C0613CF
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:50:34 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id s6so11668153qvn.6
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:50:34 -0800 (PST)
+        with ESMTP id S1727081AbhATVxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 16:53:18 -0500
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17F6C061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:52:37 -0800 (PST)
+Received: by mail-qt1-x82e.google.com with SMTP id j26so148577qtq.8
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3rma9WePIZOSZjctww7z7QG2fIyRV4pamXU0bsLXQE4=;
-        b=N8dZrn9xRhOwYLbwcQlUBYjZKjiSvnVrzeVjllksWn9ESHZV2kV8hxZtV36bsKyde7
-         tLS1o4Mf5Gta+lSrYXF8HaL+cSMlSg8nmbw9j9GszGLw5tKNfvCIor+PGcMDWK5wiQDI
-         7fruXGxKH52hPrXUKMuU5vZfcsqDsiFLmLQlU=
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=2JQE1dRupAJgMJ65Y+QbJ2r/bi+0nKHwk3ao0XD3EFQ=;
+        b=K5/CFIFXosfZ31vFxsy5dPX1UwD/kBG1q+t18HMw08Q/xMeFyw6LFTQfdhlUQiUcW+
+         3GCJgpqDQYVLuMrwLX1fuJfkrwpvfw/P+e6OEcasJK/INmhL3scrTlquPfWv6DU8ercU
+         dAdA32WeCQyktoLS9OtZ61KnpJLNB7QBd6XVkj3Pqc86IUyZnZpO9/qd/xJh3B8YS1ZQ
+         DTMAvSx2TRnuK2w6F+74btxYQ6OMkFlCOKkx0cd8HDtZBCHHGOyDLfCGqViIwRa8nYQv
+         ZKzBupORClsWp2etObc/uR2ZcQFDH0Wz5w5fqSn/KcngM7t2ZqJCOre1R4IreGNGknu0
+         8Izg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3rma9WePIZOSZjctww7z7QG2fIyRV4pamXU0bsLXQE4=;
-        b=MS18Yy1qYgH61A4yxQ/MKp8jEupi3uP40h8rtz5+F+pOiLy1ZhLWcadYb5GjWnE5p7
-         PUvmJF7bVE/Q4DhCj4H/LGIBIELXniIbAC3jeMP5B3qN7PdjF9945oOzjDIyQhJ6NQpZ
-         ahZnpLIWM8pyAaVGJ4yQqPV486XGqIdtT/MP+b4CzsYRrngtPWVeAL4buC+6tDKJT1Jo
-         B0HSD91dDfAzlnsvk9tS9ygx7/oszja9hfr0tWojM2bZD7iN8Z8GXmf6iDYn1lP6zJ0t
-         Fh+b0MEdQM68JnuJAVNR9zByzMJ3xcuFQ6ExbmR3CSXkNr/8oLk2l3xiwqKtressDesw
-         hJkg==
-X-Gm-Message-State: AOAM531ieuR0eQXDhvk65WWiWXLl4YVBZulrytlE6ju2sCjBGxPCKu55
-        0vNSf2qId34RyuPznVzc7VZ60hAJKfhRKadLyijHfcKky/gFpg==
-X-Google-Smtp-Source: ABdhPJwJNuiShQsNtOMZFZUDLjotLdVWR8rofdQLf3bjKxpllL7nmMRk9AMCRoRvS6y0T4miX57JODqJrQ0jQ18U6gc=
-X-Received: by 2002:a0c:b59a:: with SMTP id g26mr11480950qve.26.1611179433574;
- Wed, 20 Jan 2021 13:50:33 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=2JQE1dRupAJgMJ65Y+QbJ2r/bi+0nKHwk3ao0XD3EFQ=;
+        b=oPEX3ra/TG9998n2HJQRhquHa8muAbEF4KAPivoAHKASjas7u1HLoleYBhWI77ScIC
+         U4Q9/LTLbxvkUdIVI1pIi8B810NJKnpkiUbNmHYjLjcdwbhyUdgkqneDjDo+HDBVRHlE
+         qxJNzgH5ofY3BNrgY+BRNG4zQslw0WssLSnfJY3NebC7JD99z2Jab3oCmjKyZvjyhGxb
+         vUNi+a5aBH97uhCHec4H+6/k6piiJnxeESVNkF45aXKID4MrYMPvmzPhNJ6S+WZ87yvV
+         hz3Y+hu2+2EAuaQ0NgcEGqKECDncUP/iXjVxv1tjBFkln+zEbkNk9zTsAhtz6uLjT+TD
+         80XA==
+X-Gm-Message-State: AOAM532GeeveRtUlcKWozWHgidYF/rqaRmTjZFVxSe48XzXuY5DZRMc/
+        zqnBIZNmlwAjM9ZxsSntFY5JYA==
+X-Google-Smtp-Source: ABdhPJwxLz6eQapma2t8DyJ1sWnlnIdA0Tvb9RMkFqg7luL++hFzZgr82DPMNG+qupyD+nKTmTTgdA==
+X-Received: by 2002:ac8:6ec5:: with SMTP id f5mr10981475qtv.56.1611179557019;
+        Wed, 20 Jan 2021 13:52:37 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:7d49:7932:5c79:ddd4])
+        by smtp.gmail.com with ESMTPSA id x134sm2329991qka.1.2021.01.20.13.52.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 13:52:36 -0800 (PST)
+Date:   Wed, 20 Jan 2021 16:52:34 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>, avarab@gmail.com
+Subject: Re: [PATCH v2 1/1] builtin/pack-objects.c: avoid iterating all refs
+Message-ID: <YAimIr9j7SsmJJ55@nand.local>
+References: <20210120124514.49737-1-jacob@gitlab.com>
+ <20210120124514.49737-2-jacob@gitlab.com>
+ <YAhC8Gsp4H17e28n@nand.local>
+ <YAhXw9Gvn5Pyvacq@coredump.intra.peff.net>
+ <YAhYHUcdynbWyhwo@nand.local>
+ <YAiIbEAZSlL7B+am@coredump.intra.peff.net>
+ <CADMWQoPrKBjLM5ABhhhCibEyJVOXQxsNkncSU6dmwjynQ1oCcQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <cover.1611080326.git.me@ttaylorr.com> <cover.1611158549.git.me@ttaylorr.com>
- <5fc081b2d554db305400ec52fac8683a3ed59597.1611158549.git.me@ttaylorr.com>
-In-Reply-To: <5fc081b2d554db305400ec52fac8683a3ed59597.1611158549.git.me@ttaylorr.com>
-From:   Jacob Vosmaer <jacob@gitlab.com>
-Date:   Wed, 20 Jan 2021 22:50:22 +0100
-Message-ID: <CADMWQoNH+1MRGYsrJjHTUqhyYMHb9XP5-dQ3KHLT2qNVGGtttA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] ls-refs.c: initialize 'prefixes' before using it
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CADMWQoPrKBjLM5ABhhhCibEyJVOXQxsNkncSU6dmwjynQ1oCcQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the person whose name is on the "From:" line, I approve. And thanks!
+On Wed, Jan 20, 2021 at 10:46:29PM +0100, Jacob Vosmaer wrote:
+> On Wed, Jan 20, 2021 at 8:45 PM Jeff King <peff@peff.net> wrote:
+>
+> > I also rage-replaced peel_ref() with a function taking an oid so we
+> > never have to do that digging again. Posted separately in its own
+> > thread.
+>
+> That sounds like a good solution. Where does that leave my patch? Do I
+> need to wait for that new commit somehow? I don't know how that works,
+> "contributing to Git" wise.
 
-On Wed, Jan 20, 2021 at 5:04 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> From: Jacob Vosmaer <jacob@gitlab.com>
->
-> Correctly initialize the "prefixes" strvec using strvec_init() instead
-> of simply zeroing it via the earlier memset().
->
-> There's no way to trigger a crash, since the first 'ref-prefix' command
-> will initialize the strvec via the 'ALLOC_GROW' in 'strvec_push_nodup()'
-> (the alloc and nr variables are already zero'd, so the call to
-> ALLOC_GROW is valid).
->
-> If no "ref-prefix" command was given, then the call to
-> 'ls-refs.c:ref_match()' will abort early after it reads the zero in
-> 'prefixes->nr'. Likewise, strvec_clear() will only call free() on the
-> array, which is NULL, so we're safe there, too.
->
-> But, all of this is dangerous and requires more reasoning than it would
-> if we simply called 'strvec_init()', so do that.
->
-> Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
->  ls-refs.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/ls-refs.c b/ls-refs.c
-> index a1e0b473e4..367597d447 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -90,6 +90,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
->         struct ls_refs_data data;
->
->         memset(&data, 0, sizeof(data));
-> +       strvec_init(&data.prefixes);
->
->         git_config(ls_refs_config, NULL);
->
-> --
-> 2.30.0.138.g6d7191ea01
->
+Peff noted in the patch to nuke "peel_ref()" that merging his and then
+yours will cause a merge conflict, but it is trivial to resolve. So, I'd
+expect that Junio will pick up both and resolve the merge conflict when
+queuing.
+
+Or, in other words, I don't think there's anything left on your part
+;-). Thanks for providing your patches; there was a nice digression and
+I'm quite happy with where we ended up.
+
+Thanks,
+Taylor
