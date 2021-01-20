@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9EF4C433E6
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D1ECC433E0
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:00:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B1BF223E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:49:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF35923122
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732767AbhATRs4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 12:48:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39484 "EHLO
+        id S1729441AbhATSAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 13:00:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731598AbhATRso (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:48:44 -0500
+        with ESMTP id S1732855AbhATRzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:55:10 -0500
 Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B44C0613C1
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:48:02 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id q25so25875204oij.10
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:48:02 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CC97C0613D3
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:54:30 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id w8so4124273oie.2
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:54:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yPYSIVowYOtVFeW8R0APLoJ9DWUvM3bgz35+ypZi3Us=;
-        b=jY/iuj3CixyFuRYzWqPNp9vcAIaSzaHOa6801SvIDp1XlEQB0djlBR3PqGsdtDUr7W
-         1krEVmT/4hahBrWSHIbfDTayxBZrEUMB7H2FvfeS8AexHNRWTYsMQzeRLrWtHe0wHAiy
-         PYq8dQAa5nQ+sLvnU9wenWm9oNUEBbat1zgHwA4EuPHrBopauIwJWcenwPFeLhTHW0K0
-         rRDJR2xty1LG6CMjuZthQA0HtOxZRTccq2D4MYpu3sxVO9MxKbEjhHlkm4rCA7m1q/n8
-         8r3XUanj52WCGiiTgA6IAdUp7ead8lXcAvgJXqp3W5Q11AdLNKbS2vmzQnvWNTGN2J8r
-         c7vQ==
+        bh=rK35WI3lwHt0t3iHoY3ZILP3qyDQT3TIJ/IcwzU9bag=;
+        b=s+a6Fouq8IR6gpML4/QNpS7RsaF7drc7tDi9Avq+q3IcD3qCdjC6EYE5TJ09QolP6d
+         MmRkKHxo7evMvmU+G61Fw+2n1I8V0KQvyoUDXlEpD7FiPa46tUOC6ZCUx+56qKJceUvU
+         n6AX9a0N469R4m5baPws/m937OOHzvzBSy/xL3IJOLCF7XpE7xcimVFbq67cbU9n/DX4
+         CC9LO+wCT2VQzO4VyoPBBrv5pNgPkT17bjtsG+jvv+1x68c+LJlrdfeZky19bB8mGS0B
+         769aUUx6xWh9xWtuFrdsiLQX4psnH6aYBtfNEVl7/CE+34mbqt3O/yifYL1BvQOM5vT8
+         kStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yPYSIVowYOtVFeW8R0APLoJ9DWUvM3bgz35+ypZi3Us=;
-        b=ZF8TH/Wklg6UnpadnrD/ZIIx4RMhipHgxappY9ozZXJ6YWlX36y80SLEsjM283SVfT
-         Y5NEp8odr+0b5OGAYN7mqFrUJ0ukA+my1HfB32uXH8s3EuaqZCV/sbWJ58LWwRJ2Yydf
-         516pPiZ0VcXZnZmnI6Qnz8UbgMyqvpUBLfSmYN81hO8io/ugqDEAH9Xg7WFG+sSUDqdV
-         GNhdEfROc8LzZazJ5YMkNC9Soh9vpb/7gtMh+5Idz0yncsYDD+YGsHnQ/jhES9R5H3Dd
-         mUWCYAwDw+opKmAJNWA5Q6mtMX5vLU+AFtAQo0rm8fi8kSUzsPwxhBB1ouLQxLKBRVn9
-         wUjA==
-X-Gm-Message-State: AOAM532/z8FqPgo25O65glCmCYBT2J8qOyilcRBPJs5lFsPWLPAsYoMC
-        ZQrtI84u8z1TDuSX4yxFAyqEE2L7zYB942PqPw0=
-X-Google-Smtp-Source: ABdhPJxvD41QLmSO+BoA2infHOG+OzMclswc+kYL3CLC83DKJe3FBIRenDkZba+HxbtlxKt04hY0qZmSWmx5TzfQ0TI=
-X-Received: by 2002:a05:6808:83:: with SMTP id s3mr3650487oic.31.1611164881792;
- Wed, 20 Jan 2021 09:48:01 -0800 (PST)
+        bh=rK35WI3lwHt0t3iHoY3ZILP3qyDQT3TIJ/IcwzU9bag=;
+        b=Dt8lgGraJN8htEgYDm3axG3wQzN1lbdo7pr1nPlI8f2XjVzNKRLWe3tjthnJXLQP2j
+         KCq9zv20TlzPAgAFhtB0i2xS85Vpz4Hx3YJAtJuBIt1UBHRlOAR+hSA9JZGKf7tRiTbM
+         xHC0puetQdPMpKt14T0y83vSjjM4fTx/i0e5F9siK8LnYPWw9cf5K4aYTFBexRCN26Jd
+         fqDeHqVx5Oq7aVAqsHWrK9WucaCFkPB5f9QV0JVYvXi457zDHs9E9iwuoarjYvIMMrNY
+         mJ45/USRlgpZ+BrBOtK/ROuhwk3XExTKu2zjHdxUua+e2tL1bPOJHPOBiUSmEloi2and
+         Q/aQ==
+X-Gm-Message-State: AOAM533m4zQWjEPyhqtQUph8MWKC6fS/rObFnX85Oo+iLRqJc/ubd7p0
+        Ezs3Q1GD7lRGjeDZq0+rfT3cTnN4kOL7zh5HpP4bdFM7RBc=
+X-Google-Smtp-Source: ABdhPJwEMWKuUtKMkugVDNNJJAUgc/4AQ1aPoeM8PgoLpX/H4g7ygKm7Tn0Veijsl0OVFJaECjoNJ7dwgIvAzo9EEYs=
+X-Received: by 2002:a05:6808:83:: with SMTP id s3mr3666927oic.31.1611165269650;
+ Wed, 20 Jan 2021 09:54:29 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <3ba4b35f09cf3dc313787cdec6856286fe97d8a8.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <3ba4b35f09cf3dc313787cdec6856286fe97d8a8.1611161639.git.gitgitgadget@gmail.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <64358ec7ea2b3df4a8f1099452579a7568996921.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <64358ec7ea2b3df4a8f1099452579a7568996921.1611161639.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 09:47:50 -0800
-Message-ID: <CABPp-BEhJDd=Om49Cpb2CuuHn_UBuNaxJjGKZEhWfY3r3vcefA@mail.gmail.com>
-Subject: Re: [PATCH 5/9] name-hash: use trace2 regions for init
+Date:   Wed, 20 Jan 2021 09:54:18 -0800
+Message-ID: <CABPp-BHSssDCvyC3rGZasR8yWxJYN9Y09LZL2BBd2hyFgG08Vw@mail.gmail.com>
+Subject: Re: [PATCH 6/9] sparse-checkout: load sparse-checkout patterns
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <derrickstolee@github.com>,
@@ -73,50 +73,110 @@ On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> The lazy_init_name_hash() populates a hashset with all filenames and
-> another with all directories represented in the index. This is run only
-> if we need to use the hashsets to check for existence or case-folding
-> renames.
+> A future feature will want to load the sparse-checkout patterns into a
+> pattern_list, but the current mechanism to do so is a bit complicated.
+> This is made difficult due to needing to find the sparse-checkout file
+> in different ways throughout the codebase.
 >
-> Place trace2 regions where there is already a performance trace.
+> The logic implemented in the new get_sparse_checkout_patterns() was
+> duplicated in populate_from_existing_patterns() in unpack-trees.c. Use
+> the new method instead, keeping the logic around handling the struct
+> unpack_trees_options.
+>
+> The callers to get_sparse_checkout_filename() in
+> builtin/sparse-checkout.c manipulate the sparse-checkout file directly,
+> so it is not appropriate to replace logic in that file with
+> get_sparse_checkout_patterns().
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  name-hash.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  builtin/sparse-checkout.c |  5 -----
+>  dir.c                     | 17 +++++++++++++++++
+>  dir.h                     |  2 ++
+>  unpack-trees.c            |  6 +-----
+>  4 files changed, 20 insertions(+), 10 deletions(-)
 >
-> diff --git a/name-hash.c b/name-hash.c
-> index 5d3c7b12c18..4e03fac9bb1 100644
-> --- a/name-hash.c
-> +++ b/name-hash.c
-> @@ -7,6 +7,7 @@
->   */
->  #include "cache.h"
->  #include "thread-utils.h"
-> +#include "trace2.h"
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index e3140db2a0a..2306a9ad98e 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -22,11 +22,6 @@ static char const * const builtin_sparse_checkout_usage[] = {
+>         NULL
+>  };
 >
->  struct dir_entry {
->         struct hashmap_entry ent;
-> @@ -577,6 +578,7 @@ static void lazy_init_name_hash(struct index_state *istate)
->         if (istate->name_hash_initialized)
->                 return;
->         trace_performance_enter();
-> +       trace2_region_enter("index", "name-hash-init", istate->repo);
->         hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
->         hashmap_init(&istate->dir_hash, dir_entry_cmp, NULL, istate->cache_nr);
->
-> @@ -597,6 +599,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+> -static char *get_sparse_checkout_filename(void)
+> -{
+> -       return git_pathdup("info/sparse-checkout");
+> -}
+> -
+>  static void write_patterns_to_file(FILE *fp, struct pattern_list *pl)
+>  {
+>         int i;
+> diff --git a/dir.c b/dir.c
+> index d637461da5c..d153a63bbd1 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2998,6 +2998,23 @@ void setup_standard_excludes(struct dir_struct *dir)
 >         }
->
->         istate->name_hash_initialized = 1;
-> +       trace2_region_leave("index", "name-hash-init", istate->repo);
->         trace_performance_leave("initialize name hash");
 >  }
+>
+> +char *get_sparse_checkout_filename(void)
+> +{
+> +       return git_pathdup("info/sparse-checkout");
+> +}
+> +
+> +int get_sparse_checkout_patterns(struct pattern_list *pl)
+> +{
+> +       int res;
+> +       char *sparse_filename = get_sparse_checkout_filename();
+> +
+> +       pl->use_cone_patterns = core_sparse_checkout_cone;
+> +       res = add_patterns_from_file_to_list(sparse_filename, "", 0, pl, NULL);
+> +
+> +       free(sparse_filename);
+> +       return res;
+> +}
+> +
+>  int remove_path(const char *name)
+>  {
+>         char *slash;
+> diff --git a/dir.h b/dir.h
+> index a3c40dec516..facfae47402 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -448,6 +448,8 @@ int is_empty_dir(const char *dir);
+>
+>  void setup_standard_excludes(struct dir_struct *dir);
+>
+> +char *get_sparse_checkout_filename(void);
+> +int get_sparse_checkout_patterns(struct pattern_list *pl);
+>
+>  /* Constants for remove_dir_recursively: */
+>
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index af6e9b9c2fd..837b8bb42fb 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1549,14 +1549,10 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
+>  static void populate_from_existing_patterns(struct unpack_trees_options *o,
+>                                             struct pattern_list *pl)
+>  {
+> -       char *sparse = git_pathdup("info/sparse-checkout");
+> -
+> -       pl->use_cone_patterns = core_sparse_checkout_cone;
+> -       if (add_patterns_from_file_to_list(sparse, "", 0, pl, NULL) < 0)
+> +       if (get_sparse_checkout_patterns(pl) < 0)
+>                 o->skip_sparse_checkout = 1;
+>         else
+>                 o->pl = pl;
+> -       free(sparse);
+>  }
+>
 >
 > --
 > gitgitgadget
 
-Yaay for trace2.  :-)
+Looks straightforward and well motivated to me.
 
-Total sidenote: Are we ever going to get rid of the trace1 stuff?  I'm
-sure this was discussed somewhere, but I don't know where.
+But the cherry on top that really sells this patch is that more lines
+of dir.c will blame to someone besides me.  Win-win!
