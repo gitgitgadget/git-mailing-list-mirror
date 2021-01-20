@@ -2,94 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68295C433E6
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB53C433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2083323380
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3256C2333C
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 13:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388878AbhATM7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 07:59:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55916 "EHLO
+        id S2388908AbhATNAJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 08:00:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388001AbhATMc1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 07:32:27 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A0BC061575
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:31:47 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id d189so24795844oig.11
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:31:47 -0800 (PST)
+        with ESMTP id S2390028AbhATMnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 07:43:39 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56C86C0613C1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:42:59 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id d22so14570920edy.1
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 04:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0OXst9burjnpEQSq/OEiZy2onkNVe11HBqO9FTRdh4k=;
-        b=pVXCNSOKu6jmdJ3HVr03xwAVpXDCmv5svsBbNXVju2AMg203bP9J1g/I6VfQj0vYJm
-         LROdlpR+Jv6umsEZbQrAkujs2moOUfxCsU+hBX0NQltj0HCKf8KJaK80viDnJkKrvXUX
-         6fdACJyuXGlqjScFzomjackJVHWk3ysIw/Qi5eIS7oFcccuBnHeRAoTKaK8w6kvSpDVn
-         51Dt6fUDMF+2IbCII4q7Pndtoea6mJ1VKCx/s5E3K/8q5zJG9pVWVH+gtnRDy95ebjiF
-         I0LhvX5tfstGXzFMTnBhi3WqoBxpUGMU0owTMxWfmb30nP32Lm6hrkEkwFyaUOMqFNWz
-         v07g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=+TxPVWKxaYzsFzB7IX+47PCPHyzLB/qWFdcS00upu70=;
+        b=KnW95a3dXY2Ceeb5k+Nk9yeGPAlMCitxNgKfAzn85f6yGcQgI5YXszndYpzPBJT+m7
+         pbUdg7YMPXIh8xXhujQ/7wnI2Xpxwr0MHmEg10tXwidLM5olyjR4uwFwDP28Ky+eH4Ol
+         1rpmGqxLJTPlAM4zYS2NLRv9zOjIl7YioDJbEbSvWw2tCXsa2WgXlgX2xXNWCjTvFylN
+         0odoqECgd4nluoPQ7t/Q6JAJn5mimtQaaxrxtzRsYvAEJ03AirOn6+Zc/e6YU4h/+xVX
+         r6xJe6ETsX9auzAy6ONIFiie24F/udiutibM3lIsvrgIAOHvO6Gba/hJrkBuIB3CDRus
+         cGfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0OXst9burjnpEQSq/OEiZy2onkNVe11HBqO9FTRdh4k=;
-        b=LmeJorMXsQ5KO86kuXvgHq2ALPDnhTf/HbWjVa332/6poetm6155JxTmYLToHnH1ba
-         tnIeF4GrpEgAd0RhSjT65Q50oVQmXnEZeuSesDFD9+vdg9ZnoAxwD2gT1cgpsgcYS4Ow
-         c60K5xVmfElxpMjXNeFc9lpRv/4lbjpzurql3CHwauzF2Ae7LCU5LjKjnMJjfpD6ytGS
-         6vsBTDFIGrW/xr87n/tIw7WC9A1/+N+jgQha3ObPoJ2CC9RKMYeTTzewyKN/rneqfoQD
-         9U6o4pvTwBd3jVOkhkzvKdHzWD4QhGzvGuCEWN3aJigz0R8rf0K3YHuvwFDs2Fiw5qP4
-         Wv1w==
-X-Gm-Message-State: AOAM532xcW0eCaxg+TjKXwonv5aW4A3mAj1FxqgdScimAJjC47/ccg6a
-        SO3O9FFEslkWu4ZYwiVK/JzT23INq9pFFEEGCy4=
-X-Google-Smtp-Source: ABdhPJyuodz+CtZS7HkDZ7vq/Tx8bMokNeARqtYQT56zsPe4aL4vNrty5nsPaoCZQo7Ky2UVg1+z8MhTwkVNZkQ4NgI=
-X-Received: by 2002:a54:479a:: with SMTP id o26mr2691665oic.48.1611145906354;
- Wed, 20 Jan 2021 04:31:46 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=+TxPVWKxaYzsFzB7IX+47PCPHyzLB/qWFdcS00upu70=;
+        b=HwO19oNerGgK5AlkqkT9KV0DZIhRGfCEc09K06Ma2oUjjm3cHIcXbQmZv1s/vQZhd1
+         akqxGuDcwsMs9fHumtGv67hxCAz0ISk50cAg12GHNLZc11Km2Kx6RKgHE4gukMtWC54x
+         HHvBysSZ0AH0YAhBtli463QPmKD4RDvSwarya256EIRgYxUJbEIRdGPsoM+Ik3DN4es7
+         UMnf6+gMPsOZ8FJye0Xj3e2d4OcTf8KvZf+6SBTT6KFTU+c2jwq1MelCgkjQn7nV1mLj
+         aXlsWForM/z/ZOaHl29z5RsvjLRtEu1OTWwEEmgRaeQF/Aq3P17MdNd0IIEoMefp/Xye
+         xISw==
+X-Gm-Message-State: AOAM533RoOcz/LmkFV40YduY2HaP4XQEC7uC1l68NZHD3e8Xxwlmed5I
+        LWUMXK5rhjYrS6NQNNqjn+vyzmrfV50=
+X-Google-Smtp-Source: ABdhPJyPYAboYpjItdVT+f12vkOJfuUVfGr6pNl2rU8+gWDAoZiPWXWIiwHJRXG6ADCjiobzRyn8eA==
+X-Received: by 2002:a05:6402:8d9:: with SMTP id d25mr7090525edz.278.1611146577977;
+        Wed, 20 Jan 2021 04:42:57 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id zg24sm853676ejb.120.2021.01.20.04.42.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 04:42:56 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Harley Paterson <harley.paterson@hotmail.co.nz>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: False negative authentication with multiple accounts on a
+ SSH-GIT server
+References: <DB8P189MB10460B9A3CA31ADF5C05A39FF9A30@DB8P189MB1046.EURP189.PROD.OUTLOOK.COM>
+ <YAdnJabiJlu9Qlli@camp.crustytoothpaste.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <YAdnJabiJlu9Qlli@camp.crustytoothpaste.net>
+Date:   Wed, 20 Jan 2021 13:42:56 +0100
+Message-ID: <87im7r93u7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-10-charvi077@gmail.com>
- <8fd2b72c-d1d0-98be-e6a5-fb7dc699d5d5@xiplink.com> <CAPSFM5euGE_bUDPgdzx4-q5zYtkDymHdJP9rw-YkVVVzpOKWkw@mail.gmail.com>
- <7c11da69-d2f1-0aab-80bc-d8ae8735f8ca@gmail.com>
-In-Reply-To: <7c11da69-d2f1-0aab-80bc-d8ae8735f8ca@gmail.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Wed, 20 Jan 2021 18:01:35 +0530
-Message-ID: <CAPSFM5f9JJk5xY-f2mNwHjZZfo-=LzSCpA2Q73T-ASGMxfqqeg@mail.gmail.com>
-Subject: Re: [PATCH v2 9/9] doc/git-rebase: add documentation for fixup
- [-C|-c] options
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Marc Branchaud <marcnarc@xiplink.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
 
-On Wed, 20 Jan 2021 at 16:34, Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Wed, Jan 20 2021, brian m. carlson wrote:
 
-> >[...]
-> > Similarly, if we have sequence like `fixup -c`, `fixup -c`, `fixup -c`
-> > then also it will fixup
-> > up all the content and here it allow user to edit the message, so
-> > opens the editor once
+> On 2021-01-19 at 06:17:21, Harley Paterson wrote:
+>> Hello,
+>> 
+>> I've noticed an edge case in Git when a user has two Git accounts on a
+>> single server - as might be common for a personal account and a work
+>> account on a Git forge (Github, GitLab, Bitbucket...)
+>> 
+>> When attempting SSH login, `ssh` and Git will eagerly connect with the
+>> first matching key. This may or may not be the key right key for the
+>> repository the user needs. As a result, Git clones, pulls, and pushes
+>> will fail with the `Repository not found` if the wrong key is tried
+>> first.
+>> 
+>> For example, the user `alice` has two accounts on the host
+>> `git-server.com`. `alice`'s accounts are `alice-work`, and
+>> `alice-personal`. `alice-work` has access to the `foo` repository, and
+>> `alice-personal` has access to the `bar` repository.
 >
-> It is good that we only open the editor once in this case - I'd not
-> thought about chains of `fixup -c` before reading this. Do we have a
-> test to verify that the editor is only opened once?
+> Yes, this is because SSH authentication happens before any command is
+> run.  The server never knows what resource is being requested until the
+> user is already authenticated.
 >
+>> `alice` attempts to clone `foo` with both her `alice-work` and
+>> `alice-personal` keys in her SSH Agent. SSH Agent does not define
+>> which key it will attempt first, so SSH may connect successfully to
+>> `git-server.com` with her `alice-personal` keys, which do not have
+>> access to the `foo` repository.
+>> 
+>> I'd be interested in your opinions for fixes to this. I am willing to
+>> make a patch, although my knowledge of the Git codebase isn't perfect.
+>
+> We've documented how to deal with situation properly in the FAQ, which
+> you can see at gitfaq(7) or
+> https://git-scm.com/docs/gitfaq#Documentation/gitfaq.txt-HowdoIusemultipleaccountswiththesamehostingproviderusingSSH
+>
+> Is there some reason that this doesn't work for you?
+>
+>> - Should Git servers provide distinctly different error messages for
+>>   `access denied`, and `repository does not exist`? Currently the
+>>   server immediately closes the connection in this case, so
+>>   `transport.c:handshake()` with fail when attempting to
+>>   `discover_version()` because the reader hits the EOF. Perhaps the
+>>   server could send a hypothetical access denied packet here, and a
+>>   more appropriate error generated?
+>
+> Unfortunately, this leaks whether a repository exists.  If Company XYZ
+> has a repository for each of its clients, it then becomes easy to see if
+> Company XYZ is doing work for a particular client by trying to see if a
+> repository exists.
 
-No, we don't. But I also agree, it's a good idea to add a test for it.
-I think may be one sequence with 'fixup -C', 'fixup -c', 'fixup -c'
-and the other 'squash' , 'fixup -C', 'fixup -c', is sufficient for
-testing. Or any other suggestions for testing it ?
+I wonder how many hosting providers are confident that the code involved
+in this isn't vulnerable to a timing attack.
 
-Thanks and regards,
-Charvi
+> This would be bad and a huge violation of privacy, so nobody is likely
+> do to that.  I can tell you as one of the staff who maintains the
+> GitHub Git service, we're not likely to change the behavior, and I
+> suspect nobody else is, either.
+
+Let's be clear, it's a violation of privacy in the case that involves a
+private repo.
+
+But the fact that when you e.g. clone git@github.com:git/git.git with no
+valid key and get a "Permission denied" is just an emergent effect of
+how people string together openssh & their own auth solutions in the
+wild.
+
+You can just as well let the dialog proceed down to a shell without a
+valid key or password, and then check that the user wants to run "git
+upload-pack git/git.git", and then decide "sure, it's a public repo" and
+proceed.
+
+Indeed that's what e.g. GitHub does when you make up a username &
+password to clone a public repo over https.
+
+    # Under OpenSSH, See https://tools.ietf.org/html/rfc4252#section-5.2
+    Match User git
+        PermitEmptyPasswords yes
+        AuthenticationMethods none
+
+Why would a site like GitHub treat ssh differently than https here? I
+think it just comes down to openssh's support for use-case being a bit
+of a pain to configure.
+
+I don't know of a way to do that *and* pass down to e.g. a login shell
+wrapper script if/how the user was authenticated.
+
+Hrm, maybe I take that back. I suppose you can make the default shell
+for the "git" user "git-shell-public" and set the rw login shell to
+"git-shell-private" via an Authorized{Keys,Principals}Command". But I
+haven't tested it.
+
+Anyway, just saying that there's bad error messages for good reasons,
+and bad error messages for lazyness/not wanting to deal with the edge
+case.
+
+What Harley Paterson is complaining about is sometimes in the "good
+reasons" bucket, but sometimes just server operator lazyness, or not
+caring about this marginal edge case enough to provide a better error
+message.
