@@ -2,75 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81CC6C4332B
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EC8C433E6
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:49:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 454D523750
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:48:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60AD923602
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 00:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390778AbhAUAZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 19:25:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732697AbhATVrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 16:47:21 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E44B2C061757
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:46:40 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id c12so150783qtv.5
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 13:46:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=RJSNuGuxT8OURUyBaIltJm+AlTEFRmrf4A0ojxc0NvY=;
-        b=GwAetO1OtgSNC71noeQRaHwmaRIvRkpwEZL+jdQ3sa17LFRKAtDwk5S6WkqhelW51+
-         sYAeakx4Expd7V21/w/sGPfad4FK5peDfJBhgiJ9Jie/J0eJ0KPszIfvLG08C7i8o2PY
-         iMVbdI+F3PIqxRcE/QbsxyviXjN/n9UnmFocM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=RJSNuGuxT8OURUyBaIltJm+AlTEFRmrf4A0ojxc0NvY=;
-        b=PukR14Ua++W5CSCPwxLN9u3Fop/7nUilHS7UuKN7DttaoSVOAnTFb2b2rbIjU4Jzxb
-         cxZsmXqcy227W80deld9RgiXzeM0ikv1C/KcGXMIVaEh5wOPmgkfhgNOqr0ljD6o2Rfo
-         cmbXPHqNEK/MfCPJFvgo3oZ5C2RWgY5a4F/O8OlvkDBWYqN5qfz6VnTPL1y7hnZvmZXM
-         m6cb04xlylLrH72yCSDeSJ4wFZz9KBw8vgK5rXoLFGpMVOcqZ2qAQNrYBFmqPFveSzaV
-         2G3EmyTS2PHI+l0+oWkcvB/ou/sP2VtBYiQDgUgxK2gjSAFdYFnelOZdJBsc2xyYGsJR
-         j4QA==
-X-Gm-Message-State: AOAM530B7DSt5kDaPm25Mzr7u+uWYoKxOiByzFyM5iYRmpLfq3W0oipv
-        hslvb0Au7npAGufa7ZXSokDLwQBYdA2PgRF9L77aGg==
-X-Google-Smtp-Source: ABdhPJxcJ/lhFnnv7stUi9JvPQSqrmjPHf/7BiAX8wSvky1yqwToNkpPu0T0Xv+9oeaqs3IX2covo5MfXSP0q/87GA0=
-X-Received: by 2002:ac8:110e:: with SMTP id c14mr10528244qtj.293.1611179200204;
- Wed, 20 Jan 2021 13:46:40 -0800 (PST)
+        id S2392980AbhAUA0a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 19:26:30 -0500
+Received: from out03.mta.xmission.com ([166.70.13.233]:51218 "EHLO
+        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404135AbhATXZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 18:25:42 -0500
+Received: from in02.mta.xmission.com ([166.70.13.52])
+        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l2MqM-009ZQM-Fj; Wed, 20 Jan 2021 16:24:54 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l2MqL-00Gutg-Ap; Wed, 20 Jan 2021 16:24:54 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id 08A7D500F3B;
+        Wed, 20 Jan 2021 16:24:53 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id gyJwtzkoS3Bc; Wed, 20 Jan 2021 16:24:52 -0700 (MST)
+Received: from ellen (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 6591A500C8D;
+        Wed, 20 Jan 2021 16:24:52 -0700 (MST)
+Date:   Wed, 20 Jan 2021 16:24:47 -0700
+From:   Seth House <seth@eseth.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Message-ID: <20210120232447.GA35105@ellen>
+References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
+ <20210109224236.50363-1-davvid@gmail.com>
+ <20210109225400.GA156779@ellen>
+ <xmqqmtxhd1zx.fsf@gitster.c.googlers.com>
+ <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
+ <20210110072902.GA247325@ellen>
+ <xmqqh7np9gqn.fsf@gitster.c.googlers.com>
+ <20210116042454.GA4913@ellen>
 MIME-Version: 1.0
-References: <20210120124514.49737-1-jacob@gitlab.com> <20210120124514.49737-2-jacob@gitlab.com>
- <YAhC8Gsp4H17e28n@nand.local> <YAhXw9Gvn5Pyvacq@coredump.intra.peff.net>
- <YAhYHUcdynbWyhwo@nand.local> <YAiIbEAZSlL7B+am@coredump.intra.peff.net>
-In-Reply-To: <YAiIbEAZSlL7B+am@coredump.intra.peff.net>
-From:   Jacob Vosmaer <jacob@gitlab.com>
-Date:   Wed, 20 Jan 2021 22:46:29 +0100
-Message-ID: <CADMWQoPrKBjLM5ABhhhCibEyJVOXQxsNkncSU6dmwjynQ1oCcQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] builtin/pack-objects.c: avoid iterating all refs
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>, avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210116042454.GA4913@ellen>
+X-XM-SPF: eid=1l2MqL-00Gutg-Ap;;;mid=<20210120232447.GA35105@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: automerge implementation ideas for Windows
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 8:45 PM Jeff King <peff@peff.net> wrote:
+On Fri, Jan 15, 2021 at 09:24:59PM -0700, Seth House wrote:
+> The autocrlf test is breaking because the sed that ships with some mingw
+> versions (and also some minsys and cygwin versions) will *automatically*
+> remove carriage returns:
 
-> I also rage-replaced peel_ref() with a function taking an oid so we
-> never have to do that digging again. Posted separately in its own
-> thread.
+So the mingw builds of both sed and awk change carriage returns. So far
+I haven't found documentation on it so I'm not aware of a portable way
+to disable the behavior. Instead I've been playing with alternate
+approaches. The two patches below work and pass the autocrlf test on
+Windows, however they are first-draft implementations. Feedback welcome.
 
-That sounds like a good solution. Where does that leave my patch? Do I
-need to wait for that new commit somehow? I don't know how that works,
-"contributing to Git" wise.
+One other point of discussion: I would like to change the name of this
+feature. "Automerge" is a bit of an overloaded term and, IMO, doesn't
+describe this feature very well. Several of the GUI diff programs have
+a feature that they call "automerge" or "auto merge", and there's a flag
+for Meld already in Git called "mergetool.meld.useAutoMerge" which could
+cause confusion.
+
+Instead, I'd like to propose "mergetool.hideResolved" or the more
+verbose "mergetool.hideResolvedConflicts" as the name. We're not really
+merging anything (Git aleady did that before the mergetool is invoked),
+but rather we're just not showing any conflicts that Git was already
+able to resolve.
+
+---------->8--------->8--------->8--------->8-------
+
+#1: Use POSIX read and a while loop to emulate an awk-like approach:
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 246d6b76fc..94728dd518 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -240,19 +240,46 @@ checkout_staged_file () {
+ }
+ 
+ auto_merge () {
++	C0="<<<<<<< "
++	C1="||||||| "
++	C2="======="
++	C3=">>>>>>> "
++	inl=0
++	inb=0
++	inr=0
++
+ 	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
++
+ 	if test -s "$DIFF3"
+ 	then
+-		C0="^<<<<<<< "
+-		C1="^||||||| "
+-		C2="^=======$(printf '\015')\{0,1\}$"
+-		C3="^>>>>>>> "
+-
+-		sed -e "/$C0/,/$C1/d" -e "/$C2/,/$C3/d" "$DIFF3" >"$BASE"
+-		sed -e "/$C1/,/$C3/d" -e "/$C0/d" "$DIFF3" >"$LOCAL"
+-		sed -e "/$C0/,/$C2/d" -e "/$C3/d" "$DIFF3" >"$REMOTE"
++		touch "$LCONFL" "$BCONFL" "$RCONFL"
++
++		while read -r line
++		do
++			case $line in
++				$C0*) inl=1; continue ;;
++				$C1*) inl=0; inb=1; continue ;;
++				$C2*) inb=0; inr=1; continue ;;
++				$C3*) inr=0; continue ;;
++			esac
++
++			case 1 in
++				$inl) printf '%s\n' "$line" >>"$LCONFL" ;;
++				$inb) printf '%s\n' "$line" >>"$BCONFL" ;;
++				$inr) printf '%s\n' "$line" >>"$RCONFL" ;;
++				*)
++					printf '%s\n' "$line" >>"$LCONFL"
++					printf '%s\n' "$line" >>"$BCONFL"
++					printf '%s\n' "$line" >>"$RCONFL"
++				;;
++			esac
++		done < "$DIFF3"
++
++		mv -- "$LCONFL" "$LOCAL"
++		mv -- "$BCONFL" "$BASE"
++		mv -- "$RCONFL" "$REMOTE"
++		rm -- "$DIFF3"
+ 	fi
+-	rm -- "$DIFF3"
+ }
+ 
+ merge_file () {
+@@ -295,8 +322,11 @@ merge_file () {
+ 	DIFF3="$MERGETOOL_TMPDIR/${BASE}_DIFF3_$$$ext"
+ 	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+ 	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
++	LCONFL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_LCONFL_$$$ext"
+ 	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
++	RCONFL="$MERGETOOL_TMPDIR/${BASE}_REMOTE_RCONFL_$$$ext"
+ 	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
++	BCONFL="$MERGETOOL_TMPDIR/${BASE}_BASE_BCONFL_$$$ext"
+ 
+ 	base_mode= local_mode= remote_mode=
+
+---------->8--------->8--------->8--------->8-------
+
+#2: Call merge-file twice:
+
+A much simpler implementation but probably less performant. Is it enough
+to matter?
+
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 246d6b76fc..1cb45a7437 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -240,19 +240,10 @@ checkout_staged_file () {
+ }
+ 
+ auto_merge () {
+-	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
+-	if test -s "$DIFF3"
+-	then
+-		C0="^<<<<<<< "
+-		C1="^||||||| "
+-		C2="^=======$(printf '\015')\{0,1\}$"
+-		C3="^>>>>>>> "
+-
+-		sed -e "/$C0/,/$C1/d" -e "/$C2/,/$C3/d" "$DIFF3" >"$BASE"
+-		sed -e "/$C1/,/$C3/d" -e "/$C0/d" "$DIFF3" >"$LOCAL"
+-		sed -e "/$C0/,/$C2/d" -e "/$C3/d" "$DIFF3" >"$REMOTE"
+-	fi
+-	rm -- "$DIFF3"
++	git merge-file --ours -q -p "$LOCAL" "$BASE" "$REMOTE" >"$LCONFL"
++	git merge-file --theirs -q -p "$LOCAL" "$BASE" "$REMOTE" >"$RCONFL"
++	mv -- "$LCONFL" "$LOCAL"
++	mv -- "$RCONFL" "$REMOTE"
+ }
+ 
+ merge_file () {
+@@ -295,7 +286,9 @@ merge_file () {
+ 	DIFF3="$MERGETOOL_TMPDIR/${BASE}_DIFF3_$$$ext"
+ 	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+ 	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
++	LCONFL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_LCONFL_$$$ext"
+ 	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
++	RCONFL="$MERGETOOL_TMPDIR/${BASE}_REMOTE_RCONFL_$$$ext"
+ 	BASE="$MERGETOOL_TMPDIR/${BASE}_BASE_$$$ext"
+ 
+ 	base_mode= local_mode= remote_mode=
+
