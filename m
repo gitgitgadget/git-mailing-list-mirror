@@ -2,174 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9372CC433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 07:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 222CCC433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 08:12:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4242C23131
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 07:43:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7F2023131
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 08:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728766AbhATHno (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 02:43:44 -0500
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:41741 "EHLO
-        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729738AbhATHna (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 20 Jan 2021 02:43:30 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id AD8DC141F;
-        Wed, 20 Jan 2021 02:42:21 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 20 Jan 2021 02:42:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=vFzCBs6OR92ZNmP91szFz1lZmLw
-        ScsiI+fzUqV5lhM4=; b=jtl/IIocpL+8pLoK61CSO6a6lUqntjSoAxSNThOpMII
-        SaFqYuG0NN3jw26nHW809Mk7cUgbd5x9uZayX6zI+55+jGHrwHP3MEI1eCtrsVZu
-        7O1Ng+5hvpysgfayca8LYjKxSMONiDR7OPJjWYjri2lD+ULxCNIyfpXT9buVbxg1
-        /riXs02xCh3Uv2kV2NtUEsngIllrevehVSvFN22qaoZWj7R0DLpMo77Ou7CAo2hR
-        7HHPQV1C6uLyq6krNZlBMXxNItOdp4Nj3f6c3beXZ68V0giSq6KAcctLGKiTLY/X
-        VB2f7X8d8CL3ENSIJsmVuJz537zasbxs17qCzcn0+Iw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=vFzCBs
-        6OR92ZNmP91szFz1lZmLwScsiI+fzUqV5lhM4=; b=Jzz5aHIoYwh5StFjFhSXvs
-        dMYv6O91IxJbAO3jRfohPtV9GcmQlSjXRczxSqucukfhus80Jh45vOEXa1YBSOVR
-        92Yp9+gn0YNNiuLx12maaJJUwTIhN09nfU8pEdFIaxEWPDHMiQwIlSdkkLj9Fa/v
-        XYVAWf/ThXDVlH0W3fbi2wOS5RBKzbMmecvooiRBvXzneZQE60M+zXsckn0kY07C
-        TEpiVr7a6iVp9dyEqXJcloM71GkOSusZjnBhxRhT5YXAnfINKLR1TAzaqPVD62Oa
-        Hl9Lnvjs5xpEHQXJgYf0L4HRxmdQeZHJZdtR6lHaMV4MkANF1dbQ60wXblAk+kCg
-        ==
-X-ME-Sender: <xms:3N4HYCpjD1DjZImo7aWYY2yTapQqjZRogvvSvLL-pcVmDI7HQU2YJg>
-    <xme:3N4HYAoRUwgcvgijRh-zRRbGhPcMvoJ17rve_8qlnEdRc_kIBUJ6NTe_1_5RN7cII
-    IPE4YkWZ9RubXS8CA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddugdduudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepkeelrdduvddrfeeirdeitdenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:3N4HYHOVRYUbqEQsfG0vN_q3G6q153u2hrKZYRhXvLnmfxQF1d3SJA>
-    <xmx:3N4HYB5gzQeQQhSL8gxhm-oibHTJb6Zl2g_nd6Q1FL3j__ICRpcfhw>
-    <xmx:3N4HYB6luLKgCMl-02H1XVugK961jVpgRh_z-BTGJMguovLsmdFcew>
-    <xmx:3d4HYE166by8sV7Up9ZMWnao9d0Qy1FqLofPARC3QD0xOi8gI2E9ow>
-Received: from vm-mail.pks.im (dynamic-089-012-036-060.89.12.pool.telefonica.de [89.12.36.60])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 609E0108005B;
-        Wed, 20 Jan 2021 02:42:19 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id ee0c34e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 20 Jan 2021 07:42:16 +0000 (UTC)
-Date:   Wed, 20 Jan 2021 08:42:14 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Simon Ruderich <simon@ruderich.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v8 5/8] config: store "git -c" variables using more
- robust format
-Message-ID: <YAfe1laqK+bfHKVm@ncase>
-References: <cover.1606214397.git.ps@pks.im>
- <cover.1610453228.git.ps@pks.im>
- <36c2a51b13e463a4aa8e5316447336927153d99d.1610453228.git.ps@pks.im>
- <YAHqHmGOUl53mfPa@coredump.intra.peff.net>
- <YAfNrX1KNhHRbHmM@ncase>
- <xmqqk0s8gkqz.fsf@gitster.c.googlers.com>
+        id S1729882AbhATIL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 03:11:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56140 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730391AbhATIJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 03:09:46 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A472C0617A2
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 00:07:48 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id r12so20878334ejb.9
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 00:07:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=8xHo15CogmNjWuTjEwo0gOOT5RDZ9/FHgUNgkVM90PI=;
+        b=m3NQZb0I9n5fZniaTXMKg9k4lzWQqDEo2gKbB9RAfdYK6mv15b1alXaZ4r4g0HvvlK
+         hGpczgudPdeiz4j1z/6W1bbJFjrCCblSAgY+SyNlQ5YrU6YPhptGW8s57owpOYto4HXD
+         XH57SUHWnFH0v753wbYN6uAtPCRMWQVENQQpbMGrN1pewThosr/JP8QBMDqSrYxSNo9b
+         p5updOpjKYCjnGR8ddGnAF3er61JNJ9UPr/umbI+pzMFyZQ3jdqfg54t84GeSByZQPH+
+         5Vr7eurn3Ku4Z0vUSP2XpSG/XB3lO5+4dHfiFhpBsYYiloPZQO80PfdRLULM22n1E+/G
+         ui6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=8xHo15CogmNjWuTjEwo0gOOT5RDZ9/FHgUNgkVM90PI=;
+        b=ah7ZMBppgtufptiZhPpmxWNGwHEJuQ4ocWgCXnV/LafWT2ob+YrGH9a+i51zFtEZxc
+         y5h9+YtZImj4lEpX7+eVC/4cxUBBmcSqtfvudeM2yPC+Y2b7t/AH9eySiXFLRzEmSHUH
+         FvXQWT7gNbT60fxF0yGFqDo8hTM+mTH6YudDX8zZkPUKjIOgn91BtdXcsWy6WBSvkj9Z
+         PqSGsP2S1MPNs23v2VM5IMsvzX8MR8wvCWS//fFOtzY6Y52O+4x3hbwnwQTKOioquK/C
+         nJjy+SeZXRbBHgEbUVfd6mXEaTToLrTzKKk+7ByGNRE219zvXgxDK7xcJslqfcUhzLIg
+         zQjg==
+X-Gm-Message-State: AOAM532CAlm0OUXf90kqeHLr7uHi+nKXZ4XJT44RWe7iBxHS2ZvbxuB2
+        Y3Ofg5rfZA/9i4+ZdBzqbFE=
+X-Google-Smtp-Source: ABdhPJwYqbfevvsBYokFS7sSgOoThFCW1GYIGkvQlErLsy+fMNPyBfp3RJGcBgxpj9DPGmXDIdV2CQ==
+X-Received: by 2002:a17:906:a2c5:: with SMTP id by5mr5568346ejb.356.1611130065947;
+        Wed, 20 Jan 2021 00:07:45 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id g21sm664961edh.20.2021.01.20.00.07.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 00:07:45 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: RFC on packfile URIs and .gitmodules check
+References: <20210115234300.350442-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <20210115234300.350442-1-jonathantanmy@google.com>
+Date:   Wed, 20 Jan 2021 09:07:44 +0100
+Message-ID: <87o8hk820f.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="AkD5UhggHp9q3JgG"
-Content-Disposition: inline
-In-Reply-To: <xmqqk0s8gkqz.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---AkD5UhggHp9q3JgG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, Jan 16 2021, Jonathan Tan wrote:
 
-On Tue, Jan 19, 2021 at 10:55:48PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > On Fri, Jan 15, 2021 at 02:16:46PM -0500, Jeff King wrote:
-> >> On Tue, Jan 12, 2021 at 01:27:01PM +0100, Patrick Steinhardt wrote:
-> >>=20
-> >> > The previous commit added a new format for $GIT_CONFIG_PARAMETERS wh=
-ich
-> >> > is able to robustly handle subsections with "=3D" in them. Let's sta=
-rt
-> >>=20
-> >> It looks like this commit and 6 got flipped from the original ordering
-> >> (it's the "previous commit" talked about here). And indeed, running the
-> >> tests on the individual commits in this series shows that we fail at
-> >> this step (because we are writing the new format, but the reader is too
-> >> strict to accept it).
-> >>=20
-> >> That doesn't matter to the end result, of course, but it hurts later
-> >> bisecting. Just flipping patches 5 and 6 makes it all work.
-> >>=20
-> >> -Peff
-> >
-> > Oops, yes. That always happens to me when I start using git-am(1). I see
-> > that the patch series has been applied to "next" already, so does it
-> > make any sense to resend with patches 5 and 6 flipped?
->=20
-> I recall saying that I'd "rebase -i" before merging it to "next".
-> Did I forget to do so?
->=20
-> Disecting 4ed03412 (Merge branch 'ps/config-env-pairs' into next,
-> 2021-01-15), we see:
->=20
-> $ git log --oneline --reverse master..4ed03412^2 | cat -n
->      1	b0812b6ac0 git: add `--super-prefix` to usage string
->      2	ce81b1da23 config: add new way to pass config via `--config-env`
->      3	13c44953fb quote: make sq_dequote_step() a public function
->      4	b342ae61b3 config: extract function to parse config pairs
->      5	f9dbb64fad config: parse more robust format in GIT_CONFIG_PARAMETE=
-RS
->      6	1ff21c05ba config: store "git -c" variables using more robust form=
-at
->      7	b9d147fb15 environment: make `getenv_safe()` a public function
->      8	d8d77153ea config: allow specifying config entries via envvar pairs
->=20
-> The 5/8 that needs to come after 6/8 has title "store ... using more
-> rebust format" and that is the 6th patch in the series merged to
-> 'next'.  The 6/8 that needs to come before that one was called
-> "parse more robust format" and it now appears as the 5th patch.
->=20
-> So it seems all is well?
+> Someone at $DAYJOB noticed that if a .gitmodules-containing tree and the
+> .gitmodules blob itself are sent in 2 separate packfiles during a fetch
+> (which can happen when packfile URIs are used), transfer.fsckobjects
+> causes the fetch to fail. You can reproduce it as follows (as of the
+> time of writing):
+>
+>   $ git -c fetch.uriprotocols=https -c transfer.fsckobjects=true clone https://chromium.googlesource.com/chromiumos/codesearch
+>   Cloning into 'codesearch'...
+>   remote: Total 2242 (delta 0), reused 2242 (delta 0)
+>   Receiving objects: 100% (2242/2242), 1.77 MiB | 4.62 MiB/s, done.
+>   error: object 1f155c20935ee1154a813a814f03ef2b3976680f: gitmodulesMissing: unable to read .gitmodules blob
+>   fatal: fsck error in pack objects
+>   fatal: index-pack failed
+>
+> This happens because the fsck part is currently being done in
+> index-pack, which operates on one pack at a time. When index-pack sees
+> the tree, it runs fsck on it (like any other object), and the fsck
+> subsystem remembers the .gitmodules target (specifically, in
+> gitmodules_found in fsck.c). Later, index-pack runs fsck_finish() which
+> checks if the target exists, but it doesn't, so it reports the failure.
+>
+> One option is for fetch to do its own pass of checking all downloaded
+> objects once all packfiles have been downloaded, but that seems wasteful
+> as all trees would have to be re-inflated.
+>
+> Another option is to do it within the connectivity check instead - so,
+> update rev-list and the object walking mechanism to be able to detect
+> .gitmodules in trees and fsck the target blob whenever such an entry
+> occurs. This has the advantage that there is no extra re-inflation,
+> although it might be strange to have object walking be able to fsck.
+>
+> The simplest solution would be to just relax this - check the blob if it
+> exists, but if it doesn't, it's OK. Some things in favor of this
+> solution:
+>
+>  - This is something we already do in the partial clone case (although
+>    it could be argued that in this case, we're already trusting the
+>    server for far more than .gitmodules, so just because it's OK in the
+>    partial clone case doesn't mean that it's OK in the regular case).
+>
+>  - Also, the commit message for this feature (from ed8b10f631 ("fsck: check
+>    .gitmodules content", 2018-05-21)) gives a rationale of a newer
+>    server being able to protect older clients.
+>     - Servers using receive-pack (instead of fetch-pack) to obtain
+>       objects would still be protected, since receive-pack still only
+>       accepts one packfile at a time (and there are currently no plans
+>       to expand this).
+>     - Also, malicious .gitobjects files could still be crafted that pass
+>       fsck checking - for example, by containing a URL (of another
+>       server) that refers to a repo with a .gitobjects that would fail
+>       fsck.
+>
+> So I would rather go with just relaxing the check, but if consensus is
+> that we should still do it, I'll investigate doing it in the
+> connectivity check.
 
-Indeed, I missed your message about the interactive rebase. Thanks!
+Would this still behave if the $DAYJOB's packfile-uri server support was
+behaving as documented in packfile-uri.txt, or just because it has
+outside-spec behavior?
 
-Patrick
+I.e. the spec[1] says this:
 
---AkD5UhggHp9q3JgG
-Content-Type: application/pgp-signature; name="signature.asc"
+    This is the implementation: a feature, marked experimental, that
+    allows the server to be configured by one or more
+    `uploadpack.blobPackfileUri=<sha1> <uri>` entries. Whenever the list
+    of objects to be sent is assembled, all such blobs are excluded,
+    replaced with URIs. The client will download those URIs, expecting
+    them to each point to packfiles containing single blobs.
 
------BEGIN PGP SIGNATURE-----
+Which I can't see leaving an opening for more than packfile-uri being to
+serve up packfiles which each contain a single blob.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmAH3tUACgkQVbJhu7ck
-PpSN4xAAmYZNOzdchWvMEBuaWaXPl5kMU8NzTS8s/E1Cu4oU4nHwSZQ8zrZ0esDS
-Pss0jJj4Yv5QMCWce7r0uqZo5hg0pQgyF1DcyLbwDaUjNs2bz3NC86S6jmzO3cg7
-Zj4IxU6AXT+MhOUDwgrxcKALYi6Rbk3pRJWbEvIZ3j3ylWyfzU19C+5AcfhQWPjj
-4dVO4m0pH8jj7WpIX1C8gklrtNzq/h85P9nNmHaRveLwqiujI5gwA3+pUdgPLMzj
-V1xJMk2O8QbczlWzphedazvYy8+NtFdzf7rG9mmd6efcE6kVohbUEr8EWCiyzlSz
-aQJeOnLV72cjHby9GbA/1Z9DPc+jjpnB3Zlz4bjnivDCqMJCLdhj9IA5cx1u5obd
-74jsqJlpGbFEW1xvR+3LviHnsfFyz+8rN2Zgem0pR4BPMketmDexBqfj8IBP52c6
-7KhBisUaE9Bd/DO38ajTFfotIR4l/M1aa1IX6QEb9UtX40d31rUA5vO2R1UBfN8g
-qc3eXCO1krpTa3IPWrdKq2VNa7wf1HiRMDx31qnwubhozDMINn1ugPiH5H8Xab76
-3QHQBYJrE6YNMuQxHFOGSEbaryqusJEtQslbe1N83k/vR+TcbEVRAxBiHHbpBU4o
-1dSUiAUTd4fwsdUUP1k5Zaov+sTx4U8pnCoO01R0pPPtpEreUrA=
-=J85J
------END PGP SIGNATURE-----
+In that case it seems to me we'd be OK (but I haven't tested), because
+fsck_finish() will call read_object_file() which'll try to read that
+"blob from the object store when it encounters the ".gitmodules" tree,
+and because we'd have already downloaded the packfile with the blob
+before moving onto the main dialog.
 
---AkD5UhggHp9q3JgG--
+But as we discussed on-list before[2] this isn't the way packfile-uri
+actually works in the wild. It's really just sending some arbitrary data
+in a pack in that URI, with a server that knows what's in that pack and
+will send the rest in such a way that everything ends up being
+connected.
+
+As far as I can tell the only reason this is called "packfile URI" and
+behaves this way in git.git is because of the convenience of
+intrumenting pack-objects.c with an "oidset excluded_by_config" to not
+stream those blobs in a pack, but it isn't how the only (I'm pretty
+sure) production server implementation in the wild behaves at all.
+
+So *poke* about the reply I had in [3] late last year. I think the first
+thing worth doing here is fixing the docs so they describe how this
+works. You didn't get back on that (and I also forgot about it until
+this thread), but it would be nice to know what you think about the
+suggested prose there.
+
+Re-reading it I'd add something like this to the spec:
+
+ A. That the config is called "uploadpack.blobPackfileUri" in git.git
+    has nothing to do with how this is expected to behave on the
+    wire. It's just to serve the narrow support pack-objects.c has for
+    crafting such a pack.
+
+ B. It's then called "packfile-uris" on the wire, nothing to do with
+    blobs. Just packs with a checksum that we'll validate. An older
+    versions of this spec said "[a] packfiles containing single blobs"
+    but it can be any combination of blob/tree/commit data.
+
+ C. A client is then expected to deal with any combination of data
+    ordered/sliced/split up etc. in any possible way from such a
+    combination of "packfile-uris" and PACK dialog, as long as the end
+    result is valid.
+
+Except that the result of this discussion will perhaps be a more narrow
+definition for "C".
+
+1. https://github.com/git/git/blob/cd8402e0fd8cfc0ec9fb10e22ffb6aabd992eae1/Documentation/technical/packfile-uri.txt#L37-L41
+2. https://lore.kernel.org/git/20201125190957.1113461-1-jonathantanmy@google.com/
+3. https://lore.kernel.org/git/87tut5vghw.fsf@evledraar.gmail.com/
