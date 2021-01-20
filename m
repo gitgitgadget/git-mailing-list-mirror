@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87847C433E6
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14DE9C433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:48:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C46C22473
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:33:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B98BD2242A
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 17:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731653AbhATRdS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 12:33:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34904 "EHLO
+        id S1732629AbhATRro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 12:47:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727690AbhATR1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:27:36 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227B3C061575
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:26:51 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id x23so5969165oop.1
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:26:51 -0800 (PST)
+        with ESMTP id S1732467AbhATRq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:46:57 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C624C061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:46:17 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id f6so14936710ots.9
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:46:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=01RfTKv+5nprwLlepLYdtSmosshbsMMNQMkDq68+whA=;
-        b=ltvuKE3SS7lmwF9EM7ZC3jv68nUvZRhL0nsNSozS8ZQunnuebkVk4h2Owf5r4hRgSv
-         9tnrh3A2Hqj6hJXPjJdbmWYJkfxgo08ZEFArYRwWFIbtufHIV5BdAAZyIeVQ953eex3j
-         jJpdX20MbDejE8mCTseJ/jH6Rwmb94LPni09xASFdxWccGzQkT8c6HKOle1Q6rZBWt8+
-         z/uXZrtv3fyvX4n3XYcMNOsguCHqExgAUFnYVGwMln2DjPFw0YsnMTe284qo0Q6LIorY
-         1L30aQqhOVOxFeQh3xTsUKSAzqAPNSNdLevnWes5NCDCTSn2BRv7m0nihVkhJOsoMCGQ
-         HTKg==
+        bh=pP51brDfaNMxTT48f7d1TrtEQhHFG96DV4fgSFjofMg=;
+        b=egqc5qav+gRR5w5/39WtOMJxJ+qkke9iHPaORjvp3QtRKib4IVLWpuRYoNoB+yqzdD
+         +Pzn/0CkDTMDgXtyspZumbGTP0EmSQgOnc7uDcMjxDCFLHfN0vEuvZSYT90yp9fh1Rq5
+         kDAEOndxn4tsqffIugIRoXlMWwsKh4z+03HZ+rX4sv4kAoiITHlls3dkSB/EVDR6Ke2N
+         65zawWIuiA/OIqWRNtSpJqk90KMlcU6AgFPamNvxHZ5V2L/fg6AzPDixOULXm+CDyVp1
+         dL/GPy7g2vBiAIzSqbIruqVV6KEJCwgf1uTaY5T12VwHH330w5MyUeMGMYPnsnhMPmZD
+         9BaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=01RfTKv+5nprwLlepLYdtSmosshbsMMNQMkDq68+whA=;
-        b=kJFqm3ozBMN/sONlD/BYXC3rCcn5b+4MZ05BMu8nrgcWr9VSi9bynZhUFACnW/zz3e
-         Boa7CGvnW8d8yWiih8HV0n0EUtFKhzZ22FW9czpOYpCocVQgELfll7N7YTMZPIuyCGAL
-         xCCR6bkTAVKayn0U3C7w/tE670CJ6LQmaxNldUOdXiao1xwRAankeJHf7vwsy076/aFM
-         rFWpup1n8AuRaCBKuwn1M+wJl3bqWUMbl7IG17850ok5AiefhyjVUsL7EccABXOwwarh
-         7K6pEVrBS5bZMydHtEtOdMN8is7jnn5eCGnaQfrPhTga2oAg0LVJfkKXkKRTtyc5O7Wd
-         unbg==
-X-Gm-Message-State: AOAM530iOE/cWyRmudJfthn+UxMfTasgobKgAE6mW79TeAEnv4lkqOj+
-        J5afj8W5prULDO7gFwVMioO5DwqtIvRR1aloyhZM2tDMZDc=
-X-Google-Smtp-Source: ABdhPJzHrvtD+YmfA39cSAz7VDxF/5xGUFJbIy32NX13CJECKDGVcY2FyyzQc2eWdR+XM0yzd7Q7qq3i1oRd4k/K0qA=
-X-Received: by 2002:a4a:b2c6:: with SMTP id l6mr6775865ooo.7.1611163610450;
- Wed, 20 Jan 2021 09:26:50 -0800 (PST)
+        bh=pP51brDfaNMxTT48f7d1TrtEQhHFG96DV4fgSFjofMg=;
+        b=KyzCrN5hDIQxT8JJVL4BbMYO+0YQ2AEcdpao/+sjo+4O4hb2pXDyInCcdeGnAPj1Na
+         3A0I7o69MUsmNwY7ue/81zzFSktJ2KwdEtefFFCVZKPCUF7ydFTTyvf2J/Uk/smKhVHE
+         P8K8iS9C7AaFTEYj546Az5MgDXMg+ZslICw2YDoXw7kjPlbO1wQGsTPJVLEM0lBlrU8V
+         8xUXUiboXObS6En80VJVGdw9Mez3bW5p0bOO58v7kWT0e8VZ6Pi0vE58p0Pjaf+xrwiQ
+         n5iWZHcOA1mRhtz3hqIQoegYu3kvfQtjUMFPqbf4o3HWv7p82BxWsk0IHzrM/yARIEWg
+         bWPQ==
+X-Gm-Message-State: AOAM532lYjy2yoewyV1WnquMeA4rzV4GOdZ4uITRK8JDPUUMgWmil+HE
+        K94PjCY1SE2g5JkGq41ehNQmoBv+qXm4QyxOkkI=
+X-Google-Smtp-Source: ABdhPJwaaBD297BQFP1C4TXjRpE+u6KJjx7vH7Sbmfdz/CxJh1aAwjdOaX4JSBFSnL+o8PZ0owe4CnMahU4SL6Fg6eo=
+X-Received: by 2002:a05:6830:402f:: with SMTP id i15mr5764202ots.345.1611164777026;
+ Wed, 20 Jan 2021 09:46:17 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <838922de2e9756c00f4a159b2b8722ae4d28b011.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <838922de2e9756c00f4a159b2b8722ae4d28b011.1611161639.git.gitgitgadget@gmail.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <d4ff0468fc0e22fe3ef82f74603ac781fd7711e1.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <d4ff0468fc0e22fe3ef82f74603ac781fd7711e1.1611161639.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 09:26:38 -0800
-Message-ID: <CABPp-BEL=tjCx_x1z0NpNTmt3q9_CHtufwWg9FtqKBWWub00UQ@mail.gmail.com>
-Subject: Re: [PATCH 3/9] fsmonitor: de-duplicate BUG()s around dirty bits
+Date:   Wed, 20 Jan 2021 09:46:05 -0800
+Message-ID: <CABPp-BGOVUDqDvTi0VOK7fD1EeFrhjCfZm241BqgA5_yMDH-VQ@mail.gmail.com>
+Subject: Re: [PATCH 4/9] repository: add repo reference to index_state
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <derrickstolee@github.com>,
@@ -73,93 +73,80 @@ On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> The index has an fsmonitor_dirty bitmap that records which index entries
-> are "dirty" based on the response from the FSMonitor. If this bitmap
-> ever grows larger than the index, then there was an error in how it was
-> constructed, and it was probably a developer's bug.
->
-> There are several BUG() statements that are very similar, so replace
-> these uses with a simpler assert_index_minimum(). Since there is one
-> caller that uses a custom 'pos' value instead of the bit_size member, we
-> cannot simplify it too much. However, the error string is identical in
-> each, so this simplifies things.
->
-> The end result is that the code is simpler to read while also preserving
-> these assertions for developers in the FSMonitor space.
+> It will be helpful to add behavior to index opertations that might
 
-Indeed, looking through the patch, the end result is simpler to read.
-Nice cleanup.
+s/opertations/operations/
 
+> trigger an object lookup. Since each index belongs to a specific
+> repository, add a 'repo' pointer to struct index_state that allows
+> access to this repository.
+>
+> This will prevent future changes from needing to pass an additional
+> 'struct repository *repo' parameter and instead rely only on the 'struct
+> index_state *istate' parameter.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  fsmonitor.c | 27 +++++++++++++--------------
->  1 file changed, 13 insertions(+), 14 deletions(-)
+>  cache.h      | 1 +
+>  repository.c | 4 ++++
+>  2 files changed, 5 insertions(+)
 >
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index ca031c3abb8..52a50a9545a 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -13,14 +13,19 @@
+> diff --git a/cache.h b/cache.h
+> index 71097657489..f9c7a603841 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -328,6 +328,7 @@ struct index_state {
+>         struct ewah_bitmap *fsmonitor_dirty;
+>         struct mem_pool *ce_mem_pool;
+>         struct progress *progress;
+> +       struct repository *repo;
+>  };
 >
->  struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
+>  /* Name hashing */
+> diff --git a/repository.c b/repository.c
+> index a4174ddb062..67a4c1da2d9 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -264,6 +264,10 @@ int repo_read_index(struct repository *repo)
+>         if (!repo->index)
+>                 repo->index = xcalloc(1, sizeof(*repo->index));
 >
-> +static void assert_index_minimum(struct index_state *istate, size_t pos)
-> +{
-> +       if (pos > istate->cache_nr)
-> +               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-> +                   (uintmax_t)pos, istate->cache_nr);
-> +}
+> +       /* Complete the double-reference */
+> +       if (!repo->index->repo)
+> +               repo->index->repo = repo;
 > +
->  static void fsmonitor_ewah_callback(size_t pos, void *is)
->  {
->         struct index_state *istate = (struct index_state *)is;
->         struct cache_entry *ce;
+>         return read_index_from(repo->index, repo->index_file, repo->gitdir);
+>  }
 >
-> -       if (pos >= istate->cache_nr)
-> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
-> -                   (uintmax_t)pos, istate->cache_nr);
-> +       assert_index_minimum(istate, pos);
->
->         ce = istate->cache[pos];
->         ce->ce_flags &= ~CE_FSMONITOR_VALID;
-> @@ -82,10 +87,8 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
->         }
->         istate->fsmonitor_dirty = fsmonitor_dirty;
->
-> -       if (!istate->split_index &&
-> -           istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-> -                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-> +       if (!istate->split_index)
-> +               assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
->
->         trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
->         return 0;
-> @@ -110,10 +113,8 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
->         uint32_t ewah_size = 0;
->         int fixup = 0;
->
-> -       if (!istate->split_index &&
-> -           istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-> -               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-> -                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-> +       if (!istate->split_index)
-> +               assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
->
->         put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
->         strbuf_add(sb, &hdr_version, sizeof(uint32_t));
-> @@ -335,9 +336,7 @@ void tweak_fsmonitor(struct index_state *istate)
->                         }
->
->                         /* Mark all previously saved entries as dirty */
-> -                       if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-> -                               BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-> -                                   (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-> +                       assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
->                         ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
->
->                         refresh_fsmonitor(istate);
 > --
 > gitgitgadget
->
+
+Since we have repo->index and we have index->repo, which are intended
+to be circular...what if they aren't?  Do we want or need to add
+assertions anywhere that repo == repo->index->repo or that index ==
+index->repo->index ?
+
+My initial implementations of --remerge-diff[1] played around with
+creating a second repo, with a different primary object store but
+everything else the same.  The index for the two repository objects
+was thus the same, and thus clearly would have violated this assumed
+invariant for one of the two repos.  I discarded that initial
+implementation (which I didn't quite have working) because I
+discovered tmp-objdir.h and was able to add some
+tmp_objdir_make_primary() and tmp_objdir_remove_as_primary() functions
+that merely altered the existing repo's primary object store, but I'm
+curious if there might be other cases of folks doing stuff that might
+have weird failures with this new invariant.
+
+It's entirely possible that --remerge-diff was just so different, and
+I was so unfamiliar with repo objects (and still kind of am) that I
+was just doing weird stuff no one has done before, so perhaps no
+additional checks are needed -- I'm just throwing my gut question out
+there as food for thought.
+
+
+
+[1] I have not yet submitted `--remerge-diff` to the list; you haven't
+missed anything.  I'm waiting for merge-ort to be submitted, reviewed,
+and merged first.  It's the remerge-diff branch in my fork on GitHub
+if anyone is curious, though.
