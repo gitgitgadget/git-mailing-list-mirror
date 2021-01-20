@@ -6,87 +6,79 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52A5CC433E9
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F173C433E0
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 12EFA23443
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D546123442
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389694AbhATUNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 15:13:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42456 "EHLO
+        id S2389791AbhATUO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 15:14:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389548AbhATUNj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 15:13:39 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87011C061757
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:12:59 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id 22so26612155qkf.9
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:12:59 -0800 (PST)
+        with ESMTP id S2389750AbhATUOO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 15:14:14 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7C0C0613CF
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:13:24 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id k193so5492013qke.6
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 12:13:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=+WsQEKecGsYdPJ/2VLsazMRIqcMFYE9RwozfeOGEIdI=;
-        b=B/g6AR0e1wAPp1pQgK1YYDTXsntg1d3nGlacAbvsPhbkD/T1U0aNdUAOSpfk5Gpv1e
-         wLwFGdeV+qEPMjZzBzjv+jRfFIrczdGd1HH+2gWhzucGJOZ3W6bi/ulO4gWiwMjmntxR
-         Bd8vHvvIMIRZ0DxKGvyMuIoMLlDLq+XVVh0jY04Q6Xhht8KjRPNlRLKTM+UBB7LIlTGX
-         PpyWz2IuvMdt2KwakdmBfhX3D8UprMJoYPiGQHcZVeVlR3yT6Y54KhrKvSI+/XTeEI1T
-         nQh/bXKpOlTLa+tGC3/Dij7jTgebFFJLOHA3JRCJ3QC2uTJwT2oOM/F6/m4w8dUqLlDl
-         FO8g==
+        bh=yPMZUiYkT5eyf19skDJGb2ZWnyeepCf/AMrE0axU90Q=;
+        b=D+P8EJS6HRIj/QrmNxg1Aur37zPRN4PJfgUTuP9k59WvsNXVzDfVPO66cVHUJ3+RvI
+         YSCMUXXYHvFvnfVYGJnRMEHlSUy9CVh/ggqEthXyPkWkt2VS05sE2e/ocSTXpzQmhVsm
+         TnGPSNuOfiyYt6jmuBXdcFmlE5jPFcCW8ZxesahMyhxY033AhW3ZbOHBX7sBMGzG+fE7
+         ifKxnuEDi9MJ3veEgEW8t1Uy956JLEwn9XtrX0GO0srbT3lpRLlmsafvSjmQrDOQQk4q
+         PTG8E8KeOu8/wFYBfnI52sbyX+2bmj8vH8zHEVdNL+N5CgnSRksyAijKF66wgbq2Y9Dq
+         6Uwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=+WsQEKecGsYdPJ/2VLsazMRIqcMFYE9RwozfeOGEIdI=;
-        b=BAr0bjDRlrYZq9OoioakVSOQuoIxLZ7oS4dAca4YBGp7IOd+WxhEcSriyzCL6hYKca
-         RwSb9ZNbxUU4MooimUpbVZrBiL2D616X7ka5Ng0ANFbyX1tsYhSzeYfy2/slMEEHfsxZ
-         YwDQkQOhZbP2m3aT17x72gPvKoKK8q6TeFoK1hi6rBBbr3AGQ7qXAh6jymNP2VFo0AmT
-         KQjggB1NSgHC7H6IJhA897bW9rfB4ncdzuW9t+q1j8lEyriw2UsvA4lrlyS9y04PTRAe
-         fgjjbCnHQrMXd7PaQ3C9eQlfzIdZiv54kcTpf6NaMPtVHC3SHGsU7/+KTmR6pn7PHSdK
-         D7aA==
-X-Gm-Message-State: AOAM531ZzWJ9JCPvYw8LMk8EMkKEeCYbl9/IqfUj3KKe4j5ziyK7WTTW
-        2TLxpkT2x1OWDTVkElrszOGD6Q==
-X-Google-Smtp-Source: ABdhPJyn+JYXfZp4swWo0dUJR3qVelyAhV8npzlgLYmdz2k5XeQnVRwh26Qg+MJ52hSHYB3M4lNpiQ==
-X-Received: by 2002:a37:b6c6:: with SMTP id g189mr11193329qkf.432.1611173578828;
-        Wed, 20 Jan 2021 12:12:58 -0800 (PST)
+        bh=yPMZUiYkT5eyf19skDJGb2ZWnyeepCf/AMrE0axU90Q=;
+        b=g4SHqNxnp2LPzluB1iNqD1TeZ2RsV9vQ1TusNctpka6NK1+/vGDQz8XQRqRmShCJI+
+         J+Qa30tz09a3lpAqyzypLnN1TCfKLHgyRmihvg7pxHQt6G/L0a+Qyf7NTypm2vLZTHJW
+         Nd4smMzA9wbSi2XbA+C5ZmKCkAklLVsCLOdy6SFR/pZPNGitW+cFQGJJksH0+8tFWgOX
+         UjazQd/d79xVpY/6YJ8nVI8eWDB1i921kaNHP34bCc4x4tX9VfflBdYbs5wpW39R8RSb
+         AmLvjpdoLMWVQBrhTA5hIWcxkUFSkcA8ciHdlxLP/241/9CbI9gInF2RTA1TW9fyllOU
+         xxaQ==
+X-Gm-Message-State: AOAM531l1OIrOIPJGyBCGUzoaLkTOURZtCvXgv/A1ReVeaBR+vGPn1Tk
+        Mb99QMFmbEYPePZBKfCpPthgDg==
+X-Google-Smtp-Source: ABdhPJyFK8LrUwR0w+66DzYMUgO9qOQKXce+eVxRUkngzq15MTiiH5NC5QJUYlgsBt5KtesjaFcHJA==
+X-Received: by 2002:a05:620a:2104:: with SMTP id l4mr10725148qkl.35.1611173603898;
+        Wed, 20 Jan 2021 12:13:23 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7d49:7932:5c79:ddd4])
-        by smtp.gmail.com with ESMTPSA id y56sm1929268qty.94.2021.01.20.12.12.58
+        by smtp.gmail.com with ESMTPSA id c12sm1898814qtq.76.2021.01.20.12.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 12:12:58 -0800 (PST)
-Date:   Wed, 20 Jan 2021 15:12:55 -0500
+        Wed, 20 Jan 2021 12:13:23 -0800 (PST)
+Date:   Wed, 20 Jan 2021 15:13:20 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         jacob@gitlab.com
-Subject: Re: [PATCH v2 1/3] refs: expose 'for_each_fullref_in_prefixes'
-Message-ID: <YAiOx3km0WoZliYj@nand.local>
+Subject: Re: [PATCH v2 2/3] ls-refs.c: initialize 'prefixes' before using it
+Message-ID: <YAiO4Ez5x/ycZ5l+@nand.local>
 References: <cover.1611080326.git.me@ttaylorr.com>
  <cover.1611158549.git.me@ttaylorr.com>
- <bda314fe7ae1629ba068a0c4ada9b6adc20576eb.1611158549.git.me@ttaylorr.com>
- <YAiK4U1KnjPtWFN6@coredump.intra.peff.net>
+ <5fc081b2d554db305400ec52fac8683a3ed59597.1611158549.git.me@ttaylorr.com>
+ <YAiLXUDTdMpdGG5b@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YAiK4U1KnjPtWFN6@coredump.intra.peff.net>
+In-Reply-To: <YAiLXUDTdMpdGG5b@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 02:56:17PM -0500, Jeff King wrote:
-> On Wed, Jan 20, 2021 at 11:04:21AM -0500, Taylor Blau wrote:
-> > The code moved in this patch is identical before and after, with the one
-> > exception of renaming some arguments to be consistent with other
-> > functions exposed in refs.h.
->
-> The other non-identical thing is that it handles a namespace parameter
-> (which is good, but an obvious non-movement).
+On Wed, Jan 20, 2021 at 02:58:21PM -0500, Jeff King wrote:
+> That nit (and the one I mentioned in the previous patch) aside, these
+> patches look good to me (and I am OK with or without the nits
+> addressed).
 
-Ack; I knew that I forgot to mention something. Thanks for pointing it
-out here. (Since you seem to be OK with this patch even without this
-mention, I'll avoid sending another revision).
-
-> -Peff
+Thanks, as always, for your review :-).
 
 Thanks,
 Taylor
