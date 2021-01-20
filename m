@@ -2,91 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FD11C433E6
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF7B4C43381
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:37:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6B1323444
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:17:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BAF9123444
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 20:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387954AbhATUQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 15:16:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733266AbhATOA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 09:00:57 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7687C061798
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:59:50 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id x203so5786571ooa.9
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 05:59:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5xQ3KEinywvLRJCulofbeu9yI7VXNS2seqw97guXw20=;
-        b=Hk8JKzkzkHIsECd/hxR6CNrhCYcB/n+jjES/mhE5edA8/Lj/4+jus3uZrp1FNLXDps
-         gS54k5EF6nY3QW1iOAI6wvViwAO/VpUywvnwpvAlXHRHROzDkFArbczxLk06b3hs/F1W
-         d0A5keqSvKDbDhVH3XXHUD+5KKwmViBWBunrCKbhy8unaDX4F4Q4Z4BbbCJFUaXREbqe
-         PC7Uj+mtNWeEVF0R1NrJNFy3KYjIumeIgJDgZnvPjPCuvtklQwPHM5rgbkIknTXl7hix
-         fEIdMyB9NgY/z8XvSFSoqxGlYAcygEaaXU5E6HuE4iVhYQKXhrSv9JsXPP7AJy5oKJ3r
-         3sCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5xQ3KEinywvLRJCulofbeu9yI7VXNS2seqw97guXw20=;
-        b=pk7IaXLNAa4C6T34KNV8wY9wKSyWo9yIlHmOwxk8D+WMHueov84l9lJYsGnVLQxvFy
-         jW5+lfniBjcKq94nKnETdWNAa++jbuHhZXtjC1c4SaOqn4EmjAclnNTd6HZA/JmTYnCg
-         uOMP/m6JwDMXejXRV6T3+41zSgvSZCP39DWfzTORom1Sss4DOJoHNtfj2Ia4Ts1vULfp
-         MirpcYy1eEpBFEKfxA/exHxZYlHX0y4/yBlFjTQfMSRsj78Q1z553RxAeiMlwENdoDlZ
-         /GHRcDggwrOUF7LCmER0FRpk9mwasTNcIzLgMvHx4K5elud0iOC2DOl8B6eys+p1Yjmt
-         Z9uA==
-X-Gm-Message-State: AOAM533eKvaEcJt/pnLg23yU+QI/I7Qam+QMVC3Lm4CaOtVTsJnuZmoT
-        16gX/lk36rKAD2e+yo+hDZlLNxwAlaw=
-X-Google-Smtp-Source: ABdhPJz1MTCeym6QwpYgVF4Q605rkWmqJeX5rYd6dG3oOL/L3zZdoujI3SLDoi0grrUpdpa//fqxYg==
-X-Received: by 2002:a4a:9c01:: with SMTP id y1mr6199674ooj.15.1611151189969;
-        Wed, 20 Jan 2021 05:59:49 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:710c:cecb:a7d:75ab? ([2600:1700:e72:80a0:710c:cecb:a7d:75ab])
-        by smtp.gmail.com with UTF8SMTPSA id r26sm370732oij.3.2021.01.20.05.59.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Jan 2021 05:59:49 -0800 (PST)
-Subject: Re: [PATCH 09/10] builtin/repack.c: extract loose object handling
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     peff@peff.net, dstolee@microsoft.com
-References: <cover.1611098616.git.me@ttaylorr.com>
- <a808fbdf31afc9ad9ba0ab27ce889e5a2d1a01ae.1611098616.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <98c65017-8c22-a21f-0e86-a15d91bd7f70@gmail.com>
-Date:   Wed, 20 Jan 2021 08:59:48 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1732297AbhATUgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 15:36:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55551 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbhATU2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 15:28:40 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C52E0AA5C4;
+        Wed, 20 Jan 2021 15:27:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=87J9lRcHaROL2zFWLigB3xVjR5M=; b=pTE1nzbRjngkPhBXUcTn
+        UzYDFSh0GYdhU5gz0GweJ/AyNce8fPKoByFjMDH8KbUmRT2qlP4NdPVP9YuQvKiU
+        GzuqP73dB8kkUrMZiMgnY5X7l92BRt7WPVJyeaYFjQXsOqHO9Ua+eSoGJTQrpBHA
+        /mOg+rHvA5+/cu5RFqmOZp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=W8e1BSYOu2mujZWBET9roZIYGbPZyzQdOUc1ls1UlQXGjU
+        rS4FV8iJD02vyhybbR56MqujSPeyFfgA0ycvt5CG95jVG9cF9oRnh//m8B4aj75g
+        K0uaDCgVVWWnC0R0ApRau9vaKwpaz8L1lTYDAulQRGEsxlJkcyKc3NiWA4v24=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB2B5AA5C3;
+        Wed, 20 Jan 2021 15:27:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 439E7AA5C2;
+        Wed, 20 Jan 2021 15:27:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Subject: Re: [PATCH v5 2/3] ls_files.c: consolidate two for loops into one
+References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com>
+        <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
+        <802ff802be884349b4a63c0ae6e4b783e6c7aedb.1611037846.git.gitgitgadget@gmail.com>
+Date:   Wed, 20 Jan 2021 12:27:40 -0800
+Message-ID: <xmqqczxzfj5v.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <a808fbdf31afc9ad9ba0ab27ce889e5a2d1a01ae.1611098616.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F1DEAA52-5B5D-11EB-B5D5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/19/2021 6:24 PM, Taylor Blau wrote:
-> 'git repack -g' will have to learn about unreachable loose objects that
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This reference to the '-g' option is one patch too early. Perhaps
-say
+> From: ZheNing Hu <adlternative@gmail.com>
+>
+> Refactor the two for loops into one,skip showing the ce if it
+> has the same name as the previously shown one, only when doing so
+> won't lose information.
+>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>  builtin/ls-files.c | 70 +++++++++++++++++++---------------------------
+>  1 file changed, 29 insertions(+), 41 deletions(-)
 
-  An upcoming patch will introduce geometric repacking. This will
-  require removing unreachable loose objects in a separate path
-  from the existing checks.
+This one needs a bit more work, but I like the basic structure of
+the rewritten loop.
 
-or similar?
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index f1617260064..1454ab1ae6f 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -312,51 +312,39 @@ static void show_files(struct repository *repo, struct dir_struct *dir)
+>  		if (show_killed)
+>  			show_killed_files(repo->index, dir);
+>  	}
+> -	if (show_cached || show_stage) {
+> -		for (i = 0; i < repo->index->cache_nr; i++) {
+> -			const struct cache_entry *ce = repo->index->cache[i];
+> +	if (! (show_cached || show_stage || show_deleted || show_modified))
+> +		return;
 
-Thanks,
--Stolee
+If none of these four are given, nothing will be given after this
+point, so returning early is good.
 
+> +	for (i = 0; i < repo->index->cache_nr; i++) {
+> +		const struct cache_entry *ce = repo->index->cache[i];
+> +		struct stat st;
+> +		int err;
+>  
+> +		construct_fullname(&fullname, repo, ce);
+>  
+> +		if ((dir->flags & DIR_SHOW_IGNORED) &&
+> +			!ce_excluded(dir, repo->index, fullname.buf, ce))
+> +			continue;
+> +		if (ce->ce_flags & CE_UPDATE)
+> +			continue;
+
+The above two are common between the original two codepaths, and
+merging them is good.
+
+> +		if (show_cached || show_stage) {
+> +			if (!show_unmerged || ce_stage(ce))
+> +				show_ce(repo, dir, ce, fullname.buf,
+> +					ce_stage(ce) ? tag_unmerged :
+> +					(ce_skip_worktree(ce) ? tag_skip_worktree :
+> +						tag_cached));
+>  		}
+
+We would want to reduce the indentation level of the show_ce() by
+consolidating the nested if/if to
+
+		if ((show_cached || show_stage) &&
+                    (!show_unmerged || ce_stage(ce)))
+			show_ce(...);
+
+
+Everything below from this point should be skipped (especially, the
+call to lstat()) unless show_modified and/or show_deleted was asked
+by the caller, i.e.  we want to insert
+
+		if (!(show_deleted || show_modified))
+			continue;
+
+here, before we call ce_skip_worktree(), I think.
+
+> +		if (ce_skip_worktree(ce))
+> +			continue;
+> +		err = lstat(fullname.buf, &st);
+> +		if (err) {
+> +			if (errno != ENOENT && errno != ENOTDIR)
+> +				error_errno("cannot lstat '%s'", fullname.buf);
+> +			if (show_deleted)
+> +				show_ce(repo, dir, ce, fullname.buf, tag_removed);
+> +			if (show_modified)
+>  				show_ce(repo, dir, ce, fullname.buf, tag_modified);
+> -		}
+> +		} else if (show_modified && ie_modified(repo->index, ce, &st, 0))
+> +			show_ce(repo, dir, ce, fullname.buf, tag_modified);
+>  	}
+
+And this part would look somewhat different if we take my earlier
+suggestion for [1/3].
+
+Thanks.
