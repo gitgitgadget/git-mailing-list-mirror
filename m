@@ -2,181 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D1ECC433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5881DC433E9
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:01:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF35923122
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:00:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A48F23122
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 18:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729441AbhATSAL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 13:00:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40882 "EHLO
+        id S1732582AbhATSBY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 13:01:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732855AbhATRzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 12:55:10 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CC97C0613D3
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:54:30 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id w8so4124273oie.2
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:54:30 -0800 (PST)
+        with ESMTP id S2390607AbhATR76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 12:59:58 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23DF5C0613CF
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:59:17 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id j13so2538601edp.2
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 09:59:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rK35WI3lwHt0t3iHoY3ZILP3qyDQT3TIJ/IcwzU9bag=;
-        b=s+a6Fouq8IR6gpML4/QNpS7RsaF7drc7tDi9Avq+q3IcD3qCdjC6EYE5TJ09QolP6d
-         MmRkKHxo7evMvmU+G61Fw+2n1I8V0KQvyoUDXlEpD7FiPa46tUOC6ZCUx+56qKJceUvU
-         n6AX9a0N469R4m5baPws/m937OOHzvzBSy/xL3IJOLCF7XpE7xcimVFbq67cbU9n/DX4
-         CC9LO+wCT2VQzO4VyoPBBrv5pNgPkT17bjtsG+jvv+1x68c+LJlrdfeZky19bB8mGS0B
-         769aUUx6xWh9xWtuFrdsiLQX4psnH6aYBtfNEVl7/CE+34mbqt3O/yifYL1BvQOM5vT8
-         kStA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=6PBBAet1tus0nNl7Xlpn6sxtXZDbDbromASrvKVAFM8=;
+        b=TpFQXYsVD5SC/OAghbzFC8OphgidajcY0ROW6WvUU2hdkq2LjHH6nzp+kgMdesGbfK
+         R7FnV1WVnnn9KEzvmm+wYI25uzQbaTLT3VdJq/cedN8WMNGooOrXQjIFO2YjjgmX+jzY
+         R0ulSpkRnRB0DIeEmAgu9aumIezNDSwLxfJdAW5NT5f4pUv5BggtEvx0B82Kz/m9Ja5b
+         2Q9pGS9if3+VyyChQr6AkLZcQy+UOYt4yG2gmb4k4hRKXHWsYFGFgHypxtjXzbGp6bM8
+         +fAIMe8Z0CnW4A7a23p7yvVWmgCd22AoqHYy9Gc0O+koUCfPOzRXWTpnZdR2pyp9VRCZ
+         JXbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rK35WI3lwHt0t3iHoY3ZILP3qyDQT3TIJ/IcwzU9bag=;
-        b=Dt8lgGraJN8htEgYDm3axG3wQzN1lbdo7pr1nPlI8f2XjVzNKRLWe3tjthnJXLQP2j
-         KCq9zv20TlzPAgAFhtB0i2xS85Vpz4Hx3YJAtJuBIt1UBHRlOAR+hSA9JZGKf7tRiTbM
-         xHC0puetQdPMpKt14T0y83vSjjM4fTx/i0e5F9siK8LnYPWw9cf5K4aYTFBexRCN26Jd
-         fqDeHqVx5Oq7aVAqsHWrK9WucaCFkPB5f9QV0JVYvXi457zDHs9E9iwuoarjYvIMMrNY
-         mJ45/USRlgpZ+BrBOtK/ROuhwk3XExTKu2zjHdxUua+e2tL1bPOJHPOBiUSmEloi2and
-         Q/aQ==
-X-Gm-Message-State: AOAM533m4zQWjEPyhqtQUph8MWKC6fS/rObFnX85Oo+iLRqJc/ubd7p0
-        Ezs3Q1GD7lRGjeDZq0+rfT3cTnN4kOL7zh5HpP4bdFM7RBc=
-X-Google-Smtp-Source: ABdhPJwEMWKuUtKMkugVDNNJJAUgc/4AQ1aPoeM8PgoLpX/H4g7ygKm7Tn0Veijsl0OVFJaECjoNJ7dwgIvAzo9EEYs=
-X-Received: by 2002:a05:6808:83:: with SMTP id s3mr3666927oic.31.1611165269650;
- Wed, 20 Jan 2021 09:54:29 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=6PBBAet1tus0nNl7Xlpn6sxtXZDbDbromASrvKVAFM8=;
+        b=oHPmUf7Cn5C20qklcl8amaiVI6HM/URw/aLn0HMpMAEpe9qkYyBnswu5//5ENro9Cp
+         FXXbAA72VJY/KRNvH3TQWGwcjtE1n1j/M2mJKSw5TFYPQi++2tfVU45qOQoGXqzdJkVN
+         HFANGBRf30W4JzpbIpbLDcpe4FcU6iSXUIZrxL2OqHpW2a9UjGiIoHgG+NgyBtS6TiX8
+         JNyywrlU7aSWLz62NM59pqbzR4eCqJbTc072+7zb7g+8LHwMrN6mV5rEK+pag4fKGE/I
+         BK+EvueOYticgyguFVM2Xuzrdx1NmYbYzoA7hQYw8wMSHRpEIOHv2SaVySACn9mpXAwk
+         6kEg==
+X-Gm-Message-State: AOAM5334Z/NRXfjI02ySxnX8w1oIadf07AuHG54xwCplfVxpNAt2QA1L
+        OcReDlA+iZG965KJYWYukpGzr30PJB4=
+X-Google-Smtp-Source: ABdhPJyRp+9RurZ1BC6c5T6eyEjxiy8sWbV3hW+hTwSfvpuw1H+5o36+GAQ0yAxJLx6Aykq0V0AGMA==
+X-Received: by 2002:a05:6402:c92:: with SMTP id cm18mr8721577edb.367.1611165555632;
+        Wed, 20 Jan 2021 09:59:15 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id f6sm1439673edv.83.2021.01.20.09.59.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Jan 2021 09:59:14 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+        <pclouds@gmail.com>, Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 1/6] ci: remove GETTEXT_POISON jobs
+References: <87pn2b6eyb.fsf@evledraar.gmail.com>
+ <20210111144740.6092-2-avarab@gmail.com>
+ <20210112085051.GV8396@szeder.dev>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <20210112085051.GV8396@szeder.dev>
+Date:   Wed, 20 Jan 2021 18:59:14 +0100
+Message-ID: <87a6t38p71.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.839.git.1611161639.gitgitgadget@gmail.com> <64358ec7ea2b3df4a8f1099452579a7568996921.1611161639.git.gitgitgadget@gmail.com>
-In-Reply-To: <64358ec7ea2b3df4a8f1099452579a7568996921.1611161639.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Jan 2021 09:54:18 -0800
-Message-ID: <CABPp-BHSssDCvyC3rGZasR8yWxJYN9Y09LZL2BBd2hyFgG08Vw@mail.gmail.com>
-Subject: Re: [PATCH 6/9] sparse-checkout: load sparse-checkout patterns
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 8:54 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> A future feature will want to load the sparse-checkout patterns into a
-> pattern_list, but the current mechanism to do so is a bit complicated.
-> This is made difficult due to needing to find the sparse-checkout file
-> in different ways throughout the codebase.
->
-> The logic implemented in the new get_sparse_checkout_patterns() was
-> duplicated in populate_from_existing_patterns() in unpack-trees.c. Use
-> the new method instead, keeping the logic around handling the struct
-> unpack_trees_options.
->
-> The callers to get_sparse_checkout_filename() in
-> builtin/sparse-checkout.c manipulate the sparse-checkout file directly,
-> so it is not appropriate to replace logic in that file with
-> get_sparse_checkout_patterns().
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/sparse-checkout.c |  5 -----
->  dir.c                     | 17 +++++++++++++++++
->  dir.h                     |  2 ++
->  unpack-trees.c            |  6 +-----
->  4 files changed, 20 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index e3140db2a0a..2306a9ad98e 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -22,11 +22,6 @@ static char const * const builtin_sparse_checkout_usage[] = {
->         NULL
->  };
->
-> -static char *get_sparse_checkout_filename(void)
-> -{
-> -       return git_pathdup("info/sparse-checkout");
-> -}
-> -
->  static void write_patterns_to_file(FILE *fp, struct pattern_list *pl)
->  {
->         int i;
-> diff --git a/dir.c b/dir.c
-> index d637461da5c..d153a63bbd1 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2998,6 +2998,23 @@ void setup_standard_excludes(struct dir_struct *dir)
->         }
->  }
->
-> +char *get_sparse_checkout_filename(void)
-> +{
-> +       return git_pathdup("info/sparse-checkout");
-> +}
-> +
-> +int get_sparse_checkout_patterns(struct pattern_list *pl)
-> +{
-> +       int res;
-> +       char *sparse_filename = get_sparse_checkout_filename();
-> +
-> +       pl->use_cone_patterns = core_sparse_checkout_cone;
-> +       res = add_patterns_from_file_to_list(sparse_filename, "", 0, pl, NULL);
-> +
-> +       free(sparse_filename);
-> +       return res;
-> +}
-> +
->  int remove_path(const char *name)
->  {
->         char *slash;
-> diff --git a/dir.h b/dir.h
-> index a3c40dec516..facfae47402 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -448,6 +448,8 @@ int is_empty_dir(const char *dir);
->
->  void setup_standard_excludes(struct dir_struct *dir);
->
-> +char *get_sparse_checkout_filename(void);
-> +int get_sparse_checkout_patterns(struct pattern_list *pl);
->
->  /* Constants for remove_dir_recursively: */
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index af6e9b9c2fd..837b8bb42fb 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1549,14 +1549,10 @@ static void mark_new_skip_worktree(struct pattern_list *pl,
->  static void populate_from_existing_patterns(struct unpack_trees_options *o,
->                                             struct pattern_list *pl)
->  {
-> -       char *sparse = git_pathdup("info/sparse-checkout");
-> -
-> -       pl->use_cone_patterns = core_sparse_checkout_cone;
-> -       if (add_patterns_from_file_to_list(sparse, "", 0, pl, NULL) < 0)
-> +       if (get_sparse_checkout_patterns(pl) < 0)
->                 o->skip_sparse_checkout = 1;
->         else
->                 o->pl = pl;
-> -       free(sparse);
->  }
->
->
-> --
-> gitgitgadget
 
-Looks straightforward and well motivated to me.
+On Tue, Jan 12 2021, SZEDER G=C3=A1bor wrote:
 
-But the cherry on top that really sells this patch is that more lines
-of dir.c will blame to someone besides me.  Win-win!
+> On Mon, Jan 11, 2021 at 03:47:35PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> A subsequent commit will remove GETTEXT_POISON entirely, let's start
+>> by removing the CI jobs that enable the option.
+>>=20
+>> We cannot just remove the job because the CI is implicitly depending
+>> on the "poison" job being a sort of "default" job.
+>
+> I don't understand what you mean here with a "default job" that the CI
+> is implicitly depending on.  There is certainly no such default job on
+> Travis CI, and I don't think there is one on the GitHub thing.
+
+I'll reword this. I meant that the poison job was using the default
+compiler etc., whereas the other ones were setting custom values.
+
+I vaguely remember some list traffic about this in the past, i.e. the
+reliance on the poison job not just for that, but also as "the default
+OS image" setup.
+
