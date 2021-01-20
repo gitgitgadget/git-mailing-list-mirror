@@ -2,177 +2,355 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A9DC433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 00:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2EE9C433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 00:21:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 945A223104
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 00:11:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96B9A22573
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 00:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730606AbhATALe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 19:11:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
+        id S1727191AbhATAVN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 19:21:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728325AbhATAKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 19:10:39 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2923C061575
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 16:09:58 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id e9so7343619plh.3
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 16:09:58 -0800 (PST)
+        with ESMTP id S1730864AbhATAUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 19:20:54 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5917C061573
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 16:20:12 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id c128so1313227wme.2
+        for <git@vger.kernel.org>; Tue, 19 Jan 2021 16:20:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=c+2W5RsyzS8o7scDyLNim/3R/AT5lGc22Sd6mkveNow=;
-        b=WbPYFyJCBJDHTakB7HhlklxHNVxdF/cxtFQrdlLLh49ZcWH5ZDdBeHnh/BqUQYLl8v
-         nl8xbiZoo8Hk1nmuN55lNwmPnHi2Roxq9huyoTpKKshvzdvQmTNeZHjHXM/ozj3fgUxI
-         lvUtBOl5EatFq6umCt6Z+P19XDianKAPbIZqHj+/ZFtqOUWpNAwxinEW7CNyzV07bemA
-         uPDbTjMHumYSFq349VYp1mWdLo2t1dBTAEsL33BkFs6oTGWFvtaUlgjSivztwcEdr0g2
-         guLcsAoaA46qiWFK1x6bLXXVO1kcCKkCkdoxHkF7+yPYdPC2sNJFMdsnEf7VW4sKPLSQ
-         nulw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=hI+CxRMbiaasgwtl92KpvA+LyUvjbpoE0T1VUejHWIg=;
+        b=a6HQagQ4jS3UZD5fLHj9LfVCWoWQUvtUQvFlXT8sYbumjyNYGm1lGaTD9onoTG9V56
+         r721T/w+yC/ay/r6NgFo0mRRY/jvXxuIB3bU2voP65b7j04ueoLfRSnksI76fzKgezgC
+         FyaKcfaYvH2yPSk/3OczRh+Xa4M8jF6Oc3GhxgWILM2en1YT7s14j1jfV5hWXSxyqrSH
+         qmLUyyRLfzZzi4WpA4xaw9zn/CM1gxeSsKSULiFyvllTogPEQQ8Ma3RafM3QR8EY7+Mc
+         sI/xmXKCj+SXrtim7Hn5klMf7SxKOEdHtvaWW8VKl45IVIErAgIjs32/BQXij3MSGVOW
+         InHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=c+2W5RsyzS8o7scDyLNim/3R/AT5lGc22Sd6mkveNow=;
-        b=m6xed/ON3zn5TFrOp96Q1K7ZHSa1ERHrnoAjmbIDLr4ZOclMV1tAoMvlXq/pu5Djsf
-         O7qOdmDpHQoRU67hTBa6Uo0lH3zcRJZsGyo9SsZk+tdYDKSoUHjSHz3yFz0aOkFOpQWw
-         WSrOWSOzXQd1H82bPd9/XkOYXc5mzlFtps/KFBmznqWPSn1gPELffuvSgpjHAKE0QWit
-         r9DfKWI/k3nHxF2DSwYVmWmBtjYKs3EejignialQKgfHS9jgUh/1iFtAZjmTLa5wqv9n
-         O7FH5iuNCpSVZbiSgmpUj0gybuvID3HtNiSB3btd1Y21XFXXG+sv2QOnu3Cso+M5PLCH
-         Shpg==
-X-Gm-Message-State: AOAM5317PdLky8oRgKKTQ55/VuIsCOIQIoeYFeMZuYarWmvGSCAc7uWM
-        iaDYA4WXXzg9z+akjtqMVDs=
-X-Google-Smtp-Source: ABdhPJyyMLdFFuc9APWBnZswg7dlxCFCZW/aCfzzJ+hmgocVvDBdbaF0QNC1R3vsrbj8b95+iu7VIw==
-X-Received: by 2002:a17:902:a5cb:b029:de:cd0b:1424 with SMTP id t11-20020a170902a5cbb02900decd0b1424mr3553741plq.63.1611101398472;
-        Tue, 19 Jan 2021 16:09:58 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:4575:ac29:34a5:6fb8])
-        by smtp.gmail.com with ESMTPSA id b185sm218020pfa.112.2021.01.19.16.09.57
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hI+CxRMbiaasgwtl92KpvA+LyUvjbpoE0T1VUejHWIg=;
+        b=BEtm1tfBzLs9whAW7IOcWVnaaiXQP0NiCqrzJ0EUzL3o/9fv3/Q/+IwvWo4eE/IFGb
+         8RIRjR0ICo+738GDkuTfRZI2k2JrXL6obc3oD11jVPuJCq+80enQhPOrCGOfDX5MjJ1i
+         jViTD+7hczoDFVwtnK+196Ppv7kqVdsTFAJv/Zfz2wQibFPNwQh61UJ46ifEhDlvnkin
+         G4MJMqvU+tZ2oL+qvQOUvtHjycKYIFQeo8hvhLvFj52GwmXrxpxvkkX7DoKxGh73SqSA
+         cZtLXR6L/Easvu6gzXMQVIrIBuOKI+5WR9JiP7bqv7K6c8pC5tl/Io4aMbUGUCrdaH8L
+         MFUQ==
+X-Gm-Message-State: AOAM530I7B6Ahm5cKSbgeFFQk1RWZ0jwmLw2Xe5x5w4YVbXs3GTLdSI+
+        8djHKAGKiHNpQDqzsE/hLjzxtojaAGg=
+X-Google-Smtp-Source: ABdhPJxZ0qJ2twFTIHONAAGb9XcasuO67UMkmzjZiuxD3xvq3DsMS11h2x4TXPrHxO+1KoweH7DkPQ==
+X-Received: by 2002:a1c:6402:: with SMTP id y2mr1721498wmb.43.1611102011094;
+        Tue, 19 Jan 2021 16:20:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r10sm653464wmd.15.2021.01.19.16.20.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 16:09:57 -0800 (PST)
-Date:   Tue, 19 Jan 2021 16:09:55 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Developer support list for Wireshark <wireshark-dev@wireshark.org>
-Cc:     Joey Salazar <jgsal@protonmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [Wireshark-dev] Multiple-line parsing of packets dissected over
- HTTP
-Message-ID: <YAd0044tbht/DOKq@google.com>
-References: <s1Sx5qZaXOlypsQCtHxGBayhdqUl1j2vuywQN6cG59KarFM9HZu32n0CEtcje206DeKXAYuqBoNbDOA8bgwXZI3u_3nwPxYFme2GcqV0I3s=@protonmail.com>
- <CAGka-81Ze71igsW2zsfzYqqkr+sz5FE6YYo3mEpdEQUSUxZvaw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Tue, 19 Jan 2021 16:20:10 -0800 (PST)
+Message-Id: <pull.948.git.git.1611102010142.gitgitgadget@gmail.com>
+From:   "Alex Reed via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 20 Jan 2021 00:20:09 +0000
+Subject: [PATCH] branch, config:  teach branch.autosetuprebase about 'merges'
+ mode
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGka-81Ze71igsW2zsfzYqqkr+sz5FE6YYo3mEpdEQUSUxZvaw@mail.gmail.com>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Alex Reed <acreed4@gmail.com>, Alex Reed <acreed4@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Alex Reed <acreed4@gmail.com>
 
-Pascal Quantin wrote:
-> Le mar. 19 janv. 2021 à 17:45, Joey Salazar via Wireshark-dev <
-> wireshark-dev@wireshark.org> a écrit :
+branch.autoSetupRebase now honors the 'merges' flag, allowing tracking branches
+to be auto-populated with 'branch.<name>.rebase = merges'.  This allows complex
+workflows to more easily retain non-trivial merges while rebasing branches on
+pull operations.  Seeding new branches with 'branch.<name>.rebase = true' is not
+always sufficient (read: not project default) and requiring developers to
+manually reconfigure every new branch is cumbersome and error-prone.
 
->> In commit 33af2649 [1] we can keep dissecting the contents of the req,
->> adv, and res packets by setting
->>  while (plen > 0) { }
->> either in `dissect_git_pdu()` or in `dissect_one_pkt_line()`, but for now
->> in `dissect_git_pdu()` it'd be a bit messy, so wanted to ask for your
->> feedback for getting `dissect_one_pkt_line()` to work properly first.
->>
->> As you can see in pcap 169 [2], it correctly parses the length of the
->> first line as 0x0014 (20 bytes) until `0x0a`, then it's supposed to get the
->> length of the next line by the first 4 hex bytes in that line, but instead
->> of reading the length as 0x0018 (24 bytes) it's reading it as 0x0010 (16
->> bytes), and anyways, this particular line's length actually is 59 bytes.
+Signed-off-by: Alex Reed <acreed4@gmail.com>
+---
+    branch, config: teach branch.autosetuprebase about 'merges' mode
+    
+    branch.autoSetupRebase now honors the 'merges' flag, allowing tracking
+    branches to be auto-populated with 'branch..rebase = merges'. This
+    allows complex workflows to more easily retain non-trivial merges while
+    rebasing branches on pull operations. Seeding new branches with
+    'branch..rebase = true' is not always sufficient (read: not project
+    default) and requiring developers to manually reconfigure every new
+    branch is cumbersome and error-prone.
 
-Interesting.  Let me summarize your question: getting the information
-in one place here, the relevant code at line 114 looks like
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-948%2Facr4%2Fautosetuprebase-merges-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-948/acr4/autosetuprebase-merges-v1
+Pull-Request: https://github.com/git/git/pull/948
 
-| +  while (plen > 0) {
-| +    proto_tree_add_uint(git_tree, hf_git_packet_len, tvb, offset, 4, plen);
-| +    offset += 4;
-| +    plen -= 4;
-| +
-| +    proto_tree_add_item(git_tree, hf_git_packet_data, tvb, offset, plen, ENC_NA);
-| +    offset += plen;
-| +    // To-do: add lines for parsing of terminator packet 0000
-| +  }
+ Documentation/config/branch.txt |  2 +
+ branch.c                        | 70 ++++++++++++++++++++-------------
+ cache.h                         |  3 +-
+ config.c                        |  2 +
+ t/t3200-branch.sh               | 45 +++++++++++++++++++++
+ t/t5601-clone.sh                | 14 ++++++-
+ 6 files changed, 107 insertions(+), 29 deletions(-)
 
-The relevant part of the pcap is shown in an image; transcribing
-imperfectly, I see
+diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
+index cc5f3249fc5..98410bf003f 100644
+--- a/Documentation/config/branch.txt
++++ b/Documentation/config/branch.txt
+@@ -21,6 +21,8 @@ branch.autoSetupRebase::
+ 	remote-tracking branches.
+ 	When `always`, rebase will be set to true for all tracking
+ 	branches.
++	When `merges`, rebase will be set to `merges` for all tracking
++	branches.
+ 	See "branch.autoSetupMerge" for details on how to set up a
+ 	branch to track another branch.
+ 	This option defaults to never.
+diff --git a/branch.c b/branch.c
+index 9c9dae1eae3..b197fe0bbb3 100644
+--- a/branch.c
++++ b/branch.c
+@@ -34,17 +34,25 @@ static int find_tracked_branch(struct remote *remote, void *priv)
+ 	return 0;
+ }
+ 
+-static int should_setup_rebase(const char *origin)
++typedef enum {
++	REBASE_FALSE,
++	REBASE_TRUE,
++	REBASE_MERGES
++} rebase_type;
++
++static rebase_type should_setup_rebase(const char *origin)
+ {
+ 	switch (autorebase) {
+ 	case AUTOREBASE_NEVER:
+-		return 0;
++		return REBASE_FALSE;
+ 	case AUTOREBASE_LOCAL:
+-		return origin == NULL;
++		return origin == NULL ? REBASE_TRUE : REBASE_FALSE;
+ 	case AUTOREBASE_REMOTE:
+-		return origin != NULL;
++		return origin != NULL ? REBASE_TRUE : REBASE_FALSE;
+ 	case AUTOREBASE_ALWAYS:
+-		return 1;
++		return REBASE_TRUE;
++	case AUTOREBASE_MERGES:
++		return REBASE_MERGES;
+ 	}
+ 	return 0;
+ }
+@@ -59,7 +67,8 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ {
+ 	const char *shortname = NULL;
+ 	struct strbuf key = STRBUF_INIT;
+-	int rebasing = should_setup_rebase(origin);
++	rebase_type rebasing = should_setup_rebase(origin);
++	struct strbuf method = STRBUF_INIT;
+ 
+ 	if (skip_prefix(remote, "refs/heads/", &shortname)
+ 	    && !strcmp(local, shortname)
+@@ -78,44 +87,51 @@ int install_branch_config(int flag, const char *local, const char *origin, const
+ 	if (git_config_set_gently(key.buf, remote) < 0)
+ 		goto out_err;
+ 
+-	if (rebasing) {
+-		strbuf_reset(&key);
+-		strbuf_addf(&key, "branch.%s.rebase", local);
+-		if (git_config_set_gently(key.buf, "true") < 0)
+-			goto out_err;
++	strbuf_reset(&key);
++	strbuf_addf(&key, "branch.%s.rebase", local);
++	switch(rebasing) {
++		case REBASE_TRUE:
++			strbuf_addstr(&method, " by rebasing");
++			if(git_config_set_gently(key.buf, "true") < 0)
++				goto out_err;
++			break;
++		case REBASE_MERGES:
++			strbuf_addstr(&method, " by rebasing while preserving merges");
++			if (git_config_set_gently(key.buf, "merges") < 0)
++				goto out_err;
++			break;
++    default:;
+ 	}
+ 	strbuf_release(&key);
+ 
+ 	if (flag & BRANCH_CONFIG_VERBOSE) {
+ 		if (shortname) {
+ 			if (origin)
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track remote branch '%s' from '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track remote branch '%s' from '%s'."),
+-					  local, shortname, origin);
++				printf_ln(
++					_("Branch '%s' set up to track remote branch '%s' from '%s'%s."),
++					local, shortname, origin, method.buf);
+ 			else
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track local branch '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track local branch '%s'."),
+-					  local, shortname);
++				printf_ln(
++					_("Branch '%s' set up to track local branch '%s'%s."),
++					local, shortname, method.buf);
+ 		} else {
+ 			if (origin)
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track remote ref '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track remote ref '%s'."),
+-					  local, remote);
++				printf_ln(
++					_("Branch '%s' set up to track remote ref '%s'%s."),
++					local, remote, method.buf);
+ 			else
+-				printf_ln(rebasing ?
+-					  _("Branch '%s' set up to track local ref '%s' by rebasing.") :
+-					  _("Branch '%s' set up to track local ref '%s'."),
+-					  local, remote);
++				printf_ln(
++					_("Branch '%s' set up to track local ref '%s'%s."),
++					local, remote, method.buf);
+ 		}
+ 	}
+ 
++	strbuf_release(&method);
+ 	return 0;
+ 
+ out_err:
+ 	strbuf_release(&key);
++	strbuf_release(&method);
+ 	error(_("Unable to write upstream branch configuration"));
+ 
+ 	advise(_(tracking_advice),
+diff --git a/cache.h b/cache.h
+index eefa93b08f8..5a378bcd534 100644
+--- a/cache.h
++++ b/cache.h
+@@ -995,7 +995,8 @@ enum rebase_setup_type {
+ 	AUTOREBASE_NEVER = 0,
+ 	AUTOREBASE_LOCAL,
+ 	AUTOREBASE_REMOTE,
+-	AUTOREBASE_ALWAYS
++	AUTOREBASE_ALWAYS,
++	AUTOREBASE_MERGES
+ };
+ 
+ enum push_default_type {
+diff --git a/config.c b/config.c
+index 4c0cf3a1c15..28d813f2595 100644
+--- a/config.c
++++ b/config.c
+@@ -1443,6 +1443,8 @@ static int git_default_branch_config(const char *var, const char *value)
+ 			autorebase = AUTOREBASE_REMOTE;
+ 		else if (!strcmp(value, "always"))
+ 			autorebase = AUTOREBASE_ALWAYS;
++		else if (!strcmp(value, "merges"))
++			autorebase = AUTOREBASE_MERGES;
+ 		else
+ 			return error(_("malformed value for %s"), var);
+ 		return 0;
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 0af3b85d172..056192f72c5 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1222,6 +1222,51 @@ test_expect_success 'autosetuprebase always on an untracked remote branch' '
+ 	test "z$(git config branch.myr20.rebase)" = z
+ '
+ 
++test_expect_success 'autosetuprebase merges on a tracked local branch' '
++	git config branch.autosetuprebase merges &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/o || git fetch local) &&
++	git branch mybase21 &&
++	git branch --track myr21 mybase3 &&
++	test "$(git config branch.myr21.remote)" = . &&
++	test "$(git config branch.myr21.merge)" = refs/heads/mybase3 &&
++	test "$(git config branch.myr21.rebase)" = merges
++'
++
++test_expect_success 'autosetuprebase merges on a tracked remote branch' '
++	git config branch.autosetuprebase merges &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr22 local/main &&
++	test "$(git config branch.myr22.remote)" = local &&
++	test "$(git config branch.myr22.merge)" = refs/heads/main &&
++	test "$(git config branch.myr22.rebase)" = merges
++'
++
++test_expect_success 'autosetuprebase merges on an untracked local branch' '
++	git config branch.autosetuprebase merges &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr23 mybase2 &&
++	test "z$(git config branch.myr23.remote)" = z &&
++	test "z$(git config branch.myr23.merge)" = z &&
++	test "z$(git config branch.myr23.rebase)" = z
++'
++
++test_expect_success 'autosetuprebase merges on an untracked remote branch' '
++	git config branch.autosetuprebase merges &&
++	git config remote.local.url . &&
++	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr24 local/main &&
++	test "z$(git config branch.myr24.remote)" = z &&
++	test "z$(git config branch.myr24.merge)" = z &&
++	test "z$(git config branch.myr24.rebase)" = z
++'
++
+ test_expect_success 'autosetuprebase always on detached HEAD' '
+ 	git config branch.autosetupmerge always &&
+ 	test_when_finished git checkout main &&
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 7df3c5373ae..10983191439 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -210,7 +210,7 @@ test_expect_success 'clone a void' '
+ 	test_cmp target-6/.git/config target-7/.git/config
+ '
+ 
+-test_expect_success 'clone respects global branch.autosetuprebase' '
++test_expect_success 'clone respects global branch.autosetuprebase remote' '
+ 	(
+ 		test_config="$HOME/.gitconfig" &&
+ 		git config -f "$test_config" branch.autosetuprebase remote &&
+@@ -222,6 +222,18 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
+ 	)
+ '
+ 
++test_expect_success 'clone respects global branch.autosetuprebase merges' '
++	(
++		test_config="$HOME/.gitconfig" &&
++		git config -f "$test_config" branch.autosetuprebase merges &&
++		rm -fr dst &&
++		git clone src dst &&
++		cd dst &&
++		actual="z$(git config branch.master.rebase)" &&
++		test zmerges = $actual
++	)
++'
++
+ test_expect_success 'respect url-encoding of file://' '
+ 	git init x+y &&
+ 	git clone "file://$PWD/x+y" xy-url-1 &&
 
-| 0014command=ls-refs\n
-| 0018agent=git/2.29.0.rc2
-| 0016object-format=sha1
-| 0001
-[etc]
-
-where \n denotes a newline byte and there are no newlines between
-these pkt-lines.
-
-That first pkt-line has 4 bytes for the length, followed by 12 bytes
-for "command=ls-refs\n", including newline.  So why does this parse as
-
-	packet-length: 0x0014
-	packet data: "command=ls-refs\n"
-	packet-length: 0x0010
-	packet data: "agent=[etc]"
-
-?
-
-[...]
-> So what is the code leading to this dissection? It does not seem to be
-> https://gitlab.com/joeysal/wireshark/-/commit/33af2649927cb5660d4aeb64b9a9e9a58a1823aa
-> as dissect_one_pkt_line() seem to read only one line (BTW using a while
-> loop in this commit is useless as you are incrementing offset by plen, and
-> the code you shared considers that plen includes the 4 bytes of the packet
-> length field while your screenshot does not assume that).
-
-This reply is a bit dense, but it contains the hints to move forward:
-
-First, there's the matter of the contract of the dissect_one_pkt_line()
-function.  The name suggests it would dissect a *single* pkt-line, but
-it has this loop in it.  What does it actually do?  And what do we
-want it to do?
-
-That second question is easy to answer: this code will be much easier
-to read if dissect_one_pktline dissects a single pkt-line!  For
-example, if we imagine a contract like
-
-	/** Dissects a single pkt-line.
-	 *
-	 * @param[in] tvb Buffer containing a pkt-line.
-	 * @param offset Offset at which to start reading.
-	 * @param[out] tree Tree to attach the dissected pkt-line to.
-	 * @return Number of bytes dissected, or -1 on error.
-	 */
-	static int dissect_one_pkt_line(tvbuff_t *tvb, int offset, proto_tree *tree)
-
-then we could call this in a loop, like:
-
-	int offset = 0;
-
-	while (offset < total length)
-		offset += dissect_one_pkt_line(tvb, offset, tree);
-
-Obtaining the total length and including some error handling left as
-an exercise to the reader.
-
-As for the first question: what does the current code do?  The loop at
-l114 doesn't modify plen except by subtracting 4 from it.  So instead
-of reading the pkt-length from the next pkt-line, it assumes it is 4
-bytes less.  0x14 - 4 is 0x10, hence the 0x10 as pkt length
-assumption.
-
-Thanks and hope that helps,
-Jonathan
+base-commit: 66e871b6647ffea61a77a0f82c7ef3415f1ee79c
+-- 
+gitgitgadget
