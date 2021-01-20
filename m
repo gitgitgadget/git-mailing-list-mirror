@@ -2,102 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BC3DC433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D092FC433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E47FC23358
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:38:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A194223358
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 16:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391449AbhATQiK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 11:38:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51436 "EHLO
+        id S2403956AbhATQzC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 11:55:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732795AbhATQd2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 11:33:28 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF207C061575
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:32:29 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id gx5so15136990ejb.7
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:32:29 -0800 (PST)
+        with ESMTP id S2403868AbhATQyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 11:54:44 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57298C061757
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:03 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id q7so1833879wre.13
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 08:54:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=89bRz18XJHbBhAfHXy2C/5AChJri1TvYplA2GTl8/gQ=;
-        b=T0raiuDGHogbQ0wLzyVPp8PbKb8FMjI+ZaDu2hWeF/0AJyEJrWTTDE6reiPnNWA+cU
-         X/wmwFfRuK/e1pyOC6gXNFOfDyY14Hnuzq/CjpIr+9N3UnCQbO6O1OCgrlmzefYQP+3c
-         qIetL5OkP8oKEZJhcZ5AcbenDLzEAg6Sjmdlw75Z8m5fY7iZTZxlQyh69K+lA+/GNfwn
-         xMISWsze82zXB2lZqZQsW7IYWSvja0tU6knhy4z0ZOui1nLaBKOTWo5OGxxWnAYidBjY
-         cnQ/8UeHzqsFu0Cei4Nh00ZsehNx6HgnEqqQQmxWq2Vd+AIJH6XXwEoUscT0gFBAgzCO
-         PVuw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/QDPQ+/9yTiAK2nGZzt9251CqQ8MsbzHs5AF++igo8I=;
+        b=PfMSOSOQYDk20zXv2FCe2fxxd7xEG/3m47Bdv4FOGyiqes8PVFiaI03xhxEeOStR7F
+         N0OQWOkRZP3OPkAOLaAKYXr8bY51zJFit77zQFwHe7Zlj0lXjF1J5a+u+9nIsYAnyvxe
+         oPFga9qP1LVmak62ld1km+1ss3NH2Wk9OMpqyAvyYw12VX0RRFINSB0OEbZJTJcFzNxS
+         NZfJdqw9bBOHelq4R9DQ26jyd5PMNHsdTr++lMzMxdOuU/mE3e98Hy3QTH2e/Vbh24oL
+         1DnNHSTcyHFhv1v1DnzpA/fxU0n6pSV1RKo993SNeGfEejGWU5py7G+PrUpf23/TvjME
+         XbiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=89bRz18XJHbBhAfHXy2C/5AChJri1TvYplA2GTl8/gQ=;
-        b=QkQZ4b/y6FCgCLXp/ICbxwhxp2+zK/hypM5a9J3aZ2yba3fqogeX6MuPNed96jvqBv
-         cNS48epTL29uF6H+Ry+K1cbrUvabA1abqwYbDfRFe09bS1lsBXktkpdh37HdI3x354f8
-         SCat4omNRKbfmLdiit0ZAY61HdTxDtQ92yYGf/ODLAxsbM5KV5vlJBdm7EIB7Dld6XNC
-         uAd6dVnTJl6ijpJJqUU07qr3pUIqShA5NJncB6axwfqWrgIGq/zX4Ffxayy2dFfYkxjZ
-         Ong3QkeubQTd52aVE/QFdl8lDXEpziuEjbK/yTPCVNmbP607aum9uTkeEOtFrydAEUrX
-         tlNQ==
-X-Gm-Message-State: AOAM532Id2qPdSujvOMpRgQ7rfMUh889xvNvpF8RiWDc19VnlzJDtEh0
-        /fQpR25H+q1wXQ99NJ1XNj8=
-X-Google-Smtp-Source: ABdhPJx8HmytelLJnlagrtM3vNfUBHNEqfUk4BN+HTsnGBkiUAvlBfTHlBlvABzjVTgXbC302BnyNg==
-X-Received: by 2002:a17:906:7f8e:: with SMTP id f14mr6485237ejr.198.1611160348348;
-        Wed, 20 Jan 2021 08:32:28 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id n2sm1126588ejj.24.2021.01.20.08.32.27
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/QDPQ+/9yTiAK2nGZzt9251CqQ8MsbzHs5AF++igo8I=;
+        b=D4SPURhvWkqG63hKBi6Ef/Uo4MZnT3F6OI7dk+rvuIv8z5GcF6eOVx/GPmFnQSsgv3
+         sgvL/v24PIT/tGUSDfsvOuQ7A39GgDJ9QUuger0z9isGbLTHJMnUfnYDXTCuXxiNgC69
+         tdvzT9TSXqisHlSyjlBCW2YDiMmGm3qEU1XXY1Izvdi0gZTK9ghUnGNcGFUE2IxosRUc
+         H0ZhPMVmRukHVWWV53BvGkwmaY3PMsfxoDnzVtHRaPytIqRscGknrHwaRNb6kSl364Vg
+         LFGy+3vm4a3jY7uSqIzQkoBCeZJbZrLQAH6iDdv7IOXCutQ8x+u/mpGGBaGi8lz4gYbO
+         zDQA==
+X-Gm-Message-State: AOAM5327IAw83l/W3qYFCaGwOE04ekQ6v5tOm8MfBYfwn97JAX/qt89n
+        SQ1JTB6bAhHeVj5oGkOnmdYYV2KbLKs=
+X-Google-Smtp-Source: ABdhPJyXBjA+Q4ByR5wGfqGvDWSou7E3fCXDaJpy+lhqWMDngyWrz9u7Wdla96QcBH969NBmBiAfYg==
+X-Received: by 2002:adf:e8c5:: with SMTP id k5mr10587478wrn.242.1611161641855;
+        Wed, 20 Jan 2021 08:54:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m82sm5159538wmf.29.2021.01.20.08.54.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 08:32:27 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] builtin/pack-objects.c: avoid iterating all refs
-References: <20210119143348.27535-1-jacob@gitlab.com>
- <20210119143348.27535-2-jacob@gitlab.com>
- <87lfco801g.fsf@evledraar.gmail.com> <YAhF7HfOdu5AR42Q@nand.local>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <YAhF7HfOdu5AR42Q@nand.local>
-Date:   Wed, 20 Jan 2021 17:32:27 +0100
-Message-ID: <87czxz8t7o.fsf@evledraar.gmail.com>
+        Wed, 20 Jan 2021 08:54:01 -0800 (PST)
+Message-Id: <0bccfd34ae5924aef0432fd6727debb75c052da5.1611161639.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.839.git.1611161639.gitgitgadget@gmail.com>
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 20 Jan 2021 16:53:51 +0000
+Subject: [PATCH 1/9] cache-tree: clean up cache_tree_update()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
-On Wed, Jan 20 2021, Taylor Blau wrote:
+Make the method safer by allocating a cache_tree member for the given
+index_state if it is not already present.
 
-> On Wed, Jan 20, 2021 at 09:50:19AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> It seems we might just be able to delete this code on the server-side,
->> per protocol-capabilities.txt:
->>
->>     Clients MUST be prepared for the case where a server has ignored
->>     include-tag and has not actually sent tags in the pack.  In such
->>     cases the client SHOULD issue a subsequent fetch to acquire the tags
->>     that include-tag would have otherwise given the client.
->>
->> I.e. in the case where the server isn't playing along and I haven't set
->> "+refs/tags/*:refs/tags/*". But as the test shows we don't do that
->> following ourselves unless refs/tags/* is in the refspec (and then it's
->> not really "following", we're just getting all the tags).
->
-> Reading your email, I see no reason not to do it, and that snippet from
-> protocol-capabilities.txt makes me feel even better about doing so.
->
-> I'd be happy to have Jacob's patch picked up in the meantime, but I
-> think that this is a good direction to pursue.
+Also drop local variables that are used exactly once and can be found
+directly from the 'istate' parameter.
 
-Oh yes, none of this is commentary on not accepting the much smaller and
-obviously correct change in the meantime.  Just musings this general
-area of fetching & ideas for further optimization.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ cache-tree.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index 3f1a8d4f1b7..c1e49901c17 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -436,16 +436,20 @@ static int update_one(struct cache_tree *it,
+ 
+ int cache_tree_update(struct index_state *istate, int flags)
+ {
+-	struct cache_tree *it = istate->cache_tree;
+-	struct cache_entry **cache = istate->cache;
+-	int entries = istate->cache_nr;
+-	int skip, i = verify_cache(cache, entries, flags);
++	int skip, i;
++
++	i = verify_cache(istate->cache, istate->cache_nr, flags);
+ 
+ 	if (i)
+ 		return i;
++
++	if (!istate->cache_tree)
++		istate->cache_tree = cache_tree();
++
+ 	trace_performance_enter();
+ 	trace2_region_enter("cache_tree", "update", the_repository);
+-	i = update_one(it, cache, entries, "", 0, &skip, flags);
++	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
++		       "", 0, &skip, flags);
+ 	trace2_region_leave("cache_tree", "update", the_repository);
+ 	trace_performance_leave("cache_tree_update");
+ 	if (i < 0)
+-- 
+gitgitgadget
+
