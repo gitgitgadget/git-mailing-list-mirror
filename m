@@ -2,139 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F32CC433DB
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 02:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24A2AC433DB
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:27:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B421E2250E
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 02:23:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4A7023121
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 03:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729609AbhATCXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 21:23:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37534 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730708AbhATCV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 21:21:56 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F384C061575
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 18:21:12 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id i30so9028739ota.6
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 18:21:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=y3IaZuNKWVE4De+3zXHTP68TzkIbZOHsDpXEqFwLfUs=;
-        b=Ra5Noif5PTR9rJs5W/2PjH/mM+m203wUhAWkTCC96woaP9nWMzURpqjmj6k9ToabBB
-         DC5BHaXs5FakKDefJ8gZeFhx7qNKKblFl+8WzbrMIDEqHe7yAJ+yxJWBit5HPZyXl9jP
-         TDeBAWR6ZE+pAW9VBx/ugXErMTVAykbu/LE5SKY37uAGcfECMEw5hZTLYjyffP6+N+Mj
-         RFDT8DPypUOO72Ie0/AB6eDkMe9SaantszNjg8qP7K2WCYur02rCNK3TxNRSvbiu9Ia/
-         7HhCQs4V2gN8SzOF7EL7uUCsK6EAGomlL8wgZEoes6NY/rjhXWgkLCF2xejWw/2UXz7m
-         yiUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=y3IaZuNKWVE4De+3zXHTP68TzkIbZOHsDpXEqFwLfUs=;
-        b=CjtJ4xq1iElTPyAkc17zPT9BukG2m2qot8wpJ4Ljyp5+C5ydKqhMkQlYK8ClnjR6IR
-         SOmdQ3LSDkxlbBbsF7TR0w9YV6RAXMP20hRImmW4MLt4FkhsDbM0ZDbBxemi7TgNb7+y
-         +lq2PP+/jAQ8J6QO5794JtffPOl8e+HTJ4tOHhfUN0efyD16oRVz8eTTgi+SoKuEs+/F
-         p115wuPaAPbNdmS0sFmNZvrQA/hV13kBrTUe0tNB3I6p3/c/Rd9E0jngrshFCDp6KwIQ
-         x4BnYThWiY2/WndLgGzu76txB6qDw68Uni5MXakGKsJ4lmUcXMspp4k1gbsC7d11oLJA
-         Qp4Q==
-X-Gm-Message-State: AOAM530Af1pKBSVjYw0OXJQbDA6XZUKQ2CUmLoxAzfv7dZjXHrbMNdoy
-        JpV9sOhu7mXx4nt4BKYf+n1R7xmxYx0=
-X-Google-Smtp-Source: ABdhPJw7XiNjICcfAS0sYH6LSyyhT28IOct9xPHDdLwSeSLqjXRCv0QZNziY/Gl7ZYim98iWzVvcWQ==
-X-Received: by 2002:a9d:aca:: with SMTP id 68mr5571481otq.272.1611109268849;
-        Tue, 19 Jan 2021 18:21:08 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:710c:cecb:a7d:75ab? ([2600:1700:e72:80a0:710c:cecb:a7d:75ab])
-        by smtp.gmail.com with UTF8SMTPSA id 2sm128934otg.6.2021.01.19.18.21.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Jan 2021 18:21:07 -0800 (PST)
-Subject: Re: DEVEL: Help with feature implementation
-To:     Antonio Russo <aerusso@aerusso.net>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Aiyee Bee <shane.880088.supw@gmail.com>, git@vger.kernel.org
-References: <C8MJ83LNOZ1Q.OCQKHOTGHKWF@localhost>
- <38ed4389-ba9f-743a-3fa3-5ffab12ef0a9@gmail.com>
- <992cd021-d6f6-dfe4-1918-45643aa85a61@aerusso.net>
- <xmqq7do9iuqj.fsf@gitster.c.googlers.com>
- <9fc9d752-06f4-e75d-1549-f257fd34e0c3@aerusso.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ac68007e-ca66-0229-fa8f-4ceb7d6d8f23@gmail.com>
-Date:   Tue, 19 Jan 2021 21:21:06 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1728373AbhATD04 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Jan 2021 22:26:56 -0500
+Received: from mail2.pdinc.us ([67.90.184.28]:39226 "EHLO mail2.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728099AbhATD0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Jan 2021 22:26:39 -0500
+Received: from [10.42.0.115] (cpe-173-88-170-197.neo.res.rr.com [173.88.170.197])
+        (authenticated bits=0)
+        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10K3PmmL022352
+        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO);
+        Tue, 19 Jan 2021 22:25:49 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10K3PmmL022352
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1611113149; bh=+QlOFOvvNTrBs0Lyf9CSMCXoQ8scWA28mHRRiVzbZ00=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=tcdI8UIzPvXJ1qFtGlOoIEjqVxP1yOWc+9FqlL/bXaAOB3mc5VD8Z7ffqKMtt06NW
+         gsZ5eovJ1h6gBs1dwDcRePp6RImU9GWXFFlzSaMEt53GUrLmFznk9qX9X6ZUBVYz1G
+         UgZlbmybLKaF2ydT1SxI46dxCcQPOVmJ5bb2nrfk2YVutWKIkOOWJpSAch1mWprp3h
+         BPEPS7WSiMO19/XhsgSEV2q8zVTOJ+LpPOvDqS9RGo/hwfWKJuweZRBlwsa/i8V1WJ
+         IExse6FNlyYjV2HdqmOUVNwyYUGN6B+WYvA4GYBVzUNUUDJig+/ANGNaNgLflfKUtJ
+         C9nD55Xm643dg==
+Subject: Re: [PATCH 1/2] revision: Denote root commits with '#'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <196101d6eab6$20714550$6153cff0$@pdinc.us>
+ <20210117110337.429994-1-kmarek@pdinc.us>
+ <20210117110337.429994-2-kmarek@pdinc.us>
+ <xmqq7dobmfrq.fsf@gitster.c.googlers.com>
+ <e0264a29-2112-f8c8-f066-2be445654d8e@pdinc.us>
+ <xmqqwnwajbuj.fsf@gitster.c.googlers.com>
+ <xmqqr1mij88k.fsf@gitster.c.googlers.com>
+ <237aeef3-239f-bff4-fa17-5581092c8f51@pdinc.us>
+ <xmqq1reginnq.fsf@gitster.c.googlers.com>
+From:   Kyle Marek <kmarek@pdinc.us>
+Message-ID: <460257a2-478a-eb4c-f6fa-b1cc55384cd5@pdinc.us>
+Date:   Tue, 19 Jan 2021 22:25:48 -0500
+User-Agent: Mozilla/5.0 (X11; Linux ppc64le; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-In-Reply-To: <9fc9d752-06f4-e75d-1549-f257fd34e0c3@aerusso.net>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <xmqq1reginnq.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/19/2021 9:52 AM, Antonio Russo wrote:
-> On 1/18/21 6:24 PM, Junio C Hamano wrote:
->> Antonio Russo <aerusso@aerusso.net> writes:
->>
->>> As a side note, would this list be willing to look at patches that remove
->>> the need to use revs->limited?  Adding new features would be much easier if
->>> we could restrict git to use streaming algorithms for these simplifications.
->>
->> Do you mean you will write new implementations of operations like
->> "--simplify-merges", "--ancestory-path" and all its friends without
->> the need for the "limited" bit?
-> 
-> Yes.
-> 
->> Willing to look at?  I do not know about others, but sure, it would
->> make be extremely excited.
->>
->> You may be able to rewrite some other operations that implicitly
->> require the limited bit into an incremental implementation, but I am
->> skeptical that you can do "simplify-merges" in a streaming fashion
->> in such a way that we'd dig a bit but not all the way down before
->> making decisions on which commits should be included in the output
->> and how their parenthood relationship should appear etc.  I and
->> Linus tried independently and we did not get that far in our
->> attempts (note: there wasn't commit-graph back then).
-> 
-> Yeah, it's a big task (but, it'd be useful work, rather than doing
-> another rewrite of my feature to make it work when revs->limited).
-> Each of the flags (simplify-merges, ancestry-path, etc.) is its own
-> little sub-project.
-> 
-> I haven't thought about any one flag specifically, but the fact that
-> two complete code paths exist right now just seem like a nightmare.
-> I'm not necessarily interested in making the implementations faster,
-> but rather getting rid of the duplicated code path.
+On 1/19/21 5:10 PM, Junio C Hamano wrote:
+> Kyle Marek <kmarek@pdinc.us> writes:
+>
+>>> So the condition we saw in your patches, !commit->parents, which
+>>> attempted to see if it was root, needs to be replaced with a helper
+>>> function that checks if there is any parent that is shown in the
+>>> output.
+>>> ...
+>>> Hmm?
+>> Okay, I see what you mean. Fixing --graph to avoid implying ancestry
+>> sounds like a better approach to me.
+> Sorry, I do not know how you drew that conclusion from my
+> description.
+>
+> All I meant to convey is "roots are not special at all, commits that
+> do not have parents in the parts of the history shown are, and care
+> must be taken to ensure that they do not appear to have parents".
 
-It's definitely a long shot to remove the limited flag altogether,
-but a good start would be to remove sort_in_topological_order().
-All of its logic is already re-implemented in the streaming version
-(see every use of "struct topo_walk_info" in revision.c). The
-streaming is designed to be faster in the presence of a commit-graph
-file, but it should still work correctly without one. Since all
-commits with have "generation number infinity," each phase of the
-walk will do the same as the limit_list() and walk all reachable
-commits before returning the first result.
+Yeah, I guess I am confused. I thought "Fixing --graph to avoid implying 
+ancestry" was reaching the same point as "care must be taken to ensure 
+that [commits without parents shown] do not appear to have parents". (I 
+wasn't just talking about root commits at that point)
 
-The only thing to ask is: what is the overhead of the streaming
-version over sort_in_topological_order()? Is there one? You'd need
-to do performance tests without a commit-graph file.
+> And the argument applies equally to either of two approaches.
+> Whether the solution chosen is
+>
+>   (1) to use special set of markers "{#}" for commits that do not
+>       have parents in the displayed part of the history instead of
+>       the usual "<*>", or
+>
+>   (2) to stick to the normal set of markers "<*>" but shift the graph
+>       to avoid false ancestry.
+>
+> we shouldn't be special casing "root commits" just because they are
+> roots.  Exactly the same issue exists for non-root commits whose
+> parents are not shown in the output, if commits from unrelated
+> ancestry is drawn directly below them.
 
-This has long been on my own TODO list, but I haven't been able to
-prioritize it over other things. I'd be happy to review the change.
-It also would be a good way to familiarize yourself with the code
-and how we already do some streaming things, even when "extra"
-information is needed to accomplish that.
+I understand. Coming back to the "root commit" situation below.
 
-Thanks,
--Stolee
+>> That being said, I spoke to Jason recently, and he expressed interest
+>> in optionally marking root commits so they are easy to search for in a
+>> graph with something like /# in `less`. I see value in this,
+> I do not mind to denote the "this commit may appear directly on top
+> of another commit, but there is no ancestry" situation with a
+> special set of markers that is different from the usual "<*>" (for
+> left, normal and right) set.  I agree pagers are good ways to /search
+> things in the output.
+>
+>> So would you be open to my modifying of the patch in question (patch
+>> 1+2 squashed, I guess) to instead use "--mark-roots=<mark>" to
+>> optionally mark root commits with a string <mark>, and pursue fixing
+>> the --graph rendering issue in another series?
+> I do not mind if the graph rendering fix does not happen yet again;
+> IIRC the past contributors couldn't implement it, either.
+>
+> I think this new feature should be made opt-in by introducing a new
+> option (without giving it a configuration variable), with explicit
+> "--no-<option>" supported to countermand a "--<option>=#" that may
+> appear earlier on the command line (or prepare your scripts for
+> later introduction of such a configuration variable).
+
+Okay
+
+> I do find it troubling if the <option> has "root" in its name, and I
+> would find it even more troubling if the feature somehow treated
+> root commits specially but not other commits that do not have their
+> parents shown.  It was the primary point I wanted to stress in the
+> previous two message [*1*].
+
+I'll come back to this below.
+
+> I am hoping that a single option can give three-tuple that replaces
+> the usual "<*>", with perhaps the default of "{#}" or something.
+
+I thought about that, but can we handle any of the three markers being 
+multi-byte characters?
+
+> I however offhand do not think of a way to make "left root" appear
+> in the output, but because we'd need "right root" that looks
+> different from ">" anyway, it may make sense to allow specifying
+> "left root" just for symmetry.
+
+I'm thinking on that one. I need to learn more about --left-right. I 
+don't know how/when to use it yet.
+
+> [Footnote]
+>
+> *1* But if we do not think of a good option name without the word
+>      "root" in it, I might be talked into a name with "root", as long
+>      as we clearly describe (1) that commits that has parents that
+>      are not shown in the history are also shown with these letters,
+>      and (2) that new contributors are welcome to try coming up with
+>      a new name for the option to explain the behaviour better, but
+>      are not welcome to argue that the option should special case
+>      root commits only because the option is named with "root" in it.
+
+So, on the root vs parents-not-shown commits issue:
+
+You're right. Commits with their parents hidden by the range specifiers 
+have the same graphing issue as root commits.
+
+While root commits are not a special case in the sense that --graph 
+makes ancestor implications for more than just root commits, root 
+commits are a special case when we think about interpreting the presence 
+of hidden lineage in --graph output.
+
+Considering one of your examples:
+
+           C
+          /
+         O---A---B
+                  \
+           X---Y---Z
+
+When graphing C..Z, git produces output like:
+
+*   0fbb0dc (HEAD -> z) Z
+|\
+| * 11be529 (master) B
+| * 8dd1b85 A
+* 851a915 Y
+* 27d3ed0 (x) X
+
+We cannot tell from the above graph alone that X is a root and A is not.
+
+So I think it might be useful if I could do --mark-roots='#' 
+--mark-hidden-lineage=$'\u22ef' (Unicode Midline Horizontal Ellipsis) to 
+produce the following:
+
+*   0fbb0dc (HEAD -> z) Z
+|\
+| * 11be529 (master) B
+| ⋯ 8dd1b85 A
+* 851a915 Y
+# 27d3ed0 (x) X
+
+Alternatively, it could be argued that --boundary can be used to 
+indicate a hidden lineage, since root commits do not have boundary 
+commits listed below them. But --boundary draws one more commit than 
+necessary, and there still isn't an easy way to search for roots in the 
+pager.
+
+I understand that I am now leaving the original scope of the issue, but 
+I think it is worth considering.
+
+Of course, I would also like to try fixing the original graphing issue 
+in general.
+
+Thoughts?
+
+-- 
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Kyle Marek                        PD Inc. http://www.pdinc.us -
+- Jr. Developer                     10 West 24th Street #100    -
+- +1 (443) 269-1555 x361            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
