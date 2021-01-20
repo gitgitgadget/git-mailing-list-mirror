@@ -2,194 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5095C433E0
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 04:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D5E5C433E0
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 06:42:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C08123159
-	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 04:50:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1A8B2313B
+	for <git@archiver.kernel.org>; Wed, 20 Jan 2021 06:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727787AbhATEuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Jan 2021 23:50:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40218 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727122AbhATEpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Jan 2021 23:45:54 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECC6C0613C1
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 20:45:10 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id c22so14349702pgg.13
-        for <git@vger.kernel.org>; Tue, 19 Jan 2021 20:45:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FUib7HgpKvInkDCU+QfthFS1ViZVhRIegL2HNAvEROM=;
-        b=PQsqxB7OvDpD7dqHzF7oHAk5SkNrauNYxktRRvQ+9LHDwuvu9hMjQNFigKtVVHr+nY
-         PiOoUqfFoNs1oi2/GVc2DytwjO4QM1BHEVgqDGj/DRwrrS/679JEFZ4uWXwzW87Vjjqr
-         bFCSW6ZQ7Vw0pl2TFrCrv+fzzkZBYMMf8I0Nb7cX/aT8ZhHIFjvp626UaQs0UsaRbMce
-         Sdxm4fjqXam4MMaHWYSgRN3ydqIkK32d1RTYI1bPBpk7lJh3JSKmKvzndbeZvWLYIYDd
-         n3/+aMrppLqOWMrU7hNa1a8XywgJx8/Y7qa4tRyEhN9b/wYNeqMakGsaZyUgQd+CooTD
-         scdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=FUib7HgpKvInkDCU+QfthFS1ViZVhRIegL2HNAvEROM=;
-        b=UDhs8Opp+dNVfqbBq/UzENfNVqOJjtvBKIS3nbVztHbtULuqK8zj1kr3ChzR5Les6G
-         QaCLFaJSkJtuR/rEK79Y0NQkNaIz6VG/+n4kAPtayNSinsn/LwdQUuiiEAfvZxeDRm5Q
-         mE2+qBMyhylzuZa+DnJeuYcTYZQWEjXMzHH0jt4ar12NfN8K/rTan/90p7U6LSpAsE7Q
-         QzfRj3Vh1e0vaQD/Si9hFI6BQk9knCPmgzHsuE0K3NJjllkBqMPVCZ4+9PI5uauWGSh4
-         q2PIfyHZ9SRG/rP7FByVAXUB8zsjUGfNkuuA21RwO9xa34xM41OgQXQ4R2j+/sgldI9v
-         H5tA==
-X-Gm-Message-State: AOAM5324AoIbxqT2q6xgYV1qiysIDJgjLcNtIl/M8mGxZ5NqXyRPCGT6
-        4Gi85MbIEBUvRh8ukWg/4H7Tb7CE2Nzp1w==
-X-Google-Smtp-Source: ABdhPJyEwwmLf+0BWb1ZEZvFBIT3Sh1Vmc5N58cKOmmZve6ppHbeCTg2Ixv7lXj0Jc62wOvlrm6NdQ==
-X-Received: by 2002:a63:c64f:: with SMTP id x15mr7507536pgg.196.1611117909563;
-        Tue, 19 Jan 2021 20:45:09 -0800 (PST)
-Received: from xavier.hsd1.ut.comcast.net ([2601:681:5900:961c:3398:e348:1cc1:ced7])
-        by smtp.gmail.com with ESMTPSA id o76sm651209pfg.164.2021.01.19.20.45.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Jan 2021 20:45:08 -0800 (PST)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH] rebase: add a config option for --no-fork-point
-Date:   Tue, 19 Jan 2021 21:44:35 -0700
-Message-Id: <20210120044435.53509-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.30.0
+        id S1726476AbhATGkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 01:40:51 -0500
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:58323 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729862AbhATG3U (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 20 Jan 2021 01:29:20 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id B528E177A;
+        Wed, 20 Jan 2021 01:28:08 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Wed, 20 Jan 2021 01:28:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=nEFEvDywGoAYryxb49ifUF3J9j5
+        rMHTf13CuG/zgJI0=; b=oG5Ff3isBkAykzkxkWoCC63W40oWT5fLf62EM5NBuSB
+        1mlkYqHIaapamHT9NYVQCiEZ0nNabpVDgq0aSGQbZzveSbK8i6cvjYkcgsLGMJOO
+        u/lE9eyoiPZ/TGl5F2lkYPlgWhpFvfvWu6cwH2/jM5kVKu+KwZ1DR6NLN9CWdBTk
+        wvpz0BNI0W746eUrp7Sloer4Qgl+PAOPDIJZ5Onqh3R5JBms81ldhV3XGkkwc+S7
+        ErMSLj+AkLhRbswaX6toMckg4PfehbDJ4OQswEUiB0DYty3lDso4UORW6QHP1gCM
+        IeHnTsNIDLXLAW3VGTpkd8+dp2M4lfZz4ze9NpArU7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=nEFEvD
+        ywGoAYryxb49ifUF3J9j5rMHTf13CuG/zgJI0=; b=YIxEk6ZRTW/KrnNwBDCj8r
+        dhlX85yWI/Q1JgEDBbgkxGtjZ4UdwZCgnehpvuwUQrSSMB1dEcEgv2eNdaShPDF/
+        lfq6akHtpzF5f+xy4owMN2axqXxKHp6ZKLiRXFtacPP4/lJwycVdbDU3ipPRU9XA
+        9qKJGVvC54R5roOJCektHHQOi1CpIx+Vps1zkINcQNSvoBCj3ORJm18vU1eK19TR
+        dDKz7W7ucRnWEYVwtYqald7Io1CccLuKBckumtiVLJsDPVzk6IWOReUNZEmkklDd
+        9ZEty6QZmQH9YLM1kP9WORPT9LgxqI1654G74+AF+UIZp68txdDFwesragCB4Vxg
+        ==
+X-ME-Sender: <xms:d80HYNalGrEwbQpIaQLfeBi1M2BZ-hF4w8erzrWqfgMdj4ttFEcHeQ>
+    <xme:d80HYEb8lBa62GVTZpchcvzXvM5WMIeHLXrSZZlfe15FRXWaSRVDxzcr73-GwfbUs
+    n5GWB1CAWLSv0QvXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddugdeliecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
+    ejkedthfehvdelgfetgfdvtedthfenucfkphepkeelrdduvddrfeeirdeitdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hm
+X-ME-Proxy: <xmx:d80HYP-l_rNw4hH0UllsfUQBmtZzyLCvfnIpvDPW_udfeDi56NPxuQ>
+    <xmx:d80HYLozh9rsD8_pZnaemcuFa20xV4g8mladGTJT6tlN64XMB8i-2A>
+    <xmx:d80HYIrmxbuFggDm3xui4s5mx4lnCXWKs_7rZG9aRvYjMrIJHadErA>
+    <xmx:eM0HYFA8xz_fz0ynqteiVorHO1rFuBvqX-4Q7UHB8zb1aCy-6iwxrw>
+Received: from vm-mail.pks.im (dynamic-089-012-036-060.89.12.pool.telefonica.de [89.12.36.60])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 41DCF24005B;
+        Wed, 20 Jan 2021 01:28:07 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a511053b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 20 Jan 2021 06:28:04 +0000 (UTC)
+Date:   Wed, 20 Jan 2021 07:28:03 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, me@ttaylorr.com
+Subject: Re: [PATCH RESEND] refs: Always pass old object name to reftx hook
+Message-ID: <YAfNcyZ7mj4J69XT@ncase>
+References: <d255c7a5f95635c2e7ae36b9689c3efd07b4df5d.1604501894.git.ps@pks.im>
+ <ae5c3b2b783f912a02b26142ecd753bf92530d2f.1610974040.git.ps@pks.im>
+ <xmqq4kjdkgol.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="t7Lgiiij6uyretFv"
+Content-Disposition: inline
+In-Reply-To: <xmqq4kjdkgol.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some users (myself included) would prefer to have this feature off by
-default because it can silently drop commits.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/config/rebase.txt |  3 +++
- builtin/rebase.c                | 21 ++++++++++++++-------
- t/t3431-rebase-fork-point.sh    | 10 ++++++++++
- 3 files changed, 27 insertions(+), 7 deletions(-)
+--t7Lgiiij6uyretFv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index 7f7a07d22f..8531a4b3f7 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -68,3 +68,6 @@ rebase.rescheduleFailedExec::
- 	Automatically reschedule `exec` commands that failed. This only makes
- 	sense in interactive mode (or when an `--exec` option was provided).
- 	This is the same as specifying the `--reschedule-failed-exec` option.
-+
-+rebase.forkPoint:
-+	If set to false set `--no-fork-point` option by default.
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 840dbd7eb7..1679acc649 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -102,6 +102,7 @@ struct rebase_options {
- 	int reschedule_failed_exec;
- 	int use_legacy_rebase;
- 	int reapply_cherry_picks;
-+	int fork_point;
- };
- 
- #define REBASE_OPTIONS_INIT {			  	\
-@@ -111,7 +112,8 @@ struct rebase_options {
- 		.default_backend = "merge",	  	\
- 		.flags = REBASE_NO_QUIET, 		\
- 		.git_am_opts = STRVEC_INIT,		\
--		.git_format_patch_opt = STRBUF_INIT	\
-+		.git_format_patch_opt = STRBUF_INIT,	\
-+		.fork_point = -1,			\
- 	}
- 
- static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-@@ -1095,6 +1097,12 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.forkpoint")) {
-+		if (!git_config_bool(var, value))
-+			opts->fork_point = 0;
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "rebase.usebuiltin")) {
- 		opts->use_legacy_rebase = !git_config_bool(var, value);
- 		return 0;
-@@ -1306,7 +1314,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
- 	const char *rebase_merges = NULL;
--	int fork_point = -1;
- 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
- 	struct object_id squash_onto;
- 	char *squash_onto_name = NULL;
-@@ -1406,7 +1413,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
- 			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
--		OPT_BOOL(0, "fork-point", &fork_point,
-+		OPT_BOOL(0, "fork-point", &options.fork_point,
- 			 N_("use 'merge-base --fork-point' to refine upstream")),
- 		OPT_STRING('s', "strategy", &options.strategy,
- 			   N_("strategy"), N_("use the given merge strategy")),
-@@ -1494,7 +1501,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("cannot combine '--keep-base' with '--root'"));
- 	}
- 
--	if (options.root && fork_point > 0)
-+	if (options.root && options.fork_point > 0)
- 		die(_("cannot combine '--root' with '--fork-point'"));
- 
- 	if (action != ACTION_NONE && !in_progress)
-@@ -1840,8 +1847,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 								    NULL);
- 			if (!options.upstream_name)
- 				error_on_missing_default_upstream();
--			if (fork_point < 0)
--				fork_point = 1;
-+			if (options.fork_point < 0)
-+				options.fork_point = 1;
- 		} else {
- 			options.upstream_name = argv[0];
- 			argc--;
-@@ -1945,7 +1952,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
- 
--	if (fork_point > 0) {
-+	if (options.fork_point > 0) {
- 		struct commit *head =
- 			lookup_commit_reference(the_repository,
- 						&options.orig_head);
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index 172562789e..e48c4014cf 100755
---- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -74,4 +74,14 @@ test_expect_success 'git rebase --fork-point with ambigous refname' '
- 	test_must_fail git rebase --fork-point --onto D one
- '
- 
-+test_expect_success '--fork-point and --root both given' '
-+	test_must_fail git rebase --fork-point --root 2>err &&
-+	test_i18ngrep "cannot combine" err
-+'
-+
-+test_expect_success 'rebase.forkPoint true and --root given' '
-+	test_config rebase.forkPoint true &&
-+	git rebase --root
-+'
-+
- test_done
--- 
-2.30.0
+On Mon, Jan 18, 2021 at 02:45:30PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > Inputs of the reference-transaction hook currently depends on the
+> > command which is being run. For example if the command `git update-ref
+> > $REF $A $B` is executed, it will receive "$B $A $REF" as input, but if
+> > the command `git update-ref $REF $A` is executed without providing the
+> > old value, then it will receive "0*40 $A $REF" as input. This is due to
+> > the fact that we directly write queued transaction updates into the
+> > hook's standard input, which will not contain the old object value in
+> > case it wasn't provided.
+>=20
+> In effect, the user says "I do not care if this update races with
+> somebody else and it is perfectly OK if it overwrites their update"
+> by not giving $B.
+>=20
+> > While this behaviour reflects what is happening as part of the
+> > repository, it doesn't feel like it is useful. The main intent of the
+> > reference-transaction hook is to be able to completely audit all
+> > reference updates, no matter where they come from. As such, it makes a
+> > lot more sense to always provide actual values instead of what the user
+> > wanted. Furthermore, it's impossible for the hook to distinguish whether
+> > this is intended to be a branch creation or a branch update without
+> > doing additional digging with the current format.
+>=20
+> But shouldn't the transaction hook script be allowed to learn the
+> end-user intention and behave differently?  If we replace the
+> missing old object before calling the script, wouldn't it lose
+> information?
+>=20
+> The above is not an objection posed as two rhetoric questions.  I am
+> purely curious why losing information is OK in this case, or why it
+> may not be so OK but should still be acceptable because it is lessor
+> evil than giving 0{40} to the hooks.
+>=20
+> Even without this change, the current value the hook can learn by
+> looking the ref up itself if it really wanted to, no?
 
+I think the biggest problem is that right now, you cannot discern the
+actual intention of the user because the information provided to the
+hook is ambiguous in the branch creation case: "$ZERO_OID $NEW_OID $REF"
+could mean the user intends to create a new branch where it shouldn't
+have existed previously. BUT it could also mean that the user just
+doesn't care what the reference previously pointed to.
+
+The user could now try to derive the intention by manually looking up
+the current state of the reference. But that does feel kind of awkward
+to me.
+
+To me, having clearly defined semantics ("The script always gets old and
+new value of the branch regardless of what the user did") is preferable
+to having ambiguous semantics.
+
+Patrick
+
+--t7Lgiiij6uyretFv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmAHzXIACgkQVbJhu7ck
+PpRxKA/+LY7eiHNRrgZeOj6qexMPv7eQb/zq0uvp+k/klnDTrh6swUJfClHXLhgH
+ODC4BGWt3j3nKWBTNT/2GNfBl5brTCAm00H8WZ2eMO/l/AcscbG1zplspgGA3zkg
+zGj5pS8GCgdde4Zbp9otc6vcdFxIhCoTqc8QbMle+YTyZYLdV3QY7gTQZi8a9Knh
+aSVjCVR9ybGmov89rcJYcx1cS59kjd7cMiaXi8wtwSgwdnsa8SCmaZMgQIuHbTnn
+eio/JV3Ueh8NFx7f6sc1D4dv6ETRoBq0fSE1fygWyP9J/U1grb2ueYlUfvLxNtyp
+9gPQyu7QsVlgYhK6L3IlOKLXSwrGEuk+EMnkIwBFPjMAmB95NP3TjxMucTEcsjKk
+KMlPxUNqaUM+3ikLCdYkUwU/US1ot1kC77YT3cJrgkDa5c33vpXizJVg9cBcvuTp
+Sz9rczLc5g7ERwYOgq7FIzHlY6sj3rh6f43edwX2SJ+B5JozZ+ONlFgzUh0HuJIB
+xp4fLWVKH0fGjqklrbpqlt6qFsaEC2/zjJOSmjb71c6GBhFIuD+p3Ycp6txxyOyo
+e+CigDd14BT9fvyYWIIl4LoQvA/odKe3ogc4SmZWonC45flUKfeOFS4D/pjVm7Y+
+0HEluFahWOo2zURy8526Wc63uQTJJh+Onr1sTvh6+7HgdfFAOk0=
+=GgZs
+-----END PGP SIGNATURE-----
+
+--t7Lgiiij6uyretFv--
