@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91E9CC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8A7C433E9
 	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:22:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 629EA23A5E
+	by mail.kernel.org (Postfix) with ESMTP id 79E4C221E5
 	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbhAUWWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 17:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41286 "EHLO
+        id S1726462AbhAUWWH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 17:22:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726863AbhAUWVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726873AbhAUWVZ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Jan 2021 17:21:25 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65EC3C0613D6
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:42 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id v184so2795256wma.1
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:42 -0800 (PST)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21811C0613ED
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:43 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id q7so3234352wre.13
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=zwW37Km+r4zps4r4VkD9Ul6EsBzptqoj2Ha5MI5WvLA=;
-        b=uQGvvnA6vVMgSS+H1JK58bfbxcgP268ZXywWvNU8fLC6S8C5i//XmrTfio/kpBLvl3
-         MZaSdDBWUnxM5MHLMpZe4HoIuKY/H3rUT7Cjzib6u01Q/M3BYpgD98w6NRj2hjXc/tJB
-         x/7UFo/4Cs6aLzw0rldXsxrEQdI67RcFkg6ysHabHkcwbNrMTN8Kr8KSXkDX+dnB4Lwa
-         OAsGkQ6YpwHTnKFdge3Dn+0fQaLA+mDBxdV8cXzx+EvKj1HHzWTRX2ik1THVjP+HSoNb
-         sERXssbGhC10mzT73g5pctG/tuAhzPQfZNcD2qwISxBS8K1T6yNUm6E0G6HX3AuRb+hX
-         e9PQ==
+        bh=MlB78MSeD43RpQYwEtmuC1BVv0QVQez8DcE5XaZ6MFQ=;
+        b=NYzRsHWfgIO+Mqw/tjqBNLtoZRhY8Z6TLryTVKIV1J9ept1owFwICNgX1difyWCF9c
+         0w34EQsnrl9fOHfc8bG/jFSlHk3CHWt/tpT3OKdVT92zgP1FxigVEG5OveoDybMDYAa7
+         4Kklcjf4/H97uKk8dtWQK6JFK7usHOFdkyIx6q6B6ECWhnSZdcaEpaq3R5DkduBQyFLH
+         sjQSA8DG72uv8wPzFNwZS7eA8pYK8Piz+05JLJaTOsh+ewzEqqVSLHKFpsVayZhYZ+DR
+         8OOXHch4f+jOagJFUnj7LpOz5L87JSnLxL8epN/PYDpBUrPLwrjD5RrfAkF8VKSbu4gO
+         hXQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=zwW37Km+r4zps4r4VkD9Ul6EsBzptqoj2Ha5MI5WvLA=;
-        b=JgXKjePq6GXVShTcMNeMT39wXpqRm/PfwhAr1jtn8CiRGHJ5G3lxTyoPCDrdTq35G8
-         RGiCPfU+AVZ+iVwtWASJElyg+G7CU2o5v6ZtWDoCquv52QDI0RNC4HwVLTk4LlKAaDgm
-         C+ly7A0LMXRT6org35ZjFoXeeuj7Z+XLLaSonN07kx6sGIWC0hOg1dVxKSJRvjddl8vx
-         zKwCj+SOnxC+50y1xgpuCzoC4JAhBGS11VudsmC17QLCVTVCqrssNBDUa8m8ICveF2uA
-         DLn5Dw1gN7Y+Ri6lJwAnpiNGhXAI+WAdw4O3jeSHK/uzVv6sLi8qBlQX+rHwbM9Qw2pN
-         Ckrg==
-X-Gm-Message-State: AOAM530RHZxIbl+mDmeKpwcw4Vtuq+B9pokl4FbFg7Grew/Ux+y2EYjd
-        sywimVNvnYSK8YuQshlcfMGgUccGqvk=
-X-Google-Smtp-Source: ABdhPJztl3kwS2eY5S9gYS2RaOXTdJy22OA5M2jj2eJKn1CnRrD2QNc8N+1tIJ7gkC1fHSwZWSEt6A==
-X-Received: by 2002:a05:600c:1552:: with SMTP id f18mr1206488wmg.149.1611267641020;
+        bh=MlB78MSeD43RpQYwEtmuC1BVv0QVQez8DcE5XaZ6MFQ=;
+        b=eP0hKy4DTPd3xCf1qrUpfNpJZ5SYvvWU8SZGQqaMHz9pGJ97iSHYbzEZT7fEdoe4+K
+         Qh9Eqt7apog9ArCkgu3OKAN7Dg0rP7lSrIJbIky9+39Gmyt2cCcR1MwtIuglKmZIHBNi
+         yiyZEX1aJp9AMddyAho0WwMVUAhB7i52yVkEymtTPIuiq8H3tekDJKIiAxncDQJSINYU
+         3mohdTsNe56FHOm4RUtcaldnWoQe7UB8Agim2tvvM8Z2yCyXTQAE1/0rVKmnP4K53sLq
+         XavOlDzrXxvg3ekwYvjkAGqM3bM+ut+p+cCKcoWcNtZozw2judFlcH/+4v8VaXTW1eCd
+         5Pew==
+X-Gm-Message-State: AOAM530a1/mzSTozx+w3u/mgVgyPR37V+jq+06iVehCzIz0HIziaby/o
+        G93M12QS+MRhEUDYxuGlppVbvli0/lQ=
+X-Google-Smtp-Source: ABdhPJwoS8mMO8BZwTBwEGNkZiFxttTqH35x82Wm/vGQjIiZlUmcWHKY9ejC0a1TyphstJ75RCOa3A==
+X-Received: by 2002:adf:ab1d:: with SMTP id q29mr1381735wrc.415.1611267641781;
         Thu, 21 Jan 2021 14:20:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 17sm8807208wmk.48.2021.01.21.14.20.40
+        by smtp.gmail.com with ESMTPSA id v11sm9640642wrt.25.2021.01.21.14.20.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 14:20:40 -0800 (PST)
-Message-Id: <5839ba4f7615819ed6f9a0fcb6de1855cd2e89e1.1611267638.git.gitgitgadget@gmail.com>
+        Thu, 21 Jan 2021 14:20:41 -0800 (PST)
+Message-Id: <88c15617b4ba8ae3211b1a01861eb4165f3eda38.1611267638.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.841.git.1611267638.gitgitgadget@gmail.com>
 References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Jan 2021 22:20:36 +0000
-Subject: [PATCH 1/3] range-diff: refactor check for commit range
+Date:   Thu, 21 Jan 2021 22:20:37 +0000
+Subject: [PATCH 2/3] range-diff: handle commit ranges other than A..B
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,54 +77,69 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Currently, when called with exactly two arguments, we test for a literal
-`..` in each of the two.
+In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
+described to specify commit ranges that `range-diff` does not yet
+accept: "<commit>^!" and "<commit>^-<n>".
 
-However, `<commit>^!` is a perfectly valid commit range, equivalent to
-`<commit>^..<commit>` according to the `SPECIFYING RANGES` section of
-gitrevisions[7].
-
-In preparation for allowing more sophisticated ways to specify commit
-ranges, let's refactor the conditional into its own function.
+Let's accept them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/range-diff.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ builtin/range-diff.c  | 21 ++++++++++++++++++++-
+ t/t3206-range-diff.sh |  8 ++++++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 24c4162f744..551d3e689cb 100644
+index 551d3e689cb..6097635c432 100644
 --- a/builtin/range-diff.c
 +++ b/builtin/range-diff.c
-@@ -11,6 +11,11 @@ N_("git range-diff [<options>] <base> <old-tip> <new-tip>"),
- NULL
- };
+@@ -13,7 +13,26 @@ NULL
  
-+static int is_range(const char *range)
-+{
-+	return !!strstr(range, "..");
-+}
-+
- int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ static int is_range(const char *range)
  {
- 	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
-@@ -46,12 +51,12 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		diffopt.use_color = 1;
+-	return !!strstr(range, "..");
++	size_t i;
++	char c;
++
++	if (strstr(range, ".."))
++		return 1;
++
++	i = strlen(range);
++	c = i ? range[--i] : 0;
++	if (c == '!')
++		i--; /* might be ...^! or ...^@ */
++	else if (isdigit(c)) {
++		/* handle ...^-<n> */
++		while (i > 2 && isdigit(range[--i]))
++			; /* keep trimming trailing digits */
++		if (i < 2 || range[i--] != '-')
++			return 0;
++	} else
++		return 0;
++
++	return i > 0 && range[i] == '^';
+ }
  
- 	if (argc == 2) {
--		if (!strstr(argv[0], ".."))
--			die(_("no .. in range: '%s'"), argv[0]);
-+		if (!is_range(argv[0]))
-+			die(_("not a commit range: '%s'"), argv[0]);
- 		strbuf_addstr(&range1, argv[0]);
+ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 6eb344be031..e217cecac9e 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -150,6 +150,14 @@ test_expect_success 'simple A B C (unmodified)' '
+ 	test_cmp expect actual
+ '
  
--		if (!strstr(argv[1], ".."))
--			die(_("no .. in range: '%s'"), argv[1]);
-+		if (!is_range(argv[1]))
-+			die(_("not a commit range: '%s'"), argv[1]);
- 		strbuf_addstr(&range2, argv[1]);
- 	} else if (argc == 3) {
- 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
++test_expect_success 'A^! and A^-<n> (unmodified)' '
++	git range-diff --no-color topic^! unmodified^-1 >actual &&
++	cat >expect <<-EOF &&
++	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'trivial reordering' '
+ 	git range-diff --no-color master topic reordered >actual &&
+ 	cat >expect <<-EOF &&
 -- 
 gitgitgadget
 
