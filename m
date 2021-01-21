@@ -2,269 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A149DC433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1DDCC433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:27:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D16A239A4
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:03:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC993239D4
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729554AbhAUODw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 09:03:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
+        id S1728519AbhAUOYS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 09:24:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729162AbhAUODJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 09:03:09 -0500
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B02AC061575
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:02:29 -0800 (PST)
-Received: by mail-oo1-xc31.google.com with SMTP id k9so511001oop.6
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:02:29 -0800 (PST)
+        with ESMTP id S1730975AbhAUOXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 09:23:41 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931F4C061575
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:22:53 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id z22so1590018qto.7
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zIQ9ftI7Xu0eB6wuUfbjpZWpOkmF9eiFhoKKb9RaOcM=;
-        b=Hq+OTSa8VwfImdigbNAQ3u6e8SNM43OKTouk+AkWjcsgnvG+8i6xggV/JpyiZ1SEOu
-         UyM20yPXOQhX/HZHz8v6Z9TnH2pjKnv+GlE0zj83nIEBv48ckWrZoCxmVXEXAU0sd0Je
-         6ecmV/wDS9/HJ8qW6jTM70CJsK97wB0OD3X1mKRFpC9m3YgN1ATQS34UcGhL3Cr6D5ek
-         MYkYufMqO6gjtv8y31LOtHFnHjc09uOhk45QDnR8NJ4mKzdVaxnfTc3VrfGQJ/u0ZksA
-         cyXmtTePSCZ1bg0wSvUf4f4M1Tug6ftLtp2HH2oR/7CMT+5p0ErTG/bxwDocJpVDpJcb
-         uepA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=t+uBJUKHRj/IiNftrGJ+xZPcZKi9TgZASiOegIWsxxM=;
+        b=uKvRXiUkZAt7M/7GaC89zrKbSQdmTwORSWS0rnqqER8HcDUhc9KjLmLv6gSVW/lHXF
+         92zuQIfK1wDOHK854GK+qGegcutI3Yhyhfhqz/GawzI+y6vlibxe/ISo27rEP+WdVtRq
+         oqqP0OLf4RS/zcyuPIpSpOWDugLT5gHzxHl3QcK3g1a/2pCk/EbPqWXxlRhiOKNipnTd
+         1NDhiCxE8GQEDg3iR1h7Umxy8UfILbjs8skZASq5ViNvCIo0QVp7VAUTf8TVvGK2Wk8U
+         9+rysteMlImKzgZ9tnCXeBuFqNTcT1gjAnVk8DiwCkYWVYV0R0MPvz2m4/Qlsg17ad16
+         VmAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zIQ9ftI7Xu0eB6wuUfbjpZWpOkmF9eiFhoKKb9RaOcM=;
-        b=aCBgRacH8GnCNBkVAk/FPObRRg9uQAW9T98VwUn0oDUTLa8pBprBCydyr9a1OdGIe4
-         +SRRkEbLh6nD5Jx3S+1ChhkjQmoGGfjlNNtXY4idAt+6FTQd75acwdUjSBqLFSnL16XH
-         uqqObwPyhyLMaxgeX2W6QyMOn5Az1ekyYE+d/kR7t483UCgN/Vk1jj1xXunGpazXt2kT
-         XKZbOcQeILSSNUTDYx9chgg4bC6PImvZI9BNfXNrvKIlFezYLV8K5bKNsWVC7ZISC73U
-         BDnotDtx51X1ENQT7PMam8zwzxt3nNb4c/StYfN1jJTeISzkc5ZEb6GNfgEouqxpeAkd
-         qdkw==
-X-Gm-Message-State: AOAM531nbMqtjCszKsLaYGgroAxGl99FdiV65ffqu9EgM6zKOqTUH89r
-        HOT3uGcmES8JdAUDQCLfTUOCvOjecONEHEwaJFU=
-X-Google-Smtp-Source: ABdhPJy1ErtHVIbznOwioJ3Ivw3zCLWXibsVJJGTkkL/Khr5eOlrLJgBgRQouzcRu43wwLQ+CBXFKD+F7vafru8qAcc=
-X-Received: by 2002:a4a:41cf:: with SMTP id x198mr9564872ooa.75.1611237748507;
- Thu, 21 Jan 2021 06:02:28 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=t+uBJUKHRj/IiNftrGJ+xZPcZKi9TgZASiOegIWsxxM=;
+        b=Bn2dThQFwxY+7qy7r5tQhN2alEBr2YD/27AhzUNRjY8BnhvLFFtk6ncJeeAEJXUS5v
+         C//MMcXt2pwx4zh0/Zv7wFcc6expIRbO/SSlVjSb18VGurkpm0X09/h/kCKdAUSgSOec
+         6tKzVxhZvh3X0x9flT0EJVvymqWJk7UmAGDKUwwjuAbPxWkTSKIuPA3gNfcNQ/sYGJqv
+         eeEocRBttEsoz4Oj1tOrNreYjTStq7sunrGlOr03ijqoKmZImMVkY4Q2fzg1jqPWbpru
+         BrIyCG7g0rQitGhR4e6hv86+qblWiAqyalgY1oPkLcU/Be5cDBLfkLq8VQ3k55XfeHUP
+         E1rw==
+X-Gm-Message-State: AOAM533I65qZmIRB1Ai8uUp/KhbXPu3AJHdH6+ENwlaHTj/ZsQ+Ltbt/
+        JtatLJkMAb9c+JYUIdUflvH+W7neTik=
+X-Google-Smtp-Source: ABdhPJwqcvOmCFg3/QaYMoxyYiy/qP+b0/BtdevZkPzrslwFm7hY8UIEu28gHur+HdGqwUwmxYNpRQ==
+X-Received: by 2002:ac8:6657:: with SMTP id j23mr13737807qtp.204.1611238972498;
+        Thu, 21 Jan 2021 06:22:52 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id i129sm3695901qkd.114.2021.01.21.06.22.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Jan 2021 06:22:51 -0800 (PST)
+Subject: Re: FW: Bug Report: changes to submodule's files can be silently lost
+ forever
+To:     Tim Yorke <TYorke@visionrt.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <PA4PR08MB60969AFFD0607BDBE3ACBBE6A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
+ <PA4PR08MB60967539EC75C9AACC4C46A5A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <af8020e6-fe8f-1a48-aba9-f3ad9d7084e4@gmail.com>
+Date:   Thu, 21 Jan 2021 09:22:50 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-4-charvi077@gmail.com>
- <xmqqmtx3dq83.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqmtx3dq83.fsf@gitster.c.googlers.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Thu, 21 Jan 2021 19:32:15 +0530
-Message-ID: <CAPSFM5cxTrvAq6j3yhzidWdr8P8-sYmd1-9tmsK4iXMKrC7TNA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
- from squash message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <PA4PR08MB60967539EC75C9AACC4C46A5A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Tim!
 
-On Thu, 21 Jan 2021 at 07:08, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Charvi Mendiratta <charvi077@gmail.com> writes:
->
-> > +static size_t subject_length(const char *body)
-> > +{
-> > +     size_t i, len = 0;
-> > +     char c;
-> > +     int blank_line = 1;
-> > +     for (i = 0, c = body[i]; c; c = body[++i]) {
-> > +             if (c == '\n') {
-> > +                     if (blank_line)
-> > +                             return len;
-> > +                     len = i + 1;
-> > +                     blank_line = 1;
-> > +             } else if (!isspace(c)) {
-> > +                     blank_line = 0;
-> > +             }
-> > +     }
-> > +     return blank_line ? len : i;
-> > +}
->
-> I cannot quite tell what this loop is trying to compute at the first
-> glance.
->
+Le 2021-01-21 à 08:48, Tim Yorke a écrit :
 
-Oops, I think Phillip and Christian also pointed in the last revision
-to look for alternatives to make it easy. I mistook that point and
-forgot to look at it.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> - I used the command "git config submodule.recurse true" in my top-level repository
+> - made a change to a file in a submodule (located within my top-level repository)
+> - performed a git checkout in the top-level repository to a commit that didn't have the submodule
+> - performed a git checkout in the top-level repository back to a commit that does have the submodule
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> When attempting the first checkout (i.e. to a commit without the submodule), I'd expect an warning telling me that the submodule was not up-to-date (uncommited changes). 
 
->  - If body[0] == '\n', then i==0, c==LF, blank_line==1 and len==0
->    so len==0 is returned immediately.
->
->  - If the first line has only SP, HT, CR, etc. whitespace,
->    blank_line stays 1 and at the end of the line when we see
->    c=='\n', body[i] is pointing at that '\n', blank_line is true, so
->    len is returned from the previous iteration (e.g. body="   \n"
->    returns 0)
+
+That's indeed very sensible.
+
+> 
+> What happened instead? (Actual behavior)
+> 
+> The changes to the file in the submodule were lost forever without any warning
+> 
+> What's different between what you expected and what actually happened?
+> 
+> My uncommitted changes were silently lost forever, whereas I'd expect either 
+> - to be warned before I could continue or
+> - the uncommited changes to be retained.
 >
 
-yes, it returns the same result as given in this example (But I am
-not sure what you are taking " SP, HT, CR, etc " ? otherwise if its
-whitespace, then its works the same).
+Thanks for the report. This is a known problem ([1], [2], [3]),
+and I'm working on fixing it.
 
->  - If the first line has some non space, blank_line becomes false,
->    so at the end of that line when we see c=='\n', body[i] is
->    pointing at that '\n', len==i+1 becomes one past that LF and then
->    we reset blank_line to true??? and go on to the next line.
->
-> So when we see LF, if we have seen any non whitespace byte on that
-> line, blank_line is false.  Only when we saw LF followed by zero or
-> more whitespace before seeing another LF, we return len that was set
-> when we saw the previous LF (which is one past that LF).
->
-> So... is this trying to find the first paragraph-break-looking line
-> to find the end of the first paragraph.  OK.
->
+Just to be sure, the changes you lost were to a tracked file in
+the submodule, right ? It was not a new, untracked file ?
 
-I followed and agreed with the above.
+I'm not quite ready yet to submit my fixes, but if you want to compile
+Git from source in the meantime, the heart of the fix is this diff:
 
-> There must be an easier-to-read way to write all this, though, I
-> would think (or don't we already have an existing code that is
-> waiting to be factored out?).
->
 
-I look into the code again and wonder if we can change this function like this :
+diff --git a/unpack-trees.c b/unpack-trees.c index 323280dd48..a3e3d98de1 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1872,7 +1872,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
+   
+   		if (submodule_from_ce(ce)) {
+   			int r = check_submodule_move_head(ce,
+-				"HEAD", oid_to_hex(&ce->oid), o);
++				"HEAD", empty_tree_oid_hex(), o);
+   			if (r)
+   				return add_rejected_path(o, error_type, ce->name);
+   			return 0;
 
-static int subject_length(const char *body)
-{
-               const char *p = body;
-               while (*p) {
-                if (*p == '\n' && p[1] =='\n') {
-                            break;
-                } else {
-                            p++;
-               }
-               }
-               return p - body;
-}
+This should prevent Git from switching branches if any tracked files are modified
+in the submodule.
 
-I think checking again '\n' will also serve the purpose as we separate
-the commit message subject and its body with the newline. Also, this
-is also
-true that this function is only called when the message starts with
-(squash! or amend! or fixup!)
+Cheers,
 
-> In any case, let's keep reading.
->
-> >  static void append_squash_message(struct strbuf *buf, const char *body,
-> >                                 struct replay_opts *opts)
-> >  {
-> > +     size_t commented_len = 0;
-> > +
-> >       unlink(rebase_path_fixup_msg());
-> > +     if (starts_with(body, "squash!") || starts_with(body, "fixup!"))
-> > +             commented_len = subject_length(body);
-> >       strbuf_addf(buf, "\n%c ", comment_line_char);
-> >       strbuf_addf(buf, _("This is the commit message #%d:"),
-> >                   ++opts->current_fixup_count + 1);
-> >       strbuf_addstr(buf, "\n\n");
-> > -     strbuf_addstr(buf, body);
-> > +     strbuf_add_commented_lines(buf, body, commented_len);
->
-> As add_commented_lines places the comment character at the beginning
-> of each line, it is OK for body[0..commented_len) to contain more than
-> one lines.  Good.
->
-> > +     strbuf_addstr(buf, body + commented_len);
->
-> And we add everything after the beginning of the paragraph-break
-> looking line.  This code may add a line, immediately after the
-> previous "commented out" block, bunch of whitespaces and then a LF.
-> It will be cleaned up with stripspace most of the time, but
-> depending on the end-user settings, it may be left behind.  I am
-> guessing that is what we want, but thought it would not hurt to
-> double check.
->
+Philippe.
 
-I agree this working does the same and comments out the subject of the
-commit message starting with squash! or fixup! or amend!, upon
-squashing the two or more commits.
+[1] https://lore.kernel.org/git/570e77a07f0b4d4ea09307e5fa819d6f@fiveco.ch/t/#u
+[2] https://lore.kernel.org/git/20200525094019.22padbzuk7ukr5uv@overdrive.tratt.net/
+[3] https://lore.kernel.org/git/CAHsG2VT4YB_nf8PrEmrHwK-iY-AQo0VDcvXGVsf8cEYXws4nig@mail.gmail.com/
 
-> > diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> > index 7bab6000dc..551dc06bc3 100755
-> > --- a/t/t3415-rebase-autosquash.sh
-> > +++ b/t/t3415-rebase-autosquash.sh
-> > @@ -81,8 +81,7 @@ test_auto_squash () {
-> >       echo 1 >file1 &&
-> >       git add -u &&
-> >       test_tick &&
-> > -     git commit -m "squash! first" &&
-> > -
-> > +     git commit -m "squash! first" -m "extra para for first" &&
->
-> It is not "extra"; that's the beginning of the "body" ;-).
->
-
-Okay, maybe we can use "message body" here.
-
-> >       git tag $1 &&
-> >       test_tick &&
-> >       git rebase $2 -i HEAD^^^ &&
-> > @@ -139,7 +138,7 @@ test_expect_success 'auto squash that matches 2 commits' '
-> >       echo 1 >file1 &&
-> >       git add -u &&
-> >       test_tick &&
-> > -     git commit -m "squash! first" &&
-> > +     git commit -m "squash! first" -m "extra para for first" &&
-> >       git tag final-multisquash &&
-> >       test_tick &&
-> >       git rebase --autosquash -i HEAD~4 &&
-> > @@ -192,7 +191,7 @@ test_expect_success 'auto squash that matches a sha1' '
-> >       git add -u &&
-> >       test_tick &&
-> >       oid=$(git rev-parse --short HEAD^) &&
-> > -     git commit -m "squash! $oid" &&
-> > +     git commit -m "squash! $oid" -m "extra para" &&
-> >       git tag final-shasquash &&
-> >       test_tick &&
-> >       git rebase --autosquash -i HEAD^^^ &&
-> > @@ -203,7 +202,8 @@ test_expect_success 'auto squash that matches a sha1' '
-> >       git cat-file blob HEAD^:file1 >actual &&
-> >       test_cmp expect actual &&
-> >       git cat-file commit HEAD^ >commit &&
-> > -     grep squash commit >actual &&
-> > +     grep -v "squash" commit &&
->
-> This says that the file must have at least one line that does not
-> say "squash" or the test is a failure.  It does not say "there
-> should be no line that has "squash" on it".  Intended?
->
-
-Ohh yes ..
-
-> > +     grep "extra para" commit >actual &&
->
-> I can tell that you want the "extra para" to still remain, but how
-> does the grep that is not anchored guarantee that?
-
-.. but now I think to remove this `grep -v "squash" commit` as also
-discussed with Phillip earlier that in this test script we are not
-checking for the commented commit message.
-
-> Perhaps look for
->
->         grep "^extra para" commit
->
-> to ensure that you are not seeing a commented out but somehow failed
-> to get stripspaced out?
->
-I am not sure, what does failing to get stripspaced mean?
-
-Thanks for the review !
-
-Thanks and Regards,
-Charvi
