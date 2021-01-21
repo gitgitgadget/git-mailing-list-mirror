@@ -2,142 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1DDCC433DB
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58006C433E6
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:36:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC993239D4
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:27:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 182EC23A21
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728519AbhAUOYS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 09:24:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730975AbhAUOXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 09:23:41 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931F4C061575
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:22:53 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id z22so1590018qto.7
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 06:22:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=t+uBJUKHRj/IiNftrGJ+xZPcZKi9TgZASiOegIWsxxM=;
-        b=uKvRXiUkZAt7M/7GaC89zrKbSQdmTwORSWS0rnqqER8HcDUhc9KjLmLv6gSVW/lHXF
-         92zuQIfK1wDOHK854GK+qGegcutI3Yhyhfhqz/GawzI+y6vlibxe/ISo27rEP+WdVtRq
-         oqqP0OLf4RS/zcyuPIpSpOWDugLT5gHzxHl3QcK3g1a/2pCk/EbPqWXxlRhiOKNipnTd
-         1NDhiCxE8GQEDg3iR1h7Umxy8UfILbjs8skZASq5ViNvCIo0QVp7VAUTf8TVvGK2Wk8U
-         9+rysteMlImKzgZ9tnCXeBuFqNTcT1gjAnVk8DiwCkYWVYV0R0MPvz2m4/Qlsg17ad16
-         VmAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=t+uBJUKHRj/IiNftrGJ+xZPcZKi9TgZASiOegIWsxxM=;
-        b=Bn2dThQFwxY+7qy7r5tQhN2alEBr2YD/27AhzUNRjY8BnhvLFFtk6ncJeeAEJXUS5v
-         C//MMcXt2pwx4zh0/Zv7wFcc6expIRbO/SSlVjSb18VGurkpm0X09/h/kCKdAUSgSOec
-         6tKzVxhZvh3X0x9flT0EJVvymqWJk7UmAGDKUwwjuAbPxWkTSKIuPA3gNfcNQ/sYGJqv
-         eeEocRBttEsoz4Oj1tOrNreYjTStq7sunrGlOr03ijqoKmZImMVkY4Q2fzg1jqPWbpru
-         BrIyCG7g0rQitGhR4e6hv86+qblWiAqyalgY1oPkLcU/Be5cDBLfkLq8VQ3k55XfeHUP
-         E1rw==
-X-Gm-Message-State: AOAM533I65qZmIRB1Ai8uUp/KhbXPu3AJHdH6+ENwlaHTj/ZsQ+Ltbt/
-        JtatLJkMAb9c+JYUIdUflvH+W7neTik=
-X-Google-Smtp-Source: ABdhPJwqcvOmCFg3/QaYMoxyYiy/qP+b0/BtdevZkPzrslwFm7hY8UIEu28gHur+HdGqwUwmxYNpRQ==
-X-Received: by 2002:ac8:6657:: with SMTP id j23mr13737807qtp.204.1611238972498;
-        Thu, 21 Jan 2021 06:22:52 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id i129sm3695901qkd.114.2021.01.21.06.22.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jan 2021 06:22:51 -0800 (PST)
-Subject: Re: FW: Bug Report: changes to submodule's files can be silently lost
- forever
-To:     Tim Yorke <TYorke@visionrt.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <PA4PR08MB60969AFFD0607BDBE3ACBBE6A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
- <PA4PR08MB60967539EC75C9AACC4C46A5A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <af8020e6-fe8f-1a48-aba9-f3ad9d7084e4@gmail.com>
-Date:   Thu, 21 Jan 2021 09:22:50 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.1
+        id S1731320AbhAUOgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 09:36:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33976 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731520AbhAUOgP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 09:36:15 -0500
+Received: (qmail 4807 invoked by uid 109); 21 Jan 2021 14:28:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Jan 2021 14:28:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1408 invoked by uid 111); 21 Jan 2021 14:28:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Jan 2021 09:28:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 Jan 2021 09:28:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        "B. Stebler" <bono.stebler@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Improving merge of tricky conflicts
+Message-ID: <YAmPnfb/KMlqimhH@coredump.intra.peff.net>
+References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
+ <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org>
+ <20200722074530.GB3306468@coredump.intra.peff.net>
+ <xmqqmu3r5umr.fsf@gitster.c.googlers.com>
+ <20200723182549.GB3975154@coredump.intra.peff.net>
+ <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <PA4PR08MB60967539EC75C9AACC4C46A5A9A10@PA4PR08MB6096.eurprd08.prod.outlook.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Tim!
+On Fri, Jan 15, 2021 at 04:50:08PM -1000, Martin von Zweigbergk wrote:
 
-Le 2021-01-21 à 08:48, Tim Yorke a écrit :
-
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> > > I do this often enough to wonder if I should write a small "filter"
+> > > that I can pipe a whole "diff3" <<< ... ||| ... === ... >>> region
+> > > to and convert it into to diffs, but not often enough to motivate
+> > > me to actually write one ;-).
+> >
+> > I would definitely have found that useful before (usually when one side
+> > made a tiny one-line change and the other side deleted or drastically
+> > changed a huge chunk).
 > 
-> - I used the command "git config submodule.recurse true" in my top-level repository
-> - made a change to a file in a submodule (located within my top-level repository)
-> - performed a git checkout in the top-level repository to a commit that didn't have the submodule
-> - performed a git checkout in the top-level repository back to a commit that does have the submodule
-> 
-> What did you expect to happen? (Expected behavior)
-> 
-> When attempting the first checkout (i.e. to a commit without the submodule), I'd expect an warning telling me that the submodule was not up-to-date (uncommited changes). 
+> FYI, I added something similar to Mercurial recently. Instead of two
+> diffs, it shows one snapshot and one diff. See
+> https://phab.mercurial-scm.org/D9551 for details. I've used it for a
+> few weeks and it seems to be working pretty well. The drawback is
+> mostly when you want to keep the side with the diff and ignore the
+> other side, since you'll then have to drop the lines prefixed with "-"
+> and then enter column-selection mode or something and delete the first
+> character on each remaining line.
 
+I've used the script I posted earlier in the thread several times in the
+last 6 months or so, by replacing the conflict markers in the file I'm
+resolving with the new output (basically "%!magic-diff3" in vim).
 
-That's indeed very sensible.
+It is helpful. My biggest complaint is cleaning up the diff from the
+marker after viewing it. In most cases where it's helpful, one side made
+a large change (say, deleting or moving a big chunk of code) and the
+other made a small one (tweaking one line in the moved chunk). The small
+diff is useful, but the big one is not. And then after having viewed it,
+I have to remove the whole big diff in my editor.
 
-> 
-> What happened instead? (Actual behavior)
-> 
-> The changes to the file in the submodule were lost forever without any warning
-> 
-> What's different between what you expected and what actually happened?
-> 
-> My uncommitted changes were silently lost forever, whereas I'd expect either 
-> - to be warned before I could continue or
-> - the uncommited changes to be retained.
->
+(It sounds like yours _replaces_ the conflict marker with the diff,
+which is why you have to edit the diff. Mine is showing it in addition,
+so you have to delete the diff).
 
-Thanks for the report. This is a known problem ([1], [2], [3]),
-and I'm working on fixing it.
+I think rather than thinking of these as expanded conflict markers, it
+would probably be a more useful workflow to just look at the diff in a
+separate command (so just show the conflicts, not everything else, and
+just show the diff). I suspect it could be made pretty nice with some
+simple editor support (e.g., open a new buffer in the editor showing the
+diff for just the current hunk, or even the current _half_ of the hunk
+you're on).
 
-Just to be sure, the changes you lost were to a tracked file in
-the submodule, right ? It was not a new, untracked file ?
-
-I'm not quite ready yet to submit my fixes, but if you want to compile
-Git from source in the meantime, the heart of the fix is this diff:
-
-
-diff --git a/unpack-trees.c b/unpack-trees.c index 323280dd48..a3e3d98de1 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1872,7 +1872,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
-   
-   		if (submodule_from_ce(ce)) {
-   			int r = check_submodule_move_head(ce,
--				"HEAD", oid_to_hex(&ce->oid), o);
-+				"HEAD", empty_tree_oid_hex(), o);
-   			if (r)
-   				return add_rejected_path(o, error_type, ce->name);
-   			return 0;
-
-This should prevent Git from switching branches if any tracked files are modified
-in the submodule.
-
-Cheers,
-
-Philippe.
-
-[1] https://lore.kernel.org/git/570e77a07f0b4d4ea09307e5fa819d6f@fiveco.ch/t/#u
-[2] https://lore.kernel.org/git/20200525094019.22padbzuk7ukr5uv@overdrive.tratt.net/
-[3] https://lore.kernel.org/git/CAHsG2VT4YB_nf8PrEmrHwK-iY-AQo0VDcvXGVsf8cEYXws4nig@mail.gmail.com/
-
+-Peff
