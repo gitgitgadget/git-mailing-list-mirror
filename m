@@ -2,77 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D696C433DB
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 499E5C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:20:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 57F0023A22
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:11:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14C6C239EF
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727716AbhAUVK2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 16:10:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34546 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727673AbhAUVJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 16:09:27 -0500
-Received: (qmail 6919 invoked by uid 109); 21 Jan 2021 21:08:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Jan 2021 21:08:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6061 invoked by uid 111); 21 Jan 2021 21:08:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Jan 2021 16:08:31 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Jan 2021 16:08:29 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin von Zweigbergk <martinvonz@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        "B. Stebler" <bono.stebler@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: Improving merge of tricky conflicts
-Message-ID: <YAntTS6UQIUWZngD@coredump.intra.peff.net>
-References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
- <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org>
- <20200722074530.GB3306468@coredump.intra.peff.net>
- <xmqqmu3r5umr.fsf@gitster.c.googlers.com>
- <20200723182549.GB3975154@coredump.intra.peff.net>
- <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
- <YAmPnfb/KMlqimhH@coredump.intra.peff.net>
- <CANiSa6jsjrm-i+T1zSBMFqpUqy-PJpai39JtH47m=v1TO_fi4A@mail.gmail.com>
+        id S1727215AbhAUWT0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 17:19:26 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51022 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726873AbhAUWTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 17:19:21 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7B1281069D7;
+        Thu, 21 Jan 2021 17:18:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vWCa1+/eFaRFizuBWdKmY6SKEZY=; b=g4ye9q
+        ZPljSph4kYqaErH1voZT4ruzEH9+3V7y6qypoE46ek6Ym4dff2J/S+bxXA/YU89U
+        t7CKGvGifgI03+WFcsWV+gRY9kyYzquz6Abca+Ki1QTGGkS973hQvjhbf+Wt4tQf
+        SttLlo/f9RZni6HdXuR4BpDElUUWRrwUUS9Wg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XHmgVWQzzQM1h3d2sMF2fUocjZBMJ6Zj
+        pIiLFCLkaaiKwI/Vkj3gcOsQ1TIWXTzK6ep3MJHowLRRTocCO9r2L6wi8jvYz+oj
+        0k+NJQ4zbACQFw4vi9KSq8QmbDrOEFC494mykrUygXDm1D53417DKFgZVPWWbwcB
+        qaRRnvzSwI8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 739141069D6;
+        Thu, 21 Jan 2021 17:18:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 794B91069D0;
+        Thu, 21 Jan 2021 17:18:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 6/7] worktree: teach `list` to annotate prunable
+ worktree
+References: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
+        <20210119212739.77882-1-rafaeloliveira.cs@gmail.com>
+        <20210119212739.77882-7-rafaeloliveira.cs@gmail.com>
+        <xmqqo8hjc6jx.fsf@gitster.c.googlers.com>
+        <gohp6kr1me1g3r.fsf@gmail.com>
+Date:   Thu, 21 Jan 2021 14:18:29 -0800
+In-Reply-To: <gohp6kr1me1g3r.fsf@gmail.com> (Rafael Silva's message of "Thu,
+        21 Jan 2021 16:09:49 +0100")
+Message-ID: <xmqqsg6uaq8a.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANiSa6jsjrm-i+T1zSBMFqpUqy-PJpai39JtH47m=v1TO_fi4A@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 981FB34C-5C36-11EB-A0AD-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 10:30:36AM -1000, Martin von Zweigbergk wrote:
+Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
 
-> > I think rather than thinking of these as expanded conflict markers, it
-> > would probably be a more useful workflow to just look at the diff in a
-> > separate command (so just show the conflicts, not everything else, and
-> > just show the diff). I suspect it could be made pretty nice with some
-> > simple editor support (e.g., open a new buffer in the editor showing the
-> > diff for just the current hunk, or even the current _half_ of the hunk
-> > you're on).
-> 
-> At some point it seems better to delegate to a proper merge tool. You
-> said that you use vim, so I'm a little surprised that you use conflict
-> markers instead of using vimdiff. I don't use vim and I've never
-> really used vimdiff. I still use conflict markers, mostly out of
-> habit, but also because I usually run in a tmux session on a remote
-> machine. I feel like I should try to switch to meld.
+> Junio C Hamano writes:
+>
+>> Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
+>>
+>>>  Documentation/git-worktree.txt | 26 ++++++++++++++++++++++++--
+>>>  builtin/worktree.c             | 10 ++++++++++
+>>>  builtin/worktree.cc            |  0
+>>>  t/t2402-worktree-list.sh       | 32 ++++++++++++++++++++++++++++++++
+>>>  4 files changed, 66 insertions(+), 2 deletions(-)
+>>>  create mode 100644 builtin/worktree.cc
+>>
+>> What's the h*ck is that .cc file doing ;-)
+>
+> Oops. I accidentally created and committed this file.
+>
+> Re-rolling ...
+>
+> Side note (joke): I wasn't trying to add C++ into Git codebase :)
 
-Yeah, I think your first sentence might be the most important takeaway. ;)
+Yeah, I know ;-)  I've already removed the empty file in my copy,
+but it seems you are getting other useful input, so it probably is a
+good idea to remove it on your end, too.
 
-I have tried using vimdiff in the past, but didn't really like it. My
-recollection is that it was clunky to navigate, and I could fix most
-conflicts much faster just by looking at them. But I have never been a
-heavy user of the multi-window multi-buffer stuff in vim. My "open a new
-buffer in the editor" is probably a lie; for me it is more like "open a
-new terminal and run a command at the shell". :)
-
--Peff
+Thanks.
