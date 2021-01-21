@@ -2,95 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABB7C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60CE9C433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:28:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BBA823A56
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:22:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2BED523A56
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 22:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727162AbhAUWWW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 17:22:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726789AbhAUWVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 17:21:22 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95C84C061756
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:41 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d16so2579269wro.11
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 14:20:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=+PolgLVvOKcX5E/bN0McZeXHhlcwFDYWyeoEoo1QBlc=;
-        b=OMHrrYsRkPzowjLISpEDKayORoJ4HC8OnOCF23THmMFxRbd9b0kEzVkST6LqTky7uk
-         Ra4oHZ772bZujv2bIKt1B1uAq52+poXF/LWQiTj9ar25dkxat28s/Dqp1jHJP/YqyOt4
-         0FaM4H5BlBVic2Gx8Vom7IdbFzuMBlziX9XGXL9WNKRu8suvB7sq4nQGrJ/taJ1nfFYn
-         o6b0VnbRZZjJqAo4X5g95SeVz5sy/FA8by5knS1Pr17VCWMh2eBhzu96DLD1riTXskC+
-         PDvL9EBOd2WLVItrGdRKuhP+ssb0F7eFyX8pwtnFl5shdWlahbeerk0aGOwDo5Z9dszs
-         FWog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+PolgLVvOKcX5E/bN0McZeXHhlcwFDYWyeoEoo1QBlc=;
-        b=VdMr4ih+M3ILTfD5tekFjCV/JpopVYqrHmyiqHE9W81CrI6QvFr8ikzZFM51odN9dE
-         TsK4gXH7n8xGsEenApmNTm8yGUKWWUM9RVKBrlYucWzVHAIRZU/Hy1pwhDGJ74nA4PqF
-         sSlRwuuNWUqR8//W9luQ5aSP6iV8qm4p1V/4U9F4vA9s5vCvL2HeauL+lmp7EL31X88i
-         JMjHjAodO4bMxCM9J4xfG1jQtXHwhTjYeGyC/It2BArB0YNHxxl2EMZk3oXuX/xVT95K
-         FerFcdTYOp1PgP2ESQkzYPycsGOML3aVoVBfWhgmA/CqWJFCNVzUQS95D94tkHDxIcsO
-         tptQ==
-X-Gm-Message-State: AOAM532o2L1RgeZstRlw5sIKFQHjiaoYYzOShcnKM3zbepEx1otB/AY+
-        PWX7MbxYeGcbfz3JrlGQebETIm6gW+w=
-X-Google-Smtp-Source: ABdhPJyj/7Wg99aN8GRuTzSLt/Ou+8b9CHfCcnZpzCLTUB5rcb0XpvBYJrJHIpzI7MQteZwPrSCuhw==
-X-Received: by 2002:a5d:6607:: with SMTP id n7mr1451523wru.206.1611267640230;
-        Thu, 21 Jan 2021 14:20:40 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j2sm9483996wrh.78.2021.01.21.14.20.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Jan 2021 14:20:39 -0800 (PST)
-Message-Id: <pull.841.git.1611267638.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Jan 2021 22:20:35 +0000
-Subject: [PATCH 0/3] Range diff with ranges lacking dotdot
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726981AbhAUW2K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 17:28:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57815 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725764AbhAUW2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 17:28:01 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 662539F983;
+        Thu, 21 Jan 2021 17:27:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1C8fOIyESqNdYvXM+EeWtN2d43E=; b=SD/Wwq
+        V1yF/UGxcbbOWYfnPU8WhpDT3B4XVjnoC+ZA2/k07lWHowc0W3HTrA4XL8JkkELr
+        kw9jkYg0kve9tJfVd9uUKXkfuyDw26kA56DcFXMpmHHK5fUNaNiAHrvP94SiUiR8
+        Uctuse2ikKibPhUkS7HpBQKmizt83CsjhjBKY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ciUKXmUBAAkWQ7VPIw5EAUUdfc0gfA6k
+        u3UHTmUVTXTgq369LIdlgmAcRreb8scDIUx7dmhqDBR5O/9wrIKlpfgB34kChbgk
+        Gk1nt2k8zeTaUhfpFwz2+4sZ3iyqi0dyFtlfXJuXj5rmZV/Vv+9NOEcz3O3FsULy
+        G/JaE2lN22I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DD4A9F982;
+        Thu, 21 Jan 2021 17:27:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D55699F981;
+        Thu, 21 Jan 2021 17:27:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase: add a config option for --no-fork-point
+References: <20210120044435.53509-1-alexhenrie24@gmail.com>
+        <xmqqturbdxi2.fsf@gitster.c.googlers.com>
+        <CAMMLpeQM7JCP0=TMqf0DxDCVJvkCGDEPSKN6vYTU_xc7+QaA1Q@mail.gmail.com>
+Date:   Thu, 21 Jan 2021 14:27:16 -0800
+In-Reply-To: <CAMMLpeQM7JCP0=TMqf0DxDCVJvkCGDEPSKN6vYTU_xc7+QaA1Q@mail.gmail.com>
+        (Alex Henrie's message of "Wed, 20 Jan 2021 16:13:35 -0700")
+Message-ID: <xmqqo8hiaptn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D1462EE8-5C37-11EB-BB54-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In
-https://lore.kernel.org/git/20200306091933.mx2jmurmdnsjua4b@pengutronix.de/,
-it was reported that git range-diff does not handle commit ranges like
-rev^!. This patch series fixes that.
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-Johannes Schindelin (3):
-  range-diff: refactor check for commit range
-  range-diff: handle commit ranges other than A..B
-  range-diff(docs): explain how to specify commit ranges
+>> > -     if (options.root && fork_point > 0)
+>> > +     if (options.root && options.fork_point > 0)
+>> >               die(_("cannot combine '--root' with '--fork-point'"));
+>>
+>> Is that because of this code?
+>
+> Yes. I was trying to avoid annoying the user with errors when
+> rebase.forkPoint is set to "true" and --root is given on the command
+> line.
+>
+>> If so, perhaps the configuration parser should set the .fork_point
+>> to (-1), so that "[rebase] forkpoint = false" that appears in your
+>> ~/.gitconfig file can be countermanded with "[rebase] forkpoint"
+>> that is placed in .git/config for one particular project that you do
+>> not mind using the feature?
+>
+> That's a great point. I will make that change and resubmit. Thanks!
 
- Documentation/git-range-diff.txt | 13 +++++++++++++
- builtin/range-diff.c             | 32 ++++++++++++++++++++++++++++----
- t/t3206-range-diff.sh            |  8 ++++++++
- 3 files changed, 49 insertions(+), 4 deletions(-)
+By the way, is the feature itself something we can test easily?  I
+think I saw the "we must interact with --root sensibly" test, but
+the actual feature not being tested include
 
+ - rebase.forkpoint set to false and then to true; does it use the
+   fork-point feature (your patch as-is would have failed this test);
 
-base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-841%2Fdscho%2Frange-diff-with-ranges-lacking-dotdot-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-841/dscho/range-diff-with-ranges-lacking-dotdot-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/841
--- 
-gitgitgadget
+ - rebase.forkpoint set to false and command line says --fork-point;
+
+ - rebase.forkpoint set to true and command line says --no-fork-point;
+
+I offhand do not know if it is easy to observe it the fork-point
+feature gets triggered, but it seems that the difference in
+behaviour is big enough for you to care, so I am hoping you may
+think of a way.
+
+Thanks.
