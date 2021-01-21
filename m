@@ -2,131 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEE4C433E6
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4C67C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:37:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9D9B23A40
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:34:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F828206CB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728485AbhAUSeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 13:34:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48846 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728685AbhAUSdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 13:33:25 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34571C06174A
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:32:45 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id w139so1756135pfc.18
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:32:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc:content-transfer-encoding;
-        bh=1+a7dXBHOWAAz4t0qsDL9hzNGpS6a7kb4eKNtv+FDoY=;
-        b=pnuIDS19qOWwaJQoVNHkSbA2iawqyBEuGt1FRSa+OkbAp9mhKwDRFpN1lM8ym8zM3T
-         egZQ4j06AtW3gk2+I6Iucy0kMhvneOSfZa90PZcqTHMr2wK/JiPAD5njEcq2ouaQVf/A
-         R1a66j08bndTozEjOLaHkkpgVSnpw84NGSG9iEILcF/UkxK17At2Rj06zyne1WyG2dWQ
-         YGxyXRhc2x6vhLi9I4pGMd0LuHoHqgiklYgfQ3eZI6aiVJU8WDwmgqCZ+nbJD6eZAniG
-         Fcaij+JucNHELjyZEyBbiG3tkz5PtELARBzltRRdGTQk7ePyGjQHThkocyhoh90w8lrU
-         Ezjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=1+a7dXBHOWAAz4t0qsDL9hzNGpS6a7kb4eKNtv+FDoY=;
-        b=Fk3oNYVB1Bk1Z0EUT5JYf4NOjKILzEWTXxhFe3Rb4yfh/BaFOokzILNG7IrE2rM5Qg
-         syttEFtvJrfhnzK3oIB8pNmgAk/jlcpiAb8kdZ4e/VjMOIRWxl8+TMA/QK4B/Iljc/lZ
-         PJMQgK0xPiZcfhFQCTNCbP+U3dZpIRwaTqTGcOm/5M1UFkX/Q/jNglT9oSJYTpbs12QE
-         HxNgEqwOReiq5uYVWyI0yoVapjX362z9cB2L1U34z06bD4PgIfo3DC7ydzu6bdfUbsua
-         wF20Kdor5syn3XKuKaPD+MhuXssSd+yIMrLMzG0XuqlPHyPWoKKj43wb/HcQFrLGKKnY
-         DwRg==
-X-Gm-Message-State: AOAM5330OxKosTQ1OvclJCAhjym09I+JjMXGmoWoG88GfhXxBJlPwRfI
-        zvcf2jlpql6Xez+DEakjFC4WgUSYjhmGTUfAdJfA
-X-Google-Smtp-Source: ABdhPJyvPnlhO5XwewkeOkXEzLKescmLULF8ld5foCqWH3SQf/9TCzn8aCWaFZH+7Pr4IirGeXB4egqzBtSXipl2kUrq
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:7d08:: with SMTP id
- g8mr790619pjl.180.1611253964553; Thu, 21 Jan 2021 10:32:44 -0800 (PST)
-Date:   Thu, 21 Jan 2021 10:32:38 -0800
-In-Reply-To: <xmqq1refdm58.fsf@gitster.c.googlers.com>
-Message-Id: <20210121183238.1780849-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq1refdm58.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.30.0.296.g2bfb1c46d8-goog
-Subject: Re: RFC on packfile URIs and .gitmodules check
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, avarab@gmail.com, git@vger.kernel.org,
-        peff@peff.net, stolee@gmail.com, me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1728972AbhAUSg5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 13:36:57 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57894 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728919AbhAUSgu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 13:36:50 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 772809DA2D;
+        Thu, 21 Jan 2021 13:35:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Jauir8k3AH0u0YfwMgmFhExQZpI=; b=E0yQYE
+        8gLVtYkVbWNTFUiLQgkwSCYBuj/70ZsVOloa2kuwpBDVsPJZy3OVC9d9uo6Dsx+O
+        9mnY011/qbR9OrZnE+s299o1dNtCL9QLxNBi4RwkTrNeSMDCrTMAWV04NnlNth6F
+        tJXojJuleGCTBLTT+m1iR6jqyNjCZPknYY5TM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=K3AiB8JU37KwvRJ8EooYHdzVRyXFoQWs
+        OwCNPpgrutKcRdouujfONJYRC2LoRSey91mDRTW1EEuZ4wQLhGb5lk6GFN/MyIYy
+        MIbgcQnkKScECN1dPpm6Cq9OOQFMpHN304/6czQ96epE2u/lBHYqHfsDc2oHba7p
+        RGWLvJ9Xw2Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 702929DA2B;
+        Thu, 21 Jan 2021 13:35:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F14AA9DA2A;
+        Thu, 21 Jan 2021 13:35:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2021, #04; Sat, 16)
+References: <xmqq8s8so84r.fsf@gitster.c.googlers.com>
+        <CABPp-BGHpvmx-hdZ==MdODKEDVTr92m3rs4T2d_w9Aa0d0zanQ@mail.gmail.com>
+Date:   Thu, 21 Jan 2021 10:35:18 -0800
+In-Reply-To: <CABPp-BGHpvmx-hdZ==MdODKEDVTr92m3rs4T2d_w9Aa0d0zanQ@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 21 Jan 2021 08:25:33 -0800")
+Message-ID: <xmqqft2ucf4p.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 699101DA-5C17-11EB-B2FB-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
->=20
-> > We wouldn't be OK, actually. Suppose we have a separate packfile
-> > containing only the ".gitmodules" blob - when we call fsck_finish(), we
-> > would not have downloaded the other packfile yet. Git processes the
-> > entire fetch response by piping the inline packfile (after demux) into
-> > index-pack (which is the one that calls fsck_finish()) before it
-> > downloads any of the other packfile(s).
->=20
-> Is that order documented as a requirement for implementation?
->=20
-> Na=C3=AFvely, I would expect that a CDN offload would be to relieve
-> servers from the burden of having to repack ancient part of the
-> history all the time for any new "clone" clients and that is what
-> the "here is a URI, go fetch it because I won't give you objects
-> that already appear there" feature is about.  Because we expect that
-> the offloaded contents would not be up-to-date, the traditional
-> packfile transfer would then is used to complete the history with
-> objects necessary for the parts of the history newer than the
-> offloaded contents.
->=20
-> And from that viewpoint, it sounds totally backwards to start
-> processing the up-to-the-minute fresh packfile that came via the
-> traditional packfile transfer before the CDN offloaded contents are
-> fetched and stored safely in our repository.
->=20
-> We probably want to finish interaction with the live server as
-> quickly as possible---it would go counter to that wish if we force
-> the live part of the history hang in flight, unprocessed, while the
-> client downloads offloaded bulk from CDN and processes it, making
-> the server side stuck waiting for some write(2) to go through.
->=20
-> But I still wonder if it is an option to locally delay the
-> processing of the up-to-the-minute-fresh part.
->=20
-> Instead of feeding what comes from them directly to "index-pack
-> --fsck-objects", would it make sense to spool it to a temporary, so
-> that we can release the server early, but then make sure to fetch
-> and process packfile URI material before coming back to process the
-> spooled packdata.  That would allow the newer part of the history to
-> have newer trees that still reference the same old .gitmodules that
-> is found in the frozen packfile that comes from CDN, no?
->=20
-> Or can there be a situation where some objects in CDN pack are
-> referred to by objects in the up-to-the-minute-fresh pack (e.g. a
-> ".gitmodules" blob in CDN pack is still unchanged and used in an
-> updated tree in the latest revision) and some other objects in CDN
-> pack refer to an object in the live part of the history?  If there
-> is such a cyclic dependency, "index-pack --fsck" one pack at a time
-> would not work, but I doubt such a cycle can arise.
+Elijah Newren <newren@gmail.com> writes:
 
-My intention is that the order of the packfiles (and cyclic
-dependencies) would not matter, so we wouldn't need to delay any
-processing of the up-to-the-minute-fresh part. I'm currently working on
-getting index-pack to output a list of the dangling .gitmodules files,
-so that fetch-pack (its consumer) can do one final fsck on those files.
+> Hi Junio,
+>
+> On Sat, Jan 16, 2021 at 2:02 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> * en/merge-ort-perf (2021-01-15) 4 commits
+>>  - merge-ort: begin performance work; instrument with trace2_region_* calls
+>>  - Merge branch 'en/ort-directory-rename' into en/merge-ort-perf
+>>  - Merge branch 'en/ort-conflict-handling' into en/merge-ort-perf
+>>  - Merge branch 'en/diffcore-rename' into en/merge-ort-perf
+>>  (this branch uses en/diffcore-rename, en/merge-ort-3, en/ort-conflict-handling and en/ort-directory-rename.)
+>
+> Any chance we could merge this down to next now?  In terms of pre-requisites:
+>   * you merged en/diffcore-rename and en/merge-ort-3 to next already
+> (and marked both as "Will merge to master")
+>   * you previously labelled en/ort-conflict-handling as "Will merge to
+> next" (and it was reviewed by Stolee[1])
+>   * en/ort-directory-rename has now been reviewed by Taylor[2]
+> Also, en/merge-ort-perf itself has also been reviewed by Taylor[3].
 
-Another way, as you said, is to say that the order of the packfiles
-matters (which potentially allows some simplification on the client
-side) but I don't think that we need to lose this flexibility.
+This one is a bit unfortunate in that it is so small a change by
+itself, but sits on top of en/ort-directory-rename.
+
+Even though I wanted to merge the en/ort-directory-rename down to
+'next' yesterday, it has just got updated and I had to rebase the
+ort-perf branch using the material from the old thread, so neither
+is in 'next' as of now.  That's the cost of building on top of too
+many things that are in flex X-<.  I'll see if I can find time today
+to give it the last read-over before mergint the ort-d-r in 'next'
+but I am not very optimistic right now.
+
+> But I'd like a stable commit identifier to place in the '??????????'
+
+Well, we'd all like a stable commit contents in the first place ;-)
+
+Thanks.
