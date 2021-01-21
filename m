@@ -2,92 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58006C433E6
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBBF7C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 15:11:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 182EC23A21
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 14:36:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D353239D4
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 15:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731320AbhAUOgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 09:36:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33976 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731520AbhAUOgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 09:36:15 -0500
-Received: (qmail 4807 invoked by uid 109); 21 Jan 2021 14:28:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Jan 2021 14:28:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1408 invoked by uid 111); 21 Jan 2021 14:28:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Jan 2021 09:28:45 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Jan 2021 09:28:45 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin von Zweigbergk <martinvonz@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        "B. Stebler" <bono.stebler@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: Improving merge of tricky conflicts
-Message-ID: <YAmPnfb/KMlqimhH@coredump.intra.peff.net>
-References: <a0418859-c62e-c207-a1b0-1b1aaf178527@gmail.com>
- <4df975f0-e4b1-afa1-cac1-f38e6d31a0d8@kdbg.org>
- <20200722074530.GB3306468@coredump.intra.peff.net>
- <xmqqmu3r5umr.fsf@gitster.c.googlers.com>
- <20200723182549.GB3975154@coredump.intra.peff.net>
- <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
+        id S1732577AbhAUPKl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 10:10:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732578AbhAUPKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 10:10:33 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC09CC06174A
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 07:09:52 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id b2so2895508edm.3
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 07:09:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=hm1yCj02fxHzQhfbzoKjdCjbL46aG6qevAse+LgWePw=;
+        b=jSrbXqmAUnB0G/A6gZz1k57rZBWGmqFEn5j3JP9IvH32+HAha8SImWtO3diXIYvS7N
+         BtapL3lVlK/zs0tP18a18OgGU8BZh+98sB3I5l/wB1sydXhksBo8hSjBWm0gjKuzDjzC
+         cdYPKRSNiIi+08VmMElGgPIN7NO/vm5ofmJqH327MsjJptmqQNCOSuxVwC+mer98UdNg
+         MGujD3B16QEtVjBwGVNFcubx+Z9vavhxed805ZOxOeI0XAPGXY9EwnUidWAAbFIdYL0o
+         k62UT59SLBrZ5yFKWfXhNcmtH5jO10Qjuje8Q93M4xe8i5yG1LzINMAdSSaHog73CRIe
+         LAPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=hm1yCj02fxHzQhfbzoKjdCjbL46aG6qevAse+LgWePw=;
+        b=FUZqDehgdi6PSLQ1Q6Ub6WBO6t0SeDDJPWHoDl3wxo+OeT4GV7TJZ+mrVXeGKKyvbS
+         1Y8mbh2kUrmL9pV/H0ZpWPeslKESgKXvNGuQi6Zv/isQ81PcmuaaDJfG5v8RS7uPAweG
+         tfGjmVOjLcfMcx7ByarpY9tNOsrnMQFdK5Vkw8s27lz+9Ndk1oaHuCH8ZkGxYYe4Ck7q
+         tVBzL79872z2kytNaDVfTM41VMLOK+Wmy8oenAgOb/SAe8I9OdAYVAZuqxenrPzry5ds
+         1//x5jO2mgfqDlksW7lfTG55hN0AZK/0j7RMFbAxLzzdl5MTS/IsLHEiCrzrrFIo9gHq
+         dclA==
+X-Gm-Message-State: AOAM533D38XZUXSUAGA8DIv0LjiAMUntkARqsd495e+E/RwUj+ssoWAl
+        6rtybh3ItLB5w5aisQFEz2Y=
+X-Google-Smtp-Source: ABdhPJxwkeohnIM9+o5OCY6ZTcluuUIxeGgQAggO25csY6ijH/PLP0LleACrx+bLGcVlXQlkpFEjPg==
+X-Received: by 2002:a50:cc06:: with SMTP id m6mr11454745edi.14.1611241791523;
+        Thu, 21 Jan 2021 07:09:51 -0800 (PST)
+Received: from cpm12071.local ([79.140.115.135])
+        by smtp.gmail.com with ESMTPSA id j3sm2320181eja.2.2021.01.21.07.09.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Jan 2021 07:09:50 -0800 (PST)
+References: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
+ <20210119212739.77882-1-rafaeloliveira.cs@gmail.com>
+ <20210119212739.77882-7-rafaeloliveira.cs@gmail.com>
+ <xmqqo8hjc6jx.fsf@gitster.c.googlers.com>
+User-agent: mu4e 1.4.13; emacs 27.1
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        "Phillip Wood" <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 6/7] worktree: teach `list` to annotate prunable
+ worktree
+In-reply-to: <xmqqo8hjc6jx.fsf@gitster.c.googlers.com>
+Message-ID: <gohp6kr1me1g3r.fsf@gmail.com>
+Date:   Thu, 21 Jan 2021 16:09:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANiSa6iV3WbS9VQdUQ-eF=dcz-mmQXvyckGJL8ZhpgFYc7U_TQ@mail.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 15, 2021 at 04:50:08PM -1000, Martin von Zweigbergk wrote:
 
-> > > I do this often enough to wonder if I should write a small "filter"
-> > > that I can pipe a whole "diff3" <<< ... ||| ... === ... >>> region
-> > > to and convert it into to diffs, but not often enough to motivate
-> > > me to actually write one ;-).
-> >
-> > I would definitely have found that useful before (usually when one side
-> > made a tiny one-line change and the other side deleted or drastically
-> > changed a huge chunk).
-> 
-> FYI, I added something similar to Mercurial recently. Instead of two
-> diffs, it shows one snapshot and one diff. See
-> https://phab.mercurial-scm.org/D9551 for details. I've used it for a
-> few weeks and it seems to be working pretty well. The drawback is
-> mostly when you want to keep the side with the diff and ignore the
-> other side, since you'll then have to drop the lines prefixed with "-"
-> and then enter column-selection mode or something and delete the first
-> character on each remaining line.
+Junio C Hamano writes:
 
-I've used the script I posted earlier in the thread several times in the
-last 6 months or so, by replacing the conflict markers in the file I'm
-resolving with the new output (basically "%!magic-diff3" in vim).
+> Rafael Silva <rafaeloliveira.cs@gmail.com> writes:
+>
+>>  Documentation/git-worktree.txt | 26 ++++++++++++++++++++++++--
+>>  builtin/worktree.c             | 10 ++++++++++
+>>  builtin/worktree.cc            |  0
+>>  t/t2402-worktree-list.sh       | 32 ++++++++++++++++++++++++++++++++
+>>  4 files changed, 66 insertions(+), 2 deletions(-)
+>>  create mode 100644 builtin/worktree.cc
+>
+> What's the h*ck is that .cc file doing ;-)
 
-It is helpful. My biggest complaint is cleaning up the diff from the
-marker after viewing it. In most cases where it's helpful, one side made
-a large change (say, deleting or moving a big chunk of code) and the
-other made a small one (tweaking one line in the moved chunk). The small
-diff is useful, but the big one is not. And then after having viewed it,
-I have to remove the whole big diff in my editor.
+Oops. I accidentally created and committed this file.
 
-(It sounds like yours _replaces_ the conflict marker with the diff,
-which is why you have to edit the diff. Mine is showing it in addition,
-so you have to delete the diff).
+Re-rolling ...
 
-I think rather than thinking of these as expanded conflict markers, it
-would probably be a more useful workflow to just look at the diff in a
-separate command (so just show the conflicts, not everything else, and
-just show the diff). I suspect it could be made pretty nice with some
-simple editor support (e.g., open a new buffer in the editor showing the
-diff for just the current hunk, or even the current _half_ of the hunk
-you're on).
+Side note (joke): I wasn't trying to add C++ into Git codebase :)
 
--Peff
+-- 
+Thanks
+Rafael
