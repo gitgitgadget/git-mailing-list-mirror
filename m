@@ -2,193 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCABAC433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 04:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ADBCC433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 05:13:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B22A233EF
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 04:20:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D399206DC
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 05:13:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727679AbhAUEUD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 23:20:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32830 "EHLO
+        id S1731961AbhAUDrw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 22:47:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbhAUEOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 23:14:35 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2230EC061786
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 20:13:44 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id e6so782702pjj.1
-        for <git@vger.kernel.org>; Wed, 20 Jan 2021 20:13:44 -0800 (PST)
+        with ESMTP id S2393390AbhAUCyP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 21:54:15 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0785AC061575
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 18:53:35 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id kx7so671498pjb.2
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 18:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1pSKv3Xw0cVrFEHDfQ6AZ0/ZuzaN2xtw8zTsCzYqmTI=;
-        b=a9V+vV6DI8qHqD6rbeTIUYiad9TUwBaFf4fYZtMVBnDpJuUxL6V6wvFENicKHtm6GS
-         9+MYJeFDpCb+Tz/YqtQbg+J0RpxA3dMxKEghRqJ6NhaIusII+tAziTMbhXPaeuVyZMpK
-         CGfXFOOCNxtp62RMWqLfMcSNKAVRZTeyuQhSTovsr7o7OEksruwrGXIi/+2ggBZX6al1
-         Z4EZ9SNN8fFYLA67ia7MWfbbK6o+QHDgdifteBGhqkaZ+CuLyJI7V+8PzTNTZ5TZq4V6
-         IU1ud1F0Pqm1Pc8VYmVX6u1UyZTfdA320FrTCZ1St5biqZvGlgo0WkuELTZHvq0mMSUi
-         jqRg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0idAtKjk/T4tj4o9r/o9hM9FGdClvbDpJ7ry64grCMs=;
+        b=tjjzA7IhzwfEwz19bnpotTFjqpFNbN3zk8LidHpLf4aFqJzFoLW7i1gEi2ed9PcIbB
+         IAthtltZfD/Sx/yTUoDZNRcWxFh0aiDhYzoN9qoLPqaMh8fyq26G2W/kr0Eh5zDutJWn
+         Pr3tNW0OS5pEXtCP9i44GCxezFY4qIxcG7yKruIBokasZidCmMnAYMNoe4740zCBVpVp
+         MliMs4+yqYRM4CtEsVpc1BtxU/ryj/ptyKa9Tj2KOOY2zb31hrMYI3D/cPiJzDw/ErDD
+         yUTVdeE8Y8M2ibFD8gPGNz1da+TpGEYA0Djui44/R9Jel7rM/YghuFQMJtllZr/Ndecc
+         AyrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1pSKv3Xw0cVrFEHDfQ6AZ0/ZuzaN2xtw8zTsCzYqmTI=;
-        b=qvR+oCogOvQZOjPp8ePjjMUfB6wwF+OHPswr+Gpmjp+/brwP2Lpn2RKjVgGy4lQ+x2
-         IbwjUaY325MuLfuugSzl6SwJ6c46ZisoTj8KK/BFs1Wr0UFdPEn3gv/8p14VV2Ug7JVp
-         S5PCgXEpJbq41tJwtKNGd4WTcK0zq5CHn8/uL5xNQvtwwhNEbYVLSwibcIUQnG3Vbn+a
-         LV/bpH0SDOS1O4+QyboGLdFU+554ejUUR8vvQs87f2TrU/h4fv2sR0gCfQAQd9v+Qj16
-         ZeByQ6SD1SE5wH3uEgk5KT3U1C7qw1Iq90uVAVycSAObf9IEn7UjNRwpLNQAL24EROVq
-         XS3w==
-X-Gm-Message-State: AOAM530PC5xw0dHFjMLFYZqPp9GMY9+VBcLvC1rkTnGnX8imQupYe8cs
-        1+JbjFJdWvdQbVpgygQF6lAnPxj3FPqktg==
-X-Google-Smtp-Source: ABdhPJyo6WVQYlVoEC9LFPEvByKH3J5lLO5vcAc5yBIi+CKik1Jy2ppDoHMWYoPTpdm+vFFcC3QN6w==
-X-Received: by 2002:a17:902:ecca:b029:de:b5bc:c852 with SMTP id a10-20020a170902eccab02900deb5bcc852mr13045774plh.59.1611202423130;
-        Wed, 20 Jan 2021 20:13:43 -0800 (PST)
-Received: from xavier.hsd1.ut.comcast.net ([2601:681:5900:961c:3398:e348:1cc1:ced7])
-        by smtp.gmail.com with ESMTPSA id v125sm3866175pgv.6.2021.01.20.20.13.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Jan 2021 20:13:42 -0800 (PST)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v2] rebase: add a config option for --no-fork-point
-Date:   Wed, 20 Jan 2021 21:13:20 -0700
-Message-Id: <20210121041320.66192-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.30.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0idAtKjk/T4tj4o9r/o9hM9FGdClvbDpJ7ry64grCMs=;
+        b=U7KD8QosUBgzNZRt3neqAi0nCkLpBEpgRHN1XsUs2njs/lldXbNdvHW7HWINQx5wjm
+         0ETU1bQzgvvC8TBoviYW8Mh/wU4+lOqIfs2HH83RVlox/IsBqfaJ02eiTOA+Ez1iFohh
+         4gQYnjSSlSDAc2bv7CIAyGs5G+41vdn5b8ho9PCoTzjh0C1Wj6g5O8JNE4eO8w2zyQcK
+         Ro+/Xvl6OUYRHY3lIKWRoXvur17FDexkdt7YK96w9bVzqz8xpSOAqzrGdFKtv1IXjSUv
+         uXO7YN3F1oDkYlK2zQ3mMs0YPidsF5JQ2tIgC6AG8SAMGrtHkSEx9YiMY/T1JxzcAH/w
+         WaRQ==
+X-Gm-Message-State: AOAM530+eSbaMqXLteBMIvg94K01U3br9oFipY6jQY6k9i3as/Nre5KX
+        ePtCGPCnriVPt6IPnnoUdgA=
+X-Google-Smtp-Source: ABdhPJyuB10VVhgocuJorrg5TPWnbK+7VaeRp+1ayLpxc9tURYpLSKNkKLu/MuTxPgtD05rBEzpYZQ==
+X-Received: by 2002:a17:90b:4d09:: with SMTP id mw9mr9103454pjb.199.1611197614387;
+        Wed, 20 Jan 2021 18:53:34 -0800 (PST)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id y10sm3561624pff.197.2021.01.20.18.53.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jan 2021 18:53:33 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 0/2] use unique out file in t5411
+Date:   Wed, 20 Jan 2021 21:53:29 -0500
+Message-Id: <20210121025331.21658-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
+In-Reply-To: <20210120124906.GA8396@szeder.dev>
+References: <20210120124906.GA8396@szeder.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some users (myself included) would prefer to have this feature off by
-default because it can silently drop commits.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/config/rebase.txt |  3 +++
- builtin/rebase.c                | 20 +++++++++++++-------
- t/t3431-rebase-fork-point.sh    | 10 ++++++++++
- 3 files changed, 26 insertions(+), 7 deletions(-)
+t5411 has some test cases for the behavior of failed 'git push'
+commands.  Even the 'git push' command ended, the output file
+may still be updated with messages from 'git-receive-pack' command
+running in background.  This breaks test cases which reuse the
+same 'out' file.
 
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index 7f7a07d22f..8531a4b3f7 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -68,3 +68,6 @@ rebase.rescheduleFailedExec::
- 	Automatically reschedule `exec` commands that failed. This only makes
- 	sense in interactive mode (or when an `--exec` option was provided).
- 	This is the same as specifying the `--reschedule-failed-exec` option.
-+
-+rebase.forkPoint:
-+	If set to false set `--no-fork-point` option by default.
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 840dbd7eb7..de400f9a19 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -102,6 +102,7 @@ struct rebase_options {
- 	int reschedule_failed_exec;
- 	int use_legacy_rebase;
- 	int reapply_cherry_picks;
-+	int fork_point;
- };
- 
- #define REBASE_OPTIONS_INIT {			  	\
-@@ -111,7 +112,8 @@ struct rebase_options {
- 		.default_backend = "merge",	  	\
- 		.flags = REBASE_NO_QUIET, 		\
- 		.git_am_opts = STRVEC_INIT,		\
--		.git_format_patch_opt = STRBUF_INIT	\
-+		.git_format_patch_opt = STRBUF_INIT,	\
-+		.fork_point = -1,			\
- 	}
- 
- static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-@@ -1095,6 +1097,11 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.forkpoint")) {
-+		opts->fork_point = git_config_bool(var, value) ? -1 : 0;
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "rebase.usebuiltin")) {
- 		opts->use_legacy_rebase = !git_config_bool(var, value);
- 		return 0;
-@@ -1306,7 +1313,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
- 	const char *rebase_merges = NULL;
--	int fork_point = -1;
- 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
- 	struct object_id squash_onto;
- 	char *squash_onto_name = NULL;
-@@ -1406,7 +1412,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
- 			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
--		OPT_BOOL(0, "fork-point", &fork_point,
-+		OPT_BOOL(0, "fork-point", &options.fork_point,
- 			 N_("use 'merge-base --fork-point' to refine upstream")),
- 		OPT_STRING('s', "strategy", &options.strategy,
- 			   N_("strategy"), N_("use the given merge strategy")),
-@@ -1494,7 +1500,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("cannot combine '--keep-base' with '--root'"));
- 	}
- 
--	if (options.root && fork_point > 0)
-+	if (options.root && options.fork_point > 0)
- 		die(_("cannot combine '--root' with '--fork-point'"));
- 
- 	if (action != ACTION_NONE && !in_progress)
-@@ -1840,8 +1846,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 								    NULL);
- 			if (!options.upstream_name)
- 				error_on_missing_default_upstream();
--			if (fork_point < 0)
--				fork_point = 1;
-+			if (options.fork_point < 0)
-+				options.fork_point = 1;
- 		} else {
- 			options.upstream_name = argv[0];
- 			argc--;
-@@ -1945,7 +1951,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
- 
--	if (fork_point > 0) {
-+	if (options.fork_point > 0) {
- 		struct commit *head =
- 			lookup_commit_reference(the_repository,
- 						&options.orig_head);
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index 172562789e..e48c4014cf 100755
---- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -74,4 +74,14 @@ test_expect_success 'git rebase --fork-point with ambigous refname' '
- 	test_must_fail git rebase --fork-point --onto D one
- '
- 
-+test_expect_success '--fork-point and --root both given' '
-+	test_must_fail git rebase --fork-point --root 2>err &&
-+	test_i18ngrep "cannot combine" err
-+'
-+
-+test_expect_success 'rebase.forkPoint true and --root given' '
-+	test_config rebase.forkPoint true &&
-+	git rebase --root
-+'
-+
- test_done
+## Changes since v2
+
++ Use unique 'out' file by appending the '-$test_count' suffix to
+  prevent accidental overwriting by internal 'git-receive-pack'
+  process.
+
+--
+
+Jiang Xin (2):
+  t5411: use different out file to prevent overwriting
+  t5411: refactor check of refs using test_cmp_refs
+
+ t/t5411/common-functions.sh                   | 15 +++
+ t/t5411/once-0010-report-status-v1.sh         |  5 +-
+ t/t5411/test-0000-standard-git-push.sh        | 32 +++----
+ .../test-0001-standard-git-push--porcelain.sh | 32 +++----
+ t/t5411/test-0002-pre-receive-declined.sh     | 10 +-
+ ...st-0003-pre-receive-declined--porcelain.sh | 10 +-
+ t/t5411/test-0011-no-hook-error.sh            | 20 ++--
+ t/t5411/test-0012-no-hook-error--porcelain.sh | 20 ++--
+ t/t5411/test-0013-bad-protocol.sh             | 95 +++++++------------
+ t/t5411/test-0014-bad-protocol--porcelain.sh  | 95 +++++++------------
+ t/t5411/test-0020-report-ng.sh                | 20 ++--
+ t/t5411/test-0021-report-ng--porcelain.sh     | 20 ++--
+ t/t5411/test-0022-report-unexpect-ref.sh      | 10 +-
+ ...est-0023-report-unexpect-ref--porcelain.sh | 10 +-
+ t/t5411/test-0024-report-unknown-ref.sh       | 10 +-
+ ...test-0025-report-unknown-ref--porcelain.sh | 10 +-
+ t/t5411/test-0026-push-options.sh             | 22 ++---
+ t/t5411/test-0027-push-options--porcelain.sh  | 22 ++---
+ t/t5411/test-0030-report-ok.sh                |  6 +-
+ t/t5411/test-0031-report-ok--porcelain.sh     |  6 +-
+ t/t5411/test-0032-report-with-options.sh      |  9 +-
+ ...est-0033-report-with-options--porcelain.sh |  9 +-
+ t/t5411/test-0034-report-ft.sh                |  6 +-
+ t/t5411/test-0035-report-ft--porcelain.sh     |  6 +-
+ ...t-0036-report-multi-rewrite-for-one-ref.sh | 18 ++--
+ ...rt-multi-rewrite-for-one-ref--porcelain.sh | 18 ++--
+ t/t5411/test-0038-report-mixed-refs.sh        | 10 +-
+ .../test-0039-report-mixed-refs--porcelain.sh | 10 +-
+ t/t5411/test-0040-process-all-refs.sh         |  6 +-
+ .../test-0041-process-all-refs--porcelain.sh  |  6 +-
+ ...t-0050-proc-receive-refs-with-modifiers.sh | 18 ++--
+ 31 files changed, 224 insertions(+), 362 deletions(-)
+
 -- 
-2.30.0
+2.28.0.15.gba9e81f0bd
 
