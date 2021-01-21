@@ -2,94 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B408C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06341C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 098C823381
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:00:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C793F22BEF
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 21:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbhAUVAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 16:00:35 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57810 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726919AbhAUU47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 15:56:59 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 190AE108B3D;
-        Thu, 21 Jan 2021 15:56:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=imP/mC9LX4aw7R0zRwyaMYXuZtQ=; b=oqeC72
-        p9EkN8x3rwH4ygyGcjj5VPrbAK+3+2BvQKc2pjqWTKec63kJZnAAwH1b/tPsq/mB
-        q+kZha1AEys5Cwe4rLF8ccNQTJE3PIdmpaUHBEeB/wertAlyQ1YhoyTbEk0W48Qu
-        42CnPfPAWmp2FgE9xDibvYH3ijkJBudN5yLT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=O8CTa+jmHDvaMzwkio6Mf4hMl0JwGdl+
-        lfUaEKAqUsL5slM+q8T5V+o3Bes9uSMBvo/bFMYgQkdXWioKGp65bFqt2Z2PJcZb
-        2DCCYNLq4unLtxczYebtKOmnBoOjPgNk4/GK37wBoyhlLRqe6A3fBT3BObzhUWG0
-        eZS7g46xYAE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 121A3108B3C;
-        Thu, 21 Jan 2021 15:56:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 54FB3108B3A;
-        Thu, 21 Jan 2021 15:56:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Charvi Mendiratta <charvi077@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
- from squash message
-References: <20210108092345.2178-1-charvi077@gmail.com>
-        <20210119074102.21598-4-charvi077@gmail.com>
-        <xmqqmtx3dq83.fsf@gitster.c.googlers.com>
-        <CAPSFM5cxTrvAq6j3yhzidWdr8P8-sYmd1-9tmsK4iXMKrC7TNA@mail.gmail.com>
-        <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
-Date:   Thu, 21 Jan 2021 12:56:14 -0800
-In-Reply-To: <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
-        (Christian Couder's message of "Thu, 21 Jan 2021 16:21:16 +0100")
-Message-ID: <xmqqwnw6au1d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1727296AbhAUVFk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 16:05:40 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34518 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727530AbhAUVDa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 16:03:30 -0500
+Received: (qmail 6869 invoked by uid 109); 21 Jan 2021 21:02:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Jan 2021 21:02:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5973 invoked by uid 111); 21 Jan 2021 21:02:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Jan 2021 16:02:43 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 Jan 2021 16:02:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v4 3/3] clone: respect remote unborn HEAD
+Message-ID: <YAnr8lBESOO+ACL/@coredump.intra.peff.net>
+References: <20201211210508.2337494-1-jonathantanmy@google.com>
+ <cover.1608673963.git.jonathantanmy@google.com>
+ <e770fc46eb3b600d8475d69964badaf2c63a7364.1608673963.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A8BDACE-5C2B-11EB-B70A-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e770fc46eb3b600d8475d69964badaf2c63a7364.1608673963.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Dec 22, 2020 at 01:54:20PM -0800, Jonathan Tan wrote:
 
->> Oops, I think Phillip and Christian also pointed in the last revision
->> to look for alternatives to make it easy. I mistook that point and
->> forgot to look at it.
->
-> Yes, please take a look at find_commit_subject() in "commit.c".
+> @@ -1323,10 +1325,20 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  		remote_head = NULL;
+>  		option_no_checkout = 1;
+>  		if (!option_bare) {
+> -			const char *branch = git_default_branch_name();
+> -			char *ref = xstrfmt("refs/heads/%s", branch);
+> +			const char *branch;
+> +			char *ref;
+> +
+> +			if (unborn_head_target &&
+> +			    skip_prefix(unborn_head_target, "refs/heads/", &branch)) {
+> +				ref = unborn_head_target;
+> +				unborn_head_target = NULL;
+> +			} else {
+> +				branch = git_default_branch_name();
+> +				ref = xstrfmt("refs/heads/%s", branch);
+> +			}
+>  
+>  			install_branch_config(0, branch, remote_name, ref);
+> +			create_symref("HEAD", ref, "");
+>  			free(ref);
+>  		}
 
-Yeah, it uses pretty.c::skip_blank_lines(), which is easy to use.
-so something like a loop that calls skip_blank_lines() to see if it
-returns a differnt result (which means the argument we fed it was at
-the beginning of a blank line, which is what this helper wants to
-return), and otherwise we advance by one line with strchrnul() and
-retry, perhaps.
+In the old code, we never called create_symref() at all. It makes sense
+that we'd do it now when unborn_head_target is not NULL. But what about
+in the "else" clause there? Now we're adding an extra create_symref()
+call. Who was setting up the HEAD symref before, and are we now doing it
+twice?
 
-    while (*body) {
-	char *next = skip_blank_lines(body);
-	if (next != body)
-	    break; /* found a blank line */
-	body = strchrnul(body, '\n');
-	if (*body)
-	    body++;
-    }
-    /* body has the answer */
+If we have a valid unborn head, then we alias it to "ref" and we set the
+original to NULL. And it gets cleaned up here via free(ref). Makes
+sense. It confused me for a moment with this hunk...
+
+> @@ -1373,6 +1385,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	strbuf_release(&key);
+>  	junk_mode = JUNK_LEAVE_ALL;
+>  
+> +	free(unborn_head_target);
+
+...since this line will almost always be free(NULL) as a result (either
+there was no unborn head, or we consumed the string already). But it is
+covering the case that somebody gave us an unborn_head_target but it
+didn't start with refs/heads/. So it's useful to have.
+
+-Peff
