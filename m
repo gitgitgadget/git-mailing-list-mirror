@@ -2,117 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04035C433E6
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 05:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97882C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 06:14:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A89E6238EE
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 05:59:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54C95238EE
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 06:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbhAUF7l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 00:59:41 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56675 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387765AbhAUDG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 22:06:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 623B7ACF80;
-        Wed, 20 Jan 2021 22:06:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZRYBGYnztDNl
-        fASCUQyjwLrzJ2k=; b=V3Rw4ywHm7LJVvH0iGODhllt2rNmGsAPTWddjGXZUyx9
-        UQGhX1Vo8M7b0E9+R7cUe0jkNAanELo0gmogU85PFDmir7T8OukF/KgaVvAvwyzo
-        vFTgJZ6jtBcqMOo+dnOYsTEU0QGBFOwGHr/mXlP+DGaexpMAH3s2VARb33aau3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=mLCRNS
-        fhPzbzSdOirqDP0BqkVF5T5eBN/KIl3KSSIEqDpmz6pbb4WZuA+eInxlfW8vsuh0
-        gQSXhFVxbx8jIqOCGPb0yffleuQszETSHxFb2LUR8DzLrZrkk8ofvGs4TOAafqRl
-        44cx1daxJ/xsStgvadeg+syB7tviX4jLBk1Ro=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5980DACF7F;
-        Wed, 20 Jan 2021 22:06:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DA77AACF7E;
-        Wed, 20 Jan 2021 22:06:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, peff@peff.net,
-        stolee@gmail.com, me@ttaylorr.com
-Subject: Re: RFC on packfile URIs and .gitmodules check
-References: <87o8hk820f.fsf@evledraar.gmail.com>
-        <20210120193053.1804670-1-jonathantanmy@google.com>
-Date:   Wed, 20 Jan 2021 19:06:11 -0800
-In-Reply-To: <20210120193053.1804670-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 20 Jan 2021 11:30:53 -0800")
-Message-ID: <xmqq1refdm58.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1726612AbhAUGNw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 01:13:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58470 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbhAUGNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 01:13:44 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A966AC06179A
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 22:12:22 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id w1so951778ejf.11
+        for <git@vger.kernel.org>; Wed, 20 Jan 2021 22:12:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=iA3xQhB//VokeEbfMXNyLDTPMntXQ6SKQUTE2ZSvAA8=;
+        b=JLDwbe4TaFL4SOZZZgXWY1yWp25XvfexvkMxmLQVwbYsWPeQr32fH6Jq1rkCL5smyt
+         JjIcqm9iCb2E8aBf1NLlgoC0g8FyNJief3zTbNxWdRS2wupqjdBapkXRhcw2KmJEcmvk
+         0J/h8QlQcrTp6HCl4jx7IAGwvFTWZkbpYLOrEZR05S4SV/N1JDqps1Dn5iACjBpGcapo
+         9VHcRgXiQyIbY6QCRyRvISeSsjzD9h9fa2rlYkkYuhVl8ks7lZJlMCDAqwS7VQSBFZ+u
+         WGJBYUvMidOOjlbHJg3TRTDeVpGpuWp6KRLGif6zI85aV9Y0sluMDjhnQ+uV/8liLGDN
+         kFuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=iA3xQhB//VokeEbfMXNyLDTPMntXQ6SKQUTE2ZSvAA8=;
+        b=Uf8p5d9jtGRN8X5pLys/kO3B2gOxQi4uzJRD0Q78HeVZnGLrVkuLc2jmh6DRxmReP1
+         36/MzSVaM6os0agIgThExr7xAwiisa6ChNf5bKrI5unGtvF2JQP/tBmSMQJ8VYbjwltV
+         Her2lWGR3geUonjeVkCilDvJ/XNSg+l7V94CCjmNqqGMbrmL/sMW8znt9qRrf8wDi7FN
+         lNjfYUIOjQL3AhowHaxpDaAuBOIzoFasE0mVre+XILPZzrh6vW/0kC136kk8ioVRW/mv
+         zLDQHsQjIQ+6CAU+YYYE7XG+wLq3G2oIYYrVFKK2Tnw9GJ5J++/wcORFMfoC8254hGSz
+         siHA==
+X-Gm-Message-State: AOAM532i5gFfQnqLYx1V6EnHUfeyXYo9OFhfEXvL/n/LQcs9LB8smYda
+        VarairlkYYjVYAOZ7I4fZwHO+TdxvxQ=
+X-Google-Smtp-Source: ABdhPJz++kcv+EEDcDnwauupgJPOSpgMLjrDSWphTSDMdp0U19nt7NEXrq7elgSMtHw0smnlblHPCA==
+X-Received: by 2002:a17:906:4690:: with SMTP id a16mr8374806ejr.442.1611209541450;
+        Wed, 20 Jan 2021 22:12:21 -0800 (PST)
+Received: from szeder.dev (92-249-246-25.pool.digikabel.hu. [92.249.246.25])
+        by smtp.gmail.com with ESMTPSA id g17sm2165096edb.39.2021.01.20.22.12.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Jan 2021 22:12:20 -0800 (PST)
+Date:   Thu, 21 Jan 2021 07:12:19 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v19 03/10] receive-pack: add new proc-receive hook
+Message-ID: <20210121061219.GF8396@szeder.dev>
+References: <20200824174202.11710-1-worldhello.net@gmail.com>
+ <20200827154551.5966-4-worldhello.net@gmail.com>
+ <20210117222151.GY8396@szeder.dev>
+ <CANYiYbE358amO95JStnspS-N-9WMYENiYspdKtsGsUc7Hv5jWw@mail.gmail.com>
+ <20210120122858.GZ8396@szeder.dev>
+ <CANYiYbEKi=DD5-7Ss4KMF4zXNxGr2cABed--T-uwAzSf2KA-nw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9DB5BF28-5B95-11EB-A835-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANYiYbEKi=DD5-7Ss4KMF4zXNxGr2cABed--T-uwAzSf2KA-nw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Jan 21, 2021 at 10:21:36AM +0800, Jiang Xin wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> 于2021年1月20日周三 下午8:29写道：
+> >
+> > On Mon, Jan 18, 2021 at 04:24:11PM +0800, Jiang Xin wrote:
+> > > SZEDER Gábor <szeder.dev@gmail.com> 于2021年1月18日周一 上午6:21写道：
+> > > >
+> > > >
+> > > > This patch added a whole lot of test cases, and two of them '86 -
+> > > > proc-receive: not support push options (builtin protocol)' and '95 -
+> > > > proc-receive: not support push options (builtin protocol/porcelain)'
+> > > > are prone to rare failures.
+> > > >
+> > > > On Thu, Aug 27, 2020 at 11:45:44AM -0400, Jiang Xin wrote:
+> > > > > diff --git a/t/t5411/test-0026-push-options.sh b/t/t5411/test-0026-push-options.sh
+> > > > > new file mode 100644
+> > > > > index 0000000000..d0c4da8b23
+> > > > > --- /dev/null
+> > > > > +++ b/t/t5411/test-0026-push-options.sh
+> > > >
+> > > > > +# Refs of upstream : master(A)
+> > > > > +# Refs of workbench: master(A)  tags/v123
+> > > > > +# git push -o ...  :                       refs/for/master/topic
+> > > > > +test_expect_success "proc-receive: not support push options ($PROTOCOL)" '
+> > > > > +     test_must_fail git -C workbench push \
+> > > > > +             -o issue=123 \
+> > > > > +             -o reviewer=user1 \
+> > > > > +             origin \
+> > > > > +             HEAD:refs/for/master/topic \
+> > > > > +             >out 2>&1 &&
+> > > >
+> > > > Three relevant things are happening here:
+> > > >
+> > > >   - 'git push' is executed with its standard output and error
+> > > >     redirected to the file 'out'.
+> > > >
+> > > >   - 'git push' executes 'git receive-pack' internally, which inherits
+> > > >     the open file descriptors, so its output and error goes into that
+> > > >     same 'out' file.
+> > > >
+> > > >   - 'git push' is expected to fail when it finds out that the other
+> > > >     side doesn't support push options, but it does so with a simple
+> > > >     die() right away, without waiting for its child 'git receive-pack'
+> > > >     process to finish.
+> > > >
+> > > > > +     make_user_friendly_and_stable_output <out >actual &&
+> > > > > +     test_i18ngrep "fatal: the receiving end does not support push options" \
+> > > > > +             actual &&
+> > > > > +     git -C "$upstream" show-ref >out &&
+> > > >
+> > > > Here the shell opens and truncates the file 'out' to write 'git
+> > > > show-ref's output, i.e. it is still the same 'out' file that was used
+> > > > earlier.
+> > > >
+> > > > Consequently, it is possible that 'git receive-pack' is still running,
+> > > > its open file descriptors to 'out' are still valid, and its "fatal:
+> > > > the remote end hung up unexpectedly" error message about the suddenly
+> > > > disappeared 'git push' can partially overwrite the output from 'git
+> > > > show-ref'.
+> >
+> >
+> > > > I think these are the only two tests that can cause this racy
+> > > > behavior: by instrumenting finish_command() I found that in all other
+> > > > tests where 'git push' is expected to fail it errors out gracefully
+> > > > and waits for its 'git receive-pack' child process.
+> > >
+> > > Atomic push may have the same problem.
+> >
+> > I don't think so, because send_pack() doesn't die() when a ref is
+> > rejected in an atomic push, but returns, and lets its caller terminate
+> > in an usual way, including waiting for 'git receive-pack'.
+> 
+> I find many places where the client side will die() before closing the
+> service side gracefully:
+> 
+>  + In `transport_push()`, if fail to push a submodule, will die().
+>  + In `git_transport_push()`, will die() for an unimplemented v2 protocol.
+>  + In `send_pack()`, will die() if
+>     the server side has an incompatible hash algorithm, or
+>     the receiving end does not support --signed push, or
+>     the receiving end does not support --atomic push, or
+>     the receiving end does not support push options
 
-> We wouldn't be OK, actually. Suppose we have a separate packfile
-> containing only the ".gitmodules" blob - when we call fsck_finish(), we
-> would not have downloaded the other packfile yet. Git processes the
-> entire fetch response by piping the inline packfile (after demux) into
-> index-pack (which is the one that calls fsck_finish()) before it
-> downloads any of the other packfile(s).
+Sure, but it seems that those are not covered in thet 5411.
 
-Is that order documented as a requirement for implementation?
+You can build Git with the patch below, run t5411 with '-V -x', and
+then look through all the cases to see where 'git push' waited or did
+not wait for its 'git receive-pack' child process.
 
-Na=C3=AFvely, I would expect that a CDN offload would be to relieve
-servers from the burden of having to repack ancient part of the
-history all the time for any new "clone" clients and that is what
-the "here is a URI, go fetch it because I won't give you objects
-that already appear there" feature is about.  Because we expect that
-the offloaded contents would not be up-to-date, the traditional
-packfile transfer would then is used to complete the history with
-objects necessary for the parts of the history newer than the
-offloaded contents.
-
-And from that viewpoint, it sounds totally backwards to start
-processing the up-to-the-minute fresh packfile that came via the
-traditional packfile transfer before the CDN offloaded contents are
-fetched and stored safely in our repository.
-
-We probably want to finish interaction with the live server as
-quickly as possible---it would go counter to that wish if we force
-the live part of the history hang in flight, unprocessed, while the
-client downloads offloaded bulk from CDN and processes it, making
-the server side stuck waiting for some write(2) to go through.
-
-But I still wonder if it is an option to locally delay the
-processing of the up-to-the-minute-fresh part.
-
-Instead of feeding what comes from them directly to "index-pack
---fsck-objects", would it make sense to spool it to a temporary, so
-that we can release the server early, but then make sure to fetch
-and process packfile URI material before coming back to process the
-spooled packdata.  That would allow the newer part of the history to
-have newer trees that still reference the same old .gitmodules that
-is found in the frozen packfile that comes from CDN, no?
-
-Or can there be a situation where some objects in CDN pack are
-referred to by objects in the up-to-the-minute-fresh pack (e.g. a
-".gitmodules" blob in CDN pack is still unchanged and used in an
-updated tree in the latest revision) and some other objects in CDN
-pack refer to an object in the live part of the history?  If there
-is such a cyclic dependency, "index-pack --fsck" one pack at a time
-would not work, but I doubt such a cycle can arise.
-
-Thanks.
+diff --git a/run-command.c b/run-command.c
+index ea4d0fb4b1..4accdb343e 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -988,6 +988,7 @@ int start_command(struct child_process *cmd)
+ int finish_command(struct child_process *cmd)
+ {
+ 	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
++	dprintf(3, "finish_command(): '%s'\n", cmd->argv[0]);
+ 	trace2_child_exit(cmd, ret);
+ 	child_process_clear(cmd);
+ 	return ret;
