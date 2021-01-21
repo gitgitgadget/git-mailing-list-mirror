@@ -2,206 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0582C433DB
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 03:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F04C433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 03:46:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BE882389A
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 03:45:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AFBA023787
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 03:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728712AbhAUDoN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Jan 2021 22:44:13 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54857 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391868AbhAUBi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Jan 2021 20:38:58 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F9CFFDBE5;
-        Wed, 20 Jan 2021 20:38:10 -0500 (EST)
+        id S1729699AbhAUDqL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Jan 2021 22:46:11 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54719 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436669AbhAUCHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Jan 2021 21:07:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33A80973EC;
+        Wed, 20 Jan 2021 21:06:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cuPudv8L/J88eR0ulQ2VzTJUpO8=; b=j5Togb
-        N8PUvgFRQHIM3+O3oFbu7bQFs5Zz/d856Cw2EN1bAjWLIvXqf1tvRjn31mbwk2qc
-        L0qzx/1oNWGtVXq2S5ExKfPCSjbJN9YPWBY9QUhSFcPnf4P/zzk6w68v4WvpFs5Z
-        GL/1CY8PSrjcVS3Hpd3g7rehnQEnLQYQJi7Z8=
+        :content-type; s=sasl; bh=GG34st/5kksYhEaL4gPhY4mCf8I=; b=dI0Ipo
+        13Qqa+S8P6JQuhiEvQKqxjmEOf6cVrsW13u0JXzBzNXetyoMG3ae3GhQUQIo+fCj
+        xDmvFqujR2eob44QuMnnSJ4m3x41Febuf9Vmwt9+lqy4TylLggSkBFNV8QxUL8BN
+        ke4MX3xeJyc5Vxc1hQ7WKlu5XQPdk5ZTZQU1o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wWYJREb+smx5l4d9RsaCaGGZ6k8oW6iF
-        yDEDZPJBHKQkfA2ba6Uz68Nfad4K7cvmQMRBrQwRtznNh2BrUGHXgFf3Ce488AFi
-        ctq9cPPuU3qgIS+96KKC9dD/ndT768o3R+5/xwISQnz15H50Jh5pgG4PjF8gUCEh
-        ZFwzxhIk5uU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27C6BFDBE4;
-        Wed, 20 Jan 2021 20:38:10 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=wzARjPtuWdF8dvgM0aONqPR2M5Souk9M
+        U5AjP+YYphWamSYH/Cn06BJFS35ezFivjoY0Acc0oxSmFHPl1FjC0r7hQIPWYTcs
+        tCbdZ2TC2XVrqEE+HR9atHg/D0SPZq0Tg/ewI9fQ4n94pbLqQf+Ccp97ZgNKds9V
+        l7zJc3che/4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B3D8973EB;
+        Wed, 20 Jan 2021 21:06:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.196.36.241])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FE8AFDBE3;
-        Wed, 20 Jan 2021 20:38:07 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9E5FA973E9;
+        Wed, 20 Jan 2021 21:06:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     git@vger.kernel.org, chriscool@tuxfamily.org,
-        phillip.wood@dunelm.org.uk, me@ttaylorr.com
-Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
- from squash message
-References: <20210108092345.2178-1-charvi077@gmail.com>
-        <20210119074102.21598-4-charvi077@gmail.com>
-Date:   Wed, 20 Jan 2021 17:38:04 -0800
-In-Reply-To: <20210119074102.21598-4-charvi077@gmail.com> (Charvi Mendiratta's
-        message of "Tue, 19 Jan 2021 13:10:58 +0530")
-Message-ID: <xmqqmtx3dq83.fsf@gitster.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 1/2] maintenance: set log.excludeDecoration durin
+ prefetch
+References: <pull.838.git.1610940216.gitgitgadget@gmail.com>
+        <pull.838.v2.git.1611060724.gitgitgadget@gmail.com>
+        <5b2ce9049a69d4c450093433e4fa15c4e5e0c412.1611060724.git.gitgitgadget@gmail.com>
+Date:   Wed, 20 Jan 2021 18:06:53 -0800
+In-Reply-To: <5b2ce9049a69d4c450093433e4fa15c4e5e0c412.1611060724.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 19 Jan 2021
+        12:52:03 +0000")
+Message-ID: <xmqqh7nbdow2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4FF09698-5B89-11EB-A3A0-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 54D4F808-5B8D-11EB-BF1B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Charvi Mendiratta <charvi077@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +static size_t subject_length(const char *body)
-> +{
-> +	size_t i, len = 0;
-> +	char c;
-> +	int blank_line = 1;
-> +	for (i = 0, c = body[i]; c; c = body[++i]) {
-> +		if (c == '\n') {
-> +			if (blank_line)
-> +				return len;
-> +			len = i + 1;
-> +			blank_line = 1;
-> +		} else if (!isspace(c)) {
-> +			blank_line = 0;
-> +		}
-> +	}
-> +	return blank_line ? len : i;
-> +}
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The 'prefetch' task fetches refs from all remotes and places them in the
+> refs/prefetch/<remote>/ refspace. As this task is intended to run in the
+> background, this allows users to keep their local data very close to the
+> remote servers' data while not updating the users' understanding of the
+> remote refs in refs/remotes/<remote>/.
+>
+> However, this can clutter 'git log' decorations with copies of the refs
+> with the full name 'refs/prefetch/<remote>/<branch>'.
+>
+> The log.excludeDecoration config option was added in a6be5e67 (log: add
+> log.excludeDecoration config option, 2020-05-16) for exactly this
+> purpose.
+>
+> Ensure we set this only for users that would benefit from it by
+> assigning it at the beginning of the prefetch task. Other alternatives
+> would be during 'git maintenance register' or 'git maintenance start',
+> but those might assign the config even when the prefetch task is
+> disabled by existing config. Further, users could run 'git maintenance
+> run --task=prefetch' using their own scripting or scheduling. This
+> provides the best coverage to automatically update the config when
+> valuable.
 
-I cannot quite tell what this loop is trying to compute at the first
-glance.
+OK.  I think those users who keep distance from "git maintenance"
+are different story but all others cannot be using refs/prefetch/
+hierarchy for purposes other than "git maintenance" dictates, so
+"git maintenance [register|start]", or even when the user first runs
+"git maintenance" for that matter, would be acceptable point to add
+the configuration, but at the beginning of a prefetch task, we know
+the hierarchy is being used for what "git maintenance" wants to do,
+so it is a good place to do so.
 
- - If body[0] == '\n', then i==0, c==LF, blank_line==1 and len==0
-   so len==0 is returned immediately.
+But playing devil's advocate, I do not think throwing refs/prefetch
+into a "hardcoded list of hierarchies that would never be used for
+decoration purposes" would upset any end-users in practice.  The only
+reason why I do not make such a suggestion is it is more work (such
+a hardcoded reject list does not exist, if I recall correctly).
 
- - If the first line has only SP, HT, CR, etc. whitespace,
-   blank_line stays 1 and at the end of the line when we see
-   c=='\n', body[i] is pointing at that '\n', blank_line is true, so
-   len is returned from the previous iteration (e.g. body="   \n"
-   returns 0)
+> It is improbable, but possible, that users might want to run the
+> prefetch task _and_ see these refs in their log decorations. This seems
+> incredibly unlikely to me, but users can always opt-in on a
+> command-by-command basis using --decorate-refs=refs/prefetch/.
 
- - If the first line has some non space, blank_line becomes false,
-   so at the end of that line when we see c=='\n', body[i] is
-   pointing at that '\n', len==i+1 becomes one past that LF and then
-   we reset blank_line to true??? and go on to the next line.
-
-So when we see LF, if we have seen any non whitespace byte on that
-line, blank_line is false.  Only when we saw LF followed by zero or
-more whitespace before seeing another LF, we return len that was set
-when we saw the previous LF (which is one past that LF).
-    
-So... is this trying to find the first paragraph-break-looking line
-to find the end of the first paragraph.  OK.
-
-There must be an easier-to-read way to write all this, though, I
-would think (or don't we already have an existing code that is
-waiting to be factored out?).
-
-In any case, let's keep reading.
-
->  static void append_squash_message(struct strbuf *buf, const char *body,
->  				  struct replay_opts *opts)
->  {
-> +	size_t commented_len = 0;
-> +
->  	unlink(rebase_path_fixup_msg());
-> +	if (starts_with(body, "squash!") || starts_with(body, "fixup!"))
-> +		commented_len = subject_length(body);
->  	strbuf_addf(buf, "\n%c ", comment_line_char);
->  	strbuf_addf(buf, _("This is the commit message #%d:"),
->  		    ++opts->current_fixup_count + 1);
->  	strbuf_addstr(buf, "\n\n");
-> -	strbuf_addstr(buf, body);
-> +	strbuf_add_commented_lines(buf, body, commented_len);
-
-As add_commented_lines places the comment character at the beginning
-of each line, it is OK for body[0..commented_len) to contain more than
-one lines.  Good.
-
-> +	strbuf_addstr(buf, body + commented_len);
-
-And we add everything after the beginning of the paragraph-break
-looking line.  This code may add a line, immediately after the
-previous "commented out" block, bunch of whitespaces and then a LF.
-It will be cleaned up with stripspace most of the time, but
-depending on the end-user settings, it may be left behind.  I am
-guessing that is what we want, but thought it would not hurt to
-double check.
-
-> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> index 7bab6000dc..551dc06bc3 100755
-> --- a/t/t3415-rebase-autosquash.sh
-> +++ b/t/t3415-rebase-autosquash.sh
-> @@ -81,8 +81,7 @@ test_auto_squash () {
->  	echo 1 >file1 &&
->  	git add -u &&
->  	test_tick &&
-> -	git commit -m "squash! first" &&
-> -
-> +	git commit -m "squash! first" -m "extra para for first" &&
-
-It is not "extra"; that's the beginning of the "body" ;-).
-
->  	git tag $1 &&
->  	test_tick &&
->  	git rebase $2 -i HEAD^^^ &&
-> @@ -139,7 +138,7 @@ test_expect_success 'auto squash that matches 2 commits' '
->  	echo 1 >file1 &&
->  	git add -u &&
->  	test_tick &&
-> -	git commit -m "squash! first" &&
-> +	git commit -m "squash! first" -m "extra para for first" &&
->  	git tag final-multisquash &&
->  	test_tick &&
->  	git rebase --autosquash -i HEAD~4 &&
-> @@ -192,7 +191,7 @@ test_expect_success 'auto squash that matches a sha1' '
->  	git add -u &&
->  	test_tick &&
->  	oid=$(git rev-parse --short HEAD^) &&
-> -	git commit -m "squash! $oid" &&
-> +	git commit -m "squash! $oid" -m "extra para" &&
->  	git tag final-shasquash &&
->  	test_tick &&
->  	git rebase --autosquash -i HEAD^^^ &&
-> @@ -203,7 +202,8 @@ test_expect_success 'auto squash that matches a sha1' '
->  	git cat-file blob HEAD^:file1 >actual &&
->  	test_cmp expect actual &&
->  	git cat-file commit HEAD^ >commit &&
-> -	grep squash commit >actual &&
-> +	grep -v "squash" commit &&
-
-This says that the file must have at least one line that does not
-say "squash" or the test is a failure.  It does not say "there
-should be no line that has "squash" on it".  Intended?
-
-> +	grep "extra para" commit >actual &&
-
-I can tell that you want the "extra para" to still remain, but how
-does the grep that is not anchored guarantee that?  Perhaps look for
-
-	grep "^extra para" commit
-
-to ensure that you are not seeing a commented out but somehow failed
-to get stripspaced out?
-
->  	test_line_count = 1 actual
->  '
+It is not a viable workaround to add "--decorate-refs=refs/prefetch"
+that is a mouthful; configuration options are to reduce such typing,
+not to force more of them.  But because I agree with that
+"incredibly unlikely" assessment, I do not care.
 
 Thanks.
