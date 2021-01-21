@@ -2,159 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF013C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 16:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BEE4C433E6
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:34:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 654E023A57
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 16:59:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9D9B23A40
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:34:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388286AbhAUQ7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 11:59:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56740 "EHLO
+        id S1728485AbhAUSeR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 13:34:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733067AbhAUQ7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 11:59:09 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DCB0C061756
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 08:58:14 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id m1so1754993wrq.12
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 08:58:14 -0800 (PST)
+        with ESMTP id S1728685AbhAUSdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 13:33:25 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34571C06174A
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:32:45 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id w139so1756135pfc.18
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:32:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ObzTnA63EWqZOEV5WKMne6Z3hKbeHg6IBaKJIaLBJp4=;
-        b=OEfZx5kS3bc0QKfJApoofp8OVDgQMRkBD9CtkgEW4G2ZOxTrly5RQwOiyIyI0c8aqr
-         jswkSUIJ228Is/neWylIxp/y7hQ+ZMGopR/zrU5KYiPUKzIPGhoBtxidaPIrhOg/4rap
-         +Hhuv/fFCqiwIEVf7VSF2wNWLNxeAhogqk0cIU3s7cxY4xrupNxUa1LZHZ1lIdw/3kIe
-         AxOS6CXBPig4b3YPMKX1Z9Ds95b6hWVlFEcBqesi/YVL7idbuQ5/+/DKQWK0oP4SkZMN
-         v0erYYn75BlDrmi2Otc7uMZOIJ2HqdSzsqeqDCLfQKBz/WOPfrn2sgwPN4FO+Y+aZPg3
-         g/FQ==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc:content-transfer-encoding;
+        bh=1+a7dXBHOWAAz4t0qsDL9hzNGpS6a7kb4eKNtv+FDoY=;
+        b=pnuIDS19qOWwaJQoVNHkSbA2iawqyBEuGt1FRSa+OkbAp9mhKwDRFpN1lM8ym8zM3T
+         egZQ4j06AtW3gk2+I6Iucy0kMhvneOSfZa90PZcqTHMr2wK/JiPAD5njEcq2ouaQVf/A
+         R1a66j08bndTozEjOLaHkkpgVSnpw84NGSG9iEILcF/UkxK17At2Rj06zyne1WyG2dWQ
+         YGxyXRhc2x6vhLi9I4pGMd0LuHoHqgiklYgfQ3eZI6aiVJU8WDwmgqCZ+nbJD6eZAniG
+         Fcaij+JucNHELjyZEyBbiG3tkz5PtELARBzltRRdGTQk7ePyGjQHThkocyhoh90w8lrU
+         Ezjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=ObzTnA63EWqZOEV5WKMne6Z3hKbeHg6IBaKJIaLBJp4=;
-        b=oR30ZmDECIDa1t4/38mMW2fLD5KXu/RgjKz7iKBEMr9siQC6lb3gw0i7hPf7xDX9QD
-         5d4jrmzY2WB/nZEimifbX6srcOX0YO2tp0cG+rumbFDdI/cjnys568ZaK3KOdzzYNZW7
-         qTd9FP6aik1uYXRMpoeq+rXIM1zOUYuredp2qajNzCwJhNais1lpdeg3epGBag/4Lr04
-         9CD4FAwt4L60+rKpqcGLo+jcbxu7HZh2vle7Lrfbrn7jFRnuHMJsiAb45GgEodQWsWmT
-         xcAmWvIp/Fo6CmB9LvPBEzeGaMeeFpCf/n1x9kycb/u6Wnpi52ev0q3K/uM0eF4ySyUK
-         T1Zg==
-X-Gm-Message-State: AOAM5310UgLE51tLAAilLruWP2a+O6uNta3cUp5Ykg+z5KGmj6mRYbXX
-        KULJY7ONNu+QX5ezWWB5fUA=
-X-Google-Smtp-Source: ABdhPJy+Zk/h1MEGtTyT5HnaFiW6S5suV8jAVNC82a/k4Hv9Ff8CLE7K7VEBhe5XMbdLuuvD8igMLg==
-X-Received: by 2002:a5d:5544:: with SMTP id g4mr366842wrw.59.1611248292952;
-        Thu, 21 Jan 2021 08:58:12 -0800 (PST)
-Received: from [192.168.1.240] (112.16.7.51.dyn.plus.net. [51.7.16.112])
-        by smtp.gmail.com with ESMTPSA id n11sm10554441wra.9.2021.01.21.08.58.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Jan 2021 08:58:12 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
- from squash message
-To:     Christian Couder <christian.couder@gmail.com>,
-        Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>
-References: <20210108092345.2178-1-charvi077@gmail.com>
- <20210119074102.21598-4-charvi077@gmail.com>
- <xmqqmtx3dq83.fsf@gitster.c.googlers.com>
- <CAPSFM5cxTrvAq6j3yhzidWdr8P8-sYmd1-9tmsK4iXMKrC7TNA@mail.gmail.com>
- <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <3853a4a0-dca4-4d8c-a9da-6608a9385f38@gmail.com>
-Date:   Thu, 21 Jan 2021 16:58:11 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=1+a7dXBHOWAAz4t0qsDL9hzNGpS6a7kb4eKNtv+FDoY=;
+        b=Fk3oNYVB1Bk1Z0EUT5JYf4NOjKILzEWTXxhFe3Rb4yfh/BaFOokzILNG7IrE2rM5Qg
+         syttEFtvJrfhnzK3oIB8pNmgAk/jlcpiAb8kdZ4e/VjMOIRWxl8+TMA/QK4B/Iljc/lZ
+         PJMQgK0xPiZcfhFQCTNCbP+U3dZpIRwaTqTGcOm/5M1UFkX/Q/jNglT9oSJYTpbs12QE
+         HxNgEqwOReiq5uYVWyI0yoVapjX362z9cB2L1U34z06bD4PgIfo3DC7ydzu6bdfUbsua
+         wF20Kdor5syn3XKuKaPD+MhuXssSd+yIMrLMzG0XuqlPHyPWoKKj43wb/HcQFrLGKKnY
+         DwRg==
+X-Gm-Message-State: AOAM5330OxKosTQ1OvclJCAhjym09I+JjMXGmoWoG88GfhXxBJlPwRfI
+        zvcf2jlpql6Xez+DEakjFC4WgUSYjhmGTUfAdJfA
+X-Google-Smtp-Source: ABdhPJyvPnlhO5XwewkeOkXEzLKescmLULF8ld5foCqWH3SQf/9TCzn8aCWaFZH+7Pr4IirGeXB4egqzBtSXipl2kUrq
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:7d08:: with SMTP id
+ g8mr790619pjl.180.1611253964553; Thu, 21 Jan 2021 10:32:44 -0800 (PST)
+Date:   Thu, 21 Jan 2021 10:32:38 -0800
+In-Reply-To: <xmqq1refdm58.fsf@gitster.c.googlers.com>
+Message-Id: <20210121183238.1780849-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq1refdm58.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.30.0.296.g2bfb1c46d8-goog
+Subject: Re: RFC on packfile URIs and .gitmodules check
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, avarab@gmail.com, git@vger.kernel.org,
+        peff@peff.net, stolee@gmail.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian and Charvi
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>=20
+> > We wouldn't be OK, actually. Suppose we have a separate packfile
+> > containing only the ".gitmodules" blob - when we call fsck_finish(), we
+> > would not have downloaded the other packfile yet. Git processes the
+> > entire fetch response by piping the inline packfile (after demux) into
+> > index-pack (which is the one that calls fsck_finish()) before it
+> > downloads any of the other packfile(s).
+>=20
+> Is that order documented as a requirement for implementation?
+>=20
+> Na=C3=AFvely, I would expect that a CDN offload would be to relieve
+> servers from the burden of having to repack ancient part of the
+> history all the time for any new "clone" clients and that is what
+> the "here is a URI, go fetch it because I won't give you objects
+> that already appear there" feature is about.  Because we expect that
+> the offloaded contents would not be up-to-date, the traditional
+> packfile transfer would then is used to complete the history with
+> objects necessary for the parts of the history newer than the
+> offloaded contents.
+>=20
+> And from that viewpoint, it sounds totally backwards to start
+> processing the up-to-the-minute fresh packfile that came via the
+> traditional packfile transfer before the CDN offloaded contents are
+> fetched and stored safely in our repository.
+>=20
+> We probably want to finish interaction with the live server as
+> quickly as possible---it would go counter to that wish if we force
+> the live part of the history hang in flight, unprocessed, while the
+> client downloads offloaded bulk from CDN and processes it, making
+> the server side stuck waiting for some write(2) to go through.
+>=20
+> But I still wonder if it is an option to locally delay the
+> processing of the up-to-the-minute-fresh part.
+>=20
+> Instead of feeding what comes from them directly to "index-pack
+> --fsck-objects", would it make sense to spool it to a temporary, so
+> that we can release the server early, but then make sure to fetch
+> and process packfile URI material before coming back to process the
+> spooled packdata.  That would allow the newer part of the history to
+> have newer trees that still reference the same old .gitmodules that
+> is found in the frozen packfile that comes from CDN, no?
+>=20
+> Or can there be a situation where some objects in CDN pack are
+> referred to by objects in the up-to-the-minute-fresh pack (e.g. a
+> ".gitmodules" blob in CDN pack is still unchanged and used in an
+> updated tree in the latest revision) and some other objects in CDN
+> pack refer to an object in the live part of the history?  If there
+> is such a cyclic dependency, "index-pack --fsck" one pack at a time
+> would not work, but I doubt such a cycle can arise.
 
-On 21/01/2021 15:21, Christian Couder wrote:
-> On Thu, Jan 21, 2021 at 3:02 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
->>
->> Hi Junio,
->>
->> On Thu, 21 Jan 2021 at 07:08, Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> Charvi Mendiratta <charvi077@gmail.com> writes:
->>>
->>>> +static size_t subject_length(const char *body)
->>>> +{
->>>> +     size_t i, len = 0;
->>>> +     char c;
->>>> +     int blank_line = 1;
->>>> +     for (i = 0, c = body[i]; c; c = body[++i]) {
->>>> +             if (c == '\n') {
->>>> +                     if (blank_line)
->>>> +                             return len;
->>>> +                     len = i + 1;
->>>> +                     blank_line = 1;
->>>> +             } else if (!isspace(c)) {
->>>> +                     blank_line = 0;
->>>> +             }
->>>> +     }
->>>> +     return blank_line ? len : i;
->>>> +}
->>>
->>> I cannot quite tell what this loop is trying to compute at the first
->>> glance.
->>>
->>
->> Oops, I think Phillip and Christian also pointed in the last revision
->> to look for alternatives to make it easy. I mistook that point and
->> forgot to look at it.
-> 
-> Yes, please take a look at find_commit_subject() in "commit.c".
+My intention is that the order of the packfiles (and cyclic
+dependencies) would not matter, so we wouldn't need to delay any
+processing of the up-to-the-minute-fresh part. I'm currently working on
+getting index-pack to output a list of the dangling .gitmodules files,
+so that fetch-pack (its consumer) can do one final fsck on those files.
 
-That looks like it is taking the commit header and finding the start of 
-the message. We have just the message, I think we probably want to use 
-format_subject() in pretty.c which does what my hard to follow code does 
-with the option to replace newlines in the subject with another character.
-
-Best Wishes
-
-Phillip
-
->>>> +     grep "extra para" commit >actual &&
->>>
->>> I can tell that you want the "extra para" to still remain, but how
->>> does the grep that is not anchored guarantee that?
->>
->> .. but now I think to remove this `grep -v "squash" commit` as also
->> discussed with Phillip earlier that in this test script we are not
->> checking for the commented commit message.
->>
->>> Perhaps look for
->>>
->>>          grep "^extra para" commit
->>>
->>> to ensure that you are not seeing a commented out but somehow failed
->>> to get stripspaced out?
->>>
->> I am not sure, what does failing to get stripspaced mean?
-> 
-> I think this refers to:
-> 
-> https://git-scm.com/docs/git-stripspace
-> 
-> Best,
-> Christian.
-> 
+Another way, as you said, is to say that the order of the packfiles
+matters (which potentially allows some simplification on the client
+side) but I don't think that we need to lose this flexibility.
