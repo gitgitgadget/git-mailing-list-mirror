@@ -2,143 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA3A9C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 15:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98563C433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 16:16:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A3E8D23A24
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 15:36:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A010421973
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 16:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732966AbhAUPgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 10:36:16 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34030 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732962AbhAUPfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 10:35:11 -0500
-Received: (qmail 5067 invoked by uid 109); 21 Jan 2021 15:34:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Jan 2021 15:34:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2006 invoked by uid 111); 21 Jan 2021 15:34:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Jan 2021 10:34:27 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Jan 2021 10:34:26 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 1/1] builtin/pack-objects.c: avoid iterating all refs
-Message-ID: <YAmfAjZYDHoXBevr@coredump.intra.peff.net>
-References: <20210119143348.27535-1-jacob@gitlab.com>
- <20210119143348.27535-2-jacob@gitlab.com>
- <87lfco801g.fsf@evledraar.gmail.com>
- <YAiKQ0M0/14Q13Ee@coredump.intra.peff.net>
- <874kja8u2i.fsf@evledraar.gmail.com>
+        id S1726574AbhAUQQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 11:16:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47370 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731632AbhAUQPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 11:15:30 -0500
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6BB2C0613ED
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 08:14:49 -0800 (PST)
+Received: by mail-vs1-xe2e.google.com with SMTP id w187so1336706vsw.5
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 08:14:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MwR4MmlSOJNTIWyDmsXqBLthRY0wkuFgemoD0MHgZGE=;
+        b=kl7D/Q722YjmJtnGWViphfR8MsyQHaiSE6tJlg52QKMniI4IdmwPiCz4eC4cTSoOhL
+         Ziy7vErSCRrgJnogCHfZyxGDCh63eDBK7g3GJD8NusMVAR+2Sb3aK4dmgadBsVze5PXK
+         zk3wP4W6tTgvMw3+kON5H/0nGk3kORc7Cn0omuCdIgWUU7c/XZplS/dEC7S9eGzp/Urn
+         bCJTpo9/85ZJXmUuP6sglqs8+lz+H1LzH/a3y3B4w1BrqF/y6gbOCufYULYPp8PyO+mf
+         WlAZ0cRueUVVKYzWajCK1Av7hgJ0OS656hzpFCIknlD+Q//cn1pAyAZZPGuY+Jdd0TeB
+         zFYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MwR4MmlSOJNTIWyDmsXqBLthRY0wkuFgemoD0MHgZGE=;
+        b=G8xx/JZLbj60W+TJOKmSRT0AT5Z9GlnRki43pIlgubJTCwFZhvYrK7MHsGj0LOrMfE
+         VbCw5nYlRJVaQMc7/KmTilS/0noOaw2U9LpZXUo3u7KiFJM64X0c1rhbp77cdSTKSg08
+         hbQlhFjMpznHX2T/wT+Iy4QFRNQYiqtNzZfTl0LLz9d9Q/Os+/xO/xPkYcrh69fiz3nF
+         /fRSBtoW7iK5WJA2jyf6s8aVDAxUOXqDA92FGEX4Ynf7U4wWWBMo7ZkqrEF85CZqqhH5
+         69YR5ZSlDrKnFXhoDvyISMljfQAuHRUfv8LKTPlPveheNyfCnxw4E86/qNHZRIRGa0EY
+         GNjQ==
+X-Gm-Message-State: AOAM532qChvBiBr/m/Cr5WpDKBQn3OIoOA0ae4wF1sFqH9BsJP+8yu6L
+        5R+2Vg0CWrvKd+9mLDnhvkAFznk3hNNn7XkUlbkWIAr/v4mOEQ==
+X-Google-Smtp-Source: ABdhPJxneGNEjulCb5GfBO+iqWgEAHKUhFfhoWHR97Ntjlqfm7NKSnsO8iNBujGqUHp/YBFmNEg88xqKZ8xO/7rSnRM=
+X-Received: by 2002:a67:b42:: with SMTP id 63mr427228vsl.50.1611245687947;
+ Thu, 21 Jan 2021 08:14:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874kja8u2i.fsf@evledraar.gmail.com>
+References: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
+ <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com> <d57023d9f13d178dc95d7a74751923b80d1a5939.1607522429.git.gitgitgadget@gmail.com>
+ <871ree8eto.fsf@evledraar.gmail.com>
+In-Reply-To: <871ree8eto.fsf@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 21 Jan 2021 17:14:36 +0100
+Message-ID: <CAFQ2z_Py46k71fHyBHyS2jqjhJJm-N0AV4X8YZZVawoZyVyhAg@mail.gmail.com>
+Subject: Re: [PATCH v4 13/15] Reftable support for git-core
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 11:26:13AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Jan 21, 2021 at 4:55 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> I must say I do find it a bit more concerning in the case of the
+> reftable series. I.e. the git_reftable_read_raw_ref() function seems
+> like a faithful copy of the general logic (at least this part) of the
+> refs_resolve_ref_unsafe() function in refs.c.
+>
+> That I can remove error checking/handling from this place means existing
+> general logic was faithfully copied without checking that we have a test
+> for it, or adding one. Or perhaps given the history of this codebase
+> there's out-of-tree tests for it somewhere?
 
-> > So we are not just saving the client from sending a "want", but making a
-> > second full connection to do so. That seems to be an optimization worth
-> > continuing to have.
-> 
-> Correct. Suppose a history COMMIT(TAG) history like:
-> 
->     mainline: A(X) -> B(Y) -> C
->     topic:    A(X) -> B(Y) -> D(Z)
-> 
-> You only want the "mainline" history and its tags in your fetch. Now a
-> server will give you tags X & Y for free, ignoring Z.
-> 
-> The note in protocol-capabilities.txt supposes that you'll need to only
-> get A/B/C in one fetch, then do another one where you see from the OIDs
-> you have and advertised (peeled) OIDs for the tags and know you just
-> need X/Y, not Z.
+One of the earlier iterations of this code didn't have the errno
+handling, and it caused a bug that I tracked down to the errno
+handling. I'm fairly sure of this, because I remember being perplexed
+and flabbergasted at using errno as an out-of-band API mechanism. The
+first iteration of reftable code was about a year ago, so if you
+checkout the Git source code from that time, and remove the errno
+assignments, you would be able to see which test exercised this code
+path.
 
-Right. That note basically indicates that what the server is doing is
-"best effort". If it sends you B, it will also send you Y. But it is
-ultimately up to the client to decide if they want or need a tag the
-server didn't send and do the follow-up.
+Or you could check where errno is read-back (I believe ENOENT is the
+case that has special meaning)
 
-So include-tag is an optimization, but it works often enough that it
-frequently saves the second fetch from happening at all.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-> So we could also just fetch Z, then do our own walk on the client to see
-> if it's reachable, and throw it away if not. Although I suppose that'll
-> need a list of "bad" tags on the client so we don't repeat the process
-> the next time around, hrm...
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Not only that, but now you've fetched "D" that you never wanted. If it's
-one commit, that's not so bad. But it could be pulling in arbitrary
-amounts of reachable history that you don't want.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-> > You seem to be against auto-following at all. And certainly I can see an
-> > argument that it is not worth the trouble it causes. But it is the
-> > default behavior, and I suspect many people are relying on it. Fetching
-> > every tag indiscriminately is going to grab a bunch of extra unwanted
-> > objects in some repos. An obvious case is any time "clone
-> > --single-branch --depth" is used.
-> 
-> I wonder if the use-cases for --depth in the wild aren't 99.9%
-> --depth=1, in which case the peeled commit on the main branch being
-> advertised by a tag would alredy give you this information.
+Sitz der Gesellschaft: Hamburg
 
-I'd have thought there was basically no use for anything but --depth=1,
-but people seem really enamored with the notion of --depth=50. Many CI
-systems use that for some reason.
-
---depth is just one case where you might not have all of history,
-though. Even without it, --single-branch means you wouldn't want to get
-the history of all of the other branches. They may only be a few commits
-ahead of the main history, in which case fetching extra tags that point
-to them might not be a big deal. But it really depends on how your repo
-is shaped, what tags point to, etc.
-
-Even without any options, your repo may have a disjoint chunk of history
-mentioned by a tag (e.g., a tag pointing to a segment of history that is
-meant to be grafted on, or even an archived version of history from
-before filter-branch rewrite).
-
-Perhaps if we were designing from scratch we might write those off as
-unusual cases we don't need to care about. But I'd be very hesitant to
-change the way tag following works now, after so many years. If we were
-to make any change, I think one plausible one would be to have clone set
-up refspecs to fetch all tags (and then avoid sending include-tag, since
-we know we're not auto-following). That would let people still use
-auto-follow when they wanted to, but make things simpler to reason
-about. And after all, clone already fetches all of the tags.
-
-But I haven't thought too hard about it.
-
-> > Maybe I'm not quite understanding what you're proposing.
-> 
-> Not much really, just that looking deeper into this area might be a
-> useful exercise. I.e. it's a case of server<->client cooperation where
-> we offlod the work to one or the other based on an old design decision,
-> maybe that trade-off is not optimal in most cases anymore.
-
-I don't think it's very much work on the server, though. Sure, iterating
-the tags is O(nr_tags). But we do that iteration lots of other places,
-too (the advertisement unless the client asks for a very narrow prefix,
-or upload-pack's ref-marking for reachability).
-
-And saving us from sending unwanted objects is a potential win on the
-server (even a single unlucky delta where we have to reconstruct and
-re-deflate an object will likely blow a ref iteration out of the water).
-Likewise, preventing the client from connecting a second time is a win
-for the server, which doesn't have to spin up a new upload-pack
-(likewise for the client of course; it might even have to prompt the
-user for auth again!).
-
--Peff
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
