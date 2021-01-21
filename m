@@ -2,102 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4C67C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD61C433E0
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:38:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F828206CB
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:37:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6CDB22A83
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728972AbhAUSg5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 13:36:57 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57894 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728919AbhAUSgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 13:36:50 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 772809DA2D;
-        Thu, 21 Jan 2021 13:35:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Jauir8k3AH0u0YfwMgmFhExQZpI=; b=E0yQYE
-        8gLVtYkVbWNTFUiLQgkwSCYBuj/70ZsVOloa2kuwpBDVsPJZy3OVC9d9uo6Dsx+O
-        9mnY011/qbR9OrZnE+s299o1dNtCL9QLxNBi4RwkTrNeSMDCrTMAWV04NnlNth6F
-        tJXojJuleGCTBLTT+m1iR6jqyNjCZPknYY5TM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K3AiB8JU37KwvRJ8EooYHdzVRyXFoQWs
-        OwCNPpgrutKcRdouujfONJYRC2LoRSey91mDRTW1EEuZ4wQLhGb5lk6GFN/MyIYy
-        MIbgcQnkKScECN1dPpm6Cq9OOQFMpHN304/6czQ96epE2u/lBHYqHfsDc2oHba7p
-        RGWLvJ9Xw2Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 702929DA2B;
-        Thu, 21 Jan 2021 13:35:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F14AA9DA2A;
-        Thu, 21 Jan 2021 13:35:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2021, #04; Sat, 16)
+        id S1726000AbhAUSh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 13:37:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728826AbhAUSfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 13:35:10 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C385C06174A
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:34:30 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id q200so1760815pfc.14
+        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:34:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=BFd6KvjRbuf7zF5OQkgOMYbuRHMefY+pfBk6wOwSykg=;
+        b=F0n7ZClXpTOLV5Rsib0RNMw+UU1Vpv9DieFCHmU1AmkLGOF2U1V3vRD+FvSHepFuHL
+         JHDjvD4zprZu4FnlxCoZA6CzjXpcFCpHL2r1lkxfO4qGnOdtdof9qFJa+mfIYF4fUflm
+         WcABwdtne9yEwBxCVIxK0T2AwK5j84g3o+aE6kWV+7QFynCfBGeQU7n17yyscJ/RliFe
+         7J2oxm6F2mfOUIF4Jjfry4oe15uh1/gqqaNFj5YPhWcOCje8IgvqYaKosYD+MnjTT2Gp
+         Kn8EqULR0ZNo/fCGMAgb49KPeuY45ed6AVB93+KpRnIiDRH6fJN56AQ7KJ6OgDt6Aw/I
+         wnZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=BFd6KvjRbuf7zF5OQkgOMYbuRHMefY+pfBk6wOwSykg=;
+        b=Jp4iSqUvOsXegcaAIpgnJovkY7biOgHDBk4jUV4hBRTH2w90czWjQFJn747gHbk+yW
+         Z/+VAzMUbphVCRqE5w5Ls7CivlDS0rGFC3xku/CCXfdY8DofQ8wP/GoCFk9nMBdz6hqG
+         UbUnR+q1D4dLihJxRgVmyk/vpaCkc/VRkyraGlMGWWWcnZKGKZCLjCzkvYocrSQY8K9q
+         Nh10Rw2Pcjzjy0OdN+i4hqGhHLHhPD7DmL1C17/1wmR5/0U35cCS8UIgjN++57ZAN05a
+         UHylNAfKi0NuzV/Gg+scSteoNRmjeyn6SxpRcJihX7OLo1iAEK0ExMAfVuGEquvHI60t
+         LQvw==
+X-Gm-Message-State: AOAM5305S1IcVHID64+bE+FJSb7yWYYNW6518zJ4HaypUDMPgLVnqfRR
+        URXO/2z3ILVqc0gLP4/buAtxj5EGEhH78TAOR1Rq
+X-Google-Smtp-Source: ABdhPJx1yakWslmmJ2CxbI8f74CrRLmvnlA5BcvvMBdnuQ0tbsPWDPJvE13Uuzs0SlJ4rTo7WMjIp2eONaSlxbggSFLG
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:8fd5:0:b029:1bb:4d06:deda with
+ SMTP id n204-20020a628fd50000b02901bb4d06dedamr696259pfd.24.1611254069419;
+ Thu, 21 Jan 2021 10:34:29 -0800 (PST)
+Date:   Thu, 21 Jan 2021 10:34:27 -0800
+In-Reply-To: <xmqq8s8so84r.fsf@gitster.c.googlers.com>
+Message-Id: <20210121183427.1783539-1-jonathantanmy@google.com>
+Mime-Version: 1.0
 References: <xmqq8s8so84r.fsf@gitster.c.googlers.com>
-        <CABPp-BGHpvmx-hdZ==MdODKEDVTr92m3rs4T2d_w9Aa0d0zanQ@mail.gmail.com>
-Date:   Thu, 21 Jan 2021 10:35:18 -0800
-In-Reply-To: <CABPp-BGHpvmx-hdZ==MdODKEDVTr92m3rs4T2d_w9Aa0d0zanQ@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 21 Jan 2021 08:25:33 -0800")
-Message-ID: <xmqqft2ucf4p.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 699101DA-5C17-11EB-B2FB-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Mailer: git-send-email 2.30.0.296.g2bfb1c46d8-goog
+Subject: Re: What's cooking in git.git (Jan 2021, #04; Sat, 16)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+> * jt/clone-unborn-head (2020-12-22) 3 commits
+>  - clone: respect remote unborn HEAD
+>  - connect, transport: add no-op arg for future patch
+>  - ls-refs: report unborn targets of symrefs
+> 
+>  "git clone" tries to locally check out the branch pointed at by
+>  HEAD of the remote repository after it is done, but the protocol
+>  did not convey the information necessary to do so when copying an
+>  empty repository.  The protocol v2 learned how to do so.
+> 
+>  What's the status of this thing?
 
-> Hi Junio,
->
-> On Sat, Jan 16, 2021 at 2:02 PM Junio C Hamano <gitster@pobox.com> wrote:
->> * en/merge-ort-perf (2021-01-15) 4 commits
->>  - merge-ort: begin performance work; instrument with trace2_region_* calls
->>  - Merge branch 'en/ort-directory-rename' into en/merge-ort-perf
->>  - Merge branch 'en/ort-conflict-handling' into en/merge-ort-perf
->>  - Merge branch 'en/diffcore-rename' into en/merge-ort-perf
->>  (this branch uses en/diffcore-rename, en/merge-ort-3, en/ort-conflict-handling and en/ort-directory-rename.)
->
-> Any chance we could merge this down to next now?  In terms of pre-requisites:
->   * you merged en/diffcore-rename and en/merge-ort-3 to next already
-> (and marked both as "Will merge to master")
->   * you previously labelled en/ort-conflict-handling as "Will merge to
-> next" (and it was reviewed by Stolee[1])
->   * en/ort-directory-rename has now been reviewed by Taylor[2]
-> Also, en/merge-ort-perf itself has also been reviewed by Taylor[3].
-
-This one is a bit unfortunate in that it is so small a change by
-itself, but sits on top of en/ort-directory-rename.
-
-Even though I wanted to merge the en/ort-directory-rename down to
-'next' yesterday, it has just got updated and I had to rebase the
-ort-perf branch using the material from the old thread, so neither
-is in 'next' as of now.  That's the cost of building on top of too
-many things that are in flex X-<.  I'll see if I can find time today
-to give it the last read-over before mergint the ort-d-r in 'next'
-but I am not very optimistic right now.
-
-> But I'd like a stable commit identifier to place in the '??????????'
-
-Well, we'd all like a stable commit contents in the first place ;-)
-
-Thanks.
+Several people have commented on the high-level approach (and I have
+addressed those comments), but I don't think anyone has said that the
+code itself looks OK. I'll see if I can get some of my colleagues to
+review this.
