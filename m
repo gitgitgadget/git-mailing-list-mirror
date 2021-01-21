@@ -2,86 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD61C433E0
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1673BC433DB
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:45:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6CDB22A83
-	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:38:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEF0A23136
+	for <git@archiver.kernel.org>; Thu, 21 Jan 2021 18:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbhAUSh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 13:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728826AbhAUSfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 13:35:10 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C385C06174A
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:34:30 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id q200so1760815pfc.14
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 10:34:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=BFd6KvjRbuf7zF5OQkgOMYbuRHMefY+pfBk6wOwSykg=;
-        b=F0n7ZClXpTOLV5Rsib0RNMw+UU1Vpv9DieFCHmU1AmkLGOF2U1V3vRD+FvSHepFuHL
-         JHDjvD4zprZu4FnlxCoZA6CzjXpcFCpHL2r1lkxfO4qGnOdtdof9qFJa+mfIYF4fUflm
-         WcABwdtne9yEwBxCVIxK0T2AwK5j84g3o+aE6kWV+7QFynCfBGeQU7n17yyscJ/RliFe
-         7J2oxm6F2mfOUIF4Jjfry4oe15uh1/gqqaNFj5YPhWcOCje8IgvqYaKosYD+MnjTT2Gp
-         Kn8EqULR0ZNo/fCGMAgb49KPeuY45ed6AVB93+KpRnIiDRH6fJN56AQ7KJ6OgDt6Aw/I
-         wnZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=BFd6KvjRbuf7zF5OQkgOMYbuRHMefY+pfBk6wOwSykg=;
-        b=Jp4iSqUvOsXegcaAIpgnJovkY7biOgHDBk4jUV4hBRTH2w90czWjQFJn747gHbk+yW
-         Z/+VAzMUbphVCRqE5w5Ls7CivlDS0rGFC3xku/CCXfdY8DofQ8wP/GoCFk9nMBdz6hqG
-         UbUnR+q1D4dLihJxRgVmyk/vpaCkc/VRkyraGlMGWWWcnZKGKZCLjCzkvYocrSQY8K9q
-         Nh10Rw2Pcjzjy0OdN+i4hqGhHLHhPD7DmL1C17/1wmR5/0U35cCS8UIgjN++57ZAN05a
-         UHylNAfKi0NuzV/Gg+scSteoNRmjeyn6SxpRcJihX7OLo1iAEK0ExMAfVuGEquvHI60t
-         LQvw==
-X-Gm-Message-State: AOAM5305S1IcVHID64+bE+FJSb7yWYYNW6518zJ4HaypUDMPgLVnqfRR
-        URXO/2z3ILVqc0gLP4/buAtxj5EGEhH78TAOR1Rq
-X-Google-Smtp-Source: ABdhPJx1yakWslmmJ2CxbI8f74CrRLmvnlA5BcvvMBdnuQ0tbsPWDPJvE13Uuzs0SlJ4rTo7WMjIp2eONaSlxbggSFLG
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:8fd5:0:b029:1bb:4d06:deda with
- SMTP id n204-20020a628fd50000b02901bb4d06dedamr696259pfd.24.1611254069419;
- Thu, 21 Jan 2021 10:34:29 -0800 (PST)
-Date:   Thu, 21 Jan 2021 10:34:27 -0800
-In-Reply-To: <xmqq8s8so84r.fsf@gitster.c.googlers.com>
-Message-Id: <20210121183427.1783539-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq8s8so84r.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.30.0.296.g2bfb1c46d8-goog
-Subject: Re: What's cooking in git.git (Jan 2021, #04; Sat, 16)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726828AbhAUSky (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 13:40:54 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54413 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbhAUSkg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 13:40:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21418107A2C;
+        Thu, 21 Jan 2021 13:39:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dDErkOetO+SR01x6B1jsX+s7XnE=; b=EGFzv8
+        UaQ4xtxJWywCCd2uypHa7mPt9YmNcZ7FdxxsNKXtDk7h4DU8qig9mUJnMA5sCTx3
+        PF07tG3YZusDDpTdziPzupHfzODFMZSeU4RQFDmEfOVf3GXmeSYlFrXhAHZw1jEt
+        hzT8oZN9bEx9p7uaRnEFAlsEbGmxq5wHT7CFc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FirSjkKSWAGWjsfSDEyzoPdCVtVPMLVo
+        HJ5d3ivvumkfhlJr/9hVNS+Y8txXPhUwlICiaPcxElJdz8Z67RndfoEskzagVfVU
+        yjLaN1HOqPB48EiMqJgpdItwiNk58JD9wQoW9ReWhdr0DjsiO82/XVd6SUP9TPk3
+        3Pc+k1+rHsY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 19685107A2B;
+        Thu, 21 Jan 2021 13:39:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 13846107A13;
+        Thu, 21 Jan 2021 13:39:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, peff@peff.net,
+        stolee@gmail.com, me@ttaylorr.com
+Subject: Re: RFC on packfile URIs and .gitmodules check
+References: <xmqq1refdm58.fsf@gitster.c.googlers.com>
+        <20210121183238.1780849-1-jonathantanmy@google.com>
+Date:   Thu, 21 Jan 2021 10:39:42 -0800
+In-Reply-To: <20210121183238.1780849-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Thu, 21 Jan 2021 10:32:38 -0800")
+Message-ID: <xmqqbldicexd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 07929F7E-5C18-11EB-8796-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * jt/clone-unborn-head (2020-12-22) 3 commits
->  - clone: respect remote unborn HEAD
->  - connect, transport: add no-op arg for future patch
->  - ls-refs: report unborn targets of symrefs
-> 
->  "git clone" tries to locally check out the branch pointed at by
->  HEAD of the remote repository after it is done, but the protocol
->  did not convey the information necessary to do so when copying an
->  empty repository.  The protocol v2 learned how to do so.
-> 
->  What's the status of this thing?
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Several people have commented on the high-level approach (and I have
-addressed those comments), but I don't think anyone has said that the
-code itself looks OK. I'll see if I can get some of my colleagues to
-review this.
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>> 
+>> Or can there be a situation where some objects in CDN pack are
+>> referred to by objects in the up-to-the-minute-fresh pack (e.g. a
+>> ".gitmodules" blob in CDN pack is still unchanged and used in an
+>> updated tree in the latest revision) and some other objects in CDN
+>> pack refer to an object in the live part of the history?  If there
+>> is such a cyclic dependency, "index-pack --fsck" one pack at a time
+>> would not work, but I doubt such a cycle can arise.
+>
+> My intention is that the order of the packfiles (and cyclic
+> dependencies) would not matter...
+> I'm currently working on
+> getting index-pack to output a list of the dangling .gitmodules files,
+> so that fetch-pack (its consumer) can do one final fsck on those files.
+
+In other words, it essentially becomes "we check everything we
+obtained as a single unit across multiple packs, but for performance
+we'll let index-pack work as much as possible on each individual
+pack while it has necessary data in its core, and then we conclude
+by checking the objects on the 'boundaries' that cannot be validated
+using info that is only in one pack".
+
+That does sound like the right approach.  THanks.
