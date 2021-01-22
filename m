@@ -2,159 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,LONGWORDS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66F9FC433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 15:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E74C433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:06:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DBA123A84
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 15:19:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C10ED22EBE
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727103AbhAVPTA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 10:19:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34166 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729150AbhAVPRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 10:17:30 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED696C06174A
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 07:16:37 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id y187so4644497wmd.3
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 07:16:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=vvoVUi1xcPNXXcaT05hevbb9H8Me9yG1v2NJvkIIjkA=;
-        b=Ao7SJYyyCtjetjSSKFTzdDzxQh5ntjPJszk5PcDCdMPU3udzRbB0DY12NJ3PY9m4b5
-         dJxENf0pPMPLe+aOH62oJePCxiAvcpcmUF6OaalFowgZSLrEQmQsiDhhBiHygO8CBmm1
-         R4i3p8LN/tH+JexvQg0CiTaCLL92ptsxllfvfgutA+w/ug5HXdTjtKZlz9ztfO9caUNF
-         ub7nTT7or8BhpRtMd0CdVIENtL2CseEBKXgo/H8Re5aC3dbJS0z4Y4BQ0tvC0g1I4b+M
-         FsHTnUSZMXrNlGTfKqpElmssFVXliOjEPyRwpzMWUdidFSRDSxRIjJkbYtQ6+wFNdfcq
-         B6OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=vvoVUi1xcPNXXcaT05hevbb9H8Me9yG1v2NJvkIIjkA=;
-        b=R+MmfcjDGn9Fs62rjn69bD708FityCrtnfa+QZqh5BCDDE9mdONr/CDTv8f//0Ps1D
-         QaUk4i2Wq5i1Eb0l59C/RuX+cZ3m09x/lhFOk7Awm7grE8zeOiPlboOCgKfAgwHQumP0
-         4cFOxty/KsbF5rK8gY6ViYBmb4W3gMYic+zrWF56EO3TkJHLsheFA1gVmQheExtpGFUv
-         brxw+YkAkshwvipYg6LErLDrv5ec/an/cAbHRFKuUDlvOVo+vawmRNQ0sZFvJbVd3QrP
-         Vyms8Lh58ddeBm3L1B+ebAuMQSqhUrGVkJZ4dpDorPKb9W6yk9Fno2bcqrlG2cg5Q/UY
-         tRwA==
-X-Gm-Message-State: AOAM530VhBLSQYirTq8WgUutefjNo57kgZSQY96keM0CWoeisg+S/j7L
-        8adiYflR/QllgOgLHIYXiwa/6kTKXlo=
-X-Google-Smtp-Source: ABdhPJw+PiXsy0MKqJ3w7Vs34mrvwGgRYxyVieSSZ00oByvZkkq9YxtNBSCx0O8zGOK5TSoKcQDREA==
-X-Received: by 2002:a7b:c842:: with SMTP id c2mr4437915wml.100.1611328596518;
-        Fri, 22 Jan 2021 07:16:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g14sm13825345wru.45.2021.01.22.07.16.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 07:16:35 -0800 (PST)
-Message-Id: <pull.872.git.git.1611328595003.gitgitgadget@gmail.com>
-From:   "Vladimir Chigarev via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Jan 2021 15:16:34 +0000
-Subject: [PATCH] gitk: add option to perform 'git fetch' command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729350AbhAVQGi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 11:06:38 -0500
+Received: from mout.gmx.net ([212.227.15.18]:39777 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729357AbhAVQG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 11:06:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1611331493;
+        bh=o34h/zfvlHOLxIgxgahCVDI+AsA8SfDF0qHCM+75n8Q=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BDAs2UkCiXEmJ83MkfXwoIJVhzQsMLOwjjTDkwUo8nOfE/2QRrobyFXBWvLZE5bYJ
+         W8NSdgs6WJWplVpOAS+zkWMH/n2o+NM63RZ73P24NOzv2g3vyp1LdTNyu8dQG6Gw8U
+         5wuLwkzsP/dGCQ20tjC0gRUJrpDdVZXBXFdbaK2g=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.115.203] ([89.1.213.153]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhU5R-1lg96U1e43-00ecyy; Fri, 22
+ Jan 2021 17:04:53 +0100
+Date:   Fri, 22 Jan 2021 17:04:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 3/3] ls-files.c: add --deduplicate option
+In-Reply-To: <CAOLTT8Qp2NMpbk56U6PVEmFVyZYWN6gM83HD4z_nmPWV4Z_ruw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2101221702420.52@tvgsbejvaqbjf.bet>
+References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com> <pull.832.v5.git.1611037846.gitgitgadget@gmail.com> <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com> <xmqq7do7fggn.fsf@gitster.c.googlers.com>
+ <CAOLTT8R=fF00WCVBSTDKHG_3p5RcZaxM2AU-cUj1sNWvy=mhCQ@mail.gmail.com> <xmqq1reec943.fsf@gitster.c.googlers.com> <CAOLTT8Qp2NMpbk56U6PVEmFVyZYWN6gM83HD4z_nmPWV4Z_ruw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Vladimir Chigarev <chiga17@mail.ru>,
-        Vladimir Chigarev <chiga17@mail.ru>
+Content-Type: multipart/mixed; boundary="8323328-1775346365-1611331497=:52"
+X-Provags-ID: V03:K1:5sZrAcj1cpOSdRn0q9L0oi/rW+3DMcHbSKttEJ9o4aEyBzRJbvx
+ wfFA2tX9Pa+lnCmDeAM0m1skfFWlLP3yJVQYsNoVHoPpebonFhHd8HjY2X4r3XuoaHSfHtL
+ a/SGlSf9xNrzXm8yLpyTq8wk6gHhyiSE3Knc7fG2ekVcKOuCczmQ+xFW3D74/6y/V0cCQk9
+ XE2JxqYTkSfckUvgjH8Pw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zaklC9rlqGQ=:2Y2BiwViUc+3UnsxCxKIwY
+ jjJVX/+Cy/uGfsARg7jjMT6vFJ9Mlku0viA4SdbGblY13XZzglnlXfnwGjLetgCtT5sYkMX0R
+ +4pbXGAGy7fx3VQUsv0MNiRd+RZHsOX2SJpacDXESVJPsB/fN4fXCrATxSzwe1zL9asLdYwRw
+ flEmM0rIxJtncl/YJKc5kTzqu34xnPEdRAXuvOT3XM712wTqE9eoFC1SGPnwxI5R2uVW521oE
+ xnMF5DPkJjdJWsFDGRLLOph7aD3K6CFBHsuqZM1Cl04DC1VopdJG2h5RVptDDbp2bAXbTYH4N
+ pOCx4Do5+67n7AwOCIb4+4/Y2wtyWHr31+T/Tpb2ye8PmpGUHHo/PAIv1F6pXHAIhOXwkA9Cr
+ Ul2G7PykgXgAfGw5fMc9C3LPfhVB6HPpHr3XsUVSa1QZZ7L69PD5Gb3MjTMQXoR/Da+2yBiFV
+ qD4VZGJ9ZT5oRAuXUxq82GA3uKc49oh1qwPX4vlv27Dam/0tboe+4YlDGd3WxOxMzP0YX8Nw9
+ tpYnALEduimioQyfhTdeLBFmxyxywGMoWxn368FuMQa+Pnhlp0or9VwQd5fI84IhEXzpft3B5
+ xzFMeVpWoKUscj5j2HwKg43xc/QkPqAo462ttYpttaCGRRErN7ZuVqn0qKdpm9bNC2TNsw3N0
+ XFmJxwlg3/kzdCpczAQxr1b9qQwuE7D/8xd19Pboe6UjyyAaD1p2Rpfioxvap9nJvk+TZSlrZ
+ JCSvH7cDUpIMk6UabxW6+gSmzblKExd0GKui6qqg8QKKriwajHzss/MnM0U5P+7ZyUanmju5T
+ Ffn0BEwhMskZ0cdR7dHTmMLIYbp4mhusxP+XxJBAw5+D40OVs/kWM8T0wCuVdJp6JMyCp4Ko2
+ tLx3RViRnPZy95p2T5dik/z/SDsp47c5MRV0rAJsk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Vladimir Chigarev <chiga17@mail.ru>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-There wasn't ability to perform 'git fetch' from gitk tool.
-Add 'Fetch' option to 'File' menu.
-Bind it to 'F7' key.
+--8323328-1775346365-1611331497=:52
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Vladimir Chigarev <chiga17@mail.ru>
----
-    gitk: add option to perform 'git fetch' command
-    
-    There wasn't ability to perform 'git fetch' from gitk tool. Add 'Fetch'
-    option to 'File' menu. Bind it to 'F7' key.
+Hi =E8=83=A1=E5=93=B2=E5=AE=81,
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-872%2Fchiga17%2Fgitk-fetch-option-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-872/chiga17/gitk-fetch-option-v1
-Pull-Request: https://github.com/git/git/pull/872
+On Fri, 22 Jan 2021, =E8=83=A1=E5=93=B2=E5=AE=81 wrote:
 
- gitk-git/gitk | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+> And should I still use gitgitgadget PR on my origin branch "dedup"or
+> send patch on branch "zh/ls-files-deduplicate"?
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 23d9dd1fe0d..1756385886f 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -499,6 +499,34 @@ proc getcommits {selid} {
-     }
- }
- 
-+proc fetch {} {
-+    global bgcolor NS fetch_output
-+
-+    set fetch_output {}
-+    if {[catch {exec sh -c "git fetch -v 2>&1"} fetch_output]} {
-+    }
-+
-+    set w .about
-+    if {[winfo exists $w]} {
-+	raise $w
-+	return
-+    }
-+    ttk_toplevel $w
-+    wm title $w [mc "Fetch"]
-+    make_transient $w .
-+    message $w.m -text [mc " $fetch_output "] \
-+	    -justify left -aspect 600 -border 2 -bg $bgcolor -relief groove
-+    pack $w.m -side top -fill x -padx 2 -pady 2
-+    ${NS}::button $w.ok -text [mc "Close"] -command "destroy $w" -default active
-+    pack $w.ok -side bottom
-+    bind $w <Visibility> "focus $w.ok"
-+    bind $w <Key-Escape> "destroy $w"
-+    bind $w <Key-Return> "destroy $w"
-+    tk::PlaceWindow $w widget .
-+
-+    reloadcommits
-+}
-+
- proc updatecommits {} {
-     global curview vcanopt vorigargs vfilelimit viewinstances
-     global viewactive viewcomplete tclencoding
-@@ -2089,6 +2117,7 @@ proc makewindow {} {
-         mc "&File" cascade {
-             {mc "&Update" command updatecommits -accelerator F5}
-             {mc "&Reload" command reloadcommits -accelerator Shift-F5}
-+            {mc "&Fetch" command fetch -accelerator F7}
-             {mc "Reread re&ferences" command rereadrefs}
-             {mc "&List references" command showrefs -accelerator F2}
-             {xx "" separator}
-@@ -2609,6 +2638,7 @@ proc makewindow {} {
-     bindkey f nextfile
-     bind . <F5> updatecommits
-     bindmodfunctionkey Shift 5 reloadcommits
-+    bind . <F7> fetch
-     bind . <F2> showrefs
-     bindmodfunctionkey Shift 4 {newview 0}
-     bind . <F4> edit_or_newview
-@@ -3125,6 +3155,7 @@ proc keys {} {
- [mc "<%s-KP->	Decrease font size" $M1T]
- [mc "<%s-minus>	Decrease font size" $M1T]
- [mc "<F5>		Update"]
-+[mc "<F7>		Fetch"]
- " \
-             -justify left -bg $bgcolor -border 2 -relief groove
-     pack $w.m -side top -fill both -padx 2 -pady 2
+The way GitGitGadget is designed asks for contributors to adjust their
+patch(es) via interactive rebase, implementing the suggestions and
+addressing the concerns while doing so, then force-pushing, optionally
+amending the first PR comment (i.e. the description) with a list of
+those changes, and then submitting a new iteration via `/submit`.
 
-base-commit: 72c4083ddf91b489b7b7b812df67ee8842177d98
--- 
-gitgitgadget
+Ciao,
+Johannes
+
+--8323328-1775346365-1611331497=:52--
