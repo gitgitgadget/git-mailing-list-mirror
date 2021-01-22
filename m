@@ -6,288 +6,182 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE207C433DB
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09E55C433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 23:26:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97E0B23AC0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:55:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9FF523B52
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 23:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728573AbhAVWzV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:55:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35970 "EHLO cloud.peff.net"
+        id S1728458AbhAVX0F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 18:26:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35986 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728526AbhAVWzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 17:55:08 -0500
-Received: (qmail 15061 invoked by uid 109); 22 Jan 2021 22:54:19 -0000
+        id S1728535AbhAVXZp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 18:25:45 -0500
+Received: (qmail 15372 invoked by uid 109); 22 Jan 2021 23:25:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 Jan 2021 22:54:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 Jan 2021 23:25:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20065 invoked by uid 111); 22 Jan 2021 22:54:20 -0000
+Received: (qmail 20207 invoked by uid 111); 22 Jan 2021 23:25:00 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 17:54:20 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 18:25:00 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 22 Jan 2021 17:54:18 -0500
+Date:   Fri, 22 Jan 2021 18:24:59 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH v2 1/8] packfile: prepare for the existence of '*.rev'
- files
-Message-ID: <YAtXmie2kHNrcBwY@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 2/8] pack-write.c: prepare to write 'pack-*.rev' files
+Message-ID: <YAtey9krU32mgEBV@coredump.intra.peff.net>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <cover.1610576805.git.me@ttaylorr.com>
- <6742c15c84bafbcc1c06e2633de51dcda63e3314.1610576805.git.me@ttaylorr.com>
+ <8648c87fa71aec427dc11afcba6548fb66a1413b.1610576805.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6742c15c84bafbcc1c06e2633de51dcda63e3314.1610576805.git.me@ttaylorr.com>
+In-Reply-To: <8648c87fa71aec427dc11afcba6548fb66a1413b.1610576805.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 13, 2021 at 05:28:06PM -0500, Taylor Blau wrote:
+On Wed, Jan 13, 2021 at 05:28:11PM -0500, Taylor Blau wrote:
 
-> (Numbers taken in the kernel after cheating and using the next patch to
-> generate a reverse index). There are a couple of approaches to improve
-> cold cache performance not pursued here:
-> 
->   - We could include the object offsets in the reverse index format.
->     Predictably, this does result in fewer page faults, but it triples
->     the size of the file, while simultaneously duplicating a ton of data
->     already available in the .idx file. (This was the original way I
->     implemented the format, and it did show
->     `--batch-check='%(objectsize:disk)'` winning out against `--batch`.)
-> 
->     On the other hand, this increase in size also results in a large
->     block-cache footprint, which could potentially hurt other workloads.
-> 
->   - We could store the mapping from pack to index position in more
->     cache-friendly way, like constructing a binary search tree from the
->     table and writing the values in breadth-first order. This would
->     result in much better locality, but the price you pay is trading
->     O(1) lookup in 'pack_pos_to_index()' for an O(log n) one (since you
->     can no longer directly index the table).
-> 
-> So, neither of these approaches are taken here. (Thankfully, the format
-> is versioned, so we are free to pursue these in the future.) But, cold
-> cache performance likely isn't interesting outside of one-off cases like
-> asking for the size of an object directly. In real-world usage, Git is
-> often performing many operations in the revindex,
-
-I think you've nicely covered the arguments for and against the extra
-offset here. This final paragraph ends in a comma, which makes me wonder
-if you wanted to say something more. I'd guess it is along the lines
-that most commands will be looking up more than one object, so that
-cold-cache effort is amortized.
-
-Or another way of thinking about it: 17ms versus 25ms in the cold-cache
-for a _single_ object is not that big a deal, because the extra 8ms does
-not scale as we ask about more objects. Here's an actual argument in
-numbers (test repo is linux.git after building a .rev file using your
-series):
-
-For a single object, the extra cold-cache costs give --batch a slight
-edge:
-
-  $ git rev-parse HEAD >obj
-  $ hyperfine -p 'echo 3 | sudo tee /proc/sys/vm/drop_caches' \
-                 'git cat-file --buffer --batch-check="%(objectsize:disk)" <obj' \
-                 'git cat-file --buffer --batch <obj'
-
-  Benchmark #1: git cat-file --buffer --batch-check="%(objectsize:disk)" <obj
-    Time (mean ± σ):      37.2 ms ±   8.3 ms    [User: 2.6 ms, System: 4.6 ms]
-    Range (min … max):    28.5 ms …  55.6 ms    10 runs
-   
-  Benchmark #2: git cat-file --buffer --batch <obj
-    Time (mean ± σ):      27.4 ms ±   3.4 ms    [User: 2.9 ms, System: 2.5 ms]
-    Range (min … max):    23.2 ms …  37.1 ms    51 runs
-   
-  Summary
-    'git cat-file --buffer --batch <obj' ran
-      1.36 ± 0.35 times faster than 'git cat-file --buffer --batch-check="%(objectsize:disk)" <obj'
-
-But with even a moderate number of objects, that's reversed:
-
-  $ git cat-file --batch-all-objects --batch-check='%(objectname)' |
-    shuffle | head -1000 >obj-1000
-  $ hyperfine -p 'echo 3 | sudo tee /proc/sys/vm/drop_caches' \
-                 'git cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000' \
-		 'git cat-file --buffer --batch <obj-1000'
-  
-  Benchmark #1: git cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000
-    Time (mean ± σ):      1.599 s ±  0.285 s    [User: 22.4 ms, System: 334.5 ms]
-    Range (min … max):    0.816 s …  1.762 s    10 runs
-   
-  Benchmark #2: git cat-file --buffer --batch <obj-1000
-    Time (mean ± σ):      1.972 s ±  0.225 s    [User: 343.5 ms, System: 404.2 ms]
-    Range (min … max):    1.691 s …  2.283 s    10 runs
-   
-  Summary
-    'git cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000' ran
-      1.23 ± 0.26 times faster than 'git cat-file --buffer --batch <obj-1000'
-
-
-Of course this isn't exactly an apples-to-apples comparison in the first
-place, since the --batch one is doing a lot more. So "winning" with
-objectsize:disk is not much of an accomplishment. A more interesting
-comparison would be the same operation on a repo with your series,
-versus one with the offset embedded in the .rev file, as the number of
-objects grows.
-
-But since we don't have that readily available, another interesting
-comparison is stock git (with no .rev file) against your new .rev file,
-with a cold cache.
-
-At 1000 objects, the old code has a slight win, because it has less to
-fault in from the disk (instead it's recreating the same data in RAM).
-"git.compile" is your branch below; "git" is a stock build of "next":
-
-  Benchmark #1: git cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000
-    Time (mean ± σ):      1.483 s ±  0.260 s    [User: 148.9 ms, System: 301.2 ms]
-    Range (min … max):    0.792 s …  1.725 s    10 runs
-   
-  Benchmark #2: git.compile cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000
-    Time (mean ± σ):      1.820 s ±  0.138 s    [User: 27.7 ms, System: 399.3 ms]
-    Range (min … max):    1.610 s …  2.012 s    10 runs
-   
-  Summary
-    'git cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000' ran
-      1.23 ± 0.23 times faster than 'git.compile cat-file --buffer --batch-check="%(objectsize:disk)" <obj-1000'
-
-But that edge drops to 1.08x at 10,000 objects, and then at 100,000
-objects your code is a win (by 1.16x). And of course it's a giant win
-when the cache is already warm.
-
-And in a cold cache, we'd expect a .rev file with offsets in it to be
-much worse, since there's many more bytes to pull from the disk.
-
-All of which is a really verbose way of saying: you might want to add a
-few words after the comma:
-
-  In real-world usage, Git is often performing many operations in the
-  revindex (i.e., rather than asking about a single object, we'd
-  generally ask about a range of history).
-
-:) But hopefully it shows that including the offsets is not really
-making things better for the cold cache anyway.
-
->  Documentation/technical/pack-format.txt |  17 ++++
->  builtin/repack.c                        |   1 +
->  object-store.h                          |   3 +
->  pack-revindex.c                         | 112 +++++++++++++++++++++---
->  pack-revindex.h                         |   7 +-
->  packfile.c                              |  13 ++-
->  packfile.h                              |   1 +
->  tmp-objdir.c                            |   4 +-
->  8 files changed, 145 insertions(+), 13 deletions(-)
-
-Oh, there's a patch here, too. :)
-
-It mostly looks good to me. I agree with Junio that "compute" is a
-better verb than "load" for generating the in-memory revindex.
-
-> +static int load_pack_revindex_from_disk(struct packed_git *p)
+> +static void write_rev_index_positions(struct hashfile *f,
+> +				      struct pack_idx_entry **objects,
+> +				      uint32_t nr_objects)
 > +{
-> +	char *revindex_name;
-> +	int ret;
-> +	if (open_pack_index(p))
-> +		return -1;
+> +	uint32_t *pack_order;
+> +	uint32_t i;
 > +
-> +	revindex_name = pack_revindex_filename(p);
+> +	ALLOC_ARRAY(pack_order, nr_objects);
+> +	for (i = 0; i < nr_objects; i++)
+> +		pack_order[i] = i;
+> +	QSORT_S(pack_order, nr_objects, pack_order_cmp, objects);
+
+qsort? Don't we have a perfectly good radix sort for this exact purpose? :)
+
+I guess it is awkward to use because it hard-codes the assumption that
+we are sorting revindex_entry structs, with their offsets directly
+available.
+
+We _could_ actually just generate an in-memory revindex array, and then
+use that to write out the .rev file. That has the nice property that
+we'd continue exercising the fallback code in the tests.
+
+But a revindex_entry is much larger than the uint32_t's we need here. So
+we'd be incurring extra memory costs during the generation, which is
+probably not worth it. If we want better test coverage, we probably
+should explicitly run a series of tests both with and without a .rev
+file.
+
+It's possible we'd still benefit from using a more generalized radix
+sort, but it probably isn't worth the trouble. The timings from
+8b8dfd5132 (pack-revindex: radix-sort the revindex, 2013-07-11) claim a
+4x speedup on sorting 3M entries (the size matters because we are
+comparing an O(n) sort versus an O(n log n) one). We can imagine that at
+10M entries for the current kernel, it might even be 8x. But the
+absolute numbers are pretty small. The radix sort takes ~150ms for
+linux.git on my machine.  At 8x, that's 1.2s. For a repack of the
+kernel, that is mostly a drop in the bucket. It mattered a lot more when
+many processes were doing it on the fly.
+
+> +static int pack_order_cmp(const void *va, const void *vb, void *ctx)
+> +{
+> +	struct pack_idx_entry **objects = ctx;
 > +
-> +	ret = load_revindex_from_disk(revindex_name,
-> +				      p->num_objects,
-> +				      &p->revindex_map,
-> +				      &p->revindex_size);
-> +	if (ret)
-> +		goto cleanup;
+> +	off_t oa = objects[*(uint32_t*)va]->offset;
+> +	off_t ob = objects[*(uint32_t*)vb]->offset;
+
+Dereferencing a pointer to index another array always makes me nervous
+that we may have a bounds problem with bogus data.
+
+In this case we know it is OK because we filled the array ourselves with
+in-bound numbers in write_rev_index_positions.
+
+> +#define RIDX_SIGNATURE 0x52494458 /* "RIDX" */
+> +#define RIDX_VERSION 1
+
+I was surprised we didn't define these already on the reading side, but
+it looks like we didn't. In patch 1, we probably should be checking
+RIDX_SIGNATURE in load_revindex_from_disk(). But much more importantly,
+we should be checking that we find version 1, since that's what will
+make it safe to later invent a version 2.
+
+> +static void write_rev_header(struct hashfile *f)
+> +{
+> +	uint32_t oid_version;
+> +	switch (hash_algo_by_ptr(the_hash_algo)) {
+> +	case GIT_HASH_SHA1:
+> +		oid_version = 1;
+> +		break;
+> +	case GIT_HASH_SHA256:
+> +		oid_version = 2;
+> +		break;
+> +	default:
+> +		die("write_rev_header: unknown hash version");
+> +	}
+
+I forgot to comment on this in patch 1, but: I think the format is
+really independent of the hash size. The contents are identical for a
+sha-1 versus sha-256 file.
+
+That said, I don't overly mind having a hash identifier if it might help
+debug things (OTOH, how the heck do you end up with one that matches the
+trailer's packfile but  _doesn't_ match the trailer's contents?).
+
+If we do have it, should we also be checking it in the loading function?
+
+> +const char *write_rev_file(const char *rev_name,
+> +			   struct pack_idx_entry **objects,
+> +			   uint32_t nr_objects,
+> +			   const unsigned char *hash,
+> +			   unsigned flags)
+> +{
+> +	struct hashfile *f;
+> +	int fd;
 > +
-> +	p->revindex_data = (char *)p->revindex_map + 12;
-
-Junio mentioned once spot where we lose constness through a cast. This
-is another. I wonder if revindex_map should just be a "char *" to make
-pointer arithmetic easier without having to cast.
-
-But also...
-
-> +	if (p->revindex)
-> +		return p->revindex[pos].nr;
-> +	else
-> +		return get_be32((char *)p->revindex_data + (pos * sizeof(uint32_t)));
-
-If p->revindex_data were "const uint32_t *", then this line would just
-be:
-
-  return get_be32(p->revindex_data + pos);
-
-Not a huge deal either way since the whole point is to abstract this
-behind a function where it only has to be written once. I don't think
-there is any downside from the compiler's view (and we already use this
-trick for the bitmap name-hash cache).
-
-> diff --git a/packfile.c b/packfile.c
-> index 7bb1750934..b04eac9286 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -324,11 +324,21 @@ void close_pack_index(struct packed_git *p)
->  	}
->  }
->  
-> +void close_pack_revindex(struct packed_git *p) {
-> +	if (!p->revindex_map)
-> +		return;
+> +	if ((flags & WRITE_REV) && (flags & WRITE_REV_VERIFY))
+> +		die(_("cannot both write and verify reverse index"));
 > +
-> +	munmap((void *)p->revindex_map, p->revindex_size);
-> +	p->revindex_map = NULL;
-> +	p->revindex_data = NULL;
-> +}
-> +
->  void close_pack(struct packed_git *p)
->  {
->  	close_pack_windows(p);
->  	close_pack_fd(p);
->  	close_pack_index(p);
-> +	close_pack_revindex(p);
->  }
+> +	if (flags & WRITE_REV) {
+> +		if (!rev_name) {
+> +			struct strbuf tmp_file = STRBUF_INIT;
+> +			fd = odb_mkstemp(&tmp_file, "pack/tmp_rev_XXXXXX");
+> +			rev_name = strbuf_detach(&tmp_file, NULL);
+> +		} else {
+> +			unlink(rev_name);
+> +			fd = open(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+> +			if (fd < 0)
+> +				die_errno("unable to create '%s'", rev_name);
+> +		}
 
-Thinking out loud a bit: a .rev file means we're spending an extra map
-per pack (but not a descriptor, since we close after mmap). And like the
-.idx files (but unlike .pack file maps), we don't keep track of these
-and try to close them when under memory pressure. I think that's
-probably OK in terms of bytes. It may mean running up against operating
-system number-of-mmap limits more quickly when you have a very large
-number of packs, as mentioned in:
+So if the caller gave us a name, we force-overwrite it. That seemed
+weird to me at first, but it makes sense; the atomic rename-into-place
+writers will not be passing in the name. And this is exactly how
+write_idx_file() works.
 
-  https://lore.kernel.org/git/20200601044511.GA2529317@coredump.intra.peff.net/
+I wonder if we could factor out some of this repeated logic, but I
+suspect it is mostly diminishing returns. Maybe this "open a pack file
+for writing" could become a helper function, though.
 
-But this is probably bumping the number of problematic packs from 30k to
-20k. Both are sufficiently ridiculous that I don't think it matters in
-practice.
+> diff --git a/pack.h b/pack.h
+> index 9fc0945ac9..30439e0784 100644
+> --- a/pack.h
+> +++ b/pack.h
+> @@ -42,6 +42,8 @@ struct pack_idx_option {
+>  	/* flag bits */
+>  #define WRITE_IDX_VERIFY 01 /* verify only, do not write the idx file */
+>  #define WRITE_IDX_STRICT 02
+> +#define WRITE_REV 04
+> +#define WRITE_REV_VERIFY 010
 
-> diff --git a/tmp-objdir.c b/tmp-objdir.c
-> index 42ed4db5d3..da414df14f 100644
-> --- a/tmp-objdir.c
-> +++ b/tmp-objdir.c
-> @@ -187,7 +187,9 @@ static int pack_copy_priority(const char *name)
->  		return 2;
->  	if (ends_with(name, ".idx"))
->  		return 3;
-> -	return 4;
-> +	if (ends_with(name, ".rev"))
-> +		return 4;
-> +	return 5;
->  }
+It is a little funny that the write-rev function has both WRITE_REV and
+WRITE_REV_VERIFY (which we must be sure are not both provided), but we
+do not need both for the IDX.
 
-Probably not super important, but: should the .idx file still come last
-here? Simultaneous readers won't start using the pack until the .idx
-file is present. We'd probably prefer they see the whole thing
-atomically, than see a .idx missing its .rev (they won't ever produce a
-wrong answer, but they'll generate the in-core revindex on the fly when
-they don't need to).
-
-I guess one could argue that .bitmap files should get similar treatment,
-but we'd not generally see those in the quarantine objdir anyway, so
-nobody ever gave it much thought.
+I thought maybe the reason is that we'd pass these flags to
+write_idx_file() or similar, and it would need to know whether to write
+just an idx, or both. That doesn't seem to happen in this patch, but
+maybe it does in a future one...
 
 -Peff
