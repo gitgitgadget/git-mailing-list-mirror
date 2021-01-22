@@ -2,118 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36511C433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:31:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D60AFC433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:32:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6CDF23AA1
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:31:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3E0123A5C
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:32:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729016AbhAVWbS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:31:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42774 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729322AbhAVW3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 17:29:34 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20E2C06174A
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 14:28:53 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id c2so8041378edr.11
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 14:28:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=hBDv23lTTPV+k7kdFyfHVtRxjPHVvsOA1B1gMYBRxWQ=;
-        b=l6FpmG7RLlIVTc7/EHgXbi24K80A5jwKaTfteOu6IBTBRkhw622I+wmlHynyXV/pip
-         Ji2fgWv0d0arHJMukQwLQhCdRuZL03tPX3x2JeJ1tzdCVXfUT4ZyxOLj+ioUbU+JYVN8
-         EPTvLJ71bHC2loWbMxz1UI2lKy1jWeecxphweOVBqp4NKCRiMdqkwekFZQdtSTuLUc8z
-         9p6XrwBOwOaL7BadBy0WuX5ZPjFB9n6/BSJ/+ys0hczcK6M/mqBX91i9v+R/1qzuM7LO
-         3a6TWyKCjMjwJwnguOHLJ1OGuN62tqhOb6cdDNB6XvXOBoliec/bXf6tl92knuDs1tdL
-         /HCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=hBDv23lTTPV+k7kdFyfHVtRxjPHVvsOA1B1gMYBRxWQ=;
-        b=cD6Xa+K73mknR8ou47gCjyAy9JL0iT33mt32oW4B+2DILAXG82YzoczNmZ8vh0OqpA
-         HaAIbK7FBYPLGbj6oz1Qo3Tj9ygihvBfSF3SRpKvLZu3RdgC+uQK3WYe92HXNwIBi6uV
-         fbdfZx3ZyRsydZt3KQr5ru1RRSUWMvGyTF5rMR2lQUT9U3sqlkVlkIBEtNMxQHhvuyfw
-         EmADiSyt3SZ5ZPEX93HrdtsvajT9Y+6YqyM04ZGmmSNVtRFlK/pzP3h5MUlEG8JYb5Cf
-         A+aw/OWR0YIKg9z9dJE83bcihohl2KaNzUZ1ySoYVDUVfsyIMpZN4GDFDp3lVGJyAjtu
-         +icw==
-X-Gm-Message-State: AOAM533EpL5mCL/5opec3w6G+3NjE6XCjd4AKTsDW+vT5e4rTLtPHzcG
-        pltLRzbz7ynHzJfmQJFBL6c=
-X-Google-Smtp-Source: ABdhPJwyrF5PP4x/2+/CJ69hZAyYabhk7OyXKXqmslovZOTmn8y/xrXP+93w5iMHoNSvitgUPqun5A==
-X-Received: by 2002:a50:8121:: with SMTP id 30mr37047edc.311.1611354532619;
-        Fri, 22 Jan 2021 14:28:52 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id qk1sm5248909ejb.86.2021.01.22.14.28.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 14:28:51 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-Subject: Re: git archive setting user and group
-References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
- <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de>
- <20210122213954.7dlnnpngjoay3oia@chatter.i7.local>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <20210122213954.7dlnnpngjoay3oia@chatter.i7.local>
-Date:   Fri, 22 Jan 2021 23:28:51 +0100
-Message-ID: <87v9bo7gik.fsf@evledraar.gmail.com>
+        id S1730156AbhAVTws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 14:52:48 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56805 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728799AbhAVTTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 14:19:35 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B74FAA76C3;
+        Fri, 22 Jan 2021 14:18:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TGusI+EEZHWTy30RmgEVy/AtJH8=; b=CRxm5C
+        8VoXOdfP14f+4d6eh3d7GiuIaX78AhNd+goCZFE2IGYeyt0g48VYdmVmL+bTPYp+
+        M6Lv/c8EpC5VN83Vj6WqISsl5FlmHNvEpxUuuzoYqZW5m005i1hm5v9T3ohZyPQE
+        3oJsSgLWz7t5E3yOHdnF9hBWbywqEyQ1wIIng=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=F9WNTFSQEg07HgmrX6o6K6T+WJ5ji1+F
+        +v0aoShJ7UzIGWqhCFeUaxDDCc0XA42KBv0g5A58THGeXpvbVgUNAvg6olGs4uIF
+        qW5Bn9LH4E5v0BTgykW/FWtodcofY6F2ZhdPn2Nu2cewJvpEqI5yHnZepz0NIcON
+        QB82LvXGKhc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AE7FCA76C2;
+        Fri, 22 Jan 2021 14:18:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 356E0A76C0;
+        Fri, 22 Jan 2021 14:18:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 3/8] fsmonitor: de-duplicate BUG()s around dirty bits
+References: <pull.839.git.1611161639.gitgitgadget@gmail.com>
+        <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
+        <31095f9aa0ecd29193cc4d612d1953653c04b8ae.1611320639.git.gitgitgadget@gmail.com>
+Date:   Fri, 22 Jan 2021 11:18:42 -0800
+In-Reply-To: <31095f9aa0ecd29193cc4d612d1953653c04b8ae.1611320639.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 22 Jan 2021
+        13:03:54 +0000")
+Message-ID: <xmqqh7n893vx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A438BB3C-5CE6-11EB-A060-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, Jan 22 2021, Konstantin Ryabitsev wrote:
-
-> On Fri, Jan 22, 2021 at 10:00:04PM +0100, Ren=C3=A9 Scharfe wrote:
->> Adding support for using a custom user and group should be easy.  Is
->> this just a cosmetic thing?  Regular users would ignore the user info in
->> the archive, and root should not be used for extracting, and on systems
->> that don't have a logwatch user this wouldn't make a difference anyway,
->> right?
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Right now, "git archive" operations are bit-for-bit identical across all
-> versions going back at least 8+ years. In fact, we've been relying on thi=
-s to
-> support bundling tarball signatures with git tags themselves (via git not=
-es).
-> E.g. you can see this in action here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tag/?h=
-=3Dv5.10.9
+> The index has an fsmonitor_dirty bitmap that records which index entries
+> are "dirty" based on the response from the FSMonitor. If this bitmap
+> ever grows larger than the index, then there was an error in how it was
+> constructed, and it was probably a developer's bug.
 >
-> If you click on "(sig)", you will download a signature that can be used to
-> verify the tarball generated using "git archive".
+> There are several BUG() statements that are very similar, so replace
+> these uses with a simpler assert_index_minimum(). Since there is one
+> caller that uses a custom 'pos' value instead of the bit_size member, we
+> cannot simplify it too much. However, the error string is identical in
+> each, so this simplifies things.
+
+Also that single caller with a custom 'pos' used to allow 'pos' to
+point one beyond the end of istate->cache[] array, but now it is
+forbidden.  If this is a strict bugfix, it probably deserves a
+mention here.
+
+> The end result is that the code is simpler to read while also preserving
+> these assertions for developers in the FSMonitor space.
 >
-> I would argue that adding user/group support to "git archive" operation is
-> not really solving any problems other than "it's different from when I ru=
-n it
-> as a regular user" -- and can introduce potential compatibility problems =
-if
-> implemented.
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  fsmonitor.c | 27 +++++++++++++--------------
+>  1 file changed, 13 insertions(+), 14 deletions(-)
 >
-> So, I would selfishly vote not to implement this.
-
-It seems "logwatch" has the same situation, except their backwards
-compatibility is with non-"git archive" tool that used user !=3D root.
-
-If it solves a problem for some users and someone comes up with a patch
-I don't see why it shouldn't be implemented, but I think it's important
-that "root" is the default unless configured or the relevant option is
-invoked.
-
-Or do you mean that the kernel.org use-case is that users are expected
-to run "git archive" on their own machines and upload the result to
-kernel.org, and that kernel.org relies on two such files bit-for-bit
-identical?
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index ca031c3abb8..52a50a9545a 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -13,14 +13,19 @@
+>  
+>  struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
+>  
+> +static void assert_index_minimum(struct index_state *istate, size_t pos)
+> +{
+> +	if (pos > istate->cache_nr)
+> +		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> +		    (uintmax_t)pos, istate->cache_nr);
+> +}
+> +
+>  static void fsmonitor_ewah_callback(size_t pos, void *is)
+>  {
+>  	struct index_state *istate = (struct index_state *)is;
+>  	struct cache_entry *ce;
+>  
+> -	if (pos >= istate->cache_nr)
+> -		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
+> -		    (uintmax_t)pos, istate->cache_nr);
+> +	assert_index_minimum(istate, pos);
+>  
+>  	ce = istate->cache[pos];
+>  	ce->ce_flags &= ~CE_FSMONITOR_VALID;
+> @@ -82,10 +87,8 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+>  	}
+>  	istate->fsmonitor_dirty = fsmonitor_dirty;
+>  
+> -	if (!istate->split_index &&
+> -	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +	if (!istate->split_index)
+> +		assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>  
+>  	trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
+>  	return 0;
+> @@ -110,10 +113,8 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
+>  	uint32_t ewah_size = 0;
+>  	int fixup = 0;
+>  
+> -	if (!istate->split_index &&
+> -	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +	if (!istate->split_index)
+> +		assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>  
+>  	put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
+>  	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
+> @@ -335,9 +336,7 @@ void tweak_fsmonitor(struct index_state *istate)
+>  			}
+>  
+>  			/* Mark all previously saved entries as dirty */
+> -			if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
+> -				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+> -				    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+> +			assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+>  			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
+>  
+>  			refresh_fsmonitor(istate);
