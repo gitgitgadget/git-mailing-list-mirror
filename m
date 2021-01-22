@@ -2,124 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1454C433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2275BC433DB
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:56:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65DDA23A9A
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:56:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E558F23A9A
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 16:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729238AbhAVQz3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 11:55:29 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59025 "EHLO mout.gmx.net"
+        id S1729449AbhAVQ4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 11:56:00 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57159 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729350AbhAVQOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 11:14:32 -0500
+        id S1728781AbhAVQbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 11:31:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1611331967;
-        bh=vS51pObbCLKiD5wqpVeAt59asGiLYvdI1KCdJQih2g0=;
+        s=badeba3b8450; t=1611332984;
+        bh=NXyjX1TTLmcrphbuCQSvrCs9MtPbwwFMmxFZ5JIJhNY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WwhiPMnut1JL8MVEkmcTOyFo1aLifX2j3kGSQX5Fy2jL2yuvi29xUnDI8C/Ey5hJm
-         qOFAvUM32PdHWQqjGst1lB/qB2Dw+qb5O+zfESuIW5WswzESJrGQlvLyiugEAVEiOL
-         3GpLqyA09dOjHGzxFdZcOFdwejRyTDY2blEtUilI=
+        b=gianjxyH/byRhq/vHAsoHUA1SXcgJaB80zQY/04GkHeSWGVjUos61qv5qppst/RGw
+         JTW8C75OBVLwFvWyvsx3342dPDqlTU7+LhXV2j+PBvpdzpvQhK8DLPVt2PuZjfyK9x
+         z5r/RK4wX1CE8oAEG3R1kO9UQlIOyLkNsUEnPRz0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.115.203] ([89.1.213.153]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3KPq-1m1n8H1uGg-010Hd4; Fri, 22
- Jan 2021 17:12:47 +0100
-Date:   Fri, 22 Jan 2021 17:12:49 +0100 (CET)
+Received: from [172.25.115.203] ([89.1.213.153]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mt79P-1lrdzd2ZgX-00tPyU; Fri, 22
+ Jan 2021 17:29:44 +0100
+Date:   Fri, 22 Jan 2021 17:29:46 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH 2/3] range-diff: handle commit ranges other than A..B
-In-Reply-To: <CAPig+cTMqy=57hGksH6GaCB7i=eJHTCWVzwED=PPZF1hNp_1nQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2101221711140.52@tvgsbejvaqbjf.bet>
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com> <88c15617b4ba8ae3211b1a01861eb4165f3eda38.1611267638.git.gitgitgadget@gmail.com> <CAPig+cTMqy=57hGksH6GaCB7i=eJHTCWVzwED=PPZF1hNp_1nQ@mail.gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
+In-Reply-To: <YAo9aTkZBCSGLYTT@camp.crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2101221728410.52@tvgsbejvaqbjf.bet>
+References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net> <20210109224236.50363-1-davvid@gmail.com> <20210109225400.GA156779@ellen> <xmqqmtxhd1zx.fsf@gitster.c.googlers.com> <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com> <20210110072902.GA247325@ellen>
+ <xmqqh7np9gqn.fsf@gitster.c.googlers.com> <20210116042454.GA4913@ellen> <YAo9aTkZBCSGLYTT@camp.crustytoothpaste.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nbb/BDRBBAyALpLw9u39Vrmcb4yb7kkOqGzrpEe8/gEbNFSWebE
- E971dULKZoF5PhoUMzNUd1jihf5JU5YbyfaRcFG4UwkYBibYq7MPBY0A7bH9//Uul2Qg5BC
- CU6LDodbpA+F47w9e2YmCRPcX8q1wrfhtLhczAW/3FoJwSCvhydWnhnikQLPqXhaFOZuBgy
- KudYirlzlrrpF/hYRSCBQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kg1SzlCFB2U=:6GTmP75BxRP5pDEel8q9M8
- BPwu9z7Qi/Tj8THZ7ARF8Kc0tkGZUDdS8YVjvsw6Q+9ChCHIQ7htnV/QXhYkGAMIHO0qC7hyK
- jxr0id4xm2LtI8gZwsoIZ+fU06YGyXLmRfOs2MmcmJ0aoQJ2pok/pRmhVUsXIE91s3uA9pzD7
- ZVXLqZjsUw7E+5ixfotliB0rVXi8rLEvlPFgVGCcTECn7SFHi6TL34WZ5PesPEYVCTPfnjpsS
- S7+zFtlIw/MXfZB96YB+Aotm64o/WDltKfVejEHA0rqCb2RtkFPJ8F7g1RD1nnfJrAIfUy9lO
- rAZvCE5Gza0WJIrOoGz+Z4eb+Jr6DLwdHceZcUyALOp73WN8kOiv4UMECcX7sL+pcUk3SaVFj
- 4mqm7DY4re/K+q7RQ6KazPGTUg0ShxYgssicP6RQSM5nrf8a6HDQjWsHOwxV2L6m+LohPZCjy
- mKTBHQxdU36KemXtJyvAfzzGDd413tYFLmjaoDWEPJtrNnEBgQuWyXVDH/jOAnHSb/1cURSyM
- tY8LBUc9khpNVIYHq4sohrJWSdpa0C3fzOZfayLlMAdLngMpQLVFZYrQKmn4Zg8W5Rf2ucFrQ
- A2gqeeVsWziehSsL14n0bhc4I6Fb7EVepxEYTp/wgByeNBrpnC2uaj4su+2S1d1GotjXURkY1
- C/eIP8ErueYkeg/6fBDUqv4ztpcwXt4UtA0EiUg4tMzqUFB2+Dr8aundUaPS1lgWP+Y3g/i9O
- u1AAQKejUYdqiDy/Oqzn1j+ZPej47r3TvM8C7zfK0PNbkhECpIswGJjb696abrgN/sytU4nst
- B8y7NvOJ2g4pVXOAe2/as+gpfDleA5ppaSlPNoxH4v6saVD4hiW7S0AIzNiLrL1L4jbhZS7Mm
- E476ZMQBCk84KqQ78K/SgHygfF/ZQY0/7FAOPKclo=
+X-Provags-ID: V03:K1:wgWAsk3Az4fh47ED5K0AGZQDWP0wGPuimO2k3jcQWqOrq92mY6s
+ H9hHeLJOifm6KTCTJNyIIfTdKJztyWCZGbwWvxkUoqCkYb3gvQmykMYj25Ia0FIEJ21ow9x
+ C1gmXVD8HWK7UN170hCZ3LLXYpsbxy6U3C2CTrZLdg0zDwc9w94ewX5SS7FiKFOqHSo/xzR
+ TkNuo+MWcTuZmyNvhWMNw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:t+qut+V5Nzc=:zmzsnZ4VuNEUGaEGvM7PyG
+ 7tB1133bf6unbe/INOPQPreQY6MJ5CXHYvJJPp42AjXVPJouulvp7a+iD2XBaI6g+kVISq1HR
+ Ivrzh1qtpS3VHAFqhWDiosaRpC2L11jmsLpnAC3J9vztSjPRdAKrMtQn6JulxAn6TjuEjWZZW
+ nrBVHkeumtB5Ip+qkHXyftbAuVtLjSJkA3rTan9Kp2NraZyKonBAza5antxTUdM/ikqNoiv1r
+ Tf7U3NERsib6/7FkIV+3ZyLIZLjf9zqQKWCVPfoWVVbASXZdptTWTSS2InkEaOFXY+NR8qW6C
+ QE8fz094TdyBGv757FQycxqz4ModU3JkKbGdjQxh0Tgt0xlZWPZphokQZJ1rSRs4pcBt2uIuK
+ IgDtmA58e9/fCuksQ5er+GpwpCZM8ji6TWaUPlpnszVissZPvFk2THDZIkbi8ChVtJ82TbVUR
+ f+8lIunMW2H5nyiOV92L+v1zMTYVMAcHxNfMrCy1w+M69k7D3J3HBqYPj+ZsZ2/uZ7/k+z2TO
+ I0Kgsn7qghRFAMu5r0TioO3N8mLa55q/geNVFcQ/CfO7t1orxNvsj5zhrEOFADEKKD8YSqL8m
+ XmXl9uezCfwRV5YJM2yTGupLgrtbqGDTm7SWb5JW49FMzZzXZhKF7IFhTR5otlJRt56Q9r6r3
+ 1xYX0+3OqXBpmOInBzaYYpPhysrA1zQt379Wu4Nvmh3a+TEd1WCtLC9yoyFhpIH4vuQMyUmjy
+ 2zqeV+nAdkQNUUc5jgXijBfiiT4FFwdE1lX7vBnp34nZwXDhMYtsR6XmybbVRqlo76M2SDTlC
+ aNICVXDaMyqGmrora9kd5NcAyigpP36T0t8/LfQTbpWuVyfGwLUxMgzMjGgVdOjmuumMbm3u+
+ +k6vJwBEp4XAQ2A6NEP1PUes7wJNrGOE6LJGqPNxg=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi brian,
 
-On Thu, 21 Jan 2021, Eric Sunshine wrote:
+On Fri, 22 Jan 2021, brian m. carlson wrote:
 
-> On Thu, Jan 21, 2021 at 5:22 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
-> > described to specify commit ranges that `range-diff` does not yet
-> > accept: "<commit>^!" and "<commit>^-<n>".
+> On 2021-01-16 at 04:24:54, Seth House wrote:
+> > On Sun, Jan 10, 2021 at 03:24:48AM -0800, Junio C Hamano wrote:
+> > > Note that with t7800 fixed with the patch, non Windows jobs all seem
+> > > to pass, but t7610 seems to have problem(s) on Windows.
 > >
-> > Let's accept them.
+> > The autocrlf test is breaking because the sed that ships with some min=
+gw
+> > versions (and also some minsys and cygwin versions) will *automaticall=
+y*
+> > remove carriage returns:
 > >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-> > @@ -13,7 +13,26 @@ NULL
-> >  static int is_range(const char *range)
-> >  {
-> > +       if (strstr(range, ".."))
-> > +               return 1;
-> > +
-> > +       i =3D strlen(range);
-> > +       c =3D i ? range[--i] : 0;
-> > +       if (c =3D=3D '!')
-> > +               i--; /* might be ...^! or ...^@ */
-> > +       else if (isdigit(c)) {
-> > +               /* handle ...^-<n> */
-> > +               while (i > 2 && isdigit(range[--i]))
-> > +                       ; /* keep trimming trailing digits */
-> > +               if (i < 2 || range[i--] !=3D '-')
-> > +                       return 0;
-> > +       } else
-> > +               return 0;
-> > +
-> > +       return i > 0 && range[i] =3D=3D '^';
-> >  }
+> > $ printf 'foo\r\nbar\r\n' | sed -e '/bar/d' | cat -A
+> > foo$
+> >
+> > $ printf 'foo\r\nbar\r\n' | sed -b -e '/bar/d' | cat -A
+> > foo^M$
+> >
+> > (Note: the -b flag above is just for comparison. We can't use it here.
+> > It's not in POSIX and is not present in sed for busybox or OSX.)
 >
-> Is this something that the --range-diff option of git-format-patch
-> will want to do, as well?
+> Can you report this as a bug?  This behavior isn't compliant with POSIX
+> and it makes it really hard for folks to write portable code if these
+> versions implement POSIX utilities in a nonstandard way.  As a
+> non-Windows user, I have no hope of writing code that works on Windows
+> if we can't rely on our standard utilities working properly.
 
-Thank you for pointing that out. I should have checked via `git grep
-'strstr.*"\.\."'` myself. There are two more instances, one in
-`rev-parse.c` and the other in `revision.c`, but both are necessary as-are
-because their return value is actually used to further disect a `..`-style
-commit range.
+I fear that the Windows-based tools do the correct thing, though: they are
+meant to process _text_, and newlines are supposed to be
+platform-dependent in text.
 
-Thanks,
+=46rom that perspective, it sounds to me as if we're trying to ask `sed` t=
+o
+do something it was not designed to do: binary editing.
+
+Ciao,
 Dscho
-
-> At present, builtin/log.c:infer_range_diff_ranges() detects a range only
-> by checking for "..", much like this function did before this patch. If
-> so, perhaps this function can be part of the public range-diff API (or,
-> indeed, part of some other more general API if it's not really specific
-> to range-diff).
