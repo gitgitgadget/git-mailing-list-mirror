@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD293C433DB
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 13:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA6CC433DB
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 13:06:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66E5F235F7
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 13:06:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 492D823437
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 13:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbhAVNFv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 08:05:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33986 "EHLO
+        id S1727877AbhAVNF7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 08:05:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727517AbhAVNFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 08:05:39 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C449C0617A7
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 05:04:09 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id m2so4248337wmm.1
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 05:04:09 -0800 (PST)
+        with ESMTP id S1727761AbhAVNFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 08:05:45 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E394C0617AA
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 05:04:10 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id 6so5023179wri.3
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 05:04:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8JFIK/fvNqDmX4Q3vEfnZadxvVhFeB1bH+XL9LjdH2g=;
-        b=Z6jh/vU/Gg7PuTfZ1mGfAoXu2vN8wezgYJpOTbGZkmPFPqj2sTJic3ZUoDSbEUFnHZ
-         zZUsnnKIuVQ/+cKsvstrdYN7yDUWIXjHDeedE8ZEIfZilykC/wOPO2klrEyv6OswYW1v
-         4wxfYfmgW7QseyDgU7hBm1wgkeJaeyvtVRFkaPuHe2jhlt4Umm5ekXh98XI58zmIme1i
-         E69YQ+S3ZiDIlDlPCsAafljLVIJ498BEkSj8B6vYBlA5XZ5yYfCBMrAMPv2omv00a40+
-         Idqj46rBFseHKO46s/zXjyTxcv4v5PNgP9phhNq4MN+gOwKS9lbol79pSZ7SOGMAAoke
-         ALjg==
+        bh=CUC6jgZOZOWDFF1ovzbJBErl1MrlXisC9MNPD0XAhWE=;
+        b=hyRy54fWevS8qdW0uKUh21k712wDLD21JafRYAays4koBHZ6EHkEeavy4GJ15L7HKM
+         aTT11QMUeZvnchyzWn+mmMSs2V4lGjXzVp+COzUSjCsqyhdtLdxfZI+KFJ2xnX8fWwTq
+         CXBQWJJUzcWHLOzpz3WoHnqjUypQrpKRYXs7TlY9uF9bRwGUV1TUcuElErrPEAh3Z34+
+         TH7h5t70leu+hq4JeZ7T5kANRUquq5CUJqySq99s6OBip4UiM3gbedOAOMnz8eKo1Brs
+         aRz4vPXtxS1a4P0Csv55mkJJf+4+h1SxGmw+pFF2F8Qd/iLoexFty8a5jPGiRL9e+Arh
+         dGvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8JFIK/fvNqDmX4Q3vEfnZadxvVhFeB1bH+XL9LjdH2g=;
-        b=Y1FnjaPuHW8WY4ZJaodslM8YwCgmJFKqdKfPCgF6Z/DoaSv+9kEi/EOy2yNs9Ydhgl
-         s5nXh3WwhGBsLdkgpEzBBFTrJ+2T6CIQS77x0hDb+98KsR/czH/JvTQwnSIrai30tncS
-         mEPg41ouJd8tacL/UTblffPCAEjfO8hrHzFXszrVmDIKBM12NYNwDmlv+Pma5Bxm9DwA
-         GahkVrKV4m5DiwDSqp4S8gkTD+LnP83MQ5XzYpgKxFGynFqjdL87BqEdTk8ctQSYe4sb
-         5k24rLKwndCNGzLcLXstAQAempJ/LfbiO2H5nwOH/4XOCXshTOiunQL5kiVyaJMqC62C
-         kefA==
-X-Gm-Message-State: AOAM533sr6N7/8jgl+xiwZBh++BqGsdTQe74MPXvw1PZX9ivI7ZQH6Os
-        e+BZA3kTylDrwPOzRLaFg39hzkCuhwk=
-X-Google-Smtp-Source: ABdhPJytcXw77808nVZxPVdrDSq9msFiuevCb3gb4qdorkLJWJfb6g+CmwV50wsoihVGjbtD/rrZrA==
-X-Received: by 2002:a1c:68c5:: with SMTP id d188mr4030993wmc.64.1611320647815;
-        Fri, 22 Jan 2021 05:04:07 -0800 (PST)
+        bh=CUC6jgZOZOWDFF1ovzbJBErl1MrlXisC9MNPD0XAhWE=;
+        b=Iebc8cX04f2E28slKDePDm1jyFei7a4Ah6SQeFCf2s2TXDkujavGm1CeH791m16HfX
+         exN7X+0TaDasps6iuqiaU6xF1blPNxfF+qOnZqfT5co/Q5U42oPUlZbZ/SW6QWXrq848
+         rjBPrLc+Yu5EZATCgcV55KbB82y1C0r2fdh6AfcyqzALkEBcCDz5fTo0DleL2K5qojYN
+         IHMJ+WC/Hg5o3cl/XBdojurbzjnXI13TlkDR44kKvi52UZpBV0RN2yvCabG6yhOVqK7D
+         4q3b6ZhWhfC5swBAbj5gcnMGF+TfRCnoArnkGcnAn3chVWgYoux8QKOhjEpJvEukInKc
+         wkUA==
+X-Gm-Message-State: AOAM533WOwYV4IEHVCEe5q8xrdvXyw0jf+oW5mcVFVfgjwWbgCuyWSro
+        gtU3r3RQd9rJaZIqWQrVnkzV5MWum00=
+X-Google-Smtp-Source: ABdhPJx8xloPacidpbOYz9g77LplJnryPmbTxRrrEqa2zIgTk58T2i0q8NV1HWkJ6jpRwNnl/3xRtw==
+X-Received: by 2002:adf:9261:: with SMTP id 88mr2703016wrj.227.1611320648864;
+        Fri, 22 Jan 2021 05:04:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u205sm11179966wme.42.2021.01.22.05.04.07
+        by smtp.gmail.com with ESMTPSA id l7sm11360817wmg.41.2021.01.22.05.04.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 05:04:07 -0800 (PST)
-Message-Id: <8832ce84623e9c74a88b14a05b1c303ed8aa809b.1611320640.git.gitgitgadget@gmail.com>
+        Fri, 22 Jan 2021 05:04:08 -0800 (PST)
+Message-Id: <984458007edb9ac93630490cea1b0863fb584310.1611320640.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
 References: <pull.839.git.1611161639.gitgitgadget@gmail.com>
         <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Jan 2021 13:03:58 +0000
-Subject: [PATCH v2 7/8] test-lib: test_region looks for trace2 regions
+Date:   Fri, 22 Jan 2021 13:03:59 +0000
+Subject: [PATCH v2 8/8] t1092: test interesting sparse-checkout scenarios
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,97 +77,324 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Most test cases can verify Git's behavior using input/output
-expectations or changes to the .git directory. However, sometimes we
-want to check that Git did or did not run a certain section of code.
-This is particularly important for performance-only features that we
-want to ensure have been enabled in certain cases.
+These also document some behaviors that differ from a full checkout, and
+possibly in a way that is not intended.
 
-Add a new 'test_region' function that checks if a trace2 region was
-entered and left in a given trace2 event log.
-
-There is one existing test (t0500-progress-display.sh) that performs
-this check already, so use the helper function instead. Note that this
-changes the expectations slightly. The old test (incorrectly) used two
-patterns for the 'grep' invocation, but this performs an OR of the
-patterns, not an AND. This means that as long as one region_enter event
-was logged, the test would succeed, even if it was not due to the
-progress category.
-
-More uses will be added in a later change.
-
-t6423-merge-rename-directories.sh also greps for region_enter lines, but
-it verifies the number of such lines, which is not the same as an
-existence check.
+The test is designed to be run with "--run=1,X" where 'X' is an
+interesting test case. Each test uses 'init_repos' to reset the full and
+sparse copies of the initial-repo that is created by the first test
+case. This also makes it possible to have test cases leave the working
+directory or index in unusual states without disturbing later cases.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t0500-progress-display.sh |  3 +--
- t/test-lib-functions.sh     | 40 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 2 deletions(-)
+ t/t1092-sparse-checkout-compatibility.sh | 298 +++++++++++++++++++++++
+ 1 file changed, 298 insertions(+)
+ create mode 100755 t/t1092-sparse-checkout-compatibility.sh
 
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 1ed1df351cb..84cce345e7d 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -303,8 +303,7 @@ test_expect_success 'progress generates traces' '
- 		"Working hard" <in 2>stderr &&
- 
- 	# t0212/parse_events.perl intentionally omits regions and data.
--	grep -e "region_enter" -e "\"category\":\"progress\"" trace.event &&
--	grep -e "region_leave" -e "\"category\":\"progress\"" trace.event &&
-+	test_region progress "Working hard" trace.event &&
- 	grep "\"key\":\"total_objects\",\"value\":\"40\"" trace.event &&
- 	grep "\"key\":\"total_bytes\",\"value\":\"409600\"" trace.event
- '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 999982fe4a9..1170f7108ac 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1655,3 +1655,43 @@ test_subcommand () {
- 		grep "\[$expr\]"
- 	fi
- }
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+new file mode 100755
+index 00000000000..141cbe822b6
+--- /dev/null
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -0,0 +1,298 @@
++#!/bin/sh
 +
-+# Check that the given command was invoked as part of the
-+# trace2-format trace on stdin.
-+#
-+#	test_region [!] <category> <label> git <command> <args>...
-+#
-+# For example, to look for trace2_region_enter("index", "do_read_index", repo)
-+# in an invocation of "git checkout HEAD~1", run
-+#
-+#	GIT_TRACE2_EVENT="$(pwd)/trace.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+#		git checkout HEAD~1 &&
-+#	test_region index do_read_index <trace.txt
-+#
-+# If the first parameter passed is !, this instead checks that
-+# the given region was not entered.
-+#
-+test_region () {
-+	local expect_exit=0
-+	if test "$1" = "!"
-+	then
-+		expect_exit=1
-+		shift
-+	fi
++test_description='compare full workdir to sparse workdir'
 +
-+	grep -e "\"region_enter\".*\"category\":\"$1\",\"label\":\"$2\"" "$3"
-+	exitcode=$?
++. ./test-lib.sh
 +
-+	if test $exitcode != $expect_exit
-+	then
-+		return 1
-+	fi
++test_expect_success 'setup' '
++	git init initial-repo &&
++	(
++		cd initial-repo &&
++		echo a >a &&
++		echo "after deep" >e &&
++		echo "after folder1" >g &&
++		mkdir folder1 folder2 deep x &&
++		mkdir deep/deeper1 deep/deeper2 &&
++		mkdir deep/deeper1/deepest &&
++		echo "after deeper1" >deep/e &&
++		echo "after deepest" >deep/deeper1/e &&
++		cp a folder1 &&
++		cp a folder2 &&
++		cp a deep &&
++		cp a deep/deeper1 &&
++		cp a deep/deeper2 &&
++		cp a deep/deeper1/deepest &&
++		git add . &&
++		git commit -m "initial commit" &&
++		git checkout -b base &&
++		for dir in folder1 folder2 deep
++		do
++			git checkout -b update-$dir &&
++			echo "updated $dir" >$dir/a &&
++			git commit -a -m "update $dir" || return 1
++		done &&
 +
-+	grep -e "\"region_leave\".*\"category\":\"$1\",\"label\":\"$2\"" "$3"
-+	exitcode=$?
++		git checkout -b rename-base base &&
++		echo >folder1/larger-content <<-\EOF &&
++		matching
++		lines
++		help
++		inexact
++		renames
++		EOF
++		cp folder1/larger-content folder2/ &&
++		cp folder1/larger-content deep/deeper1/ &&
++		git add . &&
++		git commit -m "add interesting rename content" &&
 +
-+	if test $exitcode != $expect_exit
-+	then
-+		return 1
-+	fi
++		git checkout -b rename-out-to-out rename-base &&
++		mv folder1/a folder2/b &&
++		mv folder1/larger-content folder2/edited-content &&
++		echo >>folder2/edited-content &&
++		git add . &&
++		git commit -m "rename folder1/... to folder2/..." &&
++
++		git checkout -b rename-out-to-in rename-base &&
++		mv folder1/a deep/deeper1/b &&
++		mv folder1/larger-content deep/deeper1/edited-content &&
++		echo >>deep/deeper1/edited-content &&
++		git add . &&
++		git commit -m "rename folder1/... to deep/deeper1/..." &&
++
++		git checkout -b rename-in-to-out rename-base &&
++		mv deep/deeper1/a folder1/b &&
++		mv deep/deeper1/larger-content folder1/edited-content &&
++		echo >>folder1/edited-content &&
++		git add . &&
++		git commit -m "rename deep/deeper1/... to folder1/..." &&
++
++		git checkout -b deepest base &&
++		echo "updated deepest" >deep/deeper1/deepest/a &&
++		git commit -a -m "update deepest" &&
++
++		git checkout -f base &&
++		git reset --hard
++	)
++'
++
++init_repos () {
++	rm -rf full-checkout sparse-checkout sparse-index &&
++
++	# create repos in initial state
++	cp -r initial-repo full-checkout &&
++	git -C full-checkout reset --hard &&
++
++	cp -r initial-repo sparse-checkout &&
++	git -C sparse-checkout reset --hard &&
++	git -C sparse-checkout sparse-checkout init --cone &&
++
++	# initialize sparse-checkout definitions
++	git -C sparse-checkout sparse-checkout set deep
 +}
++
++run_on_sparse () {
++	(
++		cd sparse-checkout &&
++		$* >../sparse-checkout-out 2>../sparse-checkout-err
++	)
++}
++
++run_on_all () {
++	(
++		cd full-checkout &&
++		$* >../full-checkout-out 2>../full-checkout-err
++	) &&
++	run_on_sparse $*
++}
++
++test_all_match () {
++	run_on_all $* &&
++	test_cmp full-checkout-out sparse-checkout-out &&
++	test_cmp full-checkout-err sparse-checkout-err
++}
++
++test_expect_success 'status with options' '
++	init_repos &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git status --porcelain=v2 -z -u &&
++	test_all_match git status --porcelain=v2 -uno &&
++	run_on_all "touch README.md" &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git status --porcelain=v2 -z -u &&
++	test_all_match git status --porcelain=v2 -uno &&
++	test_all_match git add README.md &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git status --porcelain=v2 -z -u &&
++	test_all_match git status --porcelain=v2 -uno
++'
++
++test_expect_success 'add, commit, checkout' '
++	init_repos &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>$1
++	EOF
++	run_on_all "../edit-contents README.md" &&
++
++	test_all_match git add README.md &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m "Add README.md" &&
++
++	test_all_match git checkout HEAD~1 &&
++	test_all_match git checkout - &&
++
++	run_on_all "../edit-contents README.md" &&
++
++	test_all_match git add -A &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m "Extend README.md" &&
++
++	test_all_match git checkout HEAD~1 &&
++	test_all_match git checkout - &&
++
++	run_on_all "../edit-contents deep/newfile" &&
++
++	test_all_match git status --porcelain=v2 -uno &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git add . &&
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git commit -m "add deep/newfile" &&
++
++	test_all_match git checkout HEAD~1 &&
++	test_all_match git checkout -
++'
++
++test_expect_success 'checkout and reset --hard' '
++	init_repos &&
++
++	test_all_match git checkout update-folder1 &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git checkout update-deep &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git checkout -b reset-test &&
++	test_all_match git reset --hard deepest &&
++	test_all_match git reset --hard update-folder1 &&
++	test_all_match git reset --hard update-folder2
++'
++
++test_expect_success 'diff --staged' '
++	init_repos &&
++
++	write_script edit-contents <<-\EOF &&
++	echo text >>README.md
++	EOF
++	run_on_all "../edit-contents" &&
++
++	test_all_match git diff &&
++	test_all_match git diff --staged &&
++	test_all_match git add README.md &&
++	test_all_match git diff &&
++	test_all_match git diff --staged
++'
++
++test_expect_success 'diff with renames' '
++	init_repos &&
++
++	for branch in rename-out-to-out rename-out-to-in rename-in-to-out
++	do
++		test_all_match git checkout rename-base &&
++		test_all_match git checkout $branch -- .&&
++		test_all_match git diff --staged --no-renames &&
++		test_all_match git diff --staged --find-renames || return 1
++	done
++'
++
++test_expect_success 'log with pathspec outside sparse definition' '
++	init_repos &&
++
++	test_all_match git log -- a &&
++	test_all_match git log -- folder1/a &&
++	test_all_match git log -- folder2/a &&
++	test_all_match git log -- deep/a &&
++	test_all_match git log -- deep/deeper1/a &&
++	test_all_match git log -- deep/deeper1/deepest/a &&
++
++	test_all_match git checkout update-folder1 &&
++	test_all_match git log -- folder1/a
++'
++
++test_expect_success 'blame with pathspec inside sparse definition' '
++	init_repos &&
++
++	test_all_match git blame a &&
++	test_all_match git blame deep/a &&
++	test_all_match git blame deep/deeper1/a &&
++	test_all_match git blame deep/deeper1/deepest/a
++'
++
++# TODO: blame currently does not support blaming files outside of the
++# sparse definition. It complains that the file doesn't exist locally.
++test_expect_failure 'blame with pathspec outside sparse definition' '
++	init_repos &&
++
++	test_all_match git blame folder1/a &&
++	test_all_match git blame folder2/a &&
++	test_all_match git blame deep/deeper2/a &&
++	test_all_match git blame deep/deeper2/deepest/a
++'
++
++# TODO: reset currently does not behave as expected when in a
++# sparse-checkout.
++test_expect_failure 'checkout and reset (mixed)' '
++	init_repos &&
++
++	test_all_match git checkout -b reset-test update-deep &&
++	test_all_match git reset deepest &&
++	test_all_match git reset update-folder1 &&
++	test_all_match git reset update-folder2
++'
++
++test_expect_success 'merge' '
++	init_repos &&
++
++	test_all_match git checkout -b merge update-deep &&
++	test_all_match git merge -m "folder1" update-folder1 &&
++	test_all_match git rev-parse HEAD^{tree} &&
++	test_all_match git merge -m "folder2" update-folder2 &&
++	test_all_match git rev-parse HEAD^{tree}
++'
++
++test_expect_success 'merge with outside renames' '
++	init_repos &&
++
++	for type in out-to-out out-to-in in-to-out
++	do
++		test_all_match git reset --hard &&
++		test_all_match git checkout -f -b merge-$type update-deep &&
++		test_all_match git merge -m "$type" rename-$type &&
++		test_all_match git rev-parse HEAD^{tree} || return 1
++	done
++'
++
++test_expect_success 'clean' '
++	init_repos &&
++
++	echo bogus >>.gitignore &&
++	run_on_all cp ../.gitignore . &&
++	test_all_match git add .gitignore &&
++	test_all_match git commit -m ignore-bogus-files &&
++
++	run_on_sparse mkdir folder1 &&
++	run_on_all touch folder1/bogus &&
++
++	test_all_match git status --porcelain=v2 &&
++	test_all_match git clean -f &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git clean -xf &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_all_match git clean -xdf &&
++	test_all_match git status --porcelain=v2 &&
++
++	test_path_is_dir sparse-checkout/folder1
++'
++
++test_done
 -- 
 gitgitgadget
-
