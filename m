@@ -2,132 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD08CC433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B569C433DB
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:27:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B1AC23A5C
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:24:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F35AA23AA1
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:27:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729204AbhAVWYa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:24:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
+        id S1730467AbhAVTxu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 14:53:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730602AbhAVTyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 14:54:17 -0500
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD03C061794
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:53:34 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id a25so6745843ljn.0
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:53:34 -0800 (PST)
+        with ESMTP id S1729827AbhAVTmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 14:42:25 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24880C06178B
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:41:36 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id q25so7238269oij.10
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:41:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=fAl1cD+1kay3q+6zbzlBTgnLDxSNOe9NWWjLTphmyOU=;
-        b=QZBmESo0f0AsfglpAUJrH8UTXAWuj3b0MdW8T5V4WXky5TDZGa/zCWXfzLgdrs6YXC
-         AEzpJf0Rk0H04QtKJVmB3AbfKZLWVqcMnpgVe8PhZLurl1v3/UhmdtQiylht8iEgh9J7
-         OBJwy2bW7ZL0mglMgYbsj+1pI1gPAu4bSHUjxJHUIDeu8BpxjbmaF43G7FPxegFljLHj
-         VyZfpUXXkhOc0DiSKIt4eqUIRsrceX3jLyLtjn+vIiyInEPd87jOCyhZKGc1afXI5D/b
-         zrGxULFeXw4+S97hTbcKUbmEue1gN5N46chkt9yWTlgauz56pt1ZmI3/Pz291cVx4nXo
-         vj9Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TZey2qZ5TCh22d3S1fszQzRptp9SQ1JV4RNUpt1AT+U=;
+        b=QU8QXRAOS/B/fKQJBiEBB52ON1FYSOTDMiRmcZh68fRD6H2I4t1es/m/zi5yjBqvvw
+         n8d2g31v3i+BkaTU1cyZfyT77JV+mQoxUyiUb4YDEhHFDF+jJ6+i7wiujQISfAt2SnST
+         7nosptsBPKBgET5g57nNknkg/qO/xyvdTU+zyMBymB/TD9fsqxmtqrjs/62Fhvzb1YZt
+         s8ghXtfmWK5Ox5niMko/wRKDiH0Oiflg1ksi+vG8W+8EK+k5UhqgzRnkXzLbWvx2y+RQ
+         S8niIETVsESweUFHxy3V+j4ci8wL6EIAhwLPMNFesN/uqWSiJj0de+PUHYED6buTR3XF
+         GMGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=fAl1cD+1kay3q+6zbzlBTgnLDxSNOe9NWWjLTphmyOU=;
-        b=p6FcNtZU/dH9NQUHoA6BUIfuYAQO3iW1onVfMHifGql7WroJIjixzym69IiW/Tpkyl
-         /9MV/NiyoEAoE2EgIJXC5KyViSCdIZw5DPkyMpG3TXqcoButnEZWIy2IG1J00HMizuib
-         P4GwN+XdEjunPkRqy8EG2dimtl7qc203GmE2Bqph10cfNRCjIDWTftFsdTSFIBNHCWcz
-         HCJnbb9XL+FMmbArqTJZsXOPhezOJnXnspDCNH8Jw+7qjIs65L2Ac+W8ir15uUNruIQM
-         qv9YhQ6aNjSowoUqCjNLxnp9g5UFN8g6UC8qXvlata3Vi6dfVKXRM+CtGh7oLuLiH5SB
-         BFag==
-X-Gm-Message-State: AOAM533uCyBddL93TPf7IiB7/S5kEtZWqxuIo6gZntBICRxONxxQ6tfK
-        9ZWy1oqOm99etnMqFfvzkoqF/H8BYdtM0nmKuYBU8g==
-X-Google-Smtp-Source: ABdhPJygNtIwcnfzeTHb9fBUGzE6V0hUA3M9d/RkWdHI0Qkozlq929x6sxb3GLE2dCZxkpVc3LmCq3005PyDJC0Jt8o=
-X-Received: by 2002:a2e:b003:: with SMTP id y3mr2393744ljk.346.1611345212698;
- Fri, 22 Jan 2021 11:53:32 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=TZey2qZ5TCh22d3S1fszQzRptp9SQ1JV4RNUpt1AT+U=;
+        b=DS6TQZvnT8vXt2M3roYVPXd1mFrwIlyfEZJk9RDvDIK3P2phVdz/0IU8rJC4i+yjrI
+         H/g6CRiE0MfwCoiSljVRD5r2FZromulJMuacT0P2PI2JobBhjK6AxiJRLMPCnlbeb/fR
+         fttz+t5KSi0Hn/+EIeseR6fQia6BB2HV+s8ysZPmRNXnh0ltoD3DYuHcurDL7BmEXDPj
+         pSjloL6geMvsY1rhBtuAgOwDu+EEjr4g18511vU8907azqIIDwTc1HM3iC03v88QlfK7
+         3r9wIlq0ewpqlLhsynUqeZXVgV6HsxY9T3TVAuo++9jiUfJY7BTWqiTxi8pasw75G41y
+         y2Ew==
+X-Gm-Message-State: AOAM533EhPFivJ44KU1TAqfsxSe5tzGZF17t4MOOFl/xXzzqZ8QPsbPr
+        +Ng9PdrGEtmJIK3knsPavdjEOVxne/Rb+GMkd8Q=
+X-Google-Smtp-Source: ABdhPJyNSyWWLgAQvDiFUso0Fm2QqldtNbaJzSNGJY674J+g2NrfYmcrmxkAm17AcAU6SBpUs63xuJvG/MlHaWwDxAo=
+X-Received: by 2002:aca:f157:: with SMTP id p84mr4321364oih.98.1611344495527;
+ Fri, 22 Jan 2021 11:41:35 -0800 (PST)
 MIME-Version: 1.0
-References: <20210122030103.GA73465@gmail.com>
-In-Reply-To: <20210122030103.GA73465@gmail.com>
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Fri, 22 Jan 2021 11:53:21 -0800
-Message-ID: <CAJoAoZkrYYz=1wKDtUKdewPGX9wr2Zwhhyq9kd5C2_KDn9UJ=w@mail.gmail.com>
-Subject: Re: faster git clone
-To:     William Chen <williamchen32335@gmail.com>,
-        Git List <git@vger.kernel.org>
+References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-4-charvi077@gmail.com>
+ <xmqqmtx3dq83.fsf@gitster.c.googlers.com> <CAPSFM5cxTrvAq6j3yhzidWdr8P8-sYmd1-9tmsK4iXMKrC7TNA@mail.gmail.com>
+ <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
+In-Reply-To: <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Sat, 23 Jan 2021 01:11:24 +0530
+Message-ID: <CAPSFM5eOEQFDAhTateUOJt5XHY8dG8QtfjcXc-XEEZtmPmiG0g@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
+ from squash message
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 7:01 PM William Chen <williamchen32335@gmail.com> wrote:
->
-> Dear Emily,
->
-> I see your excellent contribution to git clone. I hope that you are well.
+Hi,
 
-Hi William, this is a question much better directed at the Git list as a whole.
+On Thu, 21 Jan 2021 at 20:51, Christian Couder
+<christian.couder@gmail.com> wrote:
+[...]
+> > > > +     grep "extra para" commit >actual &&
+> > >
+> > > I can tell that you want the "extra para" to still remain, but how
+> > > does the grep that is not anchored guarantee that?
+> >
+> > .. but now I think to remove this `grep -v "squash" commit` as also
+> > discussed with Phillip earlier that in this test script we are not
+> > checking for the commented commit message.
+> >
+> > > Perhaps look for
+> > >
+> > >         grep "^extra para" commit
+> > >
+> > > to ensure that you are not seeing a commented out but somehow failed
+> > > to get stripspaced out?
+> > >
+> > I am not sure, what does failing to get stripspaced mean?
+>
+> I think this refers to:
+>
+> https://git-scm.com/docs/git-stripspace
+>
 
->
-> When I try to clone a repo of a large size from github, it is slow.
->
-> $ git clone https://github.com/git/git
-> ...
-> remote: Enumerating objects: 56, done.
-> remote: Counting objects: 100% (56/56), done.
-> remote: Compressing objects: 100% (25/25), done.
-> Receiving objects:  23% (70386/299751), 33.00 MiB | 450.00 KiB/s
->
-> The following aria2c command, which can use multiple downloading threads, is much faster. Would you please let me know whether there is a way to speed up git clone (maybe by using parallelization)?
+Okay, thanks for referring and also here in this test script - so that
+the test does not fail
+due to stripspace, it is using the `test_line_count` function. Also I
+agree with above
+so maybe it is right to just replace with:
 
-In general, it would be more compelling to see actual numbers than
-"much faster", e.g. the outputs of `time git clone
-https://github.com/git/git` and `time aria2c
-https://github.com/git/git/archive/master.zip` - or even an estimation
-from you, like, "I think clone takes a minute or two but aria does the
-same thing in only a couple of seconds". "Much faster" means something
-different to everyone :)
+grep "^extra para" commit &&
+grep "extra para" commit >actual &&
 
->
-> Your help is much appreciated! I look forward to hearing from you. Thanks.
->
-> $ aria2c https://github.com/git/git/archive/master.zip
->
-> 01/21 20:16:04 [NOTICE] Downloading 1 item(s)
->
-> 01/21 20:16:04 [NOTICE] CUID#7 - Redirecting to https://codeload.github.com/git/git/zip/master
-
-Right here it looks like your zip download redirects to a CDN or
-something, which is probably better optimized for serving archives
-than the Git server itself, so I would guess that has something to do
-with it too.
-
-> [#59b6a2 8.2MiB/0B CN:1 DL:3.8MiB]
-> 01/21 20:16:08 [NOTICE] Download complete: /private/tmp/git-master.zip
->
-> Download Results:
-> gid   |stat|avg speed  |path/URI
-> ======+====+===========+=======================================================
-> 59b6a2|OK  |   2.9MiB/s|/private/tmp/git-master.zip
->
-> Status Legend:
-> (OK):download completed.
-
-There are others on the list who are better able to explain this than
-me. But I'd guess the upshot is that 'git clone
-https://github.com/git/git' is asking a Git server, which is good at
-Git repo management (e.g. accepting pushes, generating packfiles to
-send you a specific object or branch, etc) - but when you ask for
-"git/git/archive/master.zip" you're getting the result of some work
-the Git server already did a while ago to zip up the current 'master'
-into an archive and give it to some other server.
-
-We've done some other work[1] around enabling use of CDNs and prebuilt
-chunks lately, but again, there are others on the list better able to
-explain than me.
-
-[1]: https://github.com/git/git/blob/master/Documentation/technical/packfile-uri.txt
+Thanks and Regards,
+Charvi
