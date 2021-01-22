@@ -2,101 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA5F0C43381
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB2AC433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:31:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C195823AF8
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:11:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15B782076E
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728815AbhAVSKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 13:10:33 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59005 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730032AbhAVSDb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 13:03:31 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B32A2A6D7E;
-        Fri, 22 Jan 2021 13:02:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FD48z3ZatMXLfB4UO0Bumu80XN8=; b=iwjybQ
-        Fp3C18FOv4CSsoDNTawsRFRXFGGY9j9CM5zIR3ravr5cjWcHh8vSAzjuxZgTI1dJ
-        6J1eQFtuekb5hgbb42SI4TcuUYjRpM7T3ma1TrOulLHlr4657FTB5/RqOKv4LHh8
-        xuO2d746OYqKPBCM6qNJw8v2uTHWhaa4TybKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Guv93mJ1jCfBMVVRteePMz3vMd87F9bb
-        4OCfGDJ+w/iesDLm0dGHZGE75QFuIsAyUcOPa0Juh8RTm6AN0mW26QYz9KSC+PC6
-        MVIT6KMRT8JYlyspcrzeHr1Jm7gBXVl42guIOSKlS+eipv3tuXiSUiUEgp+MhvSN
-        PZhdX2xvAP4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AABDDA6D7D;
-        Fri, 22 Jan 2021 13:02:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 25BB4A6D7C;
-        Fri, 22 Jan 2021 13:02:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 3/3] ls-files.c: add --deduplicate option
-References: <pull.832.v4.git.1610856136.gitgitgadget@gmail.com>
-        <pull.832.v5.git.1611037846.gitgitgadget@gmail.com>
-        <e9c5318670658b032ba921129859f9fb3b2ca017.1611037846.git.gitgitgadget@gmail.com>
-        <xmqq7do7fggn.fsf@gitster.c.googlers.com>
-        <CAOLTT8R=fF00WCVBSTDKHG_3p5RcZaxM2AU-cUj1sNWvy=mhCQ@mail.gmail.com>
-        <xmqq1reec943.fsf@gitster.c.googlers.com>
-        <CAOLTT8Qp2NMpbk56U6PVEmFVyZYWN6gM83HD4z_nmPWV4Z_ruw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2101221702420.52@tvgsbejvaqbjf.bet>
-Date:   Fri, 22 Jan 2021 10:02:40 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2101221702420.52@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 22 Jan 2021 17:04:55 +0100 (CET)")
-Message-ID: <xmqq8s8kalz3.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1728573AbhAVSbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 13:31:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728586AbhAVSYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 13:24:51 -0500
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB54CC06121D
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:20:52 -0800 (PST)
+Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1l313D-0008Po-GJ; Fri, 22 Jan 2021 19:20:51 +0100
+Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1l313C-0003HJ-Qk; Fri, 22 Jan 2021 19:20:50 +0100
+Date:   Fri, 22 Jan 2021 19:20:50 +0100
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] range-diff(docs): explain how to specify commit
+ ranges
+Message-ID: <20210122182050.xyzkvlctb4kiin7a@pengutronix.de>
+References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
+ <041456b6e73b3a88097d0cc06056eb43d35d42c6.1611267638.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0504E28E-5CDC-11EB-95A3-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="agphy5tzrug36qdk"
+Content-Disposition: inline
+In-Reply-To: <041456b6e73b3a88097d0cc06056eb43d35d42c6.1611267638.git.gitgitgadget@gmail.com>
+X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> And should I still use gitgitgadget PR on my origin branch "dedup"or
->> send patch on branch "zh/ls-files-deduplicate"?
->
-> The way GitGitGadget is designed asks for contributors to adjust their
-> patch(es) via interactive rebase, implementing the suggestions and
-> addressing the concerns while doing so, then force-pushing, optionally
-> amending the first PR comment (i.e. the description) with a list of
-> those changes, and then submitting a new iteration via `/submit`.
+--agphy5tzrug36qdk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for clearly explaining the rules.
+On Thu, Jan 21, 2021 at 10:20:38PM +0000, Johannes Schindelin via GitGitGad=
+get wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> There are three forms, depending whether the user specifies one, two or
+> three non-option arguments. We've never actually explained how this
+> works in the manual, so let's explain it.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  Documentation/git-range-diff.txt | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+>=20
+> diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-d=
+iff.txt
+> index 9701c1e5fdd..76359baf26d 100644
+> --- a/Documentation/git-range-diff.txt
+> +++ b/Documentation/git-range-diff.txt
+> @@ -28,6 +28,19 @@ Finally, the list of matching commits is shown in the =
+order of the
+>  second commit range, with unmatched commits being inserted just after
+>  all of their ancestors have been shown.
+> =20
+> +There are three ways to specify the commit ranges:
+> +
+> +- `<range1> <range2>`: Either commit range can be of the form
+> +  `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See `SPECIFYING RANGES`
+> +  in linkgit:gitrevisions[7] for more details.
+> +
+> +- `<rev1>...<rev2>`. This resembles the symmetric ranges mentioned in
+> +  the `SPECIFYING RANGES` section of linkgit:gitrevisions[7], and is
+> +  equivalent to `<base>..<rev1> <base>..<rev2>` where `<base>` is the
+> +  merge base as obtained via `git merge-base <rev1> <rev2>`.
+> +
+> +- `<base> <rev1> <rev2>`: This is equivalent to `<base>..<rev1>
+> +  <base>..<rev2>`.
 
-As I suspect many people are afraid of forcing their pushes, it
-would assure them to explain that it is OK to force when them
-restart the series from scratch by replacing the commits.
+git-log takes a range, too. There you can specify a single rev (with the
+semantic to list all commits from this rev up (or down?) to the root).
+So <rev> means implicitly <rev>^=E2=88=9E..<rev> for git-log.
 
-And it would very much help on the receiving end when the
-description gets updated.
+Does it make sense to implement this here, too? Maybe this even allows
+sharing some more code?
 
-Just being curious, but when a series hits 'next', would the way in
-which the user interacts with GGG change?  With or without GGG, what
-is done on the local side is not all that different---you build new
-commits on top without disturbing the commits that are in 'next'.
-Then what?  Push it again (this time there is no need to force) and
-submit the additional ones via `/submit`?
+Best regards
+Uwe
 
-Thanks.
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=C3=B6nig         =
+   |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--agphy5tzrug36qdk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmALF38ACgkQwfwUeK3K
+7AljkwgAnPEXPUx9iDKY/YDJfFRIgGC5VYordHiEtImEgAqCG5pWdWoAaBpLlJzj
+YfjdKueYyYUCLRaf6a/NvleBNwc5zXbbPuZbHz83yz7z9AXiGHRY5bTvWZn1g65E
+7BcwYSeww/PcTFs6WKt6EKWC1io2Uu3WZ/hz2wJ/GBjpb9q0RabDmgRcg6/enCWW
+yaMnBLKoB1hDp0D37KaK1AmL6PTIfwGzp4mk4r3qHx3/y+4Z7UZwtIK3/JA8HR14
+bNocJgH3Esm80HFyFx24AI079LwShKaTMVsZssUN7N2cmU3iHBfhz+8qIcoZh+Se
+8qPRVfy1XoELyj2hX6FEZ4Ezx5Kjgg==
+=FLzw
+-----END PGP SIGNATURE-----
+
+--agphy5tzrug36qdk--
