@@ -2,106 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11E95C433E6
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C77C8C433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:05:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0B7523B45
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:04:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9399623B42
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730567AbhAVVDW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 16:03:22 -0500
-Received: from mout.web.de ([212.227.15.14]:32869 "EHLO mout.web.de"
+        id S1728568AbhAVVE6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 16:04:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35748 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729275AbhAVVCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 16:02:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1611349205;
-        bh=udaR0YT3zorGdy5gjOrqVM89NIQNX/xgpGwDAdo/ZFg=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=qnXR91wGpHvWJ6hGJ9p+FYa/yls+1sFOy7UcaEX0na+8RIMujymfXbN8GCpA1p9ZF
-         3vfhc8cJVECVFJkNjPxXYttj9IKMc5zokaXY3aGBIvrZSXrJid7Z2nKgVXuateiYt/
-         l+R0ujCNxiLsL3ANDfTHohGfpzok40VIy7otepeE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0Lp7Lg-1lhrvd0z2a-00exv6; Fri, 22 Jan 2021 22:00:05 +0100
-Subject: Re: git archive setting user and group
-To:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
-References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de>
-Date:   Fri, 22 Jan 2021 22:00:04 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.1
+        id S1731038AbhAVVEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 16:04:33 -0500
+Received: (qmail 13960 invoked by uid 109); 22 Jan 2021 21:03:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 22 Jan 2021 21:03:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18643 invoked by uid 111); 22 Jan 2021 21:03:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 16:03:34 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 22 Jan 2021 16:03:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: [PATCH] run-command: document use_shell option
+Message-ID: <YAs9pTBsdskC8CPN@coredump.intra.peff.net>
+References: <20210122142137.21161-1-jacob@gitlab.com>
+ <20210122142137.21161-2-jacob@gitlab.com>
+ <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EGKqObd9eJIkB6M+6vNPVz5Lv6isth+RKDwBB2bUo/KEGwH3bEw
- P+h2aY6H00+5tf7AQ+Sx+RXYInuWIWXF7R+VlnXjRYXYbvcYjTtTFBQccO3c2rtQLs6BZaj
- Ch/Uq5gZAGP+fgN8Q1hEnsvdSTcCL54HXdelt425uOMRoJ+IwgpZ0/Qgi+G+CSA0GJnwl7Q
- wyTZVyhAphNwg8OQDmwIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rlCJRuGyvyM=:L9EBpO0A3vK8WV1bd9fsmZ
- dKu3KWp2sKF6u4VAHafJ5bQ469cKiiK/e4p7JlXl5pW67f6o6fL2YM1C0FkhdhqvItlSMQzF0
- aoit1VbZZRqaBezXiG1nXY4YaYbO6ieE2vTaXNbouble3R4uqXBGrMoNuGug86+Xl0GwLHHj+
- ukscMDwDdiSfI0bq5toaXhNlijrCEuXer4hY0+26/M6CdTF3IO/afGmM0qdQdA33mTHdOwx7c
- Egs6nR/fAAlzKHUkY706MHShqDNERnc/gT+RSW1eVsMg1YTciIM4EUyHNlpHyXqbpULkK6VqP
- 2B0LYePb2Zrexw9T1pOKwCsJ5riDT90Bpyccin9AuwaBL6hnbr4JwLNf4YbNkxhlZgnW68T+U
- NsGZGqTqELW69jHxM1sjSu0VnAekWZjZEeA8L2UYmV2WWaENoUxv5H/uSPkAOuY0tAkACFnIa
- d3beQvAdGZTAUkZrFY/4lhzxrh+GwMjkjKDjcwoWUmOpQd6d1oFPQ+stR0JkdHk7soEsofYx0
- VEtSbHAzjJwpZZ68xQUgv/44cr95B6RwArgjxQnzds+9OP+Dz/ZKjD0ik/xzZm+DzJC7bH23x
- uABNm/2vpY5KXXCSKrI2+lLV/ZZpzWFmCwIQ1VG/XsEwMB4rpZ8dTUfwNO18FhfxYnsmBd1/4
- sITCIqLqkLqKSQ/SvztsU/eybjAQXECUutJsqcnm3pGYbGaSMtnzxq7sJKckLixbuNYTxVDtG
- ctPVJeXH3ssRjITarBbZONep9TKg84VIJDDlAOuBvcBJMYtfkA1M37pzG18mn+Ojc4ojAJ0Yu
- JImiuEz850alpWNjBxslHBBBNV3iQX0XAbsQKJN+q7CSG6wJzgBS7ttuYFDRvaRSmdBxmIKSN
- YoV2VHWSvpYh6iP+SHZg==
+Content-Disposition: inline
+In-Reply-To: <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.01.21 um 21:40 schrieb Jason Pyeron:
->> From: Jason Pyeron <jpyeron@pdinc.us>
->> Sent: Friday, January 22, 2021 3:09 PM
->>
->> I am about to make a release for logwatch tonight. Historically the fil=
-es are owned by logwatch in the
->> tgz file. When I use git archive it is owned by uid 0, is there an opti=
-on to set the uid/uname,
->> gid/gname owner of the files?
->
-> Answer: not at this time, as it is hard coded in the source.
->
-> archive-tar.c:
-> static void prepare_header(struct archiver_args *args,
->                            struct ustar_header *header,
->                            unsigned int mode, unsigned long size)
-> {
->         xsnprintf(header->mode, sizeof(header->mode), "%07o", mode & 077=
-77);
->         xsnprintf(header->size, sizeof(header->size), "%011"PRIoMAX , S_=
-ISREG(mode) ? (uintmax_t)size : (uintmax_t)0);
->         xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsig=
-ned long) args->time);
->
->         xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
->         xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
->         strlcpy(header->uname, "root", sizeof(header->uname));
->         strlcpy(header->gname, "root", sizeof(header->gname));
->
->
-> meh.
->
+On Fri, Jan 22, 2021 at 03:32:04PM -0500, Jeff King wrote:
 
-Adding support for using a custom user and group should be easy.  Is
-this just a cosmetic thing?  Regular users would ignore the user info in
-the archive, and root should not be used for extracting, and on systems
-that don't have a logwatch user this wouldn't make a difference anyway,
-right?
+> Yeah, that is exactly right. "use_shell" just means that the command is
+> (possibly) run with a shell. Quoting for any extra arguments is handled
+> automatically.
+> 
+> I think you're correct that this was broken from the start in 10ac85c785
+> (upload-pack: add object filtering for partial clone, 2017-12-08).
+> That's even before the use_shell was added, and then later it was pushed
+> into that conditional by 0b6069fe0a (fetch-pack: test support excluding
+> large blobs, 2017-12-08). Presumably because the non-hook path would not
+> have worked at all, and that was the first time any of it was actually
+> tested. ;)
+> 
+> (I've cc'd authors of those commits as an FYI; I think both were
+> relatively new to the project at the time so misunderstanding this
+> subtlety of run-command is not too surprising).
 
-Ren=C3=A9
+While we're thinking about it, let's beef up the documentation a bit.
+
+-- >8 --
+Subject: [PATCH] run-command: document use_shell option
+
+It's unclear how run-command's use_shell option should impact the
+arguments fed to a command. Plausibly it could mean that we glue all of
+the arguments together into a string to pass to the shell, in which case
+that opens the question of whether the caller needs to quote them.
+
+But in fact we don't implement it that way (and even if we did, we'd
+probably auto-quote the arguments as part of the glue step). And we must
+not receive quoted arguments, because we might actually optimize out the
+shell entirely (i.e., the caller does not even know if a shell will be
+involved in the end or not).
+
+Since this ambiguity may have been the cause of a recent bug, let's
+document the option a bit.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ run-command.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/run-command.h b/run-command.h
+index 6472b38bde..d08414a92e 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -126,8 +126,15 @@ struct child_process {
+ 	 */
+ 	unsigned silent_exec_failure:1;
+ 
+-	unsigned stdout_to_stderr:1;
++	/**
++	 * Run the command from argv[0] using a shell (but note that we may
++	 * still optimize out the shell call if the command contains no
++	 * metacharacters). Note that further arguments to the command in
++	 * argv[1], etc, do not need to be shell-quoted.
++	 */
+ 	unsigned use_shell:1;
++
++	unsigned stdout_to_stderr:1;
+ 	unsigned clean_on_exit:1;
+ 	unsigned wait_after_clean:1;
+ 	void (*clean_on_exit_handler)(struct child_process *process);
+-- 
+2.30.0.664.g35e6628185
+
