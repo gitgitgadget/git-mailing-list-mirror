@@ -2,109 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87A88C433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A8CC433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:53:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F46023AC0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:46:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3C1223AAC
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728383AbhAVWqu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:46:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730128AbhAVTmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 14:42:46 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B571EC061794
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:42:06 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id 9so7272886oiq.3
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:42:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ODOufgo/JNr0pFhtuDFLMYQQkpzuJA267cYct30kwds=;
-        b=iCkmN9HC5nEbHYXSWg5DglavMtU5TlccVjfGoU2BKvXiTn+Lh3612ilUbPnsFdwN9x
-         aW+nDv/1EEg1hpj3NwBnsdIFgRL06PUfe/RJU7cFIsqC8v86RiWlWrMg4+LrU1jomjFm
-         WixB6JEUvVGZYa4d391BWCOiA1HMum3mKIIorQ8je97b/MKUUK8SKI6J0oKp6dQpQO8L
-         jy2i08IUp7SYB231f2nEWLhqpZ1SDgoocM5ZBuHGWgOeTYGuEvYs1HsBvvF35WPADPaV
-         WGjd+g1vTy1HtqBu9OGQNUQZguNpUh78eybetGnpx2t9thtWIBfa1JFceO/FwNOqNrRs
-         nHQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ODOufgo/JNr0pFhtuDFLMYQQkpzuJA267cYct30kwds=;
-        b=LZj5XamkKhjrf47BH0Fy4c3c6VF2MCKC1x12x+1lO6mWFsMLuSHhsfmb4Gae5L8avp
-         bNPm0nD+nntA3ac0fg/dtg5hKOGsGJEoJD6EeN1EzWQ77NRnk5wi4X/gmDmtev7wqQ2h
-         uowWVefHv8C7MEwlMiweFjnL6EQZtZMaMIItqtdbh3F+JzAUEqGrbsj/za7XqEbM2GyW
-         yOM/KEnkvU1U3RgxJnD9MAE1hX8mPUHkgTGB8SIHJ0F4qqLsotTvI4SUsZpEgYrpgQc5
-         XHQatpriec/T2asm1HFGesUfP9N+QCNOwMDAj6ZKYN5arKnITk8aQW/9Lap0YdmPoNym
-         rATg==
-X-Gm-Message-State: AOAM530l9AF5KgCbV7BPj76suvFA2H9LJ7baHbvM6fbj8y2mt4zytVph
-        l3LhzrV6rG6+JVdEfOwKmF/Nidrud4mGH9Uz/tvQ/HKWAMQ=
-X-Google-Smtp-Source: ABdhPJyCpEqrhjU3BK4aVMV1xAEjMe+5qNUfMg5h/p4QjvruRD9cS65nRLWzSZyt6WZoxnwII3FS9NPiiGAaj8tRt4w=
-X-Received: by 2002:aca:db03:: with SMTP id s3mr4403840oig.48.1611344526205;
- Fri, 22 Jan 2021 11:42:06 -0800 (PST)
+        id S1728520AbhAVWwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 17:52:46 -0500
+Received: from mail2.pdinc.us ([67.90.184.28]:35888 "EHLO mail2.pdinc.us"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728586AbhAVWwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 17:52:02 -0500
+Received: from lovegrove (nsa1.pdinc.us [67.90.184.2])
+        (authenticated bits=0)
+        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10MMp1st024924
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 22 Jan 2021 17:51:01 -0500
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10MMp1st024924
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
+        t=1611355861; bh=EqQltOxsftxUPAloiaTBctNxJ7bn3yoj1I2LKnf5LYY=;
+        h=Reply-To:From:To:Cc:References:In-Reply-To:Subject:Date:From;
+        b=G5PYhAgKPw709tQ+3XFP0iJWO1xJtQCFGSHT1nukDpfiQVy4gsVX+84qR3GJwbLB9
+         JZPqgE1EHigp+I5CKRpOAlgFE401IbS8213MCU+i7uGbb65LkE4Cu7tVfuH94uHJgO
+         YyNos54t7HNL0KH8/h+zntAEesX3b8t8zPR86jpFRtjXMUz0C4/ht/OOrJipsdnm+v
+         txvOMFQN7nyf5vWzpge8ZhfL7OAlhmEQbnrJ2viva9IP3alefLakTFNbq5DySrF6zW
+         fXoUckJscw0E7BfJYHdJfkg8IooZrHhH+EczwvwKSTzgAKFKi93DsVOaAWA53QjZTU
+         vKQlQF+utztDQ==
+Reply-To: "Junio C Hamano" <gitster@pobox.com>,
+          =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+From:   "Jason Pyeron" <jpyeron@pdinc.us>
+To:     <git@vger.kernel.org>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>
+References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>  <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de> <xmqqsg6s61x2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqsg6s61x2.fsf@gitster.c.googlers.com>
+Subject: RE: git archive setting user and group
+Date:   Fri, 22 Jan 2021 17:51:11 -0500
+Message-ID: <078701d6f111$14d304c0$3e790e40$@pdinc.us>
 MIME-Version: 1.0
-References: <20210108092345.2178-1-charvi077@gmail.com> <20210119074102.21598-4-charvi077@gmail.com>
- <xmqqmtx3dq83.fsf@gitster.c.googlers.com> <CAPSFM5cxTrvAq6j3yhzidWdr8P8-sYmd1-9tmsK4iXMKrC7TNA@mail.gmail.com>
- <CAP8UFD3PRaiCiSfSMaX0FDrEcOz2xv3992meum7qnKve1rK6nw@mail.gmail.com> <xmqqwnw6au1d.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqwnw6au1d.fsf@gitster.c.googlers.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Sat, 23 Jan 2021 01:11:54 +0530
-Message-ID: <CAPSFM5fUnVz7wuMJCULDGOWCzk=cxamqmXFYuCkF0m9rWTYELQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/9] rebase -i: comment out squash!/fixup! subjects
- from squash message
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 15.0
+Content-Language: en-us
+Thread-Index: AQHBx3N2zV0SHJfdC165O07jxI29BQN7dRGLAZldu3qqNedSgA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 22 Jan 2021 at 02:26, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> >> Oops, I think Phillip and Christian also pointed in the last revision
-> >> to look for alternatives to make it easy. I mistook that point and
-> >> forgot to look at it.
+> From: Junio C Hamano
+> Sent: Friday, January 22, 2021 5:29 PM
+>=20
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > Am 22.01.21 um 21:40 schrieb Jason Pyeron:
+> > ...
+> >>         xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
+> >>         xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
+> >>         strlcpy(header->uname, "root", sizeof(header->uname));
+> >>         strlcpy(header->gname, "root", sizeof(header->gname));
 > >
-> > Yes, please take a look at find_commit_subject() in "commit.c".
->
-> Yeah, it uses pretty.c::skip_blank_lines(), which is easy to use.
-> so something like a loop that calls skip_blank_lines() to see if it
-> returns a differnt result (which means the argument we fed it was at
-> the beginning of a blank line, which is what this helper wants to
-> return), and otherwise we advance by one line with strchrnul() and
-> retry, perhaps.
->
->     while (*body) {
->         char *next = skip_blank_lines(body);
->         if (next != body)
->             break; /* found a blank line */
->         body = strchrnul(body, '\n');
->         if (*body)
->             body++;
->     }
->     /* body has the answer */
+> > Adding support for using a custom user and group should be easy.  Is
+> > this just a cosmetic thing?  Regular users would ignore the user =
+info in
+> > the archive, and root should not be used for extracting, and on =
+systems
+> > that don't have a logwatch user this wouldn't make a difference =
+anyway,
+> > right?
+>=20
+> I am not particularly interested in cosmetics, but it probably is OK
+> to make uname/gname overridable.  I do not see any point in uid/gid
+> numeric values overridable, though.  Just like user names and group
 
-Thanks for all the pointers. I took time in looking into it, but now I got more
-cleared its actually looks for all the spaces in complete line which
-is considered
-as a blank line and above function explains it more clearly. I will
-update the "subject
-length" function as the above way and send in the next revision.
+Interesting. So logwatch(0) vs logwatch(1100) ? I guess it is as good as =
+any value, but tar never uses 0.
 
-Thanks and Regards,
-Charvi
+On a system without the logwatch user/group tar behaves as follows:
+
+$ tar czf /tmp/logwatch.tgz --owner=3Dlogwatch --group=3Dlogwatch .
+
+$ tar tvzf /tmp/logwatch.tgz | head -n 1
+drwxrwxr-x logwatch/logwatch 0 2020-03-14 15:01 ./
+
+$ tar tvzf /tmp/logwatch.tgz --numeric-owner | head -n 1
+drwxrwxr-x 1049681/1049088   0 2020-03-14 15:01 ./
+
+$ id
+uid=3D1049681(myuser) gid=3D1049088(mygroup) groups=3Dno one cares...
+
+but when the user / group is known...
+
+$ tar czf /tmp/logwatch.tgz --owner=3DGuest --group=3DUsers .
+
+$ tar tvzf /tmp/logwatch.tgz | head -n 1
+drwxrwxr-x Guest/Users       0 2020-03-14 15:01 ./
+
+$ tar tvzf /tmp/logwatch.tgz --numeric-owner | head -n 1
+drwxrwxr-x 1049077/545       0 2020-03-14 15:01 ./
+
+$ getent passwd Guest | cut -f 3 -d :
+1049077
+
+$ getent group Users | cut -f 3 -d :
+545
+
+
+> names do not name the same user and group on every machine, uid/gid
+> are even less so.
+>=20
+>=20
+
+
