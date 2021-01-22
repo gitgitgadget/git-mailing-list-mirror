@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EEC1C433DB
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7781DC433DB
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 416E023AAC
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:41:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4383623AC0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 18:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729444AbhAVSky (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 13:40:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
+        id S1729767AbhAVSlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 13:41:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729150AbhAVSRA (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1729067AbhAVSRA (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 22 Jan 2021 13:17:00 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B051C061788
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:17 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id d16so5281684wro.11
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:17 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D399C06178B
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:18 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id v184so5157111wma.1
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Hn5JE2/Bv0hJR7cwXwcovImuk0DZn9N/knwpPf4zykE=;
-        b=YBGpcUatOptPRFNzfOxcqQ9j+SAJCilLbmSvanJDTCmJ6Uz4fj0qLpSQQFeMaSTayV
-         OgCCn1m3hRdJsGWs4BSQ0ITJHuCj/Q8NpLpw/UqAL9215IdjErvl+FL30pwmFH0h/wqo
-         7L6mbm+K76pB4i6RlLoYrSXgwDIS4GPVcTg8rYIXtZQcYQzMlY35gXLxVrkTrHHyJRhJ
-         WlbeWpPTH2nKEm1+71B2d/pzicQIoNkXYfUnJqEOL8G1xZH0Z2AFfptJhEyAXP4TMgbs
-         xOmWb89MrHEUY0FbU7ya8yLvS7KGRU62dWe141Q2f8mYWjTx3aDdmby7IV+lULVV6ARp
-         2w5A==
+        bh=a0l+HITz6SzitgtYi+GV15d+1DsaJwoOm5MRDPNWvgg=;
+        b=bG6+sBHOhvQNafPWorYM7WxJD3l+FFlbAK7IJycxiYpvh+14OH93jRsqtxBOT7vi8x
+         5A4DZ/2QN1mxmO2cctjMxg/p9Fd81FWkZtgG+zfQ7FnNbXtWf+l0+AtMbHOeRO5TuMUS
+         Bo6wnNAfNOt+4r51NYsDQ9ozmXmwt7nBrvx0/3KWICD7WVV1sow+NSWoSGPKdb3e58Zb
+         B/kjUhLXBlNa6uZf1VDG6J6RsJ9yk6AKiiwrQM9cySsjswfJHq6xBEK6YbU1ev9YTnQJ
+         kJ4/NQbaG3GcNJJtcLTzE2U8tlBEET855x9Sogeoj3saTyrphg5/b4ndyJ907w1K3jHe
+         F8ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Hn5JE2/Bv0hJR7cwXwcovImuk0DZn9N/knwpPf4zykE=;
-        b=gMXt2zI+myBUcZNIPq7EVgn9c3LW2XCHbRofmzAETstbQUaBSsv+4R/UCEUP8MFGQ8
-         f0opkkDfG3bFGpDHKoV8g3oiPgjWqBQrHlLBZ9FVESEUm7OZ3vU3USiQ0oKrIyeW6r/s
-         WRikN/+xUZuY/mtxZ62Dr/X3gedDjRmGTxMeKGtvHnKep3P3TFOwFEjwgSXOe3rAHYcG
-         SHirTgZHrOCC/ys1cgRZLy3ReUG0vMNy5ic4b+XCHiR0RzYJnElVHZkbGArCckpy2ZsI
-         82bWORyI6zt1Mh2c0Juz3rk14dTlYaeXwv45KR6k9cBhf8q8gXZIAlkUTTeZs1yhB5uJ
-         Q2WQ==
-X-Gm-Message-State: AOAM532Be2lZVh3bLSFYqxLk7JW94bLDTzkPE+YoEURbhjhCFyo4SZT0
-        r0Fqe4DqgvQo/9EL2yBCsKIyKxb6CSg=
-X-Google-Smtp-Source: ABdhPJyg90Lfm0DANC0m8u/gxYFH5jFpY8cKE6Q9AHZSnZYxLQyyc2Ew72KevaWnrgNKxSzBNS2tEA==
-X-Received: by 2002:a5d:6191:: with SMTP id j17mr5700222wru.281.1611339376147;
-        Fri, 22 Jan 2021 10:16:16 -0800 (PST)
+        bh=a0l+HITz6SzitgtYi+GV15d+1DsaJwoOm5MRDPNWvgg=;
+        b=FVtrWYRd7nSmVnbT1BuZm9UnUC386+qSeBs1UWCtO7tjf1r/v3Fj+dy5lAv56Gchr4
+         5cE2AmGGCZgf+D4Z34WUnIA+CvCaafTjhHOfyTPYIuYAU6fj9HR2FL4KVPZFS/9Rpb3j
+         Ara4rdmMA0jDnHXp89T447OkEbyMP2WY/fL/BQmV811xwE3i79+q1EJ/Hn6TZc+jMQOE
+         l6L36zUfh42z74YNnUwVtDOhtNptvTwkoQHDnviXXJJeB3OgPVfjM628rJZ8RFz420bA
+         oQQFNtxAA0eV4AgXHoW33s1uN/KQHU0gXcLPR3Kza2istT1Gf6GfZD+B1K+579oJnL0L
+         AGhA==
+X-Gm-Message-State: AOAM530tntvSvkS2YbDEJ7ofxeH2T8NePSbCvlx+cOKGwLv/0Ns80adi
+        hWSvLEWnuBY40MmJFAARPuyp7V2Yvuc=
+X-Google-Smtp-Source: ABdhPJy43Enj67kobA1nrZSS6rmTDgIh1eX6d/WUVFb2J0m0Q3oVW4aePRce+ahWysmJBn1K160cvw==
+X-Received: by 2002:a05:600c:4e92:: with SMTP id f18mr5088264wmq.126.1611339377016;
+        Fri, 22 Jan 2021 10:16:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b4sm544732wrn.12.2021.01.22.10.16.15
+        by smtp.gmail.com with ESMTPSA id m11sm5284826wmc.15.2021.01.22.10.16.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 10:16:15 -0800 (PST)
-Message-Id: <2c2744333ecf5662d4198bdddeee80ff4adf6acd.1611339373.git.gitgitgadget@gmail.com>
+        Fri, 22 Jan 2021 10:16:16 -0800 (PST)
+Message-Id: <4f5e5acd954d933df741b57f3877954d02199fe8.1611339373.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
 References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
         <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Jan 2021 18:16:11 +0000
-Subject: [PATCH v2 2/3] range-diff/format-patch: handle commit ranges other
- than A..B
+Date:   Fri, 22 Jan 2021 18:16:12 +0000
+Subject: [PATCH v2 3/3] range-diff(docs): explain how to specify commit ranges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,68 +79,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
-described to specify commit ranges that `range-diff` does not yet
-accept: "<commit>^!" and "<commit>^-<n>".
-
-Let's accept them.
+There are three forms, depending whether the user specifies one, two or
+three non-option arguments. We've never actually explained how this
+works in the manual, so let's explain it.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- revision.c            | 22 +++++++++++++++++++++-
- t/t3206-range-diff.sh |  8 ++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
+ Documentation/git-range-diff.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/revision.c b/revision.c
-index 00675f598a3..9ee063a2c03 100644
---- a/revision.c
-+++ b/revision.c
-@@ -4209,5 +4209,25 @@ void put_revision_mark(const struct rev_info *revs, const struct commit *commit)
+diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+index 9701c1e5fdd..76359baf26d 100644
+--- a/Documentation/git-range-diff.txt
++++ b/Documentation/git-range-diff.txt
+@@ -28,6 +28,19 @@ Finally, the list of matching commits is shown in the order of the
+ second commit range, with unmatched commits being inserted just after
+ all of their ancestors have been shown.
  
- int specifies_commit_range(const char *range)
- {
--	return !!strstr(range, "..");
-+	size_t i;
-+	char c;
++There are three ways to specify the commit ranges:
 +
-+	if (strstr(range, ".."))
-+		return 1;
++- `<range1> <range2>`: Either commit range can be of the form
++  `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See `SPECIFYING RANGES`
++  in linkgit:gitrevisions[7] for more details.
 +
-+	i = strlen(range);
-+	c = i > 2 ? range[--i] : 0;
-+	if (c == '!')
-+		i--; /* might be ...^! */
-+	else if (isdigit(c)) {
-+		/* handle ...^-<n> */
-+		while (i > 2 && isdigit(range[--i]))
-+			; /* keep trimming trailing digits */
-+		if (i < 2 || range[i--] != '-')
-+			return 0;
-+	} else
-+		return 0;
++- `<rev1>...<rev2>`. This resembles the symmetric ranges mentioned in
++  the `SPECIFYING RANGES` section of linkgit:gitrevisions[7], and is
++  equivalent to `<base>..<rev1> <base>..<rev2>` where `<base>` is the
++  merge base as obtained via `git merge-base <rev1> <rev2>`.
 +
-+	/* Before the `!` or the `-<n>`, we expect `<rev>^` */
-+	return i > 0 && range[i] == '^';
- }
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 6eb344be031..e217cecac9e 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -150,6 +150,14 @@ test_expect_success 'simple A B C (unmodified)' '
- 	test_cmp expect actual
- '
++- `<base> <rev1> <rev2>`: This is equivalent to `<base>..<rev1>
++  <base>..<rev2>`.
  
-+test_expect_success 'A^! and A^-<n> (unmodified)' '
-+	git range-diff --no-color topic^! unmodified^-1 >actual &&
-+	cat >expect <<-EOF &&
-+	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'trivial reordering' '
- 	git range-diff --no-color master topic reordered >actual &&
- 	cat >expect <<-EOF &&
+ OPTIONS
+ -------
 -- 
 gitgitgadget
-
