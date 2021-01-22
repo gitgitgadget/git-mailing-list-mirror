@@ -2,97 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9554CC433E6
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD08CC433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:24:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FB1F23AA1
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:22:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B1AC23A5C
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:24:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728945AbhAVWW1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:22:27 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60539 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728818AbhAVWWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 17:22:01 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E912795227;
-        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ggDxbjgVeUqCszbcmse86Lj5yak=; b=wno2Ra
-        sdGoiSXoKiSPFbUizAxSOVg2cQSB5nHla4vFd00IZl4JNhiFQfcdAnV5sHlAsnZR
-        YYdU1U039Wv2T5WK+VGiYpoAD67tna9wSXhyUUcX1jH3XCiYsOgSoI2hSMHVZ6Wv
-        we64bq0ae1cV/Fve3gNsunP+PdfDozcI40uA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qP81rjSoStKILMPXOgVsY9gZ855S0mpD
-        kVD/GLh8q/zURhL1UBtC9rIUEhazh2vQDrmjCsLhf6h427XW2xRNDC+zU66ntJi2
-        6Chuk5TElSgWDurkMlzT605F9b8CMPCvDKtvYXKSRYcdRedHmZOrpnEkQ5sOdPa6
-        SuZTX+CdcNM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE98495226;
-        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FC0695225;
-        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] run-command: document use_shell option
-References: <20210122142137.21161-1-jacob@gitlab.com>
-        <20210122142137.21161-2-jacob@gitlab.com>
-        <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
-        <YAs9pTBsdskC8CPN@coredump.intra.peff.net>
-Date:   Fri, 22 Jan 2021 14:21:15 -0800
-In-Reply-To: <YAs9pTBsdskC8CPN@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 22 Jan 2021 16:03:33 -0500")
-Message-ID: <xmqqzh1062as.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1729204AbhAVWYa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 17:24:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730602AbhAVTyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 14:54:17 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD03C061794
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:53:34 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id a25so6745843ljn.0
+        for <git@vger.kernel.org>; Fri, 22 Jan 2021 11:53:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=fAl1cD+1kay3q+6zbzlBTgnLDxSNOe9NWWjLTphmyOU=;
+        b=QZBmESo0f0AsfglpAUJrH8UTXAWuj3b0MdW8T5V4WXky5TDZGa/zCWXfzLgdrs6YXC
+         AEzpJf0Rk0H04QtKJVmB3AbfKZLWVqcMnpgVe8PhZLurl1v3/UhmdtQiylht8iEgh9J7
+         OBJwy2bW7ZL0mglMgYbsj+1pI1gPAu4bSHUjxJHUIDeu8BpxjbmaF43G7FPxegFljLHj
+         VyZfpUXXkhOc0DiSKIt4eqUIRsrceX3jLyLtjn+vIiyInEPd87jOCyhZKGc1afXI5D/b
+         zrGxULFeXw4+S97hTbcKUbmEue1gN5N46chkt9yWTlgauz56pt1ZmI3/Pz291cVx4nXo
+         vj9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=fAl1cD+1kay3q+6zbzlBTgnLDxSNOe9NWWjLTphmyOU=;
+        b=p6FcNtZU/dH9NQUHoA6BUIfuYAQO3iW1onVfMHifGql7WroJIjixzym69IiW/Tpkyl
+         /9MV/NiyoEAoE2EgIJXC5KyViSCdIZw5DPkyMpG3TXqcoButnEZWIy2IG1J00HMizuib
+         P4GwN+XdEjunPkRqy8EG2dimtl7qc203GmE2Bqph10cfNRCjIDWTftFsdTSFIBNHCWcz
+         HCJnbb9XL+FMmbArqTJZsXOPhezOJnXnspDCNH8Jw+7qjIs65L2Ac+W8ir15uUNruIQM
+         qv9YhQ6aNjSowoUqCjNLxnp9g5UFN8g6UC8qXvlata3Vi6dfVKXRM+CtGh7oLuLiH5SB
+         BFag==
+X-Gm-Message-State: AOAM533uCyBddL93TPf7IiB7/S5kEtZWqxuIo6gZntBICRxONxxQ6tfK
+        9ZWy1oqOm99etnMqFfvzkoqF/H8BYdtM0nmKuYBU8g==
+X-Google-Smtp-Source: ABdhPJygNtIwcnfzeTHb9fBUGzE6V0hUA3M9d/RkWdHI0Qkozlq929x6sxb3GLE2dCZxkpVc3LmCq3005PyDJC0Jt8o=
+X-Received: by 2002:a2e:b003:: with SMTP id y3mr2393744ljk.346.1611345212698;
+ Fri, 22 Jan 2021 11:53:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24D2C896-5D00-11EB-A0F7-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20210122030103.GA73465@gmail.com>
+In-Reply-To: <20210122030103.GA73465@gmail.com>
+From:   Emily Shaffer <emilyshaffer@google.com>
+Date:   Fri, 22 Jan 2021 11:53:21 -0800
+Message-ID: <CAJoAoZkrYYz=1wKDtUKdewPGX9wr2Zwhhyq9kd5C2_KDn9UJ=w@mail.gmail.com>
+Subject: Re: faster git clone
+To:     William Chen <williamchen32335@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jan 21, 2021 at 7:01 PM William Chen <williamchen32335@gmail.com> wrote:
+>
+> Dear Emily,
+>
+> I see your excellent contribution to git clone. I hope that you are well.
 
-> diff --git a/run-command.h b/run-command.h
-> index 6472b38bde..d08414a92e 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -126,8 +126,15 @@ struct child_process {
->  	 */
->  	unsigned silent_exec_failure:1;
->  
-> -	unsigned stdout_to_stderr:1;
-> +	/**
-> +	 * Run the command from argv[0] using a shell (but note that we may
-> +	 * still optimize out the shell call if the command contains no
-> +	 * metacharacters). Note that further arguments to the command in
-> +	 * argv[1], etc, do not need to be shell-quoted.
-> +	 */
->  	unsigned use_shell:1;
-> +
-> +	unsigned stdout_to_stderr:1;
+Hi William, this is a question much better directed at the Git list as a whole.
 
-Reads well.  Thanks.
+>
+> When I try to clone a repo of a large size from github, it is slow.
+>
+> $ git clone https://github.com/git/git
+> ...
+> remote: Enumerating objects: 56, done.
+> remote: Counting objects: 100% (56/56), done.
+> remote: Compressing objects: 100% (25/25), done.
+> Receiving objects:  23% (70386/299751), 33.00 MiB | 450.00 KiB/s
+>
+> The following aria2c command, which can use multiple downloading threads, is much faster. Would you please let me know whether there is a way to speed up git clone (maybe by using parallelization)?
 
-It is curious why "diff" chose to move stdout_to_stderr line around,
-though.
+In general, it would be more compelling to see actual numbers than
+"much faster", e.g. the outputs of `time git clone
+https://github.com/git/git` and `time aria2c
+https://github.com/git/git/archive/master.zip` - or even an estimation
+from you, like, "I think clone takes a minute or two but aria does the
+same thing in only a couple of seconds". "Much faster" means something
+different to everyone :)
 
->  	unsigned clean_on_exit:1;
->  	unsigned wait_after_clean:1;
->  	void (*clean_on_exit_handler)(struct child_process *process);
+>
+> Your help is much appreciated! I look forward to hearing from you. Thanks.
+>
+> $ aria2c https://github.com/git/git/archive/master.zip
+>
+> 01/21 20:16:04 [NOTICE] Downloading 1 item(s)
+>
+> 01/21 20:16:04 [NOTICE] CUID#7 - Redirecting to https://codeload.github.com/git/git/zip/master
+
+Right here it looks like your zip download redirects to a CDN or
+something, which is probably better optimized for serving archives
+than the Git server itself, so I would guess that has something to do
+with it too.
+
+> [#59b6a2 8.2MiB/0B CN:1 DL:3.8MiB]
+> 01/21 20:16:08 [NOTICE] Download complete: /private/tmp/git-master.zip
+>
+> Download Results:
+> gid   |stat|avg speed  |path/URI
+> ======+====+===========+=======================================================
+> 59b6a2|OK  |   2.9MiB/s|/private/tmp/git-master.zip
+>
+> Status Legend:
+> (OK):download completed.
+
+There are others on the list who are better able to explain this than
+me. But I'd guess the upshot is that 'git clone
+https://github.com/git/git' is asking a Git server, which is good at
+Git repo management (e.g. accepting pushes, generating packfiles to
+send you a specific object or branch, etc) - but when you ask for
+"git/git/archive/master.zip" you're getting the result of some work
+the Git server already did a while ago to zip up the current 'master'
+into an archive and give it to some other server.
+
+We've done some other work[1] around enabling use of CDNs and prebuilt
+chunks lately, but again, there are others on the list better able to
+explain than me.
+
+[1]: https://github.com/git/git/blob/master/Documentation/technical/packfile-uri.txt
