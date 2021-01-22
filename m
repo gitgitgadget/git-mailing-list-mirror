@@ -2,175 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D123DC10F00
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 19:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC928C433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 19:20:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B399C23AF8
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 19:17:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BE7023ACA
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 19:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729630AbhAVSkR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 13:40:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728559AbhAVSRA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 13:17:00 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B46B1C061786
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:16 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id g10so5976326wrx.1
-        for <git@vger.kernel.org>; Fri, 22 Jan 2021 10:16:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WNn/b50LA8pa+dQx7PCUJLoOEaMfXPro4ERU2UQYmEw=;
-        b=KFYb/8rLYOggXPWtxb0mLGof+w7TGB8fFykVqlQpD/mAgzQINAj3QctwMC2isHMPJZ
-         EJJiX3YgrOzNIA6uasyROOQC0+LNXMnAJo4oZNqJPjVtEGLZIaH4MoiVUDRGZakKlfTC
-         8DEsubPVS3Taeafd7CoLvtKoO4px+cE2/Rrk6QnMvZVzLHphaZOb3Op6fwcZvgooCVQ4
-         eHYtNwXeiU4M4Lmy+hMdKtO56bVrPNESdAA56UCq1AmKdLhFkADYWDf30c+qIODkXp9a
-         XLh5Q8+jNsq0fnzuGFxU81p7Ek0A+wEZXpTSEdCbLxV/ojrDueSJBa4mgqdazmlEj0cO
-         bY0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WNn/b50LA8pa+dQx7PCUJLoOEaMfXPro4ERU2UQYmEw=;
-        b=MNINUgqggXH8K2AnWeUETFaGfB+DRiZUDMrhCOKQfEknq9Zk5uNIfQ6RfYF18Xl+RY
-         4WieDcH/apS9s2J6o9EEMPfPRRnkCje+sIhD5BNSZX8goVK+vgCfZ5zV6AIasU6HnS1q
-         6RbjpIzfYtuLJnN6MQtKh3oawoe+ldmcjRyed3M+9sW17NAEC+vRI+RrgNMpbk+eB7dM
-         clnsL8eS+KyFAjrQGNYsQ4zm4Ll3KNvToSfHv2tF2HF/bjbuKso5ABEPXm9wMhEJtOts
-         u+2cDRuLzX9eeWb7QuZWlZo6fEzNd5HfWLO84LG3E2vq6Er2qbt6d8QaAfB7o1czl8sx
-         xMQQ==
-X-Gm-Message-State: AOAM532dOZsCyAhJ3wtWn6tYr6Lb44fgOTe7py+riZsNuVxelDchXcdz
-        L+19PH1t/vESayCTTwMkGbgarvGpYZc=
-X-Google-Smtp-Source: ABdhPJz3QrMdMPSQJexwiFjgyAXpCByoxN55W0EaogxYYm1MBSp5I+W3Qdd+jgGGfIzynymMdKE/vQ==
-X-Received: by 2002:a5d:4d84:: with SMTP id b4mr5935506wru.361.1611339375308;
-        Fri, 22 Jan 2021 10:16:15 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k6sm1765093wro.27.2021.01.22.10.16.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Jan 2021 10:16:14 -0800 (PST)
-Message-Id: <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
-        <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Jan 2021 18:16:10 +0000
-Subject: [PATCH v2 1/3] range-diff/format-patch: refactor check for commit
- range
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729232AbhAVTUD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 14:20:03 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61093 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728838AbhAVSrQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 13:47:16 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0852C933E4;
+        Fri, 22 Jan 2021 13:46:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Lc3J4OidTKQURNDxtoHi5ULFsjU=; b=Kgsixa
+        QZaE0r/MSldTWhljcN50KXiOOl+P06YmqBUX7CNYKyz49oEFaOfay1aZurgdwnRf
+        xiQfzy36TvYqSMX2sz6kBcXBlGe5+Gkf1iR5wUeUxxdwa2sMbuaiNcqGi/spRDZq
+        y2E32KpqoerLuUlFrxpV72hiQL5BM4MCLSjQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nr6QNBDDn+crsWEp7Z3k9adL9hpZ1L9R
+        zg0PA/Cc8kl3TVS3YzcIwk7Rid3Il/z4MrV7ZbVjDEoHOko02mEvA4dynMF4s797
+        ChZS0Wul+owry32rr2u2EO9Q6F0ijTz9CZsxBMdk2AaPmRy9KIkuXm0eq/vG3EN7
+        +BlIrc1PuyI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3046933E3;
+        Fri, 22 Jan 2021 13:46:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7A4E8933E2;
+        Fri, 22 Jan 2021 13:46:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     "Patricia B. C." <pati.camsky@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: Can git change?
+References: <CAK8LAYVZKjbMEDWTyvQv2eY+qR0qw1=mn=c4KCZvit7gsqTibA@mail.gmail.com>
+        <CAP8UFD0fZBdZ6qwDP9_yW7VAfskTKPC7HVSpK4rD=bORuECpJA@mail.gmail.com>
+Date:   Fri, 22 Jan 2021 10:46:32 -0800
+In-Reply-To: <CAP8UFD0fZBdZ6qwDP9_yW7VAfskTKPC7HVSpK4rD=bORuECpJA@mail.gmail.com>
+        (Christian Couder's message of "Fri, 22 Jan 2021 14:31:57 +0100")
+Message-ID: <xmqqpn1w95dj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 260561EC-5CE2-11EB-BCFF-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Christian Couder <christian.couder@gmail.com> writes:
 
-Currently, when called with exactly two arguments, `git range-diff`
-tests for a literal `..` in each of the two. Likewise, the argument
-provided via `--range-diff` to `git format-patch` is checked in the same
-manner.
+> Hi,
+>
+> On Fri, Jan 22, 2021 at 2:05 PM Patricia B. C. <pati.camsky@gmail.com> wrote:
+>>
+>> Hello!
+>> My name is Patricia and I work as a software engineer in Brazil. I
+>> also teach sometimes at Le Wagon, a programming school.
+>> I brought the discussion about changing our repositories' branch to
+>> main instead of master. The response of one of the owners was that
+>> "Git has not changed it, so we will not change". So here I was,
+>> wondering if maybe Git would hear me out :)
+>> Do you have any thoughts on it?
+>
+> There have been a lot of discussions about this topic. You can find
+> some pointers to them (though maybe not the most recent ones) in the
+> article "The history of `master` in Git" in:
+>
+> https://git.github.io/rev_news/2020/07/29/edition-65/
+>
+> There has been also an official statement by the Conservancy and the
+> Git PLC (Project Leadership Committee):
+>
+> https://sfconservancy.org/news/2020/jun/23/gitbranchname/
 
-However, `<commit>^!` is a perfectly valid commit range, equivalent to
-`<commit>^..<commit>` according to the `SPECIFYING RANGES` section of
-gitrevisions[7].
+I got an impression that Patricia wanted to follow what we do to
+this project, but AFAIU, both of the above are about what Git does
+to help end-user projects to rename.  They do not talk about what
+branch this project uses.
 
-In preparation for allowing more sophisticated ways to specify commit
-ranges, let's refactor the check into its own function.
+A much more relevant direct reference is the brian's assessment for
+us to switch in Edition 65, plus the test clean-up series from
+Dscho.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/log.c        | 2 +-
- builtin/range-diff.c | 9 +++++----
- revision.c           | 5 +++++
- revision.h           | 7 +++++++
- 4 files changed, 18 insertions(+), 5 deletions(-)
+Having said all that, imitating what we do to our project may
+probably not be a good idea.  We have done, and we will do in the
+future, experimental things, some of which may turn out to be bad
+ideas [*1*].  The users are probably better off imitating projects
+with larger developer base.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index bd6ff4f9f95..099abdfb7e6 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1680,7 +1680,7 @@ static void infer_range_diff_ranges(struct strbuf *r1,
- 				    struct commit *head)
- {
- 	const char *head_oid = oid_to_hex(&head->object.oid);
--	int prev_is_range = !!strstr(prev, "..");
-+	int prev_is_range = specifies_commit_range(prev);
- 
- 	if (prev_is_range)
- 		strbuf_addstr(r1, prev);
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 24c4162f744..89d54158011 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -3,6 +3,7 @@
- #include "parse-options.h"
- #include "range-diff.h"
- #include "config.h"
-+#include "revision.h"
- 
- static const char * const builtin_range_diff_usage[] = {
- N_("git range-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-@@ -46,12 +47,12 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		diffopt.use_color = 1;
- 
- 	if (argc == 2) {
--		if (!strstr(argv[0], ".."))
--			die(_("no .. in range: '%s'"), argv[0]);
-+		if (!specifies_commit_range(argv[0]))
-+			die(_("not a commit range: '%s'"), argv[0]);
- 		strbuf_addstr(&range1, argv[0]);
- 
--		if (!strstr(argv[1], ".."))
--			die(_("no .. in range: '%s'"), argv[1]);
-+		if (!specifies_commit_range(argv[1]))
-+			die(_("not a commit range: '%s'"), argv[1]);
- 		strbuf_addstr(&range2, argv[1]);
- 	} else if (argc == 3) {
- 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-diff --git a/revision.c b/revision.c
-index 9dff845bed6..00675f598a3 100644
---- a/revision.c
-+++ b/revision.c
-@@ -4206,3 +4206,8 @@ void put_revision_mark(const struct rev_info *revs, const struct commit *commit)
- 	fputs(mark, stdout);
- 	putchar(' ');
- }
-+
-+int specifies_commit_range(const char *range)
-+{
-+	return !!strstr(range, "..");
-+}
-diff --git a/revision.h b/revision.h
-index 086ff10280d..66777c8e60f 100644
---- a/revision.h
-+++ b/revision.h
-@@ -457,4 +457,11 @@ int rewrite_parents(struct rev_info *revs,
-  */
- struct commit_list *get_saved_parents(struct rev_info *revs, const struct commit *commit);
- 
-+/*
-+ * Determine whether the given argument defines a commit range, e.g. A..B.
-+ * Note that this only validates the format but does _not_ parse it, i.e.
-+ * it does _not_ look up the specified commits in the local repository.
-+ */
-+int specifies_commit_range(const char *range);
-+
- #endif
--- 
-gitgitgadget
 
+[Footnote]
+
+*1* subtree merging of gitk and git-gui, for an example, and having
+    an octopus merge in the history is another.
