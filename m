@@ -2,127 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE16C433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 20:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11E95C433E6
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:04:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A42B423B06
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 20:49:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0B7523B45
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 21:04:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729804AbhAVUt3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 15:49:29 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62219 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728700AbhAVU2E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 15:28:04 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38858943C9;
-        Fri, 22 Jan 2021 15:27:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BsWCjobrzaV0peOrwrfOUWJX4LI=; b=fkYJhD
-        S/e69AerqcxTcU9CtVPM1VUFNuN1MLXE/BdO1l3suIiQrylBfAZK0elEc6SlFSdV
-        bNLDrQXf+6t5bUh+FJffAOd3I7EdmeG+o5S+IkJg6QitD29Netjy5SZ35rHMB9pU
-        mY1TBGy9/qSqVIQd8PW5tIsQ/xWDqpIU7sZiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VfWtvGXhvYMCAH0ocZ5ZJ+UK/uJCYMN/
-        sIzqqu/UPtMLYa5hPyDg1WrW7uGl5mCK5vq18Uyk+xTuTVkvMhT7Oak4QpfcTh1C
-        GRXs4G9Tg6wDgZeknrk3iX88yoqjQQ0Bik/9tNNk4ef/SjseNN37zwTmIns72hoc
-        si2mUUy9liw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30A99943C8;
-        Fri, 22 Jan 2021 15:27:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF28E943C6;
-        Fri, 22 Jan 2021 15:27:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] range-diff/format-patch: refactor check for
- commit range
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
-        <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
-        <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
-Date:   Fri, 22 Jan 2021 12:27:10 -0800
-In-Reply-To: <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 22 Jan 2021
-        18:16:10 +0000")
-Message-ID: <xmqqzh107m5d.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1730567AbhAVVDW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 16:03:22 -0500
+Received: from mout.web.de ([212.227.15.14]:32869 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729275AbhAVVCe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 16:02:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1611349205;
+        bh=udaR0YT3zorGdy5gjOrqVM89NIQNX/xgpGwDAdo/ZFg=;
+        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
+        b=qnXR91wGpHvWJ6hGJ9p+FYa/yls+1sFOy7UcaEX0na+8RIMujymfXbN8GCpA1p9ZF
+         3vfhc8cJVECVFJkNjPxXYttj9IKMc5zokaXY3aGBIvrZSXrJid7Z2nKgVXuateiYt/
+         l+R0ujCNxiLsL3ANDfTHohGfpzok40VIy7otepeE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0Lp7Lg-1lhrvd0z2a-00exv6; Fri, 22 Jan 2021 22:00:05 +0100
+Subject: Re: git archive setting user and group
+To:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de>
+Date:   Fri, 22 Jan 2021 22:00:04 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3513ED26-5CF0-11EB-9C9D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:EGKqObd9eJIkB6M+6vNPVz5Lv6isth+RKDwBB2bUo/KEGwH3bEw
+ P+h2aY6H00+5tf7AQ+Sx+RXYInuWIWXF7R+VlnXjRYXYbvcYjTtTFBQccO3c2rtQLs6BZaj
+ Ch/Uq5gZAGP+fgN8Q1hEnsvdSTcCL54HXdelt425uOMRoJ+IwgpZ0/Qgi+G+CSA0GJnwl7Q
+ wyTZVyhAphNwg8OQDmwIA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rlCJRuGyvyM=:L9EBpO0A3vK8WV1bd9fsmZ
+ dKu3KWp2sKF6u4VAHafJ5bQ469cKiiK/e4p7JlXl5pW67f6o6fL2YM1C0FkhdhqvItlSMQzF0
+ aoit1VbZZRqaBezXiG1nXY4YaYbO6ieE2vTaXNbouble3R4uqXBGrMoNuGug86+Xl0GwLHHj+
+ ukscMDwDdiSfI0bq5toaXhNlijrCEuXer4hY0+26/M6CdTF3IO/afGmM0qdQdA33mTHdOwx7c
+ Egs6nR/fAAlzKHUkY706MHShqDNERnc/gT+RSW1eVsMg1YTciIM4EUyHNlpHyXqbpULkK6VqP
+ 2B0LYePb2Zrexw9T1pOKwCsJ5riDT90Bpyccin9AuwaBL6hnbr4JwLNf4YbNkxhlZgnW68T+U
+ NsGZGqTqELW69jHxM1sjSu0VnAekWZjZEeA8L2UYmV2WWaENoUxv5H/uSPkAOuY0tAkACFnIa
+ d3beQvAdGZTAUkZrFY/4lhzxrh+GwMjkjKDjcwoWUmOpQd6d1oFPQ+stR0JkdHk7soEsofYx0
+ VEtSbHAzjJwpZZ68xQUgv/44cr95B6RwArgjxQnzds+9OP+Dz/ZKjD0ik/xzZm+DzJC7bH23x
+ uABNm/2vpY5KXXCSKrI2+lLV/ZZpzWFmCwIQ1VG/XsEwMB4rpZ8dTUfwNO18FhfxYnsmBd1/4
+ sITCIqLqkLqKSQ/SvztsU/eybjAQXECUutJsqcnm3pGYbGaSMtnzxq7sJKckLixbuNYTxVDtG
+ ctPVJeXH3ssRjITarBbZONep9TKg84VIJDDlAOuBvcBJMYtfkA1M37pzG18mn+Ojc4ojAJ0Yu
+ JImiuEz850alpWNjBxslHBBBNV3iQX0XAbsQKJN+q7CSG6wJzgBS7ttuYFDRvaRSmdBxmIKSN
+ YoV2VHWSvpYh6iP+SHZg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Am 22.01.21 um 21:40 schrieb Jason Pyeron:
+>> From: Jason Pyeron <jpyeron@pdinc.us>
+>> Sent: Friday, January 22, 2021 3:09 PM
+>>
+>> I am about to make a release for logwatch tonight. Historically the fil=
+es are owned by logwatch in the
+>> tgz file. When I use git archive it is owned by uid 0, is there an opti=
+on to set the uid/uname,
+>> gid/gname owner of the files?
 >
-> Currently, when called with exactly two arguments, `git range-diff`
-> tests for a literal `..` in each of the two. Likewise, the argument
-> provided via `--range-diff` to `git format-patch` is checked in the same
-> manner.
+> Answer: not at this time, as it is hard coded in the source.
 >
-> However, `<commit>^!` is a perfectly valid commit range, equivalent to
-> `<commit>^..<commit>` according to the `SPECIFYING RANGES` section of
-> gitrevisions[7].
+> archive-tar.c:
+> static void prepare_header(struct archiver_args *args,
+>                            struct ustar_header *header,
+>                            unsigned int mode, unsigned long size)
+> {
+>         xsnprintf(header->mode, sizeof(header->mode), "%07o", mode & 077=
+77);
+>         xsnprintf(header->size, sizeof(header->size), "%011"PRIoMAX , S_=
+ISREG(mode) ? (uintmax_t)size : (uintmax_t)0);
+>         xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsig=
+ned long) args->time);
 >
-> In preparation for allowing more sophisticated ways to specify commit
-> ranges, let's refactor the check into its own function.
+>         xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
+>         xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
+>         strlcpy(header->uname, "root", sizeof(header->uname));
+>         strlcpy(header->gname, "root", sizeof(header->gname));
+>
+>
+> meh.
+>
 
-I think the sharing between the two makes sense, but the helper
-function should make it clear in its name that this is "the kind of
-commit range range-diff wants to take".  Among the commit range "git
-log" and friends can take, range-diff can take only a subset of it,
-and only a subset of it is meaningful to range-diff (e.g. HEAD^@ is
-still a commit range you can give to "git log", but it would not
-make much sense to give it to range-diff).
+Adding support for using a custom user and group should be easy.  Is
+this just a cosmetic thing?  Regular users would ignore the user info in
+the archive, and root should not be used for extracting, and on systems
+that don't have a logwatch user this wouldn't make a difference anyway,
+right?
 
-Perhaps
-
-    s/specifies_commit_range/is_range_diff_range/
-
-or something.
-
-> diff --git a/revision.h b/revision.h
-
-Move this to range-diff.h, not revision.h which is about true commit
-ranges.
-
-> index 086ff10280d..66777c8e60f 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -457,4 +457,11 @@ int rewrite_parents(struct rev_info *revs,
->   */
->  struct commit_list *get_saved_parents(struct rev_info *revs, const struct commit *commit);
->  
-> +/*
-> + * Determine whether the given argument defines a commit range, e.g. A..B.
-> + * Note that this only validates the format but does _not_ parse it, i.e.
-> + * it does _not_ look up the specified commits in the local repository.
-> + */
-
-And s/defines a commit range/is usable as a range to range-diff/
-
-Thanks.
-
-> +int specifies_commit_range(const char *range);
-> +
->  #endif
+Ren=C3=A9
