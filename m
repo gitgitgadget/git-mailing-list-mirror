@@ -2,109 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 013A3C433E0
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9554CC433E6
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6D2223B16
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:15:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FB1F23AA1
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 22:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730423AbhAVWDs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 17:03:48 -0500
-Received: from mail2.pdinc.us ([67.90.184.28]:34278 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730757AbhAVWDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 17:03:17 -0500
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10MM2TG1022502
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 22 Jan 2021 17:02:29 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10MM2TG1022502
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1611352949; bh=qoAVdm+5qm+8VBGIB+cY1xf3p9Qoqsx/L9JEPZfB/Kk=;
-        h=Reply-To:From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=SgwsS5J103HOGmFG06+kxwJiQzT15n0YlBAj0vuOeiC4NWZFvmnX8mA6UdxIPSq3+
-         4dwNCtygFXYDymN22fuAwbK7/q8R8H+uOJypQaQJvncuPhJpbQgnOUJh8bL7FRxcnY
-         n/9XHVASQCAAwK8Y3GyU6DFnYeYgoTQpzCg2k94ZvEd2keKqnkK9rgl2WaCJglznOq
-         bElsOpFjqI8xvMglVeFqLgTUwa9puVeS23PEodynPtNMefHPmRdZcInQWXSSA9ufI+
-         tjhA08pAXF/E52378lD3U5ip4jet67nPlccodDEt/O+aUOywsoRYyJmTDOIHIv7VCo
-         j6ZQACWV7C9Ng==
-Reply-To: <git@vger.kernel.org>,
-          "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
-          =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'Konstantin Ryabitsev'" <konstantin@linuxfoundation.org>,
-        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>
-References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us> <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de> <20210122213954.7dlnnpngjoay3oia@chatter.i7.local>
-In-Reply-To: <20210122213954.7dlnnpngjoay3oia@chatter.i7.local>
-Subject: RE: git archive setting user and group
-Date:   Fri, 22 Jan 2021 17:02:39 -0500
-Organization: PD Inc
-Message-ID: <048e01d6f10a$4d4da730$e7e8f590$@pdinc.us>
+        id S1728945AbhAVWW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 17:22:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60539 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728818AbhAVWWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 17:22:01 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E912795227;
+        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ggDxbjgVeUqCszbcmse86Lj5yak=; b=wno2Ra
+        sdGoiSXoKiSPFbUizAxSOVg2cQSB5nHla4vFd00IZl4JNhiFQfcdAnV5sHlAsnZR
+        YYdU1U039Wv2T5WK+VGiYpoAD67tna9wSXhyUUcX1jH3XCiYsOgSoI2hSMHVZ6Wv
+        we64bq0ae1cV/Fve3gNsunP+PdfDozcI40uA0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qP81rjSoStKILMPXOgVsY9gZ855S0mpD
+        kVD/GLh8q/zURhL1UBtC9rIUEhazh2vQDrmjCsLhf6h427XW2xRNDC+zU66ntJi2
+        6Chuk5TElSgWDurkMlzT605F9b8CMPCvDKtvYXKSRYcdRedHmZOrpnEkQ5sOdPa6
+        SuZTX+CdcNM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE98495226;
+        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5FC0695225;
+        Fri, 22 Jan 2021 17:21:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Vosmaer <jacob@gitlab.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] run-command: document use_shell option
+References: <20210122142137.21161-1-jacob@gitlab.com>
+        <20210122142137.21161-2-jacob@gitlab.com>
+        <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
+        <YAs9pTBsdskC8CPN@coredump.intra.peff.net>
+Date:   Fri, 22 Jan 2021 14:21:15 -0800
+In-Reply-To: <YAs9pTBsdskC8CPN@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 22 Jan 2021 16:03:33 -0500")
+Message-ID: <xmqqzh1062as.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHBx3N2zV0SHJfdC165O07jxI29BQN7dRGLAfXW232qMvqysA==
-Content-Language: en-us
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24D2C896-5D00-11EB-A0F7-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Konstantin Ryabitsev
-> Sent: Friday, January 22, 2021 4:40 PM
-> Subject: Re: git archive setting user and group
->=20
-> On Fri, Jan 22, 2021 at 10:00:04PM +0100, Ren=C3=A9 Scharfe wrote:
-> > Adding support for using a custom user and group should be easy.  Is
-> > this just a cosmetic thing?  Regular users would ignore the user =
-info in
-> > the archive, and root should not be used for extracting, and on =
-systems
-> > that don't have a logwatch user this wouldn't make a difference =
-anyway,
-> > right?
->=20
-> Right now, "git archive" operations are bit-for-bit identical across =
-all
-> versions going back at least 8+ years. In fact, we've been relying on =
-this to
-> support bundling tarball signatures with git tags themselves (via git =
-notes).
-> E.g. you can see this in action here:
-> =
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tag/?h=3D=
-v5.10.9
->=20
-> If you click on "(sig)", you will download a signature that can be =
-used to
-> verify the tarball generated using "git archive".
->=20
-> I would argue that adding user/group support to "git archive" =
-operation is
-> not really solving any problems other than "it's different from when I =
-run it
-> as a regular user" -- and can introduce potential compatibility =
-problems if
+Jeff King <peff@peff.net> writes:
 
-Being pedantic here, it is different than when I run it as any user - =
-including root.
+> diff --git a/run-command.h b/run-command.h
+> index 6472b38bde..d08414a92e 100644
+> --- a/run-command.h
+> +++ b/run-command.h
+> @@ -126,8 +126,15 @@ struct child_process {
+>  	 */
+>  	unsigned silent_exec_failure:1;
+>  
+> -	unsigned stdout_to_stderr:1;
+> +	/**
+> +	 * Run the command from argv[0] using a shell (but note that we may
+> +	 * still optimize out the shell call if the command contains no
+> +	 * metacharacters). Note that further arguments to the command in
+> +	 * argv[1], etc, do not need to be shell-quoted.
+> +	 */
+>  	unsigned use_shell:1;
+> +
+> +	unsigned stdout_to_stderr:1;
 
-Don=E2=80=99t confuse tar x with tar c.
+Reads well.  Thanks.
 
-tar c captures the current owner of the files, or allows override with a =
-single user / map file.
+It is curious why "diff" chose to move stdout_to_stderr line around,
+though.
 
-> implemented.
->=20
-> So, I would selfishly vote not to implement this.
->=20
-> -K
-
+>  	unsigned clean_on_exit:1;
+>  	unsigned wait_after_clean:1;
+>  	void (*clean_on_exit_handler)(struct child_process *process);
