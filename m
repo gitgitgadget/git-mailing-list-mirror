@@ -2,93 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0904BC433DB
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 00:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31549C433E0
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 01:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B381922CAF
-	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 00:28:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8D5520799
+	for <git@archiver.kernel.org>; Fri, 22 Jan 2021 01:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbhAVA20 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Jan 2021 19:28:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbhAVA2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Jan 2021 19:28:15 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE24C06174A
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 16:27:34 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id y128so3831532ybf.10
-        for <git@vger.kernel.org>; Thu, 21 Jan 2021 16:27:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Z02imV18iB/qMaigug9VCJeshzrtiN/riGyOMGNU+Lk=;
-        b=gkn//neYCccpEAcdhCkQlEIyzIEoKYaMHbvoI3OtJhLz9ipK6+1vzv9JIIkBbKNVti
-         qilw9REA62Q1kg1dwJTSuFM7OOW9YfCFHNG31atqsMGzeW77nW6NmQqKPas5Ij8nktsr
-         Ii3Tr1T9Xysd2Nxju7rr3PmLGm2IoDtH7EV+a3ya3OsNt2iX2fJAXApMDdNDDw7sPUs3
-         HN+ce03FnZf2zbvlkfgB747q91Z8Rlia6ZhRgPOYK+uecwRedSyEDDoJz0EdfRlqDBDJ
-         E1XkYjfan0VuSuM2HjUfvQBBaonmbnjycweuLT2nUzYWUdDZUxodR+TYxybBVRcVmLol
-         4+ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Z02imV18iB/qMaigug9VCJeshzrtiN/riGyOMGNU+Lk=;
-        b=Yi1/FULjjMZqtXxnPOnhSzavlf73IMFgK2twwlogz1xe5G/nhRQJDKN8pAdVU7YNP5
-         BbFQNQPQEKX1xCdCIWPs2UqIUxnJ5RD8gehVEQ9gbedahawcUJ4hteNkCPKutI1aL8gb
-         Upr0uGnYpvGYeUBM+WSSNnulMAd54a/Uq8gFlTEtombE5YVtnziiRe8d5Amtk6N1xrUS
-         nTNd/pfOXyeD/eDhlswVPMxnrF06S+hpTsBPk9Vtcvwc2diAgiZxzi1/AIGwq/1EDSsZ
-         FNCSIWM1VZEJ0xmH9+P50+fWf8Hzd8LTJQNaUlSMBGZTBg4fBwk5WmjVMPjR1rpGhXQi
-         7FQg==
-X-Gm-Message-State: AOAM531NxXSM0MLToWL4UhJ70MXYAdaeVK2rC2uZJmcBe0Hgi8xcf5Gl
-        QCCSWj/g2v3y+3ID9HmCM9tOFDmWEsBsw/ASDoI=
-X-Google-Smtp-Source: ABdhPJyws2EHUBGkIB+gLK2XJAsZ2JCdAXB23shoCcyJUIwK8+JKNEWl4nKh7684Rx7fsInQA/oehHU3Il+nPyzCg04=
-X-Received: by 2002:a25:d84d:: with SMTP id p74mr2740016ybg.135.1611275254069;
- Thu, 21 Jan 2021 16:27:34 -0800 (PST)
-MIME-Version: 1.0
-References: <20210121032332.658991-1-phil.hord@gmail.com> <xmqqpn1xalav.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqpn1xalav.fsf@gitster.c.googlers.com>
-From:   Phil Hord <phil.hord@gmail.com>
-Date:   Thu, 21 Jan 2021 16:27:22 -0800
-Message-ID: <CABURp0pqdK+Mrqi=r40YeUitaB2s44iYO=2UFFSh0UC_o4Mosg@mail.gmail.com>
-Subject: Re: [PATCH v3] use delete_refs when deleting tags or branches
+        id S1726070AbhAVBJw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Jan 2021 20:09:52 -0500
+Received: from out03.mta.xmission.com ([166.70.13.233]:45328 "EHLO
+        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725283AbhAVBJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Jan 2021 20:09:49 -0500
+Received: from in02.mta.xmission.com ([166.70.13.52])
+        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l2kwl-00BaPG-5v; Thu, 21 Jan 2021 18:09:07 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l2kwk-004GXe-8p; Thu, 21 Jan 2021 18:09:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id 16CC150118C;
+        Thu, 21 Jan 2021 18:09:06 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id O3B84KUDk-Se; Thu, 21 Jan 2021 18:09:05 -0700 (MST)
+Received: from ellen (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 60B9F500BE9;
+        Thu, 21 Jan 2021 18:09:05 -0700 (MST)
+Date:   Thu, 21 Jan 2021 18:09:02 -0700
+From:   Seth House <seth@eseth.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     David Aguilar <davvid@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Message-ID: <20210122010902.GA48178@ellen>
+References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net>
+ <20210109224236.50363-1-davvid@gmail.com>
+ <20210109225400.GA156779@ellen>
+ <xmqqmtxhd1zx.fsf@gitster.c.googlers.com>
+ <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
+ <20210110072902.GA247325@ellen>
+ <xmqqh7np9gqn.fsf@gitster.c.googlers.com>
+ <20210116042454.GA4913@ellen>
+ <20210120232447.GA35105@ellen>
+ <xmqqk0s5c3bv.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk0s5c3bv.fsf@gitster.c.googlers.com>
+X-XM-SPF: eid=1l2kwk-004GXe-8p;;;mid=<20210122010902.GA48178@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: Re: automerge implementation ideas for Windows
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 21, 2021 at 4:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Phil Hord <phil.hord@gmail.com> writes:
->
-> > diff --git builtin/branch.c builtin/branch.c
-> > index 8c0b428104..bcc00bcf18 100644
-> > --- builtin/branch.c
-> > +++ builtin/branch.c
->
-> You wasted 15 minutes of my life by choosing to deviate the list
-> norm of sending what "git apply -p1" (default) would accept.  I am
-> fairly trusting type and did not suspect anybody do such an evil
-> thing.  Why?
+On Thu, Jan 21, 2021 at 02:50:12PM -0800, Junio C Hamano wrote:
+> I'd rather not to see us do "text processing" in shell
 
-Oof.  Sorry.  I forgot I have diff.noprefix=true in my local config.
-It is a huge timesaver for me when looking at diffs on a console since
-I can quickly highlight the filename with a mouse to paste into an
-editor.
+Agreed. What are your thoughts on the #2 approach?
 
-Sometimes it bites me, though.  Usually I notice in the diff, but this
-one I was sending with format-patch / send-email.
+I noticed the comment in `git/xdiff-interface.h` about xdiff's gigabyte
+limit so I created a 973 MB text file with a conflict and ran #2 through
+a few mergetools to see how it went. I put /usr/bin/time in front of the
+two `git merge-file` invocations. I know one person's machine is not
+a benchmark but perhaps it's a discussion point?
 
-I guess I'll turn that off in git.git so I don't misfire at you again someday.
+Each `git merge-file` call took ~11 seconds on my middle-tier laptop and
+did not use enough RAM to hit swap.
 
-Phil
+Writing the near-gigabyte LOCAL, BASE, REMOTE, & BACKUP files went
+pretty quick. The mergetools themselves had mixed results:
+
+- vimdiff took several minutes (and a lot of swap) to open all four
+  files but did eventually work.
+- tkdiff crashed.
+- Meld spun for ~10 minutes and never opened.
+
+My takeaway: when trying to use a mergetool on a very large file, the
+two `git merge-file` invocations are not likely to be where the
+performance concern is. #2 is my preferred approach so far.
+
