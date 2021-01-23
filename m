@@ -2,129 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7375C433E6
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 03:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7336C433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 04:59:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9955E23B26
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 03:48:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3AD123AAC
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 04:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbhAWDr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 22:47:56 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59269 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbhAWDrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 22:47:32 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 769CE112611;
-        Fri, 22 Jan 2021 22:46:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3IEPje5yn3o2
-        26ekw6zKWcUclWE=; b=GrsgbnoCBYQgljJpm5Mcfx5cijRfU3Tk7pAZjWQi6Mul
-        jh2jEc+cQHQYwLRyV0Aqa/O0gK1rwI+Ll7mRSUy6RoaI0SnwA7TByhLWCWGvS13n
-        llVHfMSwONCDi9tEur36lsG8/9xfmT2+eFBn2AIs2dgMZ/3Ydwu0BS+O69bV3/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kFsN8r
-        3TwWTyTuIgurE6RVIQJrEkjxjFfjr/8JVEHbgtlWbF+Qa+uF0N1WhFiwMeAsh96J
-        KJuG3ZnQdEobY6mOzqx6LIcKWIDzPX3c7AFyGa2eB5JL9KAo4Df+Ck8SSRog1qHk
-        0bbdyF2ubikp2zjoI/BoHEpU4ORZqnp48ApbA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6EF14112610;
-        Fri, 22 Jan 2021 22:46:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B7AB611260F;
-        Fri, 22 Jan 2021 22:46:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 11/11] tests: add a "set -o pipefail" for a patched bash
-References: <20210114233515.31298-1-avarab@gmail.com>
-        <20210116153554.12604-12-avarab@gmail.com>
-Date:   Fri, 22 Jan 2021 19:46:43 -0800
-In-Reply-To: <20210116153554.12604-12-avarab@gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 16 Jan 2021 16:35:54 +0100")
-Message-ID: <xmqq5z3o5n8c.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1726662AbhAWE7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 23:59:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36264 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726636AbhAWE7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 23:59:04 -0500
+Received: (qmail 18068 invoked by uid 109); 23 Jan 2021 04:58:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 23 Jan 2021 04:58:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23104 invoked by uid 111); 23 Jan 2021 04:58:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 23:58:21 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 22 Jan 2021 23:58:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org
+Subject: Re: git archive setting user and group
+Message-ID: <YAus63jWBP1fIAhf@coredump.intra.peff.net>
+References: <043f01d6f0fe$d6ad7660$84086320$@pdinc.us>
+ <cef51cd3-c6b5-ed24-f695-83be3a6743b4@web.de>
+ <20210122213954.7dlnnpngjoay3oia@chatter.i7.local>
+ <YAt2PPM4HRcKva9a@camp.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 9D3A5830-5D2D-11EB-B823-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YAt2PPM4HRcKva9a@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Sat, Jan 23, 2021 at 01:05:00AM +0000, brian m. carlson wrote:
 
-> -test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
-> +test_expect_success !MINGW,!BASH_SET_O_PIPEFAIL 'a constipated git die=
-s with SIGPIPE' '
->  	OUT=3D$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
->  	test_match_signal 13 "$OUT"
->  '
-> =20
-> -test_expect_success !MINGW 'a constipated git dies with SIGPIPE even i=
-f parent ignores it' '
-> +test_expect_success !MINGW,!BASH_SET_O_PIPEFAIL 'a constipated git die=
-s with SIGPIPE even if parent ignores it' '
->  	OUT=3D$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 ) &&
->  	test_match_signal 13 "$OUT"
->  '
+> > Right now, "git archive" operations are bit-for-bit identical across all
+> > versions going back at least 8+ years. In fact, we've been relying on this to
+> > support bundling tarball signatures with git tags themselves (via git notes).
+> > E.g. you can see this in action here:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tag/?h=v5.10.9
+> > 
+> > If you click on "(sig)", you will download a signature that can be used to
+> > verify the tarball generated using "git archive".
+> 
+> Please do not rely on this behavior.  I want to state in the strongest
+> possible terms that this is not guaranteed behavior and it may change at
+> any time.  We have explicitly said so on the list multiple times.  If
+> you need reproducible archives, you need to add a tool to canonicalize
+> them in a suitable format and not rely on Git to never change things.
 
-The above have already !MINGW
+I strongly second this. :)
 
-> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-> index 4f7e62d05c..7b5d92add5 100755
-> --- a/t/t3600-rm.sh
-> +++ b/t/t3600-rm.sh
-> @@ -251,7 +251,10 @@ test_expect_success 'choking "git rm" should not l=
-et it die with cruft' '
->  		i=3D$(( $i + 1 ))
->  	done | git update-index --index-info &&
->  	OUT=3D$( ((trap "" PIPE; git rm -n "some-file-*"; echo $? 1>&3) | :) =
-3>&1 ) &&
-> -	test_match_signal 13 "$OUT" &&
-> +	if ! test_have_prereq BASH_SET_O_PIPEFAIL
-> +	then
-> +		test_match_signal 13 "$OUT"
-> +	fi &&
->  	test_path_is_missing .git/index.lock
->  '
+It's also not quite true that things have remained bit-for-bit identical
+for all that time. We have fixed bugs in that time, although they do not
+always cause a change in every output tarball (they often depend on
+corner cases like having long pathnames). Two off the top of my head
+(that have indeed caused people to complain about changing checksums):
 
-but this one does not.  Yet, we've been using test_match_signal on 13
-without issues, it appears.
+  - 22f0dcd963 (archive-tar: split long paths more carefully,
+    2013-01-05)
 
-And somehow with the lazy prereq on SET_O_PIPEFAIL, this part starts
-to break, like so:
+  - 82a46af13e (archive-tar: fix pax extended header length calculation,
+    2019-08-17)
 
-  https://github.com/git/git/runs/1752687552?check_suite_focus=3Dtrue#ste=
-p:7:37042
+We also rely on system gzip. That's pretty stable, but I have heard tell
+that even `gzip -n` may differ on platforms.
 
-The output captured in OUT is 0 as we can see on #37032 in the test
-log.
+Another fun one I saw recently: using export-subst with $Format:%h$ will
+produce different results depending on how many objects are present in
+the repository running git-archive.
 
-I am tempted to eject 11/11 and probably 10/11 out of the topic, as
-the earlier patches before them look more or less uncontroversial
-cleanups, and 11/11 seems to be more trouble than it is worth at
-this moment.
-
-It's not like this would allow us to loosen the rule that we
-shouldn't put a "git" invocation of the git subcommand being tested
-on the upstream side of a pipe---not everybody is running bash, and
-it is unrealistic to tell our developers "if you want to make sure
-your tests are good, you must install and use this patched bash".
-
-Thanks.
+-Peff
