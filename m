@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC89EC433DB
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 20:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E5FC433E0
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 20:00:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 819A122D50
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 20:00:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3098222DBF
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 20:00:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726316AbhAWT74 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 14:59:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36662 "EHLO
+        id S1726324AbhAWUAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 15:00:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbhAWT7o (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726288AbhAWT7o (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 23 Jan 2021 14:59:44 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8496C061793
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:26 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id c128so7305208wme.2
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:26 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9D27C061794
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:27 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id p15so1723367wrq.8
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TuqSkycyIw6sa7UCYR8334RJzyjQdAuVGemdSXJzD5o=;
-        b=kUI1i3UraOnKAPPdYY2vXknL584TyleXwbpE6OT/o0smuYuo0oR6Bl3Djk9tA8CZSf
-         hqfhfEhIjLxEzwmww2wIKQyV2r7X1TFTK4Z6qcO80BHtf8CEqDgc91CBj1unx24X08R7
-         EzD03LJjBHHcx713SHpPj5boAwLWHaD0LjFge+CBqXmbZxmzsMQz1XUV3qsNTJ5TYSMA
-         Tr8ENzd0fg3UEIMEfddrcZeBBsf6fM7UI/TKvLkaNEGihy4DjA+Vj9iqwkm/qeXR4bE7
-         e0hF+q1mpgXaBga8YKo6BpxgK9mhB7GydzNFicHbbAETSSXkhtxcK1R1ONnXld9ld2Iq
-         GxCQ==
+        bh=3LC/1eestJjR+EOcwKHsjfdOZknum6kvDyZ7fg9I1AA=;
+        b=gHakX2qOFeghf0gXhOSzQvUSZCVKsOnoX0xwdstX5fif3FDAcKrtkTCP/a9LKw7RuK
+         YncpV3gI267Fuhjnod4+OxXRk05Hky9l+8/zYzbw7KtwV6Ry10/ITvBbZ1FkKtzsX5AL
+         r6R9cqZxk77nY4zZwzmxbTunGBnpgVMzTptHUz59mfZXVjQyVmkqop2q1ELeojdRD4Cx
+         AFd+LeCKI/VnwJvZTKg+/wmQVLRbMAsQ6lnGkF0/OithL+uJMyuVRfEBZXzy7RA1nI6v
+         p5XDOxbaZakkZlW+Ba8IFI56A6asaYmCbkFj4pPqmNlyWweoddCN+Pw6OB8/1NNQ7LMr
+         LtRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TuqSkycyIw6sa7UCYR8334RJzyjQdAuVGemdSXJzD5o=;
-        b=tS7T7q8jEPEaYzoE7MgwGNAIo+yzu0Ro3DGMWX3CR2D2p2/9ngbGl2QV10OmtNV/PX
-         MSoc3DXkvEttbFCwtAOji6HbzoR0I/bY76hREfjBN1dlNEi8kLWS130sM9j+TBFhkElT
-         YShzHbukZ1fjyrKZzBX9oTA1dQv6mE8eTSTo18N1zNU5Y8pSU3zVS9WMhFrAACUpYB+E
-         104RDeJW6awBwlDSPNBEL7A8+QqQXbeAepGL22DbUbDcERfZvkJEuh/RrFgIxC2oL+Rh
-         X5VM80ThFF8g40mw2AD/bCtbljLdU/+CBNjvHvysGRE6wVmbGO3UwNRot+2LfdW5VwvR
-         CcGA==
-X-Gm-Message-State: AOAM530XiCSDfF6qGhOmCgyKDy+x4DiO7u4oAbFU4FSmoErqebiVYws+
-        /rdKMav0MX24z5d1k7kAxXpABqw7k10=
-X-Google-Smtp-Source: ABdhPJyqwJmWHt3KbuD47+NIVGvh53lK3PnMbT8kNQjEYEyXM0cn4EZiPeQnYp8cgMyDMFcIDrbpUw==
-X-Received: by 2002:a7b:c0d8:: with SMTP id s24mr7110045wmh.4.1611431905452;
-        Sat, 23 Jan 2021 11:58:25 -0800 (PST)
+        bh=3LC/1eestJjR+EOcwKHsjfdOZknum6kvDyZ7fg9I1AA=;
+        b=O0lHR19913jtF/N9qy/5Ll5XoExNKLqLUFa6wZdSz7v/814eLxfb1lmU9/v+NxWwCD
+         /u059yMSBX+u00J83VZPBcyMpFsJFDcoFXyypT5WNeNPaVPSXMLNppmsjx67xh/9igYq
+         3rQXh1e3oQZLHpAbkNy/iySuW4JzzpvajSXVQrUxw6IGRoIziAzuf0M4rHcQVzeIZ5gI
+         rA3yBG9JtpE9KkCBobSD0m1C3yXKV+qaR+Zr3Ij5+m+W+iumtpZk1lDSqW3Xiwz+j7dM
+         wh4uNR60QW5kTPjoYmgXbKUVRLvhyTz+w/HMsYayveSSbq0Xrk7lYqLEFSPxjGL9+f1w
+         JPmQ==
+X-Gm-Message-State: AOAM5300gy9euRg29KHymciQ7YrlsIJ/lD56UXVbUscj2PKUzCJfe4zd
+        /X3wchoQO8ikTN1xJq8sGtW+KFWfDhg=
+X-Google-Smtp-Source: ABdhPJw0JDSnsdYmAsVHi4J2f0FGLlensBwkejldPLxpD21eKBz8edpd85rXp2Mf6B4ZZQe5NjCo0g==
+X-Received: by 2002:a5d:53c3:: with SMTP id a3mr226869wrw.43.1611431906280;
+        Sat, 23 Jan 2021 11:58:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h187sm16385239wmf.30.2021.01.23.11.58.24
+        by smtp.gmail.com with ESMTPSA id p18sm15625221wmc.31.2021.01.23.11.58.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 23 Jan 2021 11:58:25 -0800 (PST)
-Message-Id: <6373997e05c04f57e441355eac94ca03c634e3fb.1611431900.git.gitgitgadget@gmail.com>
+Message-Id: <9b545d7dbecc6f071e58787e9d4339f59ac4e972.1611431900.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
         <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 23 Jan 2021 19:58:15 +0000
-Subject: [PATCH v3 5/9] repository: add repo reference to index_state
+Date:   Sat, 23 Jan 2021 19:58:16 +0000
+Subject: [PATCH v3 6/9] name-hash: use trace2 regions for init
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,51 +77,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-It will be helpful to add behavior to index operations that might
-trigger an object lookup. Since each index belongs to a specific
-repository, add a 'repo' pointer to struct index_state that allows
-access to this repository.
+The lazy_init_name_hash() populates a hashset with all filenames and
+another with all directories represented in the index. This is run only
+if we need to use the hashsets to check for existence or case-folding
+renames.
 
-Add a BUG() statement if the repo already has an index, and the index
-already has a repo, but somehow the index points to a different repo.
-
-This will prevent future changes from needing to pass an additional
-'struct repository *repo' parameter and instead rely only on the 'struct
-index_state *istate' parameter.
+Place trace2 regions where there is already a performance trace.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache.h      | 1 +
- repository.c | 6 ++++++
- 2 files changed, 7 insertions(+)
+ name-hash.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 71097657489..f9c7a603841 100644
---- a/cache.h
-+++ b/cache.h
-@@ -328,6 +328,7 @@ struct index_state {
- 	struct ewah_bitmap *fsmonitor_dirty;
- 	struct mem_pool *ce_mem_pool;
- 	struct progress *progress;
-+	struct repository *repo;
- };
+diff --git a/name-hash.c b/name-hash.c
+index 5d3c7b12c18..4e03fac9bb1 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -7,6 +7,7 @@
+  */
+ #include "cache.h"
+ #include "thread-utils.h"
++#include "trace2.h"
  
- /* Name hashing */
-diff --git a/repository.c b/repository.c
-index a4174ddb062..c98298acd01 100644
---- a/repository.c
-+++ b/repository.c
-@@ -264,6 +264,12 @@ int repo_read_index(struct repository *repo)
- 	if (!repo->index)
- 		repo->index = xcalloc(1, sizeof(*repo->index));
+ struct dir_entry {
+ 	struct hashmap_entry ent;
+@@ -577,6 +578,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+ 	if (istate->name_hash_initialized)
+ 		return;
+ 	trace_performance_enter();
++	trace2_region_enter("index", "name-hash-init", istate->repo);
+ 	hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
+ 	hashmap_init(&istate->dir_hash, dir_entry_cmp, NULL, istate->cache_nr);
  
-+	/* Complete the double-reference */
-+	if (!repo->index->repo)
-+		repo->index->repo = repo;
-+	else if (repo->index->repo != repo)
-+		BUG("repo's index should point back at itself");
-+
- 	return read_index_from(repo->index, repo->index_file, repo->gitdir);
+@@ -597,6 +599,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+ 	}
+ 
+ 	istate->name_hash_initialized = 1;
++	trace2_region_leave("index", "name-hash-init", istate->repo);
+ 	trace_performance_leave("initialize name hash");
  }
  
 -- 
