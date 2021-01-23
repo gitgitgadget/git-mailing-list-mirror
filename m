@@ -2,121 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2025DC433E0
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62184C433E0
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:35:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDEE622CAF
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:15:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A4AD22BEF
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbhAWVPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 16:15:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52840 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725765AbhAWVPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 16:15:19 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95291C061786
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 13:14:38 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id d18so1038921oic.3
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 13:14:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pI4WGS53LhHwgcSNCvCTZ2xSTDyZUR8LtGyzGCQsqDw=;
-        b=C++nmuHYM5hkyXET+UaNwpjTEM4hUPST9QcjMroCFGAK2uxBiLuSPbYDIfoTDKhVUB
-         koWFit8q6looBjkYvL3KAa+EKER96WeBrX7wr6QseAhOZDcKVPRJmjdGYX1vbMhB3Nay
-         Jf5w4kfmrDl5OVQFoR6pmVgU+nweGMgC+ZNQaM/WiGg8INfwe/D5i9+G+TP7n212aP1u
-         zxZudCMBrQWMudNteXX3hukVDkfKFKRQFREDuenrs3TDNl8WNIgS/n7AyOYdyIMBLm5w
-         DtAMqPULwNNOtFuq3m5S17e/S32Kp9YAMsORLeQnd8ASwiWoVgE9zn+q3hlP//4XJX5G
-         VAtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pI4WGS53LhHwgcSNCvCTZ2xSTDyZUR8LtGyzGCQsqDw=;
-        b=oXG2a+HMRUWjZ6A4/fTV/VFoLkkiHusFBWGXT27KrBYAAeeUgOSGHpv56xlMRqJamg
-         yIWusMycI7mD30XSvzs43L/ejpqucKB+JDqq13ZAnJujRIUKblfXEQl9sYA+OUtTJwdf
-         14r7mI+GUC+TMo6421LOFHh8nH133xMblvKcyQtDiPm2Xsd9aBe4i+kyQkg+S8bFH9UE
-         0ORNp7UybLU4PgaFMith76Lz3UXZ+DLWa9yaO5R7oqeOKJiMOu6Ilas3JvrJGxM+wsJ0
-         7hafguAyDXmVx5fEA/T1qkyaGPykoMAbkp/cnR5XJNAzzKx6L04jIk/GP0Z6Is56CaRK
-         GhxQ==
-X-Gm-Message-State: AOAM530aa5Y3X7Cl2gXTzUWF15cOPADYVwrdB6LxhttWgcAVQ5B2Usp4
-        /h0a5GUhgP8qpPoV9Qb9Jk0=
-X-Google-Smtp-Source: ABdhPJxPYD2DNibkvGmqvqbc7DTFUZjYAS3fyIwy18j3A4wMWoetdps35R4fNmL1HokhUhLhje2dEw==
-X-Received: by 2002:aca:b5d6:: with SMTP id e205mr6989132oif.15.1611436477845;
-        Sat, 23 Jan 2021 13:14:37 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:98e8:103:e6ee:9536? ([2600:1700:e72:80a0:98e8:103:e6ee:9536])
-        by smtp.gmail.com with UTF8SMTPSA id r8sm2551090oth.20.2021.01.23.13.14.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Jan 2021 13:14:37 -0800 (PST)
-Subject: Re: [PATCH v3 2/9] cache-tree: simplify verify_cache() prototype
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
- <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
- <1b8b56800948339c0e0387555698bdfdc80a19ad.1611431900.git.gitgitgadget@gmail.com>
- <CABPp-BEsoWs5ZEhS0KTHankzc8eUdmpn0uoF7t1ZtN8b2gwvBA@mail.gmail.com>
- <xmqqy2gj2wc0.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <51dc4a80-1bea-a028-ccd1-ccae968a82a3@gmail.com>
-Date:   Sat, 23 Jan 2021 16:14:36 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1726316AbhAWVfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 16:35:40 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50297 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726204AbhAWVfj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 16:35:39 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DA96511A039;
+        Sat, 23 Jan 2021 16:34:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=sZcmkd/6YfBF
+        J7PRhFB4qR9gw2g=; b=OynIovJ6EI/I/8lqLhui1wKP86g2lYVrIQvS4b/wbpWW
+        5dg74trp7MzYioaQQQO5zmFiEFWX6/27AzJRXv6ttVm6wBplz22NtvbudsOJ63NE
+        UqiVumtgyh5EbvlFQJwmuXgITi0wlH7rxHeal+JyyqHaE/5RTPVwZg8cOEp299s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LTZyhc
+        JP05OIJzfBKhjOXjXdQCnmOdTouRo2NkYeR7Mt5mKUHrjmQH7sVrleNB6a1Sukra
+        RmSjP5OYHIeA9BvulDlIHUWs/bWRnIrbkmqMmmUKCBUwRTIVGMteeTGmekJ5OfV/
+        QGNOaykIOP6EcgW/9VM9lZLnHOe0FnJOHCC3U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D47C111A038;
+        Sat, 23 Jan 2021 16:34:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 279FD11A036;
+        Sat, 23 Jan 2021 16:34:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Denton Liu <liu.denton@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 01/10] cache-tree tests: refactor for modern test style
+References: <87sg6s6lrs.fsf@evledraar.gmail.com>
+        <20210123130046.21975-2-avarab@gmail.com>
+Date:   Sat, 23 Jan 2021 13:34:51 -0800
+In-Reply-To: <20210123130046.21975-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 23 Jan 2021 14:00:37 +0100")
+Message-ID: <xmqqtur72v7o.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy2gj2wc0.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D44CF810-5DC2-11EB-96B9-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/23/2021 4:10 PM, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->>> -       for (i = 0; i < entries - 1; i++) {
->>> +       for (i = 0; i + 1 < istate->cache_nr; i++) {
->>>                 /* path/file always comes after path because of the way
->>>                  * the cache is sorted.  Also path can appear only once,
->>>                  * which means conflicting one would immediately follow.
->>>                  */
->>> -               const struct cache_entry *this_ce = cache[i];
->>> -               const struct cache_entry *next_ce = cache[i + 1];
->>> +               const struct cache_entry *this_ce = istate->cache[i];
->>> +               const struct cache_entry *next_ce = istate->cache[i + 1];
->>
->> Makes sense.  Thanks for explaining the i + 1 < istate->cache_nr bit
->> in the commit message; made it easier to read through quickly.  I'm
->> curious if it deserves a comment in the code too, since it does feel
->> slightly unusual.
-> 
-> I think this is entirely my fault.
-> 
-> It probably reads more natural to start from 1 and interate through
-> to the end of the array, comparing the current one with the previous
-> entry, i.e.
-> 
-> 	for (i = 1; i < istate->cache_nr; i++) {
->         	prev = cache[i - 1];
-> 		this = cache[i];
->                 compare(prev, this);
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-This would be another natural way to make the loop extremely clear.
+> diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+> index 5a633690bf..45e1cc82ed 100755
+> --- a/t/t0090-cache-tree.sh
+> +++ b/t/t0090-cache-tree.sh
+> @@ -10,7 +10,8 @@ cache-tree extension.
+>  cmp_cache_tree () {
+>  	test-tool dump-cache-tree | sed -e '/#(ref)/d' >actual &&
+>  	sed "s/$OID_REGEX/SHA/" <actual >filtered &&
+> -	test_cmp "$1" filtered
+> +	test_cmp "$1" filtered &&
+> +	rm filtered
+>  }
 
-It's a bigger diff, changing the names of 'this' and 'next', but
-perhaps worthwhile.
+OK.  Cleaning after itself is good, and not cleaning when there is
+an error is probably a bit more helpful to those who debug, but I
+think test_cmp would give them enough to work on.  A failure to
+remove filtered at the end CAN mistakenly make the caller to think
+that the expected output was not obtained, though.
 
-Thanks,
--Stolee
+> @@ -83,18 +84,6 @@ test_expect_success 'git-add in subdir invalidates c=
+ache-tree' '
+>  	test_invalid_cache_tree
+>  '
+> =20
+> -cat >before <<\EOF
+> -SHA  (3 entries, 2 subtrees)
+> -SHA dir1/ (1 entries, 0 subtrees)
+> -SHA dir2/ (1 entries, 0 subtrees)
+> -EOF
+> -
+> -cat >expect <<\EOF
+> -invalid                                   (2 subtrees)
+> -invalid                                  dir1/ (0 subtrees)
+> -SHA dir2/ (1 entries, 0 subtrees)
+> -EOF
+> -
+>  test_expect_success 'git-add in subdir does not invalidate sibling cac=
+he-tree' '
+>  	git tag no-children &&
+>  	test_when_finished "git reset --hard no-children; git read-tree HEAD"=
+ &&
+> @@ -102,9 +91,20 @@ test_expect_success 'git-add in subdir does not inv=
+alidate sibling cache-tree' '
+>  	test_commit dir1/a &&
+>  	test_commit dir2/b &&
+>  	echo "I changed this file" >dir1/a &&
+> +	test_when_finished "rm before" &&
+> +	cat >before <<-\EOF &&
+> +	SHA  (3 entries, 2 subtrees)
+> +	SHA dir1/ (1 entries, 0 subtrees)
+> +	SHA dir2/ (1 entries, 0 subtrees)
+> +	EOF
+>  	cmp_cache_tree before &&
+>  	echo "I changed this file" >dir1/a &&
+>  	git add dir1/a &&
+> +	cat >expect <<-\EOF &&
+> +	invalid                                   (2 subtrees)
+> +	invalid                                  dir1/ (0 subtrees)
+> +	SHA dir2/ (1 entries, 0 subtrees)
+> +	EOF
+>  	cmp_cache_tree expect
+>  '
 
+Why remove only 'before' and not 'expect' in when-finished handler?
