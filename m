@@ -2,138 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7246AC433E6
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 15:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAFA8C433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 16:00:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 474F523340
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 15:43:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63E0422A84
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 16:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726162AbhAWPnN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 10:43:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38296 "EHLO
+        id S1725891AbhAWQAL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 11:00:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbhAWPnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 10:43:08 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46EBCC061797
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 07:41:56 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id d16so7281569wro.11
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 07:41:56 -0800 (PST)
+        with ESMTP id S1725274AbhAWQAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 11:00:08 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CC9C06174A
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 07:59:27 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id c128so6966793wme.2
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 07:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=InwhpkEI0WqZil2a/LbOllLSCSMbd7WLpAL7F57X3qI=;
-        b=OWhekC0BIUAmZjGSUXt0KDQVIoWcoq7CQ2h5Gv7rYzJ4QJybM9jsfzmRt6NtGLP7Fe
-         2n6ZZ3QzZp6UOFhOroxh7puI2tbzYfxTiwPXmemqsQcr+8lSABStpzxuEcdW9EvY4HbM
-         2K4hCAlgMJHiggIgqOCN9olLG4ShJiX7QeNar5IlgCwnKqVgzUCGIm7USqODv0Yx4t1Q
-         yUuXG6BihFxFYwU2sHhjZKhtBPMTbDd2c0VZqmogxMNdg03Vok0NETibMMnaWjXqjUvZ
-         CNDx/paHc1FHWaRnnhRfzBaCjLtfql0TyJobMunLY+4EPPT7l7+Iv4DDlj9avl4+F7CR
-         LZBQ==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=o224S2jjf2+cnPJcpcqVSGjfAr1pX8DPsmm4EwA0Lyo=;
+        b=UkCcy0gB0bcKUIjrm9WX+21I9vdK1QlRCf0w/SnhPA26ORmDN8+5Zs9+7NoUmT2fMt
+         uClhnY0J6kAtZG5ppZUXHA7R0Zsl2KoCu+BAWSRfaa1GV86Egv+fjjV4vAqWw8pMrUcm
+         m2TM6m4wXfuIjxaMzma8qgN13Y68QSFNjbIDv2coA/8uQkDl4iWmYXi+tMNVJcHZlfsc
+         3QJF3zT/gypwKZ7cnMMTAOkKkfpsp25iN6hP4Ywh1ctq7oxWvxAiNvzjb2pVkOOqU3a/
+         p0mJo/F2uFves2wI4rWsZR3Uh+o9Sa1TneUBMhchpGCOgyWjkXPiAhCGGCbQTHk6kVnb
+         fRdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=InwhpkEI0WqZil2a/LbOllLSCSMbd7WLpAL7F57X3qI=;
-        b=HeTyPQfuD/VYSaILRlnhUk22nPpkCScDL/ynF9JzaNAyU/X02MqRuzjePY7WMj94iQ
-         xDLqXDDQKOM27bcZAYtWCqFLma8MVATVw8Q9GRvclNqSNIrZTVWcJwsh2oSb+zCUhPTO
-         GlMGr6BDSKgBqKubO91WvVmR5Xj1qQ/LdLc7rlLFlwQpqaHUpntv+DJoafequTjAQBX4
-         R7gMLVuLy6+ifOEsDDVqtI1mst/WXA33vt1f0qFg1uW1oNVMcKev7vTo16N4NEqcGo/1
-         Ai3akazVyV5cjbKDu6dqE65/WyZSqY5ww5rlALxVkO9R8RTpImnLl7REiWkA6tFD1GjK
-         uDOQ==
-X-Gm-Message-State: AOAM530M+7PxMOotOIbAgg2Kro4m2IRvz2uNCY3FAip/7U5oGuszP3kc
-        nkR0YVEgLZ7Xa3r2f4ZWvRZSmUdMNMk=
-X-Google-Smtp-Source: ABdhPJyZJoYg5fAHczsRCWbzX8C9IjKiXMYu9Ddtzkq6hRCRgtx8SrYY7FvzjQ7IpJtVu2hxCb8e8w==
-X-Received: by 2002:a05:6000:8a:: with SMTP id m10mr342338wrx.139.1611416515111;
-        Sat, 23 Jan 2021 07:41:55 -0800 (PST)
-Received: from localhost.localdomain ([81.0.50.72])
-        by smtp.gmail.com with ESMTPSA id o8sm16772353wrm.17.2021.01.23.07.41.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Jan 2021 07:41:54 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v3 7/7] bisect--helper: retire `--check-and-set-terms` subcommand
-Date:   Sat, 23 Jan 2021 16:40:56 +0100
-Message-Id: <20210123154056.48234-8-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210123154056.48234-1-mirucam@gmail.com>
-References: <20210123154056.48234-1-mirucam@gmail.com>
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=o224S2jjf2+cnPJcpcqVSGjfAr1pX8DPsmm4EwA0Lyo=;
+        b=eltrX6ObsmswH2ELDPEovHFoidbQBp12hKWJoiTXERGpzvORDrIFoJjJskT5EADqeJ
+         muEKTpRDAWyyPThtuvdV46+ko8fCahQImlYin/oHoGezxskPfnZKntBpps9G+NlyDtsG
+         PHMpJ01ZgsXZLtSZBc+T2r3MRaHycvUdYk/DtfcZqX9iMxuiZQKmyXfr23lpvyPL+xvJ
+         u4nl71FThRnqnysbeKPs8iy/FTP4L/O76juS4m/1vnuBnfGOzFuLQrIjR68FM+bkFrSh
+         j1Y5RbR8lcgkHeDERFKcOcnMnDi/Zfko+yTrGBzpJlooLRaE6U/IupSDyd8o+PtwQXuA
+         1MDg==
+X-Gm-Message-State: AOAM532vqvaM+Wu09PlFyxXFk4kZLuGVeDtL3cv3Hby41NoEu9uEsPcR
+        wyWHh5R6efqgPVkiJexKjJo=
+X-Google-Smtp-Source: ABdhPJxbTcZuEHXPAh2MoWzbyeh6DockDhbEBs1mCCBUXAPF+rF5Lv6KBsdAAv71ewRHhhWkjQ4r2g==
+X-Received: by 2002:a1c:9e86:: with SMTP id h128mr8889058wme.171.1611417566630;
+        Sat, 23 Jan 2021 07:59:26 -0800 (PST)
+Received: from [192.168.1.240] (112.16.7.51.dyn.plus.net. [51.7.16.112])
+        by smtp.gmail.com with ESMTPSA id u142sm7891153wmu.3.2021.01.23.07.59.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 23 Jan 2021 07:59:25 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/3] range-diff: refactor check for commit range
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
+ <5839ba4f7615819ed6f9a0fcb6de1855cd2e89e1.1611267638.git.gitgitgadget@gmail.com>
+ <0ce0953a-92b2-2ce6-1e13-6f6240933ce1@gmail.com>
+ <xmqqbldg7hvb.fsf@gitster.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <a0b100e7-57b8-df46-de2b-d54fdbe6a255@gmail.com>
+Date:   Sat, 23 Jan 2021 15:59:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqbldg7hvb.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+Hi Junio
 
-The `--check-and-set-terms` subcommand is no longer from the
-git-bisect.sh shell script. Instead the function
-`check_and_set_terms()` is called from the C implementation.
+On 22/01/2021 21:59, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>>    +static int is_range(const char *range)
+>>> +{
+>>> +	return !!strstr(range, "..");
+>>> +}
+>>
+>> If the user wrongly passes two arguments referring to single commits
+>> with `:/<text>` or `@{/<text>}` where text contains ".." this will
+>> give a false positive.
+> 
+> True.  I do not think this aims to be complete revision parser in
+> the first place, though.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+Yes but it affects the error message given to the user. If I run
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 61ddaa6b9c..3b0a6a7d0c 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -21,7 +21,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
-@@ -1027,7 +1026,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		CHECK_AND_SET_TERMS,
- 		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
- 		BISECT_START,
-@@ -1042,8 +1040,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
--			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
- 			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
- 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
-@@ -1079,12 +1075,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-reset requires either no argument or a commit"));
- 		res = bisect_reset(argc ? argv[0] : NULL);
- 		break;
--	case CHECK_AND_SET_TERMS:
--		if (argc != 3)
--			return error(_("--check-and-set-terms requires 3 arguments"));
--		set_terms(&terms, argv[2], argv[1]);
--		res = check_and_set_terms(&terms, argv[0]);
--		break;
- 	case BISECT_NEXT_CHECK:
- 		if (argc != 2 && argc != 3)
- 			return error(_("--bisect-next-check requires 2 or 3 arguments"));
--- 
-2.29.2
+git range-diff $(git rev-parse HEAD^{/..q}) $(git rev-parse HEAD^{/..x})
 
+It fails immediately with
+
+fatal: no .. in range: 'b60863619cf47b2e1e891c2376bd4f6da8111ab1'
+
+This patch improves the error message to say it is not a range
+
+but
+
+git range-diff HEAD^{/..q} HEAD^{/..x}
+
+runs for several minutes without producing any output and eventually 
+fails with
+
+fatal: Out of memory, malloc failed (tried to allocate 33846432676 bytes)
+
+So I think it would be helpful to be more careful here.
+
+Best Wishes
+
+Phillip
+
+
+> It is tempting to at least idly speculate if an approach to run
+> setup_revisions() on argument is_range() takes and checking the
+> result would yield a more practical solution.  I would imagine that
+> we would want to see in the resulting revs.pending has at least one
+> positive and one negative, and none of them have SYMMETRIC_LEFT set
+> in their .flags word.
+> 
+>      Side note: Strictly speaking, people could wish "rev" to mean
+>                 "everything reachable from the rev, down to root", so
+>                 requiring one negative may technically be a wrong
+>                 thing, but in the context of "range-diff", I am not
+>                 sure how useful such a behaviour would be.
+> 
