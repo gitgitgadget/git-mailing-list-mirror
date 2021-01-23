@@ -2,194 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2D5DC433DB
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7EAC433E0
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:11:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAD6322A84
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:08:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FD1C22CAF
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 21:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbhAWVHx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 16:07:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51250 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbhAWVHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 16:07:51 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3C03C0613D6
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 13:07:10 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id o18so6868329qtp.10
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 13:07:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=i//gTJdCEJfBXfS5HiHrjvNxBCz2IgCFSkyq8YOmVqc=;
-        b=t10vViwDd47p1mOq2Ma0LuPOexnjXMrPfPVgm50PwsZM19t6IPAqAO5O3evN/FzAUc
-         w6s6SiZ8QxaRnPXTdGyJ0FfOpDGPKEmXJvhq4A4NMSZmVZ4I6KkWTf5RdXXCjZtrfUwg
-         VzvKhJUYi5M8KlxqAKma1LUDuQa4PbBiSt3wlwI646MEUMkq+7m4eVeL9Xm8dVg+8UB6
-         os6dltnYA4/yPzr9vq0N2vB8Eyz/oAonrKglG7rhvcJ52c8bWzxN6H9glgnaYrKFkTZX
-         BGo0RgVudY2B/gXDXJHgR1Oln6nFTxyOlKxP9Ygz5Uw789nQk58LmYD/kNO0unMxXxa4
-         u6dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=i//gTJdCEJfBXfS5HiHrjvNxBCz2IgCFSkyq8YOmVqc=;
-        b=TL2HZVO9tuyxG3zn/LoB29T+KRhEXijgPii4woASKfBJuZjlNZpUguA4OpkMc0dXzI
-         Nz/3vwFNuHLkY699UDE7xUtDuiniqLpjEdATRmfR0S/Xr/HAAF2jZF9P4Hm9nH0Pec/z
-         CQT+vAz59BXp8B7mpkIBacuLJmCb9I8PUW1pvqaEcCBdJHGNuvOyPtl5euUMDF3guSqm
-         F+yCi8o3Qm4h6nTALT1w6XCIKCBwadjnQYWXEldHVP2zWfxZr69EWwkvlW42dk+hvpMb
-         FWxNhUw5IERvPsRdZPWgmFsNBrJ44pchjqrzSiEeE1dtksK/vevTu3fS43O2jazS7ABR
-         EEfg==
-X-Gm-Message-State: AOAM531f1rbqx6Xy/1ZQiZGjcFn6cCVBOWgp0jpHiuej+K21BlvFgtDG
-        SAHJfSaQyt1mBx3WTwsoTeQF5nRrzK6JTA==
-X-Google-Smtp-Source: ABdhPJyEhpXE5xKjflOEFVkQBlJcavm1CCKnArq4Iv1aTWSkU9IZ8yuSlFk2dlYLe77RJhRS/ouXgg==
-X-Received: by 2002:ac8:5a82:: with SMTP id c2mr1882180qtc.90.1611436029882;
-        Sat, 23 Jan 2021 13:07:09 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:98e8:103:e6ee:9536? ([2600:1700:e72:80a0:98e8:103:e6ee:9536])
-        by smtp.gmail.com with UTF8SMTPSA id p26sm1193118qkk.6.2021.01.23.13.07.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 23 Jan 2021 13:07:09 -0800 (PST)
-Subject: Re: [PATCH v3 8/9] test-lib: test_region looks for trace2 regions
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com,
+        id S1726149AbhAWVL2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 16:11:28 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65002 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbhAWVL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 16:11:27 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 87B12117FE4;
+        Sat, 23 Jan 2021 16:10:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=lfp5uumzPpajfrJSRrnA7uAHPTc=; b=ecqL7R
+        BKF5ANlFRb5vsC9nZ/YK/wTDNjvjyOM/0B4jiWKsPRe6ltLc7CxODYA59UIsUw5V
+        ucENuAlALLTvM1q1lozKgiB0HcpZmdEThTEp19QNjnRsK4+7XehLmDpQimLJ8f98
+        0HguOi7Pe5gTfz3QZmC1Ez3HJrNw8/rvJJNx4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wvaqV/cQOjtnI/SrA+qkannqlD3NKXdr
+        T+fqemipy6s15JlecpuIPP712BNoIxLmpHFzXhkPedO0rqR+IePpm+No9NqSZkA4
+        ZcXlhX3Qh5Emetu/Qcl0ZXvjfG8HiGTUbgIl2HiTSlAtfvpjnpLenWlKhRmRbZUG
+        M8DF8zXnvq8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FE6F117FE3;
+        Sat, 23 Jan 2021 16:10:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7660F117FE1;
+        Sat, 23 Jan 2021 16:10:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 2/9] cache-tree: simplify verify_cache() prototype
 References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
- <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
- <b37181bdec43cfc798740f2bdd19f6d2482beb26.1611431900.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <096e2969-60d2-3ebe-3855-a9c954ebd07e@gmail.com>
-Date:   Sat, 23 Jan 2021 16:07:08 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
+        <1b8b56800948339c0e0387555698bdfdc80a19ad.1611431900.git.gitgitgadget@gmail.com>
+        <CABPp-BEsoWs5ZEhS0KTHankzc8eUdmpn0uoF7t1ZtN8b2gwvBA@mail.gmail.com>
+Date:   Sat, 23 Jan 2021 13:10:39 -0800
+In-Reply-To: <CABPp-BEsoWs5ZEhS0KTHankzc8eUdmpn0uoF7t1ZtN8b2gwvBA@mail.gmail.com>
+        (Elijah Newren's message of "Sat, 23 Jan 2021 12:24:30 -0800")
+Message-ID: <xmqqy2gj2wc0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <b37181bdec43cfc798740f2bdd19f6d2482beb26.1611431900.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73088888-5DBF-11EB-A3D3-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/23/2021 2:58 PM, Derrick Stolee via GitGitGadget wrote:
-...
-> +	if test $exitcode != $expect_exit = 1]
-...
-> +	if test $exitcode != $expect_exit = 1]
-As Elijah pointed out, these lines are bogus. I'm not sure how
-they passed the tests without failure, but here is a replacement
-for this patch:
+Elijah Newren <newren@gmail.com> writes:
 
---- >8 ---
+>> -       for (i = 0; i < entries - 1; i++) {
+>> +       for (i = 0; i + 1 < istate->cache_nr; i++) {
+>>                 /* path/file always comes after path because of the way
+>>                  * the cache is sorted.  Also path can appear only once,
+>>                  * which means conflicting one would immediately follow.
+>>                  */
+>> -               const struct cache_entry *this_ce = cache[i];
+>> -               const struct cache_entry *next_ce = cache[i + 1];
+>> +               const struct cache_entry *this_ce = istate->cache[i];
+>> +               const struct cache_entry *next_ce = istate->cache[i + 1];
+>
+> Makes sense.  Thanks for explaining the i + 1 < istate->cache_nr bit
+> in the commit message; made it easier to read through quickly.  I'm
+> curious if it deserves a comment in the code too, since it does feel
+> slightly unusual.
 
+I think this is entirely my fault.
 
-From ff15d509b89edd4830d85d53cea3079a6b0c1c08 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Mon, 11 Jan 2021 08:53:09 -0500
-Subject: [PATCH 8/9] test-lib: test_region looks for trace2 regions
+It probably reads more natural to start from 1 and interate through
+to the end of the array, comparing the current one with the previous
+entry, i.e.
 
-Most test cases can verify Git's behavior using input/output
-expectations or changes to the .git directory. However, sometimes we
-want to check that Git did or did not run a certain section of code.
-This is particularly important for performance-only features that we
-want to ensure have been enabled in certain cases.
-
-Add a new 'test_region' function that checks if a trace2 region was
-entered and left in a given trace2 event log.
-
-There is one existing test (t0500-progress-display.sh) that performs
-this check already, so use the helper function instead. Note that this
-changes the expectations slightly. The old test (incorrectly) used two
-patterns for the 'grep' invocation, but this performs an OR of the
-patterns, not an AND. This means that as long as one region_enter event
-was logged, the test would succeed, even if it was not due to the
-progress category.
-
-More uses will be added in a later change.
-
-t6423-merge-rename-directories.sh also greps for region_enter lines, but
-it verifies the number of such lines, which is not the same as an
-existence check.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- t/t0500-progress-display.sh |  3 +--
- t/test-lib-functions.sh     | 42 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 2 deletions(-)
-
-diff --git a/t/t0500-progress-display.sh b/t/t0500-progress-display.sh
-index 1ed1df351c..84cce345e7 100755
---- a/t/t0500-progress-display.sh
-+++ b/t/t0500-progress-display.sh
-@@ -303,8 +303,7 @@ test_expect_success 'progress generates traces' '
- 		"Working hard" <in 2>stderr &&
- 
- 	# t0212/parse_events.perl intentionally omits regions and data.
--	grep -e "region_enter" -e "\"category\":\"progress\"" trace.event &&
--	grep -e "region_leave" -e "\"category\":\"progress\"" trace.event &&
-+	test_region progress "Working hard" trace.event &&
- 	grep "\"key\":\"total_objects\",\"value\":\"40\"" trace.event &&
- 	grep "\"key\":\"total_bytes\",\"value\":\"409600\"" trace.event
- '
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 999982fe4a..9fc4cf8476 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1655,3 +1655,45 @@ test_subcommand () {
- 		grep "\[$expr\]"
- 	fi
- }
-+
-+# Check that the given command was invoked as part of the
-+# trace2-format trace on stdin.
-+#
-+#	test_region [!] <category> <label> git <command> <args>...
-+#
-+# For example, to look for trace2_region_enter("index", "do_read_index", repo)
-+# in an invocation of "git checkout HEAD~1", run
-+#
-+#	GIT_TRACE2_EVENT="$(pwd)/trace.txt" GIT_TRACE2_EVENT_NESTING=10 \
-+#		git checkout HEAD~1 &&
-+#	test_region index do_read_index <trace.txt
-+#
-+# If the first parameter passed is !, this instead checks that
-+# the given region was not entered.
-+#
-+test_region () {
-+	local expect_exit=0
-+	if test "$1" = "!"
-+	then
-+		expect_exit=1
-+		shift
-+	fi
-+
-+	grep -e	'"region_enter".*"category":"'"$1"'","label":"'"$2"\" "$3"
-+	exitcode=$?
-+
-+	if test $exitcode != $expect_exit
-+	then
-+		return 1
-+	fi
-+
-+	grep -e	'"region_leave".*"category":"'"$1"'","label":"'"$2"\" "$3"
-+	exitcode=$?
-+
-+	if test $exitcode != $expect_exit
-+	then
-+		return 1
-+	fi
-+
-+	return 0
-+}
--- 
-2.30.0
+	for (i = 1; i < istate->cache_nr; i++) {
+        	prev = cache[i - 1];
+		this = cache[i];
+                compare(prev, this);
 
