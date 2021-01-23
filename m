@@ -2,102 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FE5FC433E0
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 12:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF38C433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 12:57:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B72123B08
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 12:12:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 726B122C7C
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 12:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbhAWMLt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 07:11:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49698 "EHLO
+        id S1725768AbhAWM5y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 07:57:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726699AbhAWMLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 07:11:47 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16493C06174A
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 04:11:06 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id z21so5698893pgj.4
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 04:11:06 -0800 (PST)
+        with ESMTP id S1725535AbhAWM5x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 07:57:53 -0500
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6C5C06174A
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 04:57:13 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id 3so9729119ljc.4
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 04:57:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lBtnQgkEJCr1b/zsccsgh34Qt5gcXmxMRes9em599NE=;
-        b=gvSado1TkZ5Z6e4jGbJ2wuhdD/VcCfXZy+/srpy/w0ocaKkYwAmpVWGkrLPI/A8nwl
-         UPOb4Oq7j7nK3o/34GFlDplonbFcHEcmxZzod7c18uOAs/axiuaIRjZw9kWmL5P45xEk
-         XUXps/nHuQ3oF2CIJ9QPURhwJtxtBcayBxnO/Ai+MOjNjcwx5+m7gowoqy/9gvddB8qC
-         IdGWVli1d/ObIQ73ccW88J1d2LEliLQiotHYeTo1hZZTqzeY7l/VObluDGmVAsLEOr3D
-         /jBv6fGux58TtkqN3AwAGzYas7AS9a0h98eo0dJ0ziK9XDcONKQ1UhtkYTRPE7iRfmPx
-         PeQw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LcJ2800EyCxJIF3shgr9AlAVM1fn74pr2tiYQzL8xJE=;
+        b=AdzMGQXbTZlpspZO7ADNC55uLpmgq4SFNw62TTjvkMOFvTpF5oLdBcENliUb2whc4A
+         oa+P9XpySwCa9R9nIrn7CrE1c3kJaWPX7tRGsEG4tT7HMLmZUqJz+aGRWeVvduOi6tIe
+         pAsz+WmzBjN0VPeNDzoO9UgBz6CoTzCdoDEyGzbmQZK+lIObEGIy5O1WY+3fkdWtTu8X
+         DV8xXTWPfvEwEArKe5EXjFihhmAEeX0WX64XQpXmLCClOU3Al+FzFMlWazzabwO0yHBf
+         n6rtN+KcpwDHTpSVIkLa5jjvTH2HvKWep+nrFwMDiA73GT4YsLEpG8zaV5yudUs+zMId
+         1TqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=lBtnQgkEJCr1b/zsccsgh34Qt5gcXmxMRes9em599NE=;
-        b=PaXW+hqza5qjf/cqJi9FbKQPeyRSUKfR+NKNAH+TFUQs0bZjsQVb1/RXb4lfgvyjL4
-         fD/nZXGAI72qSs46IDUEzLAKl2kASEbi7lCNKerCYcwDJXAJegMGABBc90Qd/2aqvhof
-         uoRb2S92JU06ni+W7QpCtEYIisMw6i1QIWTlAwB/6KfjfE+3iZK+NzcW5SWhMYR7NLoN
-         ADuBK5saAe4RHhBnhemtHhZynVYi2W92oEEN5C4a3zVjudyeaGrirXKrOph15jZQhK5K
-         1XGeYns19d1fKHdaAXVXGFTKvMIBQqzzUniurbAZdRdyQk65OTOSrM4z/D/Mk61XA3ZK
-         aaQg==
-X-Gm-Message-State: AOAM530O6YLTbDcaeGqpa9X0sT15boJmU7a5wWB6sue0cwIek+keYbwe
-        Af2rXQwqgehauklrOa2F6B0=
-X-Google-Smtp-Source: ABdhPJzX95mqFTguU8mKJPddxbllOnSkotFPdD7WlxCurAu4JEwd63nAwY4o/I/6nNO7QWKWZdWYRQ==
-X-Received: by 2002:a05:6a00:238b:b029:1b4:af1d:d3ff with SMTP id f11-20020a056a00238bb02901b4af1dd3ffmr9405018pfc.66.1611403866473;
-        Sat, 23 Jan 2021 04:11:06 -0800 (PST)
-Received: from Abhishek-Arch ([2409:4064:69a:b5d0:11ae:5c4d:1150:139d])
-        by smtp.gmail.com with ESMTPSA id a4sm11784062pfg.41.2021.01.23.04.11.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Jan 2021 04:11:06 -0800 (PST)
-Date:   Sat, 23 Jan 2021 17:41:28 +0530
-From:   Abhishek Kumar <abhishekkumar8222@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     abhishekkumar8222@gmail.com, git@vger.kernel.org,
-        gitgitgadget@gmail.com, jnareb@gmail.com, stolee@gmail.com
-Subject: Re: [PATCH v6 00/11] [GSoC] Implement Corrected Commit Date
-Message-ID: <YAwScMcw4sP1ZAJb@Abhishek-Arch>
-Reply-To: YAYFCbVvEL+GbQOl@nand.local
-References: <pull.676.v5.git.1609154168.gitgitgadget@gmail.com>
- <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
- <2437ba7c-f9d9-34bd-5e08-eff96cadcf91@gmail.com>
- <YAYFCbVvEL+GbQOl@nand.local>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LcJ2800EyCxJIF3shgr9AlAVM1fn74pr2tiYQzL8xJE=;
+        b=YBrAGq1KQR+oKrYW1mhVOi4uoY6j9aEK+1Gbsk1eo8L+SsDDFf105KUKpn2Bj/Ahlv
+         yawSWh2pMZb0onjTRlICe3ZdWzOHqm0MUwLuMmEyJWBxqLRGy74bwiRTBAX1FrvrTagx
+         xK5GjQNiPPq04g3oAHOKt/ZiPC12S/djH5TaUAuY02ZL5MCFurLDovZe4QNPfH7/5RYO
+         DtbYkiitQidXM3SXvb2hbd9OBtrWJCDru5TX/hEXLONS8e2z2HiFP9qayAE4SGsK9JlL
+         1HtW1J3lwHhNGAjSg++PX8//OwcqmKR0vgb3aTvgEz/E0Wg3JNAiCviYGo6yGkOgt9Uf
+         wFaw==
+X-Gm-Message-State: AOAM530roQlAc3xIL/08091IOwMzRbJ9P/FUVqw1z094T4/E445f1ZPi
+        9YTrlOQcVkI3nWb2yVV7BVf8Y8/lIt+3NhYzHdk=
+X-Google-Smtp-Source: ABdhPJwH123Q4BN0574Acw1ps6kY41YZBSjGDhb6PU64cByS62TQwHTd6fOqnATLa5hyDJmzlEOTjkbSzLFIDHX/Rxs=
+X-Received: by 2002:a2e:6c0f:: with SMTP id h15mr826607ljc.305.1611406628839;
+ Sat, 23 Jan 2021 04:57:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YAYFCbVvEL+GbQOl@nand.local>
+References: <CAK8LAYVZKjbMEDWTyvQv2eY+qR0qw1=mn=c4KCZvit7gsqTibA@mail.gmail.com>
+ <CAP8UFD0fZBdZ6qwDP9_yW7VAfskTKPC7HVSpK4rD=bORuECpJA@mail.gmail.com>
+ <xmqqpn1w95dj.fsf@gitster.c.googlers.com> <CANiSa6gEJ8ezVLhHf+TkGpqvEwvb8HhqtU3ETKiopjLQj6E_QQ@mail.gmail.com>
+ <xmqqh7n85qwd.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqh7n85qwd.fsf@gitster.c.googlers.com>
+From:   "Patricia B. C." <pati.camsky@gmail.com>
+Date:   Sat, 23 Jan 2021 09:56:57 -0300
+Message-ID: <CAK8LAYUsebOau+XJ66fEesLm4MfMuxJjse0YL408-2jih1d1eg@mail.gmail.com>
+Subject: RES: Can git change?
+To:     Junio C Hamano <gitster@pobox.com>,
+        Martin von Zweigbergk <martinvonz@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 18, 2021 at 05:00:41PM -0500, Taylor Blau wrote:
-> On Mon, Jan 18, 2021 at 04:04:14PM -0500, Derrick Stolee wrote:
-> > I checked the range-diff and looked once more through the patch
-> > series. This version is good to go by my standards.
-> >
-> > Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
-> 
-> I re-read this series now that it seems to have stabilized, and I agree
-> with Stolee that it LGTM.
-> 
->   Reviewed-by: Taylor Blau <me@ttaylorr.com>
-> 
-> > Thanks, Abhishek!
-> 
-> Incredible work!
+Hey, thanks for the replies, guys.
 
-Thanks a lot for the reviews and help in identifying the reason behind
-(relatively) minor performance increase when we switched from useless
-'commit_graph_generation()' calls to direct slab calls.
+Yes, as Junio said, my intention was to understand a bit about what
+you were doing, so thank you for the explanation!
 
-> 
-> Thanks,
-> Taylor
+The idea isn't really to imitate what you are doing, but just to use
+it as a benchmark to show that changing the name of the branch might
+not seem like an important thing, but it is a global movement that is
+being adopted by many renowned developers.
 
-Thanks
-- Abhishek
+Quoting one of the comments on the discussion topic I raised:
+
+"It's only the default name for repositories created inside GitHub.
+Since our students only create their repositories locally on their
+computers with Git, I don't see how GitHub's decision will affect
+them. If Git decides to change over from master to main, and there is
+an industry-wide push to adopt this change (which doesn't seem very
+likely to me), then I might agree with you"
+
+So, I just wanted to show that guy that this is an industry-wide push :)
+
+
+Best regards,
+Patricia Camiansky.
+
+
+De: Junio C Hamano
+Enviado:sexta-feira, 22 de janeiro de 2021 23:27
+Para: Martin von Zweigbergk
+Cc:Christian Couder; Patricia B. C.; git
+Assunto: Re: Can git change?
+
+
+
+Martin von Zweigbergk <martinvonz@gmail.com> writes:
+
+
+
+> This is probably quite off topic for the thread, but I'm curious why
+
+> you think it was a bad idea to have octopus merges in git.git's
+
+> history (there seem to be 37 of them).
+
+
+
+Octoupi in our history, at least the older ones, solve no real life
+
+problem; it only gives us "now we have something cool-looking that
+
+other people's version control systems never had", which is of
+
+dubious value.
+
+
+
+And their presense makes bisection less efficient than it could be
+
+around them, which is a real downside.
