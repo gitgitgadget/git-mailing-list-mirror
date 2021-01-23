@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C10C433E0
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9574CC433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:41:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0AD3B233EB
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:34:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 684DD23A3A
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726896AbhAWJdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 04:33:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44158 "EHLO
+        id S1726924AbhAWJlp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 04:41:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726863AbhAWJdj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 04:33:39 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D6AC06174A
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:32:57 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id w1so11075832ejf.11
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:32:57 -0800 (PST)
+        with ESMTP id S1726883AbhAWJli (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 04:41:38 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE98C061793
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:40:39 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id g24so9295957edw.9
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:40:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=5ACVhY9r+X+lyKNqbMbJeZlZsiOwLEGObPo4YXtsWpU=;
-        b=D8Cll8k+0gwmQvHzCF2pKH3PimdZNtTOdsdsUFXOa8xM7iaNKyLHfXvp8+xBROcHEa
-         8pzgdvONOoG/LFk7f3gm+sZ9AVbWEtTQZzee07Jx63CJuUWoknnU+sCBaRB8gMjjzRuB
-         rlBZhKQKitjKWC8yBHAIqshV1P47J8efDRqaV2yiqJMt+yA4A6o1ABDhWmuxnvUMSSl/
-         koOgZBx1KbmV/00UZmXSxh/O5pWHt0e3ecx6TFP1bap6Yo4mVNaXIe9/2LxeGXGW7Hb/
-         UAaLL56BSlWZAvd61u2cnc12W+5W7faVcMQnveJCI+ztR18yDKSi0VR/DPlmjEzBAKi8
-         5nmQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ykblYB8lNl5BJr2OnjQpFYXnxnxexWHvLD5pcwIv5V8=;
+        b=qiqcEPKJj2DfxWnh7Mjy9ZXObKQYVmr8i9mHdS8tbWxexpRqCuCNhuS694PvQwZDrI
+         4of7loWDmPWoBjeM3GscUYt+8DVBGQzEnrKQfPI4Ks4v42ez7hvxLWVPTW6gCT1fphaR
+         xMLspHl2eEtdfh6xk8/HYFDLJbCUVZ49xgPBBpLx2rI39gKBK0Fe+EiF3SY4pBVQJO8O
+         xIsfuIly9LwDyLjx1h5JpLUCl1i9xT0nWjfP30GTOMEjrPbegpdpFlLkAHsncGQjj/Y5
+         GEAb7vkU6mDN6ocXhPH95qSgHDuFJi1WPba8bedanFoDZOTiisHq29yR3Rsubs+ejqUY
+         N/Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=5ACVhY9r+X+lyKNqbMbJeZlZsiOwLEGObPo4YXtsWpU=;
-        b=WMw02cDjNr9aLS9RbGIB+mdy2TmhpszF3kDb5GXhAz74XnPTm0hcYXnLeG8UUTbDC4
-         Huk2UcG0J3nL3Lz7b1TMBWiT7a0JShgv+ePhgQqv23pgaeA94s8Xkpy9665nW/vs594C
-         dmcADqSBKRq+2jI8Syt1G5Aws0Ry1W/Z2nqyqApK5ihJH+GwnWCfOq0mLBcQPP14OzDk
-         d9VF7ONNhXM0sCl7A1Y7GsfwM72WuVPrl0MOQM1qgpAv9zCnnPcdhlrzzRZIPkYXizhq
-         GSFXx/RgAbIhKS5Now7Eyx1sXqBx++nbcHeUWJWYf20BPUBxOzQA8dF5idh1PNAub2xR
-         PwYQ==
-X-Gm-Message-State: AOAM531j4ooD/RYSeb0ocR1rgAlqUGKbXyu5R1e2kzEvMIt98xEtVn3f
-        YJYSnP0gvmE+KVLF2wTIqYGSQZgOmBw=
-X-Google-Smtp-Source: ABdhPJzgvx7Tw7/1n8vJCIWkTXS00cUCClpdymBL7nXmny4RO9bKb9+U1RFBdmxKXBQNVK3RxRIwuw==
-X-Received: by 2002:a17:906:494c:: with SMTP id f12mr128519ejt.56.1611394376437;
-        Sat, 23 Jan 2021 01:32:56 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=ykblYB8lNl5BJr2OnjQpFYXnxnxexWHvLD5pcwIv5V8=;
+        b=twHj6xN/OW/ChWgE8Webvrr5RekuU7X2psJw+OgTZeWEkOHT8o+jjVsEni3qoZcGbn
+         InS+5/wODVRx0HVERW1GkkZoJJn4DHjQZYTEP6D+/iyuJoxipaeHrUqHUoTLeS7PFT9Q
+         2ZsWAfVcHb+/h4xKvBSH8WKHPwkJH/RBQ1vj3h9TOe7pKsgcuQNSfgxj75MTsKvGkvKL
+         lulb9I62WHwyWyW+JxDyS8jX/oY6ClFZSHHdMfwLShkJGol5ucD4UB53vk6N+wgu2mjv
+         9XWCwP5q6ro8EkOvuHhKWLBCUL/rJCv6afrCm4aThm2RHJjXSdERt/15KvgfhVgvqEYI
+         1lDA==
+X-Gm-Message-State: AOAM533pR+0dqKz4DFT+A/ukcvTdHAWWDXcxpZDqi7TMR4llcxpbC+el
+        lSnM1kasuHwcyYiWiyXfd2I=
+X-Google-Smtp-Source: ABdhPJy6+aT6AHLARvQDC1NlN2GE52Uys1ss7DpH0j87Rjq9VW0s5jZcpjqyEpV3SjzBtLGesMKdZQ==
+X-Received: by 2002:a05:6402:5246:: with SMTP id t6mr6315603edd.62.1611394837481;
+        Sat, 23 Jan 2021 01:40:37 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id q9sm5778513ejd.113.2021.01.23.01.32.55
+        by smtp.gmail.com with ESMTPSA id g10sm5675005ejp.37.2021.01.23.01.40.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Jan 2021 01:32:55 -0800 (PST)
+        Sat, 23 Jan 2021 01:40:36 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
@@ -65,13 +65,13 @@ Subject: Re: [PATCH v2 11/11] tests: add a "set -o pipefail" for a patched bash
 References: <20210114233515.31298-1-avarab@gmail.com>
  <20210116153554.12604-12-avarab@gmail.com>
  <xmqq5z3o5n8c.fsf@gitster.c.googlers.com>
- <xmqq1rec5ckf.fsf@gitster.c.googlers.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <xmqq1rec5ckf.fsf@gitster.c.googlers.com>
-Date:   Sat, 23 Jan 2021 10:32:55 +0100
-Message-ID: <87sg6s6lrs.fsf@evledraar.gmail.com>
+In-reply-to: <xmqq5z3o5n8c.fsf@gitster.c.googlers.com>
+Date:   Sat, 23 Jan 2021 10:40:36 +0100
+Message-ID: <87pn1w6lez.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -79,87 +79,86 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Jan 23 2021, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> ...
->> The above have already !MINGW
->>
->>> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
->>> index 4f7e62d05c..7b5d92add5 100755
->>> --- a/t/t3600-rm.sh
->>> +++ b/t/t3600-rm.sh
->>> @@ -251,7 +251,10 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
->>>  		i=$(( $i + 1 ))
->>>  	done | git update-index --index-info &&
->>>  	OUT=$( ((trap "" PIPE; git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
->>> -	test_match_signal 13 "$OUT" &&
->>> +	if ! test_have_prereq BASH_SET_O_PIPEFAIL
->>> +	then
->>> +		test_match_signal 13 "$OUT"
->>> +	fi &&
->>>  	test_path_is_missing .git/index.lock
->>>  '
->>
->> but this one does not.  Yet, we've been using test_match_signal on 13
->> without issues, it appears.
->>
->> And somehow with the lazy prereq on SET_O_PIPEFAIL, this part starts
->> to break, like so:
->>
->>   https://github.com/git/git/runs/1752687552?check_suite_focus=true#step:7:37042
->>
->> The output captured in OUT is 0 as we can see on #37032 in the test
->> log.
+>> -test_expect_success !MINGW 'a constipated git dies with SIGPIPE' '
+>> +test_expect_success !MINGW,!BASH_SET_O_PIPEFAIL 'a constipated git dies=
+ with SIGPIPE' '
+>>  	OUT=3D$( ((large_git; echo $? 1>&3) | :) 3>&1 ) &&
+>>  	test_match_signal 13 "$OUT"
+>>  '
+>>=20=20
+>> -test_expect_success !MINGW 'a constipated git dies with SIGPIPE even if=
+ parent ignores it' '
+>> +test_expect_success !MINGW,!BASH_SET_O_PIPEFAIL 'a constipated git dies=
+ with SIGPIPE even if parent ignores it' '
+>>  	OUT=3D$( ((trap "" PIPE; large_git; echo $? 1>&3) | :) 3>&1 ) &&
+>>  	test_match_signal 13 "$OUT"
+>>  '
 >
-> Nah, it seems that t3600-rm's "match signal 13" is already broken
-> without O_PIPEFAIL patch on Windows.  For example:
+> The above have already !MINGW
 >
-> https://github.com/git/git/runs/1753231308?check_suite_focus=true#step:7:36912
+>> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+>> index 4f7e62d05c..7b5d92add5 100755
+>> --- a/t/t3600-rm.sh
+>> +++ b/t/t3600-rm.sh
+>> @@ -251,7 +251,10 @@ test_expect_success 'choking "git rm" should not le=
+t it die with cruft' '
+>>  		i=3D$(( $i + 1 ))
+>>  	done | git update-index --index-info &&
+>>  	OUT=3D$( ((trap "" PIPE; git rm -n "some-file-*"; echo $? 1>&3) | :) 3=
+>&1 ) &&
+>> -	test_match_signal 13 "$OUT" &&
+>> +	if ! test_have_prereq BASH_SET_O_PIPEFAIL
+>> +	then
+>> +		test_match_signal 13 "$OUT"
+>> +	fi &&
+>>  	test_path_is_missing .git/index.lock
+>>  '
 >
-> This was introduced by c15ffae5 (rm tests: actually test for SIGPIPE
-> in SIGPIPE test, 2021-01-16) in the same series.
+> but this one does not.  Yet, we've been using test_match_signal on 13
+> without issues, it appears.
+>
+> And somehow with the lazy prereq on SET_O_PIPEFAIL, this part starts
+> to break, like so:
+>
+>   https://github.com/git/git/runs/1752687552?check_suite_focus=3Dtrue#ste=
+p:7:37042
+>
+> The output captured in OUT is 0 as we can see on #37032 in the test
+> log.
+>
+> I am tempted to eject 11/11 and probably 10/11 out of the topic, as
+> the earlier patches before them look more or less uncontroversial
+> cleanups, and 11/11 seems to be more trouble than it is worth at
+> this moment.
 
-Yes, not adding !MINGW here is a stupid oversight on my part, I can
-re-roll with that added, which seems to be like it'll work & be
-better. I.e. we'll actually test for SIGPIPE ...(read on)....
+I think that makes sense, once I fix the breakage on 07/11 you noted
+downthread.
 
-> I am not sure "actually testing for SIGPIPE" is more important than
-> "make sure 'git rm' choked should not die with cruft", so without
-> thinking too deeply about the issue, my gut reaction is that
-> reverting is better than using !MINGW as other tests.  That is, no
-> matter how "git rm" gets killed, it should not leave .git/index.lock
-> behind, and the original already tests that.
+> It's not like this would allow us to loosen the rule that we
+> shouldn't put a "git" invocation of the git subcommand being tested
+> on the upstream side of a pipe[...]
 
-I don't get it. I understand why we'd do any of:
+FWIW it seems from my off-list discussion with the bash maintainer that
+no version of my patch is likely to make it into bash. He views it as a
+feature that "pipefail" treats all non-zero exit codes equally.
 
- 1. Keep my patch with !MINGW added. I.e. the intent of your 0693f9ddad
-    (Make sure lockfiles are unlocked when dying on SIGPIPE, 2008-12-18)
-    which added the test is to explicitly stress SIGPIPE, but we never
-    actually checked it explicitly...
+But as it pertains to our test suite I mainly wrote this to check if we
+had any failures that didn't make sense once SIGPIPE was ignored. I
+think smoking out any potential historical cases (and finding we didn't
+have any that mattered) was probably an effort worth it in itself. Then
+we just have to continue not putting git on the LHS on a pipe for new
+tests.
 
- 2. Just remove/rewrite that part of the test. We have 7559a1be8a
-    (unblock and unignore SIGPIPE, 2014-09-18) (the other test whose
-    pattern I copied) now.
+> [...]---not everybody is running bash, and it is unrealistic to tell
+> our developers "if you want to make sure your tests are good, you must
+> install and use this patched bash".
 
-    That along with 12e0437f23 (common-main: call
-    restore_sigpipe_to_default(), 2016-07-01) means we do this
-    everywhere, so why test "git rm" in particular in this one place but
-    not other git commands?
+I think if others think this was worth keeping and bash never accepted
+the patches we could rather easily get most of the benefit from it by
+having a CI job that ran with such a patched bash. To test with "set -o
+pipefail" it's enough that it's done semi-regularly by someone if you
+want to smoke out bugs in the tests, not everyone has to do it all the
+time.
 
- 3. Remove the overly specific PIPE test added in 7559a1be8a in favor of
-    this "git rm" test. After all if we want to test the SIGPIPE pattern
-    but sometimes we get SIGPIPE, sometimes we don't (MINGW), but we
-    don't really care because we assume on some platforms it's being
-    tested.
-
-But not why we'd keep the test as-is now that we've dug up this old code
-and found that since it got added we have a reliable way to test for
-actually-sigpipe.
-
-Just to maintain the coverage on MINGW? Wouldn't it be better to have
-two tests then, one without the prereq to run everywhere, and another
-identical one with the "trap" on !MINGW?
-
-I don't really care and can re-roll in whatever way you prefer, I just
-don't understand what I'd put as a reason in the commit message(s),
-depending on which route we go...
