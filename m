@@ -2,141 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D25A8C433DB
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 08:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C10C433E0
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 89A54233FA
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 08:28:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AD3B233EB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 09:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbhAWI0g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 03:26:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58106 "EHLO
+        id S1726896AbhAWJdp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 04:33:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbhAWI0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 03:26:35 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCDAFC06174A
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 00:25:54 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id v1so7554622ott.10
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 00:25:54 -0800 (PST)
+        with ESMTP id S1726863AbhAWJdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 04:33:39 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D6AC06174A
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:32:57 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id w1so11075832ejf.11
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 01:32:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HC/zF5qzlG4f2O27KW2DiZP+oZ8Sd8sUhZc/vhPJzwE=;
-        b=SxnqdkVPCrn4/swFmpsWayzPKdavYNGQf56Liu2THjorBbxkdZ9ES5ay29BW+f7kOk
-         PgmxYsx++aG6NFYKyuo/3wa2WfrVqhX4DpPh767rnFfPE9WYWzikYvyrTkDs2pxRCEKA
-         l9YFM6zoJwXEY0+wT/SWC3Qpp3NppLJQiKJGpyXxsChe9/zsEw3aFX21hBTz1FZcruT+
-         7lO9qXwdYgPmJ/KI4jyxDByhYCFFRES7TB5xeUWSYNSgN6iBoaUjcwqdLdfMQWYUxVfo
-         IgIOQDWJZJpJSY9OAVbOhqum+PgLpsigtrSoJT9+Y4zeBDFg1vBXzIPCa5SSzeZWZfw1
-         OkZg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=5ACVhY9r+X+lyKNqbMbJeZlZsiOwLEGObPo4YXtsWpU=;
+        b=D8Cll8k+0gwmQvHzCF2pKH3PimdZNtTOdsdsUFXOa8xM7iaNKyLHfXvp8+xBROcHEa
+         8pzgdvONOoG/LFk7f3gm+sZ9AVbWEtTQZzee07Jx63CJuUWoknnU+sCBaRB8gMjjzRuB
+         rlBZhKQKitjKWC8yBHAIqshV1P47J8efDRqaV2yiqJMt+yA4A6o1ABDhWmuxnvUMSSl/
+         koOgZBx1KbmV/00UZmXSxh/O5pWHt0e3ecx6TFP1bap6Yo4mVNaXIe9/2LxeGXGW7Hb/
+         UAaLL56BSlWZAvd61u2cnc12W+5W7faVcMQnveJCI+ztR18yDKSi0VR/DPlmjEzBAKi8
+         5nmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HC/zF5qzlG4f2O27KW2DiZP+oZ8Sd8sUhZc/vhPJzwE=;
-        b=Wip08Gv504VZ8OZoXff29HCdFJSDKcQ0A5O3X1Cm5Oc0tsEIlEOFJXsE/hqlTkz2Gz
-         7I03M2n6YZhjNWU5oiWdz1/+ZlRLeeOvriGFVmgkb06EiEYKY7jhoTJK9uwkoMrkMifX
-         LdhKb01yKorCCaGU0+eIMcedhpkqaXCdjgIYwcz87s0JDiLwazjbSbD5bti9/HQDwm7H
-         fOWXbEjMri3KPJfPosh6D/eO4I2x5ZUFTz8lUheCc16bBhP0UXGoATGtvC6hSY17OPtN
-         co+QM6TIYfAl2hR1wNCxWcI1d739p9r1/sidOAIIJX5roeMT5UEO1jAN87y8YZXT7nVO
-         dk3Q==
-X-Gm-Message-State: AOAM530Wi4IwH3p9O/cWaNIfn9b+1auXgFCNddXxFheeHcVCOu8Qh3EK
-        9uLpoof+xLOytFKtT+/6edfXyyuzSIwHNtDcHbc=
-X-Google-Smtp-Source: ABdhPJxE2cM2Jv4M9oLmpC3UMGJE8ppYz/DKnbTomjAqw5abhohzSveE9037yDl1fuGPY6CnlOj/wl+K7Wz1TrT40po=
-X-Received: by 2002:a9d:4812:: with SMTP id c18mr5782738otf.160.1611390354226;
- Sat, 23 Jan 2021 00:25:54 -0800 (PST)
-MIME-Version: 1.0
-References: <CAOLTT8R=fF00WCVBSTDKHG_3p5RcZaxM2AU-cUj1sNWvy=mhCQ@mail.gmail.com>
- <20210122154640.3791035-1-adlternative@gmail.com> <xmqqr1mc7kyt.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1mc7kyt.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Date:   Sat, 23 Jan 2021 16:27:11 +0800
-Message-ID: <CAOLTT8Sx0v_xF8KOtf76P5T=BF+CJ3B_J=H2RDDtzezuTUUa2Q@mail.gmail.com>
-Subject: Re: [PATCH v6] ls-files.c: add --deduplicate option
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=5ACVhY9r+X+lyKNqbMbJeZlZsiOwLEGObPo4YXtsWpU=;
+        b=WMw02cDjNr9aLS9RbGIB+mdy2TmhpszF3kDb5GXhAz74XnPTm0hcYXnLeG8UUTbDC4
+         Huk2UcG0J3nL3Lz7b1TMBWiT7a0JShgv+ePhgQqv23pgaeA94s8Xkpy9665nW/vs594C
+         dmcADqSBKRq+2jI8Syt1G5Aws0Ry1W/Z2nqyqApK5ihJH+GwnWCfOq0mLBcQPP14OzDk
+         d9VF7ONNhXM0sCl7A1Y7GsfwM72WuVPrl0MOQM1qgpAv9zCnnPcdhlrzzRZIPkYXizhq
+         GSFXx/RgAbIhKS5Now7Eyx1sXqBx++nbcHeUWJWYf20BPUBxOzQA8dF5idh1PNAub2xR
+         PwYQ==
+X-Gm-Message-State: AOAM531j4ooD/RYSeb0ocR1rgAlqUGKbXyu5R1e2kzEvMIt98xEtVn3f
+        YJYSnP0gvmE+KVLF2wTIqYGSQZgOmBw=
+X-Google-Smtp-Source: ABdhPJzgvx7Tw7/1n8vJCIWkTXS00cUCClpdymBL7nXmny4RO9bKb9+U1RFBdmxKXBQNVK3RxRIwuw==
+X-Received: by 2002:a17:906:494c:: with SMTP id f12mr128519ejt.56.1611394376437;
+        Sat, 23 Jan 2021 01:32:56 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id q9sm5778513ejd.113.2021.01.23.01.32.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 23 Jan 2021 01:32:55 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 11/11] tests: add a "set -o pipefail" for a patched bash
+References: <20210114233515.31298-1-avarab@gmail.com>
+ <20210116153554.12604-12-avarab@gmail.com>
+ <xmqq5z3o5n8c.fsf@gitster.c.googlers.com>
+ <xmqq1rec5ckf.fsf@gitster.c.googlers.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <xmqq1rec5ckf.fsf@gitster.c.googlers.com>
+Date:   Sat, 23 Jan 2021 10:32:55 +0100
+Message-ID: <87sg6s6lrs.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8823=E6=97=
-=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=884:52=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > In order to provide users a better experience
-> > when viewing information about files in the index
-> > and the working tree, the `--deduplicate` option will suppress
-> > some duplicate name under some conditions.
->
-> Now is it just a single patch squashing everything together?
-> That does not look like it.
->
-> > @@ -317,7 +318,7 @@ static void show_files(struct repository *repo, str=
-uct dir_struct *dir)
-> >       for (i =3D 0; i < repo->index->cache_nr; i++) {
-> >               const struct cache_entry *ce =3D repo->index->cache[i];
-> >               struct stat st;
-> > -             int err;
-> > +             int stat_err;
-> >
-> >               construct_fullname(&fullname, repo, ce);
-> >
-> > @@ -326,25 +327,43 @@ static void show_files(struct repository *repo, s=
-truct dir_struct *dir)
-> >                       continue;
-> >               if (ce->ce_flags & CE_UPDATE)
-> >                       continue;
-> > -             if (show_cached || show_stage) {
-> > -                     if (!show_unmerged || ce_stage(ce))
-> > +             if ((show_cached || show_stage) &&
-> > +                     (!show_unmerged || ce_stage(ce))) {
-> >                               show_ce(repo, dir, ce, fullname.buf,
-> >                                       ce_stage(ce) ? tag_unmerged :
-> >                                       (ce_skip_worktree(ce) ? tag_skip_=
-worktree :
-> >                                               tag_cached));
-> > +                     if (show_cached && skipping_duplicates)
-> > +                             goto skip_to_next_name;
->
-> Why should this be so complex?  You are dropping skipping_duplicates
-> when the output is not name-only, so shouldn't this look more like
->
-Truly,I may have considered too much,if I have
-"show_stage","skipping_duplicates"
-must be false.
->                 if ((show_cached || show_stage) &&
->                     (!show_unmerged || ce_stage(ce)) {
->                         show_ce(...);
->                         if (skipping_duplicates)
->                                 goto skip_to_next_name;
->                 }
->
-> It seems that this still depends on the 2/3 from the previous
-> iteration, against which I suggested to merge the conditions of
-> nested if statements into one.  That should be done in the updated
-> 2/3, not in this step, no?
->
-> >               }
-> > +             if (!show_deleted && !show_modified)
-> > +                     continue;
->
-> And this one also belongs to the step 2/3 that consolidates the two
-> loops into one.
->
-> I think you'd need to start from the three patches in v5, "rebase -i"
-> not just [3/3] but at least [2/3], too.
->
-> Thanks.
 
-Thanks,I am rewriting.
+On Sat, Jan 23 2021, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> ...
+>> The above have already !MINGW
+>>
+>>> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+>>> index 4f7e62d05c..7b5d92add5 100755
+>>> --- a/t/t3600-rm.sh
+>>> +++ b/t/t3600-rm.sh
+>>> @@ -251,7 +251,10 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
+>>>  		i=$(( $i + 1 ))
+>>>  	done | git update-index --index-info &&
+>>>  	OUT=$( ((trap "" PIPE; git rm -n "some-file-*"; echo $? 1>&3) | :) 3>&1 ) &&
+>>> -	test_match_signal 13 "$OUT" &&
+>>> +	if ! test_have_prereq BASH_SET_O_PIPEFAIL
+>>> +	then
+>>> +		test_match_signal 13 "$OUT"
+>>> +	fi &&
+>>>  	test_path_is_missing .git/index.lock
+>>>  '
+>>
+>> but this one does not.  Yet, we've been using test_match_signal on 13
+>> without issues, it appears.
+>>
+>> And somehow with the lazy prereq on SET_O_PIPEFAIL, this part starts
+>> to break, like so:
+>>
+>>   https://github.com/git/git/runs/1752687552?check_suite_focus=true#step:7:37042
+>>
+>> The output captured in OUT is 0 as we can see on #37032 in the test
+>> log.
+>
+> Nah, it seems that t3600-rm's "match signal 13" is already broken
+> without O_PIPEFAIL patch on Windows.  For example:
+>
+> https://github.com/git/git/runs/1753231308?check_suite_focus=true#step:7:36912
+>
+> This was introduced by c15ffae5 (rm tests: actually test for SIGPIPE
+> in SIGPIPE test, 2021-01-16) in the same series.
+
+Yes, not adding !MINGW here is a stupid oversight on my part, I can
+re-roll with that added, which seems to be like it'll work & be
+better. I.e. we'll actually test for SIGPIPE ...(read on)....
+
+> I am not sure "actually testing for SIGPIPE" is more important than
+> "make sure 'git rm' choked should not die with cruft", so without
+> thinking too deeply about the issue, my gut reaction is that
+> reverting is better than using !MINGW as other tests.  That is, no
+> matter how "git rm" gets killed, it should not leave .git/index.lock
+> behind, and the original already tests that.
+
+I don't get it. I understand why we'd do any of:
+
+ 1. Keep my patch with !MINGW added. I.e. the intent of your 0693f9ddad
+    (Make sure lockfiles are unlocked when dying on SIGPIPE, 2008-12-18)
+    which added the test is to explicitly stress SIGPIPE, but we never
+    actually checked it explicitly...
+
+ 2. Just remove/rewrite that part of the test. We have 7559a1be8a
+    (unblock and unignore SIGPIPE, 2014-09-18) (the other test whose
+    pattern I copied) now.
+
+    That along with 12e0437f23 (common-main: call
+    restore_sigpipe_to_default(), 2016-07-01) means we do this
+    everywhere, so why test "git rm" in particular in this one place but
+    not other git commands?
+
+ 3. Remove the overly specific PIPE test added in 7559a1be8a in favor of
+    this "git rm" test. After all if we want to test the SIGPIPE pattern
+    but sometimes we get SIGPIPE, sometimes we don't (MINGW), but we
+    don't really care because we assume on some platforms it's being
+    tested.
+
+But not why we'd keep the test as-is now that we've dug up this old code
+and found that since it got added we have a reliable way to test for
+actually-sigpipe.
+
+Just to maintain the coverage on MINGW? Wouldn't it be better to have
+two tests then, one without the prereq to run everywhere, and another
+identical one with the "trap" on !MINGW?
+
+I don't really care and can re-roll in whatever way you prefer, I just
+don't understand what I'd put as a reason in the commit message(s),
+depending on which route we go...
