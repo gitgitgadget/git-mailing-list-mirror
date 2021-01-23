@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF70C433E0
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32AE6C433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5925F23139
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 047E822EBE
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbhAWT7g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 14:59:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36530 "EHLO
+        id S1726284AbhAWT7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 14:59:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726215AbhAWT7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 14:59:06 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D50BC06178B
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:26 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id 7so8376951wrz.0
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:25 -0800 (PST)
+        with ESMTP id S1725922AbhAWT7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 14:59:04 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0659C0613D6
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:23 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id 6so8375959wri.3
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ohpT1dyG20gefcxLzQYcOZmK85UKoGo+762jzBHebhM=;
-        b=GSs1jB2zzAo3ixnyPhrl3fFKucunFeitlmxxns08wCF/IRms9yJOnXjyPBU+hCkzp3
-         0KfwauBlPTpE5tKiOBS6sN2jjrIGhel6D9eNJ9Oqjq5oSMON23mNayix2t3p6Ujlrimu
-         7x86X+ESfM91G7tT0efRUaMUncRN+VTsxF868yPP/JrTBhAa7KvL+ZejkyKZ4f2ZsTZD
-         Xymz1T9PZZ/HGymcUcXZcPgpW8RTM7gdU1mLdudOkb4kfTy8e+mCFb9Jw9n9c8EDLckb
-         8OWKCCrvXpP2qAv34MzAw9NmDehui2pPcKrBBjv0Vz9YsaYo8HdrICbVch82vaaTA4MJ
-         jJOQ==
+        bh=VNwHDx/owv/iw0AULzqRDsjmoZuBpRiDxJMwBI85Ozc=;
+        b=rn1JIF5mlYAb1p7LqO8EmQ2WuNegHFc/WqTci/6x5VK3VS1JbU4hXNYL4XJCm8UmOQ
+         qsPN5BnAT8QYYHpho7cPSiz7g7U5GUoYdXfEK0u/BnxQFWRjjDwsahIqpAFYVsb5cd+p
+         STkvCYFpmCAnF/Wsfqa0yBMsqiNEaf6+Gu/9tSSL2iu3t3TbMKhnfL76HFsLZvfMR9YL
+         JJxHmJTZa+4b8R9Fqcd8cLscPB35tLRxmgmcY3IxHsepfHcFSUQP9g9EuzMGcWhlnjQp
+         UZBvvWD3bOCrR/AiUoRbP1xWKDkw+9kNeWr2GTGFAS0cFEGU2krR8ioi5X8CK5x8rIwA
+         CKBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ohpT1dyG20gefcxLzQYcOZmK85UKoGo+762jzBHebhM=;
-        b=Oq9TpZlD92N79rh97oH3BB3VOxbiJqpTz0KmB6AWXgQRL7lUGRkUjqmeYXAWF968r4
-         SKe5MYPOSyBi15F7A+lOOekAGuGdM4Z0e+6uOMHZKtpfp+R9HLxBFkDrFMVcQpoYMGCJ
-         OrLu6GsSFljBPUTshACUOEWLI1cGCsaYv3TRO/l7JmJ9SL8hmDZIKLB33BgcPkFNBIBQ
-         lY3l704x+cHzMLhxDBWBlioaquxclpXbr6hvAjFj9sj7AyrOLE+Czw4uTD4g+h/U+hoJ
-         cnTEhIl7OvuXYld1T+WQhY31iwqiGoPakg2D0TyCYrEwCjp2AxfK+HowpEk3GSCs6ABl
-         e7tQ==
-X-Gm-Message-State: AOAM533jWLl4lVd9hMF1ofT8/ij27+81zBzDmyJWoWBBt2DMoDR3YAD9
-        rV4INJYxVCmziIlK1T7kqijLqkJKsFY=
-X-Google-Smtp-Source: ABdhPJz+RG1++iKUaBQJfF7Lu62Zrvz5bRYX5gf2hGdJgwUJAOk4HydkMOPOd4+vGlHvivTh2Lh7GA==
-X-Received: by 2002:adf:bc4b:: with SMTP id a11mr189014wrh.260.1611431904702;
-        Sat, 23 Jan 2021 11:58:24 -0800 (PST)
+        bh=VNwHDx/owv/iw0AULzqRDsjmoZuBpRiDxJMwBI85Ozc=;
+        b=bs9HI2X0nFjN5QD6aGGaTw7Tr5yn0Xrgx8lDmte5hkLmmzRNZ2qo40GfL1AxX0wnUu
+         wAnwr/v0hBOw4pXI21NdHZkGaeVw9ZCQ2Jx0YNMFG4LNOpemK0uA8niDreDBVp8l+24n
+         fP0suGv9iNg2gimOrdKhtc3gr8xb9Kb/iVnv2lmpqUPUaMR8hnt87SpKsT4h8yPqso8V
+         Afr5OU8SQSrqGb+NrZOyfzJ/xnvIAVRL0HmqCGR1Kk7N8j0mCg5QnpIJIXU5qoS4B9z3
+         lxmExak2lbvZVaGrAXGwNbd9n2NqVviu6oyy5h9kRllypy8ZYaG71ZmfQPtL1mhQW0MK
+         uOeg==
+X-Gm-Message-State: AOAM531zpnOrnijkuAt7B8qcOYRF3jN9KZq9Za1yjYxE4dJJHhURA+Sx
+        3kKUglMPUAJ2+wZ2KrbouCQ+6S7nNNc=
+X-Google-Smtp-Source: ABdhPJxKFO4YxLP6wfZjgh4pUBvX2grXcLfGlAnuxk8hlEYNDgf8HAQIHk+V+SZgIyeYaGsECo2eKQ==
+X-Received: by 2002:a5d:4987:: with SMTP id r7mr10451169wrq.352.1611431902113;
+        Sat, 23 Jan 2021 11:58:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p9sm16617552wrj.11.2021.01.23.11.58.24
+        by smtp.gmail.com with ESMTPSA id b4sm4663879wrn.12.2021.01.23.11.58.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Jan 2021 11:58:24 -0800 (PST)
-Message-Id: <4e688d25f8c7949dd3edbdb47b924450d9a50796.1611431900.git.gitgitgadget@gmail.com>
+        Sat, 23 Jan 2021 11:58:21 -0800 (PST)
+Message-Id: <bdc8ecca3d2a2fbdb1d8bf10222382c14986aa56.1611431899.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
         <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 23 Jan 2021 19:58:14 +0000
-Subject: [PATCH v3 4/9] fsmonitor: de-duplicate BUG()s around dirty bits
+Date:   Sat, 23 Jan 2021 19:58:11 +0000
+Subject: [PATCH v3 1/9] cache-tree: clean up cache_tree_update()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,92 +77,105 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The index has an fsmonitor_dirty bitmap that records which index entries
-are "dirty" based on the response from the FSMonitor. If this bitmap
-ever grows larger than the index, then there was an error in how it was
-constructed, and it was probably a developer's bug.
+Make the method safer by allocating a cache_tree member for the given
+index_state if it is not already present. This is preferrable to a
+BUG() statement or returning with an error because future callers will
+want to populate an empty cache-tree using this method.
 
-There are several BUG() statements that are very similar, so replace
-these uses with a simpler assert_index_minimum(). Since there is one
-caller that uses a custom 'pos' value instead of the bit_size member, we
-cannot simplify it too much. However, the error string is identical in
-each, so this simplifies things.
+Callers can also remove their conditional allocations of cache_tree.
 
-Be sure to add one when checking if a position if valid, since the
-minimum is a bound on the expected size.
-
-The end result is that the code is simpler to read while also preserving
-these assertions for developers in the FSMonitor space.
+Also drop local variables that can be found directly from the 'istate'
+parameter.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- fsmonitor.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ builtin/checkout.c |  3 ---
+ cache-tree.c       | 17 +++++++++--------
+ sequencer.c        |  3 ---
+ unpack-trees.c     |  2 --
+ 4 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/fsmonitor.c b/fsmonitor.c
-index ca031c3abb8..fe9e9d7baf4 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -13,14 +13,19 @@
- 
- struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
- 
-+static void assert_index_minimum(struct index_state *istate, size_t pos)
-+{
-+	if (pos > istate->cache_nr)
-+		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
-+		    (uintmax_t)pos, istate->cache_nr);
-+}
-+
- static void fsmonitor_ewah_callback(size_t pos, void *is)
- {
- 	struct index_state *istate = (struct index_state *)is;
- 	struct cache_entry *ce;
- 
--	if (pos >= istate->cache_nr)
--		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" >= %u)",
--		    (uintmax_t)pos, istate->cache_nr);
-+	assert_index_minimum(istate, pos + 1);
- 
- 	ce = istate->cache[pos];
- 	ce->ce_flags &= ~CE_FSMONITOR_VALID;
-@@ -82,10 +87,8 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index c9ba23c2794..2d6550bc3c8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -821,9 +821,6 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
  	}
- 	istate->fsmonitor_dirty = fsmonitor_dirty;
  
--	if (!istate->split_index &&
--	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
--		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
--		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-+	if (!istate->split_index)
-+		assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
+-
+ 	if (!cache_tree_fully_valid(active_cache_tree))
+ 		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
  
- 	trace_printf_key(&trace_fsmonitor, "read fsmonitor extension successful");
- 	return 0;
-@@ -110,10 +113,8 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
- 	uint32_t ewah_size = 0;
- 	int fixup = 0;
+diff --git a/cache-tree.c b/cache-tree.c
+index 3f1a8d4f1b7..60b6aefbf51 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -436,16 +436,20 @@ static int update_one(struct cache_tree *it,
  
--	if (!istate->split_index &&
--	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
--		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
--		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-+	if (!istate->split_index)
-+		assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
+ int cache_tree_update(struct index_state *istate, int flags)
+ {
+-	struct cache_tree *it = istate->cache_tree;
+-	struct cache_entry **cache = istate->cache;
+-	int entries = istate->cache_nr;
+-	int skip, i = verify_cache(cache, entries, flags);
++	int skip, i;
++
++	i = verify_cache(istate->cache, istate->cache_nr, flags);
  
- 	put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
- 	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
-@@ -335,9 +336,7 @@ void tweak_fsmonitor(struct index_state *istate)
- 			}
+ 	if (i)
+ 		return i;
++
++	if (!istate->cache_tree)
++		istate->cache_tree = cache_tree();
++
+ 	trace_performance_enter();
+ 	trace2_region_enter("cache_tree", "update", the_repository);
+-	i = update_one(it, cache, entries, "", 0, &skip, flags);
++	i = update_one(istate->cache_tree, istate->cache, istate->cache_nr,
++		       "", 0, &skip, flags);
+ 	trace2_region_leave("cache_tree", "update", the_repository);
+ 	trace_performance_leave("cache_tree_update");
+ 	if (i < 0)
+@@ -635,9 +639,6 @@ static int write_index_as_tree_internal(struct object_id *oid,
+ 		cache_tree_valid = 0;
+ 	}
  
- 			/* Mark all previously saved entries as dirty */
--			if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
--				BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
--				    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
-+			assert_index_minimum(istate, istate->fsmonitor_dirty->bit_size);
- 			ewah_each_bit(istate->fsmonitor_dirty, fsmonitor_ewah_callback, istate);
+-	if (!index_state->cache_tree)
+-		index_state->cache_tree = cache_tree();
+-
+ 	if (!cache_tree_valid && cache_tree_update(index_state, flags) < 0)
+ 		return WRITE_TREE_UNMERGED_INDEX;
  
- 			refresh_fsmonitor(istate);
+diff --git a/sequencer.c b/sequencer.c
+index 8909a467700..aa3e4c81cf0 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -679,9 +679,6 @@ static int do_recursive_merge(struct repository *r,
+ 
+ static struct object_id *get_cache_tree_oid(struct index_state *istate)
+ {
+-	if (!istate->cache_tree)
+-		istate->cache_tree = cache_tree();
+-
+ 	if (!cache_tree_fully_valid(istate->cache_tree))
+ 		if (cache_tree_update(istate, 0)) {
+ 			error(_("unable to update cache tree"));
+diff --git a/unpack-trees.c b/unpack-trees.c
+index af6e9b9c2fd..a810b79657e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1726,8 +1726,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		if (!ret) {
+ 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
+ 				cache_tree_verify(the_repository, &o->result);
+-			if (!o->result.cache_tree)
+-				o->result.cache_tree = cache_tree();
+ 			if (!cache_tree_fully_valid(o->result.cache_tree))
+ 				cache_tree_update(&o->result,
+ 						  WRITE_TREE_SILENT |
 -- 
 gitgitgadget
 
