@@ -6,77 +6,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B69FC433E0
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 00:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6FDFC433E0
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 00:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5169023B6A
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 00:09:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A3D223B6A
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 00:09:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726960AbhAWAHv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Jan 2021 19:07:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36042 "EHLO cloud.peff.net"
+        id S1726208AbhAWAJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Jan 2021 19:09:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36056 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726913AbhAWAFt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Jan 2021 19:05:49 -0500
-Received: (qmail 15774 invoked by uid 109); 23 Jan 2021 00:04:57 -0000
+        id S1726605AbhAWAJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Jan 2021 19:09:29 -0500
+Received: (qmail 15825 invoked by uid 109); 23 Jan 2021 00:08:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 23 Jan 2021 00:04:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 23 Jan 2021 00:08:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20522 invoked by uid 111); 23 Jan 2021 00:04:57 -0000
+Received: (qmail 20574 invoked by uid 111); 23 Jan 2021 00:08:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 19:04:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 22 Jan 2021 19:08:32 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 22 Jan 2021 19:04:55 -0500
+Date:   Fri, 22 Jan 2021 19:08:30 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] run-command: document use_shell option
-Message-ID: <YAtoJ1ooPn9sdoGL@coredump.intra.peff.net>
-References: <20210122142137.21161-1-jacob@gitlab.com>
- <20210122142137.21161-2-jacob@gitlab.com>
- <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
- <YAs9pTBsdskC8CPN@coredump.intra.peff.net>
- <xmqqzh1062as.fsf@gitster.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v2 4/8] builtin/pack-objects.c: respect
+ 'pack.writeReverseIndex'
+Message-ID: <YAto/ndOVfKSkizS@coredump.intra.peff.net>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <cover.1610576805.git.me@ttaylorr.com>
+ <68bde3ea972f5b3753d7e9063d0490c67c74709b.1610576805.git.me@ttaylorr.com>
+ <YAtmb7wXQse76kJi@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzh1062as.fsf@gitster.c.googlers.com>
+In-Reply-To: <YAtmb7wXQse76kJi@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 22, 2021 at 02:21:15PM -0800, Junio C Hamano wrote:
+On Fri, Jan 22, 2021 at 06:57:35PM -0500, Jeff King wrote:
 
-> > -	unsigned stdout_to_stderr:1;
-> > +	/**
-> > +	 * Run the command from argv[0] using a shell (but note that we may
-> > +	 * still optimize out the shell call if the command contains no
-> > +	 * metacharacters). Note that further arguments to the command in
-> > +	 * argv[1], etc, do not need to be shell-quoted.
-> > +	 */
-> >  	unsigned use_shell:1;
-> > +
-> > +	unsigned stdout_to_stderr:1;
+> > +	if (!strcmp(k, "pack.writereverseindex")) {
+> > +		if (git_config_bool(k, v))
+> > +			pack_idx_opts.flags |= WRITE_REV;
+> > +		else
+> > +			pack_idx_opts.flags &= ~WRITE_REV;
+> > +		return 0;
+> > +	}
 > 
-> Reads well.  Thanks.
+> This turned out delightfully simple. And I guess this is the "why is
+> WRITE_REV" caller I asked about from patch 2. It is
+> finish_tmp_packfile() where the magic happens. That unconditionally
+> calls write_rev_file(), but it's a noop if WRITE_REV isn't specified.
 > 
-> It is curious why "diff" chose to move stdout_to_stderr line around,
-> though.
+> Makes sense.
 
-Heh, I also noticed that and tried a few options to no avail (both
-patience/histogram, but also diff.indentHeuristic). It is one deletion
-and 8 insertions even if it is done the other way:
+Oh, one subtlety here: this is in pack-objects itself, _not_ in
+git-repack. This has bit us before with options like
+repack.writebitmaps, which was originally pack.writebitmaps and
+introduced all sorts of awkwardness (because pack-objects serves many
+other purposes besides repacks).
 
-  + /*
-  + ... 6 more lines ...
-  + */
-  + unsigned use_shell:1;
-  +
-    unsigned stdout_to_stderr:1;
-  - unsigned use_shell:1;
+I think this _might_ be OK, because we wouldn't even hit the code-paths
+that handle this unless we are also writing a .idx (and really, the
+point is that the two should always be written together or not at all).
 
-so it may just come down to the order of xdiff parsing the lines.
+So probably it's fine, but I wonder if we should err on the side of
+conservatism by saying that pack-objects will not change behavior
+without receiving a new command-line option, and that repack should
+trigger that option. I dunno. I guess that it makes it weird with
+respect to index-pack, which wants to see a very low-level option, too.
+So maybe this is the best way forward.
+
+(Sorry for being non-committal; I'm mostly thinking out loud).
 
 -Peff
