@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA3BC433DB
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA697C433DB
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79A5B22D2B
-	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8A872311B
+	for <git@archiver.kernel.org>; Sat, 23 Jan 2021 19:59:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726223AbhAWT7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Jan 2021 14:59:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36524 "EHLO
+        id S1726249AbhAWT7S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Jan 2021 14:59:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbhAWT7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Jan 2021 14:59:05 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31646C061788
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:25 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id y187so7312105wmd.3
-        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:25 -0800 (PST)
+        with ESMTP id S1726021AbhAWT7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Jan 2021 14:59:04 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58177C061786
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:24 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d16so7697302wro.11
+        for <git@vger.kernel.org>; Sat, 23 Jan 2021 11:58:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bh8yh3+iaQ4iXXap8pGPFY/q1QZLWVT+vydoYX5XmtQ=;
-        b=rIYM8Sj1xmEI9gizswqiR/akQNACjvzbfprhTNdSAnCKn04N90sUhLJfSsxzKbutra
-         Aq8s2L3o3K3GGjy7oW/IAxZnR8XxTE98+PU6Ie/exPsqR7i9J4iyLq65UO7q4/StRwjq
-         3b7mplEl221IIdInScHZNgKQK6j+j0/sHJQrQFgMotZ+StmgvJHqFfIZDBpVTIWo3Bm/
-         rydTfBRix3dKyR6xtQ0HXtjA4tNeiuU3Y3OH4G7auPIpqP9eBoDaqLZqlo+RuboyclL1
-         34Dyb7SmWrPbT0VqTbJ8OrW57Dughq0696pxwnEVq/Dn09zGZiUaA3/mYdbUEcyIws5B
-         FCLg==
+        bh=+A0SHikiMuu/wPZEMUwCv2+0OZd1VZkq05UUFRdHlUA=;
+        b=c0ztjakr8he5ZPexu4be7JR8drIz1LvQ9Z1O33bgFw1NOiRAVb6I/fP33wl8CVPtbU
+         4QdHUM6A/Sk55xXo5rNs0Tl/ggUjffEIcQbngT5EYZz8az8sRm6UzDUg5XRUH+EorUS3
+         RBGQK6kB9bJccmrPNriGrI+puwOvACLOSz0wbeT2HrWYUeXPLAN4AUYBm2gZqCx6i5dK
+         V/m2kVIttOw+EHFy8JKFnug0o7/F/FVRP9e9lfUAjk2qrIPjRcgHu7lUlw8RTsBZaUTu
+         RElCLwg11uhG9ddHZEBNMDgBKItrrSaS78+y4KxvPinaHlNDFj5djcX/yRCMoRf9T7uB
+         orlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bh8yh3+iaQ4iXXap8pGPFY/q1QZLWVT+vydoYX5XmtQ=;
-        b=MkkfAqZIzzVD6SpPSZnWRQt0Gd42WCwnx79tfX53jWrswJjuUBVCc8skXp3CCuELPx
-         1UVJQA6ieYd9ygF/CBw3b13OovHmPzRimzGQDoo79Y8yiSM6fFZMOXcZVjRXjl58QuZj
-         kpkVBFjA6qgES17h1t6ZP5p/tUxsIv1/wOIW/rL7K8a9DRU3fTYlKCRv2OqhuibHStBs
-         hX5tO1B666G/QZtrZDjE7qfyOaqOW9lw3sULW2ypE0q456j5U0Ny3VafWd+8qgnk32xJ
-         tIC8W9Vj/JPUyHZLLCU8UrFYOVslqBQ3bI+2N6Zw/5k2nubbQN0/P+5pqDgl8zRpiv1X
-         HZ0Q==
-X-Gm-Message-State: AOAM531akU9+VlGyaUJUVn80mNC1k7ZVAIv5VfgWEVrCH63qHK5LqwTy
-        9PqkiZK8syYbZ/lkRGGiVX14msLGw/o=
-X-Google-Smtp-Source: ABdhPJzwd4NPxNGJZ9zqYVteJ9XVjYb3seUEJumdfQIGXICxliN8hXh3SZz3bOBI98K28v/HsEwROQ==
-X-Received: by 2002:a1c:b7d6:: with SMTP id h205mr9392825wmf.182.1611431903791;
-        Sat, 23 Jan 2021 11:58:23 -0800 (PST)
+        bh=+A0SHikiMuu/wPZEMUwCv2+0OZd1VZkq05UUFRdHlUA=;
+        b=Msc+PwTqBvBrym11e/WU/jPPGUMvTRjQ7qxSIxO8nWP9hHYLIGe66xUVmj63FZ2jhE
+         6Mh1/qQ4xXj09DpTCtXN9eDzi8Z8M9pDxpdSHvpijsallj1tleUAGQwlYK042VtNpphV
+         sjc73WCj11xm60cxXXLU5I3OHUbyEI1Hs9De/koYdIhyqvkk3ztCJVuEsziL7y+zX8iL
+         adAtIirabBqurkxRbsfIJFadbA6oN+OEV0AuUHLGbuPTbgFpEzpGpNnCUoaQZF7NdbOP
+         9xSz8Aiv5C0sWck//Bb/Qpj7+RGY6irEfwlPGJCpQ28xS0cr5ax3vJMN+r33EJmXYuwI
+         cxfw==
+X-Gm-Message-State: AOAM533HpZOA0MIVWU9wLBMkqlV9C0DjqwYS3Zl/pG2q/bppEk8AOjff
+        b44WouJIBAfMXKCAxCV15nU/lCobwKo=
+X-Google-Smtp-Source: ABdhPJzmvbCTw0C8Hxy7y7+G4DXaDVSVW1d3FDSKFSfFeLjS/jXX0a4X+L+k+zn4IZkvdaIIliRGmQ==
+X-Received: by 2002:adf:81e4:: with SMTP id 91mr10484393wra.161.1611431902985;
+        Sat, 23 Jan 2021 11:58:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x1sm5691023wmi.14.2021.01.23.11.58.23
+        by smtp.gmail.com with ESMTPSA id b4sm4663933wrn.12.2021.01.23.11.58.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Jan 2021 11:58:23 -0800 (PST)
-Message-Id: <314b6b34f759c3a0e0d361bc08b254960a4d28e4.1611431900.git.gitgitgadget@gmail.com>
+        Sat, 23 Jan 2021 11:58:22 -0800 (PST)
+Message-Id: <1b8b56800948339c0e0387555698bdfdc80a19ad.1611431900.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
         <pull.839.v3.git.1611431899.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 23 Jan 2021 19:58:13 +0000
-Subject: [PATCH v3 3/9] cache-tree: extract subtree_pos()
+Date:   Sat, 23 Jan 2021 19:58:12 +0000
+Subject: [PATCH v3 2/9] cache-tree: simplify verify_cache() prototype
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,60 +77,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This method will be helpful to use outside of cache-tree.c in a later
-feature. The implementation is subtle due to subtree_name_cmp() sorting
-by length and then lexicographically.
+The verify_cache() method takes an array of cache entries and a count,
+but these are always provided directly from a struct index_state. Use
+a pointer to the full structure instead.
+
+There is a subtle point when istate->cache_nr is zero that subtracting
+one will underflow. This triggers a failure in t0000-basic.sh, among
+others. Use "i + 1 < istate->cache_nr" to avoid these strange
+comparisons. Convert i to be unsigned as well, which also removes the
+potential signed overflow in the unlikely case that cache_nr is over 2.1
+billion entries. The 'funny' variable has a maximum value of 11, so
+making it unsigned does not change anything of importance.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c | 6 +++---
- cache-tree.h | 2 ++
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ cache-tree.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/cache-tree.c b/cache-tree.c
-index acac6d58c37..2fb483d3c08 100644
+index 60b6aefbf51..acac6d58c37 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -45,7 +45,7 @@ static int subtree_name_cmp(const char *one, int onelen,
- 	return memcmp(one, two, onelen);
+@@ -151,16 +151,15 @@ void cache_tree_invalidate_path(struct index_state *istate, const char *path)
+ 		istate->cache_changed |= CACHE_TREE_CHANGED;
  }
  
--static int subtree_pos(struct cache_tree *it, const char *path, int pathlen)
-+int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen)
+-static int verify_cache(struct cache_entry **cache,
+-			int entries, int flags)
++static int verify_cache(struct index_state *istate, int flags)
  {
- 	struct cache_tree_sub **down = it->down;
- 	int lo, hi;
-@@ -72,7 +72,7 @@ static struct cache_tree_sub *find_subtree(struct cache_tree *it,
- 					   int create)
+-	int i, funny;
++	unsigned i, funny;
+ 	int silent = flags & WRITE_TREE_SILENT;
+ 
+ 	/* Verify that the tree is merged */
+ 	funny = 0;
+-	for (i = 0; i < entries; i++) {
+-		const struct cache_entry *ce = cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
+ 		if (ce_stage(ce)) {
+ 			if (silent)
+ 				return -1;
+@@ -180,13 +179,13 @@ static int verify_cache(struct cache_entry **cache,
+ 	 * stage 0 entries.
+ 	 */
+ 	funny = 0;
+-	for (i = 0; i < entries - 1; i++) {
++	for (i = 0; i + 1 < istate->cache_nr; i++) {
+ 		/* path/file always comes after path because of the way
+ 		 * the cache is sorted.  Also path can appear only once,
+ 		 * which means conflicting one would immediately follow.
+ 		 */
+-		const struct cache_entry *this_ce = cache[i];
+-		const struct cache_entry *next_ce = cache[i + 1];
++		const struct cache_entry *this_ce = istate->cache[i];
++		const struct cache_entry *next_ce = istate->cache[i + 1];
+ 		const char *this_name = this_ce->name;
+ 		const char *next_name = next_ce->name;
+ 		int this_len = ce_namelen(this_ce);
+@@ -438,7 +437,7 @@ int cache_tree_update(struct index_state *istate, int flags)
  {
- 	struct cache_tree_sub *down;
--	int pos = subtree_pos(it, path, pathlen);
-+	int pos = cache_tree_subtree_pos(it, path, pathlen);
- 	if (0 <= pos)
- 		return it->down[pos];
- 	if (!create)
-@@ -123,7 +123,7 @@ static int do_invalidate_path(struct cache_tree *it, const char *path)
- 	it->entry_count = -1;
- 	if (!*slash) {
- 		int pos;
--		pos = subtree_pos(it, path, namelen);
-+		pos = cache_tree_subtree_pos(it, path, namelen);
- 		if (0 <= pos) {
- 			cache_tree_free(&it->down[pos]->cache_tree);
- 			free(it->down[pos]);
-diff --git a/cache-tree.h b/cache-tree.h
-index 639bfa5340e..8efeccebfc9 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -27,6 +27,8 @@ void cache_tree_free(struct cache_tree **);
- void cache_tree_invalidate_path(struct index_state *, const char *);
- struct cache_tree_sub *cache_tree_sub(struct cache_tree *, const char *);
+ 	int skip, i;
  
-+int cache_tree_subtree_pos(struct cache_tree *it, const char *path, int pathlen);
-+
- void cache_tree_write(struct strbuf *, struct cache_tree *root);
- struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
+-	i = verify_cache(istate->cache, istate->cache_nr, flags);
++	i = verify_cache(istate, flags);
  
+ 	if (i)
+ 		return i;
 -- 
 gitgitgadget
 
