@@ -2,93 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D85FFC433E0
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 08:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6CD8C433E0
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 08:43:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C5D922838
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 08:27:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A5C5422C9C
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 08:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726710AbhAXI1Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 03:27:24 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48]:43387 "EHLO
-        mail-ej1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726660AbhAXIZD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 03:25:03 -0500
-Received: by mail-ej1-f48.google.com with SMTP id a10so13586306ejg.10
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 00:24:47 -0800 (PST)
+        id S1726553AbhAXIne (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 03:43:34 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:34879 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726531AbhAXInc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 03:43:32 -0500
+Received: by mail-ed1-f42.google.com with SMTP id j13so11582051edp.2
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 00:43:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JngO+9g5pAYQQtW3Nl4EhQN3WTk6hsWAgv6/jo0RcnM=;
-        b=qmc5TW9UVww0aP60aw/aB5lNQ24zJvwiXZjjxQ55UARFB3mWtRzew490+Ruc8eq8Jl
-         lg4ZizqVOcWw+a0gGnt3f4F4HHn8xs0rooTM6cM9lzyX2ig6h/OJzzBqkQabShdEWZw4
-         pRxVYL5VFtMwSI/R+4IjzmGvXXYJr1BBn6ah51ekX8x/vOmoTLu12GxtGnJs8At21dhF
-         uE8QThuW23Y3BNb6HRFXZbI01e30TGLMgw23cIJcyq1mxzkRPJgIGSWmD1uztih63tdx
-         Voe+I14l3Lgb4euwWJ+Qp4TG77eSPC4oIL4PevnDdMPH5txuEfH3xlO91gmrvXNePWRP
-         bQfw==
-X-Gm-Message-State: AOAM5312ibeTsxyXP7GJFPkMQRtyYiYKjfhBPSR8FylJd2/PyRnNK7+C
-        SU4gRhePoNQGdXvh00xNMiAeK57k+d6dVgjotxk=
-X-Google-Smtp-Source: ABdhPJxp5V+k2Z6pAMEL1DF6ed+TXWF+q+tZZsL+WGOTilz1aOgsRcSf5tH9mAVwCrjNtV4Rooxl2YwY9e+aibG/8DY=
-X-Received: by 2002:a17:906:4159:: with SMTP id l25mr365012ejk.311.1611476661919;
- Sun, 24 Jan 2021 00:24:21 -0800 (PST)
+        bh=2NauqjFI5RxtP0C0qJpH4EzfY+oFSU3kx6FUhvK6MUM=;
+        b=ZQPGL1Awq8/cZE55IP9u76H3udBb3I/ZxVfAdE1/jW9w6pou+bSXikPh7vMoNALfJo
+         8xEo3xC/0IjS3erOR6+p8ubtrSmZP5VdF5mFyeD7HZVvwgV1x/HfrtuTPRuw7cxzigCM
+         8fu9epXtnmedR4ndDd0oR1UOV/LwxLfTp430+1JD2+nhLE+kI2J+6dHTxoFJovGrXquh
+         ij+fB3StgBj50aFFiEPh1zpszUz71CssID4pHUXCkvdoVP1eIRfoqt+VnzNjyzgewY0C
+         JlZJE54dnSoTpy8pghL2xVx+8mcB3X/2gQ7mNpargPTMd7Lk4IyU5JKJ3R4tlpkRMsA/
+         qMYQ==
+X-Gm-Message-State: AOAM5333fTYDZxZOYcaSYW7lHxJJyUhveiLJoecqMpfoPCq1rQRL2OxT
+        386eaZG7s788r31J+ZqDts2MqZBd5/HcsFO/aWc=
+X-Google-Smtp-Source: ABdhPJzhCVMNiwlp/1kv5913lN5ipMQd/+TB29+I0+ORcTOEpUTlLGe0opQHRZ3bZ/exyLSjogM5QlOqlGL4wumWZ3w=
+X-Received: by 2002:a05:6402:310d:: with SMTP id dc13mr1021565edb.291.1611477770615;
+ Sun, 24 Jan 2021 00:42:50 -0800 (PST)
 MIME-Version: 1.0
 References: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
- <20210119212739.77882-1-rafaeloliveira.cs@gmail.com> <20210119212739.77882-6-rafaeloliveira.cs@gmail.com>
- <be24c164-3d03-145f-abc0-4f41ed225b4e@gmail.com>
-In-Reply-To: <be24c164-3d03-145f-abc0-4f41ed225b4e@gmail.com>
+ <20210119212739.77882-1-rafaeloliveira.cs@gmail.com> <20210119212739.77882-8-rafaeloliveira.cs@gmail.com>
+In-Reply-To: <20210119212739.77882-8-rafaeloliveira.cs@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 24 Jan 2021 03:24:11 -0500
-Message-ID: <CAPig+cS_7P3dCMDiWutuk+ota+NCXyz11XDv_Sgh3BCmVgeTLw@mail.gmail.com>
-Subject: Re: [PATCH v3 5/7] worktree: teach `list --porcelain` to annotate
- locked worktree
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Git List <git@vger.kernel.org>
+Date:   Sun, 24 Jan 2021 03:42:39 -0500
+Message-ID: <CAPig+cQnp1iV4u9Z6cArSEq-oMrQW6yQVG6VTTjnOZ3MNO9nEQ@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] worktree: teach `list` verbose mode
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 20, 2021 at 6:00 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> On 19/01/2021 21:27, Rafael Silva wrote:
-> >   The porcelain format has a line per attribute.  Attributes are listed with a
-> >   label and value separated by a single space.  Boolean attributes (like `bare`
-> >   and `detached`) are listed as a label only, and are present only
-> > +if the value is true.  Some attributes (like `locked`) can be listed as a label
-> > +only or with a value depending upon whether a reason is available.  The first
-> > +attribute of a working tree is always `worktree`, an empty line indicates the
-> > +end of the record.  For example:
->
-> I think it would be helpful to document that the reasons are quoted
-> according core.quotePath.
+On Tue, Jan 19, 2021 at 4:28 PM Rafael Silva
+<rafaeloliveira.cs@gmail.com> wrote:
+> [...]
+> Let's teach "git worktree list" a --verbose mode that outputs the reason
+> why the worktrees are being annotated. The reason is a text that can take
+> virtually any size and appending the text on the default columned format
+> will make it difficult to extend the command with other annotations and
+> not fit nicely on the screen. In order to address this shortcoming the
+> annotation is then moved to the next line indented followed by the reason
+> If the reason is not available the annotation stays on the same line as
+> the worktree itself.
+> [...]
+> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+> ---
+> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+> @@ -134,6 +134,36 @@ test_expect_success '"list" all worktrees with prunable consistent with "prune"'
+> +test_expect_success '"list" all worktrees --verbose with locked' '
+> +       test_when_finished "rm -rf locked1 locked2 out actual expect && git worktree prune" &&
+> +       git worktree add locked1 --detach &&
+> +       git worktree add locked2 --detach &&
+> +       git worktree lock locked1 &&
+> +       git worktree lock locked2 --reason "with reason" &&
+> +       test_when_finished "git worktree unlock locked1 && git worktree unlock locked2" &&
 
-Good idea.
+Same minor problem here as mentioned in my review of [5/7]: If locking
+of the second worktree fails then test_when_finished() won't get
+invoked, so the first worktree won't get unlocked, thus won't be
+pruned. To fix:
 
-> I'm not sure if it is worth changing this but I wonder if it would be
-> easier to parse the output if the names of attributes with optional
-> reasons were always followed by a space even when there is no reason,
-> otherwise the code that parses the output has to check for the name
-> followed by a space or newline. A script that only cares if the worktree
-> is locked can parse the output with
-> l.starts_with("locked ")
-> rather than having to do
-> l.starts_with("locked ") || l == "locked\n"
+    git worktree lock locked1 &&
+    test_when_finished "git worktree unlock locked1" &&
+    git worktree lock locked2 --reason "with reason" &&
+    test_when_finished "git worktree unlock locked2" &&
 
-I see where you're coming from with this suggestion, though my
-knee-jerk reaction is that it would be undesirable. Even after mulling
-it over for a few days, I still haven't managed to convince myself
-that it would be a good idea. There are a couple reasons (at least)
-for my negative reaction. The primary reason is that the trailing
-space is "invisible", and as such could end up being as confusing as
-it is helpful for the simple parsing case (taking into consideration
-that people often don't consult documentation). The second reason is
-that we're already expecting clients to be able to parse C-style
-quoting/escaping of the reason, so asking them to also distinguish
-between a single token `locked` and a `locked reason-for-lock` seems
-like very, very minor extra complexity. (It also just feels a bit
-sloppy to have that trailing space, but that's a quite minor concern.)
+> +       echo "$(git -C locked2 rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >expect &&
+> +       printf "\tlocked: with reason\n" >>expect &&
+> +       git worktree list --verbose >out &&
+> +       grep "/locked1  *[0-9a-f].* locked$" out &&
+> +       sed -n "s/  */ /g;/\/locked2  *[0-9a-f].*$/,/locked: .*$/p" <out >actual &&
+> +       test_cmp actual expect
+> +'
