@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF892C433E6
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 17:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 377F6C433E0
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 17:07:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBFB322CF6
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 17:06:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F402D22D50
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 17:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726468AbhAXRGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 12:06:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52722 "EHLO
+        id S1726498AbhAXRG7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 12:06:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726408AbhAXRGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 12:06:38 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41DAC061573
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 09:05:57 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id i63so7004853pfg.7
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 09:05:57 -0800 (PST)
+        with ESMTP id S1726496AbhAXRG5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 12:06:57 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FAC9C061574
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 09:06:14 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id cq1so6855193pjb.4
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 09:06:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cVwqRHiCPVOdFvi8BGeDd6ox9vceEwe8HnBQfQjgJgU=;
-        b=MVaCjdDnyU6jGBB8USEBY+s2Yb65gUuMGYSRsxRglGVJ/WdLzl3SJrhihAS26EOYJD
-         4InSWvERPpzNr02qD/RuoFm0dY1c9sH7XgH7p9blQAI9F1VARc4Dxc5g1bv9m6UCdrlS
-         /MKigCTqTL3sX1d917YDhtV/5huEJzAtJQSFJIFgRnjO2RpetHEUL7MhrPc5OpxdPNqD
-         EcZwYby933brmvd+qMBDyMTfz9cMKn6fMo2FkBOXKUvYUSibH8bG61A+2IN87tpdHszM
-         hlCq2vIy5kIyoyTfw34kgd6hLX2A82tOM0rer+QLcB7ooYuD82F1uTA9TU2BWLY740p5
-         gadg==
+        bh=wq7AT0GeWUiw6/y3jlwDs7feIY/g4Gw8ax680CWXrw4=;
+        b=cmFZwvsGWKeLU3WEsrm+YyeT6TSkRvK462oJztaL5hyUGUfJ/KuNOEofYkf+VZgtcC
+         vK6yBQ+zLnhu7EBMNlBGgohlkxe63LyfDiUy+ubWJMS3d9M2xNj2oFo+3H10mjuX5cxI
+         om9Jw0FJSO3RfQ8S7kTb1eYfv0VPEVDUrUKzwD/dFCR5ZuwLnzerGvygqYATvZiXy8TT
+         xJZM1upsVK1iC/RYec7KufVP1KeqxKT0lvQvTAIwh5tWkxyxdAX6D/Loy0mke7ufkBOo
+         ENA0S3IVoM+7xtRoUQ97toloAAvIAao4pxIh05QsMOtsnOFMZkugLDIFr74PRVFCOpVT
+         peUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cVwqRHiCPVOdFvi8BGeDd6ox9vceEwe8HnBQfQjgJgU=;
-        b=jLC3NzbFwP1WMmjPwrXbc5zvw6rtsg40LoQcqbgE+wNLws9S0BTL7nx2HdKN/x5xKj
-         xmdPXqq+lfyT+YtXnkhp1AgA6cHGlDOeVtw3LJL6HlUfhB8SQzMXVfJgnKIdgJlBR5AP
-         8/y8DfwfPb+cocTGgGk7AQEcSToAqh8jBgV6GpZK+p5AdjzxBWcsAbk8CQgBgPw44+2/
-         7cHaxv7wbHJMl2mt7qeXiXv/y3DdldwNXH9BDEFqFdZgUzzb7R2pGk+1LbKk5ziqoAqG
-         /9NGC5n/CPPHDC4WjyE1N1H1azp0wo1oJrmQxdtewSxDDAfzPzLjdp29mQDGkWmbNGlr
-         BuPQ==
-X-Gm-Message-State: AOAM533BEgybM0Wg2gaExbwm6o5+O3V6BNcku9hHBOm33HyXFUDWKGx8
-        wVyDwmKIRLwoiNkJ6jiXtxkCZTa++lhkHg==
-X-Google-Smtp-Source: ABdhPJyVCGjI1Ot2Bt6lDEphrzd7mrL2MrYRH47Q450JyriDG4IbRaqZWPna0mdRKr1yahsp/7RCxQ==
-X-Received: by 2002:a63:af05:: with SMTP id w5mr3929795pge.22.1611507957276;
-        Sun, 24 Jan 2021 09:05:57 -0800 (PST)
+        bh=wq7AT0GeWUiw6/y3jlwDs7feIY/g4Gw8ax680CWXrw4=;
+        b=ZZ/4Yo6UWoRViWE2mZRmfrxJuX5028jjDxTghLGISQqfGOykFrvwWFj8uLvAUlkTPy
+         KXIuvL/H5svRYXOjgVdUrnPvbYPIqjv3pYqAyvbHuooLmpow5LPrCVH6MtrhpQcOEOax
+         ipIKS97MuZWvF3WrDxBJZCc+y2L5NTTgwc0ahOUJfjoTF6nd+bEgpJgM73khOMsjO9u2
+         GmgTcSH2mxwtCWyS6p+zAtXg5ertKz1NNxjGpbIJ+XcTa061OOn3psJjkOQ+GsVzombT
+         M9VIQ4VQy5LcbXrTEHeZFUiY87uE45ykNGxywJj8Y+y4iVzavE20MG2ps5rqH1vTC9yq
+         sp8w==
+X-Gm-Message-State: AOAM533WojUkXpGhr4vDV1T5w4KDVE5cbgbS9TwN4C8O/cFiB/+/bOSh
+        Tyt+S06v+OBdsGshZH8XOSf5SFmUBT5vnA==
+X-Google-Smtp-Source: ABdhPJyO3fQTjtG8R3pzaVnriRr+uxhNOx6Gvkjx8rwkWDhQVLXC+olu/WvNVSwbc1FtIP8SlJ+rqQ==
+X-Received: by 2002:a17:902:ecca:b029:de:b5bc:c852 with SMTP id a10-20020a170902eccab02900deb5bcc852mr15232806plh.59.1611507973801;
+        Sun, 24 Jan 2021 09:06:13 -0800 (PST)
 Received: from localhost.localdomain ([2409:4050:2d0e:58a:f516:739c:ea0e:a6ba])
-        by smtp.googlemail.com with ESMTPSA id r30sm16283308pjg.43.2021.01.24.09.05.51
+        by smtp.googlemail.com with ESMTPSA id r30sm16283308pjg.43.2021.01.24.09.06.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 09:05:55 -0800 (PST)
+        Sun, 24 Jan 2021 09:06:13 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         marcnarc@xiplink.com, phillip.wood123@gmail.com,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Taylor Blau <me@ttaylorr.com>,
         Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v3 1/9] rebase -i: only write fixup-message when it's needed
-Date:   Sun, 24 Jan 2021 22:33:59 +0530
-Message-Id: <20210124170405.30583-2-charvi077@gmail.com>
+Subject: [PATCH v3 2/9] sequencer: factor out code to append squash message
+Date:   Sun, 24 Jan 2021 22:34:00 +0530
+Message-Id: <20210124170405.30583-3-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210124170405.30583-1-charvi077@gmail.com>
 References: <20210119074102.21598-1-charvi077@gmail.com>
@@ -78,36 +77,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-The file "$GIT_DIR/rebase-merge/fixup-message" is only used for fixup
-commands, there's no point in writing it for squash commands as it is
-immediately deleted.
+This code is going to grow over the next two commits so move it to
+its own function.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Reviewed-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- sequencer.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sequencer.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 8909a46770..a59e0c84af 100644
+index a59e0c84af..08cce40834 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1757,11 +1757,10 @@ static int update_squash_messages(struct repository *r,
- 			return error(_("could not read HEAD's commit message"));
+@@ -1718,6 +1718,17 @@ static int is_pick_or_similar(enum todo_command command)
+ 	}
+ }
  
- 		find_commit_subject(head_message, &body);
--		if (write_message(body, strlen(body),
--				  rebase_path_fixup_msg(), 0)) {
-+		if (command == TODO_FIXUP && write_message(body, strlen(body),
-+							rebase_path_fixup_msg(), 0) < 0) {
- 			unuse_commit_buffer(head_commit, head_message);
--			return error(_("cannot write '%s'"),
--				     rebase_path_fixup_msg());
-+			return error(_("cannot write '%s'"), rebase_path_fixup_msg());
- 		}
++static void append_squash_message(struct strbuf *buf, const char *body,
++				  struct replay_opts *opts)
++{
++	unlink(rebase_path_fixup_msg());
++	strbuf_addf(buf, "\n%c ", comment_line_char);
++	strbuf_addf(buf, _("This is the commit message #%d:"),
++		    ++opts->current_fixup_count + 1);
++	strbuf_addstr(buf, "\n\n");
++	strbuf_addstr(buf, body);
++}
++
+ static int update_squash_messages(struct repository *r,
+ 				  enum todo_command command,
+ 				  struct commit *commit,
+@@ -1779,12 +1790,7 @@ static int update_squash_messages(struct repository *r,
+ 	find_commit_subject(message, &body);
  
- 		strbuf_addf(&buf, "%c ", comment_line_char);
+ 	if (command == TODO_SQUASH) {
+-		unlink(rebase_path_fixup_msg());
+-		strbuf_addf(&buf, "\n%c ", comment_line_char);
+-		strbuf_addf(&buf, _("This is the commit message #%d:"),
+-			    ++opts->current_fixup_count + 1);
+-		strbuf_addstr(&buf, "\n\n");
+-		strbuf_addstr(&buf, body);
++		append_squash_message(&buf, body, opts);
+ 	} else if (command == TODO_FIXUP) {
+ 		strbuf_addf(&buf, "\n%c ", comment_line_char);
+ 		strbuf_addf(&buf, _("The commit message #%d will be skipped:"),
 -- 
 2.29.0.rc1
 
