@@ -8,68 +8,67 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D8B4C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52D36C433E0
 	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 10:29:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 086DB22CB9
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 10:29:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2006222D0A
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 10:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726615AbhAXKVV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 05:21:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50918 "EHLO
+        id S1726641AbhAXKWC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 05:22:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726583AbhAXKVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 05:21:19 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA12C061573
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 02:20:39 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id r12so13754424ejb.9
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 02:20:39 -0800 (PST)
+        with ESMTP id S1726583AbhAXKWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 05:22:01 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43D59C061574
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 02:21:20 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id c6so11734072ede.0
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 02:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
          :date:mime-version;
-        bh=QQwINFw3HM5ZAKzgivzCwqa+ThcClDaS07WJJzNB6qU=;
-        b=aos2euVTGDoD02JLIS8LRIqZePsuIB4E1D3NXHYGmF/1xLVkETCXoyS7eIUF/AbZNK
-         glRKNT2MCNUo1aHjols2/bHlbXw8ru9gwL2u0XVyAUMDIjbMHXQ9sZwBag+UxhiHJgQb
-         40jmICL+QQNcmdegC9rz49jyd7bZiKBdRhdksSG0WwPjmuXhmRZ2KwN/+1PH4ulpjqcq
-         VpCPUvX6xAQkC4gPnD2V8zv2US9xZEJcjdF9wTOUQzjACGhoi4Q+GfWeV+88+nXRbioP
-         VIpplWXseKYMM6gTfjW2t1mr43wkOgU6pcOKz1AYoRRlBQ8OeNh7nrI3x4sSvi/G4sgh
-         F0og==
+        bh=u0q3BDFG8S2M7W67SYxHYJ/uwCr2j8aA5qvKo7sy5rU=;
+        b=KC/MrGl7hl0Etc7T24tkYyFHig399m5UcNz3jb5ECW7ePSuhHO9Qo2j7i7cIW99+D0
+         9taO06tcyRUX0oN4Zp2EmNCai7C2LZPwYG3c+zCSPM9S3SPGTsB2Tggq622MCDskgxih
+         B35vhOLBbsexHJDinU6Dmx36PkjSYOKGBK1wzj5aVPJbQpn32nCpA83Oe3JmEr6Cxy6q
+         BpUMJTjfq/ml2L1HJiAfFrVmSBUZqL14BhplRptSCsXkpRB55707o8zQWgZEvkwZyMRS
+         NPEXUC88Yi9ZNRV8GJNr2FpbItYlyuTMrEkMUX7fcmq0dVd0JvEllmuKupRRr6dK0/vO
+         j5VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:references:user-agent:from:to:cc:subject
          :in-reply-to:message-id:date:mime-version;
-        bh=QQwINFw3HM5ZAKzgivzCwqa+ThcClDaS07WJJzNB6qU=;
-        b=BwC7AHC5XfS827iRmYTd2XqfVWGRMANb/63c0Lx+QqTZF2+Rsto8WarpcuvB85hGc5
-         sqtFlhV6rTPccFiLPHVIzSlaD4n5Ji+j6FETjyprJnorOIJAk6lYUbJQRR1GTMMOpHfg
-         5egA9kwaLtBpTOVZsgfOtN5GXQxqX1IImCfqdje9mpTtrWsAEML8BtidjBeIUCVSC8y8
-         cyJzZKh7HlJ2K11Or/fziT4OKuK4BfTqRTZke/1EkkLZL/oktzXCrT2+HJOV642b9OtI
-         3szdSaTBSQqib8Trm8jG8DpYjc9I14uSwM5/cUdAq9P8X9CaLD96ftEbp4mfEXSj+CNz
-         Y3YQ==
-X-Gm-Message-State: AOAM533x3AG5NgKskpj5jkaNb1ztlLQx6US+C5UzGSSIV2JHS42XQQ2q
-        vmfigwfLOlutwgBkdeCJV5rIpdVRjwNiWQ==
-X-Google-Smtp-Source: ABdhPJxggvBYN8OzXGTmrZteEp7BDDhIdGdqKdxicMFg5K3UTIXLi1BbPl/iqOyFmoNpU5B4ZPyQ0w==
-X-Received: by 2002:a17:906:ca0d:: with SMTP id jt13mr49608ejb.170.1611483638100;
-        Sun, 24 Jan 2021 02:20:38 -0800 (PST)
+        bh=u0q3BDFG8S2M7W67SYxHYJ/uwCr2j8aA5qvKo7sy5rU=;
+        b=KXqJw33vo71SNRWqxz9nJUIoQKIyo+NfIU6FBHFV0LFzYuDc/q04ca5FTO2i4EA19y
+         C4G82haA2ZLCXJmlJTG0XmLi5p5g5d//zejK92ywOIFDrEINKCaS8UtJdin+6nQuRtxh
+         Lwe+fzuAnfIzAFRIyO3tCoWWXmuiTpUL/QfuYl3VlGy/oSxVmeuVLO6ymW6vnGW9Vx0Q
+         lkB/PolEU7Gvz4XCM7pETNIOPEBf9yFMVb6fZO33L5EEK3CycSZKCjNpkXfLCl6CQpaz
+         D+837GrsBuOcR96hGr+MQ1Mk7a8DA9CVeH5XBhCN25Znp/nz3LOmueVU4wVeGQ5f4VC3
+         m0Vw==
+X-Gm-Message-State: AOAM532i10GdXYH/EzNbEnP2+ogdFMcUGaCdBND9P+pNokt+KEys5Pq8
+        TixYz+vTaCtchJRpyr7ivkR6mVXUANuNsA==
+X-Google-Smtp-Source: ABdhPJwyYnWJAU1cHzmdbOxxkHCa00waQ/pvRoOyfNAcPBjjBH3gJbwLMJW38W/k/7bz3jp3jfAXZg==
+X-Received: by 2002:a50:fd19:: with SMTP id i25mr513636eds.386.1611483679075;
+        Sun, 24 Jan 2021 02:21:19 -0800 (PST)
 Received: from cpm12071.local ([79.140.115.149])
-        by smtp.gmail.com with ESMTPSA id c14sm8794190edr.46.2021.01.24.02.20.37
+        by smtp.gmail.com with ESMTPSA id zg24sm6881372ejb.120.2021.01.24.02.21.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 02:20:37 -0800 (PST)
+        Sun, 24 Jan 2021 02:21:18 -0800 (PST)
 References: <20210117234244.95106-1-rafaeloliveira.cs@gmail.com>
  <20210119212739.77882-1-rafaeloliveira.cs@gmail.com>
- <20210119212739.77882-6-rafaeloliveira.cs@gmail.com>
- <CAPig+cRBDSWCmrV+6w0gXaSH+xWEX1354NhfyjhCouDdsfEAGA@mail.gmail.com>
+ <20210119212739.77882-8-rafaeloliveira.cs@gmail.com>
+ <CAPig+cQnp1iV4u9Z6cArSEq-oMrQW6yQVG6VTTjnOZ3MNO9nEQ@mail.gmail.com>
 User-agent: mu4e 1.4.13; emacs 27.1
 From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
 To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 5/7] worktree: teach `list --porcelain` to annotate
- locked worktree
-In-reply-to: <CAPig+cRBDSWCmrV+6w0gXaSH+xWEX1354NhfyjhCouDdsfEAGA@mail.gmail.com>
-Message-ID: <gohp6kim7mocul.fsf@gmail.com>
-Date:   Sun, 24 Jan 2021 11:20:36 +0100
+Subject: Re: [PATCH v3 7/7] worktree: teach `list` verbose mode
+In-reply-to: <CAPig+cQnp1iV4u9Z6cArSEq-oMrQW6yQVG6VTTjnOZ3MNO9nEQ@mail.gmail.com>
+Message-ID: <gohp6keeiaoctf.fsf@gmail.com>
+Date:   Sun, 24 Jan 2021 11:21:17 +0100
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -82,31 +81,31 @@ Eric Sunshine writes:
 > On Tue, Jan 19, 2021 at 4:28 PM Rafael Silva
 > <rafaeloliveira.cs@gmail.com> wrote:
 >> [...]
->> Teach "list --porcelain" to do the same and add a "locked" attribute
->> followed by its reason, thus making both default and porcelain format
->> consistent. If the locked reason is not available then only "locked"
->> is shown.
+>> Let's teach "git worktree list" a --verbose mode that outputs the reason
+>> why the worktrees are being annotated. The reason is a text that can take
+>> virtually any size and appending the text on the default columned format
+>> will make it difficult to extend the command with other annotations and
+>> not fit nicely on the screen. In order to address this shortcoming the
+>> annotation is then moved to the next line indented followed by the reason
+>> If the reason is not available the annotation stays on the same line as
+>> the worktree itself.
 >> [...]
 >> Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
 >> ---
 >> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
->> @@ -72,6 +72,36 @@ test_expect_success '"list" all worktrees with locked annotation' '
->> +test_expect_success '"list" all worktrees --porcelain with locked' '
->> +       test_when_finished "rm -rf locked1 locked2 unlocked out actual expect && git worktree prune" &&
->> +       echo "locked" >expect &&
->> +       echo "locked with reason" >>expect &&
->> +       git worktree add --detach locked1 &&
->> +       git worktree add --detach locked2 &&
->> +       # unlocked worktree should not be annotated with "locked"
->> +       git worktree add --detach unlocked &&
+>> @@ -134,6 +134,36 @@ test_expect_success '"list" all worktrees with prunable consistent with "prune"'
+>> +test_expect_success '"list" all worktrees --verbose with locked' '
+>> +       test_when_finished "rm -rf locked1 locked2 out actual expect && git worktree prune" &&
+>> +       git worktree add locked1 --detach &&
+>> +       git worktree add locked2 --detach &&
 >> +       git worktree lock locked1 &&
 >> +       git worktree lock locked2 --reason "with reason" &&
 >> +       test_when_finished "git worktree unlock locked1 && git worktree unlock locked2" &&
 >
-> There's a minor problem here. If the second `git worktree lock`
-> command fails, test_when_finished() will never be invoked, which means
-> that the first lock won't get cleaned up, thus the worktree won't get
-> pruned. To fix, you'd want:
+> Same minor problem here as mentioned in my review of [5/7]: If locking
+> of the second worktree fails then test_when_finished() won't get
+> invoked, so the first worktree won't get unlocked, thus won't be
+> pruned. To fix:
 >
 >     git worktree lock locked1 &&
 >     test_when_finished "git worktree unlock locked1" &&
@@ -114,31 +113,7 @@ Eric Sunshine writes:
 >     test_when_finished "git worktree unlock locked2" &&
 >
 
-Excellent point. This case didn't occur to me when I was working on v3, I
-will make this change in the next revision.
-
->> +       git worktree list --porcelain >out &&
->> +       grep "^locked" out >actual &&
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success '"list" all worktrees --porcelain with locked reason newline escaped' '
->> +       test_when_finished "rm -rf locked_lf locked_crlf out actual expect && git worktree prune" &&
->> +       printf "locked \"locked\\\\r\\\\nreason\"\n" >expect &&
->> +       printf "locked \"locked\\\\nreason\"\n" >>expect &&
->> +       git worktree add --detach locked_lf &&
->> +       git worktree add --detach locked_crlf &&
->> +       git worktree lock locked_lf --reason "$(printf "locked\nreason")" &&
->> +       git worktree lock locked_crlf --reason "$(printf "locked\r\nreason")" &&
->> +       test_when_finished "git worktree unlock locked_lf && git worktree unlock locked_crlf" &&
->
-> Same issue as above.
->
->> +       git worktree list --porcelain >out &&
->> +       grep "^locked" out >actual &&
->> +       test_cmp expect actual
->> +'
-
+Make sense. Thank you.
 
 -- 
 Thanks
