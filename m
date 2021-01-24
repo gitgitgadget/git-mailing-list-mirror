@@ -2,187 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E84F6C433DB
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 13:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF280C433E0
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 14:03:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B18F122B2C
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 13:57:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7AAC821BE5
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 14:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726023AbhAXN5B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 08:57:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40428 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725995AbhAXN45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 08:56:57 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9519EC06174A
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 05:56:16 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id f1so12011322edr.12
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 05:56:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
-         :date:mime-version;
-        bh=kB/e2XhUE1urA6MCYhw6/cwzpQijcq1Y1RTgNKU112M=;
-        b=E40XOWkw9fu9x4NTUnlaoSHg9DUwJ5jDKN3MLmLVEuX95tvfE8wGXmQQH5lL09yyB7
-         9sgPCcIcGM+YYfsMZ+WDv40SE8e01ajiLyH9z1zPU2Xzv0es+hnMppE++k5cZ54JOhLv
-         kk+i9BX0cQcfU8+8Ix2ZOwF0QQipIXY0Kq0/2XcV1iEKeNo5Z4W/FV5uJ1g/InYjv3qZ
-         C+dJ4rh2T85ucVdDuJmzjAoxo2SAFeV9JFC/90GbfZgCuvD9tCqZMQKR1ifceROb/ghI
-         3ooZ+9G5CS5kCUYrzw1jo948uQod0Ly+3m5HcmJ0T7l9p/+01hS3yEDL3pivclsCBE8g
-         tiww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:message-id:date:mime-version;
-        bh=kB/e2XhUE1urA6MCYhw6/cwzpQijcq1Y1RTgNKU112M=;
-        b=eiuC+DrHQTN4eHaGIZPF8iKY01MM5VC51u5eXgi5z4Ul3rXJhI3Y1GzVF/t9KnboVT
-         Zz73hHRz3QUXH5/GY7caEh7sjQmy8Gy0EH1eihsvjSmcfcMcJ2BDJ2Q8PEfKHM1aMkr2
-         8mt1hGCd0bw3odKrQs6KI36hySefM6Zrpcg8pKVYIprOLEEf6n5ZqLmOwZAVycsnsqdQ
-         vFSOjfOAYToiqzB9ZC7zG02h7Ej0MzakuZrfP0Ka4umJjBvvVUZTX1EXqgE4sB30wlP3
-         mypg/hsrJkYTGBqdu3Lzyayp6x2uj+jgeLs69WCecuFTVieI7bwNL7V6MkA5bUzcsstN
-         o+Pg==
-X-Gm-Message-State: AOAM531AE3EBsdQHxv9meIF8xsPvbngIGEhejsBmIH3kGe1tHK1HIk2V
-        NzwBBYrTiggEPmhAtzRM6TM=
-X-Google-Smtp-Source: ABdhPJybeIJpwiXby5C0DRKlkHrpa0qwHTE8YNx39nmeLwUjwChNnpzdxMVuOT8JPRh4S5S9rkYSZA==
-X-Received: by 2002:a05:6402:1155:: with SMTP id g21mr17810edw.279.1611496575348;
-        Sun, 24 Jan 2021 05:56:15 -0800 (PST)
-Received: from cpm12071.local ([79.140.115.149])
-        by smtp.gmail.com with ESMTPSA id w3sm691921eja.52.2021.01.24.05.56.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 05:56:14 -0800 (PST)
-References: <20210123154056.48234-1-mirucam@gmail.com>
- <20210123154056.48234-2-mirucam@gmail.com>
-User-agent: mu4e 1.4.13; emacs 27.1
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
+        id S1725939AbhAXODe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 09:03:34 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:53674 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbhAXODd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 09:03:33 -0500
+X-Greylist: delayed 543 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jan 2021 09:03:32 EST
+Received: from [10.0.2.15] ([147.147.167.73])
+        by smtp with ESMTPA
+        id 3fpklWe8GrXCc3fpllyt45; Sun, 24 Jan 2021 13:53:42 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1611496422; bh=7d33JZi/3hBl4faGwl05bj6EBEAo2JYGwfwn6epOkdU=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=MXA8mggoltxiFFWZe537sci24IH/QGwJHLAzjisZqBxf0vK28eX/LEFxiNe1X0kqX
+         p1mNfOX0k4z+n0lBzTDgvNaNCQpFo8EPt109iLM70jjfehXM3/HTHjo5Ip7U/pm3V0
+         Va4nrCHgK8s5hYpG0WTaolHujBdkfIn4Knph/6KSf+xHWbIu0bDBL7NBaTn03WU37u
+         q4YCvb4lp3yRm7aLvULBm3x49gncESLuqkiTR1kavIFFlrfqXM0Ne/rH9iGUM7XtvL
+         gC4oz3f8A2mIW3vMw1nQgAkp6endx/lXGB15nJt7k5NKzejq9vnXUtxT+iw8R06Qaf
+         YGLedaE5Qx05A==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Q+xJH7+a c=1 sm=1 tr=0
+ a=nK5asC+3lBOC3EoKtwbYYg==:117 a=nK5asC+3lBOC3EoKtwbYYg==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=A1FWTvhxAAAA:8 a=Q8b9Qr7X27ls-alY698A:9
+ a=QEXdDO2ut3YA:10 a=gWpziBj3J3xXidSoAfP2:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v4 2/2] grep/pcre2: better support invalid UTF-8 haystacks
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/7] bisect--helper: reimplement `bisect_log` shell
- function in C
-In-reply-to: <20210123154056.48234-2-mirucam@gmail.com>
-Message-ID: <gohp6kv9bml9qc.fsf@gmail.com>
-Date:   Sun, 24 Jan 2021 14:56:13 +0100
+        Todd Zullinger <tmz@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+References: <20210124021229.25987-1-avarab@gmail.com>
+ <20210124114855.13036-3-avarab@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <6fe69ede-d24b-1742-f699-c9af05560c0c@ramsayjones.plus.com>
+Date:   Sun, 24 Jan 2021 13:53:40 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20210124114855.13036-3-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfCiq7RTIKLo9mV0YcBLfgf1QpVN++MhsDTMlbW/CxISoX23k37AUZ2+59QINw2jQzMQ/IrtKRQwghJT/uVYvyzpfc+r0yOORnTnpnWn0Db429QOb6jrP
+ KUqgILkQBnBagg0Gqu6sWUxJGhjH0hA1DAJDLKs7Hyc83xw8ErxFLokq5VuL8l13atrGjMa2+41EXA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Nice work on this series.
 
-I have one comment on this series regarding a behavior diff between the
-C and shell version, and small comment about style, see below.
-
-Miriam Rubio writes:
-
-> From: Pranit Bauva <pranit.bauva@gmail.com>
->
-> Reimplement the `bisect_log()` shell function in C and also add
-> `--bisect-log` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh .
->
-> Using `--bisect-log` subcommand is a temporary measure to port shell
-> function to C so as to use the existing test suite.
->
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+On 24/01/2021 11:48, Ævar Arnfjörð Bjarmason wrote:
+> Improve the support for invalid UTF-8 haystacks given a non-ASCII
+> needle when using the PCREv2 backend.
+> 
+> This is a more complete fix for a bug I started to fix in
+> 870eea8166 (grep: do not enter PCRE2_UTF mode on fixed matching,
+> 2019-07-26), now that PCREv2 has the PCRE2_MATCH_INVALID_UTF mode we
+> can make use of it.
+> 
+> This fixes the sort of case described in 8a5999838e (grep: stess test
+> PCRE v2 on invalid UTF-8 data, 2019-07-26), i.e.:
+> 
+>     - The subject string is non-ASCII (e.g. "ævar")
+>     - We're under a is_utf8_locale(), e.g. "en_US.UTF-8", not "C"
+>     - We are using --ignore-case, or we're a non-fixed pattern
+> 
+> If those conditions were satisfied and we matched found non-valid
+> UTF-8 data PCREv2 might bark on it, in practice this only happened
+> under the JIT backend (turned on by default on most platforms).
+> 
+> Ultimately this fixes a "regression" in b65abcafc7 ("grep: use PCRE v2
+> for optimized fixed-string search", 2019-07-01), I'm putting that in
+> scare-quotes because before then we wouldn't properly support these
+> complex case-folding, locale etc. cases either, it just broke in
+> different ways.
+> 
+> There was a bug related to this the PCRE2_NO_START_OPTIMIZE flag fixed
+> in PCREv2 10.36. It can be worked around by setting the
+> PCRE2_NO_START_OPTIMIZE flag. Let's do that in those cases, and add
+> tests for the bug.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->  builtin/bisect--helper.c | 22 +++++++++++++++++++++-
->  git-bisect.sh            |  7 +------
->  2 files changed, 22 insertions(+), 7 deletions(-)
->
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 709eb713a3..a65244a0f5 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -904,6 +904,18 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
->  	return bisect_auto_next(terms, NULL);
->  }
+>  Makefile                        |  1 +
+>  grep.c                          |  8 +++++-
+>  grep.h                          |  4 +++
+>  t/helper/test-pcre2-config.c    | 12 +++++++++
+>  t/helper/test-tool.c            |  1 +
+>  t/helper/test-tool.h            |  1 +
+>  t/t7812-grep-icase-non-ascii.sh | 46 ++++++++++++++++++++++++++++++++-
+>  7 files changed, 71 insertions(+), 2 deletions(-)
+>  create mode 100644 t/helper/test-pcre2-config.c
+> 
+> diff --git a/Makefile b/Makefile
+> index 4edfda3e00..42a7ed96e2 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -722,6 +722,7 @@ TEST_BUILTINS_OBJS += test-online-cpus.o
+>  TEST_BUILTINS_OBJS += test-parse-options.o
+>  TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
+>  TEST_BUILTINS_OBJS += test-path-utils.o
+> +TEST_BUILTINS_OBJS += test-pcre2-config.o
+>  TEST_BUILTINS_OBJS += test-pkt-line.o
+>  TEST_BUILTINS_OBJS += test-prio-queue.o
+>  TEST_BUILTINS_OBJS += test-proc-receive.o
+> diff --git a/grep.c b/grep.c
+> index efeb6dc58d..e329f19877 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -492,7 +492,13 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+>  	}
+>  	if (!opt->ignore_locale && is_utf8_locale() && has_non_ascii(p->pattern) &&
+>  	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
+> -		options |= PCRE2_UTF;
+> +		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
+> +
+> +	if (PCRE2_MATCH_INVALID_UTF &&
+> +	    options & (PCRE2_UTF | PCRE2_CASELESS) &&
+> +	    !(PCRE2_MAJOR >= 10 && PCRE2_MAJOR >= 36))
+                                   ^^^^^^^^^^^^^^^^^^
+I assume that this should be s/_MAJOR/_MINOR/. ;-)
+
+> +		/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
+> +		options |= PCRE2_NO_START_OPTIMIZE;
 >  
-> +static enum bisect_error bisect_log(void)
-> +{
-> +	int fd, status;
-> +	fd = open(git_path_bisect_log(), O_RDONLY);
-> +	if (fd < 0)
-> +		return BISECT_FAILED;
-> +
-> +	status = copy_fd(fd, STDOUT_FILENO);
-> +	close(fd);
-> +	return status ? BISECT_FAILED : BISECT_OK;
-> +}
-> +
+>  	p->pcre2_pattern = pcre2_compile((PCRE2_SPTR)p->pattern,
+>  					 p->patternlen, options, &error, &erroffset,
 
-In the shell version, when we are not bisecting it the `git bisect log`
-command will `die` with the text "We are not bisecting." which state to
-the user that a bisect is not yet started. The shell version does that
-by checking if the `$GIT_DIR/BISECT_LOG` file doesn't exists or it's
-an empty file as the following code snippet copied from the shell
-version that is remove by this patch:
+ATB,
+Ramsay Jones
 
-   test -s "$GIT_DIR/BISECT_LOG" || die "$(gettext "We are not bisecting.")"
 
-This seems to be "missing" from the new C version implemented by this
-patch and perhaps we should add it. I'm not sure whether this change was
-intentional and I'm missing some context here of why we are dropping
-the message, if that's the case I apologize in advance. But, IMHO
-outputting the error message provides a better user experience as it
-would be obvious that the user forgot to `git bisect start` instead of
-silently failing.
-
-With that said, perhaps an obvious way of implementing is to use
-`is_empty_or_missing_file()`, much like `bisect_replay()` does it in the
-[2/7] patch on this series, and return the same error message from
-the shell version:
-
--- >8 --
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index a65244a0f5..ce11383125 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -907,7 +907,12 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
- static enum bisect_error bisect_log(void)
- {
-        int fd, status;
--       fd = open(git_path_bisect_log(), O_RDONLY);
-+       const char* filename = git_path_bisect_log();
-+
-+       if (is_empty_or_missing_file(filename))
-+               return error(_("We are not bisecting."));
-+
-+       fd = open(filename, O_RDONLY);
-        if (fd < 0)
-                return BISECT_FAILED;
--- >8 --
-
-Although I compiled and did small test on the above code snippet, don't
-trust it blindly and perform your own test and judge whether this is the
-best way to implement this shortcoming.
-
->
-> @@ -210,7 +205,7 @@ case "$#" in
->  	replay)
->  		bisect_replay "$@" ;;
->  	log)
-> -		bisect_log ;;
-> +		git bisect--helper --bisect-log || exit;;
-
-Style: just a minor change to add a space between `exit` and `;;`.
-
--- 
-Thanks
-Rafael
