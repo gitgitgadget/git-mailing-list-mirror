@@ -2,136 +2,267 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94798C433E0
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 19:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AD6C433DB
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 19:52:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CFA622CF6
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 19:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A787229C5
+	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 19:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbhAXTMi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 14:12:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51394 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726164AbhAXTMh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 14:12:37 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B92CC061574
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 11:11:57 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id 63so10681729oty.0
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 11:11:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=907mDphqMx3/Oral6MK6lgWDqW6BhiIbOFxPNRw/UrM=;
-        b=bzlmkrYUk60A7p0OfV85VqCNuiR+iqfYOXVR7uoeI8KanMINVt1oEp1qTgbZqt6NDm
-         J+iV5kiFNPCW127QNnhgpRzPcUa3ynd6USx5HSGs5xbSr8TiavzB3b9Z1RnvAwjkTxF2
-         YnckTZm/RZa6/3TeaO23AFgtARme9ebf9IECmiuAcxuucLy+KClFDA4ycfoaJO0908av
-         MfioXN5rojrwxkif+W3yTqNyXRaqOhIdggMZasy81xFiMX5N2cripownykxlobWKVMCz
-         EtxzBqljeRAY7erWCKaiXvE8QOWqzfnz61ZuytqRP9z1xoRXy7hnhkLHGydeWgjuaVRi
-         z/Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=907mDphqMx3/Oral6MK6lgWDqW6BhiIbOFxPNRw/UrM=;
-        b=nZXqWk88iCNVggUcH1vAhPax3qrR4ZmytP4+ueeyQ0PDd/shYZEwDzKEh8WRH3G6JR
-         /m7vCdhJgCORuvN4NLDG7iJB+/c0oRgi/8TF8kpHOOeeXtnz8MBmr+8jQC2lfF5XCkcr
-         IUmYXQqhAlEvWMXo6w5YNRylKUIX2K0jOAAsbWyNwqFDJxdm9o/8/469cdOO2cjgZiTm
-         kGboj1L7JnwdJri7YoYhWqyo7f1r13lfRIyfnE0gzz2C/Nx1AQ8efpCWce3Zpy8CKUUo
-         CyUZxxOjHiUtJ8ZTib7Gc4dSc82rVqOkzoGtJ1VTFIhj5sD43NT6BecmZlHcbj/p+CMd
-         Oolg==
-X-Gm-Message-State: AOAM533Cr6zcvLzK3VeJCl2LeyXOx28TTZzia529ma2k/1cvyp1IgSge
-        zrcq4AcQPOS6HtqTD9PDxc8=
-X-Google-Smtp-Source: ABdhPJztO76JClRfmf8iCu32W4d7ciclV2UrJqrLSOGAChKCRSPbydvs3TErIwgtlyaG/vjJlyeVWg==
-X-Received: by 2002:a05:6830:148a:: with SMTP id s10mr114820otq.323.1611515516564;
-        Sun, 24 Jan 2021 11:11:56 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:2848:4da0:c807:60aa? ([2600:1700:e72:80a0:2848:4da0:c807:60aa])
-        by smtp.gmail.com with UTF8SMTPSA id g13sm2987467otl.60.2021.01.24.11.11.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Jan 2021 11:11:55 -0800 (PST)
-Subject: Re: [PATCH v4 1/3] merge-ort: fix massive leak
-To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, gitster@pobox.com
-References: <20210115192958.3336755-1-newren@gmail.com>
- <20210124060112.1258291-1-newren@gmail.com>
- <20210124060112.1258291-2-newren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7e1c184f-4745-530d-8aca-879319786845@gmail.com>
-Date:   Sun, 24 Jan 2021 14:11:54 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        id S1726473AbhAXTwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 14:52:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62778 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbhAXTwT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 14:52:19 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34A77A6B2E;
+        Sun, 24 Jan 2021 14:51:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ujX50EuKDxPExTS/J1byEhhM8hk=; b=toZVcH
+        Tg13d4vFBPaJnQpilX3wllMgK1LIo9ax04ckR8RJ7J6RWCb9V4H2x9xRcS7fYjfJ
+        2N4b7dJ4w0sy3R6f/KDIDGOiFFQ0dWHH1gxh49ZdfyYXOkUh20blSz7Q3TQUxaCs
+        KkkdlN5Q34QvEQlBUm9FmxvCrOPPBZWluW4Gw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NHWOBP5naT/26/JUelfm++FHTBUqG6wd
+        21jSzEiGCzesQHnX2YXTyzAGjJdRElTqdE9eujZcSI1Dz1+rIORJcscPcBV8MwzJ
+        C9lt5y9zwbJpoYpbj9uKLQM28tqvEu76pLwZN0gQpucpgzQVUzMkoXWalJZe+MHy
+        mopKnBDVwcY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2BA88A6B2D;
+        Sun, 24 Jan 2021 14:51:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.196.36.241])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7EA4A6B27;
+        Sun, 24 Jan 2021 14:51:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, random_n0body@icloud.com,
+        evraiphilippeblain@gmail.com,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH/RFC v1 1/1] git restore -p . and precomposed unicode
+References: <A102844A-9501-4A86-854D-E3B387D378AA@icloud.com>
+        <20210124151306.23185-1-tboegi@web.de>
+Date:   Sun, 24 Jan 2021 11:51:33 -0800
+In-Reply-To: <20210124151306.23185-1-tboegi@web.de> (tboegi@web.de's message
+        of "Sun, 24 Jan 2021 16:13:06 +0100")
+Message-ID: <xmqqsg6qyuyi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210124060112.1258291-2-newren@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9022A854-5E7D-11EB-8255-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/24/2021 1:01 AM, Elijah Newren wrote:
-> When a series of merges was performed (such as for a rebase or series of
-> cherry-picks), only the data structures allocated by the final merge
-> operation were being freed.  The problem was that while picking out
-> pieces of merge-ort to upstream, I previously misread a certain section
-> of merge_start() and assumed it was associated with a later
-> optimization.  Include that section now, which ensures that if there was
-> a previous merge operation, that we clear out result->priv and then
-> re-use it for opt->priv, and otherwise we allocate opt->priv.
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 05c6b2e0dc..b5845ff6e9 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -3227,11 +3227,28 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
->  	assert(opt->obuf.len == 0);
->  
->  	assert(opt->priv == NULL);
-> +	if (result->priv) {
-> +		opt->priv = result->priv;
-> +		result->priv = NULL;
-> +		/*
-> +		 * opt->priv non-NULL means we had results from a previous
-> +		 * run; do a few sanity checks that user didn't mess with
-> +		 * it in an obvious fashion.
-> +		 */
-> +		assert(opt->priv->call_depth == 0);
-> +		assert(!opt->priv->toplevel_dir ||
-> +		       0 == strlen(opt->priv->toplevel_dir));
-> +	}
+tboegi@web.de writes:
 
-So instead of simply leaking result->priv, we re-use the
-data for the next round.
+> The solution is to read the config variable "core.precomposeunicode" early.
 
->  
->  	/* Default to histogram diff.  Actually, just hardcode it...for now. */
->  	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
->  
->  	/* Initialization of opt->priv, our internal merge data */
-> +	if (opt->priv) {
-> +		clear_or_reinit_internal_opts(opt->priv, 1);
-> +		trace2_region_leave("merge", "allocate/init", opt->repo);
-> +		return;
-> +	}
->  	opt->priv = xcalloc(1, sizeof(*opt->priv));
+For a single command like "restore", we need to fail if it is run
+outside a repository anyway, so it is OK, but code in "git.c" in
+general can be called outside a repository, we may not know where
+our configuration files are, though.  So I'd prefer to avoid
+adding too many "do this thing early for every single command".
 
-and here you reset the data instead of reallocating it. OK.
+Where do we normally read that variable?  I see calls to
+precompose_argv() on only a few codepaths
 
--Stolee
+builtin/diff-files.c:38:	precompose_argv(argc, argv);
+builtin/diff-index.c:28:	precompose_argv(argc, argv);
+builtin/diff-tree.c:129:	precompose_argv(argc, argv);
+builtin/diff.c:455:	precompose_argv(argc, argv);
+builtin/submodule--helper.c:1260:	precompose_argv(diff_args.nr, diff_args.v);
+parse-options.c:872:	precompose_argv(argc, argv);
 
+I guess the reason we can get away with it is because most of the
+newer commands use the parse_options() API, and the call to
+precompose_argv() is used by the codepaths implementing these
+commands.  And as a rule, these commands read config first before
+calling parse_options(), so by the time the control reaches there,
+the value of the variable may be already known.
+
+The question is why "restore -p" is so special?  Or does this patch
+mean everybody, even the ones that use parse_options() is broken?
+
+I guess "prefix" needs to be munged for everybody, so "restore -p"
+on the title of the patch is a red herring, and the problem applies
+to all "git" commands---in which case, inside "git.c" would be the
+right place to do so.
+
+I wonder if everybody who calls precompoase_argv() has access to the
+prefix, though.  If so, would it make more sense to extend the API
+to
+
+	precompose_argv(int argc, char **argv, char **prefix)
+
+so that the callers only need to call a single function, without any
+additional code like this patch does?
+
+Also, as the current precompose_argv() begins like this:
+
+        void precompose_argv(int argc, const char **argv)
+        {
+                int i = 0;
+                const char *oldarg;
+                char *newarg;
+                iconv_t ic_precompose;
+
+                if (precomposed_unicode != 1)
+                        return;
+
+and environment.c initializes the global to (-1), I wonder if we can
+get away with an approach not to read the "config" anywhere outside
+precompose_argv() function.  Instead, can't the above snippet become
+more like:
+
+                if (precomposed_unicode < 0)
+                        precomposed_unicode = read from config;
+		if (precomposed_unicode != 1)
+			return;
+
+That way, you do not even have to touch anything outside
+compat/precompose_utf8.c, other than adjusting the callers to pass
+the pointer to their prefix to be munged.
+
+Namely
+
+> +int precompose_read_config_gently(void)
+
+This can become file-scope static.
+
+> +{
+> +	git_config_get_bool("core.precomposeunicode", &precomposed_unicode);
+> +	return precomposed_unicode == 1;
+> +}
+>
+>  void probe_utf8_pathname_composition(void)
+>  {
+> @@ -60,6 +65,25 @@ void probe_utf8_pathname_composition(void)
+>  	strbuf_release(&path);
+>  }
+>
+> +char *precompose_string_if_needed(const char *in)
+> +{
+
+This too.
+
+> diff --git a/compat/precompose_utf8.h b/compat/precompose_utf8.h
+> index 6f843d3e1a..ce82857d73 100644
+> --- a/compat/precompose_utf8.h
+> +++ b/compat/precompose_utf8.h
+> @@ -28,6 +28,8 @@ typedef struct {
+>  	struct dirent_prec_psx *dirent_nfc;
+>  } PREC_DIR;
+>
+> +int precompose_read_config_gently(void);
+> +char *precompose_string_if_needed(const char *in);
+>  void precompose_argv(int argc, const char **argv);
+>  void probe_utf8_pathname_composition(void);
+
+And this can go away.
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 104993b975..f34854b66f 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -252,6 +252,14 @@ typedef unsigned long uintptr_t;
+>  #ifdef PRECOMPOSE_UNICODE
+>  #include "compat/precompose_utf8.h"
+>  #else
+> +static inline int precompose_read_config_gently(void)
+> +{
+> +	return 0;
+> +}
+> +static inline char *precompose_string_if_needed(const char *in)
+> +{
+> +	return NULL; /* no need to precompose a string */
+> +}
+
+So do these.
+
+> diff --git a/git.c b/git.c
+> index a00a0a4d94..f09e14f733 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -421,6 +421,15 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+>  			prefix = setup_git_directory_gently(&nongit_ok);
+>  		}
+>
+> +		if (precompose_read_config_gently()) {
+> +			precompose_argv(argc, argv);
+> +			if (prefix) {
+> +				const char *prec_pfx;
+> +					prec_pfx = precompose_string_if_needed(prefix);
+> +				if (prec_pfx)
+> +					prefix = prec_pfx; /* memory lost */
+> +			}
+> +		}
+
+And this would move to the beginning of precompose_argv()
+implementation.
+
+Also the code we currently use to read the core.precomposeunicode
+configuration variable (presumably somewhere in git_default_config()
+callchain; I didn't check) can go away.
+
+Which would be much nicer outcome, if doable (again, I didn't check).
+
+> diff --git a/t/t3910-mac-os-precompose.sh b/t/t3910-mac-os-precompose.sh
+> index 54ce19e353..bbbc50da93 100755
+> --- a/t/t3910-mac-os-precompose.sh
+> +++ b/t/t3910-mac-os-precompose.sh
+> @@ -191,6 +191,21 @@ test_expect_failure 'handle existing decomposed filenames' '
+>  	test_must_be_empty untracked
+>  '
+>
+> +test_expect_success "unicode decomposed: git restore -p . " '
+> +	DIRNAMEPWD=dir.Odiarnfc &&
+> +	DIRNAMEINREPO=dir.$Adiarnfc &&
+> +	export DIRNAMEPWD DIRNAMEINREPO &&
+> +	git init $DIRNAMEPWD &&
+> +	( cd $DIRNAMEPWD &&
+> +		mkdir $DIRNAMEINREPO &&
+
+Style:
+
+	(
+		cd $DIRNAMEPWD &&
+		mkdir $DIRNAMEINREPO &&
+
+Is "restore" the only thing that has this issue?  
+
+I would imagine that anything that takes '.' pathspec to limit its
+operation to the current subdirectory (e.g. "cd sub && git diff .")
+would be affected (clarification: I am *not* hinting that other
+commands need to be tested---I am however hinting to update the
+proposed log message to explain either (1) this applies in general
+to commands that does X, or (2) this affects only "restore -p" which
+does this unusual thing Y that no other commands do).
+
+Thanks.
+
+
+> +		cd $DIRNAMEINREPO &&
+> +		echo "Initial" >file &&
+> +		git add file &&
+> +		echo "More stuff" >>file &&
+> +		echo y | git restore -p .
+> +	)
+> +'
+> +
+>  # Test if the global core.precomposeunicode stops autosensing
+>  # Must be the last test case
+>  test_expect_success "respect git config --global core.precomposeunicode" '
+> --
+> 2.30.0.155.g66e871b664
