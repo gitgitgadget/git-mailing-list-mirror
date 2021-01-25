@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C9DC433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C400DC433E0
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C9D722B3B
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FA1822B3B
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731246AbhAYSAF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 13:00:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33366 "EHLO
+        id S1731043AbhAYSAs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 13:00:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731258AbhAYR4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 12:56:25 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B390C061221
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:33 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id y187so74074wmd.3
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:33 -0800 (PST)
+        with ESMTP id S1730597AbhAYR4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 12:56:21 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E39C061225
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:36 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j18so48028wmi.3
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=itRwluwYkYmkHZlSCa6+txpiwJvR8IeJetvlxdAepUA=;
-        b=MLtVWJc0Az9ltfuc+XIk+6WHtMS8nyD/9MIOIIYVFVJqVXyY3vRlSWWLMsHB8rM9eK
-         gRygMB461EsBh3rzHjFNW1koD9dJkujzE3lUiynvBfo/6SzPyu5FPhya6OXVLAHAKzcV
-         C8nRtCQIwag9vbLVoFff9TuHRVscPeJoSO7q4RS3tUjAlQ8ZTGm2kh6Y5JgC1nqkGK5v
-         /S04TEI0tmnnn6I1WHnWiOXnwQmHWE08J8ePeieYaDNtKN3OEIXiCWKxys/A14lH6HkZ
-         yBMz+x5PjOPzrDXCaVFqWHkqmWmjGoSv5jDuQwlSvn38mThFE3Az/vgqzjBwBrBQOAF3
-         WP/g==
+        bh=dbe4mlp/ovuriEiQ0skOC1I1wriOtqEa/5rVRQODJfY=;
+        b=W8XuZKsGWAQC8/qjQyKj0WbQ6NqOrrFygulHqXOdChae1PqLccW/0Dy5OBdQAwGxx5
+         OujlKzb4lGhb0B6EGUrr0tBFRocC7kXxns4dPjL5GIsmSiikCkqhZkEhkgAk+4h8fIm0
+         Xuly0oE1ls/0TzaVS561WDZ09ztvnLZ//rBlBDLZoTMY3XPp2E6wE+mD2jahgL2VBKKx
+         hCKRC6PpFBNud7GfTaMEpc1adWGkJAGi8aoFFlmnSUlB8BwmC+7FQnV1ostgaJGYwgBW
+         Me8BkBt9EdxaqSXO1usIoB5izCFVsNeo7Wh8Cd2dS8NU5X33+7OjD2hBLf9Ylapf4GEg
+         FkKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=itRwluwYkYmkHZlSCa6+txpiwJvR8IeJetvlxdAepUA=;
-        b=gT74wLGdhMaF1Bd4/v+bSBVb/JVpcNIreTKY62X8F/4FGf982/jnuk43AqFfW6twjv
-         WW3Po840HkdEmwCL+ffOxUcj4eEi0LvQXfvmzU7CavsyVSF8kmC7IabTAbbNfMLELqz6
-         vfnnfTpcmxi971BktQh9NHyagEoGjNXJ1XxB0BEgI99PxAHGF3jdlJEulU9JA+3Zivv+
-         0WBoc15F8e1pXD6zXWwBxBO/S3HKHmsWDb26uQ1e/clbxEMMjUdap5CepwqeXGFDiyD0
-         CYyONe4ied7ZlyjH71xe9pqORNEnEKpNY3JsDP2kqtbNmowvysNmgbnfAVKlwcyfxEof
-         395g==
-X-Gm-Message-State: AOAM533KCDYmMsCc1LbBjMBPj7KFZLVcRWqXPyJ6QXm7qh9G1fs7o3G1
-        0PBczOijUP/5MwMEJhYJ9U2ptawGfhw=
-X-Google-Smtp-Source: ABdhPJySg+KBmMNUE5zsg+imFym9r3HNKj/ML8exLIseZfCjWGi12PV+QZPG0G10FUZw5Lt74l8BnQ==
-X-Received: by 2002:a05:600c:618:: with SMTP id o24mr1203300wmm.82.1611596551641;
-        Mon, 25 Jan 2021 09:42:31 -0800 (PST)
+        bh=dbe4mlp/ovuriEiQ0skOC1I1wriOtqEa/5rVRQODJfY=;
+        b=t0InW7NJAek4kyq/wmTgFA7C6GwTyeVbqE6TytxIMzxsvs2J57DH3EXt/GGpRI79jH
+         UVJgngybRxntLloBpJjpeha4rX9is81mNNmqyArWkWLDkuZF6O8BFlTROTGQdIq5LeaD
+         6ACmJMfoMXyGV59kWwIKfUw5OwIo5FwvgmVqFlmQS3syufUB3mB/SoyCxQ840znSX+Xz
+         hto12hGFIpQ/U47urlhk5K+UIfdOy4ljTumKJav/AAqw3c0zpyB/2JhsUuJa5AoL/lhl
+         Y///sjjQBSHGvbwPvv4vcfXhIWE5e4c0Y497zDqC+GioYmwbMnVo1S7o/CjOww35CLDs
+         sFMg==
+X-Gm-Message-State: AOAM5309YuKR9vtpcXlDimfO4qNUFoiKbkxAAQNwJE8XZgck0Vgu/BkS
+        I/qrwhCHS8vRsdAdOICJtBXj8pN06Tg=
+X-Google-Smtp-Source: ABdhPJx8NsYij8TgDvZs2PC00D7oTtyU594wPRozWotrU3yv2/QEAqZq79IvQbPwD5wfEcZdNsymJw==
+X-Received: by 2002:a1c:de09:: with SMTP id v9mr1255612wmg.0.1611596554946;
+        Mon, 25 Jan 2021 09:42:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x81sm5265wmg.40.2021.01.25.09.42.31
+        by smtp.gmail.com with ESMTPSA id m12sm43399wmc.10.2021.01.25.09.42.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 09:42:31 -0800 (PST)
-Message-Id: <30e36850fd5f429e81cdb6fe89576acf7eb74571.1611596534.git.gitgitgadget@gmail.com>
+        Mon, 25 Jan 2021 09:42:34 -0800 (PST)
+Message-Id: <b40872d34d45220bc9f3ff11a9b5f49dc34942a9.1611596534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.git.1611596533.gitgitgadget@gmail.com>
 References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Jan 2021 17:42:04 +0000
-Subject: [PATCH 18/27] status: use sparse-index throughout
+Date:   Mon, 25 Jan 2021 17:42:08 +0000
+Subject: [PATCH 22/27] add: allow operating on a sparse-only index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,97 +77,188 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-By testing 'git -c core.fsmonitor= status -uno', we can check for the
-simplest index operations that can be made sparse-aware. The necessary
-implementation details are already integrated with sparse-checkout, so
-modify command_requires_full_index to be zero for cmd_status().
+Replace enough callers to ensure_full_index() to instead call
+expand_to_path() to reduce how often 'git add' expands a sparse index in
+memory (before writing a sparse index again).
 
-By running the debugger for 'git status -uno' after that change, we find
-two instances of ensure_full_index() that were added for extra safety,
-but can be removed without issue.
+One non-obvious case is index_name_pos_also_unmerged() which is only hit
+on the Windows platform (in my tests). Use expand_to_path() instead of
+ensure_full_index().
 
-In refresh_index(), we loop through the index entries. The
-refresh_cache_ent() method copies the sparse directories into the
-refreshed index without issue.
-
-The loop within run_diff_files() skips things that are in stage 0 and
-have skip-worktree enabled, so seems safe to disable ensure_full_index()
-here.
-
-While this change avoids calling ensure_full_index(), it actually slows
-'git status' because we do not have the cache-tree extension to help us.
+Add a test to check that 'git add -A' and 'git add <file>' does not
+expand the index at all, as long as <file> is not within a sparse
+directory.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/commit.c                         |  3 +++
- diff-lib.c                               |  2 --
- read-cache.c                             |  1 -
- t/t1092-sparse-checkout-compatibility.sh | 10 +++++++---
- 4 files changed, 10 insertions(+), 6 deletions(-)
+ builtin/add.c                            |  3 +++
+ dir.c                                    |  8 ++++----
+ read-cache.c                             | 10 +++++-----
+ sparse-index.c                           | 18 ++++++++++++++----
+ t/t1092-sparse-checkout-compatibility.sh | 14 ++++++++++++++
+ 5 files changed, 40 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 505fe60956d..543aa0caeae 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1400,6 +1400,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_status_usage, builtin_status_options);
+diff --git a/builtin/add.c b/builtin/add.c
+index a825887c503..b73f8d51de6 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -491,6 +491,9 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	add_new_files = !take_worktree_changes && !refresh_only && !add_renormalize;
+ 	require_pathspec = !(take_worktree_changes || (0 < addremove_explicit));
  
 +	prepare_repo_settings(the_repository);
 +	the_repository->settings.command_requires_full_index = 0;
 +
- 	status_init_config(&s, git_status_config);
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_status_options,
-diff --git a/diff-lib.c b/diff-lib.c
-index 3743e4463b4..b73cc1859a4 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -96,8 +96,6 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 	uint64_t start = getnanotime();
- 	struct index_state *istate = revs->diffopt.repo->index;
+ 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+ 
+ 	/*
+diff --git a/dir.c b/dir.c
+index c786fa98d0e..21998c7c4b7 100644
+--- a/dir.c
++++ b/dir.c
+@@ -18,6 +18,7 @@
+ #include "ewah/ewok.h"
+ #include "fsmonitor.h"
+ #include "submodule-config.h"
++#include "sparse-index.h"
+ 
+ /*
+  * Tells read_directory_recursive how a file or directory should be treated.
+@@ -899,9 +900,9 @@ static int read_skip_worktree_file_from_index(struct index_state *istate,
+ {
+ 	int pos, len;
  
 -	ensure_full_index(istate);
 -
- 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
- 
- 	refresh_fsmonitor(istate);
-diff --git a/read-cache.c b/read-cache.c
-index ab0c2b86ec0..78910d8f1b7 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1561,7 +1561,6 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	 */
- 	preload_index(istate, pathspec, 0);
+ 	len = strlen(path);
++
++	expand_to_path(istate, path, len, 0);
+ 	pos = index_name_pos(istate, path, len);
+ 	if (pos < 0)
+ 		return -1;
+@@ -1707,8 +1708,7 @@ static enum exist_status directory_exists_in_index(struct index_state *istate,
+ 	if (ignore_case)
+ 		return directory_exists_in_index_icase(istate, dirname, len);
  
 -	ensure_full_index(istate);
- 	for (i = 0; i < istate->cache_nr; i++) {
- 		struct cache_entry *ce, *new_entry;
- 		int cache_errno = 0;
+-
++	expand_to_path(istate, dirname, len, 0);
+ 	pos = index_name_pos(istate, dirname, len);
+ 	if (pos < 0)
+ 		pos = -pos-1;
+diff --git a/read-cache.c b/read-cache.c
+index 78910d8f1b7..8c974829497 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -647,7 +647,7 @@ static int index_name_pos_also_unmerged(struct index_state *istate,
+ 	int pos;
+ 	struct cache_entry *ce;
+ 
+-	ensure_full_index(istate);
++	expand_to_path(istate, path, namelen, 0);
+ 
+ 	pos = index_name_pos(istate, path, namelen);
+ 	if (pos >= 0)
+@@ -724,8 +724,6 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 	int hash_flags = HASH_WRITE_OBJECT;
+ 	struct object_id oid;
+ 
+-	ensure_full_index(istate);
+-
+ 	if (flags & ADD_CACHE_RENORMALIZE)
+ 		hash_flags |= HASH_RENORMALIZE;
+ 
+@@ -733,6 +731,8 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
+ 		return error(_("%s: can only add regular files, symbolic links or git-directories"), path);
+ 
+ 	namelen = strlen(path);
++	expand_to_path(istate, path, namelen, 0);
++
+ 	if (S_ISDIR(st_mode)) {
+ 		if (resolve_gitlink_ref(path, "HEAD", &oid) < 0)
+ 			return error(_("'%s' does not have a commit checked out"), path);
+@@ -1104,7 +1104,7 @@ static int has_dir_name(struct index_state *istate,
+ 	size_t len_eq_last;
+ 	int cmp_last = 0;
+ 
+-	ensure_full_index(istate);
++	expand_to_path(istate, ce->name, ce->ce_namelen, 0);
+ 
+ 	/*
+ 	 * We are frequently called during an iteration on a sorted
+@@ -1349,7 +1349,7 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
+ {
+ 	int pos;
+ 
+-	ensure_full_index(istate);
++	expand_to_path(istate, ce->name, ce->ce_namelen, 0);
+ 
+ 	if (option & ADD_CACHE_JUST_APPEND)
+ 		pos = istate->cache_nr;
+diff --git a/sparse-index.c b/sparse-index.c
+index bf8dce9a09b..a201f3b905c 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -286,6 +286,7 @@ static int in_expand_to_path = 0;
+ void expand_to_path(struct index_state *istate,
+ 		    const char *path, size_t pathlen, int icase)
+ {
++	struct cache_entry *ce = NULL;
+ 	struct strbuf path_as_dir = STRBUF_INIT;
+ 	int pos;
+ 
+@@ -320,13 +321,22 @@ void expand_to_path(struct index_state *istate,
+ 
+ 	if (pos < 0)
+ 		pos = -pos - 1;
++	if (pos < istate->cache_nr)
++		ce = istate->cache[pos];
+ 
+ 	/*
+-	 * Even if the path doesn't exist, if the value isn't exactly a
+-	 * sparse-directory entry, then there is no need to expand the
+-	 * index.
++	 * If we didn't land on a sparse directory, then there is
++	 * nothing to expand.
+ 	 */
+-	if (istate->cache[pos]->ce_mode != CE_MODE_SPARSE_DIRECTORY)
++	if (ce && !S_ISSPARSEDIR(ce))
++		goto cleanup;
++	/*
++	 * If that sparse directory is not a prefix of the path we
++	 * are looking for, then we don't need to expand.
++	 */
++	if (ce &&
++	    (ce->ce_namelen >= path_as_dir.len ||
++	     strncmp(ce->name, path_as_dir.buf, ce->ce_namelen)))
+ 		goto cleanup;
+ 
+ 	trace2_region_enter("index", "expand_to_path", istate->repo);
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index c6b7e8b8891..a3521cdc310 100755
+index 09650f0755c..ae594ab880c 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -382,12 +382,16 @@ test_expect_success 'sparse-index is expanded and converted back' '
+@@ -390,6 +390,20 @@ test_expect_success 'sparse-index is expanded and converted back' '
  	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
  		git -C sparse-index -c core.fsmonitor="" reset --hard &&
  	test_region index convert_to_sparse trace2.txt &&
--	test_region index ensure_full_index trace2.txt &&
-+	test_region index ensure_full_index trace2.txt
-+'
- 
--	rm trace2.txt &&
-+test_expect_success 'sparse-index is not expanded' '
-+	init_repos &&
++	test_region index ensure_full_index trace2.txt &&
 +
-+	rm -f trace2.txt &&
- 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
- 		git -C sparse-index -c core.fsmonitor="" status -uno &&
--	test_region index ensure_full_index trace2.txt
-+	test_region ! index ensure_full_index trace2.txt
++	rm trace2.txt &&
++	echo >>sparse-index/README.md &&
++	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
++		git -C sparse-index -c core.fsmonitor="" add -A &&
++	test_region index convert_to_sparse trace2.txt &&
++	test_region index ensure_full_index trace2.txt &&
++
++	rm trace2.txt &&
++	echo >>sparse-index/extra.txt &&
++	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" GIT_TRACE2_EVENT_NESTING=10 \
++		git -C sparse-index -c core.fsmonitor="" add extra.txt &&
++	test_region index convert_to_sparse trace2.txt &&
+ 	test_region index ensure_full_index trace2.txt
  '
  
- test_done
 -- 
 gitgitgadget
 
