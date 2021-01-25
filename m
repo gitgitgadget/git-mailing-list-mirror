@@ -2,131 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C56A3C433DB
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 22:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E9AC433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:39:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87B4B22C9F
-	for <git@archiver.kernel.org>; Sun, 24 Jan 2021 22:25:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9146A22B4B
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726625AbhAXWZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 17:25:20 -0500
-Received: from mail2.pdinc.us ([67.90.184.28]:38634 "EHLO mail2.pdinc.us"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726445AbhAXWZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 17:25:16 -0500
-Received: from blackfat (nsa1.pdinc.us [67.90.184.2])
-        (authenticated bits=0)
-        by mail2.pdinc.us (8.14.4/8.14.4) with ESMTP id 10OMOInT008049
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 24 Jan 2021 17:24:18 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail2.pdinc.us 10OMOInT008049
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pdinc.us; s=default;
-        t=1611527058; bh=RQ5fmcGp4v/04p5uCSn6czWKdkPJRO7Mr6CzTtw6doA=;
-        h=Reply-To:From:To:Cc:References:In-Reply-To:Subject:Date:From;
-        b=BDnZgfUPa79m21Nrm5DcSQzj3TK8HUApH0NdgyQyHvczKsr7GecF/lp33sv7xUXAj
-         Fkt6YUOcPM/cSmE9gLL1NhIhl+ioec7RE5NeaqFJhZQdEd8l0Zd17nKvRP/f5Bhm+2
-         83hHQwo4YeRoNIZW38s3u7XhPOpLl2m69elBi6dsdGtug+OqgFB+73R91FVhC9iAHO
-         mVDWO/kcUNEr8kH3lGURYDdSyuXCffPOWtQZZSRb1NThuTwsAj0RuFiE2fjOmgSXGZ
-         yGCrBZwts/F1mEhJekFeQtRu2eAU4FGV8v9lSyFAD/LV8nCtHAkGnLA5I25rMhq70s
-         bfDnqvqDecMmA==
-Reply-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-          <brooke@alchemists.io>, <git@vger.kernel.org>
-From:   "Jason Pyeron" <jpyeron@pdinc.us>
-To:     <git@vger.kernel.org>
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        <brooke@alchemists.io>
-References: <B6DFB74D-A722-4DBD-A4B2-562604B21CCB@alchemists.io> <022601d6f27a$58a97200$09fc5600$@pdinc.us> <YA3nwFcYz4tbhrlO@camp.crustytoothpaste.net>
-In-Reply-To: <YA3nwFcYz4tbhrlO@camp.crustytoothpaste.net>
-Subject: RE: How to Verify Git GPG Signed Downloads?
-Date:   Sun, 24 Jan 2021 17:24:28 -0500
-Organization: PD Inc
-Message-ID: <06be01d6f29f$ae6450a0$0b2cf1e0$@pdinc.us>
+        id S1726296AbhAYAj0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 19:39:26 -0500
+Received: from mail.archlinux.org ([95.216.189.61]:54886 "EHLO
+        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725986AbhAYAjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 19:39:25 -0500
+X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jan 2021 19:39:24 EST
+From:   Eli Schwartz <eschwartz@archlinux.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1611534745;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=mtfwKv7AGvI7bH29PuFjvJKoY39KUtn/sSXcqq9M2XA=;
+        b=v9hj9EUzfMQm+2popWPClvgiaf9mEdMQB+EYqdGC1qPB+W44lrREuOdlX0JBTzctpy5I8J
+        wltpuMEYkJZaK07VWGxgOKHZQ4D/3oMVJg5bRvr9agfxMavWmRMpao5JrJZedKksvCnCpg
+        g3CTkz4Tuhabor+ZdXj9Jz73lpcGjtWMrXgj7jKinFbH6srgE3FXZKhHI654FRUqr2i5Bq
+        5QEo2lag2vbsvbfes5j1uBRamvXZHvuNrZuT+4c/pU8eVje6JoqaWu+8vvwntfZznhZl0p
+        dkUxzm1ymZiIT9wVXGC5ccLd877OQmXic6fy1HDo+D7YgiF5vqBM6moq3UOd4p9Yy95Krt
+        zucSP2MgARSzAMKWiQEL/jnrwE2W6qVotJeklIPCBmZV5YUGGzwdYaqALfLluN026iXgc2
+        QvauPpuDDb/7JWDTNWieFF19xWKXNeO3Rho6eDiN61j6fkgSNF7AESBEJY7N3IsttMAlk/
+        kMyp2SJ6OWg0el+Ff8Qpf4PT54baDTBr574PKWJtERxKkeb5TfK5/YOj0dL8JNgln1THnS
+        7/68Kau5Fw8VflmzdXOOS528pVV8KZt3RvkJuvF6u0CICQBjY3y3pOoxJDJ55h9fXqUO6e
+        qHLQ5xvy6w4XF/tZaU7nS8IqSevw23t61uT6p7ygJpxpGP+FIrxQs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1611534745;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=mtfwKv7AGvI7bH29PuFjvJKoY39KUtn/sSXcqq9M2XA=;
+        b=4opjyK8NQAsYyluRnczTTkeMlTGLaFIE42/5VE6HNO98pQjuXvzRZOREbGaoV6Hce2/Yo/
+        uJ1PEQ+ZLC8RVABw==
+To:     git@vger.kernel.org
+Subject: gitattributes export-subst and software versioning
+X-Clacks-Overhead:  GNU Terry Pratchett
+Message-ID: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+Date:   Sun, 24 Jan 2021 19:32:17 -0500
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE5lIx8gYb1u2GHCPlnvQhQ03cLXwFWwEnmAkA9tUSrVV0+MA==
-Content-Language: en-us
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US-large
+Content-Transfer-Encoding: 8bit
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: brian m. carlson
-> Sent: Sunday, January 24, 2021 4:34 PM
->=20
-> On 2021-01-24 at 17:57:13, Jason Pyeron wrote:
-> > $ gpg --recv-keys 96AFE6CB
-> > gpg: requesting key 96AFE6CB from hkp server keys.gnupg.net
-> > gpg: key 713660A7: "Junio C Hamano <gitster@pobox.com>" 59 new =
-signatures
-> > gpg: key 713660A7: "Junio C Hamano <gitster@pobox.com>" 2 new =
-subkeys
-> > gpg: no ultimately trusted keys found
-> > gpg: Total number processed: 1
-> > gpg:            new subkeys: 2
-> > gpg:         new signatures: 59
-> >
-> > $ gpg --verify -v git-2.30.0.tar.sign git-2.30.0.tar.gz
-> > gpg: Signature made Mon Dec 28 01:12:30 2020 EST using RSA key ID =
-96AFE6CB
-> > gpg: NOTE: signature key 96AFE6CB expired Sun Jul 26 13:41:24 2020 =
-EDT
-> > gpg: NOTE: signature key B3F7CAC9 expired Sun Jul 26 13:41:42 2020 =
-EDT
-> > gpg: using subkey 96AFE6CB instead of primary key 713660A7
-> > gpg: NOTE: signature key 96AFE6CB expired Sun Jul 26 13:41:24 2020 =
-EDT
-> > gpg: NOTE: signature key 96AFE6CB expired Sun Jul 26 13:41:24 2020 =
-EDT
-> > gpg: NOTE: signature key B3F7CAC9 expired Sun Jul 26 13:41:42 2020 =
-EDT
-> > gpg: using PGP trust model
-> > gpg: BAD signature from "Junio C Hamano <gitster@pobox.com>"
-> > gpg: binary signature, digest algorithm SHA256
->=20
-> The signature is bad because it's over the uncompressed .tar, not the
-> .tar.gz.  There is also a .tar.xz and the signature is the same.  You
-> therefore need to uncompress it first with gunzip.
+Periodically, I wonder if there is some better way for managing tagged 
+releases for software in git. Current state of the art seems to be 
+"write a custom Makefile that takes a version and seds out the existing 
+version, then runs git tag for you". Inelegant solutions also abound; 
+people release code that does not build properly unless you build it 
+from a git checkout so it can run git describe. (There are half a dozen 
+individually popular but mutually exclusive python ecosystems for this, 
+in fact, all of them varying degrees of broken.)
 
-Silly me, but maybe there should be a README in that directory, along =
-with the signatures.asc. If not, then it should easily be found on the =
-git-scm site.
+git does have a way to automatically insert metadata via the 
+export-subst attribute on a file, but it's very awkward to use and you 
+cannot get much info out of it.
 
-$ gpg --verify  git-2.30.0.tar.sign git-2.30.0.tar
-gpg: Signature made Mon Dec 28 01:12:30 2020 EST using RSA key ID =
-96AFE6CB
-gpg: Good signature from "Junio C Hamano <gitster@pobox.com>"
-gpg:                 aka "Junio C Hamano <junio@pobox.com>"
-gpg:                 aka "Junio C Hamano <jch@google.com>"
-gpg: Note: This key has expired!
-Primary key fingerprint: 96E0 7AF2 5771 9559 80DA  D100 20D0 4E5A 7136 =
-60A7
-     Subkey fingerprint: E1F0 36B1 FEE7 221F C778  ECEF B0B5 E886 96AF =
-E6CB
+# get tags into a file, only on exact match:
 
->=20
-> > $ gpg --list-keys -v 96AFE6CB
-> > gpg: using PGP trust model
-> > gpg: NOTE: signature key 96AFE6CB expired Sun Jul 26 13:41:24 2020 =
-EDT
-> > gpg: NOTE: signature key B3F7CAC9 expired Sun Jul 26 13:41:42 2020 =
-EDT
-> > pub   4096R/713660A7 2011-10-01
-> > uid                  Junio C Hamano <gitster@pobox.com>
-> > uid                  Junio C Hamano <junio@pobox.com>
-> > uid                  Junio C Hamano <jch@google.com>
-> > sub   4096R/96AFE6CB 2011-10-03 [expired: 2020-07-26]
-> > sub   4096R/833262C4 2011-10-01
-> > sub   4096R/B3F7CAC9 2014-09-20 [expired: 2020-07-26]
-> >
-> > It is possible that Junio forgot to push his refreshed public key.
->=20
-> Yes, I think that's the case.
+$ cat VERSION
+$Format:%d$
+$Format:%D$
+
+$ git archive HEAD | bsdtar -xOf - VERSION
+   (HEAD -> master, tag: 1.0)
+HEAD -> master, tag: 1.0
+
+With sufficient regex, you can get a release out of this, but it doesn't 
+work if you try getting an autogenerated tarball for a commit that isn't 
+exactly a release.
+
+$ git commit --allow-empty -m ...
+$ git archive HEAD | bsdtar -xOf - VERSION
+   (HEAD -> master)
+HEAD -> master
+
+I think it would be much, much nicer if there was a format placeholder 
+for git describe.
+
+It doesn't even need option support -- the default output in most cases 
+could be a replacement for or fall back to existing invocations of the 
+"git" program, followed by post-processing with e.g. "sed".
+
+However, the existence of current pretty formats such as %C() or 
+%(trailer:options) implies that options could be passed in a 
+git-describe format too. e.g. %(describe:--long --tags --match="v*")
+
+Thoughts?
+
+-- 
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
 
 
