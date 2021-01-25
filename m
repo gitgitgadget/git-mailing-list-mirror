@@ -2,116 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D46AC433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 19:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E967FC433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 20:04:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBD4E224F9
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 19:59:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F1B3224F9
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 20:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732148AbhAYT7W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 14:59:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60226 "EHLO
+        id S1731577AbhAYUEw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 15:04:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732315AbhAYT6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:58:50 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA7FC061574
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:58:10 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id 3so16876070ljc.4
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:58:10 -0800 (PST)
+        with ESMTP id S1731681AbhAYUDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 15:03:52 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88EFC061573
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 12:03:11 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id l14so4725986qvp.2
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 12:03:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=iLkXK83ERvYcTFpDT41IGOB81b/ikpCpocfVfQLvhfc=;
-        b=fzXT3d4E9aITMghneSS7r/KSoRmjaOhFkp2vmJ1NifReHFNaEkXTAkydsSHKiVTJyV
-         CsDujdkTksLxnD2ll80GL5Bpqeshh0k4KVnmrpKHfl889p5Ao7GSP4/+2an7CpEFNlP5
-         PF2BAJwKfutk1G/SpS0YGh7mIu9RvtpevlwFhjqEOy5wbVD1NSSoLNJWFUmH4i+SscB1
-         SYLl92jBHBiwLXDoj3djQYBgyIbHPYZ+wN0dflkTsVR55eMDfAfdog+0LzsL/GADqhuM
-         muls8/61b6Lt8BHSGABaxEuhHW/UAYiz4Xsgrx0UNfJXgYYOXf5emOTJ9ZbRcUogCL8H
-         teSw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=o7f11APc6KpbBztE6atjuImnYR6y0VTi1DOzxioOaIQ=;
+        b=atszEV7UXJR2WF7hL3HPPpRc6eXY9rWB2Bn1smV/ASQivmHIbxiEJ2Y525viQ8CZYt
+         QoR1JX+ZDml9oaxxRT7oq08OdB/amLLHuyugY66PBNpBfJKb6aNGoslCSo58BZZ4g7WU
+         qNqXtWbJeNrbdG6P6siy7kDYOzFExEQb9r2bjIksPvxY3TufeM8xHcfZ6PQ2JPp+6wWC
+         Yue4vhTmU8y5QDFHeumR7SFmbGRqBwFpF8x2jhKcbJxCtYaXSv3wJ/Pyom5gMoI461/A
+         zEb9pWWKViK98k6A0syah65AeRvmF8pEMJQqsSvPPlwsZopZqCDXdcLMUIqZho77umyU
+         yM3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=iLkXK83ERvYcTFpDT41IGOB81b/ikpCpocfVfQLvhfc=;
-        b=oYt8uQ7gCoOY0prG3wx5HTARW3rzkiTI+kaMWyRkeLloKq44wixQjO2j5CFVd+tV39
-         vV1Nl6lpOFPXNUayGJFh4I1dl9beOSl8PFvOtWfZqyj/itHke+uzB9XbFy1uLPv+NQ+f
-         dDLWeebqLvKR/B0gQYMepzJCTpnxQuauUdCbNV0P7djXpD0gT8qGXD58oczamUYdvmR2
-         Z1faPinf+hqtVQ7k+UjDXsrplZD7ZNKqsGiCVoVmr796BJnjbFoylJGrjbYkBenCGFq6
-         xUvcNqvAvW46IbRyG29hd0++UQZHSfnwbwMDHPRTE4vMQnv3ZDMkU0EMWhJeIFbjtTyW
-         I19w==
-X-Gm-Message-State: AOAM533D+n6KG4wVvvp+206VZVzR4c8/u0mg3093uY7O5679f9853Eal
-        HkXeuYhP4Hfzxmw3wfyJYHri8cLcka8AUECS84KMeGhETFUW4g==
-X-Google-Smtp-Source: ABdhPJwZgWmP6c0PoBhaQ6en8mmFW3Yvnuj1VPXkjTVYAW0fksfkxPqD12jYo1s6wKYoRfeuWR1NcH2hEYUxvELZF0U=
-X-Received: by 2002:a2e:b16f:: with SMTP id a15mr963165ljm.459.1611604688227;
- Mon, 25 Jan 2021 11:58:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=o7f11APc6KpbBztE6atjuImnYR6y0VTi1DOzxioOaIQ=;
+        b=lbzBJLV5nWz9MkcWWm198i29ECENkrWghZoemnG+/dVEhkEBwlssEiabWJxEHQBBsq
+         ea1aUEdktTVJi9jHEhnee7xJMY/eA0yaV+WhUzkje+ldpHpnA+oqUs9mWQT24T2WlcRs
+         YqyiQ5rvpnG1AWSqzGj5ORSkyoxCOP3mtIl7O9juX41sbQFuEYbQ+2M675MstIHfhfpp
+         elO/J7r4WavJuc+LB5GBkKN3unet5AqoU5zzSEC3eXoVdVrHJaN+3cs58e6gvR4sup9A
+         rikrUigC+b51eDWa5mMN3GWizLpkGb02y9lf2hce0mQx1I10ewDQ43CwS3UkJKLs32BR
+         d/aw==
+X-Gm-Message-State: AOAM5317OC2rl6HPn4Sz9Sx+9seS+iIdf0T44LaSJvxuIG4ZmF7ubJKY
+        QwcuV8drDS1KFg3gOGti8Yr3mQ==
+X-Google-Smtp-Source: ABdhPJyrI8tWnzzRd3OtfuzEYZEoRpVAsucnpdQtQdMAfv65alnYud/Vywn7ZLlKhVLiy2nJ1hqDeA==
+X-Received: by 2002:a05:6214:a14:: with SMTP id dw20mr2390741qvb.43.1611604990901;
+        Mon, 25 Jan 2021 12:03:10 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:5e9f:a2e5:e7ac:394d])
+        by smtp.gmail.com with ESMTPSA id z26sm12607996qki.40.2021.01.25.12.03.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 12:03:10 -0800 (PST)
+Date:   Mon, 25 Jan 2021 15:03:07 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v2 3/8] builtin/index-pack.c: write reverse indexes
+Message-ID: <YA8j+3nq8nI/hcIQ@nand.local>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <cover.1610576805.git.me@ttaylorr.com>
+ <5b18ada61113faa9dc1de584366cb39b6a449ec6.1610576805.git.me@ttaylorr.com>
+ <YAtlZ49mTfTGg11/@coredump.intra.peff.net>
 MIME-Version: 1.0
-From:   Dan Lew <dlew@atlassian.com>
-Date:   Mon, 25 Jan 2021 13:57:57 -0600
-Message-ID: <CALmLNPQAKzzzAUPhejvcF7SEvq4zGDDqkm6HaVi9pAfB0JjoLQ@mail.gmail.com>
-Subject: Bug report: gitk is no longer working on my OSX machine
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YAtlZ49mTfTGg11/@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-Would love some help, having trouble getting gitk up and running again...
+On Fri, Jan 22, 2021 at 06:53:11PM -0500, Jeff King wrote:
+> On Wed, Jan 13, 2021 at 05:28:15PM -0500, Taylor Blau wrote:
+>
+> >  OPTIONS
+> > @@ -33,7 +34,14 @@ OPTIONS
+> >  	file is constructed from the name of packed archive
+> >  	file by replacing .pack with .idx (and the program
+> >  	fails if the name of packed archive does not end
+> > -	with .pack).
+> > +	with .pack). Incompatible with `--rev-index`.
+>
+> I wondered which option was incompatible, but couldn't see from the
+> context. It is "index-pack -o", which kind of makes sense. We can derive
+> "foo.rev" from "foo.idx", but normally "-o" does not do any deriving.
+>
+> So I was all set to say "OK, we can live without it", but...
+>
+> > @@ -1824,7 +1851,16 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+> >  	if (from_stdin && hash_algo)
+> >  		die(_("--object-format cannot be used with --stdin"));
+> >  	if (!index_name && pack_name)
+> > -		index_name = derive_filename(pack_name, "idx", &index_name_buf);
+> > +		index_name = derive_filename(pack_name, ".pack", "idx", &index_name_buf);
+> > +
+> > +	opts.flags &= ~(WRITE_REV | WRITE_REV_VERIFY);
+> > +	if (rev_index) {
+> > +		opts.flags |= verify ? WRITE_REV_VERIFY : WRITE_REV;
+> > +		if (index_name)
+> > +			rev_index_name = derive_filename(index_name,
+> > +							 ".idx", "rev",
+> > +							 &rev_index_name_buf);
+> > +	}
+>
+> ...here we do end up deriving ".rev" from ".idx" anyway. So I guess we
+> probably could support "-o".  I also wonder what happens with "git
+> index-pack -o foo.idx" when pack.writeReverseIndex is set. It looks like
+> it would just work because of this block. But then shouldn't
+> "--rev-index" work, too? And indeed, there is a test for that at the end
+> of the patch! So is the documentation just wrong?
 
-Here's the details from `git bugreport`:
+Hah! The documentation is just plain wrong. It's been a while, but I
+have a vague recollection of writing this documentation before changing
+the implementation of index-pack to allow this. Clearly, I forgot to go
+back to update the broken documentation.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Hilariously, there is even a test in t5325 that demonstrates this
+working! 'git index-pack --rev-index -o other.idx' writes both
+'other.idx' and 'other.rev'. That was easy :-).
 
-1. Open any git repository directory in a terminal.
-2. Run `gitk`
+> I admit to finding the use of opts.flags versus the rev_index option a
+> bit confusing. It seems like they are doing roughly the same thing, but
+> influenced by different sources. It seems like we should be able to have
+> a single local variable (then that goes on to set opts.flags for any
+> sub-functions we call). Or maybe two, if we need to distinguish config
+> versus command-line, but then they should have clear names
+> (rev_index_config and rev_index_cmdline or something).
 
-What did you expect to happen? (Expected behavior)
+Yeah, I know. It's because we already pass a pointer to a struct
+pack_idx_option to git_index_pack_config(), so in effect the 'flags' on
+that struct *is* rev_index_config.
 
-gitk opens
+It's a little ugly, I agree, but I'm skeptical that the effort to clean
+it up is worth it, mostly because the pack_idx_option struct probably
+shouldn't be part of the index-pack builtin in the first place.
 
-What happened instead? (Actual behavior)
+> As an aside, looking at derive_filename(), it seems a bit weird that one
+> argument has a dot in the suffix and the other does not. I guess you are
+> following the convention from write_special_file(), which omits it in
+> the newly-added suffix. But it is slightly awkward to omit it for the
+> old suffix in derive_filename(), because we want to strip_suffix() it
+> all at once.
 
-gitk crashes with the following error message on the command line:
+> Probably not that big a deal, but if anybody feels strongly, then
+> derive_filename() could do:
+>
+>   if (!strip_suffix(pack_name, strip, &len) ||
+>       !len || pack_name[len] != '.')
+> 	die("does not end in .%s", strip);
 
-objc[33662]: autorelease pool page 0x7fb1070a3000 corrupted
-  magic     0x00000000 0x00000000 0x00000000 0x00000000
-  should be 0xa1a1a1a1 0x4f545541 0x454c4552 0x21455341
-  pthread   0x10b020dc0
-  should be 0x10b020dc0
+That does make the callers look nicer, but it needs an extra two things:
 
-An error window also pops up saying that "wish quit unexpectedly."
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index ef2874a8e6..c758f3b8e9 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1441,11 +1441,10 @@ static const char *derive_filename(const char *pack_name, const char *strip,
+ {
+        size_t len;
+        if (!strip_suffix(pack_name, strip, &len) || !len ||
+-           pack_name[len] != '.')
++           pack_name[len - 1] != '.')
+                die(_("packfile name '%s' does not end with '.%s'"),
+                    pack_name, strip);
+        strbuf_add(buf, pack_name, len);
+-       strbuf_addch(buf, '.');
+        strbuf_addstr(buf, suffix);
+        return buf->buf;
+ }
 
-What's different between what you expected and what actually happened?
+And then it does what you are looking for. I'll pull that change out
+with your Suggested-by as a preparatory commit right before this one.
 
-It shouldn't crash.
+> > @@ -1578,6 +1591,12 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
+> >  		}
+> >  		return 0;
+> >  	}
+> > +	if (!strcmp(k, "pack.writereverseindex")) {
+> > +		if (git_config_bool(k, v))
+> > +			opts->flags |= WRITE_REV;
+> > +		else
+> > +			opts->flags &= ~WRITE_REV;
+> > +	}
+> >  	return git_default_config(k, v, cb);
+> >  }
+>
+> IMHO we'll eventually want to turn this feature on by default. In which
+> case we'll have to update every caller which is checking the config
+> manually. Should we hide this in a function that looks up the config,
+> and sets the default? Or alternatively, I guess, they could all use some
+> shared initializer for "flags".
 
-Anything else you want to add:
+Note that there are only two such callers, so I'm not sure the effort to
+extract this would be worth it.
 
-I'm using git/git-gui as installed by brew on OSX>
+> > +	# Intentionally corrupt the reverse index.
+> > +	chmod u+w $rev &&
+> > +	printf "xxxx" | dd of=$rev bs=1 count=4 conv=notrunc &&
+> > +
+> > +	test_must_fail git index-pack --rev-index --verify \
+> > +		$packdir/pack-$pack.pack 2>err &&
+> > +	grep "validation error" err
+> > +'
+>
+> This isn't that subtle of a corruption, because we are corrupting the
+> first 4 bytes, which is the magic signature. Maybe something further in
+> the actual data would be interesting instead of or in addition?
+>
+> I dunno. There are a lot of edge cases around corruption (likewise, we
+> might care how the normal reading code-path perceives a signature
+> corruption like this). I'm not sure it's all that interesting to test
+> all of them.
 
-If I run `gitk` where outside of a git repository, then it opens fine
-(and shows the "Cannot find a git repository here" error.
+Agreed, I think what is here (even though it's not a severe corruption)
+would be sufficient to make me feel good about our error handling in
+general.
 
-gitk has run fine on this computer for years; I don't know what
-suddenly changed to make it stop working.
-
-[System Info]
-git version 2.30.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30
-PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64 x86_64
-compiler info: clang: 12.0.0 (clang-1200.0.32.28)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
+Thanks,
+Taylor
