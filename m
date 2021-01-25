@@ -7,38 +7,38 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF27CC433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4CCC43381
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:24:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 96A5B20719
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:23:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00BB9207B6
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732622AbhAYVWt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 16:22:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50136 "EHLO
+        id S1732694AbhAYVXs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 16:23:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732609AbhAYVW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732608AbhAYVW0 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 25 Jan 2021 16:22:26 -0500
 Received: from dandelion.mymedia.su (unknown [IPv6:2604:180:2:1574::c9e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 368E7C061788
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 13:21:45 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61416C061786
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 13:21:44 -0800 (PST)
 Received: from dandelion.mymedia.su (localhost.localdomain [127.0.0.1])
-        by dandelion.mymedia.su (8.15.2/8.15.2/Debian-3) with ESMTP id 10PLLgZb032193;
-        Tue, 26 Jan 2021 00:21:42 +0300
+        by dandelion.mymedia.su (8.15.2/8.15.2/Debian-3) with ESMTP id 10PLLe3r032178;
+        Tue, 26 Jan 2021 00:21:40 +0300
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=guriev.su; s=default;
-        t=1611609702; bh=VNjs+5R/gcjyShw0Z/qsQnH64hD1+PKwSbljhSCTeAw=;
+        t=1611609700; bh=tYaD5ZxgYQdAX/fKKGh66LiJMK3Voyw3LHEgF8Xbhjw=;
         h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=uD+1yAgHmx9inRoRxXw6QjABQsVn4n3N2PUt8/FayIzVNjD26N8EXVorfiVgjbaIL
-         y8Eoa/6gT+XmG6q00seapFy03vqZPjkLUNm3HGcpNecWx7LQ3SQtp82Eq+RnWkNMx+
-         P8Z1qdiSlio+Rf/FjwsIQLuN0mNsCFckOE4ijAHk=
+        b=iwlqJaq3+sUWsHNmX69PqnSarZThtaPnbVTIJtesZnonqx7NDNRXY99LixHpoWsFS
+         F5QJAy+yf2d0+nGT3bI8RYxAvwcgPt1KDhcsCXNpJ/6ZGjggWAWNDmPV9tk8HLZSyg
+         pL+WgRODA6v8/nepbOylT1yZSPo7elZVGe8TE7kQ=
 Received: (from mymedia@localhost)
-        by dandelion.mymedia.su (8.15.2/8.15.2/Submit) id 10PLLgTV032192;
-        Tue, 26 Jan 2021 00:21:42 +0300
+        by dandelion.mymedia.su (8.15.2/8.15.2/Submit) id 10PLLebi032177;
+        Tue, 26 Jan 2021 00:21:40 +0300
 From:   Nicholas Guriev <nicholas@guriev.su>
 To:     git@vger.kernel.org
-Subject: [PATCH v3 4/4] t7800: new tests of difftool.tabbed feature
-Date:   Tue, 26 Jan 2021 00:21:32 +0300
-Message-Id: <20210125212132.894458-5-nicholas@guriev.su>
+Subject: [PATCH v3 3/4] doc: describe new difftool.tabbed feature
+Date:   Tue, 26 Jan 2021 00:21:31 +0300
+Message-Id: <20210125212132.894458-4-nicholas@guriev.su>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210125212132.894458-1-nicholas@guriev.su>
 References: <20210118210003.3071205-1-nicholas@guriev.su>
@@ -49,217 +49,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few helper functions were put in the script that manage faked binaries in a
-temporary directory for $PATH. The helpers restore state before test finish.
-
-Besides, two tests of rewritten prompting were added. "git difftool" now asks
-again on incorrect input. Plus, fixed a typo in a test of the --extcmd option.
+And related the `--tabbed` command line option, and the
+GIT_DIFFTOOL_TABBED environment variable.
 
 Signed-off-by: Nicholas Guriev <nicholas@guriev.su>
 ---
- t/t7800-difftool.sh | 175 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 174 insertions(+), 1 deletion(-)
+ Documentation/config/difftool.txt    |  6 +++
+ Documentation/git-difftool.txt       | 19 +++++++--
+ Documentation/git-mergetool--lib.txt | 62 ++++++++++++++++++++++++++++
+ Documentation/git.txt                |  8 ++++
+ 4 files changed, 91 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a578b35761..249d7a4821 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -270,6 +270,22 @@ test_expect_success 'difftool last flag wins' '
- 	prompt_given "$prompt"
- '
+diff --git a/Documentation/config/difftool.txt b/Documentation/config/difftool.txt
+index 6762594480..ac609aee66 100644
+--- a/Documentation/config/difftool.txt
++++ b/Documentation/config/difftool.txt
+@@ -12,3 +12,9 @@ difftool.<tool>.cmd::
  
-+test_expect_success 'ignore unknown input then launch the tool' '
-+	difftool_test_setup &&
-+	(echo Qwerty && echo Yes) >input &&
-+	git difftool branch <input >output &&
-+	tail -1 output | grep -q -x -F \
-+		"Launch '\''test-tool'\'' [Y/n]? Launch '\''test-tool'\'' [Y/n]? branch"
-+'
+ difftool.prompt::
+ 	Prompt before each invocation of the diff tool.
 +
-+test_expect_success 'ignore unknown input then skip the tool' '
-+	difftool_test_setup &&
-+	(echo Qwerty && echo No) >input &&
-+	git difftool branch <input >output &&
-+	tail -1 output | grep -q -x -F \
-+		"Launch '\''test-tool'\'' [Y/n]? Launch '\''test-tool'\'' [Y/n]? "
-+'
-+
- # git-difftool falls back to git-mergetool config variables
- # so test that behavior here
- test_expect_success 'difftool + mergetool config variables' '
-@@ -319,7 +335,7 @@ test_expect_success 'difftool --extcmd=cat' '
- test_expect_success 'difftool --extcmd cat' '
- 	echo branch >expect &&
- 	echo master >>expect &&
--	git difftool --no-prompt --extcmd=cat branch >actual &&
-+	git difftool --no-prompt --extcmd cat branch >actual &&
- 	test_cmp expect actual
- '
++difftool.tabbed::
++	Show compared files in different tabs using single invocation of
++	the diff tool. Must be a boolean value. Only the following tools
++	are currently supported: vimdiff and related, meld. Tools with
++	overridden command line will ignore this configuration variable.
+diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
+index 484c485fd0..1b7a5345ad 100644
+--- a/Documentation/git-difftool.txt
++++ b/Documentation/git-difftool.txt
+@@ -69,6 +69,13 @@ with custom merge tool commands and has the same value as `$MERGED`.
+ --tool-help::
+ 	Print a list of diff tools that may be used with `--tool`.
  
-@@ -390,6 +406,163 @@ test_expect_success 'ending prompt input with EOF' '
- 	! grep br2 output
- '
++--[no-]tabbed::
++	Open compared files in different tabs using single invocation
++	of the diff tool. This overrides configuration or environment.
++	Currently, only the following tools are supported: vimdiff and
++	related, meld. Tools with overridden command line will ignore
++	this option.
++
+ --[no-]symlinks::
+ 	'git difftool''s default behavior is create symlinks to the
+ 	working tree when run in `--dir-diff` mode and the right-hand
+@@ -95,10 +102,11 @@ instead.  `--no-symlinks` is the default on Windows.
+ 	`diff.tool`, `merge.tool` until a tool is found.
  
-+prepend_shared_path () {
-+	directory="$1"
-+	first="${PATH%%:*}"
-+	if test "$directory" != "$first"
-+	then
-+		: ${clean_shared_path=$PATH}
-+		PATH="$directory:$PATH"
-+		test_when_finished 'PATH=$clean_shared_path'
-+	fi
+ --[no-]trust-exit-code::
+-	'git-difftool' invokes a diff tool individually on each file.
+-	Errors reported by the diff tool are ignored by default.
+-	Use `--trust-exit-code` to make 'git-difftool' exit when an
+-	invoked diff tool returns a non-zero exit code.
++	'git-difftool' invokes a diff tool individually on each file
++	unless tabbed mode is active. Errors reported by the diff tool
++	are ignored by default. Use `--trust-exit-code` to make
++	'git-difftool' exit immediately when an invoked diff tool
++	returns a non-zero exit code.
+ +
+ 'git-difftool' will forward the exit code of the invoked tool when
+ `--trust-exit-code` is used.
+@@ -128,6 +136,9 @@ See the `--tool=<tool>` option above for more details.
+ difftool.prompt::
+ 	Prompt before each invocation of the diff tool.
+ 
++difftool.tabbed::
++	Configure default value of the `--tabbed` option. See above.
++
+ difftool.trustExitCode::
+ 	Exit difftool if the invoked diff tool returns a non-zero exit status.
+ +
+diff --git a/Documentation/git-mergetool--lib.txt b/Documentation/git-mergetool--lib.txt
+index 4da9d24096..1b9fb3591e 100644
+--- a/Documentation/git-mergetool--lib.txt
++++ b/Documentation/git-mergetool--lib.txt
+@@ -44,6 +44,68 @@ run_merge_tool::
+ 	'$MERGED', '$LOCAL', '$REMOTE', and '$BASE' must be defined
+ 	for use by the merge tool.
+ 
++TOOLS
++-----
++
++There are several built-in merge tool wrappers which are located in the
++'$(git --exec-path)/mergetools' directory. They are shell scripts and provide
++a unified interface for the discussed scriptlet. It expects to find the
++following functions defined by the each wrapper. However, most of them have
++sane default implementation and the wrapper may write less boilerplate.
++
++can_merge::
++	returns zero status (true) if the tool can be used by `git mergetool`,
++	otherwise the command will be unavailable. Default: true.
++
++can_diff::
++	returns zero status (true) if the tool can be used by `git difftool`,
++	otherwise the command will be unavailable. Default: true.
++
++merge_cmd::
++	should actually launch the tool in merging mode for a single path.
++	Positional argument: '$1' -- name of the merge tool. Predefined
++	variables: '$MERGED', '$LOCAL', '$REMOTE', and '$BASE' mentioned above,
++	'$merge_tool_path' -- absolute path to the binary of the tool or its name
++	if seen in default search path, '$base_present' -- string `true` or `false`.
++
++diff_cmd::
++	should actually launch the tool in diffing mode for a single path.
++	Positional argument: '$1' -- name of the diff tool. Predefined
++	variables: '$LOCAL' and '$REMOTE', '$merge_tool_path' -- absolute path
++	to the binary of the tool or its name if seen in default search path.
++
++diff_combo_supported::
++	returns zero status (true) if the tool can operate in tabbed mode,
++	otherwise the feature will be skipped. Default: false.
++
++diff_combo_cmd::
++	should actually launch the tool with all compared files. The function
++	receives list of pairs of files to compare, every filename is followed
++	by proper input field separator, '$IFS', the list is reachable through
++	third opened file descriptor and the function may close this fd after
++	reading all its content. System file descriptors remain untouched.
++	Predefined variable: '$merge_tool_path' -- absolute path to the binary
++	of the tool or its name if seen in default search path.
+++
++Example:
+++
++[listing]
++diff_combo_cmd () {
++	"$merge_tool_path" -- `cat <&3` 3<&-
 +}
 +
-+mock_binary () {
-+	name="$1" body="$2"
-+	prepend_shared_path "$PWD/fake-bin" &&
-+	touch run-cmds &&
-+	mkdir -p fake-bin &&
-+	write_script "fake-bin/$name" <<-EOF &&
-+	printf '%s ' $name "\$@" |
-+	tr -s '[:space:]' ' ' |
-+	sed 's/ \$/\\n/' >>"\$HOME/run-cmds" &&
-+	${body:-true}
-+	EOF
-+	test_when_finished "rm -f fake-bin/$name run-cmds"
-+}
++translate_merge_tool_path::
++	can print preset '$merge_tool_path'. Positional argument: '$1' -- name
++	of the merge tool.
 +
-+test_invoked () {
-+	pattern="$1"
-+	if ! grep -q -x -e "$pattern" run-cmds
-+	then
-+		set -- $pattern
-+		echo "$1 does not seem to be invoked"
-+		echo "entry '$pattern' was not found in the 'run-cmds' file"
-+		false
-+	fi
-+}
++exit_code_trustable::
++	returns zero status (true) if a caller is allowed to rely on the exit
++	code of the merge tool, otherwise one should check a backup of the file
++	to determine whether or not merging was successful. Default: false.
 +
-+test_expect_success 'tabbed mode with --tabbed option' '
-+	mock_binary vim &&
-+	test_config_global diff.tool vimdiff &&
-+	yes | git difftool --tabbed branch | tee actual &&
-+	(
-+		printf "Viewing 2 files:\n" &&
-+		printf "  '\''file'\''\n" &&
-+		printf "  '\''file2'\''\n" &&
-+		printf "Launch '\''vimdiff'\'' [Y/n]? "
-+	) >expect &&
-+	test_cmp expect actual &&
-+	test_invoked "vim -R -f -c .* file .* file2"
-+'
++list_tool_variants::
++	prints all possible names that may be passed to the '--tool' option.
 +
-+test_expect_success 'tabbed mode with GIT_DIFFTOOL_TABBED environment' '
-+	mock_binary vim &&
-+	test_config_global diff.tool vimdiff &&
-+	yes | GIT_DIFFTOOL_TABBED=yes git difftool branch | tee actual &&
-+	(
-+		printf "Viewing 2 files:\n" &&
-+		printf "  '\''file'\''\n" &&
-+		printf "  '\''file2'\''\n" &&
-+		printf "Launch '\''vimdiff'\'' [Y/n]? "
-+	) >expect &&
-+	test_cmp expect actual &&
-+	test_invoked "vim -R -f -c .* file .* file2"
-+'
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index a6d4ad0818..3ef75aae36 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -583,6 +583,14 @@ For each path `GIT_EXTERNAL_DIFF` is called, two environment variables,
+ `GIT_DIFF_PATH_TOTAL`::
+ 	The total number of paths.
+ 
++`GIT_DIFFTOOL_PROMPT`::
++	Issue an interactive prompting right before launch the diff
++	tool. It must contain a boolean value.
 +
-+test_expect_success 'tabbed mode with difftool.tabbed setting' '
-+	mock_binary vim &&
-+	test_config_global diff.tool vimdiff &&
-+	test_config_global difftool.tabbed 1 &&
-+	yes | git difftool branch | tee actual &&
-+	(
-+		printf "Viewing 2 files:\n" &&
-+		printf "  '\''file'\''\n" &&
-+		printf "  '\''file2'\''\n" &&
-+		printf "Launch '\''vimdiff'\'' [Y/n]? "
-+	) >expect &&
-+	test_cmp expect actual &&
-+	test_invoked "vim -R -f -c .* file .* file2"
-+'
++`GIT_DIFFTOOL_TABBED`::
++	Run the diff tool in tabbed mode opening all compared files
++	together. It must contain a boolean value.
 +
-+test_expect_success 'environment variable wins over config in tabbed mode' '
-+	mock_binary vim &&
-+	test_config_global diff.tool vimdiff &&
-+	test_config_global difftool.tabbed true &&
-+	GIT_DIFFTOOL_TABBED=FALSE git difftool -y branch </dev/null >output &&
-+	test_must_be_empty output &&
-+	test_invoked "vim -R -f -d -c .* file" &&
-+	test_invoked "vim -R -f -d -c .* file2"
-+'
-+
-+test_expect_success 'cli option wins over environment in tabbed mode' '
-+	mock_binary vim &&
-+	test_config_global diff.tool vimdiff &&
-+	GIT_DIFFTOOL_TABBED=1 git difftool -y --no-tabbed branch </dev/null >output &&
-+	test_must_be_empty output &&
-+	test_invoked "vim -R -f -d -c .* file" &&
-+	test_invoked "vim -R -f -d -c .* file2"
-+'
-+
-+test_expect_success 'say no in tabbed mode' '
-+	mock_binary meld &&
-+	yes no | git difftool -t meld --tabbed branch &&
-+	! test_invoked "meld\\>.*"
-+'
-+
-+test_expect_success 'no tabbed mode for single file' '
-+	mock_binary meld &&
-+	git difftool -y -t meld --tabbed branch file &&
-+	test_invoked "meld \\S\\+ file"
-+'
-+
-+test_expect_success 'both --tabbed and --trust-exit-code options' '
-+	mock_binary meld false &&
-+	test_config_global diff.tool meld &&
-+	test_config_global difftool.prompt false &&
-+	test_must_fail git difftool --tabbed --trust-exit-code branch >output &&
-+	test_must_be_empty output &&
-+	test_invoked "meld --diff \\S\\+ file --diff \\S\\+ file2"
-+'
-+
-+test_expect_success 'tempdir is still clean after successful tabbed mode' '
-+	mock_binary meld &&
-+	mkdir tempdir &&
-+	test_when_finished "rm -r tempdir" &&
-+	TMPDIR="$PWD/tempdir" git difftool -y -t meld --tabbed branch &&
-+	test_dir_is_empty tempdir
-+'
-+
-+test_expect_success 'tempdir is still clean after failed tabbed mode' '
-+	mock_binary meld false &&
-+	mkdir tempdir &&
-+	test_when_finished "rm -r tempdir" &&
-+	TMPDIR="$PWD/tempdir" git difftool -y -t meld --tabbed branch &&
-+	test_dir_is_empty tempdir
-+'
-+
-+test_background () {
-+	# https://stackoverflow.com/a/45112755/5000805
-+	set -m
-+	"$@" &
-+	set +m
-+}
-+
-+# Create a named queue for synchronizing. Our test process will get blocked on
-+# "echo line" until faked meld reaches "cat chain", and so we do not kill early.
-+test_expect_success PIPE 'tempdir is still clean after SIGTERM in tabbed mode' '
-+	mkfifo chan &&
-+	mock_binary meld "while true; do cat chan; done" &&
-+	mkdir tempdir &&
-+	test_when_finished "rm -r tempdir" &&
-+	test_background env TMPDIR="$PWD/tempdir" \
-+		git difftool -y -t meld --tabbed branch &&
-+	echo line >chan &&
-+	kill -TERM -$! &&
-+	wait && # for clean up
-+	test_dir_is_empty tempdir
-+'
-+
- test_expect_success 'difftool --tool-help' '
- 	git difftool --tool-help >output &&
- 	grep tool output
+ other
+ ~~~~~
+ `GIT_MERGE_VERBOSITY`::
 -- 
 2.27.0
 
