@@ -2,137 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD59EC433E0
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48EECC433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:04:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8288022573
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:03:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10B5D22B2C
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726647AbhAZFDQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:03:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51430 "EHLO
+        id S1730671AbhAZFDg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:03:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731638AbhAYTSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:18:35 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7EFC06178A
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:28 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id f16so397454wmq.5
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:28 -0800 (PST)
+        with ESMTP id S1731209AbhAYTYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 14:24:18 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D3D6C061574
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:23:17 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id t63so986424qkc.1
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:23:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rboGbPio/8esdvVcKT7zrjr6ldwqgY+uOQD8iI9ui0E=;
-        b=jXMgmP4225HafldqH5kHUl3YmozKxedqV2NrGfrFxECC81VtHLzTKfCpPaf0vcOuNb
-         +gWfa4in+ivPJQG68EzlOK719x8luE4RQSAsLsDhQNMPafSnJUdo4rmiFieDYqLVEDCR
-         qlyasOQbFNblxu9qMq3bs3Yk/ZD0oV2DJNjigkkYRtzEVYYNv9tJxdGNOX38xhVuH6x8
-         LZS9dXKIOhdEtMu5jus7U30KragZEgE/xxSD5te3l2Kjwj2v15nBpH+6mJgJaZJ9dsMS
-         n6zVRhOrFcsLiHX0422D2xa4y+OzOBCRh5abY8yk0MD7nIatHFYprqtJOdJ1mIID8SpQ
-         PvGw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=iI8cHtoAuB1dWr6MrJCLWuC0nAHi52bbtB2he9xJNe8=;
+        b=Hg+jXWTaJ3Opbzpy4HQ1HEeHPmn3xteSRWMS4msvefYMQemEBJYXxrXCWqNv5o6Rhv
+         Jw8W3Gl+iX59DlLZHmD4hiTtqxReVZmGoBjNqp4VYf8SVNIlt3qyowkbXn8mVWpyo8hA
+         MpQWojpBUiFOSpG6r9fu3I1DFP1cApdqnqEyNMJh9269Df7B249yN6XwM6fH0+Bvde4f
+         ayOY/YKlg5kqO8+kwEtE+grsCXHlgBILm24pdAI+S0K7wK7WV5rfXyU81JriuUHjOG00
+         /9tJZOsaPe9E5kXnGBmrgA7Ut7wgiDHZfcbTs4uufv3tR+10qbAKPWsUipfLaXiUnVgf
+         X79A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rboGbPio/8esdvVcKT7zrjr6ldwqgY+uOQD8iI9ui0E=;
-        b=uXBlNP+b9sZtMC5TZ53O3tuDKLMPQsmYhskNimq5tViJvt/qeCT4hEAQ6tKlkX0OGD
-         3A798Cm0m9Y+9rAWusVTz0pxstnGJH5TxjwDdLo8m9TUNO6N6eAKVMZ+26k2jorvNn3D
-         Lq3LX5TV88C2Z63UuvPgpE+QD6cf+tZCn00onT2XSNMo2U8YWHXfVq/U4/+n7ebNdqij
-         mlArx38QAkjC8gpXic5FwjEK7Q0IDxMyFvGAn8BXctLudpTu0WecbY33zX64hZg8/DqI
-         VtSnelXOOEvmn7oEdGKdidBb/jJcsgZbRqBn12m1THqwi/7miblEt3P+oJuf4NYz4d3+
-         tmAw==
-X-Gm-Message-State: AOAM530blAA2Yefc8/ajwtjjzdjkZkv4QvaAt9fhvy/TtOPsvmgnCuxr
-        2e13qY+syiJTJcjTfuz0GDpgZcgUPq0=
-X-Google-Smtp-Source: ABdhPJyViJBiaNRBLpJ7atNhqEoXN7IAlBJz7hcr000J9rd0uewpvB5HVHJd0b3WZXx/vgxi5Uj/YQ==
-X-Received: by 2002:a7b:c20b:: with SMTP id x11mr1421590wmi.107.1611602247203;
-        Mon, 25 Jan 2021 11:17:27 -0800 (PST)
-Received: from localhost.localdomain ([81.0.37.108])
-        by smtp.gmail.com with ESMTPSA id e4sm11665895wrw.96.2021.01.25.11.17.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jan 2021 11:17:26 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 3/7] bisect--helper: retire `--bisect-write` subcommand
-Date:   Mon, 25 Jan 2021 20:17:06 +0100
-Message-Id: <20210125191710.45161-4-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210125191710.45161-1-mirucam@gmail.com>
-References: <20210125191710.45161-1-mirucam@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iI8cHtoAuB1dWr6MrJCLWuC0nAHi52bbtB2he9xJNe8=;
+        b=BjPcHK1PZL6kAXWH7cJ81vWY/37qiVkMADXqzqaXG7M7Fz9BACZ+MFirrBQhylrm3L
+         s0GLcpM6Sfj+itfOtcNqJcfE+AmLX4yYef9wj9WTziVkpsWMvNEVZt1AFgFYazbNXrto
+         rHvaMmlY8I7Kq6a0heqXGY8IxJHa2vW3SHXOAqgzKjd4W58cfo7cGRnl6ST0/lCm6w8u
+         28MuPkShI4Ka+WUU89123LYnd2Ia+7Iyqd+woTetPRWxDhTPXdKFN1hIvUFeDltvwiTT
+         EJNLqNNrDzhkeeg3WkMWZxMl3J2OtcLJXHFSjLw2YFAb6aZFzCg1M4o92PEUK+nwH5bv
+         scSg==
+X-Gm-Message-State: AOAM531ObXuFd/ivUWRQCVc9CjjDvzlUfJoc0FcmsFqJlhJ/DdwoFPNd
+        QYsaevVRLutj+mlsFUHcWBQFSQ==
+X-Google-Smtp-Source: ABdhPJzOSHw6nlMtCmRbiDNB30ezavckDKPBkztu96L+lcNfyqq7fTNbTStux8+wHUiwgWueJoFRRw==
+X-Received: by 2002:a37:8e04:: with SMTP id q4mr2304844qkd.22.1611602596600;
+        Mon, 25 Jan 2021 11:23:16 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:5e9f:a2e5:e7ac:394d])
+        by smtp.gmail.com with ESMTPSA id 38sm12016030qtb.67.2021.01.25.11.23.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 11:23:16 -0800 (PST)
+Date:   Mon, 25 Jan 2021 14:23:13 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, dstolee@microsoft.com, jrnieder@gmail.com
+Subject: Re: [PATCH v2 1/8] packfile: prepare for the existence of '*.rev'
+ files
+Message-ID: <YA8aoQK2ABiA64ME@nand.local>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <cover.1610576805.git.me@ttaylorr.com>
+ <6742c15c84bafbcc1c06e2633de51dcda63e3314.1610576805.git.me@ttaylorr.com>
+ <YAtXmie2kHNrcBwY@coredump.intra.peff.net>
+ <YA8DlQwSzNZXq+AU@nand.local>
+ <xmqqy2ggyh1a.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy2ggyh1a.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+On Mon, Jan 25, 2021 at 11:04:33AM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> >> Thinking out loud a bit: a .rev file means we're spending an extra map
+> >> per pack (but not a descriptor, since we close after mmap). And like the
+> >> .idx files (but unlike .pack file maps), we don't keep track of these
+> >> and try to close them when under memory pressure. I think that's
+> >> probably OK in terms of bytes. It may mean running up against operating
+> >> system number-of-mmap limits more quickly ...
+> >> ...
+> >> >  	if (ends_with(name, ".idx"))
+> >> >  		return 3;
+> >> > -	return 4;
+> >> > +	if (ends_with(name, ".rev"))
+> >> > +		return 4;
+> >> > +	return 5;
+> >> >  }
+> >>
+> >> Probably not super important, but: should the .idx file still come last
+> >> here? Simultaneous readers won't start using the pack until the .idx
+> >> file is present. We'd probably prefer they see the whole thing
+> >> atomically, than see a .idx missing its .rev (they won't ever produce a
+> >> wrong answer, but they'll generate the in-core revindex on the fly when
+> >> they don't need to).
+>
+> At some point, we may want to
+>
+>  - introduce .idx version 3 that is more extensible, so that the
+>    reverse info is included in one of its chunks;
 
-The `--bisect-write` subcommand is no longer used from the
-git-bisect.sh shell script. Instead the function `bisect_write()`
-is directly called from the C implementation.
+I'm not opposed to doing so outside of this series. I'd be fine with
+resurrecting the series that Stolee posted a while ago to extract a
+"chunk writer" API (for using in the commit-graph and MIDX code) to also
+be used here.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 9 ---------
- 1 file changed, 9 deletions(-)
+That got stalled out because of the conflicts that it would have
+produced with Abhishek's work, but now that that's getting picked up it
+could move forward.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index d65b2f44c6..0b16653f13 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -21,7 +21,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
-@@ -994,7 +993,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		BISECT_WRITE,
- 		CHECK_AND_SET_TERMS,
- 		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
-@@ -1010,8 +1008,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "bisect-write", &cmdmode,
--			 N_("write out the bisection state in BISECT_LOG"), BISECT_WRITE),
- 		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
- 			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
-@@ -1048,11 +1044,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		if (argc > 1)
- 			return error(_("--bisect-reset requires either no argument or a commit"));
- 		return !!bisect_reset(argc ? argv[0] : NULL);
--	case BISECT_WRITE:
--		if (argc != 4 && argc != 5)
--			return error(_("--bisect-write requires either 4 or 5 arguments"));
--		set_terms(&terms, argv[3], argv[2]);
--		res = bisect_write(argv[0], argv[1], &terms, nolog);
- 		break;
- 	case CHECK_AND_SET_TERMS:
- 		if (argc != 3)
--- 
-2.29.2
+But brian is also working on an index v3 for some hash transition stuff,
+so I'd rather let that settle first.
 
+Of course, you could combine those efforts, but I don't think that what
+we have here is such a bad interim state.
+
+>  - make the .rev data for all packs stored as a chunk in .midx, so
+>    we can first check with .midx and not open any .rev files.
+
+This is trickier than you might think because of how the MIDX selects
+a pack when more than one pack contains a given object. There is also
+the concept of a "multi-pack reverse index" which you can think of as
+the reverse index for a pack that is more-or-less concatenating all of
+the objects in the MIDX together (in pack order). That is the same order
+we'll use to lay out the bits of a multi-pack bitmap, eventually.
+
+> either of which would reduce the numberfrom 30k down to 10k ;-)
+
+Your ";-)" is a good reminder that there are probably many other
+problems with having 30k (or even 10k!) packs that would make solving
+this (index v3 + MIDX chunk) not worthwhile.
+
+Thanks,
+Taylor
