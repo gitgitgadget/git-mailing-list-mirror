@@ -2,276 +2,407 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D79EC43381
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8CA0C43381
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36BBB221FC
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:51:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C6D2221FC
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbhAZFBh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:01:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51426 "EHLO
+        id S1725836AbhAZFAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:00:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731593AbhAYTSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:18:35 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841EFC061788
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:27 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j18so414591wmi.3
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:27 -0800 (PST)
+        with ESMTP id S1730349AbhAYSqj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 13:46:39 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECADC06174A
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 10:45:59 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id e70so13724150ote.11
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 10:45:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BAu+lyOkuwI3+lcw2UF8LucEAJAOCPo622DGOT+cEbE=;
-        b=qFf2QVITFbOMZuYLGFrdAaelw7UPyCQgcVtXh6DdgkJPuLQ58BoJtjXykW+o34Mp/P
-         c1HiP4cUACY/dw67Q5facZIV9CXcy0dG239QToCuzFxLWhGtjtu6L1COdYibd0pGBp16
-         NE12xKh3CwnVmvv7zQ5SEdw6EHBJx+v4F0lIBiYIopT/EDkfLVWoQa9aUN+Eq8zMJO05
-         G0oicBCyYSt7X5hcbCVlZktfOBiIKLo1t2JyK33zJD+H9AB1oq2iwT4G2Ov1Jx2FtjfP
-         FduP3rZ2lL3yQ1Dp9D3606Cqr8qIq+XRb5webls6PRxdDpLTqCrhe2oAfUED/X8fBvKt
-         NDpg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7+4f8pzyNjNXpFvjkHhGIY3W/5/T68G4B+HcdqyBtg8=;
+        b=hJ0pnStryAnrvsOXTo+IqOqlkReHXqEPyQTk6PVyvifiMmARC9NMEgzmQ+mSPGWzPX
+         pB7V8Fyn7V6h4vntsMo2K3NklIQwCCPBUhpiPpNEPqzCXL77WajLfRANpjexyxO82UdK
+         IFK1l/nxSJZjhAJAIqsr0s4k5Jy102X3B7R/YwTtnA2CVk//sp79K0JDnO4WkOCEYsxW
+         jglIuOodluZs5KCuiXU7Dl/7eNMVPPpi4PcwHUwYMdQYfozxzhuFW4G24m3FO8pxnirB
+         B0b/AMJtnGpK3IHVP5+SM3/cAPCzR6lp3rw9/9HIPae/S/oGsMxHX8V/yoY3MWtdUCvg
+         2wFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BAu+lyOkuwI3+lcw2UF8LucEAJAOCPo622DGOT+cEbE=;
-        b=DoFyB8pdKjsopwpkoejycJxL2Rv0mhV793UlwWBq+E5sZ7IARl/1p1ZqYaU9H/aDFe
-         mDZ/4QLolg2PhlyuiFzLExvy/XwojyB+XK2Ri81eXJRqDUK40t6LxwYrUXzHDaTWNW08
-         Ard1+DV677fmKuE5mKHVY/r7cMJtU/watp/Sd2D0myConw7i7mGDRoqADoaqWYJVK6Sp
-         0QwK/5BPlNYZYJ60gTLAST7E38QDv7sDHOrcWf5QY/w5giXf/qHiDMfxJ4Y32MQPUQfN
-         K62xOY91wHYxFFBycHV9PlBSY5I5Pf8yT4wu0mtzUmULSqeS+IrPHmQ5THXubCSV7Ypb
-         LWiQ==
-X-Gm-Message-State: AOAM530vOYb060qkr4yI+2bYawgpAcI8gQ2tF7HJA7yYSv6cGr2BmUJM
-        8theJls5E2F+8TG23pTSdl2/QXAU2qw=
-X-Google-Smtp-Source: ABdhPJyt9PzROqvgUUyxlwjLoa1Cb003Wtqk61LaiSmBXN84jP4t1POdnjCxwvzfzrXCJWk6qN3ohA==
-X-Received: by 2002:a1c:6308:: with SMTP id x8mr1438371wmb.108.1611602246349;
-        Mon, 25 Jan 2021 11:17:26 -0800 (PST)
-Received: from localhost.localdomain ([81.0.37.108])
-        by smtp.gmail.com with ESMTPSA id e4sm11665895wrw.96.2021.01.25.11.17.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jan 2021 11:17:25 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 2/7] bisect--helper: reimplement `bisect_replay` shell function in C
-Date:   Mon, 25 Jan 2021 20:17:05 +0100
-Message-Id: <20210125191710.45161-3-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210125191710.45161-1-mirucam@gmail.com>
-References: <20210125191710.45161-1-mirucam@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7+4f8pzyNjNXpFvjkHhGIY3W/5/T68G4B+HcdqyBtg8=;
+        b=iJd6xYjKwIl0d0mWFWgK+zcYdK56VznmGjugVdQF/CWvRXAgd4j3Yc5Nn1RlvZI5F/
+         v/H4Io8dfs5ekkzmNs9koKnYQoJQnkHEPs/GrQT1qiMufqpY5H/8ZWbismP+CeNlhsNd
+         w+aL2Y2bNGbNZJ9zUv3BwV47mUc9TxKTAyykvsekMuyH77EMSBsCYrCKv5z5S+pRb9+W
+         5yFYT7y1t+9L1kFJbyvDujSHyiDjaPEXeaDFwlIz6QAUkqvmNxtVttbcodPm7InyOgdD
+         wkgjT/1Xj4dyp9YwJudi1SeyodVtd3kImGCukYIvZXD4JMwCdG8cWNASOs3U9KMGZ0qd
+         7P9w==
+X-Gm-Message-State: AOAM531IP2Q5ZFmx5/0lcdSj0jiyV45XY3RCoVwD4oh1aOXQL3PcZNDa
+        csOZnONemZQ7RsBk1ziKXx5KXiqNfVi881I+8xU=
+X-Google-Smtp-Source: ABdhPJwM8AeA0AD58K7iuTuG8s3VSBTgcQpdJU2ptfv7ufoH3ypeuu3RgFCuPR5qURehRHyzy+2YCnuFl3ws3vcVi6E=
+X-Received: by 2002:a9d:1c9a:: with SMTP id l26mr1379674ota.316.1611600358400;
+ Mon, 25 Jan 2021 10:45:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
+ <pull.839.v3.git.1611431899.gitgitgadget@gmail.com> <72f925353d3f3992ab6a98df2b0752c019d11338.1611431900.git.gitgitgadget@gmail.com>
+In-Reply-To: <72f925353d3f3992ab6a98df2b0752c019d11338.1611431900.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 25 Jan 2021 10:45:47 -0800
+Message-ID: <CABPp-BF8rU5WqGrySFM2HTc1Ro5hCLiFMwesu7W9JbNsAtFCTw@mail.gmail.com>
+Subject: Re: [PATCH v3 9/9] t1092: test interesting sparse-checkout scenarios
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+On Sat, Jan 23, 2021 at 11:58 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> These also document some behaviors that differ from a full checkout, and
+> possibly in a way that is not intended.
+>
+> The test is designed to be run with "--run=1,X" where 'X' is an
 
-Reimplement the `bisect_replay` shell function in C and also add
-`--bisect-replay` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+Random sidenote: Why not suggest "--run=setup,X" instead?  Then if you
+ever add additional "setup" steps, it'd run all of them.
 
-Using `--bisect-replay` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite.
+(See https://lore.kernel.org/git/0355c888828aeec331a6b99a26d8aa04cff59859.1602980628.git.gitgitgadget@gmail.com/)
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 85 +++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 34 +---------------
- 2 files changed, 85 insertions(+), 34 deletions(-)
-
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index a65244a0f5..d65b2f44c6 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -31,6 +31,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-auto-next"),
- 	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
- 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
-+	N_("git bisect--helper --bisect-replay <filename>"),
- 	NULL
- };
- 
-@@ -916,6 +917,79 @@ static enum bisect_error bisect_log(void)
- 	return status ? BISECT_FAILED : BISECT_OK;
- }
- 
-+static int process_replay_line(struct bisect_terms *terms, struct strbuf *line)
-+{
-+	const char *p = line->buf + strspn(line->buf, " \t");
-+	char *word_end, *rev;
-+
-+	if ((!skip_prefix(p, "git bisect", &p) &&
-+	!skip_prefix(p, "git-bisect", &p)) || !isspace(*p))
-+		return 0;
-+	p += strspn(p, " \t");
-+
-+	word_end = (char *)p + strcspn(p, " \t");
-+	rev = word_end + strspn(word_end, " \t");
-+	*word_end = '\0'; /* NUL-terminate the word */
-+
-+	get_terms(terms);
-+	if (check_and_set_terms(terms, p))
-+		return -1;
-+
-+	if (!strcmp(p, "start")) {
-+		struct strvec argv = STRVEC_INIT;
-+		int res;
-+		sq_dequote_to_strvec(rev, &argv);
-+		res = bisect_start(terms, argv.v, argv.nr);
-+		strvec_clear(&argv);
-+		return res;
-+	}
-+
-+	if (one_of(p, terms->term_good,
-+	   terms->term_bad, "skip", NULL))
-+		return bisect_write(p, rev, terms, 0);
-+
-+	if (!strcmp(p, "terms")) {
-+		struct strvec argv = STRVEC_INIT;
-+		int res;
-+		sq_dequote_to_strvec(rev, &argv);
-+		res = bisect_terms(terms, argv.nr == 1 ? argv.v[0] : NULL);
-+		strvec_clear(&argv);
-+		return res;
-+	}
-+	error(_("'%s'?? what are you talking about?"), p);
-+
-+	return -1;
-+}
-+
-+static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *filename)
-+{
-+	FILE *fp = NULL;
-+	enum bisect_error res = BISECT_OK;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	if (is_empty_or_missing_file(filename))
-+		return error(_("cannot read file '%s' for replaying"), filename);
-+
-+	if (bisect_reset(NULL))
-+		return BISECT_FAILED;
-+
-+	fp = fopen(filename, "r");
-+	if (!fp)
-+		return BISECT_FAILED;
-+
-+	while ((strbuf_getline(&line, fp) != EOF) && !res){
-+		res = process_replay_line(terms, &line);
-+	}
-+
-+	strbuf_release(&line);
-+	fclose(fp);
-+
-+	if (res)
-+		return BISECT_FAILED;
-+
-+	return bisect_auto_next(terms, NULL);
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -929,7 +1003,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_NEXT,
- 		BISECT_AUTO_NEXT,
- 		BISECT_STATE,
--		BISECT_LOG
-+		BISECT_LOG,
-+		BISECT_REPLAY
- 	} cmdmode = 0;
- 	int res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -953,6 +1028,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_CMDMODE(0, "bisect-log", &cmdmode,
- 			 N_("list the bisection steps so far"), BISECT_LOG),
-+		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
-+			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
- 		OPT_BOOL(0, "no-log", &nolog,
- 			 N_("no log for BISECT_WRITE")),
- 		OPT_END()
-@@ -1020,6 +1097,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-log requires 0 arguments"));
- 		res = bisect_log();
- 		break;
-+	case BISECT_REPLAY:
-+		if (argc != 1)
-+			return error(_("no logfile given"));
-+		set_terms(&terms, "bad", "good");
-+		res = bisect_replay(&terms, argv[0]);
-+		break;
- 	default:
- 		BUG("unknown subcommand %d", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 05863cc142..e834154e29 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -77,38 +77,6 @@ bisect_visualize() {
- 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
- }
- 
--bisect_replay () {
--	file="$1"
--	test "$#" -eq 1 || die "$(gettext "No logfile given")"
--	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
--	git bisect--helper --bisect-reset || exit
--	oIFS="$IFS" IFS="$IFS$(printf '\015')"
--	while read git bisect command rev tail
--	do
--		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
--		if test "$git" = "git-bisect"
--		then
--			rev="$command"
--			command="$bisect"
--		fi
--		get_terms
--		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
--		get_terms
--		case "$command" in
--		start)
--			eval "git bisect--helper --bisect-start $rev $tail" ;;
--		"$TERM_GOOD"|"$TERM_BAD"|skip)
--			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
--		terms)
--			git bisect--helper --bisect-terms $rev || exit;;
--		*)
--			die "$(gettext "?? what are you talking about?")" ;;
--		esac
--	done <"$file"
--	IFS="$oIFS"
--	git bisect--helper --bisect-auto-next || exit
--}
--
- bisect_run () {
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
- 
-@@ -203,7 +171,7 @@ case "$#" in
- 	reset)
- 		git bisect--helper --bisect-reset "$@" ;;
- 	replay)
--		bisect_replay "$@" ;;
-+		git bisect--helper --bisect-replay "$@" || exit;;
- 	log)
- 		git bisect--helper --bisect-log || exit ;;
- 	run)
--- 
-2.29.2
-
+> interesting test case. Each test uses 'init_repos' to reset the full and
+> sparse copies of the initial-repo that is created by the first test
+> case. This also makes it possible to have test cases leave the working
+> directory or index in unusual states without disturbing later cases.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t1092-sparse-checkout-compatibility.sh | 301 +++++++++++++++++++++++
+>  1 file changed, 301 insertions(+)
+>  create mode 100755 t/t1092-sparse-checkout-compatibility.sh
+>
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> new file mode 100755
+> index 00000000000..8cd3e5a8d22
+> --- /dev/null
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -0,0 +1,301 @@
+> +#!/bin/sh
+> +
+> +test_description='compare full workdir to sparse workdir'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +       git init initial-repo &&
+> +       (
+> +               cd initial-repo &&
+> +               echo a >a &&
+> +               echo "after deep" >e &&
+> +               echo "after folder1" >g &&
+> +               echo "after x" >z &&
+> +               mkdir folder1 folder2 deep x &&
+> +               mkdir deep/deeper1 deep/deeper2 &&
+> +               mkdir deep/deeper1/deepest &&
+> +               echo "after deeper1" >deep/e &&
+> +               echo "after deepest" >deep/deeper1/e &&
+> +               cp a folder1 &&
+> +               cp a folder2 &&
+> +               cp a x &&
+> +               cp a deep &&
+> +               cp a deep/deeper1 &&
+> +               cp a deep/deeper2 &&
+> +               cp a deep/deeper1/deepest &&
+> +               cp -r deep/deeper1/deepest deep/deeper2 &&
+> +               git add . &&
+> +               git commit -m "initial commit" &&
+> +               git checkout -b base &&
+> +               for dir in folder1 folder2 deep
+> +               do
+> +                       git checkout -b update-$dir &&
+> +                       echo "updated $dir" >$dir/a &&
+> +                       git commit -a -m "update $dir" || return 1
+> +               done &&
+> +
+> +               git checkout -b rename-base base &&
+> +               echo >folder1/larger-content <<-\EOF &&
+> +               matching
+> +               lines
+> +               help
+> +               inexact
+> +               renames
+> +               EOF
+> +               cp folder1/larger-content folder2/ &&
+> +               cp folder1/larger-content deep/deeper1/ &&
+> +               git add . &&
+> +               git commit -m "add interesting rename content" &&
+> +
+> +               git checkout -b rename-out-to-out rename-base &&
+> +               mv folder1/a folder2/b &&
+> +               mv folder1/larger-content folder2/edited-content &&
+> +               echo >>folder2/edited-content &&
+> +               git add . &&
+> +               git commit -m "rename folder1/... to folder2/..." &&
+> +
+> +               git checkout -b rename-out-to-in rename-base &&
+> +               mv folder1/a deep/deeper1/b &&
+> +               mv folder1/larger-content deep/deeper1/edited-content &&
+> +               echo >>deep/deeper1/edited-content &&
+> +               git add . &&
+> +               git commit -m "rename folder1/... to deep/deeper1/..." &&
+> +
+> +               git checkout -b rename-in-to-out rename-base &&
+> +               mv deep/deeper1/a folder1/b &&
+> +               mv deep/deeper1/larger-content folder1/edited-content &&
+> +               echo >>folder1/edited-content &&
+> +               git add . &&
+> +               git commit -m "rename deep/deeper1/... to folder1/..." &&
+> +
+> +               git checkout -b deepest base &&
+> +               echo "updated deepest" >deep/deeper1/deepest/a &&
+> +               git commit -a -m "update deepest" &&
+> +
+> +               git checkout -f base &&
+> +               git reset --hard
+> +       )
+> +'
+> +
+> +init_repos () {
+> +       rm -rf full-checkout sparse-checkout sparse-index &&
+> +
+> +       # create repos in initial state
+> +       cp -r initial-repo full-checkout &&
+> +       git -C full-checkout reset --hard &&
+> +
+> +       cp -r initial-repo sparse-checkout &&
+> +       git -C sparse-checkout reset --hard &&
+> +       git -C sparse-checkout sparse-checkout init --cone &&
+> +
+> +       # initialize sparse-checkout definitions
+> +       git -C sparse-checkout sparse-checkout set deep
+> +}
+> +
+> +run_on_sparse () {
+> +       (
+> +               cd sparse-checkout &&
+> +               $* >../sparse-checkout-out 2>../sparse-checkout-err
+> +       )
+> +}
+> +
+> +run_on_all () {
+> +       (
+> +               cd full-checkout &&
+> +               $* >../full-checkout-out 2>../full-checkout-err
+> +       ) &&
+> +       run_on_sparse $*
+> +}
+> +
+> +test_all_match () {
+> +       run_on_all $* &&
+> +       test_cmp full-checkout-out sparse-checkout-out &&
+> +       test_cmp full-checkout-err sparse-checkout-err
+> +}
+> +
+> +test_expect_success 'status with options' '
+> +       init_repos &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git status --porcelain=v2 -z -u &&
+> +       test_all_match git status --porcelain=v2 -uno &&
+> +       run_on_all "touch README.md" &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git status --porcelain=v2 -z -u &&
+> +       test_all_match git status --porcelain=v2 -uno &&
+> +       test_all_match git add README.md &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git status --porcelain=v2 -z -u &&
+> +       test_all_match git status --porcelain=v2 -uno
+> +'
+> +
+> +test_expect_success 'add, commit, checkout' '
+> +       init_repos &&
+> +
+> +       write_script edit-contents <<-\EOF &&
+> +       echo text >>$1
+> +       EOF
+> +       run_on_all "../edit-contents README.md" &&
+> +
+> +       test_all_match git add README.md &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git commit -m "Add README.md" &&
+> +
+> +       test_all_match git checkout HEAD~1 &&
+> +       test_all_match git checkout - &&
+> +
+> +       run_on_all "../edit-contents README.md" &&
+> +
+> +       test_all_match git add -A &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git commit -m "Extend README.md" &&
+> +
+> +       test_all_match git checkout HEAD~1 &&
+> +       test_all_match git checkout - &&
+> +
+> +       run_on_all "../edit-contents deep/newfile" &&
+> +
+> +       test_all_match git status --porcelain=v2 -uno &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git add . &&
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git commit -m "add deep/newfile" &&
+> +
+> +       test_all_match git checkout HEAD~1 &&
+> +       test_all_match git checkout -
+> +'
+> +
+> +test_expect_success 'checkout and reset --hard' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout update-folder1 &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git checkout update-deep &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git checkout -b reset-test &&
+> +       test_all_match git reset --hard deepest &&
+> +       test_all_match git reset --hard update-folder1 &&
+> +       test_all_match git reset --hard update-folder2
+> +'
+> +
+> +test_expect_success 'diff --staged' '
+> +       init_repos &&
+> +
+> +       write_script edit-contents <<-\EOF &&
+> +       echo text >>README.md
+> +       EOF
+> +       run_on_all "../edit-contents" &&
+> +
+> +       test_all_match git diff &&
+> +       test_all_match git diff --staged &&
+> +       test_all_match git add README.md &&
+> +       test_all_match git diff &&
+> +       test_all_match git diff --staged
+> +'
+> +
+> +test_expect_success 'diff with renames' '
+> +       init_repos &&
+> +
+> +       for branch in rename-out-to-out rename-out-to-in rename-in-to-out
+> +       do
+> +               test_all_match git checkout rename-base &&
+> +               test_all_match git checkout $branch -- .&&
+> +               test_all_match git diff --staged --no-renames &&
+> +               test_all_match git diff --staged --find-renames || return 1
+> +       done
+> +'
+> +
+> +test_expect_success 'log with pathspec outside sparse definition' '
+> +       init_repos &&
+> +
+> +       test_all_match git log -- a &&
+> +       test_all_match git log -- folder1/a &&
+> +       test_all_match git log -- folder2/a &&
+> +       test_all_match git log -- deep/a &&
+> +       test_all_match git log -- deep/deeper1/a &&
+> +       test_all_match git log -- deep/deeper1/deepest/a &&
+> +
+> +       test_all_match git checkout update-folder1 &&
+> +       test_all_match git log -- folder1/a
+> +'
+> +
+> +test_expect_success 'blame with pathspec inside sparse definition' '
+> +       init_repos &&
+> +
+> +       test_all_match git blame a &&
+> +       test_all_match git blame deep/a &&
+> +       test_all_match git blame deep/deeper1/a &&
+> +       test_all_match git blame deep/deeper1/deepest/a
+> +'
+> +
+> +# TODO: blame currently does not support blaming files outside of the
+> +# sparse definition. It complains that the file doesn't exist locally.
+> +test_expect_failure 'blame with pathspec outside sparse definition' '
+> +       init_repos &&
+> +
+> +       test_all_match git blame folder1/a &&
+> +       test_all_match git blame folder2/a &&
+> +       test_all_match git blame deep/deeper2/a &&
+> +       test_all_match git blame deep/deeper2/deepest/a
+> +'
+> +
+> +# TODO: reset currently does not behave as expected when in a
+> +# sparse-checkout.
+> +test_expect_failure 'checkout and reset (mixed)' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b reset-test update-deep &&
+> +       test_all_match git reset deepest &&
+> +       test_all_match git reset update-folder1 &&
+> +       test_all_match git reset update-folder2
+> +'
+> +
+> +test_expect_success 'merge' '
+> +       init_repos &&
+> +
+> +       test_all_match git checkout -b merge update-deep &&
+> +       test_all_match git merge -m "folder1" update-folder1 &&
+> +       test_all_match git rev-parse HEAD^{tree} &&
+> +       test_all_match git merge -m "folder2" update-folder2 &&
+> +       test_all_match git rev-parse HEAD^{tree}
+> +'
+> +
+> +test_expect_success 'merge with outside renames' '
+> +       init_repos &&
+> +
+> +       for type in out-to-out out-to-in in-to-out
+> +       do
+> +               test_all_match git reset --hard &&
+> +               test_all_match git checkout -f -b merge-$type update-deep &&
+> +               test_all_match git merge -m "$type" rename-$type &&
+> +               test_all_match git rev-parse HEAD^{tree} || return 1
+> +       done
+> +'
+> +
+> +test_expect_success 'clean' '
+> +       init_repos &&
+> +
+> +       echo bogus >>.gitignore &&
+> +       run_on_all cp ../.gitignore . &&
+> +       test_all_match git add .gitignore &&
+> +       test_all_match git commit -m ignore-bogus-files &&
+> +
+> +       run_on_sparse mkdir folder1 &&
+> +       run_on_all touch folder1/bogus &&
+> +
+> +       test_all_match git status --porcelain=v2 &&
+> +       test_all_match git clean -f &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git clean -xf &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_all_match git clean -xdf &&
+> +       test_all_match git status --porcelain=v2 &&
+> +
+> +       test_path_is_dir sparse-checkout/folder1
+> +'
+> +
+> +test_done
+> --
+> gitgitgadget
