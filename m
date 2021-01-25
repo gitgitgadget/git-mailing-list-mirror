@@ -2,95 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C49CC433E0
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F4113C433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 04:59:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2680422E03
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC0D422573
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 04:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729437AbhAYOYV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 09:24:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43300 "EHLO
+        id S1730103AbhAZE6u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 23:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729395AbhAYOWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 09:22:40 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA6EC061574
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 06:22:00 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id c12so9739048qtv.5
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 06:22:00 -0800 (PST)
+        with ESMTP id S1726072AbhAYJPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 04:15:23 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE562C0612F2
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 00:44:26 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id e22so24926976iog.6
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 00:44:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=sZAtncR05zWLLHoaHqVL3VjYnxwphczznb3KhlHmznE=;
-        b=2JWFus56hc7efQUGjqTs9oY9BC7JmyNBn/WaB973zuSrS2NKTt8MOcWalNz8FXZRKt
-         aMYidy2NXSYOvzfN3IQGPo9HJhXUnEXgjtPgcUv1PhdAamE2MXq1XQm66zoFaAHubwdg
-         duUBfj5cdsCONq1B2VVDBBOrMAND1utpj40sN5sCJu44BF0NBhEjwxykbQ3xXec06oOo
-         GS7HBqL2aVsnXviTiTt2ZGzLpljwAy0qtdN/L2njDqFi2ZOmRSmBCcETzKKOw5ayffE8
-         gna0mfP0KB6/r15Qzm9KPzfgeva31j4t72YuAOtOWE86OoWwUZWXebZYuzvea0aH/Rg/
-         DZfw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=S5pQs9X6UMU4oRiCjXveWWhur/T7Do2C5LgjSU5qvsY=;
+        b=N1zcBC02TynXGuQP39x84ZIoPQOA7SNMOqGkJtQZwHZtx1WZJ+sujBaS7QtbvSYswx
+         JDjDkpgBmtkzvjg3PLmHWDBCiubC7TVLoyCsndHYmAjbJzcWmN2SYyLcRHTAvzmyMIeh
+         1HYI0nfC20TbFxjupNjgsaGp39/wEZ3e2f77nHj6N3jvlQ66TjyYapQ4zABiNr0/+tGd
+         zT26cfchiwuPFSkRh7MKdJ9CPCys9rI/nQZLWflo7b73w+gioY46RslCjL7ZdEQrkkwy
+         kgU7Dj1CDxXD4VzxPKxxh7R8TpjR2orDLaNKBoDK7dBDJr4VTyPy0DG4145fgT75JHSn
+         9yig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=sZAtncR05zWLLHoaHqVL3VjYnxwphczznb3KhlHmznE=;
-        b=G0Y7+kCLyXgwQHReoJYigwfN9eBrs86gvb6kRwNHHRz5q80ZB+CdPpUWlbdivducrC
-         wC6rufVtRYD1IEsWgw3yTwOXwEG5G5fcSR4+oIBTaBylyJNueoagEt9Io8tbXT8f20iZ
-         CUSqf2k9CDYQT0e/np3YwtsHqrdkRtIVnrMazwXUyy2v+oyRJq17MBhfSBwccNui9s4i
-         jTIvM5mk3gx9K2d6Kppcs/aNQQLaQEK/ZnR77JQ6gOz2KP0q4VPHG/TnJBAb1Fog0bjg
-         zfq/blS36mxwIhLThyM1GkoL3erzP6U7/i3jpuK3X59fVlrbI7C3u/CKWSwxMefvH3bu
-         QrRg==
-X-Gm-Message-State: AOAM5307KgEGpd6JMvS/NFxtVohK+FugW3l0FioC2sf7JZg3yx+IWVzn
-        DXTIxBhUljGOryEKmloYbnf6Iw==
-X-Google-Smtp-Source: ABdhPJx7eTIykxETyBOgw7SgqiYwclX+ljqGvEdNmMWWiubX3WcwETtXgtRc+d05Fxz4zC4FALIJBQ==
-X-Received: by 2002:ac8:1094:: with SMTP id a20mr672315qtj.248.1611584519337;
-        Mon, 25 Jan 2021 06:21:59 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:d8ad:42c:f23b:d0ef])
-        by smtp.gmail.com with ESMTPSA id i18sm12018953qkg.66.2021.01.25.06.21.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 06:21:58 -0800 (PST)
-Date:   Mon, 25 Jan 2021 09:21:56 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Eugen Konkov <kes-kes@yandex.ru>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Can not rebase to first commit
-Message-ID: <YA7T8fo5zngSD+zd@nand.local>
-References: <1327609829.20210125123816@yandex.ru>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=S5pQs9X6UMU4oRiCjXveWWhur/T7Do2C5LgjSU5qvsY=;
+        b=GeYBJjztg0IJqNoVlQ0Arx8L5RUzoqWHL1ljfnq7K8K4mKDfeoC7NI2K+YtWVVuAe/
+         /Y/OUgTqYZtq6uUtm1OLtKJuOpY9Vntj9Lk05K49eEAFUrbQbOKTz4AL5dXExksVuqkn
+         3RkPT3JClQ9jjv+H9jclG1tYKfG3wSby/spoMzqueLUdDtsnJ7B/CW7shGmyf3D0JzFT
+         fzKH64F4mkNncqWAPWxBdeAXVan+qXSiyoCJE19d9bWSEE3Ro1t7aysi9hXkSELMi+5j
+         yrljqn5hFZzUaoJknQXDWKowRLPnc9BochUEf9VpsNOLMYVjC2dKZue6Xc6MdXrluaP0
+         FoJQ==
+X-Gm-Message-State: AOAM533ejMMgEz5jiaYu5LDBdHcB6rVazec2S7ZvVthX5darRNGpYAXD
+        TybLcIdhifsqfNC0kK2PpJdG0Yle6Nf226cJq+vsylxw2fs=
+X-Google-Smtp-Source: ABdhPJyuPrMGwwuYbUDV49HS2Xv73iYQGedhlWm6UYpGaVLfaY/UHaxvH11CWml2DidspakVYKRnZ/WsHJPxSF+6xE0=
+X-Received: by 2002:a05:6e02:12e3:: with SMTP id l3mr128865iln.24.1611564266071;
+ Mon, 25 Jan 2021 00:44:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1327609829.20210125123816@yandex.ru>
+References: <CAJsFKUCuvO7Y7-MJZ-GG9Jv+4-ei=-tvx4PF1PbeU61m+CV9RA@mail.gmail.com>
+ <YA4ZOOccXK0YEOWu@nand.local>
+In-Reply-To: <YA4ZOOccXK0YEOWu@nand.local>
+From:   Christian Schilling <christian.schilling.de@gmail.com>
+Date:   Mon, 25 Jan 2021 09:44:15 +0100
+Message-ID: <CAJsFKUBKoD-PvroY7F7=PtF6+KYszTgUD1mndH8vZmh-fSC90g@mail.gmail.com>
+Subject: Re: ls-refs protocol extension
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 12:38:16PM +0200, Eugen Konkov wrote:
-> I can not rebase to first commit.
+On Mon 25. Jan 2021 at 02:04, Taylor Blau <me@ttaylorr.com> wrote:
 >
-> This is how to reproduce:
+> On Sun, Jan 24, 2021 at 01:40:08PM +0100, Christian Schilling wrote:
+> > Hi list,
+> > I have been working on a custom git server where the sha values
+> > required to respond to a ls-refs command can occasionally be expensive
+> > to compute.
 >
-> kes@work ~/work/projects/general/Auth $ git tree
-> * 67857d5 (HEAD -> dev) asdf
-> * 1e99034 (local/dev) Initial commit
+> Almost certainly the expensive part of ls-refs is actually traversing
+> the references, not parsing the objects they point at and determining
+> their hash.
 
-(Unrelated to your question, but I assume that 'git tree' is an alias of
-'git log --oneline --graph' by the looks of it).
+My use case is very different. I=E2=80=99m working on a custom git server t=
+hat
+creates refs as well as the objects they are referring to on demand.
 
-> kes@work ~/work/projects/general/Auth $ git rebase -i --autostash --rebase-merges 1e99034^
-> fatal: invalid upstream '1e99034^'
+More specifically the references are derived from the repo url to
+implement partial cloning.
+So you can do:
+git clone http://repository-url.git:/any/subdir/you/want.git
 
-Yes, this is because you're asking to rebase your branch onto the parent
-of 1e99034, which doesn't exist because 1e99034 is the "root" commit and
-therefore has no parents.
+The server will do something similar to git-filter-branch and
+deliver the result.
+Due to the way my own branch filtering implementation works this is
+usually fast enough for the users not to notice what is going on,
+but the fact remains that the shas are only known after the filtering
+is complete.
+Also my server acts as a proxy with the canonical backing repository
+hosted on a different machine.
+So to start filtering the proxy has to first ask the upstream for the
+current state of the repo and download
+any new changes. I have done a lot of optimizations to make
+all of this fast and in most cases it is, but for the occasional case,
+for example if a completely new repo is cloned for the first time,
+it leaves the users looking at a seemingly =E2=80=9Cfrozen=E2=80=9D command=
+ prompt
+not knowing if they made a mistake or are encountering some bug or
+network problem.
 
-'git rebase' has a special option for exactly this case, which is
-'--root'. By replacing '1e99034^' with '--root', you should be able to
-do what you want.
+At first I also thought about suggesting a protocol extension that allows
+to start transferring pack data before all refs are known to reduce the
+total time needed, but the slow cases are infrequent enough so that this
+probably not worth it.
+
+> Incidentally, we had a discussion recently [1] that resulted in some
+> patches that make it so that ls-refs often only has to read through part
+> of the refs in your repository, not all of them.
+
+I had my own struggles with the =E2=80=9Cto many refs=E2=80=9D problem, but=
+ this is
+unrelated :-)
+
+>
+> > It would be a great improvement of user experience if it was possible
+> > to show progress to the user while this is happening.
+>
+> It's possible that that might help, but honestly I'd be surprised if
+> there was a real use-case that needed it (especially after the patches
+> that I mentioned which should make it fast enough that you don't have to
+> care :-)).
+
+Sorry for not being clearer about what I am trying to accomplish the first =
+time,
+I hope I convinced you that this is a very different, but real, use case.
 
 Thanks,
-Taylor
+Christian
+
+>
+> Thanks,
+> Taylor
+>
+> [1]: https://lore.kernel.org/git/20210119144251.27924-1-jacob@gitlab.com/
