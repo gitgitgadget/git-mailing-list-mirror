@@ -2,87 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1519C433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 16:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DE5CC433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 17:11:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F1E122AAC
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 16:55:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10DA322AAC
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 17:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729351AbhAYQzV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 11:55:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48084 "EHLO
+        id S1728132AbhAYRKz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 12:10:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728681AbhAYQyt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 11:54:49 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775E4C06174A
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 08:54:08 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id f11so16098077ljm.8
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 08:54:08 -0800 (PST)
+        with ESMTP id S1728836AbhAYRKg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 12:10:36 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4436C061786
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:09:49 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id dj23so16291886edb.13
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gy75O1kHZmL4sxPvDF1iP+kbghF6mvB15aRup3G4NcE=;
-        b=WDmL/TOU/4C7pQnb7p38wHI6iYvW21bNCRLiVurA5ZgPVMA96Dr4+STMC4C+o7of6Z
-         0zeZi/nntb2pMj9L9KPeM+e1rxBmxmGFRYhKrY+ndE4qZ6BGV2Wdi4XzomND8bhnu4Y7
-         /vWdjcSSaJV6SYm62YkfCRf2Jr93BeV1DlaXxWdjYF6/kWJevJ4J8/UrtTOx7kkxwpRL
-         Oid7cFSd38XjBoapTg8MLu7UE2ZmBHV66/3wF/VP1SuGIi+854MVf6bVLa+WLmOD3BYU
-         T5mSj9D3g/SInXFFc73BEe1waZEXOFXFwaPxQG/ORw/omr0H7Xl8WIMaHVws0Hi87Rk4
-         6lkw==
+        d=gitlab.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EWsxJ/dCLEvNI3F3vAJDKgBhRJJlAFYuUl118n3wixc=;
+        b=AIvTLWXMvEbJzuyTox1AYBZ1xVx+Fi/MxHSk6a/Wss6r36XdnIKhz6z/KTaDaY3nCC
+         NuedNNy1v5D2XM3lnFAWgZoHu0Tr3uJVkpfK6eO6M9KdX1zLOtzi15sJipV5D9tC+ntn
+         U3KKMbbEg0VaVhphn6sf2kFcg2/wctB8M/Vpw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gy75O1kHZmL4sxPvDF1iP+kbghF6mvB15aRup3G4NcE=;
-        b=JRO9/cJ4H5Os+7laRlivkMMbjtOIIdk6uuMoYdIBy1Cbc7ELEgnhjpMcvMyIozKx+6
-         dIJ33eM9GdlDDcj96o3ukKzpnilEnYoT8KmNAksrCYf10WfCYt3kfRoZqC6RjiTCEmWb
-         E1vvg8s2jDsemzFnPUVZfjTHJB9e1bKEgrp2MKLZaPluZAZ3d0eQAMvoG5jVifi4Y2VA
-         G1B30oCZLjOrMsvhpTGj+UZbAOMxI2xkiwRM2PQQj1ugHZSue4js2rFYGTHx2WKgaVy9
-         NYc/SqNMff+/feoiSaJchU0C3cn7T8AaigSXjSojvBQ8sZV5XLDy5PvU2md5whSWHE9n
-         EQpw==
-X-Gm-Message-State: AOAM530WA/JFpxkzX+cxW94AKzHZn/Lor9oPy4MZzItFSkdMP07X0W/W
-        36Sl3bmTfT6i8SxBc0kJTnhliRvUcdCrjbCCMbDUf5bRuzUkzQ==
-X-Google-Smtp-Source: ABdhPJwOrI+2yDf7HwwiWLylyVJPQA20g3zagHaRFc0ix6dA3Cu+PNeAOpyAAraW36lFHOG7gQPRlzma4JHOClGrNME=
-X-Received: by 2002:a2e:990c:: with SMTP id v12mr645914lji.8.1611593646241;
- Mon, 25 Jan 2021 08:54:06 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EWsxJ/dCLEvNI3F3vAJDKgBhRJJlAFYuUl118n3wixc=;
+        b=iYkqqZkFZejQ7iL2cJNqogEgnA3Szc+Yuvm1zg8If3O9FK98EQ5QMVnrlw2YswVN4K
+         ihBBBTA+igOFqR2ihrsqJZTxUONnGt9EJS43ZtzpGXbMJUTynhwPhb9jJ47NR7FRL8+r
+         CR0agtUeQG690+p1euovGw25Z/ccxwAzm8/7JB6zDKMS0PUrr09s6NlMGq/BhTqleOQi
+         jPV4MsbCp9zoxU4w4kVmVV4FmjWqm51rppBr8vj5GaE3+Vl3Ukp5+mcyKI3O8Iv0HenX
+         qMP6R5FM+U4cEMMqUpcWqCLtlAJdDkEu0ww4z74bBiWBLqWqv+lfRgn/dO0Ntp89t3gp
+         5qsg==
+X-Gm-Message-State: AOAM530arhx3FKD1S5EPglOD3hYpejTlAyR0svaSYQIIU5Rt2sWTwR+5
+        knNiyjlCjl1WlyHH1MJan5SAY0exlKD8HJcH
+X-Google-Smtp-Source: ABdhPJydgGZIo60PynAl/QdxegTs9LT7uAWm7SVh0G0MKRSdd6Pt+SORsM8sQvXU7eVLE9GpD+zh3w==
+X-Received: by 2002:a50:d484:: with SMTP id s4mr1298393edi.13.1611594588373;
+        Mon, 25 Jan 2021 09:09:48 -0800 (PST)
+Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
+        by smtp.gmail.com with ESMTPSA id r11sm10823231edt.58.2021.01.25.09.09.44
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Jan 2021 09:09:45 -0800 (PST)
+From:   Jacob Vosmaer <jacob@gitlab.com>
+To:     git@vger.kernel.org, peff@peff.net, jeffhost@microsoft.com,
+        jonathantanmy@google.com, gitster@pobox.com
+Cc:     Jacob Vosmaer <jacob@gitlab.com>
+Subject: [PATCH v2] upload-pack.c: fix filter spec quoting bug
+Date:   Mon, 25 Jan 2021 18:09:21 +0100
+Message-Id: <20210125170921.14291-1-jacob@gitlab.com>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
+References: <YAs2RMT1rEH/2LSp@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <1327609829.20210125123816@yandex.ru>
-In-Reply-To: <1327609829.20210125123816@yandex.ru>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 25 Jan 2021 13:53:55 -0300
-Message-ID: <CAHd-oW6=CFNGyW30pDhjwgwMcDFeqFoad=J6DkHruaeA75SzCw@mail.gmail.com>
-Subject: Re: Can not rebase to first commit
-To:     Eugen Konkov <kes-kes@yandex.ru>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Eugen
+This fixes a bug that occurs when you combine partial clone and
+uploadpack.packobjectshook. You can reproduce it as follows:
 
-On Mon, Jan 25, 2021 at 7:50 AM Eugen Konkov <kes-kes@yandex.ru> wrote:
->
-> I can not rebase to first commit.
->
-> This is how to reproduce:
->
-> kes@work ~/work/projects/general/Auth $ git tree
-> * 67857d5 (HEAD -> dev) asdf
-> * 1e99034 (local/dev) Initial commit
-> kes@work ~/work/projects/general/Auth $ git rebase -i --autostash --rebase-merges 1e99034^
-> fatal: invalid upstream '1e99034^'
+git clone -u 'git -c uploadpack.allowfilter '\
+'-c uploadpack.packobjectshook=env '\
+'upload-pack' --filter=blob:none --no-local \
+src.git dst.git
 
-'1e99034^' means "the first parent of 1e99034". However, this is the
-root commit of your branch, so it has no parent. That's why rebase
-complained about  '1e99034^' being invalid. To rebase this commit you
-can instead use the --root option.
+Be careful with the line endings because this has a long quoted string
+as the -u argument.
 
-Thanks,
-Matheus
+The error I get when I run this is:
+
+Cloning into '/tmp/broken'...
+remote: fatal: invalid filter-spec ''blob:none''
+error: git upload-pack: git-pack-objects died with error.
+fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+remote: aborting due to possible repository corruption on the remote side.
+fatal: early EOF
+fatal: index-pack failed
+
+The problem is an unnecessary and harmful layer of quoting. I tried
+digging through the history of this function and I think this quoting
+was there from the start. My best guess is that it stems from a
+misunderstanding what use_shell=1 means. The code seems to assume it
+means "arguments get joined into one big string, then fed to /bin/sh".
+But that is not what it means: use_shell=1 means that the first
+argument in the arguments array may be a shell script and if so should
+be passed to /bin/sh. All other arguments are passed as normal
+arguments.
+
+The solution is simple: never quote the filter spec.
+
+This commit removes the conditional quoting and adds a test for
+partial clone in t5544.
+---
+ t/t5544-pack-objects-hook.sh | 9 +++++++++
+ upload-pack.c                | 9 +--------
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
+index 4357af1525..f5ba663d64 100755
+--- a/t/t5544-pack-objects-hook.sh
++++ b/t/t5544-pack-objects-hook.sh
+@@ -59,4 +59,13 @@ test_expect_success 'hook does not run from repo config' '
+ 	test_path_is_missing .git/hook.stdout
+ '
+ 
++test_expect_success 'hook works with partial clone' '
++	clear_hook_results &&
++	test_config_global uploadpack.packObjectsHook ./hook &&
++	test_config_global uploadpack.allowFilter true &&
++	git clone --bare --no-local --filter=blob:none . dst.git &&
++	git -C dst.git rev-list --objects --missing=print HEAD >objects &&
++	grep "^?" objects
++'
++
+ test_done
+diff --git a/upload-pack.c b/upload-pack.c
+index 3b66bf92ba..eae1fdbc55 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -305,14 +305,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 	if (pack_data->filter_options.choice) {
+ 		const char *spec =
+ 			expand_list_objects_filter_spec(&pack_data->filter_options);
+-		if (pack_objects.use_shell) {
+-			struct strbuf buf = STRBUF_INIT;
+-			sq_quote_buf(&buf, spec);
+-			strvec_pushf(&pack_objects.args, "--filter=%s", buf.buf);
+-			strbuf_release(&buf);
+-		} else {
+-			strvec_pushf(&pack_objects.args, "--filter=%s", spec);
+-		}
++		strvec_pushf(&pack_objects.args, "--filter=%s", spec);
+ 	}
+ 	if (uri_protocols) {
+ 		for (i = 0; i < uri_protocols->nr; i++)
+-- 
+2.30.0
+
