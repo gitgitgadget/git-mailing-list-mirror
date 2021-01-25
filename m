@@ -2,148 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB7D6C10F09
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21E01C433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:49:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FE4323121
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:46:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFA2322228
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:49:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730840AbhAZFEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:04:37 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65338 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731854AbhAYTZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:25:27 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BEC089081C;
-        Mon, 25 Jan 2021 14:24:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9b0N5b3ZW/ea
-        SE+Jh0LpaHAbfVU=; b=mDMN6zCtSwofRjOSTXRrxgKZdckAFAgc7YFUxJl/TTpP
-        xrEONufq4IczythYa/vmz4v3p6m9E8H4RjOvpRx8k1JVcyJG97wR/Y3SfyxFHn1s
-        mjPhUTJjonEfWjVvkmIt+TH/RxAK995cDdkNlf2pIQeKBCoPkUW4ZTnQfqe56Qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Y2R+8u
-        /IVSNl/C3ESibPKQLI5LfGIbtZeiGagAYeAJ/6+P7GjLcghFftOcBdV8PbGi4PQR
-        qphWENya1yfOtOp/hrNxLkWMjxtrDYEWpLFghFnra2s3ve3rVeGNKoshOT9yuaHR
-        M5v/EClhE9gi2FeA0kUYBEv7+yTkQQfjuDe0Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4DEF9081B;
-        Mon, 25 Jan 2021 14:24:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.196.36.241])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B9119081A;
-        Mon, 25 Jan 2021 14:24:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] range-diff/format-patch: refactor check for
- commit range
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
-        <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
-        <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
-        <xmqqzh107m5d.fsf@gitster.c.googlers.com>
-        <20210125073508.l7ksohyfhcogch4x@pengutronix.de>
-Date:   Mon, 25 Jan 2021 11:24:39 -0800
-In-Reply-To: <20210125073508.l7ksohyfhcogch4x@pengutronix.de> ("Uwe
-        =?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Mon, 25 Jan 2021 08:35:08
- +0100")
-Message-ID: <xmqqpn1syg3s.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1727827AbhAZFDx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:03:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730877AbhAYTZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 14:25:07 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E03FC061573
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:15:22 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id z6so10551234qtn.0
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=57pRHSfLW3lDF4zUofKtR3a4kimg4cuROmJIjECDSCU=;
+        b=DNaxTS8AhIxL9/5N9EauPO5zw9wrtZAS6qMMPtZOvvjLVcdW6oU084IagMCVBhs6S3
+         urQ2PCtjiyJr45oevgHCGqYlaS3M4PzeHejIqE0a2GGZdcywcu5BaJZ3RO3f49lTbnPo
+         xZfBRAJRSXiZUo0QxIiPCTAIApUENpGp3fnMKyvd0aUhPfW0h72iDDb6KTYd0GZ47PFS
+         lGSM+xYjId4U1sXTBzQX3Q1vIZ48H7/vz8k6m3umCf8MNT+uStE0uE8jsv7Eoe/bVb4/
+         O5zJuyDa67QgsMC8pZ3ahKz/GZ+jGzWEiS0UJfrLF/KdiKiw4WjWKhFD9fOkyRLuUOwI
+         xaEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=57pRHSfLW3lDF4zUofKtR3a4kimg4cuROmJIjECDSCU=;
+        b=tY9n/lzLJShRR75ZUuGm8JqqKliLAsfHDypqs6WDxYqzBXr8v6L9Qjcwet6fd0DDq8
+         9bzOf8tYZ+znk9NMRmsu5Lt7Ujg/nNZzDow6MMT2JDahV4BHDucT8oQzG701D4qFX//c
+         YkhedCTFKnGXm1tNdHLpBEwMNhDA5XUS5YMdYVIhJGqZZKDf7iqhS9SUQK6NFVwatU1g
+         u5r+zM1slDbMBp8Q2xLBAqQX4uN/Xxtb6FEkEkrPitQkh/3doaEqpLRseRgt4Fm+C1pK
+         3Nfa1eOx9laYptwQ139t4uxJSI03Npw6c0pKEH8m+9wGuWQex/U/Ze+FwMAACAUB0Y5o
+         97YQ==
+X-Gm-Message-State: AOAM531AviRVPGlOH0edkpVRzC6OPnupN0eQJ3fVnzRo2vNFYXFvchHg
+        U2dgjuvW/WQZLUUOgXPXZ7OeLiDYyqAbGA==
+X-Google-Smtp-Source: ABdhPJy0aVyuz4U8dFbLL1naB55i4kfJuSIsUDegVk6NLUFxtyMCgfr4D+Rzeic/GxuM3TL0ihYBmA==
+X-Received: by 2002:ac8:7767:: with SMTP id h7mr2000298qtu.136.1611602121592;
+        Mon, 25 Jan 2021 11:15:21 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:5e9f:a2e5:e7ac:394d])
+        by smtp.gmail.com with ESMTPSA id o20sm12103894qki.93.2021.01.25.11.15.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 11:15:21 -0800 (PST)
+Date:   Mon, 25 Jan 2021 14:15:18 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v2 2/8] pack-write.c: prepare to write 'pack-*.rev' files
+Message-ID: <YA8YxtUUwE0lLxQt@nand.local>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <cover.1610576805.git.me@ttaylorr.com>
+ <8648c87fa71aec427dc11afcba6548fb66a1413b.1610576805.git.me@ttaylorr.com>
+ <YAtey9krU32mgEBV@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F844BDEE-5F42-11EB-9FC9-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YAtey9krU32mgEBV@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
-
->> > In preparation for allowing more sophisticated ways to specify commi=
-t
->> > ranges, let's refactor the check into its own function.
->>=20
->> I think the sharing between the two makes sense, but the helper
->> function should make it clear in its name that this is "the kind of
->> commit range range-diff wants to take".  Among the commit range "git
->> log" and friends can take, range-diff can take only a subset of it,
->> and only a subset of it is meaningful to range-diff (e.g. HEAD^@ is
->> still a commit range you can give to "git log", but it would not
->> make much sense to give it to range-diff).
+On Fri, Jan 22, 2021 at 06:24:59PM -0500, Jeff King wrote:
+> On Wed, Jan 13, 2021 at 05:28:11PM -0500, Taylor Blau wrote:
 >
-> Does it make so little sense to forbid passing HEAD^@ as a range to
-> range-diff? I can imagine situations where is would make sense, e.g. I
-> often create customer patch stacks from a set of topic branches using
-> octopus merge. To compare two of these ^@ might be handy.
+> [...]
+>
+> qsort? Don't we have a perfectly good radix sort for this exact purpose? :)
 
-You can discuss for each individual syntax of a single-token range
-and decide which ones are and are not suitable for range-diff, but I
-suspect the reason behind this business started with dot-dot is to
-perform a superficial "sanity check" at the command line parser
-level before passing them to the revision machinery, and having to
-deal with potential errors and/or having to compare unreasonably
-large segments of history that the user did not intend.
+Yeah, I think your argument against it (which I agree with is
+basically):
 
-Also I first thought that the command changes the behaviour, given
-two tokens, depending on the shape of these two tokens (i.e. when
-they satisfy the "is-range?" we are discussing, they are taken as
-two ranges to be compared, and otherwise does something else), but
-after revisiting the code and "git help range-diff", it always does
-one thing when given=20
+  We could, and it would be faster, but it would (1) require allocating
+  twice as much data, and (2) the speed increase is a drop in the bucket
+  on any repository with enough objects to even notice it.
 
- (1) one arg: gives a symmetric range and what is to be compared
-     is its left and right half,
+I'll add something to that effect to the commit message.
 
- (2) two args: each is meant to name a set of commits and these two
-     are to be compared) or
+> Dereferencing a pointer to index another array always makes me nervous
+> that we may have a bounds problem with bogus data.
+>
+> In this case we know it is OK because we filled the array ourselves with
+> in-bound numbers in write_rev_index_positions.
 
- (3) three args: each is meant to name a commit, and the arg1..arg2
-     and arg1..arg3 are the ranges to be compared.
+Right.
 
-so ...
+> I was surprised we didn't define these already on the reading side, but
+> it looks like we didn't. In patch 1, we probably should be checking
+> RIDX_SIGNATURE in load_revindex_from_disk(). But much more importantly,
+> we should be checking that we find version 1, since that's what will
+> make it safe to later invent a version 2.
 
-> My POV is that if it's easy to use the same function (and so the same
-> set of range descriptors) for git log and git range-diff then do so.
-> This yields a consistent behaviour which is IMHO better than preventing
-> people to do things that are considered strange today.
+:-). Thanks for noticing, fixed.
 
-... I am OK with that point of view.  It certainly is simpler to
-explain to end users.
+> I forgot to comment on this in patch 1, but: I think the format is
+> really independent of the hash size. The contents are identical for a
+> sha-1 versus sha-256 file.
 
-Having said that, it would make it much harder to implement
-efficiently, though.  For example, when your user says
+Right; the format is identical. That is, the fields are the same, but
+the hashes are longer.
 
-	git range-diff A B
+> That said, I don't overly mind having a hash identifier if it might help
+> debug things (OTOH, how the heck do you end up with one that matches the
+> trailer's packfile but  _doesn't_ match the trailer's contents?).
+>
+> If we do have it, should we also be checking it in the loading function?
 
-to compare "git log A" (all the way down to the root) and "git log
-B" (likewise), you'd certainly optimize the older common part of the
-history out, essentially turning it into
+I'm not opposed to it, but I imagined that this field would be primarily
+for debugging purposes. I was surprised to learn that we _don't_ verify
+the checksum for .idx files. So, I'm reluctant to start doing so here,
+honestly.
 
-	git range-diff A..B B..A
+> So if the caller gave us a name, we force-overwrite it. That seemed
+> weird to me at first, but it makes sense; the atomic rename-into-place
+> writers will not be passing in the name. And this is exactly how
+> write_idx_file() works.
 
-or its moral equivalent
+Yep.
 
-	git range-diff A...B
+> I wonder if we could factor out some of this repeated logic, but I
+> suspect it is mostly diminishing returns. Maybe this "open a pack file
+> for writing" could become a helper function, though.
 
-But you cannot apply such an optimization blindly.  When the user
-gives A..B and B..A as two args, you somehow need to notice that=20
-you shouldn't rewrite it to "A..B...B..A", and for that, you'd still
-need some "parsing" of these args.
+Yeah. I tried factoring it out before replying, and it's a little gross.
+Most of my discomfort with it lies in the complexity of the parameters.
 
-So, I dunno.  Limiting the second form to only forms that the
-implementation does not have to do such optimization would certainly
-make it simpler for Dscho to implement ;-)
+Consider extracting the code in write_idx_file():
+
+  - There would need to be a double pointer for 'index_name' (which is
+    sometimes read, and sometimes written to).
+
+  - There would be an unsigned bit for "verify" (i.e., "open with
+    hashfd_check() or not").
+
+  - There would be a "pattern" variable if we were creating a new
+    temporary file with odb_mkstemp().
+
+Having the caller be forced to juggle the combinations of passing
+NULL/0 or not for each of those three makes me leery that this is worth
+doing, so I tend to agree with your judgement that this provides a
+diminishing return.
+
+Thanks,
+Taylor
