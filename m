@@ -2,407 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8CA0C43381
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C007C433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C6D2221FC
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D251E221FC
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 20:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725836AbhAZFAo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:00:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44358 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730349AbhAYSqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 13:46:39 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECADC06174A
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 10:45:59 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id e70so13724150ote.11
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 10:45:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7+4f8pzyNjNXpFvjkHhGIY3W/5/T68G4B+HcdqyBtg8=;
-        b=hJ0pnStryAnrvsOXTo+IqOqlkReHXqEPyQTk6PVyvifiMmARC9NMEgzmQ+mSPGWzPX
-         pB7V8Fyn7V6h4vntsMo2K3NklIQwCCPBUhpiPpNEPqzCXL77WajLfRANpjexyxO82UdK
-         IFK1l/nxSJZjhAJAIqsr0s4k5Jy102X3B7R/YwTtnA2CVk//sp79K0JDnO4WkOCEYsxW
-         jglIuOodluZs5KCuiXU7Dl/7eNMVPPpi4PcwHUwYMdQYfozxzhuFW4G24m3FO8pxnirB
-         B0b/AMJtnGpK3IHVP5+SM3/cAPCzR6lp3rw9/9HIPae/S/oGsMxHX8V/yoY3MWtdUCvg
-         2wFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7+4f8pzyNjNXpFvjkHhGIY3W/5/T68G4B+HcdqyBtg8=;
-        b=iJd6xYjKwIl0d0mWFWgK+zcYdK56VznmGjugVdQF/CWvRXAgd4j3Yc5Nn1RlvZI5F/
-         v/H4Io8dfs5ekkzmNs9koKnYQoJQnkHEPs/GrQT1qiMufqpY5H/8ZWbismP+CeNlhsNd
-         w+aL2Y2bNGbNZJ9zUv3BwV47mUc9TxKTAyykvsekMuyH77EMSBsCYrCKv5z5S+pRb9+W
-         5yFYT7y1t+9L1kFJbyvDujSHyiDjaPEXeaDFwlIz6QAUkqvmNxtVttbcodPm7InyOgdD
-         wkgjT/1Xj4dyp9YwJudi1SeyodVtd3kImGCukYIvZXD4JMwCdG8cWNASOs3U9KMGZ0qd
-         7P9w==
-X-Gm-Message-State: AOAM531IP2Q5ZFmx5/0lcdSj0jiyV45XY3RCoVwD4oh1aOXQL3PcZNDa
-        csOZnONemZQ7RsBk1ziKXx5KXiqNfVi881I+8xU=
-X-Google-Smtp-Source: ABdhPJwM8AeA0AD58K7iuTuG8s3VSBTgcQpdJU2ptfv7ufoH3ypeuu3RgFCuPR5qURehRHyzy+2YCnuFl3ws3vcVi6E=
-X-Received: by 2002:a9d:1c9a:: with SMTP id l26mr1379674ota.316.1611600358400;
- Mon, 25 Jan 2021 10:45:58 -0800 (PST)
+        id S1725308AbhAZFAY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:00:24 -0500
+Received: from mout.web.de ([212.227.17.12]:44345 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729244AbhAYQz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 11:55:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1611593588;
+        bh=U3o/zoFSiUnkKbEdzt4/UFGCg7FgPAx5/N3AzduTr2E=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=kkkyqZbDrn4UcjMSQ6b9thziQ4pBwfBvplfpTGSm08NnjgEteR/l1n9GcynXZRvku
+         bVyD0w4wUo17FdAX5rIsmA5VoscNU7zkqW0BCCCf3WkM5DEk/GiSl/Bk8k6ljvmYtM
+         ytDwGdyMgMF+3/H5d6iaATwDOEHiU/iZ6gCggjdY=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MPKB5-1lMyL334QP-00Paaj; Mon, 25
+ Jan 2021 17:53:08 +0100
+Date:   Mon, 25 Jan 2021 17:53:08 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, random_n0body@icloud.com,
+        evraiphilippeblain@gmail.com,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH/RFC v1 1/1] git restore -p . and precomposed unicode
+Message-ID: <20210125165307.2qkmbtixzih532ay@tb-raspi4>
+References: <A102844A-9501-4A86-854D-E3B387D378AA@icloud.com>
+ <20210124151306.23185-1-tboegi@web.de>
+ <xmqqsg6qyuyi.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.839.v2.git.1611320639.gitgitgadget@gmail.com>
- <pull.839.v3.git.1611431899.gitgitgadget@gmail.com> <72f925353d3f3992ab6a98df2b0752c019d11338.1611431900.git.gitgitgadget@gmail.com>
-In-Reply-To: <72f925353d3f3992ab6a98df2b0752c019d11338.1611431900.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 25 Jan 2021 10:45:47 -0800
-Message-ID: <CABPp-BF8rU5WqGrySFM2HTc1Ro5hCLiFMwesu7W9JbNsAtFCTw@mail.gmail.com>
-Subject: Re: [PATCH v3 9/9] t1092: test interesting sparse-checkout scenarios
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqsg6qyuyi.fsf@gitster.c.googlers.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:VcuOo2nrFfN7t8HnHOUJfeqyP5ggY+eT/QrlVzwxaoUjlqjIRNH
+ 8k2WPEPvEhdgWy+qw0MbTKAt+wvpjuwWcf/EEF3jw8ODmk48vji0c5xw5YDH1tf7HzT4tpY
+ tUMKGXgkoODmvX1Xk1C3GhHhyOyvYdHp62mptj63lmpBt4bEVo4Kj3M9CcKZZYXUlzq8mLF
+ t/GsH8JC6Z0UMxLjdF2yw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:a8hejwF+8+Q=:EKrZEqh+7qDay/VeteVwE2
+ dVdUSqMcXfwUlYLL3pQH7JQRxUmq2EYTB1MwWN85Qy0AvWbObR5cFBJzcNhhBcW3d5L1oD59h
+ Fr/WcahQrsp8ek/ylpAA8063k+48bca+u6ipnW3g+fBasedWqD4F8kf/etxhs8e2ClHTW2+IL
+ Yb2UNoOAjYhsiCJ7bJBCqacm36VRgX99Y3MPtj3TJXBteHgpgz8ivN8KqELmnDkBrZVgVfL/C
+ tWlaoxjxcmUCQFNmTb4tNbayJaryvYUTrtiCwRBa7DFChJZI4r2PYbX//bmZxOu7t4ti4Pm9N
+ tG0ay0Wx2SMWHcTb1SU3TS3X3QfVVnuPJg7b+qZOc/AANk/Ga3FBSsjW9qCxm9PXdZsBFMWqr
+ 3hYYJyGw+TZzDt5SbQ7A4+yuVXlRzctEkdhYgAQm5HsZuXBm2QWdujvy/mgz3bIdq82nfZzrT
+ 3g+yyg0eDRfUM1vSGM1X1sDFtlTwAZ72UEA/xPV3c4sg7JTK7xkEjAc8Q/XItfgamnYpFK67G
+ 0I5/6yX/UNbRzr2/bqpoaGyYeMJdZuquSMKI6wFfLYfKRX2W093MORTOskZ1XL9Pq2sfI3vGb
+ 2bMCRSbtPh7HHm6iWk4lSDUgqSIE2G6ydcHdCnwS+bQtTn/6aUeXNgxY59NF+RqD9NZ1oY9O3
+ w9vOj+z2LYPUZFzOxIitMbHXwc5zIb5KBF0K1R1A89ftS822x68hAc+XAxgIsM/BTLa0kk3Px
+ hfbmuSEy8fsaY7jgXTCPmKxxzE79vqPMBRxrGThPcCRMJMzi9og1VQFiZQpL+DLx3AExWX0yP
+ krjnJQ3udr8V4uu3a145kBfYhMrZz8B/h1oh1oGQcstaL5S2KVf5W2tnOPbzrD12kzoXpPYGS
+ hQPxfwbMVgMTvTB31cfg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 23, 2021 at 11:58 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> These also document some behaviors that differ from a full checkout, and
-> possibly in a way that is not intended.
->
-> The test is designed to be run with "--run=1,X" where 'X' is an
+On Sun, Jan 24, 2021 at 11:51:33AM -0800, Junio C Hamano wrote:
 
-Random sidenote: Why not suggest "--run=setup,X" instead?  Then if you
-ever add additional "setup" steps, it'd run all of them.
+Thanks for the fast review, much appreciated.
 
-(See https://lore.kernel.org/git/0355c888828aeec331a6b99a26d8aa04cff59859.1602980628.git.gitgitgadget@gmail.com/)
+The short answer: There is more to be done, V2 is coming somewhen.
+For the longer story, please see inline.
 
-> interesting test case. Each test uses 'init_repos' to reset the full and
-> sparse copies of the initial-repo that is created by the first test
-> case. This also makes it possible to have test cases leave the working
-> directory or index in unusual states without disturbing later cases.
+> tboegi@web.de writes:
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 301 +++++++++++++++++++++++
->  1 file changed, 301 insertions(+)
->  create mode 100755 t/t1092-sparse-checkout-compatibility.sh
+> > The solution is to read the config variable "core.precomposeunicode" e=
+arly.
 >
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> new file mode 100755
-> index 00000000000..8cd3e5a8d22
-> --- /dev/null
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -0,0 +1,301 @@
-> +#!/bin/sh
-> +
-> +test_description='compare full workdir to sparse workdir'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +       git init initial-repo &&
-> +       (
-> +               cd initial-repo &&
-> +               echo a >a &&
-> +               echo "after deep" >e &&
-> +               echo "after folder1" >g &&
-> +               echo "after x" >z &&
-> +               mkdir folder1 folder2 deep x &&
-> +               mkdir deep/deeper1 deep/deeper2 &&
-> +               mkdir deep/deeper1/deepest &&
-> +               echo "after deeper1" >deep/e &&
-> +               echo "after deepest" >deep/deeper1/e &&
-> +               cp a folder1 &&
-> +               cp a folder2 &&
-> +               cp a x &&
-> +               cp a deep &&
-> +               cp a deep/deeper1 &&
-> +               cp a deep/deeper2 &&
-> +               cp a deep/deeper1/deepest &&
-> +               cp -r deep/deeper1/deepest deep/deeper2 &&
-> +               git add . &&
-> +               git commit -m "initial commit" &&
-> +               git checkout -b base &&
-> +               for dir in folder1 folder2 deep
-> +               do
-> +                       git checkout -b update-$dir &&
-> +                       echo "updated $dir" >$dir/a &&
-> +                       git commit -a -m "update $dir" || return 1
-> +               done &&
-> +
-> +               git checkout -b rename-base base &&
-> +               echo >folder1/larger-content <<-\EOF &&
-> +               matching
-> +               lines
-> +               help
-> +               inexact
-> +               renames
-> +               EOF
-> +               cp folder1/larger-content folder2/ &&
-> +               cp folder1/larger-content deep/deeper1/ &&
-> +               git add . &&
-> +               git commit -m "add interesting rename content" &&
-> +
-> +               git checkout -b rename-out-to-out rename-base &&
-> +               mv folder1/a folder2/b &&
-> +               mv folder1/larger-content folder2/edited-content &&
-> +               echo >>folder2/edited-content &&
-> +               git add . &&
-> +               git commit -m "rename folder1/... to folder2/..." &&
-> +
-> +               git checkout -b rename-out-to-in rename-base &&
-> +               mv folder1/a deep/deeper1/b &&
-> +               mv folder1/larger-content deep/deeper1/edited-content &&
-> +               echo >>deep/deeper1/edited-content &&
-> +               git add . &&
-> +               git commit -m "rename folder1/... to deep/deeper1/..." &&
-> +
-> +               git checkout -b rename-in-to-out rename-base &&
-> +               mv deep/deeper1/a folder1/b &&
-> +               mv deep/deeper1/larger-content folder1/edited-content &&
-> +               echo >>folder1/edited-content &&
-> +               git add . &&
-> +               git commit -m "rename deep/deeper1/... to folder1/..." &&
-> +
-> +               git checkout -b deepest base &&
-> +               echo "updated deepest" >deep/deeper1/deepest/a &&
-> +               git commit -a -m "update deepest" &&
-> +
-> +               git checkout -f base &&
-> +               git reset --hard
-> +       )
-> +'
-> +
-> +init_repos () {
-> +       rm -rf full-checkout sparse-checkout sparse-index &&
-> +
-> +       # create repos in initial state
-> +       cp -r initial-repo full-checkout &&
-> +       git -C full-checkout reset --hard &&
-> +
-> +       cp -r initial-repo sparse-checkout &&
-> +       git -C sparse-checkout reset --hard &&
-> +       git -C sparse-checkout sparse-checkout init --cone &&
-> +
-> +       # initialize sparse-checkout definitions
-> +       git -C sparse-checkout sparse-checkout set deep
-> +}
-> +
-> +run_on_sparse () {
-> +       (
-> +               cd sparse-checkout &&
-> +               $* >../sparse-checkout-out 2>../sparse-checkout-err
-> +       )
-> +}
-> +
-> +run_on_all () {
-> +       (
-> +               cd full-checkout &&
-> +               $* >../full-checkout-out 2>../full-checkout-err
-> +       ) &&
-> +       run_on_sparse $*
-> +}
-> +
-> +test_all_match () {
-> +       run_on_all $* &&
-> +       test_cmp full-checkout-out sparse-checkout-out &&
-> +       test_cmp full-checkout-err sparse-checkout-err
-> +}
-> +
-> +test_expect_success 'status with options' '
-> +       init_repos &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git status --porcelain=v2 -z -u &&
-> +       test_all_match git status --porcelain=v2 -uno &&
-> +       run_on_all "touch README.md" &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git status --porcelain=v2 -z -u &&
-> +       test_all_match git status --porcelain=v2 -uno &&
-> +       test_all_match git add README.md &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git status --porcelain=v2 -z -u &&
-> +       test_all_match git status --porcelain=v2 -uno
-> +'
-> +
-> +test_expect_success 'add, commit, checkout' '
-> +       init_repos &&
-> +
-> +       write_script edit-contents <<-\EOF &&
-> +       echo text >>$1
-> +       EOF
-> +       run_on_all "../edit-contents README.md" &&
-> +
-> +       test_all_match git add README.md &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git commit -m "Add README.md" &&
-> +
-> +       test_all_match git checkout HEAD~1 &&
-> +       test_all_match git checkout - &&
-> +
-> +       run_on_all "../edit-contents README.md" &&
-> +
-> +       test_all_match git add -A &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git commit -m "Extend README.md" &&
-> +
-> +       test_all_match git checkout HEAD~1 &&
-> +       test_all_match git checkout - &&
-> +
-> +       run_on_all "../edit-contents deep/newfile" &&
-> +
-> +       test_all_match git status --porcelain=v2 -uno &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git add . &&
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git commit -m "add deep/newfile" &&
-> +
-> +       test_all_match git checkout HEAD~1 &&
-> +       test_all_match git checkout -
-> +'
-> +
-> +test_expect_success 'checkout and reset --hard' '
-> +       init_repos &&
-> +
-> +       test_all_match git checkout update-folder1 &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git checkout update-deep &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git checkout -b reset-test &&
-> +       test_all_match git reset --hard deepest &&
-> +       test_all_match git reset --hard update-folder1 &&
-> +       test_all_match git reset --hard update-folder2
-> +'
-> +
-> +test_expect_success 'diff --staged' '
-> +       init_repos &&
-> +
-> +       write_script edit-contents <<-\EOF &&
-> +       echo text >>README.md
-> +       EOF
-> +       run_on_all "../edit-contents" &&
-> +
-> +       test_all_match git diff &&
-> +       test_all_match git diff --staged &&
-> +       test_all_match git add README.md &&
-> +       test_all_match git diff &&
-> +       test_all_match git diff --staged
-> +'
-> +
-> +test_expect_success 'diff with renames' '
-> +       init_repos &&
-> +
-> +       for branch in rename-out-to-out rename-out-to-in rename-in-to-out
-> +       do
-> +               test_all_match git checkout rename-base &&
-> +               test_all_match git checkout $branch -- .&&
-> +               test_all_match git diff --staged --no-renames &&
-> +               test_all_match git diff --staged --find-renames || return 1
-> +       done
-> +'
-> +
-> +test_expect_success 'log with pathspec outside sparse definition' '
-> +       init_repos &&
-> +
-> +       test_all_match git log -- a &&
-> +       test_all_match git log -- folder1/a &&
-> +       test_all_match git log -- folder2/a &&
-> +       test_all_match git log -- deep/a &&
-> +       test_all_match git log -- deep/deeper1/a &&
-> +       test_all_match git log -- deep/deeper1/deepest/a &&
-> +
-> +       test_all_match git checkout update-folder1 &&
-> +       test_all_match git log -- folder1/a
-> +'
-> +
-> +test_expect_success 'blame with pathspec inside sparse definition' '
-> +       init_repos &&
-> +
-> +       test_all_match git blame a &&
-> +       test_all_match git blame deep/a &&
-> +       test_all_match git blame deep/deeper1/a &&
-> +       test_all_match git blame deep/deeper1/deepest/a
-> +'
-> +
-> +# TODO: blame currently does not support blaming files outside of the
-> +# sparse definition. It complains that the file doesn't exist locally.
-> +test_expect_failure 'blame with pathspec outside sparse definition' '
-> +       init_repos &&
-> +
-> +       test_all_match git blame folder1/a &&
-> +       test_all_match git blame folder2/a &&
-> +       test_all_match git blame deep/deeper2/a &&
-> +       test_all_match git blame deep/deeper2/deepest/a
-> +'
-> +
-> +# TODO: reset currently does not behave as expected when in a
-> +# sparse-checkout.
-> +test_expect_failure 'checkout and reset (mixed)' '
-> +       init_repos &&
-> +
-> +       test_all_match git checkout -b reset-test update-deep &&
-> +       test_all_match git reset deepest &&
-> +       test_all_match git reset update-folder1 &&
-> +       test_all_match git reset update-folder2
-> +'
-> +
-> +test_expect_success 'merge' '
-> +       init_repos &&
-> +
-> +       test_all_match git checkout -b merge update-deep &&
-> +       test_all_match git merge -m "folder1" update-folder1 &&
-> +       test_all_match git rev-parse HEAD^{tree} &&
-> +       test_all_match git merge -m "folder2" update-folder2 &&
-> +       test_all_match git rev-parse HEAD^{tree}
-> +'
-> +
-> +test_expect_success 'merge with outside renames' '
-> +       init_repos &&
-> +
-> +       for type in out-to-out out-to-in in-to-out
-> +       do
-> +               test_all_match git reset --hard &&
-> +               test_all_match git checkout -f -b merge-$type update-deep &&
-> +               test_all_match git merge -m "$type" rename-$type &&
-> +               test_all_match git rev-parse HEAD^{tree} || return 1
-> +       done
-> +'
-> +
-> +test_expect_success 'clean' '
-> +       init_repos &&
-> +
-> +       echo bogus >>.gitignore &&
-> +       run_on_all cp ../.gitignore . &&
-> +       test_all_match git add .gitignore &&
-> +       test_all_match git commit -m ignore-bogus-files &&
-> +
-> +       run_on_sparse mkdir folder1 &&
-> +       run_on_all touch folder1/bogus &&
-> +
-> +       test_all_match git status --porcelain=v2 &&
-> +       test_all_match git clean -f &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git clean -xf &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git clean -xdf &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_path_is_dir sparse-checkout/folder1
-> +'
-> +
-> +test_done
-> --
-> gitgitgadget
+> For a single command like "restore", we need to fail if it is run
+> outside a repository anyway, so it is OK, but code in "git.c" in
+> general can be called outside a repository, we may not know where
+> our configuration files are, though.  So I'd prefer to avoid
+> adding too many "do this thing early for every single command".
+>
+> Where do we normally read that variable?  I see calls to
+> precompose_argv() on only a few codepaths
+>
+> builtin/diff-files.c:38:	precompose_argv(argc, argv);
+> builtin/diff-index.c:28:	precompose_argv(argc, argv);
+> builtin/diff-tree.c:129:	precompose_argv(argc, argv);
+> builtin/diff.c:455:	precompose_argv(argc, argv);
+> builtin/submodule--helper.c:1260:	precompose_argv(diff_args.nr, diff_arg=
+s.v);
+> parse-options.c:872:	precompose_argv(argc, argv);
+>
+> I guess the reason we can get away with it is because most of the
+> newer commands use the parse_options() API, and the call to
+> precompose_argv() is used by the codepaths implementing these
+> commands.  And as a rule, these commands read config first before
+> calling parse_options(), so by the time the control reaches there,
+> the value of the variable may be already known.
+
+Yes.
+
+>
+> The question is why "restore -p" is so special?  Or does this patch
+> mean everybody, even the ones that use parse_options() is broken?
+
+One special thing is that it uses pathspec, `git restore -p .`
+and $CWD is inside a decomposed directory.
+
+There is more work to be done, as it seems.
+Running `git status . ` in an ASCII based repo (ignore the debug prints)
+
+  user@mac:/tmp/210125-precomp/A.dir>  git status .
+  git.c/handle_builtin:699 cmd=3D"status" len=3D6
+  git.c:428 prefix=3D"A.dir/" (6)
+  git.c:434 prec_pfx=3D"(null)" (4294967295)
+  builtin/commit.c:1401 prefix=3D"A.dir/" (6)
+  On branch master
+  Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory=
+)
+              modified:   O.file
+
+=2D------------------------
+But doing the same test within a decomosed directory:
+  user@mac:/tmp/210125-decomp/=C4.dir> git status .
+  git.c/handle_builtin:699 cmd=3D"status" len=3D6
+  git.c:428 prefix=3D"=C4.dir/" (8)
+  git.c:434 prec_pfx=3D"=C4.dir/" (7)
+  builtin/commit.c:1401 prefix=3D"=C4.dir/" (7)
+  On branch master
+  nothing to commit, working tree clean
+=2D--------
+But using ".." as the pathspec works:
+
+  user@mac:/tmp/210125-decomp/=C4.dir> git status ..
+  git.c/handle_builtin:699 cmd=3D"status" len=3D6
+  git.c:428 prefix=3D"=C4.dir/" (8)
+  git.c:434 prec_pfx=3D"=C4.dir/" (7)
+  builtin/commit.c:1401 prefix=3D"=C4.dir/" (7)
+  On branch master
+  Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory=
+)
+              modified:   "../A\314\210.dir/\303\226.file"
+
+  no changes added to commit (use "git add" and/or "git commit -a")
+=2D-------------
+
+So in that sense, it seems as if `git restore` is special because
+the patch helps.
+
+More patches are needed asseen above.
+
+And the rest of the suggestions makes all sense.
