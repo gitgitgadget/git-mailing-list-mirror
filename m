@@ -2,111 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E9AC433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C841C433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:57:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9146A22B4B
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:39:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 52C3822BF3
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 00:57:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbhAYAj0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 19:39:26 -0500
-Received: from mail.archlinux.org ([95.216.189.61]:54886 "EHLO
-        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725986AbhAYAjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 19:39:25 -0500
-X-Greylist: delayed 378 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Jan 2021 19:39:24 EST
-From:   Eli Schwartz <eschwartz@archlinux.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-rsa; t=1611534745;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=mtfwKv7AGvI7bH29PuFjvJKoY39KUtn/sSXcqq9M2XA=;
-        b=v9hj9EUzfMQm+2popWPClvgiaf9mEdMQB+EYqdGC1qPB+W44lrREuOdlX0JBTzctpy5I8J
-        wltpuMEYkJZaK07VWGxgOKHZQ4D/3oMVJg5bRvr9agfxMavWmRMpao5JrJZedKksvCnCpg
-        g3CTkz4Tuhabor+ZdXj9Jz73lpcGjtWMrXgj7jKinFbH6srgE3FXZKhHI654FRUqr2i5Bq
-        5QEo2lag2vbsvbfes5j1uBRamvXZHvuNrZuT+4c/pU8eVje6JoqaWu+8vvwntfZznhZl0p
-        dkUxzm1ymZiIT9wVXGC5ccLd877OQmXic6fy1HDo+D7YgiF5vqBM6moq3UOd4p9Yy95Krt
-        zucSP2MgARSzAMKWiQEL/jnrwE2W6qVotJeklIPCBmZV5YUGGzwdYaqALfLluN026iXgc2
-        QvauPpuDDb/7JWDTNWieFF19xWKXNeO3Rho6eDiN61j6fkgSNF7AESBEJY7N3IsttMAlk/
-        kMyp2SJ6OWg0el+Ff8Qpf4PT54baDTBr574PKWJtERxKkeb5TfK5/YOj0dL8JNgln1THnS
-        7/68Kau5Fw8VflmzdXOOS528pVV8KZt3RvkJuvF6u0CICQBjY3y3pOoxJDJ55h9fXqUO6e
-        qHLQ5xvy6w4XF/tZaU7nS8IqSevw23t61uT6p7ygJpxpGP+FIrxQs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-ed25519; t=1611534745;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=mtfwKv7AGvI7bH29PuFjvJKoY39KUtn/sSXcqq9M2XA=;
-        b=4opjyK8NQAsYyluRnczTTkeMlTGLaFIE42/5VE6HNO98pQjuXvzRZOREbGaoV6Hce2/Yo/
-        uJ1PEQ+ZLC8RVABw==
-To:     git@vger.kernel.org
-Subject: gitattributes export-subst and software versioning
-X-Clacks-Overhead:  GNU Terry Pratchett
-Message-ID: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
-Date:   Sun, 24 Jan 2021 19:32:17 -0500
+        id S1726333AbhAYA5S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 19:57:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40056 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725986AbhAYA5B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 19:57:01 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F00C061573
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 16:56:17 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id j13so157622qvu.10
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 16:56:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Be8vYSL+E3YxRAPVLK0Rp1+PvZBCnPSldawMTU8rg9I=;
+        b=GivxRTbM4OtfAuwSJ2j9xAi4sEdK+8LBqC2ouhJgXMnKWfA7IjUXVZ43zX3tIB8y7u
+         /LFT8ov6hsoUIfT8VKsjEjD0u0azIV1UXYTMczOj9mUisAe2koLiRidfuapVHSPq5NGg
+         ynBrlSbKRGqFuelhmZbRZaeyLijzrxwTMTDTmlLBrsvAZkWnJVmgivPkcqEO1LGxLCwu
+         5aIwNpVexn8wj/PJbMfD3+1dhP9bQBhLF7ODc8I+P+11CydoE8P72TtpKwqu8ceV/QTn
+         h5gkkYljHsI91xWFI7zmRlvVoxW8/KndS4O4vq3FI6/3VpP9QjYWD525X9zfVWLOdu1S
+         23CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Be8vYSL+E3YxRAPVLK0Rp1+PvZBCnPSldawMTU8rg9I=;
+        b=nyLwbEwlg2/gUMniKN7ahSaxrRfFHpJlnwXSqPLedGGd/v01Lx8b7pPGM2UHxNlnau
+         4BzBKLl9VHOnFpt48ht5A+sbVsCmD6CjqxOIeIS2kElPp7ce9x3BiUvYoHgi6RZQGEn+
+         ZNfQBbWqGIFWE7Q1DzBEQBPL2kRteew2n6Jyl7xdMpmgls+wtSOfsS2VYCww9topwfa/
+         XpeN4Lyr4//WF4f2rRhULFfEcBHZrbxbJ1nEEGY8ZUYau1zBaiBv9SiFAT4+eivqDZZd
+         njyTqF63COZaZLm5NOi/6JJgH+dr8E7jXhqsnh3iZ0184Au6/VzYRXINWLe2KbAPtmuu
+         G3gA==
+X-Gm-Message-State: AOAM531gR6Zil7RlHr5lFZJfmyi5wayl4etPhIrXcIJoMcGvZLRNNDFH
+        tNj/LsG/ncYdgTDVa+76nuF7pA==
+X-Google-Smtp-Source: ABdhPJwqMkOSxYnN8dDk1rbVQICmtJs16GdJmuY7pF1pxFQcite0jCLG8JdzzUgtewT55e6+NSqbsQ==
+X-Received: by 2002:a0c:f582:: with SMTP id k2mr17373qvm.55.1611536176187;
+        Sun, 24 Jan 2021 16:56:16 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:d8ad:42c:f23b:d0ef])
+        by smtp.gmail.com with ESMTPSA id p26sm3250537qkk.6.2021.01.24.16.56.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 24 Jan 2021 16:56:15 -0800 (PST)
+Date:   Sun, 24 Jan 2021 19:56:13 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, sunshine@sunshineco.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
+Message-ID: <YA4XLedWCwrnzMp7@nand.local>
+References: <xmqqk0sevqlh.fsf@gitster.c.googlers.com>
+ <YAH0G+Y4fIxoTeZa@coredump.intra.peff.net>
+ <830a88ce-1728-a6a5-f60d-59328f85932c@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US-large
-Content-Transfer-Encoding: 8bit
-Authentication-Results: mail.archlinux.org;
-        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <830a88ce-1728-a6a5-f60d-59328f85932c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Periodically, I wonder if there is some better way for managing tagged 
-releases for software in git. Current state of the art seems to be 
-"write a custom Makefile that takes a version and seds out the existing 
-version, then runs git tag for you". Inelegant solutions also abound; 
-people release code that does not build properly unless you build it 
-from a git checkout so it can run git describe. (There are half a dozen 
-individually popular but mutually exclusive python ecosystems for this, 
-in fact, all of them varying degrees of broken.)
+On Sat, Jan 23, 2021 at 09:41:29PM -0500, Philippe Blain wrote:
+> I've CC-ed Dscho regarding if we also want this for the Windows tests,
+> (I don't see why not) and if we feel it's a good idea I can
+> send a proper patch.
 
-git does have a way to automatically insert metadata via the 
-export-subst attribute on a file, but it's very awkward to use and you 
-cannot get much info out of it.
+:-). The first thought I had when I read your email was: "shouldn't we
+turn this on in those sharded Windows tests, too?"
 
-# get tags into a file, only on exact match:
+So, yeah, I think that this is a good idea for the windows- and
+vs-build tests, too.
 
-$ cat VERSION
-$Format:%d$
-$Format:%D$
-
-$ git archive HEAD | bsdtar -xOf - VERSION
-   (HEAD -> master, tag: 1.0)
-HEAD -> master, tag: 1.0
-
-With sufficient regex, you can get a release out of this, but it doesn't 
-work if you try getting an autogenerated tarball for a commit that isn't 
-exactly a release.
-
-$ git commit --allow-empty -m ...
-$ git archive HEAD | bsdtar -xOf - VERSION
-   (HEAD -> master)
-HEAD -> master
-
-I think it would be much, much nicer if there was a format placeholder 
-for git describe.
-
-It doesn't even need option support -- the default output in most cases 
-could be a replacement for or fall back to existing invocations of the 
-"git" program, followed by post-processing with e.g. "sed".
-
-However, the existence of current pretty formats such as %C() or 
-%(trailer:options) implies that options could be passed in a 
-git-describe format too. e.g. %(describe:--long --tags --match="v*")
-
-Thoughts?
-
--- 
-Eli Schwartz
-Arch Linux Bug Wrangler and Trusted User
-
-
+Thanks,
+Taylor
