@@ -2,542 +2,368 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10FF7C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B870C43381
 	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D425722ADF
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:38:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19D7922AAA
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732882AbhAYXiH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 18:38:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50984 "EHLO
+        id S1732853AbhAYXiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 18:38:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732741AbhAYXh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 18:37:58 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B9DDC061756
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:18 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id a7so7488571qkb.13
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:18 -0800 (PST)
+        with ESMTP id S1732674AbhAYXhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 18:37:54 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEF9C061573
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:08 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id i9so1134344wmq.1
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=k8vnFvKpX6pCGtokzuDjigZ8+g9Pv6GeOS+O/fIR+VI=;
-        b=Wg58n2sTzEJZQareYfI3505KsnqXn12J5MM16PoBBK/Bym4n15iR5oa09iixMv2aUF
-         YRHJKmG4k3mXLag1x19flkwIOpeMzpSYyBXllTf7RQ8YDME/seArn9Cs7wKEQP+o+uwh
-         hNzQQNabsfkoLKL4iW/+DPZKkRmz1W7WYnW/GgUTS0IKkMXFV0cUiRFodJ3Vcr1SITTS
-         +qEdIFTrTt8vAWYysa5qLahgbrH1NoLh3WLd0ctyXN7LfVofelrmoOLagUeJcJBw6Y9z
-         BaVWwGMnHrtyZV9bEfWRJ4LL5Wya7ieDLkCkrUOBUexPAwPGKWzQibge0YYLpPwcukEy
-         PgIQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ia1PMLHKnyJAlBeAtqma1paKnplzTJwxWYtpvsgpo0s=;
+        b=lo5yhCHCVMOeTs0+fnTJ95GiOZQshDw/YTAPSlQku4Nc1kP95+BC59t3Dw7MxbiS0P
+         PZyaSuPT5HTEfQWHG2XQjibNVA3DlBq/FBC2+yKvIYawYHQYmlfB1iY7pqDTQ0Z1p9h8
+         lBa7kAuKWij6symco32r76ThF7hz5IgLgvdJCMyxzABeYBW4xIrNh7v0S5GfO7ofQOQy
+         +GLJwQPe7c/ErbrhluhTMK4bZ3XAIMlF7r9jdVQVrTIRjcErpRN2M48yB3q8gJDIfyeT
+         X1EvkxkxtbUZQbqsycv/hZOXDpGnZxiLnOEL/AZJtru63II3+hLajVTEkpp2/rZpAi1P
+         RI3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=k8vnFvKpX6pCGtokzuDjigZ8+g9Pv6GeOS+O/fIR+VI=;
-        b=ZY2GAc47gWc6BC309xtRf1jFpmXHI43O5leW5wMdI+5b5SosPbUfTSRzts3SahMf3n
-         jyvjsnNiqn21NIUaqZ/AAyRHk0XIckZXCzn0lkxO+e8DX97dUECE5X3KaCggB61Au6SQ
-         6JKWNJU1FC1/blDY1YzmbWor5G+ipIRfdSZLsdIdAyxEzab9T6GT0AsfB7SPaxA0smQG
-         q3P9kdcWDJQDPGEhdVWdwKxxDDC0n/7fgQUfp+/FIIx3xC2cXw9Awg1GNgmZvBg5ZWK5
-         LTlnMLSCXAbN5AkWgcROu2u4uFqFC7IjdGYTt+c4pgYi1yxe4CCdfZxY6nJDBL/1/y+I
-         /HwQ==
-X-Gm-Message-State: AOAM530gwQSFMr6ym2pEF3nSYE+zy9/O9xzXCJFeXkKPUwzkxMWwLGyE
-        09G7U4poBi0n7D7yohy9iPKkQsWJOUzCgw==
-X-Google-Smtp-Source: ABdhPJx4cSMqx1DahjLL5S0qd2eU/MW0ojMRK+HiiFJiPrMmJzr2Q33QswSVtn9TZZOkjeq4a0h0/w==
-X-Received: by 2002:a37:bc81:: with SMTP id m123mr3306899qkf.191.1611617836844;
-        Mon, 25 Jan 2021 15:37:16 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:5e9f:a2e5:e7ac:394d])
-        by smtp.gmail.com with ESMTPSA id b16sm11892196qtx.85.2021.01.25.15.37.16
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ia1PMLHKnyJAlBeAtqma1paKnplzTJwxWYtpvsgpo0s=;
+        b=IdEkTUyzs3a4r6AozgYU7h6LFWwtPCXnlBcoykGYLNkCrjGq/aPSAQ1GKXhkuy8vF7
+         0LulDnwH8QYIPHHWMo39o2b629vSzvAtrIelx6t1Z4Pblcl/R1QmBpAcH1fAV1Y7XPsG
+         9toEKlWjW5JwAAxrSX4qyzcggYD9TlxSYiSwEg5NykuswlL/04mL1DzNz/ab74Dt7kj9
+         OUO0cUIxfls6ebpnLGtlZfRaTsRlAa1FDS/TadQASHVzwwTqht6OQajiP4bNnMG6UYvV
+         ThaOQBCoKw2La95T9DKcdEjavjO0CesBUbYuhV2ZQtxL/wzwUOP657ProZY4dXBYEKHZ
+         LjHw==
+X-Gm-Message-State: AOAM530BMpAnguiKMP4ZJfrWwEemFLtcWnk4IakPSnKHfVA8MJbhnWPF
+        BIeNmf2yEazIAz/Pry8OGutte7Q15UX1Lg==
+X-Google-Smtp-Source: ABdhPJxPufBU6DWyVV7mdLAsSUwXiowSLAy+P1YvATnV0bNSdmUZhrndhc0f0cnA9+rS5Mtexvi36A==
+X-Received: by 2002:a1c:6484:: with SMTP id y126mr2160749wmb.45.1611617827162;
+        Mon, 25 Jan 2021 15:37:07 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id y67sm810604wmg.47.2021.01.25.15.37.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 15:37:16 -0800 (PST)
-Date:   Mon, 25 Jan 2021 18:37:14 -0500
-From:   Taylor Blau <me@ttaylorr.com>
+        Mon, 25 Jan 2021 15:37:06 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
-        peff@peff.net
-Subject: [PATCH v3 01/10] packfile: prepare for the existence of '*.rev' files
-Message-ID: <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
-References: <cover.1610129989.git.me@ttaylorr.com>
- <cover.1611617819.git.me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>, Beat Bolli <dev+git@drbeat.li>,
+        Michael J Gruber <git@grubix.eu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] grep/log: remove hidden --debug and --grep-debug options
+Date:   Tue, 26 Jan 2021 00:36:51 +0100
+Message-Id: <20210125233651.31537-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1611617819.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Specify the format of the on-disk reverse index 'pack-*.rev' file, as
-well as prepare the code for the existence of such files.
+Remove the hidden "grep --debug" and "log --grep-debug" options added
+in 17bf35a3c7b (grep: teach --debug option to dump the parse tree,
+2012-09-13).
 
-The reverse index maps from pack relative positions (i.e., an index into
-the array of object which is sorted by their offsets within the
-packfile) to their position within the 'pack-*.idx' file. Today, this is
-done by building up a list of (off_t, uint32_t) tuples for each object
-(the off_t corresponding to that object's offset, and the uint32_t
-corresponding to its position in the index). To convert between pack and
-index position quickly, this array of tuples is radix sorted based on
-its offset.
+At the time these options seem to have been intended to go along with
+a documentation discussion and to help the author of relevant tests to
+perform ad-hoc debugging on them[1].
 
-This has two major drawbacks:
+Reasons to want this gone:
 
-First, the in-memory cost scales linearly with the number of objects in
-a pack.  Each 'struct revindex_entry' is sizeof(off_t) +
-sizeof(uint32_t) + padding bytes for a total of 16.
+ 1. They were never documented, and the only (rather trivial) use of
+    them in our own codebase for testing is something I removed back
+    in e01b4dab01e (grep: change non-ASCII -i test to stop using
+    --debug, 2017-05-20).
 
-To observe this, force Git to load the reverse index by, for e.g.,
-running 'git cat-file --batch-check="%(objectsize:disk)"'. When asking
-for a single object in a fresh clone of the kernel, Git needs to
-allocate 120+ MB of memory in order to hold the reverse index in memory.
+ 2. Googling around doesn't show any in-the-wild uses I could dig up,
+    and on the Git ML the only mentions after the original discussion
+    seem to have been when they came up in unrelated diff contexts, or
+    that test commit of mine.
 
-Second, the cost to sort also scales with the size of the pack.
-Luckily, this is a linear function since 'load_pack_revindex()' uses a
-radix sort, but this cost still must be paid once per pack per process.
+ 3. An exception to that is c581e4a7499 (grep: under --debug, show
+    whether PCRE JIT is enabled, 2019-08-18) where we added the
+    ability to dump out when PCREv2 has the JIT in effect.
 
-As an example, it takes ~60x longer to print the _size_ of an object as
-it does to print that entire object's _contents_:
+    The combination of that and my earlier b65abcafc7a (grep: use PCRE
+    v2 for optimized fixed-string search, 2019-07-01) means Git prints
+    this out in its most common in-the-wild configuration:
 
-  Benchmark #1: git.compile cat-file --batch <obj
-    Time (mean ± σ):       3.4 ms ±   0.1 ms    [User: 3.3 ms, System: 2.1 ms]
-    Range (min … max):     3.2 ms …   3.7 ms    726 runs
+        $ git log  --grep-debug --grep=foo --grep=bar --grep=baz --all-match
+        pcre2_jit_on=1
+        pcre2_jit_on=1
+        pcre2_jit_on=1
+        [all-match]
+        (or
+         pattern_body<body>foo
+         (or
+          pattern_body<body>bar
+          pattern_body<body>baz
+         )
+        )
 
-  Benchmark #2: git.compile cat-file --batch-check="%(objectsize:disk)" <obj
-    Time (mean ± σ):     210.3 ms ±   8.9 ms    [User: 188.2 ms, System: 23.2 ms]
-    Range (min … max):   193.7 ms … 224.4 ms    13 runs
+        $ git grep --debug \( -e foo --and -e bar \) --or -e baz
+        pcre2_jit_on=1
+        pcre2_jit_on=1
+        pcre2_jit_on=1
+        (or
+         (and
+          patternfoo
+          patternbar
+         )
+         patternbaz
+        )
 
-Instead, avoid computing and sorting the revindex once per process by
-writing it to a file when the pack itself is generated.
+I.e. for each pattern we're considering for the and/or/--all-match
+etc. debugging we'll now diligently spew out another identical line
+saying whether the PCREv2 JIT is on or not.
 
-The format is relatively straightforward. It contains an array of
-uint32_t's, the length of which is equal to the number of objects in the
-pack.  The ith entry in this table contains the index position of the
-ith object in the pack, where "ith object in the pack" is determined by
-pack offset.
+I think that nobody's complained about that rather glaringly obviously
+bad output says something about how much this is used, i.e. it's
+not.
 
-One thing that the on-disk format does _not_ contain is the full (up to)
-eight-byte offset corresponding to each object. This is something that
-the in-memory revindex contains (it stores an off_t in 'struct
-revindex_entry' along with the same uint32_t that the on-disk format
-has). Omit it in the on-disk format, since knowing the index position
-for some object is sufficient to get a constant-time lookup in the
-pack-*.idx file to ask for an object's offset within the pack.
+The need for this debugging aid for the composed grep/log patterns
+seems to have passed, and the desire to dump the JIT config seems to
+have been another one-off around the time we had JIT-related issues on
+the PCREv2 codepath. That the original author of this debugging
+facility seemingly hasn't noticed the bad output since then[2] is
+probably some indicator.
 
-This trades off between the on-disk size of the 'pack-*.rev' file for
-runtime to chase down the offset for some object. Even though the lookup
-is constant time, the constant is heavier, since it can potentially
-involve two pointer walks in v2 indexes (one to access the 4-byte offset
-table, and potentially a second to access the double wide offset table).
+1. https://lore.kernel.org/git/cover.1347615361.git.git@drmicha.warpmail.net/
+2. https://lore.kernel.org/git/xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com/
 
-Consider trying to map an object's pack offset to a relative position
-within that pack. In a cold-cache scenario, more page faults occur while
-switching between binary searching through the reverse index and
-searching through the *.idx file for an object's offset. Sure enough,
-with a cold cache (writing '3' into '/proc/sys/vm/drop_caches' after
-'sync'ing), printing out the entire object's contents is still
-marginally faster than printing its size:
-
-  Benchmark #1: git.compile cat-file --batch-check="%(objectsize:disk)" <obj >/dev/null
-    Time (mean ± σ):      22.6 ms ±   0.5 ms    [User: 2.4 ms, System: 7.9 ms]
-    Range (min … max):    21.4 ms …  23.5 ms    41 runs
-
-  Benchmark #2: git.compile cat-file --batch <obj >/dev/null
-    Time (mean ± σ):      17.2 ms ±   0.7 ms    [User: 2.8 ms, System: 5.5 ms]
-    Range (min … max):    15.6 ms …  18.2 ms    45 runs
-
-(Numbers taken in the kernel after cheating and using the next patch to
-generate a reverse index). There are a couple of approaches to improve
-cold cache performance not pursued here:
-
-  - We could include the object offsets in the reverse index format.
-    Predictably, this does result in fewer page faults, but it triples
-    the size of the file, while simultaneously duplicating a ton of data
-    already available in the .idx file. (This was the original way I
-    implemented the format, and it did show
-    `--batch-check='%(objectsize:disk)'` winning out against `--batch`.)
-
-    On the other hand, this increase in size also results in a large
-    block-cache footprint, which could potentially hurt other workloads.
-
-  - We could store the mapping from pack to index position in more
-    cache-friendly way, like constructing a binary search tree from the
-    table and writing the values in breadth-first order. This would
-    result in much better locality, but the price you pay is trading
-    O(1) lookup in 'pack_pos_to_index()' for an O(log n) one (since you
-    can no longer directly index the table).
-
-So, neither of these approaches are taken here. (Thankfully, the format
-is versioned, so we are free to pursue these in the future.) But, cold
-cache performance likely isn't interesting outside of one-off cases like
-asking for the size of an object directly. In real-world usage, Git is
-often performing many operations in the revindex (i.e., asking about
-many objects rather than a single one).
-
-The trade-off is worth it, since we will avoid the vast majority of the
-cost of generating the revindex that the extra pointer chase will look
-like noise in the following patch's benchmarks.
-
-This patch describes the format and prepares callers (like in
-pack-revindex.c) to be able to read *.rev files once they exist. An
-implementation of the writer will appear in the next patch, and callers
-will gradually begin to start using the writer in the patches that
-follow after that.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/technical/pack-format.txt |  20 ++++
- builtin/repack.c                        |   1 +
- object-store.h                          |   3 +
- pack-revindex.c                         | 144 ++++++++++++++++++++++--
- pack-revindex.h                         |  10 +-
- packfile.c                              |  13 ++-
- packfile.h                              |   1 +
- tmp-objdir.c                            |   6 +-
- 8 files changed, 184 insertions(+), 14 deletions(-)
+ builtin/grep.c |   5 ---
+ grep.c         | 101 +------------------------------------------------
+ grep.h         |   1 -
+ revision.c     |   2 -
+ 4 files changed, 2 insertions(+), 107 deletions(-)
 
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index 96d2fc589f..8833b71c8b 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -274,6 +274,26 @@ Pack file entry: <+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index ca259af4416..55d06c95130 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -216,8 +216,6 @@ static void start_threads(struct grep_opt *opt)
+ 		int err;
+ 		struct grep_opt *o = grep_opt_dup(opt);
+ 		o->output = strbuf_out;
+-		if (i)
+-			o->debug = 0;
+ 		compile_grep_patterns(o);
+ 		err = pthread_create(&threads[i], NULL, run, o);
  
-     Index checksum of all of the above.
+@@ -936,9 +934,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			   N_("indicate hit with exit status without output")),
+ 		OPT_BOOL(0, "all-match", &opt.all_match,
+ 			N_("show only matches from files that match all patterns")),
+-		OPT_SET_INT_F(0, "debug", &opt.debug,
+-			      N_("show parse tree for grep expression"),
+-			      1, PARSE_OPT_HIDDEN),
+ 		OPT_GROUP(""),
+ 		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+ 			N_("pager"), N_("show matching files in the pager"),
+diff --git a/grep.c b/grep.c
+index efeb6dc58db..21f0ee03be9 100644
+--- a/grep.c
++++ b/grep.c
+@@ -400,8 +400,6 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
  
-+== pack-*.rev files have the format:
-+
-+  - A 4-byte magic number '0x52494458' ('RIDX').
-+
-+  - A 4-byte version identifier (= 1).
-+
-+  - A 4-byte hash function identifier (= 1 for SHA-1, 2 for SHA-256).
-+
-+  - A table of index positions (one per packed object, num_objects in
-+    total, each a 4-byte unsigned integer in network order), sorted by
-+    their corresponding offsets in the packfile.
-+
-+  - A trailer, containing a:
-+
-+    checksum of the corresponding packfile, and
-+
-+    a checksum of all of the above.
-+
-+All 4-byte numbers are in network order.
-+
- == multi-pack-index (MIDX) files have the following format:
+ #if defined(PCRE_CONFIG_JIT) && !defined(NO_LIBPCRE1_JIT)
+ 	pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
+-	if (opt->debug)
+-		fprintf(stderr, "pcre1_jit_on=%d\n", p->pcre1_jit_on);
  
- The multi-pack-index files refer to multiple pack-files and loose objects.
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 2158b48f4c..01440de2d5 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -209,6 +209,7 @@ static struct {
- } exts[] = {
- 	{".pack"},
- 	{".idx"},
-+	{".rev", 1},
- 	{".bitmap", 1},
- 	{".promisor", 1},
- };
-diff --git a/object-store.h b/object-store.h
-index c4fc9dd74e..541dab0858 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -85,6 +85,9 @@ struct packed_git {
- 		 multi_pack_index:1;
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	struct revindex_entry *revindex;
-+	const uint32_t *revindex_data;
-+	const uint32_t *revindex_map;
-+	size_t revindex_size;
- 	/* something like ".git/objects/pack/xxxxx.pack" */
- 	char pack_name[FLEX_ARRAY]; /* more */
- };
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 5e69bc7372..a174fa5388 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -164,16 +164,130 @@ static void create_pack_revindex(struct packed_git *p)
- 	sort_revindex(p->revindex, num_ent, p->pack_size);
- }
- 
--int load_pack_revindex(struct packed_git *p)
-+static int create_pack_revindex_in_memory(struct packed_git *p)
- {
--	if (!p->revindex) {
--		if (open_pack_index(p))
--			return -1;
--		create_pack_revindex(p);
--	}
-+	if (open_pack_index(p))
-+		return -1;
-+	create_pack_revindex(p);
- 	return 0;
- }
- 
-+static char *pack_revindex_filename(struct packed_git *p)
-+{
-+	size_t len;
-+	if (!strip_suffix(p->pack_name, ".pack", &len))
-+		BUG("pack_name does not end in .pack");
-+	return xstrfmt("%.*s.rev", (int)len, p->pack_name);
-+}
-+
-+#define RIDX_HEADER_SIZE (12)
-+#define RIDX_MIN_SIZE (RIDX_HEADER_SIZE + (2 * the_hash_algo->rawsz))
-+
-+struct revindex_header {
-+	uint32_t signature;
-+	uint32_t version;
-+	uint32_t hash_id;
-+};
-+
-+static int load_revindex_from_disk(char *revindex_name,
-+				   uint32_t num_objects,
-+				   const uint32_t **data_p, size_t *len_p)
-+{
-+	int fd, ret = 0;
-+	struct stat st;
-+	void *data = NULL;
-+	size_t revindex_size;
-+	struct revindex_header *hdr;
-+
-+	fd = git_open(revindex_name);
-+
-+	if (fd < 0) {
-+		ret = -1;
-+		goto cleanup;
-+	}
-+	if (fstat(fd, &st)) {
-+		ret = error_errno(_("failed to read %s"), revindex_name);
-+		goto cleanup;
-+	}
-+
-+	revindex_size = xsize_t(st.st_size);
-+
-+	if (revindex_size < RIDX_MIN_SIZE) {
-+		ret = error(_("reverse-index file %s is too small"), revindex_name);
-+		goto cleanup;
-+	}
-+
-+	if (revindex_size - RIDX_MIN_SIZE != st_mult(sizeof(uint32_t), num_objects)) {
-+		ret = error(_("reverse-index file %s is corrupt"), revindex_name);
-+		goto cleanup;
-+	}
-+
-+	data = xmmap(NULL, revindex_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	hdr = data;
-+
-+	if (ntohl(hdr->signature) != RIDX_SIGNATURE) {
-+		ret = error(_("reverse-index file %s has unknown signature"), revindex_name);
-+		goto cleanup;
-+	}
-+	if (ntohl(hdr->version) != 1) {
-+		ret = error(_("reverse-index file %s has unsupported version %"PRIu32),
-+			    revindex_name, ntohl(hdr->version));
-+		goto cleanup;
-+	}
-+	if (!(ntohl(hdr->hash_id) == 1 || ntohl(hdr->hash_id) == 2)) {
-+		ret = error(_("reverse-index file %s has unsupported hash id %"PRIu32),
-+			    revindex_name, ntohl(hdr->hash_id));
-+		goto cleanup;
-+	}
-+
-+cleanup:
-+	if (ret) {
-+		if (data)
-+			munmap(data, revindex_size);
-+	} else {
-+		*len_p = revindex_size;
-+		*data_p = (const uint32_t *)data;
-+	}
-+
-+	close(fd);
-+	return ret;
-+}
-+
-+static int load_pack_revindex_from_disk(struct packed_git *p)
-+{
-+	char *revindex_name;
-+	int ret;
-+	if (open_pack_index(p))
-+		return -1;
-+
-+	revindex_name = pack_revindex_filename(p);
-+
-+	ret = load_revindex_from_disk(revindex_name,
-+				      p->num_objects,
-+				      &p->revindex_map,
-+				      &p->revindex_size);
-+	if (ret)
-+		goto cleanup;
-+
-+	p->revindex_data = (const uint32_t *)((const char *)p->revindex_map + RIDX_HEADER_SIZE);
-+
-+cleanup:
-+	free(revindex_name);
-+	return ret;
-+}
-+
-+int load_pack_revindex(struct packed_git *p)
-+{
-+	if (p->revindex || p->revindex_data)
-+		return 0;
-+
-+	if (!load_pack_revindex_from_disk(p))
-+		return 0;
-+	else if (!create_pack_revindex_in_memory(p))
-+		return 0;
-+	return -1;
-+}
-+
- int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
- {
- 	unsigned lo, hi;
-@@ -203,18 +317,28 @@ int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
- 
- uint32_t pack_pos_to_index(struct packed_git *p, uint32_t pos)
- {
--	if (!p->revindex)
-+	if (!(p->revindex || p->revindex_data))
- 		BUG("pack_pos_to_index: reverse index not yet loaded");
- 	if (p->num_objects <= pos)
- 		BUG("pack_pos_to_index: out-of-bounds object at %"PRIu32, pos);
--	return p->revindex[pos].nr;
-+
-+	if (p->revindex)
-+		return p->revindex[pos].nr;
-+	else
-+		return get_be32(p->revindex_data + pos);
- }
- 
- off_t pack_pos_to_offset(struct packed_git *p, uint32_t pos)
- {
--	if (!p->revindex)
-+	if (!(p->revindex || p->revindex_data))
- 		BUG("pack_pos_to_index: reverse index not yet loaded");
- 	if (p->num_objects < pos)
- 		BUG("pack_pos_to_offset: out-of-bounds object at %"PRIu32, pos);
--	return p->revindex[pos].offset;
-+
-+	if (p->revindex)
-+		return p->revindex[pos].offset;
-+	else if (pos == p->num_objects)
-+		return p->pack_size - the_hash_algo->rawsz;
-+	else
-+		return nth_packed_object_offset(p, pack_pos_to_index(p, pos));
- }
-diff --git a/pack-revindex.h b/pack-revindex.h
-index 6e0320b08b..61b2f3ab75 100644
---- a/pack-revindex.h
-+++ b/pack-revindex.h
-@@ -16,11 +16,17 @@
-  *   can be found
-  */
- 
-+#define RIDX_SIGNATURE 0x52494458 /* "RIDX" */
-+#define RIDX_VERSION 1
-+
- struct packed_git;
- 
- /*
-  * load_pack_revindex populates the revindex's internal data-structures for the
-  * given pack, returning zero on success and a negative value otherwise.
-+ *
-+ * If a '.rev' file is present it is mmap'd, and pointers are assigned into it
-+ * (instead of using the in-memory variant).
-  */
- int load_pack_revindex(struct packed_git *p);
- 
-@@ -55,7 +61,9 @@ uint32_t pack_pos_to_index(struct packed_git *p, uint32_t pos);
-  * If the reverse index has not yet been loaded, or the position is out of
-  * bounds, this function aborts.
-  *
-- * This function runs in constant time.
-+ * This function runs in constant time under both in-memory and on-disk reverse
-+ * indexes, but an additional step is taken to consult the corresponding .idx
-+ * file when using the on-disk format.
-  */
- off_t pack_pos_to_offset(struct packed_git *p, uint32_t pos);
- 
-diff --git a/packfile.c b/packfile.c
-index 4b938b4372..1fec12ac5f 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -324,11 +324,21 @@ void close_pack_index(struct packed_git *p)
+ 	if (p->pcre1_jit_on)
+ 		study_options = PCRE_STUDY_JIT_COMPILE;
+@@ -508,8 +506,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
  	}
+ 
+ 	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+-	if (opt->debug)
+-		fprintf(stderr, "pcre2_jit_on=%d\n", p->pcre2_jit_on);
+ 	if (p->pcre2_jit_on) {
+ 		jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+ 		if (jitret)
+@@ -535,9 +531,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 			BUG("pcre2_pattern_info() failed: %d", patinforet);
+ 		if (jitsizearg == 0) {
+ 			p->pcre2_jit_on = 0;
+-			if (opt->debug)
+-				fprintf(stderr, "pcre2_jit_on=%d: (*NO_JIT) in regex\n",
+-					p->pcre2_jit_on);
+ 			return;
+ 		}
+ 	}
+@@ -616,8 +609,6 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	if (opt->ignore_case)
+ 		regflags |= REG_ICASE;
+ 	err = regcomp(&p->regexp, sb.buf, regflags);
+-	if (opt->debug)
+-		fprintf(stderr, "fixed %s\n", sb.buf);
+ 	strbuf_release(&sb);
+ 	if (err) {
+ 		char errbuf[1024];
+@@ -812,87 +803,6 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
+ 	return compile_pattern_or(list);
  }
  
-+void close_pack_revindex(struct packed_git *p) {
-+	if (!p->revindex_map)
-+		return;
-+
-+	munmap((void *)p->revindex_map, p->revindex_size);
-+	p->revindex_map = NULL;
-+	p->revindex_data = NULL;
-+}
-+
- void close_pack(struct packed_git *p)
+-static void indent(int in)
+-{
+-	while (in-- > 0)
+-		fputc(' ', stderr);
+-}
+-
+-static void dump_grep_pat(struct grep_pat *p)
+-{
+-	switch (p->token) {
+-	case GREP_AND: fprintf(stderr, "*and*"); break;
+-	case GREP_OPEN_PAREN: fprintf(stderr, "*(*"); break;
+-	case GREP_CLOSE_PAREN: fprintf(stderr, "*)*"); break;
+-	case GREP_NOT: fprintf(stderr, "*not*"); break;
+-	case GREP_OR: fprintf(stderr, "*or*"); break;
+-
+-	case GREP_PATTERN: fprintf(stderr, "pattern"); break;
+-	case GREP_PATTERN_HEAD: fprintf(stderr, "pattern_head"); break;
+-	case GREP_PATTERN_BODY: fprintf(stderr, "pattern_body"); break;
+-	}
+-
+-	switch (p->token) {
+-	default: break;
+-	case GREP_PATTERN_HEAD:
+-		fprintf(stderr, "<head %d>", p->field); break;
+-	case GREP_PATTERN_BODY:
+-		fprintf(stderr, "<body>"); break;
+-	}
+-	switch (p->token) {
+-	default: break;
+-	case GREP_PATTERN_HEAD:
+-	case GREP_PATTERN_BODY:
+-	case GREP_PATTERN:
+-		fprintf(stderr, "%.*s", (int)p->patternlen, p->pattern);
+-		break;
+-	}
+-	fputc('\n', stderr);
+-}
+-
+-static void dump_grep_expression_1(struct grep_expr *x, int in)
+-{
+-	indent(in);
+-	switch (x->node) {
+-	case GREP_NODE_TRUE:
+-		fprintf(stderr, "true\n");
+-		break;
+-	case GREP_NODE_ATOM:
+-		dump_grep_pat(x->u.atom);
+-		break;
+-	case GREP_NODE_NOT:
+-		fprintf(stderr, "(not\n");
+-		dump_grep_expression_1(x->u.unary, in+1);
+-		indent(in);
+-		fprintf(stderr, ")\n");
+-		break;
+-	case GREP_NODE_AND:
+-		fprintf(stderr, "(and\n");
+-		dump_grep_expression_1(x->u.binary.left, in+1);
+-		dump_grep_expression_1(x->u.binary.right, in+1);
+-		indent(in);
+-		fprintf(stderr, ")\n");
+-		break;
+-	case GREP_NODE_OR:
+-		fprintf(stderr, "(or\n");
+-		dump_grep_expression_1(x->u.binary.left, in+1);
+-		dump_grep_expression_1(x->u.binary.right, in+1);
+-		indent(in);
+-		fprintf(stderr, ")\n");
+-		break;
+-	}
+-}
+-
+-static void dump_grep_expression(struct grep_opt *opt)
+-{
+-	struct grep_expr *x = opt->pattern_expression;
+-
+-	if (opt->all_match)
+-		fprintf(stderr, "[all-match]\n");
+-	dump_grep_expression_1(x, 0);
+-	fflush(NULL);
+-}
+-
+ static struct grep_expr *grep_true_expr(void)
  {
- 	close_pack_windows(p);
- 	close_pack_fd(p);
- 	close_pack_index(p);
-+	close_pack_revindex(p);
+ 	struct grep_expr *z = xcalloc(1, sizeof(*z));
+@@ -973,7 +883,7 @@ static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y
+ 	return z;
  }
  
- void close_object_store(struct raw_object_store *o)
-@@ -351,7 +361,7 @@ void close_object_store(struct raw_object_store *o)
- 
- void unlink_pack_path(const char *pack_name, int force_delete)
+-static void compile_grep_patterns_real(struct grep_opt *opt)
++void compile_grep_patterns(struct grep_opt *opt)
  {
--	static const char *exts[] = {".pack", ".idx", ".keep", ".bitmap", ".promisor"};
-+	static const char *exts[] = {".pack", ".idx", ".rev", ".keep", ".bitmap", ".promisor"};
- 	int i;
- 	struct strbuf buf = STRBUF_INIT;
- 	size_t plen;
-@@ -853,6 +863,7 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
- 	if (!strcmp(file_name, "multi-pack-index"))
+ 	struct grep_pat *p;
+ 	struct grep_expr *header_expr = prep_header_patterns(opt);
+@@ -993,7 +903,7 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
+ 
+ 	if (opt->all_match || header_expr)
+ 		opt->extended = 1;
+-	else if (!opt->extended && !opt->debug)
++	else if (!opt->extended)
  		return;
- 	if (ends_with(file_name, ".idx") ||
-+	    ends_with(file_name, ".rev") ||
- 	    ends_with(file_name, ".pack") ||
- 	    ends_with(file_name, ".bitmap") ||
- 	    ends_with(file_name, ".keep") ||
-diff --git a/packfile.h b/packfile.h
-index a58fc738e0..4cfec9e8d3 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -90,6 +90,7 @@ uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
  
- unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
- void close_pack_windows(struct packed_git *);
-+void close_pack_revindex(struct packed_git *);
- void close_pack(struct packed_git *);
- void close_object_store(struct raw_object_store *o);
- void unuse_pack(struct pack_window **);
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 42ed4db5d3..b8d880e362 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -185,9 +185,11 @@ static int pack_copy_priority(const char *name)
- 		return 1;
- 	if (ends_with(name, ".pack"))
- 		return 2;
--	if (ends_with(name, ".idx"))
-+	if (ends_with(name, ".rev"))
- 		return 3;
--	return 4;
-+	if (ends_with(name, ".idx"))
-+		return 4;
-+	return 5;
+ 	p = opt->pattern_list;
+@@ -1016,13 +926,6 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
+ 	opt->all_match = 1;
  }
  
- static int pack_copy_cmp(const char *a, const char *b)
+-void compile_grep_patterns(struct grep_opt *opt)
+-{
+-	compile_grep_patterns_real(opt);
+-	if (opt->debug)
+-		dump_grep_expression(opt);
+-}
+-
+ static void free_pattern_expr(struct grep_expr *x)
+ {
+ 	switch (x->node) {
+diff --git a/grep.h b/grep.h
+index b5c4e223a8f..5248c6ef7ea 100644
+--- a/grep.h
++++ b/grep.h
+@@ -136,7 +136,6 @@ struct grep_opt {
+ 	int word_regexp;
+ 	int fixed;
+ 	int all_match;
+-	int debug;
+ #define GREP_BINARY_DEFAULT	0
+ #define GREP_BINARY_NOMATCH	1
+ #define GREP_BINARY_TEXT	2
+diff --git a/revision.c b/revision.c
+index 1bb590ece78..657e5502532 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2489,8 +2489,6 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if ((argcount = parse_long_opt("grep", argv, &optarg))) {
+ 		add_message_grep(revs, optarg);
+ 		return argcount;
+-	} else if (!strcmp(arg, "--grep-debug")) {
+-		revs->grep_filter.debug = 1;
+ 	} else if (!strcmp(arg, "--basic-regexp")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_BRE;
+ 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
 -- 
-2.30.0.138.g6d7191ea01
+2.29.2.222.g5d2a92d10f8
 
