@@ -2,191 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08549C433E0
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C1FBC433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:28:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBBA32083E
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:26:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FA792083E
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 21:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732666AbhAYV0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 16:26:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50950 "EHLO
+        id S1732631AbhAYV2p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 16:28:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732340AbhAYV0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 16:26:10 -0500
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E2ADC061573
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 13:25:30 -0800 (PST)
-Received: from ptx.hi.pengutronix.de ([2001:67c:670:100:1d::c0])
-        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1l49MW-0008Qz-P6; Mon, 25 Jan 2021 22:25:28 +0100
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.92)
-        (envelope-from <ukl@pengutronix.de>)
-        id 1l49MU-0006jb-20; Mon, 25 Jan 2021 22:25:26 +0100
-Date:   Mon, 25 Jan 2021 22:25:25 +0100
-From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/3] range-diff/format-patch: refactor check for
- commit range
-Message-ID: <20210125212525.dpnsj7ejngvpkd5y@pengutronix.de>
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
- <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
- <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
- <xmqqzh107m5d.fsf@gitster.c.googlers.com>
- <20210125073508.l7ksohyfhcogch4x@pengutronix.de>
- <xmqqpn1syg3s.fsf@gitster.c.googlers.com>
+        with ESMTP id S1732634AbhAYVTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 16:19:39 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9E1C061574
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 13:18:59 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 36so14221711otp.2
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 13:18:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8u8RWwppm3YVsPYtQoPpgFrbpZR7YxE6sS9wbRW2euI=;
+        b=tBX+AakTHEYe3JkuQLHOw5ktIZtKVeNuACmwDxz2/gmhK1KM6y9HAb6djApISBl+U0
+         ZDYGP9mQTHzFeuuIKzztmFS29msPyL7+/6Q05/7jCXGejdgm4x9n4suqRYr4K2dkMb45
+         DGaUWK0PG5gN3fl7mgHSHtYOuWV4TIOb9AT/dzu4Yk/OIdoIUXp6BAPVw4fGQ4tvWOzf
+         3RB3Csi6hjBssD2jDcFFubmnd0h37ptnA+tue+0+DTjHKC1WfzAfJJOcWPAxSy+epWzJ
+         gjQtQzB+aCW/OSWU46crIpjVEePI+gUYcqBabgyw8SUnPHSqYBXIR3tHeXGL8n2XOMRY
+         6JCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8u8RWwppm3YVsPYtQoPpgFrbpZR7YxE6sS9wbRW2euI=;
+        b=BabMowVugZ1vNKi61bSYSA0dO/wo+9cseGkKBm0jVOM5ZGo79HA/jv1fqQP5yIBPUn
+         aeZsFxcywn/pfFr9uElS5UsuvU2FIUjXsdxNm3GgBkLh6LeklYl3G5fGi9/YXSBJf/5+
+         NIzvP41anRsQx764cLHdBYgEx7atiIlrzuhtjyWmX+eV2SI+MQCqq1Ioj1GzIfRguEYi
+         M/BTLiSd9nu6sWWP8aYTf3J6TpzHp9dGG/OtKbTU+8ImlAzYD41lvRcWcf6fwV92EL7z
+         NgtfdNWByc9rXHWIfwVSPmq8JU0UqhbRkYH1PxvJ1K7WF4SoiRzcAYSPFCTvwSHFcGl9
+         WKYg==
+X-Gm-Message-State: AOAM530JzIQZZs7ixAks+3HN2jaUXbGlNTY73EQwJhT+p83PhCB92DbN
+        GOzegZE32wYYlU/+mAKPJpM=
+X-Google-Smtp-Source: ABdhPJxmjy7vjDgdqt5yf3Jo1qNmbzVZRK34oK3qhgsyPxcCEJnLjq6L9D9g3TgBleDwrzVhAcpVUQ==
+X-Received: by 2002:a05:6830:20d8:: with SMTP id z24mr1760929otq.126.1611609538371;
+        Mon, 25 Jan 2021 13:18:58 -0800 (PST)
+Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:518:5e71:3200:18f])
+        by smtp.gmail.com with ESMTPSA id p25sm3771107oip.14.2021.01.25.13.18.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Jan 2021 13:18:57 -0800 (PST)
+Subject: Re: [PATCH 00/27] [RFC] Sparse Index
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, peff@peff.net,
+        jrnieder@gmail.com, sunshine@sunshineco.com, pclouds@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
+ <xmqqh7n4ydyw.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ef05a917-e3ec-7099-bc44-e53e31d63a8e@gmail.com>
+Date:   Mon, 25 Jan 2021 16:18:56 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oxlh2ygc52upvp5w"
-Content-Disposition: inline
-In-Reply-To: <xmqqpn1syg3s.fsf@gitster.c.googlers.com>
-X-SA-Exim-Connect-IP: 2001:67c:670:100:1d::c0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <xmqqh7n4ydyw.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---oxlh2ygc52upvp5w
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello Junio,
+On 1/25/21 3:10 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> This RFC proposes an update to the index formats to allow "sparse directory
+>> entries". These entries correspond to directories that are completely
+>> excluded from the sparse checkout definition. We can detect that a directory
+>> is excluded when using "cone mode" patterns.
+> 
+> Yay.
+> 
+>> Since having directory entries is a radical departure from the existing
+>> index format, a new extension "extensions.sparseIndex" is added. Using a
+>> sparse index should cause incompatible tools to fail because they do not
+>> understand this extension.
+> 
+> Safety is good, but because the index is purely a local matter, we
+> do not have to be so careful as updating the network protocols or
+> pack/object formats.
+> 
+> I think the use of "extensions.*" mechanism to render the repository
+> that uses the new feature unusable by older Git is safe enough, but
+> it may be too draconian.  For example, when things go wrong, don't
+> you want to "fetch"/"clone" from it into another repository to first
+> save the objects and refs?  You do not need a version of the index
+> file you understand in order to do that.
+> 
+> The index format has a mechanism to make older versions of Git bail
+> when it encounters a file that uses newer feature that they do not
+> understand.  Perhaps using it is sufficient instead?
 
-On Mon, Jan 25, 2021 at 11:24:39AM -0800, Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de> writes:
->=20
-> >> > In preparation for allowing more sophisticated ways to specify commit
-> >> > ranges, let's refactor the check into its own function.
-> >>=20
-> >> I think the sharing between the two makes sense, but the helper
-> >> function should make it clear in its name that this is "the kind of
-> >> commit range range-diff wants to take".  Among the commit range "git
-> >> log" and friends can take, range-diff can take only a subset of it,
-> >> and only a subset of it is meaningful to range-diff (e.g. HEAD^@ is
-> >> still a commit range you can give to "git log", but it would not
-> >> make much sense to give it to range-diff).
-> >
-> > Does it make so little sense to forbid passing HEAD^@ as a range to
-> > range-diff? I can imagine situations where is would make sense, e.g. I
-> > often create customer patch stacks from a set of topic branches using
-> > octopus merge. To compare two of these ^@ might be handy.
->=20
-> You can discuss for each individual syntax of a single-token range
-> and decide which ones are and are not suitable for range-diff, but I
-> suspect the reason behind this business started with dot-dot is to
-> perform a superficial "sanity check" at the command line parser
-> level before passing them to the revision machinery, and having to
-> deal with potential errors and/or having to compare unreasonably
-> large segments of history that the user did not intend.
->=20
-> Also I first thought that the command changes the behaviour, given
-> two tokens, depending on the shape of these two tokens (i.e. when
-> they satisfy the "is-range?" we are discussing, they are taken as
-> two ranges to be compared, and otherwise does something else), but
-> after revisiting the code and "git help range-diff", it always does
-> one thing when given=20
->=20
->  (1) one arg: gives a symmetric range and what is to be compared
->      is its left and right half,
->=20
->  (2) two args: each is meant to name a set of commits and these two
->      are to be compared) or
->=20
->  (3) three args: each is meant to name a commit, and the arg1..arg2
->      and arg1..arg3 are the ranges to be compared.
->=20
-> so ...
->=20
-> > My POV is that if it's easy to use the same function (and so the same
-> > set of range descriptors) for git log and git range-diff then do so.
-> > This yields a consistent behaviour which is IMHO better than preventing
-> > people to do things that are considered strange today.
->=20
-> ... I am OK with that point of view.  It certainly is simpler to
-> explain to end users.
+There are interesting subtleties with the differences between index
+formats 2, 3, and 4 that are worth keeping around. Perhaps the
+extension could be a mechanism for allowing sparse directories in
+those versions, but then a future "index version 5" includes sparse
+directories without the extension.
 
-It seems you understood my argument :-)
+I could spend time working on such an index v5 in parallel with
+the updates to Git commands to make them sparse aware. The logic
+from patches 1-14 in this series will be required before that could
+begin.
 
-> Having said that, it would make it much harder to implement
-> efficiently, though.  For example, when your user says
->=20
-> 	git range-diff A B
->=20
-> to compare "git log A" (all the way down to the root) and "git log
-> B" (likewise), you'd certainly optimize the older common part of the
-> history out, essentially turning it into
->=20
-> 	git range-diff A..B B..A
->=20
-> or its moral equivalent
->=20
-> 	git range-diff A...B
->=20
-> But you cannot apply such an optimization blindly.  When the user
-> gives A..B and B..A as two args, you somehow need to notice that=20
-> you shouldn't rewrite it to "A..B...B..A", and for that, you'd still
-> need some "parsing" of these args.
-
-I agree that for a long history
-
-	git range-diff A B
-
-is an expensive request and I wouldn't invest too many cycles optimizing
-it. (And if I'd optimize it, it wouldn't be done using textual
-combination of the two strings but by checking if the two ranges
-intersect. This way something like
-
-	git range-diff v4.0..v4.6-rc1 v4.0..v4.5.6
-
-and maybe even
-
-	git range-diff v4.0..v4.6-rc1 v4.0-rc1..v4.5.6
-
-would benefit, too. But note I'm not (anymore) familiar with the git
-source code, so I don't know if this is easy/sensible to do and I'm just
-looking at the problem from an architectural and theoretical POV.)
-
-> So, I dunno.  Limiting the second form to only forms that the
-> implementation does not have to do such optimization would certainly
-> make it simpler for Dscho to implement ;-)
-
-I don't want to make it more complicated for Dscho, I'm happy if I can
-in the near future use range-diff with $rev1^! $ref2^! . So feel free to
-ignore me.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---oxlh2ygc52upvp5w
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEfnIqFpAYrP8+dKQLwfwUeK3K7AkFAmAPN0IACgkQwfwUeK3K
-7AkT2Qf/U0hjauGpubVi6j2+BMClfZDlVRMYx+9TV+KWKoSTvqbNC1BngzO/fBmS
-eBIIpS8u4jCMKKfxRRW1vl5OW+b/tYRAME3RYO2shUroXVeUWrY4KaIwwBxgcHOR
-4Rw0e2Pi7vkK8Zrd6FWZCYVTzs9YOXfgBRJJf9OBzSGsjV66qkonVKY1SCwfIur1
-Za8+Abw8VTg4syBWwcuKvnbeyYyJuvCKE4vi17I6gqEppNfxZ9CJEe0Vo3QM7zKy
-mEnznudTd2fF2NyIuz5EdwUlStket/1PsT9m8dMPyfqnpTQUjTJ6x+/k4R0t3Sgk
-U5+1znHBEsUP1/dfAcA+reDHHyfPgw==
-=urxk
------END PGP SIGNATURE-----
-
---oxlh2ygc52upvp5w--
+Thanks,
+-Stolee
