@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25180C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4177DC433E0
 	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:45:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1A1E229EF
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:45:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B71C22AAC
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 23:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732271AbhAYXi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 18:38:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51000 "EHLO
+        id S1732512AbhAYXoj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 18:44:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732875AbhAYXiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 18:38:02 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C1EC0613D6
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:21 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id v3so11063676qtw.4
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:21 -0800 (PST)
+        with ESMTP id S1732598AbhAYXi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 18:38:26 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4CBC061786
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:29 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id n3so3553810qvf.11
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 15:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=E/+wS2YlSMS+3dDpd4JqMbC8est/am02ZO7KrV7enZw=;
-        b=ceYEr1jsHhyCwZynq2PI041JAhBUjrk5t2i/89u9pHvAtfZtvLYPEEdBWG8S0dYGAJ
-         Q8+8JALFLcU4pEYUIgrV7r+SPxdmHmCRpMJP3Xweq6YNK0WOeBzXpkmwQWSBOfKnDOhM
-         tDjA79+eIJEo4a795eBM2ogFsEN1J8jr+nZGCq38b4aoPfJWTrSdmuklOLU9k4ScGVIF
-         qwOjjAz/meMutZzx3RTAN2K5rSp3Xu7ONTtC+AGYaVSi+cQ5u/KMlvVhT5/snsqYSTzd
-         CFHqfTtCxo7wLnJ8/cw29Ikhd9JvqFqlWUii/6n0monvD2etdOlstMSOWNb/9FFtrfdU
-         gQCg==
+        bh=uWdynwCJlyn/MYmYko1uRpMqZ9bIWrJSoPeUke23b88=;
+        b=OnXTDip0epDHb89siwtVcnPkqjcC4q+ztTPn3RA5IczqjCz61TYIP0jwQI+hQ0ABzF
+         IRWX6+iO5hEe85eM4ckkqMQET8UyT74AuH6cXhXXdC3IH0ggVDlv3OeWoL0NXmeEpqBn
+         sKQ6h81soLWPdOotQvkEFDkJ8zmrOxyML31hjbIliYsyT6pOvuqYDuYUuq2z3H4Ca94L
+         uw31fG7MYJdJ3qEp2uYmKE0SvD/lNprl1xEIlglki68tpHFctLxi9ETrlXhvfuy6WguT
+         4nYKEl66AdohMcMcUe8W/HvICpnXfUIlC9de5+BXAkBQM54J0qnjZvyW80yHQSnijmWf
+         TGYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=E/+wS2YlSMS+3dDpd4JqMbC8est/am02ZO7KrV7enZw=;
-        b=tvRtPcp5EQUDkuOOTBPOMdZ4Cwf++tpkWA6scFoFx0336JZ2gx7VAOmKpUsQu526Sl
-         vmE4Tgy5YxuBCdrf4Dmr3oNkMTyOS33pnVixQ1atooA/zkAb0J71bo7hRx3oXTS6bQ4o
-         C+ZTp7qZl7Q3c9SUDqK4ZuU6hkqXGYMq4QQ0fecAXi9giRRO2LLwFo8FAwhi4vrt2DM7
-         pOpIREXzCKVcep0IlirlRElJF+2zztWarJnlFBfKDQvUcqdqHdgCriHQwtIl8b7w8ynF
-         ADwxKZCrTf/ea2dH/aQUbug7YYckEADenF24M9nsw2TXQMkWs8mAthw6QDqXGhsoYvXG
-         Wtqg==
-X-Gm-Message-State: AOAM5326iIvFQB+CpAE+NqdL5Xi2khWq4wnoEUJPIqzKuIIG7E1JLEiw
-        sSOGzoYFQfTesu/nEbWyyQb4k9MSKp62/A==
-X-Google-Smtp-Source: ABdhPJzEuN9k3Sr3ALLaWodBeLjmXkMjxlzAkgH/ugXd/ZLz5eLBbPdMbloxK0AgG6GPXOId8C8Snw==
-X-Received: by 2002:ac8:dc5:: with SMTP id t5mr2985819qti.246.1611617840778;
-        Mon, 25 Jan 2021 15:37:20 -0800 (PST)
+        bh=uWdynwCJlyn/MYmYko1uRpMqZ9bIWrJSoPeUke23b88=;
+        b=Wpx/2XvUumF0IEQraPcoIDy9u5Ug2Q5Ex7zY9lyB0Qx8wP87WVEAbH/qeRjJwfWvsk
+         v87EzmmEGetbq/XEOhROfpCR0jsd82UitAEOrkPv7Mosgq6oYBuWBhJx2z4zzxl+/aFx
+         gdI4RZ5iOAV6mYzu8qyk8acj+Alkf+HMzuMxqB1+XA3Hq/sJ4lcXZQQA43qdsh4BaEW5
+         839TSmnbTBBmbfZAo8HEsIOh3Vr3p/rHM5uBzVO7shL9ds4pewHZ+JcklNOghxQb26kP
+         90DK1kn6ep+RQWxVQ+siZTUk+9UW/pftEihrbZmFsOXuB2Plja8BZgeV3XQuHp+fFM1o
+         jb/w==
+X-Gm-Message-State: AOAM532qVFbOk/DF4Af3haO+ahAbFbFdNiR1iwttOiWrAKVEZaYJ3GQB
+        rDsbXRFLLuu8tOj5bBx6N0Cg7PWBsQ/cvQ==
+X-Google-Smtp-Source: ABdhPJzzCvPPR7JkrMqI1O2obDmSdRuiGH87fbKw1xciBXaL2gr548dZ8ktKsYlZIuDSEns1JdlObA==
+X-Received: by 2002:ad4:58f1:: with SMTP id di17mr3230514qvb.57.1611617848619;
+        Mon, 25 Jan 2021 15:37:28 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:5e9f:a2e5:e7ac:394d])
-        by smtp.gmail.com with ESMTPSA id y25sm12952057qky.14.2021.01.25.15.37.19
+        by smtp.gmail.com with ESMTPSA id e1sm13244950qkd.135.2021.01.25.15.37.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 15:37:20 -0800 (PST)
-Date:   Mon, 25 Jan 2021 18:37:18 -0500
+        Mon, 25 Jan 2021 15:37:28 -0800 (PST)
+Date:   Mon, 25 Jan 2021 18:37:26 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, jrnieder@gmail.com,
         peff@peff.net
-Subject: [PATCH v3 02/10] pack-write.c: prepare to write 'pack-*.rev' files
-Message-ID: <5efc87074246b8d2038569b13045dbe506cc24fa.1611617820.git.me@ttaylorr.com>
+Subject: [PATCH v3 04/10] builtin/index-pack.c: write reverse indexes
+Message-ID: <a8ee59fccf678bd1bf57930cd6395f36273f74d6.1611617820.git.me@ttaylorr.com>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <cover.1611617819.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,204 +72,287 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch prepares for callers to be able to write reverse index files
-to disk.
-
-It adds the necessary machinery to write a format-compliant .rev file
-from within 'write_rev_file()', which is called from
-'finish_tmp_packfile()'.
-
-Similar to the process by which the reverse index is computed in memory,
-these new paths also have to sort a list of objects by their offsets
-within a packfile. These new paths use a qsort() (as opposed to a radix
-sort), since our specialized radix sort requires a full revindex_entry
-struct per object, which is more memory than we need to allocate.
-
-The qsort is obviously slower, but the theoretical slowdown would
-require a repository with a large amount of objects, likely implying
-that the time spent in, say, pack-objects during a repack would dominate
-the overall runtime.
+Teach 'git index-pack' to optionally write and verify reverse index with
+'--[no-]rev-index', as well as respecting the 'pack.writeReverseIndex'
+configuration option.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-write.c | 120 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- pack.h       |   4 ++
- 2 files changed, 123 insertions(+), 1 deletion(-)
+ Documentation/git-index-pack.txt | 18 +++++---
+ builtin/index-pack.c             | 50 ++++++++++++++++++++--
+ t/t5325-reverse-index.sh         | 71 ++++++++++++++++++++++++++++++++
+ 3 files changed, 131 insertions(+), 8 deletions(-)
+ create mode 100755 t/t5325-reverse-index.sh
 
-diff --git a/pack-write.c b/pack-write.c
-index e9bb3fd949..680c36755d 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -167,6 +167,113 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 	return index_name;
- }
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index af0c26232c..69ba904d44 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -9,17 +9,18 @@ git-index-pack - Build pack index file for an existing packed archive
+ SYNOPSIS
+ --------
+ [verse]
+-'git index-pack' [-v] [-o <index-file>] <pack-file>
++'git index-pack' [-v] [-o <index-file>] [--[no-]rev-index] <pack-file>
+ 'git index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>]
+-                 [<pack-file>]
++		  [--[no-]rev-index] [<pack-file>]
  
-+static int pack_order_cmp(const void *va, const void *vb, void *ctx)
-+{
-+	struct pack_idx_entry **objects = ctx;
+ 
+ DESCRIPTION
+ -----------
+ Reads a packed archive (.pack) from the specified file, and
+-builds a pack index file (.idx) for it.  The packed archive
+-together with the pack index can then be placed in the
+-objects/pack/ directory of a Git repository.
++builds a pack index file (.idx) for it. Optionally writes a
++reverse-index (.rev) for the specified pack. The packed
++archive together with the pack index can then be placed in
++the objects/pack/ directory of a Git repository.
+ 
+ 
+ OPTIONS
+@@ -35,6 +36,13 @@ OPTIONS
+ 	fails if the name of packed archive does not end
+ 	with .pack).
+ 
++--[no-]rev-index::
++	When this flag is provided, generate a reverse index
++	(a `.rev` file) corresponding to the given pack. If
++	`--verify` is given, ensure that the existing
++	reverse index is correct. Takes precedence over
++	`pack.writeReverseIndex`.
 +
-+	off_t oa = objects[*(uint32_t*)va]->offset;
-+	off_t ob = objects[*(uint32_t*)vb]->offset;
-+
-+	if (oa < ob)
-+		return -1;
-+	if (oa > ob)
-+		return 1;
-+	return 0;
-+}
-+
-+static void write_rev_header(struct hashfile *f)
-+{
-+	uint32_t oid_version;
-+	switch (hash_algo_by_ptr(the_hash_algo)) {
-+	case GIT_HASH_SHA1:
-+		oid_version = 1;
-+		break;
-+	case GIT_HASH_SHA256:
-+		oid_version = 2;
-+		break;
-+	default:
-+		die("write_rev_header: unknown hash version");
+ --stdin::
+ 	When this flag is provided, the pack is read from stdin
+ 	instead and a copy is then written to <pack-file>. If
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index c758f3b8e9..d5cd665b98 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -17,7 +17,7 @@
+ #include "promisor-remote.h"
+ 
+ static const char index_pack_usage[] =
+-"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
++"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+ 
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+@@ -1484,12 +1484,14 @@ static void write_special_file(const char *suffix, const char *msg,
+ 
+ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		  const char *final_index_name, const char *curr_index_name,
++		  const char *final_rev_index_name, const char *curr_rev_index_name,
+ 		  const char *keep_msg, const char *promisor_msg,
+ 		  unsigned char *hash)
+ {
+ 	const char *report = "pack";
+ 	struct strbuf pack_name = STRBUF_INIT;
+ 	struct strbuf index_name = STRBUF_INIT;
++	struct strbuf rev_index_name = STRBUF_INIT;
+ 	int err;
+ 
+ 	if (!from_stdin) {
+@@ -1524,6 +1526,16 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 	} else
+ 		chmod(final_index_name, 0444);
+ 
++	if (curr_rev_index_name) {
++		if (final_rev_index_name != curr_rev_index_name) {
++			if (!final_rev_index_name)
++				final_rev_index_name = odb_pack_name(&rev_index_name, hash, "rev");
++			if (finalize_object_file(curr_rev_index_name, final_rev_index_name))
++				die(_("cannot store reverse index file"));
++		} else
++			chmod(final_rev_index_name, 0444);
 +	}
 +
-+	hashwrite_be32(f, RIDX_SIGNATURE);
-+	hashwrite_be32(f, RIDX_VERSION);
-+	hashwrite_be32(f, oid_version);
-+}
-+
-+static void write_rev_index_positions(struct hashfile *f,
-+				      struct pack_idx_entry **objects,
-+				      uint32_t nr_objects)
-+{
-+	uint32_t *pack_order;
-+	uint32_t i;
-+
-+	ALLOC_ARRAY(pack_order, nr_objects);
-+	for (i = 0; i < nr_objects; i++)
-+		pack_order[i] = i;
-+	QSORT_S(pack_order, nr_objects, pack_order_cmp, objects);
-+
-+	for (i = 0; i < nr_objects; i++)
-+		hashwrite_be32(f, pack_order[i]);
-+
-+	free(pack_order);
-+}
-+
-+static void write_rev_trailer(struct hashfile *f, const unsigned char *hash)
-+{
-+	hashwrite(f, hash, the_hash_algo->rawsz);
-+}
-+
-+const char *write_rev_file(const char *rev_name,
-+			   struct pack_idx_entry **objects,
-+			   uint32_t nr_objects,
-+			   const unsigned char *hash,
-+			   unsigned flags)
-+{
-+	struct hashfile *f;
-+	int fd;
-+
-+	if ((flags & WRITE_REV) && (flags & WRITE_REV_VERIFY))
-+		die(_("cannot both write and verify reverse index"));
-+
-+	if (flags & WRITE_REV) {
-+		if (!rev_name) {
-+			struct strbuf tmp_file = STRBUF_INIT;
-+			fd = odb_mkstemp(&tmp_file, "pack/tmp_rev_XXXXXX");
-+			rev_name = strbuf_detach(&tmp_file, NULL);
-+		} else {
-+			unlink(rev_name);
-+			fd = open(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
-+			if (fd < 0)
-+				die_errno("unable to create '%s'", rev_name);
-+		}
-+		f = hashfd(fd, rev_name);
-+	} else if (flags & WRITE_REV_VERIFY) {
-+		struct stat statbuf;
-+		if (stat(rev_name, &statbuf)) {
-+			if (errno == ENOENT) {
-+				/* .rev files are optional */
-+				return NULL;
-+			} else
-+				die_errno(_("could not stat: %s"), rev_name);
-+		}
-+		f = hashfd_check(rev_name);
-+	} else
-+		return NULL;
-+
-+	write_rev_header(f);
-+
-+	write_rev_index_positions(f, objects, nr_objects);
-+	write_rev_trailer(f, hash);
-+
-+	if (rev_name && adjust_shared_perm(rev_name) < 0)
-+		die(_("failed to make %s readable"), rev_name);
-+
-+	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_CLOSE |
-+				    ((flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
-+
-+	return rev_name;
-+}
-+
- off_t write_pack_header(struct hashfile *f, uint32_t nr_entries)
- {
- 	struct pack_header hdr;
-@@ -342,7 +449,7 @@ void finish_tmp_packfile(struct strbuf *name_buffer,
- 			 struct pack_idx_option *pack_idx_opts,
- 			 unsigned char hash[])
- {
--	const char *idx_tmp_name;
-+	const char *idx_tmp_name, *rev_tmp_name = NULL;
- 	int basename_len = name_buffer->len;
+ 	if (do_fsck_object) {
+ 		struct packed_git *p;
+ 		p = add_packed_git(final_index_name, strlen(final_index_name), 0);
+@@ -1553,6 +1565,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		}
+ 	}
  
- 	if (adjust_shared_perm(pack_tmp_name))
-@@ -353,6 +460,9 @@ void finish_tmp_packfile(struct strbuf *name_buffer,
- 	if (adjust_shared_perm(idx_tmp_name))
- 		die_errno("unable to make temporary index file readable");
- 
-+	rev_tmp_name = write_rev_file(NULL, written_list, nr_written, hash,
-+				      pack_idx_opts->flags);
-+
- 	strbuf_addf(name_buffer, "%s.pack", hash_to_hex(hash));
- 
- 	if (rename(pack_tmp_name, name_buffer->buf))
-@@ -366,6 +476,14 @@ void finish_tmp_packfile(struct strbuf *name_buffer,
- 
- 	strbuf_setlen(name_buffer, basename_len);
- 
-+	if (rev_tmp_name) {
-+		strbuf_addf(name_buffer, "%s.rev", hash_to_hex(hash));
-+		if (rename(rev_tmp_name, name_buffer->buf))
-+			die_errno("unable to rename temporary reverse-index file");
++	strbuf_release(&rev_index_name);
+ 	strbuf_release(&index_name);
+ 	strbuf_release(&pack_name);
+ }
+@@ -1578,6 +1591,12 @@ static int git_index_pack_config(const char *k, const char *v, void *cb)
+ 		}
+ 		return 0;
+ 	}
++	if (!strcmp(k, "pack.writereverseindex")) {
++		if (git_config_bool(k, v))
++			opts->flags |= WRITE_REV;
++		else
++			opts->flags &= ~WRITE_REV;
 +	}
-+
-+	strbuf_setlen(name_buffer, basename_len);
-+
- 	free((void *)idx_tmp_name);
+ 	return git_default_config(k, v, cb);
  }
  
-diff --git a/pack.h b/pack.h
-index 9ae640f417..afdcf8f5c7 100644
---- a/pack.h
-+++ b/pack.h
-@@ -42,6 +42,8 @@ struct pack_idx_option {
- 	/* flag bits */
- #define WRITE_IDX_VERIFY 01 /* verify only, do not write the idx file */
- #define WRITE_IDX_STRICT 02
-+#define WRITE_REV 04
-+#define WRITE_REV_VERIFY 010
+@@ -1695,12 +1714,14 @@ static void show_pack_info(int stat_only)
  
- 	uint32_t version;
- 	uint32_t off32_limit;
-@@ -91,6 +93,8 @@ struct ref;
+ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ {
+-	int i, fix_thin_pack = 0, verify = 0, stat_only = 0;
++	int i, fix_thin_pack = 0, verify = 0, stat_only = 0, rev_index;
+ 	const char *curr_index;
+-	const char *index_name = NULL, *pack_name = NULL;
++	const char *curr_rev_index = NULL;
++	const char *index_name = NULL, *pack_name = NULL, *rev_index_name = NULL;
+ 	const char *keep_msg = NULL;
+ 	const char *promisor_msg = NULL;
+ 	struct strbuf index_name_buf = STRBUF_INIT;
++	struct strbuf rev_index_name_buf = STRBUF_INIT;
+ 	struct pack_idx_entry **idx_objects;
+ 	struct pack_idx_option opts;
+ 	unsigned char pack_hash[GIT_MAX_RAWSZ];
+@@ -1727,6 +1748,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	if (prefix && chdir(prefix))
+ 		die(_("Cannot come back to cwd"));
  
- void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
- 
-+const char *write_rev_file(const char *rev_name, struct pack_idx_entry **objects, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
++	rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
 +
- /*
-  * The "hdr" output buffer should be at least this big, which will handle sizes
-  * up to 2^67.
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+@@ -1805,6 +1828,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 				if (hash_algo == GIT_HASH_UNKNOWN)
+ 					die(_("unknown hash algorithm '%s'"), arg);
+ 				repo_set_hash_algo(the_repository, hash_algo);
++			} else if (!strcmp(arg, "--rev-index")) {
++				rev_index = 1;
++			} else if (!strcmp(arg, "--no-rev-index")) {
++				rev_index = 0;
+ 			} else
+ 				usage(index_pack_usage);
+ 			continue;
+@@ -1826,6 +1853,15 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	if (!index_name && pack_name)
+ 		index_name = derive_filename(pack_name, "pack", "idx", &index_name_buf);
+ 
++	opts.flags &= ~(WRITE_REV | WRITE_REV_VERIFY);
++	if (rev_index) {
++		opts.flags |= verify ? WRITE_REV_VERIFY : WRITE_REV;
++		if (index_name)
++			rev_index_name = derive_filename(index_name,
++							 "idx", "rev",
++							 &rev_index_name_buf);
++	}
++
+ 	if (verify) {
+ 		if (!index_name)
+ 			die(_("--verify with no packfile name given"));
+@@ -1878,11 +1914,16 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < nr_objects; i++)
+ 		idx_objects[i] = &objects[i].idx;
+ 	curr_index = write_idx_file(index_name, idx_objects, nr_objects, &opts, pack_hash);
++	if (rev_index)
++		curr_rev_index = write_rev_file(rev_index_name, idx_objects,
++						nr_objects, pack_hash,
++						opts.flags);
+ 	free(idx_objects);
+ 
+ 	if (!verify)
+ 		final(pack_name, curr_pack,
+ 		      index_name, curr_index,
++		      rev_index_name, curr_rev_index,
+ 		      keep_msg, promisor_msg,
+ 		      pack_hash);
+ 	else
+@@ -1893,10 +1934,13 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 
+ 	free(objects);
+ 	strbuf_release(&index_name_buf);
++	strbuf_release(&rev_index_name_buf);
+ 	if (pack_name == NULL)
+ 		free((void *) curr_pack);
+ 	if (index_name == NULL)
+ 		free((void *) curr_index);
++	if (rev_index_name == NULL)
++		free((void *) curr_rev_index);
+ 
+ 	/*
+ 	 * Let the caller know this pack is not self contained
+diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
+new file mode 100755
+index 0000000000..2dae213126
+--- /dev/null
++++ b/t/t5325-reverse-index.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++test_description='on-disk reverse index'
++. ./test-lib.sh
++
++packdir=.git/objects/pack
++
++test_expect_success 'setup' '
++	test_commit base &&
++
++	pack=$(git pack-objects --all $packdir/pack) &&
++	rev=$packdir/pack-$pack.rev &&
++
++	test_path_is_missing $rev
++'
++
++test_index_pack () {
++	rm -f $rev &&
++	conf=$1 &&
++	shift &&
++	# remove the index since Windows won't overwrite an existing file
++	rm $packdir/pack-$pack.idx &&
++	git -c pack.writeReverseIndex=$conf index-pack "$@" \
++		$packdir/pack-$pack.pack
++}
++
++test_expect_success 'index-pack with pack.writeReverseIndex' '
++	test_index_pack "" &&
++	test_path_is_missing $rev &&
++
++	test_index_pack false &&
++	test_path_is_missing $rev &&
++
++	test_index_pack true &&
++	test_path_is_file $rev
++'
++
++test_expect_success 'index-pack with --[no-]rev-index' '
++	for conf in "" true false
++	do
++		test_index_pack "$conf" --rev-index &&
++		test_path_exists $rev &&
++
++		test_index_pack "$conf" --no-rev-index &&
++		test_path_is_missing $rev
++	done
++'
++
++test_expect_success 'index-pack can verify reverse indexes' '
++	test_when_finished "rm -f $rev" &&
++	test_index_pack true &&
++
++	test_path_is_file $rev &&
++	git index-pack --rev-index --verify $packdir/pack-$pack.pack &&
++
++	# Intentionally corrupt the reverse index.
++	chmod u+w $rev &&
++	printf "xxxx" | dd of=$rev bs=1 count=4 conv=notrunc &&
++
++	test_must_fail git index-pack --rev-index --verify \
++		$packdir/pack-$pack.pack 2>err &&
++	grep "validation error" err
++'
++
++test_expect_success 'index-pack infers reverse index name with -o' '
++	git index-pack --rev-index -o other.idx $packdir/pack-$pack.pack &&
++	test_path_is_file other.idx &&
++	test_path_is_file other.rev
++'
++
++test_done
 -- 
 2.30.0.138.g6d7191ea01
 
