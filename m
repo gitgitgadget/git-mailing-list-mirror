@@ -2,85 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B7CC433E0
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 01:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C49CC433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9485E22DD6
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 01:53:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2680422E03
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 02:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731683AbhAYTfl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 14:35:41 -0500
-Received: from siwi.pair.com ([209.68.5.199]:19199 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731793AbhAYTfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:35:17 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 008963F4114;
-        Mon, 25 Jan 2021 14:34:28 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C926F3F4113;
-        Mon, 25 Jan 2021 14:34:27 -0500 (EST)
-Subject: Re: [PATCH 01/10] pkt-line: use stack rather than static buffer in
- packet_write_gently()
-To:     Jeff King <peff@peff.net>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
- <1155a45cf64afb237204429cd4ff2e74f5f7602a.1610465492.git.gitgitgadget@gmail.com>
- <X/71qByO5jSceIFn@coredump.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <04f62d1a-42bb-cc45-0e05-a00bfd5eceba@jeffhostetler.com>
-Date:   Mon, 25 Jan 2021 14:34:27 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S1729437AbhAYOYV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 09:24:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43300 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729395AbhAYOWk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 09:22:40 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA6EC061574
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 06:22:00 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id c12so9739048qtv.5
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 06:22:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=sZAtncR05zWLLHoaHqVL3VjYnxwphczznb3KhlHmznE=;
+        b=2JWFus56hc7efQUGjqTs9oY9BC7JmyNBn/WaB973zuSrS2NKTt8MOcWalNz8FXZRKt
+         aMYidy2NXSYOvzfN3IQGPo9HJhXUnEXgjtPgcUv1PhdAamE2MXq1XQm66zoFaAHubwdg
+         duUBfj5cdsCONq1B2VVDBBOrMAND1utpj40sN5sCJu44BF0NBhEjwxykbQ3xXec06oOo
+         GS7HBqL2aVsnXviTiTt2ZGzLpljwAy0qtdN/L2njDqFi2ZOmRSmBCcETzKKOw5ayffE8
+         gna0mfP0KB6/r15Qzm9KPzfgeva31j4t72YuAOtOWE86OoWwUZWXebZYuzvea0aH/Rg/
+         DZfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=sZAtncR05zWLLHoaHqVL3VjYnxwphczznb3KhlHmznE=;
+        b=G0Y7+kCLyXgwQHReoJYigwfN9eBrs86gvb6kRwNHHRz5q80ZB+CdPpUWlbdivducrC
+         wC6rufVtRYD1IEsWgw3yTwOXwEG5G5fcSR4+oIBTaBylyJNueoagEt9Io8tbXT8f20iZ
+         CUSqf2k9CDYQT0e/np3YwtsHqrdkRtIVnrMazwXUyy2v+oyRJq17MBhfSBwccNui9s4i
+         jTIvM5mk3gx9K2d6Kppcs/aNQQLaQEK/ZnR77JQ6gOz2KP0q4VPHG/TnJBAb1Fog0bjg
+         zfq/blS36mxwIhLThyM1GkoL3erzP6U7/i3jpuK3X59fVlrbI7C3u/CKWSwxMefvH3bu
+         QrRg==
+X-Gm-Message-State: AOAM5307KgEGpd6JMvS/NFxtVohK+FugW3l0FioC2sf7JZg3yx+IWVzn
+        DXTIxBhUljGOryEKmloYbnf6Iw==
+X-Google-Smtp-Source: ABdhPJx7eTIykxETyBOgw7SgqiYwclX+ljqGvEdNmMWWiubX3WcwETtXgtRc+d05Fxz4zC4FALIJBQ==
+X-Received: by 2002:ac8:1094:: with SMTP id a20mr672315qtj.248.1611584519337;
+        Mon, 25 Jan 2021 06:21:59 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:d8ad:42c:f23b:d0ef])
+        by smtp.gmail.com with ESMTPSA id i18sm12018953qkg.66.2021.01.25.06.21.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Jan 2021 06:21:58 -0800 (PST)
+Date:   Mon, 25 Jan 2021 09:21:56 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Eugen Konkov <kes-kes@yandex.ru>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Can not rebase to first commit
+Message-ID: <YA7T8fo5zngSD+zd@nand.local>
+References: <1327609829.20210125123816@yandex.ru>
 MIME-Version: 1.0
-In-Reply-To: <X/71qByO5jSceIFn@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1327609829.20210125123816@yandex.ru>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jan 25, 2021 at 12:38:16PM +0200, Eugen Konkov wrote:
+> I can not rebase to first commit.
+>
+> This is how to reproduce:
+>
+> kes@work ~/work/projects/general/Auth $ git tree
+> * 67857d5 (HEAD -> dev) asdf
+> * 1e99034 (local/dev) Initial commit
 
+(Unrelated to your question, but I assume that 'git tree' is an alias of
+'git log --oneline --graph' by the looks of it).
 
-On 1/13/21 8:29 AM, Jeff King wrote:
-> On Tue, Jan 12, 2021 at 03:31:23PM +0000, Jeff Hostetler via GitGitGadget wrote:
-> 
->> Teach packet_write_gently() to use a stack buffer rather than a static
->> buffer when composing the packet line message.  This helps get us ready
->> for threaded operations.
-> 
-> Sounds like a good goal, but...
-> 
->>   static int packet_write_gently(const int fd_out, const char *buf, size_t size)
->>   {
->> -	static char packet_write_buffer[LARGE_PACKET_MAX];
->> +	char packet_write_buffer[LARGE_PACKET_MAX];
->>   	size_t packet_size;
-> 
-> 64k is awfully big for the stack, especially if you are thinking about
-> having threads. I know we've run into issues around that size before
-> (though I don't offhand recall whether there was any recursion
-> involved).
-> 
-> We might need to use thread-local storage here. Heap would also
-> obviously work, but I don't think we'd want a new allocation per write
-> (or maybe it wouldn't matter; we're making a syscall, so a malloc() may
-> not be that big a deal in terms of performance).
-> 
-> -Peff
-> 
+> kes@work ~/work/projects/general/Auth $ git rebase -i --autostash --rebase-merges 1e99034^
+> fatal: invalid upstream '1e99034^'
 
-Good point.
+Yes, this is because you're asking to rebase your branch onto the parent
+of 1e99034, which doesn't exist because 1e99034 is the "root" commit and
+therefore has no parents.
 
-I'll look at the callers and see if I can do something safer.
+'git rebase' has a special option for exactly this case, which is
+'--root'. By replacing '1e99034^' with '--root', you should be able to
+do what you want.
 
-Jeeff
+Thanks,
+Taylor
