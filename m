@@ -2,91 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9190FC433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5C2C433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 06:06:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 59766227BF
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:36:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B428622C9F
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 06:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbhAYBgI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 20:36:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48346 "EHLO
+        id S1725862AbhAYGF3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 01:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbhAYBfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 20:35:54 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481E0C061573
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:35:14 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id q9so10811960qkn.2
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:35:14 -0800 (PST)
+        with ESMTP id S1726810AbhAYGEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 01:04:15 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AC3C061573
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 22:03:35 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id r189so13628020oih.4
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 22:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=aNOLT/956tRAw6G1TgYODFjkp0dEJRoBWMbri6ObUs0=;
-        b=FF5Drc9Ao1LL4Qw53rJ/FoGd0DU+FvAcOA0vMwXgU7LynujDd03QxWYeh9r8vHifUP
-         WQ1To9Ew/OzKc8gfrxjo3tC405lSi8rFpHc5Nf+vHECvUzRlwUyEwSvrNKfBF07a/kyp
-         9Sn087GPwbARMXjfX4vTIM/I7iAqpRE0E8xNupSQf3Rx4NWwPcw8JwLoIGNtC7PNp7FM
-         yrdyH9pxhouFhEk/3DKnabtks+5zeboFwEbNlZ2pMNBsjFgyeZD+IyKtsfo3Zfe6BAds
-         Y6jwEglwIiO9tfkXTV6n9YSLY/R4myz7Si9t2KUyGmWdzo7bvFJtkBxCxUhho3aH63t2
-         WOjw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=kVVFGLwUUIsXUIHmh6tCNHUTP1cP5bN0w9W8vdYTpos=;
+        b=FnstiLnKkqHh6HH1FX1Y1oK9IjFbWdQ7+7yiL82IJCQHUm4BpgRDPRSDi8CDG1uNE1
+         LfknYcmN9y9TnM0gXYMvAiOs0NJE5JPp/vsDLfjDTqf3sk5OmvHHwsbA+0ikpbRMekCF
+         VmSZ49N6rYHte/2MYggL682BJN73mKu2xa6OSWQdBQ33Y6KzD2q9nKixXEVBHZXz6nEY
+         Y0ZpfmBpPv1ywaAWVIY11gnmowsSRdbCOXA78YqW2iY+II6ezJFZBjumtFCy1Y7CZusC
+         ifXDo9VzndiV7pAZY+523wbBJybVD0WvgzEBz3+92V8hC7y6sqf16WgYZsjxKx+6d9EJ
+         IFzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=aNOLT/956tRAw6G1TgYODFjkp0dEJRoBWMbri6ObUs0=;
-        b=MvqW1TTD2OwRQQ+lETnZdIoa54udPiLQUeV8zJvthCutlOnSVb7aX4SGRkQcPuzs2A
-         HLYKhRMRU7IYikDy25QyWDtA98v0RuvN0MTR3NsGsN/sEpv2in24CcKr1ALYkmqLcDIq
-         4AZZDrnU0mzQ4wbDmt8/HQkCkIiaHjt5sxb7hhn25AP5Jea98UVd2rckup/+jrdI/S61
-         DRTBgaRWWOIV0tziQAGR+ojusJPY67YHGxlsNY9Uh9Sf1S+aMN23wo5zTo6Cek8jXMTE
-         a8GpRP8XgyLaAtHarpsn0/C5EzaO+WInCzKjEGlETN+P/QaQcO8C173ETKS1WiqeITog
-         hk8w==
-X-Gm-Message-State: AOAM531iOuPimm/YNKIvFDgw6MCnLD0Y8xK/2w2Cjp8VMsBTDizDtXyB
-        I8LQ44mzvRb7B6btXaKIK24mFw==
-X-Google-Smtp-Source: ABdhPJzU2h0ed3q9ve6TJEfpZpnnqjf0Oqjih6HvJeQGOrsLxMGz3X6dOaKKYzCMPKGn63yCf6tN+w==
-X-Received: by 2002:a37:9e04:: with SMTP id h4mr1139560qke.258.1611538512334;
-        Sun, 24 Jan 2021 17:35:12 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:d8ad:42c:f23b:d0ef])
-        by smtp.gmail.com with ESMTPSA id n24sm6811032qtv.26.2021.01.24.17.35.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 17:35:11 -0800 (PST)
-Date:   Sun, 24 Jan 2021 20:35:09 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        jacob@gitlab.com, peff@peff.net
-Subject: Re: [PATCH v2 1/3] refs: expose 'for_each_fullref_in_prefixes'
-Message-ID: <YA4gTWgMVnQyVT/I@nand.local>
-References: <cover.1611080326.git.me@ttaylorr.com>
- <cover.1611158549.git.me@ttaylorr.com>
- <bda314fe7ae1629ba068a0c4ada9b6adc20576eb.1611158549.git.me@ttaylorr.com>
- <xmqqczxw5pf1.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kVVFGLwUUIsXUIHmh6tCNHUTP1cP5bN0w9W8vdYTpos=;
+        b=cTXPz/Ft6srkMwmR99JFE3UNYuTWLyewndW1Si9yQt5WbcLWETKFSP0df9oj1M/RiB
+         oRFydYzn//B9mRg4Tirps1mubTGUGHNkHCQERCf6YEBOwNEjF4WsR1PkjtLUJ4C5aApw
+         9TjvOSAMlHqgOBb9fvtC23UNDeXDtbODS98j2Q68LHrWXPGdAPqd4FAQYM/x86vAucve
+         PCOCdQFuveudi3QD70gyTkXjpppsRWSPIF96euzHrkqxnaj66V47VVGSNcPMp9xnI+A2
+         C8XE6M5fRaaZHoFz3mHqOi9HxFd24xW0/MsfbTbFi30DKrSj+HdZE2bxxB8b45ztrd5O
+         pg6g==
+X-Gm-Message-State: AOAM5317Dq/IPz/F2Iu3yhWrVT2khKavfa5BlpaL7Zwu+UEv4ehBHt8g
+        YQywOUjAmQI8QaUVwUWzi5sW0TyhEAvcG7xPlr4=
+X-Google-Smtp-Source: ABdhPJwgWxvZkemqZywzsUOIV58p4cQKYm0ywu+1FMi7tZd0SF17q6NP7xMgBAcO5WvD4CL6O1Lo9PcNB9+dSjqKeWk=
+X-Received: by 2002:aca:5290:: with SMTP id g138mr483875oib.44.1611554614529;
+ Sun, 24 Jan 2021 22:03:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqczxw5pf1.fsf@gitster.c.googlers.com>
+References: <pull.832.v6.git.1611397210.gitgitgadget@gmail.com>
+ <pull.832.v7.git.1611485667.gitgitgadget@gmail.com> <8b02367a359e62d7721b9078ac8393a467d83724.1611485667.git.gitgitgadget@gmail.com>
+ <xmqqo8heyoti.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8heyoti.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Date:   Mon, 25 Jan 2021 14:05:06 +0800
+Message-ID: <CAOLTT8QgDeWmcX7y3QmQ7jyunziw4qn==L3BiJ81weMZtq8Obw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/3] ls_files.c: bugfix for --deleted and --modified
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 22, 2021 at 06:59:30PM -0800, Junio C Hamano wrote:
-> Caught by
+OK,I didn=E2=80=99t notice any formatting changes before.
+
+Am I free from this patch now?I should probably
+look for other issues.
+
+Junio, thank you for all your patient help.
+I may often make some low-level mistakes.
+I am grateful.
+
+Cheers.
+
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8825=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=886:04=E5=86=99=E9=81=93=EF=BC=9A
 >
-> https://github.com/git/git/runs/1752536671?check_suite_focus=true#step:4:63
+> "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> I'll apply the fix suggested by Coccinelle on my end, so there is no
-> need to send an updated version just for this one.
-
-Oof. How embarrassing. I'm well aware of the existence of
-strbuf_addstr() -- there's even a caller just below the line I changed!
--- but clearly wasn't thinking when I wrote this patch.
-
-Thanks for cleaning it up.
-
-Thanks,
-Taylor
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > This situation may occur in the original code: lstat() failed
+> > but we use `&st` to feed ie_modified() later.
+> >
+> > Therefore, we can directly execute show_ce without the judgment of
+> > ie_modified() when lstat() has failed.
+> >
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> > [jc: fixed misindented code]
+>
+> I noticed that you reverted my fix in this version, when this is
+> compared with the one I sent last night.
+>
+> Comparing the result of applying all three with what I sent last
+> night, this v7 looks worse (see below).  Let's discard this round
+> and declare victory with what is already on 'seen'.
+>
+> Thanks.
+>
+>
+> ---
+>
+> comparison between what these three patches would produce (preimage)
+> and what is on 'seen' (postimage)is shown here.
+>
+> diff --git w/builtin/ls-files.c c/builtin/ls-files.c
+> index fb9cf50d76..f6f9e483b2 100644
+> --- w/builtin/ls-files.c
+> +++ c/builtin/ls-files.c
+> @@ -313,7 +313,8 @@ static void show_files(struct repository *repo, struc=
+t dir_struct *dir)
+>                 if (show_killed)
+>                         show_killed_files(repo->index, dir);
+>         }
+> -       if (! (show_cached || show_stage || show_deleted || show_modified=
+))
+> +
+> +       if (!(show_cached || show_stage || show_deleted || show_modified)=
+)
+>                 return;
+>         for (i =3D 0; i < repo->index->cache_nr; i++) {
+>                 const struct cache_entry *ce =3D repo->index->cache[i];
+> @@ -328,15 +329,16 @@ static void show_files(struct repository *repo, str=
+uct dir_struct *dir)
+>                 if (ce->ce_flags & CE_UPDATE)
+>                         continue;
+>                 if ((show_cached || show_stage) &&
+> -                       (!show_unmerged || ce_stage(ce))) {
+> -                               show_ce(repo, dir, ce, fullname.buf,
+> -                                       ce_stage(ce) ? tag_unmerged :
+> -                                       (ce_skip_worktree(ce) ? tag_skip_=
+worktree :
+> -                                               tag_cached));
+> +                   (!show_unmerged || ce_stage(ce))) {
+> +                       show_ce(repo, dir, ce, fullname.buf,
+> +                               ce_stage(ce) ? tag_unmerged :
+> +                               (ce_skip_worktree(ce) ? tag_skip_worktree=
+ :
+> +                                tag_cached));
+>                         if (skipping_duplicates)
+>                                 goto skip_to_next_name;
+>                 }
+> -               if (!show_deleted && !show_modified)
+> +
+> +               if (!(show_deleted || show_modified))
+>                         continue;
+>                 if (ce_skip_worktree(ce))
+>                         continue;
+> @@ -349,12 +351,13 @@ static void show_files(struct repository *repo, str=
+uct dir_struct *dir)
+>                                 goto skip_to_next_name;
+>                 }
+>                 if (show_modified &&
+> -                       (stat_err || ie_modified(repo->index, ce, &st, 0)=
+)) {
+> -                               show_ce(repo, dir, ce, fullname.buf, tag_=
+modified);
+> +                   (stat_err || ie_modified(repo->index, ce, &st, 0))) {
+> +                       show_ce(repo, dir, ce, fullname.buf, tag_modified=
+);
+>                         if (skipping_duplicates)
+>                                 goto skip_to_next_name;
+>                 }
+>                 continue;
+> +
+>  skip_to_next_name:
+>                 {
+>                         int j;
+> @@ -362,7 +365,7 @@ static void show_files(struct repository *repo, struc=
+t dir_struct *dir)
+>                         for (j =3D i + 1; j < repo->index->cache_nr; j++)
+>                                 if (strcmp(ce->name, cache[j]->name))
+>                                         break;
+> -                       i =3D j - 1; /* compensate for outer for loop */
+> +                       i =3D j - 1; /* compensate for the for loop */
+>                 }
+>         }
+>
+> @@ -590,7 +593,8 @@ int cmd_ls_files(int argc, const char **argv, const c=
+har *cmd_prefix)
+>                         N_("pretend that paths removed since <tree-ish> a=
+re still present")),
+>                 OPT__ABBREV(&abbrev),
+>                 OPT_BOOL(0, "debug", &debug_mode, N_("show debugging data=
+")),
+> -               OPT_BOOL(0,"deduplicate",&skipping_duplicates,N_("suppres=
+s duplicate entries")),
+> +               OPT_BOOL(0, "deduplicate", &skipping_duplicates,
+> +                        N_("suppress duplicate entries")),
+>                 OPT_END()
+>         };
+>
