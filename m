@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65331C433DB
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03818C433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:01:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A48B22B3B
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:00:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B6AD122B3B
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 18:01:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731079AbhAYSAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Jan 2021 13:00:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        id S1730729AbhAYSA7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Jan 2021 13:00:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731119AbhAYR4V (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731009AbhAYR4V (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 25 Jan 2021 12:56:21 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E20C061223
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:34 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id c12so13833314wrc.7
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:34 -0800 (PST)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75008C061224
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:35 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id a9so13816483wrt.5
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 09:42:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uWvh1uq57/MSzGVd3Bb90wwkbavYqjng6CV9Jz8ctUk=;
-        b=fRdRPaJoxPS2sVIKBGbYA3YLHTWQjPZfXovB4Ph1pnEKhr7TLy6z5ToqbvNnHKvi0O
-         EVmuiBfq9oHzUNPdNunVnUvNCNycUp2cQgt6XbO9soxnwjAAqi7p7ICIFkiDBPYAe7w1
-         xZf/QYKX4oqtGNrAxaCbzsoFz/PKmUZ1PqRxYLmNVcGf9QQDT3BcPd/q7C2NM8dVElgQ
-         IyaBU9uE5Ewkm/pl/zLaMZOBTX8RFFwe1mm4SwXFjqi64LPgWVkD2y5ewmwJmoJ9ilf9
-         4jL04GVT8Zc+Rw5CpINkBW30wg6mbHRs8fw8N81Iza6nA0asn4PFj75CW/BeYpgq8/xr
-         o7JA==
+        bh=C4K9HzfTJGIydN06TzEfi5PvtGP8wNfAxqle/0fCqkI=;
+        b=UBFFoIjDtBRDV14Nyk4Adz/C5bJW/8tglfat9j6nB6hi2v0zEbet1Dqevd2zGKpJFy
+         mQfgD9s+fOsPrdacvWfNvH0FnKLHKomDfMZTFwLak/o3vYZ4Pq9bTrCaAHuMThfrTk3u
+         MiweuHzjxQvUMH0VFUa/pu+gg+9KllL86v6NnJ8O3Y/3hkuTKga4WgbJ9fRLNZFYLde0
+         FE88DyElCSOBhMvIWdPyBFTjx6X7rB3/hoGDROtkyflXw6Q7xxCQzS3Ec0HmcVgTV2jS
+         hTacxRD81Bbngbk27YewwtU8Y6bTgB8gIM3b1tJM4aKpt5+z5UuOaRfuR/lT529H9wdp
+         lXbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uWvh1uq57/MSzGVd3Bb90wwkbavYqjng6CV9Jz8ctUk=;
-        b=cvJLfC7QQhdxgrz3lla5a0aODz1nzYMZSvn5fq4k0HAVThCVtQoNh2r6yVI4TJkoga
-         T54pplaylSaQkoFKyhpZDjg6Y4VYpbD4Q20nNHhUpwBICQLASmxJi1O8iNd5C1GMLJWn
-         Lpm1ue715soE2nBS4OR9OY0MLQ3GP20pEcNU+iJgKn53xm+miKU7sRVwlV00TBm2ucUO
-         8RXC1bsYfc0C79CqzhAQItVFB+AgLDvjWPqGU6w+T6t6ErUz4azcKlQB/tkGoAxPrPGu
-         6x0lsYvJOS0jx28dPIguWcgvkcmhoaUNmS5wOL8mC317UruI3O7+YXMjiajF8sTrdSz+
-         YVeA==
-X-Gm-Message-State: AOAM531XI8odNdhWvm4ImOap5zczyFs6FSEp7N2O+bNNAdzEaItbEKef
-        L3aUG0UG8VQ5WzKMJUc1X6TcFsWuE+g=
-X-Google-Smtp-Source: ABdhPJyfs0uCZGKkK1S6chYf4knT54wVcC3F5Ftm9cB6I3lf95CHTYEzToh1fgfvCJNaStwYgSP0Vw==
-X-Received: by 2002:adf:b257:: with SMTP id y23mr2175449wra.371.1611596553284;
-        Mon, 25 Jan 2021 09:42:33 -0800 (PST)
+        bh=C4K9HzfTJGIydN06TzEfi5PvtGP8wNfAxqle/0fCqkI=;
+        b=gIA+aacsi33LIkqtOOG1rAVcDzecRDkyKFv5dUkMzFOau4krxr4BdAuriR6JKRfGs5
+         QVEpRgdf6EWNaB41yh77HM27D8AVGvCmoGm9Zjx4vA5aKX8Q8XEIfafi3W2WhLNuovSz
+         6CDrrHQTd9Jkt1VoQ2aSlJRcBRxDaCFhDQrIiMtGXNIHB5L8lIIdKcwqIGDG6Sspq+tK
+         zs8dTBUfHunGRGg7oZEBIWTX5LBgU4uexceXxEC3qtzk0iEdLQCDZ5ZIXASjpFGe2RbU
+         j+cDlXymqv26SX2A2WUvDeUrKaeaatlUKCBfTM8W9iAYtKFwvRCNzOJ9P4lq2O/p/w19
+         vdGw==
+X-Gm-Message-State: AOAM531o1XpRYon/pc+RhJkJsGYAUtXPCSLX8QQvOUmb2TL2Ff8pjbOH
+        5Fm1+5FhyztwByNOSke8NdNZUctbDvI=
+X-Google-Smtp-Source: ABdhPJwrNi0btRo4Yr2S2CA//e3HY1VROY5T13TqPG3AZzY/BdXtc+QtvinC8KZ9Qt5yC/+F1H8WfA==
+X-Received: by 2002:a5d:538b:: with SMTP id d11mr2285784wrv.334.1611596554060;
+        Mon, 25 Jan 2021 09:42:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h1sm20454046wrr.73.2021.01.25.09.42.32
+        by smtp.gmail.com with ESMTPSA id m82sm17920wmf.29.2021.01.25.09.42.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jan 2021 09:42:32 -0800 (PST)
-Message-Id: <ba8e25502f2f466da73c292cdff7a0f90400f2be.1611596534.git.gitgitgadget@gmail.com>
+        Mon, 25 Jan 2021 09:42:33 -0800 (PST)
+Message-Id: <dfbafbde3f54333dc27a18e46b5b79573f015e60.1611596534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.git.1611596533.gitgitgadget@gmail.com>
 References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Jan 2021 17:42:06 +0000
-Subject: [PATCH 20/27] sparse-index: expand_to_path() trivial implementation
+Date:   Mon, 25 Jan 2021 17:42:07 +0000
+Subject: [PATCH 21/27] sparse-index: expand_to_path no-op if path exists
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,110 +77,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Before we check if a specific file or directory exists in the index, it
-would be good to see if a leading directory is a sparse-directory. If
-so, we will want to expand the index _just enough_ to be sure that the
-paths we are interested in are in the index.
+We need to check the file hashmap first, then look to see if the
+directory signals a non-sparse directory entry. In such a case, we can
+rely on the contents of the sparse-index.
 
-The actually-interesting implementation will follow in a later change.
-For now, simply call ensure_full_index() to expand every directory
-simultaneously.
-
-Calls like index_dir_exists(), adjust_dirname_case(), and
-index_file_exists() in name-hash.c can trust the name hash if the index
-was properly expanded for the requested names. These methods can
-transition from ensure_full_index() to expand_to_path().
+We still use ensure_full_index() in the case that we hit a path that is
+within a sparse-directory entry.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- name-hash.c    | 10 ++++------
- sparse-index.c |  7 +++++++
- sparse-index.h | 12 ++++++++++++
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ name-hash.c    |  6 ++++++
+ sparse-index.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
 diff --git a/name-hash.c b/name-hash.c
-index 0f6d4fcca5a..641f6900a7c 100644
+index 641f6900a7c..cb0f316f652 100644
 --- a/name-hash.c
 +++ b/name-hash.c
-@@ -8,6 +8,7 @@
- #include "cache.h"
- #include "thread-utils.h"
- #include "trace2.h"
-+#include "sparse-index.h"
+@@ -110,6 +110,12 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
+ 	if (ce->ce_flags & CE_HASHED)
+ 		return;
+ 	ce->ce_flags |= CE_HASHED;
++
++	if (ce->ce_mode == CE_MODE_SPARSE_DIRECTORY) {
++		add_dir_entry(istate, ce);
++		return;
++	}
++
+ 	hashmap_entry_init(&ce->ent, memihash(ce->name, ce_namelen(ce)));
+ 	hashmap_add(&istate->name_hash, &ce->ent);
  
- struct dir_entry {
- 	struct hashmap_entry ent;
-@@ -679,9 +680,8 @@ int index_dir_exists(struct index_state *istate, const char *name, int namelen)
- {
- 	struct dir_entry *dir;
- 
--	ensure_full_index(istate);
--
- 	lazy_init_name_hash(istate);
-+	expand_to_path(istate, name, namelen, 0);
- 	dir = find_dir_entry(istate, name, namelen);
- 	return dir && dir->nr;
- }
-@@ -691,9 +691,8 @@ void adjust_dirname_case(struct index_state *istate, char *name)
- 	const char *startPtr = name;
- 	const char *ptr = startPtr;
- 
--	ensure_full_index( istate);
--
- 	lazy_init_name_hash(istate);
-+	expand_to_path(istate, name, strlen(name), 0);
- 	while (*ptr) {
- 		while (*ptr && *ptr != '/')
- 			ptr++;
-@@ -716,9 +715,8 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
- 	struct cache_entry *ce;
- 	unsigned int hash = memihash(name, namelen);
- 
--	ensure_full_index(istate);
--
- 	lazy_init_name_hash(istate);
-+	expand_to_path(istate, name, namelen, icase);
- 
- 	ce = hashmap_get_entry_from_hash(&istate->name_hash, hash, NULL,
- 					 struct cache_entry, ent);
 diff --git a/sparse-index.c b/sparse-index.c
-index 3552f88fb03..dd1a06dfdd3 100644
+index dd1a06dfdd3..bf8dce9a09b 100644
 --- a/sparse-index.c
 +++ b/sparse-index.c
-@@ -280,3 +280,10 @@ void ensure_full_index(struct index_state *istate)
- 
+@@ -281,9 +281,62 @@ void ensure_full_index(struct index_state *istate)
  	trace2_region_leave("index", "ensure_full_index", istate->repo);
  }
-+
-+void expand_to_path(struct index_state *istate,
-+		    const char *path, size_t pathlen, int icase)
-+{
-+	/* for now, do the obviously-correct, slow thing */
-+	ensure_full_index(istate);
-+}
-diff --git a/sparse-index.h b/sparse-index.h
-index ca936e95d11..549e4171f1a 100644
---- a/sparse-index.h
-+++ b/sparse-index.h
-@@ -4,6 +4,18 @@
- struct index_state;
- void ensure_full_index(struct index_state *istate);
- int convert_to_sparse(struct index_state *istate);
-+/*
-+ * Some places in the codebase expect to search for a specific path.
-+ * This path might be outside of the sparse-checkout definition, in
-+ * which case a sparse-index may not contain a path for that index.
-+ *
-+ * Given an index and a path, check to see if a leading directory for
-+ * 'path' exists in the index as a sparse directory. In that case,
-+ * expand that sparse directory to a full range of cache entries and
-+ * populate the index accordingly.
-+ */
-+void expand_to_path(struct index_state *istate,
-+		    const char *path, size_t pathlen, int icase);
  
- struct repository;
- int set_sparse_index_config(struct repository *repo, int enable);
++static int in_expand_to_path = 0;
++
+ void expand_to_path(struct index_state *istate,
+ 		    const char *path, size_t pathlen, int icase)
+ {
++	struct strbuf path_as_dir = STRBUF_INIT;
++	int pos;
++
++	/* prevent extra recursion */
++	if (in_expand_to_path)
++		return;
++
++	if (!istate || !istate->sparse_index)
++		return;
++
++	if (!istate->repo)
++		istate->repo = the_repository;
++
++	in_expand_to_path = 1;
++
++	/*
++	 * We only need to actually expand a region if the
++	 * following are both true:
++	 *
++	 * 1. 'path' is not already in the index.
++	 * 2. Some parent directory of 'path' is a sparse directory.
++	 */
++
++	strbuf_add(&path_as_dir, path, pathlen);
++	strbuf_addch(&path_as_dir, '/');
++
++	/* in_expand_to_path prevents infinite recursion here */
++	if (index_file_exists(istate, path, pathlen, icase))
++		goto cleanup;
++
++	pos = index_name_pos(istate, path_as_dir.buf, path_as_dir.len);
++
++	if (pos < 0)
++		pos = -pos - 1;
++
++	/*
++	 * Even if the path doesn't exist, if the value isn't exactly a
++	 * sparse-directory entry, then there is no need to expand the
++	 * index.
++	 */
++	if (istate->cache[pos]->ce_mode != CE_MODE_SPARSE_DIRECTORY)
++		goto cleanup;
++
++	trace2_region_enter("index", "expand_to_path", istate->repo);
++
+ 	/* for now, do the obviously-correct, slow thing */
+ 	ensure_full_index(istate);
++
++	trace2_region_leave("index", "expand_to_path", istate->repo);
++
++cleanup:
++	strbuf_release(&path_as_dir);
++	in_expand_to_path = 0;
+ }
 -- 
 gitgitgadget
 
