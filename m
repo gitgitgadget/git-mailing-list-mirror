@@ -8,65 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53D26C433DB
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11281C43381
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:02:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 140A922573
+	by mail.kernel.org (Postfix) with ESMTP id C84EB22573
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729880AbhAZFCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:02:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51436 "EHLO
+        id S1730581AbhAZFCP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:02:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731675AbhAYTSf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731627AbhAYTSf (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 25 Jan 2021 14:18:35 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3360EC061794
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:32 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id i9so587910wmq.1
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:32 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 654ECC06178B
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:29 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id f16so397502wmq.5
+        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SStzSCRIL9dliRtQBfGa5wPeZR1qlbqiwnb2P1Nrq+M=;
-        b=XKRlf658AlMnu/GJTFurrzGYyjdaYUrEFzZ9CaPMHxxkrrFB9kDx1Ck92yGK9YQIKG
-         s115GBhoPYiPjTOWQRI9TW0bol2zS3T/9fIyUeazJC6dBsCW0zOJRSsRKO4YE/CnEEmh
-         x9+mFydL7pRiZ+au3rd6abPn5mDtEyLpv9Qb7i/lvZiU9aco60T1s5d/rjF2R1yG48Vf
-         kMqQmIUgZJNqN4RssndmYs1PmTD9xSbtEMJdfCrtrzCYAco4zqr5XLryccRDb907XFRR
-         rlBhAftDRvkGAiV4cULGvqz4NrencRL1JRXx5m+6hVW5lfUlS4wa9MjVD6JadIg8f1LZ
-         0IQw==
+        bh=4ag+63Vxzue5/LXXH7lgT7VDmTGYjOaGULxBGDZSh4I=;
+        b=RfeYFNqpO2RrYP5fc+e30S+k9Wox1soeL0qXgMUy/PmrOmVkqc8x61Io2gu89ISn85
+         kbsP8RYtI5jg96l5EgnH7HVecqTAUOD6Xk34wRJzszxd6J8AC6o8buA/l4fj3YUIyOmi
+         /PI0IKdakX3wXH4cD4TUVXVIDL3hWOvE1llH8vAoTbO3QMrHkdJIpN3jJ9c3OlWsvXNg
+         vw3R/+WTrnELqS00ngV4oPb3GzluuEsgbOJ055Wh7gmAqUi6JVpV7cr6aVeeb+/lxRPc
+         TCeIqCiDu7gOmMipWCfQvFuR7MejK4zVmNHDc0eMgTyijiNSlUtt7yVq7FJb4cWpIAP0
+         yl5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SStzSCRIL9dliRtQBfGa5wPeZR1qlbqiwnb2P1Nrq+M=;
-        b=Gq715ThXv83Pvr/0rpLpDg7yyjShz60EIkOZdeGMfI+LoY5j4m7taUBVJAJsA/KQ67
-         U3GFIu555QRqjvWlGKa4hWj+ouvPA2NVVVMXVM+P3/yjU/HusPKbJWKAL0WdhXZ611m3
-         vwb2zNJ3u+5Af3XF4M2s07Wu8DKv8ukjP49xa9gfziRrAXaPQMUHe7ASuEBYOPCaJCrI
-         o8mp8YuOYgFn95OpFqDVuz0lrjcOmO1RuVfJNrQWPt8qvY/TTn0dIsIf6lIVuGVuHlkA
-         T4T/19ehLENr2AkopH/W+t205615qqhuljRK05Pa0mWAU7d3k2Ji5rZEMOouzNm9/Afe
-         GUrw==
-X-Gm-Message-State: AOAM531A6xRqJMiUwq5Mkt8RKGpjoF1C92VrfhXTKq9zGHOLl3PM5ddq
-        QV9ENuyzJjFW9W0G5VKbA6/CsVT0HJA=
-X-Google-Smtp-Source: ABdhPJyEiza53qqYuGtG2nAcKR13Fzq1UZ4iPuNNFOrN60TyMTl+udtUOCBNtBZCJyHS/Au7x6woUA==
-X-Received: by 2002:a1c:4b14:: with SMTP id y20mr1513544wma.6.1611602250984;
-        Mon, 25 Jan 2021 11:17:30 -0800 (PST)
+        bh=4ag+63Vxzue5/LXXH7lgT7VDmTGYjOaGULxBGDZSh4I=;
+        b=F5qG28IW/AVHZUsaBB7oIZYLMAHxgIUEa5XLVcYx2OzqsDxmJaVs4AsckeDJ2LqmHH
+         GGzeLiKYzTbVMmHCK8ERKE3PtgpbGiXPsz/usN4jER8YVemTzGR097Xrerp23pcm2Yci
+         jNkfRhT/s4vDgIrW24YdGO6QM7RhwWWmd/dxd3FM5HgxaUlVz3Y049MxGNVx8O/s6otP
+         WBxslOdSA9l3ok6yypvj4WeqvTW8oKGP7X26P60zqNEEhZsKWXuvJRrGEaWeyXYAPm04
+         SlZyzCw4tcrdxZdfxzOabJbzOjULP81ghE+AHBmLILmAC8ZWlnHqMDDL+WOZhyyoTo60
+         AlLg==
+X-Gm-Message-State: AOAM532mBYkHaOz8fZgZ7qXBuGE0apSQ/bWez9XZ1ISn27GEMIlD63tm
+        KSR97DxROJVgSdY5t2GUVB3/S5KtQzs=
+X-Google-Smtp-Source: ABdhPJwiokuIZWvkX8vnfATry9tVNrdgHQMsyCMB/eo1EO3D6Co3q90scx52AQzgrfM/iSe0UCchbw==
+X-Received: by 2002:a1c:4e05:: with SMTP id g5mr1482052wmh.105.1611602248251;
+        Mon, 25 Jan 2021 11:17:28 -0800 (PST)
 Received: from localhost.localdomain ([81.0.37.108])
-        by smtp.gmail.com with ESMTPSA id e4sm11665895wrw.96.2021.01.25.11.17.30
+        by smtp.gmail.com with ESMTPSA id e4sm11665895wrw.96.2021.01.25.11.17.27
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Jan 2021 11:17:30 -0800 (PST)
+        Mon, 25 Jan 2021 11:17:27 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v4 7/7] bisect--helper: retire `--check-and-set-terms` subcommand
-Date:   Mon, 25 Jan 2021 20:17:10 +0100
-Message-Id: <20210125191710.45161-8-mirucam@gmail.com>
+Subject: [PATCH v4 4/7] bisect--helper: use `res` instead of return in BISECT_RESET case option
+Date:   Mon, 25 Jan 2021 20:17:07 +0100
+Message-Id: <20210125191710.45161-5-mirucam@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210125191710.45161-1-mirucam@gmail.com>
 References: <20210125191710.45161-1-mirucam@gmail.com>
@@ -78,62 +75,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The `--check-and-set-terms` subcommand is no longer from the
-git-bisect.sh shell script. Instead the function
-`check_and_set_terms()` is called from the C implementation.
+Use `res` variable to store `bisect_reset()` output in BISECT_RESET
+case option to make bisect--helper.c more consistent.
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ builtin/bisect--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 145e1a6998..e26d9baa18 100644
+index 0b16653f13..8232e795fa 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -21,7 +21,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
-@@ -1028,7 +1027,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		CHECK_AND_SET_TERMS,
- 		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
- 		BISECT_START,
-@@ -1043,8 +1041,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
--			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
- 			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
- 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
-@@ -1080,12 +1076,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+@@ -1043,7 +1043,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 	case BISECT_RESET:
+ 		if (argc > 1)
  			return error(_("--bisect-reset requires either no argument or a commit"));
- 		res = bisect_reset(argc ? argv[0] : NULL);
+-		return !!bisect_reset(argc ? argv[0] : NULL);
++		res = bisect_reset(argc ? argv[0] : NULL);
  		break;
--	case CHECK_AND_SET_TERMS:
--		if (argc != 3)
--			return error(_("--check-and-set-terms requires 3 arguments"));
--		set_terms(&terms, argv[2], argv[1]);
--		res = check_and_set_terms(&terms, argv[0]);
--		break;
- 	case BISECT_NEXT_CHECK:
- 		if (argc != 2 && argc != 3)
- 			return error(_("--bisect-next-check requires 2 or 3 arguments"));
+ 	case CHECK_AND_SET_TERMS:
+ 		if (argc != 3)
 -- 
 2.29.2
 
