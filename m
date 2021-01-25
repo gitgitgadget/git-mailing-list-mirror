@@ -7,92 +7,86 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3380FC433E0
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9190FC433DB
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:36:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F22C422B4B
-	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:07:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59766227BF
+	for <git@archiver.kernel.org>; Mon, 25 Jan 2021 01:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbhAYBGY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Jan 2021 20:06:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41900 "EHLO
+        id S1726449AbhAYBgI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Jan 2021 20:36:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726480AbhAYBFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Jan 2021 20:05:47 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6B8C061574
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:04:59 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id l27so636572qki.9
-        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:04:59 -0800 (PST)
+        with ESMTP id S1726390AbhAYBfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Jan 2021 20:35:54 -0500
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481E0C061573
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:35:14 -0800 (PST)
+Received: by mail-qk1-x732.google.com with SMTP id q9so10811960qkn.2
+        for <git@vger.kernel.org>; Sun, 24 Jan 2021 17:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wiR40pi1nEhGNDCWfH4/lilBAZpKJHn53VzZLDBbcxY=;
-        b=DTlm0oDzc7xDo/rVc1CjPMY5ou7aobtZAFHwhkmMIM+i6mNIuGXpcJYWa70T3SUznM
-         m9+Xh7Bsld9xv6qhJxygYycxTiSo6ouW0BHFRj+KJWKPP0C3w9w9GQtua4NrvwpQtx8N
-         xEvamg7aWHA+0W3KlAkeyDrpPbpi+NJO0PaWwMyS40yuPJA1cglPvMS71s9gs3i9ox7C
-         aHDZgWoo+VjZ5nc0tInJOZBsRhHrZmwaAjouGbED0Sgu3tS97elv6+mMUvqp1kD2qLoS
-         ZJOs8h1LH4G36FRLOrFOfF9g1AIPZ7fGvXXcMgBKHYK0x2v3hfPjFX7giKBM2X81huVO
-         YXkQ==
+        bh=aNOLT/956tRAw6G1TgYODFjkp0dEJRoBWMbri6ObUs0=;
+        b=FF5Drc9Ao1LL4Qw53rJ/FoGd0DU+FvAcOA0vMwXgU7LynujDd03QxWYeh9r8vHifUP
+         WQ1To9Ew/OzKc8gfrxjo3tC405lSi8rFpHc5Nf+vHECvUzRlwUyEwSvrNKfBF07a/kyp
+         9Sn087GPwbARMXjfX4vTIM/I7iAqpRE0E8xNupSQf3Rx4NWwPcw8JwLoIGNtC7PNp7FM
+         yrdyH9pxhouFhEk/3DKnabtks+5zeboFwEbNlZ2pMNBsjFgyeZD+IyKtsfo3Zfe6BAds
+         Y6jwEglwIiO9tfkXTV6n9YSLY/R4myz7Si9t2KUyGmWdzo7bvFJtkBxCxUhho3aH63t2
+         WOjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wiR40pi1nEhGNDCWfH4/lilBAZpKJHn53VzZLDBbcxY=;
-        b=h3uecLW5TQdO2YxXX/jtS/Pm3h5xHUABVw0WPVgXgzBnCquYyDNRt081UEGSnRNqVq
-         bq1oBLrPdq1lsFFk5RcyEInd5xwRU0pkjrBNQeYqKGTNjI7XKAm4a6gMMjRnamLXT3CN
-         xemQhyfONHROfyjTncqm+zFDz+X8EMqa/GWvfcje6uD6TKsEcP03h5Grw5nX6HANO2vj
-         GrL4jTEkBPQuu3pJlV5g2c4cGmcFvaLl32neCG7Zqi6ADDMy118xMQAnuUokALYx8Emw
-         ngjDlNmg1Dec1UkQCaNYkG87LOmkEhEUn3nyKMBOYXDTzdLw0mvY1ZOmQ3SLD42HRN0Q
-         RR/A==
-X-Gm-Message-State: AOAM533dTJYZc01EbE0peIL8BW0Q168rd9Aia8FQgv/Wo/YU7zdY7HGt
-        eJY6SHsE89BBSSOmn/hK+O+upEzHJ4m1DQ==
-X-Google-Smtp-Source: ABdhPJwVD4H5/+tZrLrdqjF4Aw2PKSXZLz/v7s/Hni5VvFZM0zYxNbcpBIm076CjDMnbgIAYh1bakA==
-X-Received: by 2002:a05:620a:2149:: with SMTP id m9mr1104064qkm.60.1611536698679;
-        Sun, 24 Jan 2021 17:04:58 -0800 (PST)
+        bh=aNOLT/956tRAw6G1TgYODFjkp0dEJRoBWMbri6ObUs0=;
+        b=MvqW1TTD2OwRQQ+lETnZdIoa54udPiLQUeV8zJvthCutlOnSVb7aX4SGRkQcPuzs2A
+         HLYKhRMRU7IYikDy25QyWDtA98v0RuvN0MTR3NsGsN/sEpv2in24CcKr1ALYkmqLcDIq
+         4AZZDrnU0mzQ4wbDmt8/HQkCkIiaHjt5sxb7hhn25AP5Jea98UVd2rckup/+jrdI/S61
+         DRTBgaRWWOIV0tziQAGR+ojusJPY67YHGxlsNY9Uh9Sf1S+aMN23wo5zTo6Cek8jXMTE
+         a8GpRP8XgyLaAtHarpsn0/C5EzaO+WInCzKjEGlETN+P/QaQcO8C173ETKS1WiqeITog
+         hk8w==
+X-Gm-Message-State: AOAM531iOuPimm/YNKIvFDgw6MCnLD0Y8xK/2w2Cjp8VMsBTDizDtXyB
+        I8LQ44mzvRb7B6btXaKIK24mFw==
+X-Google-Smtp-Source: ABdhPJzU2h0ed3q9ve6TJEfpZpnnqjf0Oqjih6HvJeQGOrsLxMGz3X6dOaKKYzCMPKGn63yCf6tN+w==
+X-Received: by 2002:a37:9e04:: with SMTP id h4mr1139560qke.258.1611538512334;
+        Sun, 24 Jan 2021 17:35:12 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:d8ad:42c:f23b:d0ef])
-        by smtp.gmail.com with ESMTPSA id c17sm11257932qkb.13.2021.01.24.17.04.57
+        by smtp.gmail.com with ESMTPSA id n24sm6811032qtv.26.2021.01.24.17.35.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Jan 2021 17:04:58 -0800 (PST)
-Date:   Sun, 24 Jan 2021 20:04:56 -0500
+        Sun, 24 Jan 2021 17:35:11 -0800 (PST)
+Date:   Sun, 24 Jan 2021 20:35:09 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Schilling <christian.schilling.de@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ls-refs protocol extension
-Message-ID: <YA4ZOOccXK0YEOWu@nand.local>
-References: <CAJsFKUCuvO7Y7-MJZ-GG9Jv+4-ei=-tvx4PF1PbeU61m+CV9RA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        jacob@gitlab.com, peff@peff.net
+Subject: Re: [PATCH v2 1/3] refs: expose 'for_each_fullref_in_prefixes'
+Message-ID: <YA4gTWgMVnQyVT/I@nand.local>
+References: <cover.1611080326.git.me@ttaylorr.com>
+ <cover.1611158549.git.me@ttaylorr.com>
+ <bda314fe7ae1629ba068a0c4ada9b6adc20576eb.1611158549.git.me@ttaylorr.com>
+ <xmqqczxw5pf1.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJsFKUCuvO7Y7-MJZ-GG9Jv+4-ei=-tvx4PF1PbeU61m+CV9RA@mail.gmail.com>
+In-Reply-To: <xmqqczxw5pf1.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 24, 2021 at 01:40:08PM +0100, Christian Schilling wrote:
-> Hi list,
-> I have been working on a custom git server where the sha values
-> required to respond to a ls-refs command can occasionally be expensive
-> to compute.
+On Fri, Jan 22, 2021 at 06:59:30PM -0800, Junio C Hamano wrote:
+> Caught by
+>
+> https://github.com/git/git/runs/1752536671?check_suite_focus=true#step:4:63
+>
+> I'll apply the fix suggested by Coccinelle on my end, so there is no
+> need to send an updated version just for this one.
 
-Almost certainly the expensive part of ls-refs is actually traversing
-the references, not parsing the objects they point at and determining
-their hash.
+Oof. How embarrassing. I'm well aware of the existence of
+strbuf_addstr() -- there's even a caller just below the line I changed!
+-- but clearly wasn't thinking when I wrote this patch.
 
-Incidentally, we had a discussion recently [1] that resulted in some
-patches that make it so that ls-refs often only has to read through part
-of the refs in your repository, not all of them.
-
-> It would be a great improvement of user experience if it was possible
-> to show progress to the user while this is happening.
-
-It's possible that that might help, but honestly I'd be surprised if
-there was a real use-case that needed it (especially after the patches
-that I mentioned which should make it fast enough that you don't have to
-care :-)).
+Thanks for cleaning it up.
 
 Thanks,
 Taylor
-
-[1]: https://lore.kernel.org/git/20210119144251.27924-1-jacob@gitlab.com/
