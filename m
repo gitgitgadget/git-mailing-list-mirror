@@ -4,102 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71D70C43333
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B26CC43332
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EC5920674
+	by mail.kernel.org (Postfix) with ESMTP id 2FCDA206B2
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727857AbhAZWCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:02:01 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59462 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389200AbhAZSru (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 13:47:50 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ACB33112417;
-        Tue, 26 Jan 2021 13:47:07 -0500 (EST)
+        id S1727826AbhAZWB7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 17:01:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52777 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730405AbhAZSc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 13:32:59 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A28B0AB472;
+        Tue, 26 Jan 2021 13:32:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=V+p4bf/pYSmo
-        7UdpD3NKV1euams=; b=HVzhdyBZN2hqgJX0NDKkKVu1V7JET+flhfoS/wACxSN0
-        q1fuWQCoB4dvvChiZUuj9t4xPILKWDebg3mLQtgAURId17Bxqj0gKPTfWSIqbhh8
-        7WIsKNWWZ8PkF/M471OKurlax3jAiPDiuBWgZEHVoJRVM3omVZXE6D0KMWsIdTY=
+        :content-type; s=sasl; bh=zDqkpd08/PBGShEOIpaPrHQOA1c=; b=HiYxQX
+        Lrn1YOUGJW0xpwQ4lcZA2tZyt9CjxDUbsxum1/ctLvzpXKY0/8WhcWsLCKWjP5UU
+        4E0tfPkPoch3MkA+qLX7I29hdxSVTSVIWJ1mlTh1el3G5tHQ7yX/VIIMO/syFKcE
+        UvWqKTBwRT6mClrWcgCGKpvkV7+JP4O41dRTo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xNkTXw
-        aGZx3z7wIZs92JEhqpF9VQruN+AlKLSELPmbF6KhBm+GtHXVsX4gyRi1vyjEJ9QG
-        7NNc8R4C1Ea5cZy2xpHcOxgZIFqKrTOBBNyMxmd7mm/PEMQT0tAhKbqLJ7H3Bohg
-        6WYk+27qzYRALalC0ze3vy2IQBoY9wacXgzRM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A536D112416;
-        Tue, 26 Jan 2021 13:47:07 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=k+u+y0RmUiWCSUFMT8Jd8VETCEpch37O
+        EPBjYQZfHzzeKlevW/u1IigOZJ6sTz20cH2M4ZdR3nUnocFcgSCZp562gR0uf7i8
+        mGNRm94pwrVZi87AaHv3eSEEFGwvVWrJkiD4a6YEbmu7V9G5lxi+loVvSWUU3NlJ
+        rCkfM0Lcb5s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99E61AB471;
+        Tue, 26 Jan 2021 13:32:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8FDA9112412;
-        Tue, 26 Jan 2021 13:47:03 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0882BAB46F;
+        Tue, 26 Jan 2021 13:32:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Cc:     =?utf-8?B?6Zi/5b6354OI?= via GitGitGadget 
-        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] strbuf.c: optimize program logic
-References: <pull.846.git.1611637582625.gitgitgadget@gmail.com>
-        <xmqqy2gg2pdm.fsf@gitster.c.googlers.com>
-        <CAOLTT8T1N2FSK3GiLaQUZt-OO5qzjQz7iq2cuKxasmuwnEZoXw@mail.gmail.com>
-Date:   Tue, 26 Jan 2021 10:47:01 -0800
-In-Reply-To: <CAOLTT8T1N2FSK3GiLaQUZt-OO5qzjQz7iq2cuKxasmuwnEZoXw@mail.gmail.com>
-        (=?utf-8?B?IuiDoeWTsuWugSIncw==?= message of "Tue, 26 Jan 2021 18:44:57
- +0800")
-Message-ID: <xmqq8s8f3596.fsf@gitster.c.googlers.com>
+To:     "Miriam R." <mirucam@gmail.com>
+Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH v3 1/7] bisect--helper: reimplement `bisect_log` shell
+ function in C
+References: <20210123154056.48234-1-mirucam@gmail.com>
+        <20210123154056.48234-2-mirucam@gmail.com>
+        <gohp6kv9bml9qc.fsf@gmail.com>
+        <CAN7CjDANLB85GHVVn32w_Y70bzvadtqdq2uRyc81j7nz+W05jA@mail.gmail.com>
+Date:   Tue, 26 Jan 2021 10:32:15 -0800
+In-Reply-To: <CAN7CjDANLB85GHVVn32w_Y70bzvadtqdq2uRyc81j7nz+W05jA@mail.gmail.com>
+        (Miriam R.'s message of "Mon, 25 Jan 2021 20:23:32 +0100")
+Message-ID: <xmqqczxr35xs.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E19ACA4C-6006-11EB-B808-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D095AE08-6004-11EB-AFE7-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@gmail.com> writes:
+"Miriam R." <mirucam@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8826=E6=
-=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:17=E5=86=99=E9=81=93=EF=BC=9A
->>
->> "=E9=98=BF=E5=BE=B7=E7=83=88 via GitGitGadget" <gitgitgadget@gmail.com=
-> writes:
->>
->> > From: ZheNing Hu <adlternative@gmail.com>
->> >
->> > the usage in strbuf.h tell us"Alloc is somehow a
->> > "private" member that should not be messed with.
->> > use `strbuf_avail()`instead."
->>
->> When we use the word "private", it generally means it is private to
->> the implementation of the API.  IOW, it is usually fine for the
->> implementation of the API (i.e. for strbuf API, what you see in
->> strbuf.c) to use private members.
->>
-> Well, I just think most other functions in strbuf.c follow the use
-> of `strbuf_avail()` instead of "sb->alloc-sb->len-1", and the
-> "sb->alloc-sb->len-1" that appears in `strbuf_read()` is not so uniform=
-.
+>> Although I compiled and did small test on the above code snippet, don't
+>> trust it blindly and perform your own test and judge whether this is the
+>> best way to implement this shortcoming.
+> Ok, thank you.
+> I am not the original author of this subcommand reimplementation
+> and I don't know if there is a reason for the difference with the
+> error message. Maybe we can wait for some other reviewers opinion.
 
-I actually wouldn't have minded if this were sold as "code clean-up
-to use _avail() when we open-code in the implementation of strbuf
-API in codepaths that are not performance critical."
+Sorry I missed this thread.
 
-I am not sure about the _setlen() side of the thing.  It is quite
-obvious what is going on in the original, and it falls into "when it
-is written one way that is good enough, replacing it with another
-that is not significantly better often ends up being mere code
-churn.", I would think.
+My understanding is that this topic is an attempt to "reimplement"
+what is there in the scripted version, so any deviation of behaviour
+obserbable from outside, which is *not* justified, should by
+definition be treated as a bug.
+
+If the original author did not explain why the behaviour difference
+exists and defend why the new behaviour in the reimplementation is
+better, and if you do not think of a good reason why the behaviour
+should be different and the new behaviour is better, then let's
+treat it in a bug and fix it.
 
 Thanks.
