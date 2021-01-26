@@ -2,142 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC12C4332E
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8821BC43331
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4DFD2067B
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 663A42067B
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727950AbhAZWDh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:03:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391557AbhAZTMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 14:12:41 -0500
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E52B0C061574
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 11:11:56 -0800 (PST)
-Received: by mail-qv1-xf34.google.com with SMTP id a1so8382464qvd.13
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 11:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=SgTbLwoM3fpI2CeyN2uV4PTG5B3ATTbW8wS/aFuNKzI=;
-        b=jEDhpzK/SuOPYdgpck4xhlOTOxOvQeSUpQPiRKsqIvDNP8p4EXUzzUxKInI10R5LoM
-         ojz9jgY4vN7G9qUlCgD08fjWwbO9wYwN3Y9t9m9dlFz40wzNWMgjATpx1O1NYpVqIp8c
-         ljIiA32morqAitCf5hPnDDjdJjey7QxH49id9zIDsM6DAqNFRI/Z2Fh4KYsVNusijpbj
-         liMhl0CqrGn0oBpc/MWbqj/UQZG7DJF2OOZyiMRf7PJVpNjYyv+1AYOf/cgNCVpg0LjT
-         txFKR4z+pNDVYRtQgVuHJDDCUkWISv63fvJ6OyznHzO5r64bHTdZ8NpA4cogaICWQOzS
-         5KZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=SgTbLwoM3fpI2CeyN2uV4PTG5B3ATTbW8wS/aFuNKzI=;
-        b=pjS8biunNtY1EnEAaosWmkKV5oPja2AYG6/NTqmis9a1WGemBBv1ScQ4GW8QlMp67V
-         GZJ1gDUYRphojlguo7eXZmCFlFdBiFAu8w51+yb0aCLNY2vi0NtsQy6VnH7lMc4JoYJI
-         ESB0TRbWKsRBZ2XrJgLfESLx/pobQm8IQTY/sq048RxAgAwB/doQ+RhvK9220G7tYSQi
-         0cGdRlwfWZMzDn+sEeC+kV70YKIaPeK/NtxB3lILG/leimJb/+LbUoRMqsLD+fkDcV7X
-         YHp3+5qYZ2cRv2n0KsxWDmG9Tpj2e4QDzgpoN8BxFni7FePFV0KzsmaZh+E/v8aSxOgm
-         YJBg==
-X-Gm-Message-State: AOAM531O848CTknw+05fW8Ye75xTh4NddVX/YK3x1HUncdeqk9/TqNGO
-        FV3tCDzgvNhCmFuDtHNou3wvHJIbzPsJ3Q==
-X-Google-Smtp-Source: ABdhPJzZngXunYLseNDQrpRmDRUBCWTiJXylIk3YjR2Z/22OSAzkyp8si+ySrig2NnEPJ9bPG+0nZw==
-X-Received: by 2002:a05:6214:118e:: with SMTP id t14mr6987735qvv.50.1611688315607;
-        Tue, 26 Jan 2021 11:11:55 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id a21sm14941717qkb.124.2021.01.26.11.11.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Jan 2021 11:11:54 -0800 (PST)
-Subject: Re: Git Commit Signature Encoding
-To:     Rene Schumacher <Rene.Schumacher@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
- <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <328de960-ac67-e313-ecc3-b5b505e42bea@gmail.com>
-Date:   Tue, 26 Jan 2021 14:11:53 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.1
+        id S1727969AbhAZWDo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 17:03:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53618 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390115AbhAZT0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 14:26:04 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A2979B505;
+        Tue, 26 Jan 2021 14:25:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=pnsNMlU7zuHL
+        pHd7SqgZJbXWj44=; b=codol2r35mUripuA8ut9AX+qv8U154rJBitZrKpWmH2T
+        2dzu2QnJsQN4J66pAM17ulEP/RK+cGus1CQb68N65DASrcvfZwuwOz3ZBMOcbKF5
+        w56KuUbjGOv4yLLx73uiOk4XhvW848ydU357w9nAIL7KmKsVgk91l1FMrQI8BEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=AeaSs4
+        9GYNv/BbWY1Qd8C1XM2off4RTgxvOGnIw08mnyWwy+Lx455jQRke+QEdc1JeHAjq
+        sMRxdYdgoYn+tMRjSXBx0XHyLc75Lc/8dI3NDxKc8BLJ+Ufzz3J1j5X4sDKxjf7U
+        rM1i9JtcBuSukQnuNGZjg7ld99MO2GEkpgLi0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 219F09B503;
+        Tue, 26 Jan 2021 14:25:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 942779B502;
+        Tue, 26 Jan 2021 14:25:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/3] range-diff/format-patch: refactor check for
+ commit range
+References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
+        <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
+        <3f21e10f919eead049dc2440a29bb2bed6c99d0d.1611339373.git.gitgitgadget@gmail.com>
+        <xmqqzh107m5d.fsf@gitster.c.googlers.com>
+        <20210125073508.l7ksohyfhcogch4x@pengutronix.de>
+        <xmqqpn1syg3s.fsf@gitster.c.googlers.com>
+        <20210125212525.dpnsj7ejngvpkd5y@pengutronix.de>
+Date:   Tue, 26 Jan 2021 11:25:11 -0800
+In-Reply-To: <20210125212525.dpnsj7ejngvpkd5y@pengutronix.de> ("Uwe
+        =?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Mon, 25 Jan 2021 22:25:25
+ +0100")
+Message-ID: <xmqqzh0v1ox4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3690842E-600C-11EB-B46D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi René,
+Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
 
-Le 2021-01-26 à 09:30, Rene Schumacher a écrit :
-> Hi all,
-> 
-> I'm trying to fix an encoding (?) issue when viewing gpg signatures for commits in PowerShell Core on Windows. Apparently, git changes the output from gpg depending on the command used. Here's what I see:
-> 
-> git show --show-signature
-> This command shows strange line endings and is unable to properly display the é in my name:
-> 
-> commit d7a43da0bd3bc7e31dd46afb8ccd78735ba43a36 (HEAD -> master)
-> gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time^M
-> gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF^M
-> gpg: Good signature from "Ren<82> Schumacher <rene.schumacher@microsoft.com>" [ultimate]^M
-> gpg:                 aka "Ren<82> Schumacher <reneschu@microsoft.com>" [ultimate]^M
-> Author: René Schumacher <reneschu@microsoft.com>
-> Date:   Tue Jan 26 15:28:26 2021 +0100
-> 
->      Commit with signature
-> 
-> diff --git a/file1.txt b/file1.txt
-> new file mode 100644
-> index 0000000..a7f8d9e
-> --- /dev/null
-> +++ b/file1.txt
-> @@ -0,0 +1 @@
-> +bla
-> 
-> 
-> git verify-commit
-> This command does not show the line endings but still fails to properly show the é:
-> 
-> gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time
-> gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
-> gpg: Good signature from "Ren82 Schumacher <rene.schumacher@microsoft.com>" [ultimate]
-> gpg:                 aka "Ren82 Schumacher <reneschu@microsoft.com>" [ultimate]
-> 
-> 
-> git verify-commit --raw
-> This command does properly show the é in my name so I guess that gpg output is correct and there's something happening while git parses the gpg output:
-> 
-> [GNUPG:] NEWSIG
-> [GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-> [GNUPG:] SIG_ID jBtyyA8QIDL0tD5fneVqJo7oU/8 2021-01-26 1611671306
-> [GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-> [GNUPG:] GOODSIG 7802B995CDB4A2EF René Schumacher <rene.schumacher@microsoft.com>
-> [GNUPG:] VALIDSIG 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 2021-01-26 1611671306 0 4 0 1 8 00 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
-> [GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-> [GNUPG:] TRUST_ULTIMATE 0 pgp
-> [GNUPG:] VERIFICATION_COMPLIANCE_MODE 23
-> 
-> 
-> I already set the environment variable LC_ALL to C.UTF-8, which fixed the commit message output (see first screenshot) but unfortunately not the signature output. Any idea what might be causing this and how to fix it (if possible)?
-> 
+>> > My POV is that if it's easy to use the same function (and so the sam=
+e
+>> > set of range descriptors) for git log and git range-diff then do so.
+>> > This yields a consistent behaviour which is IMHO better than prevent=
+ing
+>> > people to do things that are considered strange today.
+>>=20
+>> ... I am OK with that point of view.  It certainly is simpler to
+>> explain to end users.
+>
+> It seems you understood my argument :-)
 
-What Git and GPG versions are you running ? And what Powershell version
-(I don't think that matters but still, a complete environment description
-usually goes a long way).
+So it seems ;-).
 
-Can you come up with a reproducible example ? (Complete steps starting
-with 'git init' and 'gpg --gen-key')
+>> Having said that, it would make it much harder to implement
+>> efficiently, though.  For example, when your user says
+>>=20
+>> 	git range-diff A B
+>>=20
+>> to compare "git log A" (all the way down to the root) and "git log
+>> B" (likewise), you'd certainly optimize the older common part of the
+>> history out, essentially turning it into
+>>=20
+>> 	git range-diff A..B B..A
+>>=20
+>> or its moral equivalent
+>>=20
+>> 	git range-diff A...B
+>>=20
+>> But you cannot apply such an optimization blindly.  When the user
+>> gives A..B and B..A as two args, you somehow need to notice that=20
+>> you shouldn't rewrite it to "A..B...B..A", and for that, you'd still
+>> need some "parsing" of these args.
+>
+> I agree that for a long history
+>
+> 	git range-diff A B
+>
+> is an expensive request and I wouldn't invest too many cycles optimizin=
+g
+> it.
 
-Cheers,
+Well, your devil's advocate can argue that accepting an input that
+can easily make the tool unusable would be irresponsible, though.
 
-Philippe.
+And there are two possible ways out:
+
+ (1) declare that optimizing "A B" into "A...B" is way too difficult
+     to do in general, and find a good enough way to see if A and B
+     individually gives a "range" that should be manageable; or
+
+ (2) invest cycles to optimize, so your users do not have to care.
+
+I think the series takes the former approach, and I find it
+understandable.
+
+It is a different matter if the way found and implemented in the
+patch is "good enough" to tell if a given argument names a
+manageable range.  You said something about "rev^{/^here are
+two..dots}" that can be mistaken as a "good enough" range, but it
+actually names a revision and all the way down to the root.
+
+> (And if I'd optimize it, it wouldn't be done using textual
+> combination of the two strings but by checking if the two ranges
+> intersect.
+
+Yup, that is in line with what I mumbled earlier about
+setup_revisions() and inspecting the rev_info.pending, I think.
+
+>> So, I dunno.  Limiting the second form to only forms that the
+>> implementation does not have to do such optimization would certainly
+>> make it simpler for Dscho to implement ;-)
+>
+> I don't want to make it more complicated for Dscho, I'm happy if I can
+> in the near future use range-diff with $rev1^! $ref2^! . So feel free t=
+o
+> ignore me.
+>
+> Best regards
+> Uwe
+
