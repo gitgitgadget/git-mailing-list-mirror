@@ -2,194 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD495C433E9
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B2F1C432C3
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A760E22EBF
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F31F222EBD
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405833AbhAZOff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 09:35:35 -0500
-Received: from mail-db8eur05on2110.outbound.protection.outlook.com ([40.107.20.110]:5760
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2392729AbhAZObJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:31:09 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Cj1z7jQKHHNl8VzMMeRoBUWraiOVsdLZYfjzdcNDD7ZqtnhQ1LZCabxgIVi2c1gruLy6qIlOcl/1OudIJhfKNocXc4jqdhmtzXpYB2tj4Mcmp0VdcXvUt6plZbPTBjHrwpHDT/V8PjqUmFuBEEz6nqGS9BVScrWsfG+Zdol8QPlaUax5fk+Z30RhjzoOuhUeR84pHvmIWFFkXHGjNXiPE2IaXrIzK73EcuSpgbhHuEmO3SEyaaQLWvetLu8J1kTYKJqEL6Jccm4C/HeJH/F/TRA6bTslme7c4UPITXKlz+ZQTTEHdsDwfEsm2fLmyj2kcaQ+aZ7d+SZ5mg13ZN4mPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v0Amv8nblUWDKcEeNYRratCau3/FsDbwoJuv7Z7d8Rg=;
- b=mrDgCIvv1FkMQmO/ZEcRB1zffw9kqQPuYWPAWP5EankRR0eBu9Rl/y5YQkyFwpxh17G6W9VhXR1pqDVuiKlqsbeNJtLeQ2ra/bdhoEWyKSEcirSlFBEnkdSQhrHqGr4B/HAqTaUCgfXvnZOuniFKizaIQnGxgyRG/U1krZ7SCidBbZx1h/bSRIagJqkljYXIXXQ788upbHL9dBCMgkEwJ1cgbpQ06Y4ge4yQlHShD35+u+zoioI4zAaroPjlKULjqv3rX7wmCzmlp/CdNDL0XTtDn+NKYnzKGAmScBaxbwPleq6lR0MtW1WhMWh36WsP4TVJb8RmVu339c8zkmAtrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v0Amv8nblUWDKcEeNYRratCau3/FsDbwoJuv7Z7d8Rg=;
- b=Dtv3Zc45+3b0nI05pl4Rh8Op6JDB8Ma4XXc9G71yr+uksiTAqS1/4E2HwPH8+VVvpoDNnXtSaNWMBuQxVWJ39V1yQh5mYU8EGQxEUTG6uNMUqO+S2FfFA6JTiRalwj5CUN5/Gn/SaDwJNy6Xccc32WCBvQYjLdfne358O23P+sk=
-Received: from (2603:10a6:20b:1bd::8) by
- AM7PR83MB0402.EURPRD83.prod.outlook.com (2603:10a6:20b:1bf::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.4; Tue, 26 Jan
- 2021 14:30:25 +0000
-Received: from AM7PR83MB0434.EURPRD83.prod.outlook.com
- ([fe80::94df:7115:4ee0:8f27]) by AM7PR83MB0434.EURPRD83.prod.outlook.com
- ([fe80::94df:7115:4ee0:8f27%7]) with mapi id 15.20.3825.006; Tue, 26 Jan 2021
- 14:30:25 +0000
-From:   Rene Schumacher <Rene.Schumacher@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Git Commit Signature Encoding
-Thread-Topic: Git Commit Signature Encoding
-Thread-Index: Adbz7Oh9PSrPF9WVQ4qtX5G7B9S16AAAkSXA
-Date:   Tue, 26 Jan 2021 14:30:25 +0000
-Message-ID: <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
-References: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
-In-Reply-To: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=aa93a574-9ecd-4031-8287-8b068332c93c;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2021-01-26T14:09:32Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=microsoft.com;
-x-originating-ip: [2a0a:a543:d741:0:7057:efb2:100f:dd54]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 34351326-7ac5-411b-811e-08d8c206ebf2
-x-ms-traffictypediagnostic: AM7PR83MB0402:
-x-microsoft-antispam-prvs: <AM7PR83MB0402B9867EF6E1DB840F7FBFEEBC9@AM7PR83MB0402.EURPRD83.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3631;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: gaRqhzVtAnmyXx6/JVgRdF0IVQDQkeHl0aq2oyKJJrfvLKTFmCv0DXmbrkE2n0meBUsnNzVo5Sw4xyoWm+ezvBs7Z0SrdenqjjjV3GpCwbive8S2jM0cB7/KcvBA5e6ZtrBKAjyr+3Sh+Kj1ViIifGFFlKdGuq5bSfAv3bLa0Ku9bmHZ+9UHOzQBzHBA0eRR5fnrz1AOZIGSbY2pvd02ssQkEZMyxbiPsDqZJkK2Fw4OcpVZDao7S5iHHp17MkwOqQzLXwvKs5yTmuxVTTWPUOJqX27Js0A90D6ZeyfImgI92uAJYu4+J7wjz+ttB4SaziX+DvIZWBYBCe+vBsx9cVYrWHmY3Q9GSSOkakKcYNIMf869nDz/XdmGmM7Al3RZFoH8DCfQB8lWOny16DvCSluGHt2oo/+OiBhspYOo9X3/dzMqY4+R+CF72JPTK+u7/e0xzGbcvADu8gYiWWClxyN5GbSZ8pHKEWfA2pENhTGCMcsA84yrQGE0JuD//1IFFuMf2syZuuRykF364wz4Tg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR83MB0434.EURPRD83.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(376002)(346002)(136003)(39860400002)(396003)(6916009)(2940100002)(66574015)(66476007)(5660300002)(66946007)(66446008)(2906002)(316002)(83380400001)(64756008)(6506007)(3480700007)(33656002)(8676002)(8936002)(66556008)(10290500003)(52536014)(9686003)(478600001)(55016002)(86362001)(8990500004)(186003)(7696005)(82960400001)(19627235002)(82950400001)(76116006)(71200400001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?RdwjlemDQCWGQ3xX+wt/H+FVlkRFoB13sp5V4T9cZcBeo8TqbBmfPhY/ne?=
- =?iso-8859-1?Q?ePp1Z+9Hj77sUV1J6iMuAaioojyWGbsvtxke6UWqw0xNHjMqWunhyJRByX?=
- =?iso-8859-1?Q?dD/57rjhD6lrvT7SLFDWTXv2/gLWmhAqmQCfw1ADHgeZBVe30PaU5e43z2?=
- =?iso-8859-1?Q?MmE1ilX7GvzmLPLJcYmlMurVlk7ZPWWC2mPNRSjA7poPbYvFXZ7d+8/30H?=
- =?iso-8859-1?Q?10i+FGLaAEXbhNcI1FBR+U0tFOORakqhv3iQ29sXIZ0bfg9mea+3rm6tHH?=
- =?iso-8859-1?Q?EZniy7mSbBpjLgFYSED0Id6GV4TWb0u3xZD5cBcEFpeLj3/gzklKfVHN0d?=
- =?iso-8859-1?Q?7e6e1VWjRTKx4Xx+pZHifSyGwghqtKhafDblPDTGMng5lY+OHpETIgwEG1?=
- =?iso-8859-1?Q?P+oPqhjK7fGLrvtz0lqmqpFPWSUwmTeS9q9+3zPC1DRo3I1yC+obH+/2c6?=
- =?iso-8859-1?Q?wB51uXC00xLVR6PpY59pi7YT4z0psBofAbjm3PC7vauEH5x5g63rSXRhMv?=
- =?iso-8859-1?Q?gjTQ97yn15pMmRZDIIQrCU82SlVPf0lKqfUM0xJlFxPi0/aBBmdrhcB5dd?=
- =?iso-8859-1?Q?tcari7IQ8fQ0WKkDu1OnSCD9+MhWBY1B5AuXSmvixYUXExr9s7HbsiUwfy?=
- =?iso-8859-1?Q?MWdDfSMENKHxV5xLFt1e9hmafba7deL7P5AziwSHBNXvVMuHigtwmBOXC6?=
- =?iso-8859-1?Q?mBaHabOoZNz44qSuiYgx+qUubAfqe6SRqSegV4KFhNs96RBoAHO9RZws5R?=
- =?iso-8859-1?Q?FiCuZR6mjmpKdWqC8zVGEjG0WP3G1Yc6yO2HVZaj4JVGrB1jmf7u5F5mmJ?=
- =?iso-8859-1?Q?CgEGQiLrohOSqGlWAYXpegaxNiCA1JZsuNXbwL3SH3Xayn2I6//8fGWlB0?=
- =?iso-8859-1?Q?0rd+76ZopsNKHnQ4bnn5cIKflw71xK3VbDMLc7OcsVXTHULZQqZBWEO80v?=
- =?iso-8859-1?Q?xqhHagQQuw8LURsXhy7hW1gXOG1igC6bL7jzrqYL7Zs3xj9PJxHRhaAzEx?=
- =?iso-8859-1?Q?ABp0y4rQJaaxL+oAhQ+nL8eJWIeeEIOy9ok55OOJcho68Ktoq3SdJbfPgV?=
- =?iso-8859-1?Q?vA+qmbDOPOrQtut+5r5JW65auZKqB5pcGKH/iVJx/2HLnZX2FyCREkHgHk?=
- =?iso-8859-1?Q?8s3x79vrgIYli7y8BzW+oQtqs2STYrYMoS6+VOzKkNAcUV8Rog?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S2390703AbhAZNZx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 08:25:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391692AbhAZJ6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 04:58:19 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E3B3C061573
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 01:57:39 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ox12so22155603ejb.2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 01:57:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=E+HwaZhqaCEucOkEEG/b52cW7QH1jBbXczQ7MCRtXVE=;
+        b=cq95l8b+DMM6PINFcNl6VZQOATEAMsJJUzk3PRAuzFh89NR8YHA4V4g9vnDeOkFSlS
+         MMRVaGBi8Dqey35+dPaB80hetGqPaHCpdTRZc3G2+QeQ3ni1+qWBgWthG/bQKBX7/r2A
+         oOq7tFH6x9XuuajGaTWqXuzMls8EOFmx8dhcQRYFL2Mz8azBCMpdgUCXuwMPUyVjqJ9S
+         hiJG48DXmgiDdRe83Z8PNcyVkIMo/QIynOlyzNVZc0QA28mXZcIBT4qVk9Iuo9CW2CNi
+         PewAsUd0G4aV95baC/ngMHDqjLKfRtvIxC1L1Zbp2hlyeIJ8I63N4DK/WsAcZbLJarRe
+         YEaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=E+HwaZhqaCEucOkEEG/b52cW7QH1jBbXczQ7MCRtXVE=;
+        b=PnReh65d/sQ4H2bsmoGFdZN5dPeNQplk14XxxPB8dCMMXc0Nzq5VqZljUPIIsS1oDE
+         WYESuzMN1X2inmznOYxyjyCB24Wmc5ClKuNaxC0nKf0e9sUTR5M+7uBr5XAPRu+URMVY
+         yLLmNq4Ib4anhKAHLssGRdaZvRGE2VI/ch1Td87VfI188u1oxrPho9P1A4M+8baXLeEg
+         sPrZhgOFxJfIAoFCwXXTJSmhKpCru2IywSzErDTzJZneAV4VU/koFwBaVeS6bfvHkWdT
+         GN8PVGVrPpfFmYIc8AwQnq8DbyAjImkoewzEeN49VfpefMj7rR+BHWTMGi/UhD8So7At
+         LDKg==
+X-Gm-Message-State: AOAM533QM1WlNTozvI5rh+nqwrOMGatM1SRSU5eHWR0lsQCoODtULULd
+        cVqzEQbUAbkMJiKqXW1fznk=
+X-Google-Smtp-Source: ABdhPJzYbt39+I71jhyZWvArLQLDbiXx+sH+paAb1zHVQzGqUSbbntRdCOO7gKlg0zKg7Fie85F2zA==
+X-Received: by 2002:a17:906:5958:: with SMTP id g24mr2887727ejr.377.1611655058057;
+        Tue, 26 Jan 2021 01:57:38 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id q16sm8299638ejd.39.2021.01.26.01.57.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 01:57:37 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jacob Vosmaer <jacob@gitlab.com>
+Cc:     peff@peff.net, gitster@pobox.com, git@vger.kernel.org,
+        jeffhost@microsoft.com, jonathantanmy@google.com
+Subject: Re: [PATCH v3 1/1] upload-pack.c: fix filter spec quoting bug
+References: <YA81LEon1RPzT0T9@coredump.intra.peff.net>
+ <20210125230952.15468-1-jacob@gitlab.com>
+ <20210125230952.15468-2-jacob@gitlab.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <20210125230952.15468-2-jacob@gitlab.com>
+Date:   Tue, 26 Jan 2021 10:57:36 +0100
+Message-ID: <874kj46mwf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM7PR83MB0434.EURPRD83.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34351326-7ac5-411b-811e-08d8c206ebf2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2021 14:30:25.5014
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: G5TVXrhu1eiQGZjs987Cn9AXRCkgBLdzeJSbsd/+QZ/oakLDBhzHdI86RyUE7klw41//4Ta97VeXMDvzguC0Lg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR83MB0402
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
 
-I'm trying to fix an encoding (?) issue when viewing gpg signatures for com=
-mits in PowerShell Core on Windows. Apparently, git changes the output from=
- gpg depending on the command used. Here's what I see:
+On Tue, Jan 26 2021, Jacob Vosmaer wrote:
 
-git show --show-signature
-This command shows strange line endings and is unable to properly display t=
-he =E9 in my name:
+> This fixes a bug that occurs when you combine partial clone and
+> uploadpack.packobjectshook. You can reproduce it as follows:
 
-commit d7a43da0bd3bc7e31dd46afb8ccd78735ba43a36 (HEAD -> master)
-gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time^M
-gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF^=
-M
-gpg: Good signature from "Ren<82> Schumacher <rene.schumacher@microsoft.com=
->" [ultimate]^M
-gpg:                 aka "Ren<82> Schumacher <reneschu@microsoft.com>" [ult=
-imate]^M
-Author: Ren=E9 Schumacher <reneschu@microsoft.com>
-Date:   Tue Jan 26 15:28:26 2021 +0100
+Let's: 
 
-    Commit with signature
+ * Refer to the commit we're fixing a bug in, i.e. Junio's mention of
+   10ac85c7 (upload-pack: add object filtering for partial clone,
+   2017-12-08) upthread.
 
-diff --git a/file1.txt b/file1.txt
-new file mode 100644
-index 0000000..a7f8d9e
---- /dev/null
-+++ b/file1.txt
-@@ -0,0 +1 @@
-+bla
+ * See also "imperative-mood" in SubmittingPatches. I.e. say "Fix a bug
+   in ..." not "This fixes ... can be reproduced as"
 
+ * uploadpack.packObjectsHook not uploadpack.packobjectshook except in C
+   code.
 
-git verify-commit
-This command does not show the line endings but still fails to properly sho=
-w the =E9:
+> git clone -u 'git -c uploadpack.allowfilter '\
+> '-c uploadpack.packobjectshook=env '\
+> 'upload-pack' --filter=blob:none --no-local \
+> src.git dst.git
 
-gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time
-gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
-gpg: Good signature from "Ren82 Schumacher <rene.schumacher@microsoft.com>"=
- [ultimate]
-gpg:                 aka "Ren82 Schumacher <reneschu@microsoft.com>" [ultim=
-ate]
+This and the output below would be more readable indented.
 
+> Be careful with the line endings because this has a long quoted string
+> as the -u argument.
+>
+> The error I get when I run this is:
+>
+> Cloning into '/tmp/broken'...
+> remote: fatal: invalid filter-spec ''blob:none''
+> error: git upload-pack: git-pack-objects died with error.
+> fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
+> remote: aborting due to possible repository corruption on the remote side.
+> fatal: early EOF
+> fatal: index-pack failed
 
-git verify-commit --raw
-This command does properly show the =E9 in my name so I guess that gpg outp=
-ut is correct and there's something happening while git parses the gpg outp=
-ut:
+[...]
 
-[GNUPG:] NEWSIG
-[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-[GNUPG:] SIG_ID jBtyyA8QIDL0tD5fneVqJo7oU/8 2021-01-26 1611671306
-[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-[GNUPG:] GOODSIG 7802B995CDB4A2EF Ren=E9 Schumacher <rene.schumacher@micros=
-oft.com>
-[GNUPG:] VALIDSIG 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 2021-01-26 16116=
-71306 0 4 0 1 8 00 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
-[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
-[GNUPG:] TRUST_ULTIMATE 0 pgp
-[GNUPG:] VERIFICATION_COMPLIANCE_MODE 23
+> The problem is an unnecessary and harmful layer of quoting. I tried
+> digging through the history of this function and I think this quoting
+> was there from the start.
 
 
-I already set the environment variable LC_ALL to C.UTF-8, which fixed the c=
-ommit message output (see first screenshot) but unfortunately not the signa=
-ture output. Any idea what might be causing this and how to fix it (if poss=
-ible)?
+...So looked at "git log" but didn't try to check out 10ac85c7 and see
+if it had the same issue? If we're going to leave a note about this at
+all probably better to help future source spelunkers by being able to
+say the issue was there from the start.
 
 
-Thanks!
+> My best guess is that it stems from a
+> misunderstanding what use_shell=1 means. The code seems to assume it
+> means "arguments get joined into one big string, then fed to /bin/sh".
+> But that is not what it means: use_shell=1 means that the first
+> argument in the arguments array may be a shell script and if so should
+> be passed to /bin/sh. All other arguments are passed as normal
+> arguments.
+>
+> The solution is simple: never quote the filter spec.
+>
+> This commit removes the conditional quoting and adds a test for
+> partial clone in t5544.
+>
 
-Ren=E9 Schumacher
-Sr. Customer Engineer
-Tel: +49 89 3176 - 4908 | Mobil: +49 151 5895 5728 | mailto:rene.schumacher=
-@microsoft.com
-Microsoft Deutschland GmbH - Niederlassung K=F6ln
-Holzmarkt 2a, 50676 K=F6ln
+Thanks for hacking this up! Hopefully the above is helpful and not too
+nitpicky. Mainly wanted to help you get future patches through more
+easily...
 
-Microsoft Deutschland GmbH | Walter-Gropius-Str. 5 | 80807 M=FCnchen
-Gesch=E4ftsf=FChrer: Sabine Bendiek (Vorsitzender), Thorsten Herrmann, Benj=
-amin O. Orndorff, Keith Dolliver
-Amtsgericht M=FCnchen, HRB 70438
+> Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
+> ---
+>  t/t5544-pack-objects-hook.sh | 9 +++++++++
+>  upload-pack.c                | 9 +--------
+>  2 files changed, 10 insertions(+), 8 deletions(-)
+>
+> diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
+> index 4357af1525..f5ba663d64 100755
+> --- a/t/t5544-pack-objects-hook.sh
+> +++ b/t/t5544-pack-objects-hook.sh
+> @@ -59,4 +59,13 @@ test_expect_success 'hook does not run from repo config' '
+>  	test_path_is_missing .git/hook.stdout
+>  '
+>  
+> +test_expect_success 'hook works with partial clone' '
+> +	clear_hook_results &&
+> +	test_config_global uploadpack.packObjectsHook ./hook &&
+> +	test_config_global uploadpack.allowFilter true &&
+> +	git clone --bare --no-local --filter=blob:none . dst.git &&
+> +	git -C dst.git rev-list --objects --missing=print HEAD >objects &&
+> +	grep "^?" objects
+> +'
+> +
+>  test_done
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 3b66bf92ba..eae1fdbc55 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -305,14 +305,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+>  	if (pack_data->filter_options.choice) {
+>  		const char *spec =
+>  			expand_list_objects_filter_spec(&pack_data->filter_options);
+> -		if (pack_objects.use_shell) {
+> -			struct strbuf buf = STRBUF_INIT;
+> -			sq_quote_buf(&buf, spec);
+> -			strvec_pushf(&pack_objects.args, "--filter=%s", buf.buf);
+> -			strbuf_release(&buf);
+> -		} else {
+> -			strvec_pushf(&pack_objects.args, "--filter=%s", spec);
+> -		}
+> +		strvec_pushf(&pack_objects.args, "--filter=%s", spec);
+>  	}
+>  	if (uri_protocols) {
+>  		for (i = 0; i < uri_protocols->nr; i++)
 
