@@ -2,103 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97D06C4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2C1C43332
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 683B820665
+	by mail.kernel.org (Postfix) with ESMTP id AF5B220679
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727183AbhAZWA4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:00:56 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55119 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393536AbhAZRwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 12:52:22 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ADD8A113E79;
-        Tue, 26 Jan 2021 12:51:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BNI2iGptMfDc
-        y1IF6pLTmdAs3MQ=; b=ZvVj+I0mKwBMhQURmow1Kxe3nSFl41FzziW0PRr4kiPZ
-        U+vA6ZDAysE1qd4zka+KL8MHXtXQHnMuAswY4HWrimbmJUlXQnSpLPCY8cO49wed
-        KgbhQrVzOdBoKJA8ZX5h/0X4+b1l0FOFTo3H8vzpWyj9X1guO5MneJTVbHwgCRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WqK2Wy
-        +7sOakNUnVpFsZMWWVd2xIZ8ScK6ahOO5dHNP0KPrXKxnG9FTdfnV+rSFQWCd1V8
-        lYGMoFtb69zjK5skkFpWqNrcgmeYPSRfMcQdfakz5p/EJuz8gR1bjScPirFEmpEm
-        XuPlsk7ulsrBtHAFKbvGECSG0R1brWmkFkOB8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A59B6113E77;
-        Tue, 26 Jan 2021 12:51:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9D198113E73;
-        Tue, 26 Jan 2021 12:51:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jacob Vosmaer <jacob@gitlab.com>, peff@peff.net,
-        git@vger.kernel.org, jeffhost@microsoft.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v3 1/1] upload-pack.c: fix filter spec quoting bug
-References: <YA81LEon1RPzT0T9@coredump.intra.peff.net>
-        <20210125230952.15468-1-jacob@gitlab.com>
-        <20210125230952.15468-2-jacob@gitlab.com>
-        <874kj46mwf.fsf@evledraar.gmail.com>
-Date:   Tue, 26 Jan 2021 09:51:35 -0800
-In-Reply-To: <874kj46mwf.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 26 Jan 2021 10:57:36 +0100")
-Message-ID: <xmqqlfcf37tk.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S1727557AbhAZWBM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 17:01:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37306 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2394225AbhAZSMn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 13:12:43 -0500
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275FFC061756
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:12:03 -0800 (PST)
+Received: by mail-vk1-xa2a.google.com with SMTP id u22so4095795vke.9
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:12:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fQuIsNZi4oXUovvoZnmsNuELQOOWhyI9gwlvOe6M+KI=;
+        b=tr6gLYcfwHwuo7TwQt7gO4eFhDe4qmvlEqi+66wHsc8voKRe8Li104hqO4CNolQZeT
+         ODrwA92GEiEwvj2lt6ATTZoqZEeGVXl7/B5p1Vg/7f0/LMj7FS17TUkF1qsANNV1dRuD
+         lkgm1F+UkaYTxk96c0YtvRfBRvDWt7UejnsMebHk3kaA2m6TjiYEz5ShXL6Jy7MlJNx6
+         +IaudSXRH50jNzv/FtoLVK0qANRfcV1SYqZOVQuJbuV52jfMUEGEPuLgKTj0xVsu+G9N
+         LJNYjNsYyc2jLbQtmu1VSnKv4zqNUwZ1t8VPF13C+MFy6x5dxXIHTXrzsmVQynBJprFQ
+         SOgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fQuIsNZi4oXUovvoZnmsNuELQOOWhyI9gwlvOe6M+KI=;
+        b=DMQjKc7f77E8AbTXyti2y4McMAPBVoETWeigTxPd+2vxPP0yN0wuoLFxE9PwnEN2X2
+         9Wld5dHv418ga3M/8+4tK9ivVTYqmHgsUP/FG8PN5AfNK+q1WauDVtt56Brbyp2usVGi
+         6E4uVgLqDJCBcR2kjL3eMrafcwG6eIlp8Lb/kMl0bRTPCYubiQr3hh7gaTkefyjwHeiU
+         wJpP9vykfe/T4xa5kJWl3oTPLQV2mkI11VCy6gr58Wh4i9QB+tnHulxcbwoqyaq101Uh
+         Nq2AcO1gZT/lLqKw+xHWIPsG0GZvejLRCOTas767gQf/ZuPkpFvkiKQjURKxEKv8DuvV
+         Ojzg==
+X-Gm-Message-State: AOAM533hsYkSO7G78mEIIKhH1Xw9bEYfNxjJIg062Pa8TzMte9Kr0r2g
+        upGXy7mZPDiv89K7abl2Qhz2YNc4swiqjvsvyAMIKA==
+X-Google-Smtp-Source: ABdhPJxRXbYT0ddq16vPAAejroIIPY7a+czwbIF6vK4ayLtOigbVBmtix5eldcMpnIy9AAO8+E7CIAxrIaOs5IEyMMY=
+X-Received: by 2002:a05:6122:31a:: with SMTP id c26mr5923175vko.0.1611684721943;
+ Tue, 26 Jan 2021 10:12:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 23302A04-5FFF-11EB-9C1B-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <pull.951.git.git.1611589125365.gitgitgadget@gmail.com>
+ <xmqq35yo459k.fsf@gitster.c.googlers.com> <CAFQ2z_PCh2RfWALhAUXm01Xq0o+ibuEGJ2p9sCtvTASQ0FLUag@mail.gmail.com>
+ <xmqqtur338bg.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqtur338bg.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 26 Jan 2021 19:11:50 +0100
+Message-ID: <CAFQ2z_PN8K6sKq=Rdw=maVhd67GhCtxWgGSUb5KhZ85EYV6jOw@mail.gmail.com>
+Subject: Re: [PATCH] doc/reftable: document how to handle windows
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Jan 26, 2021 at 6:40 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Han-Wen Nienhuys <hanwen@google.com> writes:
+>
+> >> Is this because we have been assuming that in step 5. we can
+> >> "overwrite" (i.e. take over the name, implicitly unlinking the
+> >> existing one) the existing 0000001-00000001.ref with the newly
+> >> prepared one, which is not doable on Windows?
+> >
+> > No, the protocol for adding a table to the end of the stack is
+> > impervious to problems on Windows, as everything happens under lock,
+> > so there is no possibility of collisions.
+> >
+> >> We must prepare for two "randoms" colliding and retrying the
+> >> renaming step anyway, so would it make more sense to instead
+> >> use a non-random suffix (i.e. try "-0.ref" first, and when it we
+> >> fails, readdir for 0000001-00000001-*.ref to find the latest
+> >> suffix and increment it)?
+> >
+> > This is a lot of complexity, and both transactions and compactions can
+> > always fail because they fail to get the lock, or because the data to
+> > be written is out of date. So callers need to be prepared for a retry
+> > anyway.
+>
+> Sorry, are we saying the same thing and reaching different
+> conclusions?
+>
+> My question was, under the assumption that the callers need to be
+> prepared for a retry anyway,
+>
+>  (1) would it be possible to use "seq" (or "take max from existing
+>      and add one") as the random number generator for the ${random}
+>      part of your document, and
+>
+>  (2) if the answer to the previous question is yes, would it result
+>      in a system that is easier for Git developers, who observe what
+>      happens inside the .git directory, to understand the behaviour
+>      of the system, as they can immediately see that 1-1-47 is newer
+>      than 1-1-22 instead of 1-1-$random1 and 1-1-$random2 that
+>      cannot be compared?
 
-> On Tue, Jan 26 2021, Jacob Vosmaer wrote:
->
->> This fixes a bug that occurs when you combine partial clone and
->> uploadpack.packobjectshook. You can reproduce it as follows:
->
-> Let's:=20
->
->  * Refer to the commit we're fixing a bug in, i.e. Junio's mention of
->    10ac85c7 (upload-pack: add object filtering for partial clone,
->    2017-12-08) upthread.
->
->  * See also "imperative-mood" in SubmittingPatches. I.e. say "Fix a bug
->    in ..." not "This fixes ... can be reproduced as"
->
->  * uploadpack.packObjectsHook not uploadpack.packobjectshook except in =
-C
->    code.
->
-> ... [jc: all the helpful hints snipped] ...
->
-> Thanks for hacking this up! Hopefully the above is helpful and not too
-> nitpicky. Mainly wanted to help you get future patches through more
-> easily...
+The first two parts of the file name (${min}-${max}) already provide
+visibility into what is going on, and the file system timestamp
+already indicates which file is newer. I picked a random name as
+suffix, as it gets the job done and is simple.
 
-Yeah, thanks, both, for aiming higher ;-) =20
+We could do what you suggest, but it adds semantics to the filenames
+that aren't really there: currently, tables.list is a list of
+filenames, and no part of the code parses back the file names. If we'd
+do what you suggest, we have more ways in which the system can break
+subtly, and needs to handle error conditions if the names are
+malformed. This is the complexity I was alluding to in my previous
+message.
 
-I have to admit that I did find the log message a bit lacking, and
-that was why I had to dig bit to find out how the historical issue
-happened myself in the first place, and I tend to agree that it
-feels a bit of waste for that work to end up buried in the list
-archive without getting reflected in the proposed log message.
+We could stipulate that a compaction must always increase the logical
+timestamp, ie. in the scenario I sketched, the compacted table should
+be written with a max-timestamp of 3, even though it contains no
+entries at timestamp 3.  This avoids the error condition, but it's
+also surprising because it is actually inconsistent with how the
+format is described. But maybe we could update the description of the
+format.
 
+Or, we could rename to ${min}-${max}-0 and if that fails try
+${min}-${max}-1, and if that fails ${min}-${max}-2 etc. I think that
+is somewhat nicer than parsing back a counter from the existing
+filenames, but it could have the effect that 1-1-0 could be newer than
+1-1-2.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
