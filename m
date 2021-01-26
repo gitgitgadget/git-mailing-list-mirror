@@ -2,195 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1E05C433DB
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 123AEC433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:06:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 949E322B3B
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:06:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD98822B51
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 05:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730778AbhAZFEX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 00:04:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731816AbhAYTZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Jan 2021 14:25:07 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A296C06174A
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:23:43 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id n2so28892350iom.7
-        for <git@vger.kernel.org>; Mon, 25 Jan 2021 11:23:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GpdGX84pv2ZXJvc3tjs6DK/YI1bEy24edvNcHoo2G1g=;
-        b=KDBBQM5Ryy9ubRlgqLlvxsz18CTsMYOI6nlRPZAcchrpvh+qmTmXpdc5KTExWnoQkI
-         wdJJtSCvHwfNO3o4hRMWIw+iKeyI7HDKZkYaXKU4/xU7qJoMYCOXias56EtfwsB23RGS
-         Gw1VMD3FfmMaQwHOBk0SDBCiEdbKI8Yer8+LwF+JhITq8yQH/XKc142EpiCY+o5Sps8M
-         S589QXoC6Vj7sAtBdkZztJVrWQWCdTYs5f+J6eZsyNcTIxsPXJJQV9qlC94J2vuBnjjy
-         ZyyqTOpgLircAHLACgucje5d09i19kQ8BDyLBbWv+mhmdW0yipG3k6VrTJ7exwV7EUTF
-         QvKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GpdGX84pv2ZXJvc3tjs6DK/YI1bEy24edvNcHoo2G1g=;
-        b=o6v2uMxaESG8CIa6kSmz1us4g82R3aUWers6FTjFSKR/74XTCCCypbS9uZliL0GBeT
-         vbpogqPy+87MwRuxsAlODOe6FoP4TeY+5kb+Wa29VK/eiFEOLDNBjCx0XIlomMX1LTZx
-         N5Q3UMIOXt46byZVKo9bh9wCfYIM5D9Gwr250Wt3FXDG0/pHY58eHfu7Y1JQhD8nhglF
-         xQoctU/2t0VZFp1fXX1hbrWG11SJGSLTtThCQ6MFJuLSDzWnY//NdgPY6ZAphLpMWNsR
-         mTHo03yu9U8pgmPhiJomWLnzXwsG4jkMtlLAwLo3tK6PRDcXPfmLcsJdUMsAgniKjy2o
-         ydwg==
-X-Gm-Message-State: AOAM533u4Z40TG28SiRupVs2TkrXHJO7E5ccyXfJLMEeCLcBYGC9ldtk
-        VtITXDP0V/bbC0jfw9oKJtKjBfZDHqd456R31lXDhr4d
-X-Google-Smtp-Source: ABdhPJwXoVDlxPUXxfnXUsA6qNDXrSzmGTRQtMTf2iMzO0M+Ps0TkTIAGm/WKryzNCHkKpocl7ZHnc+TWO6iJ9lqEkE=
-X-Received: by 2002:a6b:d20d:: with SMTP id q13mr1623719iob.71.1611602622713;
- Mon, 25 Jan 2021 11:23:42 -0800 (PST)
+        id S1731106AbhAZFFE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 00:05:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54196 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731896AbhAZCE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Jan 2021 21:04:56 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C26A93F88;
+        Mon, 25 Jan 2021 20:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fAa5993paE6l7uI8QjCreh1OwAw=; b=SSipUa
+        a8zI79mlUzGc0Wa4vZhfsPQWvdFb06+SAqR+KtK+UjzpxG5y9UtQd8dbSAqgF+sO
+        J81nkt3olLxFrXlNUFmytX4AroegeNwKBOVAMim3yBRL9hq5fkJGSAtjXGnR9lfx
+        oSRdDniJvh7rJmaGokGysqmK00Uoi62312OM0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XuhmXgXRLEHSkVKExm9iwLKBpcKpV9L7
+        ggAJUv5lQcyXXDO/HV8zImjl3mFHGTDMaZ5QKoA8sf37I0izNHT1agJvjwov1g+W
+        XYYTc/plFM/+6aIVK5tgPeU85DXvYxqT74Re0+Wz/QXz5YCOiLrRU8Yr4AZqEGIK
+        1V8frhq6aRs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02C2393F86;
+        Mon, 25 Jan 2021 20:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76B3493F84;
+        Mon, 25 Jan 2021 20:57:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] fetch-pack: print and use dangling .gitmodules
+References: <20210115234300.350442-1-jonathantanmy@google.com>
+        <cover.1611455251.git.jonathantanmy@google.com>
+        <2d6d8c2671fe424c752994dcb5277d4d923e17a0.1611455251.git.jonathantanmy@google.com>
+        <xmqqy2gizs1s.fsf@gitster.c.googlers.com>
+Date:   Mon, 25 Jan 2021 17:57:55 -0800
+In-Reply-To: <xmqqy2gizs1s.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Sat, 23 Jan 2021 23:56:47 -0800")
+Message-ID: <xmqqmtwwwjbw.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <20210123154056.48234-1-mirucam@gmail.com> <20210123154056.48234-2-mirucam@gmail.com>
- <gohp6kv9bml9qc.fsf@gmail.com>
-In-Reply-To: <gohp6kv9bml9qc.fsf@gmail.com>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Mon, 25 Jan 2021 20:23:32 +0100
-Message-ID: <CAN7CjDANLB85GHVVn32w_Y70bzvadtqdq2uRyc81j7nz+W05jA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] bisect--helper: reimplement `bisect_log` shell
- function in C
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E8B84ED6-5F79-11EB-9381-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Rafael,
+Junio C Hamano <gitster@pobox.com> writes:
 
-El dom, 24 ene 2021 a las 14:56, Rafael Silva
-(<rafaeloliveira.cs@gmail.com>) escribi=C3=B3:
+> Jonathan Tan <jonathantanmy@google.com> writes:
 >
+>> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+>> index 7d5b17909b..8b8fb43dbc 100755
+>> ...
+>> +	sane_unset GIT_TEST_SIDEBAND_ALL &&
+>> +	git -c protocol.version=2 -c transfer.fsckobjects=1 \
+>> +		-c fetch.uriprotocols=http,https \
+>> +		clone "$HTTPD_URL/smart/http_parent" http_child &&
+>> +
+>> +	# Ensure that there are exactly 4 files (2 .pack and 2 .idx).
 >
-> Nice work on this series.
+> Ehh, please don't.  We may add multi-pack-index there, or perhaps
+> reverse index files in the future.  If you care about having two
+> packs logically because you are exercising the out-of-band
+> prepackaged packfile plus the dynamic transfer, make sure you have
+> two packs (and probably the idx files that go with them).  Don't
+> assume there will be one .idx each for them *AND* nothing else
+> there.
 >
-> I have one comment on this series regarding a behavior diff between the
-> C and shell version, and small comment about style, see below.
+>> +	ls http_child/.git/objects/pack/* >filelist &&
+>> +	test_line_count = 4 filelist
+>> +'
 >
-> Miriam Rubio writes:
+> IOW,
 >
-> > From: Pranit Bauva <pranit.bauva@gmail.com>
-> >
-> > Reimplement the `bisect_log()` shell function in C and also add
-> > `--bisect-log` subcommand to `git bisect--helper` to call it from
-> > git-bisect.sh .
-> >
-> > Using `--bisect-log` subcommand is a temporary measure to port shell
-> > function to C so as to use the existing test suite.
-> >
-> > Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> > ---
-> >  builtin/bisect--helper.c | 22 +++++++++++++++++++++-
-> >  git-bisect.sh            |  7 +------
-> >  2 files changed, 22 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> > index 709eb713a3..a65244a0f5 100644
-> > --- a/builtin/bisect--helper.c
-> > +++ b/builtin/bisect--helper.c
-> > @@ -904,6 +904,18 @@ static enum bisect_error bisect_state(struct bisec=
-t_terms *terms, const char **a
-> >       return bisect_auto_next(terms, NULL);
-> >  }
-> >
-> > +static enum bisect_error bisect_log(void)
-> > +{
-> > +     int fd, status;
-> > +     fd =3D open(git_path_bisect_log(), O_RDONLY);
-> > +     if (fd < 0)
-> > +             return BISECT_FAILED;
-> > +
-> > +     status =3D copy_fd(fd, STDOUT_FILENO);
-> > +     close(fd);
-> > +     return status ? BISECT_FAILED : BISECT_OK;
-> > +}
-> > +
+> 	d=http_child/.git/objects/pack/
+> 	ls "$d"/*.pack "$d"/*.idx >filelist &&
+> 	test_line_count = 4 filelist
 >
-> In the shell version, when we are not bisecting it the `git bisect log`
-> command will `die` with the text "We are not bisecting." which state to
-> the user that a bisect is not yet started. The shell version does that
-> by checking if the `$GIT_DIR/BISECT_LOG` file doesn't exists or it's
-> an empty file as the following code snippet copied from the shell
-> version that is remove by this patch:
->
->    test -s "$GIT_DIR/BISECT_LOG" || die "$(gettext "We are not bisecting.=
-")"
->
-> This seems to be "missing" from the new C version implemented by this
-> patch and perhaps we should add it. I'm not sure whether this change was
-> intentional and I'm missing some context here of why we are dropping
-> the message, if that's the case I apologize in advance. But, IMHO
-> outputting the error message provides a better user experience as it
-> would be obvious that the user forgot to `git bisect start` instead of
-> silently failing.
->
-> With that said, perhaps an obvious way of implementing is to use
-> `is_empty_or_missing_file()`, much like `bisect_replay()` does it in the
-> [2/7] patch on this series, and return the same error message from
-> the shell version:
->
-> -- >8 --
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index a65244a0f5..ce11383125 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -907,7 +907,12 @@ static enum bisect_error bisect_state(struct bisect_=
-terms *terms, const char **a
->  static enum bisect_error bisect_log(void)
->  {
->         int fd, status;
-> -       fd =3D open(git_path_bisect_log(), O_RDONLY);
-> +       const char* filename =3D git_path_bisect_log();
-> +
-> +       if (is_empty_or_missing_file(filename))
-> +               return error(_("We are not bisecting."));
-> +
-> +       fd =3D open(filename, O_RDONLY);
->         if (fd < 0)
->                 return BISECT_FAILED;
-> -- >8 --
->
-> Although I compiled and did small test on the above code snippet, don't
-> trust it blindly and perform your own test and judge whether this is the
-> best way to implement this shortcoming.
-Ok, thank you.
-I am not the original author of this subcommand reimplementation and I
-don't know if there is a reason
- for the difference with the error message. Maybe we can wait for some
-other reviewers opinion.
->
-> >
-> > @@ -210,7 +205,7 @@ case "$#" in
-> >       replay)
-> >               bisect_replay "$@" ;;
-> >       log)
-> > -             bisect_log ;;
-> > +             git bisect--helper --bisect-log || exit;;
->
-> Style: just a minor change to add a space between `exit` and `;;`.
-Noted.
->
-> --
-> Thanks
-> Rafael
-Thank you for your suggestions.
-Best,
-Miriam
+> or something like that.
+
+FYI, I have the following queued to make the tip of 'seen' pass the
+tests.
+
+---- >8 -------- >8 -------- >8 -------- >8 -------- >8 -------- >8 ----
+From: Junio C Hamano <gitster@pobox.com>
+Date: Mon, 25 Jan 2021 17:27:10 -0800
+Subject: [PATCH] SQUASH??? test fix
+
+---
+ t/t5702-protocol-v2.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 8b8fb43dbc..b1bc73a9a9 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -847,8 +847,9 @@ test_expect_success 'part of packfile response provided as URI' '
+ 	test -f hfound &&
+ 	test -f h2found &&
+ 
+-	# Ensure that there are exactly 6 files (3 .pack and 3 .idx).
+-	ls http_child/.git/objects/pack/* >filelist &&
++	# Ensure that there are exactly 3 packfiles with associated .idx
++	ls http_child/.git/objects/pack/*.pack \
++	    http_child/.git/objects/pack/*.idx >filelist &&
+ 	test_line_count = 6 filelist
+ '
+ 
+@@ -901,8 +902,9 @@ test_expect_success 'packfile-uri with transfer.fsckobjects' '
+ 		-c fetch.uriprotocols=http,https \
+ 		clone "$HTTPD_URL/smart/http_parent" http_child &&
+ 
+-	# Ensure that there are exactly 4 files (2 .pack and 2 .idx).
+-	ls http_child/.git/objects/pack/* >filelist &&
++	# Ensure that there are exactly 2 packfiles with associated .idx
++	ls http_child/.git/objects/pack/*.pack \
++	    http_child/.git/objects/pack/*.idx >filelist &&
+ 	test_line_count = 4 filelist
+ '
+ 
+@@ -956,8 +958,9 @@ test_expect_success 'packfile-uri with transfer.fsckobjects succeeds when .gitmo
+ 		-c fetch.uriprotocols=http,https \
+ 		clone "$HTTPD_URL/smart/http_parent" http_child &&
+ 
+-	# Ensure that there are exactly 4 files (2 .pack and 2 .idx).
+-	ls http_child/.git/objects/pack/* >filelist &&
++	# Ensure that there are exactly 2 packfiles with associated .idx
++	ls http_child/.git/objects/pack/*.pack \
++	    http_child/.git/objects/pack/*.idx >filelist &&
+ 	test_line_count = 4 filelist
+ '
+ 
+-- 
+2.30.0-509-gbbf2750a06
+
