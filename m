@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10209C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40509C43381
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:10:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE9632245C
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:10:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15D382220B
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404414AbhAZQJt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 11:09:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38814 "EHLO
+        id S2392730AbhAZQJx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:09:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392730AbhAZQH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 11:07:56 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE4FC0611C2
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:07:16 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id d16so16371883wro.11
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:07:16 -0800 (PST)
+        with ESMTP id S2392774AbhAZQIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:08:00 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43E0C061A29
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:07:18 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id 190so2934360wmz.0
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:07:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oNUjum3805oFeie3m/0ZL3PONWfjOwVbUrYB2Bwq2Ao=;
-        b=Hyx56KRFLbw003lRnHiK0FyYipdgdfim2qwnortG0mlqxopux5THGtWmH8aRVzDrgi
-         b01sUl5bBrFvxFiGZTU+RqtW6o8rHPmbgy63ORg0xitXh1SBmphGIyy49tSYX/fi/gil
-         bQ1NzfgcDwSUjjcRUAnm1x1IO2WdftEyGpCmNS0sejerHrbTeVGlIrQA2FNMDrl1QEu/
-         aNw8KN5DUxWf1PI6V00Yp7VZ6TUae78x+Eo97TsosUKmF39TwRH3MJCjO8h+stLr5Yoy
-         fnBmHOOlzn0x5Nu7Bv9B3ND8Z3mV2OsZSau1TL7eNZlYbCC0A3j3rPOFZWxPbsNVHzOO
-         9M+A==
+        bh=CQwfjZOWrRXum1b87XrtCgo9ClLzoL5PjqGHBkL1PBU=;
+        b=Pk3ElZK2HWixteVoTYcrEwHnOzbgCqvu02Olf3fAfJ1DOv1a7sXq1IR104ECdXD3kd
+         C2tC53z4u+1eBERjLIal7ss2P/zCFmGAoBxjnbYqPRZnFJghVPHt/RA8YjKX4wjRjmVy
+         //LgynMwFuzY8wSs7vYlVL/b9CFpJNzdN3B80z/iixX1ErxqclOJ5/46mIOxQmFQT/VB
+         3iTZxMnD1vsr2k1ifQsp2zM8+O33UQ/aziBh5QZ4UyTdCRG1vnbF7dR2kfg+3Oy+2DOk
+         bmXz6pJEbC896cfWlH+TRFBnXb6FhzQCKInALlooUAVLaJWiwko/PBlaasQfiHMUsLh8
+         qQ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oNUjum3805oFeie3m/0ZL3PONWfjOwVbUrYB2Bwq2Ao=;
-        b=p7Q2Vc657hmKiQG/1zkx9LkEWgfCENTBvhLBV+TarZSdMSPoL3St3W4BvwKXcbuDmY
-         VFhNqPzIij08RCXDvXkHvDTHj+SgP0qUEGM0xTHwdKt5LaKE7OuRhQqclV90l8ENJGmQ
-         h0neRzfAYCZuSWWFOivYsZJPB6pasoxrd5l9qYVColb7BtQ9VQ31DIgpYBM2zmhLzPuy
-         iM8EiU6xv60PosDOYsg+PzkXOtRaGhMW32V6RNP9uX9Qqjn3DjNtAl5kc0ggMRme37ko
-         9wkCXcA+KTStw9HL1EKPO4pJmX4D9JS5yTU23iMD9crzvwfC+af9ET8QiXA1ZA+AoRf3
-         Nfeg==
-X-Gm-Message-State: AOAM532olIIzpwua+hqJfyUfMXEnzA79kIzOhCCBqw7yY5Y+dV7pnRQK
-        HSk5kOPABVpo0aIPzxM1ciFoIMxiuxddag==
-X-Google-Smtp-Source: ABdhPJy8MfiVczC6K3JFNAAinSzbvmEoTW5Yel56TAO+ETmxLy5vbt0dL/tkNMb0QfhA6XXI5+FEJQ==
-X-Received: by 2002:adf:c642:: with SMTP id u2mr6883056wrg.243.1611677234530;
-        Tue, 26 Jan 2021 08:07:14 -0800 (PST)
+        bh=CQwfjZOWrRXum1b87XrtCgo9ClLzoL5PjqGHBkL1PBU=;
+        b=V78x/i7xPJBG57+iyY69ENyaachVlCppyhgN8HqVAOSnYXokCAsZYp4MvaVXYvqKkq
+         6njTyuVLrdii6hL89nQ8rFORus7PH7LATg8Pvi/RWwwS33Q94VUSkJI7TU73ZzQz6eZR
+         qN0MeuT5FySgJT3UOy3YOTXjd4l/x5lFXMDMmiuGyKoBKeIlb6Gko4AXfadYCtLaRSYl
+         l3V6HQPDCFZoxXh9mxrxkQZcAeKh/tCXMd+gdcR7vB+0wbGCaFmHjjqZsqI1hYyg6/xp
+         gCLyPBpz7LD2JNbAcMcLM/QgS5lqx3w39nh9xBy08SZwII6teCVc8i41Lw3oH9b6AM0D
+         Z9mA==
+X-Gm-Message-State: AOAM531uQFY5boSTQDux9AMyyJFGCtztEauKYc4hSK9LYf/R/uvqMXBg
+        C9+vnPy6Te9PxgujLfUERfZi58hf6QzEAg==
+X-Google-Smtp-Source: ABdhPJzPheLeCTqIhRdaCTDugEjaHX0QM1MxjggFdlBkc1y15kgVbu/YhH+VTSIWbbPZTcanr/7LCQ==
+X-Received: by 2002:a1c:3185:: with SMTP id x127mr380909wmx.117.1611677237037;
+        Tue, 26 Jan 2021 08:07:17 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k6sm17209743wro.27.2021.01.26.08.07.13
+        by smtp.gmail.com with ESMTPSA id k6sm17209743wro.27.2021.01.26.08.07.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 08:07:13 -0800 (PST)
+        Tue, 26 Jan 2021 08:07:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/4] Makefile: refactor assignment for subsequent change
-Date:   Tue, 26 Jan 2021 17:07:05 +0100
-Message-Id: <20210126160708.20903-2-avarab@gmail.com>
+Subject: [PATCH 3/4] Makefile: add a NO_TEST_TOOLS flag
+Date:   Tue, 26 Jan 2021 17:07:07 +0100
+Message-Id: <20210126160708.20903-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20210126160708.20903-1-avarab@gmail.com>
 References: <20210126160708.20903-1-avarab@gmail.com>
@@ -75,33 +75,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor a multi-line assignment into a form that'll lend itself
-better to having "ifdef" split it up in a follow-up commit.
+Add a NO_TEST_TOOLS flag to build an installable git, but one that
+can't run "make test". This is useful e.g. in CI environments where
+you'd like to run external tests against a built git, but have no
+desire to run git's own tests.
+
+On my 8 core machine this saves me around 1 second out of an otherwise
+11-12 second build time. So it doesn't make all the difference, but
+when you're wanting to run tests against a lot of git versions it adds
+up.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Makefile      | 6 ++++++
+ t/test-lib.sh | 5 +++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 4edfda3e009..36c7b8fa08b 100644
+index 4031fb1b22f..cfa7bc58edf 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -656,10 +656,10 @@ clean-perl-script:
- clean-python-script:
- 	$(RM) $(SCRIPT_PYTHON_GEN)
+@@ -309,6 +309,9 @@ all::
+ #
+ # Define NO_TCLTK if you do not want Tcl/Tk GUI.
+ #
++# Define NO_TEST_TOOLS if you'd like to skip building the assets
++# required to run the tests. 
++#
+ # Define SANE_TEXT_GREP to "-a" if you use recent versions of GNU grep
+ # and egrep that are pickier when their input contains non-ASCII data.
+ #
+@@ -2732,6 +2735,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
+ 	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
++	@echo NO_TEST_TOOLS=\''$(subst ','\'',$(subst ','\'',$(NO_TEST_TOOLS)))'\' >>$@+
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
+@@ -2787,8 +2791,10 @@ GIT-PYTHON-VARS: FORCE
+             fi
+ endif
  
--SCRIPTS = $(SCRIPT_SH_GEN) \
--	  $(SCRIPT_PERL_GEN) \
--	  $(SCRIPT_PYTHON_GEN) \
--	  git-instaweb
-+SCRIPTS  = $(SCRIPT_SH_GEN)
-+SCRIPTS += $(SCRIPT_PERL_GEN)
-+SCRIPTS += $(SCRIPT_PYTHON_GEN)
-+SCRIPTS += git-instaweb
++ifndef NO_TEST_TOOLS
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ TEST_TOOLS = $(TEST_PROGRAMS) $(test_bindir_programs)
++endif
  
- ETAGS_TARGET = TAGS
+ all:: $(TEST_TOOLS)
  
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 03c1c0836f1..4029cd18031 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -55,6 +55,11 @@ then
+ 	exit 1
+ fi
+ . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
++if test -n "$NO_TEST_TOOLS"
++then
++	echo >&2 'error: NO_TEST_TOOLS=$NO_TEST_TOOLS set in GIT-BUILD-OPTIONS, cannot run tests!.'
++	exit 1
++fi
+ export PERL_PATH SHELL_PATH
+ 
+ # Disallow the use of abbreviated options in the test suite by default
 -- 
 2.29.2.222.g5d2a92d10f8
 
