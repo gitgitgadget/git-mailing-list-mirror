@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1250BC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26899C433E6
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:04:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8522207B3
+	by mail.kernel.org (Postfix) with ESMTP id E8A5B2220B
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404736AbhAZQDl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 11:03:41 -0500
+        id S2404480AbhAZQDr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:03:47 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404169AbhAZQC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 11:02:28 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B906C0610D6
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:32 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v15so17006642wrx.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:32 -0800 (PST)
+        with ESMTP id S2404565AbhAZQCr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:02:47 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA818C0698C8
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:42 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id 6so17019745wri.3
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=97irUJYECDLVWkK+k5eog9vFuUY3oDEfcKFZppunCQ0=;
-        b=Hk3gFV8FhEpIFW9/fHV+GH7DrhvoDElsDHak4DEnvncPXQALxOku51Sv9pyH8o2dzw
-         16L4NGloOWUHoREFOqkMuD9faff9e2ucqT3skj9tYfim04h4NSCm41NxHkogrySXGS7S
-         Gds9aycG+Uqulg/hHyxF/wT76oyzstbHcWC/8VcfamO4VTBAk18k/lW/0ApOzmf9GPri
-         GlhMM32tc8KDUHqLG70gtZm7Mc65dglHF9YUvJ+GfMIkgQ1yyf3yamtfBikGpioUFZiY
-         9w98vwPDIkp9CQdOJrbmYTrzOw+Zim8W8wa3I5N8Cgbr8wvkb9TNBm1j8TJP+WSYF5mO
-         FPbw==
+        bh=/9WZzc0JHsPutkXhtZtPjDnbj9w/mbrhFV+hIT7xcoo=;
+        b=ag7Tu7N9BbF12VoAVBwg4a70HIqr++6HdKATakL1dTwD4inrXcn0voC2iwBplRyx7d
+         jEWCvdq2LxTF95ww7UZg3E/wkxjo9f9L3xB/P5X6tNKX3LfwfJXIo0DkrPOadgrQ0NNX
+         08307OfLAgINRXcLLkl7rngz96ZatmDbIxzHzw1p0RZV+LFkl+7kjAdGr3AS9hQWljMl
+         4Ab1sCwpU+wlRs1IjTr/zOCaoywgevoib1tDEpVwCUcIkh1Mn62FLfnXIYhHLniPOBH5
+         seCJUWt9NGUBzKdO6/C0gkAGBEVbx+WQ84QV1JTqQZeEvu6hn4IPf8/6RRHAf44ucoIC
+         ZSaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=97irUJYECDLVWkK+k5eog9vFuUY3oDEfcKFZppunCQ0=;
-        b=Vi0ilwYp32/YBhFXi5QZ4vQyHLnQv47QUdyih5bEzVWgKUR3lIHd9wDCi4xFHSDkip
-         imkgydHmXZievGZB8sVWrxnzj5uwDf+eXXEZqdois4t57GaTdfXgC2RyPInrcCE9iAnR
-         hDQxrrfL7lZuxn2P15FK0rf0YWGq1yvDDB08XO2jINOUM0ETHm5ZDF5Z5sLKygQJWawK
-         8ZJ0P71uyKJhPAyq3OhAK2fU5nv1y5Z17x8k6er4QWDckTst2kVG9Pkv0LqANpjUonn6
-         p9bndLe/wqfDMdh00uzQB65oZJ8fxqQ+354fr/XtRnkg0pCldB/aw32InkVCMCnI5fv0
-         POuA==
-X-Gm-Message-State: AOAM532Mu37zEk+C2El55eV7ojdyqrhFhFJIEFRxPX5zln2r3j3a7HZj
-        8TrgrZOzZxaRwLUglOAznTSFb1I79jY=
-X-Google-Smtp-Source: ABdhPJwSXzu06mgdab8eo9kHOMEACaEAijcXod1ecXz3CDM7i84LQbB69sFQbd5BeSX8UDOWwRtHAA==
-X-Received: by 2002:adf:9148:: with SMTP id j66mr7159766wrj.28.1611676890874;
-        Tue, 26 Jan 2021 08:01:30 -0800 (PST)
+        bh=/9WZzc0JHsPutkXhtZtPjDnbj9w/mbrhFV+hIT7xcoo=;
+        b=VD4Kotn+pJUEHbByvXkH/hNdkAgjmMnGGS5MgzlYpTsjxTs4gsWtUWH7DXzg5HlhD8
+         kAJerLR4GWo5oor46J++Ym8Q8lx6LSd8+PeCPOE3wg+ks0a3mdHrW80fvAm3WtBZeft1
+         dVtG2jMEv17B1YFjA9kjNE4ZoN61w+9OxGNhxFNaJe6JYlvkfZpxt9V0LfEUEOVF25A7
+         7bCUKCZwD6P3gl8uiz4DNwbdwrXJsVs7fLLZxkmqbU2gUhOCaJAcwLsN/5oFzV+bGIz2
+         yFurnJXb0ovStmY+sEq1jb78vYFWH1QUj+Tj0nuOUiWXvYQ9VVHAE/iPiWkoKYOOduTY
+         7bCg==
+X-Gm-Message-State: AOAM532rDExvsTL/4pcPBhD7jBo4XThZWKqlizAuSpElZYzz6385HmZz
+        +E0Hskwdb9MdBttXPBoyE9Cf+rFqQV8=
+X-Google-Smtp-Source: ABdhPJxkm542g4izd0kPYWYLVMJDquNT4CphCXnN17T3hiYdC2z79E/yLghSlauppyTuAYBhXOtlhw==
+X-Received: by 2002:adf:f512:: with SMTP id q18mr6831963wro.55.1611676901422;
+        Tue, 26 Jan 2021 08:01:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm28068267wrl.95.2021.01.26.08.01.30
+        by smtp.gmail.com with ESMTPSA id l18sm3735818wme.37.2021.01.26.08.01.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 08:01:30 -0800 (PST)
-Message-Id: <a3d6177a352643721fdc07512629b48d1213157a.1611676886.git.gitgitgadget@gmail.com>
+        Tue, 26 Jan 2021 08:01:40 -0800 (PST)
+Message-Id: <cb145e0e32afed99b9bfa822c76f48bee18885ba.1611676886.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jan 2021 16:01:12 +0000
-Subject: [PATCH 03/17] commit-graph: use chunk-format write API
+Date:   Tue, 26 Jan 2021 16:01:23 +0000
+Subject: [PATCH 14/17] midx: use chunk-format read API
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,194 +76,179 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The commit-graph write logic is ready to make use of the chunk-format
-write API. Each chunk write method is already in the correct prototype.
-We only need to use the 'struct chunkfile' pointer and the correct API
-calls.
+Instead of parsing the table of contents directly, use the chunk-format
+API methods read_table_of_contents() and pair_chunk(). In particular, we
+can use the return value of pair_chunk() to generate an error when a
+required chunk is missing.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 118 ++++++++++++++++---------------------------------
- 1 file changed, 37 insertions(+), 81 deletions(-)
+ midx.c                      | 103 ++++++++++++++++++++----------------
+ t/t5319-multi-pack-index.sh |   6 +--
+ 2 files changed, 60 insertions(+), 49 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index b26ed72396e..b2c0f233eab 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -19,6 +19,7 @@
- #include "shallow.h"
- #include "json-writer.h"
- #include "trace2.h"
-+#include "chunk-format.h"
- 
- void git_test_write_commit_graph_or_die(void)
- {
-@@ -1767,27 +1768,17 @@ static int write_graph_chunk_base(struct hashfile *f,
- 	return 0;
+diff --git a/midx.c b/midx.c
+index 0bfd2d802b6..dd019c00795 100644
+--- a/midx.c
++++ b/midx.c
+@@ -54,6 +54,51 @@ static char *get_midx_filename(const char *object_dir)
+ 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
  }
  
--typedef int (*chunk_write_fn)(struct hashfile *f,
--			      void *data);
--
--struct chunk_info {
--	uint32_t id;
--	uint64_t size;
--	chunk_write_fn write_fn;
--};
--
- static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- {
- 	uint32_t i;
- 	int fd;
- 	struct hashfile *f;
- 	struct lock_file lk = LOCK_INIT;
--	struct chunk_info chunks[MAX_NUM_CHUNKS + 1];
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
- 	int num_chunks = 3;
--	uint64_t chunk_offset;
- 	struct object_id file_hash;
-+	struct chunkfile *cf;
- 
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1833,76 +1824,50 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
- 	}
- 
--	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
--	chunks[0].size = GRAPH_FANOUT_SIZE;
--	chunks[0].write_fn = write_graph_chunk_fanout;
--	chunks[1].id = GRAPH_CHUNKID_OIDLOOKUP;
--	chunks[1].size = hashsz * ctx->commits.nr;
--	chunks[1].write_fn = write_graph_chunk_oids;
--	chunks[2].id = GRAPH_CHUNKID_DATA;
--	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
--	chunks[2].write_fn = write_graph_chunk_data;
-+	cf = init_chunkfile(f);
++static int midx_read_pack_names(const unsigned char *chunk_start,
++				size_t chunk_size, void *data)
++{
++	struct multi_pack_index *m = (struct multi_pack_index *)data;
++	m->chunk_pack_names = chunk_start;
++	return 0;
++}
 +
-+	add_chunk(cf, GRAPH_CHUNKID_OIDFANOUT,
-+		  write_graph_chunk_fanout, GRAPH_FANOUT_SIZE);
-+	add_chunk(cf, GRAPH_CHUNKID_OIDLOOKUP,
-+		  write_graph_chunk_oids, hashsz * ctx->commits.nr);
-+	add_chunk(cf, GRAPH_CHUNKID_DATA,
-+		  write_graph_chunk_data, (hashsz + 16) * ctx->commits.nr);
- 
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0))
- 		ctx->write_generation_data = 0;
--	if (ctx->write_generation_data) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA;
--		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
--		chunks[num_chunks].write_fn = write_graph_chunk_generation_data;
--		num_chunks++;
--	}
--	if (ctx->num_generation_data_overflows) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW;
--		chunks[num_chunks].size = sizeof(timestamp_t) * ctx->num_generation_data_overflows;
--		chunks[num_chunks].write_fn = write_graph_chunk_generation_data_overflow;
--		num_chunks++;
--	}
--	if (ctx->num_extra_edges) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
--		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
--		chunks[num_chunks].write_fn = write_graph_chunk_extra_edges;
--		num_chunks++;
--	}
-+	if (ctx->write_generation_data)
-+		add_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
-+			  write_graph_chunk_generation_data,
-+			  sizeof(uint32_t) * ctx->commits.nr);
-+	if (ctx->num_generation_data_overflows)
-+		add_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
-+			  write_graph_chunk_generation_data_overflow,
-+			  sizeof(timestamp_t) * ctx->num_generation_data_overflows);
-+	if (ctx->num_extra_edges)
-+		add_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES,
-+			  write_graph_chunk_extra_edges,
-+			  4 * ctx->num_extra_edges);
- 	if (ctx->changed_paths) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMINDEXES;
--		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
--		chunks[num_chunks].write_fn = write_graph_chunk_bloom_indexes;
--		num_chunks++;
--		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMDATA;
--		chunks[num_chunks].size = sizeof(uint32_t) * 3
--					  + ctx->total_bloom_filter_data_size;
--		chunks[num_chunks].write_fn = write_graph_chunk_bloom_data;
--		num_chunks++;
--	}
--	if (ctx->num_commit_graphs_after > 1) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
--		chunks[num_chunks].size = hashsz * (ctx->num_commit_graphs_after - 1);
--		chunks[num_chunks].write_fn = write_graph_chunk_base;
--		num_chunks++;
--	}
--
--	chunks[num_chunks].id = 0;
--	chunks[num_chunks].size = 0;
-+		add_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
-+			  write_graph_chunk_bloom_indexes,
-+			  sizeof(uint32_t) * ctx->commits.nr);
-+		add_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
-+			  write_graph_chunk_bloom_data,
-+			  sizeof(uint32_t) * 3
-+				+ ctx->total_bloom_filter_data_size);
++static int midx_read_oid_fanout(const unsigned char *chunk_start,
++				size_t chunk_size, void *data)
++{
++	struct multi_pack_index *m = (struct multi_pack_index *)data;
++	m->chunk_oid_fanout = (uint32_t *)chunk_start;
++
++	if (chunk_size != 4 * 256) {
++		error(_("multi-pack-index OID fanout is of the wrong size"));
++		return 1;
 +	}
-+	if (ctx->num_commit_graphs_after > 1)
-+		add_chunk(cf, GRAPH_CHUNKID_BASE,
-+			  write_graph_chunk_base,
-+			  hashsz * (ctx->num_commit_graphs_after - 1));
++	return 0;
++}
++
++static int midx_read_oid_lookup(const unsigned char *chunk_start,
++				size_t chunk_size, void *data)
++{
++	struct multi_pack_index *m = (struct multi_pack_index *)data;
++	m->chunk_oid_lookup = chunk_start;
++	return 0;
++}
++
++static int midx_read_offsets(const unsigned char *chunk_start,
++			     size_t chunk_size, void *data)
++{
++	struct multi_pack_index *m = (struct multi_pack_index *)data;
++	m->chunk_object_offsets = chunk_start;
++	return 0;
++}
++
++static int midx_read_large_offsets(const unsigned char *chunk_start,
++				   size_t chunk_size, void *data)
++{
++	struct multi_pack_index *m = (struct multi_pack_index *)data;
++	m->chunk_large_offsets = chunk_start;
++	return 0;
++}
++
+ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local)
+ {
+ 	struct multi_pack_index *m = NULL;
+@@ -65,6 +110,7 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
+ 	char *midx_name = get_midx_filename(object_dir);
+ 	uint32_t i;
+ 	const char *cur_pack_name;
++	struct chunkfile *cf = NULL;
  
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 	fd = git_open(midx_name);
  
- 	hashwrite_u8(f, GRAPH_VERSION);
- 	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
-+	hashwrite_u8(f, get_num_chunks(cf));
- 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
+@@ -114,58 +160,23 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
  
--	chunk_offset = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
--	for (i = 0; i <= num_chunks; i++) {
--		uint32_t chunk_write[3];
+ 	m->num_packs = get_be32(m->data + MIDX_BYTE_NUM_PACKS);
+ 
+-	for (i = 0; i < m->num_chunks; i++) {
+-		uint32_t chunk_id = get_be32(m->data + MIDX_HEADER_SIZE +
+-					     MIDX_CHUNKLOOKUP_WIDTH * i);
+-		uint64_t chunk_offset = get_be64(m->data + MIDX_HEADER_SIZE + 4 +
+-						 MIDX_CHUNKLOOKUP_WIDTH * i);
 -
--		chunk_write[0] = htonl(chunks[i].id);
--		chunk_write[1] = htonl(chunk_offset >> 32);
--		chunk_write[2] = htonl(chunk_offset & 0xffffffff);
--		hashwrite(f, chunk_write, 12);
+-		if (chunk_offset >= m->data_len)
+-			die(_("invalid chunk offset (too large)"));
 -
--		chunk_offset += chunks[i].size;
+-		switch (chunk_id) {
+-			case MIDX_CHUNKID_PACKNAMES:
+-				m->chunk_pack_names = m->data + chunk_offset;
+-				break;
+-
+-			case MIDX_CHUNKID_OIDFANOUT:
+-				m->chunk_oid_fanout = (uint32_t *)(m->data + chunk_offset);
+-				break;
+-
+-			case MIDX_CHUNKID_OIDLOOKUP:
+-				m->chunk_oid_lookup = m->data + chunk_offset;
+-				break;
+-
+-			case MIDX_CHUNKID_OBJECTOFFSETS:
+-				m->chunk_object_offsets = m->data + chunk_offset;
+-				break;
+-
+-			case MIDX_CHUNKID_LARGEOFFSETS:
+-				m->chunk_large_offsets = m->data + chunk_offset;
+-				break;
+-
+-			case 0:
+-				die(_("terminating multi-pack-index chunk id appears earlier than expected"));
+-				break;
+-
+-			default:
+-				/*
+-				 * Do nothing on unrecognized chunks, allowing future
+-				 * extensions to add optional chunks.
+-				 */
+-				break;
+-		}
 -	}
--
- 	if (ctx->report_progress) {
- 		strbuf_addf(&progress_title,
- 			    Q_("Writing out commit graph in %d pass",
-@@ -1914,17 +1879,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			num_chunks * ctx->commits.nr);
- 	}
++	cf = init_chunkfile(NULL);
  
--	for (i = 0; i < num_chunks; i++) {
--		uint64_t start_offset = f->total + f->offset;
--
--		if (chunks[i].write_fn(f, ctx))
--			return -1;
--
--		if (f->total + f->offset != start_offset + chunks[i].size)
--			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
--			    chunks[i].size, chunks[i].id,
--			    f->total + f->offset - start_offset);
--	}
-+	write_chunkfile(cf, ctx);
+-	if (!m->chunk_pack_names)
++	if (read_table_of_contents(cf, m->data, midx_size,
++				   MIDX_HEADER_SIZE, m->num_chunks))
++		goto cleanup_fail;
++
++	if (pair_chunk(cf, MIDX_CHUNKID_PACKNAMES, midx_read_pack_names, m) == CHUNK_NOT_FOUND)
+ 		die(_("multi-pack-index missing required pack-name chunk"));
+-	if (!m->chunk_oid_fanout)
++	if (pair_chunk(cf, MIDX_CHUNKID_OIDFANOUT, midx_read_oid_fanout, m) == CHUNK_NOT_FOUND)
+ 		die(_("multi-pack-index missing required OID fanout chunk"));
+-	if (!m->chunk_oid_lookup)
++	if (pair_chunk(cf, MIDX_CHUNKID_OIDLOOKUP, midx_read_oid_lookup, m) == CHUNK_NOT_FOUND)
+ 		die(_("multi-pack-index missing required OID lookup chunk"));
+-	if (!m->chunk_object_offsets)
++	if (pair_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS, midx_read_offsets, m) == CHUNK_NOT_FOUND)
+ 		die(_("multi-pack-index missing required object offsets chunk"));
  
- 	stop_progress(&ctx->progress);
- 	strbuf_release(&progress_title);
-@@ -1941,6 +1896,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
++	pair_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS, midx_read_large_offsets, m);
++
+ 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
  
- 	close_commit_graph(ctx->r->objects);
- 	finalize_hashfile(f, file_hash.hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
-+	free_chunkfile(cf);
+ 	m->pack_names = xcalloc(m->num_packs, sizeof(*m->pack_names));
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 297de502a94..ad4e878b65b 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -314,12 +314,12 @@ test_expect_success 'verify bad OID version' '
  
- 	if (ctx->split) {
- 		FILE *chainf = fdopen_lock_file(&lk, "w");
+ test_expect_success 'verify truncated chunk count' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_COUNT "\01" $objdir \
+-		"missing required"
++		"final chunk has non-zero id"
+ '
+ 
+ test_expect_success 'verify extended chunk count' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_COUNT "\07" $objdir \
+-		"terminating multi-pack-index chunk id appears earlier than expected"
++		"terminating chunk id appears earlier than expected"
+ '
+ 
+ test_expect_success 'verify missing required chunk' '
+@@ -329,7 +329,7 @@ test_expect_success 'verify missing required chunk' '
+ 
+ test_expect_success 'verify invalid chunk offset' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_OFFSET "\01" $objdir \
+-		"invalid chunk offset (too large)"
++		"improper chunk offset(s)"
+ '
+ 
+ test_expect_success 'verify packnames out of order' '
 -- 
 gitgitgadget
 
