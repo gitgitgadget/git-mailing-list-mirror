@@ -4,174 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 490D8C433E0
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 12:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64EC4C433E0
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 12:33:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18BFD23109
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 12:32:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BE912311F
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 12:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbhAZMcS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 07:32:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52542 "EHLO
+        id S2387448AbhAZMdZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 07:33:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404243AbhAZKno (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 05:43:44 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E974BC06174A
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 02:43:02 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id a77so679828oii.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 02:43:02 -0800 (PST)
+        with ESMTP id S1732170AbhAZMc6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 07:32:58 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA9FBC0611C2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 04:32:17 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id u25so22501321lfc.2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 04:32:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=KvUH57TPqjODHpRuVsGO7440j0Z0RYQZkFSGO58QOKY=;
-        b=nov1a855iEFgs47msXL2RiifIjpcn8a+Rx9uGC+zUgukanclrYfdMzxObVtIdsM8tk
-         IqNkxf/BKsqY7MvayCDX7JND8eLzm/WlWdJzHyqRMoTo/31ldVqk9RDD8JnTcraP/swj
-         8S3wYj3spc7Y9RXRYHKJfjLljO+AgpB1W+gfGZ2MHeEreOPvkUFu48aVbxwAEmYkZWn/
-         BiduMY5pqo4/J1c5no012ZMfdttqQMmdcKvU8hIkDyjm+7mx47PKnQhvyGK1kZaao+AO
-         oYHIOOTS88juL1qgz/mdlPhTK9uXlQN6iBlk54RUXJBi2zXgNtv6iBe6x4rUqa/2T3Q4
-         3YCA==
+        bh=RTsghDDqHvmKYwJeS7YoD+SnXzbhxYQ1Z0VxvZZPUtk=;
+        b=Rjlp1ckG8xXnu9yAbujmdg3u9LnEWteA3pNcWlyHMXWu3soc+3nrmPWFXrQ7KjXxLE
+         lbI8KBLX0ZTOf11K9SLbVbpHn4djNumdAJ99sKBn+UtvpOBDaLy3HEMIl18uP+YNaocl
+         mkKFgWLrWikZMQ6+SxHOkk9edxSU4/WRWfErwGlLdR12RrxfEIQj82tAItzkX+NOPXMk
+         pDM4BEpPVePiYX39Pl42JVRdOWoPBUYwDMZNIjnUlJJ/8JEgOStBTZ89RhMnVznNZWnk
+         HYl+OeJBQICtGJHwiXIb4RhWaXC/arQYJK+fUgEtN/exyxCp5peEqoRKvbhYpeNEFIQY
+         lQTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KvUH57TPqjODHpRuVsGO7440j0Z0RYQZkFSGO58QOKY=;
-        b=RW+zrFst1/T/BE+SuKA0KyJqmxvE3KcCdXw8fIBck+RZbSHqa6t+//mCL3/azjX/Mg
-         gMWX5Iaq/pka0RWDF3/vjhzcjKYp865LxA9LtyKLUL9Eojuc1CTp+HrbguGSG4fh9CqV
-         3cqsCEfRVgYJubu6FTrGAgUxfwB2FwK2vIQRKnWAhY++7VAC6U44aK3i4Ysnj8DS7Dbs
-         z9NdpOQPTpx07Y54/wSVYZxPxuPWv7X459c3PDAJC3HSvjqW5b5iRtWvn6xz8LlIpJc4
-         KpfzN4YIYlLNrb5wqUJZRm9/Jzaq+yaLj/xk9aWLh/h7fJ66VM0s/2Rnh3lUsCT2aP1K
-         zUQA==
-X-Gm-Message-State: AOAM532/D6IZH7JwOxjS1+zaeR2HoegXujCxmC150yCgtMDqwjZCuKi0
-        IjqusX2nLVG4psRoQrC0ZmLBRNTfOMpOUhn0R5Y=
-X-Google-Smtp-Source: ABdhPJy6PILfJt4iemgI+OFez1RSTrHTzYuTNdJIsVDD+iUJv5j8oQE6rYsDiIfcKM2cNHsayNUB4O3TbTRBtIj+U5A=
-X-Received: by 2002:aca:1a17:: with SMTP id a23mr2765444oia.120.1611657782385;
- Tue, 26 Jan 2021 02:43:02 -0800 (PST)
+        bh=RTsghDDqHvmKYwJeS7YoD+SnXzbhxYQ1Z0VxvZZPUtk=;
+        b=RybSQ2y/1oAyIXriX2CvkF69AHsQZVmU8pHUghLfOsiw93/wTgSMrdK+r8HDHaax5f
+         VELJ3YweViirGU6p+A/8U+1h6Ttkx4NoVztRi0+0NFYqQRQm9C3Mwj4fC6rpnGHDEYZ/
+         Jzvtv6xQH6Uetn6Ag8takQABWXGsL7/NkNFcvWwfRBrc2tQVGEup67abkwng1jAUguX7
+         e59/heGTkcjdje/vGxbzgYEBSZ8hB+gHPCIcV0ZkNNxu4uFHilBGiQijtPRAWLv5yNG8
+         /9iyUyVSZnMdRgbYIwbk/zZMOGeIJoHo6jk8z0+gkrGS+bvyAlOMPhuGO/QTXD6yMkVu
+         3qag==
+X-Gm-Message-State: AOAM530ykAGYZNyLaZ2rkLtSZUzjm+7hiXHOI/+7OzFNney3qLPme5pI
+        3jPaKuds/NgZ5865y5NApb5xM5rhgo46n7+u9xYXom1q8TiksHD6
+X-Google-Smtp-Source: ABdhPJwOCB9rjMnSZ8zajhHd4VkUKHGNuG2B/i5QQMQqHy7y5fq9Pnxuq5CjNEn0+sXLTVnJ4HF/U/2qsky3spMxfBg=
+X-Received: by 2002:a19:5052:: with SMTP id z18mr2642290lfj.554.1611664336181;
+ Tue, 26 Jan 2021 04:32:16 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.846.git.1611637582625.gitgitgadget@gmail.com> <xmqqy2gg2pdm.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqy2gg2pdm.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Date:   Tue, 26 Jan 2021 18:44:57 +0800
-Message-ID: <CAOLTT8T1N2FSK3GiLaQUZt-OO5qzjQz7iq2cuKxasmuwnEZoXw@mail.gmail.com>
-Subject: Re: [PATCH] strbuf.c: optimize program logic
+References: <CAK8LAYVZKjbMEDWTyvQv2eY+qR0qw1=mn=c4KCZvit7gsqTibA@mail.gmail.com>
+ <CAP8UFD0fZBdZ6qwDP9_yW7VAfskTKPC7HVSpK4rD=bORuECpJA@mail.gmail.com>
+ <xmqqpn1w95dj.fsf@gitster.c.googlers.com> <CANiSa6gEJ8ezVLhHf+TkGpqvEwvb8HhqtU3ETKiopjLQj6E_QQ@mail.gmail.com>
+ <xmqqh7n85qwd.fsf@gitster.c.googlers.com> <CAK8LAYUsebOau+XJ66fEesLm4MfMuxJjse0YL408-2jih1d1eg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2101251650150.57@tvgsbejvaqbjf.bet> <xmqqft2owjb9.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqft2owjb9.fsf@gitster.c.googlers.com>
+From:   "Patricia B. C." <pati.camsky@gmail.com>
+Date:   Tue, 26 Jan 2021 09:32:05 -0300
+Message-ID: <CAK8LAYVp0XtdFbnVB6fzpje5a3RkU6+pFW81VpCFBPMe46m7fw@mail.gmail.com>
+Subject: Re: RES: Can git change?
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?6Zi/5b6354OIIHZpYSBHaXRHaXRHYWRnZXQ=?= 
-        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Martin von Zweigbergk <martinvonz@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B41=E6=9C=8826=E6=97=
-=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=882:17=E5=86=99=E9=81=93=EF=BC=9A
+Hey!
+Thank you very much, guys, for the detailed explanation, I will bring
+those points to the discussion topic :D
+I do agree with you that we should prepare the students for "real
+world" projects and not only working locally.
+Hopefully, there will be more people who agree with me than people who
+want to stick with the old fashioned way :)
+
+Thanks again!
+Patricia Camiansky.
+
+Em seg., 25 de jan. de 2021 =C3=A0s 22:58, Junio C Hamano
+<gitster@pobox.com> escreveu:
 >
-> "=E9=98=BF=E5=BE=B7=E7=83=88 via GitGitGadget" <gitgitgadget@gmail.com> w=
-rites:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > the usage in strbuf.h tell us"Alloc is somehow a
-> > "private" member that should not be messed with.
-> > use `strbuf_avail()`instead."
+> > And I have to admit that I am somewhat concerned about your students if
+> > one of their instructors thinks that their education shouldn't prepare
+> > them for more than working locally on their computers. Aren't they at a=
+ll
+> > interested in preparing the students for life after university? If so,
+> > they will most certainly be affected by GitHub's decision.
 >
-> When we use the word "private", it generally means it is private to
-> the implementation of the API.  IOW, it is usually fine for the
-> implementation of the API (i.e. for strbuf API, what you see in
-> strbuf.c) to use private members.
+> GitHub's decision will most affect projects that haven't started
+> yet, simply because they won't have to incur any "transition" cost
+> the existing projects may have to consider.  And given enough time,
+> old projects die out and there will be more new projects than the
+> projects we currently have, hopefully.
 >
-Well, I just think most other functions in strbuf.c follow the use
-of `strbuf_avail()` instead of "sb->alloc-sb->len-1", and the
-"sb->alloc-sb->len-1" that appears in `strbuf_read()` is not so uniform.
-> In any case, these changes are _not_ optimizations.
+> Until that happens, they would be affected more by decision by the
+> projects they interact with, as it is most convenient if your local
+> name matches the name the upstream uses.  And the versions of Git
+> way before people started talking about 'master' and 'main' have
+> long been prepared for that, and we've been closing possible gaps in
+> the recent versions.  "git clone" would notice what name the upstream
+> uses and uses the same name locally.
 >
-> Replacing (alloc - len - 1) with strbuf_avail() is at best an
-> equivalent rewrite (which is a good thing from readability's point
-> of view, but not an optimization).  We know sb->alloc during the
-> loop is never 0, but the compiler may miss the fact, so the inlined
-> implementation of _avail, i.e.
->
->         static inline size_t strbuf_avail(const struct strbuf *sb)
->         {
->                 return sb->alloc ? sb->alloc - sb->len - 1 : 0;
->         }
->
-> may not incur call overhead, but may be pessimizing the executed
-> code.
-I agree,It may be a good practice not to use redundant inline functions,
-because it will not make the git binary file too bloated.
->
-> If you compare the code in the loop in the second hunk below with
-> what _setlen() does, I think you'll see the overhead of _setlen()
-> relative to the original code is even higher, so it may also be
-> pessimizing, not optimizing.
->
-> So, overall, I am not all that enthused to see this patch.
+> Even when they work locally, they'll start getting 'main' from their
+> Git soon, and that would become consistent with the name that their
+> "upstream" projects are likely to choose due to this "industry wide"
+> push.
 >
 >
-> One thing I noticed is that, whether open coded like sb->len +=3D got
-> or made into parameter to strbuf_setlen(sb, sb->len + got), we are
-> not careful about sb->len growing too large and overflowing with the
-> addition.  That may potentially be an interesting thing to look
-> into, but at the same time, unlike the usual "compute the number of
-> bytes we need to allocate and then call xmalloc()" pattern, where we
-> try to be careful in the "compute" step by using st_add() macros,
-> this code actually keep growing the buffer, so by the time the size_t
-> overflows and wraps around, we'd certainly have exhausted the memory
-> already, so it won't be an issue.
+> > Any repository created on GitHub will have that branch name by default.
+> > Likewise on Azure DevOps. I fully expect the other hosters to follow at
+> > some stage, and also for `git init` to change the default in a future
+> > version (I am working toward that goal).
+> > ...
+> > Maybe Git itself is not a good example for that. Bigger projects face
+> > dramatically bigger challenges replacing the default branch name becaus=
+e
+> > of the short term disruption caused by it. Nevertheless, a growing numb=
+er
+> > of projects have already renamed their default branch, such as Snowpack
+> > (https://github.com/snowpackjs/snowpack) and the react-refresh webpack
+> > plugin (https://github.com/pmmmwh/react-refresh-webpack-plugin) but als=
+o
+> > bigger ones such as LLVM (https://github.com/llvm/llvm-project).
 >
-This is true, but is there any good way to avoid this form of overflow?
-> But we may want to audit existing code that is not careful when
-> preparing the second parameter to strbuf_setlen().  We just
-> analyzed, if we were to accept this patch, that "sb->len + got" that
-> appear as the second parameter to new call of strbuf_setlen() looks
-> bad but would not matter in practice, but we may not be so lucky in
-> other places.
->
-I thought before `strbuf_read_once()`have almost analogous
-"strbuf_setlen(sb, sb->len + cnt)",so I change it.May be you are right,
-"sb->len + got"is not safe.
-> Thanks for a food for thought.
->
-> > diff --git a/strbuf.c b/strbuf.c
-> > index e3397cc4c72..76f560a28d0 100644
-> > --- a/strbuf.c
-> > +++ b/strbuf.c
-> > @@ -517,7 +517,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size=
-_t hint)
-> >
-> >       strbuf_grow(sb, hint ? hint : 8192);
-> >       for (;;) {
-> > -             ssize_t want =3D sb->alloc - sb->len - 1;
-> > +             ssize_t want =3D strbuf_avail(sb);
-> >               ssize_t got =3D read_in_full(fd, sb->buf + sb->len, want)=
-;
-> >
-> >               if (got < 0) {
-> > @@ -527,7 +527,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size=
-_t hint)
-> >                               strbuf_setlen(sb, oldlen);
-> >                       return -1;
-> >               }
-> > -             sb->len +=3D got;
-> > +             strbuf_setlen(sb, sb->len + got);
-> >               if (got < want)
-> >                       break;
-> >               strbuf_grow(sb, 8192);
-> > @@ -543,7 +543,7 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd,=
- size_t hint)
-> >       ssize_t cnt;
-> >
-> >       strbuf_grow(sb, hint ? hint : 8192);
-> > -     cnt =3D xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-> > +     cnt =3D xread(fd, sb->buf + sb->len, strbuf_avail(sb));
-> >       if (cnt > 0)
-> >               strbuf_setlen(sb, sb->len + cnt);
-> >       else if (oldalloc =3D=3D 0)
-> >
-> > base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
+> Yes, thanks for giving Patricia and likeminded souls more usable
+> ammunition than just us ;-)
