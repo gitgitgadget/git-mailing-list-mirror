@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72FB0C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82CDAC433DB
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:07:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 382E7207B3
+	by mail.kernel.org (Postfix) with ESMTP id 4E9492220B
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404868AbhAZQGa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 11:06:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37716 "EHLO
+        id S2404951AbhAZQGj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:06:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404616AbhAZQC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 11:02:59 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51204C0698C2
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:37 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id u14so3219430wmq.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:37 -0800 (PST)
+        with ESMTP id S2404563AbhAZQCr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:02:47 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C8AC0698C7
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:42 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id c128so3246029wme.2
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SDf53TnuEVi5SZUAg22vP1yHKIDBDQSZUZC6stgTJ+Q=;
-        b=tTW+CqggnwgJAdrQajTqsDwBdefKmh8XqfyQhmfRZMvBUgvEvxUT0OyIdrz2rbjnIV
-         klC9NP+gH7LOBKnNgGf0dqaEbeOFRIbqHra8Byxfcev2S3GFc8noyn++2mA+EnIXQrmj
-         3/+8xMWD3VTmz+pbsP6yEKSTX8xSm3TwTmtEkpZDi6kPY6cOOOBMc7Ps1pTdtYTzpYFV
-         hVhF1u8GMwzoh8kKhFhyMTY9fuGIQTjz3B27hiMBlVLfqJFHj2sD/HXEhwziTHWuXmHP
-         FjtPhAGg3EClL+pvJZkVlxB8wxVxpGoXVYC5Cq5W35lrBYJJ05tW+/IS/UP4xsSDFDSY
-         3cRQ==
+        bh=g54d1hmA9HIwJVQpYPG3GOux5lOAMXVYgzBb/0D3228=;
+        b=Pa/E98WgKQV5ShCJmWoM6qwvsUOSZwwz4T1yIhINJgssIWsYBbkmPnCDyEXfpsPWbY
+         IUwwhngHrqHWmA8R/c3RonlKuhudLkTjMrJ2e7jPjFqjHeL4sYKBLdlccFABhehjScSt
+         tGYaBKM+jh1KjZY7FAsKugiPJwEAknWQvb0LUjl3jFgwlQPATzMIPVMkZbPNEeGJ9xx8
+         pmlDrk6em8xXfo0miY0Hht4QBoLI68wmlNMkwtt3+sZfX15GVaAVf1DP2QWSxTnwpYOO
+         APnpQjJZsnUgyGs8W5eM05ij1S71TzAy2eaOi+3o4eZ0/i2yI6UwNaYZ4+lLebxBnNw6
+         F4Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SDf53TnuEVi5SZUAg22vP1yHKIDBDQSZUZC6stgTJ+Q=;
-        b=D5hcZz4exyLqsOrLMbKqas19ZFainwYvLP7P8iaHRZzIZDHy41qii4No9MUv36agDb
-         L6F0wL0n7v1WrQ81wdqWyDGD70smzbhHfUwifkm8fjx88KoISkOtdzGxN5GIR5MRBKMD
-         qOej481i/lNN+SR+ON5+2qhMgR9Ppu3AiqTDVtxLN5VlA4cnjJHC0kOIBrTQVEd87Ue+
-         04nv3BR5kaStcW5ZzSKtcaGPAh8jX5J4Od/khBr6bbEcApKksVYaTbsryeo8jj5ZwIxf
-         tsn6y/ovI9dpv7U226k/o4PFIj/fKSAHs+S+RUc1qQl4K3EIdWLhoh3z1ypt9HiteGcN
-         JBWA==
-X-Gm-Message-State: AOAM533FupJqiu4/WPmPsV8stve/iAWKFabT0yPz7jr09ByfVAzm6UQz
-        /bpGAwZn82Y7LWnrkmuFUs2/2PVFDEA=
-X-Google-Smtp-Source: ABdhPJzixmcOQxHRP15QSeqAIMot9ZVbCMP6svp6a3V9IlUZoJ1VYcWyVJlITX50fSr/IAppL1dNWQ==
-X-Received: by 2002:a1c:7c06:: with SMTP id x6mr374018wmc.67.1611676895887;
-        Tue, 26 Jan 2021 08:01:35 -0800 (PST)
+        bh=g54d1hmA9HIwJVQpYPG3GOux5lOAMXVYgzBb/0D3228=;
+        b=DGY/p6v5Tl7gJVL0gUq2tg882+64ZJ2wrWgi2paA8/j8fYPVWTtLICqv7htp5KaFcg
+         YJ6ZwIF6q7d0nXmuelGD3KOqgVOU0Do1X1dRrm5Z2O3Bg5xutBG6gVRZKJayXZcTnx2Y
+         fYKtrogHQJUKUBL+Zrs1DzAFlcymfIOc529x+KzK7FkZpTO7qehwx5mAhm9672tNk/dt
+         fuWVEJ72fe81zEdI002wciepi//6vAFigt0BAxwHbytilEae76RpiE8T70ahnlU186b6
+         jf58+2AtXT7LvqibPwHYsmzfTWu80f7CiXn2e9g8vQgLvaITEB/70FjoDKYXQS7wkCw9
+         pW0A==
+X-Gm-Message-State: AOAM530KmJK4BnKhJWJvSV+lFzKIf1v8JHJOwdzMPy6uptMEMjoo43c7
+        0dVU+hgoAitpjj0MCA9tJ8ftDwXFJ5k=
+X-Google-Smtp-Source: ABdhPJzJfaO5xt3d8+luOstoZ3th1/bL4jVT1GNoOoHq1U+AP4jKAnc7qGY4gSE5iHZBcdC0oXBddA==
+X-Received: by 2002:a1c:808d:: with SMTP id b135mr343500wmd.157.1611676900537;
+        Tue, 26 Jan 2021 08:01:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j4sm18253603wru.20.2021.01.26.08.01.34
+        by smtp.gmail.com with ESMTPSA id v4sm28924990wrw.42.2021.01.26.08.01.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 08:01:35 -0800 (PST)
-Message-Id: <eabc7b736478e68c6e7d0af73df8e3e73e17bc34.1611676886.git.gitgitgadget@gmail.com>
+        Tue, 26 Jan 2021 08:01:39 -0800 (PST)
+Message-Id: <7339990f07db81897a30cb12e2d33ac1ef855d20.1611676886.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jan 2021 16:01:17 +0000
-Subject: [PATCH 08/17] midx: add num_large_offsets to write_midx_context
+Date:   Tue, 26 Jan 2021 16:01:22 +0000
+Subject: [PATCH 13/17] commit-graph: use chunk-format read API
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,82 +76,276 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In an effort to align write_midx_internal() with the chunk-format API,
-continue to group necessary data into "struct write_midx_context". This
-change collects the "uint32_t num_large_offsets" into the context. With
-this new data, write_midx_large_offsets() now matches the
-chunk_write_fn type.
+Instead of parsing the table of contents directly, use the chunk-format
+API methods read_table_of_contents() and pair_chunk(). While the current
+implementation loses the duplicate-chunk detection, that will be added
+in a future change.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ commit-graph.c          | 209 ++++++++++++++++++++--------------------
+ t/t5318-commit-graph.sh |   2 +-
+ 2 files changed, 108 insertions(+), 103 deletions(-)
 
-diff --git a/midx.c b/midx.c
-index 66feff096e8..40b815f8877 100644
---- a/midx.c
-+++ b/midx.c
-@@ -464,6 +464,7 @@ struct write_midx_context {
- 
- 	uint32_t *pack_perm;
- 	unsigned large_offsets_needed:1;
-+	uint32_t num_large_offsets;
- };
- 
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
-@@ -772,11 +773,14 @@ static size_t write_midx_object_offsets(struct hashfile *f,
- 	return written;
+diff --git a/commit-graph.c b/commit-graph.c
+index b2c0f233eab..44c06d0fb67 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -299,15 +299,99 @@ static int verify_commit_graph_lite(struct commit_graph *g)
+ 	return 0;
  }
  
--static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_offset,
--				       struct pack_midx_entry *objects, uint32_t nr_objects)
-+static size_t write_midx_large_offsets(struct hashfile *f,
-+				       void *data)
++static int graph_read_oid_fanout(const unsigned char *chunk_start,
++				 size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_oid_fanout = (uint32_t*)chunk_start;
++	return 0;
++}
++
++static int graph_read_oid_lookup(const unsigned char *chunk_start,
++				 size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_oid_lookup = chunk_start;
++	g->num_commits = chunk_size / g->hash_len;
++	return 0;
++}
++
++static int graph_read_data(const unsigned char *chunk_start,
++				 size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_commit_data = chunk_start;
++	return 0;
++}
++
++static int graph_read_extra_edges(const unsigned char *chunk_start,
++				  size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_extra_edges = chunk_start;
++	return 0;
++}
++
++static int graph_read_base_graphs(const unsigned char *chunk_start,
++				  size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_base_graphs = chunk_start;
++	return 0;
++}
++
++static int graph_read_generation_data(const unsigned char *chunk_start,
++				      size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_generation_data = chunk_start;
++	return 0;
++}
++
++static int graph_read_generation_overflow(const unsigned char *chunk_start,
++					  size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_generation_data_overflow = chunk_start;
++	return 0;
++}
++
++static int graph_read_bloom_indices(const unsigned char *chunk_start,
++				    size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	g->chunk_bloom_indexes = chunk_start;
++	return 0;
++}
++
++static int graph_read_bloom_data(const unsigned char *chunk_start,
++				  size_t chunk_size, void *data)
++{
++	struct commit_graph *g = (struct commit_graph *)data;
++	uint32_t hash_version;
++	g->chunk_bloom_data = chunk_start;
++	hash_version = get_be32(chunk_start);
++
++	if (hash_version != 1)
++		return 0;
++
++	g->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
++	g->bloom_filter_settings->hash_version = hash_version;
++	g->bloom_filter_settings->num_hashes = get_be32(chunk_start + 4);
++	g->bloom_filter_settings->bits_per_entry = get_be32(chunk_start + 8);
++	g->bloom_filter_settings->max_changed_paths = DEFAULT_BLOOM_MAX_CHANGES;
++
++	return 0;
++}
++
+ struct commit_graph *parse_commit_graph(struct repository *r,
+ 					void *graph_map, size_t graph_size)
  {
--	struct pack_midx_entry *list = objects, *end = objects + nr_objects;
-+	struct write_midx_context *ctx = (struct write_midx_context *)data;
-+	struct pack_midx_entry *list = ctx->entries;
-+	struct pack_midx_entry *end = ctx->entries + ctx->entries_nr;
- 	size_t written = 0;
-+	uint32_t nr_large_offset = ctx->num_large_offsets;
+-	const unsigned char *data, *chunk_lookup;
+-	uint32_t i;
++	const unsigned char *data;
+ 	struct commit_graph *graph;
+-	uint64_t next_chunk_offset;
+ 	uint32_t graph_signature;
+ 	unsigned char graph_version, hash_version;
++	struct chunkfile *cf = NULL;
  
- 	while (nr_large_offset) {
- 		struct pack_midx_entry *obj;
-@@ -811,7 +815,6 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	uint64_t written = 0;
- 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
- 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
--	uint32_t num_large_offsets = 0;
- 	struct progress *progress = NULL;
- 	int pack_name_concat_len = 0;
- 	int dropped_packs = 0;
-@@ -861,7 +864,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	ctx.large_offsets_needed = 0;
- 	for (i = 0; i < ctx.entries_nr; i++) {
- 		if (ctx.entries[i].offset > 0x7fffffff)
--			num_large_offsets++;
-+			ctx.num_large_offsets++;
- 		if (ctx.entries[i].offset > 0xffffffff)
- 			ctx.large_offsets_needed = 1;
- 	}
-@@ -961,7 +964,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 
- 		cur_chunk++;
- 		chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] +
--					   num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH;
-+					   ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH;
+ 	if (!graph_map)
+ 		return NULL;
+@@ -356,108 +440,27 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 		return NULL;
  	}
  
- 	chunk_ids[cur_chunk] = 0;
-@@ -1010,7 +1013,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 				break;
+-	chunk_lookup = data + 8;
+-	next_chunk_offset = get_be64(chunk_lookup + 4);
+-	for (i = 0; i < graph->num_chunks; i++) {
+-		uint32_t chunk_id;
+-		uint64_t chunk_offset = next_chunk_offset;
+-		int chunk_repeated = 0;
+-
+-		chunk_id = get_be32(chunk_lookup + 0);
+-
+-		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
+-		next_chunk_offset = get_be64(chunk_lookup + 4);
+-
+-		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
+-			error(_("commit-graph improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
+-			      (uint32_t)chunk_offset);
+-			goto free_and_return;
+-		}
+-
+-		switch (chunk_id) {
+-		case GRAPH_CHUNKID_OIDFANOUT:
+-			if (graph->chunk_oid_fanout)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_oid_fanout = (uint32_t*)(data + chunk_offset);
+-			break;
+-
+-		case GRAPH_CHUNKID_OIDLOOKUP:
+-			if (graph->chunk_oid_lookup)
+-				chunk_repeated = 1;
+-			else {
+-				graph->chunk_oid_lookup = data + chunk_offset;
+-				graph->num_commits = (next_chunk_offset - chunk_offset)
+-						     / graph->hash_len;
+-			}
+-			break;
+-
+-		case GRAPH_CHUNKID_DATA:
+-			if (graph->chunk_commit_data)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_commit_data = data + chunk_offset;
+-			break;
+-
+-		case GRAPH_CHUNKID_GENERATION_DATA:
+-			if (graph->chunk_generation_data)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_generation_data = data + chunk_offset;
+-			break;
++	cf = init_chunkfile(NULL);
  
- 			case MIDX_CHUNKID_LARGEOFFSETS:
--				written += write_midx_large_offsets(f, num_large_offsets, ctx.entries, ctx.entries_nr);
-+				written += write_midx_large_offsets(f, &ctx);
- 				break;
+-		case GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW:
+-			if (graph->chunk_generation_data_overflow)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_generation_data_overflow = data + chunk_offset;
+-			break;
+-
+-		case GRAPH_CHUNKID_EXTRAEDGES:
+-			if (graph->chunk_extra_edges)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_extra_edges = data + chunk_offset;
+-			break;
+-
+-		case GRAPH_CHUNKID_BASE:
+-			if (graph->chunk_base_graphs)
+-				chunk_repeated = 1;
+-			else
+-				graph->chunk_base_graphs = data + chunk_offset;
+-			break;
+-
+-		case GRAPH_CHUNKID_BLOOMINDEXES:
+-			if (graph->chunk_bloom_indexes)
+-				chunk_repeated = 1;
+-			else if (r->settings.commit_graph_read_changed_paths)
+-				graph->chunk_bloom_indexes = data + chunk_offset;
+-			break;
+-
+-		case GRAPH_CHUNKID_BLOOMDATA:
+-			if (graph->chunk_bloom_data)
+-				chunk_repeated = 1;
+-			else if (r->settings.commit_graph_read_changed_paths) {
+-				uint32_t hash_version;
+-				graph->chunk_bloom_data = data + chunk_offset;
+-				hash_version = get_be32(data + chunk_offset);
+-
+-				if (hash_version != 1)
+-					break;
++	if (read_table_of_contents(cf, graph->data, graph_size,
++				   GRAPH_HEADER_SIZE, graph->num_chunks))
++		goto free_and_return;
  
- 			default:
+-				graph->bloom_filter_settings = xmalloc(sizeof(struct bloom_filter_settings));
+-				graph->bloom_filter_settings->hash_version = hash_version;
+-				graph->bloom_filter_settings->num_hashes = get_be32(data + chunk_offset + 4);
+-				graph->bloom_filter_settings->bits_per_entry = get_be32(data + chunk_offset + 8);
+-				graph->bloom_filter_settings->max_changed_paths = DEFAULT_BLOOM_MAX_CHANGES;
+-			}
+-			break;
+-		}
++	pair_chunk(cf, GRAPH_CHUNKID_OIDFANOUT, graph_read_oid_fanout, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_OIDLOOKUP, graph_read_oid_lookup, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_DATA, graph_read_data, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES, graph_read_extra_edges, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_BASE, graph_read_base_graphs, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
++		   graph_read_generation_data, graph);
++	pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
++		   graph_read_generation_overflow, graph);
+ 
+-		if (chunk_repeated) {
+-			error(_("commit-graph chunk id %08x appears multiple times"), chunk_id);
+-			goto free_and_return;
+-		}
++	if (r->settings.commit_graph_read_changed_paths) {
++		pair_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
++			   graph_read_bloom_indices, graph);
++		pair_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
++			   graph_read_bloom_data, graph);
+ 	}
+ 
+ 	if (graph->chunk_bloom_indexes && graph->chunk_bloom_data) {
+@@ -474,9 +477,11 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 	if (verify_commit_graph_lite(graph))
+ 		goto free_and_return;
+ 
++	free_chunkfile(cf);
+ 	return graph;
+ 
+ free_and_return:
++	free_chunkfile(cf);
+ 	free(graph->bloom_filter_settings);
+ 	free(graph);
+ 	return NULL;
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index fa27df579a5..c7da741284e 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -564,7 +564,7 @@ test_expect_success 'detect bad hash version' '
+ 
+ test_expect_success 'detect low chunk count' '
+ 	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\01" \
+-		"missing the .* chunk"
++		"final chunk has non-zero id"
+ '
+ 
+ test_expect_success 'detect missing OID fanout chunk' '
 -- 
 gitgitgadget
 
