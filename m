@@ -2,135 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42373C43381
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 15:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B4A1C433DB
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:02:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14BA023101
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 15:25:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF46E221EC
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392779AbhAZPYI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 10:24:08 -0500
-Received: from mout.gmx.net ([212.227.17.20]:37055 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392744AbhAZPXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 10:23:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1611674541;
-        bh=D0N/0vZdEsWwpk71arIErB2X5HpjCwk3mKdJmtIqv3w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CJ31lJfaVANvSeqdmLy9ZHvPfhrKBHRfa+wqDSWAaiaNniO1bGE0CmusbtTt0dq0K
-         mwHaCX8b56Ummga/TZxEg3KM6fZoQfzFfNteGKxpxvVnS26iANCA9Mc+lel9GUnntl
-         bxzMmrU2DGpN9iyrUZ5ID/B/2SopfuRcbZT0eUj4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.88.23] ([89.1.213.153]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvK4f-1lvhJU0lX7-00rF1q; Tue, 26
- Jan 2021 16:22:21 +0100
-Date:   Tue, 26 Jan 2021 16:22:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/3] range-diff(docs): explain how to specify commit
- ranges
-In-Reply-To: <20210122182050.xyzkvlctb4kiin7a@pengutronix.de>
-Message-ID: <nycvar.QRO.7.76.6.2101261619570.57@tvgsbejvaqbjf.bet>
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com> <041456b6e73b3a88097d0cc06056eb43d35d42c6.1611267638.git.gitgitgadget@gmail.com> <20210122182050.xyzkvlctb4kiin7a@pengutronix.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2404144AbhAZQCW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:02:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391058AbhAZQCM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:02:12 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DCB7C061A2E
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:31 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id 7so17030095wrz.0
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=siZEtXbSOFXW3yL7TfR3RspVNwEahKzFKF1375HAfPw=;
+        b=LY3nDHcmbUIdVlHmvjM4X2VnXOX/3IRYVtZfzL6HVDZkIq33iXdKFLifzbjKbupY59
+         UodG3QhrpB491jC/89lNbYRFUXUCfKxZNBuYMZ9VsgQj5cpUEU7v1XHTxItK8wUxFLAb
+         DtPkBe/7IifytCjygYZHml7CcTg+Fdnecca+p86jBbQhqfd26TYJM3HsOOq7cItjODid
+         IClL1Cl7U+UYn7mSfH2VJT6WiXE9ZPBqolg5cmtoRklvE1sGNyzkvJTlI4yZ2RVcxDOa
+         U/s0f1cz+2I/tYCoABWDEs/5kFCVkHgpgw/+ZmOeNFjuqVW+F7+5P5QEMZ9MfgVj02Tw
+         XuaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=siZEtXbSOFXW3yL7TfR3RspVNwEahKzFKF1375HAfPw=;
+        b=ADQSqhufo79uemL+j/ysuhFwUHmDBrh/TuuUS6R/o4NJjlbic07SiT9EdY4a0CdLNu
+         n/mFSBr1GWbh6ThuGBM86XhEaw1KFyhmX9KjmJIwn4MqjxWcqjPKxxl8SGM5bkkVWHdG
+         xccCBohoDEhg11Cb6PC/9cYimWfLfyJa0gC++9OPu5SfTC7Aa3yDOtavYSY0/bHS3x0c
+         F4PmzV23vpQYelLL9YVaGnOSlQBr1owgPhzeVWpktd4daBxTTze3tA1KGPuNGjcssBzB
+         rUwkS7I1FjJfkR0qnaauPyGW12pdN0qVBIhKAqhGDStZKpdpY4dOzcLSsU0ptkuRYOhe
+         m9NQ==
+X-Gm-Message-State: AOAM530+r+jhEmdgcVZ0sLHpVzLjRhhPn5vSOnV2qyGmpPluVIYHOOhg
+        bZbRkoRgYIcLFbUCyQvgLcB+iN2GRUg=
+X-Google-Smtp-Source: ABdhPJwiNxVIn+8G8fy9752END+z+BBXmOYo0qMOOs7yd5sYmkxjStHZqpnJTt5gSMfaSKQx3dGQyQ==
+X-Received: by 2002:adf:dd45:: with SMTP id u5mr6767241wrm.392.1611676889965;
+        Tue, 26 Jan 2021 08:01:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a184sm3968026wme.35.2021.01.26.08.01.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 08:01:29 -0800 (PST)
+Message-Id: <9bd273f8c94fdb0c3adf8aedef3480ff5f4232b8.1611676886.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 26 Jan 2021 16:01:11 +0000
+Subject: [PATCH 02/17] chunk-format: create chunk format write API
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2120483012-1611674542=:57"
-X-Provags-ID: V03:K1:POI4jkmi4ypLouZ7j6FlEX2iH28J6PumgYUKkZ0YeUIckHTbIIe
- HcQY0+/+M687hEmIq6fOmLYWlk1nqDsl4hrfvkAT8sQWTgjTme6hd/KQcJL2PhAqjMYh0rY
- bXmT8rKV2JgjOTw2KvHDRhNclvlo38jyTd5Z6Mk4qEvxx8dy32+usqPCO1sWi2rKt/nqdVz
- XolyPoC6HX5RrYN8qJZYQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P3Gmngsf4IY=:1khFLCvZENXAPQvFDyqrsw
- K/MtvjJHPK4LQsoCFJTnzw10WAr1OLGrHl8gbMgagq8Q/8o/EAdCl5w0CaNYke0rcd8fkIufT
- VL/GD9necleHenV9UdkHvFG+cnFS4OLXISnOLOBNLG7CEcGjOInQ+eJnZfdoyAJNUna5Hm7bc
- fslvVs5S3DYpES+xJp9ROh9ZU7S0dr4zxzuWTXoxDEwfoW8Xpo+1hY8ZquCQoMB7n7FpANKSD
- ZxLvnrR8YuzuGdZZd6JtPGvrgzoszXj7eVb76V4EdQ3/JtNwofXkZhg+6VoKoMkvQgSINHkCC
- 2pMa7VJ9zETA+6nZUxYxNS5+ftCSBeLaqi/ynWtl9q75CxUauoL3b66uh/QPLFcpvXJn7A13k
- n1Wx8k4otl0qsEhzoBEIsn70j2FioQStXJdAympq3xlSlBQdlzon4pBsyBS1nV09LottTaCJw
- ETrNSPIDw3cQlVLaFu8904Z6dEArEBtaRmVGnTYIzwawMtMbSM19mqT77uaep1GLVVn/ki82p
- JwE3pJ9ShxsofTFWlQ7OppyPOCOU7210JNHeZmb7j9dA4kcPDP+kr1/c+DwnCh6mH3/hvo49O
- Hy/ovdOs0dCwJKl3bqA5+0vULDVgM/9gahWAmv3U6qjfsO+Sz7JfzOsquych9I4jERTghJmay
- Y7RrSuiVUoLpWs5Bn+hA5au0aaXBNaTpSzXzUl8xFjfsRmtwleHveLCvBw4MVoy/eWLY5WfoF
- Pjt8lR2wSShkBg335bUO8q5/Jip6KgxIfNoO7ab0K/Npqpfg6HhNy2A2cko+ATqA3yPK0Dcwc
- rbOaRBZGctpv3zssmk1niNY63tuIiGExz326gxxrVZu46HNfn7Y9aMQZQr8mMZixPJwLx3+oQ
- R5bFwKImGsFt4410y+XpaH+OcOeqKIhUowv8yIi+s=
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, gitster@pobox.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Derrick Stolee <dstolee@microsoft.com>
 
---8323328-2120483012-1611674542=:57
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In anticipation of combining the logic from the commit-graph and
+multi-pack-index file formats, create a new chunk-format API. Use a
+'struct chunkfile' pointer to keep track of data that has been
+registered for writes. This struct is anonymous outside of
+chunk-format.c to ensure no user attempts to interfere with the data.
 
-Hi Uwe,
+The next change will use this API in commit-graph.c, but the general
+approach is:
 
-On Fri, 22 Jan 2021, Uwe Kleine-K=C3=B6nig wrote:
+ 1. initialize the chunkfile with init_chunkfile(f).
+ 2. add chunks in the intended writing order with add_chunk().
+ 3. write any header information to the hashfile f.
+ 4. write the chunkfile data using write_chunkfile().
+ 5. free the chunkfile struct using free_chunkfile().
 
-> On Thu, Jan 21, 2021 at 10:20:38PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > There are three forms, depending whether the user specifies one, two o=
-r
-> > three non-option arguments. We've never actually explained how this
-> > works in the manual, so let's explain it.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  Documentation/git-range-diff.txt | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >
-> > diff --git a/Documentation/git-range-diff.txt b/Documentation/git-rang=
-e-diff.txt
-> > index 9701c1e5fdd..76359baf26d 100644
-> > --- a/Documentation/git-range-diff.txt
-> > +++ b/Documentation/git-range-diff.txt
-> > @@ -28,6 +28,19 @@ Finally, the list of matching commits is shown in t=
-he order of the
-> >  second commit range, with unmatched commits being inserted just after
-> >  all of their ancestors have been shown.
-> >
-> > +There are three ways to specify the commit ranges:
-> > +
-> > +- `<range1> <range2>`: Either commit range can be of the form
-> > +  `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See `SPECIFYING RANGES`
-> > +  in linkgit:gitrevisions[7] for more details.
-> > +
-> > +- `<rev1>...<rev2>`. This resembles the symmetric ranges mentioned in
-> > +  the `SPECIFYING RANGES` section of linkgit:gitrevisions[7], and is
-> > +  equivalent to `<base>..<rev1> <base>..<rev2>` where `<base>` is the
-> > +  merge base as obtained via `git merge-base <rev1> <rev2>`.
-> > +
-> > +- `<base> <rev1> <rev2>`: This is equivalent to `<base>..<rev1>
-> > +  <base>..<rev2>`.
->
-> git-log takes a range, too. There you can specify a single rev (with the
-> semantic to list all commits from this rev up (or down?) to the root).
-> So <rev> means implicitly <rev>^=E2=88=9E..<rev> for git-log.
->
-> Does it make sense to implement this here, too? Maybe this even allows
-> sharing some more code?
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Makefile       |  1 +
+ chunk-format.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ chunk-format.h | 20 +++++++++++
+ 3 files changed, 112 insertions(+)
+ create mode 100644 chunk-format.c
+ create mode 100644 chunk-format.h
 
-I don't think that it makes sense to support open-ended ranges. `git
-range-diff` is expensive, its runtime is proportional to the number of
-patches in the first range times the number of patches in the second
-range. Allowing open-ended ranges will simply allow users to be stuck with
-a long runtime by mistake, and I do not see any valid use case in return
-for that risk.
+diff --git a/Makefile b/Makefile
+index 7b64106930a..50a7663841e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -854,6 +854,7 @@ LIB_OBJS += bundle.o
+ LIB_OBJS += cache-tree.o
+ LIB_OBJS += chdir-notify.o
+ LIB_OBJS += checkout.o
++LIB_OBJS += chunk-format.o
+ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+ LIB_OBJS += combine-diff.o
+diff --git a/chunk-format.c b/chunk-format.c
+new file mode 100644
+index 00000000000..2ce37ecc6bb
+--- /dev/null
++++ b/chunk-format.c
+@@ -0,0 +1,91 @@
++#include "cache.h"
++#include "chunk-format.h"
++#include "csum-file.h"
++#define CHUNK_LOOKUP_WIDTH 12
++
++/*
++ * When writing a chunk-based file format, collect the chunks in
++ * an array of chunk_info structs. The size stores the _expected_
++ * amount of data that will be written by write_fn.
++ */
++struct chunk_info {
++	uint32_t id;
++	uint64_t size;
++	chunk_write_fn write_fn;
++};
++
++struct chunkfile {
++	struct hashfile *f;
++
++	struct chunk_info *chunks;
++	size_t chunks_nr;
++	size_t chunks_alloc;
++};
++
++struct chunkfile *init_chunkfile(struct hashfile *f)
++{
++	struct chunkfile *cf = xcalloc(1, sizeof(*cf));
++	cf->f = f;
++	return cf;
++}
++
++void free_chunkfile(struct chunkfile *cf)
++{
++	if (!cf)
++		return;
++	free(cf->chunks);
++	free(cf);
++}
++
++int get_num_chunks(struct chunkfile *cf)
++{
++	return cf->chunks_nr;
++}
++
++void add_chunk(struct chunkfile *cf,
++	       uint64_t id,
++	       chunk_write_fn fn,
++	       size_t size)
++{
++	ALLOC_GROW(cf->chunks, cf->chunks_nr + 1, cf->chunks_alloc);
++
++	cf->chunks[cf->chunks_nr].id = id;
++	cf->chunks[cf->chunks_nr].write_fn = fn;
++	cf->chunks[cf->chunks_nr].size = size;
++	cf->chunks_nr++;
++}
++
++int write_chunkfile(struct chunkfile *cf, void *data)
++{
++	int i;
++	size_t cur_offset = cf->f->offset + cf->f->total;
++
++	/* Add the table of contents to the current offset */
++	cur_offset += (cf->chunks_nr + 1) * CHUNK_LOOKUP_WIDTH;
++
++	for (i = 0; i < cf->chunks_nr; i++) {
++		hashwrite_be32(cf->f, cf->chunks[i].id);
++		hashwrite_be64(cf->f, cur_offset);
++
++		cur_offset += cf->chunks[i].size;
++	}
++
++	/* Trailing entry marks the end of the chunks */
++	hashwrite_be32(cf->f, 0);
++	hashwrite_be64(cf->f, cur_offset);
++
++	for (i = 0; i < cf->chunks_nr; i++) {
++		uint64_t start_offset = cf->f->total + cf->f->offset;
++		int result = cf->chunks[i].write_fn(cf->f, data);
++
++		if (result)
++			return result;
++
++		if (cf->f->total + cf->f->offset != start_offset + cf->chunks[i].size)
++			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
++			    cf->chunks[i].size, cf->chunks[i].id,
++			    cf->f->total + cf->f->offset - start_offset);
++	}
++
++	return 0;
++}
+diff --git a/chunk-format.h b/chunk-format.h
+new file mode 100644
+index 00000000000..bfaed672813
+--- /dev/null
++++ b/chunk-format.h
+@@ -0,0 +1,20 @@
++#ifndef CHUNK_FORMAT_H
++#define CHUNK_FORMAT_H
++
++#include "git-compat-util.h"
++
++struct hashfile;
++struct chunkfile;
++
++struct chunkfile *init_chunkfile(struct hashfile *f);
++void free_chunkfile(struct chunkfile *cf);
++int get_num_chunks(struct chunkfile *cf);
++typedef int (*chunk_write_fn)(struct hashfile *f,
++			      void *data);
++void add_chunk(struct chunkfile *cf,
++	       uint64_t id,
++	       chunk_write_fn fn,
++	       size_t size);
++int write_chunkfile(struct chunkfile *cf, void *data);
++
++#endif
+-- 
+gitgitgadget
 
-Ciao,
-Johannes
-
---8323328-2120483012-1611674542=:57--
