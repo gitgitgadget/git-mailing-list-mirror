@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26899C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E777C433DB
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:04:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A5B2220B
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:04:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AE882245C
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404480AbhAZQDr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 11:03:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37604 "EHLO
+        id S2404310AbhAZQDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:03:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404565AbhAZQCr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 11:02:47 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA818C0698C8
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:42 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id 6so17019745wri.3
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:42 -0800 (PST)
+        with ESMTP id S2404570AbhAZQCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:02:50 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91573C0698CB
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:45 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id 6so17019896wri.3
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/9WZzc0JHsPutkXhtZtPjDnbj9w/mbrhFV+hIT7xcoo=;
-        b=ag7Tu7N9BbF12VoAVBwg4a70HIqr++6HdKATakL1dTwD4inrXcn0voC2iwBplRyx7d
-         jEWCvdq2LxTF95ww7UZg3E/wkxjo9f9L3xB/P5X6tNKX3LfwfJXIo0DkrPOadgrQ0NNX
-         08307OfLAgINRXcLLkl7rngz96ZatmDbIxzHzw1p0RZV+LFkl+7kjAdGr3AS9hQWljMl
-         4Ab1sCwpU+wlRs1IjTr/zOCaoywgevoib1tDEpVwCUcIkh1Mn62FLfnXIYhHLniPOBH5
-         seCJUWt9NGUBzKdO6/C0gkAGBEVbx+WQ84QV1JTqQZeEvu6hn4IPf8/6RRHAf44ucoIC
-         ZSaw==
+        bh=/31wU3H+Rpd5f02JkLU2apACd46gCGYTclTqM21pbrU=;
+        b=WH1gy189bG8syuAuMMA8X5of+0Qp3VhR7nIfFuXmQHgMJXW+Xidwca+Obgzhx2C+f+
+         5nB76y3MODoeRmZtKTIvJzlAebEzB8BP5PhyPOcpY527MHmiEqtuKn4WH7qmL1X2bLpN
+         RsoH2WAF0OQIPCdip1GS49MXJ3AVDPzBP+Mu4zd0Uqo2Itn6FGLwtpARubn4weIRXMeN
+         99D1jWX7lm+iLbsZBjvAOJEMRCYIF6bCLl1nAce5yX1rU18b13ZFEBFms9bHgWatFjkz
+         iOW96gMNqfIhZPWGUe1AT7YbO//cW7r6ZzGRv0V3g0IJdnC6zganhTMuaS1TsQMDWb64
+         4vHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/9WZzc0JHsPutkXhtZtPjDnbj9w/mbrhFV+hIT7xcoo=;
-        b=VD4Kotn+pJUEHbByvXkH/hNdkAgjmMnGGS5MgzlYpTsjxTs4gsWtUWH7DXzg5HlhD8
-         kAJerLR4GWo5oor46J++Ym8Q8lx6LSd8+PeCPOE3wg+ks0a3mdHrW80fvAm3WtBZeft1
-         dVtG2jMEv17B1YFjA9kjNE4ZoN61w+9OxGNhxFNaJe6JYlvkfZpxt9V0LfEUEOVF25A7
-         7bCUKCZwD6P3gl8uiz4DNwbdwrXJsVs7fLLZxkmqbU2gUhOCaJAcwLsN/5oFzV+bGIz2
-         yFurnJXb0ovStmY+sEq1jb78vYFWH1QUj+Tj0nuOUiWXvYQ9VVHAE/iPiWkoKYOOduTY
-         7bCg==
-X-Gm-Message-State: AOAM532rDExvsTL/4pcPBhD7jBo4XThZWKqlizAuSpElZYzz6385HmZz
-        +E0Hskwdb9MdBttXPBoyE9Cf+rFqQV8=
-X-Google-Smtp-Source: ABdhPJxkm542g4izd0kPYWYLVMJDquNT4CphCXnN17T3hiYdC2z79E/yLghSlauppyTuAYBhXOtlhw==
-X-Received: by 2002:adf:f512:: with SMTP id q18mr6831963wro.55.1611676901422;
-        Tue, 26 Jan 2021 08:01:41 -0800 (PST)
+        bh=/31wU3H+Rpd5f02JkLU2apACd46gCGYTclTqM21pbrU=;
+        b=qAMMLyQCu65WlR0uiXQyiswtHNe9x3hzEAfHSLhvrVbYLFSt6tkVaWvu0MZvXkEasg
+         JNJHHwHnuEymgOVUtV4n9RD9l7DHB7CB1Fq0kOM8F9e6XCAPIsIy+R5qj08r6DMIZgNP
+         k/sl+OBmt0EwWxkDcE4Yp50ydHBXPne9UeixwROq9bE6k0H+YuuYYzFNpQEv48zHsBJm
+         PpzxXDFRKX3q6tTOcjimNicyI7J/7UPAiFkaKVi0R1YdepA4hPxfE3r8ARAEXGzC/HD7
+         OgUnbIpC4sEXvCt8kauUtUFd5KcaHmo4HehcINPa6qCKSI6eVRvtEzC/EDhl6PozIkMm
+         jSTQ==
+X-Gm-Message-State: AOAM53352ZPvpgq9shwEdSeKH4VjV8jjkc1nR8PifzzQ+dlvJhtq3Ve9
+        ExXD98TkDOtyJMM+yV9QO3aUpa+n2QU=
+X-Google-Smtp-Source: ABdhPJwAZHOMvDFOmAqpszmk6mDC4AyHbP7tRBFDrBw7r+k+wYUaKSlQ2ZRHsbuhrJ2j/jfFWzyoCA==
+X-Received: by 2002:adf:f909:: with SMTP id b9mr7028152wrr.111.1611676904149;
+        Tue, 26 Jan 2021 08:01:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l18sm3735818wme.37.2021.01.26.08.01.40
+        by smtp.gmail.com with ESMTPSA id w4sm3670237wmc.13.2021.01.26.08.01.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 08:01:40 -0800 (PST)
-Message-Id: <cb145e0e32afed99b9bfa822c76f48bee18885ba.1611676886.git.gitgitgadget@gmail.com>
+        Tue, 26 Jan 2021 08:01:43 -0800 (PST)
+Message-Id: <05cbd0a8d93a3e54d868a549fe76e16cb75ba6d6.1611676886.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jan 2021 16:01:23 +0000
-Subject: [PATCH 14/17] midx: use chunk-format read API
+Date:   Tue, 26 Jan 2021 16:01:26 +0000
+Subject: [PATCH 17/17] chunk-format: add technical docs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,179 +76,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Instead of parsing the table of contents directly, use the chunk-format
-API methods read_table_of_contents() and pair_chunk(). In particular, we
-can use the return value of pair_chunk() to generate an error when a
-required chunk is missing.
+The chunk-based file format is now an API in the code, but we should
+also take time to document it as a file format. Specifically, it matches
+the CHUNK LOOKUP sections of the commit-graph and multi-pack-index
+files, but there are some commonalities that should be grouped in this
+document.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c                      | 103 ++++++++++++++++++++----------------
- t/t5319-multi-pack-index.sh |   6 +--
- 2 files changed, 60 insertions(+), 49 deletions(-)
+ Documentation/technical/chunk-format.txt      | 54 +++++++++++++++++++
+ .../technical/commit-graph-format.txt         |  3 ++
+ Documentation/technical/pack-format.txt       |  3 ++
+ 3 files changed, 60 insertions(+)
+ create mode 100644 Documentation/technical/chunk-format.txt
 
-diff --git a/midx.c b/midx.c
-index 0bfd2d802b6..dd019c00795 100644
---- a/midx.c
-+++ b/midx.c
-@@ -54,6 +54,51 @@ static char *get_midx_filename(const char *object_dir)
- 	return xstrfmt("%s/pack/multi-pack-index", object_dir);
- }
- 
-+static int midx_read_pack_names(const unsigned char *chunk_start,
-+				size_t chunk_size, void *data)
-+{
-+	struct multi_pack_index *m = (struct multi_pack_index *)data;
-+	m->chunk_pack_names = chunk_start;
-+	return 0;
-+}
+diff --git a/Documentation/technical/chunk-format.txt b/Documentation/technical/chunk-format.txt
+new file mode 100644
+index 00000000000..3db3792dea2
+--- /dev/null
++++ b/Documentation/technical/chunk-format.txt
+@@ -0,0 +1,54 @@
++Chunk-based file formats
++========================
 +
-+static int midx_read_oid_fanout(const unsigned char *chunk_start,
-+				size_t chunk_size, void *data)
-+{
-+	struct multi_pack_index *m = (struct multi_pack_index *)data;
-+	m->chunk_oid_fanout = (uint32_t *)chunk_start;
++Some file formats in Git use a common concept of "chunks" to describe
++sections of the file. This allows structured access to a large file by
++scanning a small "table of contents" for the remaining data. This common
++format is used by the `commit-graph` and `multi-pack-index` files. See
++link:technical/pack-format.html[the `multi-pack-index` format] and
++link:technical/commit-graph-format.html[the `commit-graph` format] for
++how they use the chunks to describe structured data.
 +
-+	if (chunk_size != 4 * 256) {
-+		error(_("multi-pack-index OID fanout is of the wrong size"));
-+		return 1;
-+	}
-+	return 0;
-+}
++A chunk-based file format begins with some header information custom to
++that format. That header should include enough information to identify
++the file type, format version, and number of chunks in the file. From this
++information, that file can determine the start of the chunk-based region.
 +
-+static int midx_read_oid_lookup(const unsigned char *chunk_start,
-+				size_t chunk_size, void *data)
-+{
-+	struct multi_pack_index *m = (struct multi_pack_index *)data;
-+	m->chunk_oid_lookup = chunk_start;
-+	return 0;
-+}
++The chunk-based region starts with a table of contents describing where
++each chunk starts and ends. This consists of (C+1) rows of 12 bytes each,
++where C is the number of chunks. Consider the following table:
 +
-+static int midx_read_offsets(const unsigned char *chunk_start,
-+			     size_t chunk_size, void *data)
-+{
-+	struct multi_pack_index *m = (struct multi_pack_index *)data;
-+	m->chunk_object_offsets = chunk_start;
-+	return 0;
-+}
++  | Chunk ID (4 bytes) | Chunk Offset (8 bytes) |
++  |--------------------|------------------------|
++  | ID[0]              | OFFSET[0]              |
++  | ...                | ...                    |
++  | ID[C]              | OFFSET[C]              |
++  | 0x0000             | OFFSET[C+1]            |
 +
-+static int midx_read_large_offsets(const unsigned char *chunk_start,
-+				   size_t chunk_size, void *data)
-+{
-+	struct multi_pack_index *m = (struct multi_pack_index *)data;
-+	m->chunk_large_offsets = chunk_start;
-+	return 0;
-+}
++Each row consists of a 4-byte chunk identifier (ID) and an 8-byte offset.
++Each integer is stored in network-byte order.
 +
- struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local)
- {
- 	struct multi_pack_index *m = NULL;
-@@ -65,6 +110,7 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
- 	char *midx_name = get_midx_filename(object_dir);
- 	uint32_t i;
- 	const char *cur_pack_name;
-+	struct chunkfile *cf = NULL;
- 
- 	fd = git_open(midx_name);
- 
-@@ -114,58 +160,23 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
- 
- 	m->num_packs = get_be32(m->data + MIDX_BYTE_NUM_PACKS);
- 
--	for (i = 0; i < m->num_chunks; i++) {
--		uint32_t chunk_id = get_be32(m->data + MIDX_HEADER_SIZE +
--					     MIDX_CHUNKLOOKUP_WIDTH * i);
--		uint64_t chunk_offset = get_be64(m->data + MIDX_HEADER_SIZE + 4 +
--						 MIDX_CHUNKLOOKUP_WIDTH * i);
--
--		if (chunk_offset >= m->data_len)
--			die(_("invalid chunk offset (too large)"));
--
--		switch (chunk_id) {
--			case MIDX_CHUNKID_PACKNAMES:
--				m->chunk_pack_names = m->data + chunk_offset;
--				break;
--
--			case MIDX_CHUNKID_OIDFANOUT:
--				m->chunk_oid_fanout = (uint32_t *)(m->data + chunk_offset);
--				break;
--
--			case MIDX_CHUNKID_OIDLOOKUP:
--				m->chunk_oid_lookup = m->data + chunk_offset;
--				break;
--
--			case MIDX_CHUNKID_OBJECTOFFSETS:
--				m->chunk_object_offsets = m->data + chunk_offset;
--				break;
--
--			case MIDX_CHUNKID_LARGEOFFSETS:
--				m->chunk_large_offsets = m->data + chunk_offset;
--				break;
--
--			case 0:
--				die(_("terminating multi-pack-index chunk id appears earlier than expected"));
--				break;
--
--			default:
--				/*
--				 * Do nothing on unrecognized chunks, allowing future
--				 * extensions to add optional chunks.
--				 */
--				break;
--		}
--	}
-+	cf = init_chunkfile(NULL);
- 
--	if (!m->chunk_pack_names)
-+	if (read_table_of_contents(cf, m->data, midx_size,
-+				   MIDX_HEADER_SIZE, m->num_chunks))
-+		goto cleanup_fail;
++The chunk identifier `ID[i]` is a label for the data stored within this
++fill from `OFFSET[i]` (inclusive) to `OFFSET[i+1]` (exclusive). Thus, the
++size of the `i`th chunk is equal to the difference between `OFFSET[i+1]`
++and `OFFSET[i]`. This requires that the chunk data appears contiguously
++in the same order as the table of contents.
 +
-+	if (pair_chunk(cf, MIDX_CHUNKID_PACKNAMES, midx_read_pack_names, m) == CHUNK_NOT_FOUND)
- 		die(_("multi-pack-index missing required pack-name chunk"));
--	if (!m->chunk_oid_fanout)
-+	if (pair_chunk(cf, MIDX_CHUNKID_OIDFANOUT, midx_read_oid_fanout, m) == CHUNK_NOT_FOUND)
- 		die(_("multi-pack-index missing required OID fanout chunk"));
--	if (!m->chunk_oid_lookup)
-+	if (pair_chunk(cf, MIDX_CHUNKID_OIDLOOKUP, midx_read_oid_lookup, m) == CHUNK_NOT_FOUND)
- 		die(_("multi-pack-index missing required OID lookup chunk"));
--	if (!m->chunk_object_offsets)
-+	if (pair_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS, midx_read_offsets, m) == CHUNK_NOT_FOUND)
- 		die(_("multi-pack-index missing required object offsets chunk"));
- 
-+	pair_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS, midx_read_large_offsets, m);
++The final entry in the table of contents must be four zero bytes. This
++confirms that the table of contents is ending and provides the offset for
++the end of the chunk-based data.
 +
- 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
++Note: The chunk-based format expects that the file contains _at least_ a
++trailing hash after `OFFSET[C+1]`.
++
++Functions for working with chunk-based file formats are declared in
++`chunk-format.h`. Using these methods provide extra checks that assist
++developers when creating new file formats, including:
++
++ 1. Writing and reading the table of contents.
++
++ 2. Verifying that the data written in a chunk matches the expected size
++    that was recorded in the table of contents.
++
++ 3. Checking that a table of contents describes offsets properly within
++    the file boundaries.
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index b6658eff188..87971c27dd7 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -61,6 +61,9 @@ CHUNK LOOKUP:
+       the length using the next chunk position if necessary.) Each chunk
+       ID appears at most once.
  
- 	m->pack_names = xcalloc(m->num_packs, sizeof(*m->pack_names));
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 297de502a94..ad4e878b65b 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -314,12 +314,12 @@ test_expect_success 'verify bad OID version' '
++  The CHUNK LOOKUP matches the table of contents from
++  link:technical/chunk-format.html[the chunk-based file format].
++
+   The remaining data in the body is described one chunk at a time, and
+   these chunks may be given in any order. Chunks are required unless
+   otherwise specified.
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index f96b2e605f3..2fb1e60d29e 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -301,6 +301,9 @@ CHUNK LOOKUP:
+ 	    (Chunks are provided in file-order, so you can infer the length
+ 	    using the next chunk position if necessary.)
  
- test_expect_success 'verify truncated chunk count' '
- 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_COUNT "\01" $objdir \
--		"missing required"
-+		"final chunk has non-zero id"
- '
- 
- test_expect_success 'verify extended chunk count' '
- 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_COUNT "\07" $objdir \
--		"terminating multi-pack-index chunk id appears earlier than expected"
-+		"terminating chunk id appears earlier than expected"
- '
- 
- test_expect_success 'verify missing required chunk' '
-@@ -329,7 +329,7 @@ test_expect_success 'verify missing required chunk' '
- 
- test_expect_success 'verify invalid chunk offset' '
- 	corrupt_midx_and_verify $MIDX_BYTE_CHUNK_OFFSET "\01" $objdir \
--		"invalid chunk offset (too large)"
-+		"improper chunk offset(s)"
- '
- 
- test_expect_success 'verify packnames out of order' '
++	The CHUNK LOOKUP matches the table of contents from
++	link:technical/chunk-format.html[the chunk-based file format].
++
+ 	The remaining data in the body is described one chunk at a time, and
+ 	these chunks may be given in any order. Chunks are required unless
+ 	otherwise specified.
 -- 
 gitgitgadget
-
