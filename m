@@ -2,146 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2C1C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0CE4C4332E
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF5B220679
+	by mail.kernel.org (Postfix) with ESMTP id 907EE20674
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbhAZWBM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:01:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37306 "EHLO
+        id S1727657AbhAZWBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 17:01:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394225AbhAZSMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 13:12:43 -0500
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275FFC061756
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:12:03 -0800 (PST)
-Received: by mail-vk1-xa2a.google.com with SMTP id u22so4095795vke.9
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:12:03 -0800 (PST)
+        with ESMTP id S2392812AbhAZSOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 13:14:43 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD33C061573
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:14:02 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id l2so10489527pgi.5
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:14:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fQuIsNZi4oXUovvoZnmsNuELQOOWhyI9gwlvOe6M+KI=;
-        b=tr6gLYcfwHwuo7TwQt7gO4eFhDe4qmvlEqi+66wHsc8voKRe8Li104hqO4CNolQZeT
-         ODrwA92GEiEwvj2lt6ATTZoqZEeGVXl7/B5p1Vg/7f0/LMj7FS17TUkF1qsANNV1dRuD
-         lkgm1F+UkaYTxk96c0YtvRfBRvDWt7UejnsMebHk3kaA2m6TjiYEz5ShXL6Jy7MlJNx6
-         +IaudSXRH50jNzv/FtoLVK0qANRfcV1SYqZOVQuJbuV52jfMUEGEPuLgKTj0xVsu+G9N
-         LJNYjNsYyc2jLbQtmu1VSnKv4zqNUwZ1t8VPF13C+MFy6x5dxXIHTXrzsmVQynBJprFQ
-         SOgQ==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=8C6knr57ZecR7KsjCwhtEIg2h5ZPwMLc5mWkqrbqCvI=;
+        b=D2FIODBYL2IEPzSuOxJd4MnJP9nmb0VJGrLOzQOOoJzaRtjJftTBy7cvIF09yvfnMe
+         sJedibv7x7RyfADMB8tIpEIkR6A/kFycgaqrJcLErWqk8lwfRcwoA0SrJeY5FDsxEvg+
+         zqtq2JBCsdc5QYet8qkc8eqjbA+3KRWcn+PQFnKoky069QVimhKwNuIenoADGKSoIRR8
+         ReAeD+xVKGyatG91Qhrk+2sJCVvQ8ESJb8Q123GQCO/Qs/PUQh0xLtVzJO4J3sQ84GRm
+         S0LBBT3WXtWFyUSRQzEwjaH90OkswP18QOLmWAiRKJU8YzKVe4Ak+iwJeE5KY4fDoGfF
+         WinQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fQuIsNZi4oXUovvoZnmsNuELQOOWhyI9gwlvOe6M+KI=;
-        b=DMQjKc7f77E8AbTXyti2y4McMAPBVoETWeigTxPd+2vxPP0yN0wuoLFxE9PwnEN2X2
-         9Wld5dHv418ga3M/8+4tK9ivVTYqmHgsUP/FG8PN5AfNK+q1WauDVtt56Brbyp2usVGi
-         6E4uVgLqDJCBcR2kjL3eMrafcwG6eIlp8Lb/kMl0bRTPCYubiQr3hh7gaTkefyjwHeiU
-         wJpP9vykfe/T4xa5kJWl3oTPLQV2mkI11VCy6gr58Wh4i9QB+tnHulxcbwoqyaq101Uh
-         Nq2AcO1gZT/lLqKw+xHWIPsG0GZvejLRCOTas767gQf/ZuPkpFvkiKQjURKxEKv8DuvV
-         Ojzg==
-X-Gm-Message-State: AOAM533hsYkSO7G78mEIIKhH1Xw9bEYfNxjJIg062Pa8TzMte9Kr0r2g
-        upGXy7mZPDiv89K7abl2Qhz2YNc4swiqjvsvyAMIKA==
-X-Google-Smtp-Source: ABdhPJxRXbYT0ddq16vPAAejroIIPY7a+czwbIF6vK4ayLtOigbVBmtix5eldcMpnIy9AAO8+E7CIAxrIaOs5IEyMMY=
-X-Received: by 2002:a05:6122:31a:: with SMTP id c26mr5923175vko.0.1611684721943;
- Tue, 26 Jan 2021 10:12:01 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.951.git.git.1611589125365.gitgitgadget@gmail.com>
- <xmqq35yo459k.fsf@gitster.c.googlers.com> <CAFQ2z_PCh2RfWALhAUXm01Xq0o+ibuEGJ2p9sCtvTASQ0FLUag@mail.gmail.com>
- <xmqqtur338bg.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtur338bg.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 26 Jan 2021 19:11:50 +0100
-Message-ID: <CAFQ2z_PN8K6sKq=Rdw=maVhd67GhCtxWgGSUb5KhZ85EYV6jOw@mail.gmail.com>
-Subject: Re: [PATCH] doc/reftable: document how to handle windows
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8C6knr57ZecR7KsjCwhtEIg2h5ZPwMLc5mWkqrbqCvI=;
+        b=n6kDe1++Gary8FKS5NNwcKdhLgQ6ztBQXUwKlc937Sif7EOM83Fro3sfO/5tX7sW3T
+         c+JdXLZ81k0mzsawmEh7mPVHSgkkkfBnoeXlB74B0vyiVuTfOLrjOnW1qtah3RGUCBa4
+         U+WTTjMxAZcV0IXQgfD9W58cdqcfR7MAYEe4ZPcg/zu/Wb7Y3Raboq+Yt8xPkf3qWP98
+         3JSSXR137fp/B9DP6QiX40YLxqlVsVH8EF5GEKzhjqbP7+VXla3ZP1Q1likROr3ZUXRI
+         hGrw1xq7LfHFcnbQwJPPfi0KMYOdRolkyoBmGH9duG7Bmq6y1/fDmTHhZtvGl7qwWXND
+         mqSg==
+X-Gm-Message-State: AOAM532eXgnuufPrIkFLswj81V8CGAZvhIsI8yhXMmqdVLX0iADeOxui
+        VAKoc0C9DAsB9ezlEgVEHXoQS4mnIqZApDLtodDX
+X-Google-Smtp-Source: ABdhPJy+qIYea5fpsLY1Wz0yh3hOmU+uynEm+gtc6tpuQBa+NTU1jEdgYgPkjOeJ7U8KGxUbopU4w+YKqbqiRwfVT/nQ
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:79d8:0:b029:1bf:1fdb:4ae8 with
+ SMTP id u207-20020a6279d80000b02901bf1fdb4ae8mr6573715pfc.58.1611684842038;
+ Tue, 26 Jan 2021 10:14:02 -0800 (PST)
+Date:   Tue, 26 Jan 2021 10:13:58 -0800
+In-Reply-To: <YAnotHAiuSz4Du/0@coredump.intra.peff.net>
+Message-Id: <20210126181358.2333028-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <YAnotHAiuSz4Du/0@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
+Subject: Re: [PATCH v4 1/3] ls-refs: report unborn targets of symrefs
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2021 at 6:40 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Han-Wen Nienhuys <hanwen@google.com> writes:
->
-> >> Is this because we have been assuming that in step 5. we can
-> >> "overwrite" (i.e. take over the name, implicitly unlinking the
-> >> existing one) the existing 0000001-00000001.ref with the newly
-> >> prepared one, which is not doable on Windows?
-> >
-> > No, the protocol for adding a table to the end of the stack is
-> > impervious to problems on Windows, as everything happens under lock,
-> > so there is no possibility of collisions.
-> >
-> >> We must prepare for two "randoms" colliding and retrying the
-> >> renaming step anyway, so would it make more sense to instead
-> >> use a non-random suffix (i.e. try "-0.ref" first, and when it we
-> >> fails, readdir for 0000001-00000001-*.ref to find the latest
-> >> suffix and increment it)?
-> >
-> > This is a lot of complexity, and both transactions and compactions can
-> > always fail because they fail to get the lock, or because the data to
-> > be written is out of date. So callers need to be prepared for a retry
-> > anyway.
->
-> Sorry, are we saying the same thing and reaching different
-> conclusions?
->
-> My question was, under the assumption that the callers need to be
-> prepared for a retry anyway,
->
->  (1) would it be possible to use "seq" (or "take max from existing
->      and add one") as the random number generator for the ${random}
->      part of your document, and
->
->  (2) if the answer to the previous question is yes, would it result
->      in a system that is easier for Git developers, who observe what
->      happens inside the .git directory, to understand the behaviour
->      of the system, as they can immediately see that 1-1-47 is newer
->      than 1-1-22 instead of 1-1-$random1 and 1-1-$random2 that
->      cannot be compared?
+> On Tue, Dec 22, 2020 at 01:54:18PM -0800, Jonathan Tan wrote:
+> 
+> > -static int ls_refs_config(const char *var, const char *value, void *data)
+> > +static void send_possibly_unborn_head(struct ls_refs_data *data)
+> >  {
+> > +	struct strbuf namespaced = STRBUF_INIT;
+> > +	struct object_id oid;
+> > +	int flag;
+> > +	int oid_is_null;
+> > +
+> > +	memset(&oid, 0, sizeof(oid));
+> > +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
+> > +	resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
+> 
+> It feels weird to call resolve_ref_unsafe() without checking the return
+> value. How do we detect errors?
+> 
+> I think the logic is that we make assumptions about which fields it will
+> touch (i.e., zeroing the flags, and not touching our zero'd oid), and
+> then check those. That feels a bit non-obvious and intimate with the
+> implementation, though (and was presumably the source of the "oops, we
+> need to clear the oid bug between v3 and v4).
+> 
+> I feel like that deserves a comment, but I also wonder if:
+> 
+>   refname = resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
+>   if (!refname)
+> 	return; /* broken, bad name, not even a symref, etc */
 
-The first two parts of the file name (${min}-${max}) already provide
-visibility into what is going on, and the file system timestamp
-already indicates which file is newer. I picked a random name as
-suffix, as it gets the job done and is simple.
+From my reading of this part of refs_resolve_ref_unsafe():
 
-We could do what you suggest, but it adds semantics to the filenames
-that aren't really there: currently, tables.list is a list of
-filenames, and no part of the code parses back the file names. If we'd
-do what you suggest, we have more ways in which the system can break
-subtly, and needs to handle error conditions if the names are
-malformed. This is the complexity I was alluding to in my previous
-message.
+                if (!(read_flags & REF_ISSYMREF)) {
+                        if (*flags & REF_BAD_NAME) {
+                                oidclr(oid);
+                                *flags |= REF_ISBROKEN;
+                        }
+                        return refname;
+                }
 
-We could stipulate that a compaction must always increase the logical
-timestamp, ie. in the scenario I sketched, the compacted table should
-be written with a max-timestamp of 3, even though it contains no
-entries at timestamp 3.  This avoids the error condition, but it's
-also surprising because it is actually inconsistent with how the
-format is described. But maybe we could update the description of the
-format.
+it seems that resolve_ref_unsafe() returns non-NULL if the ref is not a
+symref but is otherwise valid. But this is exactly what we want -
+send_possibly_unborn_head() must send HEAD in this situation anyway.
+Thanks - I've switched to checking the return value.
 
-Or, we could rename to ${min}-${max}-0 and if that fails try
-${min}-${max}-1, and if that fails ${min}-${max}-2 etc. I think that
-is somewhat nicer than parsing back a counter from the existing
-filenames, but it could have the effect that 1-1-0 could be newer than
-1-1-2.
+(It was a bit confusing that refs_resolve_ref_unsafe() returns one of
+its input arguments if it succeeds and NULL if it fails, but that's
+outside the scope of this patch, I think.)
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+> > +	if (!oid_is_null ||
+> > +	    (data->unborn && data->symrefs && (flag & REF_ISSYMREF)))
+> > +		send_ref(namespaced.buf, oid_is_null ? NULL : &oid, flag, data);
+> 
+> It likewise feels a bit funny that we determine the symref name in the
+> earlier call to resolve_ref_unsafe(), but we do not pass it here (and in
+> fact, we'll end up looking it up again!).
+> 
+> But that is not much different than what we do for normal refs passed to
+> the send_ref() callback. It would be nice if the iteration could pass in
+> "by the way, here is the symref value" to avoid that.
+
+Yes, that would be nice.
+
+> But in practice it
+> isn't a big deal, since we only do the lookup when we see the ISSYMREF
+> flag set. So typically it is only one or two extra ref resolutions.
+
+OK.
+
+> > @@ -91,7 +118,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+> >  
+> >  	memset(&data, 0, sizeof(data));
+> >  
+> > -	git_config(ls_refs_config, NULL);
+> > +	git_config(ls_refs_config, &data);
+> 
+> You will probably not be surprised that I would suggest defaulting
+> data->allow_unborn to 1 before this config call. :)
+
+I don't think many people have made comments either way, so I'll go
+ahead with defaulting it to true. I can see arguments for both sides.
+
+> > @@ -103,14 +130,31 @@ int ls_refs(struct repository *r, struct strvec *keys,
+> >  			data.symrefs = 1;
+> >  		else if (skip_prefix(arg, "ref-prefix ", &out))
+> >  			strvec_push(&data.prefixes, out);
+> > +		else if (data.allow_unborn && !strcmp("unborn", arg))
+> > +			data.unborn = 1;
+> >  	}
+> 
+> So if we have not set allow_unborn, we will not accept the client saying
+> "unborn". Which makes sense, because we would not have advertised it in
+> that case.
+> 
+> But we use the same boolean for advertising, too. So this loses the
+> "allow us to accept it, but not advertise it" logic that your earlier
+> versions had, doesn't it?
+
+Yes, it does.
+
+> And that is the important element for making
+> things work across a non-atomic deploy of versions.
+> 
+> This straight-boolean version works as long as you can atomically update
+> the _config_ on each version. But that seems like roughly the same
+> problem (having dealt with this on GitHub servers, they are not
+> equivalent, and depending on your infrastructure, it definitely _can_ be
+> easier to do one versus the other. But it seems like a funny place to
+> leave this upstream feature).
+
+Well, I was just agreeing with what you said [1]. :-)
+
+[1] https://lore.kernel.org/git/X9xJLWdFJfNJTn0p@coredump.intra.peff.net/
+
+> Or is the intent that an unconfigured reader would silently ignore the
+> unborn flag in that case? That would at least not cause it to bail on
+> the client in a mixed-version environment. But it does feel like a
+> confusing result.
+
+Right now, an old server would ignore "unborn", yes. I'm not sure of
+what the intent should be - tightening ls-refs and fetch to forbid
+unknown arguments seems like a good idea to me.
