@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0CE4C4332E
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C030C43333
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 907EE20674
+	by mail.kernel.org (Postfix) with ESMTP id E326620674
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727657AbhAZWBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:01:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37736 "EHLO
+        id S1727690AbhAZWBX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 17:01:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392812AbhAZSOn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 13:14:43 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD33C061573
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:14:02 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id l2so10489527pgi.5
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:14:02 -0800 (PST)
+        with ESMTP id S2394505AbhAZSQu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 13:16:50 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04141C061574
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:16:10 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id s64so13754944yba.20
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 10:16:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=8C6knr57ZecR7KsjCwhtEIg2h5ZPwMLc5mWkqrbqCvI=;
-        b=D2FIODBYL2IEPzSuOxJd4MnJP9nmb0VJGrLOzQOOoJzaRtjJftTBy7cvIF09yvfnMe
-         sJedibv7x7RyfADMB8tIpEIkR6A/kFycgaqrJcLErWqk8lwfRcwoA0SrJeY5FDsxEvg+
-         zqtq2JBCsdc5QYet8qkc8eqjbA+3KRWcn+PQFnKoky069QVimhKwNuIenoADGKSoIRR8
-         ReAeD+xVKGyatG91Qhrk+2sJCVvQ8ESJb8Q123GQCO/Qs/PUQh0xLtVzJO4J3sQ84GRm
-         S0LBBT3WXtWFyUSRQzEwjaH90OkswP18QOLmWAiRKJU8YzKVe4Ak+iwJeE5KY4fDoGfF
-         WinQ==
+        bh=A15DgMkwk5Y+vCov63N6SFEnKb3higLhbLWjB/qcc4o=;
+        b=hzEcVyogmcjgpE37EZxuon7ddpOTvPA1+74nyzzK9kwrZek7fgwD9eQsh2t9hbG202
+         XrLUeFwVCzWtS/fpKbKsUOExEp5eFeF0eEQmsNSN6P5QOqMp/aeMdds0szJw5k6z73Qq
+         WBKRlQisrP2Wj2XxgZSb0mtvmtlASTtx+JHoLubV1fJscI0VSjf7FmCOPsB2/c51kNDU
+         ZzOlL5RuvNmomzWwCmdbAAvvJrUWcbpF/tA+3dhffFp0fO3ovK6VZD/X+2Yton63UF9R
+         E+qk3xGjhvuTk5CF5K0Stc3chgPqIWKX83feBOF6imJzvAIRmY/5wKnk2bjvAiGdXXj/
+         ZR2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=8C6knr57ZecR7KsjCwhtEIg2h5ZPwMLc5mWkqrbqCvI=;
-        b=n6kDe1++Gary8FKS5NNwcKdhLgQ6ztBQXUwKlc937Sif7EOM83Fro3sfO/5tX7sW3T
-         c+JdXLZ81k0mzsawmEh7mPVHSgkkkfBnoeXlB74B0vyiVuTfOLrjOnW1qtah3RGUCBa4
-         U+WTTjMxAZcV0IXQgfD9W58cdqcfR7MAYEe4ZPcg/zu/Wb7Y3Raboq+Yt8xPkf3qWP98
-         3JSSXR137fp/B9DP6QiX40YLxqlVsVH8EF5GEKzhjqbP7+VXla3ZP1Q1likROr3ZUXRI
-         hGrw1xq7LfHFcnbQwJPPfi0KMYOdRolkyoBmGH9duG7Bmq6y1/fDmTHhZtvGl7qwWXND
-         mqSg==
-X-Gm-Message-State: AOAM532eXgnuufPrIkFLswj81V8CGAZvhIsI8yhXMmqdVLX0iADeOxui
-        VAKoc0C9DAsB9ezlEgVEHXoQS4mnIqZApDLtodDX
-X-Google-Smtp-Source: ABdhPJy+qIYea5fpsLY1Wz0yh3hOmU+uynEm+gtc6tpuQBa+NTU1jEdgYgPkjOeJ7U8KGxUbopU4w+YKqbqiRwfVT/nQ
+        bh=A15DgMkwk5Y+vCov63N6SFEnKb3higLhbLWjB/qcc4o=;
+        b=n15JT+0TE+OrdQVtB6ZiEz9cwJXmi6aq/kqGOQZ4vsspkEoa1VAOIpJok56ZeSPuWK
+         AYWFF5e2lNwcgbkmIghljmYUiAJpyb4g+WC5vqi5nG1aM7Ldcyfy+lNX2uQfsSp6Lpl3
+         TlBaJAdinmayK5Sncnx7ri8N+3J6MjrHkogyoOpq1lDlY7fh1C03dizs8X8LYRDObbox
+         cbrgiC6NAwDjbokhTdiVXhkO3XlnwLpSx5mqqoKHUrSWDEIZp/1XnB2Y4ibHLvnByUqq
+         VoN8KhG/YYt7x/6AzPxdq/QcApQu9mJoHdKO22Bxch75t2s5nkI7HV5aevFcLNWzE5lD
+         EvnQ==
+X-Gm-Message-State: AOAM5322u3Zet8eu8L8OECi3GAkhOVnn4EF0pjGAytbFUHIaSPnzjp5r
+        Ee8FC5hztMERWLZVGzhN4vIn+/bJrp+SlAK1R4ae
+X-Google-Smtp-Source: ABdhPJyV8vVRwa44qs6Xt845bg1br0J82/SLxZh9/cUATSpZQKfPoJOylMbfze0aYGqREXC/lCnFIC/JOhXz22WkLNDw
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:79d8:0:b029:1bf:1fdb:4ae8 with
- SMTP id u207-20020a6279d80000b02901bf1fdb4ae8mr6573715pfc.58.1611684842038;
- Tue, 26 Jan 2021 10:14:02 -0800 (PST)
-Date:   Tue, 26 Jan 2021 10:13:58 -0800
-In-Reply-To: <YAnotHAiuSz4Du/0@coredump.intra.peff.net>
-Message-Id: <20210126181358.2333028-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a25:ab23:: with SMTP id
+ u32mr10562610ybi.328.1611684969222; Tue, 26 Jan 2021 10:16:09 -0800 (PST)
+Date:   Tue, 26 Jan 2021 10:16:06 -0800
+In-Reply-To: <YAnqQZaVByUYYRNr@coredump.intra.peff.net>
+Message-Id: <20210126181606.2335396-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <YAnotHAiuSz4Du/0@coredump.intra.peff.net>
+References: <YAnqQZaVByUYYRNr@coredump.intra.peff.net>
 X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
-Subject: Re: [PATCH v4 1/3] ls-refs: report unborn targets of symrefs
+Subject: Re: [PATCH v4 2/3] connect, transport: add no-op arg for future patch
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     peff@peff.net
 Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com
@@ -69,124 +68,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Tue, Dec 22, 2020 at 01:54:18PM -0800, Jonathan Tan wrote:
+> On Tue, Dec 22, 2020 at 01:54:19PM -0800, Jonathan Tan wrote:
 > 
-> > -static int ls_refs_config(const char *var, const char *value, void *data)
-> > +static void send_possibly_unborn_head(struct ls_refs_data *data)
-> >  {
-> > +	struct strbuf namespaced = STRBUF_INIT;
-> > +	struct object_id oid;
-> > +	int flag;
-> > +	int oid_is_null;
-> > +
-> > +	memset(&oid, 0, sizeof(oid));
-> > +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
-> > +	resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
+> > In a future patch we plan to return the name of an unborn current branch
+> > from deep in the callchain to a caller via a new pointer parameter that
+> > points at a variable in the caller when the caller calls
+> > get_remote_refs() and transport_get_remote_refs(). Add the parameter to
+> > functions involved in the callchain, but no caller passes an actual
+> > argument yet in this step. Thus, the future patch only needs to concern
+> > itself with new logic.
 > 
-> It feels weird to call resolve_ref_unsafe() without checking the return
-> value. How do we detect errors?
+> OK. Since the call stack is so deep, it's nice to get all of this diff
+> noise out of the way of the third patch.
 > 
-> I think the logic is that we make assumptions about which fields it will
-> touch (i.e., zeroing the flags, and not touching our zero'd oid), and
-> then check those. That feels a bit non-obvious and intimate with the
-> implementation, though (and was presumably the source of the "oops, we
-> need to clear the oid bug between v3 and v4).
+> It does make me wonder if we should be passing a struct like:
 > 
-> I feel like that deserves a comment, but I also wonder if:
+>   struct transport_fetch_options {
+> 	struct strvec ref_prefixes;
+> 	char **unborn_head;
+>   }
+>   #define TRANSPORT_FETCH_OPTIONS_INIT = { STRVEC_INIT }
 > 
->   refname = resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
->   if (!refname)
-> 	return; /* broken, bad name, not even a symref, etc */
+> which would solve this problem once for any future options.
 
-From my reading of this part of refs_resolve_ref_unsafe():
+That's a good idea, and I've switched patch 2 to doing this. It also
+makes it easier to explain (no "unborn_head" dummy variable that does
+nothing, since I can just introduce "unborn_head" in patch 3).
 
-                if (!(read_flags & REF_ISSYMREF)) {
-                        if (*flags & REF_BAD_NAME) {
-                                oidclr(oid);
-                                *flags |= REF_ISBROKEN;
-                        }
-                        return refname;
-                }
-
-it seems that resolve_ref_unsafe() returns non-NULL if the ref is not a
-symref but is otherwise valid. But this is exactly what we want -
-send_possibly_unborn_head() must send HEAD in this situation anyway.
-Thanks - I've switched to checking the return value.
-
-(It was a bit confusing that refs_resolve_ref_unsafe() returns one of
-its input arguments if it succeeds and NULL if it fails, but that's
-outside the scope of this patch, I think.)
-
-> > +	if (!oid_is_null ||
-> > +	    (data->unborn && data->symrefs && (flag & REF_ISSYMREF)))
-> > +		send_ref(namespaced.buf, oid_is_null ? NULL : &oid, flag, data);
+> > @@ -455,7 +455,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+> >  			     struct ref **list, int for_push,
+> >  			     const struct strvec *ref_prefixes,
+> >  			     const struct string_list *server_options,
+> > -			     int stateless_rpc)
+> > +			     int stateless_rpc,
+> > +			     char **unborn_head_target)
 > 
-> It likewise feels a bit funny that we determine the symref name in the
-> earlier call to resolve_ref_unsafe(), but we do not pass it here (and in
-> fact, we'll end up looking it up again!).
+> Is a single string enough? The way the protocol is defined, I think the
+> server is free to tell us about other unborn symrefs, too (but of course
+> our implementation does not). And I'm not sure what we'd do with such
+> values (in a "--mirror" clone, I guess we could make local copies of
+> them).
 > 
-> But that is not much different than what we do for normal refs passed to
-> the send_ref() callback. It would be nice if the iteration could pass in
-> "by the way, here is the symref value" to avoid that.
+> Should we be prepared for that at the transport layer, or is it
+> over-engineering?
 
-Yes, that would be nice.
-
-> But in practice it
-> isn't a big deal, since we only do the lookup when we see the ISSYMREF
-> flag set. So typically it is only one or two extra ref resolutions.
-
-OK.
-
-> > @@ -91,7 +118,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
-> >  
-> >  	memset(&data, 0, sizeof(data));
-> >  
-> > -	git_config(ls_refs_config, NULL);
-> > +	git_config(ls_refs_config, &data);
-> 
-> You will probably not be surprised that I would suggest defaulting
-> data->allow_unborn to 1 before this config call. :)
-
-I don't think many people have made comments either way, so I'll go
-ahead with defaulting it to true. I can see arguments for both sides.
-
-> > @@ -103,14 +130,31 @@ int ls_refs(struct repository *r, struct strvec *keys,
-> >  			data.symrefs = 1;
-> >  		else if (skip_prefix(arg, "ref-prefix ", &out))
-> >  			strvec_push(&data.prefixes, out);
-> > +		else if (data.allow_unborn && !strcmp("unborn", arg))
-> > +			data.unborn = 1;
-> >  	}
-> 
-> So if we have not set allow_unborn, we will not accept the client saying
-> "unborn". Which makes sense, because we would not have advertised it in
-> that case.
-> 
-> But we use the same boolean for advertising, too. So this loses the
-> "allow us to accept it, but not advertise it" logic that your earlier
-> versions had, doesn't it?
-
-Yes, it does.
-
-> And that is the important element for making
-> things work across a non-atomic deploy of versions.
-> 
-> This straight-boolean version works as long as you can atomically update
-> the _config_ on each version. But that seems like roughly the same
-> problem (having dealt with this on GitHub servers, they are not
-> equivalent, and depending on your infrastructure, it definitely _can_ be
-> easier to do one versus the other. But it seems like a funny place to
-> leave this upstream feature).
-
-Well, I was just agreeing with what you said [1]. :-)
-
-[1] https://lore.kernel.org/git/X9xJLWdFJfNJTn0p@coredump.intra.peff.net/
-
-> Or is the intent that an unconfigured reader would silently ignore the
-> unborn flag in that case? That would at least not cause it to bail on
-> the client in a mixed-version environment. But it does feel like a
-> confusing result.
-
-Right now, an old server would ignore "unborn", yes. I'm not sure of
-what the intent should be - tightening ls-refs and fetch to forbid
-unknown arguments seems like a good idea to me.
+With the struct, I think we're prepared for it.
