@@ -2,157 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB3DC433DB
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD495C433E9
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E43E722EBD
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:35:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A760E22EBF
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 14:36:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392786AbhAZOeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 09:34:50 -0500
-Received: from mout.gmx.net ([212.227.17.20]:36475 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2392762AbhAZOeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 09:34:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1611671534;
-        bh=BTwr3EGUE83oXTqMVah0T9ewCW+duB5iEd80z2NBX0Y=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=VxDJp066iFv8nlCtUmqPAzB9chrK/VjEm9Aos49JpsV9kIufkqeCQ2BaOe7Zo0CO5
-         8SrLgie/deLcferwRBS58mGJr2TSdYGeX8SReJi4QwpbxJuVjxWarbNE/tpIoJCWrF
-         uZuJx8OOqWUtacREI7+KJoE7dv6ZXWbgW/Vu0Vyw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.88.23] ([89.1.213.153]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTmY-1lS6My10dC-00WTM3; Tue, 26
- Jan 2021 15:32:14 +0100
-Date:   Tue, 26 Jan 2021 15:32:13 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
-In-Reply-To: <YAte7ixZYdz1AOMX@camp.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2101261522200.57@tvgsbejvaqbjf.bet>
-References: <X/onP6vFAHH8SUBo@camp.crustytoothpaste.net> <20210109224236.50363-1-davvid@gmail.com> <20210109225400.GA156779@ellen> <xmqqmtxhd1zx.fsf@gitster.c.googlers.com> <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com> <20210110072902.GA247325@ellen>
- <xmqqh7np9gqn.fsf@gitster.c.googlers.com> <20210116042454.GA4913@ellen> <YAo9aTkZBCSGLYTT@camp.crustytoothpaste.net> <nycvar.QRO.7.76.6.2101221728410.52@tvgsbejvaqbjf.bet> <YAte7ixZYdz1AOMX@camp.crustytoothpaste.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0W9wM8/wmEgzX6Kq+sb93pB9f9ZMzKxZL91iIgZSAfoS6duQIYr
- rtPZD4J56rdxleJFBtNrhdYLMGc5bj+DiPejg8RQjLKTFcTHlPL6Ug9Op9EwfGkXBY11E2Z
- 95T4/djV4puwkGS0fTB96RUZkdxYwhT4KV3U5ZIqvsvB4jSv9NSZupqcS0uqSOY/tPB3Bjg
- w4RJQ3aeDq86LegjaHtkA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YCmbqOK48Ao=:mCnaQJVWDoVdhSya0cvzaA
- 28PRUQ1MBCYqTCS6B153qfvZkdxyBZ9lfKs8pCcM74ZO7REfF7LeW0iKWYkNzf1xqKL2qabZL
- /HBSJAOQWEvVSoe56eyOyJ16sntNUdQDnAkLswQngnJtrrwYZ9Je2UgCQR6BjvOs/2vv+jPFo
- aPEMLfQ2H5hSg80h5M218pqEJRutG+HtwhjsxYyk3IyyNRhr44vaJEUVs+TLXJXc8x6IhkFfE
- a1SCotMj5+GdgU0Iod5i7LVfnBWythqc4FzjVGZ9s12LUquX69Q5I9oss75orVzesrVZirdlI
- Nh5E0vcSHbVS6qOtGlQ1PL+V0JcaJiqgCwiCjF6AWWgxoAYfSxK4lZlSqB5oQ2+4kRAhCVxW8
- 6gqthoM7afGqwAo7xkcLGcvZlWt54A8tiJwV+Ru7lUBMuM9gOb9UrcOPXGecfeOaOce8oVZI6
- smKfVxO8hN+RVhuaWAbrOiY7gGC4pdsSbtmwjYsAuGuSe9S39vX9DEPOrlTQ4ocZHLnE5zl4R
- +XyD4b8uHNprylYv69guBwUuqyX/ssKjFrRjEDVVH+IWloI+LBrQd5bqkBsSh4oHMnUs5lkg2
- S4NpWguclvClDwyLegY8yzgYLrVB0R08QqD5xHXQpchAm5SdPaU3HZ3RzDnvxnweaHFCNijMX
- D/kP2fXIXhppiAI3yYxbUfUHTjWqOOXk6BnHXdbRiRYnDlK3e3WGl/AnGELIP+otT+jWKab+v
- UUpcLLuxKsMhVTyub4oprTKDQyly+V2we1+8913XcAJKaJz/E0SNSI2zzMQlYJNpPlHn8wHRh
- NtM4S7Q5cUF4r7hw76K3xGw7T5bS8le+w3Jhdeojh/1s/IJ5y1YxcJM8YruGIGT/kNVPHl4IT
- MUxJLUtBh48Yp77sID+YkbNtBIrugtYDHUJ5K+xVg=
+        id S2405833AbhAZOff (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 09:35:35 -0500
+Received: from mail-db8eur05on2110.outbound.protection.outlook.com ([40.107.20.110]:5760
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S2392729AbhAZObJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 09:31:09 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Cj1z7jQKHHNl8VzMMeRoBUWraiOVsdLZYfjzdcNDD7ZqtnhQ1LZCabxgIVi2c1gruLy6qIlOcl/1OudIJhfKNocXc4jqdhmtzXpYB2tj4Mcmp0VdcXvUt6plZbPTBjHrwpHDT/V8PjqUmFuBEEz6nqGS9BVScrWsfG+Zdol8QPlaUax5fk+Z30RhjzoOuhUeR84pHvmIWFFkXHGjNXiPE2IaXrIzK73EcuSpgbhHuEmO3SEyaaQLWvetLu8J1kTYKJqEL6Jccm4C/HeJH/F/TRA6bTslme7c4UPITXKlz+ZQTTEHdsDwfEsm2fLmyj2kcaQ+aZ7d+SZ5mg13ZN4mPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v0Amv8nblUWDKcEeNYRratCau3/FsDbwoJuv7Z7d8Rg=;
+ b=mrDgCIvv1FkMQmO/ZEcRB1zffw9kqQPuYWPAWP5EankRR0eBu9Rl/y5YQkyFwpxh17G6W9VhXR1pqDVuiKlqsbeNJtLeQ2ra/bdhoEWyKSEcirSlFBEnkdSQhrHqGr4B/HAqTaUCgfXvnZOuniFKizaIQnGxgyRG/U1krZ7SCidBbZx1h/bSRIagJqkljYXIXXQ788upbHL9dBCMgkEwJ1cgbpQ06Y4ge4yQlHShD35+u+zoioI4zAaroPjlKULjqv3rX7wmCzmlp/CdNDL0XTtDn+NKYnzKGAmScBaxbwPleq6lR0MtW1WhMWh36WsP4TVJb8RmVu339c8zkmAtrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v0Amv8nblUWDKcEeNYRratCau3/FsDbwoJuv7Z7d8Rg=;
+ b=Dtv3Zc45+3b0nI05pl4Rh8Op6JDB8Ma4XXc9G71yr+uksiTAqS1/4E2HwPH8+VVvpoDNnXtSaNWMBuQxVWJ39V1yQh5mYU8EGQxEUTG6uNMUqO+S2FfFA6JTiRalwj5CUN5/Gn/SaDwJNy6Xccc32WCBvQYjLdfne358O23P+sk=
+Received: from (2603:10a6:20b:1bd::8) by
+ AM7PR83MB0402.EURPRD83.prod.outlook.com (2603:10a6:20b:1bf::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.4; Tue, 26 Jan
+ 2021 14:30:25 +0000
+Received: from AM7PR83MB0434.EURPRD83.prod.outlook.com
+ ([fe80::94df:7115:4ee0:8f27]) by AM7PR83MB0434.EURPRD83.prod.outlook.com
+ ([fe80::94df:7115:4ee0:8f27%7]) with mapi id 15.20.3825.006; Tue, 26 Jan 2021
+ 14:30:25 +0000
+From:   Rene Schumacher <Rene.Schumacher@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Git Commit Signature Encoding
+Thread-Topic: Git Commit Signature Encoding
+Thread-Index: Adbz7Oh9PSrPF9WVQ4qtX5G7B9S16AAAkSXA
+Date:   Tue, 26 Jan 2021 14:30:25 +0000
+Message-ID: <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+References: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+In-Reply-To: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=aa93a574-9ecd-4031-8287-8b068332c93c;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2021-01-26T14:09:32Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+authentication-results: vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=none action=none
+ header.from=microsoft.com;
+x-originating-ip: [2a0a:a543:d741:0:7057:efb2:100f:dd54]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 34351326-7ac5-411b-811e-08d8c206ebf2
+x-ms-traffictypediagnostic: AM7PR83MB0402:
+x-microsoft-antispam-prvs: <AM7PR83MB0402B9867EF6E1DB840F7FBFEEBC9@AM7PR83MB0402.EURPRD83.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3631;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: gaRqhzVtAnmyXx6/JVgRdF0IVQDQkeHl0aq2oyKJJrfvLKTFmCv0DXmbrkE2n0meBUsnNzVo5Sw4xyoWm+ezvBs7Z0SrdenqjjjV3GpCwbive8S2jM0cB7/KcvBA5e6ZtrBKAjyr+3Sh+Kj1ViIifGFFlKdGuq5bSfAv3bLa0Ku9bmHZ+9UHOzQBzHBA0eRR5fnrz1AOZIGSbY2pvd02ssQkEZMyxbiPsDqZJkK2Fw4OcpVZDao7S5iHHp17MkwOqQzLXwvKs5yTmuxVTTWPUOJqX27Js0A90D6ZeyfImgI92uAJYu4+J7wjz+ttB4SaziX+DvIZWBYBCe+vBsx9cVYrWHmY3Q9GSSOkakKcYNIMf869nDz/XdmGmM7Al3RZFoH8DCfQB8lWOny16DvCSluGHt2oo/+OiBhspYOo9X3/dzMqY4+R+CF72JPTK+u7/e0xzGbcvADu8gYiWWClxyN5GbSZ8pHKEWfA2pENhTGCMcsA84yrQGE0JuD//1IFFuMf2syZuuRykF364wz4Tg==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR83MB0434.EURPRD83.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(376002)(346002)(136003)(39860400002)(396003)(6916009)(2940100002)(66574015)(66476007)(5660300002)(66946007)(66446008)(2906002)(316002)(83380400001)(64756008)(6506007)(3480700007)(33656002)(8676002)(8936002)(66556008)(10290500003)(52536014)(9686003)(478600001)(55016002)(86362001)(8990500004)(186003)(7696005)(82960400001)(19627235002)(82950400001)(76116006)(71200400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?RdwjlemDQCWGQ3xX+wt/H+FVlkRFoB13sp5V4T9cZcBeo8TqbBmfPhY/ne?=
+ =?iso-8859-1?Q?ePp1Z+9Hj77sUV1J6iMuAaioojyWGbsvtxke6UWqw0xNHjMqWunhyJRByX?=
+ =?iso-8859-1?Q?dD/57rjhD6lrvT7SLFDWTXv2/gLWmhAqmQCfw1ADHgeZBVe30PaU5e43z2?=
+ =?iso-8859-1?Q?MmE1ilX7GvzmLPLJcYmlMurVlk7ZPWWC2mPNRSjA7poPbYvFXZ7d+8/30H?=
+ =?iso-8859-1?Q?10i+FGLaAEXbhNcI1FBR+U0tFOORakqhv3iQ29sXIZ0bfg9mea+3rm6tHH?=
+ =?iso-8859-1?Q?EZniy7mSbBpjLgFYSED0Id6GV4TWb0u3xZD5cBcEFpeLj3/gzklKfVHN0d?=
+ =?iso-8859-1?Q?7e6e1VWjRTKx4Xx+pZHifSyGwghqtKhafDblPDTGMng5lY+OHpETIgwEG1?=
+ =?iso-8859-1?Q?P+oPqhjK7fGLrvtz0lqmqpFPWSUwmTeS9q9+3zPC1DRo3I1yC+obH+/2c6?=
+ =?iso-8859-1?Q?wB51uXC00xLVR6PpY59pi7YT4z0psBofAbjm3PC7vauEH5x5g63rSXRhMv?=
+ =?iso-8859-1?Q?gjTQ97yn15pMmRZDIIQrCU82SlVPf0lKqfUM0xJlFxPi0/aBBmdrhcB5dd?=
+ =?iso-8859-1?Q?tcari7IQ8fQ0WKkDu1OnSCD9+MhWBY1B5AuXSmvixYUXExr9s7HbsiUwfy?=
+ =?iso-8859-1?Q?MWdDfSMENKHxV5xLFt1e9hmafba7deL7P5AziwSHBNXvVMuHigtwmBOXC6?=
+ =?iso-8859-1?Q?mBaHabOoZNz44qSuiYgx+qUubAfqe6SRqSegV4KFhNs96RBoAHO9RZws5R?=
+ =?iso-8859-1?Q?FiCuZR6mjmpKdWqC8zVGEjG0WP3G1Yc6yO2HVZaj4JVGrB1jmf7u5F5mmJ?=
+ =?iso-8859-1?Q?CgEGQiLrohOSqGlWAYXpegaxNiCA1JZsuNXbwL3SH3Xayn2I6//8fGWlB0?=
+ =?iso-8859-1?Q?0rd+76ZopsNKHnQ4bnn5cIKflw71xK3VbDMLc7OcsVXTHULZQqZBWEO80v?=
+ =?iso-8859-1?Q?xqhHagQQuw8LURsXhy7hW1gXOG1igC6bL7jzrqYL7Zs3xj9PJxHRhaAzEx?=
+ =?iso-8859-1?Q?ABp0y4rQJaaxL+oAhQ+nL8eJWIeeEIOy9ok55OOJcho68Ktoq3SdJbfPgV?=
+ =?iso-8859-1?Q?vA+qmbDOPOrQtut+5r5JW65auZKqB5pcGKH/iVJx/2HLnZX2FyCREkHgHk?=
+ =?iso-8859-1?Q?8s3x79vrgIYli7y8BzW+oQtqs2STYrYMoS6+VOzKkNAcUV8Rog?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR83MB0434.EURPRD83.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34351326-7ac5-411b-811e-08d8c206ebf2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2021 14:30:25.5014
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: G5TVXrhu1eiQGZjs987Cn9AXRCkgBLdzeJSbsd/+QZ/oakLDBhzHdI86RyUE7klw41//4Ta97VeXMDvzguC0Lg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR83MB0402
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Hi all,
 
-On Fri, 22 Jan 2021, brian m. carlson wrote:
+I'm trying to fix an encoding (?) issue when viewing gpg signatures for com=
+mits in PowerShell Core on Windows. Apparently, git changes the output from=
+ gpg depending on the command used. Here's what I see:
 
-> On 2021-01-22 at 16:29:46, Johannes Schindelin wrote:
-> >
-> > On Fri, 22 Jan 2021, brian m. carlson wrote:
-> >
-> > > On 2021-01-16 at 04:24:54, Seth House wrote:
-> > > > The autocrlf test is breaking because the sed that ships with some=
- mingw
-> > > > versions (and also some minsys and cygwin versions) will *automati=
-cally*
-> > > > remove carriage returns:
-> > > >
-> > > > $ printf 'foo\r\nbar\r\n' | sed -e '/bar/d' | cat -A
-> > > > foo$
-> > > >
-> > > > $ printf 'foo\r\nbar\r\n' | sed -b -e '/bar/d' | cat -A
-> > > > foo^M$
-> > > >
-> > > > (Note: the -b flag above is just for comparison. We can't use it h=
-ere.
-> > > > It's not in POSIX and is not present in sed for busybox or OSX.)
-> > >
-> > > Can you report this as a bug?  This behavior isn't compliant with PO=
-SIX
-> > > and it makes it really hard for folks to write portable code if thes=
-e
-> > > versions implement POSIX utilities in a nonstandard way.  As a
-> > > non-Windows user, I have no hope of writing code that works on Windo=
-ws
-> > > if we can't rely on our standard utilities working properly.
-> >
-> > I fear that the Windows-based tools do the correct thing, though: they=
- are
-> > meant to process _text_, and newlines are supposed to be
-> > platform-dependent in text.
->
-> Ah, but POSIX gives a very specific meaning to "newline", and it refers
-> to a single byte.  If you want tools that process CRLF line endings like
-> that, then that should be opt-in as either different tools or additional
-> options, not the default behavior of a POSIX tool.  This behavior is not
-> conforming to POSIX and it is therefore a defect.
+git show --show-signature
+This command shows strange line endings and is unable to properly display t=
+he =E9 in my name:
 
-If we needed another reminder that
+commit d7a43da0bd3bc7e31dd46afb8ccd78735ba43a36 (HEAD -> master)
+gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time^M
+gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF^=
+M
+gpg: Good signature from "Ren<82> Schumacher <rene.schumacher@microsoft.com=
+>" [ultimate]^M
+gpg:                 aka "Ren<82> Schumacher <reneschu@microsoft.com>" [ult=
+imate]^M
+Author: Ren=E9 Schumacher <reneschu@microsoft.com>
+Date:   Tue Jan 26 15:28:26 2021 +0100
 
-	we never say "It's in POSIX; we'll happily ignore your needs
-	should your system not conform to it."
+    Commit with signature
 
-(https://github.com/git/git/blob/v2.30.0/Documentation/CodingGuidelines),
-then we have it right here ;-)
+diff --git a/file1.txt b/file1.txt
+new file mode 100644
+index 0000000..a7f8d9e
+--- /dev/null
++++ b/file1.txt
+@@ -0,0 +1 @@
++bla
 
-> > From that perspective, it sounds to me as if we're trying to ask `sed`=
- to
-> > do something it was not designed to do: binary editing.
->
-> Most Windows tools are perfectly capable of handling LF line endings.
-> Even the famously incapable Notepad can now handle LF without CR.  With
-> the advent of WSL, handling LF line endings is now pretty much required.
 
-I have two comments on that:
+git verify-commit
+This command does not show the line endings but still fails to properly sho=
+w the =E9:
 
-1. We could spend a splendid time questioning MSYS2's (and before that,
-   MSys') choices regarding newlines, but I think we can spend that time a
-   lot better.
+gpg: Signature made 26.01.2021 15:28:26 W. Europe Standard Time
+gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
+gpg: Good signature from "Ren82 Schumacher <rene.schumacher@microsoft.com>"=
+ [ultimate]
+gpg:                 aka "Ren82 Schumacher <reneschu@microsoft.com>" [ultim=
+ate]
 
-2. Newer software _seems_ to handle LF line endings just fine. And the
-   `sed` invocation you mentioned above does so: it groks input delimited
-   by Line Feed as newline characters. That does not mean that its output
-   is LF-only by default. I seem to remember that recent Visual Studio
-   versions did something similar: happily read an LF-only `.xml` file,
-   but then write out a modified version using CR/LF.
 
-Would I wish that Windows used LF-only instead of CR/LF, just like macOS
-switched away from CR-only to LF-only after MacOS 9? Sure I do. It would
-remove quite a few obstacles in my daily work. Can I do anything about it?
-No.
+git verify-commit --raw
+This command does properly show the =E9 in my name so I guess that gpg outp=
+ut is correct and there's something happening while git parses the gpg outp=
+ut:
 
-So I'd rather see `git mergetool` be turned into a portable C program, or
-alternatively using a built-in helper that _is_ written in C, to perform
-that desired text munging instead of losing the battle to the challenge of
-cross-platform, advanced text processing in pure shell script.
+[GNUPG:] NEWSIG
+[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
+[GNUPG:] SIG_ID jBtyyA8QIDL0tD5fneVqJo7oU/8 2021-01-26 1611671306
+[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
+[GNUPG:] GOODSIG 7802B995CDB4A2EF Ren=E9 Schumacher <rene.schumacher@micros=
+oft.com>
+[GNUPG:] VALIDSIG 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 2021-01-26 16116=
+71306 0 4 0 1 8 00 3848D5B2A3D45419D7F564F97802B995CDB4A2EF
+[GNUPG:] KEY_CONSIDERED 3848D5B2A3D45419D7F564F97802B995CDB4A2EF 0
+[GNUPG:] TRUST_ULTIMATE 0 pgp
+[GNUPG:] VERIFICATION_COMPLIANCE_MODE 23
 
-Ciao,
-Dscho
+
+I already set the environment variable LC_ALL to C.UTF-8, which fixed the c=
+ommit message output (see first screenshot) but unfortunately not the signa=
+ture output. Any idea what might be causing this and how to fix it (if poss=
+ible)?
+
+
+Thanks!
+
+Ren=E9 Schumacher
+Sr. Customer Engineer
+Tel: +49 89 3176 - 4908 | Mobil: +49 151 5895 5728 | mailto:rene.schumacher=
+@microsoft.com
+Microsoft Deutschland GmbH - Niederlassung K=F6ln
+Holzmarkt 2a, 50676 K=F6ln
+
+Microsoft Deutschland GmbH | Walter-Gropius-Str. 5 | 80807 M=FCnchen
+Gesch=E4ftsf=FChrer: Sabine Bendiek (Vorsitzender), Thorsten Herrmann, Benj=
+amin O. Orndorff, Keith Dolliver
+Amtsgericht M=FCnchen, HRB 70438
+
