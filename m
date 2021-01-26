@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 920BDC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B807BC433DB
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:06:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 605B8207B3
+	by mail.kernel.org (Postfix) with ESMTP id 7F06E2220B
 	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 16:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404545AbhAZQFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 11:05:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37776 "EHLO
+        id S2404355AbhAZQGC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 11:06:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404657AbhAZQDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 11:03:14 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2EE3C0698C9
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:43 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id f16so2881958wmq.5
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:43 -0800 (PST)
+        with ESMTP id S2404602AbhAZQC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 11:02:59 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4961EC0698C1
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:36 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id v15so17006847wrx.4
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 08:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tScQM6HseLjvMkUwY+RsUDvgpbJ4oohiYQmpQI2/Y2A=;
-        b=A939UeWUDuo4T1RZs5hgdyiqBVf9YWpYWsw2BCcsvPtT1065UZBfILdL8GuSfYSreW
-         WDyBvwpsKOWsQfloz/40V5FfHbS2MinSP7+PCPDRFeKsaU+nFfIps/jU+dExgQipA5Pe
-         QtakY80R5YeOwYmPw+jWJyRqh7U8MMW9xos0+CV3ig5kgeB1edeyYpByVp3zZF+kADbg
-         6NkYnH6gMDxH6U82rNlqJuI+D6HlFD5fGKyhOxPfAhlo9aWU9jzuD3ZupXdQiYWoM8gT
-         f6v7EQB2lv7+i0ElibBvmHgtDlPro7ylAnCwe84TQBurgT51D2YjrrCmzOX+toK95B3F
-         gTPQ==
+        bh=kAGVOi9Eji1v1ZSuzjXUMHK+pCNbc5PVfTo1bOBO/M0=;
+        b=tZ8772shu5bI5wxfiEVYh+wLBgUhqlzYeQSaSAdNlzwDwPb/pNAFIs1CID45R6N+uo
+         /mVLdYVCB/kHMwPISDBMrbqypwrnb3YLM1gQv4AuMcMCjjnjttSTHyLcELSMX7n1bvD+
+         LGxhLG51YL3TqRZjK4TnlPHl03C4pxXr7FBPkYbu0TwQjIq1wTWZzEXDbRdzmwiOT1eg
+         KCwL41m8P93dBDdUOJSxAI1+ksCiSrUWy8xzCR6E8/aLgFmOYBPJ4MAmIh4kTcmQZ8w2
+         CfaxShegPSK7gzxKniF+Z4NepvQ3qrKeReRL4NUBmw3BlgqIc5A7FjP2ZkLGBAaV89zN
+         dn4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tScQM6HseLjvMkUwY+RsUDvgpbJ4oohiYQmpQI2/Y2A=;
-        b=FzZUzSpOmdQlMf1ImVumn28imj3yjneecVm1UaKWLjedBQ9t7c2OHnw08vlaVIYMjS
-         4v6BFq/ATSJVRDLC7fWYnijaKsjmoev/QWpIulRGP8NqnUgfMsY4P6JbQS3grgYZtuwi
-         bpGjGFCAxwucUJ/7OhV5NsWcMdd62A7gNexwxI71FeJQYV4+ObAwyGSFwnCw2WyF6bwz
-         9+mODaxjP48VL1gqGQEwXv7+ZOD42OAymF7aCbO2fuMNUQ0Q6rtlnldVUBlDOsysTDXR
-         IcDxSk66nnYHkuj3g6x4SWoX6p2cC3+XCz1Wa8O9HkZqQdY7sNpYfpzr9iiwAfyYQ6Pw
-         2KOQ==
-X-Gm-Message-State: AOAM531XAJPhmq/n5VHbEqy/ZpD3oJpBJKfaa3uzMLgfGwDhx+/CkyUT
-        f2PB+pKdksWVMHN14FmMRtKOBJ5Urns=
-X-Google-Smtp-Source: ABdhPJzL98u3z9d5sj3noZZUZZzaBDXNJQPOhNtorTEdufC/kiLMdqSGzwzEbO84DzDuNTgw3cL45Q==
-X-Received: by 2002:a1c:b657:: with SMTP id g84mr400903wmf.52.1611676902373;
-        Tue, 26 Jan 2021 08:01:42 -0800 (PST)
+        bh=kAGVOi9Eji1v1ZSuzjXUMHK+pCNbc5PVfTo1bOBO/M0=;
+        b=N6b9wLleumBkm3ahs7bvSUBKSmW+1mks7panZCI6u+iz4e1P0fORa1VEYyqvFF2apL
+         WWRUlp9lXdAv6gg7OQBREApkzHNKIV1C53tGk/z26NAhsxKtU9ah+4l6GArj0iCiWtP5
+         GaBTXT097zgnQo6b8bZZI0tu/LSDHwEgbqbzNDEkmnDCuPhweV5Kt4T3VNldayyWesVu
+         +1hYmWtd7qbFXHKwO5yCnRZUuz1v6cRc+cnL7PRulroI7ekotH7mq46sV+yBJc6jN7f9
+         lSBYySYtf2WQ6dEFt3Sai5/aoehEvL/e8iMr+MsbjnYROIrQ8UamFTLPhdofxtlaCsIN
+         rgtw==
+X-Gm-Message-State: AOAM5325Jjft8XAwUo6UVeU4HHHE2t8Nh9UtPM978q6mstx9k26eT5Lk
+        DDoUXUJHbHlYNY59OjYPBzK04v65uSE=
+X-Google-Smtp-Source: ABdhPJyqB8WnI7IcovXXBoAdZLbulf2f/bBnQYQzA+jFJ5LEq2rrQZ56nbrR+7Jsi4vnjKM8nMWp7w==
+X-Received: by 2002:adf:8464:: with SMTP id 91mr6641404wrf.188.1611676894765;
+        Tue, 26 Jan 2021 08:01:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm21054288wrv.0.2021.01.26.08.01.41
+        by smtp.gmail.com with ESMTPSA id o12sm6848197wrx.82.2021.01.26.08.01.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 08:01:41 -0800 (PST)
-Message-Id: <f6c58ff72d24ec166d5d9b661c433bcb13377fd2.1611676886.git.gitgitgadget@gmail.com>
+        Tue, 26 Jan 2021 08:01:34 -0800 (PST)
+Message-Id: <0b4ce3f1732a6b7297473ac3bae035f555a9268a.1611676886.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 26 Jan 2021 16:01:24 +0000
-Subject: [PATCH 15/17] midx: use 64-bit multiplication for chunk sizes
+Date:   Tue, 26 Jan 2021 16:01:16 +0000
+Subject: [PATCH 07/17] midx: add pack_perm to write_midx_context
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,37 +76,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When calculating the sizes of certain chunks, we should use 64-bit
-multiplication always. This allows us to properly predict the chunk
-sizes without risk of overflow.
+In an effort to align write_midx_internal() with the chunk-format API,
+continue to group necessary data into "struct write_midx_context". This
+change collects the "uint32_t *pack_perm" and large_offsets_needed bit
+into the context.
+
+Update write_midx_object_offsets() to match chunk_write_fn.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ midx.c | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index dd019c00795..47aaeb804b8 100644
+index ee6f3504c6a..66feff096e8 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -945,7 +945,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT,
- 		  write_midx_oid_fanout, MIDX_CHUNK_FANOUT_SIZE);
- 	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
--		  write_midx_oid_lookup, ctx.entries_nr * the_hash_algo->rawsz);
-+		  write_midx_oid_lookup, (uint64_t)ctx.entries_nr * the_hash_algo->rawsz);
- 	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
- 		  write_midx_object_offsets,
- 		  ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH);
-@@ -953,7 +953,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	if (ctx.large_offsets_needed)
- 		add_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS,
- 			write_midx_large_offsets,
--			ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH);
-+			(uint64_t)ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH);
+@@ -461,6 +461,9 @@ struct write_midx_context {
  
- 	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
- 	write_chunkfile(cf, &ctx);
+ 	struct pack_midx_entry *entries;
+ 	uint32_t entries_nr;
++
++	uint32_t *pack_perm;
++	unsigned large_offsets_needed:1;
+ };
+ 
+ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+@@ -736,27 +739,27 @@ static size_t write_midx_oid_lookup(struct hashfile *f,
+ 	return written;
+ }
+ 
+-static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_needed,
+-					uint32_t *perm,
+-					struct pack_midx_entry *objects, uint32_t nr_objects)
++static size_t write_midx_object_offsets(struct hashfile *f,
++					void *data)
+ {
+-	struct pack_midx_entry *list = objects;
++	struct write_midx_context *ctx = (struct write_midx_context *)data;
++	struct pack_midx_entry *list = ctx->entries;
+ 	uint32_t i, nr_large_offset = 0;
+ 	size_t written = 0;
+ 
+-	for (i = 0; i < nr_objects; i++) {
++	for (i = 0; i < ctx->entries_nr; i++) {
+ 		struct pack_midx_entry *obj = list++;
+ 
+-		if (perm[obj->pack_int_id] == PACK_EXPIRED)
++		if (ctx->pack_perm[obj->pack_int_id] == PACK_EXPIRED)
+ 			BUG("object %s is in an expired pack with int-id %d",
+ 			    oid_to_hex(&obj->oid),
+ 			    obj->pack_int_id);
+ 
+-		hashwrite_be32(f, perm[obj->pack_int_id]);
++		hashwrite_be32(f, ctx->pack_perm[obj->pack_int_id]);
+ 
+-		if (large_offset_needed && obj->offset >> 31)
++		if (ctx->large_offsets_needed && obj->offset >> 31)
+ 			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
+-		else if (!large_offset_needed && obj->offset >> 32)
++		else if (!ctx->large_offsets_needed && obj->offset >> 32)
+ 			BUG("object %s requires a large offset (%"PRIx64") but the MIDX is not writing large offsets!",
+ 			    oid_to_hex(&obj->oid),
+ 			    obj->offset);
+@@ -805,13 +808,11 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	struct hashfile *f = NULL;
+ 	struct lock_file lk;
+ 	struct write_midx_context ctx = { 0 };
+-	uint32_t *pack_perm = NULL;
+ 	uint64_t written = 0;
+ 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
+ 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
+ 	uint32_t num_large_offsets = 0;
+ 	struct progress *progress = NULL;
+-	int large_offsets_needed = 0;
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+ 	int result = 0;
+@@ -857,11 +858,12 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr);
+ 
++	ctx.large_offsets_needed = 0;
+ 	for (i = 0; i < ctx.entries_nr; i++) {
+ 		if (ctx.entries[i].offset > 0x7fffffff)
+ 			num_large_offsets++;
+ 		if (ctx.entries[i].offset > 0xffffffff)
+-			large_offsets_needed = 1;
++			ctx.large_offsets_needed = 1;
+ 	}
+ 
+ 	QSORT(ctx.info, ctx.nr, pack_info_compare);
+@@ -900,13 +902,13 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	 *
+ 	 * pack_perm[old_id] = new_id
+ 	 */
+-	ALLOC_ARRAY(pack_perm, ctx.nr);
++	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
+ 	for (i = 0; i < ctx.nr; i++) {
+ 		if (ctx.info[i].expired) {
+ 			dropped_packs++;
+-			pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
+ 		} else {
+-			pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
+ 		}
+ 	}
+ 
+@@ -927,7 +929,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 		close_midx(ctx.m);
+ 
+ 	cur_chunk = 0;
+-	num_chunks = large_offsets_needed ? 5 : 4;
++	num_chunks = ctx.large_offsets_needed ? 5 : 4;
+ 
+ 	if (ctx.nr - dropped_packs == 0) {
+ 		error(_("no pack files to index."));
+@@ -954,7 +956,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	cur_chunk++;
+ 	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH;
+-	if (large_offsets_needed) {
++	if (ctx.large_offsets_needed) {
+ 		chunk_ids[cur_chunk] = MIDX_CHUNKID_LARGEOFFSETS;
+ 
+ 		cur_chunk++;
+@@ -1004,7 +1006,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 				break;
+ 
+ 			case MIDX_CHUNKID_OBJECTOFFSETS:
+-				written += write_midx_object_offsets(f, large_offsets_needed, pack_perm, ctx.entries, ctx.entries_nr);
++				written += write_midx_object_offsets(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_LARGEOFFSETS:
+@@ -1039,7 +1041,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	free(ctx.info);
+ 	free(ctx.entries);
+-	free(pack_perm);
++	free(ctx.pack_perm);
+ 	free(midx_name);
+ 	return result;
+ }
 -- 
 gitgitgadget
 
