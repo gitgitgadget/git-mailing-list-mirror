@@ -2,363 +2,350 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40910C433DB
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91A40C10F07
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1456720679
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6391620684
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 22:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728131AbhAZWFI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 17:05:08 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65493 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726672AbhAZVjk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 16:39:40 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CC146113872;
-        Tue, 26 Jan 2021 16:38:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zKWws3qNO8YywCs8f2UclaXyrak=; b=GfwgZe
-        Wm8ifqIUEisopr5e62kh74mKiXiZwTBB8oUFtHjv8a+EcG1ldI6yF/KUPwNSIMYg
-        4p/45LQY6crNGLT09zlZFC5nwusocZA0mL301b+DvarkiqvJ5qLRHurnYnTq7Yae
-        DFuWVTmihZCTJXzLs7f75XA+zJLdWrMzciMrc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Su9H1f9YgLu+oRUQ1NCIhp3cMMc50+/y
-        aAX/zdQQK0l4EK9Vau1meEpW2q2XfEo6SwLiz+rB2OucDlCzlz1++f7R6IHRdzut
-        dCtSzGLUTiTw//vSvIWFRGRrCS6zRi3JvVkh/vlFvntCG/zvlL7ud+4yrbTwRXF7
-        dA4tph0gnlA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C4B93113871;
-        Tue, 26 Jan 2021 16:38:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728084AbhAZWEc convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 26 Jan 2021 17:04:32 -0500
+Received: from mailproxy05.manitu.net ([217.11.48.69]:48444 "EHLO
+        mailproxy05.manitu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729021AbhAZUfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 15:35:07 -0500
+X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Jan 2021 15:35:06 EST
+Received: from localhost (200116b8600cd300937811cf4126827a.dip.versatel-1u1.de [IPv6:2001:16b8:600c:d300:9378:11cf:4126:827a])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F41211386E;
-        Tue, 26 Jan 2021 16:38:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] ls-refs: report unborn targets of symrefs
-References: <20201208013121.677494-1-jonathantanmy@google.com>
-        <cover.1611686656.git.jonathantanmy@google.com>
-        <32e16dfdbd3f54c0d4b39cbd555e66aa3950fffd.1611686656.git.jonathantanmy@google.com>
-Date:   Tue, 26 Jan 2021 13:38:49 -0800
-In-Reply-To: <32e16dfdbd3f54c0d4b39cbd555e66aa3950fffd.1611686656.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 26 Jan 2021 10:55:55 -0800")
-Message-ID: <xmqq8s8f1iqe.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy05.manitu.net (Postfix) with ESMTPSA id D3DF01B6009D;
+        Tue, 26 Jan 2021 21:27:27 +0100 (CET)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E156CFE6-601E-11EB-8167-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20210125233651.31537-1-avarab@gmail.com>
+References: <20210125233651.31537-1-avarab@gmail.com>
+Subject: Re: [PATCH] grep/log: remove hidden --debug and --grep-debug options
+From:   Michael J Gruber <git@grubix.eu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Beat Bolli <dev+git@drbeat.li>,
+        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org,
+        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>
+Message-ID: <161169284604.246052.1201956470999170397.git@grubix.eu>
+Date:   Tue, 26 Jan 2021 21:27:26 +0100
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Ævar Arnfjörð Bjarmason venit, vidit, dixit 2021-01-26 00:36:51:
+> Remove the hidden "grep --debug" and "log --grep-debug" options added
+> in 17bf35a3c7b (grep: teach --debug option to dump the parse tree,
+> 2012-09-13).
+> 
+> At the time these options seem to have been intended to go along with
+> a documentation discussion and to help the author of relevant tests to
+> perform ad-hoc debugging on them[1].
 
-> When cloning, we choose the default branch based on the remote HEAD.
-> But if there is no remote HEAD reported (which could happen if the
-> target of the remote HEAD is unborn), we'll fall back to using our local
-> init.defaultBranch. Traditionally this hasn't been a big deal, because
-> most repos used "master" as the default. But these days it is likely to
-> cause confusion if the server and client implementations choose
-> different values (e.g., if the remote started with "main", we may choose
-> "master" locally, create commits there, and then the user is surprised
-> when they push to "master" and not "main").
->
-> To solve this, the remote needs to communicate the target of the HEAD
-> symref, even if it is unborn, and "git clone" needs to use this
-> information.
->
-> Currently, symrefs that have unborn targets (such as in this case) are
-> not communicated by the protocol. Teach Git to advertise and support the
-> "unborn" feature in "ls-refs" (by default, this is advertised, but
-> server administrators may turn this off through the lsrefs.allowunborn
-> config). This feature indicates that "ls-refs" supports the "unborn"
-> argument; when it is specified, "ls-refs" will send the HEAD symref with
-> the name of its unborn target.
->
-> This change is only for protocol v2. A similar change for protocol v0
-> would require independent protocol design (there being no analogous
-> position to signal support for "unborn") and client-side plumbing of the
-> data required, so the scope of this patch set is limited to protocol v2.
->
-> The client side will be updated to use this in a subsequent commit.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I'm not actively working on these tests right now, but thanks for asking ;)
+
+> 
+> Reasons to want this gone:
+> 
+>  1. They were never documented, and the only (rather trivial) use of
+>     them in our own codebase for testing is something I removed back
+>     in e01b4dab01e (grep: change non-ASCII -i test to stop using
+>     --debug, 2017-05-20).
+> 
+>  2. Googling around doesn't show any in-the-wild uses I could dig up,
+>     and on the Git ML the only mentions after the original discussion
+>     seem to have been when they came up in unrelated diff contexts, or
+>     that test commit of mine.
+> 
+>  3. An exception to that is c581e4a7499 (grep: under --debug, show
+>     whether PCRE JIT is enabled, 2019-08-18) where we added the
+>     ability to dump out when PCREv2 has the JIT in effect.
+> 
+>     The combination of that and my earlier b65abcafc7a (grep: use PCRE
+>     v2 for optimized fixed-string search, 2019-07-01) means Git prints
+>     this out in its most common in-the-wild configuration:
+> 
+>         $ git log  --grep-debug --grep=foo --grep=bar --grep=baz --all-match
+>         pcre2_jit_on=1
+>         pcre2_jit_on=1
+>         pcre2_jit_on=1
+>         [all-match]
+>         (or
+>          pattern_body<body>foo
+>          (or
+>           pattern_body<body>bar
+>           pattern_body<body>baz
+>          )
+>         )
+> 
+>         $ git grep --debug \( -e foo --and -e bar \) --or -e baz
+>         pcre2_jit_on=1
+>         pcre2_jit_on=1
+>         pcre2_jit_on=1
+>         (or
+>          (and
+>           patternfoo
+>           patternbar
+>          )
+>          patternbaz
+>         )
+> 
+> I.e. for each pattern we're considering for the and/or/--all-match
+> etc. debugging we'll now diligently spew out another identical line
+> saying whether the PCREv2 JIT is on or not.
+> 
+> I think that nobody's complained about that rather glaringly obviously
+> bad output says something about how much this is used, i.e. it's
+> not.
+> 
+> The need for this debugging aid for the composed grep/log patterns
+> seems to have passed, and the desire to dump the JIT config seems to
+> have been another one-off around the time we had JIT-related issues on
+> the PCREv2 codepath. That the original author of this debugging
+> facility seemingly hasn't noticed the bad output since then[2] is
+> probably some indicator.
+
+I agree completely with this analysis.
+
+Cheers
+Michael
+
+> 1. https://lore.kernel.org/git/cover.1347615361.git.git@drmicha.warpmail.net/
+> 2. https://lore.kernel.org/git/xmqqk1b8x0ac.fsf@gitster-ct.c.googlers.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->  Documentation/config.txt                |  2 +
->  Documentation/config/lsrefs.txt         |  3 ++
->  Documentation/technical/protocol-v2.txt | 10 ++++-
->  ls-refs.c                               | 53 +++++++++++++++++++++++--
->  ls-refs.h                               |  1 +
->  serve.c                                 |  2 +-
->  t/t5701-git-serve.sh                    |  2 +-
->  7 files changed, 66 insertions(+), 7 deletions(-)
->  create mode 100644 Documentation/config/lsrefs.txt
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 6ba50b1104..d08e83a148 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -398,6 +398,8 @@ include::config/interactive.txt[]
+>  builtin/grep.c |   5 ---
+>  grep.c         | 101 +------------------------------------------------
+>  grep.h         |   1 -
+>  revision.c     |   2 -
+>  4 files changed, 2 insertions(+), 107 deletions(-)
+> 
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index ca259af4416..55d06c95130 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -216,8 +216,6 @@ static void start_threads(struct grep_opt *opt)
+>                 int err;
+>                 struct grep_opt *o = grep_opt_dup(opt);
+>                 o->output = strbuf_out;
+> -               if (i)
+> -                       o->debug = 0;
+>                 compile_grep_patterns(o);
+>                 err = pthread_create(&threads[i], NULL, run, o);
 >  
->  include::config/log.txt[]
+> @@ -936,9 +934,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>                            N_("indicate hit with exit status without output")),
+>                 OPT_BOOL(0, "all-match", &opt.all_match,
+>                         N_("show only matches from files that match all patterns")),
+> -               OPT_SET_INT_F(0, "debug", &opt.debug,
+> -                             N_("show parse tree for grep expression"),
+> -                             1, PARSE_OPT_HIDDEN),
+>                 OPT_GROUP(""),
+>                 { OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+>                         N_("pager"), N_("show matching files in the pager"),
+> diff --git a/grep.c b/grep.c
+> index efeb6dc58db..21f0ee03be9 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -400,8 +400,6 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
 >  
-> +include::config/lsrefs.txt[]
-> +
->  include::config/mailinfo.txt[]
+>  #if defined(PCRE_CONFIG_JIT) && !defined(NO_LIBPCRE1_JIT)
+>         pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
+> -       if (opt->debug)
+> -               fprintf(stderr, "pcre1_jit_on=%d\n", p->pcre1_jit_on);
 >  
->  include::config/mailmap.txt[]
-> diff --git a/Documentation/config/lsrefs.txt b/Documentation/config/lsrefs.txt
-> new file mode 100644
-> index 0000000000..dcbec11aaa
-> --- /dev/null
-> +++ b/Documentation/config/lsrefs.txt
-> @@ -0,0 +1,3 @@
-> +lsrefs.allowUnborn::
-> +	Allow the server to send information about unborn symrefs during the
-> +	protocol v2 ref advertisement.
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> index 85daeb5d9e..4707511c10 100644
-> --- a/Documentation/technical/protocol-v2.txt
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -192,11 +192,19 @@ ls-refs takes in the following arguments:
->  	When specified, only references having a prefix matching one of
->  	the provided prefixes are displayed.
+>         if (p->pcre1_jit_on)
+>                 study_options = PCRE_STUDY_JIT_COMPILE;
+> @@ -508,8 +506,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+>         }
 >  
-> +If the 'unborn' feature is advertised the following argument can be
-> +included in the client's request.
-> +
-> +    unborn
-> +	The server may send symrefs pointing to unborn branches in the form
-> +	"unborn <refname> symref-target:<target>".
-> +
->  The output of ls-refs is as follows:
->  
->      output = *ref
->  	     flush-pkt
-> -    ref = PKT-LINE(obj-id SP refname *(SP ref-attribute) LF)
-> +    obj-id-or-unborn = (obj-id | "unborn")
-> +    ref = PKT-LINE(obj-id-or-unborn SP refname *(SP ref-attribute) LF)
->      ref-attribute = (symref | peeled)
->      symref = "symref-target:" symref-target
->      peeled = "peeled:" obj-id
-> diff --git a/ls-refs.c b/ls-refs.c
-> index a1e0b473e4..4077adeb6a 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -32,6 +32,8 @@ struct ls_refs_data {
->  	unsigned peel;
->  	unsigned symrefs;
->  	struct strvec prefixes;
-> +	unsigned allow_unborn : 1;
-> +	unsigned unborn : 1;
->  };
->  
->  static int send_ref(const char *refname, const struct object_id *oid,
-> @@ -47,7 +49,10 @@ static int send_ref(const char *refname, const struct object_id *oid,
->  	if (!ref_match(&data->prefixes, refname_nons))
->  		return 0;
->  
-> -	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
-> +	if (oid)
-> +		strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
-> +	else
-> +		strbuf_addf(&refline, "unborn %s", refname_nons);
-
-When a call is made to this helper with NULL "oid", it unconditionally
-sends the "refname" out as an 'unborn' thing.  If data->symrefs is not
-true, or flag does not have REF_ISSYMREF set, then we'd end up
-sending
-
-    "unborn" SP refname LF
-
-without any ref-attribute.  The caller is responsible for ensuring
-that it passes sensible data->symrefs and flag when it passes
-oid==NULL to this function, but it is OK because this is a private
-helper.
-
-OK.
-
->  	if (data->symrefs && flag & REF_ISSYMREF) {
->  		struct object_id unused;
->  		const char *symref_target = resolve_ref_unsafe(refname, 0,
-> @@ -74,8 +79,30 @@ static int send_ref(const char *refname, const struct object_id *oid,
->  	return 0;
+>         pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+> -       if (opt->debug)
+> -               fprintf(stderr, "pcre2_jit_on=%d\n", p->pcre2_jit_on);
+>         if (p->pcre2_jit_on) {
+>                 jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+>                 if (jitret)
+> @@ -535,9 +531,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+>                         BUG("pcre2_pattern_info() failed: %d", patinforet);
+>                 if (jitsizearg == 0) {
+>                         p->pcre2_jit_on = 0;
+> -                       if (opt->debug)
+> -                               fprintf(stderr, "pcre2_jit_on=%d: (*NO_JIT) in regex\n",
+> -                                       p->pcre2_jit_on);
+>                         return;
+>                 }
+>         }
+> @@ -616,8 +609,6 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+>         if (opt->ignore_case)
+>                 regflags |= REG_ICASE;
+>         err = regcomp(&p->regexp, sb.buf, regflags);
+> -       if (opt->debug)
+> -               fprintf(stderr, "fixed %s\n", sb.buf);
+>         strbuf_release(&sb);
+>         if (err) {
+>                 char errbuf[1024];
+> @@ -812,87 +803,6 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
+>         return compile_pattern_or(list);
 >  }
 >  
-> -static int ls_refs_config(const char *var, const char *value, void *data)
-> +static void send_possibly_unborn_head(struct ls_refs_data *data)
+> -static void indent(int in)
+> -{
+> -       while (in-- > 0)
+> -               fputc(' ', stderr);
+> -}
+> -
+> -static void dump_grep_pat(struct grep_pat *p)
+> -{
+> -       switch (p->token) {
+> -       case GREP_AND: fprintf(stderr, "*and*"); break;
+> -       case GREP_OPEN_PAREN: fprintf(stderr, "*(*"); break;
+> -       case GREP_CLOSE_PAREN: fprintf(stderr, "*)*"); break;
+> -       case GREP_NOT: fprintf(stderr, "*not*"); break;
+> -       case GREP_OR: fprintf(stderr, "*or*"); break;
+> -
+> -       case GREP_PATTERN: fprintf(stderr, "pattern"); break;
+> -       case GREP_PATTERN_HEAD: fprintf(stderr, "pattern_head"); break;
+> -       case GREP_PATTERN_BODY: fprintf(stderr, "pattern_body"); break;
+> -       }
+> -
+> -       switch (p->token) {
+> -       default: break;
+> -       case GREP_PATTERN_HEAD:
+> -               fprintf(stderr, "<head %d>", p->field); break;
+> -       case GREP_PATTERN_BODY:
+> -               fprintf(stderr, "<body>"); break;
+> -       }
+> -       switch (p->token) {
+> -       default: break;
+> -       case GREP_PATTERN_HEAD:
+> -       case GREP_PATTERN_BODY:
+> -       case GREP_PATTERN:
+> -               fprintf(stderr, "%.*s", (int)p->patternlen, p->pattern);
+> -               break;
+> -       }
+> -       fputc('\n', stderr);
+> -}
+> -
+> -static void dump_grep_expression_1(struct grep_expr *x, int in)
+> -{
+> -       indent(in);
+> -       switch (x->node) {
+> -       case GREP_NODE_TRUE:
+> -               fprintf(stderr, "true\n");
+> -               break;
+> -       case GREP_NODE_ATOM:
+> -               dump_grep_pat(x->u.atom);
+> -               break;
+> -       case GREP_NODE_NOT:
+> -               fprintf(stderr, "(not\n");
+> -               dump_grep_expression_1(x->u.unary, in+1);
+> -               indent(in);
+> -               fprintf(stderr, ")\n");
+> -               break;
+> -       case GREP_NODE_AND:
+> -               fprintf(stderr, "(and\n");
+> -               dump_grep_expression_1(x->u.binary.left, in+1);
+> -               dump_grep_expression_1(x->u.binary.right, in+1);
+> -               indent(in);
+> -               fprintf(stderr, ")\n");
+> -               break;
+> -       case GREP_NODE_OR:
+> -               fprintf(stderr, "(or\n");
+> -               dump_grep_expression_1(x->u.binary.left, in+1);
+> -               dump_grep_expression_1(x->u.binary.right, in+1);
+> -               indent(in);
+> -               fprintf(stderr, ")\n");
+> -               break;
+> -       }
+> -}
+> -
+> -static void dump_grep_expression(struct grep_opt *opt)
+> -{
+> -       struct grep_expr *x = opt->pattern_expression;
+> -
+> -       if (opt->all_match)
+> -               fprintf(stderr, "[all-match]\n");
+> -       dump_grep_expression_1(x, 0);
+> -       fflush(NULL);
+> -}
+> -
+>  static struct grep_expr *grep_true_expr(void)
 >  {
-> +	struct strbuf namespaced = STRBUF_INIT;
-> +	struct object_id oid;
-> +	int flag;
-> +	int oid_is_null;
-> +
-> +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
-> +	if (!resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag))
-> +		return; /* bad ref */
-> +	oid_is_null = is_null_oid(&oid);
-> +	if (!oid_is_null ||
-> +	    (data->unborn && data->symrefs && (flag & REF_ISSYMREF)))
-> +		send_ref(namespaced.buf, oid_is_null ? NULL : &oid, flag, data);
-
-And this caller makes sure that send_ref()'s expectation holds.
-
-> +	strbuf_release(&namespaced);
-> +}
-> +
-> +static int ls_refs_config(const char *var, const char *value, void *cb_data)
-> +{
-> +	struct ls_refs_data *data = cb_data;
-> +
-> +	if (!strcmp("lsrefs.allowunborn", var))
-> +		data->allow_unborn = git_config_bool(var, value);
-> +
->  	/*
->  	 * We only serve fetches over v2 for now, so respect only "uploadpack"
->  	 * config. This may need to eventually be expanded to "receive", but we
-> @@ -91,7 +118,8 @@ int ls_refs(struct repository *r, struct strvec *keys,
->  
->  	memset(&data, 0, sizeof(data));
->  
-> -	git_config(ls_refs_config, NULL);
-> +	data.allow_unborn = 1;
-> +	git_config(ls_refs_config, &data);
-
-The above is a usual sequence of "an unspecified allow-unborn
-defaults to true, but the configuration can turn it off".  OK
->  
->  	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
->  		const char *arg = request->line;
-> @@ -103,14 +131,31 @@ int ls_refs(struct repository *r, struct strvec *keys,
->  			data.symrefs = 1;
->  		else if (skip_prefix(arg, "ref-prefix ", &out))
->  			strvec_push(&data.prefixes, out);
-> +		else if (data.allow_unborn && !strcmp("unborn", arg))
-> +			data.unborn = 1;
-
-I think the use of &&-cascade is iffy here.  Even when we are *not*
-accepting request for unborn, we should still parse it as such.
-This does not matter in today's code, but it is a basic courtesy for
-future developers who may add more "else if" after it.
-
-IOW
-
-		else if (!strcmp("unborn", arg)) {
-			if (!data.allow_unborn)
-				; /* we are not accepting the request */
-			else
-				data.unborn = 1;
-		}
-
-I wrote the above in longhand only for documentation purposes; in
-practice, 
-
-		else if (!strcmp("unborn", arg))
-                	data.unborn = data.allow_unborn;
-
-may suffice.
-
->  	}
->  
->  	if (request->status != PACKET_READ_FLUSH)
->  		die(_("expected flush after ls-refs arguments"));
->  
-> -	head_ref_namespaced(send_ref, &data);
-> +	send_possibly_unborn_head(&data);
->  	for_each_namespaced_ref(send_ref, &data);
-
-And here is another caller of send_ref().  Are we sure that
-send_ref()'s expectation is satisfied by this caller when the
-iteration encounters a broken ref (e.g. refs/heads/broken not a
-symref but names an object that does not exist and get_sha1()
-yielding 0{40}), or a dangling symref (e.g. refs/remotes/origin/HEAD
-pointing at something that does not exist)?
-
->  	packet_flush(1);
->  	strvec_clear(&data.prefixes);
->  	return 0;
+>         struct grep_expr *z = xcalloc(1, sizeof(*z));
+> @@ -973,7 +883,7 @@ static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y
+>         return z;
 >  }
-> +
-> +int ls_refs_advertise(struct repository *r, struct strbuf *value)
-> +{
-> +	if (value) {
-> +		int allow_unborn_value;
-> +
-> +		if (repo_config_get_bool(the_repository,
-> +					 "lsrefs.allowunborn",
-> +					 &allow_unborn_value) ||
-> +		    allow_unborn_value)
-> +			strbuf_addstr(value, "unborn");
-> +	}
-
-This reads "when not explicitly disabled, stuff "unborn" in there".
-
-It feels somewhat brittle that we have to read the same variable and
-apply the same "default to true" logic in two places and have to
-keep them in sync.  Is this because the decision to advertize or not
-has to be made way before the code that is specific to the
-implementation of ls-refs is run?
-
-If ls_refs_advertise() is always called first before ls_refs(), I
-wonder if it makes sense to reuse what we found out about the
-configured (or left unconfigured) state here and use it when
-ls_refs() gets called?  I know that the way serve.c infrastructure
-calls "do we advertise?" helper from each protocol-element handler
-is too narrow and does not allow us to pass such a necessary piece
-of information but I view it as a misdesign that can be corrected
-(and until that happens, we could use file-local static limited to
-ls-refs.c).
-
-> +	return 1;
-> +}
-> diff --git a/ls-refs.h b/ls-refs.h
-> index 7b33a7c6b8..a99e4be0bd 100644
-> --- a/ls-refs.h
-> +++ b/ls-refs.h
-> @@ -6,5 +6,6 @@ struct strvec;
->  struct packet_reader;
->  int ls_refs(struct repository *r, struct strvec *keys,
->  	    struct packet_reader *request);
-> +int ls_refs_advertise(struct repository *r, struct strbuf *value);
 >  
->  #endif /* LS_REFS_H */
-> diff --git a/serve.c b/serve.c
-> index eec2fe6f29..ac20c72763 100644
-> --- a/serve.c
-> +++ b/serve.c
-> @@ -73,7 +73,7 @@ struct protocol_capability {
+> -static void compile_grep_patterns_real(struct grep_opt *opt)
+> +void compile_grep_patterns(struct grep_opt *opt)
+>  {
+>         struct grep_pat *p;
+>         struct grep_expr *header_expr = prep_header_patterns(opt);
+> @@ -993,7 +903,7 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
 >  
->  static struct protocol_capability capabilities[] = {
->  	{ "agent", agent_advertise, NULL },
-> -	{ "ls-refs", always_advertise, ls_refs },
-> +	{ "ls-refs", ls_refs_advertise, ls_refs },
->  	{ "fetch", upload_pack_advertise, upload_pack_v2 },
->  	{ "server-option", always_advertise, NULL },
->  	{ "object-format", object_format_advertise, NULL },
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index a1f5fdc9fd..df29504161 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -12,7 +12,7 @@ test_expect_success 'test capability advertisement' '
->  	cat >expect <<-EOF &&
->  	version 2
->  	agent=git/$(git version | cut -d" " -f3)
-> -	ls-refs
-> +	ls-refs=unborn
->  	fetch=shallow
->  	server-option
->  	object-format=$(test_oid algo)
+>         if (opt->all_match || header_expr)
+>                 opt->extended = 1;
+> -       else if (!opt->extended && !opt->debug)
+> +       else if (!opt->extended)
+>                 return;
+>  
+>         p = opt->pattern_list;
+> @@ -1016,13 +926,6 @@ static void compile_grep_patterns_real(struct grep_opt *opt)
+>         opt->all_match = 1;
+>  }
+>  
+> -void compile_grep_patterns(struct grep_opt *opt)
+> -{
+> -       compile_grep_patterns_real(opt);
+> -       if (opt->debug)
+> -               dump_grep_expression(opt);
+> -}
+> -
+>  static void free_pattern_expr(struct grep_expr *x)
+>  {
+>         switch (x->node) {
+> diff --git a/grep.h b/grep.h
+> index b5c4e223a8f..5248c6ef7ea 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -136,7 +136,6 @@ struct grep_opt {
+>         int word_regexp;
+>         int fixed;
+>         int all_match;
+> -       int debug;
+>  #define GREP_BINARY_DEFAULT    0
+>  #define GREP_BINARY_NOMATCH    1
+>  #define GREP_BINARY_TEXT       2
+> diff --git a/revision.c b/revision.c
+> index 1bb590ece78..657e5502532 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2489,8 +2489,6 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>         } else if ((argcount = parse_long_opt("grep", argv, &optarg))) {
+>                 add_message_grep(revs, optarg);
+>                 return argcount;
+> -       } else if (!strcmp(arg, "--grep-debug")) {
+> -               revs->grep_filter.debug = 1;
+>         } else if (!strcmp(arg, "--basic-regexp")) {
+>                 revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_BRE;
+>         } else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+> -- 
+> 2.29.2.222.g5d2a92d10f8
+>
