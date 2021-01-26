@@ -2,161 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C917C433DB
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 06:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23EBDC433DB
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 11:53:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 686272075A
-	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 06:26:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3E2F2311B
+	for <git@archiver.kernel.org>; Tue, 26 Jan 2021 11:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728684AbhAZGZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 01:25:57 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60238 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731596AbhAZGS3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 01:18:29 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 694F510F441;
-        Tue, 26 Jan 2021 01:17:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=OKw2q+EtUXwU
-        YrFpWt5zkPQ5S4Q=; b=SnRlzpcV6KSbPyJDG2BPJOHgwx7HFfNBG2XLJC4keR85
-        XYJBPNYWM5awRovXgDZr4yzZKDHRPwZKB3GCnqCg5BkNjYnM42TIl6AjRx/0Fxls
-        nLNoDrBa1LhLwCEy7X9vZc5PsmEz6/LAZ1Yy2s2nJVolPqZlmw2WEYJvkzsaN1Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Q8FnPW
-        Mwg0CtYJbiKLLDTpEIBm0BLmGFPdX3UHx1bAM2upEmrTzGCdZCNIkfCnSQE4SsFZ
-        e42zpNKVEOEsrRIAvtTNm0biMj0d41FpGIkwqVV0ObMF9dtYL34R5eK5uXVUDKbw
-        z4KtVoqvsUTFLWNT24H8395dfTUlH8Z0W6EeY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5610310F440;
-        Tue, 26 Jan 2021 01:17:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DF6010F43F;
-        Tue, 26 Jan 2021 01:17:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?6Zi/5b63?= =?utf-8?B?54OI?= <adlternative@gmail.com>
-Subject: Re: [PATCH] strbuf.c: optimize program logic
-References: <pull.846.git.1611637582625.gitgitgadget@gmail.com>
-Date:   Mon, 25 Jan 2021 22:17:41 -0800
-In-Reply-To: <pull.846.git.1611637582625.gitgitgadget@gmail.com>
- (=?utf-8?B?IumYv+W+t+eDiA==?= via
-        GitGitGadget"'s message of "Tue, 26 Jan 2021 05:06:22 +0000")
-Message-ID: <xmqqy2gg2pdm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S2405258AbhAZLxG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 06:53:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405338AbhAZLja (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 06:39:30 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AC07C061756
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 03:38:50 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id t43so5491998uad.7
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 03:38:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=g5R0EZnmei99dtRZ+sS8tyVozpphal74Y/h/0mvxcZs=;
+        b=tf1CWo7F+unEQqN7i+p0ewWSlWQ7cN7l6WwU4WlKH14POscsopEQyIPn2wEPEzlDX7
+         ws7ys9w1nPCGFzOPD2pIN+30aEXBxhej1tfUk7LbKeMtuM/+IHv10KGT2w+UzA03tC2k
+         Ll0g/BFkoTaqaC90JgpzbnivjRAVXFOPcMsqcv4PZKEyLXDr4a+IKuj6SUN5RoZbiiWr
+         AeK46hHr10cCg5jy8tDuCzUbOQwixX4bwSN33pENXqHKSNaSuvjowAfHEqZEQy6mu8vE
+         Pgu7guPtIrOa8FvGQdMWKA1nRofl7nSYWU7tC1L9Fv/ozHaKSZ4fanba/9HGqFZsHgRt
+         uNPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=g5R0EZnmei99dtRZ+sS8tyVozpphal74Y/h/0mvxcZs=;
+        b=f0sKkcCgBoDNOGw/orGMPJZzFT2i8eK0mcZ1Xl6oce8t2UYCg/9pTabgfMSj2lr6ZL
+         frLQXYNOlP37/4Skx82mlrfADdWOS/hYUP4mCLK+PCf2K1v3DA5efdlyFmgEeB/sRRpS
+         Y36yannSRPoDdG4lq3geH8D0xV2mRxos6snVcxarMHwgCqs6tQbd15kCamcFh3Y0XWG4
+         uoLYQJAMepoT6R+hG7NzgJBdhM0wjv7RJJ2ybJXFCxDkkYfQY+tM/o9EVEKQxeovKxaj
+         LCOlK0YtVIvblVh+FJpcgybSYsplUaytVdx7rYEGKfENmwvnDvgCBMtRkXsN4PdjpR9s
+         /ItQ==
+X-Gm-Message-State: AOAM530ohi9yOZd4sN6T79HOeO9jIi/SHAqdx4Cyi3dIGGNkDxfzyFuS
+        12PZAPu0aHZ10EyUJ6Ri7k5XkMstYUqdtw2Tb335ng==
+X-Google-Smtp-Source: ABdhPJwswZIKoGaHbiuUkQNSE9eKLrsbOjbpgQhMMu3IDIb1cvtgsYlVLK4PgJXVuyM4YCo5sKEw0G4xAOLyvHOefeY=
+X-Received: by 2002:ab0:36af:: with SMTP id v15mr3593860uat.85.1611661129241;
+ Tue, 26 Jan 2021 03:38:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 335A8598-5F9E-11EB-8CB5-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <pull.951.git.git.1611589125365.gitgitgadget@gmail.com> <xmqq35yo459k.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq35yo459k.fsf@gitster.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Tue, 26 Jan 2021 12:38:38 +0100
+Message-ID: <CAFQ2z_PCh2RfWALhAUXm01Xq0o+ibuEGJ2p9sCtvTASQ0FLUag@mail.gmail.com>
+Subject: Re: [PATCH] doc/reftable: document how to handle windows
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"=E9=98=BF=E5=BE=B7=E7=83=88 via GitGitGadget" <gitgitgadget@gmail.com> w=
-rites:
-
-> From: ZheNing Hu <adlternative@gmail.com>
+On Tue, Jan 26, 2021 at 6:49 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> the usage in strbuf.h tell us"Alloc is somehow a
-> "private" member that should not be messed with.
-> use `strbuf_avail()`instead."
-
-When we use the word "private", it generally means it is private to
-the implementation of the API.  IOW, it is usually fine for the
-implementation of the API (i.e. for strbuf API, what you see in
-strbuf.c) to use private members.
-
-In any case, these changes are _not_ optimizations. =20
-
-Replacing (alloc - len - 1) with strbuf_avail() is at best an
-equivalent rewrite (which is a good thing from readability's point
-of view, but not an optimization).  We know sb->alloc during the
-loop is never 0, but the compiler may miss the fact, so the inlined
-implementation of _avail, i.e.
-
-	static inline size_t strbuf_avail(const struct strbuf *sb)
-	{
-	        return sb->alloc ? sb->alloc - sb->len - 1 : 0;
-        }
-
-may not incur call overhead, but may be pessimizing the executed
-code.
-
-If you compare the code in the loop in the second hunk below with
-what _setlen() does, I think you'll see the overhead of _setlen()
-relative to the original code is even higher, so it may also be
-pessimizing, not optimizing.
-
-So, overall, I am not all that enthused to see this patch.
-
-
-One thing I noticed is that, whether open coded like sb->len +=3D got
-or made into parameter to strbuf_setlen(sb, sb->len + got), we are
-not careful about sb->len growing too large and overflowing with the
-addition.  That may potentially be an interesting thing to look
-into, but at the same time, unlike the usual "compute the number of
-bytes we need to allocate and then call xmalloc()" pattern, where we
-try to be careful in the "compute" step by using st_add() macros,
-this code actually keep growing the buffer, so by the time the size_t
-overflows and wraps around, we'd certainly have exhausted the memory
-already, so it won't be an issue.
-
-But we may want to audit existing code that is not careful when
-preparing the second parameter to strbuf_setlen().  We just
-analyzed, if we were to accept this patch, that "sb->len + got" that
-appear as the second parameter to new call of strbuf_setlen() looks
-bad but would not matter in practice, but we may not be so lucky in
-other places.
-
-Thanks for a food for thought.
-
-> diff --git a/strbuf.c b/strbuf.c
-> index e3397cc4c72..76f560a28d0 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -517,7 +517,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size=
-_t hint)
-> =20
->  	strbuf_grow(sb, hint ? hint : 8192);
->  	for (;;) {
-> -		ssize_t want =3D sb->alloc - sb->len - 1;
-> +		ssize_t want =3D strbuf_avail(sb);
->  		ssize_t got =3D read_in_full(fd, sb->buf + sb->len, want);
-> =20
->  		if (got < 0) {
-> @@ -527,7 +527,7 @@ ssize_t strbuf_read(struct strbuf *sb, int fd, size=
-_t hint)
->  				strbuf_setlen(sb, oldlen);
->  			return -1;
->  		}
-> -		sb->len +=3D got;
-> +		strbuf_setlen(sb, sb->len + got);
->  		if (got < want)
->  			break;
->  		strbuf_grow(sb, 8192);
-> @@ -543,7 +543,7 @@ ssize_t strbuf_read_once(struct strbuf *sb, int fd,=
- size_t hint)
->  	ssize_t cnt;
-> =20
->  	strbuf_grow(sb, hint ? hint : 8192);
-> -	cnt =3D xread(fd, sb->buf + sb->len, sb->alloc - sb->len - 1);
-> +	cnt =3D xread(fd, sb->buf + sb->len, strbuf_avail(sb));
->  	if (cnt > 0)
->  		strbuf_setlen(sb, sb->len + cnt);
->  	else if (oldalloc =3D=3D 0)
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
+> >  $ cat .git/reftable/tables.list
+> > -00000001-00000001.log
+> > -00000002-00000002.ref
+> > -00000003-00000003.ref
+> > +00000001-00000001-RANDOM1.log
+> > +00000002-00000002-RANDOM2.ref
+> > +00000003-00000003-RANDOM3.ref
+> >  ....
+> > @@ -940,7 +944,7 @@ new reftable and atomically appending it to the sta=
+ck:
+> >  3.  Select `update_index` to be most recent file's
+> >  `max_update_index + 1`.
+> >  4.  Prepare temp reftable `tmp_XXXXXX`, including log entries.
+> > -5.  Rename `tmp_XXXXXX` to `${update_index}-${update_index}.ref`.
+> > +5.  Rename `tmp_XXXXXX` to `${update_index}-${update_index}-${random}.=
+ref`.
+> >  6.  Copy `tables.list` to `tables.list.lock`, appending file from (5).
+> >  7.  Rename `tables.list.lock` to `tables.list`.
+>
+> Is this because we have been assuming that in step 5. we can
+> "overwrite" (i.e. take over the name, implicitly unlinking the
+> existing one) the existing 0000001-00000001.ref with the newly
+> prepared one, which is not doable on Windows?
+
+No, the protocol for adding a table to the end of the stack is
+impervious to problems on Windows, as everything happens under lock,
+so there is no possibility of collisions.
+
+> We must prepare for two "randoms" colliding and retrying the
+> renaming step anyway, so would it make more sense to instead
+> use a non-random suffix (i.e. try "-0.ref" first, and when it
+> fails, readdir for 0000001-00000001-*.ref to find the latest
+> suffix and increment it)?
+
+This is a lot of complexity, and both transactions and compactions can
+always fail because they fail to get the lock, or because the data to
+be written is out of date. So callers need to be prepared for a retry
+anyway.
+
+> > @@ -993,7 +997,7 @@ prevents other processes from trying to compact the=
+se files.
+> >  should always be the case, assuming that other processes are adhering =
+to
+> >  the locking protocol.
+> >  7.  Rename `${min_update_index}-${max_update_index}_XXXXXX` to
+> > -`${min_update_index}-${max_update_index}.ref`.
+> > +`${min_update_index}-${max_update_index}-${random}.ref`.
+> >  8.  Write the new stack to `tables.list.lock`, replacing `B` and `C`
+> >  with the file from (4).
+>
+> Likewise.
+
+This case is different. Consider the following situation
+
+1-1.ref:
+  main=3Dabc123 @ timestamp 1
+  master=3Dabc123 @ timestamp 1
+2-2.ref:  bla=3D456def @ timestamp 2
+3-3.ref:
+  bla delete @ timestamp 3
+  master delete @timestamp 3
+
+The result of compacting this together would be a table containing
+
+  main =3D abc123 @ timestamp 1
+
+but in the previous naming convention, we'd name the resulting table
+"1-1.ref", which conflicts with the table in our starting situation.
+
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
