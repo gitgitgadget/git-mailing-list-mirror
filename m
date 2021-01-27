@@ -2,138 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E13C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D53F3C433DB
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 06:15:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EB982070A
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9020620715
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 06:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbhA0Fmy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 00:42:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59598 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239477AbhA0EoT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 23:44:19 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B03E9C0613ED
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 20:43:38 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id g69so846146oib.12
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 20:43:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ur3JRyXsVKUsWrRWVxzxSteB7mAQk+mwhVvdIT5ygHM=;
-        b=hGNYiiDLHQDxikEMQ0lBPzQFo+ofAwVRhgKMuUcCgCLbWHkTAXfbo+UlNp5jMvm8Su
-         nOsY5bqoDEadqvv9hBgw881Z/5/OOQHhiiOt8rZIejkepxTr5fSEXjea9PhmxcAWfeKn
-         KDstB1dyple5NNgiVv8eI6sQ25WVSrMPc9y5fg3DUYYRNUtIDpCc3iEiBKboTmKlFH8h
-         wQu3JkWxFC1bc1YJTFnEq/lKjHnEl9BON8Z2LkxAJZnVyS06ogv2WDODeOxzBtbItk6d
-         +vvO2+T7+ZcZMs7/qV8Q4KK+cbcAK5Qzg5guTaz7Wz52M+JPVSSaRG3Od7hB8HrysSj9
-         Pqsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ur3JRyXsVKUsWrRWVxzxSteB7mAQk+mwhVvdIT5ygHM=;
-        b=ClR7lepdLNe0zlsRTlqE5qsQknFkqKrKDqoPBKnd6AA103K9SwPFI64QjSnX4E/zbX
-         FItNzENqdI34KqNEfjoJWYPclnaG1cWXW8MQoUTvdf395cyb+WSYKgxIEKkfYiGx15GQ
-         0tVeDjl+7oltbDFlsGh241ZoWovdH1B7V9q+cxrHlnNnsu0mBz5rojwcDgR/fQ4/1nyL
-         bUsk0RQJuCx+kpwq0SLkoEtE7fdiZAddKObhm3pNP3ZnFx6aK6hSl+OXwkk2+bZkygDX
-         lIYaEsTp4LUROVrM9BdFsV8rCYtPvEoRbAzXbeI3HUvRVU3VaPt+i5bSZwO/c6BASirQ
-         rdMQ==
-X-Gm-Message-State: AOAM531pqX3BDKzsL4vcaor/drz/qTGFVTzZPvM+9p5PWaUou5+ESzw4
-        Br6mtdaXC5I04zBIYBRL9PRfKpzTdUWagF8rbe4=
-X-Google-Smtp-Source: ABdhPJw8ZvDSn4vLatWpEQL7A/DvS50L8dNI4o51GkpLoePSyFcQ+9SFLDUs2rMGLHzP05ONX/lMU7MfBll5zjkESaI=
-X-Received: by 2002:a54:4790:: with SMTP id o16mr1981055oic.39.1611722618018;
- Tue, 26 Jan 2021 20:43:38 -0800 (PST)
+        id S233163AbhA0GPY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 01:15:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57128 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231816AbhA0GH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 01:07:56 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3E5EAFF9B;
+        Wed, 27 Jan 2021 01:07:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Hjxz4dYlwPgRc15AsJS9DJHc5OI=; b=lKv2zC
+        wUhiDN4AoMg02peM9EcpygcvzAnyOXyhvRAWr3V5bX2/+HIKIy27tk3oobQlnmsA
+        0MyunJYp1J444pWfwAb0lCClEHJBYSjvJAuUcr+YHGYKfaR0AQyuF2Csew87V/KR
+        tBOP19WS4cXZOBdwDJ1UWDygauwpudvlXbLx4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VSHkdJclW+LzbS83zCbgBUX4/hFYpwi6
+        Almr5Ex13MYbIgC7t1FDirQOtscK4/8V2mLaIeBwjnNIVrvt6w9lm27L/6lZsO/y
+        TKhU8BZi3M8hPBv/5KHnN3qJWcGmcKwlv5tofRcI489XmDfKavw+bG20Q8Cnz9yf
+        Nvn9ibSQloU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 943E4AFF9A;
+        Wed, 27 Jan 2021 01:07:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54277AFF99;
+        Wed, 27 Jan 2021 01:07:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] Makefile: micro-optimize light non-test builds
+References: <20210126160708.20903-1-avarab@gmail.com>
+        <YBCGtd9if0qtuQxx@coredump.intra.peff.net>
+        <xmqq5z3jyxa7.fsf@gitster.c.googlers.com>
+        <YBDtO82x5sBAs/6L@coredump.intra.peff.net>
+Date:   Tue, 26 Jan 2021 22:07:07 -0800
+In-Reply-To: <YBDtO82x5sBAs/6L@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 26 Jan 2021 23:34:03 -0500")
+Message-ID: <xmqq1re6zzec.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <175c3c62543f89144b03b3bdff750ad29d17ba03.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <175c3c62543f89144b03b3bdff750ad29d17ba03.1611596534.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Jan 2021 20:43:26 -0800
-Message-ID: <CABPp-BE-eDAR8E538JD-zy3RP4MEc-pnrQwQOOWxsYD7D4BbtQ@mail.gmail.com>
-Subject: Re: [PATCH 07/27] unpack-trees: ensure full index
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: E323C0F8-6065-11EB-919C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The next change will translate full indexes into sparse indexes at write
-> time. The existing logic provides a way for every sparse index to be
-> expanded to a full index at read time. However, there are cases where an
-> index is written and then continues to be used in-memory to perform
-> further updates.
->
-> unpack_trees() is frequently called after such a write. In particular,
-> commands like 'git reset' do this double-update of the index.
->
-> Ensure that we have a full index when entering unpack_trees(), but only
-> when command_requires_full_index is true. This is always true at the
-> moment, but we will later relax that after unpack_trees() is updated to
-> handle sparse directory entries.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  unpack-trees.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f5f668f532d..4dd99219073 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1567,6 +1567,7 @@ static int verify_absent(const struct cache_entry *,
->   */
->  int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
->  {
-> +       struct repository *repo = the_repository;
->         int i, ret;
->         static struct cache_entry *dfc;
->         struct pattern_list pl;
-> @@ -1578,6 +1579,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->         trace_performance_enter();
->         trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
->
-> +       prepare_repo_settings(repo);
-> +       if (repo->settings.command_requires_full_index) {
-> +               ensure_full_index(o->src_index);
-> +               ensure_full_index(o->dst_index);
+Jeff King <peff@peff.net> writes:
 
-I was worried about o->result as well, since there is a
-    memset(&o->result, 0, sizeof(o->result));
-followed by manually initializing the relevant fields of the
-index_state.  However, the relevant field here is your new
-sparse_index bit, and you want that to be 0, i.e. full.
+> On Tue, Jan 26, 2021 at 05:38:08PM -0800, Junio C Hamano wrote:
+>
+>> The steps 2/4 and 3/4 did look like a useful feature, but I wonder
+>> why we even need to introduce NO_TEST_TOOLS in the first place.
+>> Wouldn't it be more natural to arrange them to be built by making
+>> "test::" target depend on them?  IOW, why do we need to have "all::"
+>> (our default) target depend on them?
+>
+> Hmm. That is definitely more logical, and giving "make" more information
+> to make a good decision about what is needed. I do wonder if it would be
+> annoying in two cases, though:
+>
+>   - people trigger the tests in other ways besides "make test". For
+>     instance, "make && cd t && make" works, as does just
+>     "make && cd t && ./t1234". With a more clever Makefile, those would
+>     fail (or worse, run out-of-date versions of the helpers, producing
+>     confusing results).
+>
+>   - during refactoring, I often compile-test as I go (i.e., run "make"
+>     to see which callers still need changed, then fix them, repeat).
+>     If that didn't catch test helpers, then I'd think I was done and get
+>     bit later by "make test" trying to build more code. Not the end of
+>     the world, but a minor annoyance.
+>
+> So I think even though I'd argue that giving "make" that extra
+> dependency information is "more correct", we are fighting uphill against
+> existing behavior, as well as things that make doesn't know (like that I
+> expect to be ready to run tests as long as "make all" has finished).
 
-I also checked ensure_full_index() since it is often the case that
-o->src_index == o->dst_index, but it'll be safe to be called twice on
-the same index state -- at least as currently written.
+Hmph, true, but as "make test" at the top-level merely redirects to
+"make -C t", I imagined that the default target in the t/Makefile
+would depend on doing "make -C .. test-programs" before running
+tests.
 
-So, this patch seems good.
+The recursive dependencies end somewhere, though ;-)
 
-> +       }
-> +
->         if (!core_apply_sparse_checkout || !o->update)
->                 o->skip_sparse_checkout = 1;
->         if (!o->skip_sparse_checkout && !o->pl) {
-> --
-> gitgitgadget
+ 
