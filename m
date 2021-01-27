@@ -2,188 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81007C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC54C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 543162070A
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:06:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A190E20709
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232731AbhA0D5a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 22:57:30 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50844 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728774AbhAZWY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 17:24:57 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C01711679C;
-        Tue, 26 Jan 2021 17:24:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YpMsLE7PTJR6zOwxhzgjcgZrJ+0=; b=CdP3+o
-        8mhb29LxeOrzpE1ozLVdb5XgE3Xw+xCRryV8z6HQlJBas+uZe4ZO1LLXT0aKg1pv
-        OCTUtEN+4bpVm3p7ooYSWh9fAVUnUvG5eot2T0wWeoakMVesud5jV1KMwWs65FFc
-        Tm+jAjKmk92cfqxTGZ9CyJeJtESXW33kZhh28=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Bb58hpUrUcuB/88d7iHDZRoBVAmlvysM
-        TZKFwcskKZ+Q9fZPrSms+IjJ0vYRVDjFNh7RX8zoJlvqFkRwRSBjAGR+RZ8NZ/8U
-        OGmqz+1R9xCPPDezV+dDBQY5VJN3hMcGun6o7ZLBLMC/wIwURp8HjjlC6+1cBlUF
-        iUH8QmTc9Hc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 34C7511679B;
-        Tue, 26 Jan 2021 17:24:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7B6C6116798;
-        Tue, 26 Jan 2021 17:24:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] clone: respect remote unborn HEAD
-References: <20201208013121.677494-1-jonathantanmy@google.com>
-        <cover.1611686656.git.jonathantanmy@google.com>
-        <922e8c229c359c15f1265876e6def87d7a18b763.1611686656.git.jonathantanmy@google.com>
-Date:   Tue, 26 Jan 2021 14:24:07 -0800
-In-Reply-To: <922e8c229c359c15f1265876e6def87d7a18b763.1611686656.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 26 Jan 2021 10:55:57 -0800")
-Message-ID: <xmqqzh0vz69k.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231473AbhA0FmU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 00:42:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235992AbhA0D0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 22:26:31 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891DBC061573
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:25:50 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id i20so389004otl.7
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:25:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VRhOln7x4DjOM4jRKYDeTPSWlvt9inbSDmEvKvM6DZY=;
+        b=Ti8NZz/4N56xtYNHxJkc4q+NBYrbShSLfsK4AudehLIhd5S5KqUVvkzo7EP13MvAVs
+         QgHMxeuEsuJ+2wbqEyRGdkFFl4R4S0qeJ0jtK3fihhYhHhkLjsOIZ8CHhpjYDNDNX4zs
+         f+BF56UMwTYMWOsOtzxdA1FDa2L5Rm2l0uVYcY96B0nvTohFCeZpirXMbOA7bAov6n78
+         6rvvaN/V9uyDAsOmDx71/aH56U2aa9/kNHIUUQM+ypjPRTt/Ipus1sQmzc/ZiUWaxF/K
+         7Kpbu9mNtmNxVTKUWO7oJV6u6OVcLf1zvtHOhS2R0gsiNSuB1KBI4ZuieP/man0JasAW
+         Pgsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VRhOln7x4DjOM4jRKYDeTPSWlvt9inbSDmEvKvM6DZY=;
+        b=tdrVDaBnTiekdJQPHhRs0JJgY1XFzYw/j7zaDYEwKYLeENZALHBjW1dh3yKNkZb3z8
+         37CLIxJIZ107WwDs60MX03CJaEhgqnFWVZGzEfMXZNxPLwpoIS09uTgrwjd0KVetFNV8
+         f2rwoyWC8OYBrltTwDaudGpIXr3Pgk9rLNCSdHGR9d4kSYzD4W9zNaeeX9/B6gDndZqn
+         a3+dNbIHKjdEAgACWcw1r8Km6xOACmeWVaLLgOB+CKjP/f6DdPzKX448ZK0xxDRW3iOB
+         C9qUnPUDpnbgElSmpppAVN4ZmPEkDA1jh0rmjCDQ1nXJdNSHKNxpLPQt4/IVF/M69xPw
+         FHPA==
+X-Gm-Message-State: AOAM530W1aaa3hd+GRKYf36xi2G9mvADrov3/+gGHZD5NtcP4UpNZ0HJ
+        +2fhy4DeLHJMIy2WRZ7pNSYY8hr8MiUu0y2X4do=
+X-Google-Smtp-Source: ABdhPJxcE475bc6FIH7OGtVtVV3VT+UOQzXR8nwx5BfRyT6nguJS2JGAv1sC8wgCFOuzlCISYAqaoX9mBBdEla6GLJs=
+X-Received: by 2002:a9d:506:: with SMTP id 6mr6053191otw.162.1611717949901;
+ Tue, 26 Jan 2021 19:25:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 35A83D36-6025-11EB-8E3B-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <e3b169c4fec8db34634c77d19a03fc46a3c7690e.1611596534.git.gitgitgadget@gmail.com>
+In-Reply-To: <e3b169c4fec8db34634c77d19a03fc46a3c7690e.1611596534.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 26 Jan 2021 19:25:38 -0800
+Message-ID: <CABPp-BH7hQ3cNnUcjuBP0a7R8EW9Oc29+MZ6Kfzxxk5LA0z2yg@mail.gmail.com>
+Subject: Re: [PATCH 04/27] test-read-cache: print cache entries with --table
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> This table is helpful for discovering data in the index to ensure it is
+> being written correctly, especially as we build and test the
+> sparse-index.
+>
+> To make the option parsing slightly more robust, wrap the string
+> comparisons in a loop adapted from test-dir-iterator.c.
+>
+> Care must be taken with the final check for the 'cnt' variable. We
+> continue the expectation that the numerical value is the final argument.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/helper/test-read-cache.c | 49 ++++++++++++++++++++++++++++++++++----
+>  1 file changed, 44 insertions(+), 5 deletions(-)
+>
+> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+> index 244977a29bd..cd7d106a675 100644
+> --- a/t/helper/test-read-cache.c
+> +++ b/t/helper/test-read-cache.c
+> @@ -2,18 +2,55 @@
+>  #include "cache.h"
+>  #include "config.h"
+>
+> +static void print_cache_entry(struct cache_entry *ce)
+> +{
+> +       /* stat info */
+> +       printf("%08x %08x %08x %08x %08x %08x ",
+> +              ce->ce_stat_data.sd_ctime.sec,
+> +              ce->ce_stat_data.sd_ctime.nsec,
+> +              ce->ce_stat_data.sd_mtime.sec,
+> +              ce->ce_stat_data.sd_mtime.nsec,
+> +              ce->ce_stat_data.sd_dev,
+> +              ce->ce_stat_data.sd_ino);
 
->  init.defaultBranch::
->  	Allows overriding the default branch name e.g. when initializing
-> -	a new repository or when cloning an empty repository.
-> +	a new repository.
+Printing sec & nsec in hexidecimal?  Why?
 
-Looking good.
+Also, if they'll be displayed in hex, do you want to format them as
+0x%08x, similar to what you do with binary below?
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 211d4f54b0..77fdc61f4d 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -1330,10 +1330,21 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  		remote_head = NULL;
->  		option_no_checkout = 1;
->  		if (!option_bare) {
-> -			const char *branch = git_default_branch_name();
-> -			char *ref = xstrfmt("refs/heads/%s", branch);
-> +			const char *branch;
-> +			char *ref;
 > +
-> +			if (transport_ls_refs_options.unborn_head_target &&
-> +			    skip_prefix(transport_ls_refs_options.unborn_head_target,
-> +					"refs/heads/", &branch)) {
-> +				ref = transport_ls_refs_options.unborn_head_target;
-> +				transport_ls_refs_options.unborn_head_target = NULL;
-> +			} else {
-> +				branch = git_default_branch_name();
-> +				ref = xstrfmt("refs/heads/%s", branch);
-> +			}
->  
->  			install_branch_config(0, branch, remote_name, ref);
-> +			create_symref("HEAD", ref, "");
->  			free(ref);
+> +       /* mode in binary */
 
-OK, we used to say "point our HEAD always to the local default
-name", and the code is still there in the else clause.  But when the
-transport found what name the other side uses, we use that name
-instead.
+This comment feels misleading; I think this is the "S_IFMT portion of
+mode in binary" not "mode in binary".
 
-I presume that clearing transport_ls_ref_options.unborn_head_target
-is to take ownership of this piece of memory ourselves?
+> +       printf("0b%d%d%d%d ",
+> +               (ce->ce_mode >> 15) & 1,
+> +               (ce->ce_mode >> 14) & 1,
+> +               (ce->ce_mode >> 13) & 1,
+> +               (ce->ce_mode >> 12) & 1);
 
-We didn't call create_symref() in the original code, but now we do.
-Is this a valid bugfix even if we did not have this "learn remote
-symref even for unborn HEAD" feature?  Or is the original codepath
-now somehow got broken with an extra create_symref() that we used
-not to do, but now we do?
+Why binary?  Also, since you defined a special magic constant of
+01000755 which utilizes bit 18; how come you aren't including any bits
+higher than 15?
 
-> @@ -1385,5 +1396,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	junk_mode = JUNK_LEAVE_ALL;
->  
->  	strvec_clear(&transport_ls_refs_options.ref_prefixes);
-> +	free(transport_ls_refs_options.unborn_head_target);
->  	return err;
->  }
-> diff --git a/connect.c b/connect.c
-> index 328c279250..879669df93 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -376,7 +376,8 @@ struct ref **get_remote_heads(struct packet_reader *reader,
->  }
->  
->  /* Returns 1 when a valid ref has been added to `list`, 0 otherwise */
-> -static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
-> +static int process_ref_v2(struct packet_reader *reader, struct ref ***list,
-> +			  char **unborn_head_target)
+> +       /* output permissions? */
+> +       printf("%04o ", ce->ce_mode & 01777);
+
+01777 instead of 07777 just because we don't have anything using the
+setuid or setgid bits?  But if it's based on non-use, then we don't
+use the sticky bit (01000) either, so this could be just 0777.
+
+Also, if you're using 0b for binary to distinguish and you're clearly
+using multiple bases in this code, perhaps use a print format of
+0o%04o (or 0o%03o if you only use a mask of 0777).
+
+> +       printf("%s ", oid_to_hex(&ce->oid));
+> +
+> +       printf("%s\n", ce->name);
+> +}
+> +
+> +static void print_cache(struct index_state *cache)
+> +{
+> +       int i;
+> +       for (i = 0; i < the_index.cache_nr; i++)
+> +               print_cache_entry(the_index.cache[i]);
+> +}
+> +
+>  int cmd__read_cache(int argc, const char **argv)
 >  {
->  	int ret = 1;
->  	int i = 0;
-> @@ -397,6 +398,25 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
->  		goto out;
->  	}
->  
-> +	if (!strcmp("unborn", line_sections.items[i].string)) {
-> +		i++;
-> +		if (unborn_head_target &&
-> +		    !strcmp("HEAD", line_sections.items[i++].string)) {
-> +			/*
-> +			 * Look for the symref target (if any). If found,
-> +			 * return it to the caller.
-> +			 */
-> +			for (; i < line_sections.nr; i++) {
-> +				const char *arg = line_sections.items[i].string;
-> +
-> +				if (skip_prefix(arg, "symref-target:", &arg)) {
-> +					*unborn_head_target = xstrdup(arg);
-> +					break;
-> +				}
-> +			}
-> +		}
-> +		goto out;
-> +	}
-
-We split the line and notice that the first token is "unborn"; if
-the caller is not interested in the unborn head, we just skip the
-rest, but otherwise, if it is about HEAD (i.e. we do not care if a
-dangling symref that is not HEAD is reported), we notice the target
-in unborn_head_target.
-
-OK.  We already saw how this is used in cmd_clone().
-
-> @@ -461,6 +481,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
->  	const char *hash_name;
->  	struct strvec *ref_prefixes = transport_options ?
->  		&transport_options->ref_prefixes : NULL;
-> +	char **unborn_head_target = transport_options ?
-> +		&transport_options->unborn_head_target : NULL;
-
-So any caller that passes transport_options will get the unborn head
-information for free?  The other callers are in fetch-pack.c and
-transport.c, which presumably are about fetching and not cloning.
-
-I recall discussions on filling a missing refs/remotes/X/HEAD when
-we fetch from X and learn where X points at.  Such an extension can
-be done on top of this mechanism to pass transport_options from the
-fetch codepath, I presume?
-
-
-Thanks.  I tried to follow the thought in the patches aloud, and it
-was mostly a pleasant read.
-
+>         int i, cnt = 1;
+>         const char *name = NULL;
+> +       int table = 0;
+>
+> -       if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
+> -               argc--;
+> -               argv++;
+> +       for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
+> +               if (skip_prefix(*argv, "--print-and-refresh=", &name))
+> +                       continue;
+> +               if (!strcmp(*argv, "--table")) {
+> +                       table = 1;
+> +               }
+>         }
+>
+> -       if (argc == 2)
+> -               cnt = strtol(argv[1], NULL, 0);
+> +       if (argc == 1)
+> +               cnt = strtol(argv[0], NULL, 0);
+>         setup_git_directory();
+>         git_config(git_default_config, NULL);
+>         for (i = 0; i < cnt; i++) {
+> @@ -30,6 +67,8 @@ int cmd__read_cache(int argc, const char **argv)
+>                                ce_uptodate(the_index.cache[pos]) ? "" : " not");
+>                         write_file(name, "%d\n", i);
+>                 }
+> +               if (table)
+> +                       print_cache(&the_index);
+>                 discard_cache();
+>         }
+>         return 0;
+> --
+> gitgitgadget
+>
