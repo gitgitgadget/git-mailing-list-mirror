@@ -2,123 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA614C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 06:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B00FC433DB
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 07:00:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C0A920724
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 06:50:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECE9920723
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 06:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231712AbhA0Gug (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 01:50:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38846 "EHLO
+        id S232507AbhA0G7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 01:59:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231714AbhA0DHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 22:07:49 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B6FC061574
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:07:07 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id n7so530366qkc.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:07:07 -0800 (PST)
+        with ESMTP id S317581AbhA0BFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 20:05:19 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5CF6C061573
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 17:04:28 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id kg20so325821ejc.4
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 17:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=iN7cbPuKZj6B9kfcGpoWqnUChgcLuBfa1Q6taHVLsnA=;
-        b=d9/m7S6i17lAKAuE/TPaocGxJ2PGgUn6KeedOWYZDz9N2MVSc0ZD0ZOQo0T72MCB/R
-         tFQEr2P9MfLhdc31/WSVMpwt+SqtuyFEO9zPeZBXJpseE8cQBmBCOrycb0LjRCvnJgwq
-         I2lmeux5+71Wat4KjKkTXvk6SBhDQJzxkknCW7iPvkPdq9Thzu+nuNx/wvbB1JjRKk4j
-         vQpp1YIp8/e0fsJujwJMg7l6c0aaxhqiexpVPNscNw1a+4ezf63Fpl/G8jfgGKscSiaM
-         bzPS6N5H5RmzVQPoC/R/anDfVgbbwZUnRf90FDGcl+rcrGotUuUOcgdQ7rVcJ6kut7xE
-         HpPQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=0pUL2RGNAxiz2rholqCa4joivMOrVK21vuRmOrS0o3s=;
+        b=XMPVZTp4aWIyoi2bP9QZWnXUPhCE6Wmw6PwBcfKBG3VtGzMiw0YCoH9D3zj47cXk7f
+         4AQjqW01SCHLIcNvxojYp67KSDkK6pUccsF0yGIIJ4RBuvO2oW1++va5GYPAF9nzvGYU
+         ePQjW3IHQ+LgEsSwvFhvEASGEAkB2EOYgqYP1xaC5JrmOoUimCsl83+YWE8F5xUje9wm
+         cEUkRU+MKt+mWinF+X6OwBcr0KzAJHUAzgG15nFyWJkPYVFnATN24wpusvUkXhTOPA8y
+         a54SWFk0klcoEisKhe/LFROa3ALFdUgsYYiZo7kmea7VG91OVmjpEX/oCLGFgMs49Qbe
+         zw8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=iN7cbPuKZj6B9kfcGpoWqnUChgcLuBfa1Q6taHVLsnA=;
-        b=CSo7pa7VhaIBoue4FmuD7j/cTHd23M3pLMa14/s58ECOdS1ZiJ4Lsi8dIuEMn21nRJ
-         N9TZeu2dOtpc+1Ecs/QnfxRT+LbfmzHggT6VEj5vcgNAsEJNV411/Lz/ayDF3SSLlOx2
-         TbV8gcfmFOt9xuz9hjq+cAGfngIN9Vl+r6EijnLk9QXm8hMtPgmyfX7RXwxq/xOVB+2O
-         xotceeViH6Q1XD3e8StvQUpX0KOJG57R3GTC38/ZxGdVbpIMslLc6w5M0JbnIJAu4VLb
-         BYIHynJYGWeq/HwnW0VfcIS+VB2y4aO/pUNRIongb7QIYwYdRho6u++tksrPBOh5P7bN
-         2GMg==
-X-Gm-Message-State: AOAM533YX1xhEzcEpcApeXxzejlrjM6zt35daEZc//vIAS5hRYIxsOOA
-        tuze/AIRjGFlBfF+Tg5olv2RnrW/YVmShw==
-X-Google-Smtp-Source: ABdhPJwOLiKAQU4uVJKBe+PuFF9dPxpWVZJ6uXsS2Ji1djjrA8R1XS8WlM3WoG4m5KEArTPApcSl+g==
-X-Received: by 2002:a37:90c5:: with SMTP id s188mr9184527qkd.128.1611716826387;
-        Tue, 26 Jan 2021 19:07:06 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:5cad:8534:72d4:8c70])
-        by smtp.gmail.com with ESMTPSA id t68sm391630qkd.35.2021.01.26.19.07.05
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=0pUL2RGNAxiz2rholqCa4joivMOrVK21vuRmOrS0o3s=;
+        b=csZUt3syNmth5jNJYIyxYaivvV+AltvfqevUDPYFtSn6+ZC2hSOtISePigppv4xfUP
+         BVXqClbloo//ZhhFGyNK2BF4FU9IPo5F6cAJULFPNTuDZotGLRxHl9TLH3hyhlhv86jo
+         RF3qlDOTl75wKrFR6Yns6FI8INb2UbX149a6iyMkZ/5UASef8J8qB5Xoq47UGDv/PkEJ
+         SQV1srOjyBxj14jDHOVZY22zHrXhzgM9d14rUy1OoZDkuGUSMjfBSmIZSyJwBki7MX1j
+         9VLWevI7p8wB6Q8Ovu+2jA3YXeTOf/M7Qd5rjMWnRmiQKLAR6NiYGojzTv/zE+35kiDc
+         p90g==
+X-Gm-Message-State: AOAM531UUpHA9Nq+lX2ejPWLmGJzNlvqEckdny6/9gV9Zxj7FlNyDO3R
+        VZGSOiPAsxacWndJHYkkNA8=
+X-Google-Smtp-Source: ABdhPJwdBSOLol9M633cx/+8Obf1mwgS+XT6P3hSo3dBnJ7kkyqt7AF6lEvsgs4ap9V3W3LY6o58vQ==
+X-Received: by 2002:a17:906:2c0e:: with SMTP id e14mr4922042ejh.299.1611709467327;
+        Tue, 26 Jan 2021 17:04:27 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id i6sm108507ejd.110.2021.01.26.17.04.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 19:07:05 -0800 (PST)
-Date:   Tue, 26 Jan 2021 22:06:56 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        l.s.r@web.de, szeder.dev@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 14/17] midx: use chunk-format read API
-Message-ID: <YBDY0Me2QMcUMD2e@nand.local>
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
- <cb145e0e32afed99b9bfa822c76f48bee18885ba.1611676886.git.gitgitgadget@gmail.com>
+        Tue, 26 Jan 2021 17:04:26 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jan 2021, #05; Mon, 25)
+References: <xmqq1re8wja2.fsf@gitster.c.googlers.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <xmqq1re8wja2.fsf@gitster.c.googlers.com>
+Date:   Wed, 27 Jan 2021 02:04:26 +0100
+Message-ID: <87mtwvp4v9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cb145e0e32afed99b9bfa822c76f48bee18885ba.1611676886.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2021 at 04:01:23PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+
+On Tue, Jan 26 2021, Junio C Hamano wrote:
+
+> * ab/grep-pcre-invalid-utf8 (2021-01-24) 2 commits
+>  - grep/pcre2: better support invalid UTF-8 haystacks
+>  - grep/pcre2 tests: don't rely on invalid UTF-8 data test
 >
-> Instead of parsing the table of contents directly, use the chunk-format
-> API methods read_table_of_contents() and pair_chunk(). In particular, we
-> can use the return value of pair_chunk() to generate an error when a
-> required chunk is missing.
+> * ab/retire-pcre1 (2021-01-23) 2 commits
+>  - Remove support for v1 of the PCRE library
+>  - config.mak.uname: remove redundant NO_LIBPCRE1_JIT flag
+
+I have a few follow-up patches this grep/pcre2 area to fix some
+longstanding bugs, but am holding them off because they'll conflict
+badly with both of these, and I thought maybe I shouldn't submit some
+giant "fix misc stuff related to xyz" topic again if I could help it :)
+
+So if you/reviewers are taking requests getting some eyes on these to
+get it down into next/master sooner than later would be great. 
+
+In particular the PCREv1 removal topic is rather trivially reviewable in
+the sense of whether we're removing the right code. But the real
+question is if anyone's still depending on PCREv1 badly enough to want
+to not have this, which we're more likely to see as it's merged down
+sooner than later in the cycle.
+
+> * ab/detox-gettext-tests (2021-01-21) 3 commits
+>  - tests: remove uses of GIT_TEST_GETTEXT_POISON=false
+>  - tests: remove support for GIT_TEST_GETTEXT_POISON
+>  - ci: remove GETTEXT_POISON jobs
 >
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  midx.c                      | 103 ++++++++++++++++++++----------------
->  t/t5319-multi-pack-index.sh |   6 +--
->  2 files changed, 60 insertions(+), 49 deletions(-)
->
-> diff --git a/midx.c b/midx.c
-> index 0bfd2d802b6..dd019c00795 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -54,6 +54,51 @@ static char *get_midx_filename(const char *object_dir)
->  	return xstrfmt("%s/pack/multi-pack-index", object_dir);
->  }
->
-> +static int midx_read_pack_names(const unsigned char *chunk_start,
-> +				size_t chunk_size, void *data)
-> +{
-> +	struct multi_pack_index *m = (struct multi_pack_index *)data;
-> +	m->chunk_pack_names = chunk_start;
-> +	return 0;
-> +}
+>  Get rid of "GETTEXT_POISON" support altogether, which may or may
+>  not be controversial.
 
-There are a lot of these callbacks that just assign some 'void **' to
-point at chunk_start.
+I just sent a reply to the one minor outstanding technical issue in the
+series, i.e. figuring out what to do about the GETTEXT_POISON ci job
+(drop or rename?).
 
-Maybe a good use of the "pair_chunk" name would be something like:
+But the main question is the "do we keep GETTEXT_POISON at all, and if
+so is anyone's interested in not doing this and doing Johannes's rot13
+proposal instead?".
 
-    int pair_chunk(struct chunkfile *cf, uint32_t id, const unsigned char **p);
-
-which does the same as what you wrote here. So instead of what you
-wrote, you could instead:
-
-    pair_chunk(cf, MIDX_CHUNKID_PACKNAMES, &m->chunk_pack_names);
-
-This would be in addition to the richer callback-style function which
-allows the caller greater flexibility (e.g., for the Bloom filter
-related readers in the commit-graph code).
-
-Thanks,
-Taylor
+As noted in the thread I honestly don't care much either way where we go
+with this, I'd just like to either drop the patch or get it off my plate
+sooner than later, so if you love/hate/meh the GETTEXT_POISON mode,
+chime in.
