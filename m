@@ -2,176 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1668C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 16:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79FFBC433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 16:41:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C54F64DA1
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 16:40:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3362B64D9E
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 16:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232048AbhA0QkB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 11:40:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44014 "EHLO
+        id S232655AbhA0QlU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 11:41:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236373AbhA0QiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 11:38:08 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4849C0613D6
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 08:37:28 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id 6so2586504wri.3
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 08:37:28 -0800 (PST)
+        with ESMTP id S231342AbhA0Qjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 11:39:47 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F33BBC061574
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 08:39:06 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id a77so2796630oii.4
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 08:39:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BMf0eGh6RQVhJNMs3kyLeEL57vg6b92BtnERf3iL3P0=;
-        b=TDRgQ5m3V3eSrM5aiGomQQ/To+a+2nxw1AxqHRy24DE9G8alkvUYDHOEsMhNSNC2RH
-         k080M0PkUalRKGKINs6jQ17Epka1lieGget65wr/T5YH3xZ9LCkI+ffo0BSHq4Kvxhtc
-         sBWtMw0/VRoCFZSF5uuv3p4m0jWe9AnO7vZlmRFvm/SgwvTxcFF1vr9NM+K1kNFrcSLn
-         UF7P2QWEMNdZ4CSgd2Un5fWLCa99ptmfxb9e0YW/+E+lT5YtE/jcdRrcVrk7wbO7zSAd
-         zX2fhhcGM3e+6qsKgxdYqBl3istD7GnMCdNkb9Rw3lxoPQOXXBK/lCBTt1F2CrKHTgCe
-         ygWA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l3z7Rj49//euw5IGs/MrAjuGuqzooWPa/tnpqUFjlG0=;
+        b=BuX7j7csuTP2ShD5C0Lcruy9aR238y5jTVX74HAXBpySnTauFKPx80XLIH3Se689iP
+         bk44uqc0GcAqCZqNV8CXP/ERJ468uPM8/k4eUcyXKzyrEEkO21Uom9FhytRilJ1gsuNB
+         xKwry+AJX06tQH3ElNrt9T1pp0/krC1J/lCsGhS+XKlogAgxCpnrVCexKbAcc0LfaPYv
+         SIDV2ElHNT1co+vTQtvsid4/fG30f28k7Jm6zY7V5aJGqA6p9sbnrrvk2AjqRDktgLf9
+         hHysQuq2RW5tPhh6sxGTl3mWda3ejKrJETBcu1fF7HKBhKYAYkKZsh8pk/R6N9U9+BeE
+         oCkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BMf0eGh6RQVhJNMs3kyLeEL57vg6b92BtnERf3iL3P0=;
-        b=mOc8XGcWrykYsy1DBpKeVf45K3kGH8JhG9U3CrOD09uNlJyxi2GgB9/6cK6EvEW9Qu
-         jn/y4SkLz477KeY+Yy3QnLd0ndtgz8roVQaQHY56jRvtlCgTienu89sjQir/L9HZZNQf
-         BESxpqPvTmWM0cFXU1t1/J9larDEZ/uRViBneEzQeqh6tFDD18QzNkBBQN/qicSvRKL0
-         Kkt+pyiaEX1NXvLuFnYE34NKo83bXAvyDqc3mnIffiF5juoTUgrTKFg6C8q0UX/wvVs0
-         ThtNaqwNJEeBJdkATbXOEueDmMcUa56XxxbQ3tEl/uSkYDUDe2kWoSZQiWGoFbFrkUK3
-         W5Aw==
-X-Gm-Message-State: AOAM530Fg03JJqljZx/2GYwe5SCvKUHh8efTJfruj2y3+KOkhbf5sw94
-        48u+xduiHWGEid22va5vVlL8mJwhNNQ=
-X-Google-Smtp-Source: ABdhPJyA2jlOZTtUSYeBJgRqjpzuA35yWNroQkJWUwkZvZc6unJU4m/DTHZ7pNXihuhTbLguBtP9XA==
-X-Received: by 2002:adf:b78d:: with SMTP id s13mr12087388wre.344.1611765447254;
-        Wed, 27 Jan 2021 08:37:27 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g187sm3144731wmf.1.2021.01.27.08.37.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jan 2021 08:37:26 -0800 (PST)
-Message-Id: <b98fa94b87037b811ea973c1aeb7cfe08d7c1bd6.1611765444.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.841.v3.git.1611765444.gitgitgadget@gmail.com>
-References: <pull.841.v2.git.1611339373.gitgitgadget@gmail.com>
-        <pull.841.v3.git.1611765444.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Jan 2021 16:37:22 +0000
-Subject: [PATCH v3 1/3] range-diff/format-patch: refactor check for commit
- range
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l3z7Rj49//euw5IGs/MrAjuGuqzooWPa/tnpqUFjlG0=;
+        b=MF24Ku86xESFtR/fWRq2vDoT/Bh+P5mKW6VzI0JeUugTe5DJhXQTsKokg1LnOMyHY8
+         owB620R4teF9yh5E1tSm1b9tBH0qmzt/ecpzqnJRMdtdH0797REuFi5Szelphv6srCKH
+         ZxuqE9T3pnRwN5N8kas0Emxf3rd9xgLv/+Cv/plLnUHp651QELUmSsJNsT3wgDxX42qK
+         p2940K/pHT2jGNXrBek88PIA7hYF+lniAO4TbSWB6VUlmEmz+nlWPoqrDR2WfUic08yH
+         0Xb4UHB6FT8lw9G2/PlHqxCs7bDKcrMAYxyWVNa1lM6aNu4kAHMBGnsMfJa8j5XqGKMN
+         HSyQ==
+X-Gm-Message-State: AOAM532tMAhKdGWueL4Y/4VSgujo6PkIaUGTgCNUaIaey2pQpNa5zIFU
+        xfWgmm46oI7bwvI5VgnCRshMME1lvXUJz+tJEfXlnqd7LR4=
+X-Google-Smtp-Source: ABdhPJyc+4EiMW87mF4RFe0Ycz3aTAtGZCo17/VW2EzvjhRzoQ02z63YhuW9bGa5CgQR24Ydpnl2S62qHNeE6P7YtsY=
+X-Received: by 2002:aca:4e4f:: with SMTP id c76mr3744985oib.167.1611765546342;
+ Wed, 27 Jan 2021 08:39:06 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
+ <ebbe8569dcc16f2ae235c4167be0e72a53982982.1611596534.git.gitgitgadget@gmail.com>
+ <CABPp-BE3tLmfwyncbdTKZUgLYH_8M9zMjH=+LJG4bdGcbYDPMg@mail.gmail.com> <ef86c7fc-e811-036b-b2e3-221e3bdb624a@gmail.com>
+In-Reply-To: <ef86c7fc-e811-036b-b2e3-221e3bdb624a@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 27 Jan 2021 08:38:55 -0800
+Message-ID: <CABPp-BGavK8-xhVFcDk=VpzZ7h8e6v+M5tqkQO9wSkEoaqDhdg@mail.gmail.com>
+Subject: Re: [PATCH 02/27] sparse-index: implement ensure_full_index()
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Jan 27, 2021 at 5:43 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 1/26/2021 10:05 PM, Elijah Newren wrote:
+> > On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> ...
+> >> Sparse directory entries have a specific 'ce_mode' value. The macro
+> >> S_ISSPARSEDIR(ce) can check if a cache_entry 'ce' has this type. This
+> >> ce_mode is not possible with the existing index formats, so we don't
+> >> also verify all properties of a sparse-directory entry, which are:
+> >>
+> >>  1. ce->ce_mode == 01000755
+> >
+> > This is a weird number.  What's the reason for choosing it?  It looks
+> > deceptively close to 0100755, normal executable files, but has the
+> > extra 0, meaning that ce->ce_mode & S_IFMT is 0, suggesting it has no
+> > file type.
+> >
+> > Since it's a directory, why not use S_IFDIR (040000)?
+> >
+> > (GITLINK does use the weird 0160000 value, but it happens to be
+> > S_IFLNK | S_IFDIR == 0120000 | 040000, which conveys "it's both a
+> > directory and a symlink")
+>
+> I forget how exactly I came up with these magic constants, but then
+> completely forgot to think of them critically because I haven't had
+> to look at them in a while. They _are_ important, especially because
+> these values affect the file format itself.
+>
+> I'll think harder on this before submitting a series intended for
+> merging.
+>
+> >>  2. ce->flags & CE_SKIP_WORKTREE is true
+> >
+> > Makes sense.
+> >
+> >>  3. ce->name[ce->namelen - 1] == '/' (ends in dir separator)
+> >
+> > Is there a particular reason for this?  I'm used to seeing names
+> > without the trailing slash, both in the index and in tree objects.  I
+> > don't know enough to be for or against this idea; just curious at this
+> > point.
+>
+> It's yet another way to distinguish directories from files, but
+> there are cases where we do string searches up to a prefix, and
+> having these directory separators did help, IIRC.
+>
+> >>  4. ce->oid references a tree object.
+> >
+> > Makes sense...but doesn't that suggest we'd want to use ce->ce_mode = 040000?
+>
+> ...
+>
+> >> +#define CE_MODE_SPARSE_DIRECTORY 01000755
+> >> +#define SPARSE_DIR_MODE 0100
+> >
+> > Another magic value.  Feels like the commit message should reference
+> > this one and why it was picked.  Seems odd to me, and possibly
+> > problematic to re-use file permission bits that might collide with
+> > files recorded by really old versions of git.  Maybe that's not a
+> > concern, though.
+> >
+> >> +#define S_ISSPARSEDIR(m) ((m)->ce_mode == CE_MODE_SPARSE_DIRECTORY)
+> >
+> > Should the special sauce apply to ce_flags rather than ce_mode?  Thus,
+> > instead of an S_ISSPARSEDIR, perhaps have a ce_sparse_dir macro
+> > (similar to ce_skip_worktree) based on a CE_SPARSE_DIR value (similar
+> > to CE_SKIP_WORKTREE)?
+> >
+> > Or, alternatively, do we need a single special state here?  Could we
+> > check for a combination of ce_mode == 040000 && ce_skip_worktree(ce)?
+>
+> The intention was that ce_mode be a unique value that could only
+> be assigned to a directory entry, which would then by necessity be
+> sparse. Checking both ce_mode and ce_flags seemed wasteful with the
+> given assumptions
 
-Currently, when called with exactly two arguments, `git range-diff`
-tests for a literal `..` in each of the two. Likewise, the argument
-provided via `--range-diff` to `git format-patch` is checked in the same
-manner.
+040000 is a unique value that could only be assigned to a directory
+entry.  Since we have no other uses of directories within the index,
+you are right, we wouldn't need to check ce_skip_worktree(ce) as well;
+just a check for the 040000 mode would be enough.
 
-However, `<commit>^!` is a perfectly valid commit range, equivalent to
-`<commit>^..<commit>` according to the `SPECIFYING RANGES` section of
-gitrevisions[7].
-
-In preparation for allowing more sophisticated ways to specify commit
-ranges, let's refactor the check into its own function.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/log.c        | 2 +-
- builtin/range-diff.c | 9 +++++----
- range-diff.c         | 5 +++++
- range-diff.h         | 8 ++++++++
- 4 files changed, 19 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index bd6ff4f9f95..aeece57e86a 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1680,7 +1680,7 @@ static void infer_range_diff_ranges(struct strbuf *r1,
- 				    struct commit *head)
- {
- 	const char *head_oid = oid_to_hex(&head->object.oid);
--	int prev_is_range = !!strstr(prev, "..");
-+	int prev_is_range = is_range_diff_range(prev);
- 
- 	if (prev_is_range)
- 		strbuf_addstr(r1, prev);
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 24c4162f744..5b1f6326322 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -3,6 +3,7 @@
- #include "parse-options.h"
- #include "range-diff.h"
- #include "config.h"
-+#include "revision.h"
- 
- static const char * const builtin_range_diff_usage[] = {
- N_("git range-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-@@ -46,12 +47,12 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		diffopt.use_color = 1;
- 
- 	if (argc == 2) {
--		if (!strstr(argv[0], ".."))
--			die(_("no .. in range: '%s'"), argv[0]);
-+		if (!is_range_diff_range(argv[0]))
-+			die(_("not a commit range: '%s'"), argv[0]);
- 		strbuf_addstr(&range1, argv[0]);
- 
--		if (!strstr(argv[1], ".."))
--			die(_("no .. in range: '%s'"), argv[1]);
-+		if (!is_range_diff_range(argv[1]))
-+			die(_("not a commit range: '%s'"), argv[1]);
- 		strbuf_addstr(&range2, argv[1]);
- 	} else if (argc == 3) {
- 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-diff --git a/range-diff.c b/range-diff.c
-index b9950f10c8c..9b93e08e840 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -564,3 +564,8 @@ int show_range_diff(const char *range1, const char *range2,
- 
- 	return res;
- }
-+
-+int is_range_diff_range(const char *arg)
-+{
-+	return !!strstr(arg, "..");
-+}
-diff --git a/range-diff.h b/range-diff.h
-index 583ced2e8e7..c17dbc2e75a 100644
---- a/range-diff.h
-+++ b/range-diff.h
-@@ -16,4 +16,12 @@ int show_range_diff(const char *range1, const char *range2,
- 		    const struct diff_options *diffopt,
- 		    const struct strvec *other_arg);
- 
-+/*
-+ * Determine whether the given argument is usable as a range argument of `git
-+ * range-diff`, e.g. A..B. Note that this only validates the format but does
-+ * _not_ parse it, i.e. it does _not_ look up the specified commits in the
-+ * local repository.
-+ */
-+int is_range_diff_range(const char *arg);
-+
- #endif
--- 
-gitgitgadget
-
+> ...
+>
+> >> +       /* Copy back into original index. */
+> >> +       memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
+> >> +       istate->sparse_index = 0;
+> >> +       istate->cache = full->cache;
+> >
+> > Haven't you leaked the original istate->cache here?
+>
+> Yes, seems so. Will fix.
+>
+> Thanks,
+> -Stolee
