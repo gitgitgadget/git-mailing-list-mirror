@@ -2,116 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E91C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86ED6C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83E79206BE
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:58:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E757206B9
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237675AbhA0D5n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 22:57:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39984 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388139AbhAZXQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 18:16:53 -0500
-Received: (qmail 27951 invoked by uid 109); 26 Jan 2021 23:16:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 26 Jan 2021 23:16:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5170 invoked by uid 111); 26 Jan 2021 23:16:06 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 26 Jan 2021 18:16:06 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 26 Jan 2021 18:16:04 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v4 1/3] ls-refs: report unborn targets of symrefs
-Message-ID: <YBCitNb75rpnuW2L@coredump.intra.peff.net>
-References: <YAnotHAiuSz4Du/0@coredump.intra.peff.net>
- <20210126181358.2333028-1-jonathantanmy@google.com>
+        id S237800AbhA0D7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 22:59:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232243AbhA0C4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 21:56:32 -0500
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9BDC061355
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 18:36:25 -0800 (PST)
+Received: by mail-qt1-x836.google.com with SMTP id c1so467904qtc.1
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 18:36:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=SZN8CfqGl3suEudGkBcWECqoHiaWhRpilsf8zlUM3Y0=;
+        b=LFh9WAxc2pmyUgnDa+W+ylgmI58PImBBlHqOzUXicDstGr2y5FCVR1EwxPHy/IqzHC
+         MzUGzyrKIlKFW4ay4Pm58+dcRKUqk/CBGngKuboAz7nc0nEElNYYTfLEU96mtN+nzkcx
+         TlgYvs0mWeAittDLTUI1sjWB0DdbhpV3cYmZzXXb4oI1J6JyEhSdaTI/IA6PhR9wWnhA
+         L8eKHX4cfm3zYQYjzYaRHYGoNYTzmno/R4mXZc56yZzZ44RwKDc8dwwaUIPc0aP7198b
+         72d7pXyIs8ELPbZa3SGzP9/YLbweS5v5sbKHLW4GHECrLpqQJ+nkMvKKzl5l4kuBuOoy
+         iopQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=SZN8CfqGl3suEudGkBcWECqoHiaWhRpilsf8zlUM3Y0=;
+        b=LAL+yRL+4SWielvQcsdP2/u3o0uYanQtBlCmyjrQS4UbhzdXtN05rlQBTtMd+TVSV9
+         dYivHu657Hz404d2dWorGECMlTgZ7q8Y91yDmoX3fQQGfyKZ3N7tPCJh1YitRBd+AcdS
+         qx+4z9qVNekBFpqN9/mU2GoDWAKvTXp+X+2D0tXL0G/WtKkVZox6TU0SS5GBHZoPykIm
+         u13uqhuhu3MWNg5M+jH8XyM9Rvu4MLCKEjtyofEKdONi99eJ6RkosU2i0hWH74Kk2BiT
+         KzEXcoJm8ous0WLFYHNM5ku4x9EXE+griw1hmebMO6Bo2TfVe86zJZNlg1DZuBiO6OGR
+         JFRw==
+X-Gm-Message-State: AOAM533P9eFkfN8cwsKp9nMquElL9N99G7k40eVoBjJ7YJTJwEqTQDi7
+        oL4UvtaidfoJBn2Sl91f5BF4vg==
+X-Google-Smtp-Source: ABdhPJzqgeQeo61EvV2bu+ywMGII0feGd2GD3D1kp5r3XfLJrBwRllgTlDArCVr0Y5aYJ7CvFnLBOQ==
+X-Received: by 2002:ac8:c8c:: with SMTP id n12mr7853960qti.339.1611714984634;
+        Tue, 26 Jan 2021 18:36:24 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:5cad:8534:72d4:8c70])
+        by smtp.gmail.com with ESMTPSA id n94sm446431qtd.28.2021.01.26.18.36.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 18:36:24 -0800 (PST)
+Date:   Tue, 26 Jan 2021 21:36:16 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        szeder.dev@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 01/17] commit-graph: anonymize data in chunk_write_fn
+Message-ID: <YBDRoEzRKO6GIVCb@nand.local>
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+ <09b32829e4ff2384cb35afaf1a34385e25bac8d8.1611676886.git.gitgitgadget@gmail.com>
+ <CAPx1GvfQ4K+2mt0BC-1o7e0omHAvC6XhmpOuGa41v-b850w14w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210126181358.2333028-1-jonathantanmy@google.com>
+In-Reply-To: <CAPx1GvfQ4K+2mt0BC-1o7e0omHAvC6XhmpOuGa41v-b850w14w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2021 at 10:13:58AM -0800, Jonathan Tan wrote:
+On Tue, Jan 26, 2021 at 05:53:39PM -0800, Chris Torek wrote:
+> Note: this is purely style, and minor, but I'll ask...
+>
+> On Tue, Jan 26, 2021 at 8:08 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >  static int write_graph_chunk_fanout(struct hashfile *f,
+> > -                                   struct write_commit_graph_context *ctx)
+> > +                                   void *data)
+> >  {
+> > +       struct write_commit_graph_context *ctx =
+> > +               (struct write_commit_graph_context *)data;
+>
+> Why bother with the cast on the last line here?  In C,
+> conversion from `void *` to `struct whatever *` is fine.
+>
+> (the change itself looks fine, btw)
 
-> (It was a bit confusing that refs_resolve_ref_unsafe() returns one of
-> its input arguments if it succeeds and NULL if it fails, but that's
-> outside the scope of this patch, I think.)
+Agreed. It's not a correctness issue, but I find these unnecessary casts
+to detract from readability. If you do end up rerolling this series,
+I'd rather see
 
-Yep. It would probably be much nicer for it to return a numeric success
-code, and to take an optional strbuf into which to write the resolved
-symref name (if the caller even cares about it). But definitely out of
-scope for your patch.
+    struct write_commit_graph_context *ctx = data;
 
-> > This straight-boolean version works as long as you can atomically update
-> > the _config_ on each version. But that seems like roughly the same
-> > problem (having dealt with this on GitHub servers, they are not
-> > equivalent, and depending on your infrastructure, it definitely _can_ be
-> > easier to do one versus the other. But it seems like a funny place to
-> > leave this upstream feature).
-> 
-> Well, I was just agreeing with what you said [1]. :-)
-> 
-> [1] https://lore.kernel.org/git/X9xJLWdFJfNJTn0p@coredump.intra.peff.net/
+...but I don't think that this (non-)issue alone is worth a reroll.
 
-Oh, I just need to you to agree harder then. ;)
-
-If we are not going to support config that helps you do an atomic
-deploy, then I don't really see the point of having config at all.
-Here are three plausible implementations I can conceive of:
-
-  - allowUnborn is a tri-state for "accept-but-do-not-advertise",
-    "accept-and-advertise", and "disallow". This helps with rollout in a
-    cluster by setting it to the accept-but-do-not-advertise.  The
-    default would be accept-and-advertise, which is what most servers
-    would want. I don't really know why anyone would want "disallow".
-
-  - allowUnborn is a bool for "accept-and-advertise" or "disallow". This
-    doesn't help cluster rollout. I don't know why anyone would want to
-    switch away from the default of accept-and-advertise.
-
-  - allowUnborn is always on.
-
-The first one helps the cluster case, at the cost of introducing an
-extra config knob. The third one doesn't help that case, but is one less
-knob for server admins to think about. But the second one has a knob
-that I don't understand why anybody would tweak. It seems like the worst
-of both.
-
-Perhaps there's a reason for setting "disallow" that I don't know. Or
-perhaps you're happy to help the cluster case using a simple bool with
-atomic config rollouts (which are outside the scope of Git itself).
-
-> > Or is the intent that an unconfigured reader would silently ignore the
-> > unborn flag in that case? That would at least not cause it to bail on
-> > the client in a mixed-version environment. But it does feel like a
-> > confusing result.
-> 
-> Right now, an old server would ignore "unborn", yes. I'm not sure of
-> what the intent should be - tightening ls-refs and fetch to forbid
-> unknown arguments seems like a good idea to me.
-
-If we had a just a bool (case 2 from above), and there was an
-always-implied "accept unborn even if not advertised", then that _does_
-let the config help out the cluster case (it just turns off
-advertisements, basically making the bool "accept-but-do-not-advertise"
-versus "disallow").
-
-I don't love it. The protocol spec does say "don't ask for capability
-foo if the server didn't say it knows about foo". We'd be loosening the
-enforcement of that (if only for capabilities we _do_ in fact know
-about), even though we don't know if it was due to a race, or if the
-client is just misbehaving. But I wondered if that was the direction you
-were going to try to solve your cluster-rollout problem.
-
--Peff
+Thanks,
+Taylor
