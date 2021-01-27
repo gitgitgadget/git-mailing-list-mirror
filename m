@@ -2,84 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD74EC433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A8C2C433E9
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:17:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A94B661601
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:14:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BDC060C41
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234860AbhA0XM5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 18:12:57 -0500
-Received: from mail-ej1-f48.google.com ([209.85.218.48]:41411 "EHLO
-        mail-ej1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233356AbhA0XIu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 18:08:50 -0500
-Received: by mail-ej1-f48.google.com with SMTP id g12so5021235ejf.8
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 15:08:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lkadsa0sPeBE/P/3BI54U/XxhTKrJs4zEGoKi+I7cV8=;
-        b=koJcZOQ9PnCGrPrfDYi4q6RA+2SFZH/Tv9jkr8cyK/w16lPjjKn6YnkeHW+bWwNF2n
-         4GcHeqKB9jO858Yc5u/yPys5IGGvlx/8wZCiNpKpjoHJoqu1hXlGgUgWEWn374zuWPkX
-         g8TnX3QxjZY6kzf9kcjmIiZsIpMHw47rHEtvOgm3Y7REGoV5scyBzHVwxbYl5cj6cgWM
-         Dy2mA3u2S2UZ9/FOx23qZTkq7fio+iwsSdRNKmFXKB9USVEXHIQI9NbTIIzDIMRy/21b
-         1ref6xp1lWVBVBH+kCnrhZvDYbWuGSCY5G7w3cfYIFMOpuELZcj6YSgxEJkEURY7qUdC
-         bZ9g==
-X-Gm-Message-State: AOAM530BVdbrmgcT3gbYjGdO2XoJwO4vJnlJ47HqGYky1zCZiKje3MHW
-        Zd8VOTgNEoqQfBhbNjIRct+SRviH9SJtfzIMy1tEwIJ0TBsCjg==
-X-Google-Smtp-Source: ABdhPJz+Kt0lT+tDoHo1gSrY3JNw61vr4JiRn5ZpYug/2kSIXzuiLLGU36UFEQfkygPkQB7GV2y3GT+WE1Ji/xNmBjU=
-X-Received: by 2002:a17:906:2617:: with SMTP id h23mr8580419ejc.168.1611788888850;
- Wed, 27 Jan 2021 15:08:08 -0800 (PST)
-MIME-Version: 1.0
-References: <YBHlGPBSJC++CnPy@coredump.intra.peff.net> <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
-In-Reply-To: <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 27 Jan 2021 18:07:57 -0500
-Message-ID: <CAPig+cQTV6ACiOj+GKoBwj15TZBr5craVPT6dYzzSDfrX9a3YA@mail.gmail.com>
+        id S234647AbhA0XRc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 18:17:32 -0500
+Received: from out2.migadu.com ([188.165.223.204]:10876 "EHLO out2.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235190AbhA0XLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 18:11:35 -0500
+X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jan 2021 18:11:34 EST
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
+        t=1611788513;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=qms49YnLX/gdB9jtTZJfxaku9Izj2KUZ+npubEPGVbI=;
+        b=JrJCqRyQqDVM4tly083H0ME+1MutCaL4a7lue49nTa+TRlibQxefuUFBhb8N7uOrTxou4o
+        mjN3MvlmE88yglfxQZUPfHgo9GqXI17ZZvMhsa5Xtswcf8KORr0zy4T6z+yVeZ8xD69KrQ
+        61s3IqAX81bnW9Km5nJCIEJ3ODqTJ4TotImTXhrYOaLZwVZAe33VVGm03aRAzAd6NPZHfr
+        VgDQ2eK/pcnwJxSMEM0s6ZUw1k2ybJf0KIG3Y8MOUtIieu2SsItWkyEgy1xhYEqBr59z1X
+        GgZ+5B5TTwFbn/w0E6TOId64fPTTkEhyFp9hNin3oIfGkaXL4USfNTQTdB0Dmw==
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Subject: Re: [PATCH 2/2] rev-list: add --disk-usage option for calculating
  disk usage
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
+References: <YBHlGPBSJC++CnPy@coredump.intra.peff.net>
+ <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
+Date:   Wed, 27 Jan 2021 18:01:51 -0500
+Message-ID: <87mtwuvva8.fsf@kyleam.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: kyle@kyleam.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 27, 2021 at 5:20 PM Jeff King <peff@peff.net> wrote:
-> This patch implements a --disk-usage option which produces the same
-> answer in a fraction of the time. Here are some timings using a clone of
-> torvalds/linux:
->
->   [rev-list piped to cat-file, no bitmaps]
->   $ time git rev-list --objects --all |
->     cut -d' ' -f1 |
->     git cat-file --buffer --batch-check='%(objectsize:disk)' |
->     perl -lne '$total += $_; END { print $total }'
->   1455691059
->   real  0m34.336s
->   user  0m46.533s
->   sys   0m2.953s
+Jeff King writes:
 
-This example shows the computed size (1455691059)...
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 002379056a..1e5826f26d 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -222,6 +222,15 @@ ifdef::git-rev-list[]
+>  	test the exit status to see if a range of objects is fully
+>  	connected (or not).  It is faster than redirecting stdout
+>  	to `/dev/null` as the output does not have to be formatted.
+> +
+> +--disk-usage::
+> +	Suppress normal output; instead, print the sum of the bytes used
+> +	for on-disk storage by the selected objects. This is equivalent
+> +	to piping the output of `rev-list --objects` into
+> +	`git cat-file --batch-check='%(objectsize:disk)', except that it
 
-> But the real win is with bitmaps. If we use them without the new option:
->
->   [rev-list piped to cat-file, bitmaps]
->   $ time git rev-list --objects --all --use-bitmap-index |
->     cut -d' ' -f1 |
->     git cat-file --batch-check='%(objectsize:disk)' |
->     perl -lne '$total += $_; END { print $total }'
->   real  0m9.954s
->   user  0m11.234s
->   sys   0m8.522s
+[ Just a drive-by typo comment from a reader not knowledgeable enough to
+  review the code change :) ]
 
-...however, this example does not (but all the others do). Simple
-copy/paste error?
-
-Not worth a re-roll, of course.
+The cat-file command is missing its closing quote.
