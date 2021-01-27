@@ -2,193 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAC54C433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE04C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A190E20709
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69DEC2070A
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 05:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbhA0FmU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 00:42:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235992AbhA0D0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 22:26:31 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891DBC061573
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:25:50 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id i20so389004otl.7
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:25:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VRhOln7x4DjOM4jRKYDeTPSWlvt9inbSDmEvKvM6DZY=;
-        b=Ti8NZz/4N56xtYNHxJkc4q+NBYrbShSLfsK4AudehLIhd5S5KqUVvkzo7EP13MvAVs
-         QgHMxeuEsuJ+2wbqEyRGdkFFl4R4S0qeJ0jtK3fihhYhHhkLjsOIZ8CHhpjYDNDNX4zs
-         f+BF56UMwTYMWOsOtzxdA1FDa2L5Rm2l0uVYcY96B0nvTohFCeZpirXMbOA7bAov6n78
-         6rvvaN/V9uyDAsOmDx71/aH56U2aa9/kNHIUUQM+ypjPRTt/Ipus1sQmzc/ZiUWaxF/K
-         7Kpbu9mNtmNxVTKUWO7oJV6u6OVcLf1zvtHOhS2R0gsiNSuB1KBI4ZuieP/man0JasAW
-         Pgsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VRhOln7x4DjOM4jRKYDeTPSWlvt9inbSDmEvKvM6DZY=;
-        b=tdrVDaBnTiekdJQPHhRs0JJgY1XFzYw/j7zaDYEwKYLeENZALHBjW1dh3yKNkZb3z8
-         37CLIxJIZ107WwDs60MX03CJaEhgqnFWVZGzEfMXZNxPLwpoIS09uTgrwjd0KVetFNV8
-         f2rwoyWC8OYBrltTwDaudGpIXr3Pgk9rLNCSdHGR9d4kSYzD4W9zNaeeX9/B6gDndZqn
-         a3+dNbIHKjdEAgACWcw1r8Km6xOACmeWVaLLgOB+CKjP/f6DdPzKX448ZK0xxDRW3iOB
-         C9qUnPUDpnbgElSmpppAVN4ZmPEkDA1jh0rmjCDQ1nXJdNSHKNxpLPQt4/IVF/M69xPw
-         FHPA==
-X-Gm-Message-State: AOAM530W1aaa3hd+GRKYf36xi2G9mvADrov3/+gGHZD5NtcP4UpNZ0HJ
-        +2fhy4DeLHJMIy2WRZ7pNSYY8hr8MiUu0y2X4do=
-X-Google-Smtp-Source: ABdhPJxcE475bc6FIH7OGtVtVV3VT+UOQzXR8nwx5BfRyT6nguJS2JGAv1sC8wgCFOuzlCISYAqaoX9mBBdEla6GLJs=
-X-Received: by 2002:a9d:506:: with SMTP id 6mr6053191otw.162.1611717949901;
- Tue, 26 Jan 2021 19:25:49 -0800 (PST)
+        id S231584AbhA0Fmj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 00:42:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40266 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234630AbhA0E0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 23:26:14 -0500
+Received: (qmail 30522 invoked by uid 109); 27 Jan 2021 04:25:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Jan 2021 04:25:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8213 invoked by uid 111); 27 Jan 2021 04:25:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 26 Jan 2021 23:25:32 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 26 Jan 2021 23:25:30 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Cloning with remote unborn HEAD
+Message-ID: <YBDrOrUIAcbTQ8cu@coredump.intra.peff.net>
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+ <cover.1611686656.git.jonathantanmy@google.com>
+ <xmqqeei7yyi9.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <e3b169c4fec8db34634c77d19a03fc46a3c7690e.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <e3b169c4fec8db34634c77d19a03fc46a3c7690e.1611596534.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 26 Jan 2021 19:25:38 -0800
-Message-ID: <CABPp-BH7hQ3cNnUcjuBP0a7R8EW9Oc29+MZ6Kfzxxk5LA0z2yg@mail.gmail.com>
-Subject: Re: [PATCH 04/27] test-read-cache: print cache entries with --table
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeei7yyi9.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> This table is helpful for discovering data in the index to ensure it is
-> being written correctly, especially as we build and test the
-> sparse-index.
->
-> To make the option parsing slightly more robust, wrap the string
-> comparisons in a loop adapted from test-dir-iterator.c.
->
-> Care must be taken with the final check for the 'cnt' variable. We
-> continue the expectation that the numerical value is the final argument.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  t/helper/test-read-cache.c | 49 ++++++++++++++++++++++++++++++++++----
->  1 file changed, 44 insertions(+), 5 deletions(-)
->
-> diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-> index 244977a29bd..cd7d106a675 100644
-> --- a/t/helper/test-read-cache.c
-> +++ b/t/helper/test-read-cache.c
-> @@ -2,18 +2,55 @@
->  #include "cache.h"
->  #include "config.h"
->
-> +static void print_cache_entry(struct cache_entry *ce)
-> +{
-> +       /* stat info */
-> +       printf("%08x %08x %08x %08x %08x %08x ",
-> +              ce->ce_stat_data.sd_ctime.sec,
-> +              ce->ce_stat_data.sd_ctime.nsec,
-> +              ce->ce_stat_data.sd_mtime.sec,
-> +              ce->ce_stat_data.sd_mtime.nsec,
-> +              ce->ce_stat_data.sd_dev,
-> +              ce->ce_stat_data.sd_ino);
+On Tue, Jan 26, 2021 at 05:11:42PM -0800, Junio C Hamano wrote:
 
-Printing sec & nsec in hexidecimal?  Why?
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > Thanks, Peff, for your review. I have addressed your comments (through
+> > replies to your emails and here in this v5 patch set).
+> >
+> > Jonathan Tan (3):
+> >   ls-refs: report unborn targets of symrefs
+> >   connect, transport: encapsulate arg in struct
+> >   clone: respect remote unborn HEAD
+> 
+> Applying this alone to 'master' seems to pass all tests, but
+> the topic seems to have funny interactions with another topic
+> in flight, jk/peel-iterated-oid
 
-Also, if they'll be displayed in hex, do you want to format them as
-0x%08x, similar to what you do with binary below?
+I was worried at first I really screwed up something subtle, but it is
+indeed just a funny local interaction.
 
-> +
-> +       /* mode in binary */
+Here's a fix which can be applied on top of jt/clone-unborn-head. It
+could equally well be applied as part of the merge (with a minor
+adjustment in the context), but I think it ought to be squashed into
+Jonathan's patch 1 anyway.
 
-This comment feels misleading; I think this is the "S_IFMT portion of
-mode in binary" not "mode in binary".
+The conflict you had to resolve was a red herring (it wasn't part of
+jk/peel-iterated-oid at all, but rather other commits that got pulled in
+because my topic is based on a more recent master).
 
-> +       printf("0b%d%d%d%d ",
-> +               (ce->ce_mode >> 15) & 1,
-> +               (ce->ce_mode >> 14) & 1,
-> +               (ce->ce_mode >> 13) & 1,
-> +               (ce->ce_mode >> 12) & 1);
+-- >8 --
+Subject: [PATCH] ls-refs: don't peel NULL oid
 
-Why binary?  Also, since you defined a special magic constant of
-01000755 which utilizes bit 18; how come you aren't including any bits
-higher than 15?
+When the "unborn" feature is enabled, upload-pack serving an ls-refs
+command will pass a NULL oid into send_ref(). In this case, there is no
+point trying to peel the ref, since we know it points to nothing.
 
-> +       /* output permissions? */
-> +       printf("%04o ", ce->ce_mode & 01777);
+For now this is a harmless waste of cycles (we re-resolve HEAD and find
+out that indeed, it points to nothing). But after merging with another
+topic that contains 36a317929b (refs: switch peel_ref() to
+peel_iterated_oid(), 2021-01-20), we'd actually end up passing NULL to
+peel_object(), which segfaults!
 
-01777 instead of 07777 just because we don't have anything using the
-setuid or setgid bits?  But if it's based on non-use, then we don't
-use the sticky bit (01000) either, so this could be just 0777.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ls-refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Also, if you're using 0b for binary to distinguish and you're clearly
-using multiple bases in this code, perhaps use a print format of
-0o%04o (or 0o%03o if you only use a mask of 0777).
+diff --git a/ls-refs.c b/ls-refs.c
+index 4077adeb6a..bc91f03653 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -66,7 +66,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 			    strip_namespace(symref_target));
+ 	}
+ 
+-	if (data->peel) {
++	if (data->peel && oid) {
+ 		struct object_id peeled;
+ 		if (!peel_ref(refname, &peeled))
+ 			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
+-- 
+2.30.0.724.gc858251c49
 
-> +       printf("%s ", oid_to_hex(&ce->oid));
-> +
-> +       printf("%s\n", ce->name);
-> +}
-> +
-> +static void print_cache(struct index_state *cache)
-> +{
-> +       int i;
-> +       for (i = 0; i < the_index.cache_nr; i++)
-> +               print_cache_entry(the_index.cache[i]);
-> +}
-> +
->  int cmd__read_cache(int argc, const char **argv)
->  {
->         int i, cnt = 1;
->         const char *name = NULL;
-> +       int table = 0;
->
-> -       if (argc > 1 && skip_prefix(argv[1], "--print-and-refresh=", &name)) {
-> -               argc--;
-> -               argv++;
-> +       for (++argv, --argc; *argv && starts_with(*argv, "--"); ++argv, --argc) {
-> +               if (skip_prefix(*argv, "--print-and-refresh=", &name))
-> +                       continue;
-> +               if (!strcmp(*argv, "--table")) {
-> +                       table = 1;
-> +               }
->         }
->
-> -       if (argc == 2)
-> -               cnt = strtol(argv[1], NULL, 0);
-> +       if (argc == 1)
-> +               cnt = strtol(argv[0], NULL, 0);
->         setup_git_directory();
->         git_config(git_default_config, NULL);
->         for (i = 0; i < cnt; i++) {
-> @@ -30,6 +67,8 @@ int cmd__read_cache(int argc, const char **argv)
->                                ce_uptodate(the_index.cache[pos]) ? "" : " not");
->                         write_file(name, "%d\n", i);
->                 }
-> +               if (table)
-> +                       print_cache(&the_index);
->                 discard_cache();
->         }
->         return 0;
-> --
-> gitgitgadget
->
