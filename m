@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E984CC433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 17:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 852D9C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 17:40:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B47FF64DA0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 17:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29D9464DA0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 17:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235428AbhA0RDk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 12:03:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49152 "EHLO
+        id S233219AbhA0RkB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 12:40:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234603AbhA0RBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 12:01:45 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A67F0C0613ED
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 09:01:00 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id d1so2324562otl.13
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 09:01:00 -0800 (PST)
+        with ESMTP id S1344041AbhA0Rhf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 12:37:35 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2831C061574
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 09:36:54 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id e70so2462659ote.11
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 09:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lTErWkiW2rjiffgpeQl4QDNzOHrpIvhtk0F5bBbWz1s=;
-        b=qNZNjYsF4JLgz1tt7DVSyuZc59l269siGFfWWXZ3uyA63L/aMNmkz4aPDvf7yCyFME
-         b+qbWUrYxJcQD8QCwNX3P6/zMzQCEhq8Je8o2QPVJe1VFxVd5Xmy/gMiYzJ6tsWaAisy
-         rki4e7hbjmmEfIYZDe815kQ/+DX9Cfh2FkObd/kMaQmx5jabEfpN9DvuH+g54pWRMEBd
-         zTwZ/sYvWEU42bQ7xcbH40aQwcuk/CH5yTl+vBwsxpI+w10zFJ4u2ooJUSgWD7Z0X12n
-         3DEtQJkBj/HYzBbZ2cL/Qij7iX1dsD9R62+fnfx3lxjG/YQrstbLoWl0qwu2jgs7+KeR
-         j2BQ==
+        bh=UaKJYJiWQ9oW8q7NHZBG2llC8AvoblSbwu+rPprhLIc=;
+        b=R0XGz3GaGi7Tf8la8FRsN23mXlARsHgCREgMPWYkv2hdto+nZkdyIsAIhxMkiPIm53
+         HSbBW1nu/6bRW1nFmuXz30v8xEHz506lsZdmaiofAAjyHRIPFePZmssofh/B6mDyh0cT
+         zY6w4rE4IiMioZm7R6a9rwKjQtWOs0eqFloaZeK2ReMIAciouz+xVfJJc94JHTJgyNoi
+         5Cjlau7yZmul2Pob/OqyZ6tn6wN/LaSNBlb+Jhj7jnL3Br72zEN20PFvyK9tCOZJSdhD
+         OhBmNd0UWWJSD8VIXy/F5VyVO3J6RSjkHTvqS6eW7xFP0aMEOmz6Axxq9mlfHFHVLhj6
+         T1lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lTErWkiW2rjiffgpeQl4QDNzOHrpIvhtk0F5bBbWz1s=;
-        b=CIcRowyBzcBgPOSCsbFWLswiZ6IHzkGliBii4HSH+6zqdiWBSpCQ5QY/VAwjjpj5ny
-         JkhC7IxihTVWwdIqe25MkrM/Pjp/DBl7r6hazpRUkgGXGbyQMa1rDSu18ktGIlu4fBaA
-         jMHy4OQmL7XBv/v0Ki0pxmzkjc3pO2bu2NCIRlQlmVZUiBYT08nprUb47B5aUCH9wqvz
-         OM2lCAU5OaCeqcEjQfSuE6pCdfPHlT48DwXIny9ZCm7Aj7pLFBceMC6VEQSSG3vywAr6
-         d4yTRJKidOChXeoMFlBT6D2/QDhCDEJmNjTIXK5kyiNG/lpOHayP6dNP1tZzR2H+R/sJ
-         2omw==
-X-Gm-Message-State: AOAM530cUrUJChjsaF2dUNja7r53RE8nIdKP99dNtDkG8Hng5Piqq2eY
-        z94It3l04Mp8aYZixGSRWNwALVt6x/LRNrsl4ns=
-X-Google-Smtp-Source: ABdhPJzbd4STfjMxQm+nZr4r7BRvDRMQ8QLlOuOZ30ZQbsKj69BJaoZLSv7GGAYmWL1AvJ9lk3eyXoXNf4DoRrWXSkI=
-X-Received: by 2002:a05:6830:402f:: with SMTP id i15mr8309598ots.345.1611766855982;
- Wed, 27 Jan 2021 09:00:55 -0800 (PST)
+        bh=UaKJYJiWQ9oW8q7NHZBG2llC8AvoblSbwu+rPprhLIc=;
+        b=iZD7XavBdT+K9HjR+MtagvZgCex7tQN37lQzZyH604h33129oG+/vvtXEC2d+TzBdm
+         1BK63DmcyZc8IN5yO9JuRaHHTfI3K5vpks/lL6vvWo355erxHPkKcDFdQJTCNHPXEZ/u
+         e3NI2UFlgE5OBMpNOOudtXA5tVpAOEqlBGqTbrAA6dc+0sIUBp++S4Vf1kk3q5f/ho9W
+         Wvb/tDdj848WUDkUwKeR4K2oncehelO0oF7SZMhebumUlHEJLrzL69ohZHdhFx4Hy6C7
+         hxedqfMDGSrZlJvYlZYtXh/BL6OwL1ZMAOuSohd/Lfz6d5GrAZuuvUspKITtoaBKUQ2H
+         l/kg==
+X-Gm-Message-State: AOAM532pREhYo473RIlpEH47Kb2sS9b0EDUNzPJOqmniITsLRhO8VMgN
+        hvbjf9B5ME0uxvV+ZT/LiedpCi6kGQocFsKPA3bHllAZt/o=
+X-Google-Smtp-Source: ABdhPJy3wcx2199wfXK0+e3SmklEh+UqrsAa7J6pKvA7f5jf/i7ldQw/8KYEx261rN4UcsL8cfRbX2TmM6sQk697bto=
+X-Received: by 2002:a9d:506:: with SMTP id 6mr8279461otw.162.1611769014177;
+ Wed, 27 Jan 2021 09:36:54 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <80aac5b8b71da96d6287f19e30f4ee8f786ca07b.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <80aac5b8b71da96d6287f19e30f4ee8f786ca07b.1611596534.git.gitgitgadget@gmail.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <09893b4a6bbe13e61395411bdae57ce041829042.1611596534.git.gitgitgadget@gmail.com>
+In-Reply-To: <09893b4a6bbe13e61395411bdae57ce041829042.1611596534.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 27 Jan 2021 09:00:44 -0800
-Message-ID: <CABPp-BEA5B3TzA-w-aBC1ZvFEYzvZfB-hkc=rXqgSVjrBNTLcA@mail.gmail.com>
-Subject: Re: [PATCH 08/27] sparse-checkout: hold pattern list in index
+Date:   Wed, 27 Jan 2021 09:36:43 -0800
+Message-ID: <CABPp-BGPJgA4guWHVm3AVS=hM0fTixUpRvJe5i9NnHT-3QJMfw@mail.gmail.com>
+Subject: Re: [PATCH 11/27] unpack-trees: allow sparse directories
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -78,108 +78,50 @@ On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> As we modify the sparse-checkout definition, we perform index operations
-> on a pattern_list that only exists in-memory. This allows easy backing
-> out in case the index update fails.
+> The index_pos_by_traverse_info() currently throws a BUG() when a
+> directory entry exists exactly in the index. We need to consider that it
+> is possible to have a directory in a sparse index as long as that entry
+> is itself marked with the skip-worktree bit.
 >
-> However, if the index write itself cares about the sparse-checkout
-> pattern set, we need access to that in-memory copy. Place a pointer to
-> a 'struct pattern_list' in the index so we can access this on-demand.
-> This will be used in the next change which uses the sparse-checkout
-> definition to filter out directories that are outsie the sparse cone.
+> The negation of the 'pos' variable must be conditioned to only when it
+> starts as negative. This is identical behavior as before when the index
+> is full.
 
-s/outsie/outside/
+The first sentence of this paragraph was really hard for me to parse.
+Reading the code and then reading the sentence I could make sense of
+it, but I struggled to do so the other way around.  Is there some way
+to reword this?  Or is this just a reading comprehension issue on my
+part?  (It might be...)
 
+> The starts_with() condition matches because our name.buf terminates with
+> a directory separator, just like our sparse directory entries.
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  builtin/sparse-checkout.c | 17 ++++++++++-------
->  cache.h                   |  2 ++
->  2 files changed, 12 insertions(+), 7 deletions(-)
+>  unpack-trees.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 >
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 2306a9ad98e..e00b82af727 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -110,6 +110,8 @@ static int update_working_directory(struct pattern_list *pl)
->         if (is_index_unborn(r->index))
->                 return UPDATE_SPARSITY_SUCCESS;
->
-> +       r->index->sparse_checkout_patterns = pl;
-> +
->         memset(&o, 0, sizeof(o));
->         o.verbose_update = isatty(2);
->         o.update = 1;
-> @@ -138,6 +140,7 @@ static int update_working_directory(struct pattern_list *pl)
->         else
->                 rollback_lock_file(&lock_file);
->
-> +       r->index->sparse_checkout_patterns = NULL;
->         return result;
->  }
->
-> @@ -517,19 +520,18 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
->  {
->         int result;
->         int changed_config = 0;
-> -       struct pattern_list pl;
-> -       memset(&pl, 0, sizeof(pl));
-> +       struct pattern_list *pl = xcalloc(1, sizeof(*pl));
->
->         switch (m) {
->         case ADD:
->                 if (core_sparse_checkout_cone)
-> -                       add_patterns_cone_mode(argc, argv, &pl);
-> +                       add_patterns_cone_mode(argc, argv, pl);
->                 else
-> -                       add_patterns_literal(argc, argv, &pl);
-> +                       add_patterns_literal(argc, argv, pl);
->                 break;
->
->         case REPLACE:
-> -               add_patterns_from_input(&pl, argc, argv);
-> +               add_patterns_from_input(pl, argc, argv);
->                 break;
->         }
->
-> @@ -539,12 +541,13 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
->                 changed_config = 1;
->         }
->
-> -       result = write_patterns_and_update(&pl);
-> +       result = write_patterns_and_update(pl);
->
->         if (result && changed_config)
->                 set_config(MODE_NO_PATTERNS);
->
-> -       clear_pattern_list(&pl);
-> +       clear_pattern_list(pl);
-> +       free(pl);
->         return result;
->  }
->
-> diff --git a/cache.h b/cache.h
-> index 884046ca5b8..b05341cc687 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -311,6 +311,7 @@ static inline unsigned int canon_mode(unsigned int mode)
->  struct split_index;
->  struct untracked_cache;
->  struct progress;
-> +struct pattern_list;
->
->  struct index_state {
->         struct cache_entry **cache;
-> @@ -336,6 +337,7 @@ struct index_state {
->         struct mem_pool *ce_mem_pool;
->         struct progress *progress;
->         struct repository *repo;
-> +       struct pattern_list *sparse_checkout_patterns;
->  };
->
->  /* Name hashing */
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 4dd99219073..b324eec2a5d 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -746,9 +746,12 @@ static int index_pos_by_traverse_info(struct name_entry *names,
+>         strbuf_make_traverse_path(&name, info, names->path, names->pathlen);
+>         strbuf_addch(&name, '/');
+>         pos = index_name_pos(o->src_index, name.buf, name.len);
+> -       if (pos >= 0)
+> -               BUG("This is a directory and should not exist in index");
+> -       pos = -pos - 1;
+> +       if (pos >= 0) {
+> +               if (!o->src_index->sparse_index ||
+> +                   !(o->src_index->cache[pos]->ce_flags & CE_SKIP_WORKTREE))
+> +                       BUG("This is a directory and should not exist in index");
+> +       } else
+> +               pos = -pos - 1;
+>         if (pos >= o->src_index->cache_nr ||
+>             !starts_with(o->src_index->cache[pos]->name, name.buf) ||
+>             (pos > 0 && starts_with(o->src_index->cache[pos-1]->name, name.buf)))
 > --
 > gitgitgadget
 
-Isn't this the same patch you put in your index cleanup series, or am
-I getting confused?  It looks very familiar.
+The patch looks pretty straightforward to me.
