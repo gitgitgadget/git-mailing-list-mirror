@@ -2,72 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A8C2C433E9
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B32DC433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:22:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BDC060C41
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:17:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1731A64DD1
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 23:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234647AbhA0XRc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 18:17:32 -0500
-Received: from out2.migadu.com ([188.165.223.204]:10876 "EHLO out2.migadu.com"
+        id S233767AbhA0XW0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 18:22:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41390 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235190AbhA0XLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 18:11:35 -0500
-X-Greylist: delayed 527 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Jan 2021 18:11:34 EST
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kyleam.com; s=key1;
-        t=1611788513;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=qms49YnLX/gdB9jtTZJfxaku9Izj2KUZ+npubEPGVbI=;
-        b=JrJCqRyQqDVM4tly083H0ME+1MutCaL4a7lue49nTa+TRlibQxefuUFBhb8N7uOrTxou4o
-        mjN3MvlmE88yglfxQZUPfHgo9GqXI17ZZvMhsa5Xtswcf8KORr0zy4T6z+yVeZ8xD69KrQ
-        61s3IqAX81bnW9Km5nJCIEJ3ODqTJ4TotImTXhrYOaLZwVZAe33VVGm03aRAzAd6NPZHfr
-        VgDQ2eK/pcnwJxSMEM0s6ZUw1k2ybJf0KIG3Y8MOUtIieu2SsItWkyEgy1xhYEqBr59z1X
-        GgZ+5B5TTwFbn/w0E6TOId64fPTTkEhyFp9hNin3oIfGkaXL4USfNTQTdB0Dmw==
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] rev-list: add --disk-usage option for calculating
- disk usage
-In-Reply-To: <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
-References: <YBHlGPBSJC++CnPy@coredump.intra.peff.net>
- <YBHmY7vNxu2hqOa/@coredump.intra.peff.net>
-Date:   Wed, 27 Jan 2021 18:01:51 -0500
-Message-ID: <87mtwuvva8.fsf@kyleam.com>
+        id S235766AbhA0XVy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 18:21:54 -0500
+Received: (qmail 6884 invoked by uid 109); 27 Jan 2021 22:21:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Jan 2021 22:21:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20360 invoked by uid 111); 27 Jan 2021 22:21:13 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Jan 2021 17:21:13 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 27 Jan 2021 17:21:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        sunshine@sunshineco.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
+Message-ID: <YBHnV80bBQOxZH1O@coredump.intra.peff.net>
+References: <xmqqk0sevqlh.fsf@gitster.c.googlers.com>
+ <YAH0G+Y4fIxoTeZa@coredump.intra.peff.net>
+ <830a88ce-1728-a6a5-f60d-59328f85932c@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
-X-Migadu-Auth-User: kyle@kyleam.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <830a88ce-1728-a6a5-f60d-59328f85932c@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King writes:
+On Sat, Jan 23, 2021 at 09:41:29PM -0500, Philippe Blain wrote:
 
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index 002379056a..1e5826f26d 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -222,6 +222,15 @@ ifdef::git-rev-list[]
->  	test the exit status to see if a range of objects is fully
->  	connected (or not).  It is faster than redirecting stdout
->  	to `/dev/null` as the output does not have to be formatted.
-> +
-> +--disk-usage::
-> +	Suppress normal output; instead, print the sum of the bytes used
-> +	for on-disk storage by the selected objects. This is equivalent
-> +	to piping the output of `rev-list --objects` into
-> +	`git cat-file --batch-check='%(objectsize:disk)', except that it
+> > So we could split the macos test out. It would probably involve
+> > duplicating a little bit of the content, but we do something similar for
+> > the dockerized builds. It might be that there is an option we can set to
+> > say "keep building the others even if one of these fails", which would
+> > give us the best of both.
+> 
+> Yes, a quick Google search pointed me to a blog post [1]
+> that mentions using 'fail-fast: false' in the test matrix so that
+> one failing job does not automatically cancel the rest of the jobs
+> in the matrix (the default is 'true') [2].
+> 
+> If we apply that to all four matrices in the workflow file,
+> (windows-test, vs-test, regular and dockerized), it would be
+> something like this:
 
-[ Just a drive-by typo comment from a reader not knowledgeable enough to
-  review the code change :) ]
+Thanks, that's exactly what I think we'd want.
 
-The cat-file command is missing its closing quote.
+The downside, of course, is that a failure that will happen on every
+platform will mean wasted CPU to trigger the same failure over and over.
+But:
+
+  - I rarely see that myself, because I wouldn't bother pushing up to CI
+    until "make test" passed locally. So usually I'm finding portability
+    issues via CI. Other people might be different, though.
+
+  - we already have the Windows tests in a separate matrix anyway, so a
+    failure on Linux would run the whole Windows suite (which is an
+    order of magnitude more expensive)
+
+  - even within the Windows matrix, I think running the rest of the
+    tests after a failure is still valuable. If there's a second
+    failure, you save a round-trip to CI (so it doesn't reduce CPU, but
+    it may help latency to reach a passing state).
+
+-Peff
