@@ -2,170 +2,361 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2195EC433E0
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A38EAC433DB
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0A48206B9
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71A76206B5
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237863AbhA0D7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 22:59:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37156 "EHLO
+        id S232556AbhA0D70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 22:59:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232556AbhA0DE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 22:04:26 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9251CC061786
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:02:46 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id v3so490463qtw.4
-        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:02:46 -0800 (PST)
+        with ESMTP id S231648AbhA0DHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 22:07:08 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C37C0613D6
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:05:23 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id z36so191257ooi.6
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 19:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=W7c39vfYAQcqa9VB2NCZmwFNu2tywLzGrqHmlw79K0s=;
-        b=ihd7mv6XSOEJe02RAynATbCN802YzNpJUUDOSAmimNAqE7YZSORpqecvQ46dDW5gc2
-         WYngS5AnANnmKpSo1Y38vrNnZWy6zxfsp/wkG8qZMJZiSXRD15Pas0wAj3Vfbn/sTHqd
-         OMKthbmeleIgUEtIQ0LN7kAMOp1omtlB7RcpWr/j5gPqv5veSB6cat8pyFVa6CXvYcuX
-         cEWK2DgoCd+tENSDRthMGaI0yY7IiXbCwCFxzzj6MZLgsASNU3QguO8sWdiBqbYJFOY3
-         bz2hYxCBW2k7gi5Hp6GrlfSswVPYJ3Tft5JCDzs9IHdIw1vgo87v/4Vfa2UfoB1OgS48
-         EXHg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=R7Az/XnysazeDYt6KRmf6hexOne3gsj6MFEfCpJq1/8=;
+        b=QhWVACgWAKY6kOZVxhImHmdyT4vnJAi+x8V8teniCaJBK3zGFA5r2xfkwxZyK5Qh9F
+         +OZWrrwskaD83+i+13eHBNT/yZrKJb69su/xRKGlngr9ybWg/CeLVHxPnf5vNeNDZt3P
+         gdrvWTXmOBppcZXjwR7gN6/ovcUCWPkLDvOlyHkbjV9Hc/ea7xiM8DDNuYPOkryYbWuk
+         Yjg8vzMQWqTSaqFqLjiYEk+x0x3xGajAx7gYZZfyIxPGXeFX0Kz32W/BeaW9f59vCDFe
+         4+uVdUpUyepzpneFrag6R4+44e4hXcxTzU0W9C6exaQNO6U7gPA4fs0eQ5iOa5BvkMs5
+         omRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=W7c39vfYAQcqa9VB2NCZmwFNu2tywLzGrqHmlw79K0s=;
-        b=QJ1LQOby+nOjIl8mzpSxeOAZErXXF8+HyhmX92FTXwgPuSSNYvXzXIVN1BtsCOZGSH
-         hHn7WW6J6WsMLTRkl+79LgarH46dvoNNZyr6tB5BQMfOaAzFa8z0cuHmMy5tLDAXjKPv
-         o0At35I41pojDnBj6AQd6ZuY+w4fa0jZ66vjBfsJf3plM017K7yC+Zz2Na18TolQk1x3
-         03Sv462r9NLNRiJt1fCXx+9q6b3cOgGQMUud/AKr+gdir6zW/hoJAXIBF4XVdlZWgjfk
-         tqUSRZsy68zXXFZqfQWG0yR2CGCDFV7u0XyMB+w8/nuh0WJ7W+XZP020/hVroNeSYNLZ
-         YJhw==
-X-Gm-Message-State: AOAM532GHmxpW6ygCeuMiyGXPGSaHu1J8mOoFf9Tw8HRYx/vawMQMuNX
-        1ogW6B+8hvRj2XvxssQEF6Pkcw==
-X-Google-Smtp-Source: ABdhPJyUxuT0tsigSfCutQMJhgBAhzcQd0NS8r9ffL+sB0wjXViQQcLagvShPjGu0t4bz6ZuB3MrsQ==
-X-Received: by 2002:ac8:4d59:: with SMTP id x25mr4147892qtv.369.1611716565745;
-        Tue, 26 Jan 2021 19:02:45 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:5cad:8534:72d4:8c70])
-        by smtp.gmail.com with ESMTPSA id t6sm500362qti.2.2021.01.26.19.02.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Jan 2021 19:02:45 -0800 (PST)
-Date:   Tue, 26 Jan 2021 22:02:43 -0500
-From:   Taylor Blau <me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=R7Az/XnysazeDYt6KRmf6hexOne3gsj6MFEfCpJq1/8=;
+        b=kC9/5ZfSRFCIW6gTRK0GFibXzBuqIzLqtktvLWd6LhULrPy2KvCoj5EHBHRIt9OTY+
+         ca68tzqqWdAr5i9UOTD42L+PfhSxKVKeRnbxeHcQyrpLD1c7jLWIaX/rEoNmjvTklKNO
+         +LYW2vcog/CiUsCHTasUBdmQvUBUifyqcHmhTFAzJLXv+pZlb3YaZv6Wb/RgBB1eGpI3
+         h4pPPGnwp3hjVTSzyVx9ZE8CKxEl/mInCWQAvz2J1zi+ssmN5I2wQf1xemPAejlgQ51y
+         j0huW8GRnPSYB/pq/Sq64LWYJ3fopOGgUKi6uUyrkTKwduRuatmgYLOU/YcWQ7bRBeD/
+         8KuQ==
+X-Gm-Message-State: AOAM533/XQDvG0TekszpTOpBXIYtzoiK6DAZfY1Hm+ZMTbj08gaXE/gW
+        Kjrrj0W8Wy7+3po2093/Z/d4b4FszR0kIcS6y34=
+X-Google-Smtp-Source: ABdhPJxUvDmQHddsUhpCAMaRxSepxgjrEhM6DLBcFOFnT1ddnjstTuIdVX650/YTqGg1OJQoHCX/z0fAN0XoHQbLy2E=
+X-Received: by 2002:a4a:decb:: with SMTP id w11mr6115011oou.32.1611716722066;
+ Tue, 26 Jan 2021 19:05:22 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <ebbe8569dcc16f2ae235c4167be0e72a53982982.1611596534.git.gitgitgadget@gmail.com>
+In-Reply-To: <ebbe8569dcc16f2ae235c4167be0e72a53982982.1611596534.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 26 Jan 2021 19:05:10 -0800
+Message-ID: <CABPp-BE3tLmfwyncbdTKZUgLYH_8M9zMjH=+LJG4bdGcbYDPMg@mail.gmail.com>
+Subject: Re: [PATCH 02/27] sparse-index: implement ensure_full_index()
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        l.s.r@web.de, szeder.dev@gmail.com,
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 12/17] chunk-format: create read chunk API
-Message-ID: <YBDX0wD4wwzuCyYh@nand.local>
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
- <e3475633e1d2e397c5095f34c23a19fccb2c8428.1611676886.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e3475633e1d2e397c5095f34c23a19fccb2c8428.1611676886.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2021 at 04:01:21PM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/chunk-format.c b/chunk-format.c
-> index 2ce37ecc6bb..674d31d5e58 100644
-> --- a/chunk-format.c
-> +++ b/chunk-format.c
-> @@ -12,6 +12,8 @@ struct chunk_info {
->  	uint32_t id;
->  	uint64_t size;
->  	chunk_write_fn write_fn;
+On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> We will mark an in-memory index_state as having sparse directory entries
+> with the sparse_index bit. These currently cannot exist, but we will add
+> a mechanism for collapsing a full index to a sparse one in a later
+> change. That will happen at write time, so we must first allow parsing
+> the format before writing it.
+>
+> Commands or methods that require a full index in order to operate can
+> call ensure_full_index() to expand that index in-memory. This requires
+> parsing trees using that index's repository.
+>
+> Sparse directory entries have a specific 'ce_mode' value. The macro
+> S_ISSPARSEDIR(ce) can check if a cache_entry 'ce' has this type. This
+> ce_mode is not possible with the existing index formats, so we don't
+> also verify all properties of a sparse-directory entry, which are:
+>
+>  1. ce->ce_mode == 01000755
+
+This is a weird number.  What's the reason for choosing it?  It looks
+deceptively close to 0100755, normal executable files, but has the
+extra 0, meaning that ce->ce_mode & S_IFMT is 0, suggesting it has no
+file type.
+
+Since it's a directory, why not use S_IFDIR (040000)?
+
+(GITLINK does use the weird 0160000 value, but it happens to be
+S_IFLNK | S_IFDIR == 0120000 | 040000, which conveys "it's both a
+directory and a symlink")
+
+>  2. ce->flags & CE_SKIP_WORKTREE is true
+
+Makes sense.
+
+>  3. ce->name[ce->namelen - 1] == '/' (ends in dir separator)
+
+Is there a particular reason for this?  I'm used to seeing names
+without the trailing slash, both in the index and in tree objects.  I
+don't know enough to be for or against this idea; just curious at this
+point.
+
+>  4. ce->oid references a tree object.
+
+Makes sense...but doesn't that suggest we'd want to use ce->ce_mode = 040000?
+
+
+Also, as a bit of a side comment: There have been other requests in
+the past to support directory objects in the index.  The only use I
+remember for them requested from others was to allow tracking empty
+directories.  However, I've long wanted to introduce a new "blobtree"
+object to git, so that a user can "git add" some big binary file, but
+internally git splits the binary file up and stores it as multiple
+blobs within git plus a new "blobtree" object that references all the
+individual blobs with enough information about how to stitch all the
+blobs together to get the original file.  I had a few different forms
+of "blobtree" things that I was interested in.  I think brian once
+suggested some similar idea.
+
+> These are all semi-enforced in ensure_full_index() to some extent. Any
+> deviation will cause a warning at minimum or a failure in the worst
+> case.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  cache.h        | 11 +++++-
+>  read-cache.c   |  9 +++++
+>  sparse-index.c | 94 +++++++++++++++++++++++++++++++++++++++++++++++++-
+>  sparse-index.h |  1 +
+>  4 files changed, 113 insertions(+), 2 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index f9c7a603841..884046ca5b8 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -204,6 +204,10 @@ struct cache_entry {
+>  #error "CE_EXTENDED_FLAGS out of range"
+>  #endif
+>
+> +#define CE_MODE_SPARSE_DIRECTORY 01000755
+> +#define SPARSE_DIR_MODE 0100
+
+Another magic value.  Feels like the commit message should reference
+this one and why it was picked.  Seems odd to me, and possibly
+problematic to re-use file permission bits that might collide with
+files recorded by really old versions of git.  Maybe that's not a
+concern, though.
+
+> +#define S_ISSPARSEDIR(m) ((m)->ce_mode == CE_MODE_SPARSE_DIRECTORY)
+
+Should the special sauce apply to ce_flags rather than ce_mode?  Thus,
+instead of an S_ISSPARSEDIR, perhaps have a ce_sparse_dir macro
+(similar to ce_skip_worktree) based on a CE_SPARSE_DIR value (similar
+to CE_SKIP_WORKTREE)?
+
+Or, alternatively, do we need a single special state here?  Could we
+check for a combination of ce_mode == 040000 && ce_skip_worktree(ce)?
+
 > +
-> +	const void *start;
-
-It may be clearer to fold both of these into an anonymous union along
-with an enum to indicate which mode we're in. But, I could also buy that
-that is more error prone, so perhaps just a comment along the lines of
-"exactly one of these is NULL" would suffice, too.
-
->  };
+>  /* Forward structure decls */
+>  struct pathspec;
+>  struct child_process;
+> @@ -249,6 +253,8 @@ static inline unsigned int create_ce_mode(unsigned int mode)
+>  {
+>         if (S_ISLNK(mode))
+>                 return S_IFLNK;
+> +       if (mode == SPARSE_DIR_MODE)
+> +               return CE_MODE_SPARSE_DIRECTORY;
+>         if (S_ISDIR(mode) || S_ISGITLINK(mode))
+>                 return S_IFGITLINK;
+>         return S_IFREG | ce_permissions(mode);
+> @@ -319,7 +325,8 @@ struct index_state {
+>                  drop_cache_tree : 1,
+>                  updated_workdir : 1,
+>                  updated_skipworktree : 1,
+> -                fsmonitor_has_run_once : 1;
+> +                fsmonitor_has_run_once : 1,
+> +                sparse_index : 1;
+>         struct hashmap name_hash;
+>         struct hashmap dir_hash;
+>         struct object_id oid;
+> @@ -721,6 +728,8 @@ int read_index_from(struct index_state *, const char *path,
+>                     const char *gitdir);
+>  int is_index_unborn(struct index_state *);
 >
->  struct chunkfile {
-> @@ -89,3 +91,65 @@ int write_chunkfile(struct chunkfile *cf, void *data)
+> +void ensure_full_index(struct index_state *istate);
+> +
+>  /* For use with `write_locked_index()`. */
+>  #define COMMIT_LOCK            (1 << 0)
+>  #define SKIP_IF_UNCHANGED      (1 << 1)
+> diff --git a/read-cache.c b/read-cache.c
+> index ecf6f689940..1097ecbf132 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -101,6 +101,9 @@ static const char *alternate_index_output;
 >
->  	return 0;
+>  static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+>  {
+> +       if (S_ISSPARSEDIR(ce))
+> +               istate->sparse_index = 1;
+> +
+>         istate->cache[nr] = ce;
+>         add_name_hash(istate, ce);
 >  }
-> +
-> +int read_table_of_contents(struct chunkfile *cf,
-> +			   const unsigned char *mfile,
-> +			   size_t mfile_size,
-
-Assuming that mfile and mfile_size are a pointer to a memory mapped
-region and its size? If so, a nit is that I'd expect "data" and "size"
-instead of "mfile".
-
-I think that it's probably going too far to have the chunkfile API
-handle mapping its own memory, so in that way I don't think it's wrong
-for the callers to be handling that.
-
-OTOH, it does seem a little weird to temporarily hand off ownership like
-this. I don't think I have a better suggestion, though.
-
-The implementation of this function looks good to me.
-
-> +int pair_chunk(struct chunkfile *cf,
-> +	       uint32_t chunk_id,
-> +	       chunk_read_fn fn,
-> +	       void *data)
-> +{
-> +	int i;
-> +
-> +	for (i = 0; i < cf->chunks_nr; i++) {
-> +		if (cf->chunks[i].id == chunk_id)
-> +			return fn(cf->chunks[i].start, cf->chunks[i].size, data);
-> +	}
-> +
-> +	return CHUNK_NOT_FOUND;
-> +}
-> diff --git a/chunk-format.h b/chunk-format.h
-> index bfaed672813..250e08b8e6a 100644
-> --- a/chunk-format.h
-> +++ b/chunk-format.h
-> @@ -17,4 +17,25 @@ void add_chunk(struct chunkfile *cf,
->  	       size_t size);
->  int write_chunkfile(struct chunkfile *cf, void *data);
+> @@ -2255,6 +2258,12 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>         trace2_data_intmax("index", the_repository, "read/cache_nr",
+>                            istate->cache_nr);
 >
-> +int read_table_of_contents(struct chunkfile *cf,
-> +			   const unsigned char *mfile,
-> +			   size_t mfile_size,
-> +			   uint64_t toc_offset,
-> +			   int toc_length);
+> +       if (!istate->repo)
+> +               istate->repo = the_repository;
+> +       prepare_repo_settings(istate->repo);
+> +       if (istate->repo->settings.command_requires_full_index)
+> +               ensure_full_index(istate);
 > +
-> +/*
-> + * When reading a table of contents, we find the chunk with matching 'id'
-> + * then call its read_fn to populate the necessary 'data' based on the
-> + * chunk start and size.
-> + */
-> +typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
-> +			     size_t chunk_size, void *data);
+>         return istate->cache_nr;
+>
+>  unmap:
+> diff --git a/sparse-index.c b/sparse-index.c
+> index 82183ead563..1e70244dc13 100644
+> --- a/sparse-index.c
+> +++ b/sparse-index.c
+> @@ -1,8 +1,100 @@
+>  #include "cache.h"
+>  #include "repository.h"
+>  #include "sparse-index.h"
+> +#include "tree.h"
+> +#include "pathspec.h"
+> +#include "trace2.h"
 > +
+> +static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+> +{
+> +       ALLOC_GROW(istate->cache, nr + 1, istate->cache_alloc);
 > +
-> +#define CHUNK_NOT_FOUND (-2)
-> +int pair_chunk(struct chunkfile *cf,
-> +	       uint32_t chunk_id,
-> +	       chunk_read_fn fn,
-> +	       void *data);
+> +       istate->cache[nr] = ce;
+> +       add_name_hash(istate, ce);
+> +}
+> +
+> +static int add_path_to_index(const struct object_id *oid,
+> +                               struct strbuf *base, const char *path,
+> +                               unsigned int mode, int stage, void *context)
+> +{
+> +       struct index_state *istate = (struct index_state *)context;
+> +       struct cache_entry *ce;
+> +       size_t len = base->len;
+> +
+> +       if (S_ISDIR(mode))
+> +               return READ_TREE_RECURSIVE;
+> +
+> +       strbuf_addstr(base, path);
+> +
+> +       ce = make_cache_entry(istate, mode, oid, base->buf, 0, 0);
+> +       ce->ce_flags |= CE_SKIP_WORKTREE;
+> +       set_index_entry(istate, istate->cache_nr++, ce);
+> +
+> +       strbuf_setlen(base, len);
+> +       return 0;
+> +}
+>
+>  void ensure_full_index(struct index_state *istate)
+>  {
+> -       /* intentionally left blank */
+> +       int i;
+> +       struct index_state *full;
+> +
+> +       if (!istate || !istate->sparse_index)
+> +               return;
+> +
+> +       if (!istate->repo)
+> +               istate->repo = the_repository;
+> +
+> +       trace2_region_enter("index", "ensure_full_index", istate->repo);
+> +
+> +       /* initialize basics of new index */
+> +       full = xcalloc(1, sizeof(struct index_state));
+> +       memcpy(full, istate, sizeof(struct index_state));
+> +
+> +       /* then change the necessary things */
+> +       full->sparse_index = 0;
+> +       full->cache_alloc = (3 * istate->cache_alloc) / 2;
+> +       full->cache_nr = 0;
+> +       ALLOC_ARRAY(full->cache, full->cache_alloc);
+> +
+> +       for (i = 0; i < istate->cache_nr; i++) {
+> +               struct cache_entry *ce = istate->cache[i];
+> +               struct tree *tree;
+> +               struct pathspec ps;
+> +
+> +               if (!S_ISSPARSEDIR(ce)) {
+> +                       set_index_entry(full, full->cache_nr++, ce);
+> +                       continue;
+> +               }
+> +               if (!(ce->ce_flags & CE_SKIP_WORKTREE))
+> +                       warning(_("index entry is a directory, but not sparse (%08x)"),
+> +                               ce->ce_flags);
+> +
+> +               /* recursively walk into cd->name */
+> +               tree = lookup_tree(istate->repo, &ce->oid);
+> +
+> +               memset(&ps, 0, sizeof(ps));
+> +               ps.recursive = 1;
+> +               ps.has_wildcard = 1;
+> +               ps.max_depth = -1;
+> +
+> +               read_tree_recursive(istate->repo, tree,
+> +                                   ce->name, strlen(ce->name),
+> +                                   0, &ps,
+> +                                   add_path_to_index, full);
+> +
+> +               /* free directory entries. full entries are re-used */
+> +               discard_cache_entry(ce);
+> +       }
+> +
+> +       /* Copy back into original index. */
+> +       memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
+> +       istate->sparse_index = 0;
+> +       istate->cache = full->cache;
 
-From reading the implementation, I take it that this function calls fn
-with the location and size of the requested chunk, along with the user
-supplied data.
+Haven't you leaked the original istate->cache here?
 
-I'm not sure that "pair" gives me that same sense. Maybe "read" or
-"lookup" would be better?
+> +       istate->cache_nr = full->cache_nr;
+> +       istate->cache_alloc = full->cache_alloc;
+> +
+> +       free(full);
+> +
+> +       trace2_region_leave("index", "ensure_full_index", istate->repo);
+>  }
+> diff --git a/sparse-index.h b/sparse-index.h
+> index 8dda92032e2..a2777dcac59 100644
+> --- a/sparse-index.h
+> +++ b/sparse-index.h
+> @@ -3,5 +3,6 @@
+>
+>  struct index_state;
+>  void ensure_full_index(struct index_state *istate);
+> +int convert_to_sparse(struct index_state *istate);
 
-Dunno.
+Seems logically that you'd add one, but was this meant to be included
+in a later patch?
 
-Thanks,
-Taylor
+>
+>  #endif
+> \ No newline at end of file
+> --
+> gitgitgadget
+>
