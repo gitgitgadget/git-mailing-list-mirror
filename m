@@ -2,82 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77CDFC433DB
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 305D8C433DB
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 04:16:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D7EF206B9
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 03:59:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC72120709
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 04:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237559AbhA0D7g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Jan 2021 22:59:36 -0500
-Received: from out01.mta.xmission.com ([166.70.13.231]:46986 "EHLO
-        out01.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236606AbhA0DiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Jan 2021 22:38:06 -0500
-Received: from in01.mta.xmission.com ([166.70.13.51])
-        by out01.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1l4bdw-006X9C-4G; Tue, 26 Jan 2021 20:37:20 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <seth@eseth.com>)
-        id 1l4bdv-0000Qt-J1; Tue, 26 Jan 2021 20:37:20 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 60FC45009A3;
-        Tue, 26 Jan 2021 20:37:19 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id LQZw42CXN5b6; Tue, 26 Jan 2021 20:37:19 -0700 (MST)
-Received: from ellen (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 4F229500896;
-        Tue, 26 Jan 2021 20:37:17 -0700 (MST)
-Date:   Tue, 26 Jan 2021 20:37:14 -0700
-From:   Seth House <seth@eseth.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Aguilar <davvid@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Message-ID: <20210127033714.GA16914@ellen>
-References: <xmqqa6thcn1n.fsf_-_@gitster.c.googlers.com>
- <20210110072902.GA247325@ellen>
- <xmqqh7np9gqn.fsf@gitster.c.googlers.com>
- <20210116042454.GA4913@ellen>
- <YAo9aTkZBCSGLYTT@camp.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2101221728410.52@tvgsbejvaqbjf.bet>
- <YAte7ixZYdz1AOMX@camp.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2101261522200.57@tvgsbejvaqbjf.bet>
- <20210126180635.GA28241@ellen>
- <xmqqr1m71mty.fsf@gitster.c.googlers.com>
+        id S237831AbhA0D7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Jan 2021 22:59:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37862 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232276AbhA0DDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Jan 2021 22:03:19 -0500
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C81A1C0617AB
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 18:29:37 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id z6so463708qtn.0
+        for <git@vger.kernel.org>; Tue, 26 Jan 2021 18:29:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0Ec1H25fg2751GNV4z7AGzrQioJQb9Rlh2lj9nseowI=;
+        b=kNiSl5MITBCdjZS7SZ6U1JHtg4FE4QEM0zL8kPLJ0XniXKjOdiuOOZpOd0knrVgEGo
+         S9zIxSB84DBwjUeubAfhunu7MVYy9W1JOfKiM5BjJtdG2O2uT921U6+815j0F7BRvCeM
+         JNlpp8EK7l+j8ffePQuUlgqN8/ldQNobL4bTnMFPgZcg69oGYCWhE4zNOWgeXotBry9A
+         aSH1LRe11JEnzPREzmmvmTmtZ4BqsMZ6e2lqPAPmH9yvoP/Wyw0HEO4r/Y3NFuWI/T9I
+         ZuloJXHG0cMV9fecu4tQPXKg9pOZCnWq4BBwtec0pC5JD+pLxvrW/q7incvtfzRAneUo
+         //Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0Ec1H25fg2751GNV4z7AGzrQioJQb9Rlh2lj9nseowI=;
+        b=cnbO4XHg8YHgG89Ssui7IUL84IjoPgyfMPlpNOP7me2bjQDwD62MXmKitzybymFNJ2
+         JLpMJvPwgKeESRq/+r1S2a30I2k7qdhlvA47sT1IHyTsq9gSsJyd2hQCoFp2qgIyLDdH
+         C3i2CMHubXeq2NlQ7p7fj8WixOjyQtWdq3Us4KK9g1nucyeYbZztKoXKOYG6BHidFDi0
+         AEm1mRPVMUxCw/98Tmsh7oXjUAvZLQP+gwofvlVc0ZXN/kamcAX4x9HIn7p5qmfqcGxH
+         AbsTVsPllY0340ibZipiXYU+4aBOigKH9I0gC94FW9cpwFywlgn9zuhP8wgCnDyCloA+
+         Cdpw==
+X-Gm-Message-State: AOAM5333wUWa8oDf3QIToBZmRd/8LS+1VvqoZTEPShUdqiAppTZUBUDb
+        QNbMk6fnGdNslFpJtK8D6Do36Q==
+X-Google-Smtp-Source: ABdhPJxgOUSGAllVCtxCOVSZ2v1Lx8iafJe8tnu8Lc4RCFWPVrfaZeZcjT8kCsHfsHJqJPXmQPi8GQ==
+X-Received: by 2002:ac8:1109:: with SMTP id c9mr7801299qtj.120.1611714576889;
+        Tue, 26 Jan 2021 18:29:36 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:5cad:8534:72d4:8c70])
+        by smtp.gmail.com with ESMTPSA id y67sm330313qka.68.2021.01.26.18.29.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Jan 2021 18:29:36 -0800 (PST)
+Date:   Tue, 26 Jan 2021 21:29:26 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        l.s.r@web.de, szeder.dev@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 00/17] Refactor chunk-format into an API
+Message-ID: <YBDQBkmCFUTMM5/C@nand.local>
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqr1m71mty.fsf@gitster.c.googlers.com>
-X-XM-SPF: eid=1l4bdv-0000Qt-J1;;;mid=<20210127033714.GA16914@ellen>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: Re* [PATCH v2] fixup! mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+In-Reply-To: <pull.848.git.1611676886.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 26, 2021 at 12:10:17PM -0800, Junio C Hamano wrote:
-> I am OK with that "two merge-file invocations, one with --ours and
-> then another with --theirs" approach, as I already said in
-> https://lore.kernel.org/git/xmqqh7n9aer5.fsf@gitster.c.googlers.com/
+On Tue, Jan 26, 2021 at 04:01:09PM +0000, Derrick Stolee via GitGitGadget wrote:
+> This version also changes the approach to use a more dynamic interaction
+> with a struct chunkfile pointer. This idea is credited to Taylor Blau [2],
+> but I started again from scratch. I also go further to make struct chunkfile
+> anonymous to API consumers. It is defined only in chunk-format.c, which
+> should hopefully deter future users from interacting with that data
+> directly.
+>
+> [2] https://lore.kernel.org/git/X8%2FI%2FRzXZksio+ri@nand.local/
 
-Sorry if it seemed like I left that thread hanging (busy week). Thanks
-for your reply(s). I'm finishing a v10 patchset with that change which
-I'll submit to the list for review this week.
+Great; I am very happy that you found my patch to be useful. I'm glad
+that you decided to start from scratch, too, since as I recall there
+were some unresolved test issues that I punted on in case you decided to
+abandon the topic altogether.
 
+> This combined API is beneficial to reduce duplicated logic. Or rather, to
+> ensure that similar file formats have similar protections against bad data.
+> The multi-pack-index code did not have as many guards as the commit-graph
+> code did, but now they both share a common base that checks for things like
+> duplicate chunks or offsets outside the size of the file.
+
+Definitely good.
+
+> Here are some stats for the end-to-end change:
+>
+>  * 638 insertions(+), 456 deletions(-).
+>  * commit-graph.c: 171 insertions(+), 192 deletions(-)
+>  * midx.c: 196 insertions(+), 260 deletions(-)
+>
+> While there is an overall increase to the code size, the consumers do get a
+> bit smaller. Boilerplate things like abstracting method to match
+> chunk_write_fn and chunk_read_fn make up a lot of these insertions. The
+> "interesting" code gets a lot smaller and cleaner.
+
+Like I said in [1], I don't think a net +182 line diff is reason alone
+not to pursue this topic. I don't think that an chunked index v3 will
+come as part of my work on the on-disk revindex format, but I do think
+that it's something brian may be interested in. So, I'm feeling rather
+certain that we'll eventually have new callers, at which point this will
+reduce duplication overall.
+
+[1]: https://lore.kernel.org/git/X8%2FK1dUgUmwp8ZOv@nand.local/
+
+Thanks,
+Taylor
