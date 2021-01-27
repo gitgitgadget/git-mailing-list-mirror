@@ -2,130 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EAABC433E6
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F975C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:45:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C343A207D2
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:36:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F04A9207B7
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236224AbhA0Pgb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 10:36:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235573AbhA0PDn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 10:03:43 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F1B2C06121D
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:10 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id c128so1953956wme.2
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+DRAQNjk0bjEC6cdHtenVpAcIZ+yrXA2o9jF08e5BFs=;
-        b=tZ/ocKqAOCkGcXjweB3UoNcuwQiuI+5Ql7UCvgEDsQAyx9puJeZPJFZFLmXF7blPn3
-         em9YmKZoX459M2n0VqFW/6sZKxiuzTQ06vJUEH3Uj/k9dLwsLAeFtwwO8oWrrZDK/an1
-         51jScuWpelmtWPnxuk1ZsvQZCKHGYk6WXh25MtEarQhRJjLa1TyzU7MbHgWNup9H20Ut
-         WKFf7BVTXWJJ1qZCc9RS2YK2Dc+F3TS0wpolTjltK8y28k/p+OVcwT/HW9JZsMlwfP9f
-         HrAdKsEFzNN2YMlLkzdvIns3aHdFBx7GyGzMln4ERV56VQ3Wbucwewme5TaXJw8skUDi
-         MQaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+DRAQNjk0bjEC6cdHtenVpAcIZ+yrXA2o9jF08e5BFs=;
-        b=VpwN4/FhqIkNdwLPOV8K4ITEbPhdjRyz9qIXvh5uXtgZp4KA7HUr+BHXVqxdCecyRy
-         WJpGt0lkvta3U6mLAfwJMGU8GoGWeCeebm/LyrSx7yYAPEdZT01QnX3/a+qoWNet/JwS
-         1Y6sgYB72AvaKfr3yhezl5G1exvA7THD1a6F8oxtUPwmrwyPDyC1hqDm85mswqXi7OdG
-         opldU+ecQyW7zQ+Y+W+ZLEGuLkWtbaLyTb+foh6y80l2Klje0yj3H6iay0t123xpE/z7
-         r8wKLBvAOJlISl9ZBq1YzZtCoKOw03Zrg3GWLCdXPNs6zvA+hbWQ2zfM5fDyCipL37rB
-         U6Xg==
-X-Gm-Message-State: AOAM533bqQ5Fa7XIxK70XV1xDgao0A0oyH7UKsUqPkPm7GJNDLQj48xK
-        d6gaPIrJWd3K4jh/aAY2PJAZ9lZauJk=
-X-Google-Smtp-Source: ABdhPJxlQpzJRwYR1pKSw/IV6N9ml9VFhK70dHQ1vyQwMBh79oOKGkdxMgJ0wOV88xqs5cDSeUq00w==
-X-Received: by 2002:a05:600c:24b:: with SMTP id 11mr4402960wmj.17.1611759729043;
-        Wed, 27 Jan 2021 07:02:09 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r16sm3318766wrx.36.2021.01.27.07.02.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jan 2021 07:02:08 -0800 (PST)
-Message-Id: <78744d3b7016520cfc946e858eb1f6233003bffc.1611759716.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
-        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Jan 2021 15:01:49 +0000
-Subject: [PATCH v2 10/17] midx: drop chunk progress during write
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S236395AbhA0Pok (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 10:44:40 -0500
+Received: from mout.gmx.net ([212.227.15.15]:53477 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235907AbhA0Pmh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 10:42:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1611762062;
+        bh=Cj0h/rau7iLOeio7DDfy/rLUa6hOf5ZBza8o6nLlvXo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PW348FlheWYSj6lpkzeATTljXPu7pVTXwkgT4NZFpKl9qsHPk5YeYfWH2C0m89py1
+         tZh5QiMi2l4v5oQan7euUVA1GffG5lcFLky2gp/K7jG4ksZhcLMU1KKR81cu0d31Xj
+         HIM7Y6sTHRvF1544MCFGxlL/0GDGCOx+Ulvwd2x4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.88.23] ([89.1.213.153]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwQXH-1lwLOd2MQn-00sROz; Wed, 27
+ Jan 2021 16:41:02 +0100
+Date:   Wed, 27 Jan 2021 04:01:33 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH 3/3] range-diff(docs): explain how to specify commit
+ ranges
+In-Reply-To: <xmqq1recal32.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2101270357480.57@tvgsbejvaqbjf.bet>
+References: <pull.841.git.1611267638.gitgitgadget@gmail.com> <041456b6e73b3a88097d0cc06056eb43d35d42c6.1611267638.git.gitgitgadget@gmail.com> <xmqqwnw5am64.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2101221720200.52@tvgsbejvaqbjf.bet>
+ <xmqq1recal32.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, gitster@pobox.com, l.s.r@web.de,
-        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nPXyy2vs8Gksh51dPZuR7ei9IwzFf5Jq6TPfYzqTYiHdZJqoRrf
+ FSlzdxKUuXzNGTj19jEJhBtfzPAX6pe/Ml5GD+d6fiHEN3L3vjQhygkaPDRzJghnYOmL/WT
+ vDnBhX82NN4xNBqxu0Lh48aTXj514rZqsJdLrm2uo0VUN/z0YJNO30ixoV1myNJQVfwoMjB
+ lsyaCWe7rxETKDKCv/xFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tevJaeiPtjA=:MULQX5GMhz7Gvk2H7vJqYC
+ ZpTr6egEjWafFEN1bLfOrfH5ku3fL8kbNCUJTa6HxpwJ/y8/h9PB5bacwz6NS2k8A4+UtfAUU
+ BDsmCY2RdWjtSEN6DfquvS06EoQyM0F+sgInq3JdZMgXDkluPjhXpcZy4YLLhvP6dEkXBbCkk
+ +YOF5RlSigGyahKfi3NZsRvM+89ctjg3elbRUoIlkd//hJTcO3g7ejcYtljaRbM2e+GJZrcqH
+ SQ7K3NGUdCO3LyM2jpU3Dc2/6uTiwh4T4dcKsXcOuS/cMWGlB1ErllPvy7qkw2rCywHbHuqik
+ LFVlLgWK3GLOLEqf0c/R2Q3VA1Lzdbjo0uGadr5U9UX6qwqKSubxeS9pZRxga9rHRxFkBkR0U
+ xbpE97xslfoQ37Rbjn5oEvIi4fRoqEe8Atxl2UIDiR5nJsL4OQ/pStYVr9NyHmtl7zxNA2yNX
+ XbxhhL4sNTejhNvI2oFtb7OgtTbemdhjeB1Q1h3xHiTgjR5IhdFVxL+rct8PuiM496LxWL2Nl
+ 1fGYKIlVQf4GY2cWCdyp/K8+H2ZjKVIQ/aYi6TnuD99A45/oWFivin1EtKU2PGxiKhqjSHZ9A
+ D6KKn36xB/q/4R36c/doIe/7XrQd3F17K8+xImE8LQ9uDncjuP3KPdbY3lmCmH8RYZOit3H8a
+ 577IigV7EAreGVVRhV0kWPUQDHmqUIANaKxVwB1iiOd6VgMnxQC4XFqxrlZjjwDJAVBHlBCZS
+ doEqma89hYFmTZI1jKBxChpg+w04ZCDl5kgaD91mKxqXtrSEUyabHkAYX48I7cRGcXxKTICV8
+ DPGBl6IcQtD2tO0mmRFL0cOgzKvmP6n4Plw+kZJc8lZyjrNXYGnXXynUhDXtY1u3Rzrg6LMIq
+ MFueUVJz/EeKBTTY6cU/gq45Zh/AiOBqDC17cgknM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Junio,
 
-Most expensive operations in write_midx_internal() use the context
-struct's progress member, and these indicate the process of the
-expensive operations within the chunk writing methods. However, there is
-a competing progress struct that counts the progress over all chunks.
-This is not very helpful compared to the others, so drop it.
+On Fri, 22 Jan 2021, Junio C Hamano wrote:
 
-This also reduces our barriers to combining the chunk writing code with
-chunk-format.c.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> > +- `<rev1>...<rev2>`. This resembles the symmetric ranges mentioned=
+ in
+> >> > +  the `SPECIFYING RANGES` section of linkgit:gitrevisions[7], and =
+is
+> >> > +  equivalent to `<base>..<rev1> <base>..<rev2>` where `<base>` is =
+the
+> >> > +  merge base as obtained via `git merge-base <rev1> <rev2>`.
+>
+> The above paragraph says A...B is turned into $(git merge-base A
+> B)..A and $(git merge-base A B)..B, but I wonder if we should be
+> rewriting it into A..B and B..A instead; that would make it
+> unnecessary to explain what should happen when there are more than
+> one merge bases.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- midx.c | 7 -------
- 1 file changed, 7 deletions(-)
+You know what? I lied. The code already does what you suggested. Look
+[here](https://github.com/git/git/blob/v2.30.0/builtin/range-diff.c#L59-L7=
+7):
 
-diff --git a/midx.c b/midx.c
-index e23a5fc4903..6ee262aab79 100644
---- a/midx.c
-+++ b/midx.c
-@@ -808,7 +808,6 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	uint64_t header_size = 0;
- 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
- 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
--	struct progress *progress = NULL;
- 	int pack_name_concat_len = 0;
- 	int dropped_packs = 0;
- 	int result = 0;
-@@ -976,9 +975,6 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 		hashwrite_be64(f, chunk_offsets[i]);
- 	}
- 
--	if (flags & MIDX_PROGRESS)
--		progress = start_delayed_progress(_("Writing chunks to multi-pack-index"),
--					  num_chunks);
- 	for (i = 0; i < num_chunks; i++) {
- 		if (f->total + f->offset != chunk_offsets[i])
- 			BUG("incorrect chunk offset (%"PRIu64" != %"PRIu64") for chunk id %"PRIx32,
-@@ -1011,10 +1007,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 				BUG("trying to write unknown chunk id %"PRIx32,
- 				    chunk_ids[i]);
- 		}
--
--		display_progress(progress, i + 1);
- 	}
--	stop_progress(&progress);
- 
- 	if (f->total + f->offset != chunk_offsets[num_chunks])
- 		BUG("incorrect final offset %"PRIu64" != %"PRIu64,
--- 
-gitgitgadget
+	[...]
+        } else if (argc =3D=3D 1) {
+                const char *b =3D strstr(argv[0], "..."), *a =3D argv[0];
+                int a_len;
 
+                if (!b) {
+                        error(_("single arg format must be symmetric range=
+"));
+                        usage_with_options(builtin_range_diff_usage, optio=
+ns);
+                }
+
+                a_len =3D (int)(b - a);
+                if (!a_len) {
+                        a =3D "HEAD";
+                        a_len =3D strlen(a);
+                }
+                b +=3D 3;
+                if (!*b)
+                        b =3D "HEAD";
+                strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
+                strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
+	[...]
+
+> >> Does this merely resemble?  Isn't it exactly what a symmetric range i=
+s?
+> >
+> > No, it is not exactly what a symmetric range is because `range-diff`
+> > treats both arms of the symmetric range independently, as two distinct
+> > non-symmetric ranges.
+>
+> This however is an end-user documentation, isn't it?
+
+Yes, and the end user is talking about _two_ commit ranges in the context
+of `git range-diff`, and about _one_ commit range in the context of `git
+log`.
+
+So I still think that it really just only resembles the symmetric range.
+It is fundamentally as different from it as the number 2 is different from
+the number 1.
+
+Ciao,
+Dscho
