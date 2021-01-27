@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 057EEC433E6
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 908E6C433E0
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:07:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C7EC207FC
-	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:07:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3DF822074D
+	for <git@archiver.kernel.org>; Wed, 27 Jan 2021 15:07:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235561AbhA0PGx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 10:06:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
+        id S235582AbhA0PHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 10:07:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235456AbhA0PCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 10:02:55 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CA2C061353
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:03 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id g10so2262039wrx.1
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:03 -0800 (PST)
+        with ESMTP id S235473AbhA0PDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 10:03:02 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9398BC061356
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:07 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id u14so1944750wmq.4
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 07:02:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IVxpJhxwjfihzysiEtTywlKgWec7iN7UTRxTl4Cf+Tw=;
-        b=RfUbmthH2r8av4PEryiLNPOSnXdpOewtMxRDd29dV6ejhr9lDjy9x/alvM4IoeHaXI
-         qpKkyg590s7UPMdTci5o5+yVLiAyM6w61HKnh1GnwKYXyPUF4PtMVZ62mlCwSEmA2S7r
-         vSSgDJZZOHHpR20gLK+/A2nvsXhOUuAuBPEV9p0cXfMYqkp93EyJ3jd6d+QF5Siomt8g
-         1mBKjS6SucaaqHyQvLvh7xkf1rfrKklss+WZfj2sPO0LsS0ZRvoUvmwSCRjX8qpYWOwz
-         s1BS/xStL2MBvuamz54icNSiAlZyv3NuTIdYd4+ktXhAjNlrb8+8Madr+eJ1nzUhXWL9
-         VXyw==
+        bh=AneWd0085FrvtuS+ErolP0xonuFSYCHl+u0lEosnw9Y=;
+        b=i7ziFPOiNEzvUQM3Q0SSTGRTItbLq8Fesb7iMnyT35j9ifC8FmQI8t6sxGafGe0Fi9
+         bnHSIbo9I4DAKibFpUxD3kBpNVkd3ytkf9zk4wJW+rMak2HJUdqI7jBWyFAlzI/XoFnz
+         65bmcVJDF5BNob19So9nrnGifHjx2gaxkXcA1hfO0h9PXi/2iNoixGPyaSgU5uET+H4Y
+         LpvaIPc0Otdrrv5DZQBbFPkGf0evk/kpxJi6gHocDqhDHkf9aZN8lRX54QyFatFXRH+L
+         wM6oA9zpmrWg9aJvSDcX7ZkXv3E4pIC4OoptWlYFul/AArV6+Ks/Pf73oHPE9UqqGFdu
+         xJag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IVxpJhxwjfihzysiEtTywlKgWec7iN7UTRxTl4Cf+Tw=;
-        b=tixK2OFM96SUWkCpyVG9zIyT3Re1S1hVgDRTCUwktuvWAWID23knpOdurCYF7u5qTU
-         CaGehA3hk3xSnCXY/2Cb284tYnQ8lcfCIWIqyMFV03QnzwQQobK0fNpxxowWAindJgN1
-         wxBzMjZ2H/GIJsGAA3XOCSLPt4b9rmj7c25jEbbxnAGmqBsnDc1nWOR9n517VfN+Cp2g
-         1neUALbWktoGtGVtNP4ULnJK2BBOEKmLwWFf0hR0oTDz7Uf8EfqTQja4KXOkCDKZ84qo
-         9dX+izLnymjZWYkslhI+JKmOGC+QovdkoUmU3X8rTY92SxvzhgQm4HdikNNBI7Y21tSL
-         JLlQ==
-X-Gm-Message-State: AOAM531DphE51DC6swpUyy+OTpXIWugpnQwU7ASn2sO18ShJI/IuoUK5
-        FJBga/qrVtUuoNNMKE8zMbZA7zqBUKI=
-X-Google-Smtp-Source: ABdhPJz6xiDkbMLK9EUSaRLYYSY4ji6q4FqGu4EaRy+ipwQUmJNWQGf4wTZMXgnqQAPzPXpW8OS08w==
-X-Received: by 2002:a5d:6588:: with SMTP id q8mr11675022wru.294.1611759721856;
-        Wed, 27 Jan 2021 07:02:01 -0800 (PST)
+        bh=AneWd0085FrvtuS+ErolP0xonuFSYCHl+u0lEosnw9Y=;
+        b=i/5jadgXWxU4lMo8k8qNRLhMVQ04HoYShEoZdSGm/tC50iWSpePR7FS2HCfikCfjoI
+         S4ReRPFU40MQ8/A9AwQ6p+oSy6KZw4m/+pho07RWUl8u4ZKx/aR3VvTzus++7ViUNDo3
+         HLcfOVHGCaaT6NEMST7dEkDj3vpTRq1bKcyUvy5b6KUIhXAFHsg6DjHtNVR8jYA2oPMg
+         dgnQNCpodOGRxhbDNR+ZII3L0nVnDeUrO8FdviIokuBt368B3CzdeMEhgEqld/5WJWBN
+         bbTUAiHHacif25sSgNK2iMXseq3qC9P+0Gvm+kV8JtLGUnYUzybhfHedt96+WeEAV5kb
+         mE+w==
+X-Gm-Message-State: AOAM533mX7R1RZR1pPNvVZGcoABdbRHrIVBRSYM7JBc4FeSyTQZNCtzb
+        k4mcQX0P+AqpsHBY/fnXxSEyo5ahYjo=
+X-Google-Smtp-Source: ABdhPJyGPOYbNpXl6VgPN/8gv7JmCvaQt3vltCFGCc69N9GGXFKtgwbfOpWxYMT1Xc53RcbdCumfRQ==
+X-Received: by 2002:a1c:4e:: with SMTP id 75mr4635957wma.150.1611759726138;
+        Wed, 27 Jan 2021 07:02:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s23sm2717182wmc.35.2021.01.27.07.02.00
+        by smtp.gmail.com with ESMTPSA id h16sm3258985wrq.29.2021.01.27.07.02.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jan 2021 07:02:00 -0800 (PST)
-Message-Id: <70af6e3083f4f5e2b921c1c9817c790c8b5f66ce.1611759716.git.gitgitgadget@gmail.com>
+        Wed, 27 Jan 2021 07:02:05 -0800 (PST)
+Message-Id: <2f1c496f3ab537820861fb8563b65f2c2fe15136.1611759716.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
         <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 27 Jan 2021 15:01:42 +0000
-Subject: [PATCH v2 03/17] commit-graph: use chunk-format write API
+Date:   Wed, 27 Jan 2021 15:01:46 +0000
+Subject: [PATCH v2 07/17] midx: add pack_perm to write_midx_context
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,194 +79,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The commit-graph write logic is ready to make use of the chunk-format
-write API. Each chunk write method is already in the correct prototype.
-We only need to use the 'struct chunkfile' pointer and the correct API
-calls.
+In an effort to align write_midx_internal() with the chunk-format API,
+continue to group necessary data into "struct write_midx_context". This
+change collects the "uint32_t *pack_perm" and large_offsets_needed bit
+into the context.
+
+Update write_midx_object_offsets() to match chunk_write_fn.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 118 ++++++++++++++++---------------------------------
- 1 file changed, 37 insertions(+), 81 deletions(-)
+ midx.c | 40 +++++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index fae7d1b6393..ba33777dcb8 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -19,6 +19,7 @@
- #include "shallow.h"
- #include "json-writer.h"
- #include "trace2.h"
-+#include "chunk-format.h"
+diff --git a/midx.c b/midx.c
+index 4520ef82b91..cd994e333ec 100644
+--- a/midx.c
++++ b/midx.c
+@@ -461,6 +461,9 @@ struct write_midx_context {
  
- void git_test_write_commit_graph_or_die(void)
- {
-@@ -1758,27 +1759,17 @@ static int write_graph_chunk_base(struct hashfile *f,
- 	return 0;
+ 	struct pack_midx_entry *entries;
+ 	uint32_t entries_nr;
++
++	uint32_t *pack_perm;
++	unsigned large_offsets_needed:1;
+ };
+ 
+ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+@@ -736,27 +739,27 @@ static size_t write_midx_oid_lookup(struct hashfile *f,
+ 	return written;
  }
  
--typedef int (*chunk_write_fn)(struct hashfile *f,
--			      void *data);
--
--struct chunk_info {
--	uint32_t id;
--	uint64_t size;
--	chunk_write_fn write_fn;
--};
--
- static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+-static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_needed,
+-					uint32_t *perm,
+-					struct pack_midx_entry *objects, uint32_t nr_objects)
++static size_t write_midx_object_offsets(struct hashfile *f,
++					void *data)
  {
- 	uint32_t i;
- 	int fd;
- 	struct hashfile *f;
- 	struct lock_file lk = LOCK_INIT;
--	struct chunk_info chunks[MAX_NUM_CHUNKS + 1];
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 	struct strbuf progress_title = STRBUF_INIT;
- 	int num_chunks = 3;
--	uint64_t chunk_offset;
- 	struct object_id file_hash;
-+	struct chunkfile *cf;
+-	struct pack_midx_entry *list = objects;
++	struct write_midx_context *ctx = data;
++	struct pack_midx_entry *list = ctx->entries;
+ 	uint32_t i, nr_large_offset = 0;
+ 	size_t written = 0;
  
- 	if (ctx->split) {
- 		struct strbuf tmp_file = STRBUF_INIT;
-@@ -1824,76 +1815,50 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
+-	for (i = 0; i < nr_objects; i++) {
++	for (i = 0; i < ctx->entries_nr; i++) {
+ 		struct pack_midx_entry *obj = list++;
+ 
+-		if (perm[obj->pack_int_id] == PACK_EXPIRED)
++		if (ctx->pack_perm[obj->pack_int_id] == PACK_EXPIRED)
+ 			BUG("object %s is in an expired pack with int-id %d",
+ 			    oid_to_hex(&obj->oid),
+ 			    obj->pack_int_id);
+ 
+-		hashwrite_be32(f, perm[obj->pack_int_id]);
++		hashwrite_be32(f, ctx->pack_perm[obj->pack_int_id]);
+ 
+-		if (large_offset_needed && obj->offset >> 31)
++		if (ctx->large_offsets_needed && obj->offset >> 31)
+ 			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
+-		else if (!large_offset_needed && obj->offset >> 32)
++		else if (!ctx->large_offsets_needed && obj->offset >> 32)
+ 			BUG("object %s requires a large offset (%"PRIx64") but the MIDX is not writing large offsets!",
+ 			    oid_to_hex(&obj->oid),
+ 			    obj->offset);
+@@ -805,13 +808,11 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	struct hashfile *f = NULL;
+ 	struct lock_file lk;
+ 	struct write_midx_context ctx = { 0 };
+-	uint32_t *pack_perm = NULL;
+ 	uint64_t written = 0;
+ 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
+ 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
+ 	uint32_t num_large_offsets = 0;
+ 	struct progress *progress = NULL;
+-	int large_offsets_needed = 0;
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+ 	int result = 0;
+@@ -857,11 +858,12 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr);
+ 
++	ctx.large_offsets_needed = 0;
+ 	for (i = 0; i < ctx.entries_nr; i++) {
+ 		if (ctx.entries[i].offset > 0x7fffffff)
+ 			num_large_offsets++;
+ 		if (ctx.entries[i].offset > 0xffffffff)
+-			large_offsets_needed = 1;
++			ctx.large_offsets_needed = 1;
  	}
  
--	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
--	chunks[0].size = GRAPH_FANOUT_SIZE;
--	chunks[0].write_fn = write_graph_chunk_fanout;
--	chunks[1].id = GRAPH_CHUNKID_OIDLOOKUP;
--	chunks[1].size = hashsz * ctx->commits.nr;
--	chunks[1].write_fn = write_graph_chunk_oids;
--	chunks[2].id = GRAPH_CHUNKID_DATA;
--	chunks[2].size = (hashsz + 16) * ctx->commits.nr;
--	chunks[2].write_fn = write_graph_chunk_data;
-+	cf = init_chunkfile(f);
-+
-+	add_chunk(cf, GRAPH_CHUNKID_OIDFANOUT,
-+		  write_graph_chunk_fanout, GRAPH_FANOUT_SIZE);
-+	add_chunk(cf, GRAPH_CHUNKID_OIDLOOKUP,
-+		  write_graph_chunk_oids, hashsz * ctx->commits.nr);
-+	add_chunk(cf, GRAPH_CHUNKID_DATA,
-+		  write_graph_chunk_data, (hashsz + 16) * ctx->commits.nr);
- 
- 	if (git_env_bool(GIT_TEST_COMMIT_GRAPH_NO_GDAT, 0))
- 		ctx->write_generation_data = 0;
--	if (ctx->write_generation_data) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA;
--		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
--		chunks[num_chunks].write_fn = write_graph_chunk_generation_data;
--		num_chunks++;
--	}
--	if (ctx->num_generation_data_overflows) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW;
--		chunks[num_chunks].size = sizeof(timestamp_t) * ctx->num_generation_data_overflows;
--		chunks[num_chunks].write_fn = write_graph_chunk_generation_data_overflow;
--		num_chunks++;
--	}
--	if (ctx->num_extra_edges) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_EXTRAEDGES;
--		chunks[num_chunks].size = 4 * ctx->num_extra_edges;
--		chunks[num_chunks].write_fn = write_graph_chunk_extra_edges;
--		num_chunks++;
--	}
-+	if (ctx->write_generation_data)
-+		add_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
-+			  write_graph_chunk_generation_data,
-+			  sizeof(uint32_t) * ctx->commits.nr);
-+	if (ctx->num_generation_data_overflows)
-+		add_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
-+			  write_graph_chunk_generation_data_overflow,
-+			  sizeof(timestamp_t) * ctx->num_generation_data_overflows);
-+	if (ctx->num_extra_edges)
-+		add_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES,
-+			  write_graph_chunk_extra_edges,
-+			  4 * ctx->num_extra_edges);
- 	if (ctx->changed_paths) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMINDEXES;
--		chunks[num_chunks].size = sizeof(uint32_t) * ctx->commits.nr;
--		chunks[num_chunks].write_fn = write_graph_chunk_bloom_indexes;
--		num_chunks++;
--		chunks[num_chunks].id = GRAPH_CHUNKID_BLOOMDATA;
--		chunks[num_chunks].size = sizeof(uint32_t) * 3
--					  + ctx->total_bloom_filter_data_size;
--		chunks[num_chunks].write_fn = write_graph_chunk_bloom_data;
--		num_chunks++;
--	}
--	if (ctx->num_commit_graphs_after > 1) {
--		chunks[num_chunks].id = GRAPH_CHUNKID_BASE;
--		chunks[num_chunks].size = hashsz * (ctx->num_commit_graphs_after - 1);
--		chunks[num_chunks].write_fn = write_graph_chunk_base;
--		num_chunks++;
--	}
--
--	chunks[num_chunks].id = 0;
--	chunks[num_chunks].size = 0;
-+		add_chunk(cf, GRAPH_CHUNKID_BLOOMINDEXES,
-+			  write_graph_chunk_bloom_indexes,
-+			  sizeof(uint32_t) * ctx->commits.nr);
-+		add_chunk(cf, GRAPH_CHUNKID_BLOOMDATA,
-+			  write_graph_chunk_bloom_data,
-+			  sizeof(uint32_t) * 3
-+				+ ctx->total_bloom_filter_data_size);
-+	}
-+	if (ctx->num_commit_graphs_after > 1)
-+		add_chunk(cf, GRAPH_CHUNKID_BASE,
-+			  write_graph_chunk_base,
-+			  hashsz * (ctx->num_commit_graphs_after - 1));
- 
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
- 
- 	hashwrite_u8(f, GRAPH_VERSION);
- 	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
-+	hashwrite_u8(f, get_num_chunks(cf));
- 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
- 
--	chunk_offset = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
--	for (i = 0; i <= num_chunks; i++) {
--		uint32_t chunk_write[3];
--
--		chunk_write[0] = htonl(chunks[i].id);
--		chunk_write[1] = htonl(chunk_offset >> 32);
--		chunk_write[2] = htonl(chunk_offset & 0xffffffff);
--		hashwrite(f, chunk_write, 12);
--
--		chunk_offset += chunks[i].size;
--	}
--
- 	if (ctx->report_progress) {
- 		strbuf_addf(&progress_title,
- 			    Q_("Writing out commit graph in %d pass",
-@@ -1905,17 +1870,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			num_chunks * ctx->commits.nr);
+ 	QSORT(ctx.info, ctx.nr, pack_info_compare);
+@@ -900,13 +902,13 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	 *
+ 	 * pack_perm[old_id] = new_id
+ 	 */
+-	ALLOC_ARRAY(pack_perm, ctx.nr);
++	ALLOC_ARRAY(ctx.pack_perm, ctx.nr);
+ 	for (i = 0; i < ctx.nr; i++) {
+ 		if (ctx.info[i].expired) {
+ 			dropped_packs++;
+-			pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
+ 		} else {
+-			pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
++			ctx.pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
+ 		}
  	}
  
--	for (i = 0; i < num_chunks; i++) {
--		uint64_t start_offset = f->total + f->offset;
--
--		if (chunks[i].write_fn(f, ctx))
--			return -1;
--
--		if (f->total + f->offset != start_offset + chunks[i].size)
--			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
--			    chunks[i].size, chunks[i].id,
--			    f->total + f->offset - start_offset);
--	}
-+	write_chunkfile(cf, ctx);
+@@ -927,7 +929,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 		close_midx(ctx.m);
  
- 	stop_progress(&ctx->progress);
- 	strbuf_release(&progress_title);
-@@ -1932,6 +1887,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 	cur_chunk = 0;
+-	num_chunks = large_offsets_needed ? 5 : 4;
++	num_chunks = ctx.large_offsets_needed ? 5 : 4;
  
- 	close_commit_graph(ctx->r->objects);
- 	finalize_hashfile(f, file_hash.hash, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
-+	free_chunkfile(cf);
+ 	if (ctx.nr - dropped_packs == 0) {
+ 		error(_("no pack files to index."));
+@@ -954,7 +956,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
  
- 	if (ctx->split) {
- 		FILE *chainf = fdopen_lock_file(&lk, "w");
+ 	cur_chunk++;
+ 	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH;
+-	if (large_offsets_needed) {
++	if (ctx.large_offsets_needed) {
+ 		chunk_ids[cur_chunk] = MIDX_CHUNKID_LARGEOFFSETS;
+ 
+ 		cur_chunk++;
+@@ -1004,7 +1006,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 				break;
+ 
+ 			case MIDX_CHUNKID_OBJECTOFFSETS:
+-				written += write_midx_object_offsets(f, large_offsets_needed, pack_perm, ctx.entries, ctx.entries_nr);
++				written += write_midx_object_offsets(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_LARGEOFFSETS:
+@@ -1039,7 +1041,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 	free(ctx.info);
+ 	free(ctx.entries);
+-	free(pack_perm);
++	free(ctx.pack_perm);
+ 	free(midx_name);
+ 	return result;
+ }
 -- 
 gitgitgadget
 
