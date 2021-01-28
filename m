@@ -7,102 +7,95 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E43CC433E0
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F04D3C433E0
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:51:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10AFC64DD6
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:44:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93F8864DD1
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229870AbhA1Fo1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 00:44:27 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61018 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229852AbhA1FoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 00:44:25 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0700690621;
-        Thu, 28 Jan 2021 00:43:43 -0500 (EST)
+        id S229545AbhA1Fuw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 00:50:52 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58184 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229462AbhA1Fuv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 00:50:51 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E1DB511FF20;
+        Thu, 28 Jan 2021 00:50:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hEQKH/zFkfr09qpMilW9UxP62Ng=; b=HB+7oQ
-        V7rlv5PE6CwpDC5AgDF6bm1Ah0OlFU5ZqDwskOeC1aXaJfZ5B/7IvswKWiZgXoBy
-        v6b7unjc1biW4/5JLgqiCfwUT9rCfLAqidfBMI5xayAavQjhfHcQyATOWRC4B40R
-        6hwOvxE74bHiqD4uA/OIWDlIahtib78NpdxcY=
+        :content-type; s=sasl; bh=LMlVeBDMVSz23QvLYZS5n/Z2fkQ=; b=tLnT+Y
+        5STYw+daVLkW/LJRAgh9GwMzLyk8Id62XfaP/vt2GrtBj/s4U54/JJdD3NZPcbI5
+        IXx1+XcYZjkAfJa+mPKpFw44F9uvtm0PUvLJzjWcO+8yr6N6AY8ZLpYv1P4BE/1e
+        J0OxgcThCOENQMSKNzA/5bdQ59/UuNtY/YGvU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LcRcCKLvkgLa71bcHy35/wTATZImWXYf
-        sMGtShqOjWT200I2QOcDXwACMxuI29rpOdhVhOm4zeyrEl1KziU2PHgio/arBT0s
-        fu3jLQz0OLeUxQczDqyLLHI18CIqFs1ak6RgAWeddRsh7dThBvPkGjabNqS4GJPG
-        qY/ZC/KiUtE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DFB3390620;
-        Thu, 28 Jan 2021 00:43:42 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=kNIiB8vOUIgMd0tB2m1+zf4X2/ZriARZ
+        cfmMyBqSRIHxEE7J1qfyCg1ttPrZIghVw+V9EpC2zkYwBTL038CHjb9Moi2KMPbY
+        PYSGcp2wXfqFRk+/W7SP5n+TY/r3Ye9x1ZwJBQyPtniqpqfLMLhrPBB556f1/rpG
+        2oWY7fFmrjs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DA9D411FF1F;
+        Thu, 28 Jan 2021 00:50:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A60F9061F;
-        Thu, 28 Jan 2021 00:43:42 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2ADB711FF1E;
+        Thu, 28 Jan 2021 00:50:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH 3/3] range-diff(docs): explain how to specify commit ranges
-References: <pull.841.git.1611267638.gitgitgadget@gmail.com>
-        <041456b6e73b3a88097d0cc06056eb43d35d42c6.1611267638.git.gitgitgadget@gmail.com>
-        <xmqqwnw5am64.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2101221720200.52@tvgsbejvaqbjf.bet>
-        <xmqq1recal32.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2101270357480.57@tvgsbejvaqbjf.bet>
-Date:   Wed, 27 Jan 2021 21:43:41 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2101270357480.57@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 27 Jan 2021 04:01:33 +0100 (CET)")
-Message-ID: <xmqqim7hy5te.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4 3/3] clone: respect remote unborn HEAD
+References: <YAnr8lBESOO+ACL/@coredump.intra.peff.net>
+        <20210126182212.2337587-1-jonathantanmy@google.com>
+        <YBCf8SI3fK+rDyox@coredump.intra.peff.net>
+Date:   Wed, 27 Jan 2021 21:50:05 -0800
+In-Reply-To: <YBCf8SI3fK+rDyox@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 26 Jan 2021 18:04:17 -0500")
+Message-ID: <xmqqeei5y5iq.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C77C36AC-612B-11EB-A128-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: ACE20578-612C-11EB-9978-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> The above paragraph says A...B is turned into $(git merge-base A
->> B)..A and $(git merge-base A B)..B, but I wonder if we should be
->> rewriting it into A..B and B..A instead; that would make it
->> unnecessary to explain what should happen when there are more than
->> one merge bases.
+> ... Afterwards, we
+> call it for the unborn HEAD (which I can buy is necessary) but _also_
+> for that regular path. I.e., why is the new code not:
 >
-> You know what? I lied.
-
-I knew.  So we need an update to the patch.
-
->> >> Does this merely resemble?  Isn't it exactly what a symmetric range is?
->> >
->> > No, it is not exactly what a symmetric range is because `range-diff`
->> > treats both arms of the symmetric range independently, as two distinct
->> > non-symmetric ranges.
->>
->> This however is an end-user documentation, isn't it?
+>   if (unborn_head_target && ...) {
+>           ref = unborn_head_target;
+> 	  unborn_head_target = NULL;
+> 	  create_symref("HEAD", ref, "");
+>   } else {
+>           branch = git_default_branch_name();
+> 	  ref = xstrfmt("refs/heads/%s", branch);
+>   }
 >
-> Yes, and the end user is talking about _two_ commit ranges in the context
-> of `git range-diff`, and about _one_ commit range in the context of `git
-> log`.
+> I.e., I don't understand:
+>
+>   - why create_symref() wasn't need before (assuming it was not), and
+>     why it is OK to run it now in the non-unborn code path
+>
+>   - why we need create_symref() in the unborn path (which is probably
+>     something mundane)
+>
+> I can even buy the argument that it is simply for consistency, so that
+> all of the HEAD-setup commands are shared between the two paths. And
+> that it is OK to do so, because we are just overwriting what init-db did
+> before (even if sometimes it is the same thing). But I feel like that
+> deserves explanation in the commit message. :)
 
-You are forgetting that "log A...B" shows only one half of what a
-symmetric range means, and hides which side each commit belongs to.
+Yes, during yesterday's communication glitch, I also independently
+was wondering about this and am dying to know if this is an
+unrelated "fix", applicable even without the "unborn" support, or
+breaking the non "unborn" side of the codepath.
 
-"git log --left-right A...B" shows what a symmetric range really is;
-there are two sides, left and right, and "git range-diff A...B" is
-a natural way to compare these two ranges.
-
-I've been quite happy with the way how "git range-diff @{-1}..."
-shows the comparison of two sides of the symmetric range, given by
-"git log --oneline --left-right @{-1}..."
-
-
+Thanks.
