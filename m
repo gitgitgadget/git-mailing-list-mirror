@@ -7,105 +7,90 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D00C433E0
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C664AC433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:08:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0078464DDA
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:07:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86B6A64DDA
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231625AbhA1BGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 20:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
+        id S231384AbhA1BHj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 20:07:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231235AbhA1BEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 20:04:51 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFABC061574
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:03:22 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id q13so2709689pgs.6
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:03:22 -0800 (PST)
+        with ESMTP id S231757AbhA1BFa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 20:05:30 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DDCC061573
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:04:29 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id h13so2647221qvo.18
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=aTaE3+DFqIfDQAnDY4CHOa9WNXk8BFBufILO/a0oY5s=;
-        b=f/wZImR+wuuDpxgyFrQHpcHL11FUkfD3GPemrpZYgmvI/nXF3RIgeYo13ZSFuCMsz1
-         A2mlo1Hv99Tji42shRB9SJjbF1SnOAEd8uUmvAXqd0Cf3kekBvYtRlvyI3yuRUGrjjUP
-         jRWHtL3jNmLZ0dFItAAs/HAHJ2vpDoAK2+ZbNz4f3/ajflIt1oj95Le566f3U/syh9dd
-         RjLEj6OaBdPjT4IukAsaS6bIDA0LF4uaLgRIKNdPGCm15qaGghgMGaRz0jnpcUo1mmGC
-         T1fnR5cdM1ccuog8I2xFcsuRFfm4c4TloAB4i2KXUBZcpcyntP2zpSyf5A1ZabBermEC
-         3yhQ==
+        bh=7+fDE/rf8GpAe2hx2kmELCtBS3URUB5pJAH7vb/swnI=;
+        b=u/j6NowL1oi/k2CAkUW1HtRmvPl98wHK5KmC1H6PehLofyjwIx/xWONbTm5LN54cZN
+         xT6xrxeIlyaqbUEGGXyI45stIKerxgFIE+P+bB+p2m6SLrVDHVZ2NQmrRk6o3CsSzncQ
+         x/QFKbCmK6F7gCOwnkYGGjXcR8w5MMwYgOcp819JYRtbEuz0qv+klI2esXrpWRfFrC+0
+         ETsZMAqfGYVV2HMHdlS9gY/VIREpJo4UqzvHCf/o76cAP7GEjl6FhOCHuphWDQnMnc3Z
+         1xRc61Gj2EP22FVQzmVQ1EwOh/T3TaJ+isW1YxmBkRNIa/qt9d/nv2czpcOqMCpYV8EI
+         vwYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=aTaE3+DFqIfDQAnDY4CHOa9WNXk8BFBufILO/a0oY5s=;
-        b=JzMmIbM0PZc9l79l5d+pjzzJOs0JLz4i1bde1f5VDiIdBzJnI3seT4K11DnQMKjzJi
-         rgwZcPYPLM9q81bsy++zaTl0k1A0QY28E5K+Uh1W9kII57zvNl3nbFHlsZBS2+QD7EEU
-         RtOha1UW+AkpEHISCzZF6Ith2BAMmjcOTIxkN67o7LD10N/ohRoI+hgUiVyypS8bYXzF
-         gxq6MSlCxbmML/z1GO2pBu87vuX2PLU7Cwr+OODlZDMWM+K88yGJIgDFnaOnWiOFdxr3
-         mjW+nkI/xLDTw3Nj9apxoGh5d0bFFswLG1/RADM+lQ/UP+VzaHYT4NGmSjUzE1H1habx
-         4Enw==
-X-Gm-Message-State: AOAM532L6g0fxsmzyAVIrr/46hDR6envyY3A3CbVeAeT0iOsv29cm8hE
-        sk2raPBqGequ8AQM/RzrOYuMoB16bthnFSTOlzz5
-X-Google-Smtp-Source: ABdhPJz9DHWb78WsQ94c3QBouasy02iuvr2VLd3ee6DgSh4TgP755uypnTJjR0xl0xjFm7HrxneY8xIwcP22l+ZDrLqI
+        bh=7+fDE/rf8GpAe2hx2kmELCtBS3URUB5pJAH7vb/swnI=;
+        b=LMxQdNySZ9ZAIoTN3rBL3LLGWHNio3+fyVng1+MM4acQZMG+6nGNzOxfFKsyDTW8hd
+         LyBsEisvgYu5iY7YZIdhxtFP+dkcnKNEgIXWoFi6GXJds/akSEfzW9tVRKx8LcsmBCiJ
+         oc2AS9PdWUyhVNE6DKRNhjtBlj/DxSG3aBQial+i3jf2WWZBcWBFG2OpyiZ3PaCwozHa
+         0eO3GI++IAnQ5kJdoHynnuAQBvgUGpsaLEMKgU57akPmKy7Zi2r8anbI3BZOYPuUxsIs
+         3T2YRHs+xi9KOlThED7c+LrMSJoPm/Y1HLlvaBAJIoACfPAv1Up3mwsR9u9j2AplRPpw
+         BVUQ==
+X-Gm-Message-State: AOAM530ePiCsMfZSQJxYegrzUQI8YY9vymmn4/vdPdbmLIzvQy/r3QC0
+        3EiRqtYEE4q/spHDG+Mk5nJrip1SoAQWJVHrN9Eb
+X-Google-Smtp-Source: ABdhPJzoqxYnNkjQ0uqh3IVZqYTTEmi0tFsBFk85KmcCn4rKiWeG39vtHr7kaKxPdetCESg6Iblt2ZlqyEvJIRpXYgB0
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:80d3:0:b029:1c0:c5de:ff68 with
- SMTP id j202-20020a6280d30000b02901c0c5deff68mr13411899pfd.79.1611795802247;
- Wed, 27 Jan 2021 17:03:22 -0800 (PST)
-Date:   Wed, 27 Jan 2021 17:03:20 -0800
-In-Reply-To: <87ft2q7ck4.fsf@evledraar.gmail.com>
-Message-Id: <20210128010320.3880242-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:3f0:: with SMTP id
+ cf16mr12967899qvb.25.1611795868655; Wed, 27 Jan 2021 17:04:28 -0800 (PST)
+Date:   Wed, 27 Jan 2021 17:04:26 -0800
+In-Reply-To: <xmqqmtwwwjbw.fsf@gitster.c.googlers.com>
+Message-Id: <20210128010426.3882500-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <87ft2q7ck4.fsf@evledraar.gmail.com>
+References: <xmqqmtwwwjbw.fsf@gitster.c.googlers.com>
 X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
 Subject: Re: [PATCH 4/4] fetch-pack: print and use dangling .gitmodules
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
+To:     gitster@pobox.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Sun, Jan 24 2021, Jonathan Tan wrote:
+> > Ehh, please don't.  We may add multi-pack-index there, or perhaps
+> > reverse index files in the future.  If you care about having two
+> > packs logically because you are exercising the out-of-band
+> > prepackaged packfile plus the dynamic transfer, make sure you have
+> > two packs (and probably the idx files that go with them).  Don't
+> > assume there will be one .idx each for them *AND* nothing else
+> > there.
+> >
+> >> +	ls http_child/.git/objects/pack/* >filelist &&
+> >> +	test_line_count = 4 filelist
+> >> +'
+> >
+> > IOW,
+> >
+> > 	d=http_child/.git/objects/pack/
+> > 	ls "$d"/*.pack "$d"/*.idx >filelist &&
+> > 	test_line_count = 4 filelist
+> >
+> > or something like that.
 > 
-> > +void register_found_gitmodules(const struct object_id *oid)
-> > +{
-> > +	oidset_insert(&gitmodules_found, oid);
-> > +}
-> > +
-> 
-> In fsck.c we only use this variable to insert into it, or in fsck_blob()
-> to do the actual check, but then we either abort early if we've found
-> it, or right after that:
+> FYI, I have the following queued to make the tip of 'seen' pass the
+> tests.
 
-By "this variable", do you mean gitmodules_found? fsck_finish() consumes
-it.
+[snip]
 
->         if (object_on_skiplist(options, oid))
->                 return 0;
-> 
-> So (along with comments I have below...) you could just use the existing
-> "skiplist" option instead, no?
-
-I don't understand this part (in particular, the part you quoted). About
-"skiplist", I'll reply to your other email [1] which has more details.
-
-[1] https://lore.kernel.org/git/87czxu7c15.fsf@evledraar.gmail.com/
-
-> This whole thing seems just like the bad path I took in earlier rounds
-> of my in-flight mktag series. You don't need this new custom API. You
-> just setup an error handler for your fsck which ignores / prints / logs
-> / whatever the OIDs you want if you get a FSCK_MSG_GITMODULES_MISSING
-> error, which you then "return 0" on.
-> 
-> If you don't have FSCK_MSG_GITMODULES_MISSING punt and call
-> fsck_error_function().
-
-I tried that first, and the issue is that IDs like
-FSCK_MSG_GITMODULES_MISSING are internal to fsck.c. As for whether we
-should start exposing the IDs publicly, I think we should wait until a
-few new cases like this come up, so that we more fully understand the
-requirements first.
+OK - I'll include these changes in the next version.
