@@ -2,141 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7461EC433E6
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 04:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12094C433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:24:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30AC964D9F
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 04:08:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7A0464DCE
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231426AbhA1EIi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 23:08:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231352AbhA1EGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 23:06:54 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0DC5C061354
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 20:06:11 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id 7so4054891wrz.0
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 20:06:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=VOoP6Xt5ci91qfq1z+Gg+rwGksCQOl9Zzp8IjduY7XM=;
-        b=cZ6huepJNMkfOLYD67U65Rpbz2+8Nkh9SRGJ2JrmzbA7X/Psz35PHbN9HWJG1sE0I7
-         edyvTVYbFeql6Wo21MOnwctjI508VO3TocyT24R7r7XwS7STBVePnH7srrX0MfznWUDN
-         pu1LhsNeJ9tsxpaK2Fx6RhaA+kVW/ZHhx3CUidqfJHKpHoUb9otgeh4evVnO5C+TEH52
-         zA0p86ycaQH2jzcRaNxyukbJSDM958SOZxzjP8uctc1WRXfJdLCsX569zMLUtasNvndx
-         ubrmffm2JaF2fnprCHOt11kkMCu5mrq7bYZcSW5UbqBXMJe2ywmt2YkddmHqz9zY8vjF
-         Xl3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VOoP6Xt5ci91qfq1z+Gg+rwGksCQOl9Zzp8IjduY7XM=;
-        b=Z5gRc5AJXsH4oPX2pMtI7gglrcK46kgLkNv8/zVHiMRVyabLIGPE0ipKkAInENhDwN
-         9bVP1bETmC0D5yBWBQ1/6y/eTv7I/2OUcIJ/nSjJcMEUp/XlphCYgcoKYFxWkllyGXYd
-         7cjtpXK+LkytAFPUGR1IQdsaHbhm7rkdw2xcfKrBemMpHGxL5qOdLCWBNG2LQLweMsHQ
-         TNgRw6a7av71W5KtfhCA+DT3C90sPx+yDuG2DXPiDkaeoUuxphdqUu0rSYcgWdHFpV9b
-         5Q8wXa2suRN9Z+7/729LD3/KAlZFvOvL7dnX5acMY7p/UNfRW97mYS93lgCehQod8K9v
-         fGiw==
-X-Gm-Message-State: AOAM530qW5R3UDt4ZPbAxaFVCLKm+FoM0agshwc/IllSPTijwhegulXR
-        UNOab5XmMmO28HqOyBdOILxMNr8UdV4=
-X-Google-Smtp-Source: ABdhPJyfF2jWPwQttwmWAEl5Cv7b3cOeD5d5eX0OHIXU9/eagcNQgUmTuCWX+hh3VELU1Xw5OP9pZA==
-X-Received: by 2002:adf:e404:: with SMTP id g4mr14008994wrm.416.1611806770535;
-        Wed, 27 Jan 2021 20:06:10 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q18sm5332624wrr.55.2021.01.27.20.06.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jan 2021 20:06:09 -0800 (PST)
-Message-Id: <pull.851.git.1611806768911.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 Jan 2021 04:06:08 +0000
-Subject: [PATCH] ci: do not cancel all jobs of a matrix if one fails
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S229785AbhA1FYD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 00:24:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53941 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229551AbhA1FYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 00:24:01 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9EA311247C0;
+        Thu, 28 Jan 2021 00:23:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eV/iUtrxFBT/0ODaEbLBzslcibM=; b=Yduvrq
+        gulle9K1o2n8NM+UMQDoKtl2sIUZ+6WUyMgvNxnmLQm2slGCYy8yoER9i3s/X5Jb
+        e+gRA9UH0HY5fL6fWOnc1FPRUHz1RNmPqaEnnrREj29zIjgCRf8hVOkEvHK8Sdk9
+        V4vM+1rfZ1ejGM39myiTukrt5bJPtsr83imWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G/hcxlz5ZgucOm5A+QOnIBba/X4YK8Gq
+        W1GR6o/vE0pj+jQdXNNxNdaY2PnpFdUgoVKbtdXWYAt6usLuGS6IX7WNe/tJ5yLj
+        z8PWRMkqHPGZPAabWr1/kkcKoP3ECPSyol4VYSPe3Vctl44oyBbRFW7ow64uc4Y0
+        7cEydKgLPp4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 828A11247BF;
+        Thu, 28 Jan 2021 00:23:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AE7E31247BE;
+        Thu, 28 Jan 2021 00:23:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        git@vger.kernel.org, sunshine@sunshineco.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci/install-depends: attempt to fix "brew cask" stuff
+References: <xmqqk0sevqlh.fsf@gitster.c.googlers.com>
+        <YAH0G+Y4fIxoTeZa@coredump.intra.peff.net>
+        <830a88ce-1728-a6a5-f60d-59328f85932c@gmail.com>
+        <YBHnV80bBQOxZH1O@coredump.intra.peff.net>
+Date:   Wed, 27 Jan 2021 21:23:10 -0800
+In-Reply-To: <YBHnV80bBQOxZH1O@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 27 Jan 2021 17:21:11 -0500")
+Message-ID: <xmqqr1m5y6rl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EA96F576-6128-11EB-B840-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-The CI/PR GitHub Actions workflow uses the 'matrix' strategy for the
-"windows-test", "vs-test", "regular" and "dockerized" jobs. The default
-behaviour of GitHub Actions is to cancel all in-progress jobs in a
-matrix if one of the job of the matrix fails [1].
+> The downside, of course, is that a failure that will happen on every
+> platform will mean wasted CPU to trigger the same failure over and over.
+> But:
+>
+>   - I rarely see that myself, because I wouldn't bother pushing up to CI
+>     until "make test" passed locally. So usually I'm finding portability
+>     issues via CI. Other people might be different, though.
 
-This is not ideal as a failure early in a job, like during installation of
-the build/test dependencies on a specific platform, leads to the
-cancellation of all other jobs in the matrix.
+This is the same for me.
 
-Set the 'fail-fast' variable to 'false' for all four matrix jobs in the
-workflow.
+>   - we already have the Windows tests in a separate matrix anyway, so a
+>     failure on Linux would run the whole Windows suite (which is an
+>     order of magnitude more expensive)
 
-[1] https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast
+But they tend to finish earlier than OSX and Ubuntu jobs; their
+sharding of the tests into 10 jobs may probably have something to do
+with this. 
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    ci: do not cancel all jobs of a matrix if one fails
+>   - even within the Windows matrix, I think running the rest of the
+>     tests after a failure is still valuable. If there's a second
+>     failure, you save a round-trip to CI (so it doesn't reduce CPU, but
+>     it may help latency to reach a passing state).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-851%2Fphil-blain%2Fgh-actions-dont-fail-fast-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-851/phil-blain/gh-actions-dont-fail-fast-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/851
-
- .github/workflows/main.yml | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index aef66436484..f6885e88ee6 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -123,6 +123,7 @@ jobs:
-     runs-on: windows-latest
-     needs: [windows-build]
-     strategy:
-+      fail-fast: false
-       matrix:
-         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-     steps:
-@@ -227,6 +228,7 @@ jobs:
-     runs-on: windows-latest
-     needs: [vs-build, windows-build]
-     strategy:
-+      fail-fast: false
-       matrix:
-         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-     steps:
-@@ -272,6 +274,7 @@ jobs:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     strategy:
-+      fail-fast: false
-       matrix:
-         vector:
-           - jobname: linux-clang
-@@ -309,6 +312,7 @@ jobs:
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-     strategy:
-+      fail-fast: false
-       matrix:
-         vector:
-         - jobname: linux-musl
-
-base-commit: e6362826a0409539642a5738db61827e5978e2e4
--- 
-gitgitgadget
