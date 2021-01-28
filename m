@@ -7,90 +7,150 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C664AC433DB
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48263C433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:18:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86B6A64DDA
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:08:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01CB364D99
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 01:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbhA1BHj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Jan 2021 20:07:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40088 "EHLO
+        id S231672AbhA1BSK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Jan 2021 20:18:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231757AbhA1BFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Jan 2021 20:05:30 -0500
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DDCC061573
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:04:29 -0800 (PST)
-Received: by mail-qv1-xf4a.google.com with SMTP id h13so2647221qvo.18
-        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:04:29 -0800 (PST)
+        with ESMTP id S231728AbhA1BQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Jan 2021 20:16:14 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE97C061573
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:15:28 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id hg20so2317145pjb.3
+        for <git@vger.kernel.org>; Wed, 27 Jan 2021 17:15:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=7+fDE/rf8GpAe2hx2kmELCtBS3URUB5pJAH7vb/swnI=;
-        b=u/j6NowL1oi/k2CAkUW1HtRmvPl98wHK5KmC1H6PehLofyjwIx/xWONbTm5LN54cZN
-         xT6xrxeIlyaqbUEGGXyI45stIKerxgFIE+P+bB+p2m6SLrVDHVZ2NQmrRk6o3CsSzncQ
-         x/QFKbCmK6F7gCOwnkYGGjXcR8w5MMwYgOcp819JYRtbEuz0qv+klI2esXrpWRfFrC+0
-         ETsZMAqfGYVV2HMHdlS9gY/VIREpJo4UqzvHCf/o76cAP7GEjl6FhOCHuphWDQnMnc3Z
-         1xRc61Gj2EP22FVQzmVQ1EwOh/T3TaJ+isW1YxmBkRNIa/qt9d/nv2czpcOqMCpYV8EI
-         vwYw==
+        bh=TAzyUSaAcBcN2Vh9gelTanxS4kNp7k8svXvfg95CO4k=;
+        b=gMqL11t4ztmGE9OPXgMDDz3/vyN1OHx0A62HmTtSnkZmsP2qfuuR3LL5xNKvAUHqyS
+         GFXPv0O77e3c4Ar54HrGyGIsdGBoXW2SFsPyNfGUrRqiZLIbd0kacCQv3s/dqoehp8Gn
+         13/ERlpTL+ffnA5WwuOaRmyHPuVX0NOy/SAwxW9YBicB8NkwQEvN2U1fe4o8s6TtMfyq
+         Su7ev8ogulWfDcsN/gjTqiFndB7QDutTSRQmB3xgeK3IhNJL9kRwdoK0C2qJqqGSGy4d
+         A9H3LLZ2D0ZSY7OUbKEuxjHAZWe18AQCjlUsxHfYMoI8GvWtOLAOh9bm/LiZRdufK+py
+         KWqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=7+fDE/rf8GpAe2hx2kmELCtBS3URUB5pJAH7vb/swnI=;
-        b=LMxQdNySZ9ZAIoTN3rBL3LLGWHNio3+fyVng1+MM4acQZMG+6nGNzOxfFKsyDTW8hd
-         LyBsEisvgYu5iY7YZIdhxtFP+dkcnKNEgIXWoFi6GXJds/akSEfzW9tVRKx8LcsmBCiJ
-         oc2AS9PdWUyhVNE6DKRNhjtBlj/DxSG3aBQial+i3jf2WWZBcWBFG2OpyiZ3PaCwozHa
-         0eO3GI++IAnQ5kJdoHynnuAQBvgUGpsaLEMKgU57akPmKy7Zi2r8anbI3BZOYPuUxsIs
-         3T2YRHs+xi9KOlThED7c+LrMSJoPm/Y1HLlvaBAJIoACfPAv1Up3mwsR9u9j2AplRPpw
-         BVUQ==
-X-Gm-Message-State: AOAM530ePiCsMfZSQJxYegrzUQI8YY9vymmn4/vdPdbmLIzvQy/r3QC0
-        3EiRqtYEE4q/spHDG+Mk5nJrip1SoAQWJVHrN9Eb
-X-Google-Smtp-Source: ABdhPJzoqxYnNkjQ0uqh3IVZqYTTEmi0tFsBFk85KmcCn4rKiWeG39vtHr7kaKxPdetCESg6Iblt2ZlqyEvJIRpXYgB0
+        bh=TAzyUSaAcBcN2Vh9gelTanxS4kNp7k8svXvfg95CO4k=;
+        b=fzX9WC2DS//qJzoU+mmfbvKmYXsAHj9fFduq/WTgzisaPbYhFQjbTP1DBtT5h0hvGK
+         /lLrKt9gfkr6pRUoR59vaMcbHNLLh6c2WNCtTsX4v/iD/o0lmCA4mheB8aSliNR1/UbE
+         pIR6y/SLc2KONtD9wjq2a/1WiP4sqrB3r2ooUx3vJh91iJquxbybtJltMQF2JW5G8oNy
+         uqG3+azK1l1VeMtbmOIPncEs+x0r9zhtpXOKXI61e7S3IIb2bsNv2G3G1ZDdMQwgMsJl
+         HQ6WuU95NJYux6pBPiix7Tzfdj+S5Cl/EygYjBL1KeePqRFAZrlNle3IJaHVb4cPm9Mk
+         BHcA==
+X-Gm-Message-State: AOAM530gnfKXoVeUa9OnmFyuB9h8T1g3up0MScV+NKRavCJSLbL74EH3
+        MmMDhPjI8bCVEulvP1H2oQn5m6PVt60SGv8NbOSB
+X-Google-Smtp-Source: ABdhPJxwDXfiKyw9voYJBp419X6061WKoeHmrA7yLMSovk1lMIEm8/9gHqiZoxVJ3bRGHgu/dfaJMccLTLyW12XQsHSX
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:3f0:: with SMTP id
- cf16mr12967899qvb.25.1611795868655; Wed, 27 Jan 2021 17:04:28 -0800 (PST)
-Date:   Wed, 27 Jan 2021 17:04:26 -0800
-In-Reply-To: <xmqqmtwwwjbw.fsf@gitster.c.googlers.com>
-Message-Id: <20210128010426.3882500-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:8d83:: with SMTP id
+ d3mr1223229pjo.0.1611796527161; Wed, 27 Jan 2021 17:15:27 -0800 (PST)
+Date:   Wed, 27 Jan 2021 17:15:25 -0800
+In-Reply-To: <87czxu7c15.fsf@evledraar.gmail.com>
+Message-Id: <20210128011525.3886106-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqqmtwwwjbw.fsf@gitster.c.googlers.com>
+References: <87czxu7c15.fsf@evledraar.gmail.com>
 X-Mailer: git-send-email 2.30.0.280.ga3ce27912f-goog
 Subject: Re: [PATCH 4/4] fetch-pack: print and use dangling .gitmodules
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
+To:     avarab@gmail.com
 Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Ehh, please don't.  We may add multi-pack-index there, or perhaps
-> > reverse index files in the future.  If you care about having two
-> > packs logically because you are exercising the out-of-band
-> > prepackaged packfile plus the dynamic transfer, make sure you have
-> > two packs (and probably the idx files that go with them).  Don't
-> > assume there will be one .idx each for them *AND* nothing else
-> > there.
-> >
-> >> +	ls http_child/.git/objects/pack/* >filelist &&
-> >> +	test_line_count = 4 filelist
-> >> +'
-> >
-> > IOW,
-> >
-> > 	d=http_child/.git/objects/pack/
-> > 	ls "$d"/*.pack "$d"/*.idx >filelist &&
-> > 	test_line_count = 4 filelist
-> >
-> > or something like that.
+> On Sun, Jan 24 2021, Jonathan Tan wrote:
+> >  --fsck-objects::
+> > -	Die if the pack contains broken objects. For internal use only.
+> > +	For internal use only.
+> > ++
+> > +Die if the pack contains broken objects. If the pack contains a tree
+> > +pointing to a .gitmodules blob that does not exist, prints the hash of
+> > +that blob (for the caller to check) after the hash that goes into the
+> > +name of the pack/idx file (see "Notes").
 > 
-> FYI, I have the following queued to make the tip of 'seen' pass the
-> tests.
+> [I should have waited a bit and sent one E-Mail]
+> 
+> Is this really generally usable as an IPC mechanism, what if we need
+> another set of OIDs we care about? Shouldn't it at least be hidden
+> behind some option so you don't get a deluge of output from index-pack
+> if you're not in this packfile-uri mode?
 
-[snip]
+--fsck-objects is only for internal use, and it's only used by
+fetch-pack.c. So its only consumer does want the output.
 
-OK - I'll include these changes in the next version.
+Junio also mentioned the possibility of another set of OIDs, and I
+replied [1].
+
+[1] https://lore.kernel.org/git/20210128003536.3874866-1-jonathantanmy@google.com/
+
+> But, along with my other E-Mail...
+> 
+> > [...]
+> > +static void parse_gitmodules_oids(int fd, struct oidset *gitmodules_oids)
+> > +{
+> > +	int len = the_hash_algo->hexsz + 1; /* hash + NL */
+> > +
+> > +	do {
+> > +		char hex_hash[GIT_MAX_HEXSZ + 1];
+> > +		int read_len = read_in_full(fd, hex_hash, len);
+> > +		struct object_id oid;
+> > +		const char *end;
+> > +
+> > +		if (!read_len)
+> > +			return;
+> > +		if (read_len != len)
+> > +			die("invalid length read %d", read_len);
+> > +		if (parse_oid_hex(hex_hash, &oid, &end) || *end != '\n')
+> > +			die("invalid hash");
+> > +		oidset_insert(gitmodules_oids, &oid);
+> > +	} while (1);
+> > +}
+> > +
+> 
+> Doesn't this IPC mechanism already exist in the form of fsck.skipList?
+> See my 1f3299fda9 (fsck: make fsck_config() re-usable, 2021-01-05) on
+> "next". I.e. as noted in my just-sent-E-Mail you could probably just
+> re-use skiplist as-is.
+
+I'm not sure how fsck.skipList could be used here. Before running
+fsck_finish() for the first time, we don't know which .gitmodules are
+missing and which are not. And when running fsck_finish() for the second
+time, we definitely do not want to skip any blobs.
+
+> Or if not it seems to me that this whole IPC mechanism would be better
+> done with a tempfile and passing it along like we already pass the
+> fsck.skipList between these processes.
+> 
+> I doubt it's going to be large enough to matter, we could just put it in
+> .git/ somewhere, like we put gc.log etc (but created with a mktemp()
+> name...).
+> 
+> Or if we want to keep the "print <list> | process" model we can refactor
+> the existing fsck IPC noted in 1f3299fda9 a bit, so e.g. you pass some
+> version of "lines prefixed with "fsck-skiplist: " go into list xyz via a
+> command-line option. And then existing option(s) and your potential new
+> list (which as noted, I think is probably redundant to the skiplist) can
+> use it.
+
+I think using stdout is superior to using a tempfile - we don't have to
+worry about interrupted invocations, for example.
+
+What do you mean by "the existing fsck IPC noted in 1f3299fda9"? If you
+mean the ability to pass a list of OIDs, for example using "-c
+fsck.skipList=filename.txt", I'm not sure that it solves anything.
+Firstly, I don't think that the skipList is useful here (as I said
+earlier). And secondly, I don't think that OID input is the issue -
+right now, the design is a process (index-pack, calling fsck_finish())
+writing to its output which is then picked up by the calling process
+(fetch-pack). We are not sending the dangling .gitmodules through stdin
+anywhere.
