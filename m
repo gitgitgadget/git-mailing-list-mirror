@@ -2,125 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEEDDC4332B
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3993DC433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:40:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBA1A64E09
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:26:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5D7964DF9
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhA1Q0a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 11:26:30 -0500
-Received: from mout.gmx.net ([212.227.15.18]:38421 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232557AbhA1Q0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 11:26:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1611851071;
-        bh=YBmSxSTTHNQWf1gxQuo/rqfdEctlDNfD9p5HTvolpOI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HbqY/1M8e896qSW3Tx4U9ZEEPotzvht0EZQST6705u0I3WatvCUWPjbG41XZb0imV
-         pffM7jM0r7C/HTI+hDPL0y0X2E8sQthViegmWHJURn6tV4BhIJ7r4yfK19kUsDpRVl
-         RAlW85sVD2DZ03EAv2M+K0u3+vu8ftxA2SMXmW0Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.95.40] ([89.1.213.153]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQvCv-1lJ8Ce36kp-00O2Gu; Thu, 28
- Jan 2021 17:24:31 +0100
-Date:   Thu, 28 Jan 2021 17:24:31 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Vojt=C4=9Bch_Knyttl?= <vojtech@knyt.tl>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2] rebase -i: do leave commit message intact in fixup!
- chains
-In-Reply-To: <xmqqwnwhzr54.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2101281724130.54@tvgsbejvaqbjf.bet>
-References: <pull.818.git.1608337339246.gitgitgadget@gmail.com> <pull.818.v2.git.1610123298764.gitgitgadget@gmail.com> <xmqqwnwhzr54.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S232614AbhA1QkV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 11:40:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232573AbhA1QkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 11:40:19 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C42C061574
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 08:39:39 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id c2so7327432edr.11
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 08:39:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=JQzxNY9qYQF/aTHgnavli60eNY5FmUZ0pklcHO1UmCg=;
+        b=jcmHbfFPM36iOqQvgr6vnEYk0QnJRzjmk4UlpKwkpzuW0yLIBisfUJ6aefgMpciY1E
+         ERCDYm8jGvy6LtHP3Q4jmMmEmC824DMMlh037t0CNpGmJDjnW8PALgfNXcLOx67/XwzT
+         ID9lC2nkM10WQlvkPbd8Qu4Rs+rXKag1ZL+MFp0Hxy5d2uI+pNiCgRFrWDgUbUBVLRwv
+         Uw4/5bsnu92mwqrRSMY5RPtY4tEALnYnJfXlHdB+UJbqCtJETzJ1uhMHXPBo0KRJrdDS
+         nbLZztu7+P3fyVZJ+FPFjXnu/D1cGLxmVjvColByQRvFw7I72INbO9Jm9xbCGl1/JHCK
+         CWQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=JQzxNY9qYQF/aTHgnavli60eNY5FmUZ0pklcHO1UmCg=;
+        b=Ei1oxOTmcb1OBGoi+K/3yDnA0UaTjLfLdeXAaGEQFk/qNS8gcDvdVsTIF+3OIdLB49
+         5ski1D/uUv01sLuPzMyi8rMpdKSmryIzXGYrGXtcVHh6asderPugAwcQQ/5Ffw19tbZn
+         d0hnfPp0wEr7a2PCyqLxUozz3DCZbo6V0UcPdpldFYRKV6qDfOZB4pvO8jJ/JeP5WDoN
+         OsY9jmzRsKlHC9EAhTwM0T2LVtLz4RM8h84uQ7Duymr7F4RuFQIpVTjCcdCWu+kvDS2n
+         incsjC5ikkaJ4z8aV5jre7jXTlAMFSPFyZ1E7+8TrtP5I9YT2VOlYR2YFLrtpbtCgzUb
+         G1vQ==
+X-Gm-Message-State: AOAM531dXYkT4gbu5t0Oijcaym05SZyWCdCFU5ekejbjZTlRSkIIZPiv
+        9RfmCxs4ehIsYw8b2Mh8xZkEY0zErcf0aDnjrC4ljSHodkFZIw==
+X-Google-Smtp-Source: ABdhPJwDefBJ8DDLqCBNwRMp1uWhbqd02FW37aCPUBQEQJI2QEZRimRQtm1EFgGZVWo+bkiLWg65ARa5xZ7pGf66rFY=
+X-Received: by 2002:a50:84e7:: with SMTP id 94mr397437edq.87.1611851977643;
+ Thu, 28 Jan 2021 08:39:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-740283518-1611851072=:54"
-X-Provags-ID: V03:K1:FyPW3T04EXgeDcpzvYUJxsL9/sOB92nqnnvkAMUNxveiyifJvq2
- BGtt9eGXrjhP8nH1UjRSu8s02jMIp9aGeKu+NO6WwbKjVfFXkmAx6g1jHyw9ufoAW2V012u
- zZP13yg2s5jRzT0EMhRO5rkvvJJUzh1NQeMTL9wbT1AS50MqoHBZI6Mc4k9lqBu2K3Olu2O
- 8LyhmuKWfhNaCbRVnzkjA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pVwJHReqbSc=:ENRF1f+WoBYKLf12Yyv19i
- 5oiz6HOmAWYxfIHeZTbm35XjVH8vSktGbPf9q6bhLlp9NXkxAKE1m4+7rRzAE1GD4k22BqkAB
- ACVmo8/URoQw7CSLixI/lgW6CotdU55PO/y25/T7QmuBV9ByA2NxrbaeTmVwpWjujxu7CvtnK
- GrRfIw0ruz7m+vwoGLO8a2Vua4uQ11TJn8xtjm0Rz0yzUL7rsgrVfqrBSXO5OD0SbQ3pSFdUN
- mbqvjt0EUotLCVKI4S6kksomYI8NMcKX7SJzuQ0LX2appt847IhpqeBTZBxtNK8o9kZU4Ufa1
- 6oOZbaXh1hzN6PuBzrT1HFBUk7i/6/rRmV13olD2ti5vHU6CeC5chxafqVxI+v59x8Zu0afJe
- ilcqnEAOK/Q5VNjKGoV5I2TzPx/R26L1dTxrtliuenjVkXs7DU7oHNJVQDOje8rtzQXnXGdlp
- q8UYfPCUrD1/HZA8jtVt7ij6IZKW29HHSDVDylycnPzLjDUeCmt5uJwhO9VLONOeEJKWsVBxa
- IeOS3VDmC32uKHXSyUGA/dWQelWNDEx7mQfiirbLn3zLgFAkd4TCdhoY5vGDywRA4djajL6lg
- Gh8DtuqoO2+u5H8tc66Z+xGjrU4nNSrk5uuvp7wrHgSnwZncb24TmXsaebUV8ZhuGC+VMrY+g
- EN6O58EgqDwjd7OQw8BeFOncqcQoZ8yNBs9R4dvnbtgyQT6WFvhHJFCIi0dWtQrVOlvOrXhH/
- Uc8cJh+45y917j6uyOtZnyon1jhdef1xhjQMoPs8iNhj+JISrvyEAK/s+YB+TwCI8wg+lvr7Z
- S6ANHLs2AI34VcCoSpqzWZEx6kbJggWI/AEz1V4lJ+isqboTVXDASAMJWxm+axtkFs9jFrZsM
- 2ym1paSzbZ38ScW2hEafNvR0WKhs+CKsLOBXVDK2A=
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 28 Jan 2021 17:39:26 +0100
+Message-ID: <CAP8UFD2bpXSDRkn+q_sM+QXYc0gQ3rOOkst5Xjf0w-UArYSGqA@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 71
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Brooke Kuhlmann <brooke@alchemists.io>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi everyone,
 
---8323328-740283518-1611851072=:54
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The 71st edition of Git Rev News is now published:
 
-Hi Junio,
+  https://git.github.io/rev_news/2021/01/28/edition-71/
 
-On Tue, 12 Jan 2021, Junio C Hamano wrote:
+Thanks a lot to Sergey Organov and Brooke Kuhlmann who helped this month!
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > We actually need to actively suppress that clean-up lest a configured
-> > `commit.cleanup` may interfere with what we want to do: leave the comm=
-it
-> > message unchanged.
->
-> Good thinking.
->
-> > Reported-by: Vojt=C4=9Bch Knyttl <vojtech@knyt.tl>
-> > Helped-by: Martin =C3=85gren <martin.agren@gmail.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > ...
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 8909a467700..092e7b811f0 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -943,6 +943,7 @@ N_("you have staged changes in your working tree\n=
-"
-> >  #define CLEANUP_MSG (1<<3)
-> >  #define VERIFY_MSG  (1<<4)
-> >  #define CREATE_ROOT_COMMIT (1<<5)
-> > +#define VERBATIM_MSG (1<<6)
->
-> It somewhat bothers me that these pretend to be orthogonal options
-> that can be mixed and matched, but CLEANUP and VERBATIM do not make
-> sense to be used at the same time.  As long as we have some safety
-> to ensure that both bits are not used at the same time, i.e.e.g.
->
-> 	if ((flags & (CLEANUP_MSG|VERBATIM_MSG)) =3D=3D (CLEANUP_MSG|VERBATIM_M=
-SG))
-> 		BUG("cleanup and verbatim asked at the same time");
->
-> it would be OK, though.
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
-I did something similar in spirit in the latest iteration.
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
-Thanks,
-Dscho
-
---8323328-740283518-1611851072=:54--
+https://github.com/git/git.github.io/issues/477
