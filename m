@@ -2,88 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F183EC433DB
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE25BC433E0
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A964864DCE
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:26:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F20664DCC
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 05:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbhA1F03 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 00:26:29 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56457 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbhA1F01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 00:26:27 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5510D903C2;
-        Thu, 28 Jan 2021 00:25:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5InAGmoerx81wyJlgeFYfKWmVS4=; b=ClMNji
-        HHoot8y7NRAmaMJKmed16mOodNcgIsJh2dteEm7jjJozLeh3NJYvc6KqQR3RwD/1
-        4cvwpQO5vyiZHLJcA0BvQHjGWilb1TocQXOvASC70nAYjZlquSef38g4QjWaYgty
-        ROLJidI5mRFdxwet9S3V2mlQ5YpEXb+ljpAO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xH2zE/nFDFpz/L1UHgSfYTilExsd8Wxy
-        ojRC64eFLQKOe8is1eoBteT6RdJKWvz0zx9/hZkKgAYeZIrkuUw+TbioCc2YMglL
-        WNHcjZC4wQUxfF1sqblkCjOoo5FpGouUloFBO5QP5pvU+PkqikMQrRF0kmY/3gjS
-        MwuGgHFcJrQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B842903C1;
-        Thu, 28 Jan 2021 00:25:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C2C60903BE;
-        Thu, 28 Jan 2021 00:25:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 02/27] sparse-index: implement ensure_full_index()
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
-        <ebbe8569dcc16f2ae235c4167be0e72a53982982.1611596534.git.gitgitgadget@gmail.com>
-        <CABPp-BE3tLmfwyncbdTKZUgLYH_8M9zMjH=+LJG4bdGcbYDPMg@mail.gmail.com>
-Date:   Wed, 27 Jan 2021 21:25:42 -0800
-In-Reply-To: <CABPp-BE3tLmfwyncbdTKZUgLYH_8M9zMjH=+LJG4bdGcbYDPMg@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 26 Jan 2021 19:05:10 -0800")
-Message-ID: <xmqqmtwty6nd.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229569AbhA1F3P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 00:29:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41586 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229551AbhA1F3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 00:29:15 -0500
+Received: (qmail 9339 invoked by uid 109); 28 Jan 2021 05:28:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Jan 2021 05:28:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24799 invoked by uid 111); 28 Jan 2021 05:28:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Jan 2021 00:28:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 Jan 2021 00:28:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] git-compat-util: always enable variadic macros
+Message-ID: <YBJLgY+CWtS9TeVb@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44A5C15A-6129-11EB-880D-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+We allow variadic macros in the code base, but only if there is fallback
+code for platforms that lack it. This leads to some annoyances:
 
->>  1. ce->ce_mode == 01000755
->
-> This is a weird number.  What's the reason for choosing it?  It looks
-> deceptively close to 0100755, normal executable files, but has the
-> extra 0, meaning that ce->ce_mode & S_IFMT is 0, suggesting it has no
-> file type.
->
-> Since it's a directory, why not use S_IFDIR (040000)?
->
-> (GITLINK does use the weird 0160000 value, but it happens to be
-> S_IFLNK | S_IFDIR == 0120000 | 040000, which conveys "it's both a
-> directory and a symlink")
+  - the code is more complicated because of the fallbacks (e.g.,
+    trace_printf(), etc, is implemented twice with a set of parallel
+    wrappers).
 
-Yes, that combination of IFLNK/IFDIR was the reason why we use the
-value.  I tend to think IFDIR is the best thing to use here.
+  - some constructs are just impossible and we've had to live without
+    them (e.g., a cross between FLEX_ALLOC and xstrfmt)
+
+Since this feature is present in C99, we may be able to start counting
+on it being available everywhere. Let's start with a weather balloon
+patch to find out.
+
+This patch makes the absolute minimal change by always setting
+HAVE_VARIADIC_MACROS. If somebody runs into a platform where it's a
+problem, they can undo it by commenting out the define. Likewise, if we
+have to revert this, it would be quite unlikely to cause conflicts.
+
+Once we feel comfortable that this is the right direction, then we can
+start ripping out all the spots that actually look at the flag, and
+removing the dead code.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+We've talked about this off and on for a few years. I don't have any
+immediate plans for any features that need it, but let's get the ball
+rolling.
+
+ git-compat-util.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 104993b975..5d5e47fbe2 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1176,9 +1176,12 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+ #endif
+ #endif
+ 
+-#if defined(__GNUC__) || (_MSC_VER >= 1400) || defined(__C99_MACRO_WITH_VA_ARGS)
++/*
++ * This is always defined as a first step towards making the use of variadic
++ * macros unconditional. If it causes compilation problems on your platform,
++ * please report it to the Git mailing list at git@vger.kernel.org.
++ */
+ #define HAVE_VARIADIC_MACROS 1
+-#endif
+ 
+ /* usage.c: only to be used for testing BUG() implementation (see test-tool) */
+ extern int BUG_exit_code;
+-- 
+2.30.0.758.gfe500d6872
