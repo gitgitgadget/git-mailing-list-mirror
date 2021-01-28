@@ -2,153 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-24.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C734C433E6
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D00CEC433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:16:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45C8864DEE
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A37C864DEF
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 16:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231951AbhA1QGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 11:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231860AbhA1QGg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 11:06:36 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0AC6C061574
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 08:05:54 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id c2so7190744edr.11
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 08:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gitlab.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sgUtecuVW6w64bF1Mko8FvzgUyKH+KIfLc+uA2vy5sQ=;
-        b=byZ4+CVG/P91vMUjxT+83EICumwY8ULrZG1gBQS+spHmRCoMJAdyDgZQjlbUwzdBxH
-         RGnmKYeH1lwEFOghn3Oc+XW/vAUaF7O/ehVghCfFZK/rpTPlL3Xju1aRq3VRPgS2cH9r
-         8kJzZs2/GG5+6IytJPA0Ut0Qw6qc/QWIsN7KI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sgUtecuVW6w64bF1Mko8FvzgUyKH+KIfLc+uA2vy5sQ=;
-        b=crWKFZTsOobRNZnhLMG6AnrqPv8HonPLsvZAWcC9E4m+scxSqOge0k3A8aDHz1f2T6
-         YEVneFg5SmF6qUWrIUBR9sd2pOu2MXy6/Df4sWhv8aMIfJqHvtfI7ieVGeSVFe7cWZmR
-         sLipesOfi3WRYPuUB3gAweVKUk7kBnKmZvIo6E5CD5g1RHH/7VwnyXrbA3gZM2ak+5EG
-         PgEy8+rr49hGARYVFRZsErvBp86bxS7VqjEd95mZp9tCEVmYXP77N03ps+abNsuHR0X2
-         8IvgcKutjmpSGZlbTZ6hM6NEzWiUmpGdI3Ex5mU6Mqx4BiudC9YRsfae44ZiSIUZ3DDF
-         Q1xw==
-X-Gm-Message-State: AOAM5300qdDrPglIVfxGuekn3La1Mjtho0J48vFjTukREKpR5D9/S6aj
-        DxzHppYqPZumz9gHgWsTto2wvw==
-X-Google-Smtp-Source: ABdhPJyZhl+H98/3m2Vi/J9CZLxxEg5b4IQNtTyUZhSDX/J4K/vJtCUyweCWEzr59hG3xiyzbJv9Rg==
-X-Received: by 2002:a05:6402:c16:: with SMTP id co22mr202436edb.175.1611849953582;
-        Thu, 28 Jan 2021 08:05:53 -0800 (PST)
-Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
-        by smtp.gmail.com with ESMTPSA id e10sm2458909ejx.48.2021.01.28.08.05.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Jan 2021 08:05:52 -0800 (PST)
-From:   Jacob Vosmaer <jacob@gitlab.com>
-To:     peff@peff.net, avarab@gmail.com, gitster@pobox.com,
-        git@vger.kernel.org, jeffhost@microsoft.com,
-        jonathantanmy@google.com
-Cc:     Jacob Vosmaer <jacob@gitlab.com>
-Subject: [PATCH v4] upload-pack.c: fix filter spec quoting bug
-Date:   Thu, 28 Jan 2021 17:04:53 +0100
-Message-Id: <20210128160453.79169-1-jacob@gitlab.com>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <YBCFBivBLgqEAUr1@coredump.intra.peff.net>
-References: <YBCFBivBLgqEAUr1@coredump.intra.peff.net>
+        id S232066AbhA1QQA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 11:16:00 -0500
+Received: from mout.gmx.net ([212.227.15.15]:34519 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232492AbhA1QOm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 11:14:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1611850385;
+        bh=pJvFCCH+BlXlMbfCyEFOkbptymQR9zGKkTE+3hm+xjk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=lL+MiHNdTg2MvR3zUZSZ54C2NJWfZzqkFSuNuZLWQEAxeXWcAVIEY1g1oCDzgh3HT
+         QF7G660pR5xKpgR4O/z/7in6OT4kzIu7W3dlo2/Ba5iYYEja4Yan6dZoZS0eJD1WG2
+         0y1vJhNTXeFARkQyAkYiHD+2B0h3sceIU/R4yI4A=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([89.1.213.153]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N7zFZ-1lzr6o1XAB-0152Kx; Thu, 28
+ Jan 2021 17:13:05 +0100
+Date:   Thu, 28 Jan 2021 17:13:04 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] ci: do not cancel all jobs of a matrix if one fails
+In-Reply-To: <YBJbJOLyh+ksolVB@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2101281712460.54@tvgsbejvaqbjf.bet>
+References: <pull.851.git.1611806768911.gitgitgadget@gmail.com> <YBJbJOLyh+ksolVB@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:A5a0Iqj+bhV4+cArzYbVbFx4lqGUtN3/A1yxutxP54DiV7S5dou
+ lka2Rq54SFijUJLpVlM+BjnJDspEbFUovKvNc4/14jVhphCCWY5CZQ3lJ6Wd2PVdOubGvM0
+ +UVg79UFsSgiQ8RG70nHrZPu4pvAipqOzmQYTslVcUOgOWuPQYX4Palf41TKUT7PbGPnV/n
+ 0SkD8uXqml/fJuKsvJWHg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nrlL4GYzGMg=:qAkR6PwDjt8AnW8stvH53J
+ w1HpGJJ82jzbahxUZXX+CeyTpXbMzKWDiwCfF4+DK+uXkuPI9EoK9u+fI2ucDBkflOZDTHNhm
+ xvIh0bA06aXXkq/4v5+M7Cuhzyjaxd+xVmExYu1WAl7QIqSz/jT4/3KzDt89fC4Tu52RVnf1Q
+ uVFgNddMeuNSmiAcCUa3DuIB2Qq13aFOIUMKEkkWppfjFaq+avZHdOuprpNg40rXmxbsU/mgO
+ T8k++XlhvcwZghtMLwKLmU4EeIo3b/gaiyz2l67ND3Cn8Q9ScoiNtsvdvOFXb1Fi8FCraBEHv
+ i0fo+35RTcxQYf94uHayuMoSymk04uf2VdktNjeV7CBhZ1AKVVOkKW2GWVjld4tsxwvrtWNlO
+ mVuGzFLUWv2KJxCNHdtSu4cxana3LcGW4Ewey/aosqqqR1d5dGYiPZ3AIBNl/V0mCZZ/MB6jY
+ XmnwhRlDs41gy5U1gbaWdI7UtWYBXBZGX6Jh8Tm9mY3tV9g/fkKdmjISHVU5zg6d5cHMGAyeI
+ hwk/zmqw41LeTlpT6gzTCjEV+UYWyBaBbg011p0btoJ64GYb/eYCksyAbz9OXgOnYgSHXoiRS
+ GRzg6ioOmgjqMqDiOWTo/26ZjXhYy9SDQSIEN/NecrH9oGoPnMyEKvRHopIvGWj070E3Ge4NA
+ MRUffdMO+2C/GX2Coe0HMjjX1e0mCvoxZc8QfkU8ZRepLOf7d3gtSzSJ7uq48Q/uqg6bYs0u8
+ rEvWXXvVpMFl6gXb4Qmmfupx9yvo4W3+ZgyTHSVKy/vXzMXJxbSp4BoOKXcmTjt5QO6DMu14x
+ mnfX8DeRvDUT1DZihiOi3CnEiFPf0BkoWRipF0oz0xIM2PEYjtymJDbMhFbthdGYOxl/CIyIk
+ WkwNDhpJsrk/Rw5rNrFg35BeHdBa58zJzd98AGRsY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a bug in upload-pack.c that occurs when you combine partial clone and
-uploadpack.packObjectsHook. You can reproduce it as follows:
+Hi,
 
-	git clone -u 'git -c uploadpack.allowfilter '\
-	'-c uploadpack.packobjectshook=env '\
-	'upload-pack' --filter=blob:none --no-local \
-	src.git dst.git
+On Thu, 28 Jan 2021, Jeff King wrote:
 
-Be careful with the line endings because this has a long quoted string
-as the -u argument.
+> On Thu, Jan 28, 2021 at 04:06:08AM +0000, Philippe Blain via GitGitGadge=
+t wrote:
+>
+> > From: Philippe Blain <levraiphilippeblain@gmail.com>
+> >
+> > The CI/PR GitHub Actions workflow uses the 'matrix' strategy for the
+> > "windows-test", "vs-test", "regular" and "dockerized" jobs. The defaul=
+t
+> > behaviour of GitHub Actions is to cancel all in-progress jobs in a
+> > matrix if one of the job of the matrix fails [1].
+> >
+> > This is not ideal as a failure early in a job, like during installatio=
+n of
+> > the build/test dependencies on a specific platform, leads to the
+> > cancellation of all other jobs in the matrix.
+> >
+> > Set the 'fail-fast' variable to 'false' for all four matrix jobs in th=
+e
+> > workflow.
+>
+> I think this is worth doing.
 
-The error I get when I run this is:
+Me, too. ACK!
 
-	Cloning into '/tmp/broken'...
-	remote: fatal: invalid filter-spec ''blob:none''
-	error: git upload-pack: git-pack-objects died with error.
-	fatal: git upload-pack: aborting due to possible repository corruption on the remote side.
-	remote: aborting due to possible repository corruption on the remote side.
-	fatal: early EOF
-	fatal: index-pack failed
-
-The problem is caused by unneeded quoting. This bug was already
-present in 10ac85c785 (upload-pack: add object filtering for partial
-clone, 2017-12-08) when the server side filter support was introduced.
-In fact, in 10ac85c785 this was broken regardless of
-uploadpack.packObjectsHook. Then in 0b6069fe0a (fetch-pack: test
-support excluding large blobs, 2017-12-08) the quoting was removed but
-only behind a conditional that depends on whether
-uploadpack.packObjectsHook is set. Because uploadpack.packObjectsHook
-is apparently rarely used, nobody noticed the problematic quoting
-could still happen.
-
-This commit removes the conditional quoting and adds a test for
-partial clone in t5544-pack-objects-hook.
-
-Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
----
- t/t5544-pack-objects-hook.sh | 9 +++++++++
- upload-pack.c                | 9 +--------
- 2 files changed, 10 insertions(+), 8 deletions(-)
-
-diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
-index 4357af1525..f5ba663d64 100755
---- a/t/t5544-pack-objects-hook.sh
-+++ b/t/t5544-pack-objects-hook.sh
-@@ -59,4 +59,13 @@ test_expect_success 'hook does not run from repo config' '
- 	test_path_is_missing .git/hook.stdout
- '
- 
-+test_expect_success 'hook works with partial clone' '
-+	clear_hook_results &&
-+	test_config_global uploadpack.packObjectsHook ./hook &&
-+	test_config_global uploadpack.allowFilter true &&
-+	git clone --bare --no-local --filter=blob:none . dst.git &&
-+	git -C dst.git rev-list --objects --missing=print HEAD >objects &&
-+	grep "^?" objects
-+'
-+
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index 3b66bf92ba..eae1fdbc55 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -305,14 +305,7 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 	if (pack_data->filter_options.choice) {
- 		const char *spec =
- 			expand_list_objects_filter_spec(&pack_data->filter_options);
--		if (pack_objects.use_shell) {
--			struct strbuf buf = STRBUF_INIT;
--			sq_quote_buf(&buf, spec);
--			strvec_pushf(&pack_objects.args, "--filter=%s", buf.buf);
--			strbuf_release(&buf);
--		} else {
--			strvec_pushf(&pack_objects.args, "--filter=%s", spec);
--		}
-+		strvec_pushf(&pack_objects.args, "--filter=%s", spec);
- 	}
- 	if (uri_protocols) {
- 		for (i = 0; i < uri_protocols->nr; i++)
--- 
-2.30.0
-
+Thanks,
+Dscho
