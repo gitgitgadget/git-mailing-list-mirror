@@ -2,125 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00E69C433DB
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 06:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CB52C433E9
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 06:15:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A86F64DD1
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 06:14:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23AC764DD1
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 06:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbhA1GOT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 01:14:19 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64450 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229504AbhA1GOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 01:14:17 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A49B2120016;
-        Thu, 28 Jan 2021 01:13:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/tjJw/gvnaEcgRL3q+jqwdBD5r4=; b=cVkemC
-        fCJ2To5TZTh0oU2L5AKn0GhkTshxKHo+TsqLqEQ+8odpMUWNboSfXFFlcADIWObI
-        IoYzVSc+ql1OFKgAE2AvFKTI3LLqGmQ3RiGVsPLTqZMSMCayUlsQjGdnWc1MiT0/
-        tSCPyCaQfGLlfOTE6GEGTJ90+bRIsKTmHbqk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DNWWJsmawq9j0NhQ7K0bUL7wZBalGdBR
-        zu939su9bim0i9AmpqlgJkarwbWlLu/rHyDw5FcYCY1RURsEP9YznCG9T4fbB/yz
-        /t1KYi0Vqm7VA8J3h5m9XL1P2NQdFxsjj+VEvhv6Rtw5xbxZ6jIFHnE4DUaJdZka
-        jef2Wn0CDnY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9EF8E120015;
-        Thu, 28 Jan 2021 01:13:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E9408120014;
-        Thu, 28 Jan 2021 01:13:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-compat-util: always enable variadic macros
-References: <YBJLgY+CWtS9TeVb@coredump.intra.peff.net>
-Date:   Wed, 27 Jan 2021 22:13:29 -0800
-In-Reply-To: <YBJLgY+CWtS9TeVb@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 28 Jan 2021 00:28:33 -0500")
-Message-ID: <xmqq5z3hy4fq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231179AbhA1GO7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 01:14:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41618 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231158AbhA1GO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 01:14:56 -0500
+Received: (qmail 9627 invoked by uid 109); 28 Jan 2021 06:14:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 28 Jan 2021 06:14:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25272 invoked by uid 111); 28 Jan 2021 06:14:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Jan 2021 01:14:14 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 Jan 2021 01:14:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 2/6] rerere: check dirname format while iterating rr_cache
+ directory
+Message-ID: <YBJWM0v/D6afqBLI@coredump.intra.peff.net>
+References: <YBJVuckmbGriVa//@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F19A451A-612F-11EB-946C-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YBJVuckmbGriVa//@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+In rerere_gc(), we walk over the .git/rr_cache directory and create a
+struct for each entry we find. We feed any name we get from readdir() to
+find_rerere_dir(), which then calls get_sha1_hex() on it (since we use
+the binary hash as a lookup key). If that fails (i.e., the directory
+name is not what we expected), it returns NULL. But the comment in
+find_rerere_dir() says "BUG".
 
-> We allow variadic macros in the code base, but only if there is fallback
-> code for platforms that lack it. This leads to some annoyances:
->
->   - the code is more complicated because of the fallbacks (e.g.,
->     trace_printf(), etc, is implemented twice with a set of parallel
->     wrappers).
->
->   - some constructs are just impossible and we've had to live without
->     them (e.g., a cross between FLEX_ALLOC and xstrfmt)
->
-> Since this feature is present in C99, we may be able to start counting
-> on it being available everywhere. Let's start with a weather balloon
-> patch to find out.
->
-> This patch makes the absolute minimal change by always setting
-> HAVE_VARIADIC_MACROS. If somebody runs into a platform where it's a
-> problem, they can undo it by commenting out the define. Likewise, if we
-> have to revert this, it would be quite unlikely to cause conflicts.
->
-> Once we feel comfortable that this is the right direction, then we can
-> start ripping out all the spots that actually look at the flag, and
-> removing the dead code.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> We've talked about this off and on for a few years. I don't have any
-> immediate plans for any features that need it, but let's get the ball
-> rolling.
+It _would_ be a bug for the call from new_rerere_id_hex(), the only
+other code path, to fail here; it's generating the hex internally. But
+the call in rerere_gc() is using it say "is this a plausible directory
+name".
 
-OK, so this is just callmine canary that can easily be undone when
-somebody finds it problematic.  Let's give it enough time before we
-actually start removing the fallback code that are protected by
-"#ifndef HAVE_VARIADIC_MACROS" (they are quite well isolated---only
-in the usage and trace, which is pretty much expected as we'd be
-using the feature for printf-like macros).
+Let's instead have rerere_gc() do its own "is this plausible" check.
+That has two benefits:
 
-Thanks.
+  - we can now reliably BUG() inside find_rerere_dir(), which would
+    catch bugs in the other code path (and we now will never return NULL
+    from the function, which makes it easier to see that a rerere_id
+    struct will always have a non-NULL "collection" field).
 
->  git-compat-util.h | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 104993b975..5d5e47fbe2 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1176,9 +1176,12 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
->  #endif
->  #endif
->  
-> -#if defined(__GNUC__) || (_MSC_VER >= 1400) || defined(__C99_MACRO_WITH_VA_ARGS)
-> +/*
-> + * This is always defined as a first step towards making the use of variadic
-> + * macros unconditional. If it causes compilation problems on your platform,
-> + * please report it to the Git mailing list at git@vger.kernel.org.
-> + */
->  #define HAVE_VARIADIC_MACROS 1
-> -#endif
->  
->  /* usage.c: only to be used for testing BUG() implementation (see test-tool) */
->  extern int BUG_exit_code;
+  - it makes the use of the binary hash an implementation detail of
+    find_rerere_dir(), not known by callers. That will free us up to
+    change it in a future patch.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Obviously I have an ulterior motive here, but mostly this just seemed
+to make the code clearer to me. The separation of concerns might also
+help if we did something more exotic with rerere conflict hashes (which
+just use the_hash_algo now, but really don't have to).
+
+ rerere.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/rerere.c b/rerere.c
+index d6928c1b5c..7b0c262ac6 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -146,7 +146,7 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
+ 	int pos;
+ 
+ 	if (get_sha1_hex(hex, hash))
+-		return NULL; /* BUG */
++		BUG("cannot parse rerere dir hex?");
+ 	pos = hash_pos(hash, rerere_dir, rerere_dir_nr, rerere_dir_hash);
+ 	if (pos < 0) {
+ 		rr_dir = xmalloc(sizeof(*rr_dir));
+@@ -1178,6 +1178,13 @@ static void prune_one(struct rerere_id *id,
+ 		unlink_rr_item(id);
+ }
+ 
++/* Does the basename in "path" look plausibly like an rr-cache entry? */
++static int is_rr_cache_dirname(const char *path)
++{
++	unsigned char hash[GIT_MAX_RAWSZ];
++	return !get_sha1_hex(path, hash);
++}
++
+ void rerere_gc(struct repository *r, struct string_list *rr)
+ {
+ 	struct string_list to_remove = STRING_LIST_INIT_DUP;
+@@ -1205,10 +1212,11 @@ void rerere_gc(struct repository *r, struct string_list *rr)
+ 
+ 		if (is_dot_or_dotdot(e->d_name))
+ 			continue;
+-		rr_dir = find_rerere_dir(e->d_name);
+-		if (!rr_dir)
++		if (!is_rr_cache_dirname(e->d_name))
+ 			continue; /* or should we remove e->d_name? */
+ 
++		rr_dir = find_rerere_dir(e->d_name);
++
+ 		now_empty = 1;
+ 		for (id.variant = 0, id.collection = rr_dir;
+ 		     id.variant < id.collection->status_nr;
+-- 
+2.30.0.758.gfe500d6872
+
