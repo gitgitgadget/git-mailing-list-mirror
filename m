@@ -2,73 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB2F9C433DB
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 12:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF0F6C433DB
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 13:14:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E44264DDF
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 12:58:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B29764DDE
+	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 13:14:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbhA1M6J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 07:58:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51506 "EHLO
+        id S232222AbhA1NOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 08:14:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231396AbhA1M6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 07:58:07 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BE1FC061574
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 04:57:27 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id e15so3915468qte.9
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 04:57:27 -0800 (PST)
+        with ESMTP id S232179AbhA1NNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 08:13:35 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AAB9C061573
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 05:12:55 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id r20so418652qtm.3
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 05:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=NnvjRyiZ3LvZ7mpPSToYIG6zcwTuFEwcUi984DBqYkU=;
-        b=ooB+9z73jxGjBiZX4CoIOXyoYa+SPJFZfxrQrhXlZs1BIRXric4s4175pkXc5Gxksb
-         qSJ7/fBc1NV1RaH7wDXMskMRq8Ozsk5NCRZY/pHmOkR9UeI5xRABy79dtHpNBzugIehu
-         vn0mLvkGTTlv7KFYcikrdl0MgfvTjT4XqMINGugjb0yx9pUhbbSrYqZtK9OBr37cHqYo
-         adUJJTMDSkzqEqk7YDQxfeqv7yE2S7su+t3nK2WUG4VoFY9jsIOG2KlN5X5Z38JyXhdh
-         Dv84sJtTOh3vGhxt/rrvG8OMs2FxoNwNu8v3IwcwyOUzCesjdPbLgd+1nQqrz3Wsc5Hq
-         gcfA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DAA4V4aiYdzEuSl+nS/sCgoGIuMgJLS4nK/jWtamyl8=;
+        b=K//RNHNpYbfYEmUdeGsCpemLWloBpfwXgeWws9S1gh/PpfjmWDugqEA3r835T297Wd
+         YyvUo+nNCgR/OFguvCWNoBroKjOvj+CHA4SeVgjw/dOQzftDCprcAXAvcmYXD0gBEP53
+         2gAs+oAF/IZ2rIvHGAUN6gz42b/w18zBXwuyfN9AKKJcGKmame8IrRZ3IriZ3234fUlb
+         JdOYoEsrfVgeIFsz7YfMNH0Ga2gLy1ZzefqSaT1ENn5EVOlr8bUDDqx8uBd65fehVEps
+         O6IexGbnQXYZ7N3Jq7ywrzyhh1EAlpo/Me/5RMPfI1PgRG+Qd18KwXSw54F0vw1XuoZL
+         zvOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=NnvjRyiZ3LvZ7mpPSToYIG6zcwTuFEwcUi984DBqYkU=;
-        b=Xqb/nS/r8hyqDsmDZSJ657nquMQZN2HV3yZYUxxabC+Tap4Y0qT2isVdakRIcF7i4A
-         CrrL4dRbMFCiyAG31Z8yejy19/twjTaBWTdP9yQ3HlSYlr+r7QZuUs22HOT9f2RDpfN9
-         SkIOabS5727pSthudEYYAqylNiD+wxkLxNVNyLMpHx2tZSpCzTKH2ajcdxiCNZClk8UG
-         VEb+syKDsSHWa/MMhwUg5I2dg9/F3uB0s7yeln5x3c4xCdhUu+aNuZKuRoSfSoMNml+p
-         l9yToMWBwgjsOfuvfvHU+O5l8YMFBmNNebUYFZQw7yt/1Rc8gTFbgMmsG8uTlTKWed3B
-         lEQA==
-X-Gm-Message-State: AOAM531xj/3MLpx62JkWbZ/6Z9RYUoePbgs+T72BFnNz2eZclHXUiJGD
-        /Hqh8FGuq/vZkpjHZXSN0v7zQHI07lrlTA==
-X-Google-Smtp-Source: ABdhPJzegDbQ9VOqk9VqjVlLItdLOAKT+arkDfWxl+7Mo7OPahwvTiZ5b8I7kp7FrwGxWeYLZQc4JA==
-X-Received: by 2002:ac8:71d6:: with SMTP id i22mr14324447qtp.206.1611838646397;
-        Thu, 28 Jan 2021 04:57:26 -0800 (PST)
+        bh=DAA4V4aiYdzEuSl+nS/sCgoGIuMgJLS4nK/jWtamyl8=;
+        b=rARMaJRvhsdToOaF85tBpjoYHV77KN9TQ+CR0DN1Obi3o6+XBOlxJK9Y07EV/DShql
+         e8jYSxWmXbi5cQ/vcQXhO9XIGO1kPfjQrsag8zsHd+32/L5MQQVQS/7sITYje5OylJQz
+         o5PRTQGy74N7GKe24rsR1YzuBbMjo2bREfJbLACPPMdCXZvpwZ1K+A6Gq405Q/pEpdsb
+         9nMnRtb230ZO6wgdW0IccSBBSNVFeqpCwiEQvTXhXE5kxQSQ0ZSUY6barep5z31PkPuC
+         aH5ebs1bZ83PMvErbzC6mNXAH+kkolql8xJ5johKz1KV2AsKrcevao16tKn939OTrY/v
+         FFPQ==
+X-Gm-Message-State: AOAM530kxiENEGIJHXa9s9dCIzEFdIsBeWJUCdEj6DGYhnrXy609eHib
+        ofDWOspnaEKu7edG1GF50CfceaOdXJ3IYXsB
+X-Google-Smtp-Source: ABdhPJzoFbJXAQfXHSdCefnebgwA2GyJCgztouZ2x9R/33B/b3IBqAVd/f8bwsEKdIOHeFVHcneHWA==
+X-Received: by 2002:a05:622a:201:: with SMTP id b1mr13758164qtx.237.1611839574017;
+        Thu, 28 Jan 2021 05:12:54 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:916c:60df:445f:4f0a? ([2600:1700:e72:80a0:916c:60df:445f:4f0a])
-        by smtp.gmail.com with UTF8SMTPSA id k7sm3344846qtg.65.2021.01.28.04.57.25
+        by smtp.gmail.com with UTF8SMTPSA id s15sm3262465qtn.35.2021.01.28.05.12.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Jan 2021 04:57:25 -0800 (PST)
-Subject: Re: [PATCH 1/6] commit_graft_pos(): take an oid instead of a bare
- hash
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <YBJVuckmbGriVa//@coredump.intra.peff.net>
- <YBJV07YU1Y+siwZc@coredump.intra.peff.net>
+        Thu, 28 Jan 2021 05:12:52 -0800 (PST)
+Subject: Re: [PATCH 08/27] sparse-checkout: hold pattern list in index
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
+ <80aac5b8b71da96d6287f19e30f4ee8f786ca07b.1611596534.git.gitgitgadget@gmail.com>
+ <CABPp-BEA5B3TzA-w-aBC1ZvFEYzvZfB-hkc=rXqgSVjrBNTLcA@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <493fcc80-c793-0738-3b8d-b486fd05355b@gmail.com>
-Date:   Thu, 28 Jan 2021 07:57:25 -0500
+Message-ID: <87467655-aafb-d509-5158-5688543e5868@gmail.com>
+Date:   Thu, 28 Jan 2021 08:12:52 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
  Thunderbird/85.0
 MIME-Version: 1.0
-In-Reply-To: <YBJV07YU1Y+siwZc@coredump.intra.peff.net>
+In-Reply-To: <CABPp-BEA5B3TzA-w-aBC1ZvFEYzvZfB-hkc=rXqgSVjrBNTLcA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -76,20 +84,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/28/2021 1:12 AM, Jeff King wrote:
-> All of our callers have an object_id, and are just dereferencing the
-> hash field to pass to us. Let's take the actual object_id instead. We
-> still access the hash to pass to hash_pos, but it's a step in the right
-> direction.
+On 1/27/2021 12:00 PM, Elijah Newren wrote:
+> On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> As we modify the sparse-checkout definition, we perform index operations
+>> on a pattern_list that only exists in-memory. This allows easy backing
+>> out in case the index update fails.
+>>
+>> However, if the index write itself cares about the sparse-checkout
+>> pattern set, we need access to that in-memory copy. Place a pointer to
+>> a 'struct pattern_list' in the index so we can access this on-demand.
+>> This will be used in the next change which uses the sparse-checkout
+>> definition to filter out directories that are outsie the sparse cone.
 > 
-> This makes the callers slightly simpler, but also gets rid of the
-> untyped pointer, as well as the now-inaccurate name "sha1".
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I think this one is an obvious cleanup that we'd want whether we go
-> further in the series or not.
+> s/outsie/outside/
 
-I agree. Thanks,
+Thanks! 
+
+> Isn't this the same patch you put in your index cleanup series, or am
+> I getting confused?  It looks very familiar.
+ 
+I removed it from v2 of that series because it didn't do anything of
+value until we start using the sparse_checkout_patterns member in the
+next patch of _this_ series.
+
+Thanks,
 -Stolee
-
