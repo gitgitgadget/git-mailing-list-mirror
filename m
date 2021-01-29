@@ -2,86 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 273D6C433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B368CC433DB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:04:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFB1E64DF5
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:01:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A98864DF1
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232863AbhA2XBT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 18:01:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41038 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231296AbhA2XBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 18:01:12 -0500
-Received: (qmail 4525 invoked by uid 109); 29 Jan 2021 23:00:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jan 2021 23:00:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10555 invoked by uid 111); 29 Jan 2021 23:00:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Jan 2021 18:00:31 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 29 Jan 2021 18:00:30 -0500
-From:   Jeff King <peff@peff.net>
+        id S232580AbhA2XD7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 18:03:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61309 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231156AbhA2XDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 18:03:53 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D6C66108C13;
+        Fri, 29 Jan 2021 18:03:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1M8B1SvrCjpaJJtvktiweZWSD1w=; b=ePc+BF
+        dKCcPj/JXIqGS08U1WoaMljqXtElfTeMF2EWvLg07wT9M0JEInIm1vvMbNWOYRBB
+        SAAu810cSWvLYfOrU0MSMI8v3Hz30oX0dJdXZ01g/kuCt/e3ErYGAyvFiWNdoT/f
+        rEMkkKsc9lq2Wo+Tjwor/LrTbJ+94CcITmrZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=L6fVnPzorjak5JZGymeS80e0QbQP2X8E
+        ng6KN06VE4ORzCrzwcGkFWEtXf4uvItMk5Lns9ZMJGaJrA1gFaG7erBKO/kPavw5
+        OPg57DxtPOhXy+e7sGZJDjKCdYEDNssY85XHv/A4bw7CTE22pxDH80BZLOaebuVD
+        XyFItHl/V+g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF5FE108C12;
+        Fri, 29 Jan 2021 18:03:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1B315108C11;
+        Fri, 29 Jan 2021 18:03:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         dstolee@microsoft.com
 Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
  '--assume-kept-packs-closed'
-Message-ID: <YBSTjkuW8Mib4o5A@coredump.intra.peff.net>
 References: <cover.1611098616.git.me@ttaylorr.com>
- <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
- <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
- <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
- <xmqq35yjtrip.fsf@gitster.c.googlers.com>
- <YBSPlO/ki5vRNX0T@coredump.intra.peff.net>
- <YBSSBviXOL8rM3Ao@nand.local>
+        <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
+        <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
+        <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
+        <YBRprCmIX4IrHAi0@nand.local>
+        <YBRvQdHoslnF0OXr@coredump.intra.peff.net>
+        <YBSHzG9T72nYYVt4@nand.local>
+Date:   Fri, 29 Jan 2021 15:03:08 -0800
+In-Reply-To: <YBSHzG9T72nYYVt4@nand.local> (Taylor Blau's message of "Fri, 29
+        Jan 2021 17:10:20 -0500")
+Message-ID: <xmqqh7mzs5w3.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YBSSBviXOL8rM3Ao@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 280168C0-6286-11EB-BBD5-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 29, 2021 at 05:53:58PM -0500, Taylor Blau wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> > I'm still thinking aloud here, and not really sure which is a better
-> > path. I do feel like the failure modes for the second one are less
-> > risky.
-> 
-> The more I think about it, the more I feel that the second option is the
-> right approach. It seems like if you were naïvely implementing this from
-> scratch, that you'd pick the second one (i.e., have pack-objects
-> understand a new input mode, and then make a pack based on that).
-> 
-> I am leery that we'd be able to get the first option "right" without
-> attaching some sort of marker to each pack, especially given how
-> difficult I think that this is to reason about precisely. I suppose you
-> could have a .closed file corresponding to each pack, or alternatively a
-> $objdir/pack/pack-geometry file which specifies the same thing, but both
-> of these feel overly restrictive.
+> So, I think that teaching pack-objects a way to understand a caller that
+> says "include objects from packs X, Y, and Z, but not if they appear in
+> packs A, B, or C, and also pull in any loose objects" is the best way
+> forward here.
 
-Yeah, I think my gut feeling matches yours.
+Are our goals still include that the resulting packfile has good
+delta compression and object locality?  Reachability traversal
+discovers which commit comes close to which other commits to help
+pack-objects to arrange the resulting pack so that objects that
+appear close together in history appears close together.  It also
+gives each object a pathname hint to help group objects of the same
+type (either blobs or trees) with like-paths together for better
+deltification.
 
-> Besides having to special case the loose objects, is there any downside
-> to doing the simpler thing here?
+Without reachability traversal, I would imagine that it would become
+quite important to keep the order in which objects appear in the
+original pack, and existing delta chain, as much as possible, or
+we'd be seeing a horribly inefficient pack like fast-import would
+produce.
 
-The other downside I can think of is that you can't just run "git repack
---geometric" every time, and eventually get a good result (or one that
-asymptotically approaches good ;) ). I.e., you now have two types of
-repacks: quick and dirty rollups, and "real" ones that do reachability.
-So you need some heuristics about how often you do one versus the other.
-
-I'm definitely OK with that outcome. And I think we could even bake
-those heuristics into a script or mode of repack (e.g., maybe "gc
---auto" would trigger a bigger repack every N times or something). But
-that's what I came up with by brainstorming. :)
-
--Peff
+Thanks.
