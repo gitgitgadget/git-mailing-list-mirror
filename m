@@ -2,117 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 140F3C433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F488C433DB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:55:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A45A764DED
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:54:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F0CD64DFB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231429AbhA2Wyn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 17:54:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbhA2Wym (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 17:54:42 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D66DAC061574
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 14:54:01 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id 19so10423857qkh.3
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 14:54:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=j2fLvT8lr2GQXQZ7SkzUi/mXwfroVW2BHfvyUG1w9EI=;
-        b=0Ca20whU0fTxcte6rHRoFVZPrjuFb4PebHiHj6q2Nfqqn0YF6uVAMQon2SdABHPHJ/
-         JU3/tBDvd0A+Ccp47x3NPEsFCvV9UxhHIttO75gaFT3rdHcmH3eYQA+sFWDxjISg3L2o
-         SgwJyPRSwyKscOXSbJFxAIz2uZGtaIIg7P0RQXW3G4JpsPZh+DIE0W28+Hr7GJhrPHZC
-         /rBt83iu6C6IfyJyaSEDB2TnRXaof8wFyZfZTjpRNfWbQq/D5rIA8+camUaAhG5ypERu
-         ATV/dNe+nG8EZ7UzFwZQsbFmJ/ycE0aX/8ymLVEqzn+5QqEgVGgKebdaNtY1EvQzprju
-         aOZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=j2fLvT8lr2GQXQZ7SkzUi/mXwfroVW2BHfvyUG1w9EI=;
-        b=aF1WG8383mk0epeXYDKv03u8zrfRVhhu6I7/m9xx8UDfxOvoGL38KLn5XbIwuHhsr+
-         dO/70D/sYwtrcK3qlDwqzIies2Fsh/wl3pDS2fRTN7wh8/BttxAo0B9uXwbFX2axkSL9
-         u08YAmhxGMM0/p98COwInwc8NT/hS/5qqtv5EQJ6Jt+cw+Ds+g+spFZXuRztQhq74z+w
-         81X9KhfGMWPYaIYSQkckK2bPShbIBdiln4zFw96QUeiU564vwxIqQiQT+/YeYRTB64EO
-         61jW7TVn3EUsD0gEE2wGunOKK03BrurKc2ibKB8CZSUy0ACP91KX7L0MT+L4xhZqdtMb
-         q8vA==
-X-Gm-Message-State: AOAM530PZZNj9+PrWd6vd5MagGKujQ18Ku7ud9LX19+i7GrAhSOYnn6e
-        Rh1zFl3ufqIyFqzus2Gs6t4PbKJJBmCG4A==
-X-Google-Smtp-Source: ABdhPJyFYc+u/AaMOg+L1b6oPNCEz6nrgeSqra/NV4OEKpismnSJfedfMoC1ypmlt4hkaepOUC5CKQ==
-X-Received: by 2002:a37:9905:: with SMTP id b5mr6616194qke.140.1611960841127;
-        Fri, 29 Jan 2021 14:54:01 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:f05a:e493:9aaa:4c8c])
-        by smtp.gmail.com with ESMTPSA id s129sm3163979qkh.37.2021.01.29.14.54.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jan 2021 14:54:00 -0800 (PST)
-Date:   Fri, 29 Jan 2021 17:53:58 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, dstolee@microsoft.com
-Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
- '--assume-kept-packs-closed'
-Message-ID: <YBSSBviXOL8rM3Ao@nand.local>
-References: <cover.1611098616.git.me@ttaylorr.com>
- <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
- <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
- <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
- <xmqq35yjtrip.fsf@gitster.c.googlers.com>
- <YBSPlO/ki5vRNX0T@coredump.intra.peff.net>
+        id S231605AbhA2Wzd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 17:55:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56620 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231195AbhA2Wzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 17:55:32 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41971A1C39;
+        Fri, 29 Jan 2021 17:54:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=+Z/UlQE0q/vZ
+        KwRu8YyUBQ3DBQI=; b=oMzsMJft6Q9tTTCAjsbqnuuWVkpCG+OLLKxkPUqC4h1q
+        OJxulHnLV8afgNt2geaKeGr4UdCWpzPhTXdj8eJ7dN/D8tVT2cmg+FqYLOxrhj1B
+        vaEDPQrABokiVdDqJlf6UK3mJFIfLnB+iuNb9ycK30KVe2b3v+QK3EcyvgVi+Uw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DtpHyg
+        6unOJx0IP1IWUSbBHMHUrBJSMcdJO/Q4WX9QjKnjcvdv2k0DGujriiDJgvIVqBWD
+        XBwZw2ECeV4OA2RoGYASNZEwKsbilTJapDK2xPWsgjF4ga9ruK/D9//yUB0usue9
+        XvFzVIiNC+x0WTfN+PFgOJQz+9BmWtRkHfeRc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38D01A1C38;
+        Fri, 29 Jan 2021 17:54:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6B7DA1C37;
+        Fri, 29 Jan 2021 17:54:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Colton Hurst <colton@coltonhurst.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git Conditional Includes Question (possible bug?)
+References: <1E4AB5E8-DD46-45CA-9A3F-C49F115BE0D4@coltonhurst.com>
+Date:   Fri, 29 Jan 2021 14:54:48 -0800
+In-Reply-To: <1E4AB5E8-DD46-45CA-9A3F-C49F115BE0D4@coltonhurst.com> (Colton
+        Hurst's message of "Fri, 29 Jan 2021 16:21:44 -0500")
+Message-ID: <xmqqlfcbs69z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YBSPlO/ki5vRNX0T@coredump.intra.peff.net>
+X-Pobox-Relay-ID: FDBA3F70-6284-11EB-B258-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 29, 2021 at 05:43:32PM -0500, Jeff King wrote:
-> So I think the paths forward are either:
+Colton Hurst <colton@coltonhurst.com> writes:
+
+> [Expectation] When I run `cd ~/colton/github/coltonhurst.com`
+> (this is a valid git repo) and then run `git config user.email`, I
+> expect =E2=80=98colton@coltonhurst.com=E2=80=99 will be returned.
 >
->   - come up with an air-tight system of making sure that we know packs
->     we claim are closed under reachability really are (perhaps some
->     marker that says "I was generated by repack -a")
->
->   - have a "roll-up" mode that does not care about reachability at all,
->     and just takes any objects from a particular set of packs (plus
->     probably loose objects)
->
-> I'm still thinking aloud here, and not really sure which is a better
-> path. I do feel like the failure modes for the second one are less
-> risky.
+> [Actual Result] When I run `cd ~/colton/github/coltonhurst.com`
+> (this is a valid git repo) and then run `git config user.email`,
+> nothing is returned.
 
-The more I think about it, the more I feel that the second option is the
-right approach. It seems like if you were naïvely implementing this from
-scratch, that you'd pick the second one (i.e., have pack-objects
-understand a new input mode, and then make a pack based on that).
+The relevant part of the per-user config are
 
-I am leery that we'd be able to get the first option "right" without
-attaching some sort of marker to each pack, especially given how
-difficult I think that this is to reason about precisely. I suppose you
-could have a .closed file corresponding to each pack, or alternatively a
-$objdir/pack/pack-geometry file which specifies the same thing, but both
-of these feel overly restrictive.
+> [user]
+> 	name =3D Colton Hurst
 
-Besides having to special case the loose objects, is there any downside
-to doing the simpler thing here?
+This is not conditional, and applies when you are in the repository.
 
-> Anyway, here's the --unpacked example, if you're curious. It's based on
-> fetching, but you could invert it to do pushes (in which case it is
-> repacking in "parent" that gets the wrong result).
+> [includeIf "gitdir:~/colton/github"]
+> 	path =3D ~/colton/github/.gitconfig
 
-Fascinating indeed :-).
+This is conditional, and applies when you are in a repository whose
+".git" location matches the glob pattern "~/colton/github".  The
+location in question is "~/colton/github/coltonhurst.com", which
+does not match the pattern, so it would be skipped.
 
-Thanks,
-Taylor
+> [includeIf "gitdir:~/colton/sourcehut"]
+> 	path =3D ~/colton/sourcehut/.gitconfig
+
+Likewise.
+
+So, nobody sets user.email in your example.  Isn't it expected that
+nothing is returned?
+
+I wonder what happens when the second one is updated to
+
+> [includeIf "gitdir:~/colton/github/"]
+> 	path =3D ~/colton/github/.gitconfig
+
+as "git config --help" says:
+
+ * If the pattern ends with `/`, `**` will be automatically added. For
+   example, the pattern `foo/` becomes `foo/**`. In other words, it
+   matches "foo" and everything inside, recursively.
+
+and "~/colton/github/**" as a pattern would match the path to the
+repository in question.
+
