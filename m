@@ -2,83 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78743C433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17281C4332D
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 17:14:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18A0A64E00
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:59:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA15864DE3
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 17:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232364AbhA2H5g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 02:57:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232289AbhA2H5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 02:57:07 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 464B3C061756
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:57:53 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id ox12so11681295ejb.2
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:57:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mNMuqK7qGHaKdjbQXHq9OSpMwFKc7WcnScDXtKXgSyE=;
-        b=u5yYFiyi2l55uk7LVx7Y4geG7KCBZgdtAuIfd+CpTxaCp91/LeoQXFOobibvGwoo1i
-         YSXjEP01S8iGGTp3zaQU9TWyJID20IcwrINVTDjRqRVeicIZRUnQtUhFuEZCx7sJNKyv
-         BWxmw1pd0IwWZ/RTBErFWUlJOsbdaLqy1bWFwHihSD//pnDdyz+0P4tZOICnlAagllw2
-         +cIENOZ779DhFRO3mnWJYwqD1TFOpqX6wBzk49VDVJwGL7ZjKOU5obYROvzmpqv90iKi
-         uM96PnPA5tKfc9KtytEPi8Mhje6snpXoyE+3V3YMmsQ+xHTPuuvbccGzebNeU249gd1c
-         1LtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mNMuqK7qGHaKdjbQXHq9OSpMwFKc7WcnScDXtKXgSyE=;
-        b=N2RzHSAqB1VwqvQczyIpQWgVZ17PuT/5Wb/Co2Xut2F0HkbbhRwz16v3UE+lwv65v/
-         e3AulcAW4P6Pw6M+6klJ++ur7nlqMax4VOsi4tOoz3bABErpawrbnp2OisNeyeb6rilC
-         RazBiUWEMdNnzFWai4xQ0QkXjLZG2ixGHVZFpM5fdalUMSRKcNMwyS4rhzSY0mOWmlIh
-         a37e8pwA1IFnAzoXgy3MobGLcTXUBLmhDAGWOBcdJUAyv0vjbw1nH0DNdvS/N8xTUcCu
-         d9QW8ezwp6DjZ+b13/hHDnXsAPs+hmXHRpY8ycypoH/mlP5Orz2s/9BeJA9zDP/3xbNb
-         cjPg==
-X-Gm-Message-State: AOAM5323yqFcLv9iRFPJiGv7URDA+IpG7ZeYWoH0E/KAE5tNA6pRsbcL
-        rsebfuYtaoYqXs6DF3r2rki6HlEkqOz6AoYxDGE=
-X-Google-Smtp-Source: ABdhPJwfzNA/zyNpN1ttQNQ3QEoNbNX6j55zI57BSBw+2+dRXSgzvu0ieIZEcM6VwavtT/cpEoFVgrXADd3N8mqBaEM=
-X-Received: by 2002:a17:906:3883:: with SMTP id q3mr3291797ejd.160.1611907072100;
- Thu, 28 Jan 2021 23:57:52 -0800 (PST)
+        id S232415AbhA2RNs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 12:13:48 -0500
+Received: from mout.web.de ([212.227.15.4]:36985 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231396AbhA2RM1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 12:12:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1611940222;
+        bh=rspE6PKtsdlqNQdfKdg+/+3UAYkOs1cHWAiv0OEPexc=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=KjPLNQGBLQJNHL4c5MLfoQTgFBFJJAli4DLUTQyTzLpx3hAuYffgS+h1xzlEdDFtp
+         /ta44J+tFi85AM/1ocfjMT0jR6Eml7Uqa47qXKIlIvXAsP51u9dVY6UQw8lSt2UV9n
+         3YRFdvLiTSVI3JiTHBGblc8q0BTheQUw6eNp79/0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0LqGCu-1laUNp3jnM-00dmfy; Fri, 29 Jan 2021 18:10:21 +0100
+Subject: Re: [PATCH 1/3] commit-reach: use one walk in remove_redundant()
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, me@ttaylorr.com,
+        peff@peff.net, gitster@pobox.net,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
+ <3fe74e339fc5b7083398f2df51baae5a4a008060.1611851095.git.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <d1c7b530-f1ef-8aee-32d3-6ac6707bad37@web.de>
+Date:   Fri, 29 Jan 2021 18:10:20 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.0
 MIME-Version: 1.0
-References: <20210125191710.45161-1-mirucam@gmail.com> <20210125191710.45161-5-mirucam@gmail.com>
-In-Reply-To: <20210125191710.45161-5-mirucam@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 29 Jan 2021 08:57:40 +0100
-Message-ID: <CAP8UFD0mezb35u3SPi2Q2w-oCfA8NYAmacropNQQHumC7Vdkxg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/7] bisect--helper: use `res` instead of return in
- BISECT_RESET case option
-To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <3fe74e339fc5b7083398f2df51baae5a4a008060.1611851095.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:2n0MPJ7g4yt1Va8DwsywVysp1a7yS22zjc5FPr7oSnMI6KnTn5+
+ Tyi2dMFpgd5FVEOjpRIeUC3WoumzFPChFBxTSaLYagOWflSfNAk7zOryh4q74MF0QNmvY+/
+ D0TC/ZPydGuXE/RWfdLjmWjNDuyrFeJftG7nn3HeSCOxfOrkjQsr+IxmDtbDQNg3OpNGzk4
+ 7qg7lm0WNrnsVnlKEDCWQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3vQpp6ulDIk=:b3GSXnob8gZSrQ3Q1/+Y3R
+ FKY6k+9RFngtzIV8pEFwxbfPZUUeN992eQKlSP300zsaaMZTX4WEoREZXkZ3HeB14eAz5l9Wm
+ r8zHo/u7uChfrQspTRyVb1kJ0roNf0jRmgq8+j0snOjWoqteRUQGoBQkrGR8NkOCP2G2ccJwx
+ dY1/sqATd7mrWP9HHFnEIJXCyQ82LTVKelv7w8AAIKVBkVHkrNc/4IxUqEz8187wDA1Kq/BCV
+ qid0+/QAiJCaL6K14Z3oC2yRX0ToeVwjvtjiSBR0iGpYocqllPekQxifDrSAT75lGukSkbVCF
+ 1uSgRX/CchkY3sN46aDc4KLavKRnrrx3dqfjrKv4k7AzabCIsKF+UpLdDp/lg3LD2IS8AGTgj
+ qGuktpHFcR4sCbSaAhKlupPvt9jv2wY59gRMt7HqXl9Cz062QXBt1ursIyZREDJPgdtVuGq4L
+ if0mMjQU2rzfWuNToUux8aQXqARczvYHP13OPS1Ma0v+nIzu9vID6h60+tNsUVhmjZfxL6MUe
+ U92ccExaxCC0MqTKNZwOHqxvqhB1Zup5GNr+XNO6N70AVgFnUCM4eiDFEAXAnV+HC99cTJ0y5
+ rn+cbrYowgqGeUcsP8exZWva0jfsKMv+rSPdbqvUfl0IQH1uSmwIber2mC0wchKkZCiOx8ITx
+ Vjhis35pN+epK0m67qYlfYiYk4ttia6qYRzKXRQcFMGsELX//ntLYkfzLCS/s2SkNH411MnvK
+ 3TH6q1vtODz8LltxJggJH9mVW7NzEYNsTWOxWG/aOzqcUVOaMJrLF7SImBlrPvimM8dzTUDV2
+ NsAL7f0OywKBjqno1ezHCeCwIFFki3FwA3QxsqpQCl2/bmWcGYdKtw48tLCdSXGLW6UxWniGC
+ uVuuRl2N5iyy9g8DZL/g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 8:17 PM Miriam Rubio <mirucam@gmail.com> wrote:
+Am 28.01.21 um 17:24 schrieb Derrick Stolee via GitGitGadget:
+> +	/* rearrange array */
+> +	dup =3D xcalloc(cnt, sizeof(struct commit *));
 
-> @@ -1043,7 +1043,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->         case BISECT_RESET:
->                 if (argc > 1)
->                         return error(_("--bisect-reset requires either no argument or a commit"));
-> -               return !!bisect_reset(argc ? argv[0] : NULL);
-> +               res = bisect_reset(argc ? argv[0] : NULL);
->                 break;
+You could use CALLOC_ARRAY instead here, which is shorter and uses the
+correct type automatically.  Or -- seeing that the next line overwrites
+all items anyway --  ALLOC_ARRAY.
 
-This "break;" was not necessary before but it becomes necessary when
-the above "return ..." is replaced with something else.
+> +	COPY_ARRAY(dup, array, cnt);
 
->         case CHECK_AND_SET_TERMS:
->                 if (argc != 3)
+Ren=C3=A9
