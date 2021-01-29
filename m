@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B368CC433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7BACC433E0
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:11:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A98864DF1
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:04:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C3B564DFB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232580AbhA2XD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 18:03:59 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61309 "EHLO
+        id S229866AbhA2XLk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 18:11:40 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52055 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbhA2XDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 18:03:53 -0500
+        with ESMTP id S229683AbhA2XLj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 18:11:39 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D6C66108C13;
-        Fri, 29 Jan 2021 18:03:12 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1E75C108DFE;
+        Fri, 29 Jan 2021 18:10:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1M8B1SvrCjpaJJtvktiweZWSD1w=; b=ePc+BF
-        dKCcPj/JXIqGS08U1WoaMljqXtElfTeMF2EWvLg07wT9M0JEInIm1vvMbNWOYRBB
-        SAAu810cSWvLYfOrU0MSMI8v3Hz30oX0dJdXZ01g/kuCt/e3ErYGAyvFiWNdoT/f
-        rEMkkKsc9lq2Wo+Tjwor/LrTbJ+94CcITmrZQ=
+        :content-type:content-transfer-encoding; s=sasl; bh=wsUbltmqwUxL
+        gqAhqdKID4Fun54=; b=j92QYc493YguUhVSGX01BN1A6H4YA4nNRqHDHvVJXhZO
+        H09l674Jr9DtjDEjyo8JrzxuSV1ltV4gLvl8znEhZFYKX+Qre/YkkCb3+NDiyn5y
+        kmfNkRAZ2Iro37kK3xBjXtX/pRUwSCuvxGJuABYx8mTOz7915haBfUZ+EIkIsnk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=L6fVnPzorjak5JZGymeS80e0QbQP2X8E
-        ng6KN06VE4ORzCrzwcGkFWEtXf4uvItMk5Lns9ZMJGaJrA1gFaG7erBKO/kPavw5
-        OPg57DxtPOhXy+e7sGZJDjKCdYEDNssY85XHv/A4bw7CTE22pxDH80BZLOaebuVD
-        XyFItHl/V+g=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vrZsg9
+        Z9a4KXSJ1L3EA9ItNPGTWbD0t8EuPYVQkwOcaovDkEY2RlA3L3SXFZytrDZKEFnL
+        CV5vpQobX5NG9LeeoelM/BI75ogKcSSrZUntqaiWS7ri9adWTupwHRaupEzKJ+nK
+        NKcZXI2fgdZuIiqcHn4/80gAz3nFj9+VYmyPc=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF5FE108C12;
-        Fri, 29 Jan 2021 18:03:12 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17399108DFD;
+        Fri, 29 Jan 2021 18:10:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1B315108C11;
-        Fri, 29 Jan 2021 18:03:10 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 58142108DFB;
+        Fri, 29 Jan 2021 18:10:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
@@ -55,41 +55,57 @@ References: <cover.1611098616.git.me@ttaylorr.com>
         <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
         <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
         <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
-        <YBRprCmIX4IrHAi0@nand.local>
-        <YBRvQdHoslnF0OXr@coredump.intra.peff.net>
-        <YBSHzG9T72nYYVt4@nand.local>
-Date:   Fri, 29 Jan 2021 15:03:08 -0800
-In-Reply-To: <YBSHzG9T72nYYVt4@nand.local> (Taylor Blau's message of "Fri, 29
-        Jan 2021 17:10:20 -0500")
-Message-ID: <xmqqh7mzs5w3.fsf@gitster.c.googlers.com>
+        <xmqq35yjtrip.fsf@gitster.c.googlers.com>
+        <YBSPlO/ki5vRNX0T@coredump.intra.peff.net>
+        <YBSSBviXOL8rM3Ao@nand.local>
+Date:   Fri, 29 Jan 2021 15:10:51 -0800
+In-Reply-To: <YBSSBviXOL8rM3Ao@nand.local> (Taylor Blau's message of "Fri, 29
+        Jan 2021 17:53:58 -0500")
+Message-ID: <xmqqczxns5j8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 280168C0-6286-11EB-BBD5-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3C1FC56C-6287-11EB-9430-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> So, I think that teaching pack-objects a way to understand a caller that
-> says "include objects from packs X, Y, and Z, but not if they appear in
-> packs A, B, or C, and also pull in any loose objects" is the best way
-> forward here.
+> On Fri, Jan 29, 2021 at 05:43:32PM -0500, Jeff King wrote:
+>> So I think the paths forward are either:
+>>
+>>   - come up with an air-tight system of making sure that we know packs
+>>     we claim are closed under reachability really are (perhaps some
+>>     marker that says "I was generated by repack -a")
+>>
+>>   - have a "roll-up" mode that does not care about reachability at all=
+,
+>>     and just takes any objects from a particular set of packs (plus
+>>     probably loose objects)
+>>
+>> I'm still thinking aloud here, and not really sure which is a better
+>> path. I do feel like the failure modes for the second one are less
+>> risky.
+>
+> The more I think about it, the more I feel that the second option is th=
+e
+> right approach. It seems like if you were na=C3=AFvely implementing thi=
+s from
+> scratch, that you'd pick the second one (i.e., have pack-objects
+> understand a new input mode, and then make a pack based on that).
 
-Are our goals still include that the resulting packfile has good
-delta compression and object locality?  Reachability traversal
-discovers which commit comes close to which other commits to help
-pack-objects to arrange the resulting pack so that objects that
-appear close together in history appears close together.  It also
-gives each object a pathname hint to help group objects of the same
-type (either blobs or trees) with like-paths together for better
-deltification.
+Yes, "roll-up" mode would be a sensible thing to have, as long as we
+can keep pruning out of the picture for now.  But in the end, I do
+think "stop at any object in this frozen pack---these objects go all
+the way down to root and we know they are reachable" optimization
+that would give 'prune' a performance boost with small margin of
+false positive about reachability (i.e. we may never be able to
+prune away an object in such a pack, even when it becomes
+unreachable) would be a valuable thing to have in a practical
+system, so from that point of view, the work done in these patches
+are not lost ;-)
 
-Without reachability traversal, I would imagine that it would become
-quite important to keep the order in which objects appear in the
-original pack, and existing delta chain, as much as possible, or
-we'd be seeing a horribly inefficient pack like fast-import would
-produce.
-
-Thanks.
+The efficiency issue of the resulting pack I mentioned earlier in a
+separate message is there in the "roll-up" mode, though.
