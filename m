@@ -6,90 +6,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74298C433E0
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9EA5C433E0
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:29:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 408B764DEB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:28:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D7BA64DEB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbhA2A1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 19:27:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42664 "EHLO cloud.peff.net"
+        id S231205AbhA2A3O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 19:29:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42676 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229596AbhA2A1v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 19:27:51 -0500
-Received: (qmail 20347 invoked by uid 109); 29 Jan 2021 00:27:10 -0000
+        id S231184AbhA2A3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 19:29:13 -0500
+Received: (qmail 20379 invoked by uid 109); 29 Jan 2021 00:28:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jan 2021 00:27:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jan 2021 00:28:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4075 invoked by uid 111); 29 Jan 2021 00:27:11 -0000
+Received: (qmail 4084 invoked by uid 111); 29 Jan 2021 00:28:33 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Jan 2021 19:27:11 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Jan 2021 19:28:33 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 28 Jan 2021 19:27:09 -0500
+Date:   Thu, 28 Jan 2021 19:28:32 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH v3 01/10] packfile: prepare for the existence of '*.rev'
- files
-Message-ID: <YBNWXU8xzw0087DC@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 03/10] builtin/index-pack.c: allow stripping arbitrary
+ extensions
+Message-ID: <YBNWsJBDUpNiRXP4@coredump.intra.peff.net>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <cover.1611617819.git.me@ttaylorr.com>
- <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
+ <8a3e70454b9bc64fc7a5ff07d47f7fde018e6a3d.1611617820.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
+In-Reply-To: <8a3e70454b9bc64fc7a5ff07d47f7fde018e6a3d.1611617820.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 06:37:14PM -0500, Taylor Blau wrote:
+On Mon, Jan 25, 2021 at 06:37:22PM -0500, Taylor Blau wrote:
 
-> +struct revindex_header {
-> +	uint32_t signature;
-> +	uint32_t version;
-> +	uint32_t hash_id;
-> +};
-> [...]
-> +	struct revindex_header *hdr;
-> [...]
-> +	data = xmmap(NULL, revindex_size, PROT_READ, MAP_PRIVATE, fd, 0);
-> +	hdr = data;
-> +
-> +	if (ntohl(hdr->signature) != RIDX_SIGNATURE) {
+> To derive the filename for a .idx file, 'git index-pack' uses
+> derive_filename() to strip the '.pack' suffix and add the new suffix.
+> 
+> Prepare for stripping off suffixes other than '.pack' by making the
+> suffix to strip a parameter of derive_filename(). In order to make this
+> consistent with the "suffix" parameter which does not begin with a ".",
+> an additional check in derive_filename.
 
-I guess this technique was pulled from the .idx code paths, but IMHO we
-should avoid this kind of struct-casting. It relies on the compiler's
-struct packing, and I'm not 100% sure it doesn't violate some weird
-pointer-aliasing rules.
+Maybe "add" missing from the final line?
 
-OTOH, as long as we do not ever care about sizeof(revindex_header), this
-is likely to work in practice, since every field is at least 4-byte
-aligned (but there is probably an extra 4 bytes of padding at the end).
+> +static const char *derive_filename(const char *pack_name, const char *strip,
+> +				   const char *suffix, struct strbuf *buf)
+>  {
+>  	size_t len;
+> -	if (!strip_suffix(pack_name, ".pack", &len))
+> -		die(_("packfile name '%s' does not end with '.pack'"),
+> -		    pack_name);
+> +	if (!strip_suffix(pack_name, strip, &len) || !len ||
+> +	    pack_name[len - 1] != '.')
+> +		die(_("packfile name '%s' does not end with '.%s'"),
+> +		    pack_name, strip);
+>  	strbuf_add(buf, pack_name, len);
+> -	strbuf_addch(buf, '.');
 
-The "right" way is probably something like:
-
-  const char *header = data;
-  if (get_be32(header) != RIDX_SIGNATURE)
-          error...;
-  header += 4;
-  if (get_be32(header) != 1)
-          error...;
-  header += 4;
-  ...etc...
-
-I thought we had helpers to read and advance the pointer, but it looks
-like those are specific to the bitmap code (e.g., read_be32(), though it
-uses a separate offset variable).
-
-I dunno. Maybe I am being overly picky. The .idx code already does it
-like this, and I believe the index (as in .git/index) does, too. We have
-run into problems (as in b5007211b6 (pack-bitmap: do not use gcc packed
-attribute, 2014-11-27)), but that was due to a more odd-sized struct, as
-well as using sizeof().
-
-The rest of the patch looks good to me.
+Looks good to me.
 
 -Peff
