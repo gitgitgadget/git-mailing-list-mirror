@@ -7,105 +7,89 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7BACC433E0
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 497EDC433E0
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:13:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C3B564DFB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:11:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4EC864DFA
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbhA2XLk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 18:11:40 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52055 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbhA2XLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 18:11:39 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1E75C108DFE;
-        Fri, 29 Jan 2021 18:10:56 -0500 (EST)
+        id S231963AbhA2XNj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 18:13:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52730 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231202AbhA2XNi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 18:13:38 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFB5EA1D9C;
+        Fri, 29 Jan 2021 18:12:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wsUbltmqwUxL
-        gqAhqdKID4Fun54=; b=j92QYc493YguUhVSGX01BN1A6H4YA4nNRqHDHvVJXhZO
-        H09l674Jr9DtjDEjyo8JrzxuSV1ltV4gLvl8znEhZFYKX+Qre/YkkCb3+NDiyn5y
-        kmfNkRAZ2Iro37kK3xBjXtX/pRUwSCuvxGJuABYx8mTOz7915haBfUZ+EIkIsnk=
+        :content-type; s=sasl; bh=HOPO20YOMm8oPHhPWwQzO2CtPqc=; b=hs81uN
+        b6aY4F3cL7e8KMKKsAgI+ACzxe7k+/DFbhwSRVAHAV71A8j7bAhNRXK4LjbFwblQ
+        B622mDMViSd82IMtoKCcDHo5pas3aGej0TdxCXghAPgDxDBZJeLnkGBm1w1Xwjwc
+        IdCwhd56xAD8DXeiKKFQ82QgzyNQfcq3UeyZ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vrZsg9
-        Z9a4KXSJ1L3EA9ItNPGTWbD0t8EuPYVQkwOcaovDkEY2RlA3L3SXFZytrDZKEFnL
-        CV5vpQobX5NG9LeeoelM/BI75ogKcSSrZUntqaiWS7ri9adWTupwHRaupEzKJ+nK
-        NKcZXI2fgdZuIiqcHn4/80gAz3nFj9+VYmyPc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 17399108DFD;
-        Fri, 29 Jan 2021 18:10:56 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Q1nWGiDUuzRjGuYQohqP6dvcSVIhxdSY
+        IQS+QvTLQikckusA1U84qVafh1EYCckJRSMvJssp+GVM0GF33BLPoJZnWovd2izE
+        LsCUnyyk52SzZBqfUcPTbvcsoK+a3UJNQ3rumI2/pDPdlK1v3TqZstQBHSlDcjwU
+        jLW1PXQ7Qo0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E67AEA1D9A;
+        Fri, 29 Jan 2021 18:12:55 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 58142108DFB;
-        Fri, 29 Jan 2021 18:10:53 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7531FA1D99;
+        Fri, 29 Jan 2021 18:12:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         dstolee@microsoft.com
-Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
- '--assume-kept-packs-closed'
+Subject: Re: [PATCH 05/10] p5303: measure time to repack with keep
 References: <cover.1611098616.git.me@ttaylorr.com>
-        <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
-        <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
-        <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
-        <xmqq35yjtrip.fsf@gitster.c.googlers.com>
-        <YBSPlO/ki5vRNX0T@coredump.intra.peff.net>
-        <YBSSBviXOL8rM3Ao@nand.local>
-Date:   Fri, 29 Jan 2021 15:10:51 -0800
-In-Reply-To: <YBSSBviXOL8rM3Ao@nand.local> (Taylor Blau's message of "Fri, 29
-        Jan 2021 17:53:58 -0500")
-Message-ID: <xmqqczxns5j8.fsf@gitster.c.googlers.com>
+        <b3b2574d4d9d10f226b52d81fe0e6bf1f761504e.1611098616.git.me@ttaylorr.com>
+        <xmqqft2ktnpj.fsf@gitster.c.googlers.com>
+        <YBRi4v/AeDD/Zc9X@coredump.intra.peff.net>
+        <xmqqy2gbsclr.fsf@gitster.c.googlers.com>
+        <YBSHv3TWleRxM1+/@coredump.intra.peff.net>
+Date:   Fri, 29 Jan 2021 15:12:54 -0800
+In-Reply-To: <YBSHv3TWleRxM1+/@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 29 Jan 2021 17:10:07 -0500")
+Message-ID: <xmqq8s8bs5ft.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3C1FC56C-6287-11EB-9430-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 84E9F560-6287-11EB-B338-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, Jan 29, 2021 at 05:43:32PM -0500, Jeff King wrote:
->> So I think the paths forward are either:
->>
->>   - come up with an air-tight system of making sure that we know packs
->>     we claim are closed under reachability really are (perhaps some
->>     marker that says "I was generated by repack -a")
->>
->>   - have a "roll-up" mode that does not care about reachability at all=
-,
->>     and just takes any objects from a particular set of packs (plus
->>     probably loose objects)
->>
->> I'm still thinking aloud here, and not really sure which is a better
->> path. I do feel like the failure modes for the second one are less
->> risky.
+> On Fri, Jan 29, 2021 at 12:38:08PM -0800, Junio C Hamano wrote:
 >
-> The more I think about it, the more I feel that the second option is th=
-e
-> right approach. It seems like if you were na=C3=AFvely implementing thi=
-s from
-> scratch, that you'd pick the second one (i.e., have pack-objects
-> understand a new input mode, and then make a pack based on that).
+>> > Oops. Looks like I was the one who introduced that. Nobody seems to have
+>> > complained, so I'm somewhat tempted to leave it. But it would not be too
+>> > hard to replace with perl, I think.
+>> 
+>> Yeah, but would it be worth it?  I am actually OK to say that you
+>> need GNU sed if you want to run perf.  We already rely on GNU time
+>> to run perf tests, no?
+>
+> True. This one is a little worse because it's subtle, and somebody might
+> copy it unknowingly into the regular test suite.
+>
+> I am happy to leave it, or for you to pick up the patch I sent earlier
+> (which I did verify produces identical output).
 
-Yes, "roll-up" mode would be a sensible thing to have, as long as we
-can keep pruning out of the picture for now.  But in the end, I do
-think "stop at any object in this frozen pack---these objects go all
-the way down to root and we know they are reachable" optimization
-that would give 'prune' a performance boost with small margin of
-false positive about reachability (i.e. we may never be able to
-prune away an object in such a pack, even when it becomes
-unreachable) would be a valuable thing to have in a practical
-system, so from that point of view, the work done in these patches
-are not lost ;-)
+Yeah, I would be very unhappy if somebody copied-and-pasted it, but
+somehow I didn't think too many people moved code in that direction
+;-)
 
-The efficiency issue of the resulting pack I mentioned earlier in a
-separate message is there in the "roll-up" mode, though.
+Will apply the portability fix, then.
+
+Thanks.
