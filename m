@@ -2,84 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58301C433E0
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42495C433E0
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:29:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5AD864DDB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:21:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB2C964DDB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 23:29:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbhA2XVB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 18:21:01 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54080 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbhA2XVA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 18:21:00 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 14F3C108E8F;
-        Fri, 29 Jan 2021 18:19:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RulkyiOs3nMdC4kEUf8nOW2z3eY=; b=vkaNd6
-        9Yg71uXwtlAxQYwbnqlPy3Hi+4VjsAGawodKDRIR6PRaPxR3b+fxxYLy3/zuiZiX
-        LNVuvpNMdGbAfWi824LxR4zFb6vq2kb+BbvlBV3d02g8rhU6/jHwGJQVkHWhNnJa
-        F4J88+9pX0VAw+gh4vf1CsAz7XYAdOp6SA/Xw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jvOLXTpd8uQ7iqFYYaCqzq0qn9DgrVwt
-        CW7GJypdnEfCIEATNaku6rX3sJye5mdZs0MawIY9I79wS73m9YvTwDLBBiZOLZ/7
-        LiOeKV4H9Lkeh3sajdqntyEZkC9noQhzB73eti+CPzcGXw2UDWEfHfd66puR7uB5
-        H85EJX8YHT0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D43D108E8D;
-        Fri, 29 Jan 2021 18:19:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5463F108E8C;
-        Fri, 29 Jan 2021 18:19:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, random_n0body@icloud.com,
-        levraiphilippeblain@gmail.com
-Subject: Re: [PATCH v2 1/1] MacOS: precompose_argv_prefix()
-References: <A102844A-9501-4A86-854D-E3B387D378AA@icloud.com>
-        <20210129171512.28167-1-tboegi@web.de>
-Date:   Fri, 29 Jan 2021 15:19:41 -0800
-In-Reply-To: <20210129171512.28167-1-tboegi@web.de> (tboegi@web.de's message
-        of "Fri, 29 Jan 2021 18:15:12 +0100")
-Message-ID: <xmqq4kizs54i.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232326AbhA2X3S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 18:29:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229828AbhA2X3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 18:29:13 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13756C061573
+        for <git@vger.kernel.org>; Fri, 29 Jan 2021 15:28:31 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id t14so7994015qto.8
+        for <git@vger.kernel.org>; Fri, 29 Jan 2021 15:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Fw53/9iJu1PXYuug80JMN7SqVYK3oGNAqZsPdIFrjXM=;
+        b=oLUPx7EXJqI70Pcvq4A1lWIPYQ7kaKPjxqIgYJNlYXU0tYk1yIyjH/LLMSy9V9XrK9
+         3gPwnhMYpMyqospihhpKCsdPsBF6qNMsNIyozbkh83pWgF9O0ghxbXM9+WG3yRwBviAV
+         z0e21IPtrUKdbBOI/Infz1O0a3XgnvQfK/YHMRfqe3qKQyBBKf0LFVzzP+xAitp4AUX+
+         A0n1fC6YURmasDc5xPRX0RJHrO3dHAUQPcHp+W/DSiONff3vfG5MtCpymqBxsnkIP7ol
+         KcZlEw15PupbttOMKdmIcKwiHZkpqSVAs2F83oj77YfHAawdIr51cEjPlYjwcGTZkL11
+         B9HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Fw53/9iJu1PXYuug80JMN7SqVYK3oGNAqZsPdIFrjXM=;
+        b=JhNFEBlnBiFzXjeqsreWlPW+P25gd6/g2uuLa0wHMXVnFzDX0ht8QLv2bAuXcrXaM5
+         mQSCw6FPS7zAZDfY1dSGOwP7CpHFZUcs1fegTMxZY5wmCEvg0OS2aTjUxT8ssDQgjUe+
+         o0D240565ECYXJ2A0eisAh9FPlMLjQThSVrKr7jXGcpPbBEHjnrZXS4rtPLkRNiOy+cW
+         Pdl4tCNwLbem5o5Zvj1IKT+Z54mB07IYtliV8scOgFkvgRjhDN13XnUy9QPmk3fcTZ7S
+         KuOIawcXvZvTTs/sdHv6YEjQhGLZWJb1e2kfjgRwjm3nq6I0UWjVv+NDVMDR8o0y0m8C
+         yb+w==
+X-Gm-Message-State: AOAM532/eruK70hQA2KmInRwEAYVPUQviJfAMFpfUfCXHSLpjpnD0xH7
+        6Cgn+yxahfviQvAK5K7VmlrU/g==
+X-Google-Smtp-Source: ABdhPJwGJGqLbKzrQ+z/8+lU/jBulfxz9AtZDDsWfpnM8PiUadNhVyoIKzQOHdT43dwXTp7fL8pFtw==
+X-Received: by 2002:ac8:1482:: with SMTP id l2mr6590431qtj.301.1611962910900;
+        Fri, 29 Jan 2021 15:28:30 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:f05a:e493:9aaa:4c8c])
+        by smtp.gmail.com with ESMTPSA id 202sm7310735qkj.92.2021.01.29.15.28.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Jan 2021 15:28:30 -0800 (PST)
+Date:   Fri, 29 Jan 2021 18:28:28 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, dstolee@microsoft.com
+Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
+ '--assume-kept-packs-closed'
+Message-ID: <YBSaHHKV5ncjjJum@nand.local>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
+ <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
+ <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
+ <YBRprCmIX4IrHAi0@nand.local>
+ <YBRvQdHoslnF0OXr@coredump.intra.peff.net>
+ <YBSHzG9T72nYYVt4@nand.local>
+ <xmqqh7mzs5w3.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 78052A8A-6288-11EB-B58D-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh7mzs5w3.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
-
-> Solution:
-> precompose_argv() now handles the prefix (if needed), and is renamed into
-> precompose_argv_prefix().
+On Fri, Jan 29, 2021 at 03:03:08PM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Inside this function the config variable core.precomposeunicode is read
-> into the global variable precomposed_unicode, as before.
-> This reading is skipped if precomposed_unicode had been read before.
+> > So, I think that teaching pack-objects a way to understand a caller that
+> > says "include objects from packs X, Y, and Z, but not if they appear in
+> > packs A, B, or C, and also pull in any loose objects" is the best way
+> > forward here.
 >
-> The original patch for preocomposed unicode, 76759c7dff53, placed
-> precompose_argv() into parse-options.c
-> Now move it into git.c .
-> As a cleanup, remove it from parse-options.c and diff*.c
+> Are our goals still include that the resulting packfile has good
+> delta compression and object locality?  Reachability traversal
+> discovers which commit comes close to which other commits to help
+> pack-objects to arrange the resulting pack so that objects that
+> appear close together in history appears close together.  It also
+> gives each object a pathname hint to help group objects of the same
+> type (either blobs or trees) with like-paths together for better
+> deltification.
 
-So an effect of this change is that now everybody's argv[], not just
-those who are using parse-options API, is munged at the same single
-place.  That sounds like a good move toward a happy future.
+I think our goals here are somewhere between having fewer packfiles
+while also ensuring that the packfiles we had to create don't have
+horrible delta compression and locality.
 
-Will queue.  Thanks.
+But now that you do mention it, I remember the reachability traversal's
+bringing in object names was a reason that we decided to implement this
+series using a reachability traversal in the first place.
+
+> Without reachability traversal, I would imagine that it would become
+> quite important to keep the order in which objects appear in the
+> original pack, and existing delta chain, as much as possible, or
+> we'd be seeing a horribly inefficient pack like fast-import would
+> produce.
+
+Yeah; we'd definitely want to feed the objects to pack-objects in the
+order that they appear in the original pack. Maybe that's not that bad a
+tradeoff to make, though...
+
+> Thanks.
+
+Thanks,
+Taylor
