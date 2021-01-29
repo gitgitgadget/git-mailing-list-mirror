@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC0BC433E6
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 18:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F071C433E6
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 18:24:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83B8764DED
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 18:23:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 363B064DEB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 18:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232570AbhA2SXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 13:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
+        id S232708AbhA2SXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 13:23:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230249AbhA2SWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 13:22:49 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB84C0613D6
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 10:22:09 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id w14so6754993pfi.2
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 10:22:09 -0800 (PST)
+        with ESMTP id S232536AbhA2SWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 13:22:55 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34561C061573
+        for <git@vger.kernel.org>; Fri, 29 Jan 2021 10:22:15 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id md11so6230829pjb.0
+        for <git@vger.kernel.org>; Fri, 29 Jan 2021 10:22:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wq7AT0GeWUiw6/y3jlwDs7feIY/g4Gw8ax680CWXrw4=;
-        b=IeLCEcfZkH00Uzwr8YWoT5WqhjmFSAS57vphWMVfRqZUnpzPd2i+NL51gEZEvR7TTM
-         muKUU47B5OAXPVSfPxDmiD3Lupo30fUiWpkTK24Jwc+396MUDeBdwguLDE7FKOV+QwF/
-         COipCfaNtE1pxwElT/hEMq/55FJafTbaB1TA7PL3QYnwr0HY8iLPPBYyn+b6qgXLTxWx
-         YJNTJtcN+LfKAb17C9bhBoV7bGbqJmrYM37hpex/nhe+HZdDeUKgsSo/sXt7WqDEjJ2u
-         GMVW0MchY2Ezu1lSls4NXAPlhCBuKADzcYUOMb5D2wDd0dnoySSaDF6I9sozuXSbjRNl
-         yzuA==
+        bh=EfYYnHwUIihEh7v3AmkOo7Bl1PLcpbzVNEik165bR84=;
+        b=kKafuvXQ4ObcAMSP4VpUBBZ4HY10gtRsBvyzsZh+rPz+GOtfzEmxgZratwx5XQ4Wmd
+         zmQB89aAxy7EdqiPHVHPTR8nzr0OgOSjhpWuhTCu71NNr8Dpxb+WA6pL54+MudoxhBoX
+         K+QrZN216lA2piRPqaKB7AMpgN1IELpUHyIft6STZsIB9novHSEP3ZXudtnl7UtICE7w
+         MlmiE3NMJUrUshh7Lyhu5GT6BT+SuXcUI/dy1Z+PlMvs88vPx8SXML9GGXEkwqiEt+1b
+         V0X91N5MNCJKKg6yh5oUuClT8qIIF/72smbAqNBLIsiIGBRQMUQIYvml5CwBiR2stgQ8
+         f7DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wq7AT0GeWUiw6/y3jlwDs7feIY/g4Gw8ax680CWXrw4=;
-        b=cDH7lgIaK9kI8HJBJDvFAb3E2g+CHMfCOgmI5JDOMiDISnsINHqGRNwUXx/MDPEoM/
-         BV3nvL5ha1NnjcTlxhPd4qrlYAzxGVNyY0TwAXu5wFGSS+joGI2bSpDstcEGH82FYE3u
-         USTibErWl90jpjUv8WQEmkCQA/w+66SfHbSb945BAOTqBbJkffS8hZSzVSBoNQyFWI7J
-         dOwY54uC/vJSTa08FBqerSMYCfl1Lj+tX07UBGcWjiVw+w9a2ww9/50I9Ulc8vWfnn9A
-         xiAZSdJwSU79L61o/WD/Cx56NXfylB7hpMk0a5T0WP2F7R6pomfrbz4etb1wJfkKhwwD
-         80VA==
-X-Gm-Message-State: AOAM533gW19yUgWIktC1QnpLUI8437ZMCeVMylsLtYbadKpALSv3vBhq
-        ikHUgkyJwwMwiwNBSAYkkT9zALMI1wU=
-X-Google-Smtp-Source: ABdhPJx5ShswnaUzxKYiQd47IuM8g56/yVYNT8ZBFWpRSPt0q/8V54JnkUOTyfdZYHxd/gjB7tVzUw==
-X-Received: by 2002:a63:c64:: with SMTP id 36mr5961889pgm.282.1611944528711;
-        Fri, 29 Jan 2021 10:22:08 -0800 (PST)
+        bh=EfYYnHwUIihEh7v3AmkOo7Bl1PLcpbzVNEik165bR84=;
+        b=XK+/INvQXNqnW66RVcZWJJ3FMRhcqt0voPFtIFnGoHRbB19lVkKnNkn8pKSG6WeeGd
+         vQSp9o9I8lx+Ei5Q1QXaQYT6+ICb26YiCKdqMXzSpaUfVzdrfvg3vVr9/asAde2DT7d3
+         N5qsh0h50OHO3d6tuvJ9dLGkH8srwvYDrdL6dSCY4P6ftwiVhvaR60ag+KvmbjexTdDv
+         ONKS9uAJvxZlwQM2OmDeU7DPLApdtXDDnB56Vh/AN7dfQcdlAKSeBrmW8xyYyp3jndes
+         4DzUi/MM8xNn8osn4tYO50er6OmBWFAHBgomtG2mQMCiaXCT5OkKsSjpJfXu+U6ACALw
+         YZ7w==
+X-Gm-Message-State: AOAM530TgSAyvtqNaUVA7IVbP/zGBxR4UVeEXpsUNKPR/KqPTl5wg6UZ
+        g0Rj+TLtJI4WPwtBPy3AP2nEROs0fzQ=
+X-Google-Smtp-Source: ABdhPJyR/DETvi2FbC3lD5Bbr5zioZuKKfEvQ2NgqRvAXjJLUxnnBQVKlPObf/gt5uEtsQvfqbEy4A==
+X-Received: by 2002:a17:902:a60b:b029:df:ec2e:6a1d with SMTP id u11-20020a170902a60bb02900dfec2e6a1dmr5445724plq.27.1611944534457;
+        Fri, 29 Jan 2021 10:22:14 -0800 (PST)
 Received: from localhost.localdomain ([2402:8100:396a:4597:fd76:2af1:5584:160e])
-        by smtp.googlemail.com with ESMTPSA id x141sm9497834pfc.128.2021.01.29.10.22.04
+        by smtp.googlemail.com with ESMTPSA id x141sm9497834pfc.128.2021.01.29.10.22.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jan 2021 10:22:08 -0800 (PST)
+        Fri, 29 Jan 2021 10:22:14 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, phillip.wood123@gmail.com,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Taylor Blau <me@ttaylorr.com>,
         Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v4 2/9] sequencer: factor out code to append squash message
-Date:   Fri, 29 Jan 2021 23:50:43 +0530
-Message-Id: <20210129182050.26143-3-charvi077@gmail.com>
+Subject: [PATCH v4 3/9] rebase -i: comment out squash!/fixup! subjects from squash message
+Date:   Fri, 29 Jan 2021 23:50:44 +0530
+Message-Id: <20210129182050.26143-4-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210129182050.26143-1-charvi077@gmail.com>
 References: <20210124170405.30583-1-charvi077@gmail.com>
@@ -76,51 +77,190 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This code is going to grow over the next two commits so move it to
-its own function.
+When squashing commit messages the squash!/fixup! subjects are not of
+interest so comment them out to stop them becoming part of the final
+message.
+
+This change breaks a bunch of --autosquash tests which rely on the
+"squash! <subject>" line appearing in the final commit message. This is
+addressed by adding a second line to the commit message of the "squash!
+..." commits and testing for that.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Reviewed-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- sequencer.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ sequencer.c                  | 21 ++++++++++++++++++++-
+ t/t3415-rebase-autosquash.sh | 30 ++++++++++++++++--------------
+ t/t3900-i18n-commit.sh       |  4 ----
+ 3 files changed, 36 insertions(+), 19 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index a59e0c84af..08cce40834 100644
+index 08cce40834..034149f24d 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1718,6 +1718,17 @@ static int is_pick_or_similar(enum todo_command command)
+@@ -1718,15 +1718,34 @@ static int is_pick_or_similar(enum todo_command command)
  	}
  }
  
-+static void append_squash_message(struct strbuf *buf, const char *body,
-+				  struct replay_opts *opts)
++static size_t subject_length(const char *body)
 +{
-+	unlink(rebase_path_fixup_msg());
-+	strbuf_addf(buf, "\n%c ", comment_line_char);
-+	strbuf_addf(buf, _("This is the commit message #%d:"),
-+		    ++opts->current_fixup_count + 1);
-+	strbuf_addstr(buf, "\n\n");
-+	strbuf_addstr(buf, body);
++	const char *p = body;
++	while (*p) {
++		const char *next = skip_blank_lines(p);
++		if (next != p)
++			break;
++		p = strchrnul(p, '\n');
++		if (*p)
++			p++;
++	}
++	return p - body;
 +}
 +
- static int update_squash_messages(struct repository *r,
- 				  enum todo_command command,
- 				  struct commit *commit,
-@@ -1779,12 +1790,7 @@ static int update_squash_messages(struct repository *r,
- 	find_commit_subject(message, &body);
+ static void append_squash_message(struct strbuf *buf, const char *body,
+ 				  struct replay_opts *opts)
+ {
++	size_t commented_len = 0;
++
+ 	unlink(rebase_path_fixup_msg());
++	if (starts_with(body, "squash!") || starts_with(body, "fixup!"))
++		commented_len = subject_length(body);
+ 	strbuf_addf(buf, "\n%c ", comment_line_char);
+ 	strbuf_addf(buf, _("This is the commit message #%d:"),
+ 		    ++opts->current_fixup_count + 1);
+ 	strbuf_addstr(buf, "\n\n");
+-	strbuf_addstr(buf, body);
++	strbuf_add_commented_lines(buf, body, commented_len);
++	strbuf_addstr(buf, body + commented_len);
+ }
  
- 	if (command == TODO_SQUASH) {
--		unlink(rebase_path_fixup_msg());
--		strbuf_addf(&buf, "\n%c ", comment_line_char);
--		strbuf_addf(&buf, _("This is the commit message #%d:"),
--			    ++opts->current_fixup_count + 1);
--		strbuf_addstr(&buf, "\n\n");
--		strbuf_addstr(&buf, body);
-+		append_squash_message(&buf, body, opts);
- 	} else if (command == TODO_FIXUP) {
- 		strbuf_addf(&buf, "\n%c ", comment_line_char);
- 		strbuf_addf(&buf, _("The commit message #%d will be skipped:"),
+ static int update_squash_messages(struct repository *r,
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index e7087befd4..78cc2260cc 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -84,8 +84,7 @@ test_auto_squash () {
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! first" &&
+-
++	git commit -m "squash! first" -m "extra para for first" &&
+ 	git tag $1 &&
+ 	test_tick &&
+ 	git rebase $2 -i HEAD^^^ &&
+@@ -142,7 +141,7 @@ test_expect_success 'auto squash that matches 2 commits' '
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! first" &&
++	git commit -m "squash! first" -m "extra para for first" &&
+ 	git tag final-multisquash &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD~4 &&
+@@ -195,7 +194,7 @@ test_expect_success 'auto squash that matches a sha1' '
+ 	git add -u &&
+ 	test_tick &&
+ 	oid=$(git rev-parse --short HEAD^) &&
+-	git commit -m "squash! $oid" &&
++	git commit -m "squash! $oid" -m "extra para" &&
+ 	git tag final-shasquash &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD^^^ &&
+@@ -206,7 +205,8 @@ test_expect_success 'auto squash that matches a sha1' '
+ 	git cat-file blob HEAD^:file1 >actual &&
+ 	test_cmp expect actual &&
+ 	git cat-file commit HEAD^ >commit &&
+-	grep squash commit >actual &&
++	! grep "squash" commit &&
++	grep "^extra para" commit >actual &&
+ 	test_line_count = 1 actual
+ '
+ 
+@@ -216,7 +216,7 @@ test_expect_success 'auto squash that matches longer sha1' '
+ 	git add -u &&
+ 	test_tick &&
+ 	oid=$(git rev-parse --short=11 HEAD^) &&
+-	git commit -m "squash! $oid" &&
++	git commit -m "squash! $oid" -m "extra para" &&
+ 	git tag final-longshasquash &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD^^^ &&
+@@ -227,7 +227,8 @@ test_expect_success 'auto squash that matches longer sha1' '
+ 	git cat-file blob HEAD^:file1 >actual &&
+ 	test_cmp expect actual &&
+ 	git cat-file commit HEAD^ >commit &&
+-	grep squash commit >actual &&
++	! grep "squash" commit &&
++	grep "^extra para" commit >actual &&
+ 	test_line_count = 1 actual
+ '
+ 
+@@ -236,7 +237,7 @@ test_auto_commit_flags () {
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit --$1 first-commit &&
++	git commit --$1 first-commit -m "extra para for first" &&
+ 	git tag final-commit-$1 &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD^^^ &&
+@@ -264,11 +265,11 @@ test_auto_fixup_fixup () {
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "$1! first" &&
++	git commit -m "$1! first" -m "extra para for first" &&
+ 	echo 2 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "$1! $2! first" &&
++	git commit -m "$1! $2! first" -m "second extra para for first" &&
+ 	git tag "final-$1-$2" &&
+ 	test_tick &&
+ 	(
+@@ -329,12 +330,12 @@ test_expect_success C_LOCALE_OUTPUT 'autosquash with custom inst format' '
+ 	git add -u &&
+ 	test_tick &&
+ 	oid=$(git rev-parse --short HEAD^) &&
+-	git commit -m "squash! $oid" &&
++	git commit -m "squash! $oid" -m "extra para for first" &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+ 	subject=$(git log -n 1 --format=%s HEAD~2) &&
+-	git commit -m "squash! $subject" &&
++	git commit -m "squash! $subject" -m "second extra para for first" &&
+ 	git tag final-squash-instFmt &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD~4 &&
+@@ -345,8 +346,9 @@ test_expect_success C_LOCALE_OUTPUT 'autosquash with custom inst format' '
+ 	git cat-file blob HEAD^:file1 >actual &&
+ 	test_cmp expect actual &&
+ 	git cat-file commit HEAD^ >commit &&
+-	grep squash commit >actual &&
+-	test_line_count = 2 actual
++	! grep "squash" commit &&
++	grep first commit >actual &&
++	test_line_count = 3 actual
+ '
+ 
+ test_expect_success 'autosquash with empty custom instructionFormat' '
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index d277a9f4b7..bfab245eb3 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -226,10 +226,6 @@ test_commit_autosquash_multi_encoding () {
+ 		git rev-list HEAD >actual &&
+ 		test_line_count = 3 actual &&
+ 		iconv -f $old -t UTF-8 "$TEST_DIRECTORY"/t3900/$msg >expect &&
+-		if test $flag = squash; then
+-			subject="$(head -1 expect)" &&
+-			printf "\nsquash! %s\n" "$subject" >>expect
+-		fi &&
+ 		git cat-file commit HEAD^ >raw &&
+ 		(sed "1,/^$/d" raw | iconv -f $new -t utf-8) >actual &&
+ 		test_cmp expect actual
 -- 
 2.29.0.rc1
 
