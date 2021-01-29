@@ -2,79 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6073CC433E6
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 23:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74298C433E0
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:28:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2386664E01
-	for <git@archiver.kernel.org>; Thu, 28 Jan 2021 23:26:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 408B764DEB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 00:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231701AbhA1X0d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Jan 2021 18:26:33 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61564 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbhA1X0c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Jan 2021 18:26:32 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE7D8FB4C7;
-        Thu, 28 Jan 2021 18:25:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=O8pm0x0mlQceIxS/POwgwPiZvyM=; b=miY+Xe
-        U7KCrYD6xGu56s9rkJapNcxRsJFPJT5uzmA6pJkkuLavu+UVaK1nUT2Q53zgrfYM
-        xAi6PGeSizPmuvhnyVJatmyHuClBTzcEtM86A0z0YjBDBR467ae3m+xnxMIKhxqu
-        An30LopSIuUoaWPh6X0tAR/0wVZ+lUi9AfXw0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ffEP/VCPRaPVqbKqU7rW/SZGeXR7cGwv
-        soHUy+Vf+rWkTeQHZWDgf2yIHPsSqUFCJ6g/Zh7a9mtSzd3qF/DGD4NnPjkMlWvv
-        Qw/ukAxr+XUdZGNNyTtvR128+rt5AwVyVji1Qyecw7Y1Toy4WnPdCvcYRPjtIbxl
-        /tFrov2sbk4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C6D25FB4C5;
-        Thu, 28 Jan 2021 18:25:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 19713FB4C4;
-        Thu, 28 Jan 2021 18:25:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] pretty: lazy-load commit data when expanding user-format
-References: <YBMXM83xCZvC5WyA@coredump.intra.peff.net>
-Date:   Thu, 28 Jan 2021 15:25:47 -0800
-In-Reply-To: <YBMXM83xCZvC5WyA@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 28 Jan 2021 14:57:39 -0500")
-Message-ID: <xmqqlfccve2s.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229892AbhA2A1v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Jan 2021 19:27:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42664 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229596AbhA2A1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Jan 2021 19:27:51 -0500
+Received: (qmail 20347 invoked by uid 109); 29 Jan 2021 00:27:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jan 2021 00:27:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4075 invoked by uid 111); 29 Jan 2021 00:27:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 28 Jan 2021 19:27:11 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 28 Jan 2021 19:27:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v3 01/10] packfile: prepare for the existence of '*.rev'
+ files
+Message-ID: <YBNWXU8xzw0087DC@coredump.intra.peff.net>
+References: <cover.1610129989.git.me@ttaylorr.com>
+ <cover.1611617819.git.me@ttaylorr.com>
+ <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 279D9F5A-61C0-11EB-A2E2-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Jan 25, 2021 at 06:37:14PM -0500, Taylor Blau wrote:
 
-> I added the final test to show where we don't improve (the 1% there is
-> just lucky noise), but also as a regression test to make sure we're not
-> doing anything stupid like loading the commit multiple times when there
-> are several placeholders that need it.
->
-> Reported-by: Michael Haggerty <mhagger@alum.mit.edu>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This benefits "rev-list --format=", as well, though there you can also
-> use things like "--parents" instead, which are already fast.
+> +struct revindex_header {
+> +	uint32_t signature;
+> +	uint32_t version;
+> +	uint32_t hash_id;
+> +};
+> [...]
+> +	struct revindex_header *hdr;
+> [...]
+> +	data = xmmap(NULL, revindex_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +	hdr = data;
+> +
+> +	if (ntohl(hdr->signature) != RIDX_SIGNATURE) {
 
-Quite pleased to see more work lazily done (and personally I am
-happy to see Michael's name on the list---say Hi, I missed him).
+I guess this technique was pulled from the .idx code paths, but IMHO we
+should avoid this kind of struct-casting. It relies on the compiler's
+struct packing, and I'm not 100% sure it doesn't violate some weird
+pointer-aliasing rules.
 
+OTOH, as long as we do not ever care about sizeof(revindex_header), this
+is likely to work in practice, since every field is at least 4-byte
+aligned (but there is probably an extra 4 bytes of padding at the end).
+
+The "right" way is probably something like:
+
+  const char *header = data;
+  if (get_be32(header) != RIDX_SIGNATURE)
+          error...;
+  header += 4;
+  if (get_be32(header) != 1)
+          error...;
+  header += 4;
+  ...etc...
+
+I thought we had helpers to read and advance the pointer, but it looks
+like those are specific to the bitmap code (e.g., read_be32(), though it
+uses a separate offset variable).
+
+I dunno. Maybe I am being overly picky. The .idx code already does it
+like this, and I believe the index (as in .git/index) does, too. We have
+run into problems (as in b5007211b6 (pack-bitmap: do not use gcc packed
+attribute, 2014-11-27)), but that was due to a more odd-sized struct, as
+well as using sizeof().
+
+The rest of the patch looks good to me.
+
+-Peff
