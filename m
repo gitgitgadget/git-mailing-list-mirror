@@ -7,63 +7,61 @@ X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA0AC433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78743C433DB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:59:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 155B264D9D
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:55:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 18A0A64E00
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 07:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232322AbhA2Hxw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 02:53:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41194 "EHLO
+        id S232364AbhA2H5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 02:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbhA2Hxu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 02:53:50 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 346F3C06174A
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:54:36 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id hs11so11646420ejc.1
-        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:54:36 -0800 (PST)
+        with ESMTP id S232289AbhA2H5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 02:57:07 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 464B3C061756
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:57:53 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id ox12so11681295ejb.2
+        for <git@vger.kernel.org>; Thu, 28 Jan 2021 23:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=GXgPXxXQFfWGFdYmZqQg4MtyaXMWW/sO+Wxx3KuyjgU=;
-        b=chx3wqhZmKwCDWL9WWkxHCp2cSzOgxh6IgigrqkV+kxI+tw099L5igqvnw5kIQYY8w
-         mDZttTcAF8LI5GzF5qo0wa7rSDZ8RPltE/AW4omztPzFnrh+ZxiN6VZLFz1yycjtg+gT
-         2mfLdW602gvUZua/T/71CXXJ+SB4s1wJbNYxlqkuHvH/yBpYbzzAz/IwUFIzRIHegoXS
-         EcFAJz9c3rK/5DHdxBH6fiuYy5h4AsRN9V+HcClrW/rbB4x+MbwqCSFrEwzNcGIjq06O
-         IBc8HDV0kUW2YDQkiXeqOcfQvrb4vtIRu7Wv7yGc7hOXeyA+rH2LHdtClczKIKibj2r/
-         7C1Q==
+        bh=mNMuqK7qGHaKdjbQXHq9OSpMwFKc7WcnScDXtKXgSyE=;
+        b=u5yYFiyi2l55uk7LVx7Y4geG7KCBZgdtAuIfd+CpTxaCp91/LeoQXFOobibvGwoo1i
+         YSXjEP01S8iGGTp3zaQU9TWyJID20IcwrINVTDjRqRVeicIZRUnQtUhFuEZCx7sJNKyv
+         BWxmw1pd0IwWZ/RTBErFWUlJOsbdaLqy1bWFwHihSD//pnDdyz+0P4tZOICnlAagllw2
+         +cIENOZ779DhFRO3mnWJYwqD1TFOpqX6wBzk49VDVJwGL7ZjKOU5obYROvzmpqv90iKi
+         uM96PnPA5tKfc9KtytEPi8Mhje6snpXoyE+3V3YMmsQ+xHTPuuvbccGzebNeU249gd1c
+         1LtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=GXgPXxXQFfWGFdYmZqQg4MtyaXMWW/sO+Wxx3KuyjgU=;
-        b=ONYaKPm3B35jzUzIzyZWz+t7QV2TtJmbOUbULcfoY2WZ1ZP0k3BJB9w96ezHilwt/2
-         RH+sF4V7TmwscsyJJRS2nYVNOepfnBV1kZTWh5gIRi7vPL/eAP8I2/DYbVgsTwOwj77V
-         19EyFvnvzADvI3OAD+I4tmA3d9hA8zCa/SWtnnLvoO0PeqUDTqKhMHcR77sz+0qGwA68
-         GqQdzpTJle7IU+8eMT9H85Tjtk+DVJLCVwZ3XVBkRCkUPBxjSVloXfWM6klQOjd0b8ql
-         xH2m8Pha6uuSVxppRosmIiJb4bfhzB4Tk7yqZ8ljqyicMtY5g4bPCUgj8DkKnHCgmbh9
-         Wbkw==
-X-Gm-Message-State: AOAM530JOqRu39yIwM4FvDtjzgA/SvJC99nbEctxO9HYWeNaJkC1GYOk
-        3hctYvCKVC5bjo30rztKD5tNoemZf8Y9LPbXzzwWzqwNBoLwlQ==
-X-Google-Smtp-Source: ABdhPJxCW1nSkf2lIyepp3cu4CYGObxTca0n7TqXA5TH+uqLj8QstsYQEgTaMdUil2e93ItPbC8wukn3CDbj57Yns+0=
-X-Received: by 2002:a17:906:3883:: with SMTP id q3mr3283327ejd.160.1611906875031;
- Thu, 28 Jan 2021 23:54:35 -0800 (PST)
+        bh=mNMuqK7qGHaKdjbQXHq9OSpMwFKc7WcnScDXtKXgSyE=;
+        b=N2RzHSAqB1VwqvQczyIpQWgVZ17PuT/5Wb/Co2Xut2F0HkbbhRwz16v3UE+lwv65v/
+         e3AulcAW4P6Pw6M+6klJ++ur7nlqMax4VOsi4tOoz3bABErpawrbnp2OisNeyeb6rilC
+         RazBiUWEMdNnzFWai4xQ0QkXjLZG2ixGHVZFpM5fdalUMSRKcNMwyS4rhzSY0mOWmlIh
+         a37e8pwA1IFnAzoXgy3MobGLcTXUBLmhDAGWOBcdJUAyv0vjbw1nH0DNdvS/N8xTUcCu
+         d9QW8ezwp6DjZ+b13/hHDnXsAPs+hmXHRpY8ycypoH/mlP5Orz2s/9BeJA9zDP/3xbNb
+         cjPg==
+X-Gm-Message-State: AOAM5323yqFcLv9iRFPJiGv7URDA+IpG7ZeYWoH0E/KAE5tNA6pRsbcL
+        rsebfuYtaoYqXs6DF3r2rki6HlEkqOz6AoYxDGE=
+X-Google-Smtp-Source: ABdhPJwfzNA/zyNpN1ttQNQ3QEoNbNX6j55zI57BSBw+2+dRXSgzvu0ieIZEcM6VwavtT/cpEoFVgrXADd3N8mqBaEM=
+X-Received: by 2002:a17:906:3883:: with SMTP id q3mr3291797ejd.160.1611907072100;
+ Thu, 28 Jan 2021 23:57:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20210125191710.45161-1-mirucam@gmail.com> <20210125191710.45161-4-mirucam@gmail.com>
-In-Reply-To: <20210125191710.45161-4-mirucam@gmail.com>
+References: <20210125191710.45161-1-mirucam@gmail.com> <20210125191710.45161-5-mirucam@gmail.com>
+In-Reply-To: <20210125191710.45161-5-mirucam@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 29 Jan 2021 08:54:23 +0100
-Message-ID: <CAP8UFD07Ajht9nj3ykYMGW6FnhrScKGBKuTpJMABVvVKuKx9gg@mail.gmail.com>
-Subject: Re: [PATCH v4 3/7] bisect--helper: retire `--bisect-write` subcommand
+Date:   Fri, 29 Jan 2021 08:57:40 +0100
+Message-ID: <CAP8UFD0mezb35u3SPi2Q2w-oCfA8NYAmacropNQQHumC7Vdkxg@mail.gmail.com>
+Subject: Re: [PATCH v4 4/7] bisect--helper: use `res` instead of return in
+ BISECT_RESET case option
 To:     Miriam Rubio <mirucam@gmail.com>
 Cc:     git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,21 +69,16 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Jan 25, 2021 at 8:17 PM Miriam Rubio <mirucam@gmail.com> wrote:
 
-> @@ -1048,11 +1044,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+> @@ -1043,7 +1043,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>         case BISECT_RESET:
 >                 if (argc > 1)
 >                         return error(_("--bisect-reset requires either no argument or a commit"));
->                 return !!bisect_reset(argc ? argv[0] : NULL);
-
-Here we are returning so we never fall back into the BISECT_WRITE case below...
-
-> -       case BISECT_WRITE:
-> -               if (argc != 4 && argc != 5)
-> -                       return error(_("--bisect-write requires either 4 or 5 arguments"));
-> -               set_terms(&terms, argv[3], argv[2]);
-> -               res = bisect_write(argv[0], argv[1], &terms, nolog);
+> -               return !!bisect_reset(argc ? argv[0] : NULL);
+> +               res = bisect_reset(argc ? argv[0] : NULL);
 >                 break;
 
-...so the above "break;" could be removed too.
+This "break;" was not necessary before but it becomes necessary when
+the above "return ..." is replaced with something else.
 
 >         case CHECK_AND_SET_TERMS:
 >                 if (argc != 3)
