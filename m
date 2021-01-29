@@ -2,111 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F488C433DB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 014D6C433DB
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F0CD64DFB
-	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:55:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 923D764DED
+	for <git@archiver.kernel.org>; Fri, 29 Jan 2021 22:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231605AbhA2Wzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 17:55:33 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56620 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbhA2Wzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 17:55:32 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41971A1C39;
-        Fri, 29 Jan 2021 17:54:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=+Z/UlQE0q/vZ
-        KwRu8YyUBQ3DBQI=; b=oMzsMJft6Q9tTTCAjsbqnuuWVkpCG+OLLKxkPUqC4h1q
-        OJxulHnLV8afgNt2geaKeGr4UdCWpzPhTXdj8eJ7dN/D8tVT2cmg+FqYLOxrhj1B
-        vaEDPQrABokiVdDqJlf6UK3mJFIfLnB+iuNb9ycK30KVe2b3v+QK3EcyvgVi+Uw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DtpHyg
-        6unOJx0IP1IWUSbBHMHUrBJSMcdJO/Q4WX9QjKnjcvdv2k0DGujriiDJgvIVqBWD
-        XBwZw2ECeV4OA2RoGYASNZEwKsbilTJapDK2xPWsgjF4ga9ruK/D9//yUB0usue9
-        XvFzVIiNC+x0WTfN+PFgOJQz+9BmWtRkHfeRc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38D01A1C38;
-        Fri, 29 Jan 2021 17:54:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A6B7DA1C37;
-        Fri, 29 Jan 2021 17:54:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Colton Hurst <colton@coltonhurst.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git Conditional Includes Question (possible bug?)
-References: <1E4AB5E8-DD46-45CA-9A3F-C49F115BE0D4@coltonhurst.com>
-Date:   Fri, 29 Jan 2021 14:54:48 -0800
-In-Reply-To: <1E4AB5E8-DD46-45CA-9A3F-C49F115BE0D4@coltonhurst.com> (Colton
-        Hurst's message of "Fri, 29 Jan 2021 16:21:44 -0500")
-Message-ID: <xmqqlfcbs69z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232535AbhA2W5o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 17:57:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41028 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229683AbhA2W5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 17:57:42 -0500
+Received: (qmail 4506 invoked by uid 109); 29 Jan 2021 22:56:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 29 Jan 2021 22:56:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10534 invoked by uid 111); 29 Jan 2021 22:57:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 29 Jan 2021 17:57:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 29 Jan 2021 17:57:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
+ '--assume-kept-packs-closed'
+Message-ID: <YBSSvXHIwUe/8rVj@coredump.intra.peff.net>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
+ <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
+ <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
+ <YBRprCmIX4IrHAi0@nand.local>
+ <YBRvQdHoslnF0OXr@coredump.intra.peff.net>
+ <YBSHzG9T72nYYVt4@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FDBA3F70-6284-11EB-B258-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YBSHzG9T72nYYVt4@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Colton Hurst <colton@coltonhurst.com> writes:
+On Fri, Jan 29, 2021 at 05:10:20PM -0500, Taylor Blau wrote:
 
-> [Expectation] When I run `cd ~/colton/github/coltonhurst.com`
-> (this is a valid git repo) and then run `git config user.email`, I
-> expect =E2=80=98colton@coltonhurst.com=E2=80=99 will be returned.
->
-> [Actual Result] When I run `cd ~/colton/github/coltonhurst.com`
-> (this is a valid git repo) and then run `git config user.email`,
-> nothing is returned.
+> On Fri, Jan 29, 2021 at 03:25:37PM -0500, Jeff King wrote:
+> > So it may be reasonable to go that direction, which is really defining a
+> > totally separate strategy from git-gc's "repack, and occasionally
+> > objects age out". Especially if we find that the
+> > assume-kept-packs-closed route is too risky (i.e., has too many cases
+> > where it's possible to cause corruption if our assumptions isn't met).
+> 
+> Yeah, this whole conversation has made me very nervous about using
+> reachability. Fundamentally, this isn't about reachability at all. The
+> operation is as simple as telling pack-objects a list of packs that you
+> do and don't want objects from, making a new pack out of that, and then
+> optionally dropping the packs that you rolled up.
+> 
+> So, I think that teaching pack-objects a way to understand a caller that
+> says "include objects from packs X, Y, and Z, but not if they appear in
+> packs A, B, or C, and also pull in any loose objects" is the best way
+> forward here.
+> 
+> Of course, you're going to be dragging along unreachable objects until
+> you decide to do a full repack, but I'm OK with that since we wouldn't
+> expect anybody to be solely relying on geometric repacks without
+> occasionally running 'git repack -ad'.
 
-The relevant part of the per-user config are
+While writing my other response, I had some thoughts that this "dragging
+along" might not be so bad.
 
-> [user]
-> 	name =3D Colton Hurst
+Just to lay out the problem as I see it, if you do:
 
-This is not conditional, and applies when you are in the repository.
+  - frequently roll up all small packs and loose objects into a new
+    pack, without regard to reachability
 
-> [includeIf "gitdir:~/colton/github"]
-> 	path =3D ~/colton/github/.gitconfig
+  - occasionally run "git repack -ad" to do a real traversal
 
-This is conditional, and applies when you are in a repository whose
-".git" location matches the glob pattern "~/colton/github".  The
-location in question is "~/colton/github/coltonhurst.com", which
-does not match the pattern, so it would be skipped.
+then the problem is that unreachable objects never age out:
 
-> [includeIf "gitdir:~/colton/sourcehut"]
-> 	path =3D ~/colton/sourcehut/.gitconfig
+  - a loose unreachable object starts with a recent-ish mtime
 
-Likewise.
+  - the frequent roll-up rolls it into a pack, freshening its mtime
 
-So, nobody sets user.email in your example.  Isn't it expected that
-nothing is returned?
+  - the full "repack -ad" doesn't delete it, because its pack mtime is
+    too recent. It explodes it loose again.
 
-I wonder what happens when the second one is updated to
+  - repeat forever
 
-> [includeIf "gitdir:~/colton/github/"]
-> 	path =3D ~/colton/github/.gitconfig
+We know that "repack -d" is not 100% accurate because of similar "closed
+under reachability" assumptions (see my other email). But it's OK,
+because the worst case is an object that doesn't quite get packed yet,
+not that it gets deleted.
 
-as "git config --help" says:
+So you could do something like:
 
- * If the pattern ends with `/`, `**` will be automatically added. For
-   example, the pattern `foo/` becomes `foo/**`. In other words, it
-   matches "foo" and everything inside, recursively.
+  - roll up loose objects into a pack with "repack -d"; mostly accurate,
+    but doesn't suck up unreachable objects
 
-and "~/colton/github/**" as a pattern would match the path to the
-repository in question.
+  - roll up small packs into a bigger pack without regard for
+    reachability. This includes the pack created in the first step, but
+    we know everything in it is actually reachable.
 
+  - eventually run "repack -ad" to do a real traversal
+
+That would extend the lifetime of unreachable objects which were found
+in a pack (they get dragged forward during the rollups). But they'd
+eventually get exploded loose during a "repack -ad", and then _not_
+sucked back into a roll-up pack. And then eventually "repack -ad"
+removes them.
+
+The downsides are:
+
+  - doing a separate "repack -d" plus a roll-up repack is wasted work.
+    But I think they could be combined into a single step (at the cost
+    of some extra complexity in the implementation).
+
+  - using "--unpacked" still means traversing every commit. That's much
+    faster than traversing the whole object graph, but still scales with
+    the size of the repo, not the size of the new objects. That might be
+    acceptable, though.
+
+I do think the original problem goes away entirely if we can keep better
+track of the mtimes. I.e., if we had packs marked with ".cruft" instead
+of exploding loose, then the logic is:
+
+  - roll up all loose objects and any objects in a pack that isn't
+    marked as cruft (or keep); never delete a cruft pack at this stage
+
+  - occasionally "repack -ad"; this does delete old cruft packs (because
+    we'd have rescued any reachable objects they might have contained)
+
+I'm not sure I want to block this topic on having cruft packs, though.
+Of course there are tons of _other_ reasons to want them (like not
+causing operational headaches when a repo's disk and inode usage grows
+by 10x due to exploding loose objects). So maybe it's not a bad idea to
+work on them together. I dunno.
+
+-Peff
