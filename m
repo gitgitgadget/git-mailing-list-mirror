@@ -2,114 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBE1FC433DB
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 00:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B00C433DB
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 00:02:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79DA064E04
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 00:00:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF20C64E11
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 00:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231202AbhA3AAk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Jan 2021 19:00:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50352 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231138AbhA3AAN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Jan 2021 19:00:13 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B4AC061573
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 15:59:33 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id lw17so7123749pjb.0
-        for <git@vger.kernel.org>; Fri, 29 Jan 2021 15:59:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9uPLiEGkHq4TEpackj/nAC+wJUrt/W9mGGMXdYT/hGw=;
-        b=P85Sd45i0dLTlRQv9wDGdedTbLtbXRlMPclIe0bPX084Nt30BJiJ1BAU3o13Fyxsos
-         Hx8f/gxd0YDYFekFL97faK+YQaZpAKRw/WCZT4GkEEutM1VMU66PY5/kLZ8IfcczLrO6
-         MS0bg6IQlPUuwpiVXe3seikyAUKRsEx/If/VVG/asB2AqLCdJ7StqH7JH0mLYjiH4F6F
-         QZ34NhnJvbIX1PkAgJFD4WUNF+ybeow8nVrdF4gNiokpM3YNKHz1HAfeUkk+exTDkwmD
-         ADenGHtZKONY1s/6W/O+t382BTlJbeLKn0KEngw1WkD8ildegh2trqWPy+rHSRptrELM
-         tJDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9uPLiEGkHq4TEpackj/nAC+wJUrt/W9mGGMXdYT/hGw=;
-        b=a4XJz21PCJ62w2JUw4I7jKXAvMfxinDaob4BX9+zmOPtcs0ABiwQeBjlgL3mCsGDTz
-         IqYmf24FI0mBvJuq9/PA9TG75IoPozBx34LvBVNFgDKN9iVsetrJ4ei3EAJlrs0aKL5S
-         0uAFkPTO6FTOE1UyUCnyGPTN1Cc/kAVZyKV/ZQfypcoHglYDxFfoe5pzdhL83YsLAukT
-         o1jL2NvL7+8Tijixq5PYbHTGGqmPKClg7kIergAfDxpFGWH+Y4OIBu2oqu9LuIGIlAeS
-         TizRq9J3KACoNCgUf4l/h8q89dUg5gxACtCUg964oAQclj9dMM9Bo6h03sHS/z0RIpUv
-         pd6A==
-X-Gm-Message-State: AOAM530jWk504pElrUOeQmQ+56SMry5LKiyySO/jkzlPGvn4ID0XQO7q
-        OXJ155DP/q9u1ZinlMRgRrEnwAoRrZ2YNA==
-X-Google-Smtp-Source: ABdhPJzZIaVOpHTm21GBSAwPZdNcgVxj5w+WpL8OYgEOXugEyRYuqQ+lDXc3hCj3QlwFc+3vi2NUjg==
-X-Received: by 2002:a17:90b:1017:: with SMTP id gm23mr6624548pjb.172.1611964772553;
-        Fri, 29 Jan 2021 15:59:32 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:3547:8f35:27a2:2e7e])
-        by smtp.gmail.com with ESMTPSA id p68sm224650pfb.60.2021.01.29.15.59.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Jan 2021 15:59:31 -0800 (PST)
-Date:   Fri, 29 Jan 2021 15:59:26 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 00/17] propose config-based hooks (part I)
-Message-ID: <YBShXpaDnxWKxYMf@google.com>
-References: <20201205014607.1464119-1-emilyshaffer@google.com>
- <20201222000220.1491091-1-emilyshaffer@google.com>
+        id S231367AbhA3ACR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Jan 2021 19:02:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54367 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231138AbhA3ACQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Jan 2021 19:02:16 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E06519B03D;
+        Fri, 29 Jan 2021 19:01:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hpnkv+WSkrCb91neZDDuU+pXC9M=; b=qbfXVx
+        JOGb2330YU8YZEiVMjOszp9HN3sdOs6Hoy2dIW9goAE+ov+kSXn9E3JEZTD9DS2Q
+        o++9SFNR+z5hBaFW6oDZ8Kq0Ja+sfkoKoBaUEW/dvztOW9rnJi8o2N8E2RbTo/2P
+        8U3IbYueCvK7IwhL/AXsSYvzZ5YlbQoikGg+A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cuLtZxn0FQhwYqCvfD/ZD9y2XEM0fQYR
+        HvcoDgsMReWfIaO8DSqfkuuyepuW4qAvIQpZDN/Ir7U7vYeUUsr6otyhyFar75LR
+        GuI0QYFObbe8AY0j1buAZJz+j3JFjfOUKN9QQh26ZcqiKNZ+teQJAUppfuz1C14J
+        yX4cWuElwPw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D85A49B03B;
+        Fri, 29 Jan 2021 19:01:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5D8849B03A;
+        Fri, 29 Jan 2021 19:01:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH v2 2/3] pretty.c: capture invalid trailer argument
+References: <pull.726.git.1599335291.gitgitgadget@gmail.com>
+        <pull.726.v2.git.1611954543.gitgitgadget@gmail.com>
+        <245e48eb6835cae4e61f65af780b766d990d4b5f.1611954543.git.gitgitgadget@gmail.com>
+Date:   Fri, 29 Jan 2021 16:01:31 -0800
+In-Reply-To: <245e48eb6835cae4e61f65af780b766d990d4b5f.1611954543.git.gitgitgadget@gmail.com>
+        (Hariom Verma via GitGitGadget's message of "Fri, 29 Jan 2021 21:09:02
+        +0000")
+Message-ID: <xmqqsg6jqomc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201222000220.1491091-1-emilyshaffer@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F860BDC-628E-11EB-A291-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 21, 2020 at 04:02:03PM -0800, Emily Shaffer wrote:
-> 
-> Since v6:
-> 
->  - Converted 'enum hookdir_opt' to UPPER_SNAKE
->  - Coccinelle fix in the hook destructor
->  - Fixed a bug where builtin/hook.c wasn't running the default git config setup
->    and therefore missed hooks in core.hooksPath when it was set. (These hooks
->    would still run except when invoked by 'git hook run' as the config was
->    called by the processes which invoked the hook library.)
-> 
-> CI run: https://github.com/nasamuffin/git/actions/runs/436864964
+"Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Some updates on this series...
+> +			size_t invalid_arg_len = strcspn(*arg, ",)");
+> +			*invalid_arg = xstrndup(*arg, invalid_arg_len);
+> +			return 1;
 
-Since Jan 21 we've been running this series as picked from
-gitster/git:es/config-hooks on Googler machines, with a subset of users
-asked to try out putting their hooks into config instead of hookdir. So
-far we haven't heard any crashes or bugs like that, although I did hear
-a couple places where the user documentation is lacking. I feel
-encouraged by that, and I'm hoping to improve the documentation in the
-next week or so, pending $DAYJOB concerns.
+How about doing this only when invalid_arg is not NULL, i.e.
 
-We also addressed some of this series in our every-other-week review
-club (me, Jonathan Tan, Jonathan Nieder, and Josh Steadmon; although in
-this case I tried to be quiet :) ) and so I hope there will be some
-comments from my three teammates coming to list sometime next week.
+	} else if (!match_placeholder_bool_arg(....) &&
+		   ...
+        	   !match_placeholder_bool_arg(....)) {
+		if (invalid_arg) {
+			size_t len = strcspn(*arg, ",)");
+			*invalid_arg = xstrndup(*arg, len);
+		}
+		return -1;
+	}
 
-Since I feel pretty comfortable that it doesn't seem to explode
-anywhere, I'm really keen to hear nitpicky reviews and try to push to
-get this into 'next'; maybe I can barter my eyes on someone else's
-neglected review? That sounds pretty mercenary but I think Junio is the
-one who suggested it a few weeks ago... ;)
+Note that I just used 'len'; when the scope of a variable is so
+short, it is clear the length of what thing it refers to from the
+context, and there is no point in using a variable name that long.
 
- - Emily
+In any case, by doing so, the callers that are not interested in the
+report can just pass NULL, which means ...
+
+> @@ -1464,12 +1472,13 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+>  		struct strbuf sepbuf = STRBUF_INIT;
+>  		struct strbuf kvsepbuf = STRBUF_INIT;
+>  		size_t ret = 0;
+> +		char *unused = NULL;
+
+... this will become unneeded, and ...
+
+>  		opts.no_divider = 1;
+>  
+>  		if (*arg == ':') {
+>  			arg++;
+> -			if (format_set_trailers_options(&opts, &filter_list, &sepbuf, &kvsepbuf, &arg))
+> +			if (format_set_trailers_options(&opts, &filter_list, &sepbuf, &kvsepbuf, &arg, &unused))
+>  				goto trailer_out;
+
+... this will pass NULL, and ...
+
+>  		}
+>  		if (*arg == ')') {
+> @@ -1479,6 +1488,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+>  	trailer_out:
+>  		string_list_clear(&filter_list, 0);
+>  		strbuf_release(&sepbuf);
+> +		free((char *)unused);
+
+... this will become unneeded.
+
+>  		return ret;
+>  	}
+>  
+> diff --git a/pretty.h b/pretty.h
+> index 7369cf7e148..d902cdd70a9 100644
+> --- a/pretty.h
+> +++ b/pretty.h
+> @@ -151,6 +151,7 @@ int format_set_trailers_options(struct process_trailer_options *opts,
+>  			struct string_list *filter_list,
+>  			struct strbuf *sepbuf,
+>  			struct strbuf *kvsepbuf,
+> -			const char **arg);
+> +			const char **arg,
+> +			char **invalid_arg);
+>  
+>  #endif /* PRETTY_H */
