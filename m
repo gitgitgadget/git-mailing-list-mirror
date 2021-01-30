@@ -4,93 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD723C433E0
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 10:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15855C433DB
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 10:27:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 810AA64DE4
+	by mail.kernel.org (Postfix) with ESMTP id C6C9164E0A
 	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 10:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbhA3K0x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 05:26:53 -0500
-Received: from wforward2-smtp.messagingengine.com ([64.147.123.31]:41599 "EHLO
+        id S231752AbhA3K0z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 05:26:55 -0500
+Received: from wforward2-smtp.messagingengine.com ([64.147.123.31]:56561 "EHLO
         wforward2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229814AbhA3K0w (ORCPT
+        by vger.kernel.org with ESMTP id S230058AbhA3K0w (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 30 Jan 2021 05:26:52 -0500
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Jan 2021 05:26:52 EST
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailforward.west.internal (Postfix) with ESMTP id 23F08C9B;
-        Sat, 30 Jan 2021 05:19:18 -0500 (EST)
+        by mailforward.west.internal (Postfix) with ESMTP id 4DC6BCB4;
+        Sat, 30 Jan 2021 05:19:23 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Sat, 30 Jan 2021 05:19:18 -0500
+  by compute1.internal (MEProxy); Sat, 30 Jan 2021 05:19:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=date:from:message-id:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; bh=397zJM2g+eyDtP0UG7T3G6obkTkhMA+WLsSd/kYaYs4=; b=AxTfWdHr
-        u1DlQcadMtQCiUPhWJrvOq2q7EOJp4HoCj5KW8JUy+cRKv1TVyAKgfEw/inAEmy9
-        wrkqgkatYObpiYv6Pgb/ZUIucxR2bluThCr0eoNguXSINGC5D17iXR4Deup1VKvr
-        TC8p98srC1Gz0pdDYO9qagK5quhcbTR3iPSUqQiwW05jEQqKNPCmtcbQiD33lZFK
-        tMZ+fAPNPfjnXC47qQCw3o7WdI+KdNwdb14SNuyr+9LQN+swXToYxkrrcJkUIP/E
-        5JxMM3FaUuwc0qpk7ZA2Y5zhkErQY3RNufStpbkppc63QCG6PEZa2z57RTHUiHp+
-        qpUdDMiOOOo6SA==
-X-ME-Sender: <xms:pTIVYFv40qfXLeyGLgPduD_OcxUkxOny2KP3LfIhd73Rt7itjC1WDg>
-    <xme:pTIVYOeczyU0GDOn4mfrQjhsE6gulyRZBQBxHgH3rBgdXJpJR41lY1lEzB9T8Mdhv
-    nEux3MAWF-9_JiTwQ>
+        messagingengine.com; h=date:from:in-reply-to:message-id
+        :references:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=wL1XU4E8tIHmFrybImcYE+oBCQWPy
+        iupFVU0mglZ7VI=; b=RgrqIs1/QK0n9h6QFK9Us2MYoAzshQ/YIXVP9g49NcI70
+        5eMMRcETeztpcReXWyLG6iLCRK/mNHrXvXXaG4dgWG3VStm4i3FEAhMStam90c2K
+        JR55V2+M5/1j+xI8FUwy8bgH9Uvjhk3jNw3Bh70Z4qUk0t5NLzLvOXESJmDbG22U
+        M+OTqW4MfHIoe20JMEmmWt/qMKFzaeQUNNafkA+U1PD/BV8DO8AkNG5P+g8tWX+h
+        MQVf/HQU9U8b6cJmp2CacWLs0asj3TRL02Qekou3unP6v2dB+xc3EdiKN8OYr7T7
+        Bh86p9DOgRc+ZBZ7pnAuQwk3Lvpo4VaJvCszRwooA==
+X-ME-Sender: <xms:qjIVYOqDi1PmwEByBIwg3U_SB1gjndQrAyAkvmtnIsbi7gi8Td5Upg>
+    <xme:qjIVYMqCmbof30DtgNPJz1ozwiBvyt1ghEWIiXNqdNUOd0B_Rp7Q2d81baF5DwysQ
+    Uy9qYrmxFXqyIV9eA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeggdduiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkfestddtredttddttdenuc
-    fhrhhomhepfdfmhihlvgculfdrucfotgfmrgihfdcuoehmrggtkhihlhgvsehgmhgrihhl
-    rdgtohhmqeenucggtffrrghtthgvrhhnpeetudeivdekteevheelueehgeekgfeiveelte
-    ehffeffedugfdttdegfeffgfekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecu
-    kfhppeejiedrudekrdduvddvrddvfedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepmhgrtghkhihlvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:pTIVYIywsY5BNyTnfACiGBamssYMnj56d2Q0gndNMlo0P5kkvaz_5Q>
-    <xmx:pTIVYMNfOdRX9nMwrQLLRbyXE0Sge6-4pEWxVS_72IA6RLpT_Bd-3g>
-    <xmx:pTIVYF-8foZLgO82lVwzX2o73RsJmT49wSD1WVqpoeh5lyMUl5x-mA>
-    <xmx:pTIVYAZEJb1YnWMwkf1ehhtFx5a6L6NT7Qq8NdOfHom5wcCUva5a6JQf9bM>
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgjfhestddtredttddttd
+    enucfhrhhomhepfdfmhihlvgculfdrucfotgfmrgihfdcuoehmrggtkhihlhgvsehgmhgr
+    ihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeeitdejheegtddvffelfeetudefjefhve
+    duieetudeilefhgeekfeekkeejgfevvdenucfkphepjeeirddukedruddvvddrvdefvden
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrggtkh
+    ihlhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:qjIVYDOEdhRHgUh1RSqtvuSyATBpmwh-40iPNuYCmPtUZb38oOgYfw>
+    <xmx:qjIVYN6HI48Bi-w03_3q5jjzpueEZhwwyXrmp7GwtQ-FUIdanTrS2A>
+    <xmx:qjIVYN4RHt9M_MiBldFYRYGXMxrALbHa2lLQb9jibxwnrwuR6g_LDA>
+    <xmx:qjIVYHm0OjTAhdAS1mLdBo25DeKaHBSu6S8VB_CcKSlBzzb7g0cVjkgSX1k>
 Received: from localhost.localdomain (unknown [76.18.122.232])
-        by mail.messagingengine.com (Postfix) with ESMTPA id DD1D124005B;
-        Sat, 30 Jan 2021 05:19:16 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 3DB2424005B;
+        Sat, 30 Jan 2021 05:19:22 -0500 (EST)
 From:   "Kyle J. McKay" <mackyle@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Git mailing list <git@vger.kernel.org>
-Subject: [PATCH 0/2] Eliminate extraneous ref log entries
-Date:   Sat, 30 Jan 2021 03:19:07 -0700
-Message-Id: <7c7e8679f2da7e1475606d698b2da8c@72481c9465c8b2c4aaff8b77ab5e23c>
+Subject: [PATCH 2/2] refs.c: avoid creating extra unwanted reflog entries
+Date:   Sat, 30 Jan 2021 03:19:09 -0700
+Message-Id: <1e8c8e3d23d3c2ddf031e3d7719241c@72481c9465c8b2c4aaff8b77ab5e23c>
+In-Reply-To: <7c7e8679f2da7e1475606d698b2da8c@72481c9465c8b2c4aaff8b77ab5e23c>
+References: <7c7e8679f2da7e1475606d698b2da8c@72481c9465c8b2c4aaff8b77ab5e23c>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since Git version v2.29.0, the `git symbolic-ref` command has started
-adding extraneous entries to the ref log of the symbolic ref it's
-updating.
+Since commit 523fa69c36744ae6 ("reflog: cleanse messages in the refs.c
+layer", 2020-07-10, v2.29.0), ref log messages are now being "cleansed"
+to make sure they do not end up breaking the ref log files.  A laudable
+endeavor.
 
-This change was inadvertently introduced in commit 523fa69c36744ae6
-("reflog: cleanse messages in the refs.c layer", 2020-07-10, v2.29.0).
+Unfortunately, that commit had an unintended side effect that causes
+the `git symbolic-ref <refname1> <refname2>` command to suddenly start
+adding new entries to the ref log for <refname1> whenever it's run.
 
-A bug report [1] was made about a failing test in the TopGit test
-suite.  Further investigations into the cause led to this patch set.
+These new entries have a completely empty message and do not provide
+any useful information.  In fact, there was no mention that the change
+to "cleanse" ref log messages was intended to add these new ref log
+entries at all.
 
-1/2 - adds new tests to monitor this behavior
-2/2 - corrects the problem
+What happened is that when the change to "cleanse" the incoming ref
+log message was made, the code started inadvertently transforming
+a NULL ref log message pointer into an empty string "".
 
-The tests added in 1/2 are marked `test_expect_failure` and then
-changed to `test_expect_success` in 2/2.
+This created the observed effect that using the `symbolic-ref` command
+suddenly started causing ref log entries to be added.
 
--Kyle
+The original code that predated the "cleanse" commit called the
+`xstrdup_or_null` function to retain the original NULL pointer and
+avoid introducing unwanted extra ref log entries.
 
-[1]: <https://github.com/mackyle/topgit/issues/17>
+After the "cleanse" commit, ref log messages are now funnelled through
+a new static function named `normalize_reflog_message`.
 
-Kyle J. McKay (2):
-  t/t1417: test symbolic-ref effects on ref logs
-  refs.c: avoid creating extra unwanted reflog entries
+Eliminate the unwanted extra blank ref log entries by returning a NULL
+pointer when NULL is passed into `normalize_reflog_message` rather
+than returning a pointer to an empty string ("").
 
- refs.c                   | 16 +++----
- t/t1417-reflog-symref.sh | 91 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 100 insertions(+), 7 deletions(-)
- create mode 100755 t/t1417-reflog-symref.sh
+To reflect this new behavior, rename the function to
+`normalize_reflog_message_or_null` in the same spirit as the name
+of the `xstrdup_or_null` function that was called pre-"cleanse".
 
+Flip the `test_expect_failure` tests to `test_expect_success`
+as they now pass again.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ refs.c                   | 16 +++++++++-------
+ t/t1417-reflog-symref.sh |  6 +++---
+ 2 files changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 03968ad7..790b1ff0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -835,11 +835,13 @@ static void copy_reflog_msg(struct strbuf *sb, const char *msg)
+ 	strbuf_rtrim(sb);
+ }
+ 
+-static char *normalize_reflog_message(const char *msg)
++static char *normalize_reflog_message_or_null(const char *msg)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	if (msg && *msg)
++	if (!msg)
++		return NULL;
++	if (*msg)
+ 		copy_reflog_msg(&sb, msg);
+ 	return strbuf_detach(&sb, NULL);
+ }
+@@ -1067,7 +1069,7 @@ struct ref_update *ref_transaction_add_update(
+ 		oidcpy(&update->new_oid, new_oid);
+ 	if (flags & REF_HAVE_OLD)
+ 		oidcpy(&update->old_oid, old_oid);
+-	update->msg = normalize_reflog_message(msg);
++	update->msg = normalize_reflog_message_or_null(msg);
+ 	return update;
+ }
+ 
+@@ -1951,7 +1953,7 @@ int refs_create_symref(struct ref_store *refs,
+ 	char *msg;
+ 	int retval;
+ 
+-	msg = normalize_reflog_message(logmsg);
++	msg = normalize_reflog_message_or_null(logmsg);
+ 	retval = refs->be->create_symref(refs, ref_target, refs_heads_master,
+ 					 msg);
+ 	free(msg);
+@@ -2339,7 +2341,7 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
+ 	char *msg;
+ 	int retval;
+ 
+-	msg = normalize_reflog_message(logmsg);
++	msg = normalize_reflog_message_or_null(logmsg);
+ 	retval = refs->be->delete_refs(refs, msg, refnames, flags);
+ 	free(msg);
+ 	return retval;
+@@ -2357,7 +2359,7 @@ int refs_rename_ref(struct ref_store *refs, const char *oldref,
+ 	char *msg;
+ 	int retval;
+ 
+-	msg = normalize_reflog_message(logmsg);
++	msg = normalize_reflog_message_or_null(logmsg);
+ 	retval = refs->be->rename_ref(refs, oldref, newref, msg);
+ 	free(msg);
+ 	return retval;
+@@ -2374,7 +2376,7 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
+ 	char *msg;
+ 	int retval;
+ 
+-	msg = normalize_reflog_message(logmsg);
++	msg = normalize_reflog_message_or_null(logmsg);
+ 	retval = refs->be->copy_ref(refs, oldref, newref, msg);
+ 	free(msg);
+ 	return retval;
+diff --git a/t/t1417-reflog-symref.sh b/t/t1417-reflog-symref.sh
+index 6149531f..3687b058 100755
+--- a/t/t1417-reflog-symref.sh
++++ b/t/t1417-reflog-symref.sh
+@@ -53,7 +53,7 @@ test_expect_success setup '
+ 	test $hcnt -ne $kcnt
+ '
+ 
+-test_expect_failure 'HEAD reflog symbolic-ref' '
++test_expect_success 'HEAD reflog symbolic-ref' '
+ 	hcnt1=$(git reflog show HEAD | wc -l) &&
+ 	git symbolic-ref HEAD refs/heads/unu &&
+ 	git symbolic-ref HEAD refs/heads/du &&
+@@ -62,7 +62,7 @@ test_expect_failure 'HEAD reflog symbolic-ref' '
+ 	test $hcnt1 = $hcnt2
+ '
+ 
+-test_expect_failure 'refs/heads/KVAR reflog symbolic-ref' '
++test_expect_success 'refs/heads/KVAR reflog symbolic-ref' '
+ 	kcnt1=$(git reflog show refs/heads/KVAR | wc -l) &&
+ 	git symbolic-ref refs/heads/KVAR refs/heads/tri &&
+ 	git symbolic-ref refs/heads/KVAR refs/heads/du &&
+@@ -71,7 +71,7 @@ test_expect_failure 'refs/heads/KVAR reflog symbolic-ref' '
+ 	test $kcnt1 = $kcnt2
+ '
+ 
+-test_expect_failure 'double symref reflog symbolic-ref' '
++test_expect_success 'double symref reflog symbolic-ref' '
+ 	hcnt1=$(git reflog show HEAD | wc -l) &&
+ 	kcnt1=$(git reflog show refs/heads/KVAR | wc -l) &&
+ 	git symbolic-ref HEAD refs/heads/KVAR &&
 -- 
