@@ -6,67 +6,77 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28C1CC433DB
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2099C433E0
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:07:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00A7764E27
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:07:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C10A164E27
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229468AbhA3JHw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 04:07:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41420 "EHLO cloud.peff.net"
+        id S229619AbhA3JH4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 04:07:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41422 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233857AbhA3JHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 04:07:30 -0500
-Received: (qmail 16569 invoked by uid 109); 30 Jan 2021 08:39:24 -0000
+        id S233863AbhA3JHg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 04:07:36 -0500
+Received: (qmail 16594 invoked by uid 109); 30 Jan 2021 08:41:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Jan 2021 08:39:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Jan 2021 08:41:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23241 invoked by uid 111); 30 Jan 2021 08:39:23 -0000
+Received: (qmail 23248 invoked by uid 111); 30 Jan 2021 08:41:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 30 Jan 2021 03:39:23 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 30 Jan 2021 03:41:32 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 30 Jan 2021 03:39:22 -0500
+Date:   Sat, 30 Jan 2021 03:41:31 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH v3 01/10] packfile: prepare for the existence of '*.rev'
- files
-Message-ID: <YBUbOpsyl2BVqRJQ@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 06/10] Documentation/config/pack.txt: advertise
+ 'pack.writeReverseIndex'
+Message-ID: <YBUbu67CdryFdTXK@coredump.intra.peff.net>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <cover.1611617819.git.me@ttaylorr.com>
- <6f8b70ab276c0579c957c315743fdab63462a605.1611617820.git.me@ttaylorr.com>
- <YBNWXU8xzw0087DC@coredump.intra.peff.net>
- <YBNhgX1urWjnziEZ@nand.local>
+ <7e29f2d3a08c42b1e8368c4a2f52a11cc47ee959.1611617820.git.me@ttaylorr.com>
+ <YBNXQDlmdZVeMsA8@coredump.intra.peff.net>
+ <YBNiNAVhlRpNKzr+@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YBNhgX1urWjnziEZ@nand.local>
+In-Reply-To: <YBNiNAVhlRpNKzr+@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 28, 2021 at 08:14:41PM -0500, Taylor Blau wrote:
+On Thu, Jan 28, 2021 at 08:17:40PM -0500, Taylor Blau wrote:
 
-> > I dunno. Maybe I am being overly picky. The .idx code already does it
-> > like this, and I believe the index (as in .git/index) does, too. We have
-> > run into problems (as in b5007211b6 (pack-bitmap: do not use gcc packed
-> > attribute, 2014-11-27)), but that was due to a more odd-sized struct, as
-> > well as using sizeof().
+> On Thu, Jan 28, 2021 at 07:30:56PM -0500, Jeff King wrote:
+> > On Mon, Jan 25, 2021 at 06:37:34PM -0500, Taylor Blau wrote:
+> >
+> > > +pack.writeReverseIndex::
+> > > +	When true, git will write a corresponding .rev file (see:
+> > > +	link:../technical/pack-format.html[Documentation/technical/pack-format.txt])
+> > > +	for each new packfile that it writes in all places except for
+> > > +	linkgit:git-fast-import[1] and in the bulk checkin mechanism.
+> > > +	Defaults to false.
+> >
+> > We may want to teach fast-import about this, too, but I think it's OK to
+> > draw the line here for now (it's already reasonably well known that the
+> > generated packs aren't amazing and benefit from repacking).
 > 
-> How about a set of follow-up patches to address all of these spots at
-> the same time? That would allow us to move forward here (which is safe
-> to do, as you note), and address all of these instances together
-> uniformly.
-> 
-> Sound good?
+> Maybe this was worth explaining in the documentation, but this choice
+> was intentional. I'm not aware of any use-case that keeps the packs
+> generated by fast-import around for very long (i.e., I'd expect any 'git
+> fast-import' to be pretty quickly followed by a 'git repack -ad'), so I
+> don't think we'd want to spend time generating a reverse index for a
+> pack structure that we're about to immediately discard.
 
-That sounds fine to me. TBH, I am probably OK if that cleanup never
-happens, as long as nobody finds that it is a problem on there platform.
+One case where I imagine they are kept is in remote-helpers that use the
+import/export mechanism (e.g., something interacting with remote-hg). I
+suspect people there just live with the somewhat lousy packs, and then
+perhaps occasionally "git repack -adf". That would give them .rev files
+then, too.
 
-I do wonder if we should provide more guidance about what is OK and what
-is not in CodingGuidelines, but I have a feeling it would end up to
-esoteric to be generally useful.
+But as I said, I think it's OK to ignore this for now. If somebody with
+an interest in fast-import wants to add support later, they can.
 
 -Peff
