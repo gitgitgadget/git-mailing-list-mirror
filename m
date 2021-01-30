@@ -2,108 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31712C433E0
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78CFBC433E0
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:43:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E733F64E04
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:29:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4977464DE2
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231547AbhA3J3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 04:29:18 -0500
-Received: from bsmtp5.bon.at ([195.3.86.187]:5076 "EHLO bsmtp5.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230455AbhA3J2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 04:28:37 -0500
-X-Greylist: delayed 1358 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Jan 2021 04:28:37 EST
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-        by bsmtp5.bon.at (Postfix) with ESMTPS id 4DSSFr2tCXz5vHD
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 09:35:28 +0100 (CET)
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4DSS6m3SBKz5tl9;
-        Sat, 30 Jan 2021 09:29:20 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D68C94BCE;
-        Sat, 30 Jan 2021 09:29:18 +0100 (CET)
-Subject: Re: [PATCH] pager: exit without error on SIGPIPE
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Vincent Lefevre <vincent@vinc17.net>,
-        Git Mailing List <git@vger.kernel.org>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a3e738e2-695e-cf01-5d01-50b6fea272ec@kdbg.org>
-Date:   Sat, 30 Jan 2021 09:29:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        id S230298AbhA3Jnn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 04:43:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230114AbhA3JnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 04:43:15 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4F5C061573
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 01:42:35 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a10so16563233ejg.10
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 01:42:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=8xBi1DweHBwLZSxjq6lKdLOr1oLwg3Qgj86PZb9eEIc=;
+        b=Ggng4RGnosmAlECbWj8gwfC0RzewgUhICVq0lUc7Vlc2SjI8bqHpuH/6TC2F8D+lId
+         HcXM/96P7O6gYoec5Th9xpjPk/3+o76qocyZzPi6R5ObTkTfvwvbtIs5XvczJDuO+xR3
+         5/7s1i1i18/DZ6rvoFbgGHZjZ2lBDzwXXmGQOMvflHdc+KISNKsAMaxSZCnNBcNtavTT
+         b22TdE2UPvznHEbesYnFgnrW9xy35CT3+mb7WsSZA0A32h++C1lq4GE7Vl5LYUmQFb4w
+         SIAfvAmkxj6C1Z8ZldW4x7QmW8X0Vp1/Md6Mxn2Ti2O4O/FT9AAW7p/dNlecYmkaFCJF
+         uK2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=8xBi1DweHBwLZSxjq6lKdLOr1oLwg3Qgj86PZb9eEIc=;
+        b=SQomWijDuOD9pim9uVycrL8Gyx2+4fwalZkexSyKHDATHcAJuB/Ih4DqLlnbRoyImV
+         SGgrfMgQWzUaE0BzhVrE2cCH50yKL15IBG1OZXttPFoH9o+kbmRdN6ArP3vgJA+iyZMW
+         3izvG/+1o0/nPoJaQk/qp6q6TiJTPAu6OgvlEehaOGvGbd+9a5wKAoKBf2CvtjrFio7T
+         MUxuCWcyJyODL2QxxSm4oC8CS6PFxzNcibWum80/0wjJUSK9kLjdCmHLeaaXeVTHxWVG
+         kzzH0x17Wwcwhlq/6+GGjqf/HzX/r8NzZdJPl/9/U8VvZzub9L/X2F+ZsMBAgsjyZRT+
+         /2gw==
+X-Gm-Message-State: AOAM53304Kg4ASbGBqxZUH36QWgxFILR079gRjKPLeMv/miIAeSHr61h
+        20sZHPUmMIx8CNbVPDSaWpY=
+X-Google-Smtp-Source: ABdhPJz7WVxJFEmx3j87r8QQzqxC8ArjaXZ/iBTfBhFkSjAxMcjY8EZ1wo7pu+hm2iLIYc6LA8wYGA==
+X-Received: by 2002:a17:907:7295:: with SMTP id dt21mr8506546ejc.518.1611999753293;
+        Sat, 30 Jan 2021 01:42:33 -0800 (PST)
+Received: from cpm12071.fritz.box ([212.86.35.190])
+        by smtp.gmail.com with ESMTPSA id h19sm5050453ejl.26.2021.01.30.01.42.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 Jan 2021 01:42:32 -0800 (PST)
+References: <20210119212739.77882-1-rafaeloliveira.cs@gmail.com>
+ <20210127080310.89639-1-rafaeloliveira.cs@gmail.com>
+ <CAPig+cTt-TyOR8kc6YvBVLpf-bgFdJ+FVYA2NvG_Vvn7tMbBkQ@mail.gmail.com>
+User-agent: mu4e 1.4.13; emacs 27.1
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/7] teach `worktree list` verbose mode and prunable
+ annotations
+In-reply-to: <CAPig+cTt-TyOR8kc6YvBVLpf-bgFdJ+FVYA2NvG_Vvn7tMbBkQ@mail.gmail.com>
+Message-ID: <gohp6k4kiykbga.fsf@cpm12071.fritz.box>
+Date:   Sat, 30 Jan 2021 10:42:31 +0100
 MIME-Version: 1.0
-In-Reply-To: <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.01.21 um 00:48 schrieb Denton Liu:
-> If the pager closes before the git command feeding the pager finishes,
-> git is killed by a SIGPIPE and the corresponding exit code is 141.
-> Since the pipe is just an implementation detail, it does not make sense
-> for this error code to be user-facing.
-> 
-> Handle SIGPIPEs by simply calling exit(0) in wait_for_pager_signal().
-> 
-> Introduce `test-tool pager` which infinitely prints `y` to the pager in
-> order to test the new behavior. This cannot be tested with any existing
-> git command because there are no other commands which produce infinite
-> output. Without the change to pager.c, the newly introduced test fails.
-> 
-> Reported-by: Vincent Lefevre <vincent@vinc17.net>
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 
-...
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> diff --git a/pager.c b/pager.c
-> index ee435de675..5922d99dc8 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -34,6 +34,8 @@ static void wait_for_pager_atexit(void)
->  static void wait_for_pager_signal(int signo)
->  {
->  	wait_for_pager(1);
-> +	if (signo == SIGPIPE)
-> +		exit(0);
->  	sigchain_pop(signo);
->  	raise(signo);
->  }
-> diff --git a/t/helper/test-pager.c b/t/helper/test-pager.c
-> new file mode 100644
-> index 0000000000..feb68b8643
-> --- /dev/null
-> +++ b/t/helper/test-pager.c
-> @@ -0,0 +1,12 @@
-> +#include "test-tool.h"
-> +#include "cache.h"
-> +
-> +int cmd__pager(int argc, const char **argv)
-> +{
-> +	if (argc > 1)
-> +		usage("\ttest-tool pager");
-> +
-> +	setup_pager();
-> +	for (;;)
-> +		puts("y");
-> +}
+> On Wed, Jan 27, 2021 at 3:03 AM Rafael Silva
+> <rafaeloliveira.cs@gmail.com> wrote:
+>> Changes in v4
+>>  * Added documentation to explain that the lock reason is quoted with
+>>    the same rules as described for `core.quotePath`.
+>>  * The `worktree unlock` issued in the test cleanup is splitted and
+>>    executed after each `worktree lock` to ensure the unlock is only
+>>    done after we know each locked command was successful.
+>>  * Fix a couple of grammos in the [4/7] commit message.
+>
+> I just gave v4 a complete read-through and it looks great. All review
+> comments on previous rounds have been addressed, and I didn't find
+> anything important to comment on in v4. Very nicely done.
+>
+> Please consider this entire series:
+>
+>     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+>
 
-My gut feeling tells that this will end in an infinite loop on Windows.
-There are no signals on Windows that would kill the upstream of a pipe.
-This call site will only notice that the downstream of the pipe was
-closed, when it checks for write errors.
+Thanks for the review and for all the insightful comments.
 
-Let me test it.
+> Junio: Perhaps the summary of this series in the merge message can be
+> refined a bit, as it only talks about verbose mode, but this series
+> does a bit more than that. Heres a proposal:
+>
+>     `git worktree list` now annotates worktrees as prunable, shows
+>     locked and prunable attributes in --porcelain mode, and gained
+>     a --verbose option.
 
--- Hannes
+I believe this message summarize nicely all the changes implemented by
+this series.
+
+-- 
+Thanks
+Rafael
