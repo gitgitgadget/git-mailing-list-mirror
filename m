@@ -2,114 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E2DBC433E6
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD723C433E0
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 10:27:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A6CB64E12
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:50:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 810AA64DE4
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 10:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231686AbhA3JuQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 04:50:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34860 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbhA3JuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 04:50:07 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46E63C061573
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 01:49:27 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id hs11so16607291ejc.1
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 01:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nZObf6XPDbsxFUYFsr2ooasEANC2DphMcIDbhGyGwaE=;
-        b=rC8zRQlSHFx7/lQWhXMoPMBDzG6LSXvrsiYYPOrBxVRV7Brq4EpreiXRxUFHJ7etE1
-         8z5BFn0ff1FxvvHiEpaxYbOHHxpC5cgVvytmbEfvyk+dJZHdUxm8Xfp7TEoj/60tGjC4
-         /b0TXUvCUWFkMyWRDTRCrx7e7xzZVQ17k+yNyQ+jbc1xPbgmMorBfW935a77cZ+QHR4N
-         fQPuRhdqTc/amGBooDTtCCYC851Zzx7qNQXh5feT6rYudDGrTbh2INfILJ3tuOm08w+C
-         VtbX4DHWn5zFk5dv8xnb7tZIyKxZyojqZxQym8VdJdXjb7emCx6in+vEq+ghA4GYxp5G
-         etBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nZObf6XPDbsxFUYFsr2ooasEANC2DphMcIDbhGyGwaE=;
-        b=WB4E5noYCU3LFYQoniFgTlryDBFEM4QLOz8KfIZmUN06tCmBtFxwdoZfcDIKrRm24+
-         MOZ5yXiRUAss7Mb0aDO0RFHNjLyO4vqrAFoRVCJoBBUEupqfJHoIqdeXYF/nP8QfG9c6
-         YTkdL4dBH8wTJUtNcaDp/DJczPRG+Gwbs/9ZTjWxR2JQnZYzi5HG4/tN0b7Y+unAGres
-         bSn8GOgPgCUV37e1C2AHVyb7vG2b1fTnRFOqk3u2Qz32M75d/jGSYI/C/s1Cdc2yiOmW
-         4I/S2VxzheVLEBedGH+LRHcMyHzwjmVFvKgFKiPSh0VPW3G377FbLDexmmLPctHUowQ1
-         VMMQ==
-X-Gm-Message-State: AOAM5305ELMPSaqfleS2U/w3m6jg/B846bw3PJnE2ZmWIvQ2dPZRsxu2
-        K8kSJuvlQKdLk1B7ejWrBrqQQPBLhwej7evuEzM=
-X-Google-Smtp-Source: ABdhPJyc9Ety1LEXM2jWEyRrbRJFrdpaqyLC1EJN7KXy8aG2KCDzpD4IwchxQtPpllfIU3BS7FBb8xVyMlwWlBcxOI4=
-X-Received: by 2002:a17:906:ce49:: with SMTP id se9mr8463125ejb.341.1612000166087;
- Sat, 30 Jan 2021 01:49:26 -0800 (PST)
-MIME-Version: 1.0
-References: <20210125191710.45161-1-mirucam@gmail.com> <20210125191710.45161-2-mirucam@gmail.com>
- <YBS6YJq0W3VsGf6P@danh.dev>
-In-Reply-To: <YBS6YJq0W3VsGf6P@danh.dev>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 30 Jan 2021 10:49:14 +0100
-Message-ID: <CAP8UFD0iZ5WMMV8FZgNx9jFV9W4qMMPXMEN-ExG8jOkw9LLH6g@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] bisect--helper: reimplement `bisect_log` shell
- function in C
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S231235AbhA3K0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 05:26:53 -0500
+Received: from wforward2-smtp.messagingengine.com ([64.147.123.31]:41599 "EHLO
+        wforward2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229814AbhA3K0w (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 30 Jan 2021 05:26:52 -0500
+X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Sat, 30 Jan 2021 05:26:52 EST
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailforward.west.internal (Postfix) with ESMTP id 23F08C9B;
+        Sat, 30 Jan 2021 05:19:18 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Sat, 30 Jan 2021 05:19:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=date:from:message-id:subject:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; bh=397zJM2g+eyDtP0UG7T3G6obkTkhMA+WLsSd/kYaYs4=; b=AxTfWdHr
+        u1DlQcadMtQCiUPhWJrvOq2q7EOJp4HoCj5KW8JUy+cRKv1TVyAKgfEw/inAEmy9
+        wrkqgkatYObpiYv6Pgb/ZUIucxR2bluThCr0eoNguXSINGC5D17iXR4Deup1VKvr
+        TC8p98srC1Gz0pdDYO9qagK5quhcbTR3iPSUqQiwW05jEQqKNPCmtcbQiD33lZFK
+        tMZ+fAPNPfjnXC47qQCw3o7WdI+KdNwdb14SNuyr+9LQN+swXToYxkrrcJkUIP/E
+        5JxMM3FaUuwc0qpk7ZA2Y5zhkErQY3RNufStpbkppc63QCG6PEZa2z57RTHUiHp+
+        qpUdDMiOOOo6SA==
+X-ME-Sender: <xms:pTIVYFv40qfXLeyGLgPduD_OcxUkxOny2KP3LfIhd73Rt7itjC1WDg>
+    <xme:pTIVYOeczyU0GDOn4mfrQjhsE6gulyRZBQBxHgH3rBgdXJpJR41lY1lEzB9T8Mdhv
+    nEux3MAWF-9_JiTwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeeggdduiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkfestddtredttddttdenuc
+    fhrhhomhepfdfmhihlvgculfdrucfotgfmrgihfdcuoehmrggtkhihlhgvsehgmhgrihhl
+    rdgtohhmqeenucggtffrrghtthgvrhhnpeetudeivdekteevheelueehgeekgfeiveelte
+    ehffeffedugfdttdegfeffgfekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecu
+    kfhppeejiedrudekrdduvddvrddvfedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepmhgrtghkhihlvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:pTIVYIywsY5BNyTnfACiGBamssYMnj56d2Q0gndNMlo0P5kkvaz_5Q>
+    <xmx:pTIVYMNfOdRX9nMwrQLLRbyXE0Sge6-4pEWxVS_72IA6RLpT_Bd-3g>
+    <xmx:pTIVYF-8foZLgO82lVwzX2o73RsJmT49wSD1WVqpoeh5lyMUl5x-mA>
+    <xmx:pTIVYAZEJb1YnWMwkf1ehhtFx5a6L6NT7Qq8NdOfHom5wcCUva5a6JQf9bM>
+Received: from localhost.localdomain (unknown [76.18.122.232])
+        by mail.messagingengine.com (Postfix) with ESMTPA id DD1D124005B;
+        Sat, 30 Jan 2021 05:19:16 -0500 (EST)
+From:   "Kyle J. McKay" <mackyle@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: [PATCH 0/2] Eliminate extraneous ref log entries
+Date:   Sat, 30 Jan 2021 03:19:07 -0700
+Message-Id: <7c7e8679f2da7e1475606d698b2da8c@72481c9465c8b2c4aaff8b77ab5e23c>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 30, 2021 at 2:46 AM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
+Since Git version v2.29.0, the `git symbolic-ref` command has started
+adding extraneous entries to the ref log of the symbolic ref it's
+updating.
 
-> > @@ -210,7 +205,7 @@ case "$#" in
-> >       replay)
-> >               bisect_replay "$@" ;;
-> >       log)
-> > -             bisect_log ;;
-> > +             git bisect--helper --bisect-log || exit ;;
->
-> The original code was "die" when no bisect_log available.
->
-> I think we need to "exit 1" here to indicate a failure, i.e.
->
->         git bisect--helper --bisect-log || exit 1 ;;
+This change was inadvertently introduced in commit 523fa69c36744ae6
+("reflog: cleanse messages in the refs.c layer", 2020-07-10, v2.29.0).
 
-Actually:
+A bug report [1] was made about a failing test in the TopGit test
+suite.  Further investigations into the cause led to this patch set.
 
-             git bisect--helper --bisect-log || exit ;;
+1/2 - adds new tests to monitor this behavior
+2/2 - corrects the problem
 
-will indicate failure. See:
+The tests added in 1/2 are marked `test_expect_failure` and then
+changed to `test_expect_success` in 2/2.
 
-$ ( false || exit )
-$ echo $?
-1
+-Kyle
 
-The difference with what you suggest is that the exit code will be the
-same instead of always 1:
+[1]: <https://github.com/mackyle/topgit/issues/17>
 
-$ ( ( exit 4 ) || exit )
-echo $?
-4
+Kyle J. McKay (2):
+  t/t1417: test symbolic-ref effects on ref logs
+  refs.c: avoid creating extra unwanted reflog entries
 
-which is a good thing, as die() exits with code 128, so if `git
-bisect--helper --bisect-log` die()s then we will get a 128 exit code
-with `|| exit` instead of 1 with `|| exit 1`.
+ refs.c                   | 16 +++----
+ t/t1417-reflog-symref.sh | 91 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+), 7 deletions(-)
+ create mode 100755 t/t1417-reflog-symref.sh
 
-Thanks for your review,
-Christian.
+-- 
