@@ -2,432 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3837C433E0
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 13:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F66AC433DB
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 15:50:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9929A64DD6
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 13:00:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17B0464DFA
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 15:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230036AbhA3NAP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 08:00:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
+        id S232216AbhA3Pub (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 10:50:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbhA3NAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 08:00:12 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67257C061573
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 04:59:32 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id m2so8866147wmm.1
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 04:59:32 -0800 (PST)
+        with ESMTP id S232223AbhA3Pq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 10:46:29 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CAE9C0613ED
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 07:45:47 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id q7so11855316wre.13
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 07:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:from:date:subject:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=2UYxGp4zTSpe+BOqkOPjCkDzO2CpcOBs0GhMGvxtP8s=;
-        b=Ds91QHbw3eJdpiR6GXjxQrtJ/TnGsJPuEzHIoD1dlcU/F0vv7BpJvWMJeRGMNijLAJ
-         VvNidbUubqsxgNN88VpqWmnol9uz//JfwWB9DBmPXVId47dOGYBP0blS8rYCnD4wsvZe
-         w6eR1Sk5sUdsmI6rXmQL/7xVNB0GO16814D7cgG0Y6V/hWiCk6y0uwQRcaUSAd81eeQa
-         WDpO9r/m9uJqZr2BRn7qljGfE+CfhUMx7fDmL71qazZKebVdKDDKjsVHU0FRczq48jrC
-         7AzJV5GkiykCGfsShkUymZB55brhym30VSWSlgZJQ+HOp2uK4mbMjjdwPyCzY7zRwGS9
-         Tuow==
+        bh=BY5J7tBmjh7jJISx6wvV+k47i95eNuZhaYMRjPcT3aY=;
+        b=YAj5m22wdX5BrQmKFDN60IbUxd7H63bPW68OH5MWav2ia+3tsMaR30aeY/JIjMKva9
+         g6HvN1zqHKOIP3UgRkl+WB91Oh/EVdx8EylPh5ELgDxT4eKg8MRJ9mO6FbNtmToDGVLa
+         ucrh+yP9wKI7dKn5/ZkjgcJUiTO4RTYD7A6RGQsxlv1k8d6904z8t7750wZvAYuL9LZD
+         dEBta6icld6WSz3Xx6TuXnxtjCrrbHgrWbnzhkVL7ytmoKTF9AklQtC0osDDGYMjgnLx
+         sW7A2Qp+JoYqyyxpzTikldEt21w+MfxcZa1mJMrOZL1M9QDuN7dFRV2legcY47Ip5hUt
+         t0pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2UYxGp4zTSpe+BOqkOPjCkDzO2CpcOBs0GhMGvxtP8s=;
-        b=BnbrcCHmVH3kCnUD3BI+k8bj24lUGinDEP79jjrrT+ILODaHoeMNYACxpeLf1lV96l
-         9nmiJBV27uP3hUAiRYpzeaSb9Tux6WkVzDAhk7+obW8YhwiPZztjzPD+tzp6zca4Asza
-         XZtw0MfZKfQfu+2KzNvqbmg8ZGNwZ9e784Ov/L+Sfr8U737XaIcQfX+VhQ8Sahl1yv2i
-         0HIFhHakbZL3V06FOmt+ewAlrfc7XW4dVYaYgISxztBiYSp3EAMuQ2tAEVcLj3qT4KeF
-         LtmP84YQKt6eKtjCrE3YmUcW5/e9uLA/QPmex6BMBDMkjGWbjgZouOsuu4G5E90w06YA
-         4U2A==
-X-Gm-Message-State: AOAM532gne/CpENTqeANjWCDP9+cdyBEMqbeKHlaLwPKx1jbz/TCJpJY
-        UUMYTIjxdrpMcw3zE+M1oUWPUM68U7o=
-X-Google-Smtp-Source: ABdhPJxuy+kw9U2mOyus8shwrxQkkc5RHyjnni1KXbdFosFIL3vqO1Ay9ZFpWuhsibqpLuhVKQrXPw==
-X-Received: by 2002:a7b:c3d8:: with SMTP id t24mr3491099wmj.35.1612011570539;
-        Sat, 30 Jan 2021 04:59:30 -0800 (PST)
+        bh=BY5J7tBmjh7jJISx6wvV+k47i95eNuZhaYMRjPcT3aY=;
+        b=lXDPk3ueKyIlV4kDUHaNSA4KTUOuqCSIhg98fdLC5LOe1NP9tc3xRfZbrV3rgLzUDb
+         YIGJLUscP6SJMSpFZTu9U7CJcAxZkAizLP0xhk2l+yfPRBI3CJYLbWWViOvE2H1u02Mq
+         Lgm8tfi+0tmq0UNVvstROm93XglmEVpSPyagOZla+NbHXMFjxy9BkILopP0WbvC1kksl
+         pJXUzR4nd+IvSLCQ/NqwgdG8wxzgQljtzBTWXgoPatG7AdqkeuDJXQac1+XuGNFZg22S
+         nT2ixdvKEJPUf1u+/73w9ivxM6LndToXzdwM/xi3Ao+ZGMpU1tjYFIGRWHB33Z1/69Nz
+         D1Zg==
+X-Gm-Message-State: AOAM533X1AdDuhIKV7aKGmsuSD6oYKkbh3cif34l/9d2k/88IgxSoxxN
+        9CtMANpFm13uKIbbhJUPVdT+jHFCows=
+X-Google-Smtp-Source: ABdhPJy37rU1W+c49FlzM2oj0TOd2Zac3VCNRUAD/teZ8oU1PQZtuVrvGvb402Op+zIz4A+t6uZePQ==
+X-Received: by 2002:adf:e392:: with SMTP id e18mr9862186wrm.116.1612021546043;
+        Sat, 30 Jan 2021 07:45:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u14sm13744043wmq.45.2021.01.30.04.59.29
+        by smtp.gmail.com with ESMTPSA id a27sm18365449wrc.94.2021.01.30.07.45.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Jan 2021 04:59:30 -0800 (PST)
-Message-Id: <pull.857.git.1612011569489.gitgitgadget@gmail.com>
-From:   "=?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Sat, 30 Jan 2021 12:59:28 +0000
-Subject: [PATCH] alloc.h|c: migrate alloc_states to mem-pool
+        Sat, 30 Jan 2021 07:45:45 -0800 (PST)
+Message-Id: <pull.854.git.1612021544723.gitgitgadget@gmail.com>
+From:   "Lance Ward via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 30 Jan 2021 15:45:44 +0000
+Subject: [PATCH] status: learn --color for piping colored output
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88?= <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Cc:     Lance Ward <ljward10@gmail.com>, Lance Ward <ljward10@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+From: Lance Ward <ljward10@gmail.com>
 
-"alloc_state" may have similar effects with "mem_pool".
-Using the new memory pool API may be more beneficial
-to our memory management in the future.
+Many users like to pipe colored results of git status to other commands
+such as more or less, but by default colors are lost when piping without
+changing the user's git configuration.  Many other commands such as diff,
+show, log and grep have a --color option to easily override this behavior.
+This allows the status command to have a similar --color option providing
+a simpler mechanism for temporarily forcing piped colored output.
 
-So I change them in the "struct parsed_object_pool",and
-The corresponding interface has also been changed.
-functions "alloc_*_node" now change to "mem_pool_alloc_*_node".
-
-At the same time ,I add the member `alloc_count` of
-struct mem_pool ,so that we can effective track
-node alloc count,and adapt to the original interface `alloc_report`.
-
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+Signed-off-by: Lance Ward <ljward10@gmail.com>
 ---
-    alloc.h|c: migrate alloc_states to mem-pool
+    status: learn --color for piping colored output
     
-    Notice that "mem-pool" api may have similar effort with alloc_state,
-    "parsed_object_pool" have five member with alloc_state type, and "TODO"
-    usage in "object.h":"migrate alloc_states to mem-pool?", so let us
-    change it to mem-pool version.
+    Many users like to pipe colored results of git status to other commands
+    such as more or less, but by default colors are lost when piping without
+    changing the user's git configuration. Many other commands such as diff,
+    show, log and grep have a --color option to easily override this
+    behavior. This allows the status command to have a similar --color
+    option providing a simpler mechanism for temporarily forcing piped
+    colored output.
     
-    After I learned the role of the memory pool,I think in the future git
-    may be more inclined to use the memory pool instead of the old interface
-    "alloc_state".
-    
-    Thanks.
+    Signed-off-by: Lance Ward ljward10@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-857%2Fadlternative%2Falloc_states_to_mem_pool-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-857/adlternative/alloc_states_to_mem_pool-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/857
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-854%2Fljward10%2Flw-add-status-color-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-854/ljward10/lw-add-status-color-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/854
 
- alloc.c           | 24 ++++++++++++------------
- alloc.h           | 10 +++++-----
- blame.c           |  2 +-
- blob.c            |  2 +-
- commit-graph.c    |  2 +-
- commit.c          |  2 +-
- mem-pool.c        |  6 ++++++
- mem-pool.h        |  8 ++++++++
- merge-recursive.c |  2 +-
- object.c          | 37 +++++++++++++++++++++----------------
- object.h          | 10 +++++-----
- tag.c             |  2 +-
- tree.c            |  2 +-
- 13 files changed, 64 insertions(+), 45 deletions(-)
+ builtin/commit.c             |  7 ++++
+ diff.c                       |  5 +++
+ diff.h                       |  1 +
+ t/t7527-status-color-pipe.sh | 69 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+)
+ create mode 100755 t/t7527-status-color-pipe.sh
 
-diff --git a/alloc.c b/alloc.c
-index 957a0af3626..951ef3e4ed7 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -71,30 +71,30 @@ static inline void *alloc_node(struct alloc_state *s, size_t node_size)
- 	return ret;
- }
- 
--void *alloc_blob_node(struct repository *r)
-+void *mem_pool_alloc_blob_node(struct repository *r)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 739110c5a7f..1579f7cc9ed 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1355,6 +1355,7 @@ static int git_status_config(const char *k, const char *v, void *cb)
+ int cmd_status(int argc, const char **argv, const char *prefix)
  {
--	struct blob *b = alloc_node(r->parsed_objects->blob_state, sizeof(struct blob));
-+	struct blob *b = mem_pool_calloc(r->parsed_objects->blob_pool, 1, sizeof(struct blob));
- 	b->object.type = OBJ_BLOB;
- 	return b;
+ 	static int no_renames = -1;
++	static int use_color = GIT_COLOR_AUTO;
+ 	static const char *rename_score_arg = (const char *)-1;
+ 	static struct wt_status s;
+ 	unsigned int progress_flag = 0;
+@@ -1378,6 +1379,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 			    STATUS_FORMAT_LONG),
+ 		OPT_BOOL('z', "null", &s.null_termination,
+ 			 N_("terminate entries with NUL")),
++		OPT__COLOR(&use_color, N_("use colored output")),
+ 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+ 		  N_("mode"),
+ 		  N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
+@@ -1410,6 +1412,11 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	handle_untracked_files_arg(&s);
+ 	handle_ignored_arg(&s);
+ 
++	if (use_color != GIT_COLOR_AUTO) {
++		s.use_color=use_color;
++		set_diff_color(use_color);
++	}
++
+ 	if (s.show_ignored_mode == SHOW_MATCHING_IGNORED &&
+ 	    s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
+ 		die(_("Unsupported combination of ignored and untracked-files arguments"));
+diff --git a/diff.c b/diff.c
+index 69e3bc00ed8..fe7ffce6803 100644
+--- a/diff.c
++++ b/diff.c
+@@ -261,6 +261,11 @@ void init_diff_ui_defaults(void)
+ 	diff_detect_rename_default = DIFF_DETECT_RENAME;
  }
  
--void *alloc_tree_node(struct repository *r)
-+void *mem_pool_alloc_tree_node(struct repository *r)
- {
--	struct tree *t = alloc_node(r->parsed_objects->tree_state, sizeof(struct tree));
-+	struct tree *t = mem_pool_calloc(r->parsed_objects->tree_pool, 1, sizeof(struct tree));
- 	t->object.type = OBJ_TREE;
- 	return t;
- }
- 
--void *alloc_tag_node(struct repository *r)
-+void *mem_pool_alloc_tag_node(struct repository *r)
- {
--	struct tag *t = alloc_node(r->parsed_objects->tag_state, sizeof(struct tag));
-+	struct tag *t = mem_pool_calloc(r->parsed_objects->tag_pool, 1, sizeof(struct tag));
- 	t->object.type = OBJ_TAG;
- 	return t;
- }
- 
--void *alloc_object_node(struct repository *r)
-+void *mem_pool_alloc_object_node(struct repository *r)
- {
--	struct object *obj = alloc_node(r->parsed_objects->object_state, sizeof(union any_object));
-+	struct object *obj = mem_pool_calloc(r->parsed_objects->object_pool, 1, sizeof(union any_object));
- 	obj->type = OBJ_NONE;
- 	return obj;
- }
-@@ -116,9 +116,9 @@ void init_commit_node(struct commit *c)
- 	c->index = alloc_commit_index();
- }
- 
--void *alloc_commit_node(struct repository *r)
-+void *mem_pool_alloc_commit_node(struct repository *r)
- {
--	struct commit *c = alloc_node(r->parsed_objects->commit_state, sizeof(struct commit));
-+	struct commit *c = mem_pool_calloc(r->parsed_objects->commit_pool, 1, sizeof(struct commit));
- 	init_commit_node(c);
- 	return c;
- }
-@@ -130,8 +130,8 @@ static void report(const char *name, unsigned int count, size_t size)
- }
- 
- #define REPORT(name, type)	\
--    report(#name, r->parsed_objects->name##_state->count, \
--		  r->parsed_objects->name##_state->count * sizeof(type) >> 10)
-+    report(#name, r->parsed_objects->name##_pool->alloc_count, \
-+		  r->parsed_objects->name##_pool->alloc_count * sizeof(type) >> 10)
- 
- void alloc_report(struct repository *r)
- {
-diff --git a/alloc.h b/alloc.h
-index 371d388b552..707b28b464e 100644
---- a/alloc.h
-+++ b/alloc.h
-@@ -7,12 +7,12 @@ struct commit;
- struct tag;
- struct repository;
- 
--void *alloc_blob_node(struct repository *r);
--void *alloc_tree_node(struct repository *r);
-+void *mem_pool_alloc_blob_node(struct repository *r);
-+void *mem_pool_alloc_tree_node(struct repository *r);
- void init_commit_node(struct commit *c);
--void *alloc_commit_node(struct repository *r);
--void *alloc_tag_node(struct repository *r);
--void *alloc_object_node(struct repository *r);
-+void *mem_pool_alloc_commit_node(struct repository *r);
-+void *mem_pool_alloc_tag_node(struct repository *r);
-+void *mem_pool_alloc_object_node(struct repository *r);
- void alloc_report(struct repository *r);
- 
- struct alloc_state *allocate_alloc_state(void);
-diff --git a/blame.c b/blame.c
-index a5044fcfaa6..cbb9d8316c1 100644
---- a/blame.c
-+++ b/blame.c
-@@ -192,7 +192,7 @@ static struct commit *fake_working_tree_commit(struct repository *r,
- 
- 	repo_read_index(r);
- 	time(&now);
--	commit = alloc_commit_node(r);
-+	commit = mem_pool_alloc_commit_node(r);
- 	commit->object.parsed = 1;
- 	commit->date = now;
- 	parent_tail = &commit->parents;
-diff --git a/blob.c b/blob.c
-index 182718aba9f..787c7b2b016 100644
---- a/blob.c
-+++ b/blob.c
-@@ -9,7 +9,7 @@ struct blob *lookup_blob(struct repository *r, const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(r, oid);
- 	if (!obj)
--		return create_object(r, oid, alloc_blob_node(r));
-+		return create_object(r, oid, mem_pool_alloc_blob_node(r));
- 	return object_as_type(obj, OBJ_BLOB, 0);
- }
- 
-diff --git a/commit-graph.c b/commit-graph.c
-index 06f8dc1d896..edbcfd8a01e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2362,7 +2362,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
- 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
--		odb_commit = (struct commit *)create_object(r, &cur_oid, alloc_commit_node(r));
-+		odb_commit = (struct commit *)create_object(r, &cur_oid, mem_pool_alloc_commit_node(r));
- 		if (parse_commit_internal(odb_commit, 0, 0)) {
- 			graph_report(_("failed to parse commit %s from object database for commit-graph"),
- 				     oid_to_hex(&cur_oid));
-diff --git a/commit.c b/commit.c
-index fe1fa3dc41f..96d06737409 100644
---- a/commit.c
-+++ b/commit.c
-@@ -61,7 +61,7 @@ struct commit *lookup_commit(struct repository *r, const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(r, oid);
- 	if (!obj)
--		return create_object(r, oid, alloc_commit_node(r));
-+		return create_object(r, oid, mem_pool_alloc_commit_node(r));
- 	return object_as_type(obj, OBJ_COMMIT, 0);
- }
- 
-diff --git a/mem-pool.c b/mem-pool.c
-index 8401761dda0..d7bae84a982 100644
---- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -35,6 +35,11 @@ static struct mp_block *mem_pool_alloc_block(struct mem_pool *pool,
- 	return p;
- }
- 
-+struct mem_pool *mem_pool_new(void)
++void set_diff_color(int use_color)
 +{
-+	return xmalloc(sizeof(struct mem_pool));
++       diff_use_color_default = use_color;
 +}
 +
- void mem_pool_init(struct mem_pool *pool, size_t initial_size)
+ int git_diff_heuristic_config(const char *var, const char *value, void *cb)
  {
- 	memset(pool, 0, sizeof(*pool));
-@@ -69,6 +74,7 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
- 	struct mp_block *p = NULL;
- 	void *r;
- 
-+	pool->alloc_count++;
- 	/* round up to a 'uintmax_t' alignment */
- 	if (len & (sizeof(uintmax_t) - 1))
- 		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-diff --git a/mem-pool.h b/mem-pool.h
-index fe7507f022b..64529e136cf 100644
---- a/mem-pool.h
-+++ b/mem-pool.h
-@@ -19,8 +19,16 @@ struct mem_pool {
- 
- 	/* The total amount of memory allocated by the pool. */
- 	size_t pool_alloc;
+ 	if (!strcmp(var, "diff.indentheuristic"))
+diff --git a/diff.h b/diff.h
+index 2ff2b1c7f2c..10196d9b040 100644
+--- a/diff.h
++++ b/diff.h
+@@ -501,6 +501,7 @@ int parse_long_opt(const char *opt, const char **argv,
+ int git_diff_basic_config(const char *var, const char *value, void *cb);
+ int git_diff_heuristic_config(const char *var, const char *value, void *cb);
+ void init_diff_ui_defaults(void);
++void set_diff_color(int use_color);
+ int git_diff_ui_config(const char *var, const char *value, void *cb);
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ #define diff_setup(diffopts) repo_diff_setup(the_repository, diffopts)
+diff --git a/t/t7527-status-color-pipe.sh b/t/t7527-status-color-pipe.sh
+new file mode 100755
+index 00000000000..ee4ab2ea821
+--- /dev/null
++++ b/t/t7527-status-color-pipe.sh
+@@ -0,0 +1,69 @@
++#!/bin/sh
 +
-+	/* The count of calling mem_pool_alloc .*/
-+	size_t alloc_count;
- };
- 
-+/*
-+ * Create a new mem_pool.
-+ */
-+struct mem_pool *mem_pool_new(void);
++test_description='git status color option'
 +
- /*
-  * Initialize mem_pool with specified initial size.
-  */
-diff --git a/merge-recursive.c b/merge-recursive.c
-index f736a0f6323..62ef4e7b688 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -216,7 +216,7 @@ static struct commit *make_virtual_commit(struct repository *repo,
- 					  struct tree *tree,
- 					  const char *comment)
- {
--	struct commit *commit = alloc_commit_node(repo);
-+	struct commit *commit = mem_pool_alloc_commit_node(repo);
- 
- 	set_merge_remote_desc(commit, comment, (struct object *)commit);
- 	set_commit_tree(commit, tree);
-diff --git a/object.c b/object.c
-index 68f80b0b3d8..241933f6c88 100644
---- a/object.c
-+++ b/object.c
-@@ -182,7 +182,7 @@ struct object *lookup_unknown_object(const struct object_id *oid)
- 	struct object *obj = lookup_object(the_repository, oid);
- 	if (!obj)
- 		obj = create_object(the_repository, oid,
--				    alloc_object_node(the_repository));
-+				mem_pool_alloc_object_node(the_repository));
- 	return obj;
- }
- 
-@@ -469,11 +469,16 @@ struct parsed_object_pool *parsed_object_pool_new(void)
- 	struct parsed_object_pool *o = xmalloc(sizeof(*o));
- 	memset(o, 0, sizeof(*o));
- 
--	o->blob_state = allocate_alloc_state();
--	o->tree_state = allocate_alloc_state();
--	o->commit_state = allocate_alloc_state();
--	o->tag_state = allocate_alloc_state();
--	o->object_state = allocate_alloc_state();
-+	o->blob_pool = mem_pool_new();
-+	o->tree_pool = mem_pool_new();
-+	o->commit_pool = mem_pool_new();
-+	o->tag_pool = mem_pool_new();
-+	o->object_pool = mem_pool_new();
-+	mem_pool_init(o->blob_pool,0);
-+	mem_pool_init(o->tree_pool,0);
-+	mem_pool_init(o->commit_pool,0);
-+	mem_pool_init(o->tag_pool,0);
-+	mem_pool_init(o->object_pool,0);
- 
- 	o->is_shallow = -1;
- 	o->shallow_stat = xcalloc(1, sizeof(*o->shallow_stat));
-@@ -566,16 +571,16 @@ void parsed_object_pool_clear(struct parsed_object_pool *o)
- 	free_commit_buffer_slab(o->buffer_slab);
- 	o->buffer_slab = NULL;
- 
--	clear_alloc_state(o->blob_state);
--	clear_alloc_state(o->tree_state);
--	clear_alloc_state(o->commit_state);
--	clear_alloc_state(o->tag_state);
--	clear_alloc_state(o->object_state);
-+	mem_pool_discard(o->blob_pool,1);
-+	mem_pool_discard(o->tree_pool,1);
-+	mem_pool_discard(o->tag_pool,1);
-+	mem_pool_discard(o->object_pool,1);
-+	mem_pool_discard(o->commit_pool,1);
- 	stat_validity_clear(o->shallow_stat);
--	FREE_AND_NULL(o->blob_state);
--	FREE_AND_NULL(o->tree_state);
--	FREE_AND_NULL(o->commit_state);
--	FREE_AND_NULL(o->tag_state);
--	FREE_AND_NULL(o->object_state);
-+	FREE_AND_NULL(o->blob_pool);
-+	FREE_AND_NULL(o->tree_pool);
-+	FREE_AND_NULL(o->commit_pool);
-+	FREE_AND_NULL(o->tag_pool);
-+	FREE_AND_NULL(o->object_pool);
- 	FREE_AND_NULL(o->shallow_stat);
- }
-diff --git a/object.h b/object.h
-index 59daadce214..43031d8dc04 100644
---- a/object.h
-+++ b/object.h
-@@ -10,11 +10,11 @@ struct parsed_object_pool {
- 	int nr_objs, obj_hash_size;
- 
- 	/* TODO: migrate alloc_states to mem-pool? */
--	struct alloc_state *blob_state;
--	struct alloc_state *tree_state;
--	struct alloc_state *commit_state;
--	struct alloc_state *tag_state;
--	struct alloc_state *object_state;
-+	struct mem_pool *blob_pool;
-+	struct mem_pool *tree_pool;
-+	struct mem_pool *commit_pool;
-+	struct mem_pool *tag_pool;
-+	struct mem_pool *object_pool;
- 
- 	/* parent substitutions from .git/info/grafts and .git/shallow */
- 	struct commit_graft **grafts;
-diff --git a/tag.c b/tag.c
-index 1ed2684e45b..de24b6308b4 100644
---- a/tag.c
-+++ b/tag.c
-@@ -102,7 +102,7 @@ struct tag *lookup_tag(struct repository *r, const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(r, oid);
- 	if (!obj)
--		return create_object(r, oid, alloc_tag_node(r));
-+		return create_object(r, oid, mem_pool_alloc_tag_node(r));
- 	return object_as_type(obj, OBJ_TAG, 0);
- }
- 
-diff --git a/tree.c b/tree.c
-index e76517f6b18..7d61ae942e6 100644
---- a/tree.c
-+++ b/tree.c
-@@ -199,7 +199,7 @@ struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(r, oid);
- 	if (!obj)
--		return create_object(r, oid, alloc_tree_node(r));
-+		return create_object(r, oid, mem_pool_alloc_tree_node(r));
- 	return object_as_type(obj, OBJ_TREE, 0);
- }
- 
++. ./test-lib.sh
++
++test_expect_success setup '
++	echo 1 >original &&
++	git add .
++'
++
++# Normal git status does not pipe colors
++test_expect_success 'git status' '
++	git status >out &&
++	test_i18ngrep "original$" out
++'
++
++# Test new color option with never (expect same as above)
++test_expect_success 'git status --color=never' '
++	git status --color=never >out &&
++	test_i18ngrep "original$" out
++'
++
++# Test new color (default is always)
++test_expect_success 'git status --color' '
++	git status --color |
++	test_decode_color >out &&
++	test_i18ngrep "original<RESET>$" out
++'
++
++# Test new color option with always
++test_expect_success 'git status --color=always' '
++	git status --color=always |
++	test_decode_color >out &&
++	test_i18ngrep "original<RESET>$" out
++'
++
++# Test verbose (default)
++test_expect_success 'git status -v' '
++	git status -v |
++	test_decode_color >out &&
++	test_i18ngrep "+1" out
++'
++
++# Test verbose --color=never
++test_expect_success 'git status -v --color=never' '
++	git status -v --color=never |
++	test_decode_color >out &&
++	test_i18ngrep "+1" out
++'
++
++# Test verbose --color (default always)
++test_expect_success 'git status -v --color' '
++	git status -v --color |
++	test_decode_color >out &&
++	test_i18ngrep "<CYAN>@@ -0,0 +1 @@<RESET>" out &&
++	test_i18ngrep "<GREEN>+<RESET><GREEN>1<RESET>" out
++'
++
++test_done
++# Test verbose --color=always
++test_expect_success 'git status -v --color=always' '
++	git status -v --color=always |
++	test_decode_color >out &&
++	test_i18ngrep "<CYAN>@@ -0,0 +1 @@<RESET>" out &&
++	test_i18ngrep "GREEN>+<RESET><GREEN>1<RESET>" out
++'
++
++test_done
 
-base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
+base-commit: e6362826a0409539642a5738db61827e5978e2e4
 -- 
 gitgitgadget
