@@ -2,102 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B854BC433DB
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 19:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E087C433E0
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 20:24:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C2A464DF5
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 19:18:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9B7D64DDD
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 20:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232233AbhA3TRu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 14:17:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42764 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230360AbhA3TRs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 14:17:48 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308E2C061573
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 11:17:08 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id d18so14041619oic.3
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 11:17:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TIUtcckhgRy/f2UjtIjDbTcOJdHHJprssI7FEgIvga0=;
-        b=ddQ44BriqzO4hE1SOh1Hnh3gkjYk88ErxsW892zGX2TcxerfOcksGATE7ilAL4VVZB
-         byoEFx9rmA4Ly8eTNfjzy/8Yia0mJeC4RKzsTTUBgoVUVi+vbuOgWzrxaoF0qfR5fo40
-         T22b8Mpowow7WKoArpWJ0aTlerRFha4+ELlWLj4bUPVpHihihL06ADlk6OOX49YaPN8f
-         Hb8V/orbsy/iwXUuwbxGic/SvxYCePKm65z1lwtygQQsonJyZWXi4FidW+m8ClaEIiQL
-         tGWrbh31se+WoYXqSlhNVC/bxFmRrYuAOoROLgrJcBlPezXCb6Y8VAYULUoJIvRM0USX
-         gEKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TIUtcckhgRy/f2UjtIjDbTcOJdHHJprssI7FEgIvga0=;
-        b=FXaK7nhbCL2shT5g3IAE3EWmyg2BefUsVb9vSELoVheaJrr6ucyE9auDLB8H1G5KZ3
-         e5K0ccu5LG43jQjmWOPRaMnupWTlYK4VNf2+AQojQWFjeGGQjav69qdgXbnKXce5MqgW
-         Fp7wZr2sPS/9+aQn2E8jSxUmTuOrtr4kJhPMPqIlMdAniwZPrINODx41iTSEiqQTH+Gk
-         G+en+FZeurod+CWE9zj3CZ5yy5t2qeQQZXc8gfl7VAZrGj6pGKxM78s57qb+jG/kGVV4
-         u43tSiSjU7ZaP3cNst/MYcfMyfyc0oZO2fY+hEkBgSpMTi4OClh9KR3A9DIBgt/iGZ/l
-         4Exg==
-X-Gm-Message-State: AOAM530e88AiCY/+w1zb1wwyBdtvvKU0S3E+LZgn+YjXeASEjQDuZeho
-        KPWd8DkA2PGNr4tsiGcM7ytj0qAs2OPVnODJyoA=
-X-Google-Smtp-Source: ABdhPJxXK/q79haOVda3DuwfClBkRZnPKLmpdE3tizvKvlw6c++mP7S4RlyQ3Ol7Y5gPTY92nfyEQKP9kqtrKSVsU0k=
-X-Received: by 2002:aca:ab08:: with SMTP id u8mr6014537oie.84.1612034227491;
- Sat, 30 Jan 2021 11:17:07 -0800 (PST)
-MIME-Version: 1.0
+        id S231150AbhA3UVk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 15:21:40 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54572 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230237AbhA3UVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 15:21:40 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CDC3FA2644;
+        Sat, 30 Jan 2021 15:20:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W8hfaj47A8ELQbFGTcnUZmUzuAo=; b=tNyAR4
+        B5iKjaAFH4FSUPpQRf/BDTuDlDee+I6G674WLFWUhcC5Mj8wC7eaNAP/YMTX7V8a
+        eLvZe4l1b9jF4aVen8pWuhzg6w9Moq9hp4YTuwVwD67X+qfUl1AaEDE+z9qMIIFN
+        3VAfqGSJt6yY/q43xWP9kxHMbyz2ttYdku9M8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WO9LV/McSFucpuhtjpicMA+TeEqJZOqf
+        6a1IiaxxVdY07jRWCmsWercR0CU34IiIz8hjXjvQTEiMAtJjFvfYLlSH63YWB+Jv
+        O/0ublQms2SDoicKaN3MowvpIHKpn8bgEvDpUhpv/J7KZkmwXRiexLzc+ippm23Z
+        NoJ2xaqbMqw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5697A2643;
+        Sat, 30 Jan 2021 15:20:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4FD28A2641;
+        Sat, 30 Jan 2021 15:20:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>
+Subject: Re: [PATCH v2 0/3] Unify trailers formatting logic for pretty.c and
+ ref-filter.c
 References: <pull.726.git.1599335291.gitgitgadget@gmail.com>
- <pull.726.v2.git.1611954543.gitgitgadget@gmail.com> <245e48eb6835cae4e61f65af780b766d990d4b5f.1611954543.git.gitgitgadget@gmail.com>
- <CAP8UFD00sdiaFYUvgzQmXKCQSyrNKG82_xXvRGRaqdkbqKu7UQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD00sdiaFYUvgzQmXKCQSyrNKG82_xXvRGRaqdkbqKu7UQ@mail.gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Sun, 31 Jan 2021 00:46:56 +0530
-Message-ID: <CA+CkUQ9sKyWJYahnZqfy1OfxxA+ukv148SCxjbGaOBzkCH0kbg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] pretty.c: capture invalid trailer argument
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        <pull.726.v2.git.1611954543.gitgitgadget@gmail.com>
+        <xmqqft2jqkli.fsf@gitster.c.googlers.com>
+Date:   Sat, 30 Jan 2021 12:20:56 -0800
+In-Reply-To: <xmqqft2jqkli.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 29 Jan 2021 17:28:25 -0800")
+Message-ID: <xmqq35yip45z.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A93AC85C-6338-11EB-97EC-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sat, Jan 30, 2021 at 3:58 AM Christian Couder
-<christian.couder@gmail.com> wrote:
+> With this queued directly on top of master, I am getting these
+> failures.
 >
-> On Fri, Jan 29, 2021 at 10:15 PM Hariom Verma via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Hariom Verma <hariom18599@gmail.com>
-> >
-> > As we would like to use this same logic in ref-filter, it's nice to
-> > get invalid trailer argument. This will allow us to print precise
-> > error message, while using `format_set_trailers_options()` in
-> > ref-filter.
->
-> Thanks for continuing to work on this!
->
-> >  {
-> >         for (;;) {
-> >                 const char *argval;
-> >                 size_t arglen;
-> >
-> > +               if(**arg == ')') {
-> > +                       break;
-> > +               }
->
-> A space char is missing between "if" and "(". Also no need for "{" and
-> "}". It could just be:
->
-> > +               if (**arg == ')')
-> > +                       break;
+> t6300-for-each-ref.sh                            (Wstat: 256 Tests: 301 Failed: 6)
+>   Failed tests:  277-280, 285, 287
+>   Non-zero exit status: 1
 
-Thanks for pointing this out. Will fix it.
+Judging from the way the first failure happens, it appears that
+some code depends on a kind of shell portability issues?
+
+The failure is under GNU bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)
+
+Ah, I think I know what is going on.
+
+test_trailer_option() {
+	title="$1"
+	option="$2"
+	expect="$3"
+	test_expect_success "$title" '
+		echo $expect >expect &&
+		git for-each-ref --format="%($option)" refs/heads/main >actual &&
+		test_cmp expect actual &&
+		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
+		test_cmp expect actual
+	'
+}
+
+Not quoting "$expect" given to 'echo' inside double-quote is
+criminal, but I do not think that contributes to this particular
+failure.  The problem is in the callers.
+
+test_trailer_option '%(trailers:key=foo) shows that trailer' \
+	'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>\n'
+
+
+Doing
+
+	expect='foo\n'
+	echo $expect
+
+and expecting that somebody would magically turn \n to a true
+newline is the bug.  Not everybody's builtin "echo" works that way.
+
+Here is a quick fix-up.  I didn't check which parts are to be blamed
+on which patch of yours, if any, so you might need to split them up
+into multiple pieces (i.e. a preliminary clean-up patch, and a patch
+each to be applied to part N/3 (1 <= N <= 3) of your patch).
+
+
+ t/t6300-for-each-ref.sh | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+diff --git c/t/t6300-for-each-ref.sh w/t/t6300-for-each-ref.sh
+index a8835b1391..0278cb9924 100755
+--- c/t/t6300-for-each-ref.sh
++++ w/t/t6300-for-each-ref.sh
+@@ -874,7 +874,7 @@ test_trailer_option() {
+ 	option="$2"
+ 	expect="$3"
+ 	test_expect_success "$title" '
+-		echo $expect >expect &&
++		echo "$expect" >expect &&
+ 		git for-each-ref --format="%($option)" refs/heads/main >actual &&
+ 		test_cmp expect actual &&
+ 		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
+@@ -883,13 +883,18 @@ test_trailer_option() {
+ }
+ 
+ test_trailer_option '%(trailers:key=foo) shows that trailer' \
+-	'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>\n'
++	'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:key=foo) is case insensitive' \
+-	'trailers:key=SiGned-oFf-bY' 'Signed-off-by: A U Thor <author@example.com>\n'
++	'trailers:key=SiGned-oFf-bY' 'Signed-off-by: A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:key=foo:) trailing colon also works' \
+-	'trailers:key=Signed-off-by:' 'Signed-off-by: A U Thor <author@example.com>\n'
++	'trailers:key=Signed-off-by:' 'Signed-off-by: A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:key=foo) multiple keys' \
+-	'trailers:key=Reviewed-by:,key=Signed-off-by' 'Reviewed-by: A U Thor <author@example.com>\nSigned-off-by: A U Thor <author@example.com>\n'
++	'trailers:key=Reviewed-by:,key=Signed-off-by' 'Reviewed-by: A U Thor <author@example.com>
++Signed-off-by: A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:key=nonexistent) becomes empty' \
+ 	'trailers:key=Shined-off-by:' ''
+ 
+@@ -928,11 +933,14 @@ test_expect_success 'pretty format %(trailers:key=foo,only=no) also includes non
+ '
+ 
+ test_trailer_option '%(trailers:key=foo,valueonly) shows only value' \
+-	'trailers:key=Signed-off-by,valueonly' 'A U Thor <author@example.com>\n'
++	'trailers:key=Signed-off-by,valueonly' 'A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:separator) changes separator' \
+ 	'trailers:separator=%x2C,key=Reviewed-by,key=Signed-off-by:' 'Reviewed-by: A U Thor <author@example.com>,Signed-off-by: A U Thor <author@example.com>'
+ test_trailer_option '%(trailers:key_value_separator) changes key-value separator' \
+-	'trailers:key_value_separator=%x2C,key=Reviewed-by,key=Signed-off-by:' 'Reviewed-by,A U Thor <author@example.com>\nSigned-off-by,A U Thor <author@example.com>\n'
++	'trailers:key_value_separator=%x2C,key=Reviewed-by,key=Signed-off-by:' 'Reviewed-by,A U Thor <author@example.com>
++Signed-off-by,A U Thor <author@example.com>
++'
+ test_trailer_option '%(trailers:separator,key_value_separator) changes both separators' \
+ 	'trailers:separator=%x2C,key_value_separator=%x2C,key=Reviewed-by,key=Signed-off-by:' 'Reviewed-by,A U Thor <author@example.com>,Signed-off-by,A U Thor <author@example.com>'
+ 
+
+
+
