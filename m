@@ -6,81 +6,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1CF1C433E6
-	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A118C433E0
+	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:08:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95A5D64E1B
+	by mail.kernel.org (Postfix) with ESMTP id DB9F264E1B
 	for <git@archiver.kernel.org>; Sat, 30 Jan 2021 09:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230034AbhA3JIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 04:08:16 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41424 "EHLO cloud.peff.net"
+        id S229932AbhA3JIS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 04:08:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41428 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233872AbhA3JHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 04:07:54 -0500
-Received: (qmail 16613 invoked by uid 109); 30 Jan 2021 08:43:03 -0000
+        id S230358AbhA3JHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 04:07:55 -0500
+Received: (qmail 16651 invoked by uid 109); 30 Jan 2021 08:47:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Jan 2021 08:43:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 30 Jan 2021 08:47:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23259 invoked by uid 111); 30 Jan 2021 08:43:03 -0000
+Received: (qmail 23293 invoked by uid 111); 30 Jan 2021 08:47:39 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 30 Jan 2021 03:43:03 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 30 Jan 2021 03:47:39 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 30 Jan 2021 03:43:02 -0500
+Date:   Sat, 30 Jan 2021 03:47:38 -0500
 From:   Jeff King <peff@peff.net>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH v3 07/10] t: prepare for GIT_TEST_WRITE_REV_INDEX
-Message-ID: <YBUcFpzhuV+7kRwi@coredump.intra.peff.net>
+Subject: Re: [PATCH v3 10/10] t5325: check both on-disk and in-memory reverse
+ index
+Message-ID: <YBUdKgmk2X4wd++h@coredump.intra.peff.net>
 References: <cover.1610129989.git.me@ttaylorr.com>
  <cover.1611617819.git.me@ttaylorr.com>
- <7cf16485cccccf365101d30138d9ee8b00d705d0.1611617820.git.me@ttaylorr.com>
- <YBNasXXZc1BEkMxH@coredump.intra.peff.net>
- <YBNjLqOe1NtpziV7@nand.local>
+ <38c8afabf25a7f5e144850938cf00b53e9cf25fd.1611617820.git.me@ttaylorr.com>
+ <YBNfZeRiHgQwSqGq@coredump.intra.peff.net>
+ <YBNlkvrxvAYrLeMc@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YBNjLqOe1NtpziV7@nand.local>
+In-Reply-To: <YBNlkvrxvAYrLeMc@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 28, 2021 at 08:21:50PM -0500, Taylor Blau wrote:
+On Thu, Jan 28, 2021 at 08:32:02PM -0500, Taylor Blau wrote:
 
-> [sane_unset outside of a test]
+> On Thu, Jan 28, 2021 at 08:05:41PM -0500, Jeff King wrote:
+> > Oh, I forgot to mention: if re-rolling, s/fortuan/fortuna/.
 > 
-> I think I probably took this from the trace2 tests? Not sure. I'm glad
-> that it's not wrong, strictly speaking.
+> I do like your suggestion quite a lot: it gets rid of some ugliness,
+> while making the overall test structure simpler. Here's a replacement
+> for the final series.
 > 
-> This is another instance that I'd be happy to send a follow-up patch to
-> get rid of all of these at once, unless you feel strongly that it should
-> be changed in this series before applying.
+> Junio: when queuing, please apply this one instead of the original v3
+> 10/10.
 
-Nope, I don't feel strongly.
-
-> > This one is making the test a bit looser (it would miss a case where we
-> > somehow failed to generate the .idx). That seems like an unlikely bug,
-> > but I wonder if we can keep the original behavior. I guess:
-> >
-> >   ls .git/objects/pack/*.pack \
-> >      .git/objects/pack/*.idx |
-> >      sort >post_packs
-> >
-> > would work?
-> 
-> Sure, I see what you're saying. To be honest, I'm skeptical that we'd
-> have a bug which failed only this one test, so I'm hesitant to send a
-> replacement/reroll for this alone.
-> 
-> If you feel strongly, though, I'm happy to change it. (But, I'll err on
-> the side of leaving it as-is, since you indicated in your response to
-> v3's cover letter that you'd be OK if I discarded some or all of your
-> suggestions).
-
-Nope, I don't feel strongly. Junio even argued elsewhere that these
-tests may be better off just looking for pack files (which is looser
-than what they do now, but as we've said, unlikely to matter for any
-realistic bug). So I'm happy enough with what you have.
+Thanks, this looks good to me.
 
 -Peff
