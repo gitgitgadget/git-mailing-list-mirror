@@ -2,134 +2,245 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37274C433DB
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 01:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DCF7C433DB
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:17:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D445764E13
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 01:48:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2052464E17
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232699AbhAaBsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 20:48:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41644 "EHLO
+        id S229534AbhAaDK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 22:10:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbhAaBsm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 20:48:42 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E3FC061574
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 17:48:01 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id c2so14888356edr.11
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 17:48:01 -0800 (PST)
+        with ESMTP id S229468AbhAaDK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 22:10:56 -0500
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A55EC061573
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:10:16 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id 70so10402018qkh.4
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Xd4Ihj9oQnV0bYPavKIOPk5VQqLIswyZ7oDq/P+9Mlk=;
-        b=kPwPt/Uj9Ylk0my8d0QMevLGxyqmjIR12ZEqoqp2Myb20oOKfEoMAD1nV3a/f3ENAM
-         OuXYUF/HV9W9+OvpfMr6Mzx7yfAFJUsMsg10uz+zj6KYh7I6IWSfflUceql5wIfg+ano
-         ZeWIuZ9xBrcPKxMGrqj3KaxW1CcMdO6Q4Dq5a7IELcjjeLaEjmJL1zW5izHPNcXbWZgQ
-         wakzxXAwovubxCiEjJmbnEy+Gb3FWtzb0y6qt+vfGz6rCTP+D/m4ADBSTaEg8hQJIqRU
-         fGRPbwGt1aMWlURo106pJ+KPefRr4DU3yGMDTQ8BNx/tllC2X7jk8IVxVcfhQ/ETXe/W
-         e60A==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=rvgfhv7d+bfOQKt+8aXwpn3JVxKtuI7tBiEOhhl/0Kw=;
+        b=b2yp8l90XzzNKxQnb5C8nTk//DGxuVIw4q8GhfScyMBaTKNSl5dr9gcMa9w9MERFyT
+         tRt/iS+Gylegv47Xw4FZfWqyHanf/1u5kTrMCUNTuAbxE8YWbo33jagdHy2jC20iAsR4
+         +YyV4KgyM/JMXtxnOFBWzKY3sakMPldkOxpe+WJAOjoEGU9sbafCWzQTLjlg+aJwZlvs
+         mkKO0B9Jb2FrGpIbLoUlBAB6z32bqSHUGUw66kGw9VAYnuxvXKOejD4bxQumXPKMJTE/
+         vuMvmD3eKT1CbDYuY2MyDMxG+IFnhFKN2+qhLcjPFGu/c/eBsnltahTMtcHjTSl+tHMm
+         ifPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Xd4Ihj9oQnV0bYPavKIOPk5VQqLIswyZ7oDq/P+9Mlk=;
-        b=amWcqm+TvOFPOLbY78K/4lSu4mySHQ6hnribSLDu48S5xQ/gpV7fqXanCrGTlzWaIk
-         6OnhRbVvd231wA8ZdyzenHNu6xyM9S+5r4V40l+KCkMNaiaxggPV4WjIeGt3cMWf1Nxu
-         xpBdKEthhkMIBXfkTMVdSdwmmDYvw7aDmYfdmTV2iL3BK5RZ3bZwNO3F7qQj72DUtK/u
-         szCrRuBH94dURvk674hGIY6MyrGNT/Nzqdr7fwPwCXrDsiuEZFrVpNIDE5b9WOYy+JOo
-         7vQlAlNlCCCuEmQWaNsoe3nus81XNr44wpACElZ5uKmBh/BniHh+tr8zyptQfyTs9Zdb
-         fi8g==
-X-Gm-Message-State: AOAM532sv/LbdOF+/GQCjOSnJG5wk3tYX4NQniwN0sjoCF1R14yxcKnI
-        zAMGhtiMh3U9mnN0j9Dl8Vl2d2dtSho=
-X-Google-Smtp-Source: ABdhPJzzSpZjkVsmZzmBqJFiWEA8XwCdHYAbEmZm6x8L3pXLNKP8j3QeOq2+R8tzIL3y+6QWm5AHew==
-X-Received: by 2002:a05:6402:1155:: with SMTP id g21mr12268458edw.279.1612057680165;
-        Sat, 30 Jan 2021 17:48:00 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id gt34sm357021ejc.22.2021.01.30.17.47.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Jan 2021 17:47:59 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Vincent Lefevre <vincent@vinc17.net>
-Cc:     git@vger.kernel.org
-Subject: Re: git fails with a broken pipe when one quits the pager
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <YAG/vzctP4JwSp5x@zira.vinc17.org>
-Date:   Sun, 31 Jan 2021 02:47:59 +0100
-Message-ID: <8735yhq3lc.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=rvgfhv7d+bfOQKt+8aXwpn3JVxKtuI7tBiEOhhl/0Kw=;
+        b=gbb5UcFQuK8LTDyafR6uxewm305ukAaX1ux6Hl0hU4fpw2EAZo9vaO41pwex2qGT3i
+         zetIuVjFU+7pOGIGoygH/oYw/MExXhplV9EUxZaGvfS+Br0uYSRf288rZq+HDLX2CGvT
+         wG3puXqftMvNBZbn6NreOlOtnplIlVuh5jgiLMag8gpqLdztJxoSYJK8eRa8lfc0XhLN
+         H1+xSmPhlMIsMs+pfZOyz1kdhDI5RjVo2MO8/qFLgAELFsNvlUjJyBs9xnYJ4p9tjsTg
+         qZNdmBAj42e6uZ3HfqVp5+jwz/vmqSDJQBmp/WpJ0D7xsX/eLNhPrPUvVMi4tEVOgBNe
+         6Xug==
+X-Gm-Message-State: AOAM532zfFyIOw8fgrXH2s/wWYyqdp0/SpR83mzL6D8qXZ4yfXOXLbT/
+        p/OslypdQKkKv4ptKcXVJKTfnBjJsvWYDlYD9pXC
+X-Google-Smtp-Source: ABdhPJyrQ97MZIewGu3ZM2MmGEvX2lte9zyszzu+Kjy1YMRV9+i5kOCTPcuxQe16JdwQ5exjFdGdzbTVYEA6X3FYmH3D
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:e4cf:: with SMTP id
+ g15mr10194787qvm.23.1612062614995; Sat, 30 Jan 2021 19:10:14 -0800 (PST)
+Date:   Sat, 30 Jan 2021 19:10:11 -0800
+In-Reply-To: <20201222000220.1491091-4-emilyshaffer@google.com>
+Message-Id: <20210131031011.1016240-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201222000220.1491091-4-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: Re: [PATCH v7 03/17] hook: add list command
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Teach 'git hook list <hookname>', which checks the known configs in
+> order to create an ordered list of hooks to run on a given hook event.
+> 
+> Multiple commands can be specified for a given hook by providing
+> multiple "hook.<hookname>.command = <path-to-hook>" lines. Hooks will be
+> run in config order. If more properties need to be set on a given hook
+> in the future, commands can also be specified by providing
+> "hook.<hookname>.command = <hookcmd-name>", as well as a "[hookcmd
+> <hookcmd-name>]" subsection; at minimum, this subsection must contain a
+> "hookcmd.<hookcmd-name>.command = <path-to-hook>" line.
 
-On Fri, Jan 15 2021, Vincent Lefevre wrote:
+I learned later that this isn't true - in patch 6, the commit message
+and one of the tests therein describe being able to skip a previously
+inline command by making a hookcmd section of the same name and just
+specifying "skip = true" there (without any command).
 
-> I had reported the following bug at
->   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D914896
->
-> It still occurs with Git 2.30.0.
->
-> Some git commands with a lot of output fail with a broken pipe when
-> one quits the pager (without going to the end of the output).
->
-> For instance, in zsh:
->
-> cventin% setopt PRINT_EXIT_VALUE
-> cventin% git log
-> zsh: broken pipe  git log
-> cventin% echo $?
-> 141
-> cventin%=20
->
-> This is annoying[...]
+Maybe just delete the "at minimum" part.
 
-Yes it's annoying, but the annoying output is from zsh, not
-git. Consider a smarter implementation like:
+> +static int list(int argc, const char **argv, const char *prefix)
+>  {
+> -	struct option builtin_hook_options[] = {
+> +	struct list_head *head, *pos;
+> +	struct hook *item;
 
-    case $__exit_status in
-        0) __exit_emoji=3D=F0=9F=98=80;;
-        1) __exit_emoji=3D=E2=98=B9=EF=B8=8F ;;
-        141) __exit_emoji=3D=F0=9F=A4=95 ;;
-        [...]
+You asked for review on nits too so here's one: "item" should be
+declared in the list_for_each block. (That also makes it easier to see
+that we don't need to free it.)
 
-Then put the $__exit_emoji in your $PS1 prompt, now when you 'q' in a
-pager you know the difference between having quit at the full output
-being emitted or not.
+> diff --git a/hook.c b/hook.c
+> new file mode 100644
+> index 0000000000..937dc768c8
+> --- /dev/null
+> +++ b/hook.c
+> @@ -0,0 +1,115 @@
+> +#include "cache.h"
+> +
+> +#include "hook.h"
+> +#include "config.h"
 
-> And of course, I don't want to hide error messages by default, because
-> this would hide *real* errors.
+Usually we put all the includes together without any intervening blank
+lines.
 
-Isn't the solution to this that your shell stops reporting failures due
-to SIGPIPE in such a prominent way then?
+> +static void append_or_move_hook(struct list_head *head, const char *command)
+> +{
+> +	struct list_head *pos = NULL, *tmp = NULL;
+> +	struct hook *to_add = NULL;
+> +
+> +	/*
+> +	 * remove the prior entry with this command; we'll replace it at the
+> +	 * end.
+> +	 */
+> +	list_for_each_safe(pos, tmp, head) {
+> +		struct hook *it = list_entry(pos, struct hook, list);
+> +		if (!strcmp(it->command.buf, command)) {
+> +		    list_del(pos);
+> +		    /* we'll simply move the hook to the end */
+> +		    to_add = it;
 
-> The broken pipe is internally expected, thus should not be reported
-> by git.
->
-> Just to be clear: this broken pipe should be discarded only when git
-> uses its builtin pager feature, not with a general pipe, where the
-> error may be important.
->
-> For instance,
->
-> $ { git log ; echo "Exit status: $?" >&2 ; } | true
->
-> should still output
->
-> Exit status: 141
+"break" here?
 
-I don't get it, how is it less meaningful when git itself invokes the
-pager?
+> +		}
+> +	}
+> +
+> +	if (!to_add) {
+> +		/* adding a new hook, not moving an old one */
+> +		to_add = xmalloc(sizeof(struct hook));
 
-In both cases the exit code means the same thing, that something in a
-pipe wasn't fully consumed being signalled to calling processes is the
-point of SIGPIPE.
+Style is to write sizeof(*to_add), I think.
+
+[snip]
+
+> +struct hook_config_cb
+> +{
+> +	struct strbuf *hookname;
+
+struct declarations have "{" not on a line on its own.
+
+Also, "hookname" could just be a char *?
+	
+> +	struct list_head *list;
+> +};
+> +
+> +static int hook_config_lookup(const char *key, const char *value, void *cb_data)
+> +{
+> +	struct hook_config_cb *data = cb_data;
+> +	const char *hook_key = data->hookname->buf;
+> +	struct list_head *head = data->list;
+> +
+> +	if (!strcmp(key, hook_key)) {
+> +		const char *command = value;
+> +		struct strbuf hookcmd_name = STRBUF_INIT;
+> +
+> +		/* Check if a hookcmd with that name exists. */
+> +		strbuf_addf(&hookcmd_name, "hookcmd.%s.command", command);
+> +		git_config_get_value(hookcmd_name.buf, &command);
+
+So we don't really care whether git_config_get_value returns 0 or 1 as
+long as it doesn't touch "command" if there is no such hookcmd. That
+fits with how git_config_get_value() is documented, so that's great.
+Perhaps better to document as:
+
+  If a hookcmd.%s.command config exists, replace the command with the
+  value of that config. (If not, do nothing - git_config_get_value() is
+  documented to not overwrite the value argument in this case.)
+
+> +
+> +		if (!command) {
+> +			strbuf_release(&hookcmd_name);
+> +			BUG("git_config_get_value overwrote a string it shouldn't have");
+> +		}
+> +
+> +		/*
+> +		 * TODO: implement an option-getting callback, e.g.
+> +		 *   get configs by pattern hookcmd.$value.*
+> +		 *   for each key+value, do_callback(key, value, cb_data)
+> +		 */
+> +
+> +		append_or_move_hook(head, command);
+> +
+> +		strbuf_release(&hookcmd_name);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +struct list_head* hook_list(const struct strbuf* hookname)
+
+"const char *hookname" should suffice?
+
+Also, search for "* " and replace with " *" where applicable (also in
+the .h file).
+
+> +{
+> +	struct strbuf hook_key = STRBUF_INIT;
+> +	struct list_head *hook_head = xmalloc(sizeof(struct list_head));
+> +	struct hook_config_cb cb_data = { &hook_key, hook_head };
+> +
+> +	INIT_LIST_HEAD(hook_head);
+> +
+> +	if (!hookname)
+> +		return NULL;
+> +
+> +	strbuf_addf(&hook_key, "hook.%s.command", hookname->buf);
+> +
+> +	git_config(hook_config_lookup, (void*)&cb_data);
+
+Do we need this void* cast?
+
+> +
+> +	strbuf_release(&hook_key);
+> +	return hook_head;
+> +}
+> diff --git a/hook.h b/hook.h
+> new file mode 100644
+> index 0000000000..8ffc4f14b6
+> --- /dev/null
+> +++ b/hook.h
+> @@ -0,0 +1,26 @@
+> +#include "config.h"
+> +#include "list.h"
+> +#include "strbuf.h"
+> +
+> +struct hook
+> +{
+> +	struct list_head list;
+> +	/*
+> +	 * Config file which holds the hook.*.command definition.
+> +	 * (This has nothing to do with the hookcmd.<name>.* configs.)
+> +	 */
+> +	enum config_scope origin;
+> +	/* The literal command to run. */
+> +	struct strbuf command;
+
+"char *" would suffice?
+
+The tests look fine.
