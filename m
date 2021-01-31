@@ -2,90 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44C17C433DB
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D94DFC433E6
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:41:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1703D64E15
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:36:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A422564E29
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229825AbhAaEgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 23:36:18 -0500
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:48657 "EHLO
-        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230184AbhAaEb6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 30 Jan 2021 23:31:58 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 3237AB6E;
-        Sat, 30 Jan 2021 23:23:43 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Sat, 30 Jan 2021 23:23:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=L5MbpVmMqGVqrlOnd74KqD2hWMM7TlzkY1ommGqLf
-        bQ=; b=e5jbB+ljY8l4uI4huJ5U/mMFikI1TFYM8QAk+YLoDTdJxQ+dFOQycPvPp
-        lDwb4fmw8kZXxDD0ceOa9Ozd8Y2Kpp1OF4t5ohWVyI4fNtmnxo9AnXIxxIHPym05
-        RfFt/jLN75/uoRzpm4p+vlsqHndH4mU5xxdItG9Nfq/PLPPyWcM+12RbCh2CL+nR
-        Fg0TM2GTwFP+/B2wohrvfp8AZ3DkU2MRhD92lbgnIJ2634YdJGFCZKLE6UIao9y5
-        qJ4dopTBnGX+lOfGjhmJhnrBjYQWAsu5EbBAsasjHj5tYeJwOcw8KqyLR02ag0e7
-        V25lmFeHFZIg5wscPnoZhZpLX2Zgw==
-X-ME-Sender: <xms:zjAWYKGJsULjPt7VXpb2d4A2rhs6jTCseIzOezsCYIfmNy4HmrfAFw>
-    <xme:zjAWYLVboK1WzLifDnhzCDK9djkNNv0LR3zRCFQRJ8S1AxccWcWyO10wgS7jNHGAJ
-    o98fkKkjUNM9rki4L0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfeehgdeikecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurheptggguffhjgffgffkfhfvofesthhqmh
-    dthhdtvdenucfhrhhomhepveholhhtohhnucfjuhhrshhtuceotgholhhtohhnsegtohhl
-    thhonhhhuhhrshhtrdgtohhmqeenucggtffrrghtthgvrhhnpeelvedtgeehhfdvudfhie
-    egjeffteeludevjefhkedvheekffeghfdtgedttdeujeenucfkphepjedurdduvddtrddu
-    heehrdegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    eptgholhhtohhnsegtohhlthhonhhhuhhrshhtrdgtohhm
-X-ME-Proxy: <xmx:zjAWYEIC6Hf2hPK4fndYKTIqAc8cP6Z-n9QaHqNQRW_9Q7h7h_DLtw>
-    <xmx:zjAWYEGuixWFnnc3-5SXEpB3JmGmnV0nr8mVkWkQvTxuRIkgJvCtyw>
-    <xmx:zjAWYAVcN-kHFW3tDSp9pTZiR21EIyncT0vSwS-ADU2pSh8jkedLLA>
-    <xmx:zjAWYIgn80ye0eL_a7fCp7scm2aQLBcE-myk0sDd3xj3mZ_3zMtMEQ>
-Received: from [192.168.0.171] (pool-71-120-155-4.nrflva.fios.verizon.net [71.120.155.4])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A126B1080057;
-        Sat, 30 Jan 2021 23:23:42 -0500 (EST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
-Subject: Re: Git Conditional Includes Question (possible bug?)
-From:   Colton Hurst <colton@coltonhurst.com>
-In-Reply-To: <xmqqlfcbs69z.fsf@gitster.c.googlers.com>
-Date:   Sat, 30 Jan 2021 23:23:39 -0500
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B569AC8C-8AF3-46E6-B8FB-A6EBEF42FA00@coltonhurst.com>
-References: <1E4AB5E8-DD46-45CA-9A3F-C49F115BE0D4@coltonhurst.com>
- <xmqqlfcbs69z.fsf@gitster.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3654.40.0.2.32)
+        id S230212AbhAaEk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 23:40:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49766 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbhAaEkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 23:40:12 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A79FC061573
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 20:39:31 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id y187so8435108pfc.7
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 20:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=Gy2jz0n82IsrRw3okj2wPihlegGvSzrJGC07FoBAXHs=;
+        b=aPMRihf4UgmpFyKYJ5bQJeIoqhE0vSPUpxqOIFeFKP/7uLbZeUe95s55HSRxBs8ri7
+         lWnei+1R/ZsaDSuh5NZTWujltDfUId+gYOClxclaCpKkiBGdvtcwYOVCWw4CYVqDV2pc
+         efKDF8Pz7lhCCHx1a0LrdKIXNsnmAJJIxdGUVH1rWcgIaqwxFkzFVbT+Xw5aKcutATzN
+         HeRF5RXHSAE0XC2Jtd5cTVc6piKakRorKLFdamjqJWFIGKW+H41+/zAxMoTIV306jhhz
+         u+K2Pf8kWUuqro6aHPB1wL3B4xymR5UJdMfApfCQbRuf0t5dMk4rXOmwYSr63vf1hOTg
+         aaHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Gy2jz0n82IsrRw3okj2wPihlegGvSzrJGC07FoBAXHs=;
+        b=dt2IgAzxg5AgcFBHA7r0jDrk46n6HN5/iuJpVzLC0ay8ISsi3N4xTxFvymfbUdZyjw
+         VXTKzc6xoFXCLBvr69xuxBsg7zlnOMXhvn62oOvXTXJhuf9hl/BYl7LIMjYllYL6A9An
+         LWbcdzTa6x4FRmA2XecEpNEAXLCuf6oytdmRcLL3wOfBIc7VE7Ur8Txe4euA2X9RA39C
+         9OXsRv2xF94riE3uz3Q9kYnlqug8T92HB5CwsUc2HotK5xdfdSpWEk7Lvo0avJYqKVI/
+         od0kjULPqoYQtT4S2mjEyEh9ZgnnI0dg/YEpsC8H8PHpdZ6dbXdiTuul2n5Dc6vsgOdY
+         9IOQ==
+X-Gm-Message-State: AOAM533LZGUh6k9GHS1xkbv7GPvwTxPOiSRoA3QoblwkgOJ+peXe0OQx
+        i7f5Nn/l8LuJpLFrn1GYaiNxbhGcxtmZ+jwSEWRV
+X-Google-Smtp-Source: ABdhPJyt5B7qJIxUE+oa9T1Py0BCYNTIxHq64d70ET90J0GI8ZaNNFz9VXM4e+th4iahbsaZzIJ4uzWqQ7sBPqM9JIkP
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:909a:0:b029:1bc:22d3:9e58 with
+ SMTP id i26-20020aa7909a0000b02901bc22d39e58mr10780528pfa.29.1612067970946;
+ Sat, 30 Jan 2021 20:39:30 -0800 (PST)
+Date:   Sat, 30 Jan 2021 20:39:28 -0800
+In-Reply-To: <20201222000220.1491091-10-emilyshaffer@google.com>
+Message-Id: <20210131043928.1036246-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201222000220.1491091-10-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: Re: [PATCH v7 09/17] hook: replace find_hook() with hook_exists()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio,
+> Add a helper to easily determine whether any hooks exist for a given
+> hook event.
+> 
+> Many callers want to check whether some state could be modified by a
+> hook; that check should include the config-based hooks as well. Optimize
+> by checking the config directly. Since commands which execute hooks
+> might want to take args to replace 'hook.runHookDir', let
+> 'hook_exists()' mirror the behavior of 'hook.runHookDir'.
 
-> as "git config --help" says:
->=20
-> * If the pattern ends with `/`, `**` will be automatically added. For
->   example, the pattern `foo/` becomes `foo/**`. In other words, it
->   matches "foo" and everything inside, recursively.
->=20
-> and "~/colton/github/**" as a pattern would match the path to the
-> repository in question.
+The text makes sense, but the title might better be "introduce
+hook_exists()" instead of "replace", since find_hook() is still around.
 
-That solved the issue. My email was in the subdirectory config files, =
-but not having the `/` at the end of the path ruined it. Thank you so =
-much for the help!
+Also maybe briefly mention the future plans - e.g. in the future, no
+code will use find_hook() except <whatever the hook-internal functions
+are>, because all of them will use hook_exists() and run_hook().
 
-Have a great day and weekend!
+> +/*
+> + * Returns 1 if any hooks are specified in the config or if a hook exists in the
+> + * hookdir. Typically, invoke hook_exsts() like:
+> + *   hook_exists(hookname, configured_hookdir_opt());
+> + * Like with run_hooks, if you take a --run-hookdir flag, reflect that
+> + * user-specified behavior here instead.
+> + */
+> +int hook_exists(const char *hookname, enum hookdir_opt should_run_hookdir);
 
-
-Colton=
+I wonder if enum hookdir_opt should support a "unspecified" instead, in
+which case hook_exists() will automatically read the config (instead of
+relying on the caller to call configured_hookdir_opt()), but I see that
+this patch set is version 7 and perhaps this design point has already
+been discussed.
