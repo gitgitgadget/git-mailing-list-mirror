@@ -2,129 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79FEBC433DB
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 20:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 258D2C433DB
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 20:28:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4252664E11
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 20:28:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E65BB64E11
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 20:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232047AbhAaU2k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Jan 2021 15:28:40 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51543 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231325AbhAaU0d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Jan 2021 15:26:33 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 134B01185D8;
-        Sun, 31 Jan 2021 15:25:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C6q8bCj9Hw7ySTsXQQvNGLyVeaM=; b=xxw5u1
-        owC61eLFQBnAHLchLvMtlxHL+ymnlYSnEdLacJdF1R27zCj4lOhq2yEqFyIztENP
-        aSvYiBxfz3LTk74X6kaA3VXl5v/K6B2rvTN0w6cJgklQldHn9R7rSSKf5knpkrNV
-        7+pVC/vWehsiDEiIaTKsMZCzteBci1RmND4r0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UF0KA74DvKnqfjZTLwKasVYrpJB+h8qg
-        s7ui1QNZdTwgAySltEZneJbOHwGMBwFoIPkVZErm/RUtKe6xofmgW5uaLxi5fE2g
-        Eftljzrswi7fWqX1D6GQVuRyXVI/3B6eshnVonkQqpSjVtXh3c0J3aNCYfM8Xza1
-        sQnZ4xefOjY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B3201185D7;
-        Sun, 31 Jan 2021 15:25:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4F00A1185D6;
-        Sun, 31 Jan 2021 15:25:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        me@ttaylorr.com, peff@peff.net,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/3] commit-reach: use one walk in remove_redundant()
-References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
-        <3fe74e339fc5b7083398f2df51baae5a4a008060.1611851095.git.gitgitgadget@gmail.com>
-        <xmqqtur0vl7i.fsf@gitster.c.googlers.com>
-        <e5863616-ff74-88f2-3d6a-c8dbe03477fe@gmail.com>
-Date:   Sun, 31 Jan 2021 12:25:42 -0800
-In-Reply-To: <e5863616-ff74-88f2-3d6a-c8dbe03477fe@gmail.com> (Derrick
-        Stolee's message of "Sat, 30 Jan 2021 22:59:08 -0500")
-Message-ID: <xmqqft2gonuh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231995AbhAaU2n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Jan 2021 15:28:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50978 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231997AbhAaU0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Jan 2021 15:26:35 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F8EC06174A
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 12:25:55 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id j13so16580558edp.2
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 12:25:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=8AHBVJssYVEwgY5WH6utw5ZBqJR3rTB0rAFR+uuUAok=;
+        b=M4XM2UxPj2czXtArm7g3G4HRth699NC/tV0mM+K3pHuhEzbGYUBidVMrVrcHoB0VCQ
+         6lrgu9flrNr/bUBKWsRQ3946axKONxBmt13RlLwDacf9mEb04BejP9xg6YWxyGAjZrEe
+         lc+D6MYHCFOIu7Pc69rhdjbXU3DQCEB1nZSxCIpOasQE08uJlIbwQIwsnnUKntedLmS0
+         IdRb4d9BDyeRFZid2OrUW3llm/Ee84EnxmIFby2vkgfh3CSJnwZGOQVYHkbNGZqvOJNO
+         Kg9WhhP1bTrP+nEqGaaPvaY92NBsc5d5QdDhmViZNARxw8zrsbKAkCyEsBIQ1gwBAeoN
+         KpnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=8AHBVJssYVEwgY5WH6utw5ZBqJR3rTB0rAFR+uuUAok=;
+        b=KzwAS4Je3pe+5iKqO5hRS6iGBIr4UtaOHm0rHHJ6JrHCseP4crCfxyO0ur3Udkhc6l
+         k75ITdV+QBapneavg8iD5MVt19A7Qj5c93W5p96OfJlL+zvyPI0f/zMhBwunekq7UfdV
+         ho2HP/sjsMyHOGhr1KVPQxYDU1Xzg/Dd9ZO1rQkMKJQllkFMauy7D7Ib6AkRS3wz9CYG
+         TU8QTsKh7PWzBdk/VaXr38niB9LpJtPushu/BvbOLrM48B+CvOpdkTO9K2+8MEmnAACu
+         krIjWl8srYxY88CJ86ci2xB6XcbxAyR6fJjtUwzyO2N2U9JO7uwgDLDLt9HtSX9h6Psz
+         u1xw==
+X-Gm-Message-State: AOAM531nEyAlwQrjx5kWFlkYb8gbD1GHhXbQWko2Gu6+l8avGv+n4724
+        Ho3tBTXjj3xtCdzNx95S9cw=
+X-Google-Smtp-Source: ABdhPJwGzwSVYHdZYz1K4CafTkOtrwYYdSyRirZxdIWchSQ5bEYaIb2z0mR9VH+il94DEQL9YmQtUA==
+X-Received: by 2002:a05:6402:1a56:: with SMTP id bf22mr15798358edb.284.1612124753674;
+        Sun, 31 Jan 2021 12:25:53 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id w18sm6890858ejq.59.2021.01.31.12.25.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Jan 2021 12:25:53 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Thomas Ackermann via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Ackermann <th.acker@arcor.de>
+Subject: Re: [PATCH 4/6] doc hash-function-transition: use https links
+ consistently
+References: <pull.858.git.1612093734.gitgitgadget@gmail.com>
+ <d4abf1cf78e2e59e49b81bd458d85848bd3d7ff3.1612093734.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
+In-reply-to: <d4abf1cf78e2e59e49b81bd458d85848bd3d7ff3.1612093734.git.gitgitgadget@gmail.com>
+Date:   Sun, 31 Jan 2021 21:25:52 +0100
+Message-ID: <87tuqwonu7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7EB5076C-6402-11EB-8F4F-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
 
->> So, the inner loop makes sure we won't revisit STALE parent, but
->> keep digging parents we haven't seen, and stop when the generation
->> is old enough.  What happens when there is no generation number
->> computed yet, I wonder...  We'll keep getting infinity and dig all
->> the way down to root?
+On Sun, Jan 31 2021, Thomas Ackermann via GitGitGadget wrote:
+
+> From: Thomas Ackermann <th.acker@arcor.de>
 >
-> If we are on commits that have no generation number yet, then we
-> will walk until reaching commits in the commit-graph file that have
-> a computed generation (or in the heuristic case, when we have reached
-> all but one of the commits).
+> use only https links in References
+
+Per my grepping this leaves just 2 more such links, in
+t/t0021-conversion.sh, in the whole source tree. Might as well convert
+them while we're at it...
+
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  Documentation/technical/hash-function-transition.txt | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 >
-> In the case of the commit-graph, all commits will have generation
-> number "infinity". In such a case, perhaps the old algorithm _is_
-> the best we can do, at least for now.
+> diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+> index 2eba25cf87c..dc0c4976a62 100644
+> --- a/Documentation/technical/hash-function-transition.txt
+> +++ b/Documentation/technical/hash-function-transition.txt
+> @@ -831,8 +831,8 @@ Later history:
+>  
+>  References:
+>  
+> - [1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
+> - [2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
+> - [3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
+> - [4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
+> + [1] https://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
+> + [2] https://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
+> + [3] https://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
+> + [4] https://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
+>   [5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
 
-Hmph, I am afraid that such is life X-<.
-
-> One way to ensure we do not regress from the current behavior
-> would be to condition the new algorithm with
->
-> 	if (generation_numbers_enabled(the_repository))
-> 		new_algorithm();
-> 	else
-> 		old_algorithm();
->
-> much like in repo_is_descendant_of().
->
-> Is that a good plan?
-
-It would certainly avoid one particular form of regression, so it is
-better than nothing.
-
-But at the same time, we'd probably want to encourage people to
-enable and maintain generation numbers for the majority of commits
-in their repository, but unless you "gc" twice a day or something,
-you'd inevitably have a mixture, say, all commits that are more than
-two weeks old are covered by commit-graph, but more recent ones are
-not yet enumerated, and you have to traverse at runtime.
-
-And the performance characteristics we would care the most in the
-longer term is to make sure that we perform well in such a mixed
-environment for the parts of the history that are not old enough.
-
-Many things can be sped up by precomputing and storing the result in
-the commit-graph file and that is not all that interesting or
-surprising part of the story, I would think.  Rather, we want to
-ensure that we do not perform on the youngest part of the history
-any worse---that way, people will have strong incentive to enable
-commit-graph, as things will work superbly for older parts of the
-history, while not doing any worse than the original system for the
-newest parts of the history.
-
-There was a side thread where somebody wished if they can remove
-support for all the codepaths that do not use commit-graph, but
-would this be an example of how such a wish is impractical, I have
-to wonder?
-
-Thanks.
