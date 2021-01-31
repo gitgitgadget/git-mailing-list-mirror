@@ -2,129 +2,245 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CACD3C433DB
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DB65C433DB
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:26:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8719964E21
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:00:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31CF964E06
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 04:26:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229658AbhAaD7v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 22:59:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41202 "EHLO
+        id S229658AbhAaE0L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 23:26:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbhAaD7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 22:59:50 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA729C061573
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:59:09 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id t25so2718600otc.5
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:59:09 -0800 (PST)
+        with ESMTP id S229786AbhAaEX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 23:23:58 -0500
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB22C061573
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 20:22:57 -0800 (PST)
+Received: by mail-qk1-x74a.google.com with SMTP id n7so4469345qkn.18
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 20:22:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=8oJKmhVWpEKuDmJT03oQZgKbGeI83IrfX41Eu7SI6AI=;
-        b=ANMoN0ux8y9nwE+d0FGIgmh4jDf8xel6eGYS/ekaQAI0rxpWieKqqmXabXQwbBfor2
-         KMQUeqGLpHw/0bC6awDbYHEjWwoq7G7LYB+Ny1/LqhQUCHVaNGWXUH+YSFuCQfBVER9Y
-         0NXlbC9V1k9TL1AuLrahAb97U/th+AP0FCa0g/rzvpn1w5jM9qGpKW79V4mZXQMn3ZAU
-         pSzx1Av5DbO9nPDX+hF8sDpIrArZOTgqsMwYmsYJ8Ngdt43WUU7g4ZfWbR3xdHkB3qQV
-         aYYlrTm8Xi3KM8MYjum2qUXoa9/N+cK/PC/rYTZMJ4SA3Ka9fLi/dgqkiOPTCOnyTFHD
-         qPGA==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=4CSgXOqWb2hTlTR+zs4h+RBmsDMli1twyA7YfTCqwhI=;
+        b=hxmjpG+FgNWletD7vyV/PknNDiqWADS5w9QtwJK30AjWbe45TT8QUyub6o/Hv9e+JB
+         Hg3P1KR6rf+1pYtaEGEhoFOFFihvjfsa5mpeiJcyCcijA+Ul90giKWgtsdCtvK76zXIV
+         cnJyx4l6I+V2OiaQeo1/92qb9SLRQIidfJa3hpQuJZT9yJ8ilgV0AF4hD5mV22K/iyhp
+         1lFAAxP9bTth14Qif5CmotHk288d/NpMdIxRoXeZf1BLnnyLZcWNV8MxTU8wraAaHvsM
+         99pK7W2L6VE9g7GO8qpqxF0/3nvHSL4ImNrBhv2/ALoO9e01Rnsp1aPLwz4jRnmA81Pm
+         NMdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=8oJKmhVWpEKuDmJT03oQZgKbGeI83IrfX41Eu7SI6AI=;
-        b=kwL5mDyG+fWde4+4JNXgTLlbw2uITJQkqu1cwKnMRhcNTqM3Q7x7oGPFITtIcDQ7vc
-         Ur2ZZ9C4V/+gRYQWfVA4qP1E1SJO1qOkYYCg0PrJLASLSDf0UoLfsgXXnVNJ/H3gu2Ig
-         zoAD75u+OgdOIwQDo1kv3NFPDVaOOeLmK5EfiPwe/OjYVKPfm2+NNLvEBRyZ25c8TMHe
-         /Mtyr/15UsenxdY4N2aEtDZHFE3BXqJo237sigAn+YDZe+gMiEBBNuMU9WcF9CCvucxQ
-         ge9W16C8raXshux7lOUI3a+UvDxa22NLj+s5HPDk+qCXNVkctLeg8CKWf7xbN62WOAdF
-         8BHQ==
-X-Gm-Message-State: AOAM5333k7dmVkXk1DVVJnPQn4Hv/Ou4LaZKiNsmaqufXFju0/x615Z4
-        3o9T0+i6HxVfhaK+4Nlt3EA=
-X-Google-Smtp-Source: ABdhPJyMbfxmtBCLM/4BGKnLNaNl/2wSijNJBuPpdnzML4Q2BQT/7zqABf0mDe/Fq7r8pJs/LCqw9A==
-X-Received: by 2002:a05:6830:573:: with SMTP id f19mr7530584otc.117.1612065549311;
-        Sat, 30 Jan 2021 19:59:09 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:383e:f17:3be5:db8d? ([2600:1700:e72:80a0:383e:f17:3be5:db8d])
-        by smtp.gmail.com with UTF8SMTPSA id z20sm3124814oth.55.2021.01.30.19.59.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 Jan 2021 19:59:08 -0800 (PST)
-Message-ID: <e5863616-ff74-88f2-3d6a-c8dbe03477fe@gmail.com>
-Date:   Sat, 30 Jan 2021 22:59:08 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH 1/3] commit-reach: use one walk in remove_redundant()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        me@ttaylorr.com, peff@peff.net,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
- <3fe74e339fc5b7083398f2df51baae5a4a008060.1611851095.git.gitgitgadget@gmail.com>
- <xmqqtur0vl7i.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqtur0vl7i.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=4CSgXOqWb2hTlTR+zs4h+RBmsDMli1twyA7YfTCqwhI=;
+        b=ku4xY8esmXlGj+4IgHyEbZH8yNY6fpnvRtMJOtfFVAfJD2pKp4waORpTp0bJgp1egd
+         vJKJSTIhHvhxjlra9wKPCp2GrSw1NaSmTBRFq7XnQdnAi3SppN8XpUyxyMqnrc7/Sl0M
+         suj3H2vJNja9Nt6lstNHfSgg2ZphfMFi15qwwR3vzANxQfM1mr3Qa9e2WijICoCv/D36
+         2idb0JV36m+Ds4ZdS3lnXJBxQyCxTFcA8jcOBc/v/ffLCjAvo/uRuqt4I/9r5wdDGNkJ
+         /Vw61JFC9U5jCu/yixL7PNhV182wL8T2hxSNjU53mJU9Js7cSVYfXWOkxKkk0qCdjbEW
+         0q0Q==
+X-Gm-Message-State: AOAM5311cUMrWEzGdIBOAwru2j8bFeP65ppSSVDwOASI/jjmBkbgZ1Ql
+        XuQ28qRWnC2aHhK7X73zOrH2BG95mRlKckugBfmz
+X-Google-Smtp-Source: ABdhPJxD/eknETyILazoVW8YxMaGhasBPFUF/RCWQ/FmQAgBM2P0aEhGTdBOJ3ZP1g8N9Tbd+NAJO8YntyaBx45nmgW4
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:b65f:: with SMTP id
+ q31mr10130466qvf.24.1612066976061; Sat, 30 Jan 2021 20:22:56 -0800 (PST)
+Date:   Sat, 30 Jan 2021 20:22:54 -0800
+In-Reply-To: <20201222000220.1491091-9-emilyshaffer@google.com>
+Message-Id: <20210131042254.1032233-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201222000220.1491091-9-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: Re: [PATCH v7 08/17] hook: add 'run' subcommand
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/28/2021 3:51 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +		parents = c->parents;
->> +		while (parents) {
->> +			if (!(parents->item->object.flags & STALE)) {
->> +				parents->item->object.flags |= STALE;
->> +				prio_queue_put(&queue, parents->item);
->> +			}
->> +			parents = parents->next;
->> +		}
->> +	}
+> In order to enable hooks to be run as an external process, by a
+> standalone Git command, or by tools which wrap Git, provide an external
+> means to run all configured hook commands for a given hook event.
 > 
-> So, the inner loop makes sure we won't revisit STALE parent, but
-> keep digging parents we haven't seen, and stop when the generation
-> is old enough.  What happens when there is no generation number
-> computed yet, I wonder...  We'll keep getting infinity and dig all
-> the way down to root?
+> For now, the hook commands will run in config order, in series. As
+> alternate ordering or parallelism is supported in the future, we should
+> add knobs to use those to the command line as well.
+> 
+> As with the legacy hook implementation, all stdout generated by hook
+> commands is redirected to stderr. Piping from stdin is not yet
+> supported.
+> 
+> Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
+> execution list. For now, there is no way to disable them.
 
-If we are on commits that have no generation number yet, then we
-will walk until reaching commits in the commit-graph file that have
-a computed generation (or in the heuristic case, when we have reached
-all but one of the commits).
+Not true anymore now that we have hook.runHookDir :-)
 
-In the case of the commit-graph, all commits will have generation
-number "infinity". In such a case, perhaps the old algorithm _is_
-the best we can do, at least for now.
+> @@ -64,6 +65,32 @@ in the order they should be run, and print the config scope where the relevant
+>  `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
+>  This output is human-readable and the format is subject to change over time.
+>  
+> +run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] `<hook-name>`::
+> +
+> +Runs hooks configured for `<hook-name>`, in the same order displayed by `git
+> +hook list`. Hooks configured this way are run prepended with `sh -c`, so paths
+> +containing special characters or spaces should be wrapped in single quotes:
+> +`command = '/my/path with spaces/script.sh' some args`.
 
-The trade-off is that we might walk more commits in unusual cases
-with few input commits. That quadratic behavior will take over as
-the input size grows, no matter if there is a commit-graph or not.
+I learned recently that this may not work the way I expect [1], so you
+might want to specifically call this out for someone who knows how
+run-command and running-with-shell works.
 
-I can do a big more digging into these unusual cases, especially
-when we cannot rely on commit-graphs being present.
+[1] https://lore.kernel.org/git/YAs9pTBsdskC8CPN@coredump.intra.peff.net/
 
-One way to ensure we do not regress from the current behavior
-would be to condition the new algorithm with
+> @@ -135,6 +136,56 @@ enum hookdir_opt configured_hookdir_opt(void)
+>  	return HOOKDIR_UNKNOWN;
+>  }
+>  
+> +static int should_include_hookdir(const char *path, enum hookdir_opt cfg)
+> +{
+> +	struct strbuf prompt = STRBUF_INIT;
+> +	/*
+> +	 * If the path doesn't exist, don't bother adding the empty hook and
+> +	 * don't bother checking the config or prompting the user.
+> +	 */
+> +	if (!path)
+> +		return 0;
+> +
+> +	switch (cfg)
+> +	{
+> +		case HOOKDIR_NO:
+> +			return 0;
+> +		case HOOKDIR_UNKNOWN:
+> +			fprintf(stderr,
+> +				_("Unrecognized value for 'hook.runHookDir'. "
+> +				  "Is there a typo? "));
+> +			/* FALLTHROUGH */
 
-	if (generation_numbers_enabled(the_repository))
-		new_algorithm();
-	else
-		old_algorithm();
+Same comment (about UNKNOWN and defaulting to WARN instead of YES) as in
+one of the previous patches.
 
-much like in repo_is_descendant_of().
+> +		case HOOKDIR_WARN:
+> +			fprintf(stderr, _("Running legacy hook at '%s'\n"),
+> +				path);
+> +			return 1;
+> +		case HOOKDIR_INTERACTIVE:
+> +			do {
+> +				/*
+> +				 * TRANSLATORS: Make sure to include [Y] and [n]
+> +				 * in your translation. Only English input is
+> +				 * accepted. Default option is "yes".
+> +				 */
+> +				fprintf(stderr, _("Run '%s'? [Yn] "), path);
+> +				git_read_line_interactively(&prompt);
+> +				strbuf_tolower(&prompt);
+> +				if (starts_with(prompt.buf, "n")) {
+> +					strbuf_release(&prompt);
+> +					return 0;
+> +				} else if (starts_with(prompt.buf, "y")) {
+> +					strbuf_release(&prompt);
+> +					return 1;
+> +				}
+> +				/* otherwise, we didn't understand the input */
+> +			} while (prompt.len); /* an empty reply means "Yes" */
+> +			strbuf_release(&prompt);
+> +			return 1;
+> +		case HOOKDIR_YES:
+> +		default:
+> +			return 1;
+> +	}
+> +}
 
-Is that a good plan?
+[snip]
 
-Thanks,
--Stolee
+> +int run_hooks(const char *hookname, struct run_hooks_opt *options)
+> +{
+> +	struct strbuf hookname_str = STRBUF_INIT;
+> +	struct list_head *to_run, *pos = NULL, *tmp = NULL;
+> +	int rc = 0;
+> +
+> +	if (!options)
+> +		BUG("a struct run_hooks_opt must be provided to run_hooks");
+> +
+> +	strbuf_addstr(&hookname_str, hookname);
+> +
+> +	to_run = hook_list(&hookname_str);
+> +
+> +	list_for_each_safe(pos, tmp, to_run) {
+> +		struct child_process hook_proc = CHILD_PROCESS_INIT;
+> +		struct hook *hook = list_entry(pos, struct hook, list);
+> +
+> +		hook_proc.env = options->env.v;
+> +		hook_proc.no_stdin = 1;
+> +		hook_proc.stdout_to_stderr = 1;
+> +		hook_proc.trace2_hook_name = hook->command.buf;
+> +		hook_proc.use_shell = 1;
+
+I think this is based on run_hook_ve() in run-command.c - could we
+refactor that to avoid duplication of code?
+
+> +
+> +		if (hook->from_hookdir) {
+> +		    if (!should_include_hookdir(hook->command.buf, options->run_hookdir))
+> +			continue;
+> +		    /*
+> +		     * Commands from the config could be oneliners, but we know
+> +		     * for certain that hookdir commands are not.
+> +		     */
+> +		    hook_proc.use_shell = 0;
+> +		}
+> +
+> +		/* add command */
+> +		strvec_push(&hook_proc.args, hook->command.buf);
+> +
+> +		/*
+> +		 * add passed-in argv, without expanding - let the user get back
+> +		 * exactly what they put in
+> +		 */
+> +		strvec_pushv(&hook_proc.args, options->args.v);
+> +
+> +		rc |= run_command(&hook_proc);
+> +	}
+> +
+> +	return rc;
+> +}
+
+[snip]
+
+> +struct run_hooks_opt
+> +{
+> +	/* Environment vars to be set for each hook */
+> +	struct strvec env;
+> +
+> +	/* Args to be passed to each hook */
+> +	struct strvec args;
+> +
+> +	/*
+> +	 * How should the hookdir be handled?
+> +	 * Leave the RUN_HOOKS_OPT_INIT default in most cases; this only needs
+> +	 * to be overridden if the user can override it at the command line.
+> +	 */
+> +	enum hookdir_opt run_hookdir;
+> +};
+> +
+> +#define RUN_HOOKS_OPT_INIT  {   		\
+> +	.env = STRVEC_INIT, 				\
+> +	.args = STRVEC_INIT, 			\
+> +	.run_hookdir = configured_hookdir_opt()	\
+> +}
+
+I don't think we have function invocations in our declarations like
+this. Maybe stick to just using run_hooks_opt_init().
+
+[snip tests]
+
+The tests look good.
