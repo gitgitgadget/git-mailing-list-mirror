@@ -2,125 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA98C433E0
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FED0C433E0
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:41:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E8A6B64DDB
-	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:38:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A13764E1F
+	for <git@archiver.kernel.org>; Sun, 31 Jan 2021 03:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbhAaDiW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Jan 2021 22:38:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36630 "EHLO
+        id S229927AbhAaDlR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Jan 2021 22:41:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbhAaDiR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Jan 2021 22:38:17 -0500
-Received: from joooj.vinc17.net (joooj.vinc17.net [IPv6:2001:4b99:1:3:216:3eff:fe20:ac98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88025C061573
-        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:37:37 -0800 (PST)
-Received: from smtp-zira.vinc17.net (128.119.75.86.rev.sfr.net [86.75.119.128])
-        by joooj.vinc17.net (Postfix) with ESMTPSA id E55635D2;
-        Sun, 31 Jan 2021 04:36:53 +0100 (CET)
-Received: by zira.vinc17.org (Postfix, from userid 1000)
-        id 7425FC20315; Sun, 31 Jan 2021 04:36:52 +0100 (CET)
-Date:   Sun, 31 Jan 2021 04:36:52 +0100
-From:   Vincent Lefevre <vincent@vinc17.net>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git fails with a broken pipe when one quits the pager
-Message-ID: <20210131033652.GK623063@zira.vinc17.org>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <8735yhq3lc.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8735yhq3lc.fsf@evledraar.gmail.com>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.0.5+101 (ab6d0dc5) vl-132933 (2021-01-27)
+        with ESMTP id S229728AbhAaDlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Jan 2021 22:41:13 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 981BEC061573
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:40:33 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id b81so8364396pfb.21
+        for <git@vger.kernel.org>; Sat, 30 Jan 2021 19:40:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=qpmbFM/LA4EYrahGLddOz1G/YRhy/VpOs8UuJ1H9nJ0=;
+        b=D9AeYBAWZCw7czWTj2l9HVeCS6tTFBRZWvJ+Oa2L7yuiRrs1lImXGJYnR//aI362ez
+         0USsHwGpTiBRb0oOr3xolgHW/N9UkV55S+KTk1OwDUg9DPYQlw6xbh4+qC34vc/f9NRr
+         fHlejCcLmK5NUUDiMM8Tb4cC6OaKJjagfj65M36JOq8l2bBV/N6iDReMSMieKtHDPhMP
+         JN4Q/BRYAhB4EBiljEJ64v/ox4k4pRAkvCCF0ITl5ggufc/Ld4gsOMch2sGbev9Bolv4
+         NftiR/ZTE3IAk+3X7TzaLweydt5w7/wUVjMo2KZcN0dFewC6yvTjUCJ0FSs+7G4iBF1o
+         5gaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=qpmbFM/LA4EYrahGLddOz1G/YRhy/VpOs8UuJ1H9nJ0=;
+        b=TrA71lZA9/XirpfIc+F7OLbePHZ0AzsQ9T4kU8UBc5P0gmaqjZ610JJJv3imYfjoFL
+         LCbR4K42iOxvbZuA8u+yyEjrFTgyUNrfWG+0qJ0jduAvVj79vDoN0D9vRddt5kFo4SKt
+         g7QVM1YN+4vh2CeMnA+Kcs3xOLEad+tu4ljptGxtRWhbEyfmnzJyiAcL902oUQgx6FX3
+         hvhZpDW/3rKT9mUV/ArEfp8vn+oQHaFdIx4JeAUHZlzIh+ASX1T3ZMTeF9rPHA3AZQL8
+         Yi/RqZlvUOfVhn8GQuy8IXseSJE3o1pqLUd3JsmvHeHVDax8HJB2K1SCQs268Z4TEZ7D
+         pxmQ==
+X-Gm-Message-State: AOAM531GESJiWjPJ743m/HKhnN3C7SZzTTIxIAiCHTw6D4rgKPBjz2iX
+        goS7U/An3Npe9m8hmu17egnH6hv0Lph+LicajvqP
+X-Google-Smtp-Source: ABdhPJzuQ6vlzNoONDs3RZyLBAHM32CZdyn6/x/ctdjieuyzGb5XXZ/zn09Vd7+QMG/HGvb/aGKirtx7nMkbJcaJVCpY
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a62:1cd4:0:b029:1c1:2d50:94c9 with
+ SMTP id c203-20020a621cd40000b02901c12d5094c9mr11012136pfc.31.1612064433108;
+ Sat, 30 Jan 2021 19:40:33 -0800 (PST)
+Date:   Sat, 30 Jan 2021 19:40:30 -0800
+In-Reply-To: <20201222000220.1491091-7-emilyshaffer@google.com>
+Message-Id: <20210131034030.1025259-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201222000220.1491091-7-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: Re: [PATCH v7 06/17] hook: implement hookcmd.<name>.skip
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-01-31 02:47:59 +0100, Ævar Arnfjörð Bjarmason wrote:
-> On Fri, Jan 15 2021, Vincent Lefevre wrote:
-> > I had reported the following bug at
-> >   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=914896
-> >
-> > It still occurs with Git 2.30.0.
-> >
-> > Some git commands with a lot of output fail with a broken pipe when
-> > one quits the pager (without going to the end of the output).
-> >
-> > For instance, in zsh:
-> >
-> > cventin% setopt PRINT_EXIT_VALUE
-> > cventin% git log
-> > zsh: broken pipe  git log
-> > cventin% echo $?
-> > 141
-> > cventin% 
-> >
-> > This is annoying[...]
-> 
-> Yes it's annoying, but the annoying output is from zsh, not
-> git. Consider a smarter implementation like:
-> 
->     case $__exit_status in
->         0) __exit_emoji=😀;;
->         1) __exit_emoji=☹️ ;;
->         141) __exit_emoji=🤕 ;;
->         [...]
-> 
-> Then put the $__exit_emoji in your $PS1 prompt, now when you 'q' in a
-> pager you know the difference between having quit at the full output
-> being emitted or not.
+> If a user wants a specific repo to skip execution of a hook which is set
+> at a global or system level, they can now do so by specifying 'skip' in
+> their repo config:
 
-FYI, I already have the exit status already in my prompt (the above
-commands were just for the example). Still, the git behavior is
-disturbing.
+Usually the present tense describes the situation before the commit, so
+maybe s/they can now do so/they will be able to do so/.
 
-Moreover, this doesn't solve the issue when doing something like
+> -static void append_or_move_hook(struct list_head *head, const char *command)
+> +static struct hook* find_hook_by_command(struct list_head *head, const char *command)
 
-  git log && some_other_command
+"* " -> " *"
 
-> > And of course, I don't want to hide error messages by default, because
-> > this would hide *real* errors.
-> 
-> Isn't the solution to this that your shell stops reporting failures due
-> to SIGPIPE in such a prominent way then?
+[snip tests]
 
-No! I want to be warned about real SIGPIPEs.
-
-> > The broken pipe is internally expected, thus should not be reported
-> > by git.
-> >
-> > Just to be clear: this broken pipe should be discarded only when git
-> > uses its builtin pager feature, not with a general pipe, where the
-> > error may be important.
-> >
-> > For instance,
-> >
-> > $ { git log ; echo "Exit status: $?" >&2 ; } | true
-> >
-> > should still output
-> >
-> > Exit status: 141
-> 
-> I don't get it, how is it less meaningful when git itself invokes the
-> pager?
-
-I don't understand your question. If I invoke the pager myself,
-I don't get a SIGPIPE:
-
-cventin:~/software/gcc-trunk> git log
-cventin:~/software/gcc-trunk[PIPE]> git log|m
-cventin:~/software/gcc-trunk>
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+For the tests, I thought of the case in which we skip a hookcmd that was
+never specified as a hook, but that's probably not very useful.
