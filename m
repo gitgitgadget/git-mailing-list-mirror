@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B2EC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FED0C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:04:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1EC764ED3
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EE7964E2C
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:04:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbhBAWDv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 17:03:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41924 "EHLO
+        id S229515AbhBAWD5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 17:03:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbhBAWDh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229981AbhBAWDh (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 1 Feb 2021 17:03:37 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8C4C06178C
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 14:02:29 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id o5so629820wmq.2
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 14:02:29 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E87F9C061794
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 14:02:31 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id u14so613251wml.4
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 14:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
-        b=eykLUXBzWnv9rhOpD+B6HZ1XrdKr/qUFOtXZ+mKbh7zMsedk5A/F2i21/qgL7EX6XX
-         aFiQEYeRV7kWXEFESdd3tIQnqWxUsGsXw92c1/CQHDywXUSA2po4XT9sD73wvNpZg0RY
-         N+ZRY0dkd6vGBuFjQihia2Q6lfQ8eEKXLGfE6tJQWV3h0508e1+USMUZe3c4ALA9v5rF
-         tMaBRpwJVfuFDhmFzC4VvyupQ5Jl7VQ5Cfv8HDk21HD27hACQg0HJlrwDrZITntnM9KZ
-         zFg7Y+hBsVtokSWVxB5wvvyCONxLEQ+oSk7zP2ye1An4lCm/4ccG4suI4gonbY55PjjW
-         u9nw==
+        bh=EwY+RPdKlOlJBlCoDOs+KUc/NkIJWwGIjdTt04+8VTw=;
+        b=f3riSPceJ2i5bAT5uZ8XuYicl97OZSFVB31s5zNlvauZ6L3DuZcsJxi6wpK/lXjybu
+         dRF6ksUx+wj2WehJAvjX9qVldw/5mzsRXqAjsu6yAO9nKQZKR5eiMD6LRoOfqRHlbcms
+         izwpKXbHcArAXfRECKvyoGXxFKWdz8yhCRgwYwAyZr9AocPIk8ff2BKsNVqhg3mDRN2F
+         GZFzh+zmRIYLgFgoU6G2b/nStEZSTH8wXI7oLGJPS+SHIaIxY+1kacOZewn2lqjKJX/C
+         iM9JzCBD4i5fOgigdIdpgtE3yiQJnz05E0ldtyLOWdv2lTjmWGcshVrljOorMJd3i8Wf
+         glqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
-        b=Hf3flYqkFDXWKKRCGZr1kRNUR+1clG4d4tKcbKFo06gpjiPrWBxsw7ZZLMEbnMhiQ5
-         r3F+uMx4Yf/ILeJ/awc9eciwoQgGNS4f7J/HhNdWaYgmnzp6S7+g8H0Ak5qyTMAIXjpr
-         UxID4FDu1zPKYMJHrpLrBPxjfLD8sGYT4NkQf0UCcgeG1z/Go4ddoglQUpXk8GEm63SW
-         lNVKTh+B42QPg2V3Gb+ymk/q+Td/xAaXAmMGpR+nAzAbG+B38cFBPAaf6bJCNzK6igk/
-         2u/4O0ZGM5VUMRWh+8WKEJpn+udmXxr4V/2zaGkZwQOmzE5q+nW9ajbybXPVbvNF2Yd7
-         vXhw==
-X-Gm-Message-State: AOAM533HiG1wXIeo9xz7uPJ7nKZRPcRvHMmuDOIWMrqFUQ4M8b3RLpvG
-        qf6bCInPpeR+Tt4yUuZghHvcPTuDL9A=
-X-Google-Smtp-Source: ABdhPJzkPuRpZprcjKP2LpapQ65vIvSTlxsa1KjBA/YQ72JJZsDOfcNFIFDDf4Knbtd/nsnI8OiNfA==
-X-Received: by 2002:a7b:cb8f:: with SMTP id m15mr789038wmi.65.1612216948534;
-        Mon, 01 Feb 2021 14:02:28 -0800 (PST)
+        bh=EwY+RPdKlOlJBlCoDOs+KUc/NkIJWwGIjdTt04+8VTw=;
+        b=a99nU6j+mKuHk4y4PtwBXLhF5jScnqd9g71FWE4OdvPrp+IuAkJX+VM15EPjCd1jeo
+         seYJTJSnMpZbSSiy/iX2oOW6NYXWxudN0sIigNDKi/YSLHYKMYM49kWat02Vh5i9/eiM
+         xCdIwZi03SN3WiWRtb9Ng8mK9TVlnO7p5Z3mLpHsqJUjceZ+VHuYJABDNHa/FRr3hm67
+         HeiGZzb2RXqdDoBnDl6CCsh3F/I2WsCd8st35zravJHIxhYCDQRz24cFbW10mG4pOUD6
+         tSrggmh8ZJIi5PqBAUd8jJOVRKcvoIKZwkmct7Cs80pg3wGnOnOKF3bjTrSPpYAXdiYe
+         qReg==
+X-Gm-Message-State: AOAM531tMmsbSkKhAiPJhgtxmrWjZavyvErCsM0F7+4cydaE9BpF2Yqc
+        QVhaeaKHnLEqJCH/wx3C5H3HzFQXCMw=
+X-Google-Smtp-Source: ABdhPJwf3ZJKZ2UKzNZzvUFfk4r8kKAmHOUnhE7fGXMOExguoR2im18nWqyGOlBcIXoXh0HbSVq0sA==
+X-Received: by 2002:a1c:5454:: with SMTP id p20mr786731wmi.128.1612216950364;
+        Mon, 01 Feb 2021 14:02:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u6sm29982898wro.75.2021.02.01.14.02.27
+        by smtp.gmail.com with ESMTPSA id y18sm27738530wrt.19.2021.02.01.14.02.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 14:02:27 -0800 (PST)
-Message-Id: <cdd49f1fdb18b85430c39f65d2a85890abf927e7.1612216941.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 14:02:29 -0800 (PST)
+Message-Id: <c84531f624428c19408fb1f05343f27ee88e2654.1612216941.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.860.git.1612216941.gitgitgadget@gmail.com>
 References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 22:02:14 +0000
-Subject: [PATCH 05/11] preload-index: log the number of lstat calls to trace2
+Date:   Mon, 01 Feb 2021 22:02:16 +0000
+Subject: [PATCH 07/11] read-cache: log the number of scanned files to trace2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,70 +75,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Report the total number of calls made to lstat() inside preload_index().
+Report the number of files in the working directory that were read and
+their hashes verified in `refresh_index()`.
 
 FSMonitor improves the performance of commands like `git status` by
-avoiding scanning the disk for changed files.  This can be seen in
-`preload_index()`.  Let's measure this.
+avoiding scanning the disk for changed files.  Let's measure this.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- preload-index.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ read-cache.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/preload-index.c b/preload-index.c
-index ed6eaa47388..e5529a58636 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -31,6 +31,7 @@ struct thread_data {
- 	struct pathspec pathspec;
- 	struct progress_data *progress;
- 	int offset, nr;
-+	int t2_nr_lstat;
- };
- 
- static void *preload_thread(void *_data)
-@@ -73,6 +74,7 @@ static void *preload_thread(void *_data)
- 			continue;
- 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
- 			continue;
-+		p->t2_nr_lstat++;
- 		if (lstat(ce->name, &st))
- 			continue;
- 		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY|CE_MATCH_IGNORE_FSMONITOR))
-@@ -98,6 +100,7 @@ void preload_index(struct index_state *index,
- 	int threads, i, work, offset;
- 	struct thread_data data[MAX_PARALLEL];
- 	struct progress_data pd;
-+	int t2_sum_lstat = 0;
- 
- 	if (!HAVE_THREADS || !core_preload_index)
- 		return;
-@@ -107,6 +110,9 @@ void preload_index(struct index_state *index,
- 		threads = 2;
- 	if (threads < 2)
- 		return;
-+
-+	trace2_region_enter("index", "preload", NULL);
-+
- 	trace_performance_enter();
- 	if (threads > MAX_PARALLEL)
- 		threads = MAX_PARALLEL;
-@@ -141,10 +147,14 @@ void preload_index(struct index_state *index,
- 		struct thread_data *p = data+i;
- 		if (pthread_join(p->pthread, NULL))
- 			die("unable to join threaded lstat");
-+		t2_sum_lstat += p->t2_nr_lstat;
+diff --git a/read-cache.c b/read-cache.c
+index 893cc41e1d9..c9dd7f4015e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1365,7 +1365,8 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
+ 					     struct cache_entry *ce,
+ 					     unsigned int options, int *err,
+ 					     int *changed_ret,
+-					     int *t2_did_lstat)
++					     int *t2_did_lstat,
++					     int *t2_did_scan)
+ {
+ 	struct stat st;
+ 	struct cache_entry *updated;
+@@ -1445,6 +1446,8 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
+ 		}
  	}
- 	stop_progress(&pd.progress);
  
- 	trace_performance_leave("preload index");
-+
-+	trace2_data_intmax("index", NULL, "preload/sum_lstat", t2_sum_lstat);
-+	trace2_region_leave("index", "preload", NULL);
++	if (t2_did_scan)
++		*t2_did_scan = 1;
+ 	if (ie_modified(istate, ce, &st, options)) {
+ 		if (err)
+ 			*err = EINVAL;
+@@ -1523,6 +1526,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 	const char *unmerged_fmt;
+ 	struct progress *progress = NULL;
+ 	int t2_sum_lstat = 0;
++	int t2_sum_scan = 0;
+ 
+ 	if (flags & REFRESH_PROGRESS && isatty(2))
+ 		progress = start_delayed_progress(_("Refresh index"),
+@@ -1547,6 +1551,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		int changed = 0;
+ 		int filtered = 0;
+ 		int t2_did_lstat = 0;
++		int t2_did_scan = 0;
+ 
+ 		ce = istate->cache[i];
+ 		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+@@ -1574,8 +1579,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 
+ 		new_entry = refresh_cache_ent(istate, ce, options,
+ 					      &cache_errno, &changed,
+-					      &t2_did_lstat);
++					      &t2_did_lstat, &t2_did_scan);
+ 		t2_sum_lstat += t2_did_lstat;
++		t2_sum_scan += t2_did_scan;
+ 		if (new_entry == ce)
+ 			continue;
+ 		if (progress)
+@@ -1612,6 +1618,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		replace_index_entry(istate, i, new_entry);
+ 	}
+ 	trace2_data_intmax("index", NULL, "refresh/sum_lstat", t2_sum_lstat);
++	trace2_data_intmax("index", NULL, "refresh/sum_scan", t2_sum_scan);
+ 	trace2_region_leave("index", "refresh", NULL);
+ 	if (progress) {
+ 		display_progress(progress, istate->cache_nr);
+@@ -1625,7 +1632,7 @@ struct cache_entry *refresh_cache_entry(struct index_state *istate,
+ 					struct cache_entry *ce,
+ 					unsigned int options)
+ {
+-	return refresh_cache_ent(istate, ce, options, NULL, NULL, NULL);
++	return refresh_cache_ent(istate, ce, options, NULL, NULL, NULL, NULL);
  }
  
- int repo_read_index_preload(struct repository *repo,
+ 
 -- 
 gitgitgadget
 
