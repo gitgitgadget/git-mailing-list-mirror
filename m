@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1449C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD1D7C433E6
 	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 11:18:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77C2D64D7F
+	by mail.kernel.org (Postfix) with ESMTP id 5176F64E9E
 	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 11:18:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233281AbhBALSQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 06:18:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
+        id S233111AbhBALSP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 06:18:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233233AbhBALSN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 06:18:13 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63501C061756
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 03:17:32 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id i8so7275260ejc.7
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 03:17:32 -0800 (PST)
+        with ESMTP id S232573AbhBALSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 06:18:11 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C47C06174A
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 03:17:31 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id s11so18395278edd.5
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 03:17:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nwq5nsRhT/4w7swwCTrVYAXbwr4AxduYhnq0dq+J32Q=;
-        b=B42aPeEGMckPljx/M+CXWwuGq57qwKRmGSG3FSqyoBftBlFbn2s0oQbLmr2NJXN61p
-         GI/xB4nQgDJhK4msZVkGVdgjntNPc74ukrdjOKp6CRspRrS7MfpmtoE6LsPjsqZq53gT
-         A9HnIac7BGXFMje/tmLGhwuIEZ8UiqsORPtlD++lXiGB2PdNNUbFNs4E9E/kRtFTgNAg
-         yMkSyQd20NAqyXXOyejo8fU9WLeUSftDbCt2qu2PWL0Au88Gx9F6rEkUfnOOOzQRZxNB
-         2bBiF7313UNHG0So3C7qJx1f9DTW7Py0mTGaiV+LOKXjOibSxQykVrhPg3kMETLrF9PW
-         xKOg==
+        bh=JvlVW3spyFeGJFHXMh1JhMXMbkIUfEJgahOeALEjRo4=;
+        b=VgsMyLf0s6Y191eyYpGtsNppQ+VnAJc9y/UZEXka4oDJkwjffmwP1Lc8QJ7IpTA2rT
+         68r823J623GxwYMlDWEdvQ/zIpbB7kpG+e8oms5NivWuI6RZJg/amD0BfEx3hpab06nJ
+         zSdIoggaEG0fNrOrNYIJAghrAQHCDOI1Shi7HcLBhthXXD14J3w//lZBqVpyZnlrTioW
+         DNdJ5Bb3No6v9bjev0VrRbKERiXlvIML5Az1yE/72B5BDFA+JKqs55RG37lgcSag8EA3
+         abmYy2YUxhe1RgDiD13bNwiylw3JklXUtSjJ+eW9A94ZV/EXYrPDZKfkn9516a07oyx7
+         ldKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nwq5nsRhT/4w7swwCTrVYAXbwr4AxduYhnq0dq+J32Q=;
-        b=LJCPNOd3pWKAO2+Ku0c27KRIINETMEjIkR/whED3w21kxn/9VR0pXh4qhmHrNSaPd1
-         NuHlyptI8IS28SBH+vzNQpIR6O6QcP7M3N6GRsCW1dGSepYlUbrv/EJJ35EuJOZnfMel
-         iX9xrRk0qivLfzivVNNHHlazEzV/OoslCWsE85JAQ5p0mDEDhffx7f8wjfkQCMp7rxQ1
-         vLA/jmEXu7TCXtxHLpDd3bqv8SLdH1TnuChjKxvAmPoT8FamSl08a0geZmm8TsXMbRsS
-         NuVUi/1hYGm92FwiXZNMCjfxEti8WaWphWCgRFovw0Uo4c/b8NXE5eLhvdR4sBHJ5mut
-         B2gg==
-X-Gm-Message-State: AOAM530SXCC9KvWqLoWq4TV/1Y0roXqP4Hju9otwqR3+2BTlLoYz85MT
-        ItL2e7wO8fMfYYiijBwBxhZXkMPNkUNEMg==
-X-Google-Smtp-Source: ABdhPJwqKsT1VanY7SkyHqhx8MOOCFZLnlW1Rn8XnRzKCJ+jbwyCxlWoFc0I8dfGwzWLVlFmDauJUg==
-X-Received: by 2002:a17:906:f0d7:: with SMTP id dk23mr17212279ejb.131.1612178250735;
-        Mon, 01 Feb 2021 03:17:30 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t19sm7760548ejc.62.2021.02.01.03.17.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=JvlVW3spyFeGJFHXMh1JhMXMbkIUfEJgahOeALEjRo4=;
+        b=t9znQ05PCkwYPCkAJy5YN0Gk0brpQK244LFIh8UR0dqO7e2+cST3TiJP1LS9rnO5tH
+         PXOcD5yqYZSrBUNvqNZHIgNZ9KECwap6EOjMQw6xmtAtJQkc6QKhnD2szvGULBVkMoTr
+         giRBH/gX2WDtyInfEF5j6JCon0vl5ZalevDALyCJOoC0v4IWHNtv3GSJ4uSCB5p7o8fc
+         uC8Dww23C5J8CJCeGRvw/wRyiHVLQHZlEdCpg1o/+DWtlSas+/Kfk5p5FQh+ZBhfy4Eq
+         KlPyAhFu15gpVq6opR/L7DibjLU3gRpgJrSYky05wm/KTiB5GCnAv54PkoarghJ2QH0A
+         mYdw==
+X-Gm-Message-State: AOAM531LlYDfxylNIwij70wLKli0wxkq9xAZ94aXf8WDhRBXLQYji3eJ
+        tWSyl+7W2bn9CTbocDzVxAY4sUbbOmB6LA==
+X-Google-Smtp-Source: ABdhPJzSNqezmUkJADJXILxNH3I7+lBvNOxNumVWKhVP74hPwpjiLzxsi5lYwvJnxgsi61TWk5z0hQ==
+X-Received: by 2002:aa7:d5c5:: with SMTP id d5mr5055470eds.139.1612178249693;
         Mon, 01 Feb 2021 03:17:29 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t19sm7760548ejc.62.2021.02.01.03.17.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Feb 2021 03:17:28 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/6] Makefile: split up long OBJECTS line
-Date:   Mon,  1 Feb 2021 12:17:12 +0100
-Message-Id: <20210201111715.10200-4-avarab@gmail.com>
+Subject: [PATCH v2 2/6] Makefile: guard against TEST_OBJS in the environment
+Date:   Mon,  1 Feb 2021 12:17:11 +0100
+Message-Id: <20210201111715.10200-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210128182310.26787-1-avarab@gmail.com>
 References: <20210128182310.26787-1-avarab@gmail.com>
@@ -75,48 +75,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split up the long OBJECTS line into multiple lines using the "+="
-assignment we commonly use elsewhere in the Makefile when these lines
-get unwieldy.
+Add TEST_OBJS to the list of other *_OBJS variables we reset. We had
+already established this pattern when TEST_OBJS was introduced in
+daa99a91729 (Makefile: make sure test helpers are rebuilt when headers
+change, 2010-01-26), but it wasn't added to the list in that commit
+along with the rest.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index ce18d9ceffd..c7caa4b0ae3 100644
+index 65e600713c1..ce18d9ceffd 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -583,6 +583,7 @@ EXTRA_CPPFLAGS =
- FUZZ_OBJS =
- FUZZ_PROGRAMS =
- LIB_OBJS =
-+OBJECTS =
- PROGRAM_OBJS =
- PROGRAMS =
- EXCLUDED_PROGRAMS =
-@@ -2383,11 +2384,15 @@ XDIFF_OBJS += xdiff/xprepare.o
- XDIFF_OBJS += xdiff/xutils.o
+@@ -591,6 +591,7 @@ SCRIPT_PYTHON =
+ SCRIPT_SH =
+ SCRIPT_LIB =
+ TEST_BUILTINS_OBJS =
++TEST_OBJS =
+ TEST_PROGRAMS_NEED_X =
+ THIRD_PARTY_SOURCES =
  
- TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
--OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
--	$(XDIFF_OBJS) \
--	$(FUZZ_OBJS) \
--	common-main.o \
--	git.o
-+
-+OBJECTS += $(LIB_OBJS)
-+OBJECTS += $(BUILTIN_OBJS)
-+OBJECTS += $(PROGRAM_OBJS)
-+OBJECTS += $(TEST_OBJS)
-+OBJECTS += $(XDIFF_OBJS)
-+OBJECTS += $(FUZZ_OBJS)
-+OBJECTS += common-main.o
-+OBJECTS += git.o
- ifndef NO_CURL
- 	OBJECTS += http.o http-walker.o remote-curl.o
- endif
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
