@@ -2,124 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75090C433E6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85305C4332B
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:15:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 403B064E06
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B94964EA7
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbhBAPFI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 10:05:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
+        id S231398AbhBAPOR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 10:14:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbhBAPEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 10:04:00 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668AAC0613D6
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 07:03:58 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id df22so3267365edb.1
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 07:03:58 -0800 (PST)
+        with ESMTP id S231292AbhBAPB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 10:01:29 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 696DBC0613ED
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 07:01:00 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id rv9so24793987ejb.13
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 07:01:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=K5uLPkJhW+7w/BlYDWYVfaEqboJvRewdwKXIyx9lnc4=;
-        b=h8O2/RfL8vZDKzJLnT8DatgpCeGDzcduKnwyeaKyw1Icf/By4USbbmpx/cHsTg0UV5
-         Fmi7VS6TkITT2tYZxP9vh/ofjyK2je68cfNIbn1HAR3vRaS6kNDUhHFEyUxvNZuVrhnb
-         ugzRDGLswDuJTcIgYApHNwCrGCH2cU8K8nI9MB1vvcyLmXRezXwe6pqIszKuzkai16MG
-         DDqeTfbLOUOyQjLeOjA3LHm4naSMWsO1x9wPAgu2rg8nWnh1+kinIqK2+NnAlrbquQJr
-         Rv4wBUoX52P3jbUqyVMAyAX/v52e+4hagKxGLHOywPhPC8XIY7ss53MaB9XJ6pusy2XC
-         VodA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FaO8NdwUrU1OG5bWKo+9ilYd5vPvdHP2d2Typze6KaQ=;
+        b=Ky5SZRq/ec0/gAUZ1z49Evrqkh2COfq2NZyU3slSiXIugTKLbVTTISd89vT5munNgF
+         cIKQ/aq2uwwYde5IRgxtrMOanZdEaQ9SJA+UU/Um14RRT+6J830QJ33QdiZtMxRWIJ9Y
+         fQAcO2vA11kUj69NXuQBA7X5gWfGhIwZFO0YCDIzpxdDBEWyXNJ3TTglY07ge2DukJUT
+         fnBJaF3S2gnup3sUtaxZKk65gyHEN9a6ckx2Qj/mTa/JlLFwSQ0/EGLo/UuT8ju961rq
+         fsCuF13fJiCTbq1XiTWXv38q7K8R0ZTTX3+k3VK1pK1g+YnjCJFOeiJ2KVtYdHqgTm5o
+         z8AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=K5uLPkJhW+7w/BlYDWYVfaEqboJvRewdwKXIyx9lnc4=;
-        b=Y4Zdh13TRwuSg/Tcpgivb3hF1MaisUQEQO9tMlRqIzolhAF7B44aOe8hWP4/cWGzn4
-         5cT6+YwycS0eV25hF9eXLOMB4JKwK1s+DRr/ahe4Y2NmmetgnTwUnS694swdfRh36s2a
-         HNOY2crwHuUaZDcLDl9zMJ6EFz0X2TBGOMZT37T9HEit42aWFtgdKxtjObCxGsjAeQYh
-         aa2hj6zY9VFRt3wA0UIyu0zWZMnSK6iCB0vnQrVL7Jw1bduGQFNIbXAcmYvTTs4nxM+l
-         jubQS1ye/kUEwBWOZh8phLIblJJj2BoYzG2nemQXBfzEUCaQbgyP6djKuPf6nz/c/n9g
-         cM2w==
-X-Gm-Message-State: AOAM531ACzfZQ9QI7jzjNu/v1MPhtUBdoKThvLFlw3vm8359VLIDtmkV
-        bxH70BO1US6zKj6+1EnP0EI=
-X-Google-Smtp-Source: ABdhPJwlUqwf8Y7oBSre/EcmNxjAXT26mSnWtpgYxYhSS5kfi1AsqnrdfZMo8f3q165OmWUxcCpsnA==
-X-Received: by 2002:aa7:c485:: with SMTP id m5mr19118575edq.320.1612191837090;
-        Mon, 01 Feb 2021 07:03:57 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=FaO8NdwUrU1OG5bWKo+9ilYd5vPvdHP2d2Typze6KaQ=;
+        b=s0TkwEEr/hxxKF8WoZ0HLidXKUdU/ZbpSOPnfwaA2ujeIldvjcLO3cghj7sB5GFy1s
+         RmAE+xoV3ohiciqdtAUyMFa7zVRMowKev/lZ0xU2Kn8+jYH5zvoYitSb4S1e7V3ZDYlD
+         GxXZAETPv/zO4E1L9VN3IS9uEiGEXkDGKZ1SGKjZyvxoha8+n8HCMwg21fszVMqi3n12
+         yC3Rfl4DMlkHph6X1QM4Zu+CBOOemONqVvhheLTTMvEHRFd5+zxetsNISs9W+wTf3CoH
+         5fuOzhvGlr206yFtMtPynLB62+YnyJFmDsKxeW4aRWiZckEtS4fltHvrDAvds2ElY8ZV
+         +dKQ==
+X-Gm-Message-State: AOAM530s3Ipo7XMtu54XceVHXfs2Vtbyoel/yXdcP0/EKShJrQbR+7LP
+        gFzJGHKrYsA5NNEx5QYkQLc=
+X-Google-Smtp-Source: ABdhPJzG67wHIRujm/jijUfljbnu9c4lGUKVnAo5K5Nvyskz/5WR0/4oApjJFXjgO00srQfrujG5+Q==
+X-Received: by 2002:a17:906:25c4:: with SMTP id n4mr18323938ejb.359.1612191654672;
+        Mon, 01 Feb 2021 07:00:54 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id f13sm8105188ejf.42.2021.02.01.07.03.56
+        by smtp.gmail.com with ESMTPSA id j23sm8744240edv.45.2021.02.01.07.00.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 07:03:56 -0800 (PST)
+        Mon, 01 Feb 2021 07:00:53 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Vincent Lefevre <vincent@vinc17.net>
-Subject: Re: [PATCH] pager: exit without error on SIGPIPE
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     Vincent Lefevre <vincent@vinc17.net>,
+        Git List <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Subject: Re: git fails with a broken pipe when one quits the pager
 References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
+ <8735yhq3lc.fsf@evledraar.gmail.com>
+ <20210131033652.GK623063@zira.vinc17.org>
+ <87o8h4omqa.fsf@evledraar.gmail.com>
+ <20210201103429.GT623063@zira.vinc17.org>
+ <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.14
-In-reply-to: <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
-Date:   Mon, 01 Feb 2021 16:03:55 +0100
-Message-ID: <87czxjomn8.fsf@evledraar.gmail.com>
+In-reply-to: <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
+Date:   Mon, 01 Feb 2021 16:00:53 +0100
+Message-ID: <87ft2fomsa.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Jan 30 2021, Denton Liu wrote:
+On Mon, Feb 01 2021, Chris Torek wrote:
 
-> [...]
+>> On 2021-01-31 21:49:49 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wro=
+te:
+>> > ... That we're returning an exit code per getting a SIGHUP here
+>> > is a feature. Consider:
+>> >
+>> >     git -c core.pager=3D/bin/false log && echo showed you the output
+>
+> This example has a minor flaw: it should use `git -c core.pager=3D/bin/tr=
+ue`,
+> probably.
 
-The thread at large has enough about whether this approach even makes
-sense. I won't repeat that here. Just small notes on the patch itself:
+FWIW it doesn't have a flaw It should be /bin/false, not /bin/true. See
+this reply in a side-thread:
+https://lore.kernel.org/git/87im7cng42.fsf@evledraar.gmail.com/
 
-> diff --git a/Makefile b/Makefile
-> index 4edfda3e00..38a1a20f31 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -719,6 +719,7 @@ TEST_BUILTINS_OBJS += test-mktemp.o
->  TEST_BUILTINS_OBJS += test-oid-array.o
->  TEST_BUILTINS_OBJS += test-oidmap.o
->  TEST_BUILTINS_OBJS += test-online-cpus.o
-> +TEST_BUILTINS_OBJS += test-pager.o
->  TEST_BUILTINS_OBJS += test-parse-options.o
->  TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
->  TEST_BUILTINS_OBJS += test-path-utils.o
-> diff --git a/pager.c b/pager.c
-> index ee435de675..5922d99dc8 100644
-> --- a/pager.c
-> +++ b/pager.c
-> @@ -34,6 +34,8 @@ static void wait_for_pager_atexit(void)
->  static void wait_for_pager_signal(int signo)
->  {
->  	wait_for_pager(1);
-> +	if (signo == SIGPIPE)
-> +		exit(0);
+I.e. part of the point here (which I realize I forgot to articulate...)
+is that we have a hard reliance on SIGHUP to report *any* pager failures
+as a matter of the current implementation.
 
-As shown in
-https://lore.kernel.org/git/20210201144921.8664-1-avarab@gmail.com/ this
-leaves us without guard rails where the pager dies/segfaults or
-whatever.
+Part of that has to do with internal git implementation details, i.e. we
+get the exit code for the pager either in an atexit() handler (we've
+already picked the exit code) or when handling a signal.
 
-That's an existing bug, but by not carrying the SIGPIPE forward it
-changes from "most of the time we'd exit with SIGPIPE anyway" to "we'll
-never notice".
+Perhaps we could do better there and e.g. exit with <num> if the pager
+exits with <num>. I don't know what's the conventional behavior in that
+case.
 
-> [...]
-> +test_expect_success TTY 'SIGPIPE from pager returns success' '
-> +	test_terminal env PAGER=true test-tool pager
-> +'
-> +
->  test_done
+But in any case, we exit with SIGPIPE in those cases in any reasonable
+failure mode. That is, unless the pager consumed all the output, and
+*then* died that is.
 
-As noted in
-https://lore.kernel.org/git/20210201144921.8664-1-avarab@gmail.com/ I
-think this whole "test-tool pager" isn't needed. We can just use git
-itself with some trickery.
+I submitted
+https://lore.kernel.org/git/20210201144921.8664-1-avarab@gmail.com/ to
+try to address the lack of testing around this, which has tests for the
+true/false case.
