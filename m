@@ -2,70 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 080BFC433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FC5C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:21:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEB0064EC6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:17:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8145864ECB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbhBAWRL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 17:17:11 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:8539 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229527AbhBAWRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 17:17:10 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4DV2ND0Zvgz5tlB;
-        Mon,  1 Feb 2021 23:16:28 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id B06874B9D;
-        Mon,  1 Feb 2021 23:16:27 +0100 (CET)
-Subject: Re: git fails with a broken pipe when one quits the pager
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Vincent Lefevre <vincent@vinc17.net>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <8735yhq3lc.fsf@evledraar.gmail.com>
- <20210131033652.GK623063@zira.vinc17.org>
- <87o8h4omqa.fsf@evledraar.gmail.com>
- <20210201103429.GT623063@zira.vinc17.org>
- <87im7cng42.fsf@evledraar.gmail.com> <20210201144857.GB24560@zira.vinc17.org>
- <87a6snokrr.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <5772995f-c887-7f13-6b5f-dc44f4477dcb@kdbg.org>
-Date:   Mon, 1 Feb 2021 23:16:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S229915AbhBAWVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 17:21:00 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62421 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229572AbhBAWU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 17:20:59 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F29511F7FD;
+        Mon,  1 Feb 2021 17:20:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=E+NfYj0qy/IkyJmfTsHFyQ+Q/T8=; b=Ul3Tcr
+        uFr321ocMFAt9fcoZw3urN4kTii4+8S87+c0oZ2MvYOkxnrxQsguAn9NtfuZfOS/
+        S4U8+ABOYDR1s4JBxynwWf10CSbH7pA1vIP2wyenjpIGgsDQOVcggtaH8CWBNb7d
+        Kpldu+cTeekCEd54hbwBje4V2Onik/AxK0L0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XfRm1Gd3hMdvNzpcOifHGsjWph7627lp
+        LwoYi/0Yz2Tgw9IV8r5Y9VRfTRRr692L1e+KXze5NsvdWBSZYTeA8wlA6+uVk15G
+        fb3WuwuCjyfg3NYvCFasLHL4Qqy7rwPFIvhirWlbDZhOfZBCvcSBp6dhXaNJQ2Bg
+        ZpYTxGoFHWA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 55B1E11F7FC;
+        Mon,  1 Feb 2021 17:20:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9E3B911F7FB;
+        Mon,  1 Feb 2021 17:20:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 00/14] Simple IPC Mechanism
+References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
+        <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
+Date:   Mon, 01 Feb 2021 14:20:11 -0800
+In-Reply-To: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com> (Jeff
+        Hostetler via GitGitGadget's message of "Mon, 01 Feb 2021 19:45:33
+        +0000")
+Message-ID: <xmqq5z3bjuqs.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87a6snokrr.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A78DF430-64DB-11EB-871E-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.02.21 um 16:44 schrieb Ævar Arnfjörð Bjarmason:
-> On Mon, Feb 01 2021, Vincent Lefevre wrote:
->> On 2021-02-01 13:10:21 +0100, Ævar Arnfjörð Bjarmason:
->>> So we've got the SIGPIPE to indicate the output wasn't fully
->>> consumed.
->>
->> But the user doesn't care: he quit the pager because he didn't
->> need more output. So there is no need to signal that the output
->> wasn't fully consumed. The user already knew that before quitting
->> the pager!
-> 
-> As noted above, this is assuming way too much about the functionality of
-> the pager command. We can get a SIGPIPE without the user's intent in
-> this way. Consider e.g. piping to some remote system via netcat.
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-That assumption is warranted, IMO. Aren't _you_ stretching the meaning
-of "pager" too far here? A pager is intended for presentation to the
-user. If someone plays games with it, they should know what they get.
+> Here is version 2 of my "Simple IPC" series and addresses the following
+> review comments:
+> ...
+> Junio C Hamano (1):
+>   ci/install-depends: attempt to fix "brew cask" stuff
 
--- Hannes
+Huh?
