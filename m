@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9DDAC433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B2EC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB63464E2C
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1EC764ED3
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:03:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229810AbhBAWDp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 17:03:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41922 "EHLO
+        id S229822AbhBAWDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 17:03:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229973AbhBAWDg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 17:03:36 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E20ABC06178B
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 14:02:28 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id 6so18285357wri.3
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 14:02:28 -0800 (PST)
+        with ESMTP id S229977AbhBAWDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 17:03:37 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB8C4C06178C
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 14:02:29 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id o5so629820wmq.2
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 14:02:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qDQXfUw79WQ7Mw00tvloo6yvrULHW0pLb4QJBzNWryw=;
-        b=hIeWy0f/9E/01GJEPEts5iR7e1AdERKpXI6d7C4Go6QUloubMrNVW5ZuHBC7P2WGB1
-         93BODEKLNPDcBMnK22G4lhUncy/SNeTvnjfBssMYWJ8VU7/pboag8OD/sTLNU8pvghtr
-         T67OGXeMSmnabwkkGeWZ3A/IPdZOLLX1yG3wT0TlfG9EafLx4Q0bJHRcF0vD/xQDDZjW
-         fR3lYJOt2uU9aDAQeDjMffQKLuqvA87e0Njq/cD06ctHpKIyRXY9JZ+84Fgz6e3piR3j
-         EzB+7EoCBU9lOBpIB0Vj4Kdr117EBS6WGv/XiiLbOqopt9VP+rD7HVeYbxEE8Er9e/Ep
-         vlMw==
+        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
+        b=eykLUXBzWnv9rhOpD+B6HZ1XrdKr/qUFOtXZ+mKbh7zMsedk5A/F2i21/qgL7EX6XX
+         aFiQEYeRV7kWXEFESdd3tIQnqWxUsGsXw92c1/CQHDywXUSA2po4XT9sD73wvNpZg0RY
+         N+ZRY0dkd6vGBuFjQihia2Q6lfQ8eEKXLGfE6tJQWV3h0508e1+USMUZe3c4ALA9v5rF
+         tMaBRpwJVfuFDhmFzC4VvyupQ5Jl7VQ5Cfv8HDk21HD27hACQg0HJlrwDrZITntnM9KZ
+         zFg7Y+hBsVtokSWVxB5wvvyCONxLEQ+oSk7zP2ye1An4lCm/4ccG4suI4gonbY55PjjW
+         u9nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qDQXfUw79WQ7Mw00tvloo6yvrULHW0pLb4QJBzNWryw=;
-        b=LttKEkjR9ajjjnxxq5pd0UhFjB8guoN7We0LDYmq7sT4z6y35zcJojbCqiRy5bta8f
-         tTUI2TGzcncXGfhcjSqCsJX/rVuoybE3QWP3cpAXq3sXL3zgZ4ZfbABpNza5hYYE+8G9
-         IKnNKTd0jUkJvRbjgtPWvQATClbaV8ZKXPQ5PmTamnL5f7IdiL4m1Di6dljh91NhOkDy
-         mva376Qidim5nnnUqagrJUeZzMXuElBz5wfJLT6lUzcxCfw2V1ShSj7jwEz3khJ90QuJ
-         IcULN+ZybNQCCPJdNIJOL5eH8Q02eP+LhGU+NhXCH7Dyedkf8Rc1GR9WAELdtZzb82do
-         1dAA==
-X-Gm-Message-State: AOAM532FZvrebanymoFwHOZA0/lYAL9B2cyEdX5Q9jmB2Yjt2rIPSkB7
-        RwfFmwyRuyqnSE/a/c5cvGW8i70A4rI=
-X-Google-Smtp-Source: ABdhPJyahUumIiYlQ3MVrcNl9040vVX9f5LsDnXtbfbt+YloBwl+3PHazoBEJVBR+9xnryUU5CQVsA==
-X-Received: by 2002:adf:814f:: with SMTP id 73mr20270174wrm.368.1612216947323;
-        Mon, 01 Feb 2021 14:02:27 -0800 (PST)
+        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
+        b=Hf3flYqkFDXWKKRCGZr1kRNUR+1clG4d4tKcbKFo06gpjiPrWBxsw7ZZLMEbnMhiQ5
+         r3F+uMx4Yf/ILeJ/awc9eciwoQgGNS4f7J/HhNdWaYgmnzp6S7+g8H0Ak5qyTMAIXjpr
+         UxID4FDu1zPKYMJHrpLrBPxjfLD8sGYT4NkQf0UCcgeG1z/Go4ddoglQUpXk8GEm63SW
+         lNVKTh+B42QPg2V3Gb+ymk/q+Td/xAaXAmMGpR+nAzAbG+B38cFBPAaf6bJCNzK6igk/
+         2u/4O0ZGM5VUMRWh+8WKEJpn+udmXxr4V/2zaGkZwQOmzE5q+nW9ajbybXPVbvNF2Yd7
+         vXhw==
+X-Gm-Message-State: AOAM533HiG1wXIeo9xz7uPJ7nKZRPcRvHMmuDOIWMrqFUQ4M8b3RLpvG
+        qf6bCInPpeR+Tt4yUuZghHvcPTuDL9A=
+X-Google-Smtp-Source: ABdhPJzkPuRpZprcjKP2LpapQ65vIvSTlxsa1KjBA/YQ72JJZsDOfcNFIFDDf4Knbtd/nsnI8OiNfA==
+X-Received: by 2002:a7b:cb8f:: with SMTP id m15mr789038wmi.65.1612216948534;
+        Mon, 01 Feb 2021 14:02:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r11sm621335wmh.9.2021.02.01.14.02.26
+        by smtp.gmail.com with ESMTPSA id u6sm29982898wro.75.2021.02.01.14.02.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 14:02:26 -0800 (PST)
-Message-Id: <8de9985a706675ff41a3549ce00dd42a9dc92c88.1612216941.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 14:02:27 -0800 (PST)
+Message-Id: <cdd49f1fdb18b85430c39f65d2a85890abf927e7.1612216941.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.860.git.1612216941.gitgitgadget@gmail.com>
 References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 22:02:13 +0000
-Subject: [PATCH 04/11] p7519: add trace logging during perf test
+Date:   Mon, 01 Feb 2021 22:02:14 +0000
+Subject: [PATCH 05/11] preload-index: log the number of lstat calls to trace2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,123 +75,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add optional trace logging to allow us to better compare performance of
-various fsmonitor providers and compare results with non-fsmonitor runs.
+Report the total number of calls made to lstat() inside preload_index().
 
-Currently, this includes Trace2 logging, but may be extended to include
-other trace targets, such as GIT_TRACE_FSMONITOR if desired.
-
-Using this logging helped me explain an odd behavior on MacOS where the
-kernel was dropping events and causing the hook to Watchman to timeout.
+FSMonitor improves the performance of commands like `git status` by
+avoiding scanning the disk for changed files.  This can be seen in
+`preload_index()`.  Let's measure this.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/.gitignore         |  1 +
- t/perf/Makefile           |  4 ++--
- t/perf/p7519-fsmonitor.sh | 32 ++++++++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 2 deletions(-)
+ preload-index.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/t/perf/.gitignore b/t/perf/.gitignore
-index 982eb8e3a94..72f5d0d3148 100644
---- a/t/perf/.gitignore
-+++ b/t/perf/.gitignore
-@@ -1,3 +1,4 @@
- /build/
- /test-results/
-+/test-trace/
- /trash directory*/
-diff --git a/t/perf/Makefile b/t/perf/Makefile
-index fcb0e8865e4..2465770a782 100644
---- a/t/perf/Makefile
-+++ b/t/perf/Makefile
-@@ -7,10 +7,10 @@ perf: pre-clean
- 	./run
+diff --git a/preload-index.c b/preload-index.c
+index ed6eaa47388..e5529a58636 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -31,6 +31,7 @@ struct thread_data {
+ 	struct pathspec pathspec;
+ 	struct progress_data *progress;
+ 	int offset, nr;
++	int t2_nr_lstat;
+ };
  
- pre-clean:
--	rm -rf test-results
-+	rm -rf test-results test-trace
+ static void *preload_thread(void *_data)
+@@ -73,6 +74,7 @@ static void *preload_thread(void *_data)
+ 			continue;
+ 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
+ 			continue;
++		p->t2_nr_lstat++;
+ 		if (lstat(ce->name, &st))
+ 			continue;
+ 		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY|CE_MATCH_IGNORE_FSMONITOR))
+@@ -98,6 +100,7 @@ void preload_index(struct index_state *index,
+ 	int threads, i, work, offset;
+ 	struct thread_data data[MAX_PARALLEL];
+ 	struct progress_data pd;
++	int t2_sum_lstat = 0;
  
- clean:
--	rm -rf build "trash directory".* test-results
-+	rm -rf build "trash directory".* test-results test-trace
- 
- test-lint:
- 	$(MAKE) -C .. test-lint
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 45bbba3c92f..e6724d3604b 100755
---- a/t/perf/p7519-fsmonitor.sh
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -32,6 +32,8 @@ test_description="Test core.fsmonitor"
- #
- # GIT_PERF_7519_DROP_CACHE: if set, the OS caches are dropped between tests
- #
-+# GIT_PERF_7519_TRACE: if set, enable trace logging during the test.
-+#   Trace logs will be grouped by fsmonitor provider.
- 
- test_perf_large_repo
- test_checkout_worktree
-@@ -70,6 +72,32 @@ then
- 	fi
- fi
- 
-+trace_start() {
-+	if test -n "$GIT_PERF_7519_TRACE"
-+	then
-+		name="$1"
-+		TEST_TRACE_DIR="$TEST_OUTPUT_DIRECTORY/test-trace/p7519/"
-+		echo "Writing trace logging to $TEST_TRACE_DIR"
+ 	if (!HAVE_THREADS || !core_preload_index)
+ 		return;
+@@ -107,6 +110,9 @@ void preload_index(struct index_state *index,
+ 		threads = 2;
+ 	if (threads < 2)
+ 		return;
 +
-+		mkdir -p "$TEST_TRACE_DIR"
++	trace2_region_enter("index", "preload", NULL);
 +
-+		# Start Trace2 logging and any other GIT_TRACE_* logs that you
-+		# want for this named test case.
+ 	trace_performance_enter();
+ 	if (threads > MAX_PARALLEL)
+ 		threads = MAX_PARALLEL;
+@@ -141,10 +147,14 @@ void preload_index(struct index_state *index,
+ 		struct thread_data *p = data+i;
+ 		if (pthread_join(p->pthread, NULL))
+ 			die("unable to join threaded lstat");
++		t2_sum_lstat += p->t2_nr_lstat;
+ 	}
+ 	stop_progress(&pd.progress);
+ 
+ 	trace_performance_leave("preload index");
 +
-+		GIT_TRACE2_PERF="$TEST_TRACE_DIR/$name.trace2perf"
-+		export GIT_TRACE2_PERF
-+
-+		>"$GIT_TRACE2_PERF"
-+	fi
-+}
-+
-+trace_stop() {
-+	if test -n "$GIT_PERF_7519_TRACE"
-+	then
-+		unset GIT_TRACE2_PERF
-+	fi
-+}
-+
- test_expect_success "one time repo setup" '
- 	# set untrackedCache depending on the environment
- 	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-@@ -203,6 +231,7 @@ test_fsmonitor_suite() {
- # such as Watchman.
- #
++	trace2_data_intmax("index", NULL, "preload/sum_lstat", t2_sum_lstat);
++	trace2_region_leave("index", "preload", NULL);
+ }
  
-+trace_start fsmonitor-watchman
- if test -n "$GIT_PERF_7519_FSMONITOR"; then
- 	for INTEGRATION_PATH in $GIT_PERF_7519_FSMONITOR; do
- 		test_expect_success "setup for fsmonitor $INTEGRATION_PATH" 'setup_for_fsmonitor'
-@@ -221,11 +250,13 @@ then
- 	# preventing the removal of the trash directory
- 	watchman shutdown-server >/dev/null 2>&1
- fi
-+trace_stop
- 
- #
- # Run a full set of perf tests with the fsmonitor feature disabled.
- #
- 
-+trace_start fsmonitor-disabled
- test_expect_success "setup without fsmonitor" '
- 	unset INTEGRATION_SCRIPT &&
- 	git config --unset core.fsmonitor &&
-@@ -233,5 +264,6 @@ test_expect_success "setup without fsmonitor" '
- '
- 
- test_fsmonitor_suite
-+trace_stop
- 
- test_done
+ int repo_read_index_preload(struct repository *repo,
 -- 
 gitgitgadget
 
