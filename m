@@ -2,255 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 708E2C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC49C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:55:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 325EC64ECB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:51:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA6E664ECB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhBAUvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 15:51:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229567AbhBAUvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 15:51:04 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE124C061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 12:50:24 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id g69so20309912oib.12
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 12:50:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rWZ8qE94bf3yNVYrmST9KzXqQDXE/6jeaBR57bY6C/0=;
-        b=tF4AmRt6h3Aba5SukEyl46o9thEm3tai4Yf7SCoPccjO/wEOdn8UGRVFrcYWQQL1vY
-         enKb/QxSI/tUDcNP+a2d3CUVYmNrZYpOdZ6pkKXdYuCPkK7Nmj50x0WMsxhio33zypLV
-         Ra2iwxzsdZr4RDg3XC9B2N/fq8AYI2tWwnkColGGweE+XLjJeQXRzJY1GXCg2YJSz+f1
-         L5mNIBXZxqJS7aJyCp2UqkbdwZvQJycAK/CZmvrSBTBaar7gvafhM4x1EojVFvED6O93
-         elDNv3Cc9SILTXbgVxZ9nQRtysfXkK/E3RZ/L+LebZ9KmFgmHzM912ulDQceLfZZJRh4
-         o0zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rWZ8qE94bf3yNVYrmST9KzXqQDXE/6jeaBR57bY6C/0=;
-        b=ZAPdJ5OtYE6iRbiGIFbJv9kFo+IoIh3VZnr4Y3Hu1ZkpeZWSmEidg4/f8NKyTtRgVA
-         pzGzad58lZE2an5ruWESyniMUF50xCtsTO2XvI9h69IOAIcKIWi1XgcOrXb5MXjhbHWA
-         1Xc8gKLB0ukwGfOwA83OX4hCJ6B5Jw99qpg+p/GjcmrI9w4nBBLQ3Jg+5CBQ3IGsXqFj
-         r9m/svDetxZUETVoQaxBiUm2JpA1HjQJyUOxnmJPxpYu5wKFSYPitH6IhMxo0il3b7a5
-         FbaIFoNdax2SjlgGN79k7AwBJyJj88Uy/ok9QKPvRtonnEM3go0eM0GS5q/Ljhslqbci
-         W3lg==
-X-Gm-Message-State: AOAM533sP7ya0Lt+WO/VaiBQmdse1fR6nD89oJN0AOVpUXyfaOgrAc+/
-        D8EmPwS1u2G+HaxLOirgL87Kkrz/vWt2QEYgzKE=
-X-Google-Smtp-Source: ABdhPJx1VNmXs/x1fYSOtEolShENzeT19BamRxHE7gRoC2p2t9h8USDIdX0krm71rfdH73wgJOXXaNlOZy/Y6ej7JVg=
-X-Received: by 2002:aca:a816:: with SMTP id r22mr488062oie.31.1612212623923;
- Mon, 01 Feb 2021 12:50:23 -0800 (PST)
+        id S230094AbhBAUz5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 15:55:57 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57217 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229831AbhBAUz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 15:55:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8857C11EE0E;
+        Mon,  1 Feb 2021 15:55:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ASfYT8iuQChc
+        yND8C9jAjuo4pOU=; b=ZxB384NL44RvhokYDrpZcS65DhWT5ZUt3FVDpucJAiRh
+        73ngKG12Qx4+OFhTTuCYT3JCNgNtg80n/5Cwh4yn3/BFHa0vq5U/veZeGORK4FeI
+        +4gtReeXiHRvPjzT91ptfo3NsPahcuk2GktPhMjrLRn53LPaWPot3DOsrk2F5/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Swsbu6
+        6bHtWo2OOcykXVivzFDDeqkD0zfVgRsc3sc0tZKWSS2bIBgrRm9XrC8RhpMzpTW3
+        IvUDQzzhg7Fklt3ZR73jk7EA55qPIOm1tnmBOfRBGpPJjGJI3H7/cb8gv/sLe31L
+        hQijqtMygbJK+lWeaO0UtxrR1VFsLxr2zaNU4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 814DC11EE0D;
+        Mon,  1 Feb 2021 15:55:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CBBA111EE0C;
+        Mon,  1 Feb 2021 15:55:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Vincent Lefevre <vincent@vinc17.net>
+Subject: Re: [PATCH] pager: exit without error on SIGPIPE
+References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
+        <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
+        <87czxjomn8.fsf@evledraar.gmail.com>
+        <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
+        <87wnvrefbv.fsf@evledraar.gmail.com>
+Date:   Mon, 01 Feb 2021 12:55:09 -0800
+In-Reply-To: <87wnvrefbv.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 01 Feb 2021 20:52:04 +0100")
+Message-ID: <xmqq8s87ld8y.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <45cf57c9c40bebb7383b8aab19c82fc4e41d2cd3.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <45cf57c9c40bebb7383b8aab19c82fc4e41d2cd3.1611596534.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Feb 2021 12:50:12 -0800
-Message-ID: <CABPp-BEjm1NJ8GAn6iKJDvgFYw7mMrR8T66RZtUi6nwgPcXRHQ@mail.gmail.com>
-Subject: Re: [PATCH 16/27] unpack-trees: make sparse aware
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C60A1134-64CF-11EB-8CA1-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> As a first step to integrate 'git status' and 'git add' with the sparse
-> index, we must start integrating unpack_trees() with sparse directory
-> entries. These changes are currently impossible to trigger because
-> unpack_trees() calls ensure_full_index() if command_requires_full_index
-> is true. This is the case for all commands at the moment. As we expand
-> more commands to be sparse-aware, we might find that more changes are
-> required to unpack_trees(). The current changes will suffice for
-> 'status' and 'add'.
->
-> unpack_trees() calls the traverse_trees() API using unpack_callback()
-> to decide if we should recurse into a subtree. We must add new abilities
-> to skip a subtree if it corresponds to a sparse directory entry.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Makes sense.
-
-> It is important to be careful about the trailing directory separator
-> that exists in the sparse directory entries but not in the subtree
-> paths.
-
-The comment makes me wonder if leaving the trailing directory
-separator out would be better, as it'd allow direct comparisons.  Of
-course, you have a better idea of what is easier or harder based on
-this decision.  Is there any chance you have a quick list of the
-places that the code was simplified by this decision and a list of
-places like this one that were made slightly harder?
-
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  dir.h           |  2 +-
->  preload-index.c |  2 ++
->  read-cache.c    |  3 +++
->  unpack-trees.c  | 24 ++++++++++++++++++++++--
->  4 files changed, 28 insertions(+), 3 deletions(-)
+>> Would it be the matter of propagating the exit status of the pager
+>> noticed by wait_or_white() down thru finish_command_in_signal() and
+>> wait_for_pager(1) to here, so
+>>
+>>  - If we know pager exited with non-zero status, we would report,
+>>    perhaps with warning(_("..."));
+>>
+>>  - If we notice we got a SIGPIPE, we ignore it---it is nothing of
+>>    interest to the end-user;
+>>
+>>  - Otherwise we do not do anything differently.
+>>
+>> would be sufficient?  Implementors of "git -p" may know that "git"
+>> happens to implement its paging by piping its output to an external
+>> pager, but the end-users do not care.  Implementors may say they are
+>> giving 'q' to their pager "less", but to the end-users, who report
+>> "I ran 'git log' and after reading a pageful, I told it to 'q'uit",
+>> the distinction does not have any importance.
+>>
+>> Or are there more to it, in that the exit status we get from the
+>> pager, combined with the kind of signal we are getting, is not
+>> sufficient for us to tell what is going on?
 >
-> diff --git a/dir.h b/dir.h
-> index facfae47402..300305ec335 100644
-> --- a/dir.h
-> +++ b/dir.h
-> @@ -503,7 +503,7 @@ static inline int ce_path_match(const struct index_state *istate,
->                                 char *seen)
->  {
->         return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
-> -                             S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
-> +                             S_ISSPARSEDIR(ce) || S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
+> It is, I just wonder if ignoring the exit code is a practical issue as
+> long as we're not clobbering SIGPIPE, particularly with my trace2
+> logging patch in this thread.
+>
+> But yeah, we could patch git to handle this in the general case....
 
-I think this hunk becomes unnecessary if you use ce_mode = 040000 for
-sparse directory entries.
+Sorry, but now you lost me.
 
->  }
->
->  static inline int dir_path_match(const struct index_state *istate,
-> diff --git a/preload-index.c b/preload-index.c
-> index ed6eaa47388..323fc8c5100 100644
-> --- a/preload-index.c
-> +++ b/preload-index.c
-> @@ -54,6 +54,8 @@ static void *preload_thread(void *_data)
->                         continue;
->                 if (S_ISGITLINK(ce->ce_mode))
->                         continue;
-> +               if (S_ISSPARSEDIR(ce))
-> +                       continue;
->                 if (ce_uptodate(ce))
->                         continue;
->                 if (ce_skip_worktree(ce))
-> diff --git a/read-cache.c b/read-cache.c
-> index 65679d70d7c..ab0c2b86ec0 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1572,6 +1572,9 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->                 if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
->                         continue;
->
-> +               if (istate->sparse_index && S_ISSPARSEDIR(ce))
-> +                       continue;
-> +
->                 if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
->                         filtered = 1;
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index b324eec2a5d..90644856a80 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -583,6 +583,13 @@ static void mark_ce_used(struct cache_entry *ce, struct unpack_trees_options *o)
->  {
->         ce->ce_flags |= CE_UNPACKED;
->
-> +       /*
-> +        * If this is a sparse directory, don't advance cache_bottom.
-> +        * That will be advanced later using the cache-tree data.
-> +        */
-> +       if (S_ISSPARSEDIR(ce))
-> +               return;
+I was merely wondering if Denton's patch can become a small update
+on top of these, if we just made sure that the exit code of the
+pager noticed by wait_or_whine() is reported to the code where
+Denton makes the decision to say "let's not re-raise but simply exit
+with 0 return as what we got is SIGPIPE".  I guess we could even
+make git exit with the pager's return code in that case, as the
+end-user observable result would be similar to "git log | less"
+where 'less' may be segfaulting or exiting cleanly.
 
-I don't grok the cache_bottom stuff -- in general, nothing specific
-about your patch.  But since I don't grok that stuff, it means I don't
-understand how your comment here relates; you may want to ping another
-reviewer about this portion of the patch.
+IOW, something like this on top of your three-patch series?
 
-> +
->         if (o->cache_bottom < o->src_index->cache_nr &&
->             o->src_index->cache[o->cache_bottom] == ce) {
->                 int bottom = o->cache_bottom;
-> @@ -980,6 +987,9 @@ static int do_compare_entry(const struct cache_entry *ce,
->         ce_len -= pathlen;
->         ce_name = ce->name + pathlen;
->
-> +       /* remove directory separator if a sparse directory entry */
-> +       if (S_ISSPARSEDIR(ce))
-> +               ce_len--;
+ pager.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Here's where your comment about trailing separator comes in; makes sense.
-
->         return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
->  }
->
-> @@ -989,6 +999,10 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
->         if (cmp)
->                 return cmp;
->
-> +       /* If ce is a sparse directory, then allow equality here. */
-> +       if (S_ISSPARSEDIR(ce))
-> +               return 0;
-> +
-
-This seems surprising to me.  Is there a chance you are comparing
-sparse directory A with sparse directory B and you return with
-equality?  Or sparse_directory A with regular file B?  Do the callers
-still do the right thing?  If your code change here is right, it seems
-like it deserves an extra comment either in the code or the commit
-message.
-
->         /*
->          * Even if the beginning compared identically, the ce should
->          * compare as bigger than a directory leading up to it!
-> @@ -1239,6 +1253,7 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->         struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
->         struct unpack_trees_options *o = info->data;
->         const struct name_entry *p = names;
-> +       unsigned recurse = 1;
->
->         /* Find first entry with a real name (we could use "mask" too) */
->         while (!p->mode)
-> @@ -1280,12 +1295,16 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->                                         }
->                                 }
->                                 src[0] = ce;
-> +
-> +                               if (S_ISSPARSEDIR(ce))
-> +                                       recurse = 0;
->                         }
->                         break;
->                 }
->         }
->
-> -       if (unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
-> +       if (recurse &&
-> +           unpack_nondirectories(n, mask, dirmask, src, names, info) < 0)
->                 return -1;
->
->         if (o->merge && src[0]) {
-> @@ -1315,7 +1334,8 @@ static int unpack_callback(int n, unsigned long mask, unsigned long dirmask, str
->                         }
->                 }
->
-> -               if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
-> +               if (recurse &&
-> +                   traverse_trees_recursive(n, dirmask, mask & ~dirmask,
->                                              names, info) < 0)
->                         return -1;
->                 return mask;
-
-The unpack_callback() code has some comparison to a cache-tree, but
-I'd assume that you'd need to update cache-tree.c somewhat to take
-advantage of these sparse directory entries.  Am I wrong, and you just
-get cache-tree.c working with sparse directory entries for free?  Or
-is this something coming in a later patch?
+diff --git c/pager.c w/pager.c
+index 3d37dd7ada..73bc5fc0e4 100644
+--- c/pager.c
++++ w/pager.c
+@@ -28,8 +28,14 @@ static void wait_for_pager_atexit(void)
+=20
+ static void wait_for_pager_signal(int signo)
+ {
++	int status;
++
+ 	close_pager_fds();
+-	finish_command_in_signal(&pager_process);
++	status =3D finish_command_in_signal(&pager_process);
++
++	if (signo =3D=3D SIGPIPE)
++		exit(status);
++
+ 	sigchain_pop(signo);
+ 	raise(signo);
+ }
