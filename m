@@ -5,64 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7211C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD450C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8307164E35
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 854D764E31
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231516AbhBAHAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 02:00:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44638 "EHLO
+        id S231530AbhBAHAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 02:00:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230224AbhBAHAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230273AbhBAHAQ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 1 Feb 2021 02:00:16 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4E4C06178A
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:58 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id f16so11619624wmq.5
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:58 -0800 (PST)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D0FC06178C
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:59:01 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id l12so15340471wry.2
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MLHCfKST6sbi5X1s5XvAFO8baFBf4VFen9s1WclrfWw=;
-        b=HTANDkoa9YQiCkhWMmuwGbMuvNkazRXGrhvDCJf/kBMquO9JRnQzXsfgCo+a9ZVDiv
-         ZTDUUsGFpv8eTMKURbXDLpNE6TqRwKmjriKs/dlhUYmWc9F2zCmP7icHyJYYcM9eNBTe
-         AAgly/HgFCyT8m27G1VXNoHAdW3cDCIOhXAKm9cvCYxPo24OPu7Eltz/mb3VJTqiqr70
-         sV3FXiSCKzrEqYgrpj4psnyK46xECwfVn84+fu2/driMrdRZBMA2BOFT4up6LKNY5/EA
-         NoRxspWDEnF3evG3k78Lglmq8pyCqAvuxTsTAzaZC/rtMJzcQZ+mGuadUmTlUd52HnmM
-         N6Zw==
+        bh=UYJgOKWJ/XWhk8Iv45XU12uhxalFQCYx0vedEBag57A=;
+        b=dsQC4ypQV9wgBhGcLh8evjUTWCEaPBg5FzFCvDSV+UJILtpiiKqzcNHCPfG+vXWlLy
+         r1shfW89T981muqFNO+mQr/PJrmuV5qKbxcP4zzDX13ltSWBYL9zMZF0IC9TXthsGRZH
+         HdWPwXVnEzafS3fKXj4KhIu9B6Hfpa59WA9V3hN1Mw4/Cs0XKHCCpscyn8TGaVDGFOYv
+         aI4z4tho6uALEk7GjLhPyoq5tC05X5t/iFcxZVdaNiSFSu2IPQmwbBrZNQ/CFos2Tpr8
+         vdtl81D9C3iRvuILcuk3D7vgBztmfjaUvk6BjgNcRcYWDMyCadA2gBhKV9LZSeloR0gm
+         Y3aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MLHCfKST6sbi5X1s5XvAFO8baFBf4VFen9s1WclrfWw=;
-        b=qF0Xzn3gh359cKZ+ROvXMOopoogLWbWzFpulvPMD8N4TePxNMlTU94AbHh0MLwe8l4
-         i1uryuzpEn4LKPAPHGMBYChyxh09Hum7GVdQCgS5jNVfew6MhPkJIXqJ9BWxs+Y4bSfM
-         NusVoH697z32UQpNgQUtJVe2t60p2h84mLm/n5l45N78nK51InlDpYRwtOlT1ohmmhkG
-         RstJSJ7JEv4VQBT/Kpt8a909o4G2ngeULCJAH9/AdaALFZ6YcSg5kvKMmZJb08akI8nw
-         0GnKazndro1hOKXQwtjpy9PW08KTSv3Hkwed2ySp9EqwAw0EL+ZMEW/gVWzLROsVwlcD
-         eWUw==
-X-Gm-Message-State: AOAM533k+ATBV7I7JvjE62fq43CfvH8B1LE60mr/MsYeS8dsbZmqHTz6
-        1b0p9g0nSPyM4mf26dMzQN1OAgXqHd4=
-X-Google-Smtp-Source: ABdhPJxC8dSQp6AZe3IQiMyJtbtikECE09EJIl8q97floD+12qK1pGEO0SEF1LhDVAyuwuYQxQZ3/A==
-X-Received: by 2002:a1c:7d41:: with SMTP id y62mr6956990wmc.139.1612162737389;
-        Sun, 31 Jan 2021 22:58:57 -0800 (PST)
+        bh=UYJgOKWJ/XWhk8Iv45XU12uhxalFQCYx0vedEBag57A=;
+        b=d7SfOsLepUkRxD9LvaP/JmqSIS8DZgFndRUBsIg82cRMjQB3k1pgeULKcxAT6okfbA
+         SAHZShL4quep3VReLCYdwZojnmAuGEhhKlwWPxqEpahcMFFQz4F0atKeC0FxJD9uPpyx
+         xyjRloIPFS7x8eu2egaTW28JRlFago3eSc88uZZbKXnnAOVjknApJQJPjBaNcUaJJZ5t
+         GTwwkD0XZD5n80kTvm1VLVAsCZpyPXLxLcf4Ma15OAGCKkdT43jMcQfQ2VumeUfrICKL
+         ZDZgxTInfUTbCN4FN7tay907cPM5YH3j6RzfFU7jOEV/bAUGUkaLVPtzjCdkwvdOq//Q
+         S2DQ==
+X-Gm-Message-State: AOAM531DeqI2Uc27fCK3ABVcnEpwfc/XdUsYEWUjRREuXbJuB7FD7ISd
+        yWslSoaLv3JzgYYq3lyaprtmH1zsZeg=
+X-Google-Smtp-Source: ABdhPJzRdyKgrnS8zsBCbdXdGBw5htyZ3uaMBvVZSIx1dsawGc7oL89/DA0WV3YcGumJq63akuH66Q==
+X-Received: by 2002:a5d:470f:: with SMTP id y15mr16247362wrq.187.1612162739583;
+        Sun, 31 Jan 2021 22:58:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t18sm21828230wrr.56.2021.01.31.22.58.56
+        by smtp.gmail.com with ESMTPSA id v25sm20517098wmh.4.2021.01.31.22.58.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Jan 2021 22:58:56 -0800 (PST)
-Message-Id: <ec598f1d500b542953e8786f67f35115c2b29fec.1612162726.git.gitgitgadget@gmail.com>
+        Sun, 31 Jan 2021 22:58:58 -0800 (PST)
+Message-Id: <07a88f1aae6f7f7812ab7a5937eac73131c2139e.1612162726.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 References: <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
         <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 06:58:42 +0000
-Subject: [PATCH v7 08/11] commit-graph: implement corrected commit date
+Date:   Mon, 01 Feb 2021 06:58:44 +0000
+Subject: [PATCH v7 10/11] commit-graph: use generation v2 only if entire chain
+ does
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,102 +82,334 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-With most of preparations done, let's implement corrected commit date.
+Since there are released versions of Git that understand generation
+numbers in the commit-graph's CDAT chunk but do not understand the GDAT
+chunk, the following scenario is possible:
 
-The corrected commit date for a commit is defined as:
+1. "New" Git writes a commit-graph with the GDAT chunk.
+2. "Old" Git writes a split commit-graph on top without a GDAT chunk.
 
-* A commit with no parents (a root commit) has corrected commit date
-  equal to its committer date.
-* A commit with at least one parent has corrected commit date equal to
-  the maximum of its commit date and one more than the largest corrected
-  commit date among its parents.
+If each layer of split commit-graph is treated independently, as it was
+the case before this commit, with Git inspecting only the current layer
+for chunk_generation_data pointer, commits in the lower layer (one with
+GDAT) whould have corrected commit date as their generation number,
+while commits in the upper layer would have topological levels as their
+generation. Corrected commit dates usually have much larger values than
+topological levels. This means that if we take two commits, one from the
+upper layer, and one reachable from it in the lower layer, then the
+expectation that the generation of a parent is smaller than the
+generation of a child would be violated.
 
-As a special case, a root commit with timestamp of zero (01.01.1970
-00:00:00Z) has corrected commit date of one, to be able to distinguish
-from GENERATION_NUMBER_ZERO (that is, an uncomputed corrected commit
-date).
+It is difficult to expose this issue in a test. Since we _start_ with
+artificially low generation numbers, any commit walk that prioritizes
+generation numbers will walk all of the commits with high generation
+number before walking the commits with low generation number. In all the
+cases I tried, the commit-graph layers themselves "protect" any
+incorrect behavior since none of the commits in the lower layer can
+reach the commits in the upper layer.
 
-To minimize the space required to store corrected commit date, Git
-stores corrected commit date offsets into the commit-graph file. The
-corrected commit date offset for a commit is defined as the difference
-between its corrected commit date and actual commit date.
+This issue would manifest itself as a performance problem in this case,
+especially with something like "git log --graph" since the low
+generation numbers would cause the in-degree queue to walk all of the
+commits in the lower layer before allowing the topo-order queue to write
+anything to output (depending on the size of the upper layer).
 
-Storing corrected commit date requires sizeof(timestamp_t) bytes, which
-in most cases is 64 bits (uintmax_t). However, corrected commit date
-offsets can be safely stored using only 32-bits. This halves the size
-of GDAT chunk, which is a reduction of around 6% in the size of
-commit-graph file.
+Therefore, When writing the new layer in split commit-graph, we write a
+GDAT chunk only if the topmost layer has a GDAT chunk. This guarantees
+that if a layer has GDAT chunk, all lower layers must have a GDAT chunk
+as well.
 
-However, using offsets be problematic if a commit is malformed but valid
-and has committer date of 0 Unix time, as the offset would be the same
-as corrected commit date and thus require 64-bits to be stored properly.
+Rewriting layers follows similar approach: if the topmost layer below
+the set of layers being rewritten (in the split commit-graph chain)
+exists, and it does not contain GDAT chunk, then the result of rewrite
+does not have GDAT chunks either.
 
-While Git does not write out offsets at this stage, Git stores the
-corrected commit dates in member generation of struct commit_graph_data.
-It will begin writing commit date offsets with the introduction of
-generation data chunk.
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ commit-graph.c                |  30 +++++-
+ commit-graph.h                |   1 +
+ t/t5324-split-commit-graph.sh | 181 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 210 insertions(+), 2 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 8f17815021d..d1e6ced8647 100644
+index d2afcc83283..77fef5a240e 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1343,9 +1343,11 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 					ctx->commits.nr);
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		uint32_t level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
-+		timestamp_t corrected_commit_date = commit_graph_data_at(ctx->commits.list[i])->generation;
+@@ -614,6 +614,21 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	return graph_chain;
+ }
  
- 		display_progress(ctx->progress, i + 1);
--		if (level != GENERATION_NUMBER_ZERO)
-+		if (level != GENERATION_NUMBER_ZERO &&
-+		    corrected_commit_date != GENERATION_NUMBER_ZERO)
- 			continue;
- 
- 		commit_list_insert(ctx->commits.list[i], &list);
-@@ -1354,17 +1356,24 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 			struct commit_list *parent;
- 			int all_parents_computed = 1;
- 			uint32_t max_level = 0;
-+			timestamp_t max_corrected_commit_date = 0;
- 
- 			for (parent = current->parents; parent; parent = parent->next) {
- 				level = *topo_level_slab_at(ctx->topo_levels, parent->item);
-+				corrected_commit_date = commit_graph_data_at(parent->item)->generation;
- 
--				if (level == GENERATION_NUMBER_ZERO) {
-+				if (level == GENERATION_NUMBER_ZERO ||
-+				    corrected_commit_date == GENERATION_NUMBER_ZERO) {
- 					all_parents_computed = 0;
- 					commit_list_insert(parent->item, &list);
- 					break;
--				} else if (level > max_level) {
--					max_level = level;
- 				}
++static void validate_mixed_generation_chain(struct commit_graph *g)
++{
++	int read_generation_data;
 +
-+				if (level > max_level)
-+					max_level = level;
++	if (!g)
++		return;
 +
-+				if (corrected_commit_date > max_corrected_commit_date)
-+					max_corrected_commit_date = corrected_commit_date;
- 			}
++	read_generation_data = !!g->chunk_generation_data;
++
++	while (g) {
++		g->read_generation_data = read_generation_data;
++		g = g->base_graph;
++	}
++}
++
+ struct commit_graph *read_commit_graph_one(struct repository *r,
+ 					   struct object_directory *odb)
+ {
+@@ -622,6 +637,8 @@ struct commit_graph *read_commit_graph_one(struct repository *r,
+ 	if (!g)
+ 		g = load_commit_graph_chain(r, odb);
  
- 			if (all_parents_computed) {
-@@ -1373,6 +1382,10 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 				if (max_level > GENERATION_NUMBER_V1_MAX - 1)
- 					max_level = GENERATION_NUMBER_V1_MAX - 1;
- 				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
++	validate_mixed_generation_chain(g);
 +
-+				if (current->date && current->date > max_corrected_commit_date)
-+					max_corrected_commit_date = current->date - 1;
-+				commit_graph_data_at(current)->generation = max_corrected_commit_date + 1;
- 			}
- 		}
+ 	return g;
+ }
+ 
+@@ -791,7 +808,7 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 	date_low = get_be32(commit_data + g->hash_len + 12);
+ 	item->date = (timestamp_t)((date_high << 32) | date_low);
+ 
+-	if (g->chunk_generation_data) {
++	if (g->read_generation_data) {
+ 		offset = (timestamp_t)get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
+ 
+ 		if (offset & CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW) {
+@@ -2019,6 +2036,13 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
+ 		if (i < ctx->num_commit_graphs_after)
+ 			ctx->commit_graph_hash_after[i] = xstrdup(oid_to_hex(&g->oid));
+ 
++		/*
++		 * If the topmost remaining layer has generation data chunk, the
++		 * resultant layer also has generation data chunk.
++		 */
++		if (i == ctx->num_commit_graphs_after - 2)
++			ctx->write_generation_data = !!g->chunk_generation_data;
++
+ 		i--;
+ 		g = g->base_graph;
  	}
+@@ -2343,6 +2367,8 @@ int write_commit_graph(struct object_directory *odb,
+ 	} else
+ 		ctx->num_commit_graphs_after = 1;
+ 
++	validate_mixed_generation_chain(ctx->r->objects->commit_graph);
++
+ 	compute_generation_numbers(ctx);
+ 
+ 	if (ctx->changed_paths)
+@@ -2541,7 +2567,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+ 		 * also GENERATION_NUMBER_V1_MAX. Decrement to avoid extra logic
+ 		 * in the following condition.
+ 		 */
+-		if (!g->chunk_generation_data && max_generation == GENERATION_NUMBER_V1_MAX)
++		if (!g->read_generation_data && max_generation == GENERATION_NUMBER_V1_MAX)
+ 			max_generation--;
+ 
+ 		generation = commit_graph_generation(graph_commit);
+diff --git a/commit-graph.h b/commit-graph.h
+index 19a02001fde..ad52130883b 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -64,6 +64,7 @@ struct commit_graph {
+ 	struct object_directory *odb;
+ 
+ 	uint32_t num_commits_in_base;
++	unsigned int read_generation_data;
+ 	struct commit_graph *base_graph;
+ 
+ 	const uint32_t *chunk_oid_fanout;
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 587757b62d9..8e90f3423b8 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -453,4 +453,185 @@ test_expect_success 'prevent regression for duplicate commits across layers' '
+ 	git -C dup commit-graph verify
+ '
+ 
++NUM_FIRST_LAYER_COMMITS=64
++NUM_SECOND_LAYER_COMMITS=16
++NUM_THIRD_LAYER_COMMITS=7
++NUM_FOURTH_LAYER_COMMITS=8
++NUM_FIFTH_LAYER_COMMITS=16
++SECOND_LAYER_SEQUENCE_START=$(($NUM_FIRST_LAYER_COMMITS + 1))
++SECOND_LAYER_SEQUENCE_END=$(($SECOND_LAYER_SEQUENCE_START + $NUM_SECOND_LAYER_COMMITS - 1))
++THIRD_LAYER_SEQUENCE_START=$(($SECOND_LAYER_SEQUENCE_END + 1))
++THIRD_LAYER_SEQUENCE_END=$(($THIRD_LAYER_SEQUENCE_START + $NUM_THIRD_LAYER_COMMITS - 1))
++FOURTH_LAYER_SEQUENCE_START=$(($THIRD_LAYER_SEQUENCE_END + 1))
++FOURTH_LAYER_SEQUENCE_END=$(($FOURTH_LAYER_SEQUENCE_START + $NUM_FOURTH_LAYER_COMMITS - 1))
++FIFTH_LAYER_SEQUENCE_START=$(($FOURTH_LAYER_SEQUENCE_END + 1))
++FIFTH_LAYER_SEQUENCE_END=$(($FIFTH_LAYER_SEQUENCE_START + $NUM_FIFTH_LAYER_COMMITS - 1))
++
++# Current split graph chain:
++#
++#     16 commits (No GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++test_expect_success 'setup repo for mixed generation commit-graph-chain' '
++	graphdir=".git/objects/info/commit-graphs" &&
++	test_oid_cache <<-EOF &&
++	oid_version sha1:1
++	oid_version sha256:2
++	EOF
++	git init mixed &&
++	(
++		cd mixed &&
++		git config core.commitGraph true &&
++		git config gc.writeCommitGraph false &&
++		for i in $(test_seq $NUM_FIRST_LAYER_COMMITS)
++		do
++			test_commit $i &&
++			git branch commits/$i || return 1
++		done &&
++		git commit-graph write --reachable --split &&
++		graph_read_expect $NUM_FIRST_LAYER_COMMITS &&
++		test_line_count = 1 $graphdir/commit-graph-chain &&
++		for i in $(test_seq $SECOND_LAYER_SEQUENCE_START $SECOND_LAYER_SEQUENCE_END)
++		do
++			test_commit $i &&
++			git branch commits/$i || return 1
++		done &&
++		GIT_TEST_COMMIT_GRAPH_NO_GDAT=1 git commit-graph write --reachable --split=no-merge &&
++		test_line_count = 2 $graphdir/commit-graph-chain &&
++		test-tool read-graph >output &&
++		cat >expect <<-EOF &&
++		header: 43475048 1 $(test_oid oid_version) 4 1
++		num_commits: $NUM_SECOND_LAYER_COMMITS
++		chunks: oid_fanout oid_lookup commit_metadata
++		EOF
++		test_cmp expect output &&
++		git commit-graph verify &&
++		cat $graphdir/commit-graph-chain
++	)
++'
++
++# The new layer will be added without generation data chunk as it was not
++# present on the layer underneath it.
++#
++#      7 commits (No GDAT)
++# ------------------------
++#     16 commits (No GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++test_expect_success 'do not write generation data chunk if not present on existing tip' '
++	git clone mixed mixed-no-gdat &&
++	(
++		cd mixed-no-gdat &&
++		for i in $(test_seq $THIRD_LAYER_SEQUENCE_START $THIRD_LAYER_SEQUENCE_END)
++		do
++			test_commit $i &&
++			git branch commits/$i || return 1
++		done &&
++		git commit-graph write --reachable --split=no-merge &&
++		test_line_count = 3 $graphdir/commit-graph-chain &&
++		test-tool read-graph >output &&
++		cat >expect <<-EOF &&
++		header: 43475048 1 $(test_oid oid_version) 4 2
++		num_commits: $NUM_THIRD_LAYER_COMMITS
++		chunks: oid_fanout oid_lookup commit_metadata
++		EOF
++		test_cmp expect output &&
++		git commit-graph verify
++	)
++'
++
++# Number of commits in each layer of the split-commit graph before merge:
++#
++#      8 commits (No GDAT)
++# ------------------------
++#      7 commits (No GDAT)
++# ------------------------
++#     16 commits (No GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++# The top two layers are merged and do not have generation data chunk as layer below them does
++# not have generation data chunk.
++#
++#     15 commits (No GDAT)
++# ------------------------
++#     16 commits (No GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++test_expect_success 'do not write generation data chunk if the topmost remaining layer does not have generation data chunk' '
++	git clone mixed-no-gdat mixed-merge-no-gdat &&
++	(
++		cd mixed-merge-no-gdat &&
++		for i in $(test_seq $FOURTH_LAYER_SEQUENCE_START $FOURTH_LAYER_SEQUENCE_END)
++		do
++			test_commit $i &&
++			git branch commits/$i || return 1
++		done &&
++		git commit-graph write --reachable --split --size-multiple 1 &&
++		test_line_count = 3 $graphdir/commit-graph-chain &&
++		test-tool read-graph >output &&
++		cat >expect <<-EOF &&
++		header: 43475048 1 $(test_oid oid_version) 4 2
++		num_commits: $(($NUM_THIRD_LAYER_COMMITS + $NUM_FOURTH_LAYER_COMMITS))
++		chunks: oid_fanout oid_lookup commit_metadata
++		EOF
++		test_cmp expect output &&
++		git commit-graph verify
++	)
++'
++
++# Number of commits in each layer of the split-commit graph before merge:
++#
++#     16 commits (No GDAT)
++# ------------------------
++#     15 commits (No GDAT)
++# ------------------------
++#     16 commits (No GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++# The top three layers are merged and has generation data chunk as the topmost remaining layer
++# has generation data chunk.
++#
++#     47 commits (GDAT)
++# ------------------------
++#     64 commits (GDAT)
++#
++test_expect_success 'write generation data chunk if topmost remaining layer has generation data chunk' '
++	git clone mixed-merge-no-gdat mixed-merge-gdat &&
++	(
++		cd mixed-merge-gdat &&
++		for i in $(test_seq $FIFTH_LAYER_SEQUENCE_START $FIFTH_LAYER_SEQUENCE_END)
++		do
++			test_commit $i &&
++			git branch commits/$i || return 1
++		done &&
++		git commit-graph write --reachable --split --size-multiple 1 &&
++		test_line_count = 2 $graphdir/commit-graph-chain &&
++		test-tool read-graph >output &&
++		cat >expect <<-EOF &&
++		header: 43475048 1 $(test_oid oid_version) 5 1
++		num_commits: $(($NUM_SECOND_LAYER_COMMITS + $NUM_THIRD_LAYER_COMMITS + $NUM_FOURTH_LAYER_COMMITS + $NUM_FIFTH_LAYER_COMMITS))
++		chunks: oid_fanout oid_lookup commit_metadata generation_data
++		EOF
++		test_cmp expect output
++	)
++'
++
++test_expect_success 'write generation data chunk when commit-graph chain is replaced' '
++	git clone mixed mixed-replace &&
++	(
++		cd mixed-replace &&
++		git commit-graph write --reachable --split=replace &&
++		test_path_is_file $graphdir/commit-graph-chain &&
++		test_line_count = 1 $graphdir/commit-graph-chain &&
++		verify_chain_files_exist $graphdir &&
++		graph_read_expect $(($NUM_FIRST_LAYER_COMMITS + $NUM_SECOND_LAYER_COMMITS)) &&
++		git commit-graph verify
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
 
