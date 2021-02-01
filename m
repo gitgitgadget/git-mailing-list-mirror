@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEE19C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 23:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C231CC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 23:25:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9233764E7A
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 23:22:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9605264EBD
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 23:25:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbhBAXW2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 18:22:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
+        id S230264AbhBAXZi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 18:25:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230178AbhBAXWY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 18:22:24 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BCD6C061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 15:21:44 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id t25so7974918otc.5
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 15:21:44 -0800 (PST)
+        with ESMTP id S230438AbhBAXZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 18:25:33 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4B4C0613D6
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 15:24:53 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id h192so20817347oib.1
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 15:24:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0a3baMn+9OU5RbriCeI8d4q+25+YnhJ7SeSMEKQgEBU=;
-        b=kpKEcqlsxc6Dj7RQqdUQ0PmY8UWuSyUH1hsbT4exIm+gHJhehhjk2hX3wrzTuO8RgR
-         zQm0QQPhMRZDoLHuAqRZFZIO2KZ6YzmuF3ibZqR/0IxUVLTJ9ZNBK7/FWlngDPOcoxWy
-         JBUiJBuJWLrUe11UTxoK+VkYXusP2Ef7S3Rrvg7Hqu1Hpu4vQetGE1JItLUxxmf9Qosi
-         q+ZPpoQP0AD3ZHIQLG+CnmKG2Kwj2yMOKWurEIteztlf3jvPXFWWOrmvMR6kGcsHMYwe
-         QHV/JMbFBgTpT/012RTqVIZ/miVHtTDoqQXLtLwn6p43IVtV07pUVevjnHFGow935lIK
-         CQhw==
+        bh=l6ysMNoJe8v6cYVsM2C6GGhI5NldC3sfhhKwaDyvqpE=;
+        b=oNwWgHz0hnk2vs0ZISWDl603OSaSKZOE70rMkErQZ9SOpRMijZHF9LGCFbBeM+3kDm
+         2e1DOKYeO5DTjD46ZBsqIXc71uckJ01FgHCUVxLa1zrhIpBB5aJ2eNigOfIxG9fhMEph
+         B3vZAcGzIwf+K5rb3JzIdbyKo913/WoqbuYwNl4nyHltcUPmA+3eIkEOD+vVwH0znTPS
+         kXS50qwpHP05rMZsEw5gBMKVLacK1tSUdOvmbkHxs4b5eVSDDfsaxfp+bz7QltDvflyw
+         cEbJvvVaorLo9Ish3dHNm6DR04p82FsaNn4gxs+zmOssLAa8vH6xoSWQGdvrmIJc9Aiu
+         646w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0a3baMn+9OU5RbriCeI8d4q+25+YnhJ7SeSMEKQgEBU=;
-        b=ADKnctZnMcBMacKH+umBG0o8wzKqOqUiwWgx/k3hMXnJWHCYESQ0h/PlrjIxRFzcS0
-         IDd9OCcCL8EwL9B9DZZMf5VseEwDizuQbXpLzjn11z9sTJkghEyQz7/ZNb27r/6Fzdl8
-         W2Kl+KV80n21qxAKJW/kcK5pql0aZ28e6FfIeBs0Vab3dagz9yAMkyMNnmjs0vBCSB3F
-         6PQkfiWWun8eWxwLrduFzbMkd4uHS8SNd5Oxe204YXKB1bHAFKpN95vl4T+/2QiuYzGA
-         wqnXNdJf7lRB/TiiWVtb14BWXmWK+LJroopl78W9e5gswT8pVv2svp3O9crgi0NgeosY
-         YugQ==
-X-Gm-Message-State: AOAM532OJEgPYRJxkhYwQMfm8yBz7ekbh1AVsMfndzegBAIPr7e/wZTa
-        bpMQQ4bpEe9bE+YOdMU4R6uOkIZoBo0B6aJJSVM=
-X-Google-Smtp-Source: ABdhPJyMUg8zMPTfa4igALNVJAnk3pVml0ISHQ8EHGNEWTzLA1xmvwWcFKKQHSAPmEM6QBraKHlaFk1PyZAPSwpafes=
-X-Received: by 2002:a05:6830:402f:: with SMTP id i15mr13193989ots.345.1612221703873;
- Mon, 01 Feb 2021 15:21:43 -0800 (PST)
+        bh=l6ysMNoJe8v6cYVsM2C6GGhI5NldC3sfhhKwaDyvqpE=;
+        b=nkjfdZ1bteAEgdTfxZyP1o9NPI7m2jpVUJ+1Yc1JNqOYKVzvooVsxYvnFtPfqVd18A
+         9YqHt7gQJIHokhNnCAichY5z/SsaYyPq1i2OEzVle9zj9L2f27tLw3c5+yhI236FQ0pm
+         6K8GV/Ba2hMVTugu2syChvlJQXGWHfKXai7QqVp1oSiyVs5E0aPgv1jCVSx++ZKfZqe8
+         wEqdLgrEiNOYeUWk01qiKrGxK/jvSHkUkDn1qL79GR7dBBq34eHPobvIRCi3m2XeyOtP
+         PJhW4q62ciFANVrQ00bfTjD9aOfWD+TL6ngvEFzHTPAIRNbrwGxlzXfECoE6Nb8v/zNN
+         6EtA==
+X-Gm-Message-State: AOAM530YTLjd0M3iu/f7VrWKqU9KPKXqGZEhqbVLnISGzsFxk2vF1yai
+        g9jlLFs86FIZdDcOiImG0540JWVQ/W0eDbLOiMtQ86Kstpw=
+X-Google-Smtp-Source: ABdhPJzdc9ND2kTtXYj5dud4lr1GVpUV2Ex813QEAuOcXIKOjI1ef5HMPaxJv9BE13D/Q3fSH361dst77mM+lZyNgRM=
+X-Received: by 2002:a54:4790:: with SMTP id o16mr828855oic.39.1612221892718;
+ Mon, 01 Feb 2021 15:24:52 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <926a2e12cf7534339e1f9bedff50d97bf251ffa2.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <926a2e12cf7534339e1f9bedff50d97bf251ffa2.1611596534.git.gitgitgadget@gmail.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <5f53b08225771adc0be12c39e7be169d8620f146.1611596534.git.gitgitgadget@gmail.com>
+In-Reply-To: <5f53b08225771adc0be12c39e7be169d8620f146.1611596534.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Feb 2021 15:21:32 -0800
-Message-ID: <CABPp-BHsiLTtv6AuycRrQ5K6q0=ZTJe0kd7uTUL+UT=nxj66zA@mail.gmail.com>
-Subject: Re: [PATCH 24/27] dir: use expand_to_path in add_patterns()
+Date:   Mon, 1 Feb 2021 15:24:41 -0800
+Message-ID: <CABPp-BHv+kAV5BfrhdQ+Vo-q_eVs7a3MvLYg0wYhZQoyvCoqaw@mail.gmail.com>
+Subject: Re: [PATCH 26/27] pathspec: stop calling ensure_full_index
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -78,63 +78,35 @@ On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> The add_patterns() method has a way to extract a pattern file from the
-> index. If this pattern file is sparse and within a sparse directory
-> entry, then we need to expand the index before looking for that entry as
-> a file path.
+> The add_pathspec_matches_against_index() focuses on matching a pathspec
+> to file entries in the index. It is possible that this already works
+> correctly for its only use: checking if untracked files exist in the
+> index.
+>
+> It is likely that this causes a behavior issue when adding a directory
+> that exists at HEAD but is outside the sparse cone. I'm marking this as
+> a place to pursue with future tests.
 
-Why?
-
-Correct me if I'm wrong, but I thought the point of add_patterns() was
-to read .gitignore entries, so that we can know whether to e.g. have
-status report untracked files within some directory or have clean
-delete files within a directory.  But if we have a sparse directory
-entry in the index, we probably have no such directory in the working
-directory.  And if we have no such working directory, getting
-.gitignore entries for those directories is a big waste of time.
-
-> For now, convert ensure_full_index() into expand_to_path() to only
-> expand this way when absolutely necessary.
-
-Not only should we probably not need to read these files at all,
-expand_to_path() still expands a lot more than necessary, right?  If
-two directories are sparse -- moduleA and moduleB, and we need
-something from under moduleA/, then expand_to_path() will call
-ensure_full_index() and fill out every entry under both modules, even
-if moduleB is way bigger than moduleA.  Unless I've misunderstood
-something, there's multiple ways we're falling short of "only...when
-absolutely necessary".
-
-
-Perhaps both of these things are future work you already had planned;
-if so, some tweaks to the commit message may help keep this reader
-oriented.  :-)
+Sounds like you're unsure if this patch is good.  Should it be marked
+RFC or something?
 
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  dir.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  pathspec.c | 1 -
+>  1 file changed, 1 deletion(-)
 >
-> diff --git a/dir.c b/dir.c
-> index 21998c7c4b7..7df8d3b1da0 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1093,7 +1093,7 @@ static int add_patterns(const char *fname, const char *base, int baselen,
->                         int pos;
->
->                         if (istate)
-> -                               ensure_full_index(istate);
-> +                               expand_to_path(istate, fname, strlen(fname), 0);
->
->                         if (oid_stat->valid &&
->                             !match_stat_data_racy(istate, &oid_stat->stat, &st))
+> diff --git a/pathspec.c b/pathspec.c
+> index 9b105855483..61dc771aa02 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -36,7 +36,6 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                         num_unmatched++;
+>         if (!num_unmatched)
+>                 return;
+> -       ensure_full_index(istate);
+>         for (i = 0; i < istate->cache_nr; i++) {
+>                 const struct cache_entry *ce = istate->cache[i];
+>                 ce_path_match(istate, ce, pathspec, seen);
 > --
 > gitgitgadget
-
-There's also a read_skip_worktree_file_from_index() call earlier in
-the same function, which in your big RFC patch you protected with the
-ensure_full_index() call already.  Perhaps it should have an
-expand_to_path() conversion as well?  But, in the big picture, it
-seems like checking if we can avoid reading in that pattern file
-(whenever the directory doesn't exist within the working copy) would
-be a better first step.
+>
