@@ -2,89 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04A95C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 01:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F73DC433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 02:15:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B017564DCC
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 01:49:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 610ED64E13
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 02:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231249AbhBABto (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 31 Jan 2021 20:49:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51950 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230469AbhBABte (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Jan 2021 20:49:34 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B916B3B27;
-        Sun, 31 Jan 2021 20:48:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2Wo0uY7vBvie
-        2pCZkpTD8bZDhbo=; b=Rr0eGQQSmQKm7k0bG55RxC5xEQzIuNXXe/QQ2++cuDVF
-        usTPWfavGm6xqxjtPhedJky2+S8DPYsc7T9UH9qpt4BASxfgKaWlo38tWRmZH4vJ
-        YtQ1e04Wa/AKCagR8EVV5Ntt7+FfkxOlbOghaF1I8h9pJuxVHxtz2BHaHnpLggo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YiLunG
-        wq2D5/XoSTg1Id3Y7RLxY/nkcibxHtBeaKrrWamSpl2FZBjnRrDn8DCreqvh4GtF
-        x0S1pIGy4m6uPqY+qGcRcX1ax9G9wG46LY0QXSF9w81a8pFl/TxafaTuMvDmncDZ
-        jhvErYuFPZTmCUVUJzRBYWqdUA2xpqAMWJLnA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2DC36B3B26;
-        Sun, 31 Jan 2021 20:48:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 948C9B3B25;
-        Sun, 31 Jan 2021 20:48:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jan 2021, #06; Sat, 30)
-References: <xmqqsg6infev.fsf@gitster.c.googlers.com>
-        <87lfc8ocmt.fsf@evledraar.gmail.com>
-Date:   Sun, 31 Jan 2021 17:48:50 -0800
-In-Reply-To: <87lfc8ocmt.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 01 Feb 2021 01:27:54 +0100")
-Message-ID: <xmqqy2g8mubh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231299AbhBACPl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 31 Jan 2021 21:15:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40540 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231286AbhBACPj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Jan 2021 21:15:39 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79144C061573
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 18:14:59 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id i6so9034902ybq.5
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 18:14:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oZFOXmfsAoDtyWKBo08wWnUxBBBIeu6C1AJQwNtcmhY=;
+        b=PVnJY66D9bNZ1C6PzHEjN6g2yy+k93MziUXugJmnCvIsPcYcSoIRYGebG6dj7JfNtk
+         wX3r/eJ9EQqpQNWphOUYjLLHa8t7Bs7K7ufAMtEObAw7z7VJd0xiEL2MWBLBo5i4WF1n
+         JNwhIMSO2XTeA3Rh9ennYfS5aWVl/KQQ/ln0qntKH33nrfAXobbuxG3Tq7H2iC9ciFGS
+         UsUaAcrwyi1dUi+6Jd0xFv1/KTkwvcIhFps/Gi9iMtMnTlUK5zwVRwTz5AIy3xJgrjof
+         vEnfZ8t+TT7uKdGrtwaGvB0rFL97V3J1ra8PlMbp3HZb42n81Ar3q9Z3RbsFyNLr6lcw
+         fSPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=oZFOXmfsAoDtyWKBo08wWnUxBBBIeu6C1AJQwNtcmhY=;
+        b=YTZwdzcDREaaDqxXd1rUHFnluNiw+id1BxLhJR6bJLesXwM3vZxRT1n5Nuc/cCs9fO
+         yhzRvkp/+TQfCzckMexhRZqs0RNwJiws0iEqh3qgUKOkbWru+l12FHQEteWRrhDa3/yj
+         9tS2odTx9iSd1/XmAw7N78iLjlWGxvHJMlS1j0hNsP9eolSspA/2+xu7Hjn00W7V0AYL
+         0RbwcAM1wJwuk/HSrPjxgdHDFpjuMBlUmD37FHKJ6xbKKs5yC7Z017/5/KEPBc7ailf/
+         4wS4KhpSYwm06h6l68wB9W062Mp44HgTSAeVq8ZkT3wZ2EwqNIQgHHsOYu/M/hoqSqGm
+         qZJg==
+X-Gm-Message-State: AOAM530SsGrVkmfT3wbW+Y0ngtHXN4ab0UXFT8SwYPgbU5T8XZHC8e9Y
+        zGQZXWjBvS7/H/1p6nopjSfIhbtAA8Zu1I8W/skX4TnOTZYld/UI
+X-Google-Smtp-Source: ABdhPJzKpNNxP4j/Dk3zcpcjet9IFG/gxCNjYZ6C3azwiuCfvSk8S62vtpkfQnIt3Mc+UFEmyyMqGKXpiTjvsp/3uHg=
+X-Received: by 2002:a25:b94a:: with SMTP id s10mr20563094ybm.374.1612145698715;
+ Sun, 31 Jan 2021 18:14:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A26DEA02-642F-11EB-ADF9-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Mon, 1 Feb 2021 10:14:47 +0800
+Message-ID: <CAGP6POKSOaaq0A-L2RgQ+R+bJVo-KuZChEOcCuO8jP+Cm9QFPw@mail.gmail.com>
+Subject: Recover a git repo after accidentally deleting some hash files
+ located under .git/objects.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi,
 
-> On Sun, Jan 31 2021, Junio C Hamano wrote:
->
->
->> * ab/detox-gettext-tests (2021-01-21) 3 commits
->>  - tests: remove uses of GIT_TEST_GETTEXT_POISON=3Dfalse
->>  - tests: remove support for GIT_TEST_GETTEXT_POISON
->>  - ci: remove GETTEXT_POISON jobs
->>
->>  Get rid of "GETTEXT_POISON" support altogether, which may or may
->>  not be controversial.
->
-> I'm waiting on SZEDER'S feedback on [1], ditto the last What's
-> Cooking[2]. Also as noted in [2] the "do we keep GETTEXT_POISON at all"
-> question.
->
-> How about we just remove it and see if people who love it will come out
-> of the woodworks, the patches aren't going to be hard to revert...
+I accidentally deleted some hash files located under the project's
+.git/objects subdirectory. In this case, can I resume the project?
 
-Yeah, why not ;-)
-
+Regards
+-- 
+Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
+Theory and Simulation of Materials
+Hebei Polytechnic University of Science and Technology engineering
+NO. 552 North Gangtie Road, Xingtai, China
