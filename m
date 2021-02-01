@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D352C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F50C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD8E164E30
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB97F64E31
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbhBAG7q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 01:59:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
+        id S230189AbhBAHAO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 02:00:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229703AbhBAG7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 01:59:34 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D01AFC0613D6
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:53 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l12so15340196wry.2
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:53 -0800 (PST)
+        with ESMTP id S229703AbhBAHAM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 02:00:12 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB11C0613ED
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:55 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id y187so12204050wmd.3
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=cEe95guw9s9mzUDrRNnTP/221TBTHwdatVA+Owv7Nr0=;
-        b=hBl6uBiW/aKHt0+bz3CnFE3dDdP9AMeWkEgCVczuhd1NLGgOtdJxKYxfTxcF67zECh
-         0tryZswbk6HVKqbip6ULx/a9Q4zmywj+ahVxRidlEhahBIj+E8bgdQR4lrwRC1Ge96yO
-         q2a0rAXwNPQkze7eWLrzgx5KEIPJpamDl1ib5vzbBkrWYoMDjhxEcqmVzSEnP237RpXG
-         WLIzTs3vPFN4+rHhFRH/6zAyWcYC1UJDre11kDPpZrliz9ucROBoIC7xSOgvxaJTRZxD
-         hgVr6VLOmV4GBKa0KXeUaS4fG3AKsd8g/vtVGO5F2Pmz/vjVMRCflZWBlnT8BquVSuDj
-         XSbQ==
+        bh=Qm98VKlkwBFr4t215FdMpwLOpqWNk9wC7rfbJCXWIUU=;
+        b=DZjcD6/Js/kK2HevoUYoQlXVvSLIXfbzYnBq6n2ar7TLUOmnexo7XOYkSSQxxX04rv
+         FovBNB2tyMpffefqDrqwFzPdO5GbFNgf5qY0szTHLZAt9q1IWi709U4i3dlJkWniPcDc
+         efKpKbfQgl4dxef/TpnNzQS/ThIsbrOoGfqnVxwG2V102QokbGBMc+OYFFIloy05Vgkx
+         zlfaPvvhaq9Bn61Dh7BkY0vzoxGt6y0ZCytQSqO2sYkn7iweAtYvyihxJyrlpSR1NsB8
+         wzeuPpxH2Qn3r4RcQsYTI1bVn5x0n/xORCVpmamRbG+UlSQ/DSeWKFG0JSaHafbWHYxx
+         SNtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=cEe95guw9s9mzUDrRNnTP/221TBTHwdatVA+Owv7Nr0=;
-        b=V68vyo9N+hWLGZXMRzPaIRuv7xQ1lA1t/ZvxDtawKHsO8pvB5g5XJUVlDVua99TirF
-         Bx8ojzZ3D58EMQXRIokajJ3WPwVfN22wy9lSCb+ats4awFYPfwlJSQC/Ajek0WvLzGql
-         a5/cP14HGLJ2pJTgVK+t6Vnpljf1YidNiaGMvtA9IuueS+fE4kxayIu3f1j6CByHdZ5L
-         FcUBT6ZLxYpOzNMdQVK1m1mSJoY4MlxjjdNdnej2SCAzcY4yUCAWW8kaxtP7H4FjiqR0
-         Yj/OH/54utAgpssV1vaj+hJiSQOlDogzWpu853AXs0uOMpW0gNtf6hs0Ri7WjZHjCo5h
-         FJgQ==
-X-Gm-Message-State: AOAM531HW+3gW5Q/z5j9ltJcqxlvHo4q8bjStx6AyHNMmmsu1eCmy0y8
-        xytLGgh/szpTlnF/In+RWSdWjJlZE2w=
-X-Google-Smtp-Source: ABdhPJzn/dk5F6vKsgcjMGz2g3gG+SfFo1lKjIq/IjER5B4wgepri8HX93KXidYuxmpEMu1gEG4HsQ==
-X-Received: by 2002:a5d:4443:: with SMTP id x3mr17033288wrr.409.1612162732367;
-        Sun, 31 Jan 2021 22:58:52 -0800 (PST)
+        bh=Qm98VKlkwBFr4t215FdMpwLOpqWNk9wC7rfbJCXWIUU=;
+        b=fHomFmZxEp5zfGIwHqMs9r4Hx0YSqS5sPCdJu6qDUnbzWZpY5eRkBRTz9+Qo3cTQh3
+         kZ2OQ7ZsKrQorYDxMR3zonntLc49ieRZr13XNvt1Iu8JMGQCPTDHBCfo6B1UDa7mcAOE
+         tI+Dtcr3xbc2kBDxfQVE24MEbK00OoITcpTqPB8ZPy1cW1z9ckbWdiYm3hGZUdUc2Uqs
+         uMVhMNjBKCCxjFWdXps40fBRZxacQAJbUSIN8vIbBT7xeow2zkztNhbv/WDAQjvFm5/R
+         qXjfKiREGm7R8lXYyW3fcPeauSjR4RKeclGEy8Ym4b8Jk95CQ38c3O653miGLBFkCRla
+         qXig==
+X-Gm-Message-State: AOAM5325JJWsgZDXbDsvkf7Rjw4LH7qTVibFRuuAnnKiBOszlVs+70Yi
+        FcR5mmtsIU5XdXC1lMX3Z2mBS+T7PPg=
+X-Google-Smtp-Source: ABdhPJx2LbAw45Sp54nE4TWdnQbywKw+aU5w/iv1ffvPHq2LHgFIyEtvAMtXFTV2r9RTYFqbeQE5fQ==
+X-Received: by 2002:a05:600c:618:: with SMTP id o24mr13740887wmm.82.1612162733593;
+        Sun, 31 Jan 2021 22:58:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p15sm25487707wrt.15.2021.01.31.22.58.51
+        by smtp.gmail.com with ESMTPSA id t18sm21827945wrr.56.2021.01.31.22.58.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Jan 2021 22:58:51 -0800 (PST)
-Message-Id: <085085a433072076ffa45d149cdf4e0b6b55d918.1612162726.git.gitgitgadget@gmail.com>
+        Sun, 31 Jan 2021 22:58:52 -0800 (PST)
+Message-Id: <3b1aae4106a409cf4652e07295683f92d7bf1fb2.1612162726.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 References: <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
         <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 06:58:38 +0000
-Subject: [PATCH v7 04/11] t6600-test-reach: generalize *_three_modes
+Date:   Mon, 01 Feb 2021 06:58:39 +0000
+Subject: [PATCH v7 05/11] commit-graph: add a slab to store topological levels
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,281 +81,171 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-In a preparatory step to implement generation number v2, we add tests to
-ensure Git can read and parse commit-graph files without Generation Data
-chunk. These files represent commit-graph files written by Old Git and
-are neccesary for backward compatability.
+In a later commit we will introduce corrected commit date as the
+generation number v2. Corrected commit dates will be stored in the new
+seperate Generation Data chunk. However, to ensure backwards
+compatibility with "Old" Git we need to continue to write generation
+number v1 (topological levels) to the commit data chunk. Thus, we need
+to compute and store both versions of generation numbers to write the
+commit-graph file.
 
-We extend run_three_modes() and test_three_modes() to *_all_modes() with
-the fourth mode being "commit-graph without generation data chunk".
+Therefore, let's introduce a commit-slab `topo_level_slab` to store
+topological levels; corrected commit date will be stored in the member
+`generation` of struct commit_graph_data.
+
+The macros `GENERATION_NUMBER_INFINITY` and `GENERATION_NUMBER_ZERO`
+mark commits not in the commit-graph file and commits written by a
+version of Git that did not compute generation numbers respectively.
+Generation numbers are computed identically for both kinds of commits.
+
+A "slab-miss" should return `GENERATION_NUMBER_INFINITY` as the commit
+is not in the commit-graph file. However, since the slab is
+zero-initialized, it returns 0 (or rather `GENERATION_NUMBER_ZERO`).
+Thus, we no longer need to check if the topological level of a commit is
+`GENERATION_NUMBER_INFINITY`.
+
+We will add a pointer to the slab in `struct write_commit_graph_context`
+and `struct commit_graph` to populate the slab in
+`fill_commit_graph_info` if the commit has a pre-computed topological
+level as in case of split commit-graphs.
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- t/t6600-test-reach.sh | 62 +++++++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ commit-graph.c | 45 ++++++++++++++++++++++++++++++---------------
+ commit-graph.h |  1 +
+ 2 files changed, 31 insertions(+), 15 deletions(-)
 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index f807276337d..af10f0dc090 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -58,7 +58,7 @@ test_expect_success 'setup' '
- 	git config core.commitGraph true
- '
+diff --git a/commit-graph.c b/commit-graph.c
+index 955418bd6e5..2f344cce151 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -64,6 +64,8 @@ void git_test_write_commit_graph_or_die(void)
+ /* Remember to update object flag allocation in object.h */
+ #define REACHABLE       (1u<<15)
  
--run_three_modes () {
-+run_all_modes () {
- 	test_when_finished rm -rf .git/objects/info/commit-graph &&
- 	"$@" <input >actual &&
- 	test_cmp expect actual &&
-@@ -70,8 +70,8 @@ run_three_modes () {
- 	test_cmp expect actual
++define_commit_slab(topo_level_slab, uint32_t);
++
+ /* Keep track of the order in which commits are added to our list. */
+ define_commit_slab(commit_pos, int);
+ static struct commit_pos commit_pos = COMMIT_SLAB_INIT(1, commit_pos);
+@@ -772,6 +774,9 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 	item->date = (timestamp_t)((date_high << 32) | date_low);
+ 
+ 	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
++
++	if (g->topo_levels)
++		*topo_level_slab_at(g->topo_levels, item) = get_be32(commit_data + g->hash_len + 8) >> 2;
  }
  
--test_three_modes () {
--	run_three_modes test-tool reach "$@"
-+test_all_modes () {
-+	run_all_modes test-tool reach "$@"
- }
+ static inline void set_commit_tree(struct commit *c, struct tree *t)
+@@ -960,6 +965,7 @@ struct write_commit_graph_context {
+ 		 changed_paths:1,
+ 		 order_by_pack:1;
  
- test_expect_success 'ref_newer:miss' '
-@@ -80,7 +80,7 @@ test_expect_success 'ref_newer:miss' '
- 	B:commit-4-9
- 	EOF
- 	echo "ref_newer(A,B):0" >expect &&
--	test_three_modes ref_newer
-+	test_all_modes ref_newer
- '
++	struct topo_level_slab *topo_levels;
+ 	const struct commit_graph_opts *opts;
+ 	size_t total_bloom_filter_data_size;
+ 	const struct bloom_filter_settings *bloom_settings;
+@@ -1106,7 +1112,7 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 		else
+ 			packedDate[0] = 0;
  
- test_expect_success 'ref_newer:hit' '
-@@ -89,7 +89,7 @@ test_expect_success 'ref_newer:hit' '
- 	B:commit-2-3
- 	EOF
- 	echo "ref_newer(A,B):1" >expect &&
--	test_three_modes ref_newer
-+	test_all_modes ref_newer
- '
+-		packedDate[0] |= htonl(commit_graph_data_at(*list)->generation << 2);
++		packedDate[0] |= htonl(*topo_level_slab_at(ctx->topo_levels, *list) << 2);
  
- test_expect_success 'in_merge_bases:hit' '
-@@ -98,7 +98,7 @@ test_expect_success 'in_merge_bases:hit' '
- 	B:commit-8-8
- 	EOF
- 	echo "in_merge_bases(A,B):1" >expect &&
--	test_three_modes in_merge_bases
-+	test_all_modes in_merge_bases
- '
+ 		packedDate[1] = htonl((*list)->date);
+ 		hashwrite(f, packedDate, 8);
+@@ -1336,11 +1342,10 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ 					_("Computing commit graph generation numbers"),
+ 					ctx->commits.nr);
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+-		uint32_t generation = commit_graph_data_at(ctx->commits.list[i])->generation;
++		uint32_t level = *topo_level_slab_at(ctx->topo_levels, ctx->commits.list[i]);
  
- test_expect_success 'in_merge_bases:miss' '
-@@ -107,7 +107,7 @@ test_expect_success 'in_merge_bases:miss' '
- 	B:commit-5-9
- 	EOF
- 	echo "in_merge_bases(A,B):0" >expect &&
--	test_three_modes in_merge_bases
-+	test_all_modes in_merge_bases
- '
+ 		display_progress(ctx->progress, i + 1);
+-		if (generation != GENERATION_NUMBER_INFINITY &&
+-		    generation != GENERATION_NUMBER_ZERO)
++		if (level != GENERATION_NUMBER_ZERO)
+ 			continue;
  
- test_expect_success 'in_merge_bases_many:hit' '
-@@ -117,7 +117,7 @@ test_expect_success 'in_merge_bases_many:hit' '
- 	X:commit-5-7
- 	EOF
- 	echo "in_merge_bases_many(A,X):1" >expect &&
--	test_three_modes in_merge_bases_many
-+	test_all_modes in_merge_bases_many
- '
+ 		commit_list_insert(ctx->commits.list[i], &list);
+@@ -1348,29 +1353,26 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ 			struct commit *current = list->item;
+ 			struct commit_list *parent;
+ 			int all_parents_computed = 1;
+-			uint32_t max_generation = 0;
++			uint32_t max_level = 0;
  
- test_expect_success 'in_merge_bases_many:miss' '
-@@ -127,7 +127,7 @@ test_expect_success 'in_merge_bases_many:miss' '
- 	X:commit-8-6
- 	EOF
- 	echo "in_merge_bases_many(A,X):0" >expect &&
--	test_three_modes in_merge_bases_many
-+	test_all_modes in_merge_bases_many
- '
+ 			for (parent = current->parents; parent; parent = parent->next) {
+-				generation = commit_graph_data_at(parent->item)->generation;
++				level = *topo_level_slab_at(ctx->topo_levels, parent->item);
  
- test_expect_success 'in_merge_bases_many:miss-heuristic' '
-@@ -137,7 +137,7 @@ test_expect_success 'in_merge_bases_many:miss-heuristic' '
- 	X:commit-6-6
- 	EOF
- 	echo "in_merge_bases_many(A,X):0" >expect &&
--	test_three_modes in_merge_bases_many
-+	test_all_modes in_merge_bases_many
- '
+-				if (generation == GENERATION_NUMBER_INFINITY ||
+-				    generation == GENERATION_NUMBER_ZERO) {
++				if (level == GENERATION_NUMBER_ZERO) {
+ 					all_parents_computed = 0;
+ 					commit_list_insert(parent->item, &list);
+ 					break;
+-				} else if (generation > max_generation) {
+-					max_generation = generation;
++				} else if (level > max_level) {
++					max_level = level;
+ 				}
+ 			}
  
- test_expect_success 'is_descendant_of:hit' '
-@@ -148,7 +148,7 @@ test_expect_success 'is_descendant_of:hit' '
- 	X:commit-1-1
- 	EOF
- 	echo "is_descendant_of(A,X):1" >expect &&
--	test_three_modes is_descendant_of
-+	test_all_modes is_descendant_of
- '
+ 			if (all_parents_computed) {
+-				struct commit_graph_data *data = commit_graph_data_at(current);
+-
+-				data->generation = max_generation + 1;
+ 				pop_commit(&list);
  
- test_expect_success 'is_descendant_of:miss' '
-@@ -159,7 +159,7 @@ test_expect_success 'is_descendant_of:miss' '
- 	X:commit-7-6
- 	EOF
- 	echo "is_descendant_of(A,X):0" >expect &&
--	test_three_modes is_descendant_of
-+	test_all_modes is_descendant_of
- '
+-				if (data->generation > GENERATION_NUMBER_MAX)
+-					data->generation = GENERATION_NUMBER_MAX;
++				if (max_level > GENERATION_NUMBER_MAX - 1)
++					max_level = GENERATION_NUMBER_MAX - 1;
++				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+ 			}
+ 		}
+ 	}
+@@ -2106,6 +2108,7 @@ int write_commit_graph(struct object_directory *odb,
+ 	int res = 0;
+ 	int replace = 0;
+ 	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
++	struct topo_level_slab topo_levels;
  
- test_expect_success 'get_merge_bases_many' '
-@@ -174,7 +174,7 @@ test_expect_success 'get_merge_bases_many' '
- 		git rev-parse commit-5-6 \
- 			      commit-4-7 | sort
- 	} >expect &&
--	test_three_modes get_merge_bases_many
-+	test_all_modes get_merge_bases_many
- '
+ 	prepare_repo_settings(the_repository);
+ 	if (!the_repository->settings.core_commit_graph) {
+@@ -2132,6 +2135,18 @@ int write_commit_graph(struct object_directory *odb,
+ 							 bloom_settings.max_changed_paths);
+ 	ctx->bloom_settings = &bloom_settings;
  
- test_expect_success 'reduce_heads' '
-@@ -196,7 +196,7 @@ test_expect_success 'reduce_heads' '
- 			      commit-2-8 \
- 			      commit-1-10 | sort
- 	} >expect &&
--	test_three_modes reduce_heads
-+	test_all_modes reduce_heads
- '
++	init_topo_level_slab(&topo_levels);
++	ctx->topo_levels = &topo_levels;
++
++	if (ctx->r->objects->commit_graph) {
++		struct commit_graph *g = ctx->r->objects->commit_graph;
++
++		while (g) {
++			g->topo_levels = &topo_levels;
++			g = g->base_graph;
++		}
++	}
++
+ 	if (flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS)
+ 		ctx->changed_paths = 1;
+ 	if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
+diff --git a/commit-graph.h b/commit-graph.h
+index f8e92500c6e..00f00745b79 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -73,6 +73,7 @@ struct commit_graph {
+ 	const unsigned char *chunk_bloom_indexes;
+ 	const unsigned char *chunk_bloom_data;
  
- test_expect_success 'can_all_from_reach:hit' '
-@@ -219,7 +219,7 @@ test_expect_success 'can_all_from_reach:hit' '
- 	Y:commit-8-1
- 	EOF
- 	echo "can_all_from_reach(X,Y):1" >expect &&
--	test_three_modes can_all_from_reach
-+	test_all_modes can_all_from_reach
- '
++	struct topo_level_slab *topo_levels;
+ 	struct bloom_filter_settings *bloom_filter_settings;
+ };
  
- test_expect_success 'can_all_from_reach:miss' '
-@@ -241,7 +241,7 @@ test_expect_success 'can_all_from_reach:miss' '
- 	Y:commit-8-5
- 	EOF
- 	echo "can_all_from_reach(X,Y):0" >expect &&
--	test_three_modes can_all_from_reach
-+	test_all_modes can_all_from_reach
- '
- 
- test_expect_success 'can_all_from_reach_with_flag: tags case' '
-@@ -264,7 +264,7 @@ test_expect_success 'can_all_from_reach_with_flag: tags case' '
- 	Y:commit-8-1
- 	EOF
- 	echo "can_all_from_reach_with_flag(X,_,_,0,0):1" >expect &&
--	test_three_modes can_all_from_reach_with_flag
-+	test_all_modes can_all_from_reach_with_flag
- '
- 
- test_expect_success 'commit_contains:hit' '
-@@ -280,8 +280,8 @@ test_expect_success 'commit_contains:hit' '
- 	X:commit-9-3
- 	EOF
- 	echo "commit_contains(_,A,X,_):1" >expect &&
--	test_three_modes commit_contains &&
--	test_three_modes commit_contains --tag
-+	test_all_modes commit_contains &&
-+	test_all_modes commit_contains --tag
- '
- 
- test_expect_success 'commit_contains:miss' '
-@@ -297,8 +297,8 @@ test_expect_success 'commit_contains:miss' '
- 	X:commit-9-3
- 	EOF
- 	echo "commit_contains(_,A,X,_):0" >expect &&
--	test_three_modes commit_contains &&
--	test_three_modes commit_contains --tag
-+	test_all_modes commit_contains &&
-+	test_all_modes commit_contains --tag
- '
- 
- test_expect_success 'rev-list: basic topo-order' '
-@@ -310,7 +310,7 @@ test_expect_success 'rev-list: basic topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
- 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
- 	>expect &&
--	run_three_modes git rev-list --topo-order commit-6-6
-+	run_all_modes git rev-list --topo-order commit-6-6
- '
- 
- test_expect_success 'rev-list: first-parent topo-order' '
-@@ -322,7 +322,7 @@ test_expect_success 'rev-list: first-parent topo-order' '
- 		commit-6-2 \
- 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
- 	>expect &&
--	run_three_modes git rev-list --first-parent --topo-order commit-6-6
-+	run_all_modes git rev-list --first-parent --topo-order commit-6-6
- '
- 
- test_expect_success 'rev-list: range topo-order' '
-@@ -334,7 +334,7 @@ test_expect_success 'rev-list: range topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes git rev-list --topo-order commit-3-3..commit-6-6
-+	run_all_modes git rev-list --topo-order commit-3-3..commit-6-6
- '
- 
- test_expect_success 'rev-list: range topo-order' '
-@@ -346,7 +346,7 @@ test_expect_success 'rev-list: range topo-order' '
- 		commit-6-2 commit-5-2 commit-4-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes git rev-list --topo-order commit-3-8..commit-6-6
-+	run_all_modes git rev-list --topo-order commit-3-8..commit-6-6
- '
- 
- test_expect_success 'rev-list: first-parent range topo-order' '
-@@ -358,7 +358,7 @@ test_expect_success 'rev-list: first-parent range topo-order' '
- 		commit-6-2 \
- 		commit-6-1 commit-5-1 commit-4-1 \
- 	>expect &&
--	run_three_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
-+	run_all_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
- '
- 
- test_expect_success 'rev-list: ancestry-path topo-order' '
-@@ -368,7 +368,7 @@ test_expect_success 'rev-list: ancestry-path topo-order' '
- 		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
- 		commit-6-3 commit-5-3 commit-4-3 \
- 	>expect &&
--	run_three_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
-+	run_all_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
- '
- 
- test_expect_success 'rev-list: symmetric difference topo-order' '
-@@ -382,7 +382,7 @@ test_expect_success 'rev-list: symmetric difference topo-order' '
- 		commit-3-8 commit-2-8 commit-1-8 \
- 		commit-3-7 commit-2-7 commit-1-7 \
- 	>expect &&
--	run_three_modes git rev-list --topo-order commit-3-8...commit-6-6
-+	run_all_modes git rev-list --topo-order commit-3-8...commit-6-6
- '
- 
- test_expect_success 'get_reachable_subset:all' '
-@@ -402,7 +402,7 @@ test_expect_success 'get_reachable_subset:all' '
- 			      commit-1-7 \
- 			      commit-5-6 | sort
- 	) >expect &&
--	test_three_modes get_reachable_subset
-+	test_all_modes get_reachable_subset
- '
- 
- test_expect_success 'get_reachable_subset:some' '
-@@ -420,7 +420,7 @@ test_expect_success 'get_reachable_subset:some' '
- 		git rev-parse commit-3-3 \
- 			      commit-1-7 | sort
- 	) >expect &&
--	test_three_modes get_reachable_subset
-+	test_all_modes get_reachable_subset
- '
- 
- test_expect_success 'get_reachable_subset:none' '
-@@ -434,7 +434,7 @@ test_expect_success 'get_reachable_subset:none' '
- 	Y:commit-2-8
- 	EOF
- 	echo "get_reachable_subset(X,Y)" >expect &&
--	test_three_modes get_reachable_subset
-+	test_all_modes get_reachable_subset
- '
- 
- test_done
 -- 
 gitgitgadget
 
