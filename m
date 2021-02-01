@@ -2,143 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 249BAC433E6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 080BFC433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:17:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE09E64EC1
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:13:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CEB0064EC6
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbhBAWNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 17:13:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbhBAWNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 17:13:24 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D055BC061756
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 14:12:43 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id n42so17908635ota.12
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 14:12:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4HwtJZz1dI7xo2+/aitpNluPZfJ4yiRlRlskqN2Wieg=;
-        b=EFP8ZFHyUc9kxWrNKWtGo6DdPcthoBznGvuYBnePULt7J+zL5Ec8DTOt+LxblKJNGK
-         YZbFI3WfDsNDav/aq6EXsmu5W+mbMbf9YvJx97QgDFclJsOQTybarDeXzl2lxxbr5/Dx
-         kTmGVGDxaVTljvULdWpviLh47mL60cDEKUK1DFFl/dkpzooy12lEAfIoNq6crlarElle
-         Nex5e/vvxDjowEbfg7gWE7BBTydUGkAjxNqr3GgNyZM83I0/xbk1VtqzmWnhl32MwT+T
-         Bam4iQy08eSCGtu7qrqqLYSLwzFxksFEpmTrLdzFAmsCY1sZf5VYFeqzWc5McDagcRRW
-         CMOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4HwtJZz1dI7xo2+/aitpNluPZfJ4yiRlRlskqN2Wieg=;
-        b=VjkUc9YBW1axDAH3kDjraU3253OPw6K8tkoIidD1DTKRRBesU6tFW29FaJXnkYU3GM
-         hOn4okFHsn0/E8kAjmiP2hvCKWpjqO4ApbK678JteKA61JpyPFeR9fSSUBfMR2P85LQ7
-         EA40CxzqA7LkqSpYb9coA56/RUS0tlZQKVrACWcHuBG/wVGSbbxHMFSCZV3xLGWYkwP+
-         y7ADVXb2MgHiiywts9gYESN4OlXi31oiGippDr9+fBGeA6Ef9pJz8tdIVbH/2oMFbGzC
-         Lf044PV4EZs4kSOb7gz6C9m8FT+CE0Cf7KEOCeSgxdGXVYDsBzsLW8eYwWmVnM7uKib9
-         0Lxg==
-X-Gm-Message-State: AOAM530Rzd44YQGGylIUD3i/gRaZyomTXg+7VbqYi9Xaw40R/Owz9BTR
-        HfUlW03vdmYwmkAjUmJa4IX/iMTV1QGyID5/sjk=
-X-Google-Smtp-Source: ABdhPJzNGREa/VtkSSYuA3gWtDVTVLqZH5WOOcdCLpvRssEE7JHuphANzY4IY9Yi17tqKHk2py4ZY4i2TDEjlm/k/jQ=
-X-Received: by 2002:a9d:506:: with SMTP id 6mr12892867otw.162.1612217563155;
- Mon, 01 Feb 2021 14:12:43 -0800 (PST)
+        id S229787AbhBAWRL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 17:17:11 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:8539 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229527AbhBAWRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 17:17:10 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4DV2ND0Zvgz5tlB;
+        Mon,  1 Feb 2021 23:16:28 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B06874B9D;
+        Mon,  1 Feb 2021 23:16:27 +0100 (CET)
+Subject: Re: git fails with a broken pipe when one quits the pager
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Vincent Lefevre <vincent@vinc17.net>
+References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
+ <8735yhq3lc.fsf@evledraar.gmail.com>
+ <20210131033652.GK623063@zira.vinc17.org>
+ <87o8h4omqa.fsf@evledraar.gmail.com>
+ <20210201103429.GT623063@zira.vinc17.org>
+ <87im7cng42.fsf@evledraar.gmail.com> <20210201144857.GB24560@zira.vinc17.org>
+ <87a6snokrr.fsf@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <5772995f-c887-7f13-6b5f-dc44f4477dcb@kdbg.org>
+Date:   Mon, 1 Feb 2021 23:16:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com> <036653cac368c6c04b439f5352d70a5dcc3c5feb.1611596534.git.gitgitgadget@gmail.com>
-In-Reply-To: <036653cac368c6c04b439f5352d70a5dcc3c5feb.1611596534.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Feb 2021 14:12:32 -0800
-Message-ID: <CABPp-BEQR6udbGRMVm8vUBkJvAeCOZF09YAMjACHDNWC5Wnjtw@mail.gmail.com>
-Subject: Re: [PATCH 17/27] dir.c: accept a directory as part of cone-mode patterns
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87a6snokrr.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> When we have sparse directory entries in the index, we want to compare
-> that directory against sparse-checkout patterns. Those pattern matching
-> algorithms are built expecting a file path, not a directory path. This
-> is especially important in the "cone mode" patterns which will match
-> files that exist within the "parent directories" as well as the
-> recursive directory matches.
->
-> If path_matches_pattern_list() is given a directory, we can add a bogus
-> filename ("-") to the directory and get the same results as before,
-> assuming we are in cone mode. Since sparse index requires cone mode
-> patterns, this is an acceptable assumption.
+Am 01.02.21 um 16:44 schrieb Ævar Arnfjörð Bjarmason:
+> On Mon, Feb 01 2021, Vincent Lefevre wrote:
+>> On 2021-02-01 13:10:21 +0100, Ævar Arnfjörð Bjarmason:
+>>> So we've got the SIGPIPE to indicate the output wasn't fully
+>>> consumed.
+>>
+>> But the user doesn't care: he quit the pager because he didn't
+>> need more output. So there is no need to signal that the output
+>> wasn't fully consumed. The user already knew that before quitting
+>> the pager!
+> 
+> As noted above, this is assuming way too much about the functionality of
+> the pager command. We can get a SIGPIPE without the user's intent in
+> this way. Consider e.g. piping to some remote system via netcat.
 
-Why is "-" a bogus filename?  Is that only on certain operating
-systems, or are you just not expecting a user to name their file with
-such a bad name?  What if there is a file with that name in that
-directory in the repository; do you need the pathname to be bogus?
+That assumption is warranted, IMO. Aren't _you_ stretching the meaning
+of "pager" too far here? A pager is intended for presentation to the
+user. If someone plays games with it, they should know what they get.
 
-What do you mean by "get the same results as before"?  The first
-paragraph suggests the code wouldn't handle a directory path, and that
-not handling it was problematic, so it seems unlikely you want the
-same results as that.  But it's not clear what the "before" refers to
-here.
-
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  dir.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/dir.c b/dir.c
-> index ad6eb033cb1..c786fa98d0e 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1384,6 +1384,11 @@ enum pattern_match_result path_matches_pattern_list(
->         strbuf_addch(&parent_pathname, '/');
->         strbuf_add(&parent_pathname, pathname, pathlen);
->
-> +       /* Directory requests should be added as if they are a file */
-> +       if (parent_pathname.len > 1 &&
-> +           parent_pathname.buf[parent_pathname.len - 1] == '/')
-
-Ah, this looks like a case where the trailing slash is helpful;
-without it, you might have to feed extra data in through the call
-hierarchy to signify that this is a directory entry.
-
-> +               strbuf_add(&parent_pathname, "-", 1);
-> +
->         if (hashmap_contains_path(&pl->recursive_hashmap,
->                                   &parent_pathname)) {
->                 result = MATCHED_RECURSIVE;
-
-hashmap_contains_path?  Don't we already know (modulo special cases of
-our bogus value not quite being bogus enough) that this is false since
-we were adding a bogus path?  How could the hashmap have a bogus value
-in it?  Won't this particular call fail with or without our adding "-"
-to the end of the path?
-
-After this hashmap_contains_path() call, the subsequent code looks for
-the parent of the path by stripping off everything after the last
-'/'...which seems like the relevant code anyway.  Is the problem that
-the hashmap_contains_path() call was returning true when we didn't add
-"-" to the end?  If so, can we use and if or a goto instead to make
-the code skip this first check and move on to where we want it to go?
-
-Or am I misunderstanding something about this code?
+-- Hannes
