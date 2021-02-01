@@ -2,129 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66762C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E58C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:30:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 128D264E31
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:08:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFE8264E2F
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 07:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbhBAHIZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 02:08:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45798 "EHLO
+        id S231916AbhBAHaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 02:30:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232286AbhBAHFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 02:05:32 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF5DCC061573
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 23:04:50 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id z13so10140959pfn.18
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 23:04:50 -0800 (PST)
+        with ESMTP id S231831AbhBAHaA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 02:30:00 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DACCC061573
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 23:29:20 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id d1so15325249otl.13
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 23:29:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=HmFwdIWyrYBP9MMBnyZpH8vYN2ettDFBg6tpGd+0GYw=;
-        b=ksuvJjHGOYOVs8nFSe//VlCX5oe5RV3SnmDAnZ33kFlgRRa26BtG83HQVB5y5KksZ5
-         yxJTzu1Ksq78toSzNv+eSNVhYJvOIVfBdKvCG0hsZ4lfCVV+UXWCJNFcNHGiM38fBDf7
-         kGZ3S/MPyiJB+lj9lpWpS3YLSfs0k/rkZdggh7CDwiWDBuFclWcD/i571QwNUgDG629a
-         fOhtm4dIPSgBvxcpFUgDbb5yfaTL/+QvomNbcTWw5wyAX/1ASIYcsx8Bxd8JJozRRTkm
-         cNi8UeP6IUJ+7o1mlp+e9LvwHCqA/P6YkcYeqaGBVEXP4EWKkgwvu2lWqaxZV5KuRGDn
-         oANA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Ud2+hmDiVzfv7ErbfRqnma920SBcNqDdeWjl6fziBks=;
+        b=VSULfXWOmNWFNjOY22Wj1yFpYfINHEmE3iCQyLeIBsBMc3ik2CBam4NzThLop/RQAd
+         A81L4aU2zj/xe9oLOANjgmka4tz5V5sB8BNfm1G7bWFSx/j8TSPaf61n7N3oNbfd5+5V
+         AwFenzxxaM5a45w3hy3LKfyS7X8oN+bs4JaOveJn8qfV6/JpEcxHiBSF82hxcLUAJi9h
+         HvbM3sewHSqkjeE7MsKbf+ExLkxB+BMODL3aLU9DxrpqN0BbmSf8Mvs4rjZ5PPSHRzVV
+         upz7hm81lS/RApvhLI5F+fCseynGZIQtZAn3fsMjj7K1vlAbogb3vum6IV2jWJ72/MCN
+         YOUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HmFwdIWyrYBP9MMBnyZpH8vYN2ettDFBg6tpGd+0GYw=;
-        b=Sd5UeYC9FDwDv+TPpOT5J7cyuVpD49he+++/AibKv2r1oxXD1jTBXjOvzZZ6oNREk3
-         Utk/Wzp4GWvPh3pQ9Qlo3xoDhH138MJisbA66+ORd+6g8auRXva+pd7x0xkddI9RDy2o
-         bi3ZW3RIO6qmEuJm2BVVJTbiXO9cc+8P0bWO605SUKKSnj7OV9/r0itelEWIbYLWQKVY
-         /fIZ6u6pSu0j8U9tp7FNZYMkq0JuGh4Y/EthhEVBHTcuAKf1yPEhIcghIPgvur7LySvu
-         o6DFW5YEHOy1zHSJ2KIblTf1VcOS71Gu9BFqRFLusqS9bPYGb+t8HSeIKLOtozhTvtJZ
-         K0Kg==
-X-Gm-Message-State: AOAM533RPYahcUFTyKqZqy+CMvoxO8qucYlgOI8+kWtcxQXB5vseYJIe
-        jqIZTXHZiXdHPOUz2TlI+rWPrtRcZFRCXGSeJUaI
-X-Google-Smtp-Source: ABdhPJzD6HxG0RcEbTR4RLl3Czhf5ZpfO0zH1kWRxbXigPll1C2R4yzD8vskZibN3QsCxdn4P2MRU12kq2A8MdWuBf+7
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:1393:b029:1b4:7938:ff1d
- with SMTP id t19-20020a056a001393b02901b47938ff1dmr15203863pfg.31.1612163090262;
- Sun, 31 Jan 2021 23:04:50 -0800 (PST)
-Date:   Sun, 31 Jan 2021 23:04:48 -0800
-In-Reply-To: <20201222000220.1491091-16-emilyshaffer@google.com>
-Message-Id: <20210201070448.1325624-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201222000220.1491091-16-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: Re: [PATCH v7 15/17] hook: provide stdin by string_list or callback
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ud2+hmDiVzfv7ErbfRqnma920SBcNqDdeWjl6fziBks=;
+        b=MgoaWaNFMFxLBwTAf/CPhvDrUPeI1sJ0DwTe/cJc7qkGH7rVHT+vUpaTHo3aTgjnxW
+         6QShO/T3IoYnUxLU6R14fIJZQMIXCXJRbVYgCPE8xQppuIaLgXvAwbaBDWzndEDubeAg
+         +Gg79WburDEL7Azx0K5iM0V+73bCUHbN5LF1gzrqSPDFIkkxLRL1UdTqgip72C8ckmd5
+         CSNUXwL7YyodXmYU/8ubdpIz5MKyvjVo+WyQ+/cTNyM01mbDS05d9r7LkYEiqLyQp5qB
+         hY9PJdBqQB70jPq7YfQVUSFe1WNOsq08HYKJgFJNJmNSbRkMC4J7CGLijJxzEfgyoywm
+         L3pg==
+X-Gm-Message-State: AOAM533zyjGU6kRq+UUaC5l5z49brq2LlmzN2zB2uMHt8CaO36db5NYf
+        9QMowHY2pTAhJ80mDRDaMVo/kehp2mfXJ/Zmivs=
+X-Google-Smtp-Source: ABdhPJy0TUHb5y6wbg6yoOJh5HWnuW9TP77IpD4SiFVD15UeX2w+HRwYEOqmz+9qv7fPG/kqox0jaevug1hOCby2grM=
+X-Received: by 2002:a9d:21ca:: with SMTP id s68mr6649557otb.164.1612164559504;
+ Sun, 31 Jan 2021 23:29:19 -0800 (PST)
+MIME-Version: 1.0
+References: <CAGP6POKSOaaq0A-L2RgQ+R+bJVo-KuZChEOcCuO8jP+Cm9QFPw@mail.gmail.com>
+ <CAOLTT8SsmzNNvQHaP3+vQmuq0fdRbFNL8ukOvPW5Zw9+nPk32Q@mail.gmail.com> <CAGP6POKB1b=gCjd-rNCYrJKcp8bmRP_cpwAPi81udh61ZdZJzA@mail.gmail.com>
+In-Reply-To: <CAGP6POKB1b=gCjd-rNCYrJKcp8bmRP_cpwAPi81udh61ZdZJzA@mail.gmail.com>
+From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Date:   Mon, 1 Feb 2021 15:31:22 +0800
+Message-ID: <CAOLTT8ScAgJFo8UxzXvVCX7ojk5fpc6eYxuUg-gJr=--LOzujw@mail.gmail.com>
+Subject: Re: Recover a git repo after accidentally deleting some hash files
+ located under .git/objects.
+To:     Hongyi Zhao <hongyi.zhao@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> In cases where a hook requires only a small amount of information via
-> stdin, it should be simple for users to provide a string_list alone. But
-> in more complicated cases where the stdin is too large to hold in
-> memory, let's provide a callback the users can populate line after line
-> with instead.
+oh,I am using Konversation,it's a good irc client.
+You can also use weechat in terminal.
+And http://quhno.internetstrahlen.de/Vivaldi/freenode-help.html
+may have many helpful usages for you to learn irc command.
 
-[snip]
+=E8=AF=B4=E5=8F=A5=E4=B8=AD=E6=96=87=E6=B4=BB=E8=B7=83=E4=B8=8B=E6=B0=94=E6=
+=B0=9B :=EF=BC=89
 
-> diff --git a/hook.h b/hook.h
-> index 8a7542610c..0ac83fa7ca 100644
-> --- a/hook.h
-> +++ b/hook.h
-> @@ -2,6 +2,7 @@
->  #include "list.h"
->  #include "strbuf.h"
->  #include "strvec.h"
-> +#include "run-command.h"
->  
->  struct hook
->  {
-> @@ -14,6 +15,12 @@ struct hook
->  	/* The literal command to run. */
->  	struct strbuf command;
->  	int from_hookdir;
-> +
-> +	/*
-> +	 * Use this to keep state for your feed_pipe_fn if you are using
-> +	 * run_hooks_opt.feed_pipe. Otherwise, do not touch it.
-> +	 */
-> +	void *feed_pipe_cb_data;
-
-When would we need per-hook state? I see in patch 14 that you give each
-running process little by little (in pp_buffer_stdin()), perhaps so that
-each hook can make progress at roughly the same pace, but I don't think
-we can expect all hooks to work the same, so I don't think it's worth
-complicating the design for all that.
-
->  };
->  
->  /*
-> @@ -57,12 +64,24 @@ struct run_hooks_opt
->  
->  	/* Path to file which should be piped to stdin for each hook */
->  	const char *path_to_stdin;
-> +	/* Pipe each string to stdin, separated by newlines */
-> +	struct string_list str_stdin;
-> +	/*
-> +	 * Callback and state pointer to ask for more content to pipe to stdin.
-> +	 * Will be called repeatedly, for each hook. See
-> +	 * hook.c:pipe_from_stdin() for an example. Keep per-hook state in
-> +	 * hook.feed_pipe_cb_data (per process). Keep initialization context in
-> +	 * feed_pipe_ctx (shared by all processes).
-> +	 */
-> +	feed_pipe_fn feed_pipe;
-> +	void *feed_pipe_ctx;
-
-Instead of 3 fields, I think 2 suffice - the function and the data
-(called "ctx" here). We can supply a function that treats the data as a
-string_list.
+Hongyi Zhao <hongyi.zhao@gmail.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=881=E6=97=
+=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=883:01=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Mon, Feb 1, 2021 at 1:54 PM =E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@=
+gmail.com> wrote:
+> >
+> > Hi=EF=BC=8CI don't think so unless you have the commit
+> >  in github or gitlab which include this file=EF=BC=8C
+> > maybe you can use git pull to get it.
+> > By the way ,you can ask questions in irc chatroom #git or #git-devel.
+> > There will be a good place to get help.
+>
+> Thanks a lot for your suggestion. BTW, what's IRC client and server
+> used by you normally?
+>
+> > --
+> > adlternative
+> >
+> > Hongyi Zhao <hongyi.zhao@gmail.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=881=
+=E6=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=8810:16=E5=86=99=E9=81=93=EF=BC=
+=9A
+> > >
+> > > Hi,
+> > >
+> > > I accidentally deleted some hash files located under the project's
+> > > .git/objects subdirectory. In this case, can I resume the project?
+> > >
+> > > Regards
+> > > --
+> > > Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
+> > > Theory and Simulation of Materials
+> > > Hebei Polytechnic University of Science and Technology engineering
+> > > NO. 552 North Gangtie Road, Xingtai, China
+>
+>
+>
+> --
+> Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
+> Theory and Simulation of Materials
+> Hebei Polytechnic University of Science and Technology engineering
+> NO. 552 North Gangtie Road, Xingtai, China
