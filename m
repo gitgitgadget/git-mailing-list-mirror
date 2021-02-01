@@ -2,206 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D4CC433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9718FC433E6
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:50:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 614AD64ECA
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E89C64EC3
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232439AbhBATtt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 14:49:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40568 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232359AbhBATqc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 14:46:32 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6142C0613D6
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:45:52 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id c12so17947673wrc.7
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:45:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=pSbgX86qfVOFV+DYuqgTNYqm4NtxhzBOQZKnL/QDvHQ=;
-        b=s0B3P3HvFLOT4xe+ivSV3jbEs6SBNToylxkOuNjYRgOWDZDv/3H+DHFJU0HD/VCk4l
-         Fq1MIRDJieFN8wRxPmTC8QeNIVbkWO+//pidjjnpMokTVuoJv6C3kUKV46Riq9AYfy5v
-         IbKYqi/cXlXd0dF2f2Sz7FeKhAOi2QPnO8JvxwV0f9omHzSK57nwMSgJHi+y6KqN6Ma1
-         6zIXhvJTPtKOwt/a07jDB+ECpnPT03h8v7pgOGOl7FmrHKpKTzvpcjAkJlU7dm4oF5GW
-         3ZgXDbHRg7hV8PhFUw6Rga26mjNNYPyU+pGmjhGLrS0s2B2nEuzXManJPgUKo/BBSOjB
-         fyJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pSbgX86qfVOFV+DYuqgTNYqm4NtxhzBOQZKnL/QDvHQ=;
-        b=suMWKdpj56pRHmvs9Op8z8DD1mUxD2sZlU+w4erVDXC7XCI+jV6OH1xRsSgud2T6uT
-         Eb0AHf5zKvX/C4MjRuzd7mLONV5CTp6N548v278wV7jpMzFLT74hadAlv0x3YHFud+xH
-         7b3IiQIN+Lk5pa9KKIaBOsTIea2l64M7Ewa1ursSstMMxYWdt8qkFoX7ZlkgSIgw5erI
-         9gAWodGqSh6q6U2OmEnZpahXrEtDgzTsMNZbb0Jwx1YcAUnFnfbiuH3m6wdMzZpKxXfd
-         4/UivRB/IApsXvk+ZxcJHwp0HkfQrPt5hwecdcE79cS2s90QfcmzrsChCcGCgwS3PsTV
-         7BCA==
-X-Gm-Message-State: AOAM530Qw3J4aZgcrCoHBB47JCj9SlyfyEmXZlJ/mR9madV6U+iUeOC8
-        9PQem6WYzMo+hS3dj5+8cYz0UwY2aCk=
-X-Google-Smtp-Source: ABdhPJwm5mvFDCnMghsa5wRlMJRcYtY0zlTIp8ECCpgeLFNyNg1bSnXy6CXDp2zUEqZ9KqccRlggOw==
-X-Received: by 2002:adf:e38d:: with SMTP id e13mr19454044wrm.231.1612208751399;
-        Mon, 01 Feb 2021 11:45:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h207sm320409wme.18.2021.02.01.11.45.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 11:45:50 -0800 (PST)
-Message-Id: <3b03a8ff7a72c101f82a685cc6f34a5dd37a9c4b.1612208747.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
-        <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 19:45:35 +0000
-Subject: [PATCH v2 02/14] pkt-line: promote static buffer in
- packet_write_gently() to callers
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232710AbhBATuZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 14:50:25 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58449 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231624AbhBATtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 14:49:08 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A44B3B34EC;
+        Mon,  1 Feb 2021 14:48:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=T/a/m/vG9DAhP6x2IvLuw5duvns=; b=Tvf0Jj
+        T3mJI5i+WDgDbPcW9S1F7+cKOPX8qg9QMMUBcU87o9Z41WKN1A8GY47XnIJn+iEP
+        f9Ue0BRV4up0VXMUiwECuj1QHwzTIXgfLW9e5ve7Lt52T/K2VlVZAyah7LdAxcJ5
+        rZbMgxep/3qKpnIge/T/ghI7v9MlqLxdI8rg0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NC/ylmGippTmtUa4wti7X2YmzyD698VU
+        DfyJa3eSgCBBlbFcEGhVV3W1FEn+TE4dK0/B06V/x1bpf35y0UKE95HpBJisBLlC
+        RygB0nZcRMNq9SFNbjtK4YRKGOMQ4SDSh7TMgRxLtxcHTWr3GmTVPcLWUL2eQLOd
+        CNLEPSpZs/U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BFD8B34EB;
+        Mon,  1 Feb 2021 14:48:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 26FF6B34EA;
+        Mon,  1 Feb 2021 14:48:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: What's cooking in git.git (Jan 2021, #06; Sat, 30)
+References: <xmqqsg6infev.fsf@gitster.c.googlers.com>
+        <CAPSFM5fLcSBmcGTLaPuoKKHO0qv3fKB5q-XvXv5emWfLYpFv=w@mail.gmail.com>
+Date:   Mon, 01 Feb 2021 11:48:24 -0800
+In-Reply-To: <CAPSFM5fLcSBmcGTLaPuoKKHO0qv3fKB5q-XvXv5emWfLYpFv=w@mail.gmail.com>
+        (Charvi Mendiratta's message of "Mon, 1 Feb 2021 21:21:03 +0530")
+Message-ID: <xmqqr1lzlgc7.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7279449E-64C6-11EB-B69E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-Move the static buffer used in `packet_write_gently()` to its callers.
-This is a first step to make packet writing more thread-safe.
+> It seems that a lot of tests are failing in macOS.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- pkt-line.c | 33 ++++++++++++++++++++++++---------
- pkt-line.h | 10 ++++++++--
- 2 files changed, 32 insertions(+), 11 deletions(-)
+That is caused by a separate topic, I think.
 
-diff --git a/pkt-line.c b/pkt-line.c
-index d633005ef74..14af049cd9c 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -194,26 +194,34 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	return status;
- }
- 
--static int packet_write_gently(const int fd_out, const char *buf, size_t size)
-+/*
-+ * Use the provided scratch space to build a combined <hdr><buf> buffer
-+ * and write it to the file descriptor (in one write if possible).
-+ */
-+static int packet_write_gently(const int fd_out, const char *buf, size_t size,
-+			       struct packet_scratch_space *scratch)
- {
--	static char packet_write_buffer[LARGE_PACKET_MAX];
- 	size_t packet_size;
- 
--	if (size > sizeof(packet_write_buffer) - 4)
-+	if (size > sizeof(scratch->buffer) - 4)
- 		return error(_("packet write failed - data exceeds max packet size"));
- 
- 	packet_trace(buf, size, 1);
- 	packet_size = size + 4;
--	set_packet_header(packet_write_buffer, packet_size);
--	memcpy(packet_write_buffer + 4, buf, size);
--	if (write_in_full(fd_out, packet_write_buffer, packet_size) < 0)
-+
-+	set_packet_header(scratch->buffer, packet_size);
-+	memcpy(scratch->buffer + 4, buf, size);
-+
-+	if (write_in_full(fd_out, scratch->buffer, packet_size) < 0)
- 		return error(_("packet write failed"));
- 	return 0;
- }
- 
- void packet_write(int fd_out, const char *buf, size_t size)
- {
--	if (packet_write_gently(fd_out, buf, size))
-+	static struct packet_scratch_space scratch;
-+
-+	if (packet_write_gently(fd_out, buf, size, &scratch))
- 		die_errno(_("packet write failed"));
- }
- 
-@@ -244,6 +252,12 @@ void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
- 
- int write_packetized_from_fd(int fd_in, int fd_out)
- {
-+	/*
-+	 * TODO We could save a memcpy() if we essentially inline
-+	 * TODO packet_write_gently() here and change the xread()
-+	 * TODO to pass &buf[4].
-+	 */
-+	static struct packet_scratch_space scratch;
- 	static char buf[LARGE_PACKET_DATA_MAX];
- 	int err = 0;
- 	ssize_t bytes_to_write;
-@@ -254,7 +268,7 @@ int write_packetized_from_fd(int fd_in, int fd_out)
- 			return COPY_READ_ERROR;
- 		if (bytes_to_write == 0)
- 			break;
--		err = packet_write_gently(fd_out, buf, bytes_to_write);
-+		err = packet_write_gently(fd_out, buf, bytes_to_write, &scratch);
- 	}
- 	if (!err)
- 		err = packet_flush_gently(fd_out);
-@@ -263,6 +277,7 @@ int write_packetized_from_fd(int fd_in, int fd_out)
- 
- int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
- {
-+	static struct packet_scratch_space scratch;
- 	int err = 0;
- 	size_t bytes_written = 0;
- 	size_t bytes_to_write;
-@@ -274,7 +289,7 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
- 			bytes_to_write = len - bytes_written;
- 		if (bytes_to_write == 0)
- 			break;
--		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
-+		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write, &scratch);
- 		bytes_written += bytes_to_write;
- 	}
- 	if (!err)
-diff --git a/pkt-line.h b/pkt-line.h
-index 8c90daa59ef..4ccd6f88926 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -5,6 +5,13 @@
- #include "strbuf.h"
- #include "sideband.h"
- 
-+#define LARGE_PACKET_MAX 65520
-+#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
-+
-+struct packet_scratch_space {
-+	char buffer[LARGE_PACKET_MAX];
-+};
-+
- /*
-  * Write a packetized stream, where each line is preceded by
-  * its length (including the header) as a 4-byte hex number.
-@@ -213,8 +220,7 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader);
- enum packet_read_status packet_reader_peek(struct packet_reader *reader);
- 
- #define DEFAULT_PACKET_MAX 1000
--#define LARGE_PACKET_MAX 65520
--#define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
-+
- extern char packet_buffer[LARGE_PACKET_MAX];
- 
- struct packet_writer {
--- 
-gitgitgadget
+The mention of 3415 is a leftover from an older round, I think.  It
+seems we have an all-green build of 'seen' with this topic in it.
 
+Thanks.
