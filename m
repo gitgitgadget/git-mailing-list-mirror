@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 910DFC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5DCFC43381
 	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5119564EC2
+	by mail.kernel.org (Postfix) with ESMTP id 9083A64EC4
 	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232570AbhBATrl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 14:47:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40586 "EHLO
+        id S232588AbhBATr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 14:47:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232372AbhBATqf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 14:46:35 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D534C061788
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:45:55 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id a1so17964857wrq.6
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:45:55 -0800 (PST)
+        with ESMTP id S232432AbhBATqg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 14:46:36 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C705C06178A
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:45:56 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id j18so342870wmi.3
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:45:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hJMMlnG4K85uP3aMIkdMyhFWAilpMetGJKPcVVcf3AE=;
-        b=TMSO6uXG+J/PEgsfWImC93OhQoPpnLfoPYsDPQthHd3pz1R2+4F6zW62KFm3JTOGDj
-         4Jdgl5k/7wmDKe3cZkOC6v1Q96dup0GL+Y0NlBERyDwKmsWk9S275n8hEz4BUxeMfArm
-         FlTXWHMU+uftGvt5bVi5ZUohnHXW10YT7JAVrNAZRtafwSDw2yB/zuevfPLHHHJQWPFl
-         rxOaqILdz5w+eXMr7+m9jnx4NkgTbNC2oqwdXbt4G8ngi1f67FCDyR9zLpZVOzLZ2bCz
-         QDkV1M90Z/7Q+BKFPnO4MSN3eplQ77nf/j8dEk9rXwpoRelUU6hBIhafZMvE4YPxSvVh
-         HiCw==
+        bh=Pbcu3sqHNuJHcnom8abmYvjSL2+3Cp3JrBKFE8pxB10=;
+        b=QlKnE8jSqPHTdqAsLnUDubeV0IHkpPiEOBrz8fna554HSH3Bsdga1Fr2YY7OMWSqGf
+         ekTZcLYPYED5I/EAOXMKXwqHRPJehL635oATwnyvNg4lVDX+BBDlxRWFs87wZF93pGVx
+         MvMY8Esf+GeIUAmUN9ZL1vO5NuzPIex45XtKQSunk+0M8iHZF9wxAdP7mXQDKJCahT/m
+         2Jsamu50Lr/5YJzEd+ipCC4TT2V8pr8kGcq8qoWOWmQGrEWTtkZNFENqcoC8BwzE1p3p
+         fcoMcDJBcIvT/w7SzmZo+hNxeqdiLlrXN6henTXDN6tnIdDNu4LElKsFeKc97dYM+ek2
+         pnEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hJMMlnG4K85uP3aMIkdMyhFWAilpMetGJKPcVVcf3AE=;
-        b=LN3CfqxQtrtZZP+50N82eRKoQArEltXb/+nC7xq9ujCLflOBq4xSFvyDgzfK2kPIeY
-         msovgShwsXSw5AwrYQKP5mwny8if61gingA5OwOiiEtmEA8dAQ7SqdogNfjn5aqc8Sg2
-         aa3Ifst04ZMR746o4YOc3IL5SQhJeI1sObBv0BeRFAVfOsD2HXGJGvxJmDSwIerz5sun
-         eIiz3RJTDunuq/yIrzdT/NAKd41IFdwhDSkn43+/fN3CFQhKiKcHb19n+F9Zxm2t5fFo
-         87jlDH7GnE6Y8yXxbs38nfThOEF/1i4F2eNeQA8gW/hJTFtLlgF47wlzGwnsmldiPLAh
-         Cvaw==
-X-Gm-Message-State: AOAM533BgUU/jd0APJSsLTvkpkaAGUzXQRbrP544vCV/BCLEn22vpNOq
-        3Up5SH2dNo+tbBp/Zn3E8hU3okAx6Zg=
-X-Google-Smtp-Source: ABdhPJxjBoAWRX7RIxL1QeETVxDJWPzqUfVFnjOBTKOewmN+ZnZyWMnVVm7+5Wf6d6nrMLLNDYNEWw==
-X-Received: by 2002:adf:f009:: with SMTP id j9mr19842840wro.35.1612208754235;
-        Mon, 01 Feb 2021 11:45:54 -0800 (PST)
+        bh=Pbcu3sqHNuJHcnom8abmYvjSL2+3Cp3JrBKFE8pxB10=;
+        b=gBnG9wFun2hOoDcbfcjPJyi+PYBVpb4A3yoqdTDEp5LuIlHjEDgJBtBvXUJ0HzBquH
+         zCDD1PCUhW2JX7DG0s6DHrI+3rhvsosI/ckYdCD/LMPsrpvVKFUWsyeaz4G466SZi4Zl
+         bbu+BpFe/QIxkr3EMRDbi566fZGON10gjI5h9/GvJm1wJ48z2gvd71HZ6YoC8+6xW1ZM
+         IPsKeaxtznSy7jD5Jp1NeJj1goQucXNazr3HCeso1INWOkIRqSYUCbs+R1X5SVWoTvrr
+         m0l7qs05qwmDExh8wINnpKEeCh0GJi++QSlv+pPqRpvlWapotUDtMsMB/0pW5MqjZi4z
+         qt/Q==
+X-Gm-Message-State: AOAM530mibAkB6OJwEz9S8FOKVFrioqo+aefpbU64hla+RUPsVBryJPB
+        uUFV4tS3dQ4YPbwI/ogCIbpPUHG2e50=
+X-Google-Smtp-Source: ABdhPJxkhsMLQuJ+NMlrqjI7Ip5OCPCSE8I8U82ErwnAGdy9ZWshso7D/gjrbT58D0lJH/+6Z8UlQA==
+X-Received: by 2002:a1c:4c01:: with SMTP id z1mr396377wmf.159.1612208755081;
+        Mon, 01 Feb 2021 11:45:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k131sm280991wmb.37.2021.02.01.11.45.53
+        by smtp.gmail.com with ESMTPSA id i7sm3938335wru.49.2021.02.01.11.45.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 11:45:53 -0800 (PST)
-Message-Id: <43bc4a26b79038a13d042f4538b467b1af94688b.1612208747.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 11:45:54 -0800 (PST)
+Message-Id: <6a389a3533512acedfa1769c64296c1e19b16221.1612208747.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
 References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
         <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 19:45:38 +0000
-Subject: [PATCH v2 05/14] pkt-line: (optionally) libify the packet readers
+Date:   Mon, 01 Feb 2021 19:45:39 +0000
+Subject: [PATCH v2 06/14] pkt-line: accept additional options in
+ read_packetized_to_strbuf()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,104 +80,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-So far, the (possibly indirect) callers of `get_packet_data()` can ask
-that function to return an error instead of `die()`ing upon end-of-file.
-However, random read errors will still cause the process to die.
+The `read_packetized_to_strbuf()` function reads packets into a strbuf
+until a flush packet has been received. So far, it has only one caller:
+`apply_multi_file_filter()` in `convert.c`. This caller really only
+needs the `PACKET_READ_GENTLE_ON_EOF` option to be passed to
+`packet_read()` (which makes sense in the scenario where packets should
+be read until a flush packet is received).
 
-So let's introduce an explicit option to tell the packet reader
-machinery to please be nice and only return an error.
-
-This change prepares pkt-line for use by long-running daemon processes.
-Such processes should be able to serve multiple concurrent clients and
-and survive random IO errors.  If there is an error on one connection,
-a daemon should be able to drop that connection and continue serving
-existing and future connections.
-
-This ability will be used by a Git-aware "Internal FSMonitor" feature
-in a later patch series.
+We are about to introduce a caller that wants to pass other options
+through to `packet_read()`, so let's extend the function signature
+accordingly.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- pkt-line.c | 19 +++++++++++++++++--
- pkt-line.h |  4 ++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ convert.c  | 2 +-
+ pkt-line.c | 4 ++--
+ pkt-line.h | 6 +++++-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
+diff --git a/convert.c b/convert.c
+index 3f396a9b288..175c5cd51d5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -903,7 +903,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 		if (err)
+ 			goto done;
+ 
+-		err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
++		err = read_packetized_to_strbuf(process->out, &nbuf, 0) < 0;
+ 		if (err)
+ 			goto done;
+ 
 diff --git a/pkt-line.c b/pkt-line.c
-index d91a1deda95..528493bca21 100644
+index 528493bca21..f090fc56eef 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -323,8 +323,11 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
- 		*src_size -= ret;
- 	} else {
- 		ret = read_in_full(fd, dst, size);
--		if (ret < 0)
-+		if (ret < 0) {
-+			if (options & PACKET_READ_NEVER_DIE)
-+				return error_errno(_("read error"));
- 			die_errno(_("read error"));
-+		}
- 	}
+@@ -461,7 +461,7 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+ 	return packet_read_line_generic(-1, src, src_len, dst_len);
+ }
  
- 	/* And complain if we didn't get enough bytes to satisfy the read. */
-@@ -332,6 +335,8 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
- 		if (options & PACKET_READ_GENTLE_ON_EOF)
- 			return -1;
+-ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
++ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out, int options)
+ {
+ 	int packet_len;
  
-+		if (options & PACKET_READ_NEVER_DIE)
-+			return error(_("the remote end hung up unexpectedly"));
- 		die(_("the remote end hung up unexpectedly"));
- 	}
- 
-@@ -360,6 +365,9 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 	len = packet_length(linelen);
- 
- 	if (len < 0) {
-+		if (options & PACKET_READ_NEVER_DIE)
-+			return error(_("protocol error: bad line length "
-+				       "character: %.4s"), linelen);
- 		die(_("protocol error: bad line length character: %.4s"), linelen);
- 	} else if (!len) {
- 		packet_trace("0000", 4, 0);
-@@ -374,12 +382,19 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
- 		*pktlen = 0;
- 		return PACKET_READ_RESPONSE_END;
- 	} else if (len < 4) {
-+		if (options & PACKET_READ_NEVER_DIE)
-+			return error(_("protocol error: bad line length %d"),
-+				     len);
- 		die(_("protocol error: bad line length %d"), len);
- 	}
- 
- 	len -= 4;
--	if ((unsigned)len >= size)
-+	if ((unsigned)len >= size) {
-+		if (options & PACKET_READ_NEVER_DIE)
-+			return error(_("protocol error: bad line length %d"),
-+				     len);
- 		die(_("protocol error: bad line length %d"), len);
-+	}
- 
- 	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0) {
- 		*pktlen = -1;
+@@ -477,7 +477,7 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
+ 			 * that there is already room for the extra byte.
+ 			 */
+ 			sb_out->buf + sb_out->len, LARGE_PACKET_DATA_MAX+1,
+-			PACKET_READ_GENTLE_ON_EOF);
++			options | PACKET_READ_GENTLE_ON_EOF);
+ 		if (packet_len <= 0)
+ 			break;
+ 		sb_out->len += packet_len;
 diff --git a/pkt-line.h b/pkt-line.h
-index ccf27549227..7f31c892165 100644
+index 7f31c892165..150319a6f00 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -79,10 +79,14 @@ int write_packetized_from_buf2(const char *src_in, size_t len, int fd_out,
-  *
-  * If options contains PACKET_READ_DIE_ON_ERR_PACKET, it dies when it sees an
-  * ERR packet.
-+ *
-+ * With `PACKET_READ_NEVER_DIE`, no errors are allowed to trigger die() (except
-+ * an ERR packet, when `PACKET_READ_DIE_ON_ERR_PACKET` is in effect).
-  */
- #define PACKET_READ_GENTLE_ON_EOF     (1u<<0)
- #define PACKET_READ_CHOMP_NEWLINE     (1u<<1)
- #define PACKET_READ_DIE_ON_ERR_PACKET (1u<<2)
-+#define PACKET_READ_NEVER_DIE         (1u<<3)
- int packet_read(int fd, char **src_buffer, size_t *src_len, char
- 		*buffer, unsigned size, int options);
+@@ -145,8 +145,12 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
  
+ /*
+  * Reads a stream of variable sized packets until a flush packet is detected.
++ *
++ * The options are augmented by PACKET_READ_GENTLE_ON_EOF and passed to
++ * packet_read.
+  */
+-ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
++ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out,
++				  int options);
+ 
+ /*
+  * Receive multiplexed output stream over git native protocol.
 -- 
 gitgitgadget
 
