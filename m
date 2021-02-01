@@ -2,108 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 610B6C433E6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A02C9C43381
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:18:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26D8064EA3
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:17:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CD6A64E9E
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 15:18:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231476AbhBAPQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 10:16:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38768 "EHLO
+        id S231285AbhBAPR5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 10:17:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbhBAPQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 10:16:27 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEFA3C061756
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 07:15:46 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id m22so23236894lfg.5
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 07:15:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=v0DvBbRyTLaKFdpHvIkccJB+iUgm6iNofCdYOqp7H3s=;
-        b=olMjYnm5M5dlroneuksyPWT5KMdzt6WiSw5mIuA0N8fjYafYG603uYGczXpiY7R5g1
-         fXE28eQKQHEwwRX8HynbG9FmfX3Cpg1YLm1d274VUBDPVEiwcAZdfbX7MwK0o5Yyv22a
-         NwJ09dlLl0wFWAViBM00ynqlR0ui8rMe1QIwirFVO1w8EaLK/yTPat2YOOUdGyJQIr6i
-         I/xUt0GKNde9Lujp9I3UhfAgjfnpmm2F8nVhwbZZ28vfgiHp+bMXPCMrp/LYciqJGGOs
-         Nkh0mPwhloalW3j6nZhqW2pAZvb85MxdkbS+EZpNlVetxggZXb1Pmwn0JM38B7PqnQpp
-         Dvrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=v0DvBbRyTLaKFdpHvIkccJB+iUgm6iNofCdYOqp7H3s=;
-        b=nhrTcXk5Dz0gRs52gra+BGwlEhiy11a3EgueCPVjDepqudM3cWviJ3i8d5eO2r8uGv
-         lYDon0qaX/0/08G5GcgELx4/Qih7Do6608qAB1NkHnZ11QB16TTrPJa5+nd8YbIMMhqS
-         U2V47CrMRkmmVnknNKmjcQdq4q3krVjN/ZKgFd+NEXS3i50FPiWlG1iBxdKmoxFtfECz
-         vnTf0Up1mX2V05w7C820xNmwv4xHwwx/F6KKq3SUn4TyeACbwPlFhgXzzFDCh5H7xksz
-         yy/An/c+ziDaGgmcFxzd5KTGSlCdfDOkrt2R/x3XXnt5HfF62HGl5X/SI0kX2U1q8zVW
-         vOYg==
-X-Gm-Message-State: AOAM532uR8GyN7N/OUmnI4F2JmCcBkh7r0ujWAszknH2JLrTCiTXEV2w
-        fuj0lI7q2dgOEu4z6TU+crFyzdLEm1JcdV5SNLREAnzB7wMI74Wq
-X-Google-Smtp-Source: ABdhPJzn7jJiDoIsxY8JNjFtHQqYHaQAPHG2VapE37P0xqmwvBVfaViavKQtXBzVP8nBBc2q65s4ZRwUgIjIKnmovls=
-X-Received: by 2002:ac2:4ade:: with SMTP id m30mr9482276lfp.231.1612192544665;
- Mon, 01 Feb 2021 07:15:44 -0800 (PST)
+        with ESMTP id S230170AbhBAPRs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 10:17:48 -0500
+Received: from joooj.vinc17.net (joooj.vinc17.net [IPv6:2001:4b99:1:3:216:3eff:fe20:ac98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5995C061573
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 07:17:07 -0800 (PST)
+Received: from smtp-zira.vinc17.net (128.119.75.86.rev.sfr.net [86.75.119.128])
+        by joooj.vinc17.net (Postfix) with ESMTPSA id 1308AAA4;
+        Mon,  1 Feb 2021 16:17:03 +0100 (CET)
+Received: by zira.vinc17.org (Postfix, from userid 1000)
+        id A7338C20354; Mon,  1 Feb 2021 16:17:03 +0100 (CET)
+Date:   Mon, 1 Feb 2021 16:17:03 +0100
+From:   Vincent Lefevre <vincent@vinc17.net>
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git fails with a broken pipe when one quits the pager
+Message-ID: <20210201151703.GC24560@zira.vinc17.org>
+References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
+ <8735yhq3lc.fsf@evledraar.gmail.com>
+ <20210131033652.GK623063@zira.vinc17.org>
+ <87o8h4omqa.fsf@evledraar.gmail.com>
+ <20210201103429.GT623063@zira.vinc17.org>
+ <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
+ <20210201123635.GA24560@zira.vinc17.org>
+ <CAPx1Gverh2E2h5JOSOfJ7JYvbhjv8hJNLE8y4VA2fNv0La8Rtw@mail.gmail.com>
 MIME-Version: 1.0
-From:   Hongyi Zhao <hongyi.zhao@gmail.com>
-Date:   Mon, 1 Feb 2021 23:15:33 +0800
-Message-ID: <CAGP6POLQ_6cZHh0UCaavNBL7+FcMEX8bwb=VxvNMtmO0ZSCPwg@mail.gmail.com>
-Subject: The error subcommand given by git tab completion.
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPx1Gverh2E2h5JOSOfJ7JYvbhjv8hJNLE8y4VA2fNv0La8Rtw@mail.gmail.com>
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.0.5+101 (ab6d0dc5) vl-132933 (2021-01-27)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Ubuntu 20.04, the `git TAB' will give me the following available subcommands:
+On 2021-02-01 04:53:03 -0800, Chris Torek wrote:
+> On Mon, Feb 1, 2021 at 4:36 AM Vincent Lefevre <vincent@vinc17.net> wrote:
+> > In general, repositories have more than 64k log.
+> 
+> Please don't focus on the exact size.  Some system might
+> have a multi-gigabyte pipe buffer, and some other system
+> might have a tiny one; we'd like consistent behavior no matter
+> what size the system uses.  Can we *get* consistent behavior?
+> I don't know.
 
-$ git TAB
-add               deborig           merge             rm
-am                describe          mergetool         send-email
-apply             diff              mv                shortlog
-archive           difftool          notes             show
-bisect            fetch             pull              show-branch
-blame             format-patch      push              sparse-checkout
-branch            fsck              range-diff        stage
-bundle            gc                rebase            stash
-checkout          gitk              reflog            status
-cherry            grep              remote            submodule
-cherry-pick       gui               repack            switch
-citool            help              replace           tag
-clean             init              request-pull      whatchanged
-clone             instaweb          reset             worktree
-commit            latexdiff         restore
-config            log               revert
+The consistent behavior can be obtained by ignoring the broken pipe
+(in the case where git starts the pager).
 
-Then I try the following:
+> [me]
+> > > The problem that has come up is, if I understand correctly, that
+> > > some Linux distributions have come with misconfigured pagers
+> > > that don't bother reading their input, and silently exit zero.
+> >
+> > They are not misconfigured. This is how they work.
+> 
+> A pager that reads nothing and writes nothing does not seem
+> very useful to me. [...]
 
-$ git gui
-git: 'gui' is not a git command. See 'git --help'.
+I agree.
 
-The most similar commands are
-    gc
-    grep
-    init
-    pull
-    push
+> [on various exit cases]
+> > > There's no good way for Git to be able to tell which of these was
+> > > the case.
+> >
+> > In the case git spawns a pager, it knows that this is a pager
+> > (as per documentation).
+> 
+> Again, this seems irrelevant.  If the pager exited correctly
+> while reading everything, or it exited correctly without reading
+> everything, or if it exited incorrectly with or without reading
+> everything, is not something *Git* can tell.
 
-The git version is shown as below:
+No, Git can tell when the pager exited abnormally: it suffices to
+check its exit status. Git currently doesn't do that, and this is
+bad, because it can miss real issues, which cannot always be detected
+by the user.
 
-$ git --version
-git version 2.25.1
+If the pager exits with exit code 0, this means normal termination,
+whether the user has read the full output or not.
 
-As you can see, gui is among the auto-completed subcommands list, but
-it can be run like the manner of other subcommands. Any hints for this
-problem?
+> I'm therefore not sure that Git should *try* to tell -- which is the
+> point I'm trying to make here. The question is this: if we can only
+> do a poor job, should we try at all? What *should* we do, given what
+> we *can* do? All we get is SIGPIPE and an exit status, and the
+> SIGPIPE may or may not be meaningful.
+> 
+> That seems to be what you're arguing as well.  So I'm not sure
+> why you're objecting to what I'm pointing out. :-)
 
-Regards
+Well, my objection is based on the fact that it is possible to get
+the information from the exit status of the pager (I originally
+thought that Git was taking it into account).
+
+BTW, another related thing I dislike about Git, and I think that this
+should also be regarded as a bug, is that when doing a commit, Git
+doesn't check the exit status of the editor for the commit message.
+Say, for instance, if something on the system kills the editor, Git
+applies the commit with an incorrect or incomplete log message though
+the commit wasn't validated yet by the user. Fortunately, the user
+can amend the commit, but IMHO, that's an incorrect behavior.
+
 -- 
-Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
-Theory and Simulation of Materials
-Hebei Polytechnic University of Science and Technology engineering
-NO. 552 North Gangtie Road, Xingtai, China
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
