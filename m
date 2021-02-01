@@ -2,112 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23108C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:54:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DE7CC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A790364E2B
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:54:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF62964E2B
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbhBAGxs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 01:53:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42978 "EHLO
+        id S229630AbhBAG7c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 01:59:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230224AbhBAGwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 01:52:36 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3D2C061574
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:51:55 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id l7so9868319pjy.0
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:51:55 -0800 (PST)
+        with ESMTP id S229527AbhBAG7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 01:59:31 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5501C061573
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:50 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d16so15285408wro.11
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=omap3adMUrzwPoFNiA5dWmpHDtCQdqNGXkm5uNaTGCA=;
-        b=fzeFPtgZGrCjeGQR0qjUkh9wYunaqIckT5fu5cmKsrVkniM9w8LDH9JTCpWqnp3P/O
-         qRbCtp74pk61+nP0Lo4GaTXkkK+EPlNiIcekifco810p3pEqA1PDz23RBBS+R+13a+Om
-         8wl6kSek2RtuN2+1IA9TDK4mgHuShrN8PTnOniv+KiOj4jD7Ab6TQJ61Qwx/7t3Y40Qq
-         D7j6MLnjrLQ+Hbsy5v5GshnUrR3CQK92mEah7gy5jLPgQ4Onqa1hPi0eUve9s66BWc+v
-         2WGNjJbISkdFbT1Bnl4FFqt9Hfz4GdXWWPK+N4cmgXdxRslqFVQ2QhzZwU4mIwcTqfmr
-         3ufQ==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TEn2MjmptZkcNZR3QfnWESfHn4uIr+R6RuBklnAznUY=;
+        b=AdvfLXfiRf/+0+Mx6yykltxh9AM3iy19XCAL6ukd25KNhyKGeMeS7p+PFCgx/L/LlB
+         +OeDrpTSV1sYYMhld1zipgqnVO2EOF29lRVMVRIRUEJ1nZT2goWuXYX0xkmLpEu3hdUl
+         wyh7PL85rOwfQqCciA2pmP74fBgMRi3h5u7ACVJA33yb2n7KXYQKT4bQdqXYRaT+C+/w
+         qmdwPgVq664VFcB3LNP4ljzXoP7r3W/RW+0FOS45SlSZsfumgT6pe680j/1lYWiyWiff
+         zdUydruzUDcDypuCvS5mQxjKb1NG0985C555BqAGEDCAUvVhE3NPWalc2cTjMSjDUV7j
+         0DpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=omap3adMUrzwPoFNiA5dWmpHDtCQdqNGXkm5uNaTGCA=;
-        b=ZZfzSCVSEpko0e2CZcV8ySnOZwMwboGp44sGV7PXKaG1Z3TMvBoHlEieJfN9IEtWxl
-         3kWmB/hfT7HYQcrsu7hf5Cr3l9sgnw7Rj+5gRItxWZKSEUu7ceSfQ7wLI7skPWwQmKWE
-         ok+lARrveqp+9mjz0eyVut82fOLZcuIchK9NgqQ9Pvkqm0iozLVjrWTCkADFw9F3LDuq
-         E1jV+dMx6Fm0TAxp+M+coFrkJr+vfIoJe9vqj8xDRSbwqIL8WF9/74b/eRIZvgfDp6lG
-         TmvmqPRPbebgULeWtTMb308ZNhT7o/VHkSwwcp+6gaAyhOsgVjfDExyFSyYE+8Eyz0vJ
-         RlnQ==
-X-Gm-Message-State: AOAM533iu3wlQKuUYt7fTnLbGJwrwpU2X9KMBWPsY6uzE43q7bdh00L4
-        A+gr/Mf77OdTLvyPxMb0uChCt4HnZegyaNW244hg
-X-Google-Smtp-Source: ABdhPJxwuRN29a0rDl++2mii4TCMhZOLdokdbzK1u3/sAhbJ3h1LimEWRxHb5qEg2WV3aMgKLIflsXgI4vHoFkbHnoH2
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:8c98:b029:e1:5a00:537c with
- SMTP id t24-20020a1709028c98b02900e15a00537cmr4084926plo.79.1612162315425;
- Sun, 31 Jan 2021 22:51:55 -0800 (PST)
-Date:   Sun, 31 Jan 2021 22:51:53 -0800
-In-Reply-To: <20201222000220.1491091-15-emilyshaffer@google.com>
-Message-Id: <20210201065153.1322296-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201222000220.1491091-15-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: Re: [PATCH v7 14/17] run-command: add stdin callback for parallelization
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     emilyshaffer@google.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=TEn2MjmptZkcNZR3QfnWESfHn4uIr+R6RuBklnAznUY=;
+        b=Hf5OUBeGdWOR+L+tv5btUWVMzfn45yrSmEyXb0pQKMAEN0jEBuiDeBNoarvebz9jGi
+         IS2yO7y5fWgOcSzhrhpkJlz0iOk58VykloC85f7TYxFrOfkEeFMsmpBdy50QsJfN0/KK
+         fr0evxPRXk6sA8JohJoQ40hMUabFz0mnOPCppjsDWIiHzyni2wMetfVGOJMCBgNJVQq7
+         8+/dfXaW0nnJIiFVfZsZF8WJUbvn63HDLlcCyQCm4UnLZehmaLUP/hyidu0Oy4zC6Aeb
+         dvFXb2kEh/DG5m5/Cml6Y+/c4fwTxqwP/IUwAybTmFe4qd27vFnFBDDkkjbTWvUkLGCV
+         tZJA==
+X-Gm-Message-State: AOAM533VnXEXNn9d8S749S+Kaymk8Xb37j17cFrU0+Dzm9UXNjVjZWwh
+        +31/iSjYjbWU9rVtqtq85NagudP9kIk=
+X-Google-Smtp-Source: ABdhPJzvxTekn/GYwIfJtSysU6/KCE6OyRo6X4VyRhGXQLWbMvBE0DOyTj0e3edHozXqKezWoITmZQ==
+X-Received: by 2002:a05:6000:2:: with SMTP id h2mr16173055wrx.91.1612162729353;
+        Sun, 31 Jan 2021 22:58:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u10sm19148668wmj.40.2021.01.31.22.58.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Jan 2021 22:58:48 -0800 (PST)
+Message-Id: <9ac331b63ee609f5380649d3b395f420e57e56f8.1612162726.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
+References: <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
+        <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
+From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 01 Feb 2021 06:58:35 +0000
+Subject: [PATCH v7 01/11] commit-graph: fix regression when computing Bloom
+ filters
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Jakub =?UTF-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If a user of the run_processes_parallel() API wants to pipe a large
-> amount of information to stdin of each parallel command, that
-> information could exceed the buffer of the pipe allocated for that
-> process's stdin.  Generally this is solved by repeatedly writing to
-> child_process.in between calls to start_command() and finish_command();
-> run_processes_parallel() did not provide users an opportunity to access
-> child_process at that time.
+From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-[snip]
+Before computing Bloom filters, the commit-graph machinery uses
+commit_gen_cmp to sort commits by generation order for improved diff
+performance. 3d11275505 (commit-graph: examine commits by generation
+number, 2020-03-30) claims that this sort can reduce the time spent to
+compute Bloom filters by nearly half.
 
-> diff --git a/run-command.h b/run-command.h
-> index 6472b38bde..e058c0e2c8 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -436,6 +436,20 @@ typedef int (*start_failure_fn)(struct strbuf *out,
->  				void *pp_cb,
->  				void *pp_task_cb);
->  
-> +/**
-> + * This callback is called repeatedly on every child process who requests
-> + * start_command() to create a pipe by setting child_process.in < 0.
-> + *
-> + * pp_cb is the callback cookie as passed into run_processes_parallel, and
-> + * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-> + * The contents of 'send' will be read into the pipe and passed to the pipe.
-> + *
-> + * Return nonzero to close the pipe.
-> + */
-> +typedef int (*feed_pipe_fn)(struct strbuf *pipe,
-> +			    void *pp_cb,
-> +			    void *pp_task_cb);
-> +
+But since c49c82aa4c (commit: move members graph_pos, generation to a
+slab, 2020-06-17), this optimization is broken, since asking for a
+'commit_graph_generation()' directly returns GENERATION_NUMBER_INFINITY
+while writing.
 
-As you mention above in the commit message, I think the clearest API to
-support what we need is to just have a callback (that has access to
-child_process) that is executed between process start and finish.
+Not all hope is lost, though: 'commit_gen_cmp()' falls back to
+comparing commits by their date when they have equal generation number,
+and so since c49c82aa4c is purely a date comparison function. This
+heuristic is good enough that we don't seem to loose appreciable
+performance while computing Bloom filters.
 
-As it is, I think this callback is too specific in that it takes a
-struct strbuf. I think that this struct strbuf will just end up being
-unnecessary copying much of the time, when the user could have just
-written to the fd directly.
+Applying this patch (compared with v2.30.0) speeds up computing Bloom
+filters by factors ranging from 0.40% to 5.19% on various repositories [1].
+
+So, avoid the useless 'commit_graph_generation()' while writing by
+instead accessing the slab directly. This returns the newly-computed
+generation numbers, and allows us to avoid the heuristic by directly
+comparing generation numbers.
+
+[1]: https://lore.kernel.org/git/20210105094535.GN8396@szeder.dev/
+
+Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
+---
+ commit-graph.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index f3486ec18f1..78de312ccec 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -139,13 +139,17 @@ static struct commit_graph_data *commit_graph_data_at(const struct commit *c)
+ 	return data;
+ }
+ 
++/* 
++ * Should be used only while writing commit-graph as it compares
++ * generation value of commits by directly accessing commit-slab.
++ */
+ static int commit_gen_cmp(const void *va, const void *vb)
+ {
+ 	const struct commit *a = *(const struct commit **)va;
+ 	const struct commit *b = *(const struct commit **)vb;
+ 
+-	uint32_t generation_a = commit_graph_generation(a);
+-	uint32_t generation_b = commit_graph_generation(b);
++	uint32_t generation_a = commit_graph_data_at(a)->generation;
++	uint32_t generation_b = commit_graph_data_at(b)->generation;
+ 	/* lower generation commits first */
+ 	if (generation_a < generation_b)
+ 		return -1;
+-- 
+gitgitgadget
+
