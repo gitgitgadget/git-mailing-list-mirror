@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55BB5C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F40C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 136B564ECB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3316C64ECB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbhBATth (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 14:49:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40476 "EHLO
+        id S232053AbhBATtl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 14:49:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232365AbhBATqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 14:46:34 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19328C0617A9
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:46:02 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id q7so17921206wre.13
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:46:02 -0800 (PST)
+        with ESMTP id S232329AbhBATqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 14:46:33 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF44CC0613ED
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:45:53 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id 7so17971667wrz.0
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VzM+PE+3kF6zgcBTgKFXoFbs+d9tx2DOnwjzoMRPDAw=;
-        b=a8Ljt8h0ZbQODOAcuSKdSDu/5mVrdmS8hs+DV+IgXtvrO3HDt3dbDKkYYdzG0IxB9P
-         G5jvAJIBbnpZkQpJ6a7XTYhpmje3YCnKtIoGKlAZjidIGnTbkTm9NgIX0VlEsM2f8zVV
-         U3bpP4wMrddVykn51uluO66HQkUcW8IEO+x7A79ZsUVNgKNj7knYI75+Vk98MJiV0X+r
-         UKPEA6rxV8KLTtZBVtf+pit33UIWKWl20ZGpwUyRFIWGdp44NOHo2hPy07fxpEVqWz3P
-         PG9vnUqgc0cvcX1ahWK3ZzJHhLGmIxn9OZgcsLj4U7GeJDSEUgpZXTm6c6rB8o+deQYe
-         veGg==
+        bh=m8IpXcH5RcuEGRDPYOKsp8OHYVdfh8TgVVg0bIEweZA=;
+        b=KBhYybb/OVTGy2AUxk8XRdJTadnkgJ/gWBuMDtcycX+oJzJAekuNJgTPsN78OtZu0l
+         r4vyvaPnR4M8x3n2L+YG6MBEyzgRVLOl2xNVQPvlz3mply2kqcO3kf34uEPjeIZ3ruo0
+         zo7f7GiaAa+VaKqARc7E+d/zSVVPQc5AVgu1RkSEF3ZBU9F7Woc55xM9csKzRi9Nwe2t
+         wtaLxBtlw3W5CSFn+KjWR6DJ5nlWrJ81ihIWVXK1TUvD//vywWiAFN6Zfgyayh13vKWZ
+         ISAHadM5n/2aEf0WYMP9FOKElt+zO+uZY/9s0bZzUrSdmVJEy53DFZNE4R229cv/txzs
+         6jOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VzM+PE+3kF6zgcBTgKFXoFbs+d9tx2DOnwjzoMRPDAw=;
-        b=X4z3DF5uVNf2rV9GSLyaX7U4PxcsQ8d/kJPBUxJsSs8zVByuv+KxKuqVQKjTSvdGJV
-         N8Rhi7Q2xwBYDEPvVEZxeH7g35lUSyqy8yE2GPZZl/kAizi7Cn88nh2S4xUwL8sf5VN1
-         4y5gXzLenteZF9lVAkRdCfXKZ9+RoJyQS8JMaikAbHgi0RQckgdS9qG/IrW7ApkuftqQ
-         Ljr5QEioxYd6UELBdj/KBmwiearLkiYM9n9NgR8fjz6+1WhN4RXwsuk2gKi7J00FH3HP
-         bTckCwmSN0e/ldKpD88PZBbnLErpysFSukzaGdKFcsSE78Rcgf3/K7ZLuvl6RAAeyBF5
-         ol+A==
-X-Gm-Message-State: AOAM5326cv1zl338Wt7YCSsNnAdcfqJEUY5UIKT8CSJ3MoR0EAxNT2WA
-        pCM2Lca+tTujtzXUomy0gmFttIEHgvI=
-X-Google-Smtp-Source: ABdhPJz5CmcvoYN4qy3FXnSY8Bh9QrKHFRBBzkowU0399AJ89CPuXUgEb8Y0xxLI4FDxlN8TkQjLLg==
-X-Received: by 2002:adf:f7cf:: with SMTP id a15mr20001606wrq.351.1612208760704;
-        Mon, 01 Feb 2021 11:46:00 -0800 (PST)
+        bh=m8IpXcH5RcuEGRDPYOKsp8OHYVdfh8TgVVg0bIEweZA=;
+        b=eeh9O6s9b82WZ/mzTCQRGV20I2esI/UDs6q03VBwFDaNhKZqf9+narGtdpDmH/9lNW
+         H2F5EOUW5pGD8PJcNGSSQwkVKmXvtBJ7ty+quo4zz8em4O4P7Y2I/rOYY74TNkPDUNCS
+         uuf0CcBebexIah8u+JB4L368Y4fnNdyLeKbeddTkT0Mv23TLIxUfweNJDGAXHmU3mca8
+         hofNGOfFHPuYvxLDIAIw+95P3vaxhzkUs5A4GRnlFmyn8kLcS3v5PVWOR1ME9OTinTO/
+         3w87IzT6cFT2GHMbHEulFgRxZdr5IAPmFaM+iqR5eF6LVnn/W05gAMhcgQpkd0dkT3E/
+         G00A==
+X-Gm-Message-State: AOAM532pxuM4oxNSK+yM9lcp5Z7SbyxKkHKR0s7q+hAdzBA4U/sj6j8g
+        N7inr1qGpz3RMPVv/NBQytSg9EVhxok=
+X-Google-Smtp-Source: ABdhPJz97bAs9CLqlmOmvmCduyZ6QIFycD2+zRvD8KJT0PyzhC+ydl30EkR0/YNp9Hvfz7BnESq9bQ==
+X-Received: by 2002:adf:d852:: with SMTP id k18mr20178028wrl.262.1612208752353;
+        Mon, 01 Feb 2021 11:45:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r13sm351033wmh.9.2021.02.01.11.45.59
+        by smtp.gmail.com with ESMTPSA id i18sm20111119wrn.29.2021.02.01.11.45.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 11:46:00 -0800 (PST)
-Message-Id: <745b6d5fb74699b7fe7e32080b18779aa4a82547.1612208747.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 11:45:51 -0800 (PST)
+Message-Id: <e671894b4c0419138e66270aa9699053bdd504be.1612208747.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
 References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
         <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 19:45:45 +0000
-Subject: [PATCH v2 12/14] unix-socket: add no-chdir option to
- unix_stream_listen()
+Date:   Mon, 01 Feb 2021 19:45:36 +0000
+Subject: [PATCH v2 03/14] pkt-line: add write_packetized_from_buf2() that
+ takes scratch buffer
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,96 +80,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Calls to `chdir()` are dangerous in a multi-threaded context.  If
-`unix_stream_listen()` is given a socket pathname that is too big to
-fit in a `sockaddr_un` structure, it will `chdir()` to the parent
-directory of the requested socket pathname, create the socket using a
-relative pathname, and then `chdir()` back.  This is not thread-safe.
-
-Add `disallow_chdir` flag to `struct unix_sockaddr_context` and change
-all callers to pass an initialized context structure.
-
-Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when flag
-is set.
+Create version of `write_packetized_from_buf()` that takes a scratch buffer
+argument rather than assuming a static buffer.  This will be used later as
+we make packet-line writing more thread-safe.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- unix-socket.c | 19 ++++++++++++++++---
- unix-socket.h |  2 ++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ pkt-line.c | 9 ++++++++-
+ pkt-line.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/unix-socket.c b/unix-socket.c
-index 8bcef18ea55..9726992f276 100644
---- a/unix-socket.c
-+++ b/unix-socket.c
-@@ -11,8 +11,15 @@ static int chdir_len(const char *orig, int len)
- 
- struct unix_sockaddr_context {
- 	char *orig_dir;
-+	unsigned int disallow_chdir:1;
- };
- 
-+#define UNIX_SOCKADDR_CONTEXT_INIT \
-+{ \
-+	.orig_dir=NULL, \
-+	.disallow_chdir=0, \
+diff --git a/pkt-line.c b/pkt-line.c
+index 14af049cd9c..5d86354cbeb 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -278,6 +278,13 @@ int write_packetized_from_fd(int fd_in, int fd_out)
+ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
+ {
+ 	static struct packet_scratch_space scratch;
++
++	return write_packetized_from_buf2(src_in, len, fd_out, &scratch);
 +}
 +
- static void unix_sockaddr_cleanup(struct unix_sockaddr_context *ctx)
- {
- 	if (!ctx->orig_dir)
-@@ -32,7 +39,11 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
- {
- 	int size = strlen(path) + 1;
++int write_packetized_from_buf2(const char *src_in, size_t len, int fd_out,
++			       struct packet_scratch_space *scratch)
++{
+ 	int err = 0;
+ 	size_t bytes_written = 0;
+ 	size_t bytes_to_write;
+@@ -289,7 +296,7 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
+ 			bytes_to_write = len - bytes_written;
+ 		if (bytes_to_write == 0)
+ 			break;
+-		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write, &scratch);
++		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write, scratch);
+ 		bytes_written += bytes_to_write;
+ 	}
+ 	if (!err)
+diff --git a/pkt-line.h b/pkt-line.h
+index 4ccd6f88926..f1d5625e91f 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -41,6 +41,8 @@ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int write_packetized_from_fd(int fd_in, int fd_out);
+ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
++int write_packetized_from_buf2(const char *src_in, size_t len, int fd_out,
++			       struct packet_scratch_space *scratch);
  
--	ctx->orig_dir = NULL;
-+	if (ctx->disallow_chdir && size > sizeof(sa->sun_path)) {
-+		errno = ENAMETOOLONG;
-+		return -1;
-+	}
-+
- 	if (size > sizeof(sa->sun_path)) {
- 		const char *slash = find_last_dir_sep(path);
- 		const char *dir;
-@@ -67,7 +78,7 @@ int unix_stream_connect(const char *path)
- {
- 	int fd, saved_errno;
- 	struct sockaddr_un sa;
--	struct unix_sockaddr_context ctx;
-+	struct unix_sockaddr_context ctx = UNIX_SOCKADDR_CONTEXT_INIT;
- 
- 	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
- 		return -1;
-@@ -96,7 +107,9 @@ int unix_stream_listen(const char *path,
- 	int bind_successful = 0;
- 	int backlog;
- 	struct sockaddr_un sa;
--	struct unix_sockaddr_context ctx;
-+	struct unix_sockaddr_context ctx = UNIX_SOCKADDR_CONTEXT_INIT;
-+
-+	ctx.disallow_chdir = opts->disallow_chdir;
- 
- 	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
- 		return -1;
-diff --git a/unix-socket.h b/unix-socket.h
-index c28372ef48e..5b0e8ccef10 100644
---- a/unix-socket.h
-+++ b/unix-socket.h
-@@ -4,12 +4,14 @@
- struct unix_stream_listen_opts {
- 	int listen_backlog_size;
- 	unsigned int force_unlink_before_bind:1;
-+	unsigned int disallow_chdir:1;
- };
- 
- #define UNIX_STREAM_LISTEN_OPTS_INIT \
- { \
- 	.listen_backlog_size = 5, \
- 	.force_unlink_before_bind = 1, \
-+	.disallow_chdir = 0, \
- }
- 
- int unix_stream_connect(const char *path);
+ /*
+  * Read a packetized line into the buffer, which must be at least size bytes
 -- 
 gitgitgadget
 
