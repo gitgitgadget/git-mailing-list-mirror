@@ -2,129 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9982DC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF9E9C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6304A64EA3
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:37:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DBF164EA2
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbhBAMhW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 07:37:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60984 "EHLO
+        id S231462AbhBAMsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 07:48:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbhBAMhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 07:37:20 -0500
-Received: from joooj.vinc17.net (joooj.vinc17.net [IPv6:2001:4b99:1:3:216:3eff:fe20:ac98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77640C061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 04:36:39 -0800 (PST)
-Received: from smtp-zira.vinc17.net (128.119.75.86.rev.sfr.net [86.75.119.128])
-        by joooj.vinc17.net (Postfix) with ESMTPSA id 2DCF9877;
-        Mon,  1 Feb 2021 13:36:36 +0100 (CET)
-Received: by zira.vinc17.org (Postfix, from userid 1000)
-        id DBF1AC2034C; Mon,  1 Feb 2021 13:36:35 +0100 (CET)
-Date:   Mon, 1 Feb 2021 13:36:35 +0100
-From:   Vincent Lefevre <vincent@vinc17.net>
-To:     Chris Torek <chris.torek@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git fails with a broken pipe when one quits the pager
-Message-ID: <20210201123635.GA24560@zira.vinc17.org>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <8735yhq3lc.fsf@evledraar.gmail.com>
- <20210131033652.GK623063@zira.vinc17.org>
- <87o8h4omqa.fsf@evledraar.gmail.com>
- <20210201103429.GT623063@zira.vinc17.org>
- <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+        with ESMTP id S231145AbhBAMsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 07:48:11 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE139C06174A
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 04:47:30 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id l12so16446224wry.2
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 04:47:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=D5QXzi/cbFOuguGsQb1Cl9Xqof6bgvqas9cgqXBJIbE=;
+        b=gNvTB9NXTkQ87goJ38Yc4Sa5puLCjRECAbZ6kZXh2w9fR5/oTmIsuNJ30HAhUQB0Mg
+         BibjMrdhpzRcob9QQY4S937RrjEjYvjS6JXdCOjM3cnPj78gva0sKJHaP7jA5weby4i1
+         H2C4azKEKUErUE14UuZanZpMy/VVOc35AAx+4ctgz/bZonaXiWb5Ld2Tihq6o1oo+Awb
+         icFucZFVyUEjiz6jttqiObXVFhjJqqDdeuzUb7mQ+2SvGjRCZcVaO/Pqb2BENcuZqETu
+         w2b/OZLFF0TGEmnQYEgN/URaDbV1PKegvMmmxjN+jHU93s/oMmI0mtKjadzsVIK4syi4
+         U7NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=D5QXzi/cbFOuguGsQb1Cl9Xqof6bgvqas9cgqXBJIbE=;
+        b=tBdBLUJg0WUZ5il7NiKhVz7VZ72TTXR51S79ccVJ5j9yxeQnurhUAlLV79IDaF3Q3E
+         rNcJK1tURMrKf1siwLrRZh/WeH2QJ2nfT+PqexuTskiQ17LCa5wnY/8+BYH6RDH078Qr
+         7+t826lGObIuj0DqZMWyyfzzUQV2rcxvTWAXqo/pvdhfF36ylC2PWPYLU8gRYWsEijUs
+         YMYPUIxdwWbfOE35frb4VMDW0tLjFLaqKOWfGHnw61OwIgEIfGAeAQKVHOP5rUKpfWBQ
+         9wrm3rIr3ER9diqNQyAoA2+4rowsTiNZxjIF+aqA6r+pe9+3WeHN0Tk/CJufKQnSNWGB
+         0qmA==
+X-Gm-Message-State: AOAM5300f/1v+AaQMhJvDpNbOvcBTt2lxsf0dz4oOLACJaASnXNRB6+E
+        gW2kfwRV+vntjJv2ZotCiDKEUJJac2c=
+X-Google-Smtp-Source: ABdhPJymU7oiY2Tlo+yhsO011rbSXxXV4ijPI/DVaRHscdpPyXcBIkFJ/uTa7Q58w+RLh9DD4ri9qw==
+X-Received: by 2002:adf:a2ca:: with SMTP id t10mr17844805wra.370.1612183649518;
+        Mon, 01 Feb 2021 04:47:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r12sm26914534wrp.13.2021.02.01.04.47.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Feb 2021 04:47:29 -0800 (PST)
+Message-Id: <649f6799e6bfa0662ed5a4debf915053598fe142.1612183647.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
+References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
+        <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 01 Feb 2021 12:47:23 +0000
+Subject: [PATCH v2 1/5] commit-reach: reduce requirements for
+ remove_redundant()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.0.5+101 (ab6d0dc5) vl-132933 (2021-01-27)
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, me@ttaylorr.com,
+        peff@peff.net, gitster@pobox.com,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-02-01 03:33:54 -0800, Chris Torek wrote:
-> > On 2021-01-31 21:49:49 +0100, Ævar Arnfjörð Bjarmason wrote:
-> > > ... That we're returning an exit code per getting a SIGHUP here
-> > > is a feature. Consider:
-> > >
-> > >     git -c core.pager=/bin/false log && echo showed you the output
-> 
-> This example has a minor flaw: it should use `git -c core.pager=/bin/true`,
-> probably.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-In this case, since /bin/true doesn't read anything on purpose,
-I would not expect any non-zero exit status.
+Remove a comment at the beggining of remove_redundant() that mentions a
+reordering of the input array to have the initial segment be the
+independent commits and the final segment be the redundant commits.
+While this behavior is followed in remove_redundant(), no callers rely
+on that behavior.
 
-And note that
+Remove the final loop that copies this final segment and update the
+comment to match the new behavior.
 
-  git -c core.pager="sh -c 'cat; /bin/false'" log
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-reach.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-exits with a zero exit status, which is unexpected since the
-pager failed. For instance, in practice, the pager could be
-killed by the system, but the user would not necessarily notice
-this as the pager may be configured to quit automatically when
-reaching the end of the output (there are some "less" options
-to do that: -E, -F). So, the user would think that he got the
-full output while he didn't.
-
-[...]
-> > > Not being able to write "git log" output is a real SIGPIPE.
-> 
-> Worth noting: Linux has a pretty large pipe buffer.  POSIX requires
-> at least 4k here, as I recall, but Linux will buffer 64k or more, so that
-> if `git log` is able to write the entire log text (will be the case for small
-> repositories) *before* the program on the right side of the pager pipe
-> exits (this depends on many things), the pager's exit *won't* cause
-> a SIGPIPE.  You'll get the SIGPIPE if either the pager exits very
-> quickly, so that `git log` is unable to write much before the exit, or
-> if the repository is sufficiently large so that the pipe blocks first.
-
-In general, repositories have more than 64k log.
-
-> > Which is not the case here, because the full output has never been
-> > requested by the user.
-> 
-> The `git log` command *did* request the full output.
-
-No, because the output is sent to a pager. As long as the user
-does not look at more than what he looks for, no more "git log"
-output is requested (such output can happen internally, but it
-is not requested by the user).
-
-> The problem that has come up is, if I understand correctly, that
-> some Linux distributions have come with misconfigured pagers
-> that don't bother reading their input, and silently exit zero.
-
-They are not misconfigured. This is how they work. Actually I don't
-see why they should read more than needed: this would be a useless
-waste of memory.
-
-> This causes all kinds of Git commands to *seem* to fail. The Git
-> commands are just fine; the bug is that the pager doesn't read or
-> write anything.
-> 
-> Unfortunately, the way that pipes work -- asynchronously -- means
-> that Git really *can't* catch all problems here.  But catching a SIGPIPE,
-> whether Git itself spawned the pager or not, does indicate that
-> something has gone wrong ... *unless* Git was piping to, e.g., less,
-> and the user read enough, and the user typed `q` at less, and less
-> exited without bothering to read the rest of the input.
-> 
-> There's no good way for Git to be able to tell which of these was
-> the case.
-
-In the case git spawns a pager, it knows that this is a pager
-(as per documentation).
-
+diff --git a/commit-reach.c b/commit-reach.c
+index e38771ca5a1..9af51fe7e07 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -160,9 +160,10 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
+ {
+ 	/*
+ 	 * Some commit in the array may be an ancestor of
+-	 * another commit.  Move such commit to the end of
+-	 * the array, and return the number of commits that
+-	 * are independent from each other.
++	 * another commit.  Move the independent commits to the
++	 * beginning of 'array' and return their number. Callers
++	 * should not rely upon the contents of 'array' after
++	 * that number.
+ 	 */
+ 	struct commit **work;
+ 	unsigned char *redundant;
+@@ -209,9 +210,6 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
+ 	for (i = filled = 0; i < cnt; i++)
+ 		if (!redundant[i])
+ 			array[filled++] = work[i];
+-	for (j = filled, i = 0; i < cnt; i++)
+-		if (redundant[i])
+-			array[j++] = work[i];
+ 	free(work);
+ 	free(redundant);
+ 	free(filled_index);
 -- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+gitgitgadget
+
