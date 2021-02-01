@@ -2,139 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD08AC433E9
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 391D9C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:07:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61EC664EC2
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 19:54:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E11CB64DDB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 20:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232540AbhBATyJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 14:54:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41944 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232372AbhBATwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 14:52:47 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5891DC061351
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 11:52:07 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id s3so6598391edi.7
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 11:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Axxvp8pRlyK4p1MtC33SQ8UaRSXtOMK7CUGh6glSRig=;
-        b=nQhMxhLyXCz0NFfkQ90YRBnuk5gjVywwFBrj4cx4rTaKcJou1bUamrEjSuj7tbYc1F
-         QIZAD2Ua7Xqsc/8Nex+ExpzJ4XIaCg6+V18pGS5MGTpO6xRedf+fQ7YC2l017ZEKklad
-         BneYuaGWhZ4BxlC+LJljYIivKyX3XUiC+6ykbieqr0RfqCMNvdfIE7dkbIRuJo1BfeOh
-         tef53CkXtNdJMGsMSoVTipHTJVbIMgdhGR4bxipUuzN4rA605O3Tnrw+EP1kSc8tA720
-         0tjz7ht8O2C6Kraj29/EMsEfdLnWoMEaxFHgGRamTCGYWVtt8D3Is755u/j5RMO4CmPO
-         A9lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Axxvp8pRlyK4p1MtC33SQ8UaRSXtOMK7CUGh6glSRig=;
-        b=SeBRcJr7Oy14dLkbaavt3PRhaus+AQ1zqjquVubId0rtXFll6KfCS4qozUQdRGxdnZ
-         JSLp2kOj07Y/6IN6lwhaM84MlGdvi4lDGGlVJaxUzPmAGxIQqtL8kU2hM0WOyb1BiUpE
-         s9u89/t9XnkCMkctYBju13QHyCg90x07A+Y5Z9b3FLJPuG5c9RQU76pm4r2JB7OBQ9gQ
-         Bv2ir30eTnGIhdSotomBACZ+Hy2VXOw4OhmTfYdx4qFHX2KB4RNLxCuZETtXli/SUxPC
-         NYz9ELgAK+bUOB7ldALTQpsLkIm3+Z8Os9rBT5DC9zsfDVWYfYquPWHBpt/nkXwVxtGd
-         7i7g==
-X-Gm-Message-State: AOAM531aDTAlWBr5opouKcurpxd+4z/zonIfvfOIfTQTCnQZdkfpnNL0
-        hdycWv60+EMgfZi5We/F0Rw=
-X-Google-Smtp-Source: ABdhPJyUjGvmb4LAu4qWc4x5g3R8VJWCJYs/pzZPsC6uEF7606esuKBiNhBNf9zvx6h46QuRouAoug==
-X-Received: by 2002:a50:d4d9:: with SMTP id e25mr8667935edj.183.1612209125964;
-        Mon, 01 Feb 2021 11:52:05 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id re19sm8470415ejb.111.2021.02.01.11.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 11:52:05 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Vincent Lefevre <vincent@vinc17.net>
-Subject: Re: [PATCH] pager: exit without error on SIGPIPE
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
- <87czxjomn8.fsf@evledraar.gmail.com>
- <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
-Date:   Mon, 01 Feb 2021 20:52:04 +0100
-Message-ID: <87wnvrefbv.fsf@evledraar.gmail.com>
+        id S232990AbhBAUHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 15:07:13 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60544 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233011AbhBAUGk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 15:06:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CEB3E120ECE;
+        Mon,  1 Feb 2021 15:05:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8ZB2RZwoFmfEvfs0Uc1tSxgGBZM=; b=i/iV5r
+        KA4LllKVJ1mcMTLvKHhXmuUJeVXozY56AaPEJqWHb0geU+eaSREnwkykiRn9yygo
+        5Qt7s3VHiv9sb8n6MpnX8Ugc6NssCHxl9W52gci7gVolHWyESLGSH+U3EH9KooMd
+        4UHW0hfBJHFNSq5ZsP/h78aKx3U/b6DNnQg5k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RkpK8AwfHPFAUkuM+f4AaEJ1KjTUc+Lg
+        /ATHFDzIy9PyDi7pWfQbKKA9MFgmeCYVlMWrWQsvPpRcouxAPGUVueVLGxX4umbY
+        oeeKuw39l9jDjE/5ZQOKAZSDi/Oqs8npg72uSTPlo1vN8Tk1vdyc/7Xmr9ZJOSXL
+        JOsfTHXXdB0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C708B120ECD;
+        Mon,  1 Feb 2021 15:05:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 12723120ECA;
+        Mon,  1 Feb 2021 15:05:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        me@ttaylorr.com, peff@peff.net,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 4/5] commit-reach: use heuristic in remove_redundant()
+References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
+        <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
+        <83feabeebb5f035059758fba1ca5cf74f3a22c91.1612183647.git.gitgitgadget@gmail.com>
+Date:   Mon, 01 Feb 2021 12:05:54 -0800
+In-Reply-To: <83feabeebb5f035059758fba1ca5cf74f3a22c91.1612183647.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 01 Feb 2021
+        12:47:26 +0000")
+Message-ID: <xmqqczxjlfj1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E4DE0658-64C8-11EB-8206-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Mon, Feb 01 2021, Junio C Hamano wrote:
+> The important piece is to ensure we short-circuit the walk when we find
+> that there is a single non-redundant commit. This happens frequently
+> when looking for merge-bases or comparing several tags with 'git
+> merge-base --independent'. Use a new count 'count_still_independent' and
+> if that hits 1 we can stop walking.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> diff --git a/pager.c b/pager.c
->>> index ee435de675..5922d99dc8 100644
->>> --- a/pager.c
->>> +++ b/pager.c
->>> @@ -34,6 +34,8 @@ static void wait_for_pager_atexit(void)
->>>  static void wait_for_pager_signal(int signo)
->>>  {
->>>  	wait_for_pager(1);
->>> +	if (signo =3D=3D SIGPIPE)
->>> +		exit(0);
->>
->> As shown in
->> https://lore.kernel.org/git/20210201144921.8664-1-avarab@gmail.com/ this
->> leaves us without guard rails where the pager dies/segfaults or
->> whatever.
->>
->> That's an existing bug, but by not carrying the SIGPIPE forward it
->> changes from "most of the time we'd exit with SIGPIPE anyway" to "we'll
->> never notice".
->
-> Would it be the matter of propagating the exit status of the pager
-> noticed by wait_or_white() down thru finish_command_in_signal() and
-> wait_for_pager(1) to here, so
->
->  - If we know pager exited with non-zero status, we would report,
->    perhaps with warning(_("..."));
->
->  - If we notice we got a SIGPIPE, we ignore it---it is nothing of
->    interest to the end-user;
->
->  - Otherwise we do not do anything differently.
->
-> would be sufficient?  Implementors of "git -p" may know that "git"
-> happens to implement its paging by piping its output to an external
-> pager, but the end-users do not care.  Implementors may say they are
-> giving 'q' to their pager "less", but to the end-users, who report
-> "I ran 'git log' and after reading a pageful, I told it to 'q'uit",
-> the distinction does not have any importance.
->
-> Or are there more to it, in that the exit status we get from the
-> pager, combined with the kind of signal we are getting, is not
-> sufficient for us to tell what is going on?
+That is because when you are left one single thing, it may be able
+to reach many other things, but the fact that it by itself won't be
+reachable by remaining independent things will not change (because,
+that sole remaining independent thing is itself)?
 
-It is, I just wonder if ignoring the exit code is a practical issue as
-long as we're not clobbering SIGPIPE, particularly with my trace2
-logging patch in this thread.
+> To update 'count_still_independent' properly, we add use of the RESULT
+> flag on the input commits. Then we can detect when we reach one of these
+> commits and decrease the count. We need to remove the RESULT flag at
+> that moment because we might re-visit that commit when popping the
+> stack.
+>
+> We use the STALE flag to mark parents that have been added to the new
+> walk_start list, but we need to clear that flag before we start walking
+> so those flags don't halt our depth-first-search walk.
+>
+> On my copy of the Linux kernel repository, the performance of 'git
+> merge-base --independent <all-tags>' goes from 1.1 seconds to 0.11
+> seconds.
 
-But yeah, we could patch git to handle this in the general case. I think
-it's probably a bit of a PITA to do, since for the general case we need
-to munge the exit code in an atexit() handler.
-
-Which means calling _exit() (if that's even portable), and presumably
-changing from the atexit() API to our own registry of how many times we
-called atexit(), which would introduce logic bugs if we ever use a
-library that wants to have atexit(). I.e. if we _exit() before its
-atexit() handler runs because we wanted to munge the exit code.
+These two numbers are with commit-graph fully populated with usable
+generation numbers, I presume, and it is quite impressive.
 
