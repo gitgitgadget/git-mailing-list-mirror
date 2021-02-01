@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1108CC433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 17:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6B1AC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 17:15:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B771464EAC
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 17:15:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9316264EAC
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 17:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbhBARPy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 12:15:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36232 "EHLO
+        id S229534AbhBARP5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 12:15:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230055AbhBARPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 12:15:52 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2550C06174A
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 09:15:11 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id a1so17456410wrq.6
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 09:15:11 -0800 (PST)
+        with ESMTP id S230055AbhBARP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 12:15:56 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15184C061786
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 09:15:16 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id u14so13841768wmq.4
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 09:15:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=juCAe5atgoTFygs1wNmd/FGDKpeIjGfc51PxxQjB/ho=;
-        b=qkSz8i8116W3fK2B3ZcfQdg3NKJHj2fy2+aOHQnXXlZM+KHhtWfD59bbmm5smjsWzX
-         hrT4VQABxSDYVhUZ+YkAx2TufGqejq9R3tbCNdKgWyEVRvsBKem3t7AIYBp5T8DGWdoX
-         1IZRCcSnLczYFAYDfvEXbQ9wSq2Fy50Kc0vJhQ89nD/6Y72rGWlH9xgT4Ba4RRx45gCj
-         eDoxfyLniZPF2t+DjSNdoFuga4fLQ2YDNbSoFIoGss3Cpfoa/Lm5FAuYmZFzKpzh0HbS
-         3P0qp/dH+lfXPWaD1b2q3AWZZgA3H3/xCYC70uB/WSVoc3B4yv00Oc0HHVV6UeNbqU//
-         agbg==
+        bh=/U6UDAGaH1mCjnX82IwAUqNIZFhOQLAUI+ugKX9Q2tk=;
+        b=kDIv91brKm1ilrz19as9TNlZmc+dQDu5v7Tbm3LyjWOmeMaCoDKvK5bzLX9ZbeY60a
+         PMlxwn/ylsA7oA7FMGxpOhOEB5f6+t4MBOY120wNCVSk5P917YhkxaGq11o3D/SA7/ne
+         a90sR1BeuDcBbmzYwdK9cohQ92dH5XlqlU0JYCsV65SoB5OHeN0qHhOlnbz3MVqsxSFd
+         hNOqs9guGDrspanKtDoZ3a7zWnJtMHsKdYY9NP+BHi4twH7DfF6AdlJGnuFe8T5fh3if
+         NCfGOBJJHfKRIDUtrCmvYM79K6Q0WXtdD6g0nVEJO2H9ig91cL0ftZ7L0lXHkYIrZHKf
+         gFIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=juCAe5atgoTFygs1wNmd/FGDKpeIjGfc51PxxQjB/ho=;
-        b=izksorTCH2XXfqTXQ4oAUcRkNmtwOnGwQmn088b+YojlM2+dtHtVYPvrYoK/6Ipj4T
-         CxdtKvQE3Fc9PCezGUmiFDcS1JaWD1CckoUsjhygkDzkqYW5w+JCfy8EKhuY0j54IVkw
-         B1pbhS7sg7PIq54milG28P0GRM16i5bmUwA5zLMKLtOPbzAEXYM2Gc56PPjaaGL9y9tZ
-         PWwCuA77HrjDrW9uDABhi+V5s7FWFedzCAsJ18zgbl6dsTRc6jAHutdqSoGpDzkEcScr
-         UcvuVqLjR/IfMy0bUlUjxU04FQK+Zqo8HNUZH3JTCNGQxAOpA5xbo5IdLMRXjZT3JREB
-         G/Ug==
-X-Gm-Message-State: AOAM530KKpdr5mXW7M2HKGuXcMA4Rq5Rf3gmnev4FlzZTfdJP0jIlRc3
-        fSlkR6t/xEjqJUHgoW70gzIrFdOYi20=
-X-Google-Smtp-Source: ABdhPJzDYIAyuaRZVHLqm81KfnMr4OWpWMqqLeFXwjvrjg+6LRHyAQ30T4iD+Wy25PQNM6jL+W3WJg==
-X-Received: by 2002:a5d:51cf:: with SMTP id n15mr18738843wrv.303.1612199710304;
-        Mon, 01 Feb 2021 09:15:10 -0800 (PST)
+        bh=/U6UDAGaH1mCjnX82IwAUqNIZFhOQLAUI+ugKX9Q2tk=;
+        b=MYuKvgsfIvZZNS9nAnPrdl6JMXiMiVRfTZaL6szaCZrApvv1Zqr5WMDmsu2NQabhNZ
+         0GRKB6vQ7ltX2ktXH25t0u22oiw2xLQWdVUOL1ai1/xXnhdgk3VEii0a/XdWAGqdQztq
+         4KGz13wtHXvDXhB3FP78pSKB1YGWgERp9htW0Ha3EYy26VYYLj+ya37nZa2zfrz3cwD+
+         HYp8kle5cg1z7l3vubQ4wErwB5oi/wvWyKkcyUeREZ/wR2PZ6Cdj2OaG1nLbIne22xCu
+         HMTQ0kQsToobXtNnRCbREBup99T5AtBhqK6GKh7JYn5Hn0mVnKZnKZxnylH/zPfTyOsx
+         nDwA==
+X-Gm-Message-State: AOAM532brHxeoiou0tpKnD5gRAKAHlm7LizSkeDmvCIc0DxTBFIGTfcI
+        DNvjKV91dk27zRLs2unvZy+hIfzZ5mo=
+X-Google-Smtp-Source: ABdhPJxI2bVuG/h0oxJorAreE5RSbIYrx6UeJo/zE13H2C/nPyk4bbzG52+dBI7gF5OCyHcv87e9Qw==
+X-Received: by 2002:a1c:4e:: with SMTP id 75mr16125092wma.150.1612199714307;
+        Mon, 01 Feb 2021 09:15:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r16sm6490239wrt.68.2021.02.01.09.15.09
+        by smtp.gmail.com with ESMTPSA id n9sm27931727wrq.41.2021.02.01.09.15.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 09:15:09 -0800 (PST)
-Message-Id: <9c605c99f66cae3c66bcdd4cbeefbfa1ec2be192.1612199707.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 09:15:13 -0800 (PST)
+Message-Id: <d554fa306601c9e5e0e804d10b7a73b6eece6b04.1612199707.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.850.git.1612199707.gitgitgadget@gmail.com>
 References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 17:15:03 +0000
-Subject: [PATCH 1/5] commit-graph: use repo_parse_commit
+Date:   Mon, 01 Feb 2021 17:15:05 +0000
+Subject: [PATCH 3/5] commit-graph: validate layers for generation data
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,70 +77,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The write_commit_graph_context has a repository pointer, so use it.
+We need to be extra careful that we don't use corrected
+commit dates from any layer of a commit-graph chain if there is a
+single commit-graph file that is missing the generation_data chunk.
+Update validate_mixed_generation_chain() to correctly update each
+layer to ignore the generation_data chunk in this case. It now also
+returns 1 if all layers have a generation_data chunk. This return
+value will be used in the next change.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-graph.c | 10 +++++-----
- commit.h       |  5 +++--
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ commit-graph.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index f3bde2ad95a..03e5a987968 100644
+index edbb3a0f2cc..13992137dd0 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1098,7 +1098,7 @@ static int write_graph_chunk_data(struct hashfile *f,
- 		uint32_t packedDate[2];
- 		display_progress(ctx->progress, ++ctx->progress_cnt);
- 
--		if (parse_commit_no_graph(*list))
-+		if (repo_parse_commit_no_graph(ctx->r, *list))
- 			die(_("unable to parse commit %s"),
- 				oid_to_hex(&(*list)->object.oid));
- 		tree = get_commit_tree_oid(*list);
-@@ -1411,11 +1411,11 @@ static void close_reachable(struct write_commit_graph_context *ctx)
- 		if (!commit)
- 			continue;
- 		if (ctx->split) {
--			if ((!parse_commit(commit) &&
-+			if ((!repo_parse_commit(ctx->r, commit) &&
- 			     commit_graph_position(commit) == COMMIT_NOT_FROM_GRAPH) ||
- 			    flags == COMMIT_GRAPH_SPLIT_REPLACE)
- 				add_missing_parents(ctx, commit);
--		} else if (!parse_commit_no_graph(commit))
-+		} else if (!repo_parse_commit_no_graph(ctx->r, commit))
- 			add_missing_parents(ctx, commit);
- 	}
- 	stop_progress(&ctx->progress);
-@@ -1710,9 +1710,9 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
- 			continue;
- 
- 		if (ctx->split && flags == COMMIT_GRAPH_SPLIT_REPLACE)
--			parse_commit(ctx->commits.list[ctx->commits.nr]);
-+			repo_parse_commit(ctx->r, ctx->commits.list[ctx->commits.nr]);
- 		else
--			parse_commit_no_graph(ctx->commits.list[ctx->commits.nr]);
-+			repo_parse_commit_no_graph(ctx->r, ctx->commits.list[ctx->commits.nr]);
- 
- 		num_parents = commit_list_count(ctx->commits.list[ctx->commits.nr]->parents);
- 		if (num_parents > 2)
-diff --git a/commit.h b/commit.h
-index 251d877fcf6..b05ab558ce2 100644
---- a/commit.h
-+++ b/commit.h
-@@ -89,9 +89,10 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
- 	return repo_parse_commit_gently(r, item, 0);
+@@ -614,19 +614,26 @@ static struct commit_graph *load_commit_graph_chain(struct repository *r,
+ 	return graph_chain;
  }
  
--static inline int parse_commit_no_graph(struct commit *commit)
-+static inline int repo_parse_commit_no_graph(struct repository *r,
-+					     struct commit *commit)
+-static void validate_mixed_generation_chain(struct commit_graph *g)
++/*
++ * returns 1 if and only if all graphs in the chain have
++ * corrected commit dates stored in the generation_data chunk.
++ */
++static int validate_mixed_generation_chain(struct commit_graph *g)
  {
--	return repo_parse_commit_internal(the_repository, commit, 0, 0);
-+	return repo_parse_commit_internal(r, commit, 0, 0);
+-	int read_generation_data;
++	int read_generation_data = 1;
++	struct commit_graph *p = g;
+ 
+-	if (!g)
+-		return;
+-
+-	read_generation_data = !!g->chunk_generation_data;
++	while (read_generation_data && p) {
++		read_generation_data = p->read_generation_data;
++		p = p->base_graph;
++	}
+ 
+ 	while (g) {
+ 		g->read_generation_data = read_generation_data;
+ 		g = g->base_graph;
+ 	}
++
++	return read_generation_data;
  }
  
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ struct commit_graph *read_commit_graph_one(struct repository *r,
 -- 
 gitgitgadget
 
