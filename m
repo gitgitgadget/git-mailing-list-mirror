@@ -2,98 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB06C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BEF4C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:07:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B774664E2A
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:05:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24C0864E9E
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 22:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbhBAWFJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 17:05:09 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:7302 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229543AbhBAWE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 17:04:57 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4DV2660lLDz5tlB;
-        Mon,  1 Feb 2021 23:04:14 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 3D4934B9D;
-        Mon,  1 Feb 2021 23:04:12 +0100 (CET)
-Subject: Re: git fails with a broken pipe when one quits the pager
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Vincent Lefevre <vincent@vinc17.net>
+        id S230230AbhBAWHn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 17:07:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61163 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230248AbhBAWFz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 17:05:55 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9241DB44CF;
+        Mon,  1 Feb 2021 17:05:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J7d7yFJwxO4Bp+MK9TRODCcyOdM=; b=atR4Vs
+        qt5JojmR50ZAFgClmWjNhqSqvgRKmBMcMpxHgVa+xEqYp+uJJ03nraKCNfdIAX6k
+        QsJZ0MvaxlhNlYZZNrKAy2YlgWE2iuLO4fRy+8H5KG0BWAWq8f/Hr3AFGbUsmi5p
+        RkS2yFZKQ33v8DjHoTYwUnVBOfTEjVu61Acqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mKwUPAjMH65knbpXf9n/XCMQq6xO0JZ1
+        iYyjLRrDfbQ87DtzZh+/7gq/e90qYZfi9XX8CqK14Dq/rRqRSx1rXn/+fYHYQ1fj
+        134eOCFE5ouhwsDxUfgc9yTo/anKTKlYb2lpRRaM7DusbDgWpIsPaU47LpByTDtl
+        ASeeFWJA04A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A2EBB44CE;
+        Mon,  1 Feb 2021 17:05:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE862B44CC;
+        Mon,  1 Feb 2021 17:05:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     git@vger.kernel.org
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <8735yhq3lc.fsf@evledraar.gmail.com>
- <20210131033652.GK623063@zira.vinc17.org>
- <87o8h4omqa.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <2f750bc9-e739-6b98-25a1-6f035123e0e0@kdbg.org>
-Date:   Mon, 1 Feb 2021 23:04:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+Subject: Re: [PATCH v3 02/17] am: convert applypatch hooks to use config
+References: <20201222000435.1529768-1-emilyshaffer@google.com>
+        <20201222000435.1529768-3-emilyshaffer@google.com>
+Date:   Mon, 01 Feb 2021 14:05:11 -0800
+In-Reply-To: <20201222000435.1529768-3-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Mon, 21 Dec 2020 16:04:20 -0800")
+Message-ID: <xmqqsg6fjvfs.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87o8h4omqa.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8E004358-64D9-11EB-9F71-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.01.21 um 21:49 schrieb Ævar Arnfjörð Bjarmason:
-> On Sun, Jan 31 2021, Vincent Lefevre wrote:
->> On 2021-01-31 02:47:59 +0100, Ævar Arnfjörð Bjarmason wrote:
->>> On Fri, Jan 15 2021, Vincent Lefevre wrote:
->>>> And of course, I don't want to hide error messages by default, because
->>>> this would hide *real* errors.
->>>
->>> Isn't the solution to this that your shell stops reporting failures due
->>> to SIGPIPE in such a prominent way then?
->>
->> No! I want to be warned about real SIGPIPEs.
-> 
-> Not being able to write "git log" output is a real SIGPIPE.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-When Git is talking to a pager *and* it knows about it because has
-started it itself, SIGPIPE is just a nuisance, not a useful behavior.
+> Teach pre-applypatch, post-applypatch, and applypatch-msg to use the
+> hook.h library instead of the run-command.h library. This enables use of
+> hooks specified in the config, in addition to those in the hookdir.
+> These three hooks are called only by builtin/am.c.
 
-Guess why `git log` works on Windows when the pager is quit early, where
-we do not have SIGPIPE? Because write errors are checked in sufficiently
-many places.
-
-I propose to do just this:
-
-diff --git a/pager.c b/pager.c
-index ee435de675..9fcc36425f 100644
---- a/pager.c
-+++ b/pager.c
-@@ -138,6 +138,7 @@ void setup_pager(void)
- 
- 	/* this makes sure that the parent terminates after the pager */
- 	sigchain_push_common(wait_for_pager_signal);
-+	sigchain_push(SIGPIPE, SIG_IGN);
- 	atexit(wait_for_pager_atexit);
- }
- 
-diff --git a/run-command.c b/run-command.c
-index ea4d0fb4b1..c0041413b5 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1165,10 +1165,6 @@ void check_pipe(int err)
- 	if (err == EPIPE) {
- 		if (in_async())
- 			async_exit(141);
--
--		signal(SIGPIPE, SIG_DFL);
--		raise(SIGPIPE);
--		/* Should never happen, but just in case... */
- 		exit(141);
- 	}
- }
+I was interested in the applypatch-msg the most; it gets fed the
+"final-commit" file as its input and expected to modify it in place,
+so if you allow two or more to work in series, you do not have to
+anything extra (like swapping the output from the previous step to
+the input for the next step), which makes this a relatively easy
+conversion.
