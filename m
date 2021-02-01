@@ -7,119 +7,149 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE821C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 21:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BE88C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 21:11:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7C7164ECC
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 21:03:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1D5C60232
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 21:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229996AbhBAVDS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 16:03:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57030 "EHLO
+        id S232202AbhBAVLX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 16:11:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbhBAVDP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 16:03:15 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEC3BC061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 13:02:34 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id k25so20377251oik.13
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 13:02:34 -0800 (PST)
+        with ESMTP id S231902AbhBAVLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 16:11:23 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD2B9C061573
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 13:10:42 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id h192so20432674oib.1
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 13:10:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=kEH+gTFpPEywdzV85CkZJ73gErznn79o63ZFbLRXlNk=;
-        b=HUvJk758w283NDUhf3r4yW1CejJ2ZP3GTiz6PsYQzfd7KlIa8+4ZE6u5ybiMOAhTW5
-         an3RGgzjb7sW4PQxWk7diq7GmmphBi+xhzMUR01T1SJxZ3b4t/wqnPIzPmL2CLnBAjPN
-         m4fNGVOfPLf0k/UcLWEPKzW0EG43wkt7EAaA0HdJ9Hia8N986o40vhFSbLWWyqsjwQWh
-         CEthY5LGv85oFUMbim8W2Sp9rDKPI/+F36gfeONA2fJy9VrgezUHBEIPn+Y4Ms60wuQR
-         xkY2Lb7zTbgAesX0ekHdvDswuIunIAqgbcA86dOuFgiekD8MYxcZ4O6MTr2RfWnoc6M1
-         QGfg==
+        bh=jOOncHoObOPHNOP8nF++92WzzSS+3++KUJ54SBGAEII=;
+        b=litcUZSX+C3LD0Qfte6i9wqBKMclP0bWMoiBYahnSS6Ws5Jc9x5opABE007XC/RwqX
+         b6JBC83IoRtRASNBAi1QyygkSWkNNF3CIxqXeN+djLIpFEl3Gx3ode7x3IkCgQXiU5et
+         cL6PvyRDcsdMgUacqK8/3oSvyozYW0O+W+DsKH/76Ls9QLmEqOgCheTfrojxP7D9D2Aj
+         zw/jtqZIrUuF3LAaMFgLvnYdWgWv9r8wTVgJWAFxujNIVB5mZc/poIpu3XBqtYuQmaBw
+         aoOfgPzPwkdQzLbIsaGXHBTtOTe9b74I8wVdy2YySKDAw15Q9nbXTxSl7gd3V4jF3rs4
+         QHNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=kEH+gTFpPEywdzV85CkZJ73gErznn79o63ZFbLRXlNk=;
-        b=shpPKyEWNxrdAxDswB+J/f34D/mJ1Jn7hhdQ0DVnF86/cFAig9RP9P5q0S36lS8L1E
-         xSJ/djd8j7yA9cSSTShYIQazLIOrhAieZe1qX+HyO3whLpUyydTn5HEqh8jcrE9dhJA/
-         nZVdF1mED+LckLHkS1AGp4LX66TmSiu6IKu7JMoW37hW7E6ahzf/SJIF0RVR6xGNmhB2
-         I/B9vu3LbD3rInG5vOYaXh6nwdaePL0BxbTQYu/0Q2Czl1bGZ6J/cFNZCbAtwCfB07nz
-         wIWHOYQV6rV/0bgt68Ldury6GqmH/g1OwyKtinhQLm/zgKqFWwqrrltqpwDVaGccnQGy
-         f6IA==
-X-Gm-Message-State: AOAM530wAMxi5UbfvcuJfytzCOKxrv5+pO8tvOcCxxSO0ztXQyU+SS0r
-        GC8a/zP2xjOKjod6ml6v3MU=
-X-Google-Smtp-Source: ABdhPJwOV6DlfcWaSe0weOE8xwlHUe8ElA4a7YN4gU5QCWK0AxNI33sSvwEQceSxiT6HUUuPULGQ+Q==
-X-Received: by 2002:a05:6808:2c2:: with SMTP id a2mr535584oid.164.1612213354143;
-        Mon, 01 Feb 2021 13:02:34 -0800 (PST)
+        bh=jOOncHoObOPHNOP8nF++92WzzSS+3++KUJ54SBGAEII=;
+        b=lmi6gqgAAcSkF8p6Widqf1kzUVp2ZR1MBhEhi8KnfuMqhkBt+//2+pfCAv0vqgyWF1
+         vlzpJyrzj1Yg7DDke2ranK+9Ra1ZBgiqGKims2Qa20iIRjINOcgKJeCY91NVIIf6eQFX
+         spcAMOp5+AfF+Ix0PCv1xzdnkgvEvkjyrXJFKevEXBtpV/vfKeyqdAvNsP5lvSQRdhn9
+         amHzhwPtKNYVSBs3oWvGJYDgD67GM/IA78rvrVKKBMmdQqdyd35cBkbtsd32T9jU4wnV
+         29Zjg1PsbuhUTUoIlcmdiLMgogPnEXAkYxY0aZZ/0+Gyln0MW68Iu+9fEndj4uXcd2AL
+         xJpA==
+X-Gm-Message-State: AOAM533cF8t+8i/Me2t9nwB9AAMUHhuIO5jWUJgSSEurkzEdURUSNJxf
+        jcSMoCCyffXeq+PkQ57aWHw=
+X-Google-Smtp-Source: ABdhPJwnEUm58RmixhDOOWUeFI0wx+Kr6K65pdskg50Oxax8vvHd+G/nPxZEp3/fxKntVy+cZSOdNw==
+X-Received: by 2002:aca:dc56:: with SMTP id t83mr543466oig.75.1612213842076;
+        Mon, 01 Feb 2021 13:10:42 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:8497:2090:4038:7fd1? ([2600:1700:e72:80a0:8497:2090:4038:7fd1])
-        by smtp.gmail.com with UTF8SMTPSA id c2sm4341192ooo.17.2021.02.01.13.02.32
+        by smtp.gmail.com with UTF8SMTPSA id d17sm4186389otk.3.2021.02.01.13.10.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Feb 2021 13:02:33 -0800 (PST)
-Message-ID: <bd00470c-59d6-52a8-9b2c-dc9e3a0beb82@gmail.com>
-Date:   Mon, 1 Feb 2021 16:02:32 -0500
+        Mon, 01 Feb 2021 13:10:41 -0800 (PST)
+Message-ID: <52beefd1-9974-0673-2dd7-3e43b0efbef7@gmail.com>
+Date:   Mon, 1 Feb 2021 16:10:40 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
-Subject: Re: [PATCH v2 4/5] commit-reach: use heuristic in remove_redundant()
+Subject: Re: [PATCH 15/27] [RFC-VERSION] *: ensure full index
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     Elijah Newren <newren@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        me@ttaylorr.com, peff@peff.net,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
- <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
- <83feabeebb5f035059758fba1ca5cf74f3a22c91.1612183647.git.gitgitgadget@gmail.com>
- <xmqqczxjlfj1.fsf@gitster.c.googlers.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
+ <71b33bb2498d53e5818f3a597240b530976152fb.1611596534.git.gitgitgadget@gmail.com>
+ <CABPp-BHSnqPZckgk4oPQonA8YCBQ8jMpH+QzcnpEALr7yc9+rg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqczxjlfj1.fsf@gitster.c.googlers.com>
+In-Reply-To: <CABPp-BHSnqPZckgk4oPQonA8YCBQ8jMpH+QzcnpEALr7yc9+rg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/1/2021 3:05 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> The important piece is to ensure we short-circuit the walk when we find
->> that there is a single non-redundant commit. This happens frequently
->> when looking for merge-bases or comparing several tags with 'git
->> merge-base --independent'. Use a new count 'count_still_independent' and
->> if that hits 1 we can stop walking.
-> 
-> That is because when you are left one single thing, it may be able
-> to reach many other things, but the fact that it by itself won't be
-> reachable by remaining independent things will not change (because,
-> that sole remaining independent thing is itself)?
-
-Right. If there is only one non-STALE input commit left, then it will
-be the only returned result. We will never find that all commits are
-redundant because the commit graph is acyclic. The performance
-improvement comes from halting the DFS walk: there might be more
-commits to walk but they won't change the result.
-
->> To update 'count_still_independent' properly, we add use of the RESULT
->> flag on the input commits. Then we can detect when we reach one of these
->> commits and decrease the count. We need to remove the RESULT flag at
->> that moment because we might re-visit that commit when popping the
->> stack.
+On 2/1/2021 3:22 PM, Elijah Newren wrote:
+> On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >>
->> We use the STALE flag to mark parents that have been added to the new
->> walk_start list, but we need to clear that flag before we start walking
->> so those flags don't halt our depth-first-search walk.
+>> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->> On my copy of the Linux kernel repository, the performance of 'git
->> merge-base --independent <all-tags>' goes from 1.1 seconds to 0.11
->> seconds.
+>> This giant patch is not intended for actual review. I have a branch that
+>> has these changes split out in a sane way with some commentary in each
+>> file that is modified.
+>>
+>> The idea here is to guard certain portions of the codebase that do not
+>> know how to handle sparse indexes by ensuring that the index is expanded
+>> to a full index before proceeding with the logic.
+>>
+>> This also provides a good mechanism for testing which code needs
+>> updating to enable the sparse index in a Git builtin. The builtin can
+>> set the_repository->settings.command_requires_full_index to zero and
+>> then we can debug the command with a breakpoint on ensure_full_index().
+>> That identifies the portion of code that needs adjusting before enabling
+>> sparse indexes for that command.
+>>
+>> Some index operations must be changed to operate on a non-const pointer,
+>> since ensuring a full index will modify the index itself.
+>>
+>> There are likely some gaps to these protections, which is why it will be
+>> important to carefully test each scenario as we relax the requirements.
+>> I expect that to be a long effort.
 > 
-> These two numbers are with commit-graph fully populated with usable
-> generation numbers, I presume, and it is quite impressive.
- 
-Yes, these numbers are with a full commit-graph.
+> I think the idea makes sense; it provides a way for us to
+> incrementally build support for this new feature.
+> 
+> I skimmed over the code and noticed various interesting places that
+> had the ensure_full_index() call (e.g.
+> read_skip_worktree_file_from_index() -- whose existence comes from
+> sparsity; what irony...).  Better breakouts would be great, so I'll
+> defer commenting much until then.  But, just to verify I'm
+> understanding: the primary defence is the command_requires_full_index
+> setting, and you have added several ensure_full_index() calls
+> throughout the code in places you believe would need to be fixed up in
+> case someone switches the command_requires_full_index setting.  Is
+> that correct?  And your comment on the gaps is just that there may be
+> other places that are missing the secondary protection (as opposed to
+> my first reading of that paragraph as suggesting we aren't sure if we
+> have enough protections yet and need to add more before this moves out
+> of RFC); is that right?
+
+Yes, the idea is that we can incrementally enable
+command_requires_full_index for some builtins and be confident that
+corner cases will be protected by ensure_full_index(). Further, we
+can test whether ensure_full_index() was called using test_region
+in test scripts to demonstrate that a command is truly "sparse aware"
+or if it is converting to full and back to sparse.
+
+There is also the case that when we write the index into a sparse
+format, the in-memory structure is modified. If the index is re-used
+afterwards, then we must expand to full again for these code paths.
+
+unpack_trees() already has one of these calls because it was necessary
+for the sparse-index write to work.
+
+The ensure_full_index() pattern also works when updating a builtin to
+work with the sparse-index because of the breakpoint trick.
+
+When I submit this as a full series, this patch will be one full
+patch series submission with careful comments about why each of these
+is added on a file-by-file basis.
 
 Thanks,
 -Stolee
