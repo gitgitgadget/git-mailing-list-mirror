@@ -2,116 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B5EC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04885C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 13:15:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 516F064EB8
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6B0D64E2A
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 13:15:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231743AbhBAMyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 07:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36352 "EHLO
+        id S231587AbhBANPb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 08:15:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231145AbhBAMx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 07:53:57 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB033C061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 04:53:16 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id l12so19430597ljc.3
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 04:53:16 -0800 (PST)
+        with ESMTP id S231477AbhBANPQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 08:15:16 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E92AC061756
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 05:14:36 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id s77so2663020qke.4
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 05:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=uzuKuWBAQ6addo4jvHvv0BX75uYbuyIw88dBG5g35iE=;
-        b=vTg7ljFhD42QygTBxZiyOLHOW56OTGE1M1qoMDecCh3c0VIEVXcPrF7SIQlZqeE5aZ
-         xVPkFAqXkXEk8fi5DGEmSYWWtf/FEvMZXwb0pV0x0pld8DlfnKXzPR07c3BqU64NK8N4
-         dN4nqLI6dSVJoeOjnYc6NRHoivx4moeyHUBn+nSm9jtXfbUR8hZUpTBsEpGSI9tjJeOl
-         oW7mLApZrWn0DBoss/xQ8H/w0mojyhrch/HsdUOX06xy2CmX+So30J75Eo510R/NWkB+
-         rg6xZWOfORn5vIFk0PaT4EpOY7m3SZitfJYh5zeRGYsTSSAMcsyHfd7ooc8ZtK8+mi9u
-         RN/g==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=z+lHY5PpQCHSwp6DZdgq08sOYp65zbqgxo56pQkNync=;
+        b=Sh0sC7w080eNxGEFgJfihRcLf/VYBDSz3i2avlbjAmYNg5OOGG25hS+hZER3BarsMn
+         GfHSHobbxp/9LpYwOjyt7F4LE/SRdSdlE6Zn6pXRVxSicPMiyUIL+BexmuWYWQJfWwwH
+         dQkObpljiRGL1t94+EHWS3ne8EF/7oUx1kj0opGbIFsaT4zxJru6K9Ak8lS3xDcFw9Fv
+         uALhH+Zkyd1MHiX3+mc9z4d/8Tw5M+Ml0eO1NlqqXI7kgGpkChEHDcj3w9vNA5mCbn5V
+         ywIIZt5BN+nQ48Y/momlaYrPuZJWrMUthSH4Ot9Yg8e4QBXD5PCHVz8A4KURkXmFp661
+         8v3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uzuKuWBAQ6addo4jvHvv0BX75uYbuyIw88dBG5g35iE=;
-        b=V9PmA8CtE4Kr4wWQJ1NystU0YpHF6NUAvrUAbtZp0+I0g1WiuR6bOHgZaDp8KNsk28
-         9RbTxf6Cj6TAPeJvRellOWydnnZBPDLrnQegv9FKsw6fjVp1mQuc2pgZT+YN2+a59cmK
-         5XdSuIWJz2gr7aK13ahBIUHL/+RcIx3Q8CugcpD7YGCEcXFP/vgj44GC3OKuf9JzSx9R
-         SbY60CsEVK+BmcaDWc87IjeXU05gg1yVMzmScidu+TOp36rEwzep5EvJodrGg4QgVh5U
-         3Lq9pek9rySyzGXsDuaO7waGsJdlJje46tlkK1S2fuP4O7OB1dsVm3iabKp6waZ0ec7Q
-         plrw==
-X-Gm-Message-State: AOAM5302qbjF2hZivIZGNRrPHU6rYQqvcOcoE7M7mP0cTBIBXkHdrdbG
-        SCnD7re1aYsIVj2p1TAetA8aLNsJ0bkFu5u84W0=
-X-Google-Smtp-Source: ABdhPJx75+XLP8YckoD9j0cZ7f84Pn0YR2c+SWhFml4M8DyAYqpKFmgZA7a5qsf2LtkVn5foMWV2WWMb/dN3MnzkNms=
-X-Received: by 2002:a2e:7812:: with SMTP id t18mr6257813ljc.168.1612183995207;
- Mon, 01 Feb 2021 04:53:15 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=z+lHY5PpQCHSwp6DZdgq08sOYp65zbqgxo56pQkNync=;
+        b=Hm+Tt61fUSd8g9qzNGuUuusvSKNaeuYdQy+Iv9LuUsAIu2RL78Ni2xBVUJzLI6uk/P
+         eZXPYY9EHYXV15gAdGOag5UYexnpV3Ilyl3wCWpyRchdVNgcolPUdrJUAEJwEav+Z/iT
+         Rofk7XFHkM2JB+oqqZyjKIuRLLCOBeHO9K5/0Kbabyspwu8Fr/h2pHamz6dupi9mBLNU
+         yjDc9dwXnK81ANaN3ahrG7J0dbi5N7mf6KOB7W5D/QM6u9vxWQnE8da9gPlPizvKUwMw
+         gSQpYrM/Oyde4Mr9zaC4BCTHbpqeLRAhpScaDW/mP+kMWrTR8WKbUTXDTX64vJQ5lyo8
+         NhZQ==
+X-Gm-Message-State: AOAM533LTLzl1A+JSaNupXZOdAM1Y1yZr4HILQBhReMXz4gT2D1cloin
+        WWhPF86o4lQexBQefQjt27E=
+X-Google-Smtp-Source: ABdhPJzc/sKbtDR7QXGcxl9lggSw1eiSjhafgh2iqviDgdv5V5HZ3Ur4XvEnHcNebVIjetHbMXsFww==
+X-Received: by 2002:a37:642:: with SMTP id 63mr15866119qkg.311.1612185275214;
+        Mon, 01 Feb 2021 05:14:35 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:8497:2090:4038:7fd1? ([2600:1700:e72:80a0:8497:2090:4038:7fd1])
+        by smtp.gmail.com with UTF8SMTPSA id g186sm14175852qke.0.2021.02.01.05.14.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Feb 2021 05:14:34 -0800 (PST)
+Message-ID: <3c48f860-e743-afbe-63e8-99804036a965@gmail.com>
+Date:   Mon, 1 Feb 2021 08:14:34 -0500
 MIME-Version: 1.0
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org> <8735yhq3lc.fsf@evledraar.gmail.com>
- <20210131033652.GK623063@zira.vinc17.org> <87o8h4omqa.fsf@evledraar.gmail.com>
- <20210201103429.GT623063@zira.vinc17.org> <CAPx1Gvf92eCnSCZJLeqwyL-SprCxmnfi4w=d0-MHddY38DzADg@mail.gmail.com>
- <20210201123635.GA24560@zira.vinc17.org>
-In-Reply-To: <20210201123635.GA24560@zira.vinc17.org>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Mon, 1 Feb 2021 04:53:03 -0800
-Message-ID: <CAPx1Gverh2E2h5JOSOfJ7JYvbhjv8hJNLE8y4VA2fNv0La8Rtw@mail.gmail.com>
-Subject: Re: git fails with a broken pipe when one quits the pager
-To:     Vincent Lefevre <vincent@vinc17.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
+ Thunderbird/86.0
+Subject: Re: [PATCH v7 00/11] [GSoC] Implement Corrected Commit Date
+Content-Language: en-US
+To:     Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Abhishek Kumar <abhishekkumar8222@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
+ <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 1, 2021 at 4:36 AM Vincent Lefevre <vincent@vinc17.net> wrote:
-> In general, repositories have more than 64k log.
+On 2/1/2021 1:58 AM, Abhishek Kumar via GitGitGadget wrote:
 
-Please don't focus on the exact size.  Some system might
-have a multi-gigabyte pipe buffer, and some other system
-might have a tiny one; we'd like consistent behavior no matter
-what size the system uses.  Can we *get* consistent behavior?
-I don't know.
+> Changes in version 7:
+> 
+>  * Moved the documentation patch ahead of "commit-graph: implement corrected
+>    commit date" and elaborated on the introduction of generation number v2.
 
-[me]
-> > The problem that has come up is, if I understand correctly, that
-> > some Linux distributions have come with misconfigured pagers
-> > that don't bother reading their input, and silently exit zero.
->
-> They are not misconfigured. This is how they work.
+The only change in this version is this commit message:
 
-A pager that reads nothing and writes nothing does not seem
-very useful to me.  (Perhaps we can disregard these cases
-entirely.  It's not like we should expect Git to handle things if
-someone builds a version of `less` that doesn't work.  The
-fact is that on these Linux systems, running `$pager foo` on a
-file `foo` does nothing at all, for some values of `$pager`.  I
-believe I ran into this on a Docker setup at least once.  It's
-not Git's fault and hence not something for it to correct.)
+>  11:  e571f03d8bd !  7:  8647b5d2e38 doc: add corrected commit date info
+>      @@ Metadata
+>       Author: Abhishek Kumar <abhishekkumar8222@gmail.com>
+>       
+>        ## Commit message ##
+>      -    doc: add corrected commit date info
+>      +    commit-graph: document generation number v2
+>       
+>      -    With generation data chunk and corrected commit dates implemented, let's
+>      -    update the technical documentation for commit-graph.
+>      +    Git uses topological levels in the commit-graph file for commit-graph
+>      +    traversal operations like 'git log --graph'. Unfortunately, topological
+>      +    levels can perform worse than committer date when parents of a commit
+>      +    differ greatly in generation numbers [1]. For example, 'git merge-base
+>      +    v4.8 v4.9' on the Linux repository walks 635,579 commits using
+>      +    topological levels and walks 167,468 using committer date. Since
+>      +    091f4cf3 (commit: don't use generation numbers if not needed,
+>      +    2018-08-30), 'git merge-base' uses committer date heuristic unless there
+>      +    is a cutoff because of the performance hit.
+>      +
+>      +    [1] https://lore.kernel.org/git/efa3720fb40638e5d61c6130b55e3348d8e4339e.1535633886.git.gitgitgadget@gmail.com/
+>      +
+>      +    Thus, the need for generation number v2 was born. As Git used to die
+>      +    when graph version understood by it and in the commit-graph file are
+>      +    different [2], we needed a way to distinguish between the old and new
+>      +    generation number without incrementing the graph version.
+>      +
+>      +    [2] https://lore.kernel.org/git/87a7gdspo4.fsf@evledraar.gmail.com/
+>      +
+>      +    The following candidates were proposed (https://github.com/derrickstolee/gen-test,
+>      +    https://github.com/abhishekkumar2718/git/pull/1):
+>      +    - (Epoch, Date) Pairs.
+>      +    - Maximum Generation Numbers.
+>      +    - Corrected Commit Date.
+>      +    - FELINE Index.
+>      +    - Corrected Commit Date with Monotonically Increasing Offsets.
+>      +
+>      +    Based on performance, local computability, and immutability (along with
+>      +    the introduction of an additional commit-graph chunk which relieved the
+>      +    requirement of backwards-compatibility) Corrected Commit Date was chosen
+>      +    as generation number v2 and is defined as follows:
+>      +
+>      +    For a commit C, let its corrected commit date  be the maximum of the
+>      +    commit date of C and the corrected commit dates of its parents plus 1.
+>      +    Then corrected commit date offset is the difference between corrected
+>      +    commit date of C and commit date of C. As a special case, a root commit
+>      +    with the timestamp zero has corrected commit date of 1 to distinguish it
+>      +    from GENERATION_NUMBER_ZERO (that is, an uncomputed generation number).
+>      +
+>      +    While it was proposed initially to store corrected commit date offsets
+>      +    within Commit Data Chunk, storing the offsets in a new chunk did not
+>      +    affect the performance measurably. The new chunk is "Generation DATa
+>      +    (GDAT) chunk" and it stores corrected commit date offsets while CDAT
+>      +    chunk stores topological level. The old versions of Git would ignore
+>      +    GDAT chunk, using topological levels from CDAT chunk. In contrast, new
+>      +    versions of Git would use corrected commit dates, falling back to
+>      +    topological level if the generation data chunk is absent in the
+>      +    commit-graph file.
+>      +
+>      +    While storing corrected commit date offsets saves us 4 bytes per commit
+>      +    (as compared with storing corrected commit dates directly), it's however
+>      +    possible for the offset to overflow the space allocated. To handle such
+>      +    cases, we introduce a new chunk, _Generation Data Overflow_ (GDOV) that
+>      +    stores the corrected commit date. For overflowing offsets, we set MSB
+>      +    and store the position into the GDOV chunk, in a mechanism similar to
+>      +    the Extra Edges list chunk.
+>      +
+>      +    For mixed generation number environment (for example new Git on the
+>      +    command line, old Git used by GUI client), we can encounter a
+>      +    mixed-chain commit-graph (a commit-graph chain where some of split
+>      +    commit-graph files have GDAT chunk and others do not). As backward
+>      +    compatibility is one of the goals, we can define the following behavior:
+>      +
+>      +    While reading a mixed-chain commit-graph version, we fall back on
+>      +    topological levels as corrected commit dates and topological levels
+>      +    cannot be compared directly.
+>      +
+>      +    When adding new layer to the split commit-graph file, and when merging
+>      +    some or all layers (replacing them in the latter case), the new layer
+>      +    will have GDAT chunk if and only if in the final result there would be
+>      +    no layer without GDAT chunk just below it.
 
-[on various exit cases]
-> > There's no good way for Git to be able to tell which of these was
-> > the case.
->
-> In the case git spawns a pager, it knows that this is a pager
-> (as per documentation).
+While that is a quality message, v6 has landed in 'next' and I've begun
+working off of that version. As Taylor attempted to say [1], this topic
+should be considered final and updates should be follow-ups on top.
 
-Again, this seems irrelevant.  If the pager exited correctly
-while reading everything, or it exited correctly without reading
-everything, or if it exited incorrectly with or without reading
-everything, is not something *Git* can tell.  I'm therefore not
-sure that Git should *try* to tell -- which is the point I'm trying
-to make here.  The question is this: if we can only do a poor
-job, should we try at all?  What *should* we do, given what
-we *can* do?  All we get is SIGPIPE and an exit status, and
-the SIGPIPE may or may not be meaningful.
+[1] https://lore.kernel.org/git/YBYLwpKdUfxCNwaz@nand.local/
 
-That seems to be what you're arguing as well.  So I'm not sure
-why you're objecting to what I'm pointing out. :-)
+(Of course, if Junio says differently, then listen to him.)
 
-Chris
+Thanks,
+-Stolee
+
