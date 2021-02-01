@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D544C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 14:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B298C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 14:55:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A92C64E08
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 14:53:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3E1C64EA4
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 14:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229807AbhBAOxE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 09:53:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33558 "EHLO
+        id S229669AbhBAOzD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 09:55:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231342AbhBAOwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 09:52:08 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D5C8C06178C
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 06:49:42 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id y187so13436899wmd.3
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 06:49:42 -0800 (PST)
+        with ESMTP id S231467AbhBAOuW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 09:50:22 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0662AC06178B
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 06:49:41 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id u14so12868461wml.4
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 06:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fM7qUCPJGyb6Z+rE4xM6dI5yPatKD56tb+keMVbb+/E=;
-        b=DzU1o9F0+VH+FCWV3E5Icylvw1mxbDeKs4gcU63z98IpRx3SU6t9Bo52x7e1cD5+Jv
-         sQCBHtGPXTdMFY+VmpIXgjl0Ry1/xRE7qEOKoG9W7J9XB8kNECjF5VuWkgtrzN38rY6E
-         euYt/Cjo442bOtc7c0JyblB0jNuKmBuvyfkDaXLDCc23805NITCH5sAhs3aclj3DhiH2
-         lIv67O0yoywyVmEQFO00sT9RmsDzy3vneKEMy9cRdGhhdSFyESNi4x7C5Qjc3DbfEnGS
-         cBRLTp4ayxeubTbRs1WWQwopf2I5n4p9+tFCcKzST2YPm9pd4NSKjxM96CMVcufFylh8
-         RVvQ==
+        bh=uYhUHo6Ku3bulSheUJkOZuqf/igSgjI+/StyEFlK6/Y=;
+        b=Q7RPodz28eF31Y0T1y1RAoxkbKCKEUcethEc7e6RErANE8vdTNaf7nBnu3EBLJ56aH
+         myGibDsFE6J7EjekkX+PZEABzfRL10LFzYpYAVfzd7VB819i8H4xzb5cQqhYnJ5jRMTp
+         Z0MDGJ6SDOqzhzgYzd2HeUC2PnjKQL9tWPKI9wLuvDYPjloCUlV5MoO3i6+Zl2VlO0b0
+         eQTn6hO7edsMJxN+7m5aOqTyhjlt+SdL7YKENuwaeViSVqh/iFdgBCpWoWDUaOYZpqrl
+         y8H/IlpO2VjPV59NGEUHCu3P2Azp8Ls0RkEXt+h7IiiHb5y+BV60AHZ8sU2XpvmWokzV
+         oF9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fM7qUCPJGyb6Z+rE4xM6dI5yPatKD56tb+keMVbb+/E=;
-        b=e7XDNEcufGvrRD3g4jCvpP0SX0xnFiUk0biiXNxofx4n/Gbfw7hlhGIbCmP3+p81Jm
-         vJaGh3zbM0xVm/zhDoiePJ2iLXmuEmmFihfd6bNzm8GaG9UkMe0fnxK7ZPi2iek+PO7e
-         cdbxfxQmF0hQ814dJ28mk757F9fukx64w6YUNIBIwaHEh4+2xWiAEJpVli5MtDmGWwMU
-         gK5b0O3fuPYH8webL32m7lvCei52ljYnizIhzL+nxiup8Zz9yq1BVadqpIqnLejRri7P
-         or5qeN8RJUvK6JKSMQcW1gltt/smKVpPHUfhJFwd+PXMM4+MR3lu4+dXQ81/80z7NXrK
-         rg9Q==
-X-Gm-Message-State: AOAM5306XI/OPlAe96ejxp/EZEpw+Z6vi8Wv2dMypNnnmBESjV9XmodC
-        ok0pi2douPo0jzNEny6VSsI71gquZsTHGw==
-X-Google-Smtp-Source: ABdhPJxlInkfqcQeHtMdeA77esoYrBLC7WH1MBI1F3lC7hxlqqxtJXYx97FAB1ksksdfAWOaFuTaSw==
-X-Received: by 2002:a7b:c210:: with SMTP id x16mr14976334wmi.105.1612190980558;
-        Mon, 01 Feb 2021 06:49:40 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k4sm28799954wrm.53.2021.02.01.06.49.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=uYhUHo6Ku3bulSheUJkOZuqf/igSgjI+/StyEFlK6/Y=;
+        b=ZkuO+GeHPSBQmSlhBdVcfg1qBBCrf/sPmbn0l8ZiOJts8YHN1wghxfrars1o3w2j6Y
+         VatGiK8vtwCC+aFuyZS2s+PT8TPqDuXxYAn1cuYTkh5cY/iWDALF/9bj4BFPvxL0Musx
+         R97kDK947IohWp8FIFENcYfcQEMl5NT8vhS1YqQclQWJ9a71BB6kGfYKb7vHG/eSChzN
+         2q/K041OYEHsKUeYxPwaum07gaYXsvHKZyIS33DaYxVVy6jwoXSkI/b7BVLq7HQPj8i8
+         3nngEAfHMqEzlcYM7P6wyqwxO0DbVUYfytzdtuAClSQUr3QVtdP47VolqysfbP74mFV8
+         iQ8A==
+X-Gm-Message-State: AOAM530tXoRHhrA2Bi3v06h+6ZfQur4Hf9QBibrhIyXsn8OnnT3DOK9b
+        Xa9SsZNvQNe2fhjgkGw8eeaux3LAZl4JVA==
+X-Google-Smtp-Source: ABdhPJyXIIYkJ4mPKcBbn3XwuXGqwFZNJdKFN3oo9+2pSLuIqH5oSQObset5dspW3v5VfmjnhmYjeA==
+X-Received: by 2002:a1c:c386:: with SMTP id t128mr9006593wmf.172.1612190979478;
         Mon, 01 Feb 2021 06:49:39 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id k4sm28799954wrm.53.2021.02.01.06.49.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Feb 2021 06:49:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/3] pager: properly log pager exit code when signalled
-Date:   Mon,  1 Feb 2021 15:49:21 +0100
-Message-Id: <20210201144921.8664-4-avarab@gmail.com>
+Subject: [PATCH 2/3] pager: refactor wait_for_pager() function
+Date:   Mon,  1 Feb 2021 15:49:20 +0100
+Message-Id: <20210201144921.8664-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87im7cng42.fsf@evledraar.gmail.com>
 References: <87im7cng42.fsf@evledraar.gmail.com>
@@ -79,139 +79,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When git invokes a pager that exits with non-zero the common case is
-that we'll already return the correct SIGPIPE failure from git itself,
-but the exit code logged in trace2 has always been incorrectly
-reported[1]. Fix that and log the correct exit code in the logs.
+Refactor the wait_for_pager() function. Since 507d7804c0b (pager:
+don't use unsafe functions in signal handlers, 2015-09-04) the
+wait_for_pager() and wait_for_pager_atexit() callers diverged on more
+than they shared.
 
-Since this gives us something to test outside of our recently-added
-tests needing a !MINGW prerequisite, let's refactor the test to run on
-MINGW and actually check for SIGPIPE outside of MINGW.
-
-The wait_or_whine() is only called with a true "in_signal" from from
-finish_command_in_signal(), which in turn is only used in pager.c.
-
-I'm not quite sure about that BUG() case. Can we have a true in_signal
-and not have a true WIFEXITED(status)? I haven't been able to think of
-a test case for it.
-
-1. The incorrect logging of the exit code in was seemingly copy/pasted
-   into finish_command_in_signal() in ee4512ed481 (trace2: create new
-   combined trace facility, 2019-02-22)
+Let's extract the common code into a new close_pager_fds() helper, and
+move the parts unique to the only to callers to those functions.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- run-command.c    |  8 +++++--
- t/t7006-pager.sh | 61 +++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 58 insertions(+), 11 deletions(-)
+ pager.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index ea4d0fb4b15..10e1c96c2bd 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -551,8 +551,12 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
+diff --git a/pager.c b/pager.c
+index ee435de6756..3d37dd7adaa 100644
+--- a/pager.c
++++ b/pager.c
+@@ -11,29 +11,25 @@
+ static struct child_process pager_process = CHILD_PROCESS_INIT;
+ static const char *pager_program;
  
- 	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
- 		;	/* nothing */
+-static void wait_for_pager(int in_signal)
++static void close_pager_fds(void)
+ {
+-	if (!in_signal) {
+-		fflush(stdout);
+-		fflush(stderr);
+-	}
+ 	/* signal EOF to pager */
+ 	close(1);
+ 	close(2);
 -	if (in_signal)
--		return 0;
-+	if (in_signal && WIFEXITED(status))
-+		return WEXITSTATUS(status);
-+	if (in_signal) {
-+		BUG("was not expecting waitpid() status %d", status);
-+		return -1;
-+	}
+-		finish_command_in_signal(&pager_process);
+-	else
+-		finish_command(&pager_process);
+ }
  
- 	if (waiting < 0) {
- 		failed_errno = errno;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index c60886f43e6..1424466caf5 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -656,31 +656,74 @@ test_expect_success TTY 'git tag with auto-columns ' '
- 	test_cmp expect actual
- '
+ static void wait_for_pager_atexit(void)
+ {
+-	wait_for_pager(0);
++	fflush(stdout);
++	fflush(stderr);
++	close_pager_fds();
++	finish_command(&pager_process);
+ }
  
--test_expect_success TTY,!MINGW 'git returns SIGPIPE on early pager exit' '
-+test_expect_success TTY 'git returns SIGPIPE on early pager exit' '
- 	test_when_finished "rm pager-used" &&
- 	test_config core.pager ">pager-used; head -n 1; exit 0" &&
-+	GIT_TRACE2="$(pwd)/trace.normal" &&
-+	export GIT_TRACE2 &&
-+	test_when_finished "unset GIT_TRACE2" &&
- 
--	OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
--	test_match_signal 13 "$OUT" &&
-+	if test_have_prereq !MINGW
-+	then
-+		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
-+		test_match_signal 13 "$OUT"
-+	else
-+		test_terminal git log
-+	fi &&
-+	grep "child_exit.* code:0 " trace.normal &&
- 	test_path_is_file pager-used
- '
- 
--test_expect_success TTY,!MINGW 'git returns SIGPIPE on early pager non-zero exit' '
-+test_expect_success TTY 'git returns SIGPIPE on early pager non-zero exit' '
- 	test_when_finished "rm pager-used" &&
- 	test_config core.pager ">pager-used; head -n 1; exit 1" &&
-+	GIT_TRACE2="$(pwd)/trace.normal" &&
-+	export GIT_TRACE2 &&
-+	test_when_finished "unset GIT_TRACE2" &&
- 
--	OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
--	test_match_signal 13 "$OUT" &&
-+	if test_have_prereq !MINGW
-+	then
-+		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
-+		test_match_signal 13 "$OUT"
-+	else
-+		test_terminal git log
-+	fi &&
-+	grep "child_exit.* code:1 " trace.normal &&
- 	test_path_is_file pager-used
- '
- 
--test_expect_success TTY,!MINGW 'git discards pager non-zero exit' '
-+test_expect_success TTY 'git discards pager non-zero exit' '
- 	test_when_finished "rm pager-used" &&
- 	test_config core.pager "wc >pager-used; exit 1" &&
-+	GIT_TRACE2="$(pwd)/trace.normal" &&
-+	export GIT_TRACE2 &&
-+	test_when_finished "unset GIT_TRACE2" &&
- 
--	OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
--	test "$OUT" -eq 0 &&
-+	if test_have_prereq !MINGW
-+	then
-+		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
-+		test "$OUT" -eq 0
-+	else
-+		test_terminal git log
-+	fi &&
-+	grep "child_exit.* code:1 " trace.normal &&
- 	test_path_is_file pager-used
- '
- 
-+test_expect_success TTY 'git logs nonexisting pager invocation' '
-+	test_config core.pager "does-not-exist" &&
-+	GIT_TRACE2="$(pwd)/trace.normal" &&
-+	export GIT_TRACE2 &&
-+	test_when_finished "unset GIT_TRACE2" &&
-+
-+	if test_have_prereq !MINGW
-+	then
-+		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
-+		test_match_signal 13 "$OUT"
-+	else
-+		test_terminal git log
-+	fi &&
-+	grep "child_exit.* code:-1 " trace.normal
-+'
-+
- test_done
+ static void wait_for_pager_signal(int signo)
+ {
+-	wait_for_pager(1);
++	close_pager_fds();
++	finish_command_in_signal(&pager_process);
+ 	sigchain_pop(signo);
+ 	raise(signo);
+ }
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
