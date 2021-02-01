@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1927BC433E6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD606C43381
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C04B764EA5
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B111664E9E
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 12:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231475AbhBAMsQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 07:48:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35102 "EHLO
+        id S231490AbhBAMs0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 07:48:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231308AbhBAMsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 07:48:12 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18128C061756
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 04:47:32 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id q7so16397925wre.13
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 04:47:32 -0800 (PST)
+        with ESMTP id S231464AbhBAMsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 07:48:15 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9357C0613ED
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 04:47:34 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id j18so12540905wmi.3
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 04:47:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=McEu39H+C/Qincvr1lZST/EZjVZrFbTYDM7C70uLiZE=;
-        b=AWnZr0hpBDh1cJdoUJD7SMZjQJ3Noeg5HeoFhEBL78zPx50WgLk2JhFEQC1kCpGuCH
-         MMiIP0JyZtqPr6pNPhjPpfD2+YlJiZAmDKLsPsKK21Xyuq28jSSx1BKxbbICiweT1Xdp
-         VRRrHtaSZZ0/Bkkbw9F/kAwwyocSi/UAwBnm/38FF8iYrp9zqnEsFtq7wwNYjxQa25p1
-         TdLOtqPnWrq4hrZIHdBGlTDy2hBw/ZI2YzBZrs6Ef8ZIq/RFQJc9Q09yt1U8RTJT8drT
-         X7fA8eyPwYULmQh2cq4M4/vwvJ7p9vGsE59l59Zf106EcIhkdxREFDjeEHSR2Zezxvir
-         /ulQ==
+        bh=TD3YqiwIGUfhzShNQFKZ9Adltf/LTAg7dpgLfajJDA4=;
+        b=Y0cTRo6fyfjuwzMx4fLm1JyPO2N8r8IrdEBMtGAARW2c5M3utDC0IafDFpTaeQB3/A
+         66QEovnb8sF1BHOT/Dk4kTS+CKZuQFGNmqhxCdCposZFQuk5rTEL9rCJpXcD7rPEB/ru
+         gmjW5crIFJMEPU94DpwfEeTz/O0iHMzQnKsaXl/OlbHwDct7XGpZ7KL1y1ZMOEM7gw5j
+         MfchbjMcPg4JCapTWfC+YsZ/7BSK3bX1QjvgltG67qzfy755mHbkcLlhhX8iouZ3jLB+
+         GL3ZfMYuItF2n0iiKpjgt/vfOptH2W2kemiIqrnLwLNO1Q/oR7XaRVcaDGICAgX6SrXo
+         uIWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=McEu39H+C/Qincvr1lZST/EZjVZrFbTYDM7C70uLiZE=;
-        b=ECK2t2nKbYK0f3pIJiXPZn1AlbMWQwYaqVoBuLXcBy0x59oBjVQBUJxu22e2KlWj4p
-         AlHM1EHLg3P1+xY1rDTupZeG23ymMn6M9JqSn970jBazxTArrAlQUMvf1Jw4MAMpTLyC
-         ybI7ZgcmGgEQ5aQMyUxgBTj+Ryuoib7+txKp5U6GuVR104c5ua1Qc/bZGZBokgZruAQm
-         cefb2UfDRkZYwHBDBB3Oz0gbh2/F/lEhXFNUOYaLljR0smRyLfVfffJKu1Lm6vjlZjxT
-         pKFxlOlsY4DFegRJ316Z9PR8OTxZwCyM9Af75E06dTnnNo4TixI6ez1k3oPBZ2P3mSqR
-         73OQ==
-X-Gm-Message-State: AOAM533nxryqUbV8eb8DvU4upYd6bCij1Stpp0YUx3Ci3OgPWva36Jzt
-        NMgEZn1h2s71qZIyXid8M/HjaTVYLkQ=
-X-Google-Smtp-Source: ABdhPJwdookc+TEStyQwt8cFz33yT+SiULKnGY3fzAdJTEKmZNvYkCZGI74URPzhgkSMZ7LwdFfaVw==
-X-Received: by 2002:adf:ee0d:: with SMTP id y13mr18111948wrn.228.1612183650540;
-        Mon, 01 Feb 2021 04:47:30 -0800 (PST)
+        bh=TD3YqiwIGUfhzShNQFKZ9Adltf/LTAg7dpgLfajJDA4=;
+        b=NubnjFI+uyKSIxJR/4Ns42duA5MTh+Ny19Bc5P932Du9srCHbvCbToUrWHbw/nawMH
+         jGGxl9FzAdh+DbunkXxso532W859kdpvnGcDZQ+gJc9aoRlnXBJsCV9+WmMutVlxho4Q
+         //j6sA39O7AUGnlrt4Skd82VjOZxe55NxRnyeOV1YAPjq5bvwqSM6TbLAHZJVEfnoPcw
+         fe0JIrJRojp0HrJZCs85Dua47t/df/gZDFh5KcMxX9VmhCLOKH1fqQaB1+PVR6Bh/+lS
+         4SL8Ckd3gnkR3rzjQgq2DN50qCuXTAqrf1h8zsSy0PbBo/hi5PPqO82nuYLAaQYNZC0u
+         d25Q==
+X-Gm-Message-State: AOAM531QiETBe1EahzQQydyeLES3xOgrJ1sZBfgtaNYbt0k9AcZjvP4M
+        1t7+C9XGH9rZifLbrDFQ+0U2+9mVCvY=
+X-Google-Smtp-Source: ABdhPJxHnkW9MO6uTS8xs6LPShNpXqQAqP93cchGq6IAo7t6kldfQpIsLyNiZb5aN1hl5nnW4J+pRw==
+X-Received: by 2002:a1c:ba44:: with SMTP id k65mr5409936wmf.25.1612183652581;
+        Mon, 01 Feb 2021 04:47:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m22sm27509884wrh.66.2021.02.01.04.47.29
+        by smtp.gmail.com with ESMTPSA id y67sm21716433wmg.47.2021.02.01.04.47.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 04:47:29 -0800 (PST)
-Message-Id: <2f80ae5fcb00d9d5c1b0502af45921cb20ebdf94.1612183647.git.gitgitgadget@gmail.com>
+        Mon, 01 Feb 2021 04:47:32 -0800 (PST)
+Message-Id: <83feabeebb5f035059758fba1ca5cf74f3a22c91.1612183647.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
 References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
         <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 12:47:24 +0000
-Subject: [PATCH v2 2/5] commit-reach: use one walk in remove_redundant()
+Date:   Mon, 01 Feb 2021 12:47:26 +0000
+Subject: [PATCH v2 4/5] commit-reach: use heuristic in remove_redundant()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,187 +80,173 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The current implementation of remove_redundant() uses several calls to
-paint_down_to_common() to determine that commits are independent of each
-other. This leads to quadratic behavior when many inputs are passed to
-commands such as 'git merge-base'.
+Reachability algorithms in commit-reach.c frequently benefit from using
+the first-parent history as a heuristic for satisfying reachability
+queries. The most obvious example was implemented in 4fbcca4e
+(commit-reach: make can_all_from_reach... linear, 2018-07-20).
 
-For example, in the Linux kernel repository, I tested the performance
-by passing all tags:
+Update the walk in remove_redundant() to use this same heuristic. Here,
+we are walking starting at the parents of the input commits. Sort those
+parents and walk from the highest generation to lower. Each time, use
+the heuristic of searching the first parent history before continuing to
+expand the walk.
 
- git merge-base --independent $(git for-each-ref refs/tags --format="$(refname)")
+The order in which we explore the commits matters, so update
+compare_commits_by_gen to break generation number ties with commit date.
+This has no effect when the commits are in a commit-graph file with
+corrected commit dates computed, but it will assist when the commits are
+in the region "above" the commit-graph with "infinite" generation
+number. Note that we cannot shift to use
+compare_commits_by_gen_then_commit_date as the method prototype is
+different. We use compare_commits_by_gen for QSORT() as opposed to as a
+priority function.
 
-(Note: I had to delete the tags v2.6.11-tree and v2.6.11 as they do
-not point to commits.)
+The important piece is to ensure we short-circuit the walk when we find
+that there is a single non-redundant commit. This happens frequently
+when looking for merge-bases or comparing several tags with 'git
+merge-base --independent'. Use a new count 'count_still_independent' and
+if that hits 1 we can stop walking.
 
-Here is the performance improvement introduced by this change:
+To update 'count_still_independent' properly, we add use of the RESULT
+flag on the input commits. Then we can detect when we reach one of these
+commits and decrease the count. We need to remove the RESULT flag at
+that moment because we might re-visit that commit when popping the
+stack.
 
- Before: 16.4s
-  After:  1.1s
+We use the STALE flag to mark parents that have been added to the new
+walk_start list, but we need to clear that flag before we start walking
+so those flags don't halt our depth-first-search walk.
 
-This performance improvement requires the commit-graph file to be
-present. We keep the old algorithm around as remove_redundant_no_gen()
-and use it when generation_numbers_enabled() is false. This is similar
-to other algorithms within commit-reach.c. The new algorithm is
-implemented in remove_redundant_with_gen().
-
-The basic approach is to do one commit walk instead of many. First, scan
-all commits in the list and mark their _parents_ with the STALE flag.
-This flag will indicate commits that are reachable from one of the
-inputs, except not including themselves. Then, walk commits until
-covering all commits up to the minimum generation number pushing the
-STALE flag throughout.
-
-At the end, we need to clear the STALE bit from all of the commits
-we walked. We move the non-stale commits in 'array' to the beginning of
-the list, and this might overwrite stale commits. However, we store an
-array of commits that started the walk, and use clear_commit_marks() on
-each of those starting commits. That method will walk the reachable
-commits with the STALE bit and clear them all. This makes the algorithm
-safe for re-entry or for other uses of those commits after this walk.
-
-This logic is covered by tests in t6600-test-reach.sh, so the behavior
-does not change. This is tested both in the case with a commit-graph and
-without.
+On my copy of the Linux kernel repository, the performance of 'git
+merge-base --independent <all-tags>' goes from 1.1 seconds to 0.11
+seconds.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- commit-reach.c | 108 +++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 100 insertions(+), 8 deletions(-)
+ commit-reach.c | 72 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 56 insertions(+), 16 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 9af51fe7e07..053676e51d0 100644
+index 7bf52e94429..d3a6e2bdd04 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -156,15 +156,9 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
- 	return ret;
+@@ -29,6 +29,10 @@ static int compare_commits_by_gen(const void *_a, const void *_b)
+ 		return -1;
+ 	if (generation_a > generation_b)
+ 		return 1;
++	if (a->date < b->date)
++		return -1;
++	if (a->date > b->date)
++		return 1;
+ 	return 0;
  }
  
--static int remove_redundant(struct repository *r, struct commit **array, int cnt)
-+static int remove_redundant_no_gen(struct repository *r,
-+				   struct commit **array, int cnt)
+@@ -231,11 +235,10 @@ static int remove_redundant_no_gen(struct repository *r,
+ static int remove_redundant_with_gen(struct repository *r,
+ 				     struct commit **array, int cnt)
  {
--	/*
--	 * Some commit in the array may be an ancestor of
--	 * another commit.  Move the independent commits to the
--	 * beginning of 'array' and return their number. Callers
--	 * should not rely upon the contents of 'array' after
--	 * that number.
--	 */
- 	struct commit **work;
- 	unsigned char *redundant;
- 	int *filled_index;
-@@ -210,12 +204,110 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
- 	for (i = filled = 0; i < cnt; i++)
- 		if (!redundant[i])
- 			array[filled++] = work[i];
-+	for (j = filled, i = 0; i < cnt; i++)
-+		if (redundant[i])
-+			array[j++] = work[i];
- 	free(work);
- 	free(redundant);
- 	free(filled_index);
- 	return filled;
- }
+-	int i, count_non_stale = 0;
++	int i, count_non_stale = 0, count_still_independent = cnt;
+ 	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+ 	struct commit **walk_start;
+ 	size_t walk_start_nr = 0, walk_start_alloc = cnt;
+-	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
  
-+static int remove_redundant_with_gen(struct repository *r,
-+				     struct commit **array, int cnt)
-+{
-+	int i, count_non_stale = 0;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
-+	struct commit **walk_start;
-+	size_t walk_start_nr = 0, walk_start_alloc = cnt;
-+	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
-+
-+	ALLOC_ARRAY(walk_start, walk_start_alloc);
-+
-+	/* Mark all parents of the input as STALE */
-+	for (i = 0; i < cnt; i++) {
-+		struct commit_list *parents;
-+		timestamp_t generation;
-+
-+		repo_parse_commit(r, array[i]);
-+		parents = array[i]->parents;
-+
-+		while (parents) {
-+			repo_parse_commit(r, parents->item);
-+			if (!(parents->item->object.flags & STALE)) {
-+				parents->item->object.flags |= STALE;
-+				ALLOC_GROW(walk_start, walk_start_nr + 1, walk_start_alloc);
-+				walk_start[walk_start_nr++] = parents->item;
-+				prio_queue_put(&queue, parents->item);
-+			}
-+			parents = parents->next;
-+		}
-+
-+		generation = commit_graph_generation(array[i]);
-+
-+		if (generation < min_generation)
-+			min_generation = generation;
-+	}
-+
-+	/* push the STALE bits up to min generation */
-+	while (queue.nr) {
-+		struct commit_list *parents;
-+		struct commit *c = prio_queue_get(&queue);
-+
-+		repo_parse_commit(r, c);
-+
-+		if (commit_graph_generation(c) < min_generation)
-+			continue;
-+
-+		parents = c->parents;
-+		while (parents) {
-+			if (!(parents->item->object.flags & STALE)) {
-+				parents->item->object.flags |= STALE;
-+				prio_queue_put(&queue, parents->item);
-+			}
-+			parents = parents->next;
-+		}
-+	}
-+
-+	/* rearrange array */
-+	for (i = count_non_stale = 0; i < cnt; i++) {
-+		if (!(array[i]->object.flags & STALE))
-+			array[count_non_stale++] = array[i];
-+	}
-+
-+	/* clear marks */
+ 	ALLOC_ARRAY(walk_start, walk_start_alloc);
+ 
+@@ -245,6 +248,7 @@ static int remove_redundant_with_gen(struct repository *r,
+ 		timestamp_t generation;
+ 
+ 		repo_parse_commit(r, array[i]);
++		array[i]->object.flags |= RESULT;
+ 		parents = array[i]->parents;
+ 
+ 		while (parents) {
+@@ -253,7 +257,6 @@ static int remove_redundant_with_gen(struct repository *r,
+ 				parents->item->object.flags |= STALE;
+ 				ALLOC_GROW(walk_start, walk_start_nr + 1, walk_start_alloc);
+ 				walk_start[walk_start_nr++] = parents->item;
+-				prio_queue_put(&queue, parents->item);
+ 			}
+ 			parents = parents->next;
+ 		}
+@@ -264,26 +267,63 @@ static int remove_redundant_with_gen(struct repository *r,
+ 			min_generation = generation;
+ 	}
+ 
+-	/* push the STALE bits up to min generation */
+-	while (queue.nr) {
+-		struct commit_list *parents;
+-		struct commit *c = prio_queue_get(&queue);
++	QSORT(walk_start, walk_start_nr, compare_commits_by_gen);
+ 
+-		repo_parse_commit(r, c);
++	/* remove STALE bit for now to allow walking through parents */
 +	for (i = 0; i < walk_start_nr; i++)
-+		clear_commit_marks(walk_start[i], STALE);
-+	free(walk_start);
-+
-+	return count_non_stale;
-+}
-+
-+static int remove_redundant(struct repository *r, struct commit **array, int cnt)
-+{
++		walk_start[i]->object.flags &= ~STALE;
+ 
+-		if (commit_graph_generation(c) < min_generation)
+-			continue;
 +	/*
-+	 * Some commit in the array may be an ancestor of
-+	 * another commit.  Move the independent commits to the
-+	 * beginning of 'array' and return their number. Callers
-+	 * should not rely upon the contents of 'array' after
-+	 * that number.
++	 * Start walking from the highest generation. Hopefully, it will
++	 * find all other items during the first-parent walk, and we can
++	 * terminate early. Otherwise, we will do the same amount of work
++	 * as before.
 +	 */
-+	if (generation_numbers_enabled(r)) {
-+		int i;
++	for (i = walk_start_nr - 1; i >= 0 && count_still_independent > 1; i--) {
++		/* push the STALE bits up to min generation */
++		struct commit_list *stack = NULL;
+ 
+-		parents = c->parents;
+-		while (parents) {
+-			if (!(parents->item->object.flags & STALE)) {
+-				parents->item->object.flags |= STALE;
+-				prio_queue_put(&queue, parents->item);
++		commit_list_insert(walk_start[i], &stack);
++		walk_start[i]->object.flags |= STALE;
 +
-+		/*
-+		 * If we have a single commit with finite generation
-+		 * number, then the _with_gen algorithm is preferred.
-+		 */
-+		for (i = 0; i < cnt; i++) {
-+			if (commit_graph_generation(array[i]) < GENERATION_NUMBER_INFINITY)
-+				return remove_redundant_with_gen(r, array, cnt);
-+		}
-+	}
++		while (stack) {
++			struct commit_list *parents;
++			struct commit *c = stack->item;
 +
-+	return remove_redundant_no_gen(r, array, cnt);
-+}
++			repo_parse_commit(r, c);
 +
- static struct commit_list *get_merge_bases_many_0(struct repository *r,
- 						  struct commit *one,
- 						  int n,
++			if (c->object.flags & RESULT) {
++				c->object.flags &= ~RESULT;
++				if (--count_still_independent <= 1)
++					break;
+ 			}
+-			parents = parents->next;
++
++			if (commit_graph_generation(c) < min_generation) {
++				pop_commit(&stack);
++				continue;
++			}
++
++			parents = c->parents;
++			while (parents) {
++				if (!(parents->item->object.flags & STALE)) {
++					parents->item->object.flags |= STALE;
++					commit_list_insert(parents->item, &stack);
++					break;
++				}
++				parents = parents->next;
++			}
++
++			/* pop if all parents have been visited already */
++			if (!parents)
++				pop_commit(&stack);
+ 		}
++		free_commit_list(stack);
+ 	}
+ 
++	/* clear result */
++	for (i = 0; i < cnt; i++)
++		array[i]->object.flags &= ~RESULT;
++
+ 	/* rearrange array */
+ 	for (i = count_non_stale = 0; i < cnt; i++) {
+ 		if (!(array[i]->object.flags & STALE))
 -- 
 gitgitgadget
 
