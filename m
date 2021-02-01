@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 056EAC433E6
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D352C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B26A964E2B
-	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD8E164E30
+	for <git@archiver.kernel.org>; Mon,  1 Feb 2021 06:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230136AbhBAG7j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 01:59:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44480 "EHLO
+        id S230145AbhBAG7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 01:59:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbhBAG7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 01:59:33 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE307C061756
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:52 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id c12so15327630wrc.7
-        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:52 -0800 (PST)
+        with ESMTP id S229703AbhBAG7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 01:59:34 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D01AFC0613D6
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:53 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id l12so15340196wry.2
+        for <git@vger.kernel.org>; Sun, 31 Jan 2021 22:58:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DwtwXjs+wLi+6q2F8F5zy7dwAI6S0gMGo+qQ9ijVI6A=;
-        b=tEohX5MYCytxhllLhuZj4TZB8nqbNPmymZErczbb9lSpMKpa7ksaDK2hxXx7Gc9EEC
-         PeI9lOinYWto3Gq8kO/R5r2ubwFu+JEZVkg9Yl9LzT7tw/9Q/CFC3xdRqe+GpjZlzP5t
-         TU0Jmb98CT+tfHxBgCTIscLEFxlKDuUWUgomu10kukW7SqkvHhPFfmfNqaTlD68Zz9HH
-         bhniSNmlqnH3K4Kw0Nq3+NITeYsgmNZG4Xzngze0tXiZFknekad8NbPCaeLv3b7Dtiwj
-         D/GoCTlr0NO1Ru9lrDvx4VgFBcQBzEq4eViioJp4DjmSaDA/e2umGblWR/vBbqcFiYm7
-         h7Fg==
+        bh=cEe95guw9s9mzUDrRNnTP/221TBTHwdatVA+Owv7Nr0=;
+        b=hBl6uBiW/aKHt0+bz3CnFE3dDdP9AMeWkEgCVczuhd1NLGgOtdJxKYxfTxcF67zECh
+         0tryZswbk6HVKqbip6ULx/a9Q4zmywj+ahVxRidlEhahBIj+E8bgdQR4lrwRC1Ge96yO
+         q2a0rAXwNPQkze7eWLrzgx5KEIPJpamDl1ib5vzbBkrWYoMDjhxEcqmVzSEnP237RpXG
+         WLIzTs3vPFN4+rHhFRH/6zAyWcYC1UJDre11kDPpZrliz9ucROBoIC7xSOgvxaJTRZxD
+         hgVr6VLOmV4GBKa0KXeUaS4fG3AKsd8g/vtVGO5F2Pmz/vjVMRCflZWBlnT8BquVSuDj
+         XSbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DwtwXjs+wLi+6q2F8F5zy7dwAI6S0gMGo+qQ9ijVI6A=;
-        b=V4kmQonzYrYUPSnlDmgZQwRh5zxd3YXU++lV6eufM4To7zvaPg2NdhNfffDzp4IGIw
-         cEumh2tPwLX8T5MfwK8iUqTbpoXqN/ld3ZMpOYBX2px4fBde1pbBx4lvKadKxdD9jEDQ
-         DWjorlJVQEtreJQAm6sxg4bNv1zIAJwL6i2E8TttHMXoeVoSm3QzehjPOO5W+TKHIMXW
-         Ou1k0wtEFsW2MUTEz/UVOmO/zjyXnerLqv20PabcEDN7Umum7dYeWn2Fq07J+8Hw3GJD
-         dwZzWruoZ6RaqvcN2OOR3dk5zZ6Ckqx18dnUSpzjnObXXcJDI69srSfz8b674CUBnEvf
-         x9/Q==
-X-Gm-Message-State: AOAM530sFn1JddiVOtLkqvFOOluVcpF6ODa6YA1mDTU4vJ/DOaMKtIMV
-        y2t6FS23K1jsVUgOf9R0lYt/yh5EZ0c=
-X-Google-Smtp-Source: ABdhPJxcmWMtZMoHdGPdkwPL0hnz0FJmjwDbEeXBnjI3Vw6tLO+vHOHBM1YpT7QdmmL7/SVa3YAT+w==
-X-Received: by 2002:adf:fb91:: with SMTP id a17mr16411519wrr.93.1612162731321;
-        Sun, 31 Jan 2021 22:58:51 -0800 (PST)
+        bh=cEe95guw9s9mzUDrRNnTP/221TBTHwdatVA+Owv7Nr0=;
+        b=V68vyo9N+hWLGZXMRzPaIRuv7xQ1lA1t/ZvxDtawKHsO8pvB5g5XJUVlDVua99TirF
+         Bx8ojzZ3D58EMQXRIokajJ3WPwVfN22wy9lSCb+ats4awFYPfwlJSQC/Ajek0WvLzGql
+         a5/cP14HGLJ2pJTgVK+t6Vnpljf1YidNiaGMvtA9IuueS+fE4kxayIu3f1j6CByHdZ5L
+         FcUBT6ZLxYpOzNMdQVK1m1mSJoY4MlxjjdNdnej2SCAzcY4yUCAWW8kaxtP7H4FjiqR0
+         Yj/OH/54utAgpssV1vaj+hJiSQOlDogzWpu853AXs0uOMpW0gNtf6hs0Ri7WjZHjCo5h
+         FJgQ==
+X-Gm-Message-State: AOAM531HW+3gW5Q/z5j9ltJcqxlvHo4q8bjStx6AyHNMmmsu1eCmy0y8
+        xytLGgh/szpTlnF/In+RWSdWjJlZE2w=
+X-Google-Smtp-Source: ABdhPJzn/dk5F6vKsgcjMGz2g3gG+SfFo1lKjIq/IjER5B4wgepri8HX93KXidYuxmpEMu1gEG4HsQ==
+X-Received: by 2002:a5d:4443:: with SMTP id x3mr17033288wrr.409.1612162732367;
+        Sun, 31 Jan 2021 22:58:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e11sm25327973wrx.14.2021.01.31.22.58.50
+        by smtp.gmail.com with ESMTPSA id p15sm25487707wrt.15.2021.01.31.22.58.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Jan 2021 22:58:50 -0800 (PST)
-Message-Id: <b3040696d43f1abb6d7a50590b4e181cd2eb74aa.1612162726.git.gitgitgadget@gmail.com>
+        Sun, 31 Jan 2021 22:58:51 -0800 (PST)
+Message-Id: <085085a433072076ffa45d149cdf4e0b6b55d918.1612162726.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 References: <pull.676.v6.git.1610820679.gitgitgadget@gmail.com>
         <pull.676.v7.git.1612162726.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 01 Feb 2021 06:58:37 +0000
-Subject: [PATCH v7 03/11] commit-graph: consolidate fill_commit_graph_info
+Date:   Mon, 01 Feb 2021 06:58:38 +0000
+Subject: [PATCH v7 04/11] t6600-test-reach: generalize *_three_modes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,164 +81,281 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-Both fill_commit_graph_info() and fill_commit_in_graph() parse
-information present in commit data chunk. Let's simplify the
-implementation by calling fill_commit_graph_info() within
-fill_commit_in_graph().
+In a preparatory step to implement generation number v2, we add tests to
+ensure Git can read and parse commit-graph files without Generation Data
+chunk. These files represent commit-graph files written by Old Git and
+are neccesary for backward compatability.
 
-fill_commit_graph_info() used to not load committer data from commit data
-chunk. However, with the upcoming switch to using corrected committer
-date as generation number v2, we will have to load committer date to
-compute generation number value anyway.
-
-e51217e15 (t5000: test tar files that overflow ustar headers,
-30-06-2016) introduced a test 'generate tar with future mtime' that
-creates a commit with committer date of (2^36 + 1) seconds since
-EPOCH. The CDAT chunk provides 34-bits for storing committer date, thus
-committer time overflows into generation number (within CDAT chunk) and
-has undefined behavior.
-
-The test used to pass as fill_commit_graph_info() would not set struct
-member `date` of struct commit and load committer date from the object
-database, generating a tar file with the expected mtime.
-
-However, with corrected commit date, we will load the committer date
-from CDAT chunk (truncated to lower 34-bits to populate the generation
-number. Thus, Git sets date and generates tar file with the truncated
-mtime.
-
-The ustar format (the header format used by most modern tar programs)
-only has room for 11 (or 12, depending on some implementations) octal
-digits for the size and mtime of each file.
-
-As the CDAT chunk is overflow by 12-octal digits but not 11-octal
-digits, we split the existing tests to test both implementations
-separately and add a new explicit test for 11-digit implementation.
-
-To test the 11-octal digit implementation, we create a future commit
-with committer date of 2^34 - 1, which overflows 11-octal digits without
-overflowing 34-bits of the Commit Date chunks.
-
-To test the 12-octal digit implementation, the smallest committer date
-possible is 2^36 + 1, which overflows the CDAT chunk and thus
-commit-graph must be disabled for the test.
+We extend run_three_modes() and test_three_modes() to *_all_modes() with
+the fourth mode being "commit-graph without generation data chunk".
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c      | 27 ++++++++++-----------------
- t/t5000-tar-tree.sh | 24 +++++++++++++++++++++---
- 2 files changed, 31 insertions(+), 20 deletions(-)
+ t/t6600-test-reach.sh | 62 +++++++++++++++++++++----------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 78de312ccec..955418bd6e5 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -753,15 +753,24 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 	const unsigned char *commit_data;
- 	struct commit_graph_data *graph_data;
- 	uint32_t lex_index;
-+	uint64_t date_high, date_low;
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index f807276337d..af10f0dc090 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -58,7 +58,7 @@ test_expect_success 'setup' '
+ 	git config core.commitGraph true
+ '
  
- 	while (pos < g->num_commits_in_base)
- 		g = g->base_graph;
- 
-+	if (pos >= g->num_commits + g->num_commits_in_base)
-+		die(_("invalid commit position. commit-graph is likely corrupt"));
-+
- 	lex_index = pos - g->num_commits_in_base;
- 	commit_data = g->chunk_commit_data + GRAPH_DATA_WIDTH * lex_index;
- 
- 	graph_data = commit_graph_data_at(item);
- 	graph_data->graph_pos = pos;
-+
-+	date_high = get_be32(commit_data + g->hash_len + 8) & 0x3;
-+	date_low = get_be32(commit_data + g->hash_len + 12);
-+	item->date = (timestamp_t)((date_high << 32) | date_low);
-+
- 	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
+-run_three_modes () {
++run_all_modes () {
+ 	test_when_finished rm -rf .git/objects/info/commit-graph &&
+ 	"$@" <input >actual &&
+ 	test_cmp expect actual &&
+@@ -70,8 +70,8 @@ run_three_modes () {
+ 	test_cmp expect actual
  }
  
-@@ -776,38 +785,22 @@ static int fill_commit_in_graph(struct repository *r,
- {
- 	uint32_t edge_value;
- 	uint32_t *parent_data_ptr;
--	uint64_t date_low, date_high;
- 	struct commit_list **pptr;
--	struct commit_graph_data *graph_data;
- 	const unsigned char *commit_data;
- 	uint32_t lex_index;
+-test_three_modes () {
+-	run_three_modes test-tool reach "$@"
++test_all_modes () {
++	run_all_modes test-tool reach "$@"
+ }
  
- 	while (pos < g->num_commits_in_base)
- 		g = g->base_graph;
- 
--	if (pos >= g->num_commits + g->num_commits_in_base)
--		die(_("invalid commit position. commit-graph is likely corrupt"));
-+	fill_commit_graph_info(item, g, pos);
- 
--	/*
--	 * Store the "full" position, but then use the
--	 * "local" position for the rest of the calculation.
--	 */
--	graph_data = commit_graph_data_at(item);
--	graph_data->graph_pos = pos;
- 	lex_index = pos - g->num_commits_in_base;
--
- 	commit_data = g->chunk_commit_data + (g->hash_len + 16) * lex_index;
- 
- 	item->object.parsed = 1;
- 
- 	set_commit_tree(item, NULL);
- 
--	date_high = get_be32(commit_data + g->hash_len + 8) & 0x3;
--	date_low = get_be32(commit_data + g->hash_len + 12);
--	item->date = (timestamp_t)((date_high << 32) | date_low);
--
--	graph_data->generation = get_be32(commit_data + g->hash_len + 8) >> 2;
--
- 	pptr = &item->parents;
- 
- 	edge_value = get_be32(commit_data + g->hash_len);
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 3ebb0d3b652..7204799a0b5 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -431,15 +431,33 @@ test_expect_success TAR_HUGE,LONG_IS_64BIT 'system tar can read our huge size' '
- 	test_cmp expect actual
+ test_expect_success 'ref_newer:miss' '
+@@ -80,7 +80,7 @@ test_expect_success 'ref_newer:miss' '
+ 	B:commit-4-9
+ 	EOF
+ 	echo "ref_newer(A,B):0" >expect &&
+-	test_three_modes ref_newer
++	test_all_modes ref_newer
  '
  
--test_expect_success TIME_IS_64BIT 'set up repository with far-future commit' '
-+test_expect_success TIME_IS_64BIT 'set up repository with far-future (2^34 - 1) commit' '
-+	rm -f .git/index &&
-+	echo foo >file &&
-+	git add file &&
-+	GIT_COMMITTER_DATE="@17179869183 +0000" \
-+		git commit -m "tempori parendum"
-+'
-+
-+test_expect_success TIME_IS_64BIT 'generate tar with far-future mtime' '
-+	git archive HEAD >future.tar
-+'
-+
-+test_expect_success TAR_HUGE,TIME_IS_64BIT,TIME_T_IS_64BIT 'system tar can read our future mtime' '
-+	echo 2514 >expect &&
-+	tar_info future.tar | cut -d" " -f2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TIME_IS_64BIT 'set up repository with far-far-future (2^36 + 1) commit' '
- 	rm -f .git/index &&
- 	echo content >file &&
- 	git add file &&
--	GIT_COMMITTER_DATE="@68719476737 +0000" \
-+	GIT_TEST_COMMIT_GRAPH=0 GIT_COMMITTER_DATE="@68719476737 +0000" \
- 		git commit -m "tempori parendum"
+ test_expect_success 'ref_newer:hit' '
+@@ -89,7 +89,7 @@ test_expect_success 'ref_newer:hit' '
+ 	B:commit-2-3
+ 	EOF
+ 	echo "ref_newer(A,B):1" >expect &&
+-	test_three_modes ref_newer
++	test_all_modes ref_newer
  '
  
--test_expect_success TIME_IS_64BIT 'generate tar with future mtime' '
-+test_expect_success TIME_IS_64BIT 'generate tar with far-far-future mtime' '
- 	git archive HEAD >future.tar
+ test_expect_success 'in_merge_bases:hit' '
+@@ -98,7 +98,7 @@ test_expect_success 'in_merge_bases:hit' '
+ 	B:commit-8-8
+ 	EOF
+ 	echo "in_merge_bases(A,B):1" >expect &&
+-	test_three_modes in_merge_bases
++	test_all_modes in_merge_bases
  '
  
+ test_expect_success 'in_merge_bases:miss' '
+@@ -107,7 +107,7 @@ test_expect_success 'in_merge_bases:miss' '
+ 	B:commit-5-9
+ 	EOF
+ 	echo "in_merge_bases(A,B):0" >expect &&
+-	test_three_modes in_merge_bases
++	test_all_modes in_merge_bases
+ '
+ 
+ test_expect_success 'in_merge_bases_many:hit' '
+@@ -117,7 +117,7 @@ test_expect_success 'in_merge_bases_many:hit' '
+ 	X:commit-5-7
+ 	EOF
+ 	echo "in_merge_bases_many(A,X):1" >expect &&
+-	test_three_modes in_merge_bases_many
++	test_all_modes in_merge_bases_many
+ '
+ 
+ test_expect_success 'in_merge_bases_many:miss' '
+@@ -127,7 +127,7 @@ test_expect_success 'in_merge_bases_many:miss' '
+ 	X:commit-8-6
+ 	EOF
+ 	echo "in_merge_bases_many(A,X):0" >expect &&
+-	test_three_modes in_merge_bases_many
++	test_all_modes in_merge_bases_many
+ '
+ 
+ test_expect_success 'in_merge_bases_many:miss-heuristic' '
+@@ -137,7 +137,7 @@ test_expect_success 'in_merge_bases_many:miss-heuristic' '
+ 	X:commit-6-6
+ 	EOF
+ 	echo "in_merge_bases_many(A,X):0" >expect &&
+-	test_three_modes in_merge_bases_many
++	test_all_modes in_merge_bases_many
+ '
+ 
+ test_expect_success 'is_descendant_of:hit' '
+@@ -148,7 +148,7 @@ test_expect_success 'is_descendant_of:hit' '
+ 	X:commit-1-1
+ 	EOF
+ 	echo "is_descendant_of(A,X):1" >expect &&
+-	test_three_modes is_descendant_of
++	test_all_modes is_descendant_of
+ '
+ 
+ test_expect_success 'is_descendant_of:miss' '
+@@ -159,7 +159,7 @@ test_expect_success 'is_descendant_of:miss' '
+ 	X:commit-7-6
+ 	EOF
+ 	echo "is_descendant_of(A,X):0" >expect &&
+-	test_three_modes is_descendant_of
++	test_all_modes is_descendant_of
+ '
+ 
+ test_expect_success 'get_merge_bases_many' '
+@@ -174,7 +174,7 @@ test_expect_success 'get_merge_bases_many' '
+ 		git rev-parse commit-5-6 \
+ 			      commit-4-7 | sort
+ 	} >expect &&
+-	test_three_modes get_merge_bases_many
++	test_all_modes get_merge_bases_many
+ '
+ 
+ test_expect_success 'reduce_heads' '
+@@ -196,7 +196,7 @@ test_expect_success 'reduce_heads' '
+ 			      commit-2-8 \
+ 			      commit-1-10 | sort
+ 	} >expect &&
+-	test_three_modes reduce_heads
++	test_all_modes reduce_heads
+ '
+ 
+ test_expect_success 'can_all_from_reach:hit' '
+@@ -219,7 +219,7 @@ test_expect_success 'can_all_from_reach:hit' '
+ 	Y:commit-8-1
+ 	EOF
+ 	echo "can_all_from_reach(X,Y):1" >expect &&
+-	test_three_modes can_all_from_reach
++	test_all_modes can_all_from_reach
+ '
+ 
+ test_expect_success 'can_all_from_reach:miss' '
+@@ -241,7 +241,7 @@ test_expect_success 'can_all_from_reach:miss' '
+ 	Y:commit-8-5
+ 	EOF
+ 	echo "can_all_from_reach(X,Y):0" >expect &&
+-	test_three_modes can_all_from_reach
++	test_all_modes can_all_from_reach
+ '
+ 
+ test_expect_success 'can_all_from_reach_with_flag: tags case' '
+@@ -264,7 +264,7 @@ test_expect_success 'can_all_from_reach_with_flag: tags case' '
+ 	Y:commit-8-1
+ 	EOF
+ 	echo "can_all_from_reach_with_flag(X,_,_,0,0):1" >expect &&
+-	test_three_modes can_all_from_reach_with_flag
++	test_all_modes can_all_from_reach_with_flag
+ '
+ 
+ test_expect_success 'commit_contains:hit' '
+@@ -280,8 +280,8 @@ test_expect_success 'commit_contains:hit' '
+ 	X:commit-9-3
+ 	EOF
+ 	echo "commit_contains(_,A,X,_):1" >expect &&
+-	test_three_modes commit_contains &&
+-	test_three_modes commit_contains --tag
++	test_all_modes commit_contains &&
++	test_all_modes commit_contains --tag
+ '
+ 
+ test_expect_success 'commit_contains:miss' '
+@@ -297,8 +297,8 @@ test_expect_success 'commit_contains:miss' '
+ 	X:commit-9-3
+ 	EOF
+ 	echo "commit_contains(_,A,X,_):0" >expect &&
+-	test_three_modes commit_contains &&
+-	test_three_modes commit_contains --tag
++	test_all_modes commit_contains &&
++	test_all_modes commit_contains --tag
+ '
+ 
+ test_expect_success 'rev-list: basic topo-order' '
+@@ -310,7 +310,7 @@ test_expect_success 'rev-list: basic topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-6-6
++	run_all_modes git rev-list --topo-order commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: first-parent topo-order' '
+@@ -322,7 +322,7 @@ test_expect_success 'rev-list: first-parent topo-order' '
+ 		commit-6-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --first-parent --topo-order commit-6-6
++	run_all_modes git rev-list --first-parent --topo-order commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: range topo-order' '
+@@ -334,7 +334,7 @@ test_expect_success 'rev-list: range topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-3..commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-3..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: range topo-order' '
+@@ -346,7 +346,7 @@ test_expect_success 'rev-list: range topo-order' '
+ 		commit-6-2 commit-5-2 commit-4-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-8..commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-8..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: first-parent range topo-order' '
+@@ -358,7 +358,7 @@ test_expect_success 'rev-list: first-parent range topo-order' '
+ 		commit-6-2 \
+ 		commit-6-1 commit-5-1 commit-4-1 \
+ 	>expect &&
+-	run_three_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
++	run_all_modes git rev-list --first-parent --topo-order commit-3-8..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: ancestry-path topo-order' '
+@@ -368,7 +368,7 @@ test_expect_success 'rev-list: ancestry-path topo-order' '
+ 		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
+ 		commit-6-3 commit-5-3 commit-4-3 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
++	run_all_modes git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6
+ '
+ 
+ test_expect_success 'rev-list: symmetric difference topo-order' '
+@@ -382,7 +382,7 @@ test_expect_success 'rev-list: symmetric difference topo-order' '
+ 		commit-3-8 commit-2-8 commit-1-8 \
+ 		commit-3-7 commit-2-7 commit-1-7 \
+ 	>expect &&
+-	run_three_modes git rev-list --topo-order commit-3-8...commit-6-6
++	run_all_modes git rev-list --topo-order commit-3-8...commit-6-6
+ '
+ 
+ test_expect_success 'get_reachable_subset:all' '
+@@ -402,7 +402,7 @@ test_expect_success 'get_reachable_subset:all' '
+ 			      commit-1-7 \
+ 			      commit-5-6 | sort
+ 	) >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_expect_success 'get_reachable_subset:some' '
+@@ -420,7 +420,7 @@ test_expect_success 'get_reachable_subset:some' '
+ 		git rev-parse commit-3-3 \
+ 			      commit-1-7 | sort
+ 	) >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_expect_success 'get_reachable_subset:none' '
+@@ -434,7 +434,7 @@ test_expect_success 'get_reachable_subset:none' '
+ 	Y:commit-2-8
+ 	EOF
+ 	echo "get_reachable_subset(X,Y)" >expect &&
+-	test_three_modes get_reachable_subset
++	test_all_modes get_reachable_subset
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
