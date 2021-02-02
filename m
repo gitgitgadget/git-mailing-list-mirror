@@ -2,113 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E9DFC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 02:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3959EC433E6
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:02:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DDD864DDE
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 02:42:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECFB664E9A
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231389AbhBBCmY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 21:42:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45068 "EHLO
+        id S230281AbhBBDC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 22:02:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbhBBCmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 21:42:21 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF080C06174A
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 18:41:40 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id k142so6779900oib.7
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 18:41:40 -0800 (PST)
+        with ESMTP id S230178AbhBBDCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 22:02:24 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B816DC06178A
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 19:01:27 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id y187so1007716wmd.3
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 19:01:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=UUz+ByMJcAJJc/lw54/Pqda36nZRmFWeIYYN21yWtWc=;
-        b=oVbLwl45imZRbcq6h/JvyyI0zPPd374vIlQ9tTrYwgt2Bn2iAaMooaIMv4DtSwc938
-         g3GJUTNVH7muh6lcmzGSlEW2Q6TRboIXzeIdrZzGHG7c8rdDSiatymWGTYyd0vdZxzNn
-         IITSkya9a3QvlRpYce7Xy3blX+vgzSjnsyEiN1aMbLjqJdX3nYkjSLw48bGM8BVGhgxG
-         R1RTJdSPe6kIkZ5rRcJBTQk76X8RPFzlyXPKTjNcU0n3EAjQJo5wUSlThE5xOZivh4MS
-         pJRlZaOW7r1imXoJfhdJchsdLKtlXMAmm8QlgucKlN5JVW4T2ZW/Osz1n6lTf14DYms0
-         Wy3A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=juCAe5atgoTFygs1wNmd/FGDKpeIjGfc51PxxQjB/ho=;
+        b=TQ8lES/4YqltBEiemAyM3zSyLPdbQ5yIBjU2P+kjZtFeIzOzEVxrYKWIEEA35lUlSN
+         4p3UbB1t5ovYjkvgpoFMpklQZ+kmxLjRregsLGrDtC+OmECtAB0jhLC9kkvGTOtYiBt5
+         icizNNTwLtAJDWtvQxUYWMSdkdruBZiyB7W9hg6lLu7RDRUSwqXtooKJaBgaNBvCvTKF
+         zcPuElXgF6cKkWyzZcO9238/LRh4q9T13DObVXzxG+RUlUkRnSXqCi7z/y8fe3HfKhQn
+         uiSxkg6DBTG6ZDXuWDPdsKWJX3r/livzAzZzzoI9YByCdisoCylw4TwCrjoSeBNasbMe
+         +QWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=UUz+ByMJcAJJc/lw54/Pqda36nZRmFWeIYYN21yWtWc=;
-        b=iJ9tft+Cfvyou402BY3s++2u/Glm5EbRXWUG8NH3Lww3NhGkSrMr3Q7HPKPmBMHcfd
-         bR893i3xBj60/B3CFATxWrEVRQPgd31yVoeOc5k4NbuMWVnnusbXaw47MZ7M8Ca4DIUY
-         arrU9Hka9fx1ipuGeBHWo/4i0FVJcl529MbNXQibBiTy69F8Gk2E02Uc2cKSCe4HfH/g
-         cw/H+cmcgfKvUrRJX+5+89abarn6yHtlxmSyGJki5dtIq+AEUw6L8o4lsRvLkygIWYf/
-         BKG5QBZEuUTUFMC/bUZlcu1fhpneBSadmVi2yjB4G1EngpY/LWJr8w1F9qEUD8DTaBCu
-         o/rA==
-X-Gm-Message-State: AOAM533fPWogPVt2VsL4z6t7GpcnNXMf/jIwsSOM/c9B5tKx4QKxaeYK
-        FOydmbVJ/CL8hIqq/AFW/qM=
-X-Google-Smtp-Source: ABdhPJyIFIsanydvMAtuAr1JeBmHfSpYoyNYZaKucPEtar/jZc9gQ8aRNZg5PpJzTKWsLl5O3hRZGQ==
-X-Received: by 2002:aca:4f94:: with SMTP id d142mr1242692oib.165.1612233700226;
-        Mon, 01 Feb 2021 18:41:40 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:cc4:631e:f39f:4032? ([2600:1700:e72:80a0:cc4:631e:f39f:4032])
-        by smtp.gmail.com with UTF8SMTPSA id s10sm4582715ool.35.2021.02.01.18.41.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Feb 2021 18:41:39 -0800 (PST)
-Message-ID: <37c90f69-2f0f-2ac1-09e8-6ce670dd18ba@gmail.com>
-Date:   Mon, 1 Feb 2021 21:41:39 -0500
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=juCAe5atgoTFygs1wNmd/FGDKpeIjGfc51PxxQjB/ho=;
+        b=nRf25o77J0ug82raICsCm18BPv7g41zXWrthkbm7vRnVFXLqTluY4ygH+njXmPJ6aJ
+         bwU9RA+ccFuNqdTCBTVLfGeII5IcbvrMCqVqCJSBEuH2XagLSDVdj/EBcX6+EWNGO0Ad
+         15p4vTkwhmBFqfSQkfO88mfWOgOOmXoZ4BhkGezydMeneerDgZcE4y11EKxbruC4n5pW
+         brStJRckryb4D/0KSc+5o1SRkPJ3oruoI61ZpN6u3TirLaCVVFyWTcxU9JzhsBHR/lsg
+         neEuB73llVkhBAHIfjY+LQ5UftV8WP77ltHDVv0f9O+wMJqrg/lm3DXlnLFVUfo9baFN
+         aqzA==
+X-Gm-Message-State: AOAM531lWft7dA3r7J/XOxXXVPH4LmTB/sZLceAJIRoASslWAlMFNYzZ
+        S0y0BFKG3rhoVeJ7DnzbHKout8xJ6ZI=
+X-Google-Smtp-Source: ABdhPJyabaQDYmGSww9efXrXawOwuIZtB50D/ikojO/N/o+bRREx+/aeJ+xfNNmcSFXuu3w2jHoW1A==
+X-Received: by 2002:a1c:8109:: with SMTP id c9mr1468092wmd.137.1612234885875;
+        Mon, 01 Feb 2021 19:01:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m24sm68478wmi.24.2021.02.01.19.01.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Feb 2021 19:01:25 -0800 (PST)
+Message-Id: <9c605c99f66cae3c66bcdd4cbeefbfa1ec2be192.1612234883.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
+References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
+        <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 02 Feb 2021 03:01:18 +0000
+Subject: [PATCH v2 1/6] commit-graph: use repo_parse_commit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH 27/27] cache-tree: integrate with sparse directory entries
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, peff@peff.net, gitster@pobox.com,
+        abhishekkumar8222@gmail.com, Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <ttaylorr@github.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
- <05e7548b780da6b2bf2342d91d8757568df0a6b8.1611596534.git.gitgitgadget@gmail.com>
- <CABPp-BGtF+p7D8x0xvSwMz7XveqVcBWhr20iHQ4=Vrxw6LEoKw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BGtF+p7D8x0xvSwMz7XveqVcBWhr20iHQ4=Vrxw6LEoKw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/1/2021 6:54 PM, Elijah Newren wrote:
-> On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> In this test, I also used "echo >>README.md" to append a line to the
->> README.md file, so the 'git add .' command is doing _something_ other
->> than a no-op. Without this edit (and FS Monitor enabled) the small
->> tree case again gains about 30ms on the sparse index case.
-> 
-> Meaning the small tree is 30 ms faster than reported here, or 30 ms
-> slower, or that both sparse index and small tree are faster but the
-> small tree decreases its time more than the sparse index one does?
-> 
-> Sorry, I don't mean to be dense, I'm just struggling with
-> understanding words today it seems.  (Also, it seems like there's a
-> joke in there about me being "dense" in a review of a "sparse"
-> feature...but I'm not quite coming up with it.)
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I don't blame you! This is a lot to digest, and I appreciate you
-pushing through to the end of it.
+The write_commit_graph_context has a repository pointer, so use it.
 
-Clearly, I was getting a bit inexact near the end. My excitement
-to share this RFC clearly overshadowed my attention to grammatical
-detail. I'll go through your feedback more carefully soon and
-hopefully clarify these and many other questions.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-graph.c | 10 +++++-----
+ commit.h       |  5 +++--
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-Thanks,
--Stolee
+diff --git a/commit-graph.c b/commit-graph.c
+index f3bde2ad95a..03e5a987968 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1098,7 +1098,7 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 		uint32_t packedDate[2];
+ 		display_progress(ctx->progress, ++ctx->progress_cnt);
+ 
+-		if (parse_commit_no_graph(*list))
++		if (repo_parse_commit_no_graph(ctx->r, *list))
+ 			die(_("unable to parse commit %s"),
+ 				oid_to_hex(&(*list)->object.oid));
+ 		tree = get_commit_tree_oid(*list);
+@@ -1411,11 +1411,11 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+ 		if (!commit)
+ 			continue;
+ 		if (ctx->split) {
+-			if ((!parse_commit(commit) &&
++			if ((!repo_parse_commit(ctx->r, commit) &&
+ 			     commit_graph_position(commit) == COMMIT_NOT_FROM_GRAPH) ||
+ 			    flags == COMMIT_GRAPH_SPLIT_REPLACE)
+ 				add_missing_parents(ctx, commit);
+-		} else if (!parse_commit_no_graph(commit))
++		} else if (!repo_parse_commit_no_graph(ctx->r, commit))
+ 			add_missing_parents(ctx, commit);
+ 	}
+ 	stop_progress(&ctx->progress);
+@@ -1710,9 +1710,9 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
+ 			continue;
+ 
+ 		if (ctx->split && flags == COMMIT_GRAPH_SPLIT_REPLACE)
+-			parse_commit(ctx->commits.list[ctx->commits.nr]);
++			repo_parse_commit(ctx->r, ctx->commits.list[ctx->commits.nr]);
+ 		else
+-			parse_commit_no_graph(ctx->commits.list[ctx->commits.nr]);
++			repo_parse_commit_no_graph(ctx->r, ctx->commits.list[ctx->commits.nr]);
+ 
+ 		num_parents = commit_list_count(ctx->commits.list[ctx->commits.nr]->parents);
+ 		if (num_parents > 2)
+diff --git a/commit.h b/commit.h
+index 251d877fcf6..b05ab558ce2 100644
+--- a/commit.h
++++ b/commit.h
+@@ -89,9 +89,10 @@ static inline int repo_parse_commit(struct repository *r, struct commit *item)
+ 	return repo_parse_commit_gently(r, item, 0);
+ }
+ 
+-static inline int parse_commit_no_graph(struct commit *commit)
++static inline int repo_parse_commit_no_graph(struct repository *r,
++					     struct commit *commit)
+ {
+-	return repo_parse_commit_internal(the_repository, commit, 0, 0);
++	return repo_parse_commit_internal(r, commit, 0, 0);
+ }
+ 
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+-- 
+gitgitgadget
+
