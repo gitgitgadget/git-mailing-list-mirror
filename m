@@ -2,119 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D25FC433E0
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 11:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C09B0C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 13:04:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1872C64DD9
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 11:35:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 942A964F4E
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 13:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231434AbhBBLf1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 06:35:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46172 "EHLO
+        id S230184AbhBBNE5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 08:04:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231320AbhBBLdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 06:33:42 -0500
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A4F1C06174A
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 03:33:02 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id s77so5986805qke.4
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 03:33:02 -0800 (PST)
+        with ESMTP id S229838AbhBBNEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 08:04:55 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F2AC061573
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 05:04:14 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id v1so19713409ott.10
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 05:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=uTdPtgyzjpV+R9vpuSt7egTzhuEmbbFfukfzW3cm57w=;
-        b=qHa2qJ8ShnVyKfX23741agKnEQ44k+xv/YLGC0GrgpYxK8iS9lPwMO5v8lxSvZftj1
-         Cl3zO0FN7FeBJSkDQMHRHb5jgtXlHSvj0CL89NlNKthWcRkHk7dzuND8bo61rYUoZZhP
-         evFsbs0wjiHUXkDf1UOpEDjHN+4K2feWXXpv6XwfJWDwJ0wmOMh8z7o1SaoBU+v7Srhh
-         7c0OQsFV/clrqWo1nj8yiJykJColR35TCIuXaUw00FWpztaD7rWM80bGJeNq69dy5NKA
-         cQCfC7ZNw/QgPuFgvo8Q3dXSxmrb5o9sj1TsDgTWrAc4TXl/rufduaw6evDCtla5uhpE
-         wcAw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LSB0jc0c6StMJVHuvT9FoowSnH63vCuuLy/ovgbtREM=;
+        b=qjiic7CXptEVC2m/jAI62fNJl8fLYdE0Kr6gdb8JQ3tliCdQDAw/tAxRgb9xu62xL/
+         trrCiaumyBnoq/NabW0lkv3YPPyrhwcoDvtGx0hyQ8jSi98PZpaltnCiuKEY1GBeNfIR
+         1wGpq6uzUQ6mAbeFMgMJqpbfuEqdzm+985erW1SRkPzYBaTWp9Y4QEgL1tMcCc3y6R5P
+         UqBo0kCmbqA1gTidoIfDvC5MsBycVeRnvey8CoeRp2Fah5pxyeMJqHjwQNoxWyFl7aj8
+         5731GMdnW0hZq8EVq5Hk6wVQBaXP/8fNUL9ON9xZ44t4viJr1h86/ssICJWRHwSeZQ3E
+         c7hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=uTdPtgyzjpV+R9vpuSt7egTzhuEmbbFfukfzW3cm57w=;
-        b=OiW7+4oU3xVK3gDs52sxeGjZVRnGZHKeZoti/JaDg6WgRRluHWf/xEZsi67leptbys
-         SBlXmk6kuEvP6lGEZymHG49wzhBCDkjEuN6agSJoxIdug8yjK4199BFS1+o2H4tyWoKy
-         tUsMS1EfxPHclHMylslgU8kbILvM2E+eo8IPlvxtkmOTkbBEYaPak3+ACw0bE0nRksWi
-         xEE2ypxVKAdJFdaysSl3LCfb0ZqeAhMx+GRokcNc6lP4AwsRdaYuMEkN1fUTN8Mq9c4o
-         vDc6GHdw6OaqKjSdPc6TyNqG4R9r/3Cjj0xf3z0qrKFkv+zY8Vu8EZ3HtyTRR/hUBq9w
-         oMVg==
-X-Gm-Message-State: AOAM5335zzZeYclUTYo9RdOXI5S6y/0Wz0Aju5kECQCt/HiRxsjI8rvz
-        1Z6VC3lrC978NqTAxAQaXJI=
-X-Google-Smtp-Source: ABdhPJzup6aMARrES9OdJKGzBPlPFmwo8e+u1Gdy0OsmVXCXN62QB9G9QUOngrUOYooGqrVj9j8tIQ==
-X-Received: by 2002:ae9:ddc4:: with SMTP id r187mr20129439qkf.391.1612265581570;
-        Tue, 02 Feb 2021 03:33:01 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:cc4:631e:f39f:4032? ([2600:1700:e72:80a0:cc4:631e:f39f:4032])
-        by smtp.gmail.com with UTF8SMTPSA id 15sm5893854qty.65.2021.02.02.03.33.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Feb 2021 03:33:00 -0800 (PST)
-Message-ID: <bae3726e-25e1-90e5-b0e3-5c2d0c4cd26a@gmail.com>
-Date:   Tue, 2 Feb 2021 06:33:00 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LSB0jc0c6StMJVHuvT9FoowSnH63vCuuLy/ovgbtREM=;
+        b=C1DciS44OgDrwlRdzo/hl3Cb4Z+k65pbVr7nS+pmZ5FqZYlPeND3O+yBdbNENLACap
+         kz6sIIpQUkCCaePvJjLaSE2FogRRILwB3F5Ys//SoI10b3d3t97g9Tcr1ykSeNiNIpVO
+         Qj4r0jSN6NZaZzKxu0LmAkeroAQar5LWlREaCb2/BtHe9CgYZaDGdjqOWJOcio4wbtLF
+         tPkOKx8n4sWLfFCIScykxOHJ57aGZT0Wt0RSCGB+w1glupvXxaLS7kSlPtLKnaa67wqN
+         0EuJ5vRBysaGOQKQBdv/6AAfzRXCWXWvAeLc2x44FPxsN1TtyOMtPZeE7DLo6JeknseB
+         TRyA==
+X-Gm-Message-State: AOAM531cwQEXJAeNeoyRlA73cQRhYKt4IcVJ5lNG5BhmtOIUCkNqpYp8
+        Jflwtik85cBaTTgiAIfwp3J/SuFUu+tEku1SdXavOFZ+YG/FoMpT
+X-Google-Smtp-Source: ABdhPJzM6ClmPD7jN+ya9zJH6ESVRehm3bxqZath4YO+n4bUJ/NFwyMY1zkCohDWBZPrtQGjGKfXSUKZHbegJWtHRvA=
+X-Received: by 2002:a9d:4812:: with SMTP id c18mr14484515otf.160.1612271053285;
+ Tue, 02 Feb 2021 05:04:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: RFC -- making a plan for remainder of merge-ort
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <CABPp-BHvk5RLq3OOYhcQZJ_9w6hbQUVurJiRrks8kcGq5-rn0g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHvk5RLq3OOYhcQZJ_9w6hbQUVurJiRrks8kcGq5-rn0g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.857.git.1612011569489.gitgitgadget@gmail.com>
+ <pull.857.v2.git.1612175966786.gitgitgadget@gmail.com> <xmqqpn1jn033.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpn1jn033.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Date:   Tue, 2 Feb 2021 21:06:17 +0800
+Message-ID: <CAOLTT8ShJzJangqkk8KQVdptFB5K0TiB1ETQcXb=HwinbkL9Hw@mail.gmail.com>
+Subject: Re: [PATCH v2] alloc.h|c: migrate alloc_states to mem-pool
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?6Zi/5b6354OIIHZpYSBHaXRHaXRHYWRnZXQ=?= 
+        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/1/2021 10:52 PM, Elijah Newren wrote:
-> Hi everyone,
-> 
-> There will be ~11 more series (with about ~6-7 patches per series)
-> before merge-ort is complete.  Now that gitster/en/merge-ort-perf has
-> merged to next, I can start submitting the next series.  Some
-> questions before I do so, though:
-> > * What's the right rate to submit them to not overwhelm reviewers? One
-> per week?  I didn't get much feedback on this for the past series.
-> [One per week, assuming the git-2.32 cycle is 3 months long, would
-> mean finishing in about 3 months, i.e. just a few weeks before
-> git-2.32-rc0.]
+To Junio:
+Thanks for checking.forget my unprofessional
+description.Macroscopically speaking,
+both alloc_state and mem_pool are doing one thing:Apply for a
+large block of memory in advance,and when needed a dynamically
+allocated memory ,we call the interface function to apply for memory,
+This can reduce the overhead of calling malloc multiple times.And the
+mem-pool or alloc_state will Automatic Expand capacity.
 
-I promise to get back to reviewing with a faster turnaround soon.
+So that ,my this patch may have something not considered,
+>     mem_pool_init(o->blob_pool,0);
+may be a wrong way to init this mem-pool
+because:
+>void mem_pool_init(...)
+>       ...
+>       if (initial_size > 0)
+>              mem_pool_alloc_block(pool, initial_size, NULL);
+the first time calloc malloc may  decay to we first call "mem_pool_alloc_bl=
+ock",
+I think this may not be great.
 
-If these are smaller series (and ~6-7 patches per would be smaller)
-then I could see most of them stabilizing within a week. I think the
-biggest thing for dependent series is to allow one to stabilize
-before starting the next one. OF course, we can _think_ something is
-stable and then a contributor appears with insightful comments a week
-or more later.
+A little ashamed,I did not consider the optimization point of this
+at the beginning,
 
-> * My focus for the next few series is on diffcore-rename.c, which will
-> also affect things other than merge-ort.  While each series is
-> self-contained, given that 2.31-rc0 is just over 3 weeks away I'm
-> wondering if it makes sense to hold my future diffcore-rename series
-> out of 2.31 and start merging them in the 2.32 cycle.  Thoughts?
 
-It might be fine to get the code under review, but ask Junio to
-delay merging into 'master' until shortly after release. This
-ensures that there is plenty of time to "simmer in CI."
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=882=E6=97=
+=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=881:56=E5=86=99=E9=81=93=EF=BC=9A
+>
+> "=E9=98=BF=E5=BE=B7=E7=83=88 via GitGitGadget"  <gitgitgadget@gmail.com> =
+writes:
+>
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > "alloc_state" may have similar effects with "mem_pool".
+>
+> What "similar effects" do you have in mind?  "mem_pool" may have
+> more than one "effects" to multiple things that are affected, but it
+> is unclear which effect that "mem_pool" exerts on what you are
+> referring to.
+>
+> > Using the new memory pool API may be more beneficial
+> > to our memory management in the future.
+>
+> Many things may or may not be "beneficial" in the future.  We do not
+> build things on a vague "hunch".
+>
+Now,I make a rough comparison.
+Situation : when we just use it to malloc little struct node
+such as `object`,`blob` ,`tree`.
+> Are you seeking performance (e.g.  number of objects that can be
+> allocated per minute)?
 
-Thanks,
--Stolee
+1.  performance.
+`mem_pool` api will allocate 2^20 byte everytime ,
+`alloc_state` api will allocate 1024*nodesize byte and ALLOC_GROW everytime=
+.
+A repo like git may call malloc fewer times when using `mem_pool`,
+while a small repo may not have this amount of objects. The number of
+calling `malloc`
+may be similar.
+may be `mem_pool` win a little...
+>Are you seeking better memory locality
+> (e.g. related objects are likely to be stored in the same page,
+> reducing number of page faults)?
+2. page faults .
+I might think they are similar at first.But now,I start to understand
+what you mean:`alloc_state` more like an object pool,so that we could
+go through the list of all objects.Therefore, mem_pool is not conducive
+to continuous access to all objects.Because There may be fragments
+in the memory And this must be a cross-page operation.
+so `alloc_state` win.
+>Are you seeking reduced wasted
+> memory (e.g. custom allocator packs objects better than bog-standard
+> malloc(3))?
+3.Memory utilization.
+`alloc_state`win.No doubt.
+ Are you seeking functionality (e.g. you have this and
+> that specific codepaths and usecase where you wish to be able to
+> release all the objects instantiated for a particular repository,
+> without having to go through the list of all objects, and use of
+> mempool is one way to allow us do so)?
+>
+4.functionality
+yeah,As mentioned above.Object pool will be better.
+`alloc_state`win.
+5.
+Indeed, the object pool `alloc_state` may be better than the
+memory pool `mem_pool`.
+But We can assume that the original author=E2=80=99s intention may be to
+The five alloc_states are merged together.
+Because the original author said: "migrate alloc_states to mem-pool"
+Or another advantage of using the memory pool is that it can dynamically
+allocate a variety of different objects, I now think the original author ha=
+s
+this intention.So my patch code also needs some modifications.But at the
+same time, it may not be good to count them separately if multiple objects
+are allocated using the memory pool at the same time.
+so 'mem_pool' win a little.
+> It is not even clear in your problem description what kind of
+> benefit you are seeking, let alone how much quantitative improvement
+> you are getting with this change.
+>
+I don't know how to quantify them temporarily.
+I may need the opinions of you and the original author before I can move on=
+.
+
+Thanks.
