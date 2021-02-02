@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D3FC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51D7FC4332E
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:28:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2475A64F78
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:27:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3266964F77
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:28:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236254AbhBBQ1d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 11:27:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50766 "EHLO
+        id S236313AbhBBQ1i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 11:27:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235081AbhBBQWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 11:22:36 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC465C061224
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 08:19:14 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id c12so21097477wrc.7
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 08:19:14 -0800 (PST)
+        with ESMTP id S236299AbhBBQWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 11:22:48 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6B9C061226
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 08:19:17 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id e15so2830479wme.0
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 08:19:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=s3tQLLw1VoeIVYOBcePa6Zg6m/eYJaaMoocRslAdv9M=;
-        b=MWpCpy2P+CUrEpWK4r2//UcdGmqVypk7c+AvI2qI610wsUVEAjnf5ApM0okEJBYqTW
-         C+48y5b7nPJ6C3EoHxAFIEfVHBj124Rxg7L91aDguO2o9Jzj3Gy1ezn2LIswVfyvzhD6
-         AURh8I/CnShNVfEVM4sBBShUIKgScAANsFCHU6d4P2oraQUqdRuA7YQ3juvFIUqW5Tif
-         sf/UJIiaiEPt3GITj6Rbv8+8so0V27jik/yWNcIeDrQvuv3PZim07NCRZ9sCUIkMEP9B
-         Z1uZCGwP/5+7P/OoaKHGaS3p5YbK/g0ZfWhlCk2KFg3GsAuxmpiUe8g695N0RK+JLKPS
-         6Fvg==
+        bh=/DncVgEztJPVuz6mC6hrgF0RNBiotUg00UdzjEdkN0g=;
+        b=qVU73IJf3q0MEpeVwMcjWqb87R7llM2c/MUGmIl0kcd2ZvcH2hhY8aZxkPO6qxiqQh
+         jTj5usLBLZPezO1OhZ+EVPb3Zmye956BsSEJJAGEhIFIW01BgU/zlTOc8y+DqWFB4R4P
+         DZb7QpMXDuy1tyyv5XrNKVjCEL+ZOAlVJuLixtkjFBBqQS3SfM8u1xrP9Zyyi3cUqlpu
+         g06366NE6AJFvoBvEgE7xxvvZx1QWfgRW8gIdrAdlGdsQPb2SnXqFIga1QwYpoik00EB
+         64/V7Y+pEE9W6+679Hlb3DCABkG3aajFExrGxgoR9yqOsRBWvrE9tw8oq2R6uAiHewE0
+         oPsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s3tQLLw1VoeIVYOBcePa6Zg6m/eYJaaMoocRslAdv9M=;
-        b=Nm7jMgHF+QXL3vbINkpHqvgxJ6cRpYD03dDPQT2nwPd2HcSc+rQi2Y1RSeEtYigPUS
-         8cZb457BW6dtKvPAIbIh0CNuIWw2L9VEY4ayYOO5c+lrwTrwrX+7VbQKVumc0uEz/868
-         sxMIVI2Sj1ohnLoCq1WUK+dDQnJ82QbX2zHamK+EMDcgQZINQNejOBf21LO8cOej9ANx
-         W64te0WidxSD09vH6/+9hKNCFkippK0IJcD2FRthkXSRDhKGKHW4Q/RslW828Nyey35z
-         dfvexKFuPTVTEvJUCYcCAn8O0k42EADPRI6ihqfBQL76dUxRBQmyDs1J+Npteu7NW27w
-         BwMw==
-X-Gm-Message-State: AOAM533j+Ejgpven8GlMhz1+p4bEqkViCkgeEjPvHN/CpJyHKwXDReEa
-        z5+ytpXdBKnJZiai5K98uFwe5Eppwfk=
-X-Google-Smtp-Source: ABdhPJzr1TvhCecsHKEpBr7UpQf74T9EQceB1IR0d61SmhKtVyBZjKrxOySVmLbHTAaIxSCYOC4u7g==
-X-Received: by 2002:a5d:6b45:: with SMTP id x5mr23735668wrw.415.1612282753166;
-        Tue, 02 Feb 2021 08:19:13 -0800 (PST)
+        bh=/DncVgEztJPVuz6mC6hrgF0RNBiotUg00UdzjEdkN0g=;
+        b=s86h7POJtLjSgccl1LB6LkD2o9+8zXHJ0Xl+ECs1uR9Hvj1BOQBIPhJu+Bb5EHe65M
+         zcgH9TPjddqt+L5fzHUp7h9WqpE6BmFY1QnXVsux7lzXCjBIIZVvlKVnVkWRHNI/SikI
+         ZRB7EmDL16y5oiozrftqHhoXEUo5n2MkKkLjVehMW+h8UqOAMpQv3OrBNrzV3R/ZeV9o
+         vA16xgJzT6htSJPUiGdS/I4T/01xMGZA/51vjOnulopvb59H5JjkYIr4TrGGx6qGlRdq
+         rB63dBFYmymbPSE9NtGVRta34KYoGgx9QSIfq9sjvPmEb1XflsgOGtJZKEKuNyXZfxmT
+         hd5g==
+X-Gm-Message-State: AOAM5306zAoHMBSRLNJvte/S2Twz2AWUwdd7PH/sMEGXL+uimQRtzFaS
+        qSDTOhAC0pvUOa/eYSXwhiG51n+9sdk=
+X-Google-Smtp-Source: ABdhPJxmUkvuAF0CJwUAM5LCuwXWSsDh+Ev0/P5nVDn1v2TJcHFmIK4iPiVGC5eXvcz89tFUP5POsQ==
+X-Received: by 2002:a1c:9648:: with SMTP id y69mr4301804wmd.40.1612282755725;
+        Tue, 02 Feb 2021 08:19:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5sm3677106wmq.7.2021.02.02.08.19.11
+        by smtp.gmail.com with ESMTPSA id t8sm3526269wmq.36.2021.02.02.08.19.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 08:19:11 -0800 (PST)
-Message-Id: <f36c5dd4c1e38860f5eaa22fb83d1b09ecd5c524.1612282749.git.gitgitgadget@gmail.com>
+        Tue, 02 Feb 2021 08:19:15 -0800 (PST)
+Message-Id: <4f622fffcc5d42ff202c7de530a7805d41cd32bb.1612282749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
 References: <pull.858.git.1612093734.gitgitgadget@gmail.com>
         <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
 From:   "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 Feb 2021 16:19:04 +0000
-Subject: [PATCH v2 1/6] doc hash-function-transition: fix asciidoc output
+Date:   Tue, 02 Feb 2021 16:19:06 +0000
+Subject: [PATCH v2 3/6] doc hash-function-transition: use upper case
+ consistently
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,270 +79,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Thomas Ackermann <th.acker@arcor.de>
 
-Asciidoc requires lists to start with an empty line and uses
-different characters for indentation levels ("-", "*", "**", ...).
-For special symbols like a dash "--" has to be used and there is
-no double arrow "<->", so a left and right arrow "<-->" has to be
-combined for that. Lastly for verbatim output a newline followed
-by an indentation has to be used.
-
-Fix asciidoc output for lists, special characters and verbatim
-text while retaining the readabilty of the original text file.
+Use upper case consistently in Document History.
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- .../technical/hash-function-transition.txt    | 81 +++++++++++--------
- 1 file changed, 46 insertions(+), 35 deletions(-)
+ .../technical/hash-function-transition.txt         | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 6fd20ebbc25..4b04829d537 100644
+index 51acf2c10b7..2eba25cf87c 100644
 --- a/Documentation/technical/hash-function-transition.txt
 +++ b/Documentation/technical/hash-function-transition.txt
-@@ -94,7 +94,7 @@ Overview
- --------
- We introduce a new repository format extension. Repositories with this
- extension enabled use SHA-256 instead of SHA-1 to name their objects.
--This affects both object names and object content --- both the names
-+This affects both object names and object content -- both the names
- of objects and all references to other objects within an object are
- switched to the new hash function.
- 
-@@ -191,21 +191,21 @@ hash functions. They have the following format (all integers are in
- network byte order):
- 
- - A header appears at the beginning and consists of the following:
--  - The 4-byte pack index signature: '\377t0c'
--  - 4-byte version number: 3
--  - 4-byte length of the header section, including the signature and
-+  * The 4-byte pack index signature: '\377t0c'
-+  * 4-byte version number: 3
-+  * 4-byte length of the header section, including the signature and
-     version number
--  - 4-byte number of objects contained in the pack
--  - 4-byte number of object formats in this pack index: 2
--  - For each object format:
--    - 4-byte format identifier (e.g., 'sha1' for SHA-1)
--    - 4-byte length in bytes of shortened object names. This is the
-+  * 4-byte number of objects contained in the pack
-+  * 4-byte number of object formats in this pack index: 2
-+  * For each object format:
-+    ** 4-byte format identifier (e.g., 'sha1' for SHA-1)
-+    ** 4-byte length in bytes of shortened object names. This is the
-       shortest possible length needed to make names in the shortened
-       object name table unambiguous.
--    - 4-byte integer, recording where tables relating to this format
-+    ** 4-byte integer, recording where tables relating to this format
-       are stored in this index file, as an offset from the beginning.
--  - 4-byte offset to the trailer from the beginning of this file.
--  - Zero or more additional key/value pairs (4-byte key, 4-byte
-+  * 4-byte offset to the trailer from the beginning of this file.
-+  * Zero or more additional key/value pairs (4-byte key, 4-byte
-     value). Only one key is supported: 'PSRC'. See the "Loose objects
-     and unreachable objects" section for supported values and how this
-     is used.  All other keys are reserved. Readers must ignore
-@@ -213,37 +213,36 @@ network byte order):
- - Zero or more NUL bytes. This can optionally be used to improve the
-   alignment of the full object name table below.
- - Tables for the first object format:
--  - A sorted table of shortened object names.  These are prefixes of
-+  * A sorted table of shortened object names.  These are prefixes of
-     the names of all objects in this pack file, packed together
-     without offset values to reduce the cache footprint of the binary
-     search for a specific object name.
- 
--  - A table of full object names in pack order. This allows resolving
-+  * A table of full object names in pack order. This allows resolving
-     a reference to "the nth object in the pack file" (from a
-     reachability bitmap or from the next table of another object
-     format) to its object name.
- 
--  - A table of 4-byte values mapping object name order to pack order.
-+  * A table of 4-byte values mapping object name order to pack order.
-     For an object in the table of sorted shortened object names, the
-     value at the corresponding index in this table is the index in the
-     previous table for that same object.
--
-     This can be used to look up the object in reachability bitmaps or
-     to look up its name in another object format.
- 
--  - A table of 4-byte CRC32 values of the packed object data, in the
-+  * A table of 4-byte CRC32 values of the packed object data, in the
-     order that the objects appear in the pack file. This is to allow
-     compressed data to be copied directly from pack to pack during
-     repacking without undetected data corruption.
- 
--  - A table of 4-byte offset values. For an object in the table of
-+  * A table of 4-byte offset values. For an object in the table of
-     sorted shortened object names, the value at the corresponding
-     index in this table indicates where that object can be found in
-     the pack file. These are usually 31-bit pack file offsets, but
-     large offsets are encoded as an index into the next table with the
-     most significant bit set.
- 
--  - A table of 8-byte offset entries (empty for pack files less than
-+  * A table of 8-byte offset entries (empty for pack files less than
-     2 GiB). Pack files are organized with heavily used objects toward
-     the front, so most object references should not need to refer to
-     this table.
-@@ -252,10 +251,10 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  - A copy of the 20-byte SHA-256 checksum at the end of the
-+  * A copy of the 20-byte SHA-256 checksum at the end of the
-     corresponding packfile.
- 
--  - 20-byte SHA-256 checksum of all of the above.
-+  * 20-byte SHA-256 checksum of all of the above.
- 
- Loose object index
- ~~~~~~~~~~~~~~~~~~
-@@ -350,8 +349,8 @@ the following steps:
-    they will be discarded.)
- 3. convert to sha256: open a new (sha256) packfile. Read the topologically
-    sorted list just generated. For each object, inflate its
--   sha1-content, convert to sha256-content, and write it to the sha256
--   pack. Record the new sha1<->sha256 mapping entry for use in the idx.
-+   SHA-1 content, convert to SHA-256 content, and write it to the SHA-256
-+   pack. Record the new SHA-1<-->SHA-256 mapping entry for use in the idx.
- 4. sort: reorder entries in the new pack to match the order of objects
-    in the pack the server generated and include blobs. Write a sha256 idx
-    file
-@@ -391,6 +390,7 @@ existing "gpgsig" field. Its signed payload is the sha256-content of the
- commit object with any "gpgsig" and "gpgsig-sha256" fields removed.
- 
- This means commits can be signed
-+
- 1. using SHA-1 only, as in existing signed commit objects
- 2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
-    fields.
-@@ -408,6 +408,7 @@ sha256-content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
- SIGNATURE-----" delimited in-body signature removed.
- 
- This means tags can be signed
-+
- 1. using SHA-1 only, as in existing signed tag objects
- 2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
-    signature.
-@@ -598,7 +599,7 @@ The user can also explicitly specify which format to use for a
- particular revision specifier and for output, overriding the mode. For
- example:
- 
--git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
-+    git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
- 
- Choice of Hash
- --------------
-@@ -636,6 +637,7 @@ We choose SHA-256.
- Transition plan
- ---------------
- Some initial steps can be implemented independently of one another:
-+
- - adding a hash function API (vtable)
- - teaching fsck to tolerate the gpgsig-sha256 field
- - excluding gpgsig-* from the fields copied by "git commit --amend"
-@@ -647,9 +649,9 @@ Some initial steps can be implemented independently of one another:
- - introducing index v3
- - adding support for the PSRC field and safer object pruning
- 
--
- The first user-visible change is the introduction of the objectFormat
- extension (without compatObjectFormat). This requires:
-+
- - teaching fsck about this mode of operation
- - using the hash function API (vtable) when computing object names
- - signing objects and verifying signatures
-@@ -657,6 +659,7 @@ extension (without compatObjectFormat). This requires:
-   repository
- 
- Next comes introduction of compatObjectFormat:
-+
- - implementing the loose-object-idx
- - translating object names between object formats
- - translating object content between object formats
-@@ -669,6 +672,7 @@ Next comes introduction of compatObjectFormat:
-   "Object names on the command line" above)
- 
- The next step is supporting fetches and pushes to SHA-1 repositories:
-+
- - allow pushes to a repository using the compat format
- - generate a topologically sorted list of the SHA-1 names of fetched
-   objects
-@@ -734,6 +738,7 @@ Using hash functions in parallel
- Objects newly created would be addressed by the new hash, but inside
- such an object (e.g. commit) it is still possible to address objects
- using the old hash function.
-+
- * You cannot trust its history (needed for bisectability) in the
-   future without further work
- * Maintenance burden as the number of supported hash functions grows
-@@ -749,6 +754,7 @@ sha1-content based signatures.
- 
- In other words, a single signature was used to attest to the object
- content using both hash functions. This had some advantages:
-+
- * Using one signature instead of two speeds up the signing process.
- * Having one signed payload with both hashes allows the signer to
-   attest to the sha1-name and sha256-name referring to the same object.
-@@ -756,6 +762,7 @@ content using both hash functions. This had some advantages:
-   to be detected quickly using current versions of git.
- 
- However, it also came with disadvantages:
-+
- * Verifying a signed object requires access to the sha1-names of all
-   objects it references, even after the transition is complete and
-   translation table is no longer needed for anything else. To support
-@@ -782,16 +789,17 @@ Document History
- bmwill@google.com, jonathantanmy@google.com, jrnieder@gmail.com,
- sbeller@google.com
- 
--Initial version sent to
--http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
-+* Initial version sent to http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
- 
+@@ -794,8 +794,8 @@ sbeller@google.com
  2017-03-03 jrnieder@gmail.com
  Incorporated suggestions from jonathantanmy and sbeller:
-+
- * describe purpose of signed objects with each hash type
- * redefine signed object verification using object content under the
+ 
+-* describe purpose of signed objects with each hash type
+-* redefine signed object verification using object content under the
++* Describe purpose of signed objects with each hash type
++* Redefine signed object verification using object content under the
    first hash function
  
  2017-03-06 jrnieder@gmail.com
-+
- * Use SHA3-256 instead of SHA2 (thanks, Linus and brian m. carlson).[1][2]
- * Make sha3-based signatures a separate field, avoiding the need for
-   "hash" and "nohash" fields (thanks to peff[3]).
-@@ -805,6 +813,7 @@ Incorporated suggestions from jonathantanmy and sbeller:
-   especially Junio).
+@@ -814,13 +814,13 @@ Incorporated suggestions from jonathantanmy and sbeller:
  
  2017-09-27 jrnieder@gmail.com, sbeller@google.com
-+
- * use placeholder NewHash instead of SHA3-256
- * describe criteria for picking a hash function.
- * include a transition plan (thanks especially to Brandon Williams
-@@ -816,12 +825,14 @@ Incorporated suggestions from jonathantanmy and sbeller:
+ 
+-* use placeholder NewHash instead of SHA3-256
+-* describe criteria for picking a hash function.
+-* include a transition plan (thanks especially to Brandon Williams
++* Use placeholder NewHash instead of SHA3-256
++* Describe criteria for picking a hash function.
++* Include a transition plan (thanks especially to Brandon Williams
+   for fleshing these ideas out)
+-* define the translation table (thanks, Shawn Pearce[5], Jonathan
++* Define the translation table (thanks, Shawn Pearce[5], Jonathan
+   Tan, and Masaya Suzuki)
+-* avoid loose object overhead by packing more aggressively in
++* Avoid loose object overhead by packing more aggressively in
+   "git gc --auto"
  
  Later history:
- 
-- See the history of this file in git.git for the history of subsequent
-- edits. This document history is no longer being maintained as it
-- would now be superfluous to the commit log
-+* See the history of this file in git.git for the history of subsequent
-+  edits. This document history is no longer being maintained as it
-+  would now be superfluous to the commit log
-+
-+References:
- 
--[1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
--[2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
--[3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
--[4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
--[5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
-+ [1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
-+ [2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
-+ [3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
-+ [4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
-+ [5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
 -- 
 gitgitgadget
 
