@@ -2,124 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B62AC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76625C433DB
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:20:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFD4164DD9
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:16:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C57164F63
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233117AbhBBWQP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 17:16:15 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:23179 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229707AbhBBWQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 17:16:11 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4DVfJZ4GrFz5tlB;
-        Tue,  2 Feb 2021 23:15:26 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 05E8F4B92;
-        Tue,  2 Feb 2021 23:15:24 +0100 (CET)
-Subject: Re: [PATCH] pager: exit without error on SIGPIPE
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Vincent Lefevre <vincent@vinc17.net>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
- <87czxjomn8.fsf@evledraar.gmail.com>
- <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
- <87wnvrefbv.fsf@evledraar.gmail.com>
- <xmqq8s87ld8y.fsf@gitster.c.googlers.com>
- <87tuqvdy1b.fsf@evledraar.gmail.com>
- <xmqqo8h3hybf.fsf@gitster.c.googlers.com>
- <xmqqczxjhwgv.fsf@gitster.c.googlers.com>
- <1dfb079e-a472-0259-2a00-100eb7a06297@kdbg.org>
- <xmqq35yegrcv.fsf@gitster.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <12a440af-c080-089d-bf60-76262d5aec7a@kdbg.org>
-Date:   Tue, 2 Feb 2021 23:15:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S233544AbhBBWUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 17:20:35 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59126 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234318AbhBBWSw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 17:18:52 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F2371102C49;
+        Tue,  2 Feb 2021 17:18:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AtzdsRyLMFNIyYZuEHsZyrWDbk0=; b=DQ1W7W
+        uvnzG/HaxY2bQckEjQ3Mjywrfbf3DM53oZ/DKwFOe45f33oRFOzwPHyTQV46Vhr7
+        Dv2jh2QLeqyYC3Up9JdLZr8pH0DcSKlF4lPINKb6czCurH73NsoD7rUn1aQ3MHWm
+        CGVNY/Z0PnLMWaMuONdnw1IHzNG4jj4IShcZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G5ISNJ5YKvpeKNInBFJfNytmCMr8h4CT
+        gPbcw6NM5GIWYCZKE3R0U5Z770eKKATBn+DMC9Q/lxcQt5v06RORNbOPiZgV0PPP
+        3rY7MdpWvSXDa/fkYZUrThT0E/TbYsHtw8ITg4Vmk1R0m2aO0Z4W1VRO7wv65hpn
+        7XFkKhsAjGE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EB3C7102C48;
+        Tue,  2 Feb 2021 17:18:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 33B2D102C45;
+        Tue,  2 Feb 2021 17:18:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v6 1/3] ls-refs: report unborn targets of symrefs
+References: <xmqq4kiuif4d.fsf@gitster.c.googlers.com>
+        <20210202183453.1907985-1-jonathantanmy@google.com>
+Date:   Tue, 02 Feb 2021 14:17:59 -0800
+In-Reply-To: <20210202183453.1907985-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 2 Feb 2021 10:34:53 -0800")
+Message-ID: <xmqq1rdyf71k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq35yegrcv.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 839FF45A-65A4-11EB-A09C-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.02.21 um 21:13 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> Am 02.02.21 um 06:25 schrieb Junio C Hamano:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>>
->>>> Sorry, but you still have lost me---I do not see if/why we even care
->>>> about atexit codepath.  As far as the end users are concered, they
->>>> are running "git" and observing the exit code from "git".  There,
->>>> reporting that "git" was killed by SIGPIPE, instead of exiting
->>>> normally, is not something they want to hear about after quitting
->>>> their pager, and that is why the signal reception codepath matters.
->>>
->>> (something I noticed that I left unsaid...)
->>>
->>> On the other hand, "git" spawns not just pager but other
->>> subprocesses (e.g. "hooks"), and it is entirely up to us what to do
->>> with the exit code from them.  When we care about making an external
->>> effect (e.g. post-$action hooks that are run for their side effects),
->>> we can ignore their exit status just fine.
->>>
->>> And I do not see why the "we waited before leaving, and noticed the
->>> pager exited with non-zero status" that we could notice in the
->>> atexit codepath has to be so special.  We _could_ (modulo the "exit
->>> there is not portable" you noted) make our exit status reflect that,
->>> but I do not think it is all that important a "failure" (as opposed
->>> to, say, we tried to show a commit message but failed to recode it
->>> into utf-8, or we tried to spawn the pager but failed to start a
->>> process) to clobber _our_ exit status with pager's exit status.
->>>
->>> So...
->>
->> The pager is a special case of a sub-process spawned, as it really only
->> a courtesy for the user. Without the pager facility, the user would have
->> to use
->>
->>     git log | less
->>
->> In that situation, the exit code of the pager *does* override git's, and
->> it is also irrelevant for the user that git was killed by SIGPIPE and is
->> not worth a visible notice.
-> 
-> All true, except that "GIT_PAGER=less git -p log" reports the exit
-> status of "git" and not "less" when the entire command finishes
-> (regardless of how it happens, like user typing 'q', output of log
-> is shorter than one page and "less" automatically exiting at the
-> end, etc.), unlike "git log | less", where the exit status of "git"
-> is hidden.  But from the end-user's point of view, I do think it
-> is not a good idea to report an abnormal exit of "git" with SIGPIPE;
-> it is an irrelevant implementation detail.
-> 
-> Anyway, my opinion in the message you are responding to was that the
-> exit status of the pager subprocess wait_for_pager_atexit() finds
-> does not matter, and there is no reason to overly complicate the
-> implementation like the comments in Ævar's [v2 5/5] implies, and it
-> is sufficient to just hide the fact in wait_for_pager_signal() that
-> we got SIGPIPE.  I am not sure if you are agreeing with me, or are
-> showing me where/why I was wrong.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-We are agreeing that the SIGPIPE should not be reported.
+> I'm not sure what the ideal endgame state is, but I could see how
+> sending all symlinks would be useful (e.g. if a client wanted to mirror
+> another repo with more fidelity). Right now I don't plan on adding
+> support for dangling symrefs other than HEAD, though. Maybe I'll update
+> it to something like:
+>
+>   If HEAD is a symref pointing to an unborn branch, the server may send
+>   it in the form "unborn HEAD symref-target:<target>". In the future,
+>   this may be extended to other symrefs as well.
 
-We may be disagreeing whether it is good or bad that git's exit code is
-overridden by the pager's exit code, which Ævar wanted to implement,
-IIUC. I think that is reasonable and I base my opinion on the comparison
-with the pipeline `git log | less`, where git's exit code is ignored.
+Unless you plan to add support for symbolic refs that are not HEAD
+in immediate future, "In the future, ..." is not even necessary to
+say.  The users cannot expect to exploit the missing feature anyway,
+and they cannot even plan to use it in near future.
 
--- Hannes
+I've been disturbed by the phrase "the server may send it" quite a
+lot, actually.  In the original before the rewrite above, it was a
+good cop-out excuse "no, we do not send symbolic refs other than
+HEAD because we only say 'the server may' and do not promise
+anything beyond that".  But now we are tightening the description
+to HEAD that we do intend to support well, it probably is a good
+idea to give users a promise a bit firmer than that.
+
+    unborn If HEAD is a symref pointing to an unborn branch <b>, the
+    server reports it as "unborn HEAD symref-target:refs/heads/<b>"
+    in its response.
+
+It would make it clear that by sending 'unborn' in the request, the
+client is not just allowing the server to include the unborn
+information in the response.  It is asking the server, that has
+advertised that it is capable to do so, to exercise the feature.
+
+> I think that there is a discussion point to be decided
+> (advertise/allow/ignore vs allow/ignore), so I'll wait for that before
+> sending v7.
+
+What is the downside of having three choices (which allows phased
+deployment, where everybody starts as capable of responding without
+advertising in the first phase, and once everybody becomes capable
+of responding, they start advertising) and the reason we might
+prefer just allow/ignore instead?  Too much complexity?  It does not
+help the real deployment as much in practice as it seems on paper?
+
+I am not advocating three-choice option; I am neutral, but do not
+see a good reason to reject it (while I can easily see a reason to
+reject the other one).
+
+Thanks.
