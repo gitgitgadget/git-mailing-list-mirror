@@ -2,111 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32884C433E6
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 18:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EDB5C4332B
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:27:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 105D964F6A
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 18:38:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 459BD64E4D
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236914AbhBBSiJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 13:38:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52364 "EHLO
+        id S233524AbhBBT1m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 14:27:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238603AbhBBSf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 13:35:56 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B222DC06178A
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 10:34:57 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id c186so14078756pfa.23
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 10:34:57 -0800 (PST)
+        with ESMTP id S233394AbhBBTZW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 14:25:22 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7065DC061573
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 11:24:42 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id lg21so4417205ejb.3
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 11:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=K3znd53XxW/wZJ46EP2jTXBDICz0G6Zt4XRv7Of/0lE=;
-        b=I6Yh9X/q5tpgX9PxiPu3JZyRWPfhWB0ud5YL3iB3PuHBaViDivNUhNCuiTjTnjKP2b
-         MgHi49ar9Y1YfRGgDSVckSKsPvYahClmI6J2ZKhrjcvr/UNmWP1gBlNWz2y6vAMLXWsc
-         ZtqAz3NVi/DQelAwXaSq1ahRrstdWbyQOF/i67h67S1Yuayr/xROJwnj1K+HNpp50vTj
-         FR+acZFrrHhLcQCu+puSk0zZ1sTLauQwWU6tkuEO/9Pr73XjA+hiqMJhhjEsfHnCtSto
-         2fqK73XRBU/dwjZSnsn4N4dCO5aeXHgNVH2S2zZViF+gtDHBk2t1d05SdzvajwTe8wUr
-         Y44A==
+        d=gitlab.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WnYD00KmQFAVYx5NSKppzIvLUt5sd58U/u6HgdNb8xE=;
+        b=N4snJpvonBf1w9fCxGWqa9p8VH+3T9uSuvbhbcQsLlJ0K7LnLHhzhk9aDCKm2rsEEL
+         sB/BIj/ucH9c2jwYKRn5YTw0HEmsIuVLyIDZvxlEZykQ6pdG+Zv0KZ/UpjO0O3LcXyTh
+         TZluP/9ryI2dRY5IGL2ybn7euBGDdjQOdfGjQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=K3znd53XxW/wZJ46EP2jTXBDICz0G6Zt4XRv7Of/0lE=;
-        b=bLyK0Pozq2yRGAohuoNFcM1iETMpZZzq0GC6IIWZVSU3pvs0DUpoeZy2glqMI9TpLO
-         bDbMYzkW5qoTMnpiWmdmJLuk51ongbViAou+Ftxh4p3l21dXZEqV8Uff0BL93hFtZfn0
-         9kZCDyEkGA4BnTqWstLWQ+xoZvttX1k+sXYh7dQ68/gJUuDM9kZFwuwY5hPDiKfshQJy
-         GVXoW94o2btTqSyyGajrUMyFGyCCPfTuliHCqNee0DTAg762+PG9VdeFpqagRSis0qfz
-         Zl86TnXNXG7LFEMPXSrAHvYfemVX8LyZIZUK08+vCIhL2CnoZoSC0xy4Vuh8jGg3Wsrz
-         uA4g==
-X-Gm-Message-State: AOAM532+1EViaRWmm2JWgg6rwjdGwrYWy7fqiqichrTQMi5Tpw4Hu5Sd
-        KU1DU5BIWiV5Frro7jMQajVjJKgRqzv/LCOtDUVO
-X-Google-Smtp-Source: ABdhPJzdges75e9qtAYzDaJ5kDkG+ivh47BEB/EOIxk6dlZl0DicWbhgIrnEsOgUIYInCzNAPW29m22zjfSCjQZhL4H1
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:e7cd:: with SMTP id
- kb13mr5642750pjb.10.1612290897224; Tue, 02 Feb 2021 10:34:57 -0800 (PST)
-Date:   Tue,  2 Feb 2021 10:34:53 -0800
-In-Reply-To: <xmqq4kiuif4d.fsf@gitster.c.googlers.com>
-Message-Id: <20210202183453.1907985-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq4kiuif4d.fsf@gitster.c.googlers.com>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: Re: [PATCH v6 1/3] ls-refs: report unborn targets of symrefs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WnYD00KmQFAVYx5NSKppzIvLUt5sd58U/u6HgdNb8xE=;
+        b=YzPjbO7ZF72rGY3qG+25oqTfVbriQWiQ+pOXGxQeH+eTj9hWF63qtv0R+7u0SS07Fj
+         Rt3O4hapE8dcb0VlMK7MLgitPLeVrxuw+aumEQSgQSAptkdEkk4XZpCg++WiZFqMpP70
+         NwyaVF100LTV06I5A68KlgaeIz2doW9me5GUNtV1PErJ0X2NyaXr8r5cIW6gDDMBcAct
+         DK5W9M731nVZ5eum9X9VgLEA2729ArMmQUyHzyqhCc6dZBmgBwBb8sMq+Y3I6NeBU2wQ
+         GiwbUG4GR5klxRDZpRcZWJsl1Uzdyq9dVtjTvdqesBEGmy22HHQkscDPa0OFS4rd//Ve
+         3dbQ==
+X-Gm-Message-State: AOAM531jYmcrx5sCip37qg6kwpXn2+aqxdYRJ0MYoiQPRbURAl7Mv9KD
+        cbCIdG3yWhSYP9dEl47xEBoLhMmgQI1POZpR2yw=
+X-Google-Smtp-Source: ABdhPJyE/TwU9L8LN7ZhlAzaxy1qlwWi6M4DBHsjID2xB8IECsNOoqwG+801J+4zyEtGRSfysKOglQ==
+X-Received: by 2002:a17:906:7cb:: with SMTP id m11mr12940024ejc.332.1612293881171;
+        Tue, 02 Feb 2021 11:24:41 -0800 (PST)
+Received: from localhost.localdomain (e93008.upc-e.chello.nl. [213.93.93.8])
+        by smtp.gmail.com with ESMTPSA id m22sm1193530edp.63.2021.02.02.11.24.40
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Feb 2021 11:24:40 -0800 (PST)
+From:   Jacob Vosmaer <jacob@gitlab.com>
+To:     peff@peff.net, avarab@gmail.com, git@vger.kernel.org,
+        jeffhost@microsoft.com, jonathantanmy@google.com,
+        gitster@pobox.com, sunshine@sunshineco.com
+Cc:     Jacob Vosmaer <jacob@gitlab.com>
+Subject: [PATCH v2] t5544: clarify 'hook works with partial clone' test
+Date:   Tue,  2 Feb 2021 20:24:17 +0100
+Message-Id: <20210202192417.68663-1-jacob@gitlab.com>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <CAPig+cQoTpsYS+2pccHmzx=Xoc34u166cYoC=GAcEndofN4gcA@mail.gmail.com>
+References: <CAPig+cQoTpsYS+2pccHmzx=Xoc34u166cYoC=GAcEndofN4gcA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> > index 85daeb5d9e..4707511c10 100644
-> > --- a/Documentation/technical/protocol-v2.txt
-> > +++ b/Documentation/technical/protocol-v2.txt
-> > @@ -192,11 +192,19 @@ ls-refs takes in the following arguments:
-> >  	When specified, only references having a prefix matching one of
-> >  	the provided prefixes are displayed.
-> >  
-> > +If the 'unborn' feature is advertised the following argument can be
-> > +included in the client's request.
-> > +
-> > +    unborn
-> > +	The server may send symrefs pointing to unborn branches in the form
-> > +	"unborn <refname> symref-target:<target>".
-> > +
-> 
-> I somehow had an impression that this is done only for HEAD and no
-> other symrefs.
+Apply a few leftover improvements from the review of ad5df6b782
+(upload-pack.c: fix filter spec quoting bug).
 
-Right now, that's true.
+1. Instead of enumerating objects reachable from HEAD, enumerate all
+reachable objects, because HEAD has not special significance in this
+test.
 
-> If this describes the ideal endgame state and the implementation at
-> the moment only covers what is practically the most useful (i.e.
-> HEAD), that is fine.
-> 
-> If we do not plan to support symrefs other than HEAD that are
-> dangling, that is fine as well, but then the description needs
-> updating, no?
+2. Instead of relying on the knowledge that "? in rev-list output
+means partial clone", explicitly verify that there are no blobs with
+cat-file.
 
-I'm not sure what the ideal endgame state is, but I could see how
-sending all symlinks would be useful (e.g. if a client wanted to mirror
-another repo with more fidelity). Right now I don't plan on adding
-support for dangling symrefs other than HEAD, though. Maybe I'll update
-it to something like:
+Signed-off-by: Jacob Vosmaer <jacob@gitlab.com>
+---
+ t/t5544-pack-objects-hook.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-  If HEAD is a symref pointing to an unborn branch, the server may send
-  it in the form "unborn HEAD symref-target:<target>". In the future,
-  this may be extended to other symrefs as well.
+diff --git a/t/t5544-pack-objects-hook.sh b/t/t5544-pack-objects-hook.sh
+index f5ba663d64..dd5f44d986 100755
+--- a/t/t5544-pack-objects-hook.sh
++++ b/t/t5544-pack-objects-hook.sh
+@@ -64,8 +64,9 @@ test_expect_success 'hook works with partial clone' '
+ 	test_config_global uploadpack.packObjectsHook ./hook &&
+ 	test_config_global uploadpack.allowFilter true &&
+ 	git clone --bare --no-local --filter=blob:none . dst.git &&
+-	git -C dst.git rev-list --objects --missing=print HEAD >objects &&
+-	grep "^?" objects
++	git -C dst.git rev-list --objects --missing=allow-any --no-object-names --all >objects &&
++	git -C dst.git cat-file --batch-check="%(objecttype)" <objects >types &&
++	! grep blob types
+ '
+ 
+ test_done
+-- 
+2.30.0
 
-I think that there is a discussion point to be decided
-(advertise/allow/ignore vs allow/ignore), so I'll wait for that before
-sending v7.
