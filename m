@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5E6C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A90EC433E0
 	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:25:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 173F664F72
+	by mail.kernel.org (Postfix) with ESMTP id 65B0D64F77
 	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 16:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236363AbhBBQZE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 11:25:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50774 "EHLO
+        id S233546AbhBBQZP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 11:25:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236302AbhBBQWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 11:22:51 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CF3C0611C1
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 08:19:19 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id l12so21105745wry.2
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 08:19:19 -0800 (PST)
+        with ESMTP id S236307AbhBBQW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 11:22:56 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82A02C0611C2
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 08:19:20 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id l12so1956962wmq.2
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 08:19:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ykrjwuOhfmXvFJgFxOpKYuTOaMIy6qr02qTqRxa/ZC0=;
-        b=Y8aAs5TD/CvDKETkZDH72OkOWW4NMb+ejbhFeVpRkDGlGazpn4iAEdwL7ZitzeslgC
-         9GWVLPfO9iUEdrRTmBOE5gOhb3d24+PLyC2dhLc932Ao84TGGfAvFENAxlJBYhXOqriw
-         NUS0G+h15KNjvW03pjh2aLTTHqsYY1f1BQ5xAyW6B6KHNbD/tsVFQZB3eKtqkxZg+qkO
-         DO0giV0s2lJoKEnjhaYUgxr0zf3G/YQ6CgrfmLO+WKYcpAk2/qMqCoDadc+Jzkmk6iIg
-         uaH2QRqH+qTWsISSEAEXW3ncARDgiwVJTSnxwtj16tBiNd9fV2vHkj61po8WrXD2r7ve
-         Q4JQ==
+        bh=OlGDqfHJfMcZpZUqydihqUUw8xk/hGiogY19dE95aKU=;
+        b=deS8O8wUCDtm04d70IPvAIumkPa95qQWWy7b0xL60PtmnHQ6QHQXkIbIhZszusV0iN
+         2mS5+xgqlRDPEX5Y0iPeJft6KC4yWIX6FrND2PW2bm3s1Js23pmq+4f4mB9ilOs8+bgd
+         +UrGqaG49paDuGRN/7ff/6iYlDWtqFN8LBBiFaSPfV2RruCCPTFvcNrrzi2GO8q6N4HT
+         AdQUGy4bqZrod2WOXRBTLrgBF0Ascu4QfO4VtlhPt4CS6HeY60CEQ0qTU2FXkKEZjnE5
+         vr+6AAxbmxufRggxKJlvgNC6CWygLqL09/pv5Cc6Z5Ryhjy2y+zy9VQghkBLrji+fO66
+         DXZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ykrjwuOhfmXvFJgFxOpKYuTOaMIy6qr02qTqRxa/ZC0=;
-        b=c1W/2GaTT1ENvveql47tzJapzeaZJ2yyZ5dkdi3L2wViXVelrav1x4RH54AVVDZ02G
-         A+uGcJafjTq1oxtsA8LQ8w3ObnF4+fwz7oHLt5a+G5bcuyfpX2rd60I9DZwBjzd3Br8E
-         V5FkzN2Pvc6Eg8eI9LCWrJPweWfEgyCER2axiLqwP2nQokD4p9WAwOljgTPxOkDE4gdV
-         bCiieQjO9O97tk8XftuzhYRWVhWI+nPB4TxzI6t8xUiS7Ev09iqnPJlz1NHyFg5gqIJD
-         oHSs9KFPkOSHjDzag2BIwcxZJ5+L0X8v92ytX+0XBYAwog3NlLqSf8fJHiR77HLmZoyA
-         Lt4g==
-X-Gm-Message-State: AOAM533+oFexgjDAuLnZ4krwWZxia3NpxG+A4KnBuuvD2zVEI7iiu3fB
-        jdh13XTUTFZwTHt9C1dtdk6DSjuojaQ=
-X-Google-Smtp-Source: ABdhPJzpOGu0FMr26T16KL1wFKKKDtEo49HYXs0+LiqtJNGrd/UH0Sz7aqs4BmiTejVEKHcxffhh5A==
-X-Received: by 2002:a5d:6546:: with SMTP id z6mr24980514wrv.125.1612282757988;
-        Tue, 02 Feb 2021 08:19:17 -0800 (PST)
+        bh=OlGDqfHJfMcZpZUqydihqUUw8xk/hGiogY19dE95aKU=;
+        b=P8Q3Dhd83VvQc+WIu43Okhm6WcnxFtoHOIOnSrnRBrnn3Lmxn7ZBf2tg5/FLeKKm//
+         re0sedpFHMP4pbINhWB0REhnsdV6nw+GKdxJuCQ3f7jGe9ej3moV0jjjjWRgE+l6gd3v
+         r6AOQ1cUq0x8gAAnqYphIfsBJLLxnpgA9yHNs8Ixh1cJ3KhI3QvQ4fgCuhUCGUQ51Vrk
+         RS0Srak0vorP56DxtePtHeRAagHrk61n4PI8tnmK5w/ZCWQwz0EP4UdJeRxi5S8fAwQ9
+         lDl3mxUOSCpH/M9gdFyhPsTWeXONbrrFS0wYD7bd3iGBVajZQ3UjQdX5QtyUBOthBQQa
+         lu/Q==
+X-Gm-Message-State: AOAM531ZjytmBlXqJvdEu0o73yTS0CzK9qtvcHF7nef/E/7UvbhXQLYj
+        AiQ7q4ASxHHsh4yOMGqUTZbFMKNE2sg=
+X-Google-Smtp-Source: ABdhPJyAPbqnrtnC1+4FelSfKht+OruFJhiLWdJgEkzp+7qhNOlRG+j5O4cRD/tDkdjNztRSuTcjKg==
+X-Received: by 2002:a1c:6384:: with SMTP id x126mr4418761wmb.52.1612282759080;
+        Tue, 02 Feb 2021 08:19:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n6sm3661869wmi.23.2021.02.02.08.19.17
+        by smtp.gmail.com with ESMTPSA id l2sm3754245wmq.17.2021.02.02.08.19.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 08:19:17 -0800 (PST)
-Message-Id: <711a37969b6f51922c12555534d9c4634cde6021.1612282749.git.gitgitgadget@gmail.com>
+        Tue, 02 Feb 2021 08:19:18 -0800 (PST)
+Message-Id: <d6041b7e9e87d8830b9774c6cba5df824c33d9df.1612282749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
 References: <pull.858.git.1612093734.gitgitgadget@gmail.com>
         <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
 From:   "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 Feb 2021 16:19:08 +0000
-Subject: [PATCH v2 5/6] doc hash-function-transition: move rationale upwards
+Date:   Tue, 02 Feb 2021 16:19:09 +0000
+Subject: [PATCH v2 6/6] doc: use https links
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,107 +78,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Thomas Ackermann <th.acker@arcor.de>
 
-Move rationale for new hash function to beginning of document
-so that it appears before the concrete move to SHA-256 is described.
-
-Remove details about SHA-1 weaknesses. Instead add references
-to the details of how the new hash function was chosen.
+Use only https links for lore.kernel.org.
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- .../technical/hash-function-transition.txt    | 62 +++++--------------
- 1 file changed, 16 insertions(+), 46 deletions(-)
+ Documentation/technical/hash-function-transition.txt | 10 +++++-----
+ t/t0021-conversion.sh                                |  4 ++--
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 86b09ea0f21..475f2f501a6 100644
+index 475f2f501a6..e7e6bd95ff9 100644
 --- a/Documentation/technical/hash-function-transition.txt
 +++ b/Documentation/technical/hash-function-transition.txt
-@@ -27,22 +27,12 @@ advantages:
-   methods have a short reliable string that can be used to reliably
-   address stored content.
+@@ -759,7 +759,7 @@ Document History
+ bmwill@google.com, jonathantanmy@google.com, jrnieder@gmail.com,
+ sbeller@google.com
  
--Over time some flaws in SHA-1 have been discovered by security
--researchers. On 23 February 2017 the SHAttered attack
--(https://shattered.io) demonstrated a practical SHA-1 hash collision.
-+Over time some flaws in SHA-1 have been discovered by security researchers.
+-* Initial version sent to http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
++* Initial version sent to https://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
  
- Git v2.13.0 and later subsequently moved to a hardened SHA-1
--implementation by default, which isn't vulnerable to the SHAttered
--attack.
-+implementation by default, but SHA-1 is still believed to be weak.
+ 2017-03-03 jrnieder@gmail.com
+ Incorporated suggestions from jonathantanmy and sbeller:
+@@ -801,8 +801,8 @@ Later history:
  
--Thus Git has in effect already migrated to a new hash that isn't SHA-1
--and doesn't share its vulnerabilities, its new hash function just
--happens to produce exactly the same output for all known inputs,
--except two PDFs published by the SHAttered researchers, and the new
--implementation (written by those researchers) claims to detect future
--cryptanalytic collision attacks.
--
--Regardless, it's considered prudent to move past any variant of SHA-1
-+Thus it's considered prudent to move past any variant of SHA-1
- to a new hash. There's no guarantee that future attacks on SHA-1 won't
- be published in the future, and those attacks may not have viable
- mitigations.
-@@ -57,6 +47,19 @@ SHA-1 still possesses the other properties such as fast object lookup
- and safe error checking, but other hash functions are equally suitable
- that are believed to be cryptographically secure.
+ References:
  
-+Choice of Hash
-+--------------
-+There were several contenders for a successor hash to SHA-1, including
-+SHA-256, SHA-512/256, SHA-256x16, K12, and BLAKE2bp-256.
-+
-+In late 2018 the project picked SHA-256 as its successor hash.
-+
-+See 0ed8d8da374 (doc hash-function-transition: pick SHA-256 as
-+NewHash, 2018-08-04) and numerous mailing list threads at the time,
-+particularly the one starting at
-+https://lore.kernel.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/
-+for more information.
-+
- Goals
- -----
- 1. The transition to SHA-256 can be done one local repository at a time.
-@@ -601,39 +604,6 @@ example:
+- [1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
+- [2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
+- [3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
+- [4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
++ [1] https://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
++ [2] https://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
++ [3] https://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
++ [4] https://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
+  [5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index e4c4de5c745..e828ee964c1 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -34,7 +34,7 @@ filter_git () {
+ # Compare two files and ensure that `clean` and `smudge` respectively are
+ # called at least once if specified in the `expect` file. The actual
+ # invocation count is not relevant because their number can vary.
+-# c.f. http://lore.kernel.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
++# c.f. https://lore.kernel.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+ test_cmp_count () {
+ 	expect=$1
+ 	actual=$2
+@@ -49,7 +49,7 @@ test_cmp_count () {
  
-     git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
- 
--Choice of Hash
----------------
--In early 2005, around the time that Git was written, Xiaoyun Wang,
--Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
--collisions in 2^69 operations. In August they published details.
--Luckily, no practical demonstrations of a collision in full SHA-1 were
--published until 10 years later, in 2017.
--
--Git v2.13.0 and later subsequently moved to a hardened SHA-1
--implementation by default that mitigates the SHAttered attack, but
--SHA-1 is still believed to be weak.
--
--The hash to replace this hardened SHA-1 should be stronger than SHA-1
--was: we would like it to be trustworthy and useful in practice for at
--least 10 years.
--
--Some other relevant properties:
--
--1. A 256-bit hash (long enough to match common security practice; not
--   excessively long to hurt performance and disk usage).
--
--2. High quality implementations should be widely available (e.g., in
--   OpenSSL and Apple CommonCrypto).
--
--3. The hash function's properties should match Git's needs (e.g. Git
--   requires collision and 2nd preimage resistance and does not require
--   length extension resistance).
--
--4. As a tiebreaker, the hash should be fast to compute (fortunately
--   many contenders are faster than SHA-1).
--
--We choose SHA-256.
--
- Transition plan
- ---------------
- Some initial steps can be implemented independently of one another:
+ # Compare two files but exclude all `clean` invocations because Git can
+ # call `clean` zero or more times.
+-# c.f. http://lore.kernel.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
++# c.f. https://lore.kernel.org/git/xmqqshv18i8i.fsf@gitster.mtv.corp.google.com/
+ test_cmp_exclude_clean () {
+ 	expect=$1
+ 	actual=$2
 -- 
 gitgitgadget
-
