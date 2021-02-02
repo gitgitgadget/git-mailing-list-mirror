@@ -8,113 +8,108 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA7B0C433E0
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 15:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DC64C433E9
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 15:32:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D23864E9A
+	by mail.kernel.org (Postfix) with ESMTP id D07E564E92
 	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 15:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234870AbhBBPch (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 10:32:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40534 "EHLO
+        id S235308AbhBBPcr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 10:32:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235492AbhBBPai (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 10:30:38 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6749BC0613D6
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 07:29:57 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id k142so8696435oib.7
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 07:29:57 -0800 (PST)
+        with ESMTP id S235074AbhBBPbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 10:31:10 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BAEC0613ED
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 07:30:30 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id k25so23121655oik.13
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 07:30:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YsjYiEfDmTNeuosEB2NyJ5k54FXc28GaCYwPE1KueVI=;
-        b=X+wU3LSMq3jNngDbDmh856sZGeNtnbBvO6JTzjgGk9Ci+qCS/asIWoas4KbfSy7Jsv
-         eMtAVGdli25tlmkwt+KzySqnACKrRZWUAM46kCtv6ixdTfSm365RFxbbnIkg0QuDjqVy
-         YDTVdidIEu9ymzeMYNxoGYEA0rWBPRTabcC0Qvcgkw+gOu6wvVFoo7XqasdZ8qjv4Pfe
-         tKIJyWjRGjt6O9FMrXX/fXck+9Y4KJTKKNTKnA3RWiJvcFRA4I80zUsh1NLZ6XbuqHFC
-         KUqJi6mYhHdAqg4bJ2/nV9coSxgDWsKL++yyRwNL0XJy8O8Sgc0lHv/9BjXj9oJ6AC77
-         tZyA==
+        bh=gPFyHmui9NpQlipgb5kxDbyTgkwq+F5lggfOsYeOlQM=;
+        b=sGw/bFTZmizxkg8t9DOIiUQY3EorGD2BV1THojKN3iKGq2OkQg1ltBquldZZ2frB91
+         69Aijq9obWgQ9QzkOk96pNeD8dnnCkZoQgzjlxaYg6Cu9LWt3SuRfwxWs44Zeg21lyWJ
+         ZfeMkgNsvk4ukI2BQsCpw8fEKO3+YV4IxLhoG26ewXWGyK7xh6ucnJMe+QB3woDnFGx7
+         XbWSXEb32+FCY5lvwsUtPNaS3Qn5dSzLAa2W8tWlVu9dLdSmoUuVhsBCzSjZTGsjvCVj
+         s5tqMT3bFUpI35tbK9VgLxGCon8xSmRQ3z/KsG6j3VTqQtFQEKyh3utPGESB5A/w5iVv
+         hPEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YsjYiEfDmTNeuosEB2NyJ5k54FXc28GaCYwPE1KueVI=;
-        b=boWxh2ax38/PhlW42vDGE1ON8souDC5bHYhCCO7kXxd9NhuLN0Mg4oUiJcBtU0hAQa
-         4gBRgdgl+IniWjhqVokwPt9WxdZAf2wVCONLSyNCTHcv8xROPI0FYYOosrCGFHaTfXUp
-         sWhA6EEog+tc957AlTzqwN2HutAuzOEei4rskhQfBAgwvBus/q40DALOtRz97Pv8Q7AK
-         gIOX6QDCzpGtg5vAU+RP/8NwjONE8t3rLVPuotYcwrpsp/wk4APQTd2FoZd61tBwlWWu
-         cTgAfZYRhRWg0VP7r5USzIKPc+bSpI+MAtT637Kyh/e0CVHDAMIl4bhed9LYp3+Aq9U8
-         DVag==
-X-Gm-Message-State: AOAM532I+QwnZigpF19jPL9B0Ngv0+h4zbKPN3m2T+aCWpL5oxesCp/h
-        uZzioYnNH/KKBvip750vLinyDN21mouGp/uMdPtPq4cMP8o=
-X-Google-Smtp-Source: ABdhPJygEa/ltHbwSmhkyIiEy5fTI9CfyO1j8jEEFZt7tC21lwDMgavEVQM+rEI49Wd4oF9Ts2Mpq2zBekILbB5BU7o=
-X-Received: by 2002:aca:db03:: with SMTP id s3mr3169492oig.48.1612279796845;
- Tue, 02 Feb 2021 07:29:56 -0800 (PST)
+        bh=gPFyHmui9NpQlipgb5kxDbyTgkwq+F5lggfOsYeOlQM=;
+        b=FouQwobt+Kp3XztL4BP9vSvW/7LYz9kGjdoR/aq7a4m5QR5zMovTIAeJmPMhzG7Uf+
+         8Jr2qL0AM6MLIN+pp9FpovSUY4EcZ7f9tYvn4hPeq/CYrnGnuE7bq8KOdfnN2i+2+QYi
+         pErBGYkGRfsUAsoD8uRbb7rk//FG88xA4WfSThgd3d0IJ7fV0m7QZ8gdKMM6au8rnPHQ
+         Kfi3ZabMDWHVbbcT7g8cuomvkRNt/h6/3GB0/roJdsbqJEwSRsiMc3Sw2d7IaZFT4nG0
+         DKoDtXoLsXcWNGUaDMC6u7EwCN9kNfk5GUbdCqx2HChtLps6lctAsi2kYPq9+HTvdAS/
+         T6FA==
+X-Gm-Message-State: AOAM531mD+nCcch7irr/92opNQhZqn2+f+l/ja0ezXs93Avgw4fS2Fz9
+        /UgqQJam+gRSuaKPT/sK8mMPsqeAaqRqzN7yM4E=
+X-Google-Smtp-Source: ABdhPJzE8f5ixx480Z5hxAV62an7A192aA6CWwxA4BdBzEXQtW5SQg9blT03C9oQ2QpTE+0vSyE4aIjFi/OXHJjIEm8=
+X-Received: by 2002:aca:db03:: with SMTP id s3mr3171547oig.48.1612279829772;
+ Tue, 02 Feb 2021 07:30:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
- <20210129182050.26143-9-charvi077@gmail.com> <CAPig+cTyK_OPixAnJQc_cO4vHzA++hfyfGEA7uZBK3ukCWD0PA@mail.gmail.com>
-In-Reply-To: <CAPig+cTyK_OPixAnJQc_cO4vHzA++hfyfGEA7uZBK3ukCWD0PA@mail.gmail.com>
+ <20210129182050.26143-10-charvi077@gmail.com> <f3e2b9ce-3dfe-e33a-6149-ca23397b1690@sunshineco.com>
+In-Reply-To: <f3e2b9ce-3dfe-e33a-6149-ca23397b1690@sunshineco.com>
 From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Tue, 2 Feb 2021 20:59:45 +0530
-Message-ID: <CAPSFM5cRcVYfNSnm_-FyRRJc4mnh-t2BaSbhd7nE3uz-zv=+vQ@mail.gmail.com>
-Subject: Re: [PATCH v4 8/9] rebase -i: teach --autosquash to work with amend!
+Date:   Tue, 2 Feb 2021 21:00:18 +0530
+Message-ID: <CAPSFM5f_=-MFUnZtt9KKLBcd56L_m3SZ8OZr5xjUwG3zgo+7pQ@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] doc/git-rebase: add documentation for fixup
+ [-C|-c] options
 To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
+Cc:     git <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Christian Couder <chriscool@tuxfamily.org>
+        Marc Branchaud <marcnarc@xiplink.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2 Feb 2021 at 08:50, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Tue, 2 Feb 2021 at 08:53, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> On Fri, Jan 29, 2021 at 1:25 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > If the commit subject starts with "amend!" then rearrange it like a
-> > "fixup!" commit and replace `pick` command with `fixup -C` command,
-> > which is used to fixup up the content if any and replaces the original
-> > commit message with amend! commit's message.
-> >
+> On 1/29/21 1:20 PM, Charvi Mendiratta wrote:
 > > Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 > > ---
-> >  sequencer.c                     | 23 ++++++++++++++++-------
-> >  t/t3437-rebase-fixup-options.sh | 12 ++++++++++++
-> >  2 files changed, 28 insertions(+), 7 deletions(-)
+> > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> > @@ -887,9 +887,17 @@ If you want to fold two or more commits into one, replace the command
+> >   If the commits had different authors, the folded commit will be
+> >   attributed to the author of the first commit.  The suggested commit
+> > -message for the folded commit is the concatenation of the commit
+> > -messages of the first commit and of those with the "squash" command,
+> > -but omits the commit messages of commits with the "fixup" command.
+> > +message for the folded commit is the concatenation of the first
+> > +commit's message with those identified by "squash" commands, omitting the
+> > +messages of commits identified by "fixup" commands, unless "fixup -c"
+> > +is used.  In that case the suggested commit message is only the message
+> > +of the "fixup -c" commit, and an editor is opened allowing you to edit
+> > +the message.  The contents (patch) of the "fixup -c" commit are still
+> > +incorporated into the folded commit. If there is more than one "fixup -c"
+> > +commit, the message from the last last one is used.  You can also use
 >
-> Is this new behavior of recognizing "amend!" in the subject documented
-> anywhere? I checked the documentation patch [9/9] but didn't see any
-> mention of it.
->
-
-No this patch series does not include that but included in the patch series of
-amend! commit implementation that is not sent to the mailing list yet.
-(Apology for the confusion)
-
-> > diff --git a/sequencer.c b/sequencer.c
-> > @@ -5662,6 +5662,12 @@ static int subject2item_cmp(const void *fndata,
-> > +static inline int skip_fixup_amend_squash(const char *subject, const char **p) {
-> > +       return skip_prefix(subject, "fixup! ", p) ||
-> > +              skip_prefix(subject, "amend! ", p) ||
-> > +              skip_prefix(subject, "squash! ", p);
-> > +}
->
-> While the function name skip_fixup_amend_squash() may be accurate, it
-> won't scale well. What happens when additional fixup-like prefixes are
-> added in the future? Does the function name get extended to name them,
-> as well? How about choosing a more generic, yet still meaningful,
-> function name which doesn't suffer from this scaling problem. Perhaps
-> skip_fixupish() or fix_squashlike() or something.
+> Erm, s/last last/last/ or even better s/last last/final/
 >
 
-I agree completely, and will change the function name  to skip_fixupish().
+Okay, I will correct it as s/last last/final
 
-> Also, making this function `inline` seems like a case of premature optimization.
+> > +"fixup -C" to get the same behavior as "fixup -c" except without opening
+> > +an editor.
+> > +
+> >
+> >   'git rebase' will stop when "pick" has been replaced with "edit" or
+> >   when a command fails due to merge errors. When you are done editing
+>
+> It seems like an extra blank line sneaked in between the updated
+> paragraph and the paragraph which follows it.
 
-Okay, will remove `inline`.
+Okay, I will remove it. Thanks for all the reviews!
 
 Thanks and Regards,
 Charvi
