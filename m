@@ -2,67 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55027C433E9
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 17:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32609C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 17:41:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 151D164F6D
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 17:29:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E82CE64F86
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 17:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236690AbhBBR32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 12:29:28 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:41055 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237515AbhBBRZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 12:25:42 -0500
-Received: by mail-ed1-f46.google.com with SMTP id s5so10934961edw.8
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 09:25:28 -0800 (PST)
+        id S237563AbhBBRlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 12:41:03 -0500
+Received: from mail-ej1-f49.google.com ([209.85.218.49]:46140 "EHLO
+        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237637AbhBBRiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 12:38:00 -0500
+Received: by mail-ej1-f49.google.com with SMTP id rv9so31208272ejb.13
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 09:37:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=A3hp0u4vI7MP0vGmaFfgtaDn0BvI0KbmeM1GxCtsZyI=;
-        b=BhkchXqvjOBI9dEZM2HiP9xMuJYzCfMQX1OPREjNiFVoVggeXYms/fpS+RrYALTpjs
-         twY+nTjh907TJyBMsromX1axDEamucfBtOEfAD+tRVUQTtZNo5agLlI2BUOOV4Uj3gAp
-         UAhMsJJ+Q/2KsxAKUO5+K9o+MiZnOAv94S5rBkrQ6UNwgUxrXOJWkYFLwBDvHwtiOS8o
-         hFa1/+ZGv1yNaXWL2UNyNtkWPNikTbEqDOECI7XNscVFpDZHShpxqYxKy4CSVCMBVSqt
-         c2BLv8jfJk3wA5UuhuG9LSxDQ8GQBv3LjppZhzRQyn8cqmEMmtL9IgHWBkrqZ+GPgTdi
-         oPOQ==
-X-Gm-Message-State: AOAM5333k8G0BrN9zgiL1hrMu0rVB7CgrzSxr6TqR/nIAGDqK44qvDPb
-        1LdX/6dnqxnMd00snt0z91hLzr7X5oAosWx603rT8GaFwLs=
-X-Google-Smtp-Source: ABdhPJwdaF139vmEcBkpTEOxiWcDADLguBwbI4iVwCqJ4/nHt8+cblpOC/vYeYcmm8PcM/TO2H2eML9qCYT5Fw/FGrQ=
-X-Received: by 2002:a05:6402:40c4:: with SMTP id z4mr24498477edb.233.1612286702335;
- Tue, 02 Feb 2021 09:25:02 -0800 (PST)
+        bh=kFUbIo0iI3CI6i5PezeBgSRkz3fLaZhCwyTgDIPbWo0=;
+        b=YrFi2fHWZdQder4I7/qW62aRKGJ/5M/K04XO8kITIj/JaJx9S26p02sRlAq41a9x/i
+         ig1KKj6Hafdtzt6yUbSq+Q270HL9sp8fJ4sbsIeINWsyazdlQ+jEQo+x7jD/xu82jyIK
+         Tt7dKj00HujNlH4A0zwhQ7lUPcFLJFHYvHLLUjLZ9m1cF5YIHByAIdoEY7/4qIkv9erw
+         eqn121Ztklv/07tNTbPDDA3Q7otUXIzNnLi0ZZrCruSBJAKYuZx6L7iA7LsTs3+AEVQp
+         8upiFcq1hXKi7ijGlt1RLfWLDvvqdAlGKxpMkYh04DcS0LZsfIxjLekfTEp2l7WFe1cH
+         g3Sw==
+X-Gm-Message-State: AOAM531nhdwVJfafHgZ152eXtTmQ/9lGp37GbcpHT7/I4iqaCWIQlX/0
+        7/C4V/kLPCiCTTqaoqFlxMyGHP83a0Z2Z3EN3XA=
+X-Google-Smtp-Source: ABdhPJy3kEbWcH2X2FlL8R9pm3DGUw5L825eB8Qtmr+9xunatyYT3jDmtfemt6nDDPmQKkxBne5JtfMvxrMBNIpyra4=
+X-Received: by 2002:a17:906:a1c2:: with SMTP id bx2mr23880950ejb.138.1612287438467;
+ Tue, 02 Feb 2021 09:37:18 -0800 (PST)
 MIME-Version: 1.0
-References: <CACoUkn6+9C3+HVVQF905t1siAD9Sqo1JvRa0Whw-J6x7V7icyg@mail.gmail.com>
- <YBkVFTOP6K1//i6m@coredump.intra.peff.net> <YBkZnY8X5VyNkXkR@coredump.intra.peff.net>
- <xmqqpn1igznk.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqpn1igznk.fsf@gitster.c.googlers.com>
+References: <cover.1612258145.git.liu.denton@gmail.com> <17675b9e4c0c50e6bfd5219c933b5ba1148ab86c.1612258145.git.liu.denton@gmail.com>
+In-Reply-To: <17675b9e4c0c50e6bfd5219c933b5ba1148ab86c.1612258145.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 2 Feb 2021 12:24:51 -0500
-Message-ID: <CAPig+cQoCuQSyrKfE_sNCvi=Yo2035e0TOA1sOBF1HE02-kFjA@mail.gmail.com>
-Subject: Re: Bash completion suggests tags for git branch -D
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Paul Jolly <paul@myitcv.io>,
-        Git List <git@vger.kernel.org>
+Date:   Tue, 2 Feb 2021 12:37:07 -0500
+Message-ID: <CAPig+cRuD19xwfmkn2E4669n+0BPJg24NBOp-Zjv9uKDTXedFA@mail.gmail.com>
+Subject: Re: [PATCH 1/9] git-stash.txt: be explicit about subcommand options
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 2, 2021 at 12:22 PM Junio C Hamano <gitster@pobox.com> wrote:
-> From: Jeff King <peff@peff.net>
-> Subject: [PATCH] completion: treat "branch -D" the same way as "branch -d"
+On Tue, Feb 2, 2021 at 4:36 AM Denton Liu <liu.denton@gmail.com> wrote:
+> Currently, the options for the `list` and `show` subcommands are just
+> listed as `<options>`. This seems to imply, from a cursory glance at the
+> summary, that they take the stash options listed below. However, reading
+> more carefully, we see that they take log options and diff options
+> respectively.
 >
-> Paul Jolly noticed that the former offers not just branches but tags
-> as completion candidates.  Mimic how "branch -d" limits its suggestion
-> to branch names.
+> Make it more obvious that they take log and diff options by explicitly
+> stating this in the subcommand summary.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> @@ -67,7 +67,7 @@ save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q
+> -list [<options>]::
+> +list [<log options>]::
+>
+> -show [<options>] [<stash>]::
+> +show [<diff options>] [<stash>]::
 
-Perhaps a Reported-by: would be appropriate?
+I might suggest that it is more common to hyphenate these words than
+to separate them with spaces:
+
+    list [<log-options>]::
+    show [<diff-options>] [<stash>]::
