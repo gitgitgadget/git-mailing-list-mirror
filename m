@@ -2,205 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB54C433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 04:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC82C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 04:46:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B1C264ED4
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 04:09:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1526E60230
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 04:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231324AbhBBEJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 23:09:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35542 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229872AbhBBEJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 23:09:54 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5022C061573
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 20:09:12 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id y9so6200194ejp.10
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 20:09:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=E9V8tU/uPLCP6pL/yJMhs+MzVYfJCpTjYiJidGUmj/E=;
-        b=s3KU6rP7tBtSQZ5ovHHw/6Hbk1Fw3iNqVooHOtlBs3obOhebMoTudf0y74Vxdv42JB
-         W/TgNGTREaAhOhjfXVxZz3+g1U6Pl88dCeMr5XrU+OozUfGqebd9bFurXBf3Etg/q2ex
-         9PVSUJdE6izny6t/0/smgGF4g7wrySK6eN92CtiMuVuldWTebv4Yz3h3hhz59Q6fJcrQ
-         Fu45XHxRkTYL3o77PrmfmsUS60oQWxCEFC1fzlxAi9/qrUha4ZMDgj7YXFI6BusLlM0C
-         6JazD9qQG2JO8+XVZHpOW8FIp17ZzaXOtUIljCRVNWS5rf8heFxwrXw+EnIACivHr9N9
-         oMjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=E9V8tU/uPLCP6pL/yJMhs+MzVYfJCpTjYiJidGUmj/E=;
-        b=PM25+1+YJjsOLxsdOoBh8Fipf91qTAMM+PHDt6ykbeVcfB7Zfg1jzCIKl1tjlh8grg
-         kw5wDKEErFEQ/3ZX2Q17rKcQOKMklRgauhcl0uxYhR4kMaMYc74i2WHQqa5yc4N/+6Ql
-         TfQ9Py73Prpnv6mRk2Z1yl2l+nwJ+e4ysh+WwFKQJVaWfdzoAwsZwlROr+mp6VtGGdCK
-         OJFwP+Fu9hAV3PU/KjaVaTnqIJg3Hje20mTDrCH2R1WfL0NIGNGxIGUSqKIx5oZ17E00
-         xlCs96mvmXYSwx1tFjatWqPVHQDH+SDyxR2JggFXiqAhPTk/b+sdZAn35vkSzdT40A0s
-         E0vw==
-X-Gm-Message-State: AOAM532y9C0ztWrupg4lg0NJiIrz5kLR62wQ/BD/XOp3HlPOt4NZ1Twb
-        2HESVQ9D63+QiojrXjcm+9B18ofQyoaZd96KxsnO/pLmdQKaxg==
-X-Google-Smtp-Source: ABdhPJyAcOv5NGjZhmXHkxeFPF8R3j8+0pneCmGoZaAUvNXvl+mavyjS5Y9/UqGoLySpOJgwX8r6ehItCBiL0OwkYss=
-X-Received: by 2002:a17:906:fc4:: with SMTP id c4mr21369331ejk.143.1612238951615;
- Mon, 01 Feb 2021 20:09:11 -0800 (PST)
+        id S231733AbhBBEqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 23:46:44 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55083 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231725AbhBBEqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 23:46:43 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F07A12433A;
+        Mon,  1 Feb 2021 23:46:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=i8d6b7knUQBJ
+        Lxl+X5aPZNVQ+zQ=; b=WwJubqYpoLswIeAyysktFblqmxuoT6yyUc7O4oMJzID2
+        cZK/PkEoExdWSJTWzcqz8OfBP5K3tt6h0vueKL4GLwLEVo5eNgOiVPXUP1UdpQm4
+        L3rlQX0OGOo13jAAO4BxqCvaCZqC80lbpnMR9MiNksMibLLLoOXEPnH20WGXttU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A6TxQl
+        NpezWmEgAoPst6L+fA6nPwovfAX0FviZ5iNqK+Dgtuy4W5y4kB8WiwazMtJVA0SS
+        3QC6EzPBvZ1DLqhW7b0CWKAJHxCfr+p//YDPDnS8ECh1QsDsezQxG2wdeVEEIc4c
+        1qQgOfKjQR92tcFhkl9PyD5Qg6JVGj8d8UT8g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 037CA124339;
+        Mon,  1 Feb 2021 23:46:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 47B27124338;
+        Mon,  1 Feb 2021 23:45:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Vincent Lefevre <vincent@vinc17.net>
+Subject: Re: [PATCH] pager: exit without error on SIGPIPE
+References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
+        <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
+        <87czxjomn8.fsf@evledraar.gmail.com>
+        <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
+        <87wnvrefbv.fsf@evledraar.gmail.com>
+        <xmqq8s87ld8y.fsf@gitster.c.googlers.com>
+        <87tuqvdy1b.fsf@evledraar.gmail.com>
+Date:   Mon, 01 Feb 2021 20:45:56 -0800
+In-Reply-To: <87tuqvdy1b.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 02 Feb 2021 03:05:36 +0100")
+Message-ID: <xmqqo8h3hybf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.854.git.1612021544723.gitgitgadget@gmail.com>
- <CAPig+cQMn6oc4Jh=gb1jNfArXJBYhPRaSzJJvvbvprit6_OC0g@mail.gmail.com>
- <CACPHW2X2UGAVmNM+cHXs6dwVfZbgLFZ0iUGU89h04H5czAt1Ww@mail.gmail.com> <CAPig+cS-hnwp2HjkkFPeJ4aibFHnJ0VZq0DSVgdWB0H_q5=oXw@mail.gmail.com>
-In-Reply-To: <CAPig+cS-hnwp2HjkkFPeJ4aibFHnJ0VZq0DSVgdWB0H_q5=oXw@mail.gmail.com>
-From:   Lance Ward <ljward10@gmail.com>
-Date:   Mon, 1 Feb 2021 22:09:00 -0600
-Message-ID: <CACPHW2VBEu=02HFhyrDes=6KceLtHzGDqBJVf2qAnD2s1f8VAg@mail.gmail.com>
-Subject: Re: [PATCH] status: learn --color for piping colored output
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Lance Ward via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8AD65D56-6511-11EB-9D90-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I've updated my patch per your request.
+>>> But yeah, we could patch git to handle this in the general case....
+>>
+>> Sorry, but now you lost me.
+>>
+>> I was merely wondering if Denton's patch can become a small update
+>> on top of these, if we just made sure that the exit code of the
+>> pager noticed by wait_or_whine() is reported to the code where
+>> Denton makes the decision to say "let's not re-raise but simply exit
+>> with 0 return as what we got is SIGPIPE".  I guess we could even
+>> make git exit with the pager's return code in that case, as the
+>> end-user observable result would be similar to "git log | less"
+>> where 'less' may be segfaulting or exiting cleanly.
+>>
+>> IOW, something like this on top of your three-patch series?
+>>
+>>  pager.c | 8 +++++++-
+>>  1 file changed, 7 insertions(+), 1 deletion(-)
+>> ...
+> I sent a WIP start at something like this at the end of my v2, please
+> discard it when picking up the rest:
+> https://lore.kernel.org/git/20210202020001.31601-6-avarab@gmail.com/
+>
+> As noted there it's going to be a lot more complex than this.
 
-On Sun, Jan 31, 2021 at 5:09 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> [cc:+junio +peff +duy +dscho +rene]
->
-> On Sun, Jan 31, 2021 at 1:49 PM Lance Ward <ljward10@gmail.com> wrote:
-> > On Sun, Jan 31, 2021 at 1:31 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > On Sat, Jan 30, 2021 at 10:51 AM Lance Ward via GitGitGadget
-> > > <gitgitgadget@gmail.com> wrote:
-> > > > diff --git a/diff.c b/diff.c
-> > > > +void set_diff_color(int use_color)
-> > > > +{
-> > > > +       diff_use_color_default = use_color;
-> > > > +}
-> > >
-> > > This new API for setting `diff_use_color_default` feels a bit too
-> > > quick-and-dirty and assumes that the caller has intimate knowledge
-> > > about when it is safe/correct to call the new function. Did you
-> > > consider the alternate approach of having wt-status functionality set
-> > > the appropriate diff_options.use_color value at the time it drives the
-> > > diff machinery? For instance, as a test, I added:
-> > >
-> > >     rev.diffopt.use_color = s->use_color;
-> > >
-> > > to the functions wt-status.c:wt_status_collect_changes_worktree(),
-> > > wt_status_collect_changes_index(), and wt_longstatus_print_verbose(),
-> > > so that the `use_color` value from the `struct wt_status *` supplied
-> > > by commit.c:cmd_status() is automatically applied to the diff options.
-> >
-> > Originally I tried to use what I thought would be a much more appropriate
-> > method which is to simply let the --color flag set things the same way
-> > as the config option status.color=always does, but I noticed it does
-> > not work the same when piped.
->
-> I'm not quite sure what you mean. How exactly did you originally
-> implement --config to accomplish this?
->
-> > For example the following produces full color output:
-> > git -c status.color=always status -v
-> >
-> > However, running this colors only the status, not the diff:
-> > git -c status.color=always status -v | cat
-> >
-> > Right now I can only get what I expect by running:
-> > git -c status.color=always -c diff.color=always status -v | cat
-> >
-> > This appeared to me to be inconsistent behaviour [...]
->
-> At an implementation level, this behavior makes sense, but I can see
-> how it might be confusing and unexpected from a user's viewpoint. I
-> think the approach I suggested of patching those wt-status.c functions
-> to use:
->
->     rev.diffopt.use_color = s->use_color;
->
-> would fix this inconsistency, wouldn't it?
+Sorry, but you still have lost me---I do not see if/why we even care
+about atexit codepath.  As far as the end users are concered, they
+are running "git" and observing the exit code from "git".  There,
+reporting that "git" was killed by SIGPIPE, instead of exiting
+normally, is not something they want to hear about after quitting
+their pager, and that is why the signal reception codepath matters.
 
-Yes, it did.
+Yes, I can see you are making it "a lot more complex" in your patch,
+but what I do not see is why we even need to.
 
->
-> > [...] and lead me down
-> > a path trying to figure out where the color was being disabled which
-> > made me realize that the status command shares code paths with
-> > the commit message and porcelain output.  I wanted to be very
-> > careful not to do anything which might break either of these in some
-> > unforeseen way which is why I created the function.
->
-> I see where you are coming from and understand the desire to isolate
-> this behavior change, however, I can't shake the feeling that this
-> sledge-hammer approach is going in the wrong direction and that the
-> fine-grained approach I suggested in my review is more desirable.
-> Having said that, I'm not particularly familiar with this area of the
-> code -- and had to spend some time digging through it to find those
-> functions in wt-status.c to make the fine-grained approach work -- so
-> it would be nice to hear from people who have spent a lot more time in
-> that area of the code (I Cc:'d them).
->
-
-I've made the change you requested and it resolves the issue.
-It also fixed the inconsistency I mentioned.  I only needed
-to modify wt_longstatus_print_verbose to resolve the issue
-since it is the only status path that had an issue with the
-git status command.
-
-> > If you feel existing unit tests would mitigate any issues with commit
-> > messages and porcelain output I can try going the route you
-> > suggested instead?
->
-> I doubt that anyone on this project feels that the unit tests have
-> sufficient coverage to make any guarantees. However, for changes such
-> as the one I proposed which might have unforeseen side-effects, Junio
-> tends to let the changes "cook" for a while in his 'next' branch
-> before promoting them to the 'master' branch so as to give time for
-> unexpected fallout to be discovered.
->
-
-I did not have to patch all the functions you mentioned and think
-the new change is cleaner and will not break anything else.
-
-> > Also if you agree the behavior of status.color should be the same for
-> > both piped and not piped output I could add that to this patch as well?
->
-> I'm not quite sure I understand your question. Are you asking if
-> `color.status` should imply `color.diff`? If so, I haven't thought a
-> lot about it, but I can see how the present behavior may have a high
-> surprise-factor for users, so it might be worthwhile.
-
-Yes, the inconsistency I mentioned was basically that:
-color.status implies color.diff when outputting to stdout,
-but this is not true when outputting to a file.  My latest
-change resolves this inconsistency.  Now color.status
-implies color.diff when running git status regardless
-of where the output is going.
-
->
-> In fact, I can envision this patch being re-rolled as a two-patch
-> series which (1) patches the wt-status.c functions to do
-> `rev.diffopt.use_color = s->use_color` which should make
-> `color.status` imply `color.diff`, and (2) adds a --color option to
-> `git status` which sets `wt_status.use_color` (which would then be
-> automatically inherited by the diff machinery due to the first patch).
->
-> (By the way, `status.color` is a deprecated synonym for `color.status`.)
-
-Right now as it stands my patch resolves both of these, but
-if you'd like to make it two separate patches that would be fine.
+Thanks.
