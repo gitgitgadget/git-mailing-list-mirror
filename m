@@ -2,88 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 296EAC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 05:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 914FBC433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 06:03:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFC8764ED9
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 05:50:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AED564D90
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 06:03:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231866AbhBBFuc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 00:50:32 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53987 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231862AbhBBFu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 00:50:26 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFFE410AB5A;
-        Tue,  2 Feb 2021 00:49:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z0SkHkiMhj3AA/TdNm9oadCEwYI=; b=PqAsH6
-        TlQu0WhKL2Yx1z9zI2VTFuNlaC5s5TD6G2+W19BRWGuwrXoLhMlNo63vB309U2rH
-        apLjxuwmS95kS1K9XQxth0T/xX0ENcQp3pN15mRep5MS3+wQ0kMjjyIF+9km8twq
-        50Zod1Q5nbSGZEZ+ztJugNDhre9q90QzRkWe4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HGn9M7CWp91W4x6bnwBfQqxwE5bmgRd3
-        0ufLHI2d+v+7sEQZSr5Vuj/efGGMrWxBDG0l8PzUbhcResgL6pC4ZR3jvQzepXg9
-        UE+ZJgB3OzG6dF6YCgG8NC2gB88E4WOuftnyNXp4eS52QAf83Z44AOqvhVzIt/cV
-        NDKJ0kZoKxY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C3F210AB59;
-        Tue,  2 Feb 2021 00:49:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2F7210AB57;
-        Tue,  2 Feb 2021 00:49:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Vosmaer <jacob@gitlab.com>
-Cc:     peff@peff.net, avarab@gmail.com, git@vger.kernel.org,
-        jeffhost@microsoft.com, jonathantanmy@google.com
-Subject: Re: [PATCH v5 0/1] upload-pack.c: fix filter spec quoting bug
-References: <xmqqpn1ovi4j.fsf@gitster.c.googlers.com>
-        <20210201202938.39576-1-jacob@gitlab.com>
-Date:   Mon, 01 Feb 2021 21:49:40 -0800
-In-Reply-To: <20210201202938.39576-1-jacob@gitlab.com> (Jacob Vosmaer's
-        message of "Mon, 1 Feb 2021 21:29:37 +0100")
-Message-ID: <xmqq8s87hvd7.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231909AbhBBGDK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 01:03:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59690 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231912AbhBBGB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 01:01:58 -0500
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FC6CC061573
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 22:01:18 -0800 (PST)
+Received: by mail-il1-x136.google.com with SMTP id g7so16935584iln.2
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 22:01:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=myitcv.io; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Vjaw/b2Mkml2YfhnnyogutBy5N0/yg0/6eHT3dUfTEA=;
+        b=QrS0Xtl3RjbaYxQdOx7nLBgDagCN8QQH8Y7l2i37dHmO4u0RZoKeZKmFMfCUVUWUCH
+         lP2C/nycmHALLgdPEIeSbLvIThF2uIhI2WJBFJUPLf/dBNLdg2znA0WXopItqqTiTz79
+         pi0WyVuAejbk7QQRHRzCOkM2KW4mm/2lASqbLgSpZM8XlyWcmsQ34UkTO6xJ6Jgl5Dgk
+         5N7RbKl+jHeiI60RKOAgRzWjXNEeKkoV+YIpzCYNaXjH2W8jWqo1ONe3uwvI4EJr8Egl
+         GQ58gi3ObZyU1uXd3kloNWUVpHcic2vQ1b6uQhwcZcgnmRZO6hkkFE06wN0EmDZCIFMS
+         uJ0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Vjaw/b2Mkml2YfhnnyogutBy5N0/yg0/6eHT3dUfTEA=;
+        b=FASpRSVIrUWayXeZbMTjAPPFIz8ifHYck8cK8nr51nyEluVO4E/8pu8zvKnjGKiiq2
+         7D5pFpF7ROCf6z/SI/T/s9KMR5pp3i/4GlYTrV7olsbzSaCp25LnXSRWLNg5HThQyM9D
+         J32+IvLDRs/cgTl89X+otp1iKdArQbPLUxvGK7wh+uw+7QdGQhq5TdITjXVAsWpge1N7
+         28bgXaehdwmwCDi7s547vH9rN5YW2vVooTAWSKL9CRgpn493pdSSffpnzTrNrptsEPwR
+         vqGfnNthr/R3h4OEuWKGJP28BJB3rQ1uo5KfonYyEzY0pumWYijftSzGFtk6N/ymJRK9
+         pPJA==
+X-Gm-Message-State: AOAM531BYOR9IN3/G2bOWThD+2o8Kjk9iYfZeB8W5yoITMTQhEbyoQBl
+        eb0TOaXFmEGc+rvT74NoovTY3G9r7bzkq3a7AT2aSdlO7zlXAA==
+X-Google-Smtp-Source: ABdhPJzYGg52sLSJUte8zc+fAVAh+G2tz3RLfQSaX2a686NZLyE0/jDWNX3Tg0pxfo2TMaKAvFNzigFqb4ZRadNYe3c=
+X-Received: by 2002:a92:650b:: with SMTP id z11mr16096039ilb.84.1612245677603;
+ Mon, 01 Feb 2021 22:01:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 71DCBDDC-651A-11EB-9EF7-D609E328BF65-77302942!pb-smtp21.pobox.com
+From:   Paul Jolly <paul@myitcv.io>
+Date:   Tue, 2 Feb 2021 06:01:07 +0000
+Message-ID: <CACoUkn6+9C3+HVVQF905t1siAD9Sqo1JvRa0Whw-J6x7V7icyg@mail.gmail.com>
+Subject: Bash completion suggests tags for git branch -D
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Vosmaer <jacob@gitlab.com> writes:
+Hi,
 
-> I updated the test based on the latest round of feedback.
+Easiest explained via a repro:
 
-Thanks, but this came a bit too late to wholesale replace the patch;
-the previous round was good enough and is in 'next' already.
+    cd $(mktemp -d)
+    git init
+    touch README
+    git add -A
+    git commit -am 'Initial commit'
+    git checkout -b branch
+    git tag b-is-a-tag
 
-Looking at the change between two versions, I guess that the change
-in tests may be worth salvaging, so perhaps you can make it into an
-incremental "the test we added earlier was good, but let's make it
-even better by doing X and Y" patch to be applied on top?
+If you then type:
 
-Thanks.
+    git branch -D b^
+
+leaving the cursor at the position shown by the caret, then attempt
+completion via <Tab><Tab> (at least according to my bash setup) two
+options are shown:
+
+    b-is-a-tag   branch
+
+b-is-a-tag is not a branch, so should not be offered as a completion
+candidate in this instance.
+
+Many thanks,
 
 
-
-
-> Jacob Vosmaer (1):
->   upload-pack.c: fix filter spec quoting bug
->
->  t/t5544-pack-objects-hook.sh | 10 ++++++++++
->  upload-pack.c                |  9 +--------
->  2 files changed, 11 insertions(+), 8 deletions(-)
+Paul
