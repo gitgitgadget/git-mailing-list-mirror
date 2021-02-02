@@ -2,76 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41165C433E6
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1EC1C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:41:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07E8964F2C
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:40:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DCC664E08
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 19:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239847AbhBBTkD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 14:40:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44900 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239972AbhBBTji (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 14:39:38 -0500
-Received: (qmail 15520 invoked by uid 109); 2 Feb 2021 19:38:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 02 Feb 2021 19:38:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6578 invoked by uid 111); 2 Feb 2021 19:38:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Feb 2021 14:38:56 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 2 Feb 2021 14:38:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Paul Jolly <paul@myitcv.io>, git@vger.kernel.org
-Subject: Re: Bash completion suggests tags for git branch -D
-Message-ID: <YBmqT/hvT9wM6yHz@coredump.intra.peff.net>
-References: <CACoUkn6+9C3+HVVQF905t1siAD9Sqo1JvRa0Whw-J6x7V7icyg@mail.gmail.com>
- <YBkVFTOP6K1//i6m@coredump.intra.peff.net>
- <YBkZnY8X5VyNkXkR@coredump.intra.peff.net>
- <xmqqpn1igznk.fsf@gitster.c.googlers.com>
+        id S239990AbhBBTk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 14:40:59 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53789 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233185AbhBBTkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 14:40:37 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D7723110AA3;
+        Tue,  2 Feb 2021 14:39:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=m3EiDD7pEzMjHbrQD8wbydN/dN4=; b=GMk+9u
+        kY4WHPq3N/uNAiH3bHTCaYA8y8XPRskHGlJsNTcllKheHR15GjiSPEyESo/MGpQr
+        ADShNBpDmn7mdrLeu8MGISewqndK1B3U116SBSc04numNiJQUq7rUTx7D1J/+eF2
+        N4Ps1ecw+VCQdspR4ymxPrON+xaHg8s+eLf3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wTho0EILEHruQ/0eWFXbpdhHC0UvedYf
+        pxi+wunvLqlVRXXDLnfTIR216NW8S6ROX7PbDOF31bcgIdW88v9x9rwyb4MN1jc2
+        14YYem0g2wX92Yut67dkNQDKSy4BxwNi3t4jxMrSWOhe2PxUjj7kCxnxT8KKSu+Q
+        QKlR7ndotEs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D06A2110AA2;
+        Tue,  2 Feb 2021 14:39:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AA831110AA1;
+        Tue,  2 Feb 2021 14:39:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Thomas Ackermann <th.acker@arcor.de>
+Subject: Re: [PATCH v2 2/6] doc hash-function-transition: use SHA-1 and
+ SHA-256 consistently
+References: <pull.858.git.1612093734.gitgitgadget@gmail.com>
+        <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
+        <681ce4129dc35b6a61aac0dbd1b9b9d638a2b78d.1612282749.git.gitgitgadget@gmail.com>
+Date:   Tue, 02 Feb 2021 11:39:45 -0800
+In-Reply-To: <681ce4129dc35b6a61aac0dbd1b9b9d638a2b78d.1612282749.git.gitgitgadget@gmail.com>
+        (Thomas Ackermann via GitGitGadget's message of "Tue, 02 Feb 2021
+        16:19:05 +0000")
+Message-ID: <xmqqft2egsxq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpn1igznk.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6873FCA0-658E-11EB-9B41-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 02, 2021 at 09:14:39AM -0800, Junio C Hamano wrote:
+"Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> > Oops. I meant to paste the "before" snippet, but this is obviously after
-> > I stuck "-D" in there. It does seem to work. :)
-> 
-> ;-)
-> 
-> Before we forget, as you said a few times that everything you send
-> here on Git are signed off...
-> 
-> -- >8 --
-> From: Jeff King <peff@peff.net>
-> Date: Tue Feb 2 04:02:13 2021 -0500
-> Subject: [PATCH] completion: treat "branch -D" the same way as "branch -d"
-> 
-> Paul Jolly noticed that the former offers not just branches but tags
-> as completion candidates.  Mimic how "branch -d" limits its suggestion
-> to branch names.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> From: Thomas Ackermann <th.acker@arcor.de>
+>
+> Use SHA-1 and SHA-256 instead of sha1 and sha256  when referring
+> to the hash type.
 
-Yeah, this looks fine (though Eric's reported-by suggestion seems
-reasonable). I endorse the signoff. :)
+Ahh.  [1/6] was supposed to be only about formatting, and I found it
+a bit irritating that it had some of these changes mixed in, as it
+was not entirely clear to me that [1/6] covered all those lowercase
+sha1 and sha256 instances, or just some of them.
 
-I had also considered whether a test made sense, but I wasn't at all
-familiar with the completion tests. It looks like we're not even testing
-"-d", so I'm happy to proceed without one.
+Moving them from [1/6] to this step would help future readers by
+reducing such irritation (I do not know if it is worth it until
+I read through the series to the end).
 
--Peff
+> Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
+> ---
+>  .../technical/hash-function-transition.txt    | 122 +++++++++---------
+>  1 file changed, 61 insertions(+), 61 deletions(-)
+
+Thanks.
