@@ -2,149 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA0CC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03F47C433DB
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:06:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B6AD64E9C
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:03:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A787864DA5
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 03:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231201AbhBBDDG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Feb 2021 22:03:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49436 "EHLO
+        id S231345AbhBBDFt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Feb 2021 22:05:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231132AbhBBDCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Feb 2021 22:02:37 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4ADC061797
-        for <git@vger.kernel.org>; Mon,  1 Feb 2021 19:01:31 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id u14so1047635wml.4
-        for <git@vger.kernel.org>; Mon, 01 Feb 2021 19:01:31 -0800 (PST)
+        with ESMTP id S229557AbhBBDFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Feb 2021 22:05:45 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11558C061573
+        for <git@vger.kernel.org>; Mon,  1 Feb 2021 19:05:00 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id k193so18558087qke.6
+        for <git@vger.kernel.org>; Mon, 01 Feb 2021 19:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=YdGHpYEjlWjy/M9oqm/ijQbzattP/S90vUHrg7e3h0M=;
-        b=B/CAeGEEUWIxX5apsRiXJY4006qT51ZyXgWJuierWVGmAeFR6xF73IhfgIKZdqBcT/
-         zaGa0jcOviA1UiJUz3OCdnSKkRubpo27Mw813Am7Hbbr2zB1DUKqLwxbrsBdIDWWnnTm
-         HYIfnw5+cqyR5wsyO3MV9a5GlUe+xC8TXJtv6ih3XHln+Y1Z1KcwHwSGtTe0yvI2sijp
-         8wYmfwl9oKRRc9us1UMHC5DtyvcvUjB1DnusuhVoTGK2v4lTpFaFY6YaxGG4F0snYa5x
-         b51eO8z4tw2Ior6Fne4gNwp/dmx/r03sB1xaghUFAr8XmgSa+v8DWxIqKuNOfMg9BE2D
-         AYCA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wvgUOiChauefCalS5rcv09lpezYzn3UAyDT0t2GD/j0=;
+        b=J3jcdDkG8oDT7KfkHO+YtpyQecrBY7b3OJ8jLI9aj9TH26Yw88ii7iIYlnAT9XPGjo
+         kS6UjarhZ/HtQbE1cSCv1s+4kagU2ZYGzQzM4A3Zh6O1HqqHi/vBYT0ehOqwpZqq67jt
+         /qrWHPeFH2GiusvYdYhQN188r2xhXZlyP1IR9PCZ0w1M9MH/O4+Xy+wptYDQtiua96Tt
+         8k5iM43uifgMI35BuND7+t6GRkoRUTT5F7ZrJc4ohcd8QdQvvwijLwlLusbDtb4+xyx3
+         KCpAYQMdUdOASmSgLqD+fHVX4SdkfhucfNGFNk03QENVi3jg+T47/kAZoItuOUdXqbKJ
+         S8sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YdGHpYEjlWjy/M9oqm/ijQbzattP/S90vUHrg7e3h0M=;
-        b=toSh31cf1H2cVsxaPgyTfcPn8x1zYh9ow+KQX02vDIrO1l2MatnitwdY4yQ9GPKscB
-         vWVghlmLGXWSvPSBh4WmrablibpSEfC9hEs4Jw1rrBEIgtqR7iMec3oSKv5rmRXLPpZC
-         YUvBVo+NtGT3ZZJoTszFeeRgXOW6XKzk1x2VDB3xze30WDW1X9vUjQvjFif9oLBvhRGE
-         +V5SqZCnOwTN9ZNkAs+C2s/sgX9NzZwFHYsLPrVQYAvbD1OxQO557z1PETKUQQcEW7GZ
-         5z9foTgFZDMVptFye6SZ+JL6vtxAmIqo8NS47lcQgEqxIj88MkmN4wOIthe9iMn/yWn4
-         bQvg==
-X-Gm-Message-State: AOAM530OlXuGIN2onEwH6RZOffMxDwba+sKKmzH2kMNTar2uFuqNP5um
-        O9mtC1nee1UgZId8yiMkcaskoWOU4LI=
-X-Google-Smtp-Source: ABdhPJxURW8gb77bPlSKAU5eG5zB3LE6y4Ow2sww4KUqiPJphMtZfo+lgXWvlZMx1ctVqp7mQMeszg==
-X-Received: by 2002:a1c:a90f:: with SMTP id s15mr1535271wme.154.1612234889625;
-        Mon, 01 Feb 2021 19:01:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m18sm28609884wrx.17.2021.02.01.19.01.28
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wvgUOiChauefCalS5rcv09lpezYzn3UAyDT0t2GD/j0=;
+        b=dIHqU6YMcX1NhXPE0hKypEH1wmDSk/m9jV7kP57nZsSWGqGIDk2zOGbiclI67f+E5W
+         /Oyahu2zsZrC0wvqCH7+x2l5ztFxhJ1jkAsGScgcVh5/F0/x28FnOId1zTXfUMZDibSA
+         JSv1P1fFeE2lZyo9Lp2Vx2duipwz4WLSU/EHOyp2NELYVM6Hz23gdwtb+EfaE/zyVRRH
+         iV7+hDaHxWIsntJuDLLeVYq9+iOwop6JQYvFV5Mf8HENxlnyj0IR7nvJtiQ7qikQvBZm
+         UQRVhN5epOL6WgtCSFQFaq3ARWds7eyR8NNU2UWACwK9IH8Yj1APqTI7BFQQ6L+YMpWp
+         Lltg==
+X-Gm-Message-State: AOAM531+2wypfJvXXeY66ZhEcQwAQttkvbwY1VSFGGJ0mULd+smEu1Oa
+        XTXq9AHcD7hY6189T8t4+k0Azw==
+X-Google-Smtp-Source: ABdhPJyUirBwCOv+/F5+GKomRdj2VBI+Ov2Aa+78G97xklLIiQ9kamHRksQpbhhkgpsfT3HYCB6e8Q==
+X-Received: by 2002:a05:620a:1209:: with SMTP id u9mr19561802qkj.177.1612235099266;
+        Mon, 01 Feb 2021 19:04:59 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:8bd2:a84b:ef4c:2356])
+        by smtp.gmail.com with ESMTPSA id h6sm6150977qkf.96.2021.02.01.19.04.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Feb 2021 19:01:29 -0800 (PST)
-Message-Id: <9bccee8fb6381102d543d6b28e90959307ed08eb.1612234883.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
-References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
-        <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 02 Feb 2021 03:01:22 +0000
-Subject: [PATCH v2 5/6] commit-graph: be extra careful about mixed generations
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 01 Feb 2021 19:04:58 -0800 (PST)
+Date:   Mon, 1 Feb 2021 22:04:56 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        dstolee@microsoft.com
+Subject: Re: [PATCH 03/10] builtin/pack-objects.c: learn
+ '--assume-kept-packs-closed'
+Message-ID: <YBjBWD8Lz81P9ElM@nand.local>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <2da42e9ca26c9ef914b8b044047d505f00a27e20.1611098616.git.me@ttaylorr.com>
+ <xmqqk0rwtom2.fsf@gitster.c.googlers.com>
+ <YBRfvZh86Z8wAnxZ@coredump.intra.peff.net>
+ <YBRprCmIX4IrHAi0@nand.local>
+ <YBRvQdHoslnF0OXr@coredump.intra.peff.net>
+ <YBSHzG9T72nYYVt4@nand.local>
+ <xmqqh7mzs5w3.fsf@gitster.c.googlers.com>
+ <YBSaHHKV5ncjjJum@nand.local>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, peff@peff.net, gitster@pobox.com,
-        abhishekkumar8222@gmail.com, Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <ttaylorr@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YBSaHHKV5ncjjJum@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Fri, Jan 29, 2021 at 06:28:28PM -0500, Taylor Blau wrote:
+> On Fri, Jan 29, 2021 at 03:03:08PM -0800, Junio C Hamano wrote:
+> > Are our goals still include that the resulting packfile has good
+> > delta compression and object locality?  Reachability traversal
+> > discovers which commit comes close to which other commits to help
+> > pack-objects to arrange the resulting pack so that objects that
+> > appear close together in history appears close together.  It also
+> > gives each object a pathname hint to help group objects of the same
+> > type (either blobs or trees) with like-paths together for better
+> > deltification.
+>
+> I think our goals here are somewhere between having fewer packfiles
+> while also ensuring that the packfiles we had to create don't have
+> horrible delta compression and locality.
+>
+> But now that you do mention it, I remember the reachability traversal's
+> bringing in object names was a reason that we decided to implement this
+> series using a reachability traversal in the first place.
 
-When upgrading to a commit-graph with corrected commit dates from
-one without, there are a few things that need to be considered.
+Peff shared a very clever idea with me today. Like in the naive
+approach, we fill the list of "objects to pack" with everything in the
+packs that are about to get rolled up, excluding anything that appears
+in the large packs.
 
-When computing generation numbers for the new commit-graph file that
-expects to add the generation_data chunk with corrected commit
-dates, we need to ensure that the 'generation' member of the
-commit_graph_data struct is set to zero for these commits.
+But we do a reachability traversal whose starting points are all of the
+commits in the packs that are about to be rolled up, filling in the
+namehash of the objects we encounter along the way.
 
-Unfortunately, the fallback to use topological level for generation
-number when corrected commit dates are not available are causing us
-harm here: parsing commits notices that read_generation_data is
-false and populates 'generation' with the topological level.
+Like in the original version of this series, we'll stop early once we
+encounter an object in any of the frozen packs (which are marked as kept
+in core), and so we might not traverse through everything. But that's
+completely OK, since we know we have the right list of objects to pack
+(at worst, we would having some zero'd namehashes and come up with
+slightly worse deltas).
 
-The solution is to iterate through the commits, parse the commits
-to populate initial values, then reset the generation values to
-zero to trigger recalculation. This loop only occurs when the
-existing commit-graph data has no corrected commit dates.
+But, I think that this is a nice middle-ground (and it allows us to
+reuse lots of work from the original version), so I'm quite happy.
 
-While this improves our situation somewhat, we have not completely
-solved the issue for correctly computing generation numbers for mixed
-layers. That follows in the next change.
+It's in my fork [1] in the tb/geometric-repack.wip branch, but I'll try
+and clean those patches up tomorrow and send a v2 to the list.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+Thanks,
+Taylor
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 2790f70d113..ee8d5a0cdb4 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1036,7 +1036,8 @@ struct write_commit_graph_context {
- 		 split:1,
- 		 changed_paths:1,
- 		 order_by_pack:1,
--		 write_generation_data:1;
-+		 write_generation_data:1,
-+		 trust_generation_numbers:1;
- 
- 	struct topo_level_slab *topo_levels;
- 	const struct commit_graph_opts *opts;
-@@ -1508,6 +1509,15 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 		ctx->progress = start_delayed_progress(
- 					_("Computing commit graph generation numbers"),
- 					ctx->commits.nr);
-+
-+	if (!ctx->trust_generation_numbers) {
-+		for (i = 0; i < ctx->commits.nr; i++) {
-+			struct commit *c = ctx->commits.list[i];
-+			repo_parse_commit(ctx->r, c);
-+			commit_graph_data_at(c)->generation = GENERATION_NUMBER_ZERO;
-+		}
-+	}
-+
- 	for (i = 0; i < ctx->commits.nr; i++) {
- 		struct commit *c = ctx->commits.list[i];
- 		timestamp_t corrected_commit_date;
-@@ -2439,7 +2449,7 @@ int write_commit_graph(struct object_directory *odb,
- 	} else
- 		ctx->num_commit_graphs_after = 1;
- 
--	validate_mixed_generation_chain(ctx->r->objects->commit_graph);
-+	ctx->trust_generation_numbers = validate_mixed_generation_chain(ctx->r->objects->commit_graph);
- 
- 	compute_topological_levels(ctx);
- 	if (ctx->write_generation_data)
--- 
-gitgitgadget
-
+[1]: https://github.com/ttaylorr/git
