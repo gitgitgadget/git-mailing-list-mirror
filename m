@@ -2,94 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5AC2C433E0
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 20:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 995C0C433DB
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 21:25:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6040764E38
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 20:47:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D89664F92
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 21:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233668AbhBBUqu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 15:46:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52342 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233725AbhBBUqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 15:46:03 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7DD2C06174A
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 12:45:22 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id y14so12971485ljn.8
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 12:45:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sview-ru.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=zg6cz2H9VuAyWLKlebcG9qjUibnKoulPSqWiDQtXF24=;
-        b=VeuiEYPTcbfbSsLWbvuvryhRg1jGQNTIjaiEFKSn0SQWv2AqqRFj5kVuDCJvjMgbdW
-         biVAgUKCT8hviVhR0lG5pShXvh7dFBYNBNYzFzy1VVPFO3ZHePIvLvL6wjxS1Uw5aX9+
-         B4ZjrxQI1G/2k0TgKWLSbyG65hxXB+TYEzv3KqgJgipiSdUFWBhAJ2jFHpC+942rKr+T
-         myON9GyvaFFby+Up/D6wIi5dcT7CaXk7NKJchvhKGD3GM5iMF4yU+4p9bG3gmF3c2zks
-         7fJ8JCWppjc/5asjDhYjnAdnuBW8U4dMu9cQztiKT1SgdyLo3hsUzQPR+twZJMkl/bND
-         0Zug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=zg6cz2H9VuAyWLKlebcG9qjUibnKoulPSqWiDQtXF24=;
-        b=MTTKxUzVv8d4oueZk90zde+UFqXXlS2PZwEhGPeQZZQHRlE3EMzmr8rzajRvTaejNd
-         emdDh5b7iap3gQlnMWNV8kDgEa4eTG3P6geRjRxjfFU67T0GMvJYcNggEa97zjmZ3Gxi
-         ujhHV4czQkaHHYb55YcipvlQDGb94OVorXKyqAWrIPDTOz10RjZKvzNdkclY6MReFTmQ
-         TSbXdKYn9O1M51GxNw1qKv3OvNfB2+KlgI1HHuPVfPWcvLd47YjGEQsgTGs5bQK1cXXc
-         3oATg6eecF8aJjcdJxeJdY7TGvLPlTdLSx8hm6PSec6wBIE3gHeCSNfEytsoq9dqhf1M
-         n9FQ==
-X-Gm-Message-State: AOAM531dJ6eHUPAGQtKLa4LqeZNOrrbMRjD+xomYiUH2M+2d5jq+rO8a
-        HMVcjXKQVvhS2ozvlhD5D2hbNI8N5FB3R57Q
-X-Google-Smtp-Source: ABdhPJw+BMyDFT2xwRBmLEHNOQGI7/VPaB5f8Nlx3suX1qiDA6cu1WkBfdf6H+cWHko3wfd7LHlX6g==
-X-Received: by 2002:a2e:720d:: with SMTP id n13mr14841797ljc.220.1612298721118;
-        Tue, 02 Feb 2021 12:45:21 -0800 (PST)
-Received: from [10.73.4.226] (nnov.opencascade.com. [95.79.112.20])
-        by smtp.gmail.com with ESMTPSA id v84sm2564lfa.178.2021.02.02.12.45.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Feb 2021 12:45:20 -0800 (PST)
-Subject: Re: [PATCH] git-gui: fix blurry icon on macos taskbar
-To:     Pratyush Yadav <me@yadavpratyush.com>,
-        Kirill Gavrilov via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.941.git.git.1609937443534.gitgitgadget@gmail.com>
- <20210114182030.rnbvypttrknshclh@yadavpratyush.com>
-From:   Kirill Gavrilov <kirill@sview.ru>
-Message-ID: <154c779f-8d37-f4e7-c063-40fd05220b6a@sview.ru>
-Date:   Tue, 2 Feb 2021 23:45:18 +0300
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+        id S231423AbhBBVYy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 16:24:54 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56362 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231236AbhBBVYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 16:24:38 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 42066111737;
+        Tue,  2 Feb 2021 16:23:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=E1ZRBHcwY+ptnzB4ri6xq5xcw1s=; b=GcTJse
+        QcG2pV+TTq7P2asyBL9W/oRaosjheoOp/ASmYzIEcgvXVrZs58FGeNFP+au4g+PP
+        o6MHu0ycImSO7rySLHA80bzj6Pw+iXtFI/M7xvHSr+vzK07EL3NjyuHhQ/cxC689
+        d3f9x05I+6L1FBRK4iOhQe7e0CKKBowvmEJh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jdjBZIGJYeB5cKx8oX+0LGgfPe/rE1b5
+        rZ7GrmwSk5srpQ9+8dBBg3zzag1F5fCijLelO+zRN/ov5hhYtk13RssUCYT8nYOq
+        BTVbkTNid/tBdC83sZ1nXob3JKpmMzE1XR34E9o6Q+8XWQgcRmfh3jnfg2XoCL6C
+        9GbP7RELKDk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C1A5111736;
+        Tue,  2 Feb 2021 16:23:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7DE22111734;
+        Tue,  2 Feb 2021 16:23:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 01/11] p7519: use xargs -0 rather than -d in test
+References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
+        <cf252e24b8c4da19ee9f886a1ab9c9c391d89d66.1612216941.git.gitgitgadget@gmail.com>
+        <xmqqsg6fid57.fsf@gitster.c.googlers.com>
+        <b2c548b7-f641-2398-c200-d774af9cf628@jeffhostetler.com>
+Date:   Tue, 02 Feb 2021 13:23:50 -0800
+In-Reply-To: <b2c548b7-f641-2398-c200-d774af9cf628@jeffhostetler.com> (Jeff
+        Hostetler's message of "Tue, 2 Feb 2021 13:16:36 -0500")
+Message-ID: <xmqqpn1if9jt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210114182030.rnbvypttrknshclh@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2A796B2-659C-11EB-99AA-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Pratyush,
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> Ping. Do you plan to re-roll this patch with only a single PNG?
-I have prepared a patch that uses a single PNG image and also checked it 
-on Linux.
-And then I've realized that PNG loader has been added to Tcl 8.6, so 
-that version checks will be required for compatibility with older Tcl.
+> I'm not sure now that you mention it.  I suppose on modern filesystems
+> that have mtimes with nanosecond fields we could (are) assuming that
+> "touch" is actually doing something.  On older filesystems (such as
+> FAT32), you're right it is probably not doing anything at the speed
+> that the test runs.
 
-At the same time, macOS is shipped with an old Tcl 8.5 and binary 
-installer for git from "git-osx-installer" project used system Tcl...
-And system Tcl has been broken with macOS Big Sur 11.1 update (it worked 
-with macOS Big Sur 11.0) - that's why I've tested my patch with custom 
-built Tcl 8.6.
+That one is probably the most relevant nit among the ones I raised.
+I do not actually mind if we used test-chmtime to force our own
+timestamp (e.g. "5 seconds before the filesystem time"), and added
+the helper the "--stdin" option to read paths to work around the
+"xargs" issue.
 
-Best regards,
-Kirill
+> TBH I'm not sure that the test needs the "-h".  Symlinks are not that
+> common and it shouldn't affect the timings that much if there are a few.
+
+I agree.
+
+> I'm not sure what to do about "-0".  Not even "--null" is portable.
+
+Correct.  I do not think it is worth "digging", though.  I do not
+mind "ls-files -z | test-tool chmtime -600 --stdin -z" to lose
+xargs, but we already depend on GNU time to run t/perf, and it is
+not too far a stretch to require GNU xargs that knows "-0" or "-d".
+
+Thanks.
 
