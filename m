@@ -2,152 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E59E9C433DB
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF21C433E0
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 23:09:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B87C864F66
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 22:58:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 679D664E41
+	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 23:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235963AbhBBW5s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 17:57:48 -0500
-Received: from mout.gmx.net ([212.227.17.21]:59045 "EHLO mout.gmx.net"
+        id S236269AbhBBXJV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 18:09:21 -0500
+Received: from mout.gmx.net ([212.227.15.19]:42243 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235960AbhBBW5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 17:57:43 -0500
+        id S236266AbhBBXJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 18:09:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1612306566;
-        bh=bKpjoC5H8W+bbeoIFwXFXGxfvNhKYHtVM0WlxF61m5Q=;
+        s=badeba3b8450; t=1612307247;
+        bh=stGshHcGrPknRThQKBRHdVUu4cVhHtcAX/IR8NgYm/U=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LNrRTx5qI5J4aubFyQEh4CpQaLwGyXJzw0QVGniGwtRa9rNqN7abdQ+3haoGSMEvC
-         r3DR2BWu9OJDymj5waiOO4I0Kxc4x7dSoFuRIfBhcpuEaOqrpgGnFxt1Ugx9yXvmaD
-         XQd81TJCFPI4LjCXLpPST1YS4OJug8blRfJHTKTI=
+        b=SxgY9CJ56yCfo23krRJijkSqLffMWvWyZ0/wTybd2CF8QHL9FzN2g3aRp+SZi0OZf
+         xadjYm8AW7D/EGOwB8wDqHqyYyWhmMaabp0u9pVGC4yMJuAxykEL+GdCcyTwe4hHfA
+         WIXz1v2xPRuq62h8Q32NkCiB+SAvNAyodJ97d65s=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.95.40] ([89.1.214.8]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAwXh-1lDQOF1QW9-00BHHB; Tue, 02
- Feb 2021 23:56:06 +0100
-Date:   Tue, 2 Feb 2021 23:56:12 +0100 (CET)
+Received: from [172.19.95.40] ([89.1.214.8]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFKGZ-1l90ZK0aRV-00FnXx; Wed, 03
+ Feb 2021 00:07:27 +0100
+Date:   Wed, 3 Feb 2021 00:07:32 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Jeff Hostetler <git@jeffhostetler.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
         Chris Torek <chris.torek@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 04/14] pkt-line: optionally skip the flush packet in
- write_packetized_from_buf()
-In-Reply-To: <YBkf/KOv+YBZ5hQF@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2102022355590.54@tvgsbejvaqbjf.bet>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com> <pull.766.v2.git.1612208747.gitgitgadget@gmail.com> <0832f7d324da643d7a480111d693ff5559c2b7a7.1612208747.git.gitgitgadget@gmail.com> <YBkf/KOv+YBZ5hQF@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 00/14] Simple IPC Mechanism
+In-Reply-To: <1be67634-4188-9ef3-306c-72b78ea856b5@jeffhostetler.com>
+Message-ID: <nycvar.QRO.7.76.6.2102030003300.54@tvgsbejvaqbjf.bet>
+References: <pull.766.git.1610465492.gitgitgadget@gmail.com> <pull.766.v2.git.1612208747.gitgitgadget@gmail.com> <xmqq5z3bjuqs.fsf@gitster.c.googlers.com> <1be67634-4188-9ef3-306c-72b78ea856b5@jeffhostetler.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SBL2TZBHYzJbPRTjfUActUi8f+y5jLIyjYlCW/3K/zDsh9agTIA
- Hsc4Jpqo5ZrusvQ1JJLRTIMrPKzT6vkMw9E9slLny9iUhSJgYmmskoa/J3c+TQv/WwUs3zX
- OmwFXj7Ce5v9TnlDkx76zf4hY2c+Tjf9r04sviUv2zvdAOOeZw1o9q79TIMUwImmNxpJs2W
- bXTSXb2QB3gERriRR0ZeQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Hvvv23MCMG4=:/DSadMdqizQfVrJsqHjmkW
- 2T0fdERgs0ZgG84Etz4qFfgvM3D1uZ0Ke+xrNNmnZBaozQ9YKl0+xLL8NdvCoo+RmIsrmioq0
- TGTu3Xd6TrDfFXNSaWPymVJDsxCHoNGzCMti+EVoVS6GspnS/4kDNT8umAD8Pvg4EcQYYiDZf
- rj0lwoZoQBTybwArClI1r9Nu90J+gueMqoszQRokUi02U+/EfAKkI6RApntIbYjtQQ9jOnEsO
- yWITNqI26RVDSzPKlxpvwyc8forq8s28KjsFOsim6u1kuU89jDgNC35Vz65eUldM2U1w0isVq
- 1fAh1hnkZyTiTjQAuXhqzNeztvU+jCAArJKFyNVZd28HcsNF8tk0plL8enRvxzlngAFiPQ7Ai
- bffa0SIyTo4tfqEncVTPIvEkLqVILD1FeQ41WXVlAvf9TZU4q0JuhsjfnWOgJddWYujE8rzeV
- gVv9bTv63dzCAKIOwGgC9lXt48VUA7kfuDvYnDN7GgVVmgvO9ZwUfAZU5GEwCSZ5FD5zoBcKJ
- dvggna5DYZs+uhXnaV88blWUTVcvXRLGAurV/Avr771WIUANQ2qUaoA3BS0DuPzs628kO0CCe
- 7wCV2lqtkHXn5vltR90P6SUnnGKU8xaz64RaMr4J0LtLgxrCF8iJ4Dp8DIyUHwIqzVH3LHh6f
- 64LGEvbbhLmwFk0fOrx8XrSMGez3ALsaU9pIzQxguPpKUpAm8NhBB5zEfy0NG/qBHSDEv2fTr
- L7W2BY+qsCyHAgRRYKRRgdnOuYSLkFbLmc/JtkTi4EUgl3z+CPqEHn3cMuqmSUpett4/By8P4
- EToMnZD83yqgJm/yxSBmxNk4dQ9943TV+epaGTpinFznobC3Ako72i0GdP4OtvGB4nWMXgcDI
- s1+LpjVEE2Oez5YmjUu1vF3w33GAT/Nf5K/TfarEE=
+X-Provags-ID: V03:K1:O1zXTlPu6UiF5rWEVr8gtNsd4fLITejARJBWze3xx6QIetC2eg7
+ 3DHLEGsY18naIMZZWsxnLwjOds+0uk8LTeZPR+1YYJjwQRUtC80at8uzQmBA3He5InMxXD9
+ HWtlTwGEMYoqfppI5yJ1sbDs16x8AlQNAa6rFh6svBH2JN1QlQmPiULj1CTGmCC8ntttR/T
+ SIg5z3urPVTrMNYixVFIQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Cuv6mBGyqDc=:Wmco/EU6gKB1Aws15EQeWb
+ or1EDXrs9eV2sWqZwVkXHOYz8e2TnjGOuEACw2ILvc3Auipft5H5QkpIdFP8cGLdpA7fU01hk
+ cvt0qCTPLknMvLnbYKzOnPIKlhR7k0IIyAXNFr4GPTM59/H1dxkMQ+25WcNd2uI5GDhFxVCY5
+ 3sM9VXUBw1rXeBpnsY/vgrfuNnUjvsyuIrN4x6+J3KmyrVl2ZpWqxrg0wvjGRLw96qe5h41yL
+ 9JCRMpKhPjJmQwR0l/XowgutrG/zL5qxOaGmmByH/IsFwrPzpoqS1bChLWeVI9vnn6iNWD5uW
+ 74Rj/P5QWfe4Ty+Sd7L0IchOyDAgqR2zN/IWZwWLGM11/gvl9RqWxOHMxOJXXeD6nE54rj08+
+ Of9aeQ++ZxxwNaN1cHbboYwUw6bpu1uBEgKm+y8BPT/IbzmOTV1OHl1ZDb2j2qgKir07eS1XD
+ FcowGlwcLtcfKT+rQUxMI3s0b4B1+aw8+Vn3tMRqYJdooSKLmvBGQn7ZwKtkSx6hGF7WpGpTa
+ Tv/U8yrjHss1Z0lY29fan9jsDvYOGcdE2dq8yZ9dJxP3J6co9eJaAMC4PVigyfew93TIUdsaV
+ rT03y8ZJ9YW3SzvXgqz9NActXWC9BsJhlA0YnTFmulsEPaYhkDQznpUOLIpKoARK+r05cV0Su
+ ig/NiZV9AMYQyLehe7xiQfgKdEAB+SNKoBxhG2PqD84VahLhXsZ3QaiMK/rKXsx+S6uUwVzed
+ /c1n+qHC4q8hzfBkiJOzwNqa1AGIFHqI+RMcGNiDv6Lk6n7uIXk24yE72dMXHboLpF+PHYFhS
+ 0XaXqSY53/V50/ZZ1AZuXTVo9IBEne6VpPQ2its+1tsrl2KhvtY2Lq+76sWjoz2z/3BV16Dkq
+ YIlWN7l/0zCs40luKHQujcgMbYa+ubV19opaYdpXA=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio & Jeff,
 
+On Mon, 1 Feb 2021, Jeff Hostetler wrote:
 
-On Tue, 2 Feb 2021, Jeff King wrote:
-
-> On Mon, Feb 01, 2021 at 07:45:37PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On 2/1/21 5:20 PM, Junio C Hamano wrote:
+> > "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > >
-> > This function currently has only one caller: `apply_multi_file_filter(=
-)`
-> > in `convert.c`. That caller wants a flush packet to be written after
-> > writing the payload.
+> > > Here is version 2 of my "Simple IPC" series and addresses the follow=
+ing
+> > > review comments:
+> > > ...
+> > > Junio C Hamano (1):
+> > >    ci/install-depends: attempt to fix "brew cask" stuff
 > >
-> > However, we are about to introduce a user that wants to write many
-> > packets before a final flush packet, so let's extend this function to
-> > prepare for that scenario.
+> > Huh?
+> >
 >
-> I think this is a sign that the function is not very well-designed in
-> the first place. It seems like the code would be easier to understand
-> overall if that caller just explicitly did the flush itself. It even
-> already does so in other cases!
->
-> Something like (untested):
+> Sorry.  I had to prepend that one to the patch series to get the
+> CI builds to run.  I've been working rebased against "v2.30.0" and
+> GitGitGadget references "master".
 
-Fine by me.
+The idea being that we want to be able to merge this branch as-is into Git
+for Windows (and also into microsoft/git), and therefore do not want to
+base it on a later commit that is not reachable from git-for-windows/git's
+`main` branch.
 
-Thanks,
+Maybe it is time to merge `jc/macos-install-dependencies-fix` down to
+`maint`? Then we could base Simple IPC/FSMonitor on `maint` instead, and
+would still have the benefit we want.
+
+Ciao,
 Dscho
-
->
->  convert.c  | 4 ++++
->  pkt-line.c | 4 ----
->  2 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/convert.c b/convert.c
-> index ee360c2f07..3968ac37b9 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -890,6 +890,10 @@ static int apply_multi_file_filter(const char *path=
-, const char *src, size_t len
->  	if (err)
->  		goto done;
->
-> +	err =3D packet_flush_gently(process->in);
-> +	if (err)
-> +		goto done;
-> +
->  	err =3D subprocess_read_status(process->out, &filter_status);
->  	if (err)
->  		goto done;
-> diff --git a/pkt-line.c b/pkt-line.c
-> index d633005ef7..014520a9c2 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -256,8 +256,6 @@ int write_packetized_from_fd(int fd_in, int fd_out)
->  			break;
->  		err =3D packet_write_gently(fd_out, buf, bytes_to_write);
->  	}
-> -	if (!err)
-> -		err =3D packet_flush_gently(fd_out);
->  	return err;
->  }
->
-> @@ -277,8 +275,6 @@ int write_packetized_from_buf(const char *src_in, si=
-ze_t len, int fd_out)
->  		err =3D packet_write_gently(fd_out, src_in + bytes_written, bytes_to_=
-write);
->  		bytes_written +=3D bytes_to_write;
->  	}
-> -	if (!err)
-> -		err =3D packet_flush_gently(fd_out);
->  	return err;
->  }
->
->
-> -Peff
->
