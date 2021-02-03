@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A849C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B72FC433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:30:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5DA0F64F74
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:30:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55D8464F72
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232972AbhBCDa1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:30:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
+        id S232493AbhBCDab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:30:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232775AbhBCD3y (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232779AbhBCD3y (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Feb 2021 22:29:54 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6130C0617AB
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:32 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id 7so22600127wrz.0
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:32 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8098C061352
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:34 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id v15so22606094wrx.4
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HC+ZzBrGlToRVJblAhAifGzgXh5aWhNRfQs9vvFZNGw=;
-        b=QhYQK31taUXcIY1it9oT0slnXvbUqRCggUc1BpjgZi/4FTk5UW1wpqMncFSbpftPx2
-         6LgCuEo8PbY+dFmRLUyA2ZKCNVn85Za1+IxGpDA6aIcpaFJD9RmH6bcGO9n/de3QLIG3
-         zAMxWPKjTehYghne+gd5VnRYHoATWwYDf6mhmlgte9OQM1V1nMiYeezbPqKX/uyvQQjH
-         DEvqoBvQFk3yvINFiFwLeSTSTVUGnHnH7Md0ijrA33JyK7H9G8Ilh48Q8ZmrLxWvVqX3
-         h6FaBpmJmFwqMHJDrjPIk68+lIi5tV4pBhh6T/m4b3cmw0L83qisiK9rGAV5ZBaBEFG+
-         chfQ==
+        bh=9b9RieoyOdD0CIVbhSBytPUXJeqtwuDtxmewDnHnx70=;
+        b=JjKb+ijz9T1Hbcqy1Ydsy8o34jY/n6bfaX4lk/1lP92oVuyyh6Ila/+2/U8znlR/3/
+         fmh3TREBqGFYrxYJpG4y2l751Zt+V3qJ2wBfIoFpyrLNES3ImuT28Y7M3ogTGK9t82TU
+         NGlle0cl4vaBy95EE2713aKafI/+kFuasDz+psK9bO5TLpodE05k5MsYUBl0DJ+Qht0Z
+         2tvMrXECrtEr1+a+xMNFFYuZFMJrTIzj0I5VhyA/Ibl6j8lNZX5/eXUwsT0h6bEhf+K9
+         ZQVDlTp/TKs/n14jB/Q+1ERLhHrBcu6kiUizdnKtY89MNtVvu7YjXPUzt4xkXOdISb8u
+         Z4aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HC+ZzBrGlToRVJblAhAifGzgXh5aWhNRfQs9vvFZNGw=;
-        b=HH9IrJm16B7DwvmeTySqcIGrtIKb16S/H/9HyH4+Fw+p8WoHd7S5iOg3UgH1z+7x3R
-         +FdsrTHuJJhUeTRAJjEsYmKIm6Nb1iFwQ5Cbn9VxiUK0eDuv+vO5bWnveN+L8eAd1NtA
-         kavx5PVuRgbOl9O+FUo2o7+w9Pz9DFIiBbD6ZoP3fnKuBiQjrRT/sOuGpjhA29DLlkSU
-         zd/fnwik1iKrrNmCYIc7gYH+8LJNhm3yaSVLx03d44PlSbYG2uKHAbizS6b76TUxDqAX
-         glWn45YjFfDktZrZ2jR0dwVt4seJyn2Ok7Ai5wlwIzC2e8LbMK45zGubCAyib8q50bjB
-         M3hQ==
-X-Gm-Message-State: AOAM532GJqVGPewuQ4PY/HEKxCyrWsiIaKWPpqdjTMxjC0aex9UXq42m
-        Fpac20KEZmDEWhhSSDxM+MPA9tx+brQphg==
-X-Google-Smtp-Source: ABdhPJyxH5bTtppoUk6MRB4Ugmh5bu2BlwchZqJwwarhQsErby6QXC1nAXYp3MdWAr/uwb3Jm7GO4g==
-X-Received: by 2002:adf:9226:: with SMTP id 35mr1069840wrj.408.1612322911353;
-        Tue, 02 Feb 2021 19:28:31 -0800 (PST)
+        bh=9b9RieoyOdD0CIVbhSBytPUXJeqtwuDtxmewDnHnx70=;
+        b=nBmxMF4v0leH2eA5IEqC0M4wZ41fbqCvHstXw9cFhD13Tj9qxe9GbOlphw3Rt/ZXOn
+         048ebdU++qkIXAEJpLodSvb71LABatD6UojIPS7fG6DMUPRiy7IFecgOFVLw2iUctO1U
+         xOXiDWpYO5V3eSuuE2yZM78NrY2QsAdgQWQUP/zRpIpBJPghRKX2wQgbZGZCcxCHwG0H
+         ZI2nes26PyUQbhp9sK50y4WbhEKw4eCQP1dkebI33iCy5UziPEFWjxzXWgpK5e9TOwh4
+         uDi05XJmJd9g7AFsYs9B358YZ4pIs2Cz3dJwGdhhKdVrJHuyTNrfPJlvpKs4Ng6VGUfk
+         Yc+Q==
+X-Gm-Message-State: AOAM531tLigTKhXfPy3WOBq4nI2VmT83E91HKszZ5mhxTve4swamZXHE
+        4rz1XK3Zo4M4RREx/kRogr1ZpVYkYUGHDA==
+X-Google-Smtp-Source: ABdhPJyznwIb3bt0pJLAhR15GK3jtCti3jNnzbIlwhkuDPeW7lsOd/3fdSZeoHde7Jx234UeMcZ72g==
+X-Received: by 2002:a05:6000:1547:: with SMTP id 7mr1045140wry.301.1612322913365;
+        Tue, 02 Feb 2021 19:28:33 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.30
+        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 19:28:30 -0800 (PST)
+        Tue, 02 Feb 2021 19:28:32 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/25] pickaxe -S: remove redundant "sz" check in while-loop
-Date:   Wed,  3 Feb 2021 04:28:00 +0100
-Message-Id: <20210203032811.14979-15-avarab@gmail.com>
+Subject: [PATCH 16/25] pickaxe tests: add test for diffgrep_consume() internals
+Date:   Wed,  3 Feb 2021 04:28:02 +0100
+Message-Id: <20210203032811.14979-17-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
 References: <20210203032811.14979-1-avarab@gmail.com>
@@ -78,40 +78,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we walk to the end of the string we just won't match the rest of
-the regex. This removes an optimization for simplicity's sake. In
-subsequent commits we'll alter this code more, and not having to think
-about this condition makes it easier to read.
+In diffgrep_consume() we generate a diff, and then advance past the
+"+" or "-" at the start of the line for matching. This has been done
+ever since the code was added in f506b8e8b5f (git log/diff: add
+-G<regexp> that greps in the patch text, 2010-08-23).
 
-If we look at the context of what we're doing here the last thing we
-need to be worried about is one extra regex match. The real problem is
-that we keep matching after it's clear that the number of contains()
-for "A" and "B" is different. So we could be much smarter here.
+If we match "line" instead of "line + 1" no tests fail, i.e. we've got
+zero coverage for whether any of our searches match the beginning of
+the line or not. Let's add a test for this.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diffcore-pickaxe.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ t/t4209-log-pickaxe.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 208177bb40..8df76afb6e 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -82,12 +82,11 @@ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws)
- 		regmatch_t regmatch;
- 		int flags = 0;
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index bd42848871..ebd51f498b 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -106,6 +106,21 @@ test_expect_success 'log -S --no-textconv (missing textconv tool)' '
+ 	rm .gitattributes
+ '
  
--		while (sz &&
--		       !regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
-+		while (!regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
- 			flags |= REG_NOTBOL;
- 			data += regmatch.rm_eo;
- 			sz -= regmatch.rm_eo;
--			if (sz && regmatch.rm_so == regmatch.rm_eo) {
-+			if (regmatch.rm_so == regmatch.rm_eo) {
- 				data++;
- 				sz--;
- 			}
++test_expect_success 'setup log -[GS] plain' '
++	test_create_repo GS-plain &&
++	test_commit -C GS-plain --append A data.bin "a" &&
++	test_commit -C GS-plain --append B data.bin "a a" &&
++	test_commit -C GS-plain C data.bin "" &&
++	git -C GS-plain log >full-log
++'
++
++test_expect_success 'log -G trims diff new/old [-+]' '
++	git -C GS-plain log -G"[+-]a" >log &&
++	test_must_be_empty log &&
++	git -C GS-plain log -G"^a" >log &&
++	test_cmp log full-log
++'
++
+ test_expect_success 'setup log -[GS] binary & --text' '
+ 	test_create_repo GS-bin-txt &&
+ 	test_commit -C GS-bin-txt --append A data.bin "a\na\0a\n" &&
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
