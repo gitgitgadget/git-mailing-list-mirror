@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83C5BC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70D11C433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:39:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 420BA64F58
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:38:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17D6E64DF6
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234440AbhBCPij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 10:38:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41426 "EHLO
+        id S234598AbhBCPiu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 10:38:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234463AbhBCPgR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234467AbhBCPgR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 3 Feb 2021 10:36:17 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40ABDC06178A
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:34:55 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id c12so24873424wrc.7
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:34:55 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255D0C06178B
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:34:56 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id a1so24872580wrq.6
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:34:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lqKy4hVMWrTskZKeFtm7FEKoU1VgE+JBqwUCMTIqmOc=;
-        b=Hikr5YIWfEm8+My0Mr97/7LizCoq9h9FYhJFUT1zg9jkLhHKI3n7R8oKI/o3sEjvbK
-         zjQPImB/nC5BYdNk40YFPf+DaPHb9yZ3TcR29rw2m7yV5qwo4LTc+CmRBEWSARYKKQig
-         XruYR1IeOMhOPg1hA84VPoVg2Kd4FlHh2zrvj9MW+MBih3p7b5IELxKXC58WlysKOqtv
-         IFMhK8ttswfYCgv/iX8h1X4xmfDD+Pb6GjqLov5OvH9AheqpHGVm9SmlOkQgK8SUSIzp
-         UObSZCprAcIvFoGqe2POcrigZnVzs9gGa5nUPi2qwNpgYX2e2L4wPc2cqHwwgCqHS3a8
-         6HWw==
+        bh=33gxJd1Jklf/uB/iz/5tsYS9j18tcal8oRvrrvPdTOw=;
+        b=hbdLGhzWf+qvVV+xb9EL17bjnfs6OTh/lBsRqArzvse+gMganj1SYoU0kdRIebqs3r
+         x7SVRIyXPIjfbdaEydM7YvyaAtr9y0BXcr2Lkmbfr3rDwZ38Ju4LaWE3uoBbzbWLcfx8
+         v9L57gK7ifAFae5MmGO6DnenmKZWvGa/UGv03lSmAjOFB90zH4KT6CzUhmaf1OQrSb2r
+         r8d01h+U1HDF4qeC5aYtR7Fq09OFgCEAceqRCtkrlod0qzpT4nS1ej+zGZyGR9grX2ti
+         b5DG558AcgoyBLlvxwrhJjwshalxbb2tQao59jwrw0te0gnVHSGaNcABLUFRTjHHSULU
+         lpdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lqKy4hVMWrTskZKeFtm7FEKoU1VgE+JBqwUCMTIqmOc=;
-        b=Fzn18xUs973JVn9TeiLorTdDznN5qq4KEn5ToYFobGFFsJWcaPvfbN6haNT8iQhBja
-         +q2pbdDQTInAYScCazCnsp8PfFKpQn7vthHdSnAD0BM6wZX5490gVcNGgynut0z53AYl
-         nojHZosbLxVvVFh/Yby43lecpgJm0Ji1pcnjlaxAKrm6/DckU4aCQVckKyFodgiww5W5
-         pOOEYK2ARLo7utI8+Q40ut1hTTtlaSxfJZCHu+JW5Y7ao3oj+zC+U2GlM6eF0KwxQU24
-         H/LDAK5TcqJS5WtPBZuOnVWdNLaTgDOhc6hnsJVNytVUFKQX2VmAkmEVri+fMMS5F0tq
-         k1Vw==
-X-Gm-Message-State: AOAM531Bb4Mrhd7XxmUQd8/8N0UpbUt3ieVn+fKFUwFbgcoVMPBRwa6i
-        4tsErDxH01APkrAV+N7chTMVjYvp6l4=
-X-Google-Smtp-Source: ABdhPJyhbGQLLi7kaxs7HmSEZCCwMkA6SIaS1k+1GnxV2gQ/ZMN3yqWrC+4hxewf0RgI5UnSZB1mSA==
-X-Received: by 2002:a5d:6282:: with SMTP id k2mr4307182wru.159.1612366493880;
-        Wed, 03 Feb 2021 07:34:53 -0800 (PST)
+        bh=33gxJd1Jklf/uB/iz/5tsYS9j18tcal8oRvrrvPdTOw=;
+        b=cB3q3FGjml8iWPUG1wNLlJFux46QeC2w6vN+bH3zDj8ONgSaIDV+qqDSyPXvTBkPZA
+         f/1pBjcmh1oHPhrnm7yfydiDEl1nqb6splg9H3bju4AE1Gr0rqm1iWBhzcBM06tVE794
+         35/pHFXiah8otV/qCTuywQNeMri4Sh/BafRUzVgjCX2SvLY2XPazZpuUey6JbL7WNPBX
+         GHlQxWCsNMBOSIs/YmCsuGGQ0OHmHr+4HMoLiJdvpks3JHQrbMjEfuachccbhhLp0s5w
+         bPBDycGJZGXtgOaFcNknTikl3sYg8BbKtyAQL87sNUyQXEazkmIUEHHc6J3mzXFO4hSJ
+         IzTQ==
+X-Gm-Message-State: AOAM533GGeAqYbGofmCeyQtEFCVsk1+XVDJWmw6SbtZMS2yujf6emM7V
+        XSiVsXv4E/xXXcnHk9lLpAxIhJ/976k=
+X-Google-Smtp-Source: ABdhPJzOnPM/HHj0cGdkWeT85o5vZ2c/Y9onb1zTZmVTp/+k5BB9dDl6rbxpsgUWIMiJZuSsx2IWZw==
+X-Received: by 2002:a5d:4a0d:: with SMTP id m13mr4192434wrq.395.1612366494773;
+        Wed, 03 Feb 2021 07:34:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c62sm3162762wmd.43.2021.02.03.07.34.52
+        by smtp.gmail.com with ESMTPSA id a24sm2269797wmj.23.2021.02.03.07.34.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 07:34:53 -0800 (PST)
-Message-Id: <e570f7316cce4d3cd6cedbb551124b7b317f11d3.1612366490.git.gitgitgadget@gmail.com>
+        Wed, 03 Feb 2021 07:34:54 -0800 (PST)
+Message-Id: <3042fc92fe6d5ff05fd2e4ac96ef936a69b2a2ff.1612366490.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
 References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
         <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 Feb 2021 15:34:40 +0000
-Subject: [PATCH v2 01/11] p7519: do not rely on "xargs -d" in test
+Date:   Wed, 03 Feb 2021 15:34:41 +0000
+Subject: [PATCH v2 02/11] p7519: fix watchman watch-list test on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,44 +76,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Convert the test to use a more portable method to update the mtime on a
-large number of files under version control.
+Only use the final portion of the test trash directory file name
+when verifying that Watchman was started.
 
-The Mac version of xargs does not support the "-d" option.
-Likewise, the "-0" and "--null" options are not portable.
-
-Furthermore, use `test-tool chmtime` rather than `touch` to update the
-mtime to ensure that it is actually updated (especially on file systems
-with only whole second resolution).
+On Windows and under the SDK, $GIT_WORKTREE is a cygwin-style
+path with forward slashes and a "/c/" drive name.  However
+`watchman watch-list` reports a proper Windows-style pathname
+with drive letters and backslashes.  This causes the grep to
+fail.  Since we don't really care about the full pathname (and
+we really don't want to bother with normalizaing them), just see
+if the test-name portion of the path is found.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p7519-fsmonitor.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ t/perf/p7519-fsmonitor.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 9b43342806b..6677e0ef7ab 100755
+index 6677e0ef7ab..21d525541d5 100755
 --- a/t/perf/p7519-fsmonitor.sh
 +++ b/t/perf/p7519-fsmonitor.sh
-@@ -164,8 +164,18 @@ test_fsmonitor_suite() {
- 		git status -uall
- 	'
- 
-+	# Update the mtimes on upto 100k files to make status think
-+	# that they are dirty.  For simplicity, omit any files with
-+	# LFs (i.e. anything that ls-files thinks it needs to dquote).
-+	# Then fully backslash-quote the paths to capture any
-+	# whitespace so that they pass thru xargs properly.
-+	#
- 	test_perf_w_drop_caches "status (dirty) ($DESC)" '
--		git ls-files | head -100000 | xargs -d "\n" touch -h &&
-+		git ls-files | \
-+			head -100000 | \
-+			grep -v \" | \
-+			sed '\''s/\(.\)/\\\1/g'\'' | \
-+			xargs test-tool chmtime -300 &&
- 		git status
- 	'
+@@ -101,7 +101,7 @@ test_expect_success "one time repo setup" '
+ 	# If Watchman exists, watch the work tree and attempt a query.
+ 	if test_have_prereq WATCHMAN; then
+ 		watchman watch "$GIT_WORK_TREE" &&
+-		watchman watch-list | grep -q -F "$GIT_WORK_TREE"
++		watchman watch-list | grep -q -F "p7519-fsmonitor"
+ 	fi
+ '
  
 -- 
 gitgitgadget
