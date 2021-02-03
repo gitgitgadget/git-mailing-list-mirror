@@ -2,199 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0EBCC433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3048BC433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:07:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 973AE64F6C
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:04:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4D2264F68
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231638AbhBCUEv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 15:04:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231759AbhBCUEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 15:04:37 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77666C06178B
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 12:03:53 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id z6so652375wrq.10
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 12:03:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=yfDtjcJ1TJXIGMyNUMt1kQBPOnO99QJK9uriR9Vve44=;
-        b=rRedbHH3047FMa9nZg+WVmrL9mP1GRNpwQFNdlVxsIywNohrXT6PVeGiQd/aCmHRpp
-         qkxPZC+jLwOL6s1f1Nrua9SOZRFdcPgh9MB4xByO5KYsFCB/YjGvxsOKDGl6qhUUOyT9
-         vDkmAvVuISFqpaxzT0Klk0oWKz4oktI+Cmlg80wbKdkUuhyZWjxsi4Jy0eJRNHeQHxwq
-         UAEZooa1KfmESOsG41/VdrKeNCeUbTZzc8YLrZn/4P5kjylwwGoDipAZCiDHLuEZa/Ve
-         klew5ya13d7WZZkrYSI7eeAUWpnC52R/q5itjzIg8ve57OQk2kfSVrbeT9nNDje97xEn
-         O3cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=yfDtjcJ1TJXIGMyNUMt1kQBPOnO99QJK9uriR9Vve44=;
-        b=CQ4xLi/d1pOu3ZBptrzyeinMxmdC6H0RWJcy95/uP7QRn1SjpH9nJRkleFzsUVS/Wv
-         u1dfLpxr0A2drYT7GEHi4gpgU3BhRb5CykSZA/rni5AS9yKMMItwueXNyvsY/r7S9b+j
-         QxqNq7W7ay6ITzTmBdZEySTI7EnAdmsbrcRLUPByZAiiSIrUn/aF2ll7odnYt66ydAlG
-         M73XNFrF20QlbIBg8oZl0Qc2ioIx0plY3fZd1AyEItfdQ1ODL55RVnfXSb9iCUyB/lIe
-         C6Me1s7yroJZSNgVHxN+2hlaRpl9izNpmeGTyYRfQVQVFLuwYqRS5FKgl3KRjfc+yrRG
-         hmLA==
-X-Gm-Message-State: AOAM532Ns9J/1MWfgTBO2FbCuzHJMcq5TodJoMfDNE5GyKhuNOwO6IQJ
-        KXoQS8UdsuCT60mXbvLurwUEOPmSIi0=
-X-Google-Smtp-Source: ABdhPJxofSpWmJbaYd61CpmYnJOHK3VYUxaua6/SzMnYxZyPbtZ90FObG8276b75PPMDGeIpUwXf7w==
-X-Received: by 2002:a05:6000:1788:: with SMTP id e8mr5444700wrg.171.1612382632013;
-        Wed, 03 Feb 2021 12:03:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z1sm4970563wrp.62.2021.02.03.12.03.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 12:03:51 -0800 (PST)
-Message-Id: <7ae9460d3dba84122c2674b46e4339b9d42bdedd.1612382628.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.842.v2.git.1612382628.gitgitgadget@gmail.com>
-References: <pull.842.git.1612331345.gitgitgadget@gmail.com>
-        <pull.842.v2.git.1612382628.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 Feb 2021 20:03:47 +0000
-Subject: [PATCH v2 2/2] diffcore-rename: filter rename_src list when possible
+        id S231335AbhBCUHe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 15:07:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62488 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231194AbhBCUHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 15:07:30 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 08686ABC42;
+        Wed,  3 Feb 2021 15:06:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4fK+IyyIj+Rmgx33UWPXPX+CP/g=; b=ID5Wcx
+        svPTa4SfVuXg/j2FWwhTbJdnQsVC7pc9lKQ/iPmEoc3EqmcpOIj/q3e0rzmgzYZ8
+        i5EuypYdwXBP9+FmhP2YXA4DBhZnXy51xNIjwEPYWYmNpjbXOXF3tMtVb38G4ojI
+        USR4gakFSE9Pq066NxOdK7lQFUz3y9envjK14=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fA1ml++rXY/cqVorTMklogxtPBJgwnqr
+        boDp/ZHOqMiXkrAYWe+Vxo9LRok3jvRVNs+Vc33qvPsMJ1MeKqnfpoT0rY8bp0qt
+        6lgxyOQ4ckbTTOrSE2CRMlVRuqf8mA/r9kXbUHuptleWdJPDztHNFH8/SRu36DfI
+        IqBiNQf3CUk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F3336ABC40;
+        Wed,  3 Feb 2021 15:06:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 75B75ABC3F;
+        Wed,  3 Feb 2021 15:06:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Feiyang via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Feiyang <github@feiyangxue.com>,
+        Feiynag Xue <fxue@roku.com>, Luke Diamand <luke@diamand.org>,
+        Yang Zhao <yang.zhao@skyboxlabs.com>
+Subject: Re: [PATCH] git-p4: remove deprecated function "encodeWithUTF8()"
+References: <pull.862.git.1612371471347.gitgitgadget@gmail.com>
+Date:   Wed, 03 Feb 2021 12:06:46 -0800
+In-Reply-To: <pull.862.git.1612371471347.gitgitgadget@gmail.com> (Feiyang via
+        GitGitGadget's message of "Wed, 03 Feb 2021 16:57:50 +0000")
+Message-ID: <xmqqtuqsc3vt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Karsten Blees <blees@dcon.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5855B926-665B-11EB-ADE1-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+"Feiyang via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-We have to look at each entry in rename_src a total of rename_dst_nr
-times.  When we're not detecting copies, any exact renames or ignorable
-rename paths will just be skipped over.  While checking that these can
-be skipped over is a relatively cheap check, it's still a waste of time
-to do that check more than once, let alone rename_dst_nr times.  When
-rename_src_nr is a few thousand times bigger than the number of relevant
-sources (such as when cherry-picking a commit that only touched a
-handful of files, but from a side of history that has different names
-for some high level directories), this time can add up.
+> From: Feiynag Xue <fxue@roku.com>
+>
+> commit d38208a297e76bbfbfa8e485632c217aaafa9486 introduced function "decode_path()" to replace "encodeWithUTF8()". This old function "encodeWithUTF8()" no longer has reference by any code in this file.
+>
+> Signed-off-by: Feiynag Xue <fxue@roku.com>
 
-First make an initial pass over the rename_src array and move all the
-relevant entries to the front, so that we can iterate over just those
-relevant entries.
+ - Please line-wrap your log message to reasonable length, like around
+   70 columns.
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+ - We refer to an existing commit like this: d38208a2 (git-p4:
+   convert path to unicode before processing them, 2019-12-13)
 
-                            Before                  After
-    no-renames:       14.119 s ±  0.101 s    13.815 s ±  0.062 s
-    mega-renames:   1802.044 s ±  0.828 s  1799.937 s ±  0.493 s
-    just-one-mega:    51.391 s ±  0.028 s    51.289 s ±  0.019 s
+   You can ask "git show -s --pretty=reference d38208a2" to produce
+   such a string with versions of Git that are recent enough (like
+   v2.25 or newer), or --pretty='format:%h (%s, %ad)' can be used
+   instead of --pretty=reference for older version of Git.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore-rename.c | 57 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 51 insertions(+), 6 deletions(-)
+ - Please Cc: those who are likely to know the area to ask for their
+   reviews.  This patch addresses a fallout from an existing commit,
+   and its author would be a good candidate.
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 8b118628b4e..74930716e70 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -454,6 +454,54 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
- 	return count;
- }
- 
-+static void remove_unneeded_paths_from_src(int detecting_copies)
-+{
-+	int i, new_num_src;
-+
-+	if (detecting_copies)
-+		return; /* nothing to remove */
-+	if (break_idx)
-+		return; /* culling incompatbile with break detection */
-+
-+	/*
-+	 * Note on reasons why we cull unneeded sources but not destinations:
-+	 *   1) Pairings are stored in rename_dst (not rename_src), which we
-+	 *      need to keep around.  So, we just can't cull rename_dst even
-+	 *      if we wanted to.  But doing so wouldn't help because...
-+	 *
-+	 *   2) There is a matrix pairwise comparison that follows the
-+	 *      "Performing inexact rename detection" progress message.
-+	 *      Iterating over the destinations is done in the outer loop,
-+	 *      hence we only iterate over each of those once and we can
-+	 *      easily skip the outer loop early if the destination isn't
-+	 *      relevant.  That's only one check per destination path to
-+	 *      skip.
-+	 *
-+	 *      By contrast, the sources are iterated in the inner loop; if
-+	 *      we check whether a source can be skipped, then we'll be
-+	 *      checking it N separate times, once for each destination.
-+	 *      We don't want to have to iterate over known-not-needed
-+	 *      sources N times each, so avoid that by removing the sources
-+	 *      from rename_src here.
-+	 */
-+	for (i = 0, new_num_src = 0; i < rename_src_nr; i++) {
-+		/*
-+		 * renames are stored in rename_dst, so if a rename has
-+		 * already been detected using this source, we can just
-+		 * remove the source knowing rename_dst has its info.
-+		 */
-+		if (rename_src[i].p->one->rename_used)
-+			continue;
-+
-+		if (new_num_src < i)
-+			memcpy(&rename_src[new_num_src], &rename_src[i],
-+			       sizeof(struct diff_rename_src));
-+		new_num_src++;
-+	}
-+
-+	rename_src_nr = new_num_src;
-+}
-+
- void diffcore_rename(struct diff_options *options)
- {
- 	int detect_rename = options->detect_rename;
-@@ -530,13 +578,11 @@ void diffcore_rename(struct diff_options *options)
- 		goto cleanup;
- 
- 	/*
--	 * Calculate how many renames are left (but all the source
--	 * files still remain as options for rename/copies!)
-+	 * Calculate how many renames are left
- 	 */
- 	num_destinations = (rename_dst_nr - rename_count);
-+	remove_unneeded_paths_from_src(want_copies);
- 	num_sources = rename_src_nr;
--	if (!want_copies)
--		num_sources -= rename_count;
- 
- 	/* All done? */
- 	if (!num_destinations || !num_sources)
-@@ -578,8 +624,7 @@ void diffcore_rename(struct diff_options *options)
- 			struct diff_filespec *one = rename_src[j].p->one;
- 			struct diff_score this_src;
- 
--			if (one->rename_used && !want_copies)
--				continue;
-+			assert(!one->rename_used || want_copies || break_idx);
- 
- 			if (skip_unmodified &&
- 			    diff_unmodified_pair(rename_src[j].p))
--- 
-gitgitgadget
+ - "deprecated" is probably not the word you wanted to use here, as
+   it has a connotation that something was suboptimal with it, and
+   it got replaced by something else.  Reading your description, I
+   think you are removing a function that is no longer used.
+
+   I'd suggest rewriting it to something like:
+
+     Subject: git-p4: remove "encodeWithUTF8()" that is no longer used
+
+     d38208a2 (git-p4: convert path to unicode before processing
+     them, 2019-12-13) introduced the function "decode_path()" to
+     replace the "encodeWithUTF8()" method of P4Sync class, which no
+     longer is used anywhere.
+
+     Remove it.
+
+Thanks.
+
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-862%2Ffeiyeung%2Fremove-encodeWithUTF8-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-862/feiyeung/remove-encodeWithUTF8-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/862
+>
+>  git-p4.py | 12 ------------
+>  1 file changed, 12 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 09c9e93ac40..2c7e5498afa 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2939,18 +2939,6 @@ def writeToGitStream(self, gitMode, relPath, contents):
+>              self.gitStream.write(d)
+>          self.gitStream.write('\n')
+>  
+> -    def encodeWithUTF8(self, path):
+> -        try:
+> -            path.decode('ascii')
+> -        except:
+> -            encoding = 'utf8'
+> -            if gitConfig('git-p4.pathEncoding'):
+> -                encoding = gitConfig('git-p4.pathEncoding')
+> -            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
+> -            if self.verbose:
+> -                print('Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path))
+> -        return path
+> -
+>      # output one file from the P4 stream
+>      # - helper for streamP4Files
+>  
+>
+> base-commit: e6362826a0409539642a5738db61827e5978e2e4
