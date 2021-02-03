@@ -7,68 +7,68 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34316C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99AB8C433E9
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:09:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05E2A64F67
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:08:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A4DB64F67
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232372AbhBCDHf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:07:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
+        id S232554AbhBCDJD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:09:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231704AbhBCDHc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 22:07:32 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 322EDC061793
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:07:35 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id e70so21993574ote.11
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:07:35 -0800 (PST)
+        with ESMTP id S232274AbhBCDJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 22:09:00 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3E3C06178B
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:09:02 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id n7so25207175oic.11
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:09:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=hpbuy6Aya44emHM+HYA4Ln+Rh9+IBffbc3/qdsDne2I=;
-        b=SJC+F/1B6jW6o3F5s/6WEseW9aXdWVjm7ikgNa6OY8sx3a4jcSonS9GG9GrO3cdzuH
-         sDkm3Il3eFstNK9rSsQ++u4697FGX0b89tY9iLc3lPlbHaFMT9uceymuCdCg2XvK20/x
-         m9rX6QfpJGkXVUq+/eTm1HruDXlUOWgTednnnW5tFk2Ww61Om/NzcMnAbGliW4ui4NzX
-         pzWPAsOec6AC+Cvw5fDnAQlOkrq6C6sV4b9Agk0ohG3230C1OW60CFrN9OcVuTqVrFqg
-         G8uUAckxVYrazRrxRE1OmiqIsfeAg+ZGsxr+1clHrJeTp2A64X93cYF0y96X1PfduOiQ
-         T7vQ==
+        bh=SqltQk6znpK4212tNHMzyh84kQbuOyNNMW9+tZgFSgI=;
+        b=NbeVTUm8PIpUN/awdceQYpFKvICXgVBLo10+ZwEFS461L2FQXYfxnkpYjNzFxpsMVH
+         Sd1fE9f0iVsbHrFXL516ig0doNhgURUn2I2GcWOmKzJYJ3508s1WF5yCiotgcdLIxvz/
+         BEKqEFNjMoSO+qpNCamHY/tP6kUhd+ZCZLbfA1YBLKCbc4UKg7mW6bzxExpMzuB2CMBv
+         zVyhTFGQuEgmkWifi+GKhJ54b8tvU7fWn48keW/hpukC4u4tAqsFK13khJg/exxazsrE
+         5qi+7522TAdgrdZAgNSs+nnBi/Jn69iZKfaQS/DUoSNbMhDzFyt1o2boKaLNm7SO2TWB
+         ic8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=hpbuy6Aya44emHM+HYA4Ln+Rh9+IBffbc3/qdsDne2I=;
-        b=GWd9DtPabWLanODEnthpgfWsLn6K3jhFf+kCYK03C9/3Rb4Faswmw+/242z2Vg8n56
-         TOfTK5uLm1A2eJqi6oaUwsSa5vBRSYgMBDuEe9NujnMxhaJEZ5nTDV8CvSTfCrEncZCt
-         /tOuYA52Bu4TkCHgldk1DpdVrQz5XaqtU0yfrUrMv9hhyhXaoKzRUf1iFDio17zN3XAT
-         kxu5xDrqxuKlsloxVZaVSN0LC1D6xuKrdPsfW85LqGSVeFNDiQo6aOIlAol33wwj8jQF
-         1CKd00v1/obCelnvA9PeMaMScR+HO3lRr1s/vNNe1NpclzMOw0NnR2IeZvGktUXMVnym
-         8UtQ==
-X-Gm-Message-State: AOAM533Sv5Vp+VR/YUQ5XSVeiIu4PgMz2oxhe8Nxrmr7GmNWvGN301qO
-        5azhGNaJZYVhtKFsgyVwxv6LCM0VJGeCb3q8
-X-Google-Smtp-Source: ABdhPJyed12lp7A/+7BQDTBwwXKl7iUq+evkpUMXviLmI7U2SZDiqnGbg/g8UzBE90MYNnQ84rIEgw==
-X-Received: by 2002:a05:6830:b:: with SMTP id c11mr644031otp.138.1612321654443;
-        Tue, 02 Feb 2021 19:07:34 -0800 (PST)
+        bh=SqltQk6znpK4212tNHMzyh84kQbuOyNNMW9+tZgFSgI=;
+        b=KZ0xYG2i/Bq8K1tlBwGkIHYuSYP2J7apIgvsMVrNfcZfnRjh+WVKItomnwtB4ebFhP
+         oPP6QdRdhYUsuFR5qRw0KIGxa5TMhkQajiRTmeC5y20osJBdyrVnIJY72fFRn637BkHk
+         Us0JNhSxxWfKEwSsqzlhXveP0MdVKAAKu+t4Diywt7FFetmZxcOPIQ0QR9koQdw6NRFf
+         Y5Y34qYei+Q6xQ7JwZ3GJpiya1roftj6EHFjj6ez9V6YpP83gModgbDkoBjPUtK1hmKC
+         8fn6CB0x4ddiP6RagkUNo8AdKoLTB3i+iWdF0DBxtq9auHHE20FAoKiAuuqSZmpK29QP
+         Dn1g==
+X-Gm-Message-State: AOAM533mHs3rCX1ndTI+DyxwY3bmZ+sMBnOzf2fbTFkkZAaVpOgYsUCJ
+        UTzRpcV8vkDberdcr/CMPqoTMn9tiDB+x/sV
+X-Google-Smtp-Source: ABdhPJwsaa5N6dBmJcLHM+jeY8snjHu2qLqE2D/2vqtav1T9HfXztCB1SqsnKoq4hBesGv0k12EseQ==
+X-Received: by 2002:aca:b286:: with SMTP id b128mr696395oif.126.1612321741876;
+        Tue, 02 Feb 2021 19:09:01 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:79cd:7444:bf97:c4d4? ([2600:1700:e72:80a0:79cd:7444:bf97:c4d4])
-        by smtp.gmail.com with UTF8SMTPSA id z1sm186201ooo.45.2021.02.02.19.07.32
+        by smtp.gmail.com with UTF8SMTPSA id v67sm189405otb.43.2021.02.02.19.09.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Feb 2021 19:07:33 -0800 (PST)
-Message-ID: <6dc1520f-8130-75e1-6617-67b54cb03933@gmail.com>
-Date:   Tue, 2 Feb 2021 22:07:32 -0500
+        Tue, 02 Feb 2021 19:09:01 -0800 (PST)
+Message-ID: <247b0056-8358-f71f-22ee-0bacfbc4239d@gmail.com>
+Date:   Tue, 2 Feb 2021 22:09:00 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
 Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
  commit_graph_data_at()
 Content-Language: en-US
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
-        gitster@pobox.com, abhishekkumar8222@gmail.com,
-        Taylor Blau <ttaylorr@github.com>,
+        abhishekkumar8222@gmail.com, Taylor Blau <ttaylorr@github.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
@@ -76,101 +76,46 @@ References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
  <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
  <YBn3fxFe978Up5Ly@google.com>
  <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
- <YBoBBie2t1EhcLAN@google.com>
+ <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YBoBBie2t1EhcLAN@google.com>
+In-Reply-To: <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/2/2021 8:48 PM, Jonathan Nieder wrote:
-> Hi,
+On 2/2/2021 9:06 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 > 
-> Derrick Stolee wrote:
->> On 2/2/2021 8:08 PM, Jonathan Nieder wrote:
-> 
->>> At Google, we're running into a commit-graph issue that appears to
->>> have also arrived as part of this last week's rollout.  This one is a
->>> bit worse --- it is reproducible for affected users and stops them
->>> from being able to do day-to-day development:
->>
->> You're shipping 'next' widely? I appreciate the extra eyes on
->> early bits, so we can find more issues and get them resolved.
-> 
-> Yes.  Changes in 'next' have already gotten all the vetting via code
-> review that they're going to get; the difference between changes in
-> 'next' and 'master' is that the latter have had some production
-> exposure among users of 'next' with the ability to get help from a
-> local expert, roll back quickly when there's a problem, and so on.  I
-> recommend that anyone with an installation with that ability use
-> 'next', to improve the quality of code that ultimately is released
-> from 'master'.
-> 
-> It also helps us get the chance to use our experience to affect the
-> direction of a topic before it's too late.
-
-This is a good practice. It's also how I found the issues fixed
-in this series, but that's because I install it locally for my own
-extra additional testing before shipping it to users.
-
-> [...]
->>> We have some examples of repositories that were corrupted this way,
->>> but we didn't catch them in the act of corruption --- it started
->>> happening to several users with this release so we immediately rolled
->>> back.
->>
->> It is definitely related to the split commit-graph during the
->> upgrade scenario. Your verify output shows that you are using
->> the --split option heavily (possibly with fetch.writeCommitGraph?
->> or are you using 'git maintenance run --task=commit-graph'?)
-> 
-> Yep, the splits come from fetch.writeCommitGraph.
-> 
-> [...]
 >>> - what is the recommended way to recover from this state?  "git fsck"
 >>>   shows the repositories to have no problems.  "git help commit-graph"
 >>>   doesn't show a command for users to use; is
 >>>   `rm -fr .git/objects/info/commit-graphs/` the recommended recovery
 >>>   command?
->>
+> 
+> "rm -f .git/objects/info/commit-graph" as well, no?
+
+In this case, that won't be necessary since they are using a
+split commit-graph. However, the following is what I do to
+be extra sure:
+
+	rm -rf .git/objects/info/commit-graph*
+
+Deletes the singleton file and the directory.
+
 >> That, followed by `git commit-graph write --reachable [--changed-paths]`
 >> depending on what they want.
 > 
-> Can we package this as something more user-friendly?  E.g.
-> 
-> 	git commit-graph clear
-> 	git commit-graph write --reachable
-> 
-> If that makes sense to you, I'm happy to send a patch (or to review
-> one if someone else gets to it first).  I'm mostly asking to find out
-> whether this matches your idea of what the UI should be like.
+> Just out of curiosity, how important is "--reachable"?  It only
+> traverses from the tips of refs and unlike fsck and repack, not from
+> reflog entries (or the index for that matter, but that shouldn't
+> make much difference as there is no _commit_ in the index).
 
-'clear' is probably fine. I was thinking it might be good to have
-an option to the 'write' subcommand to clear the existing data, but
-it's probably better as separate steps.
-
->>> - is there configuration or a patch we can roll out to help affected
->>>   users recover from this state?
->>
->> If you are willing, then take v2 of this series and follow through by
->> clearing the commit-graph files of affected users. Note that you can
->> be proactive using `git commit-graph verify` to see who needs rewrites.
-> 
-> Does this mean we should change the BUG error message to help affected
-> users discover how they can recover for themselves (for example, using
-> commands like the above)?
-
-It _is_ a bug that led to this, but it's more about incorrect
-commit-graph data which could be caused by anything. Better to
-have a better message such as "your commit-graph file is
-probably corrupt".
-
-> Also, should "git fsck" call "git commit-graph verify" to make the
-> latter more discoverable?
-
-Yes. I thought it did, but I must be incorrect.
+I just like to focus on the reachable commits starting at refs
+instead of scanning all packed objects to see which are commits
+or not.
 
 Thanks,
--Stolee
+-stolee
+
