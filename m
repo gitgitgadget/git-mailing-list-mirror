@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E89FC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BA8C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:56:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5074064F5F
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:56:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AD7964F6B
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232398AbhBCV4v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 16:56:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38956 "EHLO
+        id S232405AbhBCV4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 16:56:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232366AbhBCV4s (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232375AbhBCV4s (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 3 Feb 2021 16:56:48 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3834C06178A
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 13:55:31 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id c12so1020755wrc.7
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 13:55:31 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2556C06178B
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 13:55:32 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id f16so1217337wmq.5
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 13:55:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=spbB+9a/qGy/GHfu1eZe/L4LU9K7gSjpfEPxZ03UfEo=;
-        b=gCbQaWwJj6daR1xrlr/RgV15BDAwKkTQIroiG32YzI+9jWSv7Iq0j1ZzidFQvLQNyP
-         R68GT8+a4t9gtkC1UnPChL7sAWiGe/wIawADqYuMsdBvjRrRlz2N/+OAsP/fjsZV66iv
-         VuawADeM2fibeuu0WhLyoLjFlJ3HwbTaBirgpvclG1jJoRsI9BEFZV3A0hD96srjfN02
-         UF1/Heio47cJ54C/tUxhtONINWVgBiYsAXo3w6ctE964K9NLPohUo4RzmJwPwV0vR4Ta
-         WBox4rL/+YdDQLoBVZCS3c7xKoQRLe7pKyh1o3Lya8MgDm1xJ0ZLcjjV6X150iVesA7P
-         i8hA==
+        bh=1I9MuZk5+Y9ELPMFnogL7a7Kp0ubTDgTkirTInm3rRI=;
+        b=neEOt168rcL9GoZSFr9+q2ox8yV2lFU1T7NRdF2PhXc7a+xOLn5pgPX4lAdV7Ber7L
+         3P5/5xnE2IQfAWSWd+AkXXShfCgpekqwTVZU6Bwl1H8nkB2FOTlBd0qbVyOBz+ezY2Wo
+         CoDifFe4vWVSBCkMkyhKSwKKtrugOiPOMM4LwvbrQW48+jdLSdJFHHLDc43V1DdzufwM
+         d3Rwx8NRgo65xmlvAqv1f2H3u0CSLkpF0FYDWSFFLWGny1nCIBZ+U5U/0k203qDrel5v
+         pyaaK+TQ4WjFpVxA4q/IsDcAVlUBgmkrA1/Y3Hs5XuaPYPhNO9Hpz4JO7iQ6U7/3bj3/
+         Dp6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=spbB+9a/qGy/GHfu1eZe/L4LU9K7gSjpfEPxZ03UfEo=;
-        b=piEYUgYlUBW/dmrjfK5O2Qs3BE/RyhmuAefL93ATJd5XMMQmd3zOqhM5WAx2ckFXUD
-         Oh9/YhLsUvs0d+37P9W577o8ewbMNeOUWxdvLzKfOUvjOCi8QZDuLocd3nNMd7MuPaoS
-         KOGAqLBOHV7Cq078/tDU/x5UJkc+hZigo+tvp6+f1LTtxslZA9kOLb7fMDXW9dG/xw02
-         JnjKt/wU11W7caDgNADT34SI9e85kdr4hu7HNCr6rr46y45Zi7hoxMCl1zb1nfx9LiNq
-         +CEnuySKfRecGp5KiUUQt3MnEhEcwgtZ31cZJPmEL24SHRyDi/pyL+G3wH7BXn0i0fYk
-         OWZA==
-X-Gm-Message-State: AOAM533kjKzU4JcZmNlLru7AE+u/FJJe0qjLkAHnnx0tJwKLCZli/4U6
-        lXIQr6+R0OZX7isiW5xWNfxDchwwvo8=
-X-Google-Smtp-Source: ABdhPJwvXZCgcIOv4Rh05ht0idyefa38awXpREQPoihNLUGhtjZt3AwXvwqGcXX7r0o00yqhRsHgNw==
-X-Received: by 2002:adf:d20c:: with SMTP id j12mr5765988wrh.407.1612389330634;
-        Wed, 03 Feb 2021 13:55:30 -0800 (PST)
+        bh=1I9MuZk5+Y9ELPMFnogL7a7Kp0ubTDgTkirTInm3rRI=;
+        b=TU4F38FKafXTXn84cPyn/hwtbHjDrWu+0R98X99ZDh6Vy7zX6/EWb0UVuLQtRywiCX
+         4IiJf4YgCctmTOhcvtDXZ5GpmWxnb9YxOC0EqMNqidoOkvCg9AKMiHnGBbQnzpv8Y0iy
+         CtLqrdIvZTIUwyCVY3Y0VaxokUSYO9+2M58xtB3MPdnFm2/0+50avb8YNl9zjub+w2XG
+         FLHWIbBmG139M9mLVsdfcDQx0YYfGuB82AbZgBy2B+7NWt0UBem4PyrXzN9omlKac6Rg
+         ybqddkc5gqAsoEzqIzvNxKUzlqoX7U8m30hBi3ED4XYSp1xXrTxXy5PfOG1Cyq56fEG9
+         eIvg==
+X-Gm-Message-State: AOAM530PjjP8FPIx2syGmYCBGkovpryjLR20LdVacFSz8EwbAM8RqPEB
+        Km4YjoQnJ4V49A96BfCnGg0Ojk039DQ=
+X-Google-Smtp-Source: ABdhPJy7xeGVZ7n4RvIIEekZ3RjmJg6qZ1wZz2qonIE69J7jZfKGZZyUIcpRPi7aXKMtlcK5fzhZcA==
+X-Received: by 2002:a05:600c:3504:: with SMTP id h4mr4712173wmq.168.1612389331571;
+        Wed, 03 Feb 2021 13:55:31 -0800 (PST)
 Received: from localhost.localdomain ([81.0.37.148])
-        by smtp.gmail.com with ESMTPSA id 143sm2609531wmb.47.2021.02.03.13.55.29
+        by smtp.gmail.com with ESMTPSA id 143sm2609531wmb.47.2021.02.03.13.55.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Feb 2021 13:55:30 -0800 (PST)
+        Wed, 03 Feb 2021 13:55:31 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     rafaeloliveira.cs@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>,
@@ -64,9 +64,9 @@ Cc:     rafaeloliveira.cs@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v5 5/7] bisect--helper: retire `--bisect-auto-next` subcommand
-Date:   Wed,  3 Feb 2021 22:54:36 +0100
-Message-Id: <20210203215438.96760-6-mirucam@gmail.com>
+Subject: [PATCH v5 6/7] bisect--helper: reimplement `bisect_skip` shell function in C
+Date:   Wed,  3 Feb 2021 22:54:37 +0100
+Message-Id: <20210203215438.96760-7-mirucam@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210203215438.96760-1-mirucam@gmail.com>
 References: <20210203215438.96760-1-mirucam@gmail.com>
@@ -78,9 +78,12 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The --bisect-auto-next subcommand is no longer used from the
-git-bisect.sh shell script. Instead the function bisect_auto_next()
-is directly called from the C implementation.
+Reimplement the `bisect_skip()` shell function in C and also add
+`bisect-skip` subcommand to `git bisect--helper` to call it from
+git-bisect.sh
+
+Using `--bisect-skip` subcommand is a temporary measure to port shell
+function to C so as to use the existing test suite.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -89,51 +92,129 @@ Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ builtin/bisect--helper.c | 45 +++++++++++++++++++++++++++++++++++++++-
+ git-bisect.sh            | 17 +--------------
+ 2 files changed, 45 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index fd018ddda5..31eba522ff 100644
+index 31eba522ff..7ad9b4d55b 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -27,7 +27,6 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
- 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
- 	N_("git bisect--helper --bisect-next"),
--	N_("git bisect--helper --bisect-auto-next"),
+@@ -30,6 +30,7 @@ static const char * const git_bisect_helper_usage[] = {
  	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
  	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
  	N_("git bisect--helper --bisect-replay <filename>"),
-@@ -1003,7 +1002,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_START,
- 		BISECT_AUTOSTART,
++	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
+ 	NULL
+ };
+ 
+@@ -992,6 +993,41 @@ static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *f
+ 	return bisect_auto_next(terms, NULL);
+ }
+ 
++static enum bisect_error bisect_skip(struct bisect_terms *terms, const char **argv, int argc)
++{
++	int i;
++	enum bisect_error res;
++	struct strvec argv_state = STRVEC_INIT;
++
++	strvec_push(&argv_state, "skip");
++
++	for (i = 0; i < argc; i++) {
++		const char *dotdot = strstr(argv[i], "..");
++
++		if (dotdot) {
++			struct rev_info revs;
++			struct commit *commit;
++
++			init_revisions(&revs, NULL);
++			setup_revisions(2, argv + i - 1, &revs, NULL);
++
++			if (prepare_revision_walk(&revs))
++				die(_("revision walk setup failed\n"));
++			while ((commit = get_revision(&revs)) != NULL)
++				strvec_push(&argv_state,
++						oid_to_hex(&commit->object.oid));
++
++			reset_revision_walk();
++		} else {
++			strvec_push(&argv_state, argv[i]);
++		}
++	}
++	res = bisect_state(terms, argv_state.v, argv_state.nr);
++
++	strvec_clear(&argv_state);
++	return res;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -1004,7 +1040,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		BISECT_NEXT,
--		BISECT_AUTO_NEXT,
  		BISECT_STATE,
  		BISECT_LOG,
- 		BISECT_REPLAY
-@@ -1022,8 +1020,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("start the bisect session"), BISECT_START),
- 		OPT_CMDMODE(0, "bisect-next", &cmdmode,
- 			 N_("find the next bisection commit"), BISECT_NEXT),
--		OPT_CMDMODE(0, "bisect-auto-next", &cmdmode,
--			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
- 		OPT_CMDMODE(0, "bisect-state", &cmdmode,
- 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_CMDMODE(0, "bisect-log", &cmdmode,
-@@ -1076,12 +1072,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		get_terms(&terms);
- 		res = bisect_next(&terms, prefix);
- 		break;
--	case BISECT_AUTO_NEXT:
--		if (argc)
--			return error(_("--bisect-auto-next requires 0 arguments"));
--		get_terms(&terms);
--		res = bisect_auto_next(&terms, prefix);
--		break;
- 	case BISECT_STATE:
+-		BISECT_REPLAY
++		BISECT_REPLAY,
++		BISECT_SKIP
+ 	} cmdmode = 0;
+ 	int res = 0, nolog = 0;
+ 	struct option options[] = {
+@@ -1026,6 +1063,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("list the bisection steps so far"), BISECT_LOG),
+ 		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
+ 			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
++		OPT_CMDMODE(0, "bisect-skip", &cmdmode,
++			 N_("skip some commits for checkout"), BISECT_SKIP),
+ 		OPT_BOOL(0, "no-log", &nolog,
+ 			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+@@ -1088,6 +1127,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		set_terms(&terms, "bad", "good");
- 		get_terms(&terms);
+ 		res = bisect_replay(&terms, argv[0]);
+ 		break;
++	case BISECT_SKIP:
++		set_terms(&terms, "bad", "good");
++		res = bisect_skip(&terms, argv, argc);
++		break;
+ 	default:
+ 		BUG("unknown subcommand %d", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index e834154e29..6a7afaea8d 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -39,21 +39,6 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+ TERM_BAD=bad
+ TERM_GOOD=good
+ 
+-bisect_skip() {
+-	all=''
+-	for arg in "$@"
+-	do
+-		case "$arg" in
+-		*..*)
+-			revs=$(git rev-list "$arg") || die "$(eval_gettext "Bad rev input: \$arg")" ;;
+-		*)
+-			revs=$(git rev-parse --sq-quote "$arg") ;;
+-		esac
+-		all="$all $revs"
+-	done
+-	eval git bisect--helper --bisect-state 'skip' $all
+-}
+-
+ bisect_visualize() {
+ 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ 
+@@ -162,7 +147,7 @@ case "$#" in
+ 	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
+ 		git bisect--helper --bisect-state "$cmd" "$@" ;;
+ 	skip)
+-		bisect_skip "$@" ;;
++		git bisect--helper --bisect-skip "$@" || exit;;
+ 	next)
+ 		# Not sure we want "next" at the UI level anymore.
+ 		git bisect--helper --bisect-next "$@" || exit ;;
 -- 
 2.29.2
 
