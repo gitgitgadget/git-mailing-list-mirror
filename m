@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A19E4C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A80D8C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AC2964F74
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C3AD64F74
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232761AbhBCD3q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:29:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54544 "EHLO
+        id S232807AbhBCD34 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:29:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232680AbhBCD3l (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232735AbhBCD3l (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Feb 2021 22:29:41 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03581C061793
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:26 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id l12so22587018wry.2
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:25 -0800 (PST)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40089C061794
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:27 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id j11so3381192wmi.3
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JrxhJITvh/JFLu/TQm4W9HxXuDchoeDmPm9ANtG+qqY=;
-        b=OcvgAb+og7WEeap9YdvkeLzndkIDk0PyqFQVorPk6m8C/PQjsIUVsQipAUVSMPQKJ6
-         y6ZN7fJR3zJwKe18iC0MSf0qffdKal+VCIERYDSpIMohHVzDa2FRj5QQNlm58mECp469
-         x7qOce5S0g2YwdR79MUyNU4ErhpGPU22C6owiWlH39v/q0/fB8BFTA7eYl9+d9cfxrJC
-         U1aMxSgxtD/0z8iNhbGEnR9NHbJzynKE3JIoGUsMMbS60W0pNu5hA3K6uWbCQe4ZogAk
-         ios8YBKfTgLO4UN4k28zUXoxhEvNjFS2bhTLlCR3UkQ+vuLqac2gArDyTDvCeBqiyR1R
-         Wvww==
+        bh=9fpIbgVB1ioLE6p5hinYpbuExDDHGymIPBD7V65ryiY=;
+        b=s4kDWWoj0mosA7c5PMgexLiA6pXwpwXm/dAR0OSSHQKyLup0SxWiY9/Qc+3csOrWm5
+         enmgBT2d++Ob7FFHjbRVX6ZD8Az693fvFn4k3o8RIzzFMZZ5tHrz1Qb4aHN4QASPCpCq
+         UxChzz51eGbPkuhkc6e5RHYjmtK57VvobQQK2lX9kiobPqOzKC2pV96QTQOdSoAwQAQI
+         ESBIQuMj5Lbz2ye1tNuSUE8xZCaTY6LsriJDNacYoQqRVujATyk38mjdgb8YX5+oT1Fz
+         5ZHiyd0OScNpupYG6QjR0ynKcsjNLvcjJe4yXdMqqJ+MT2GFqs/qG1arXPKEBhsmndvc
+         0qLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JrxhJITvh/JFLu/TQm4W9HxXuDchoeDmPm9ANtG+qqY=;
-        b=pT/g4R/nMralKJjkSzXe2ZGCfcUsFyEwxHRqzswRJfgSowtPoC83pJxCj3ehQ0tXUy
-         05cq16OKJpikfXfhsjDl0gDWsGT6F1u1cDvltE0LsPcs0WkXrCcbqOEyYflnZ1kHowbE
-         sEuThlxZVxqkkEremoeimsyxLhBX1DshMelt0lvuvE2+nR2TnjBdi5Y1YE0uO3JTcFtc
-         wtlne/CrvPcEi/StBCzdNvDyD2MrqgoqgxUzAx9YQQrNERC3nmeLTJVU/GLaIKIcacV/
-         5T6Fliu7p2lmZ8U81fbhsXtO847/R0XC9NJA+xt2JyzKHc6wortxjE73zMGsa0OyhkhG
-         sEjQ==
-X-Gm-Message-State: AOAM530gdPYUymdpniiGHyuAaPG1/LB04a9VD45ahXnTDfYwRgbdLjCf
-        ee5zjDMglPbuBRHjNveZEj/gBh8Uk3EF0Q==
-X-Google-Smtp-Source: ABdhPJxD2sla8gUX/aVUePpezqxB3oTo7oaWFkAcHfaYQo0QKXCVVtGkk3O5VzMIjCWmCpoc+BBr3A==
-X-Received: by 2002:adf:f905:: with SMTP id b5mr1017831wrr.129.1612322904549;
-        Tue, 02 Feb 2021 19:28:24 -0800 (PST)
+        bh=9fpIbgVB1ioLE6p5hinYpbuExDDHGymIPBD7V65ryiY=;
+        b=QU3Tww8kmEUnPleIgUrvl1YjSztb3kI8x1IMXjGcn1VhUS3VijwWHlsSIGbuQKoX8D
+         NHDCogav9uLMnW28yV9Elv723VFycMCASLMe07etUGihry8ThMbIowWpkaIu23IwfPYS
+         VDWze4uAKZljdKYEUAOSjk0/D3xoZ4TA9SxvVHeT1M99q8AEQYtZBC2TGht3rosvF/Ke
+         AV0USsL9E8tP5WIlJq7sQgXmahiYKQ8rt+cCdOVzBjApMnOIqq5PMOwd2wJhjGfgic8n
+         df54Xvrwc4FiIfTGDAAt+7NDIKsGEaLslwpAnP1ugpdPr7AGJWZdt0nz7MYfVKBlS29y
+         e81A==
+X-Gm-Message-State: AOAM533dpItSRseBevg42k9hvhoObNAZ7bU9njFWy8RlJ0Ka4g6tgkmy
+        oT0cxze8Vsm6ehqZIsgAnLnbpWNN/c3r+w==
+X-Google-Smtp-Source: ABdhPJwAUoQvdbe47W3e/5bBkNzlfFGASr0688DgqyP095egZsDvA78EX1DrKMsMdXtNBiTocfWh5Q==
+X-Received: by 2002:a7b:c95a:: with SMTP id i26mr37108wml.164.1612322905695;
+        Tue, 02 Feb 2021 19:28:25 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.23
+        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 19:28:23 -0800 (PST)
+        Tue, 02 Feb 2021 19:28:24 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/25] grep/pcre2: use pcre2_maketables_free() function
-Date:   Wed,  3 Feb 2021 04:27:54 +0100
-Message-Id: <20210203032811.14979-9-avarab@gmail.com>
+Subject: [PATCH 09/25] grep/pcre2: actually make pcre2 use custom allocator
+Date:   Wed,  3 Feb 2021 04:27:55 +0100
+Message-Id: <20210203032811.14979-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
 References: <20210203032811.14979-1-avarab@gmail.com>
@@ -78,58 +78,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make use of the pcre2_maketables_free() function to free the memory
-allocated by pcre2_maketables(). At first sight it's strange that
-10da030ab75 (grep: avoid leak of chartables in PCRE2, 2019-10-16)
-which added the free() call here doesn't make use of the pcre2_free()
-the author introduced in the preceding commit in 513f2b0bbd4 (grep:
-make PCRE2 aware of custom allocator, 2019-10-16).
+Continue work started in 513f2b0bbd4 (grep: make PCRE2 aware of custom
+allocator, 2019-10-16) and make PCREv2 use our pcre2_{malloc,free}().
+functions for allocation. We'll now use it for all PCREv2 allocations.
 
-The reason is that at the time the function didn't exist. It was first
-introduced in PCREv2 version 10.34, released on 2019-11-21.
+The reason 513f2b0bbd4 worked as a bugfix for the USE_NED_ALLOCATOR
+issue is because it managed to target pretty much the allocation freed
+via free(), as opposed to by a pcre2_*free() function. I.e. the
+pcre2_maketables() and pcre2_maketables_free() pair. For most of the
+rest we continued allocating with stock malloc() inside PCREv2 itself,
+but didn't segfault because we'd use its corresponding free().
 
-Let's make use of it behind a macro. I don't think this matters for
-anything to do with custom allocators, but it makes our use of PCREv2
-more discoverable. At some distant point in the future we'll be able
-to drop the version guard, as nobody will be running a version older
-than 10.34.
+In a preceding commit of mine I changed the free() to
+pcre2_maketables_free() on versions of PCREv2 10.34 and newer. So as
+far as fixing the segfault goes we could revert 513f2b0bbd4. But then
+we wouldn't use the desired allocator, let's just use it instead.
+
+Before this patch we'd on e.g.:
+
+    grep --threads=1 -iP æ.*var.*xyz
+
+Only use pcre2_{malloc,free}() for 2 malloc() calls and 2
+corresponding free() call. Now it's 12 calls to each. This can be
+observed with the GREP_PCRE2_DEBUG_MALLOC debug mode.
+
+Reading the history of how this bug got introduced it wasn't present
+in Johannes's original patch[1] to fix the issue.
+
+My reading of that thread is that the approach the follow-up patches
+to Johannes's original pursued were based on misunderstanding of how
+the PCREv2 API works. In particular this part of [2]:
+
+    "most of the time (like when using UTF-8) the chartable (and
+    therefore the global context) is not needed (even when using
+    alternate allocators)"
+
+That's simply not how PCREv2 memory allocation works. It's easy to see
+how the misunderstanding came about. It's because (as noted above) the
+issue was noticed because of our use of free() in our own grep.c for
+freeing the memory allocated by pcre2_maketables().
+
+Thus the misunderstanding that PCREv2's compile context is something
+only needed for pcre2_maketables(), and e.g. an aborted earlier
+attempt[3] to only set it up when we ourselves called
+pcre2_maketables().
+
+That's not what PCREv2's compile context is. To quote PCREv2's
+documentation:
+
+    "This context just contains pointers to (and data for) external
+    memory management functions that are called from several places in
+    the PCRE2 library."
+
+Thus the failed attempts to go down the route of only creating the
+general context in cases where we ourselves call pcre2_maketables(),
+before finally settling on the approach 513f2b0bbd4 took of always
+creating it.
+
+Instead we should always create it, and then pass the general context
+to those functions that accept it, so that they'll consistently use
+our preferred memory allocation functions.
+
+1. https://public-inbox.org/git/3397e6797f872aedd18c6d795f4976e1c579514b.1565005867.git.gitgitgadget@gmail.com/
+2. https://lore.kernel.org/git/CAPUEsphMh_ZqcH3M7PXC9jHTfEdQN3mhTAK2JDkdvKBp53YBoA@mail.gmail.com/
+3. https://lore.kernel.org/git/20190806085014.47776-3-carenas@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 4 ++++
- grep.h | 3 +++
- 2 files changed, 7 insertions(+)
+ grep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index e58044474d..c63dbff4b2 100644
+index c63dbff4b2..0116ff5f09 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -490,7 +490,11 @@ static void free_pcre2_pattern(struct grep_pat *p)
- 	pcre2_compile_context_free(p->pcre2_compile_context);
- 	pcre2_code_free(p->pcre2_pattern);
- 	pcre2_match_data_free(p->pcre2_match_data);
-+#ifdef GIT_PCRE2_VERSION_10_34_OR_HIGHER
-+	pcre2_maketables_free(pcre2_global_context, p->pcre2_tables);
-+#else
- 	free((void *)p->pcre2_tables);
-+#endif
- }
- #else /* !USE_LIBPCRE2 */
- static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
-diff --git a/grep.h b/grep.h
-index 54e52042cb..64666e9204 100644
---- a/grep.h
-+++ b/grep.h
-@@ -7,6 +7,9 @@
- #if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 36) || PCRE2_MAJOR >= 11
- #define GIT_PCRE2_VERSION_10_36_OR_HIGHER
- #endif
-+#if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 34) || PCRE2_MAJOR >= 11
-+#define GIT_PCRE2_VERSION_10_34_OR_HIGHER
-+#endif
- #else
- typedef int pcre2_code;
- typedef int pcre2_match_data;
+@@ -390,7 +390,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 			if (!pcre2_global_context)
+ 				BUG("pcre2_global_context uninitialized");
+ 			p->pcre2_tables = pcre2_maketables(pcre2_global_context);
+-			p->pcre2_compile_context = pcre2_compile_context_create(NULL);
++			p->pcre2_compile_context = pcre2_compile_context_create(pcre2_global_context);
+ 			pcre2_set_character_tables(p->pcre2_compile_context,
+ 							p->pcre2_tables);
+ 		}
+@@ -411,7 +411,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 					 p->pcre2_compile_context);
+ 
+ 	if (p->pcre2_pattern) {
+-		p->pcre2_match_data = pcre2_match_data_create_from_pattern(p->pcre2_pattern, NULL);
++		p->pcre2_match_data = pcre2_match_data_create_from_pattern(p->pcre2_pattern, pcre2_global_context);
+ 		if (!p->pcre2_match_data)
+ 			die("Couldn't allocate PCRE2 match data");
+ 	} else {
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
