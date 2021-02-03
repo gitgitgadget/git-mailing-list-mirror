@@ -2,72 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C8A3C433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 18:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4938C433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 18:14:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAA1564F8C
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 18:00:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8931E64F8C
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 18:14:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232677AbhBCSAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 13:00:01 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:41617 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232557AbhBCR7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 12:59:03 -0500
-Received: by mail-ed1-f48.google.com with SMTP id s5so654418edw.8
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 09:58:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EPRPhqA8t12OPD1QrX7cfeu7AdUiM+pi4UnOyV9VTMo=;
-        b=QkRi1stumoyGUxpR+JG6qSo1g6uqaCdbpp8OFj/aR4gYsQDRgkNlfuLQoy0oybrRN4
-         3qxf2+Igx34yCZZH4s6M7/+Dx9kIkrgU/nvBjIXtoLiYor494uPJfpNO+9bnj+kx7qfk
-         BoqpqYvK+1QXKVUZDg4cOMmEM9A0aGFjTSi5QA8pvCpKaKWQCIxeIJKyEOVVGTKta/Xg
-         yi6M4es0Il0gY2vIzGHsG2aP2SdbdZa+n+nMDOcNAtC8EGILCdV5NRv2ugumRRr8zbtw
-         vmz1zLa2MFnTyFOThc9ZiM4Rj/IepxGmRZlj4ozGfbuM38jhIfTNjJOeMnddoOWyPeZA
-         ibmA==
-X-Gm-Message-State: AOAM530z13EdyHWmjuQpmATxDl64AnwhFBpVIjyGzSK/tZce95iW0Z8F
-        dSMdj0/DjrgOIXdkymdu56lWlH+KJoVuEIgCX4I=
-X-Google-Smtp-Source: ABdhPJytaqMojNqD4pxMcsc4OZrOBw8bJTlh3XVBGFoi62JlQzvtRUG1Xr0nts9wERwr252uqV3HM52xtGeOrryuZVE=
-X-Received: by 2002:a05:6402:40c4:: with SMTP id z4mr4252026edb.233.1612375101484;
- Wed, 03 Feb 2021 09:58:21 -0800 (PST)
-MIME-Version: 1.0
-References: <20210202200301.44282-1-me@yadavpratyush.com> <fdfe1661-463b-fc18-02cc-4c6e22ce0463@kdbg.org>
- <CAPig+cTQaPTNnGcd583B=xoVUR1qPb372Y_x9szROfMcA5h+tA@mail.gmail.com>
-In-Reply-To: <CAPig+cTQaPTNnGcd583B=xoVUR1qPb372Y_x9szROfMcA5h+tA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Feb 2021 12:58:10 -0500
-Message-ID: <CAPig+cQxASd8YNm+6E4XkiEoR__hAW8nrUbEkaBoJSicpq_rmA@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: remove lines starting with the comment character
+        id S232404AbhBCSOA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 13:14:00 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59460 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232750AbhBCSNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 13:13:12 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1CF94AADFB;
+        Wed,  3 Feb 2021 13:12:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=iEdbqeu/bkph
+        Uht3odqlAGrpVmk=; b=rr51maiEpVCJJymY9gC3kWfzwVj1wBpVLF5CxNtccbax
+        Y6BZWE7hErvcDuIsUFp8gdiBgaWpTKgZlqs+NHkOVepmJea2vlZruE512bH6fkXo
+        FCBzWSfUa083dH5vbCnt59oIifagz84NRtO7lP5xcVM34ESM5KBqDnFOo6TShv0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VKM2ab
+        taZd3o+E0s4T7G4EcJ+/Gkch2E7ZFRtOQUXzuWKsRgSjkBglwOf+XK6FeW3+O/wH
+        SAYek+QZFEg0pN2CUj/qleuofUso1C0PbItEfRFmXv3ZAoJUk5AfIvtXJ5qea/3w
+        oRjSBfsaXYySAF9CgDyha29nf1QpqHOR3JB3Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C5D6AADFA;
+        Wed,  3 Feb 2021 13:12:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 73B84AADF9;
+        Wed,  3 Feb 2021 13:12:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Vincent Lefevre <vincent@vinc17.net>
+Subject: Re: [PATCH] pager: exit without error on SIGPIPE
+References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
+        <bc88492979fee215d5be06ccbc246ae0171a9ced.1611910122.git.liu.denton@gmail.com>
+        <87czxjomn8.fsf@evledraar.gmail.com>
+        <xmqqtuqvn0i7.fsf@gitster.c.googlers.com>
+        <87wnvrefbv.fsf@evledraar.gmail.com>
+        <xmqq8s87ld8y.fsf@gitster.c.googlers.com>
+        <87tuqvdy1b.fsf@evledraar.gmail.com>
+        <xmqqo8h3hybf.fsf@gitster.c.googlers.com>
+        <xmqqczxjhwgv.fsf@gitster.c.googlers.com>
+        <1dfb079e-a472-0259-2a00-100eb7a06297@kdbg.org>
+        <xmqq35yegrcv.fsf@gitster.c.googlers.com>
+        <12a440af-c080-089d-bf60-76262d5aec7a@kdbg.org>
+        <xmqqwnvqdsax.fsf@gitster.c.googlers.com>
+        <aa672f2b-6886-a2bf-5129-f10f4e488961@kdbg.org>
+Date:   Wed, 03 Feb 2021 10:12:25 -0800
+In-Reply-To: <aa672f2b-6886-a2bf-5129-f10f4e488961@kdbg.org> (Johannes Sixt's
+        message of "Wed, 3 Feb 2021 18:07:02 +0100")
+Message-ID: <xmqqr1lxc96e.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5F7389BE-664B-11EB-8719-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 3, 2021 at 12:48 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> So, perhaps one way forward is for Pratyush to emulate that behavior
-> and insert some text into the edit box saying "lines beginning with
-> '#' will be ignored", or add a label above or below the edit box
-> stating the same. (Of course, the actual displayed comment-character
-> should be determined dynamically.)
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Even more fancy would be to add a checkbox below the edit field which
-both enables/disables the "stripspace" behavior and allows the user to
-specify the comment-character. For instance:
+>> I guess we are then in agreement---I do think it makes sense to send
+>> the true exit code from the pager as the exit code from the pager to
+>> the trace output, which is what the early part of =C3=86var's patch do=
+es,
+>> but I do not think the exit code of the pager should affect the exit
+>> code from "git log" as a whole.
+>
+> Then we do not agree. The exit code of `git log | less` is ignored, and
+> I regard `git -p log` just as a short-hand for that.
 
-    [x] ignore lines beginning with [#]
+I think you skipped "not" while reading the "but I do not think"
+part of the last sentence.
 
-where [x] is the checkbox and [#] is a text field in which the user
-can type the comment-character.
+> The only thing I care is that git does not die due to a SIGPIPE when th=
+e
+> pager is closed early.
 
-For convenience, the checkbox would be checked by default, and the
-comment-character would default to the user's configured
-comment-character or "#".
+Makes two of us ;-)
