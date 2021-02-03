@@ -2,145 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1347AC43381
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E68EDC433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:54:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA7F364F55
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:52:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94C9264F65
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234638AbhBCPwf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 10:52:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41632 "EHLO
+        id S234271AbhBCPys (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 10:54:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234550AbhBCPhN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 10:37:13 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2D1C061794
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:34:59 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id z6so24798719wrq.10
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:34:59 -0800 (PST)
+        with ESMTP id S234516AbhBCPfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 10:35:36 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91E62C061786
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:34:50 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id k193so29308qke.6
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:34:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
-        b=heqe3bwy+ZKUhqXD0bSjNerrcFsOcJXUuzuZTO0GU2qzypk4FfTT0rTpVvVzC46eAl
-         sO2xLtqiTYs7gJuEvSXavlU6YDvVH7a3OQCrJy2ENM1eNfnhW19k1i0p+q158hvC3uhr
-         2MCQkzfmaLtCYs/bmYKsdrJL876sR6Lw9vQYeByaydXVFqvohDfnPdOoF40+0nJXyqPm
-         Zr9uU2asIgQq5WsQz/iLT9jcxCkwCW0YZAQsnrJJA2uyqhSzKeG75yqBf5RnLi71fZsK
-         Vk0VNxPFr1A06w1MUy9RYzgy+Zef2XSGLpQ4jqXj2BXeKoODk0Rylc9HAV75LWjVj1lF
-         wpOw==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9ArkWLqU89mwdUJZMs2TD6Y8+7altj3rxKhntlKj23c=;
+        b=Joq4wHm1FHtGFtS+UBLIfRxjrkN51dFYvm1i+0C8PBaamfwCl/cQcolFnw9e14zjs4
+         w9IIi1msp7bAPggwvqBhs5kfACjqQwbDE60n2naAc33ZfUBUV8pr4gGLbRnfP1OLfPG2
+         Kh40HIFWhJ0kI2867fSxwI3/c0f5hLJjovf8Z2dwZHgDFhNLLVZvaWcudGHlu2F/DxWe
+         zWoJMPtAPZsVYvsz2y4kIdHe/MJUqWoPSwWuxBilMt3L5D+a4VKKdKtFotDtATBpjCyY
+         qrUZOFjY4aTet3a+WttkDDeUW01ucL5WdSCtla5Vkf+VntgcjNGBWLM4WVuMg61x26C0
+         Q+OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JewujSwXcnrJrGpQL58DN1s7LbKqF3XLqwqHhLqPPEA=;
-        b=Dz8uFKh3ZTWlh7eCWCXj3+zQGD21+o1FZlUfajZGYUvkNB+PI/IDbumr83BVDWqEGI
-         UkTc178In8OfglMTweRWh1GIvBJgA12Ww0lGoNnFegPrZu9xuaSFzPMg+iQh9NR0eQSZ
-         Ln1kEzecigG6cKFmoxXPvz8VlBdKjSiOjkiGpICJjATVhrYJFTO0+aYZ1C3vsQS2ZSqm
-         CHtESkhoV5/qguG5L0blulI5OEMX1Qnz97FbT6SI9pUD1JsvJyglIXV1eR6+rMCemqkL
-         DXT2JsjAGwQi8mIpRPAfVh4VuTPblHH2pc+9ojhE60iQ+yTy/H5HykTrl1ZXzFyvjQNb
-         vPHQ==
-X-Gm-Message-State: AOAM532z2bW9SM0phnh2+Da4QqUiAUN310j+NbEnMjYAWvuMFaeox0r7
-        xsAX6sAKzkqTkOlRZUEbD2mhv2HluWM=
-X-Google-Smtp-Source: ABdhPJzTTlp3Cd43395vAAp2iZKmrHVFLE/d8th86iry4XD4AtOPslS5O61q7gn+HiAL7vWdGSfh8Q==
-X-Received: by 2002:a5d:554e:: with SMTP id g14mr4211734wrw.305.1612366497930;
-        Wed, 03 Feb 2021 07:34:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v25sm3355487wmh.4.2021.02.03.07.34.57
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9ArkWLqU89mwdUJZMs2TD6Y8+7altj3rxKhntlKj23c=;
+        b=K90kBHWhf1bY5BLtKSiNAFHbhwx7sPzDlwotmbAnI5KX0PN6hi8nLV0n96R42GR7q8
+         dWrWcjWUFgllM5izZDe/do8mWvLH2HziiUpjfh0tRj/uynZLSYNyZlKKF1qK4Mp80m6w
+         RV4azpO72v2yk+xwvPsMl7vRGcdM+fXqbAffSmqZOkTebNXDPyBYkEg0GRCtDhIHDiQj
+         L4cWoBj3SK5RgfZwzOoQl0mg4xQ6gezkWa4OnuOqGdijbfXrNhCRAYMwQRgKvwsARxht
+         QJLT5p/RU6vz15bhLv6ZpzHeDR+xb3Pl3siqqlQYsm7LFjRb7CRL2qGZcEyPYZT65jcR
+         MSaw==
+X-Gm-Message-State: AOAM530Q3ZaEtwasBXb6TcdqH5c6E34rlF4K7v2Gj20Gg5HaJdQGYx4F
+        +2TNxf9iLgxBH7ckHzi1NeVUsw==
+X-Google-Smtp-Source: ABdhPJz4er/YnoEEXUB4J9rH9d1AJF6PSdF9f1z6LlrhyJJ6VdjzR/6M+Tn4B620G7jiOam1Y0coxA==
+X-Received: by 2002:a37:4e43:: with SMTP id c64mr3053705qkb.49.1612366489828;
+        Wed, 03 Feb 2021 07:34:49 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:3a5f:649:7bf7:4ac8])
+        by smtp.gmail.com with ESMTPSA id t3sm1849962qkg.91.2021.02.03.07.34.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 07:34:57 -0800 (PST)
-Message-Id: <3c5035e4649d18d96fc0206c2ceacc6ffe99deff.1612366490.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
-References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
-        <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 Feb 2021 15:34:44 +0000
-Subject: [PATCH v2 05/11] preload-index: log the number of lstat calls to
- trace2
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 03 Feb 2021 07:34:49 -0800 (PST)
+Date:   Wed, 3 Feb 2021 10:34:46 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
+        gitster@pobox.com, abhishekkumar8222@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
+ commit_graph_data_at()
+Message-ID: <YBrCli7AR/XrB3Pr@nand.local>
+References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
+ <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
+ <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
+ <YBn3fxFe978Up5Ly@google.com>
+ <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
+ <YBoBBie2t1EhcLAN@google.com>
+ <6dc1520f-8130-75e1-6617-67b54cb03933@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6dc1520f-8130-75e1-6617-67b54cb03933@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Tue, Feb 02, 2021 at 10:07:32PM -0500, Derrick Stolee wrote:
+> > Can we package this as something more user-friendly?  E.g.
+> >
+> > 	git commit-graph clear
+> > 	git commit-graph write --reachable
+> >
+> > If that makes sense to you, I'm happy to send a patch (or to review
+> > one if someone else gets to it first).  I'm mostly asking to find out
+> > whether this matches your idea of what the UI should be like.
+>
+> 'clear' is probably fine. I was thinking it might be good to have
+> an option to the 'write' subcommand to clear the existing data, but
+> it's probably better as separate steps.
 
-Report the total number of calls made to lstat() inside preload_index().
+Wouldn't 'git commit-graph write --split=replace --reachable' do the
+same thing? I know that you changed some of the spots where we load an
+existing commit graph, so my claim might be out-of-date, but I'm pretty
+sure that this would get you out of a broken state.
 
-FSMonitor improves the performance of commands like `git status` by
-avoiding scanning the disk for changed files.  This can be seen in
-`preload_index()`.  Let's measure this.
+Thinking aloud, I'm not totally sure that we should be exposing "git
+commit-graph clear" to users. The only time that you'd want to run this
+is if you were trying to remove a corrupted commit-graph, so I'd rather
+see guidance on how to do that safely show up in
+Documentation/git-commit-graph.txt.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- preload-index.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+On the other hand, now I'm encouraging running "rm -fr
+$GIT_DIR/objects/info/commit-graph*", which feels dangerous.
 
-diff --git a/preload-index.c b/preload-index.c
-index ed6eaa47388..e5529a58636 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -31,6 +31,7 @@ struct thread_data {
- 	struct pathspec pathspec;
- 	struct progress_data *progress;
- 	int offset, nr;
-+	int t2_nr_lstat;
- };
- 
- static void *preload_thread(void *_data)
-@@ -73,6 +74,7 @@ static void *preload_thread(void *_data)
- 			continue;
- 		if (threaded_has_symlink_leading_path(&cache, ce->name, ce_namelen(ce)))
- 			continue;
-+		p->t2_nr_lstat++;
- 		if (lstat(ce->name, &st))
- 			continue;
- 		if (ie_match_stat(index, ce, &st, CE_MATCH_RACY_IS_DIRTY|CE_MATCH_IGNORE_FSMONITOR))
-@@ -98,6 +100,7 @@ void preload_index(struct index_state *index,
- 	int threads, i, work, offset;
- 	struct thread_data data[MAX_PARALLEL];
- 	struct progress_data pd;
-+	int t2_sum_lstat = 0;
- 
- 	if (!HAVE_THREADS || !core_preload_index)
- 		return;
-@@ -107,6 +110,9 @@ void preload_index(struct index_state *index,
- 		threads = 2;
- 	if (threads < 2)
- 		return;
-+
-+	trace2_region_enter("index", "preload", NULL);
-+
- 	trace_performance_enter();
- 	if (threads > MAX_PARALLEL)
- 		threads = MAX_PARALLEL;
-@@ -141,10 +147,14 @@ void preload_index(struct index_state *index,
- 		struct thread_data *p = data+i;
- 		if (pthread_join(p->pthread, NULL))
- 			die("unable to join threaded lstat");
-+		t2_sum_lstat += p->t2_nr_lstat;
- 	}
- 	stop_progress(&pd.progress);
- 
- 	trace_performance_leave("preload index");
-+
-+	trace2_data_intmax("index", NULL, "preload/sum_lstat", t2_sum_lstat);
-+	trace2_region_leave("index", "preload", NULL);
- }
- 
- int repo_read_index_preload(struct repository *repo,
--- 
-gitgitgadget
+Somewhere in the middle would be something like:
 
+  git -c core.commitGraph=false commit-graph write --reachable
+
+which would disable reading existing commit-graph files. Since
+85102ac71b (commit-graph: don't write commit-graph when disabled,
+2020-10-09), that causes us to exit immediately.
+
+I think that reverting that patch and advertising setting
+'core.commitGraph=false' in the documentation makes the most sense.
+
+Thanks,
+Taylor
