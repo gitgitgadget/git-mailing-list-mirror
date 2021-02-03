@@ -2,170 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC66C433E9
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD037C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C724F64F43
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:09:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8455061477
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231876AbhBCVJW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 16:09:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56948 "EHLO
+        id S231921AbhBCVJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 16:09:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231805AbhBCVJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 16:09:19 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57091C061573
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 13:08:39 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id s5so1357227edw.8
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 13:08:39 -0800 (PST)
+        with ESMTP id S232171AbhBCVJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 16:09:38 -0500
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B70DC0613D6
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 13:08:58 -0800 (PST)
+Received: by mail-qt1-x836.google.com with SMTP id t17so837361qtq.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 13:08:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yHdXZ14UnJNlSaq41uicH1or9WN1KckFy/Q6oEeUWD0=;
-        b=YkjmDWYsofor8U7Vk+n476xxubQ07/RZariM9dA3g22VZc/PWjyCnLm0w/PP1c83ZR
-         zGQpuh8LHmyawZWlVAu6Biexp07fb93WY4NEa1YyskKJMfZnAl+Yy0QCj/5rPEDpl502
-         zTKMhIuceoNdzZJyek5kCUq3JuY80oc73pIQiEP1MYHTqn6IPntkiS+cpD06m718Z5HD
-         K7Z0uRHqMNba1ReW4jHQ5Di91u0kYd7egGOcTJzTJaI7xjJ0OMcAwzys2UT6oncf9I/x
-         zklY4zHgSwdxerv3O0oBkpFAwLkcWb8oj5z6UrRQMxfmJeNT7WyQ7fDrqQVcXeQ5tdzV
-         8GJA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=jT32/eP5Xnw7JYDVVJkjvsWZDrSQf69ajWerRRe7OYM=;
+        b=INzx0RG42j8ngz9fTtOc+kRhQwVrviRKj8MzWiFHkvWhNFFRYFQ6HokdNYQc7UcncS
+         BiJ+PRKEI7pmN4Y0aabLBg76A8o/TtUbKits7WVmPvAfzmtcWwxQIQPiyV29gzPuWYjk
+         pur9xyyhW3SPtc63maCRONsG6kXns7bgoavXDdNSDyDiMwE4sfe7NpO3t7JkzPhBGD9E
+         97o542py+b3L3+gmuI8TMSvIrnjAYo5HVxiEGDA4j8ATsdARiMDnpGHaGTwBiYqkvNfS
+         YijsEKsaOaF3VHC8V3p2xp2N/52Jp8NwTbxXpq0cbudRy1NEB6pMz81tUO30LATfq2T8
+         jyGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yHdXZ14UnJNlSaq41uicH1or9WN1KckFy/Q6oEeUWD0=;
-        b=aY0uvxoE3AwFODTCocAcw6+Q7Fqeu/TDbbfKNHzAaeWxVN9cW5VNCthu3RefBkrz+q
-         iKeiMiptio9MQ8f5b39jjuWXMaIY+8QmwXPl0N9+bYWiHTEE0/UrP8402BsmbUmtdcpn
-         IxRznnC1ebuZvtP6Vttw8C81lBk+SiNn9K+he3w3qzsNrYYGGE4bHQLWuuidx4WkeLtL
-         WfXqfsUnw1Y/ai7+Bn2//RkN/ffFAnOhrHYNSnChqxHQlvt+u8/HrHjX+97FupgFT2ep
-         TfgcOlx8pmAyHnJJeAu8KkMYfANbW2SJmY/c+8XiEzUaA19hvpnv8P9t3ufvxEFX90sY
-         kHMA==
-X-Gm-Message-State: AOAM531Qe9qJpP9Eeu/lm6fT1GyjSJliwR0NRhV2hhnYWe6G+NRhtB28
-        38Fh1mmvwtCVHD/jb1hfZmcK/MzcERHLLb4TPYw=
-X-Google-Smtp-Source: ABdhPJzep6fXLn2VrfgnjLYOChN+SRa6IV3lVJA3JiRR/ita83syWzcMTD82fkFnUdwhRxPVF/y+5FJavPLiJ2uP5y8=
-X-Received: by 2002:aa7:da98:: with SMTP id q24mr5116086eds.370.1612386518025;
- Wed, 03 Feb 2021 13:08:38 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=jT32/eP5Xnw7JYDVVJkjvsWZDrSQf69ajWerRRe7OYM=;
+        b=GH+04peaeyzbVaMIWCosiOVElDjiGCOC7sguSo+CpggWkPlQ0L2EDu3t5gQcXfLWw2
+         N526qc0SvWCF/Pw8+BNLv0Ncrd2+iFwh+5c2gabFkFs2mll+TOSoGTXGaZANMMwmcscl
+         Q1qvm6cStzckK1SlDzDc/t4lsmY26z1n2AYvUNLd6uO7XM//wxJJMRARC4uggV97j4YI
+         7r4QQ8qVcSzDkul0C7lREfW3/1smzjt/BxvfAkrzrlMKCXzafJsxS1YLMdC7DIH0OtMm
+         eqJzsc1kgVJoReIXZwAwt0JdUAb+NQHNE8oH4TXMbCIbSCkHROGcgLvFQNICTu+kS+n2
+         EMVQ==
+X-Gm-Message-State: AOAM531AiFJ5FipDf5CrGbQCZvdJNcXvt5ESVogBbvlmRZ9nonh43mQA
+        jtKp0Fodl77/47yU50Tb3o3AaA==
+X-Google-Smtp-Source: ABdhPJx7XYCeP/BLq5VXs9YNT+tgiE4UD/cDD37+KbG+g5zfJ39hqRU9rMcQckN7FZy9v1W0C5/gJw==
+X-Received: by 2002:ac8:6755:: with SMTP id n21mr4269475qtp.57.1612386537482;
+        Wed, 03 Feb 2021 13:08:57 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:3a5f:649:7bf7:4ac8])
+        by smtp.gmail.com with ESMTPSA id x74sm2708357qkb.55.2021.02.03.13.08.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Feb 2021 13:08:56 -0800 (PST)
+Date:   Wed, 3 Feb 2021 16:08:53 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, abhishekkumar8222@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
+ commit_graph_data_at()
+Message-ID: <YBsQ5WhmSPNPyDDs@nand.local>
+References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
+ <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
+ <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
+ <YBn3fxFe978Up5Ly@google.com>
+ <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
+ <YBoBBie2t1EhcLAN@google.com>
+ <6dc1520f-8130-75e1-6617-67b54cb03933@gmail.com>
+ <YBrCli7AR/XrB3Pr@nand.local>
+ <xmqqk0rpc7uj.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <pull.854.git.1612021544723.gitgitgadget@gmail.com>
- <CAPig+cQMn6oc4Jh=gb1jNfArXJBYhPRaSzJJvvbvprit6_OC0g@mail.gmail.com>
- <CACPHW2X2UGAVmNM+cHXs6dwVfZbgLFZ0iUGU89h04H5czAt1Ww@mail.gmail.com>
- <CAPig+cS-hnwp2HjkkFPeJ4aibFHnJ0VZq0DSVgdWB0H_q5=oXw@mail.gmail.com>
- <CACPHW2VBEu=02HFhyrDes=6KceLtHzGDqBJVf2qAnD2s1f8VAg@mail.gmail.com> <CAPig+cSSU1P68dBomjRkO4jUqUnu+0ri5-3y0-H228-qONwhyw@mail.gmail.com>
-In-Reply-To: <CAPig+cSSU1P68dBomjRkO4jUqUnu+0ri5-3y0-H228-qONwhyw@mail.gmail.com>
-From:   Lance Ward <ljward10@gmail.com>
-Date:   Wed, 3 Feb 2021 15:08:26 -0600
-Message-ID: <CACPHW2WbY+c914vHV8cjfBC1GstF7PxfQFr-NF=EUhcF0YaCzQ@mail.gmail.com>
-Subject: Re: [PATCH] status: learn --color for piping colored output
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Lance Ward via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk0rpc7uj.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-
-I made all the changes you suggested and split it into two
-independent changes:
-
-This patch handles the --color option:
-https://github.com/git/git/pull/955
-
-This patch fixes the coloring inconsistency:
-https://github.com/git/git/pull/954
-
-Both have failed a CI test, but the reason has nothing to do with my
-code.  CI/PR / static-analysis VM is trying to install the package
-coccinelle, but is failing to install it with the following:
-
-E: Unable to locate package coccinelle
-Error: Process completed with exit code 100.
-
-On Tue, Feb 2, 2021 at 10:46 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, Feb 03, 2021 at 10:41:08AM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> On Mon, Feb 1, 2021 at 11:09 PM Lance Ward <ljward10@gmail.com> wrote:
-> > On Sun, Jan 31, 2021 at 5:09 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > I think the approach I suggested of patching those wt-status.c functions
-> > > to use:
-> > >     rev.diffopt.use_color = s->use_color;
-> > > would fix this inconsistency, wouldn't it?
+> > Thinking aloud, I'm not totally sure that we should be exposing "git
+> > commit-graph clear" to users. The only time that you'd want to run this
+> > is if you were trying to remove a corrupted commit-graph, so I'd rather
+> > see guidance on how to do that safely show up in
+> > Documentation/git-commit-graph.txt.
 > >
-> > I've made the change you requested and it resolves the issue.
-> > It also fixed the inconsistency I mentioned.  I only needed
-> > to modify wt_longstatus_print_verbose to resolve the issue
-> > since it is the only status path that had an issue with the
-> > git status command.
+> > On the other hand, now I'm encouraging running "rm -fr
+> > $GIT_DIR/objects/info/commit-graph*", which feels dangerous.
 >
-> Okay, makes sense. As long as you insert the assignment somewhere
-> above the special case:
+> True.
 >
->     if (s->fp != stdout) {
->         rev.diffopt.use_color = 0;
->         wt_status_add_cut_line(s->fp);
->     }
+> As this is, like pack .idx file, supposed to be "precomputed cached
+> data that can be fully recreated using primary information" [*], I
+> am perfectly fine to say "commit-graph may have unexplored corners,
+> and when you hit a BUG(), you can safely use 'commit-graph clear'
+> and recreate it from scratch, or operate without it if you feel you
+> do not yet want to trust your data to it for now."  Giving safer and
+> easier way to opt out for those who need to get today's release
+> done, with enough performance incentive to re-enable it when the
+> crunch is over, would be an honest thing to do, I would think.
 >
-> then it should work correctly, I would think. However, it might be
-> easier for people to grok the logic overall if you incorporate it into
-> that conditional, perhaps like this:
+> 	Side note: the index file also used to be considered to hold
+> 	such cached data, that can be recreated from the working
+> 	tree data and the tip commit.  We no longer treat it that
+> 	way, though.
 >
->     if (s->fp != stdout) {
->         rev.diffopt.use_color = 0;
->         wt_status_add_cut_line(s->fp);
->     } else {
->         rev.diffopt.use_color = s->use_color;
->     }
->
-> Or this:
->
->     if (s->fp == stdout) {
->         rev.diffopt.use_color = s->use_color;
->     else {
->         rev.diffopt.use_color = 0;
->         wt_status_add_cut_line(s->fp);
->     }
->
-> It's subjective, of course, so use your best judgment.
->
-
-I've made the change you suggested.
-
-> > > In fact, I can envision this patch being re-rolled as a two-patch
-> > > series which (1) patches the wt-status.c functions to do
-> > > `rev.diffopt.use_color = s->use_color` which should make
-> > > `color.status` imply `color.diff`, and (2) adds a --color option to
-> > > `git status` which sets `wt_status.use_color` (which would then be
-> > > automatically inherited by the diff machinery due to the first patch).
+> > Somewhere in the middle would be something like:
 > >
-> > Right now as it stands my patch resolves both of these, but
-> > if you'd like to make it two separate patches that would be fine.
+> >   git -c core.commitGraph=false commit-graph write --reachable
 >
-> The reason I was thinking of splitting these changes into two patches
-> is that they have different purposes. You'd sell the first patch as a
-> straight up bug fix, and it's easier to formulate a proper "sales
-> spiel" for that if it's not blurred with other changes. (This may be
-> important because it could be slightly controversial if other people
-> don't consider the behavior as being buggy.) The second patch would be
-> an easy sell as a straightforward and simple enhancement. Another
-> reason for splitting them into two patches is that doing so would make
-> it easier to revert the bug-fix patch separately if it turns out that
-> there are unforeseen negative side-effects.
+> I am a bit worried about the thinking along this line, because it
+> gives the users an impression that there is no escaping from
+> trusting commit-graph---the one that was created from scratch is
+> bug-free and they only need to be cautious about incrementals.
 >
-> Having said that, a well-crafted commit message may very well make it
-> easy to sell the change(s) as a single patch. Again, use your best
-> judgment.
+> But (1) we do not know that, and (2) it is an unconvincing message
+> to somebody who just got hit by a BUG().
 
-I've split it into two patches.
+This is a convincing counter-point to my proposal. Yeah, I agree that we
+shouldn't be advertising that commit-graph is completely trustworthy.
+
+> > which would disable reading existing commit-graph files. Since
+> > 85102ac71b (commit-graph: don't write commit-graph when disabled,
+> > 2020-10-09), that causes us to exit immediately.
+>
+> Meaning the three command sequence
+>
+> 	git commit-graph clear
+> 	git commit-graph write --reachable
+>         git config core.commitGraph false
+>
+> to force a clean build of a graph and forbid further updates until
+> the bug is squashed???  But should't core.commitGraph forbid reading
+> and using the data in the existing files, too?  In which case, shouldn't
+> it be equivalent to "git commit-graph clear"?
+
+I think we may be saying the same thing. I was suggesting that if we
+reverted 85102ac71b, that 'git -c core.commitGraph=false commit-graph
+write ...' would rewrite your commit-graph from scratch (without opening
+up existing ones and propagating corruption).
+
+So I was saying that that *would* be a viable "git commit-grpah clear"
+(if 85102ac71b were reverted).
+
+Thanks,
+Taylor
