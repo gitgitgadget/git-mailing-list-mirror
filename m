@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F36D3C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C457EC433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:31:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C767A64F50
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:31:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84DAD64F4D
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232913AbhBCDbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:31:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54702 "EHLO
+        id S233120AbhBCDbb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:31:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232956AbhBCDaU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 22:30:20 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37415C0612F2
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:40 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id q7so22549305wre.13
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:40 -0800 (PST)
+        with ESMTP id S232959AbhBCDaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 22:30:22 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3513FC06121D
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:43 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id b3so4444535wrj.5
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KYXXVyw5H3JyNbDugs3LzYrAKPVskYuIXY3VLwb52r0=;
-        b=uKzgOKV4KSS98oXucpvHvzzvD6rA+CzmVSVHZ2GDrYRarYWaMKKJMxIls01SfQb3Sg
-         W3NpxkqEHFJFA3Obukk1Jpn5chexbef2Sv10kG+nFZmMrLk8iXLGHfdrhhW0hJDuW/pi
-         r/CagkUV2p0rzZO+qzpD1AP3pXlcnMMlodVEiaFkmL5b+i8m4sBf7ZrllhUcNiIDM2tY
-         rPhyVfZvZWsHACsG5Y1kddHJ0b+kd4/yhxYdWtgB9b7JoADJ1kA/hnWKMwZ4NDYio91z
-         CbVlJ86qY3lFEGlkNCiHqyHyGhKlTy/FdhJj2sL2WCfjlND7iTeTY039vTQia3Nxqhp4
-         5F5w==
+        bh=DoOM4eeSiyX+rXghRCSO3Y4ucb89AOg8AlaxMh20DD4=;
+        b=OsXxQXT1KWCljFWE1nVg0Q8Vf85MqAnBIXUmBnZsluJ4BUBCsRGJbTULBOWo+RbUPc
+         mBEADEI8mP5BHw5FTl6VHLME3LKyuZNjM/qCXT+dqv0308j8MjT2LxNJ5VXZ495McKpE
+         RABnEm7qx/Haqk1a4wTUrzdua/AQfqijz05VK9wY/24WlF6C5pt6H3lpUKzJNVKSJQHy
+         jkghxiyp3uV1/F5+mMKRYKlVrFIY5pjVZ6x+79+12HQq5U4TrA+PaX8J4w68xE+z4/vw
+         iMVMWoCh+4MWX30NVAyN32+dWG5MicX8lhWHdri5TDK5MIe8AZFA6/zw+UMP8fhjL5aD
+         4eTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KYXXVyw5H3JyNbDugs3LzYrAKPVskYuIXY3VLwb52r0=;
-        b=PXLDRLi2sALTrPW+nDh5yI+pNIcqC/cip8MGOSmB5Nv8yK5cj70fELQslC/+8iENvG
-         dC44/tHCY5aFKwiO3/tIcZI2dLjFgLnKHTc/OufKea6cMed05KCEk5ePe8D0PSUniqBt
-         0VRVvKP9ESGqSw6gpxQ02UOZUtbw0+Qx4UeyvzckwNxv/3I9v0X7C/YPoMOTxGzMmIwj
-         d7uchOomy8Ajs5OvyfK9lzW+1++qeT0jWVXRK43TUpEslX2t0CfTPVTatvTlio4Hsbdc
-         UhYHCXtPuMhRXGpEmEtwVk7WJmiaj8prdjYxK1ck4tAB3cqSL9O6Arm9BeEn98h+/mtn
-         n70w==
-X-Gm-Message-State: AOAM532Z/uTh/ZF94dxyG+NhNQi4kGbtKK91L5fv5p3hESd4gY6/sj3e
-        xckU2cIPOjM6J49AzIHK9HlnuxZPnM7ZrA==
-X-Google-Smtp-Source: ABdhPJzgSQk3qOus64eq+GElZy6udZ2SpDKOl/RAJPfM/hGw31Hoa75mTkoI5T7iupjnqDJo/B+IDw==
-X-Received: by 2002:adf:f508:: with SMTP id q8mr1043705wro.291.1612322918548;
-        Tue, 02 Feb 2021 19:28:38 -0800 (PST)
+        bh=DoOM4eeSiyX+rXghRCSO3Y4ucb89AOg8AlaxMh20DD4=;
+        b=hDD0R/MgWUeo1IalHb73OIY2EkewGo/4fMxFZQF23qHNihs/c8amYqUaBsE1ANGbvh
+         suurVCbAL/lc06tMRveVdCRc6hpLKtjUn+GOyvN2cAX0ApKOB93d42m+oNK3ZULBxX9F
+         ohwY45w5OQs02okzLILISI6RsoeQH4h2HcCY8vyclobJVVvUdizFZY8bgPEjl2EJP0d1
+         hqGS0u8tf9Enx+MI6aeS0oRCSlqAuvcybm/TQlS2oz7oiqUqvTs9RTzqY+U7I9aYDogF
+         Gl6AaeV0PFA5hxdIbEhjY+FEKDm8cllzGJReEXjRcoy99vLqkLwa7/PquBxd86PSdb3m
+         X8GA==
+X-Gm-Message-State: AOAM5303fFlkpKBwBtxkgMWQT2emEoHQPzMAQNaZ10dO7YuskXt7fnB2
+        anDwlTs7NEtRBMzfuXJPH6uGgyM2TERG4g==
+X-Google-Smtp-Source: ABdhPJwQWz3N//dCza4Ct9MOwn/7pyuWtCpEKQ4Hw/69lnJJWoSmG7qtaNAbl6SinQul+DCkNIZgmg==
+X-Received: by 2002:a5d:6b45:: with SMTP id x5mr1001872wrw.415.1612322919852;
+        Tue, 02 Feb 2021 19:28:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.37
+        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 19:28:37 -0800 (PST)
+        Tue, 02 Feb 2021 19:28:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 21/25] pickaxe: use PCREv2 for -G and -S
-Date:   Wed,  3 Feb 2021 04:28:07 +0100
-Message-Id: <20210203032811.14979-22-avarab@gmail.com>
+Subject: [PATCH 22/25] Remove unused kwset.[ch]
+Date:   Wed,  3 Feb 2021 04:28:08 +0100
+Message-Id: <20210203032811.14979-23-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
 References: <20210203032811.14979-1-avarab@gmail.com>
@@ -78,351 +78,1900 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-up b65abcafc7a (grep: use PCRE v2 for optimized fixed-string
-search, 2019-07-01) and remove the use of kwset in the pickaxe code
-for fixed-string search, in favor of optimistically using PCRE v2.
+Remove the unused kwset matching engine. It has not been used by grep
+itself since 48de2a768cf (grep: remove the kwset optimization,
+2019-07-01), and in a previous commit we removed its last remaining
+use in diffcore-pickaxe.c.
 
-This does mean that the semantics of the -G option subtly change,
-before it's an ERE, whereas now it'll be a PCRE if we're compiled with
-PCRE. Since PCRE is almost entirely a strict superset of ERE syntax I
-think this is OK.
+This matching engine is much faster than the C library's regex
+matching for fixed strings, but slower than PCREv2, which we can make
+use of in the common case.
 
-Now when running the newly added t/perf/p4209-pickaxe.sh[1] and the
-latest PCRE v2 we'll get the following performance improvements (well,
-mostly improvements):
-
-    Test                                                                           origin/next       HEAD
-    -----------------------------------------------------------------------------------------------------------------------
-    4209.1: git log --pickaxe-regex -S'[þæö]' <limit-rev>..                        0.41(0.37+0.03)   0.42(0.37+0.05) +2.4%
-    4209.2: git log -G'a' <limit-rev>..                                            0.61(0.52+0.08)   0.50(0.45+0.05) -18.0%
-    4209.3: git log --pickaxe-regex -S'a' <limit-rev>..                            0.73(0.66+0.07)   0.42(0.37+0.05) -42.5%
-    4209.4: git log --text -G'a' <limit-rev>..                                     0.61(0.54+0.06)   0.50(0.44+0.05) -18.0%
-    4209.5: git log --text --pickaxe-all -G'a' <limit-rev>..                       0.44(0.37+0.06)   0.46(0.36+0.06) +4.5%
-    4209.6: git log --pickaxe-all -G'a' <limit-rev>..                              0.46(0.39+0.07)   0.38(0.33+0.05) -17.4%
-    4209.7: git log --pickaxe-all --pickaxe-regex -S'a' <limit-rev>..              0.55(0.48+0.06)   0.35(0.30+0.04) -36.4%
-    4209.8: git log -G'uncommon' <limit-rev>..                                     0.68(0.60+0.07)   0.59(0.53+0.05) -13.2%
-    4209.9: git log --pickaxe-regex -S'uncommon' <limit-rev>..                     0.48(0.45+0.03)   0.36(0.31+0.05) -25.0%
-    4209.10: git log --text -G'uncommon' <limit-rev>..                             0.66(0.58+0.07)   0.58(0.52+0.04) -12.1%
-    4209.11: git log --text --pickaxe-all -G'uncommon' <limit-rev>..               0.67(0.61+0.05)   0.57(0.52+0.05) -14.9%
-    4209.12: git log --pickaxe-all -G'uncommon' <limit-rev>..                      0.62(0.55+0.06)   0.52(0.46+0.06) -16.1%
-    4209.13: git log --pickaxe-all --pickaxe-regex -S'uncommon' <limit-rev>..      0.49(0.43+0.06)   0.31(0.26+0.04) -36.7%
-    4209.14: git log -G'[þæö]' <limit-rev>..                                       0.71(0.64+0.07)   0.51(0.47+0.04) -28.2%
-    4209.15: git log --pickaxe-regex -S'[þæö]' <limit-rev>..                       0.45(0.40+0.05)   0.42(0.37+0.04) -6.7%
-    4209.16: git log --text -G'[þæö]' <limit-rev>..                                0.64(0.56+0.07)   0.50(0.44+0.06) -21.9%
-    4209.17: git log --text --pickaxe-all -G'[þæö]' <limit-rev>..                  0.64(0.54+0.09)   0.50(0.47+0.03) -21.9%
-    4209.18: git log --pickaxe-all -G'[þæö]' <limit-rev>..                         0.66(0.59+0.07)   0.50(0.45+0.05) -24.2%
-    4209.19: git log --pickaxe-all --pickaxe-regex -S'[þæö]' <limit-rev>..         0.42(0.38+0.04)   0.41(0.37+0.04) -2.4%
-    4209.20: git log -i --pickaxe-regex -S'[þæö]' <limit-rev>..                    0.41(0.38+0.03)   0.49(0.43+0.05) +19.5%
-    4209.21: git log -i -G'a' <limit-rev>..                                        0.63(0.61+0.02)   0.50(0.45+0.05) -20.6%
-    4209.22: git log -i --pickaxe-regex -S'a' <limit-rev>..                        0.81(0.75+0.06)   0.60(0.58+0.02) -25.9%
-    4209.23: git log -i --text -G'a' <limit-rev>..                                 0.64(0.54+0.10)   0.49(0.44+0.05) -23.4%
-    4209.24: git log -i --text --pickaxe-all -G'a' <limit-rev>..                   0.47(0.43+0.04)   0.37(0.31+0.06) -21.3%
-    4209.25: git log -i --pickaxe-all -G'a' <limit-rev>..                          0.51(0.43+0.08)   0.37(0.31+0.06) -27.5%
-    4209.26: git log -i --pickaxe-all --pickaxe-regex -S'a' <limit-rev>..          0.62(0.55+0.05)   0.46(0.41+0.04) -25.8%
-    4209.27: git log -i -G'uncommon' <limit-rev>..                                 0.64(0.58+0.05)   0.51(0.48+0.03) -20.3%
-    4209.28: git log -i --pickaxe-regex -S'uncommon' <limit-rev>..                 0.48(0.44+0.04)   0.47(0.42+0.05) -2.1%
-    4209.29: git log -i --text -G'uncommon' <limit-rev>..                          0.62(0.53+0.08)   0.51(0.44+0.07) -17.7%
-    4209.30: git log -i --text --pickaxe-all -G'uncommon' <limit-rev>..            0.61(0.53+0.08)   0.51(0.45+0.06) -16.4%
-    4209.31: git log -i --pickaxe-all -G'uncommon' <limit-rev>..                   0.63(0.57+0.05)   0.51(0.47+0.04) -19.0%
-    4209.32: git log -i --pickaxe-all --pickaxe-regex -S'uncommon' <limit-rev>..   0.47(0.42+0.04)   0.47(0.45+0.01) +0.0%
-    4209.33: git log -i -G'[þæö]' <limit-rev>..                                    0.60(0.54+0.05)   0.51(0.47+0.04) -15.0%
-    4209.34: git log -i --pickaxe-regex -S'[þæö]' <limit-rev>..                    0.39(0.33+0.05)   0.49(0.45+0.03) +25.6%
-    4209.35: git log -i --text -G'[þæö]' <limit-rev>..                             0.59(0.53+0.06)   0.51(0.47+0.02) -13.6%
-    4209.36: git log -i --text --pickaxe-all -G'[þæö]' <limit-rev>..               0.62(0.56+0.05)   0.51(0.45+0.04) -17.7%
-    4209.37: git log -i --pickaxe-all -G'[þæö]' <limit-rev>..                      0.61(0.55+0.06)   0.51(0.47+0.04) -16.4%
-    4209.38: git log -i --pickaxe-all --pickaxe-regex -S'[þæö]' <limit-rev>..      0.42(0.39+0.02)   0.49(0.46+0.03) +16.7%
-
-1. With these options:
-
-    GIT_PERF_EXTRA=1 GIT_PERF_REPEAT_COUNT=10 GIT_PERF_MAKE_OPTS='-j8 USE_LIBPCRE=Y CFLAGS=-O3 LIBPCREDIR=/home/avar/g/pcre2/inst' ./run origin/next HEAD -- p4209-pickaxe.sh
+It's also an increasingly bitrotting version of the GPLv2 code, whose
+upstream has moved onto the incompatible GPLv3, so getting rid of the
+need to maintain a permanent fork of it is a good thing.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diff.h             |   4 ++
- diffcore-pickaxe.c | 143 ++++++++++++++++++---------------------------
- 2 files changed, 61 insertions(+), 86 deletions(-)
+ Makefile          |   2 -
+ compat/obstack.c  | 413 ------------------------
+ compat/obstack.h  | 511 ------------------------------
+ ctype.c           |  36 ---
+ git-compat-util.h |   3 -
+ kwset.c           | 775 ----------------------------------------------
+ kwset.h           |  65 ----
+ 7 files changed, 1805 deletions(-)
+ delete mode 100644 compat/obstack.c
+ delete mode 100644 compat/obstack.h
+ delete mode 100644 kwset.c
+ delete mode 100644 kwset.h
 
-diff --git a/diff.h b/diff.h
-index 2ff2b1c7f2..2f369c162b 100644
---- a/diff.h
-+++ b/diff.h
-@@ -365,6 +365,8 @@ struct diff_options {
- 
- 	struct repository *repo;
- 	struct option *parseopts;
-+
-+	struct grep_opt *grep_filter;
- };
- 
- unsigned diff_filter_bit(char status);
-@@ -520,6 +522,8 @@ int git_config_rename(const char *var, const char *value);
- #define DIFF_PICKAXE_KIND_G	8 /* grep in the patch */
- #define DIFF_PICKAXE_KIND_OBJFIND	16 /* specific object IDs */
- 
-+#define DIFF_PICKAXE_KIND_GS_MASK (DIFF_PICKAXE_KIND_S | \
-+				   DIFF_PICKAXE_KIND_G)
- #define DIFF_PICKAXE_KINDS_MASK (DIFF_PICKAXE_KIND_S | \
- 				 DIFF_PICKAXE_KIND_G | \
- 				 DIFF_PICKAXE_KIND_OBJFIND)
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 5161c81057..25ab1b2427 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -6,16 +6,16 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "xdiff-interface.h"
--#include "kwset.h"
-+#include "grep.h"
- #include "commit.h"
- #include "quote.h"
- 
- typedef int (*pickaxe_fn)(mmfile_t *one, mmfile_t *two,
- 			  struct diff_options *o,
--			  regex_t *regexp, kwset_t kws);
-+			  struct grep_opt *grep_filter);
- 
- struct diffgrep_cb {
--	regex_t *regexp;
-+	struct grep_opt	*grep_filter;
- 	int hit;
- };
- 
-@@ -23,6 +23,8 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
- {
- 	struct diffgrep_cb *data = priv;
- 	regmatch_t regmatch;
-+	struct grep_opt *grep_filter = data->grep_filter;
-+	struct grep_pat *grep_pat = grep_filter->pattern_list;
- 
- 	if (line[0] != '+' && line[0] != '-')
- 		return;
-@@ -32,25 +34,25 @@ static void diffgrep_consume(void *priv, char *line, unsigned long len)
- 		 * caller early.
- 		 */
- 		return;
--	data->hit = !regexec_buf(data->regexp, line + 1, len - 1, 1,
--				 &regmatch, 0);
-+	data->hit = patmatch(grep_pat, line + 1, line + len + 1, &regmatch, 0);
- }
- 
- static int diff_grep(mmfile_t *one, mmfile_t *two,
- 		     struct diff_options *o,
--		     regex_t *regexp, kwset_t kws)
-+		     struct grep_opt *grep_filter)
- {
--	regmatch_t regmatch;
- 	struct diffgrep_cb ecbdata;
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
-+	regmatch_t regmatch;
-+	struct grep_pat *grep_pat = grep_filter->pattern_list;
- 
- 	if (!one)
--		return !regexec_buf(regexp, two->ptr, two->size,
--				    1, &regmatch, 0);
-+		return patmatch(grep_pat, two->ptr, two->ptr + two->size,
-+				&regmatch, 0);
- 	if (!two)
--		return !regexec_buf(regexp, one->ptr, one->size,
--				    1, &regmatch, 0);
-+		return patmatch(grep_pat, one->ptr, one->ptr + one->size,
-+				&regmatch, 0);
- 
- 	/*
- 	 * We have both sides; need to run textual diff and see if
-@@ -58,7 +60,7 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
- 	 */
- 	memset(&xpp, 0, sizeof(xpp));
- 	memset(&xecfg, 0, sizeof(xecfg));
--	ecbdata.regexp = regexp;
-+	ecbdata.grep_filter = grep_filter;
- 	ecbdata.hit = 0;
- 	xecfg.ctxlen = 0;
- 	xecfg.interhunkctxlen = o->interhunkcontext;
-@@ -68,52 +70,40 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
- 	return ecbdata.hit;
- }
- 
--static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws)
-+static unsigned int contains(mmfile_t *mf, struct grep_opt *grep_filter)
- {
-+
- 	unsigned int cnt = 0;
- 	unsigned long sz = mf->size;
--	const char *data = mf->ptr;
+diff --git a/Makefile b/Makefile
+index 5a239cac20..570b78a528 100644
+--- a/Makefile
++++ b/Makefile
+@@ -840,7 +840,6 @@ LIB_OBJS += combine-diff.o
+ LIB_OBJS += commit-graph.o
+ LIB_OBJS += commit-reach.o
+ LIB_OBJS += commit.o
+-LIB_OBJS += compat/obstack.o
+ LIB_OBJS += compat/terminal.o
+ LIB_OBJS += config.o
+ LIB_OBJS += connect.o
+@@ -888,7 +887,6 @@ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+ LIB_OBJS += ident.o
+ LIB_OBJS += json-writer.o
+-LIB_OBJS += kwset.o
+ LIB_OBJS += levenshtein.o
+ LIB_OBJS += line-log.o
+ LIB_OBJS += line-range.o
+diff --git a/compat/obstack.c b/compat/obstack.c
+deleted file mode 100644
+index 27cd5c1ea1..0000000000
+--- a/compat/obstack.c
++++ /dev/null
+@@ -1,413 +0,0 @@
+-/* obstack.c - subroutines used implicitly by object stack macros
+-   Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1996, 1997, 1998,
+-   1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+-   This file is part of the GNU C Library.
 -
--	if (regexp) {
--		regmatch_t regmatch;
--		int flags = 0;
+-   The GNU C Library is free software; you can redistribute it and/or
+-   modify it under the terms of the GNU Lesser General Public
+-   License as published by the Free Software Foundation; either
+-   version 2.1 of the License, or (at your option) any later version.
 -
--		while (!regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
--			flags |= REG_NOTBOL;
--			data += regmatch.rm_eo;
--			sz -= regmatch.rm_eo;
--			if (regmatch.rm_so == regmatch.rm_eo) {
--				data++;
--				sz--;
--			}
--			cnt++;
--		}
+-   The GNU C Library is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+-   Lesser General Public License for more details.
 -
--	} else { /* Classic exact string match */
--		while (sz) {
--			struct kwsmatch kwsm;
--			size_t offset = kwsexec(kws, data, sz, &kwsm);
--			if (offset == -1)
--				break;
--			sz -= offset + kwsm.size[0];
--			data += offset + kwsm.size[0];
--			cnt++;
-+	char *data = mf->ptr;
-+	regmatch_t regmatch;
-+	int flags = 0;
-+	struct grep_pat *grep_pat = grep_filter->pattern_list;
-+
-+	while (patmatch(grep_pat, data, data + sz, &regmatch, flags)) {
-+		flags |= REG_NOTBOL;
-+		data += regmatch.rm_eo;
-+		sz -= regmatch.rm_eo;
-+		if (regmatch.rm_so == regmatch.rm_eo) {
-+			data++;
-+			sz--;
- 		}
-+		cnt++;
- 	}
- 	return cnt;
- }
- 
- static int has_changes(mmfile_t *one, mmfile_t *two,
- 		       struct diff_options *o,
--		       regex_t *regexp, kwset_t kws)
-+		       struct grep_opt *grep_filter)
- {
--	unsigned int one_contains = one ? contains(one, regexp, kws) : 0;
--	unsigned int two_contains = two ? contains(two, regexp, kws) : 0;
-+	unsigned int one_contains = one ? contains(one, grep_filter) : 0;
-+	unsigned int two_contains = two ? contains(two, grep_filter) : 0;
- 	return one_contains != two_contains;
- }
- 
- static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
--			 regex_t *regexp, kwset_t kws, pickaxe_fn fn)
-+			 struct grep_opt *grep_filter, pickaxe_fn fn)
- {
- 	struct userdiff_driver *textconv_one = NULL;
- 	struct userdiff_driver *textconv_two = NULL;
-@@ -160,7 +150,7 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 
- 	ret = fn(DIFF_FILE_VALID(p->one) ? &mf1 : NULL,
- 		 DIFF_FILE_VALID(p->two) ? &mf2 : NULL,
--		 o, regexp, kws);
-+		 o, grep_filter);
- 
- 	if (textconv_one)
- 		free(mf1.ptr);
-@@ -173,7 +163,7 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- }
- 
- static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
--		    regex_t *regexp, kwset_t kws, pickaxe_fn fn)
-+		    struct grep_opt *grep_filter, pickaxe_fn fn)
- {
- 	int i;
- 	struct diff_queue_struct outq;
-@@ -184,7 +174,7 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		/* Showing the whole changeset if needle exists */
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
--			if (pickaxe_match(p, o, regexp, kws, fn))
-+			if (pickaxe_match(p, o, grep_filter, fn))
- 				return; /* do not munge the queue */
- 		}
- 
-@@ -199,7 +189,7 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 		/* Showing only the filepairs that has the needle */
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
--			if (pickaxe_match(p, o, regexp, kws, fn))
-+			if (pickaxe_match(p, o, grep_filter, fn))
- 				diff_q(&outq, p);
- 			else
- 				diff_free_filepair(p);
-@@ -210,54 +200,35 @@ static void pickaxe(struct diff_queue_struct *q, struct diff_options *o,
- 	*q = outq;
- }
- 
--static void regcomp_or_die(regex_t *regex, const char *needle, int cflags)
+-   You should have received a copy of the GNU Lesser General Public
+-   License along with the GNU C Library; if not, see
+-   <http://www.gnu.org/licenses/>.  */
+-
+-#include "git-compat-util.h"
+-#include <gettext.h>
+-#include "obstack.h"
+-
+-/* NOTE BEFORE MODIFYING THIS FILE: This version number must be
+-   incremented whenever callers compiled using an old obstack.h can no
+-   longer properly call the functions in this obstack.c.  */
+-#define OBSTACK_INTERFACE_VERSION 1
+-
+-/* Comment out all this code if we are using the GNU C Library, and are not
+-   actually compiling the library itself, and the installed library
+-   supports the same library interface we do.  This code is part of the GNU
+-   C Library, but also included in many other GNU distributions.  Compiling
+-   and linking in this code is a waste when using the GNU C library
+-   (especially if it is a shared library).  Rather than having every GNU
+-   program understand `configure --with-gnu-libc' and omit the object
+-   files, it is simpler to just do this in the source for each such file.  */
+-
+-#include <stdio.h>		/* Random thing to get __GNU_LIBRARY__.  */
+-#if !defined _LIBC && defined __GNU_LIBRARY__ && __GNU_LIBRARY__ > 1
+-# include <gnu-versions.h>
+-# if _GNU_OBSTACK_INTERFACE_VERSION == OBSTACK_INTERFACE_VERSION
+-#  define ELIDE_CODE
+-# endif
+-#endif
+-
+-#include <stddef.h>
+-
+-#ifndef ELIDE_CODE
+-
+-
+-# if HAVE_INTTYPES_H
+-#  include <inttypes.h>
+-# endif
+-# if HAVE_STDINT_H || defined _LIBC
+-#  include <stdint.h>
+-# endif
+-
+-/* Determine default alignment.  */
+-union fooround
 -{
--	int err = regcomp(regex, needle, cflags);
--	if (err) {
--		/* The POSIX.2 people are surely sick */
--		char errbuf[1024];
--		regerror(err, regex, errbuf, 1024);
--		die("invalid regex: %s", errbuf);
--	}
+-  uintmax_t i;
+-  long double d;
+-  void *p;
+-};
+-struct fooalign
+-{
+-  char c;
+-  union fooround u;
+-};
+-/* If malloc were really smart, it would round addresses to DEFAULT_ALIGNMENT.
+-   But in fact it might be less smart and round addresses to as much as
+-   DEFAULT_ROUNDING.  So we prepare for it to do that.  */
+-enum
+-  {
+-    DEFAULT_ALIGNMENT = offsetof (struct fooalign, u),
+-    DEFAULT_ROUNDING = sizeof (union fooround)
+-  };
+-
+-/* When we copy a long block of data, this is the unit to do it with.
+-   On some machines, copying successive ints does not work;
+-   in such a case, redefine COPYING_UNIT to `long' (if that works)
+-   or `char' as a last resort.  */
+-# ifndef COPYING_UNIT
+-#  define COPYING_UNIT int
+-# endif
+-
+-
+-/* The functions allocating more room by calling `obstack_chunk_alloc'
+-   jump to the handler pointed to by `obstack_alloc_failed_handler'.
+-   This can be set to a user defined function which should either
+-   abort gracefully or use longjump - but shouldn't return.  This
+-   variable by default points to the internal function
+-   `print_and_abort'.  */
+-static void print_and_abort (void);
+-void (*obstack_alloc_failed_handler) (void) = print_and_abort;
+-
+-# ifdef _LIBC
+-#  if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_3_4)
+-/* A looong time ago (before 1994, anyway; we're not sure) this global variable
+-   was used by non-GNU-C macros to avoid multiple evaluation.  The GNU C
+-   library still exports it because somebody might use it.  */
+-struct obstack *_obstack_compat;
+-compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
+-#  endif
+-# endif
+-
+-/* Define a macro that either calls functions with the traditional malloc/free
+-   calling interface, or calls functions with the mmalloc/mfree interface
+-   (that adds an extra first argument), based on the state of use_extra_arg.
+-   For free, do not use ?:, since some compilers, like the MIPS compilers,
+-   do not allow (expr) ? void : void.  */
+-
+-# define CALL_CHUNKFUN(h, size) \
+-  (((h) -> use_extra_arg) \
+-   ? (*(h)->chunkfun.extra) ((h)->extra_arg, (size)) \
+-   : (*(h)->chunkfun.plain) ((size)))
+-
+-# define CALL_FREEFUN(h, old_chunk) \
+-  do { \
+-    if ((h) -> use_extra_arg) \
+-      (*(h)->freefun.extra) ((h)->extra_arg, (old_chunk)); \
+-    else \
+-      (*(h)->freefun.plain) ((old_chunk)); \
+-  } while (0)
+-
+-
+-/* Initialize an obstack H for use.  Specify chunk size SIZE (0 means default).
+-   Objects start on multiples of ALIGNMENT (0 means use default).
+-   CHUNKFUN is the function to use to allocate chunks,
+-   and FREEFUN the function to free them.
+-
+-   Return nonzero if successful, calls obstack_alloc_failed_handler if
+-   allocation fails.  */
+-
+-int
+-_obstack_begin (struct obstack *h,
+-		int size, int alignment,
+-		void *(*chunkfun) (long),
+-		void (*freefun) (void *))
+-{
+-  register struct _obstack_chunk *chunk; /* points to new chunk */
+-
+-  if (alignment == 0)
+-    alignment = DEFAULT_ALIGNMENT;
+-  if (size == 0)
+-    /* Default size is what GNU malloc can fit in a 4096-byte block.  */
+-    {
+-      /* 12 is sizeof (mhead) and 4 is EXTRA from GNU malloc.
+-	 Use the values for range checking, because if range checking is off,
+-	 the extra bytes won't be missed terribly, but if range checking is on
+-	 and we used a larger request, a whole extra 4096 bytes would be
+-	 allocated.
+-
+-	 These number are irrelevant to the new GNU malloc.  I suspect it is
+-	 less sensitive to the size of the request.  */
+-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
+-		    + 4 + DEFAULT_ROUNDING - 1)
+-		   & ~(DEFAULT_ROUNDING - 1));
+-      size = 4096 - extra;
+-    }
+-
+-  h->chunkfun.plain = chunkfun;
+-  h->freefun.plain = freefun;
+-  h->chunk_size = size;
+-  h->alignment_mask = alignment - 1;
+-  h->use_extra_arg = 0;
+-
+-  chunk = h->chunk = CALL_CHUNKFUN (h, h -> chunk_size);
+-  if (!chunk)
+-    (*obstack_alloc_failed_handler) ();
+-  h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
+-					       alignment - 1);
+-  h->chunk_limit = chunk->limit
+-    = (char *) chunk + h->chunk_size;
+-  chunk->prev = NULL;
+-  /* The initial chunk now contains no empty object.  */
+-  h->maybe_empty_object = 0;
+-  h->alloc_failed = 0;
+-  return 1;
 -}
 -
- void diffcore_pickaxe(struct diff_options *o)
- {
- 	const char *needle = o->pickaxe;
- 	int opts = o->pickaxe_opts;
--	regex_t regex, *regexp = NULL;
--	kwset_t kws = NULL;
-+	struct grep_opt opt;
-+
-+	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_GS_MASK)) {
-+		grep_init(&opt, the_repository, NULL);
-+#ifdef USE_LIBPCRE2
-+		grep_commit_pattern_type(GREP_PATTERN_TYPE_PCRE, &opt);
-+#else
-+		grep_commit_pattern_type(GREP_PATTERN_TYPE_ERE, &opt);
-+#endif
- 
--	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
--		int cflags = REG_EXTENDED | REG_NEWLINE;
- 		if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE)
--			cflags |= REG_ICASE;
--		regcomp_or_die(&regex, needle, cflags);
--		regexp = &regex;
--	} else if (opts & DIFF_PICKAXE_KIND_S) {
--		if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE &&
--		    has_non_ascii(needle)) {
--			struct strbuf sb = STRBUF_INIT;
--			int cflags = REG_NEWLINE | REG_ICASE;
+-int
+-_obstack_begin_1 (struct obstack *h, int size, int alignment,
+-		  void *(*chunkfun) (void *, long),
+-		  void (*freefun) (void *, void *),
+-		  void *arg)
+-{
+-  register struct _obstack_chunk *chunk; /* points to new chunk */
 -
--			basic_regex_quote_buf(&sb, needle);
--			regcomp_or_die(&regex, sb.buf, cflags);
--			strbuf_release(&sb);
--			regexp = &regex;
--		} else {
--			kws = kwsalloc(o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE
--				       ? tolower_trans_tbl : NULL);
--			kwsincr(kws, needle, strlen(needle));
--			kwsprep(kws);
+-  if (alignment == 0)
+-    alignment = DEFAULT_ALIGNMENT;
+-  if (size == 0)
+-    /* Default size is what GNU malloc can fit in a 4096-byte block.  */
+-    {
+-      /* 12 is sizeof (mhead) and 4 is EXTRA from GNU malloc.
+-	 Use the values for range checking, because if range checking is off,
+-	 the extra bytes won't be missed terribly, but if range checking is on
+-	 and we used a larger request, a whole extra 4096 bytes would be
+-	 allocated.
+-
+-	 These number are irrelevant to the new GNU malloc.  I suspect it is
+-	 less sensitive to the size of the request.  */
+-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
+-		    + 4 + DEFAULT_ROUNDING - 1)
+-		   & ~(DEFAULT_ROUNDING - 1));
+-      size = 4096 - extra;
+-    }
+-
+-  h->chunkfun.extra = (struct _obstack_chunk * (*)(void *,long)) chunkfun;
+-  h->freefun.extra = (void (*) (void *, struct _obstack_chunk *)) freefun;
+-
+-  h->chunk_size = size;
+-  h->alignment_mask = alignment - 1;
+-  h->extra_arg = arg;
+-  h->use_extra_arg = 1;
+-
+-  chunk = h->chunk = CALL_CHUNKFUN (h, h -> chunk_size);
+-  if (!chunk)
+-    (*obstack_alloc_failed_handler) ();
+-  h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
+-					       alignment - 1);
+-  h->chunk_limit = chunk->limit
+-    = (char *) chunk + h->chunk_size;
+-  chunk->prev = NULL;
+-  /* The initial chunk now contains no empty object.  */
+-  h->maybe_empty_object = 0;
+-  h->alloc_failed = 0;
+-  return 1;
+-}
+-
+-/* Allocate a new current chunk for the obstack *H
+-   on the assumption that LENGTH bytes need to be added
+-   to the current object, or a new object of length LENGTH allocated.
+-   Copies any partial object from the end of the old chunk
+-   to the beginning of the new one.  */
+-
+-void
+-_obstack_newchunk (struct obstack *h, int length)
+-{
+-  register struct _obstack_chunk *old_chunk = h->chunk;
+-  register struct _obstack_chunk *new_chunk;
+-  register long	new_size;
+-  register long obj_size = h->next_free - h->object_base;
+-  register long i;
+-  long already;
+-  char *object_base;
+-
+-  /* Compute size for new chunk.  */
+-  new_size = (obj_size + length) + (obj_size >> 3) + h->alignment_mask + 100;
+-  if (new_size < h->chunk_size)
+-    new_size = h->chunk_size;
+-
+-  /* Allocate and initialize the new chunk.  */
+-  new_chunk = CALL_CHUNKFUN (h, new_size);
+-  if (!new_chunk)
+-    (*obstack_alloc_failed_handler) ();
+-  h->chunk = new_chunk;
+-  new_chunk->prev = old_chunk;
+-  new_chunk->limit = h->chunk_limit = (char *) new_chunk + new_size;
+-
+-  /* Compute an aligned object_base in the new chunk */
+-  object_base =
+-    __PTR_ALIGN ((char *) new_chunk, new_chunk->contents, h->alignment_mask);
+-
+-  /* Move the existing object to the new chunk.
+-     Word at a time is fast and is safe if the object
+-     is sufficiently aligned.  */
+-  if (h->alignment_mask + 1 >= DEFAULT_ALIGNMENT)
+-    {
+-      for (i = obj_size / sizeof (COPYING_UNIT) - 1;
+-	   i >= 0; i--)
+-	((COPYING_UNIT *)object_base)[i]
+-	  = ((COPYING_UNIT *)h->object_base)[i];
+-      /* We used to copy the odd few remaining bytes as one extra COPYING_UNIT,
+-	 but that can cross a page boundary on a machine
+-	 which does not do strict alignment for COPYING_UNITS.  */
+-      already = obj_size / sizeof (COPYING_UNIT) * sizeof (COPYING_UNIT);
+-    }
+-  else
+-    already = 0;
+-  /* Copy remaining bytes one by one.  */
+-  for (i = already; i < obj_size; i++)
+-    object_base[i] = h->object_base[i];
+-
+-  /* If the object just copied was the only data in OLD_CHUNK,
+-     free that chunk and remove it from the chain.
+-     But not if that chunk might contain an empty object.  */
+-  if (! h->maybe_empty_object
+-      && (h->object_base
+-	  == __PTR_ALIGN ((char *) old_chunk, old_chunk->contents,
+-			  h->alignment_mask)))
+-    {
+-      new_chunk->prev = old_chunk->prev;
+-      CALL_FREEFUN (h, old_chunk);
+-    }
+-
+-  h->object_base = object_base;
+-  h->next_free = h->object_base + obj_size;
+-  /* The new chunk certainly contains no empty object yet.  */
+-  h->maybe_empty_object = 0;
+-}
+-# ifdef _LIBC
+-libc_hidden_def (_obstack_newchunk)
+-# endif
+-
+-/* Return nonzero if object OBJ has been allocated from obstack H.
+-   This is here for debugging.
+-   If you use it in a program, you are probably losing.  */
+-
+-/* Suppress -Wmissing-prototypes warning.  We don't want to declare this in
+-   obstack.h because it is just for debugging.  */
+-int _obstack_allocated_p (struct obstack *h, void *obj);
+-
+-int
+-_obstack_allocated_p (struct obstack *h, void *obj)
+-{
+-  register struct _obstack_chunk *lp;	/* below addr of any objects in this chunk */
+-  register struct _obstack_chunk *plp;	/* point to previous chunk if any */
+-
+-  lp = (h)->chunk;
+-  /* We use >= rather than > since the object cannot be exactly at
+-     the beginning of the chunk but might be an empty object exactly
+-     at the end of an adjacent chunk.  */
+-  while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
+-    {
+-      plp = lp->prev;
+-      lp = plp;
+-    }
+-  return lp != NULL;
+-}
+-
+-/* Free objects in obstack H, including OBJ and everything allocate
+-   more recently than OBJ.  If OBJ is zero, free everything in H.  */
+-
+-# undef obstack_free
+-
+-void
+-obstack_free (struct obstack *h, void *obj)
+-{
+-  register struct _obstack_chunk *lp;	/* below addr of any objects in this chunk */
+-  register struct _obstack_chunk *plp;	/* point to previous chunk if any */
+-
+-  lp = h->chunk;
+-  /* We use >= because there cannot be an object at the beginning of a chunk.
+-     But there can be an empty object at that address
+-     at the end of another chunk.  */
+-  while (lp != NULL && ((void *) lp >= obj || (void *) (lp)->limit < obj))
+-    {
+-      plp = lp->prev;
+-      CALL_FREEFUN (h, lp);
+-      lp = plp;
+-      /* If we switch chunks, we can't tell whether the new current
+-	 chunk contains an empty object, so assume that it may.  */
+-      h->maybe_empty_object = 1;
+-    }
+-  if (lp)
+-    {
+-      h->object_base = h->next_free = (char *) (obj);
+-      h->chunk_limit = lp->limit;
+-      h->chunk = lp;
+-    }
+-  else if (obj != NULL)
+-    /* obj is not in any of the chunks! */
+-    abort ();
+-}
+-
+-# ifdef _LIBC
+-/* Older versions of libc used a function _obstack_free intended to be
+-   called by non-GCC compilers.  */
+-strong_alias (obstack_free, _obstack_free)
+-# endif
+-
+-int
+-_obstack_memory_used (struct obstack *h)
+-{
+-  register struct _obstack_chunk* lp;
+-  register int nbytes = 0;
+-
+-  for (lp = h->chunk; lp != NULL; lp = lp->prev)
+-    {
+-      nbytes += lp->limit - (char *) lp;
+-    }
+-  return nbytes;
+-}
+-
+-# ifdef _LIBC
+-#  include <libio/iolibio.h>
+-# endif
+-
+-# ifndef __attribute__
+-/* This feature is available in gcc versions 2.5 and later.  */
+-#  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
+-#   define __attribute__(Spec) /* empty */
+-#  endif
+-# endif
+-
+-static void
+-print_and_abort (void)
+-{
+-  /* Don't change any of these strings.  Yes, it would be possible to add
+-     the newline to the string and use fputs or so.  But this must not
+-     happen because the "memory exhausted" message appears in other places
+-     like this and the translation should be reused instead of creating
+-     a very similar string which requires a separate translation.  */
+-# ifdef _LIBC
+-  (void) __fxprintf (NULL, "%s\n", _("memory exhausted"));
+-# else
+-  fprintf (stderr, "%s\n", _("memory exhausted"));
+-# endif
+-  exit (1);
+-}
+-
+-#endif	/* !ELIDE_CODE */
+diff --git a/compat/obstack.h b/compat/obstack.h
+deleted file mode 100644
+index f90a46d9b9..0000000000
+--- a/compat/obstack.h
++++ /dev/null
+@@ -1,511 +0,0 @@
+-/* obstack.h - object stack macros
+-   Copyright (C) 1988-1994,1996-1999,2003,2004,2005,2009
+-	Free Software Foundation, Inc.
+-   This file is part of the GNU C Library.
+-
+-   The GNU C Library is free software; you can redistribute it and/or
+-   modify it under the terms of the GNU Lesser General Public
+-   License as published by the Free Software Foundation; either
+-   version 2.1 of the License, or (at your option) any later version.
+-
+-   The GNU C Library is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+-   Lesser General Public License for more details.
+-
+-   You should have received a copy of the GNU Lesser General Public
+-   License along with the GNU C Library; if not, see
+-   <http://www.gnu.org/licenses/>.  */
+-
+-/* Summary:
+-
+-All the apparent functions defined here are macros. The idea
+-is that you would use these pre-tested macros to solve a
+-very specific set of problems, and they would run fast.
+-Caution: no side-effects in arguments please!! They may be
+-evaluated MANY times!!
+-
+-These macros operate a stack of objects.  Each object starts life
+-small, and may grow to maturity.  (Consider building a word syllable
+-by syllable.)  An object can move while it is growing.  Once it has
+-been "finished" it never changes address again.  So the "top of the
+-stack" is typically an immature growing object, while the rest of the
+-stack is of mature, fixed size and fixed address objects.
+-
+-These routines grab large chunks of memory, using a function you
+-supply, called `obstack_chunk_alloc'.  On occasion, they free chunks,
+-by calling `obstack_chunk_free'.  You must define them and declare
+-them before using any obstack macros.
+-
+-Each independent stack is represented by a `struct obstack'.
+-Each of the obstack macros expects a pointer to such a structure
+-as the first argument.
+-
+-One motivation for this package is the problem of growing char strings
+-in symbol tables.  Unless you are "fascist pig with a read-only mind"
+---Gosper's immortal quote from HAKMEM item 154, out of context--you
+-would not like to put any arbitrary upper limit on the length of your
+-symbols.
+-
+-In practice this often means you will build many short symbols and a
+-few long symbols.  At the time you are reading a symbol you don't know
+-how long it is.  One traditional method is to read a symbol into a
+-buffer, realloc()ating the buffer every time you try to read a symbol
+-that is longer than the buffer.  This is beaut, but you still will
+-want to copy the symbol from the buffer to a more permanent
+-symbol-table entry say about half the time.
+-
+-With obstacks, you can work differently.  Use one obstack for all symbol
+-names.  As you read a symbol, grow the name in the obstack gradually.
+-When the name is complete, finalize it.  Then, if the symbol exists already,
+-free the newly read name.
+-
+-The way we do this is to take a large chunk, allocating memory from
+-low addresses.  When you want to build a symbol in the chunk you just
+-add chars above the current "high water mark" in the chunk.  When you
+-have finished adding chars, because you got to the end of the symbol,
+-you know how long the chars are, and you can create a new object.
+-Mostly the chars will not burst over the highest address of the chunk,
+-because you would typically expect a chunk to be (say) 100 times as
+-long as an average object.
+-
+-In case that isn't clear, when we have enough chars to make up
+-the object, THEY ARE ALREADY CONTIGUOUS IN THE CHUNK (guaranteed)
+-so we just point to it where it lies.  No moving of chars is
+-needed and this is the second win: potentially long strings need
+-never be explicitly shuffled. Once an object is formed, it does not
+-change its address during its lifetime.
+-
+-When the chars burst over a chunk boundary, we allocate a larger
+-chunk, and then copy the partly formed object from the end of the old
+-chunk to the beginning of the new larger chunk.  We then carry on
+-accrediting characters to the end of the object as we normally would.
+-
+-A special macro is provided to add a single char at a time to a
+-growing object.  This allows the use of register variables, which
+-break the ordinary 'growth' macro.
+-
+-Summary:
+-	We allocate large chunks.
+-	We carve out one object at a time from the current chunk.
+-	Once carved, an object never moves.
+-	We are free to append data of any size to the currently
+-	  growing object.
+-	Exactly one object is growing in an obstack at any one time.
+-	You can run one obstack per control block.
+-	You may have as many control blocks as you dare.
+-	Because of the way we do it, you can `unwind' an obstack
+-	  back to a previous state. (You may remove objects much
+-	  as you would with a stack.)
+-*/
+-
+-
+-/* Don't do the contents of this file more than once.  */
+-
+-#ifndef _OBSTACK_H
+-#define _OBSTACK_H 1
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/* We need the type of a pointer subtraction.  If __PTRDIFF_TYPE__ is
+-   defined, as with GNU C, use that; that way we don't pollute the
+-   namespace with <stddef.h>'s symbols.  Otherwise, include <stddef.h>
+-   and use ptrdiff_t.  */
+-
+-#ifdef __PTRDIFF_TYPE__
+-# define PTR_INT_TYPE __PTRDIFF_TYPE__
+-#else
+-# include <stddef.h>
+-# define PTR_INT_TYPE ptrdiff_t
+-#endif
+-
+-/* If B is the base of an object addressed by P, return the result of
+-   aligning P to the next multiple of A + 1.  B and P must be of type
+-   char *.  A + 1 must be a power of 2.  */
+-
+-#define __BPTR_ALIGN(B, P, A) ((B) + (((P) - (B) + (A)) & ~(A)))
+-
+-/* Similar to _BPTR_ALIGN (B, P, A), except optimize the common case
+-   where pointers can be converted to integers, aligned as integers,
+-   and converted back again.  If PTR_INT_TYPE is narrower than a
+-   pointer (e.g., the AS/400), play it safe and compute the alignment
+-   relative to B.  Otherwise, use the faster strategy of computing the
+-   alignment relative to 0.  */
+-
+-#define __PTR_ALIGN(B, P, A)						    \
+-  (sizeof (PTR_INT_TYPE) < sizeof(void *) ?                                 \
+-   __BPTR_ALIGN((B), (P), (A)) :                                            \
+-   (void *)__BPTR_ALIGN((PTR_INT_TYPE)(void *)0, (PTR_INT_TYPE)(P), (A))            \
+-  )
+-
+-#include <string.h>
+-
+-struct _obstack_chunk		/* Lives at front of each chunk. */
+-{
+-  char  *limit;			/* 1 past end of this chunk */
+-  struct _obstack_chunk *prev;	/* address of prior chunk or NULL */
+-  char	contents[4];		/* objects begin here */
+-};
+-
+-struct obstack		/* control current object in current chunk */
+-{
+-  long	chunk_size;		/* preferred size to allocate chunks in */
+-  struct _obstack_chunk *chunk;	/* address of current struct obstack_chunk */
+-  char	*object_base;		/* address of object we are building */
+-  char	*next_free;		/* where to add next char to current object */
+-  char	*chunk_limit;		/* address of char after current chunk */
+-  union
+-  {
+-    PTR_INT_TYPE tempint;
+-    void *tempptr;
+-  } temp;			/* Temporary for some macros.  */
+-  int   alignment_mask;		/* Mask of alignment for each object. */
+-  /* These prototypes vary based on `use_extra_arg'. */
+-  union {
+-    void *(*plain) (long);
+-    struct _obstack_chunk *(*extra) (void *, long);
+-  } chunkfun;
+-  union {
+-    void (*plain) (void *);
+-    void (*extra) (void *, struct _obstack_chunk *);
+-  } freefun;
+-  void *extra_arg;		/* first arg for chunk alloc/dealloc funcs */
+-  unsigned use_extra_arg:1;	/* chunk alloc/dealloc funcs take extra arg */
+-  unsigned maybe_empty_object:1;/* There is a possibility that the current
+-				   chunk contains a zero-length object.  This
+-				   prevents freeing the chunk if we allocate
+-				   a bigger chunk to replace it. */
+-  unsigned alloc_failed:1;	/* No longer used, as we now call the failed
+-				   handler on error, but retained for binary
+-				   compatibility.  */
+-};
+-
+-/* Declare the external functions we use; they are in obstack.c.  */
+-
+-extern void _obstack_newchunk (struct obstack *, int);
+-extern int _obstack_begin (struct obstack *, int, int,
+-			    void *(*) (long), void (*) (void *));
+-extern int _obstack_begin_1 (struct obstack *, int, int,
+-			     void *(*) (void *, long),
+-			     void (*) (void *, void *), void *);
+-extern int _obstack_memory_used (struct obstack *);
+-
+-void obstack_free (struct obstack *, void *);
+-
+-
+-/* Error handler called when `obstack_chunk_alloc' failed to allocate
+-   more memory.  This can be set to a user defined function which
+-   should either abort gracefully or use longjump - but shouldn't
+-   return.  The default action is to print a message and abort.  */
+-extern void (*obstack_alloc_failed_handler) (void);
+-
+-/* Pointer to beginning of object being allocated or to be allocated next.
+-   Note that this might not be the final address of the object
+-   because a new chunk might be needed to hold the final size.  */
+-
+-#define obstack_base(h) ((void *) (h)->object_base)
+-
+-/* Size for allocating ordinary chunks.  */
+-
+-#define obstack_chunk_size(h) ((h)->chunk_size)
+-
+-/* Pointer to next byte not yet allocated in current chunk.  */
+-
+-#define obstack_next_free(h)	((h)->next_free)
+-
+-/* Mask specifying low bits that should be clear in address of an object.  */
+-
+-#define obstack_alignment_mask(h) ((h)->alignment_mask)
+-
+-/* To prevent prototype warnings provide complete argument list.  */
+-#define obstack_init(h)						\
+-  _obstack_begin ((h), 0, 0,					\
+-		  (void *(*) (long)) obstack_chunk_alloc,	\
+-		  (void (*) (void *)) obstack_chunk_free)
+-
+-#define obstack_begin(h, size)					\
+-  _obstack_begin ((h), (size), 0,				\
+-		  (void *(*) (long)) obstack_chunk_alloc,	\
+-		  (void (*) (void *)) obstack_chunk_free)
+-
+-#define obstack_specify_allocation(h, size, alignment, chunkfun, freefun)  \
+-  _obstack_begin ((h), (size), (alignment),				   \
+-		  (void *(*) (long)) (chunkfun),			   \
+-		  (void (*) (void *)) (freefun))
+-
+-#define obstack_specify_allocation_with_arg(h, size, alignment, chunkfun, freefun, arg) \
+-  _obstack_begin_1 ((h), (size), (alignment),				\
+-		    (void *(*) (void *, long)) (chunkfun),		\
+-		    (void (*) (void *, void *)) (freefun), (arg))
+-
+-#define obstack_chunkfun(h, newchunkfun) \
+-  ((h)->chunkfun.extra = (struct _obstack_chunk *(*)(void *, long)) (newchunkfun))
+-
+-#define obstack_freefun(h, newfreefun) \
+-  ((h)->freefun.extra = (void (*)(void *, struct _obstack_chunk *)) (newfreefun))
+-
+-#define obstack_1grow_fast(h,achar) (*((h)->next_free)++ = (achar))
+-
+-#define obstack_blank_fast(h,n) ((h)->next_free += (n))
+-
+-#define obstack_memory_used(h) _obstack_memory_used (h)
+-
+-#if defined __GNUC__ && defined __STDC__ && __STDC__
+-/* NextStep 2.0 cc is really gcc 1.93 but it defines __GNUC__ = 2 and
+-   does not implement __extension__.  But that compiler doesn't define
+-   __GNUC_MINOR__.  */
+-# if __GNUC__ < 2 || (__NeXT__ && !__GNUC_MINOR__)
+-#  define __extension__
+-# endif
+-
+-/* For GNU C, if not -traditional,
+-   we can define these macros to compute all args only once
+-   without using a global variable.
+-   Also, we can avoid using the `temp' slot, to make faster code.  */
+-
+-# define obstack_object_size(OBSTACK)					\
+-  __extension__								\
+-  ({ struct obstack const *__o = (OBSTACK);				\
+-     (unsigned) (__o->next_free - __o->object_base); })
+-
+-# define obstack_room(OBSTACK)						\
+-  __extension__								\
+-  ({ struct obstack const *__o = (OBSTACK);				\
+-     (unsigned) (__o->chunk_limit - __o->next_free); })
+-
+-# define obstack_make_room(OBSTACK,length)				\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   int __len = (length);						\
+-   if (__o->chunk_limit - __o->next_free < __len)			\
+-     _obstack_newchunk (__o, __len);					\
+-   (void) 0; })
+-
+-# define obstack_empty_p(OBSTACK)					\
+-  __extension__								\
+-  ({ struct obstack const *__o = (OBSTACK);				\
+-     (__o->chunk->prev == 0						\
+-      && __o->next_free == __PTR_ALIGN ((char *) __o->chunk,		\
+-					__o->chunk->contents,		\
+-					__o->alignment_mask)); })
+-
+-# define obstack_grow(OBSTACK,where,length)				\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   int __len = (length);						\
+-   if (__o->next_free + __len > __o->chunk_limit)			\
+-     _obstack_newchunk (__o, __len);					\
+-   memcpy (__o->next_free, where, __len);				\
+-   __o->next_free += __len;						\
+-   (void) 0; })
+-
+-# define obstack_grow0(OBSTACK,where,length)				\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   int __len = (length);						\
+-   if (__o->next_free + __len + 1 > __o->chunk_limit)			\
+-     _obstack_newchunk (__o, __len + 1);				\
+-   memcpy (__o->next_free, where, __len);				\
+-   __o->next_free += __len;						\
+-   *(__o->next_free)++ = 0;						\
+-   (void) 0; })
+-
+-# define obstack_1grow(OBSTACK,datum)					\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   if (__o->next_free + 1 > __o->chunk_limit)				\
+-     _obstack_newchunk (__o, 1);					\
+-   obstack_1grow_fast (__o, datum);					\
+-   (void) 0; })
+-
+-/* These assume that the obstack alignment is good enough for pointers
+-   or ints, and that the data added so far to the current object
+-   shares that much alignment.  */
+-
+-# define obstack_ptr_grow(OBSTACK,datum)				\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   if (__o->next_free + sizeof (void *) > __o->chunk_limit)		\
+-     _obstack_newchunk (__o, sizeof (void *));				\
+-   obstack_ptr_grow_fast (__o, datum); })				\
+-
+-# define obstack_int_grow(OBSTACK,datum)				\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   if (__o->next_free + sizeof (int) > __o->chunk_limit)		\
+-     _obstack_newchunk (__o, sizeof (int));				\
+-   obstack_int_grow_fast (__o, datum); })
+-
+-# define obstack_ptr_grow_fast(OBSTACK,aptr)				\
+-__extension__								\
+-({ struct obstack *__o1 = (OBSTACK);					\
+-   *(const void **) __o1->next_free = (aptr);				\
+-   __o1->next_free += sizeof (const void *);				\
+-   (void) 0; })
+-
+-# define obstack_int_grow_fast(OBSTACK,aint)				\
+-__extension__								\
+-({ struct obstack *__o1 = (OBSTACK);					\
+-   *(int *) __o1->next_free = (aint);					\
+-   __o1->next_free += sizeof (int);					\
+-   (void) 0; })
+-
+-# define obstack_blank(OBSTACK,length)					\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   int __len = (length);						\
+-   if (__o->chunk_limit - __o->next_free < __len)			\
+-     _obstack_newchunk (__o, __len);					\
+-   obstack_blank_fast (__o, __len);					\
+-   (void) 0; })
+-
+-# define obstack_alloc(OBSTACK,length)					\
+-__extension__								\
+-({ struct obstack *__h = (OBSTACK);					\
+-   obstack_blank (__h, (length));					\
+-   obstack_finish (__h); })
+-
+-# define obstack_copy(OBSTACK,where,length)				\
+-__extension__								\
+-({ struct obstack *__h = (OBSTACK);					\
+-   obstack_grow (__h, (where), (length));				\
+-   obstack_finish (__h); })
+-
+-# define obstack_copy0(OBSTACK,where,length)				\
+-__extension__								\
+-({ struct obstack *__h = (OBSTACK);					\
+-   obstack_grow0 (__h, (where), (length));				\
+-   obstack_finish (__h); })
+-
+-/* The local variable is named __o1 to avoid a name conflict
+-   when obstack_blank is called.  */
+-# define obstack_finish(OBSTACK)					\
+-__extension__								\
+-({ struct obstack *__o1 = (OBSTACK);					\
+-   void *__value = (void *) __o1->object_base;				\
+-   if (__o1->next_free == __value)					\
+-     __o1->maybe_empty_object = 1;					\
+-   __o1->next_free							\
+-     = __PTR_ALIGN (__o1->object_base, __o1->next_free,			\
+-		    __o1->alignment_mask);				\
+-   if (__o1->next_free - (char *)__o1->chunk				\
+-       > __o1->chunk_limit - (char *)__o1->chunk)			\
+-     __o1->next_free = __o1->chunk_limit;				\
+-   __o1->object_base = __o1->next_free;					\
+-   __value; })
+-
+-# define obstack_free(OBSTACK, OBJ)					\
+-__extension__								\
+-({ struct obstack *__o = (OBSTACK);					\
+-   void *__obj = (OBJ);							\
+-   if (__obj > (void *)__o->chunk && __obj < (void *)__o->chunk_limit)  \
+-     __o->next_free = __o->object_base = (char *)__obj;			\
+-   else (obstack_free) (__o, __obj); })
+-
+-#else /* not __GNUC__ or not __STDC__ */
+-
+-# define obstack_object_size(h) \
+- (unsigned) ((h)->next_free - (h)->object_base)
+-
+-# define obstack_room(h)		\
+- (unsigned) ((h)->chunk_limit - (h)->next_free)
+-
+-# define obstack_empty_p(h) \
+- ((h)->chunk->prev == 0							\
+-  && (h)->next_free == __PTR_ALIGN ((char *) (h)->chunk,		\
+-				    (h)->chunk->contents,		\
+-				    (h)->alignment_mask))
+-
+-/* Note that the call to _obstack_newchunk is enclosed in (..., 0)
+-   so that we can avoid having void expressions
+-   in the arms of the conditional expression.
+-   Casting the third operand to void was tried before,
+-   but some compilers won't accept it.  */
+-
+-# define obstack_make_room(h,length)					\
+-( (h)->temp.tempint = (length),						\
+-  (((h)->next_free + (h)->temp.tempint > (h)->chunk_limit)		\
+-   ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0))
+-
+-# define obstack_grow(h,where,length)					\
+-( (h)->temp.tempint = (length),						\
+-  (((h)->next_free + (h)->temp.tempint > (h)->chunk_limit)		\
+-   ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0),		\
+-  memcpy ((h)->next_free, where, (h)->temp.tempint),			\
+-  (h)->next_free += (h)->temp.tempint)
+-
+-# define obstack_grow0(h,where,length)					\
+-( (h)->temp.tempint = (length),						\
+-  (((h)->next_free + (h)->temp.tempint + 1 > (h)->chunk_limit)		\
+-   ? (_obstack_newchunk ((h), (h)->temp.tempint + 1), 0) : 0),		\
+-  memcpy ((h)->next_free, where, (h)->temp.tempint),			\
+-  (h)->next_free += (h)->temp.tempint,					\
+-  *((h)->next_free)++ = 0)
+-
+-# define obstack_1grow(h,datum)						\
+-( (((h)->next_free + 1 > (h)->chunk_limit)				\
+-   ? (_obstack_newchunk ((h), 1), 0) : 0),				\
+-  obstack_1grow_fast (h, datum))
+-
+-# define obstack_ptr_grow(h,datum)					\
+-( (((h)->next_free + sizeof (char *) > (h)->chunk_limit)		\
+-   ? (_obstack_newchunk ((h), sizeof (char *)), 0) : 0),		\
+-  obstack_ptr_grow_fast (h, datum))
+-
+-# define obstack_int_grow(h,datum)					\
+-( (((h)->next_free + sizeof (int) > (h)->chunk_limit)			\
+-   ? (_obstack_newchunk ((h), sizeof (int)), 0) : 0),			\
+-  obstack_int_grow_fast (h, datum))
+-
+-# define obstack_ptr_grow_fast(h,aptr)					\
+-  (((const void **) ((h)->next_free += sizeof (void *)))[-1] = (aptr))
+-
+-# define obstack_int_grow_fast(h,aint)					\
+-  (((int *) ((h)->next_free += sizeof (int)))[-1] = (aint))
+-
+-# define obstack_blank(h,length)					\
+-( (h)->temp.tempint = (length),						\
+-  (((h)->chunk_limit - (h)->next_free < (h)->temp.tempint)		\
+-   ? (_obstack_newchunk ((h), (h)->temp.tempint), 0) : 0),		\
+-  obstack_blank_fast (h, (h)->temp.tempint))
+-
+-# define obstack_alloc(h,length)					\
+- (obstack_blank ((h), (length)), obstack_finish ((h)))
+-
+-# define obstack_copy(h,where,length)					\
+- (obstack_grow ((h), (where), (length)), obstack_finish ((h)))
+-
+-# define obstack_copy0(h,where,length)					\
+- (obstack_grow0 ((h), (where), (length)), obstack_finish ((h)))
+-
+-# define obstack_finish(h)						\
+-( ((h)->next_free == (h)->object_base					\
+-   ? (((h)->maybe_empty_object = 1), 0)					\
+-   : 0),								\
+-  (h)->temp.tempptr = (h)->object_base,					\
+-  (h)->next_free							\
+-    = __PTR_ALIGN ((h)->object_base, (h)->next_free,			\
+-		   (h)->alignment_mask),				\
+-  (((h)->next_free - (char *) (h)->chunk				\
+-    > (h)->chunk_limit - (char *) (h)->chunk)				\
+-   ? ((h)->next_free = (h)->chunk_limit) : 0),				\
+-  (h)->object_base = (h)->next_free,					\
+-  (h)->temp.tempptr)
+-
+-# define obstack_free(h,obj)						\
+-( (h)->temp.tempint = (char *) (obj) - (char *) (h)->chunk,		\
+-  ((((h)->temp.tempint > 0						\
+-    && (h)->temp.tempint < (h)->chunk_limit - (char *) (h)->chunk))	\
+-   ? (ptrdiff_t) ((h)->next_free = (h)->object_base				\
+-	    = (h)->temp.tempint + (char *) (h)->chunk)			\
+-   : (((obstack_free) ((h), (h)->temp.tempint + (char *) (h)->chunk), 0), 0)))
+-
+-#endif /* not __GNUC__ or not __STDC__ */
+-
+-#ifdef __cplusplus
+-}	/* C++ */
+-#endif
+-
+-#endif /* obstack.h */
+diff --git a/ctype.c b/ctype.c
+index fc0225cebd..3451745550 100644
+--- a/ctype.c
++++ b/ctype.c
+@@ -28,39 +28,3 @@ const unsigned char sane_ctype[256] = {
+ 	A, A, A, A, A, A, A, A, A, A, A, R, R, U, P, X,		/* 112..127 */
+ 	/* Nothing in the 128.. range */
+ };
+-
+-/* For case-insensitive kwset */
+-const unsigned char tolower_trans_tbl[256] = {
+-	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+-	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
+-	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+-	0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+-	 ' ',  '!',  '"',  '#',  '$',  '%',  '&', 0x27,
+-	 '(',  ')',  '*',  '+',  ',',  '-',  '.',  '/',
+-	 '0',  '1',  '2',  '3',  '4',  '5',  '6',  '7',
+-	 '8',  '9',  ':',  ';',  '<',  '=',  '>',  '?',
+-	 '@',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
+-	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
+-	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
+-	 'x',  'y',  'z',  '[', 0x5c,  ']',  '^',  '_',
+-	 '`',  'a',  'b',  'c',  'd',  'e',  'f',  'g',
+-	 'h',  'i',  'j',  'k',  'l',  'm',  'n',  'o',
+-	 'p',  'q',  'r',  's',  't',  'u',  'v',  'w',
+-	 'x',  'y',  'z',  '{',  '|',  '}',  '~', 0x7f,
+-	0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87,
+-	0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f,
+-	0x90, 0x91, 0x92, 0x93, 0x94, 0x95, 0x96, 0x97,
+-	0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+-	0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7,
+-	0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf,
+-	0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7,
+-	0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf,
+-	0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7,
+-	0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf,
+-	0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0xd6, 0xd7,
+-	0xd8, 0xd9, 0xda, 0xdb, 0xdc, 0xdd, 0xde, 0xdf,
+-	0xe0, 0xe1, 0xe2, 0xe3, 0xe4, 0xe5, 0xe6, 0xe7,
+-	0xe8, 0xe9, 0xea, 0xeb, 0xec, 0xed, 0xee, 0xef,
+-	0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7,
+-	0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
+-};
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5d5e47fbe2..1f4e740773 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -986,9 +986,6 @@ int xsnprintf(char *dst, size_t max, const char *fmt, ...);
+ 
+ int xgethostname(char *buf, size_t len);
+ 
+-/* in ctype.c, for kwset users */
+-extern const unsigned char tolower_trans_tbl[256];
+-
+ /* Sane ctype - no locale, and works with signed chars */
+ #undef isascii
+ #undef isspace
+diff --git a/kwset.c b/kwset.c
+deleted file mode 100644
+index fc439e0667..0000000000
+--- a/kwset.c
++++ /dev/null
+@@ -1,775 +0,0 @@
+-/*
+- * This file has been copied from commit e7ac713d^ in the GNU grep git
+- * repository. A few small changes have been made to adapt the code to
+- * Git.
+- */
+-
+-/* kwset.c - search for any of a set of keywords.
+-   Copyright 1989, 1998, 2000, 2005 Free Software Foundation, Inc.
+-
+-   This program is free software; you can redistribute it and/or modify
+-   it under the terms of the GNU General Public License as published by
+-   the Free Software Foundation; either version 2, or (at your option)
+-   any later version.
+-
+-   This program is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-   GNU General Public License for more details.
+-
+-   You should have received a copy of the GNU General Public License
+-   along with this program; if not, see <http://www.gnu.org/licenses/>. */
+-
+-/* Written August 1989 by Mike Haertel.
+-   The author may be reached (Email) at the address mike@ai.mit.edu,
+-   or (US mail) as Mike Haertel c/o Free Software Foundation. */
+-
+-/* The algorithm implemented by these routines bears a startling resemblance
+-   to one discovered by Beate Commentz-Walter, although it is not identical.
+-   See "A String Matching Algorithm Fast on the Average," Technical Report,
+-   IBM-Germany, Scientific Center Heidelberg, Tiergartenstrasse 15, D-6900
+-   Heidelberg, Germany.  See also Aho, A.V., and M. Corasick, "Efficient
+-   String Matching:  An Aid to Bibliographic Search," CACM June 1975,
+-   Vol. 18, No. 6, which describes the failure function used below. */
+-
+-#include "cache.h"
+-
+-#include "kwset.h"
+-#include "compat/obstack.h"
+-
+-#define NCHAR (UCHAR_MAX + 1)
+-/* adapter for `xmalloc()`, which takes `size_t`, not `long` */
+-static void *obstack_chunk_alloc(long size)
+-{
+-	if (size < 0)
+-		BUG("Cannot allocate a negative amount: %ld", size);
+-	return xmalloc(size);
+-}
+-#define obstack_chunk_free free
+-
+-#define U(c) ((unsigned char) (c))
+-
+-/* Balanced tree of edges and labels leaving a given trie node. */
+-struct tree
+-{
+-  struct tree *llink;		/* Left link; MUST be first field. */
+-  struct tree *rlink;		/* Right link (to larger labels). */
+-  struct trie *trie;		/* Trie node pointed to by this edge. */
+-  unsigned char label;		/* Label on this edge. */
+-  char balance;			/* Difference in depths of subtrees. */
+-};
+-
+-/* Node of a trie representing a set of reversed keywords. */
+-struct trie
+-{
+-  unsigned int accepting;	/* Word index of accepted word, or zero. */
+-  struct tree *links;		/* Tree of edges leaving this node. */
+-  struct trie *parent;		/* Parent of this node. */
+-  struct trie *next;		/* List of all trie nodes in level order. */
+-  struct trie *fail;		/* Aho-Corasick failure function. */
+-  int depth;			/* Depth of this node from the root. */
+-  int shift;			/* Shift function for search failures. */
+-  int maxshift;			/* Max shift of self and descendants. */
+-};
+-
+-/* Structure returned opaquely to the caller, containing everything. */
+-struct kwset
+-{
+-  struct obstack obstack;	/* Obstack for node allocation. */
+-  int words;			/* Number of words in the trie. */
+-  struct trie *trie;		/* The trie itself. */
+-  int mind;			/* Minimum depth of an accepting node. */
+-  int maxd;			/* Maximum depth of any node. */
+-  unsigned char delta[NCHAR];	/* Delta table for rapid search. */
+-  struct trie *next[NCHAR];	/* Table of children of the root. */
+-  char *target;			/* Target string if there's only one. */
+-  int mind2;			/* Used in Boyer-Moore search for one string. */
+-  unsigned char const *trans;  /* Character translation table. */
+-};
+-
+-/* Allocate and initialize a keyword set object, returning an opaque
+-   pointer to it.  Return NULL if memory is not available. */
+-kwset_t
+-kwsalloc (unsigned char const *trans)
+-{
+-  struct kwset *kwset;
+-
+-  kwset = (struct kwset *) xmalloc(sizeof (struct kwset));
+-
+-  obstack_init(&kwset->obstack);
+-  kwset->words = 0;
+-  kwset->trie
+-    = (struct trie *) obstack_alloc(&kwset->obstack, sizeof (struct trie));
+-  if (!kwset->trie)
+-    {
+-      kwsfree((kwset_t) kwset);
+-      return NULL;
+-    }
+-  kwset->trie->accepting = 0;
+-  kwset->trie->links = NULL;
+-  kwset->trie->parent = NULL;
+-  kwset->trie->next = NULL;
+-  kwset->trie->fail = NULL;
+-  kwset->trie->depth = 0;
+-  kwset->trie->shift = 0;
+-  kwset->mind = INT_MAX;
+-  kwset->maxd = -1;
+-  kwset->target = NULL;
+-  kwset->trans = trans;
+-
+-  return (kwset_t) kwset;
+-}
+-
+-/* This upper bound is valid for CHAR_BIT >= 4 and
+-   exact for CHAR_BIT in { 4..11, 13, 15, 17, 19 }. */
+-#define DEPTH_SIZE (CHAR_BIT + CHAR_BIT/2)
+-
+-/* Add the given string to the contents of the keyword set.  Return NULL
+-   for success, an error message otherwise. */
+-const char *
+-kwsincr (kwset_t kws, char const *text, size_t len)
+-{
+-  struct kwset *kwset;
+-  register struct trie *trie;
+-  register unsigned char label;
+-  register struct tree *link;
+-  register int depth;
+-  struct tree *links[DEPTH_SIZE];
+-  enum { L, R } dirs[DEPTH_SIZE];
+-  struct tree *t, *r, *l, *rl, *lr;
+-
+-  kwset = (struct kwset *) kws;
+-  trie = kwset->trie;
+-  text += len;
+-
+-  /* Descend the trie (built of reversed keywords) character-by-character,
+-     installing new nodes when necessary. */
+-  while (len--)
+-    {
+-      label = kwset->trans ? kwset->trans[U(*--text)] : *--text;
+-
+-      /* Descend the tree of outgoing links for this trie node,
+-	 looking for the current character and keeping track
+-	 of the path followed. */
+-      link = trie->links;
+-      links[0] = (struct tree *) &trie->links;
+-      dirs[0] = L;
+-      depth = 1;
+-
+-      while (link && label != link->label)
+-	{
+-	  links[depth] = link;
+-	  if (label < link->label)
+-	    dirs[depth++] = L, link = link->llink;
+-	  else
+-	    dirs[depth++] = R, link = link->rlink;
+-	}
+-
+-      /* The current character doesn't have an outgoing link at
+-	 this trie node, so build a new trie node and install
+-	 a link in the current trie node's tree. */
+-      if (!link)
+-	{
+-	  link = (struct tree *) obstack_alloc(&kwset->obstack,
+-					       sizeof (struct tree));
+-	  if (!link)
+-	    return "memory exhausted";
+-	  link->llink = NULL;
+-	  link->rlink = NULL;
+-	  link->trie = (struct trie *) obstack_alloc(&kwset->obstack,
+-						     sizeof (struct trie));
+-	  if (!link->trie)
+-	    {
+-	      obstack_free(&kwset->obstack, link);
+-	      return "memory exhausted";
+-	    }
+-	  link->trie->accepting = 0;
+-	  link->trie->links = NULL;
+-	  link->trie->parent = trie;
+-	  link->trie->next = NULL;
+-	  link->trie->fail = NULL;
+-	  link->trie->depth = trie->depth + 1;
+-	  link->trie->shift = 0;
+-	  link->label = label;
+-	  link->balance = 0;
+-
+-	  /* Install the new tree node in its parent. */
+-	  if (dirs[--depth] == L)
+-	    links[depth]->llink = link;
+-	  else
+-	    links[depth]->rlink = link;
+-
+-	  /* Back up the tree fixing the balance flags. */
+-	  while (depth && !links[depth]->balance)
+-	    {
+-	      if (dirs[depth] == L)
+-		--links[depth]->balance;
+-	      else
+-		++links[depth]->balance;
+-	      --depth;
+-	    }
+-
+-	  /* Rebalance the tree by pointer rotations if necessary. */
+-	  if (depth && ((dirs[depth] == L && --links[depth]->balance)
+-			|| (dirs[depth] == R && ++links[depth]->balance)))
+-	    {
+-	      switch (links[depth]->balance)
+-		{
+-		case (char) -2:
+-		  switch (dirs[depth + 1])
+-		    {
+-		    case L:
+-		      r = links[depth], t = r->llink, rl = t->rlink;
+-		      t->rlink = r, r->llink = rl;
+-		      t->balance = r->balance = 0;
+-		      break;
+-		    case R:
+-		      r = links[depth], l = r->llink, t = l->rlink;
+-		      rl = t->rlink, lr = t->llink;
+-		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
+-		      l->balance = t->balance != 1 ? 0 : -1;
+-		      r->balance = t->balance != (char) -1 ? 0 : 1;
+-		      t->balance = 0;
+-		      break;
+-		    default:
+-		      abort ();
+-		    }
+-		  break;
+-		case 2:
+-		  switch (dirs[depth + 1])
+-		    {
+-		    case R:
+-		      l = links[depth], t = l->rlink, lr = t->llink;
+-		      t->llink = l, l->rlink = lr;
+-		      t->balance = l->balance = 0;
+-		      break;
+-		    case L:
+-		      l = links[depth], r = l->rlink, t = r->llink;
+-		      lr = t->llink, rl = t->rlink;
+-		      t->llink = l, l->rlink = lr, t->rlink = r, r->llink = rl;
+-		      l->balance = t->balance != 1 ? 0 : -1;
+-		      r->balance = t->balance != (char) -1 ? 0 : 1;
+-		      t->balance = 0;
+-		      break;
+-		    default:
+-		      abort ();
+-		    }
+-		  break;
+-		default:
+-		  abort ();
 -		}
-+			opt.ignore_case = 1;
-+		if (opts & DIFF_PICKAXE_KIND_S &&
-+		    !(opts & DIFF_PICKAXE_REGEX))
-+			opt.fixed = 1;
-+
-+		append_grep_pattern(&opt, needle, "diffcore-pickaxe", 0, GREP_PATTERN);
-+		compile_grep_patterns(&opt);
- 	}
- 
--	pickaxe(&diff_queued_diff, o, regexp, kws,
-+	pickaxe(&diff_queued_diff, o, &opt,
- 		(opts & DIFF_PICKAXE_KIND_G) ? diff_grep : has_changes);
- 
--	if (regexp)
--		regfree(regexp);
--	if (kws)
--		kwsfree(kws);
-+	if (opts & ~DIFF_PICKAXE_KIND_OBJFIND)
-+		free_grep_patterns(&opt);
-+
- 	return;
- }
+-
+-	      if (dirs[depth - 1] == L)
+-		links[depth - 1]->llink = t;
+-	      else
+-		links[depth - 1]->rlink = t;
+-	    }
+-	}
+-
+-      trie = link->trie;
+-    }
+-
+-  /* Mark the node we finally reached as accepting, encoding the
+-     index number of this word in the keyword set so far. */
+-  if (!trie->accepting)
+-    trie->accepting = 1 + 2 * kwset->words;
+-  ++kwset->words;
+-
+-  /* Keep track of the longest and shortest string of the keyword set. */
+-  if (trie->depth < kwset->mind)
+-    kwset->mind = trie->depth;
+-  if (trie->depth > kwset->maxd)
+-    kwset->maxd = trie->depth;
+-
+-  return NULL;
+-}
+-
+-/* Enqueue the trie nodes referenced from the given tree in the
+-   given queue. */
+-static void
+-enqueue (struct tree *tree, struct trie **last)
+-{
+-  if (!tree)
+-    return;
+-  enqueue(tree->llink, last);
+-  enqueue(tree->rlink, last);
+-  (*last) = (*last)->next = tree->trie;
+-}
+-
+-/* Compute the Aho-Corasick failure function for the trie nodes referenced
+-   from the given tree, given the failure function for their parent as
+-   well as a last resort failure node. */
+-static void
+-treefails (register struct tree const *tree, struct trie const *fail,
+-	   struct trie *recourse)
+-{
+-  register struct tree *link;
+-
+-  if (!tree)
+-    return;
+-
+-  treefails(tree->llink, fail, recourse);
+-  treefails(tree->rlink, fail, recourse);
+-
+-  /* Find, in the chain of fails going back to the root, the first
+-     node that has a descendant on the current label. */
+-  while (fail)
+-    {
+-      link = fail->links;
+-      while (link && tree->label != link->label)
+-	if (tree->label < link->label)
+-	  link = link->llink;
+-	else
+-	  link = link->rlink;
+-      if (link)
+-	{
+-	  tree->trie->fail = link->trie;
+-	  return;
+-	}
+-      fail = fail->fail;
+-    }
+-
+-  tree->trie->fail = recourse;
+-}
+-
+-/* Set delta entries for the links of the given tree such that
+-   the preexisting delta value is larger than the current depth. */
+-static void
+-treedelta (register struct tree const *tree,
+-	   register unsigned int depth,
+-	   unsigned char delta[])
+-{
+-  if (!tree)
+-    return;
+-  treedelta(tree->llink, depth, delta);
+-  treedelta(tree->rlink, depth, delta);
+-  if (depth < delta[tree->label])
+-    delta[tree->label] = depth;
+-}
+-
+-/* Return true if A has every label in B. */
+-static int
+-hasevery (register struct tree const *a, register struct tree const *b)
+-{
+-  if (!b)
+-    return 1;
+-  if (!hasevery(a, b->llink))
+-    return 0;
+-  if (!hasevery(a, b->rlink))
+-    return 0;
+-  while (a && b->label != a->label)
+-    if (b->label < a->label)
+-      a = a->llink;
+-    else
+-      a = a->rlink;
+-  return !!a;
+-}
+-
+-/* Compute a vector, indexed by character code, of the trie nodes
+-   referenced from the given tree. */
+-static void
+-treenext (struct tree const *tree, struct trie *next[])
+-{
+-  if (!tree)
+-    return;
+-  treenext(tree->llink, next);
+-  treenext(tree->rlink, next);
+-  next[tree->label] = tree->trie;
+-}
+-
+-/* Compute the shift for each trie node, as well as the delta
+-   table and next cache for the given keyword set. */
+-const char *
+-kwsprep (kwset_t kws)
+-{
+-  register struct kwset *kwset;
+-  register int i;
+-  register struct trie *curr;
+-  register unsigned char const *trans;
+-  unsigned char delta[NCHAR];
+-
+-  kwset = (struct kwset *) kws;
+-
+-  /* Initial values for the delta table; will be changed later.  The
+-     delta entry for a given character is the smallest depth of any
+-     node at which an outgoing edge is labeled by that character. */
+-  memset(delta, kwset->mind < UCHAR_MAX ? kwset->mind : UCHAR_MAX, NCHAR);
+-
+-  /* Check if we can use the simple boyer-moore algorithm, instead
+-     of the hairy commentz-walter algorithm. */
+-  if (kwset->words == 1 && kwset->trans == NULL)
+-    {
+-      char c;
+-
+-      /* Looking for just one string.  Extract it from the trie. */
+-      kwset->target = obstack_alloc(&kwset->obstack, kwset->mind);
+-      if (!kwset->target)
+-	return "memory exhausted";
+-      for (i = kwset->mind - 1, curr = kwset->trie; i >= 0; --i)
+-	{
+-	  kwset->target[i] = curr->links->label;
+-	  curr = curr->links->trie;
+-	}
+-      /* Build the Boyer Moore delta.  Boy that's easy compared to CW. */
+-      for (i = 0; i < kwset->mind; ++i)
+-	delta[U(kwset->target[i])] = kwset->mind - (i + 1);
+-      /* Find the minimal delta2 shift that we might make after
+-	 a backwards match has failed. */
+-      c = kwset->target[kwset->mind - 1];
+-      for (i = kwset->mind - 2; i >= 0; --i)
+-	if (kwset->target[i] == c)
+-	  break;
+-      kwset->mind2 = kwset->mind - (i + 1);
+-    }
+-  else
+-    {
+-      register struct trie *fail;
+-      struct trie *last, *next[NCHAR];
+-
+-      /* Traverse the nodes of the trie in level order, simultaneously
+-	 computing the delta table, failure function, and shift function. */
+-      for (curr = last = kwset->trie; curr; curr = curr->next)
+-	{
+-	  /* Enqueue the immediate descendants in the level order queue. */
+-	  enqueue(curr->links, &last);
+-
+-	  curr->shift = kwset->mind;
+-	  curr->maxshift = kwset->mind;
+-
+-	  /* Update the delta table for the descendants of this node. */
+-	  treedelta(curr->links, curr->depth, delta);
+-
+-	  /* Compute the failure function for the descendants of this node. */
+-	  treefails(curr->links, curr->fail, kwset->trie);
+-
+-	  /* Update the shifts at each node in the current node's chain
+-	     of fails back to the root. */
+-	  for (fail = curr->fail; fail; fail = fail->fail)
+-	    {
+-	      /* If the current node has some outgoing edge that the fail
+-		 doesn't, then the shift at the fail should be no larger
+-		 than the difference of their depths. */
+-	      if (!hasevery(fail->links, curr->links))
+-		if (curr->depth - fail->depth < fail->shift)
+-		  fail->shift = curr->depth - fail->depth;
+-
+-	      /* If the current node is accepting then the shift at the
+-		 fail and its descendants should be no larger than the
+-		 difference of their depths. */
+-	      if (curr->accepting && fail->maxshift > curr->depth - fail->depth)
+-		fail->maxshift = curr->depth - fail->depth;
+-	    }
+-	}
+-
+-      /* Traverse the trie in level order again, fixing up all nodes whose
+-	 shift exceeds their inherited maxshift. */
+-      for (curr = kwset->trie->next; curr; curr = curr->next)
+-	{
+-	  if (curr->maxshift > curr->parent->maxshift)
+-	    curr->maxshift = curr->parent->maxshift;
+-	  if (curr->shift > curr->maxshift)
+-	    curr->shift = curr->maxshift;
+-	}
+-
+-      /* Create a vector, indexed by character code, of the outgoing links
+-	 from the root node. */
+-      for (i = 0; i < NCHAR; ++i)
+-	next[i] = NULL;
+-      treenext(kwset->trie->links, next);
+-
+-      if ((trans = kwset->trans) != NULL)
+-	for (i = 0; i < NCHAR; ++i)
+-	  kwset->next[i] = next[U(trans[i])];
+-      else
+-	COPY_ARRAY(kwset->next, next, NCHAR);
+-    }
+-
+-  /* Fix things up for any translation table. */
+-  if ((trans = kwset->trans) != NULL)
+-    for (i = 0; i < NCHAR; ++i)
+-      kwset->delta[i] = delta[U(trans[i])];
+-  else
+-    memcpy(kwset->delta, delta, NCHAR);
+-
+-  return NULL;
+-}
+-
+-/* Fast boyer-moore search. */
+-static size_t
+-bmexec (kwset_t kws, char const *text, size_t size)
+-{
+-  struct kwset const *kwset;
+-  register unsigned char const *d1;
+-  register char const *ep, *sp, *tp;
+-  register int d, gc, i, len, md2;
+-
+-  kwset = (struct kwset const *) kws;
+-  len = kwset->mind;
+-
+-  if (len == 0)
+-    return 0;
+-  if (len > size)
+-    return -1;
+-  if (len == 1)
+-    {
+-      tp = memchr (text, kwset->target[0], size);
+-      return tp ? tp - text : -1;
+-    }
+-
+-  d1 = kwset->delta;
+-  sp = kwset->target + len;
+-  gc = U(sp[-2]);
+-  md2 = kwset->mind2;
+-  tp = text + len;
+-
+-  /* Significance of 12: 1 (initial offset) + 10 (skip loop) + 1 (md2). */
+-  if (size > 12 * len)
+-    /* 11 is not a bug, the initial offset happens only once. */
+-    for (ep = text + size - 11 * len;;)
+-      {
+-	while (tp <= ep)
+-	  {
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    if (d == 0)
+-	      goto found;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    if (d == 0)
+-	      goto found;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    if (d == 0)
+-	      goto found;
+-	    d = d1[U(tp[-1])], tp += d;
+-	    d = d1[U(tp[-1])], tp += d;
+-	  }
+-	break;
+-      found:
+-	if (U(tp[-2]) == gc)
+-	  {
+-	    for (i = 3; i <= len && U(tp[-i]) == U(sp[-i]); ++i)
+-	      ;
+-	    if (i > len)
+-	      return tp - len - text;
+-	  }
+-	tp += md2;
+-      }
+-
+-  /* Now we have only a few characters left to search.  We
+-     carefully avoid ever producing an out-of-bounds pointer. */
+-  ep = text + size;
+-  d = d1[U(tp[-1])];
+-  while (d <= ep - tp)
+-    {
+-      d = d1[U((tp += d)[-1])];
+-      if (d != 0)
+-	continue;
+-      if (U(tp[-2]) == gc)
+-	{
+-	  for (i = 3; i <= len && U(tp[-i]) == U(sp[-i]); ++i)
+-	    ;
+-	  if (i > len)
+-	    return tp - len - text;
+-	}
+-      d = md2;
+-    }
+-
+-  return -1;
+-}
+-
+-/* Hairy multiple string search. */
+-static size_t
+-cwexec (kwset_t kws, char const *text, size_t len, struct kwsmatch *kwsmatch)
+-{
+-  struct kwset const *kwset;
+-  struct trie * const *next;
+-  struct trie const *trie;
+-  struct trie const *accept;
+-  char const *beg, *lim, *mch, *lmch;
+-  register unsigned char c;
+-  register unsigned char const *delta;
+-  register int d;
+-  register char const *end, *qlim;
+-  register struct tree const *tree;
+-  register unsigned char const *trans;
+-
+-  accept = NULL;
+-
+-  /* Initialize register copies and look for easy ways out. */
+-  kwset = (struct kwset *) kws;
+-  if (len < kwset->mind)
+-    return -1;
+-  next = kwset->next;
+-  delta = kwset->delta;
+-  trans = kwset->trans;
+-  lim = text + len;
+-  end = text;
+-  if ((d = kwset->mind) != 0)
+-    mch = NULL;
+-  else
+-    {
+-      mch = text, accept = kwset->trie;
+-      goto match;
+-    }
+-
+-  if (len >= 4 * kwset->mind)
+-    qlim = lim - 4 * kwset->mind;
+-  else
+-    qlim = NULL;
+-
+-  while (lim - end >= d)
+-    {
+-      if (qlim && end <= qlim)
+-	{
+-	  end += d - 1;
+-	  while ((d = delta[c = *end]) && end < qlim)
+-	    {
+-	      end += d;
+-	      end += delta[U(*end)];
+-	      end += delta[U(*end)];
+-	    }
+-	  ++end;
+-	}
+-      else
+-	d = delta[c = (end += d)[-1]];
+-      if (d)
+-	continue;
+-      beg = end - 1;
+-      trie = next[c];
+-      if (trie->accepting)
+-	{
+-	  mch = beg;
+-	  accept = trie;
+-	}
+-      d = trie->shift;
+-      while (beg > text)
+-	{
+-	  c = trans ? trans[U(*--beg)] : *--beg;
+-	  tree = trie->links;
+-	  while (tree && c != tree->label)
+-	    if (c < tree->label)
+-	      tree = tree->llink;
+-	    else
+-	      tree = tree->rlink;
+-	  if (tree)
+-	    {
+-	      trie = tree->trie;
+-	      if (trie->accepting)
+-		{
+-		  mch = beg;
+-		  accept = trie;
+-		}
+-	    }
+-	  else
+-	    break;
+-	  d = trie->shift;
+-	}
+-      if (mch)
+-	goto match;
+-    }
+-  return -1;
+-
+- match:
+-  /* Given a known match, find the longest possible match anchored
+-     at or before its starting point.  This is nearly a verbatim
+-     copy of the preceding main search loops. */
+-  if (lim - mch > kwset->maxd)
+-    lim = mch + kwset->maxd;
+-  lmch = NULL;
+-  d = 1;
+-  while (lim - end >= d)
+-    {
+-      if ((d = delta[c = (end += d)[-1]]) != 0)
+-	continue;
+-      beg = end - 1;
+-      if (!(trie = next[c]))
+-	{
+-	  d = 1;
+-	  continue;
+-	}
+-      if (trie->accepting && beg <= mch)
+-	{
+-	  lmch = beg;
+-	  accept = trie;
+-	}
+-      d = trie->shift;
+-      while (beg > text)
+-	{
+-	  c = trans ? trans[U(*--beg)] : *--beg;
+-	  tree = trie->links;
+-	  while (tree && c != tree->label)
+-	    if (c < tree->label)
+-	      tree = tree->llink;
+-	    else
+-	      tree = tree->rlink;
+-	  if (tree)
+-	    {
+-	      trie = tree->trie;
+-	      if (trie->accepting && beg <= mch)
+-		{
+-		  lmch = beg;
+-		  accept = trie;
+-		}
+-	    }
+-	  else
+-	    break;
+-	  d = trie->shift;
+-	}
+-      if (lmch)
+-	{
+-	  mch = lmch;
+-	  goto match;
+-	}
+-      if (!d)
+-	d = 1;
+-    }
+-
+-  if (kwsmatch)
+-    {
+-      kwsmatch->index = accept->accepting / 2;
+-      kwsmatch->offset[0] = mch - text;
+-      kwsmatch->size[0] = accept->depth;
+-    }
+-  return mch - text;
+-}
+-
+-/* Search through the given text for a match of any member of the
+-   given keyword set.  Return a pointer to the first character of
+-   the matching substring, or NULL if no match is found.  If FOUNDLEN
+-   is non-NULL store in the referenced location the length of the
+-   matching substring.  Similarly, if FOUNDIDX is non-NULL, store
+-   in the referenced location the index number of the particular
+-   keyword matched. */
+-size_t
+-kwsexec (kwset_t kws, char const *text, size_t size,
+-	 struct kwsmatch *kwsmatch)
+-{
+-  struct kwset const *kwset = (struct kwset *) kws;
+-  if (kwset->words == 1 && kwset->trans == NULL)
+-    {
+-      size_t ret = bmexec (kws, text, size);
+-      if (kwsmatch != NULL && ret != (size_t) -1)
+-	{
+-	  kwsmatch->index = 0;
+-	  kwsmatch->offset[0] = ret;
+-	  kwsmatch->size[0] = kwset->mind;
+-	}
+-      return ret;
+-    }
+-  else
+-    return cwexec(kws, text, size, kwsmatch);
+-}
+-
+-/* Free the components of the given keyword set. */
+-void
+-kwsfree (kwset_t kws)
+-{
+-  struct kwset *kwset;
+-
+-  kwset = (struct kwset *) kws;
+-  obstack_free(&kwset->obstack, NULL);
+-  free(kws);
+-}
+diff --git a/kwset.h b/kwset.h
+deleted file mode 100644
+index f50ecae573..0000000000
+--- a/kwset.h
++++ /dev/null
+@@ -1,65 +0,0 @@
+-#ifndef KWSET_H
+-#define KWSET_H
+-
+-/* This file has been copied from commit e7ac713d^ in the GNU grep git
+- * repository. A few small changes have been made to adapt the code to
+- * Git.
+- */
+-
+-/* kwset.h - header declaring the keyword set library.
+-   Copyright (C) 1989, 1998, 2005 Free Software Foundation, Inc.
+-
+-   This program is free software; you can redistribute it and/or modify
+-   it under the terms of the GNU General Public License as published by
+-   the Free Software Foundation; either version 2, or (at your option)
+-   any later version.
+-
+-   This program is distributed in the hope that it will be useful,
+-   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-   GNU General Public License for more details.
+-
+-   You should have received a copy of the GNU General Public License
+-   along with this program; if not, see <http://www.gnu.org/licenses/>. */
+-
+-/* Written August 1989 by Mike Haertel.
+-   The author may be reached (Email) at the address mike@ai.mit.edu,
+-   or (US mail) as Mike Haertel c/o Free Software Foundation. */
+-
+-struct kwsmatch
+-{
+-  int index;			/* Index number of matching keyword. */
+-  size_t offset[1];		/* Offset of each submatch. */
+-  size_t size[1];		/* Length of each submatch. */
+-};
+-
+-struct kwset_t;
+-typedef struct kwset_t* kwset_t;
+-
+-/* Return an opaque pointer to a newly allocated keyword set, or NULL
+-   if enough memory cannot be obtained.  The argument if non-NULL
+-   specifies a table of character translations to be applied to all
+-   pattern and search text. */
+-kwset_t kwsalloc(unsigned char const *);
+-
+-/* Incrementally extend the keyword set to include the given string.
+-   Return NULL for success, or an error message.  Remember an index
+-   number for each keyword included in the set. */
+-const char *kwsincr(kwset_t, char const *, size_t);
+-
+-/* When the keyword set has been completely built, prepare it for
+-   use.  Return NULL for success, or an error message. */
+-const char *kwsprep(kwset_t);
+-
+-/* Search through the given buffer for a member of the keyword set.
+-   Return a pointer to the leftmost longest match found, or NULL if
+-   no match is found.  If foundlen is non-NULL, store the length of
+-   the matching substring in the integer it points to.  Similarly,
+-   if foundindex is non-NULL, store the index of the particular
+-   keyword found therein. */
+-size_t kwsexec(kwset_t, char const *, size_t, struct kwsmatch *);
+-
+-/* Deallocate the given keyword set and all its associated storage. */
+-void kwsfree(kwset_t);
+-
+-#endif /* KWSET_H */
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
