@@ -2,120 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99AB8C433E9
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 562B8C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6A4DB64F67
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:09:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11E4464F6C
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232554AbhBCDJD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:09:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50238 "EHLO
+        id S232441AbhBCD26 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:28:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232274AbhBCDJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 22:09:00 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F3E3C06178B
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:09:02 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id n7so25207175oic.11
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:09:02 -0800 (PST)
+        with ESMTP id S230083AbhBCD26 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 22:28:58 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3862C061573
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:17 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id m13so22583307wro.12
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=SqltQk6znpK4212tNHMzyh84kQbuOyNNMW9+tZgFSgI=;
-        b=NbeVTUm8PIpUN/awdceQYpFKvICXgVBLo10+ZwEFS461L2FQXYfxnkpYjNzFxpsMVH
-         Sd1fE9f0iVsbHrFXL516ig0doNhgURUn2I2GcWOmKzJYJ3508s1WF5yCiotgcdLIxvz/
-         BEKqEFNjMoSO+qpNCamHY/tP6kUhd+ZCZLbfA1YBLKCbc4UKg7mW6bzxExpMzuB2CMBv
-         zVyhTFGQuEgmkWifi+GKhJ54b8tvU7fWn48keW/hpukC4u4tAqsFK13khJg/exxazsrE
-         5qi+7522TAdgrdZAgNSs+nnBi/Jn69iZKfaQS/DUoSNbMhDzFyt1o2boKaLNm7SO2TWB
-         ic8w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gYW2sLYnZrukSa7ycfOjvS1p7rDZxIHfuuOQX+44sQo=;
+        b=L+hqQgOf9m0j14Fqx3Xgx+8oVGjOA1r8XP0xF9gytxKcQD67y0PSNKUXTQAttSDTQv
+         oohO/8812pQVZxytWzGET91Dy3swMZHLmMKMLArB+IcrESO4FNKqnEwSeWMkAnlBjDCJ
+         r4Am1D4+pMjpiOxmly0KWq6ENzNh3AToLFjismsquzIcesQtf9VmV7utg5Oy7Pl882IA
+         jB1mDSMGFaBX8PJlGjD/mmP4rWv5AAOM6drt0uSvXhqYESQtKA6tSQyncGNWEpRhW3N5
+         alQ9Uds/2JPb/2yQk7LKeUnu15PvKPE3tLqmP9MxOvpbxFeu5KA7ukGF92mBwVf8Lv3m
+         bDbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=SqltQk6znpK4212tNHMzyh84kQbuOyNNMW9+tZgFSgI=;
-        b=KZ0xYG2i/Bq8K1tlBwGkIHYuSYP2J7apIgvsMVrNfcZfnRjh+WVKItomnwtB4ebFhP
-         oPP6QdRdhYUsuFR5qRw0KIGxa5TMhkQajiRTmeC5y20osJBdyrVnIJY72fFRn637BkHk
-         Us0JNhSxxWfKEwSsqzlhXveP0MdVKAAKu+t4Diywt7FFetmZxcOPIQ0QR9koQdw6NRFf
-         Y5Y34qYei+Q6xQ7JwZ3GJpiya1roftj6EHFjj6ez9V6YpP83gModgbDkoBjPUtK1hmKC
-         8fn6CB0x4ddiP6RagkUNo8AdKoLTB3i+iWdF0DBxtq9auHHE20FAoKiAuuqSZmpK29QP
-         Dn1g==
-X-Gm-Message-State: AOAM533mHs3rCX1ndTI+DyxwY3bmZ+sMBnOzf2fbTFkkZAaVpOgYsUCJ
-        UTzRpcV8vkDberdcr/CMPqoTMn9tiDB+x/sV
-X-Google-Smtp-Source: ABdhPJwsaa5N6dBmJcLHM+jeY8snjHu2qLqE2D/2vqtav1T9HfXztCB1SqsnKoq4hBesGv0k12EseQ==
-X-Received: by 2002:aca:b286:: with SMTP id b128mr696395oif.126.1612321741876;
-        Tue, 02 Feb 2021 19:09:01 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:79cd:7444:bf97:c4d4? ([2600:1700:e72:80a0:79cd:7444:bf97:c4d4])
-        by smtp.gmail.com with UTF8SMTPSA id v67sm189405otb.43.2021.02.02.19.09.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Feb 2021 19:09:01 -0800 (PST)
-Message-ID: <247b0056-8358-f71f-22ee-0bacfbc4239d@gmail.com>
-Date:   Tue, 2 Feb 2021 22:09:00 -0500
+        bh=gYW2sLYnZrukSa7ycfOjvS1p7rDZxIHfuuOQX+44sQo=;
+        b=C9O+JbUCIuGvJq2RG5qZQnJBYeB+VXcdf+2iEM6dYTtMAt7WZSfOdZobOIaVUyjn3h
+         ZNjv4NkTSwJrwofIsriqy+sf87OawuyOD2bR4LF4SESNZI941uTnE7D/efe4GYyULiRT
+         y8pPMXSXAesbZZm3rsKKWm69bE1FdoK9ajwITki6E9mYsWn1QLwUFVIdZTP3bOF+b6Ty
+         qT/3h5Z/bQ1gfC3LnMHaOb5fMpBDTYI7gl5RCFYSyT0sLjVZ678g34COYLbZ5U1yOQS+
+         rnbhLX5nvrojE2Hdzn10bpAFg7m8gjPMEp5NcjLC44FX8ITo+KoYRGRjp74k60XylcMi
+         CuTw==
+X-Gm-Message-State: AOAM531vRhCvfo5aQQuaU98u8ZDGZetGMUp/ZJmyT9zVOiC78HAtzSRC
+        3zB9dRLwbc8q+HPxN+hI46APIYiVw6eyCA==
+X-Google-Smtp-Source: ABdhPJwrk4VUGUSFcaDqWvl+BWYH90X8eea9/DJUZzMsnKfXPC+OPEONxZGEJrYE7YvobHrCh5oa4A==
+X-Received: by 2002:a5d:5902:: with SMTP id v2mr1031282wrd.426.1612322896115;
+        Tue, 02 Feb 2021 19:28:16 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Feb 2021 19:28:15 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/25] grep: PCREv2 fixes, remove kwset.[ch]
+Date:   Wed,  3 Feb 2021 04:27:46 +0100
+Message-Id: <20210203032811.14979-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
- commit_graph_data_at()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
-        abhishekkumar8222@gmail.com, Taylor Blau <ttaylorr@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
- <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
- <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
- <YBn3fxFe978Up5Ly@google.com>
- <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
- <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/2/2021 9:06 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->>> - what is the recommended way to recover from this state?  "git fsck"
->>>   shows the repositories to have no problems.  "git help commit-graph"
->>>   doesn't show a command for users to use; is
->>>   `rm -fr .git/objects/info/commit-graphs/` the recommended recovery
->>>   command?
-> 
-> "rm -f .git/objects/info/commit-graph" as well, no?
+This is based on next. I was wondering if/how to split this up, it
+should arguably be a few serieses, but let's see if it gets some
+traction in reviews like this. Comments below:
 
-In this case, that won't be necessary since they are using a
-split commit-graph. However, the following is what I do to
-be extra sure:
+Ævar Arnfjörð Bjarmason (25):
+  grep/pcre2 tests: reword comments referring to kwset
+  grep/pcre2: drop needless assignment + assert() on opt->pcre2
+  grep/pcre2: drop needless assignment to NULL
+  grep/pcre2: correct reference to grep_init() in comment
+  grep/pcre2: prepare to add debugging to pcre2_malloc()
+  grep/pcre2: add GREP_PCRE2_DEBUG_MALLOC debug mode
+  grep/pcre2: use compile-time PCREv2 version test
+  grep/pcre2: use pcre2_maketables_free() function
+  grep/pcre2: actually make pcre2 use custom allocator
+  grep/pcre2: move back to thread-only PCREv2 structures
+  grep/pcre2: move definitions of pcre2_{malloc,free}
 
-	rm -rf .git/objects/info/commit-graph*
+PCRE v2 code cleanups, and fix up bugs in our pcre2_{malloc,free}()
+handling.
 
-Deletes the singleton file and the directory.
+  pickaxe tests: refactor to use test_commit --append
+  pickaxe -S: support content with NULs under --pickaxe-regex
+  pickaxe -S: remove redundant "sz" check in while-loop
+  pickaxe/style: consolidate declarations and assignments
+  pickaxe tests: add test for diffgrep_consume() internals
+  pickaxe tests: add test for "log -S" not being a regex
+  perf: add performance test for pickaxe
 
->> That, followed by `git commit-graph write --reachable [--changed-paths]`
->> depending on what they want.
-> 
-> Just out of curiosity, how important is "--reachable"?  It only
-> traverses from the tips of refs and unlike fsck and repack, not from
-> reflog entries (or the index for that matter, but that shouldn't
-> make much difference as there is no _commit_ in the index).
+Various test prep for pickaxe.
 
-I just like to focus on the reachable commits starting at refs
-instead of scanning all packed objects to see which are commits
-or not.
+  pickaxe -G: set -U0 for diff generation
 
-Thanks,
--stolee
+Turns out feeding "log -G" -U10 output makes it faster.
+
+  grep.h: make patmatch() a public function
+  pickaxe: use PCREv2 for -G and -S
+  Remove unused kwset.[ch]
+
+At long last, kwset.[ch] is gone!
+
+  xdiff-interface: allow early return from xdiff_emit_{line,hunk}_fn
+  xdiff-interface: support early exit in xdiff_outf()
+  pickaxe -G: terminate early on matching lines
+
+Solve an ancient todo item in pickaxe by extending our xdiff interface
+so you can early exit from hunk/line handlers.
+
+ Makefile                       |   2 -
+ builtin/grep.c                 |   1 -
+ combine-diff.c                 |   9 +-
+ compat/obstack.c               | 413 ------------------
+ compat/obstack.h               | 511 ----------------------
+ ctype.c                        |  36 --
+ diff.c                         |  39 +-
+ diff.h                         |   4 +
+ diffcore-pickaxe.c             | 184 ++++----
+ git-compat-util.h              |   3 -
+ grep.c                         | 103 ++---
+ grep.h                         |  11 +-
+ kwset.c                        | 775 ---------------------------------
+ kwset.h                        |  65 ---
+ range-diff.c                   |   8 +-
+ t/perf/p4209-pickaxe.sh        |  82 ++++
+ t/t4209-log-pickaxe.sh         |  64 ++-
+ t/t7816-grep-binary-pattern.sh |   4 +-
+ xdiff-interface.c              |  26 +-
+ xdiff-interface.h              |  36 +-
+ 20 files changed, 351 insertions(+), 2025 deletions(-)
+ delete mode 100644 compat/obstack.c
+ delete mode 100644 compat/obstack.h
+ delete mode 100644 kwset.c
+ delete mode 100644 kwset.h
+ create mode 100755 t/perf/p4209-pickaxe.sh
+
+-- 
+2.30.0.284.gd98b1dd5eaa7
 
