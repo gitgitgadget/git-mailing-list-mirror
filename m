@@ -2,173 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAEA9C433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A306BC433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 16:00:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0CAF64F93
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 15:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 517D364DDB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 16:00:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234485AbhBCPyw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 10:54:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41270 "EHLO
+        id S234744AbhBCQAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 11:00:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233585AbhBCPfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 10:35:36 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BAFC061788
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:34:53 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id f16so37802wmq.5
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:34:53 -0800 (PST)
+        with ESMTP id S234731AbhBCP7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 10:59:55 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BE7C061573
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 07:59:09 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id o18so17879684qtp.10
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 07:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=y0uDEyR14HxwPOKcctVpZM3ozMX0T1PFIs+TId3VyUE=;
-        b=fRv03Wn90dnBibEOi4butTaeapSX5pUEkMnttAunVLZcdJnhlHA0BY74XIipL9Gy1K
-         wdLQEtVHDhp09965CbehVQXibbZGHxESN96pTHSOKek4rWsOn/s1ESbO+oKwqKiw2zPR
-         wOCRLSiOJl9aKylCAk7ezJL3wAgIJ0r4QoZE74fXlDp0rMmFK/wPuyHe/rzPrIpnaz2i
-         TDTR+xNnTJgZjv28Wm50Zbps6FnoQ6giDnQJGp7z3IIvUZcTcbXCskV+PMpfaG3S2/s/
-         NkCrjeq7mepzIzll5YrsB91BF4zcQR9LUdXjT9tGBU0og6yK5Gye5wvLXeKpfVxsd0CF
-         VCtQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=oC1LKNRtEP/vyJcLF5dg07bVy2ZxwzraLjzWKVeUBXU=;
+        b=Z0EaZL/nCgLxV1FJqVuil09aGdPGAj+8APav3z7PzFRKlN5Ee06nZd/9+stOogk5Zp
+         2oDEHZl9Tb1w0lecSZ0jOdXSMDv67GOqp0jZPO66/98i/2ohLsF/UskkXfHx8+F+M+eO
+         wFh9IaTrhCCz8Cvojobl1AGOT3TUdrgGP3lAN19QPxVGVelj3PSYAL2Zzxhe2DIeUWhp
+         mmVVGUc9kMnnIs8qeCOiOEdoYiGAYlas6gDRtWrHHUEaKdJ7HsVkKO9Cv+L5r/n66IM0
+         yibe4hi7akyDNfFYjYbcUKxR6pae/qk5ntN1rocLtyMs5jz2QnG6TNWVMWjjkHCfdc+L
+         6nZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y0uDEyR14HxwPOKcctVpZM3ozMX0T1PFIs+TId3VyUE=;
-        b=HUf/mW/5koWh8K/EWgm4nKcYMwFauyIZ5EVahJKFpIzFa/68z+UUNpE/vdtgiolkzf
-         Bu4OmZzhzr7uhIhbXdu7oyzQkMcTC9CgS8khoWC2aQhvNCWK6zC6oLcz2G0F3kH+9Nh+
-         bC48EXsPsg9npkRHMsJLxHSh56Lw4oNBNkxmhXdUN4KmXDhZUO97wsG/JlKg4YLArhhX
-         wJO7wbjfPsj66pdicBeUcLP18W5Lo+HbhRN9FmTMhy3oThpUsvPCpKc0J1qEAeDeqXHS
-         jNooOplIpiSOyzoRD0cn6IEnAEzZwdBco6RiPHxByv91D6xOJTUIhJfZVWM8W6z3JQEH
-         nLaw==
-X-Gm-Message-State: AOAM532jHE9Kj2Djit4oj//UXWkLV24pzHlnOTN9ecfPKqNa7sAPBBmf
-        pkLM5SlRPikKLiQP3f30jFl/m6AhCHo=
-X-Google-Smtp-Source: ABdhPJwrtvjlKmNxt6MbMHVjOcnduSmq5+6foR84yifAvBdagiifssVzlojKgaZYFc6qjMd13qGyNA==
-X-Received: by 2002:a7b:c842:: with SMTP id c2mr3358006wml.100.1612366491829;
-        Wed, 03 Feb 2021 07:34:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2sm3129938wmf.15.2021.02.03.07.34.50
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=oC1LKNRtEP/vyJcLF5dg07bVy2ZxwzraLjzWKVeUBXU=;
+        b=EYQZn1cZRCr4WL4nYZ+cZxOfrmaV++6gt9Y3lLTIvtGDBq1HrpMfLkV63Hbbd7uEtt
+         /lCo5orpxmyq4YXyaJ3/CiKtrI3/Uy2FEVUAhgWuKfeJQi+LOSlLU+9bzAQ4bWARBylq
+         gBwjejDVfUtLZMvIAviu7veYiKmi1f10ftuRoo6S58ITtdKFOrjEuNSRNQG4LMH7A9mu
+         j/ZpzelhV33pc5x5ai2kqQ4bBamlO1Vj35k/cbh682Mkb7tGL9NngwSLVn+TkFJ3TdAl
+         8oUKsBIn+6H87IbsZ+RWpC42f6XliquTQCOetmMus+d4y23omxLWmJb/KYydzJuKTLhm
+         GXuQ==
+X-Gm-Message-State: AOAM530jlcB2ejtmrbHALOVXBQZHtewBdKkXhXSSAzmHNvWOyyfy9mkA
+        U7uhEMSz+UUmo4AQyj9/b+CQfw==
+X-Google-Smtp-Source: ABdhPJzACVB087fBbQ7eCTTTnL8qRKVh244B1CtpSaDqZt5aq5cFL4yiwvc1MsE3Uu0FoH7Rarfbrw==
+X-Received: by 2002:ac8:59d6:: with SMTP id f22mr3075972qtf.230.1612367948968;
+        Wed, 03 Feb 2021 07:59:08 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:3a5f:649:7bf7:4ac8])
+        by smtp.gmail.com with ESMTPSA id b16sm1578617qtx.85.2021.02.03.07.59.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 07:34:51 -0800 (PST)
-Message-Id: <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
-In-Reply-To: <pull.860.git.1612216941.gitgitgadget@gmail.com>
-References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 03 Feb 2021 15:34:39 +0000
-Subject: [PATCH v2 00/11] FSMonitor Preliminary Commits
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 03 Feb 2021 07:59:08 -0800 (PST)
+Date:   Wed, 3 Feb 2021 10:59:05 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        me@ttaylorr.com, peff@peff.net, gitster@pobox.com,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 5/5] commit-reach: stale commits may prune generation
+ further
+Message-ID: <YBrISQ/5/pJKgGGZ@nand.local>
+References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
+ <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
+ <14f0974c987215bd36e91450c1a6ebc6d5732121.1612183647.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <14f0974c987215bd36e91450c1a6ebc6d5732121.1612183647.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is version 2 of this series.
+On Mon, Feb 01, 2021 at 12:47:27PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> Note that these are only modest improvements for the case where the two
+> independent commits are not in the commit-graph (not until v5.10). All
+> algorithms get faster as more commits are indexed, which is not a
+> surprise. However, the cost of walking extra commits is more and more
+> prevalent in relative terms as more commits are indexed. Finally, the
+> last case allows us to jump to the minimum generation between the last
+> two commits (that are actually independent) so we greatly reduce the
+> cost in that case.
 
-In version 1, I replaced the non-portable "xargs -d" with "xargs -0", but it
-turns out that that too is not universally available. In this version I
-replace the need for either one by filtering out the problematic paths (such
-as ones with LFs) and quoting paths to handle whitespace. The resulting
-paths can be passed to xargs without any arguments.
+Very nice. The explanation and implementation makes sense to me.
 
-Also, I updated the test to use test-tool chmtime rather than touch to
-ensure that the files actually look dirty on low-resolution file systems.
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  commit-reach.c | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
+>
+> diff --git a/commit-reach.c b/commit-reach.c
+> index d3a6e2bdd04..c2e0747fea4 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -237,15 +237,27 @@ static int remove_redundant_with_gen(struct repository *r,
+>  {
+>  	int i, count_non_stale = 0, count_still_independent = cnt;
+>  	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
+> -	struct commit **walk_start;
+> +	struct commit **walk_start, **sorted;
+>  	size_t walk_start_nr = 0, walk_start_alloc = cnt;
+> +	int min_gen_pos = 0;
+> +
+> +	/*
+> +	 * Sort the input by generation number, ascending. This allows
+> +	 * us to increase the "min_generation" limit when we discover
+> +	 * the commit with lowest generation is STALE. The index
+> +	 * min_gen_pos points to the current position within 'array'
+> +	 * that is not yet known to be STALE.
+> +	 */
+> +	ALLOC_ARRAY(sorted, cnt);
+> +	COPY_ARRAY(sorted, array, cnt);
+> +	QSORT(sorted, cnt, compare_commits_by_gen);
+> +	min_generation = commit_graph_generation(sorted[0]);
 
-Jeff Hostetler (10):
-  p7519: do not rely on "xargs -d" in test
-  p7519: fix watchman watch-list test on Windows
-  p7519: move watchman cleanup earlier in the test
-  p7519: add trace logging during perf test
-  preload-index: log the number of lstat calls to trace2
-  read-cache: log the number of lstat calls to trace2
-  read-cache: log the number of scanned files to trace2
-  fsmonitor: log invocation of FSMonitor hook to trace2
-  fsmonitor: log FSMN token when reading and writing the index
-  fsmonitor: refactor initialization of fsmonitor_last_update token
+This line caught my eye, but we return early in
+commit-reach.c:reduce_heads() before even calling remove_redundant()
+(which itself calls remove_redundant_with_gen()), so it's always OK to
+assume that we have at least one element in 'array'.
 
-Kevin Willford (1):
-  fsmonitor: allow all entries for a folder to be invalidated
+This patch and the others in v2 all look good to me.
 
- fsmonitor.c               | 107 ++++++++++++++++++++++++++++++++++----
- fsmonitor.h               |   5 ++
- preload-index.c           |  10 ++++
- read-cache.c              |  24 +++++++--
- t/perf/.gitignore         |   1 +
- t/perf/Makefile           |   4 +-
- t/perf/p7519-fsmonitor.sh |  71 +++++++++++++++++++++----
- 7 files changed, 196 insertions(+), 26 deletions(-)
-
-
-base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-860%2Fjeffhostetler%2Ffsmonitor-prework-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-860/jeffhostetler/fsmonitor-prework-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/860
-
-Range-diff vs v1:
-
-  1:  cf252e24b8c !  1:  e570f7316cc p7519: use xargs -0 rather than -d in test
-     @@ Metadata
-      Author: Jeff Hostetler <jeffhost@microsoft.com>
-      
-       ## Commit message ##
-     -    p7519: use xargs -0 rather than -d in test
-     +    p7519: do not rely on "xargs -d" in test
-      
-     -    The Mac version of xargs does not support the "-d" option.  Convert the test
-     -    setup to pipe the data set thru `lf_to_nul | xargs -0` instead.
-     +    Convert the test to use a more portable method to update the mtime on a
-     +    large number of files under version control.
-     +
-     +    The Mac version of xargs does not support the "-d" option.
-     +    Likewise, the "-0" and "--null" options are not portable.
-     +
-     +    Furthermore, use `test-tool chmtime` rather than `touch` to update the
-     +    mtime to ensure that it is actually updated (especially on file systems
-     +    with only whole second resolution).
-      
-          Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-      
-       ## t/perf/p7519-fsmonitor.sh ##
-      @@ t/perf/p7519-fsmonitor.sh: test_fsmonitor_suite() {
-     + 		git status -uall
-       	'
-       
-     ++	# Update the mtimes on upto 100k files to make status think
-     ++	# that they are dirty.  For simplicity, omit any files with
-     ++	# LFs (i.e. anything that ls-files thinks it needs to dquote).
-     ++	# Then fully backslash-quote the paths to capture any
-     ++	# whitespace so that they pass thru xargs properly.
-     ++	#
-       	test_perf_w_drop_caches "status (dirty) ($DESC)" '
-      -		git ls-files | head -100000 | xargs -d "\n" touch -h &&
-     -+		git ls-files | head -100000 | lf_to_nul | xargs -0 touch -h &&
-     ++		git ls-files | \
-     ++			head -100000 | \
-     ++			grep -v \" | \
-     ++			sed '\''s/\(.\)/\\\1/g'\'' | \
-     ++			xargs test-tool chmtime -300 &&
-       		git status
-       	'
-       
-  2:  a641f9e357c =  2:  3042fc92fe6 p7519: fix watchman watch-list test on Windows
-  3:  2af6858716f =  3:  9ceba5e6942 p7519: move watchman cleanup earlier in the test
-  4:  8de9985a706 =  4:  f6ea0a51f50 p7519: add trace logging during perf test
-  5:  cdd49f1fdb1 =  5:  3c5035e4649 preload-index: log the number of lstat calls to trace2
-  6:  65488f7a1bf =  6:  d150a2d4576 read-cache: log the number of lstat calls to trace2
-  7:  c84531f6244 =  7:  33cc0b838fa read-cache: log the number of scanned files to trace2
-  8:  ef64b60c7a0 =  8:  c043bccc8af fsmonitor: log invocation of FSMonitor hook to trace2
-  9:  edb88ffe39e =  9:  6ec4a4468f6 fsmonitor: log FSMN token when reading and writing the index
- 10:  384d2eff863 = 10:  2ac66f07a59 fsmonitor: allow all entries for a folder to be invalidated
- 11:  4686196bbc6 = 11:  5410d3ab61d fsmonitor: refactor initialization of fsmonitor_last_update token
-
--- 
-gitgitgadget
+Thanks,
+Taylor
