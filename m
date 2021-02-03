@@ -2,138 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE4CC433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAFF5C433E6
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:57:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2052B64F6C
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:57:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E10864D90
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 21:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232411AbhBCV44 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 16:56:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38966 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232376AbhBCV4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 16:56:49 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A50FDC06178C
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 13:55:33 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id b3so1049377wrj.5
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 13:55:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mkYGtGgbgi7zNnwSPavbqMHadABSk3fc72upqSEr/CA=;
-        b=KJdgQRQ4Cdwfs3l6Pk8BDMB0GXq7Vyr3zA/nwxNY0fA7yBHrBoRwa0KgKbuW29d1MW
-         or161KEdc9DnVCNyxcTT5vfOzxh26YPcd9Rj8GBj+7kLVseUKly9Y4+97APBs/D/6ewT
-         JfSlm5eSsMatTceXUC3xzB5tHu6bFXOycG6LvtpegSKppvjzVyLYVoJEjdciVRhm0Po4
-         kaU+2dz/cBbcoy2yUOfYOy/DW+Sg76d5pNVui1sXOfdjBKj9jyo/doi0tn1jjHHSPhU2
-         sqC4/YjjitDXoR/Oo9VyfJEtPXYA22Hb/L0nQikNttrBZPZ3sPdYv5QFUVg2nVh/K6sa
-         H6Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mkYGtGgbgi7zNnwSPavbqMHadABSk3fc72upqSEr/CA=;
-        b=t5A5gWybUR7AFTMwXZ/sSdiS3JgUozPXilAR8UtOl2c3Q6MdU113A3sueE2o+zEklK
-         YQTbEsSEA7s/+/LjI8UYqY7C0/3NyT0+TSq6IuE77RN5P46Tr1JfHX7kbaCsyXMd0avM
-         eMvs1uiyC/H43OqroXEs4Us5GDd0mqkLxHF/OwPaIARpMjl/H8sxXrcD2BNcUHY4lN0Y
-         0gk/PD3w/uIgxQc+9AAEdlQVuixr1ejSu8D/t1e+UZvbpBpXodN0sc8LwcwF4qX1xZ9u
-         3S4uUOyAhBIWQTk/saOS/ueKILmMCUkyn7xr/TuT3SRXo5WlCkEVezaKePVTIvd+h6nP
-         QFug==
-X-Gm-Message-State: AOAM531MxLxU38R41UVmIx8rMjPLn6ByxCL/vq4kp8mOvpOmCRiScu7m
-        zySPGZ/7N/kCJX7tFoNqApE0J6mRVdE=
-X-Google-Smtp-Source: ABdhPJyTYDxS7eOeOUUQL8672Zcvz5NLgai641LqFUtzPzP7JUyPEmsGxeDxO8GCIfL1B3jKvsJyeA==
-X-Received: by 2002:adf:9261:: with SMTP id 88mr5678139wrj.227.1612389332501;
-        Wed, 03 Feb 2021 13:55:32 -0800 (PST)
-Received: from localhost.localdomain ([81.0.37.148])
-        by smtp.gmail.com with ESMTPSA id 143sm2609531wmb.47.2021.02.03.13.55.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Feb 2021 13:55:32 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     rafaeloliveira.cs@gmail.com, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v5 7/7] bisect--helper: retire `--check-and-set-terms` subcommand
-Date:   Wed,  3 Feb 2021 22:54:38 +0100
-Message-Id: <20210203215438.96760-8-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210203215438.96760-1-mirucam@gmail.com>
-References: <20210203215438.96760-1-mirucam@gmail.com>
+        id S232445AbhBCV5P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 16:57:15 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57523 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232437AbhBCV5I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 16:57:08 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8FEEA10DE51;
+        Wed,  3 Feb 2021 16:56:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tpuDZg2W/xnA12zmRqo3CKKDZV0=; b=jFoMIi
+        dVe+hrtkqQG7kjrVUr8TkyOmHrakbO8pNHIaYEuHpnBP2GUVWdvPrWf0wJIyqxfx
+        uEPe+rOp9cjq45F87LQPUy293YCanAP2AHU1KIywOuObQ0rMJ2GF6KNqQim1JmIZ
+        YP3GwNbYJXsVyu5mxQ4rxHPY9LqbERo+8zcsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Maqr5Kg7M5K6NcGm/hF4wQfGV33eeiBf
+        fyqaLmo7/pLxbnFXWBBEA3xkhFmecHt/zU5XnOCOj7uNcO0tSYVIOUnozmF4NtYG
+        OMmkKO6Om3Zklfs3XKoOyAOqBE4pxjK92iH/EgrBy6GCPYp5DHhnAbNquwfHhSAt
+        WbHnXnMOGBQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8824F10DE50;
+        Wed,  3 Feb 2021 16:56:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C299010DE4E;
+        Wed,  3 Feb 2021 16:56:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Karsten Blees <blees@dcon.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 0/2] Optimization batch 6: make full use of exact
+ renames
+References: <pull.842.git.1612331345.gitgitgadget@gmail.com>
+        <pull.842.v2.git.1612382628.gitgitgadget@gmail.com>
+Date:   Wed, 03 Feb 2021 13:56:21 -0800
+In-Reply-To: <pull.842.v2.git.1612382628.gitgitgadget@gmail.com> (Elijah
+        Newren via GitGitGadget's message of "Wed, 03 Feb 2021 20:03:45
+        +0000")
+Message-ID: <xmqqlfc4byt6.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A787109E-666A-11EB-9CE8-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The `--check-and-set-terms` subcommand is no longer from the
-git-bisect.sh shell script. Instead the function
-`check_and_set_terms()` is called from the C implementation.
+> This series depends on en/merge-ort-perf and makes full use of exact
+> renames; see commit messages for details.
+>
+> Thanks to Stolee and Junio for reviewing v1.
+>
+> Changes since v1:
+>
+>  * Update rename_src_nr when updating rename_src
+>  * Introduce want_copies in the first patch and use it in a few more places
+>  * Move a comment below a few exit-early if-checks.
+>
+> Elijah Newren (2):
+>   diffcore-rename: no point trying to find a match better than exact
+>   diffcore-rename: filter rename_src list when possible
+>
+>  diffcore-rename.c | 69 +++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 61 insertions(+), 8 deletions(-)
 
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+Thanks, these look bettrer.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 7ad9b4d55b..d69e13335d 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -21,7 +21,6 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- 
- static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-reset [<commit>]"),
--	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
- 	N_("git bisect--helper --bisect-next-check <good_term> <bad_term> [<term>]"),
- 	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
- 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
-@@ -1032,7 +1031,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
- 		BISECT_RESET = 1,
--		CHECK_AND_SET_TERMS,
- 		BISECT_NEXT_CHECK,
- 		BISECT_TERMS,
- 		BISECT_START,
-@@ -1047,8 +1045,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
- 			 N_("reset the bisection state"), BISECT_RESET),
--		OPT_CMDMODE(0, "check-and-set-terms", &cmdmode,
--			 N_("check and set terms in a bisection state"), CHECK_AND_SET_TERMS),
- 		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
- 			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
- 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
-@@ -1084,12 +1080,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-reset requires either no argument or a commit"));
- 		res = bisect_reset(argc ? argv[0] : NULL);
- 		break;
--	case CHECK_AND_SET_TERMS:
--		if (argc != 3)
--			return error(_("--check-and-set-terms requires 3 arguments"));
--		set_terms(&terms, argv[2], argv[1]);
--		res = check_and_set_terms(&terms, argv[0]);
--		break;
- 	case BISECT_NEXT_CHECK:
- 		if (argc != 2 && argc != 3)
- 			return error(_("--bisect-next-check requires 2 or 3 arguments"));
--- 
-2.29.2
+With these changes, I guess there are only two things I find myself
+somewhat embarrassing in the rename machinery that is still there
+since I invented it.
+
+ - We still need to go full matrix while finding the "best"
+   pairing.  I cannot think of a way to avoid it (that is what makes
+   it embarrassing) but wish there were some way to.
+
+   In an early attempt, I tried to retire rename_src[j], once
+   rename_dst[i] has been found to be a "good enough" match for it,
+   from the pool of rename src candidates to find a good match for
+   rename_dst[k] for i < k, but naive implementation of it would not
+   work well for obvious reasons---rename_src[j] may match a lot
+   better with rename_dst[k] than rename_dst[i] but we do not know
+   that until we try to estimate similarity with rename_dst[k].
+
+
+ - The .cnt_data member was designed to be a concise summary of the
+   blob characteristics so that two .cnt_data can be "compared"
+   fairly cheaply to see how "similar" two blobs are [*], but (1) it
+   is rather big to be called a "concise summary", and (2) it was
+   not chosen after real performance measurement, and we've been
+   using it for the past 15 years without revisiting its design.
+
+   Side note: In a very early prototype, the approach to assess
+   similarity between two blobs was very different---there was no
+   attempt to compute "concise summary" for each blob, but we just
+   attempted to create delta (as in the pack data) between src and
+   dst blobs and measured how small a delta we can use to transform
+   from src to dst.
 
