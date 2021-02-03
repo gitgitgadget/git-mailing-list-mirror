@@ -2,232 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 294F0C433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C516C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:49:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4D6B64F68
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:45:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EF6D364F67
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:49:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbhBCFpg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 00:45:36 -0500
-Received: from mail-ej1-f45.google.com ([209.85.218.45]:42663 "EHLO
-        mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhBCFpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 00:45:34 -0500
-Received: by mail-ej1-f45.google.com with SMTP id r12so33671825ejb.9
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 21:45:17 -0800 (PST)
+        id S231388AbhBCFtG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 00:49:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229680AbhBCFtF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 00:49:05 -0500
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0715EC061573
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 21:48:25 -0800 (PST)
+Received: by mail-oo1-xc31.google.com with SMTP id z36so5744573ooi.6
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 21:48:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6/629jk7IBcxS6SFsW1Z6S1UwCK3NYZLx3GqinBU3Lc=;
+        b=ONm6F5RpiWQb56hZ08S2QHOwQ7hNujWf/t2S1xvi7RtzjRKBnieSyABhGpa42U//rs
+         zzAfDPjs1dfPwwRaT46pqqDW5+ZTr6aBKzKu5BMBGU4lEl3GivMWyJnDb+UHzH5fyaW9
+         m51AHkDKz8AF7cT3lFa4e+QEEtXvPHpMGw1LACm+TNLt7iiH3A4rkJi/hWMms5pXsB+5
+         pkNt1YKf03gKmHUr0JMRan2ZVjfbQ6QnXuR3/FDPvWDfheaWLbCavmXeWiLwStEpxh6a
+         MNTP6TbscMSpHs1ZEevkJj3788H1McH1egzMmPDisJYk8DpEIvZrfRiqa7zwUZWk8wP8
+         pJvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PKfiiSIhHS9XosDD9bQtHFrrLvNdepjT+3d42JF5AVQ=;
-        b=OKJgzhDYijovzJ+95LNvAnoCnoyjes1ZkO97lZA/Mst99du9Le4t1YWlRGkd31IORB
-         K2wCam3txFx7mauGw53SmSUfKDkWKLpbabdYgHc35myVTOH8w52bnJb8xpBTnQ5VorUU
-         ntqYfcWd2DLOUI0KbSHjDCGqJsBg3lD+oowIN6sZrlb1yvv6vteiJbZ13B3sHZjjJOEC
-         IEfvnb5zqXFRMTLUfsOTY/X17NzK8cWV19+ESQOH1smXJHrYqc9mXYu0YF21nNYj1Zv5
-         9uOgkLTPZRytU0Q7zJOlh/f1DTiTgq2X7jBT9riycDy5c18pEzRhM3FqwT5j+caQIpUx
-         KTbg==
-X-Gm-Message-State: AOAM532gCpVSeJTfO7sZyvthPqFHfTPRDTDdlUWOhNchNdZGC+NccHez
-        KLyJGDW8KtjFi3GfxgOCwIwKuv7mHjJ9gWTH+RgQORAT7L22gw==
-X-Google-Smtp-Source: ABdhPJw9/suQYcwaizWD00f5z0O6Qoma++cg/6z31C7WOGnZzTTzGqV32T+8+hIFEovfocbo3P3aAkJqlL4CWyEDBls=
-X-Received: by 2002:a17:906:6d94:: with SMTP id h20mr1591531ejt.231.1612331091166;
- Tue, 02 Feb 2021 21:44:51 -0800 (PST)
+        bh=6/629jk7IBcxS6SFsW1Z6S1UwCK3NYZLx3GqinBU3Lc=;
+        b=MbVQsNTO2Nuh+D4lGMJW4d10nkCYW9uTPLgvqd+hqwepbnnpmKxvDNEEfnE7+CgfFw
+         4rpoGvTTEAiMxvMKpKKcAo8xOvP62SW4MM8tnG+96ZAzDPrMgVt9C0S7qwGbCJqRrenw
+         my0Lm2k5yb9qNPYg1fEYgPsrPGc4Le3VoxT+gJ+bo99lxIiFHHdBLwoq+u9CN9CT/dhi
+         RNI7gBkpGhyVfMZMWiFgxcS14BxJU/vDGvEa4dQmTULwZO008ArsNUPO3xAI+40eTMZe
+         dx0Z3kUAzhcYNB5JGWy7MpPdgsyRtju1hFvCd9V5ekXgWGarMmE60AQDzUpl9FwzbLY5
+         Lf/w==
+X-Gm-Message-State: AOAM530o9cCa7EQ0sWyd6O/jOExTBHqJW0dUkjRsueDyAiynJJHXJCz/
+        H+runpwB7dvwF0r2IB8hgFq2IhOcAi4EbMAGXO0=
+X-Google-Smtp-Source: ABdhPJzZ3wlLJ/VVCzgTI6oQ3thKNo5d4FDiIQTSqcdZufTVrdz1mgZrDNMl9ibnlnseAf+c1qrrAYBTsDnZETHzpkg=
+X-Received: by 2002:a4a:decb:: with SMTP id w11mr1011481oou.32.1612331304336;
+ Tue, 02 Feb 2021 21:48:24 -0800 (PST)
 MIME-Version: 1.0
-References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
- <20210129182050.26143-8-charvi077@gmail.com> <CAPig+cQO_uHurPn3N-k-UwBFgvx2x8Bx2Uy+=sQxhmj3E6rt7Q@mail.gmail.com>
- <CAP8UFD2m18ZemGMkfzFhO1TUrMjNOGuQCqP1KVnRK7JEngeuog@mail.gmail.com>
-In-Reply-To: <CAP8UFD2m18ZemGMkfzFhO1TUrMjNOGuQCqP1KVnRK7JEngeuog@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Feb 2021 00:44:40 -0500
-Message-ID: <CAPig+cSBVG0AdyqXH2mZp6Ohrcb8_ec1Mm_vGbQM4zWT_7yYxQ@mail.gmail.com>
-Subject: Re: [PATCH v4 7/9] t3437: test script for fixup [-C|-c] options in
- interactive rebase
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Charvi Mendiratta <charvi077@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <CABPp-BHvk5RLq3OOYhcQZJ_9w6hbQUVurJiRrks8kcGq5-rn0g@mail.gmail.com>
+ <bae3726e-25e1-90e5-b0e3-5c2d0c4cd26a@gmail.com>
+In-Reply-To: <bae3726e-25e1-90e5-b0e3-5c2d0c4cd26a@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 2 Feb 2021 21:48:13 -0800
+Message-ID: <CABPp-BHqk3UkauL-MmQ+JBJvhC6WRhJJM+yLvXiENZNn+CTw5w@mail.gmail.com>
+Subject: Re: RFC -- making a plan for remainder of merge-ort
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 2, 2021 at 5:02 AM Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Tue, Feb 2, 2021 at 3:01 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Fri, Jan 29, 2021 at 1:25 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > > +               merge_*|fixup_*)
-> > > +                       action=$(echo "$line" | sed 's/_/ /g');;
+On Tue, Feb 2, 2021 at 3:33 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 2/1/2021 10:52 PM, Elijah Newren wrote:
+> > Hi everyone,
 > >
-> > What is "merge_" doing here? It doesn't seem to be used by this patch.
+> > There will be ~11 more series (with about ~6-7 patches per series)
+> > before merge-ort is complete.  Now that gitster/en/merge-ort-perf has
+> > merged to next, I can start submitting the next series.  Some
+> > questions before I do so, though:
+> > > * What's the right rate to submit them to not overwhelm reviewers? One
+> > per week?  I didn't get much feedback on this for the past series.
+> > [One per week, assuming the git-2.32 cycle is 3 months long, would
+> > mean finishing in about 3 months, i.e. just a few weeks before
+> > git-2.32-rc0.]
 >
-> Yeah, it's not used, but it might be a good thing to add this for
-> consistency while at it.
-
-It confuses readers (as it did to me), causing them to waste
-brain-cycles trying to figure out why it's present. Thus, it would be
-better to add it when it's actually needed. The waste of brain-cycles
-and time is especially important on a project like Git for which
-reviewers and reviewer time are limited resources.
-
-> > > +# Copyright (c) 2018 Phillip Wood
-> >
-> > Did Phillip write this script? Is this patch based upon an old patch from him?
+> I promise to get back to reviewing with a faster turnaround soon.
 >
-> Yeah, it might be a good idea to add a "Based-on-patch-by: Phillip ..."
+> If these are smaller series (and ~6-7 patches per would be smaller)
+> then I could see most of them stabilizing within a week. I think the
+> biggest thing for dependent series is to allow one to stabilize
+> before starting the next one. OF course, we can _think_ something is
+> stable and then a contributor appears with insightful comments a week
+> or more later.
 
-Agreed.
+Yeah, smaller on average, but there is a long one early on.  The next
+eight series' patch counts are: 2, 3, 11, 7, 8, 7, 6, 7.  I don't have
+ones beyond that ready quite yet.
 
-> > The implementation of test_commit_message() is a bit hard to follow.
-> > It might be simpler to write it more concisely and directly like this:
-> >
-> >     git show --no-patch --pretty=format:%B "$1" >actual &&
-> >     case "$2" in
-> >     -m) echo "$3" >expect && test_cmp expect actual ;;
+Also, for the next nine series, each one will depend upon the previous one.
+
+> > * My focus for the next few series is on diffcore-rename.c, which will
+> > also affect things other than merge-ort.  While each series is
+> > self-contained, given that 2.31-rc0 is just over 3 weeks away I'm
+> > wondering if it makes sense to hold my future diffcore-rename series
+> > out of 2.31 and start merging them in the 2.32 cycle.  Thoughts?
 >
-> I think we try to avoid many commands on the same line.
+> It might be fine to get the code under review, but ask Junio to
+> delay merging into 'master' until shortly after release. This
+> ensures that there is plenty of time to "simmer in CI."
 
-For something this minor, it's not likely to matter but, of course, it
-could be split over two lines:
-
-    -m) echo "$3" >expect &&
-        test_cmp expect actual ;;
-
-> >     *) test_cmp "$2" actual ;;
-> >     esac
->
-> In general I am not sure that using $1, $2, $3 directly makes things
-> easier to understand, but yeah, with the function documentation that
-> you suggest, it might be better to write the function using them
-> directly.
-
-The direct $1, $2, etc. was just an example. It's certainly possible
-to give them names even in the rewritten code I presented. One good
-reason, however, for just using $1, $2, etc. is that $2 is not well
-defined; sometimes it's a switch ("-m") and sometimes its a pathname,
-so it's hard to invent a suitable variable name for it. Also, this
-function becomes so simple (in the rewritten version) that explicit
-variable names don't add a lot of value (the cognitive load is quite
-low because the function is so short).
-
-> > Style nit: In Git test scripts, the here-doc body and EOF are indented
-> > the same amount as the command which opened the here-doc:
->
-> I don't think we are very consistent with this and I didn't find
-> anything about this in CodingGuidelines.
->
-> In t0008 and t0021 for example, the indentation is more like:
->
->      cat >message <<-EOF &&
->           amend! B
->           ...
->           body
->      EOF
->
-> and I like this style, as it seems clearer than the other styles.
-
-I performed a quick survey of the heredoc styles in the tests. Here
-are the results[1] of my analysis on the 'seen' branch:
-
-total-heredocs=4128
-
-same-indent=3053 (<<EOF & body & EOF share indent)
-
-    cat >expect <<-\EOF
-    body
-    EOF
-
-body-eof-indented=24 (body & EOF indented)
-
-    cat >expect <<-\EOF
-        body
-        EOF
-
-body-indented=735 (body indented; EOF not)
-
-    cat >expect <<-\EOF
-        body
-    EOF
-
-left-margin=316 (<<EOF indented; body & EOF not)
-
-        cat >expect <<\EOF
-    body
-    EOF
-
-So, the indentation recommended in my review -- with 3053 instances
-out of 4128 heredocs -- is by far the most prevalent in the project.
-
-[1]: Note that there is a miniscule amount of inaccuracy in the
-numbers because there are a few cases in which heredocs contain other
-heredocs, and some scripts build heredocs piecemeal when constructing
-other scripts, and I didn't bother making my analysis script handle
-those few cases. The inaccuracy is tiny, thus not meaningful to the
-overall picture.
-
-> > I see that you mirrored the implementation of FAKE_LINES handling of
-> > "exec" here for "fixup", but the cases are quite different. The
-> > argument to "exec" is arbitrary and can have any number of spaces
-> > embedded in it, which conflicts with the meaning of spaces in
-> > FAKE_LINES, which separate the individual commands in FAKE_LINES.
-> > Consequently, "_" was chosen as a placeholder in "exec" to mean
-> > "space".
-> >
-> > However, "fixup" is a very different beast. Its arguments are not
-> > arbitrary at all, so there isn't a good reason to mirror the choice of
-> > "_" to represent a space, which leads to rather unsightly tokens such
-> > as "fixup_-C". It would work just as well to use simpler tokens such
-> > as "fixup-C" and "fixup-c", in which case t/lib-rebase.sh might parse
-> > them like this (note that I also dropped `g` from the `sed` action):
-> >
-> >     fixup-*)
-> >         action=$(echo "$line" | sed 's/-/ -/');;
->
-> I agree that "fixup" arguments are not arbitrary at all, but I think
-> it makes things simpler to just use one way to encode spaces instead
-> of many different ways.
-
-Is that the intention here, though? Is the idea that some day `fixup`
-will accept arbitrary arguments thus needs to encode spaces? If not,
-then mirroring the treatment given to `exec` confuses readers into
-thinking that it will/should accept arbitrary arguments. I brought
-this up in my review specifically because it was confusing to a person
-(me) new to this topic and reading the patches for the first time. The
-more specific and exact the code can be, the less likely it will
-confuse readers in the future.
-
-Anyhow, it's a minor point, not worth expending a lot of time discussing.
-
-> > It feels clunky and fragile for this test to be changing
-> > "expected-message" which was created in the "setup" test and used
-> > unaltered up to this point. If the content of "expected-message" is
-> > really going to change from test to test (as I see it changes again in
-> > a later test), then it would be easier to reason about the behavior if
-> > each test gives "expected-message" the precise content it should have
-> > in that local context. As it is currently implemented, it's too
-> > difficult to follow along and remember the value of "expected-message"
-> > from test to test. It also makes it difficult to extend tests or add
-> > new tests in between existing tests without negatively impacting other
-> > tests. If each test sets up "expected-message" to the precise content
-> > needed by the test, then both those problems go away.
->
-> Yeah, perhaps the global "expected-message" could be renamed for
-> example "global-expected-message", and tests which need a specific one
-> could prepare and use a custom "expected-message" (maybe named
-> "custom-expected-message") without ever changing
-> "global-expected-message".
-
-That would be fine, though I wondered while reviewing the patch if a
-global "expect-message" file was even needed since it didn't seem like
-very many tests used it (but I didn't spend a lot of time counting the
-exact number of tests due to the high cognitive load tracing how that
-file might mutate as it passed through each test).
-
-Another really good reason for avoiding having later tests depend upon
-mutations from earlier tests, if possible, is that it makes it easier
-to run tests selectively with --run or GIT_SKIP_TESTS.
+Makes sense; I'll submit the first one.
