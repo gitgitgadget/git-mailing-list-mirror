@@ -7,81 +7,108 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A67E6C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 12:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56161C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:14:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EBBD64F87
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 12:40:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1749064F41
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230159AbhBCMj7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 07:39:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59578 "EHLO
+        id S232605AbhBCOOE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 09:14:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230256AbhBCMjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 07:39:35 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87267C061573
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 04:38:54 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id y18so9322953edw.13
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 04:38:54 -0800 (PST)
+        with ESMTP id S231791AbhBCON7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 09:13:59 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308C8C0613ED
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 06:13:19 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id w2so1632749ejk.13
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 06:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=y2VmzigI3/uULaTv7vFtYFy+FiiC7/T8yvNWDYcLvDA=;
-        b=RpqGmpiBXfxLlVomAXsDvn+t+TUjYR/RjSOiOn778bJedWjP83Wp+p0jBt96fR61oD
-         7ysN/bBYqggnwNUepY83gfdMyPghw2RFzGc71/4TMqiG13BI5u2D6vj8u2oAqzjlVuld
-         rwU+8FOxjPc3iMgHPjPdUIJCiqBpVYIaOCbuShQ156yEZb9NAHyHw6jxriyng+TBwgK+
-         gWjd88XLT1VEa6NqxMJDcDrOQjnrbSI02pS19JuzTxMecJBVHsjeHGTdZ+c5K0Z6Pddi
-         INHh7oWVVKC9EgkN6C6Pdzvy3cU/kYpcrlcNn/k10Vd89Zqhl+c18nLzVN6voraUo/6H
-         w6uA==
+         :message-id:mime-version;
+        bh=txLX5JhkRgO9NXevP9Kn8XYLobehpLB/ZWeKRoR28gM=;
+        b=q/Q1hRqzxk4nFh/8vDPqfcZfaAH6dkxkgsGlQ3xnlZx77iKDxrRwTYaox6dtT9Uri0
+         NZax9iAF+S4PxeEOK9B7Qt+o49KZIiLyQlzvJzIJJV4Q/b2LkRl8UFdkH8pjzNkp/KDM
+         bwYTgntYIe0w7XFRMqLecKacmLMIlHNokaLxQlaPtFaLopF/YKlPYuUw8UsAl9gDDdLR
+         faY7HES0mgbEBuSOiSPSex1TP0pHsHmQKVxs23kbpxo1KjT8tjzvrcmYmcFCWBa1UHtA
+         I8PrXUkDRF5STBscNKZq4GSuLXY0hDf/x6JXEec6jWAaURH4upfnGic7JCFR2lnC5i2l
+         TCTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=y2VmzigI3/uULaTv7vFtYFy+FiiC7/T8yvNWDYcLvDA=;
-        b=ByBO40mDqTgVwd89sTa5v+lA75wn3nV3Mgx7LbyjZE5qdGPvHajpoAsnaup7v47hdT
-         XYFrlE07dGTk1PpvnN1EeGX3Vbmyp8a1cjMyzET9uWTgIe7FwSnPJO08p/GlAIkEskN2
-         7BD3AMKTL/GBZxx/oZXUUqxJq57i3/xM9uEkfiEK3H7UtkqwIRZPBYxVWwG1nXC6CIqa
-         vMD8DV3nvSTM76cCXc6C2mHWyk7Odc31eh4K6aa8FbAEV55RdnsFsmyC1tpxcrRYS22+
-         hFAUrnG7Ci9RnsOAmFJuWbE0kacYaA6FXLdqGygL6HwnVXgYkMeA7HS+HIN6fpOF45qk
-         Jm1w==
-X-Gm-Message-State: AOAM531KRIfY3gZ6cD8ZMRmqQ8XycsTMRO4F1XdnUi9n77zJnRvKrav5
-        iezyDmWP1wQo3Obf+UiWMXZSpUVFbbUj9A==
-X-Google-Smtp-Source: ABdhPJxgRK/CFI5aj9Jnm0wskGHeHvgtXKdIM6yS0PdrPYuC7ChgF0pKqd+Q3WWMCLSCLBT3OXr+TA==
-X-Received: by 2002:a05:6402:438d:: with SMTP id o13mr2630638edc.135.1612355933010;
-        Wed, 03 Feb 2021 04:38:53 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version;
+        bh=txLX5JhkRgO9NXevP9Kn8XYLobehpLB/ZWeKRoR28gM=;
+        b=oPlfafYyuci5qE8qj0+4w+XKvQh3R6le/oCeKOPOC1rprCDSG13WAd5GzZhe4p1XQ1
+         xJsu0qWuwRjdz47ANR3iGH1FqDl5XiwlYqkVnUf1IyA9I5N/L5a9YjcqAoexG2/ATu50
+         UTblhnr7bwSLmHmsxqY9+IJsuvvkq0hXjseHmYHd75iHttSDlLJP0ofJaWNA41VBH00U
+         ayN2F2h2naMRgfhijd5hijXDaj+d636xVOGSjldhlBPjecku+wYUu0HkBwXK4UPY2YXH
+         kSkzebUU/gLlyVb52ELXmcF17sbOW9uO1tgjRqwNkuQYBkvv1FfWGSJp6V+2+2tazz97
+         0eEg==
+X-Gm-Message-State: AOAM530nC2oWorgVQQuKoY3EwqKpz73Dlg9u+wxvH5kXOmlstzYvpkiV
+        UH9O0GOByOmdoqcs5NREoNUNBIgkrLDk0Q==
+X-Google-Smtp-Source: ABdhPJw0xl2UaAznfgCr3VQjHs2cWV/iLM34eD2CZbOeVc5o/KQ4COuSDFN88tJulHDL6QsTpYzHZQ==
+X-Received: by 2002:a17:906:9588:: with SMTP id r8mr3451725ejx.167.1612361597831;
+        Wed, 03 Feb 2021 06:13:17 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id z13sm811484edc.73.2021.02.03.04.38.52
+        by smtp.gmail.com with ESMTPSA id p21sm906555edx.90.2021.02.03.06.13.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 04:38:52 -0800 (PST)
+        Wed, 03 Feb 2021 06:13:17 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?B?= =?utf-8?Q?el=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 00/25] grep: PCREv2 fixes, remove kwset.[ch]
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 22/25] Remove unused kwset.[ch]
 References: <20210203032811.14979-1-avarab@gmail.com>
+ <20210203032811.14979-23-avarab@gmail.com>
+ <CAPUEspgBmuTBHVZWY9fRtjbHWBRr0zHravLL1Czepc6jmib4HA@mail.gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210203032811.14979-1-avarab@gmail.com>
-Date:   Wed, 03 Feb 2021 13:38:51 +0100
-Message-ID: <87czxhe36s.fsf@evledraar.gmail.com>
+In-reply-to: <CAPUEspgBmuTBHVZWY9fRtjbHWBRr0zHravLL1Czepc6jmib4HA@mail.gmail.com>
+Date:   Wed, 03 Feb 2021 15:13:16 +0100
+Message-ID: <87a6sldytf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-I'm aware of a CI failure related to this series:
+On Wed, Feb 03 2021, Carlo Arenas wrote:
 
-On Wed, Feb 03 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> this is still being used in Linux without Glibc (ex: alpine or void that
+> use musl), and other OS that rely on the compat layer by default for legacy
+> reasons (ex: macOS and Windows) or where PCRE2 is not widely used/available
+> (ex: OpenBSD, NetBSD)
 
->   pickaxe tests: refactor to use test_commit --append
+Are you perhaps confusing kwset with NO_REGEX=1 and compat/regex/*? I
+just say that because that's a common "Linux without Glibc" && musl
+fallback.
 
-It's because here I fed "\0" etc. to "echo" instead of "printf", which
-isn't portable. I've got a fix for this locally, but want to wait for
-more comments before sending a re-roll.
+The kwset is not a fallback, we use it unconditionally on all platforms
+regardless of libc etc., until this series.
+
+Anyway, as far as PCRE v2 and compatibility go there's no compatibility
+concerns here we didn't address already & have in in-the-wild git
+releases since Since 48de2a768c (grep: remove the kwset optimization,
+2019-07-01) and b65abcafc7 (grep: use PCRE v2 for optimized fixed-string
+search, 2019-07-01).
+
+I.e. we haven't used kwset at all in the more commonly used grep code,
+just C library regex + PCRE if it's available.
+
+FWIW I think the commonly used packages on Windows and MacOS build with
+PCRE v2, but that's just from memory, I don't use those myself.
+
+> PS. hadn't yet tested this series, but thought it was a good idea to at
+> least mention this as a FYI to make sure tradeoffs are well known and
+> testing done as well.
+
+Indeed, and a glance at the log & past list traffic shows we had a lot
+of such portability fixes around pcre2 in the past.
+
+But in this case we're just directing the pickaxe to use the existing
+grep codepath, so I think we should be fine, sans small stuff like (sent
+a reply to the cover letter about this) me screwing up shell portability
+in the v1 etc.
