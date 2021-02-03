@@ -2,178 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DED6C433E0
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 23:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A982C433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 00:25:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 174FE64F6A
-	for <git@archiver.kernel.org>; Tue,  2 Feb 2021 23:25:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B498A64E46
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 00:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233328AbhBBXZC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 18:25:02 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38124 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233010AbhBBXZB (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 2 Feb 2021 18:25:01 -0500
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 27C276079B;
-        Tue,  2 Feb 2021 23:23:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1612308229;
-        bh=4qfatCppc/7Pz7qtLditS53rhexzmgjEfmlBvTCFqGg=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ybdUx9vAGCjOLNWZZHR+3hO7yO6uwI0vv0ERREGmqh+0rFJ9rvTc0hUDPBDhAPNKl
-         wPbc89VcrnKsOKkPX7OZDAc8l8N3lI3KyM+EuH5eau1kiMRpKi/gZI7xmEtf8DY5PW
-         5HpqnVsBdUWCwlPVHS4DsjbjjpnGrktnLju7DWOt8XkhYcwnXYlmm7Ff7QBuLVr8TW
-         XEZh2mNq3R1PkTaMMfPGmudeoTHDWbdJiocFeDC4QR3Ixn1zLjrPxWc0OZODx64TX9
-         LsYWBfcm/OK0k3xWiOcT0tiEVXV8+/Otc5Ki1g3qA5Z/uQFeZr6MdV85nEqxoK5QNf
-         0PExLwwI2GgxOBcxTe8Jfi2SFrEMOKOTfzbihOZhqt9I4fVkuMGux+o1xMM4OBpeD8
-         H2EddXGLXInYa2TSkB5sxO0pv8x+cCsxtG11V2pKxkqBXOiLQY67FpRI4dNEqJw4My
-         aCMJwpWVxrfaY0IS+vY7tQJJm7WiP+pAGOI21Ql7FxzLJK0gTND
-Date:   Tue, 2 Feb 2021 23:23:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Thomas Ackermann via GitGitGadget <gitgitgadget@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Thomas Ackermann <th.acker@arcor.de>
-Subject: Re: [PATCH v2 5/6] doc hash-function-transition: move rationale
- upwards
-Message-ID: <YBnfAAcuTV89l0mM@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Ackermann via GitGitGadget <gitgitgadget@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Thomas Ackermann <th.acker@arcor.de>
-References: <pull.858.git.1612093734.gitgitgadget@gmail.com>
- <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
- <711a37969b6f51922c12555534d9c4634cde6021.1612282749.git.gitgitgadget@gmail.com>
- <xmqqbld2gs9f.fsf@gitster.c.googlers.com>
+        id S232048AbhBCAZJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 19:25:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43222 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231985AbhBCAZI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 19:25:08 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F61AC061573
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 16:24:27 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id l12so26257508ljc.3
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 16:24:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b6m6PqES3CuBssZZ3vF4+0/ihqMvokohv0xs5siqfgU=;
+        b=I8e87N7Y9ycCq72FQSgUpiB7OB5+AfrBpzVi3T84kqQG1N9LZ3EndMXetQoeGgzLJU
+         V7sNGx6KjHB6ZKJJIFH3o3dycfj5rvS9wkGA/ogknJHOC96HMdjhcmKrj1ZzenI7Xth7
+         yoFmGpO6oznTERA4MFw+G5z5/Mz1bVkJIDmzSVPynVu5szOJspt71aNGmNxZrP3ge2Ob
+         0xOHJiCMEyTYtfZePkLac3KQp4jfCdMU6WMrvvVscpELM85OdXWitvYj85r7dbNuNOsK
+         mSahYtxbhtoxP/RA0yQGUGhR2aHiLRQYpHpPicM3xn0ZD8aFYRM2Dyd5oHJYB3Yf0bUN
+         aV6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b6m6PqES3CuBssZZ3vF4+0/ihqMvokohv0xs5siqfgU=;
+        b=UpzM3o6drFmkwFcp6OC6yVZdPKuA+IbZnsptjXQ9L6d3Yv2WRzSbqLXolJ24jPwMv4
+         mTJUSKEn0Y71GsPpTXyjnxDxWCfORZwahB7tyD3EE7+U/+XFicVSwU4Sc+b2XwYa+h4c
+         GiAMt4C5vMZAOaX48MEj+xD44Pi+0w/9i1VQ/LULxz698KkPszZ0wrNKu5WljwI1Jnml
+         Qm06Kt2JcG2KWfqnDlZU6Q78jqxQ3eoTVG7PEh7OFVwC0su/1rjmtMFxmtQAcy+pkkdz
+         zpPr/NNyxyhFnRY4GUGw1fzPNSNb1EgC6GiLE89PCqUB6JxiwwRQL5UzL3tokZxfb02Z
+         DUZw==
+X-Gm-Message-State: AOAM530P6k5x0P0eKhcA5ym5tyHcTIzwBMPtV+UITJhlzh2C/8A2a0n1
+        36ykcEeiNYCStgeb8/iXfMV7cityGgpAzNdcTxuNLSH84tycmgRtdn0=
+X-Google-Smtp-Source: ABdhPJxoo5qwJ3GE8I/XlOqiLo1TsGY8dsG+2ZGbd2gP9Xfuv8F8cOzq5+43KcxotkZ/xeEEMxM4/BzCzJZ9XiZhRm0=
+X-Received: by 2002:a2e:98ce:: with SMTP id s14mr144033ljj.447.1612311865136;
+ Tue, 02 Feb 2021 16:24:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UdNdnQPPBgcV69um"
-Content-Disposition: inline
-In-Reply-To: <xmqqbld2gs9f.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+References: <CAGP6POK1s5fdzY74HyE9=0CV_B+HpbM9gU2qKuYtQAaPuc7XgQ@mail.gmail.com>
+ <CAPc5daUtOMQB9YqOTQL4mrHpfyATe=FM01cW9Ngd1iy8aWwMmg@mail.gmail.com>
+ <CAGP6POJ62-HG88uRv7yHHGy3Uu+T57APQ6GiNU3nQDW2eT4cXw@mail.gmail.com>
+ <YBkUJP2u4NcldpOp@coredump.intra.peff.net> <CAGP6POKxr6k5KaC0xNaFGt=mBoEMkObNGHhDpUHQdEbsokrHhQ@mail.gmail.com>
+ <YBkZZrDzBo0UC+SQ@coredump.intra.peff.net> <CAGP6POJStLEGwiU6yobaA6ag1q1ametFoe2AVkOAs6zDQ5bk3A@mail.gmail.com>
+ <20210202222339.GA20119@dcvr>
+In-Reply-To: <20210202222339.GA20119@dcvr>
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Wed, 3 Feb 2021 08:24:13 +0800
+Message-ID: <CAGP6POKb4uPFECJ7Ghu-jZ+fe_S2oR_OdPDVQeMwnswp7KX_=g@mail.gmail.com>
+Subject: Re: Only receive the topics I participated in or initiated on this
+ mailing list.
+To:     Eric Wong <e@80x24.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Feb 3, 2021 at 6:23 AM Eric Wong <e@80x24.org> wrote:
+>
+> Hongyi Zhao <hongyi.zhao@gmail.com> wrote:
+> > On Tue, Feb 2, 2021 at 5:20 PM Jeff King <peff@peff.net> wrote:
+> > >
+> > > On Tue, Feb 02, 2021 at 05:02:53PM +0800, Hongyi Zhao wrote:
+> > >
+> > > > > If you only care about topics that you have participated in, the easiest
+> > > > > thing is to simply unsubscribe from the list.
+> > > >
+> > > > Do you mean I still can post to this list without subscription to it?
+> > >
+> > > Yes.
+> >
+> > Does this rule apply to all the lists residing on <http://vger.kernel.org/>?
+>
+> Yes, and any exceptions would be documented.
+>
+> > > You can also read the archive at https://lore.kernel.org/git if you
+> > > later feel like checking for threads you might have missed.
+>
+> Btw, you can use the "tc:" prefix to search To/Cc: fields
+> as documented in https://lore.kernel.org/git/_/text/help/
+>
+> You can get all the messages sent to you in gzipped mboxrd
+> format via:
+>
+>   curl -sSf -d '' 'https://lore.kernel.org/git/?q=tc:hongyi&x=m' >mboxrd.gz
+>
+> And public-inbox.org/git still exists for redundancy and dogfooding:
+>
+>   curl -sSf -d '' 'https://public-inbox.org/git/?q=tc:hongyi&x=m' >mboxrd.gz
 
---UdNdnQPPBgcV69um
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you for telling me this. But why the content can't be directly
+print on the stdout as shown below:
 
-On 2021-02-02 at 19:54:20, Junio C Hamano wrote:
-> "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > -Over time some flaws in SHA-1 have been discovered by security
-> > -researchers. On 23 February 2017 the SHAttered attack
-> > -(https://shattered.io) demonstrated a practical SHA-1 hash collision.
-> > +Over time some flaws in SHA-1 have been discovered by security researc=
-hers.
-> >=20
-> >  Git v2.13.0 and later subsequently moved to a hardened SHA-1
-> > -implementation by default, which isn't vulnerable to the SHAttered
-> > -attack.
-> > +implementation by default, but SHA-1 is still believed to be weak.
->=20
-> Even if we've hardended against one particular form of attack, we
-> still have incentive to switch away from SHA-1.  It is unclear why
-> we just do not add ", but ..." to the original and instead remove
-> the half-sentence about sha1dc.
+werner@X10DAi:~$ curl -sSf -d '' 'https://lore.kernel.org/git/?q=tc:hongyi&x=m'
+werner@X10DAi:~$ curl -sSf -d '' 'https://public-inbox.org/git/?q=tc:hongyi&x=m'
+werner@X10DAi:~$
 
-I think we should keep the original statement about the attack since
-it's relevant to why we want to change.  I also think we should say,
-"but SHA-1 is still weak".  Saying "is still believed to be" implies
-doubt or uncertainty, and the fact that multiple collisions have been
-performed and can be trivially verified should remove any doubt.
+As you can see, nothing is shown to me.
 
-Even if SHA-1 were still perfectly secure (which it is not), it can only
-by design provide an 80-bit security level, which is inadequate by
-today's standards.
+> There may be a CLI tool for dealing with that in the near future
+> that lets you keep track of which messages you've read/unread or tagged :>
 
-> > @@ -57,6 +47,19 @@ SHA-1 still possesses the other properties such as f=
-ast object lookup
-> >  and safe error checking, but other hash functions are equally suitable
-> >  that are believed to be cryptographically secure.
-> >=20
-> > +Choice of Hash
-> > +--------------
-> > +There were several contenders for a successor hash to SHA-1, including
-> > +SHA-256, SHA-512/256, SHA-256x16, K12, and BLAKE2bp-256.
-> > +
-> > +In late 2018 the project picked SHA-256 as its successor hash.
-> > +
-> > +See 0ed8d8da374 (doc hash-function-transition: pick SHA-256 as
-> > +NewHash, 2018-08-04) and numerous mailing list threads at the time,
-> > +particularly the one starting at
-> > +https://lore.kernel.org/git/20180609224913.GC38834@genre.crustytoothpa=
-ste.net/
-> > +for more information.
->=20
-> I personally think this is referring too much to external document
-> for typical readers, and lost too much relative to the original.  I
-> do not mind losing the history of how we reached the conclusion that
-> SHA-1 is no longer viable at all, but I am not sure if we want to
-> lose the list of criteria we used when choosing (i.e. stronger than
-> SHA-1, 256-bit, quality implementations, etc.) from this section.
 
-I don't have a problem including this and in fact I think it might be
-valuable, but I think we should keep the below data as well.
 
-> > -The hash to replace this hardened SHA-1 should be stronger than SHA-1
-> > -was: we would like it to be trustworthy and useful in practice for at
-> > -least 10 years.
-> > -
-> > -Some other relevant properties:
-> > -
-> > -1. A 256-bit hash (long enough to match common security practice; not
-> > -   excessively long to hurt performance and disk usage).
-> > -
-> > -2. High quality implementations should be widely available (e.g., in
-> > -   OpenSSL and Apple CommonCrypto).
-> > -
-> > -3. The hash function's properties should match Git's needs (e.g. Git
-> > -   requires collision and 2nd preimage resistance and does not require
-> > -   length extension resistance).
-> > -
-> > -4. As a tiebreaker, the hash should be fast to compute (fortunately
-> > -   many contenders are faster than SHA-1).
-
-I'd prefer to keep the original criteria here, because I think it's
-useful to document what they were for why we'd want to change.  For
-example, we occasionally get random users asking why we didn't pick a
-hash with length extension resistance or why we didn't pick SHA-3.
-
-The fact that we don't need length extension attack resistance and that
-most non-Linux crypto libraries provide an extremely limited set of
-crypto primitives are essential to our decision.  I think if SHA-3-256
-had been more widely available, it would have been the winning candidate.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---UdNdnQPPBgcV69um
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYBne/wAKCRB8DEliiIei
-gaMKAP4u52wtuucT3eKGKzxIXTOe/HahOtc2O7von40WULErqwD8DglRiGYPkBq8
-ZFf1Z+rRTTMHoptIR6RTro+YEWuLXA4=
-=+vVA
------END PGP SIGNATURE-----
-
---UdNdnQPPBgcV69um--
+-- 
+Assoc. Prof. Hongyi Zhao <hongyi.zhao@gmail.com>
+Theory and Simulation of Materials
+Hebei Polytechnic University of Science and Technology engineering
+NO. 552 North Gangtie Road, Xingtai, China
