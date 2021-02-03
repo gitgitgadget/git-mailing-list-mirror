@@ -2,132 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 439ACC433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 04:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 918B3C433E6
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:06:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE92964E2A
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 04:53:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 587E364E46
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 05:06:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbhBCExE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 23:53:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45658 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229483AbhBCExD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 23:53:03 -0500
-Received: (qmail 17578 invoked by uid 109); 3 Feb 2021 04:52:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Feb 2021 04:52:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12147 invoked by uid 111); 3 Feb 2021 04:52:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 02 Feb 2021 23:52:23 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 2 Feb 2021 23:52:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 02/14] pkt-line: promote static buffer in
- packet_write_gently() to callers
-Message-ID: <YBosBuyCmBzYiRfv@coredump.intra.peff.net>
-References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
- <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
- <3b03a8ff7a72c101f82a685cc6f34a5dd37a9c4b.1612208747.git.gitgitgadget@gmail.com>
- <YBkeYSA5UfQP1m/x@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2102022340460.54@tvgsbejvaqbjf.bet>
+        id S229615AbhBCFGZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 00:06:25 -0500
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:40992 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229487AbhBCFGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 00:06:24 -0500
+Received: by mail-ej1-f52.google.com with SMTP id f14so9317661ejc.8
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 21:06:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+a/XYmA8++maKXOjjlGOvvrRSudZJia6jkZVC82Qjqo=;
+        b=ULHrIvWtliu3RdXqftPtt8LF4lbNZgf2p3fWBloNThcsT+abKkcdKwzfS8XfU2scfi
+         FYdtiGz7zeQ3epHaFKifzNUl6fi63g73LuEKO0piEtdfUXOKmI3Wjwiw4SIXzVJGuuCr
+         lI0JBbh5FrzbfgcfdCnmGhLcUYS4eZRZTjgA6FtSN//sX2zG3dPq2NGCiiGa2Rg5aBYc
+         GLmlaxgtW0yQbscHUvz2vp+IQxhAsansOjQSFIN4N4vdWHrGahkcGYrFB+Nq+4BUAYc5
+         FJ1iePNYRK4gnivbXrZKJe+EMXmdBR56+JVkQ5h7k9ryP8L8WjT4/2NCkJUrsLQH5Mpp
+         Whbg==
+X-Gm-Message-State: AOAM533j8N2qWMaQt8tgneUIzJwHWUVAZ6OHKKicV2mGaA5Ef7srUbbw
+        vok0H6pqJfwVN54DKV5ypqjnCadfm98Qe//8w9da3f1I6Ok=
+X-Google-Smtp-Source: ABdhPJzR6WO2wugQ/Fq83adfDJSLI381nIZz6YugDdwyNmJRJEX0L8nBmFStgiNA5KRW/H1ZF739C5C9Hkkh2sV/wDM=
+X-Received: by 2002:a17:906:4348:: with SMTP id z8mr1419558ejm.371.1612328742498;
+ Tue, 02 Feb 2021 21:05:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2102022340460.54@tvgsbejvaqbjf.bet>
+References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
+ <20210129182050.26143-7-charvi077@gmail.com> <CAPig+cQeBE7m8wf1e_soVrpvL3==u50MPyb90NwWLnFiUz1Byw@mail.gmail.com>
+ <CAPSFM5fZHZDnmRD2GzwPVKwBjogKD=GJbC7e=6aQSbu_iXBdNw@mail.gmail.com>
+In-Reply-To: <CAPSFM5fZHZDnmRD2GzwPVKwBjogKD=GJbC7e=6aQSbu_iXBdNw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 3 Feb 2021 00:05:31 -0500
+Message-ID: <CAPig+cRxmFr_Sbwdf4OFMr8Vp1q6O6J7AbgYAD5cgdD--hgDuw@mail.gmail.com>
+Subject: Re: [PATCH v4 6/9] rebase -i: add fixup [-C | -c] command
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 02, 2021 at 11:54:43PM +0100, Johannes Schindelin wrote:
+On Tue, Feb 2, 2021 at 10:29 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> On Tue, 2 Feb 2021 at 06:17, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > When `-c` says "edit the commit message" it's not clear what will be
+> > edited. The original's commit message? The replacement's message? A
+> > combination of the two? If you can come up with a succinct way to word
+> > it such that it states more precisely what exactly will be edited, it
+> > would be nice, but not necessarily worth a re-roll.
+>
+> Here the editor shows the commented out commit message of original commit and
+> the replacement commit message (of fixup -c commit) is not commented out.
+>
+> So maybe s/edit the commit message/edit this commit message  is better.
 
-> > Would it really be so bad to do:
+Yes, that would be clearer and is just as succinct.
+
+> > This code adds to the confusion. In the function argument list, `flag`
+> > has been declared as a single enum item, yet this code is treating
+> > `flag` as if it is a combination of bits. So, it's not clear what the
+> > intention is here. Is `flag` always going to be a specific enum item
+> > in this context or is it going to be a combination of bits? If it is
+> > only ever going to be a distinct enum item, then one would expect this
+> > code to be written like this:
 > >
-> >   char header[4];
-> >   set_packet_header(header, packet_size);
-> >   if (write_in_full(fd_out, header, 4) < 0 ||
-> >       write_in_full(fd_out, buf, size) < 0)
-> >           return error(...);
-> 
-> There must have been a reason why the original code went out of its way to
-> copy the data. At least that's what I _assume_.
+> >     return command == TODO_FIXUP &&
+> >         (flag == TODO_REPLACE_FIXUP_MSG ||
+> >         flag == TODO_EDIT_FIXUP_MSG);
+>
+> I admit it resulted in a bit of confusion. Here, its true that flag is always
+> going to be specific enum item( as command can be merge -c, fixup -c, or
+> fixup -C ) and I combined the bag of bits to denote
+> the specific enum item. So, maybe we can go with the first method?
 
-Having looked at the history, including the original mailing list
-threads, it doesn't seem to be.
+Sounds fine. It would clarify the intent.
 
-> I could see, for example, that these extra round-trips just for the
-> header, really have a negative impact on network operations.
+> > By the way, the function name check_fixup_flag() doesn't necessarily
+> > do a good job conveying the purpose of this function. Based upon the
+> > implementation, I gather that it is checking whether the command is a
+> > "fixup" command, so perhaps the name could reflect that. Perhaps
+> > is_fixup() or something?
+>
+> Agree, here it's checking if the command is fixup and the flag value (
+> which implies either user has given command fixup -c or fixup -C )
+> So, I wonder if we can write is_fixup_flag() ?
 
-Keep in mind these won't be network round-trips. They're just syscall
-round-trips. The OS would keep writing without an ACK while filling a
-TCP window. The worst case may be an extra packet on the wire, though
-the OS may end up coalescing the writes into a single packet anyway.
+Reasonable.
 
-> > I doubt that two syscalls is breaking the bank here, but if people are
-> > really concerned, using writev() would be a much better solution.
-> 
-> No, because there is no equivalent for that on Windows. And since Windows
-> is the primary target of our Simple IPC/FSMonitor work, that would break
-> the bank.
+> > I was wondering if the above could be rephrased like this to avoid the
+> > repetition:
+> > [...]
+> > but perhaps it's too magical and ugly.
+>
+> I agree, this [tolower(bol[1]) == 'c'] is actually doing all the
+> magic, but I am not
+> sure if we should change it or not ? As in the source code just after
+> this code we
+> are checking in a similar way for the 'merge' command. So, maybe implementing
+> in a similar way is easier to read ?
 
-Are you concerned about the performance implications, or just
-portability? Falling back to two writes (and wrapping that in a
-function) would be easy for the latter. For the former, there's WSASend,
-but I have no idea what kind of difficulties/caveats we might run into.
-
-> > The other direction is that callers could be using a correctly-sized
-> > buffer in the first place. I.e., something like:
-> >
-> >   struct packet_buffer {
-> >           char full_packet[LARGE_PACKET_MAX];
-> >   };
-> >   static inline char *packet_data(struct packet_buffer *pb)
-> >   {
-> > 	return pb->full_packet + 4;
-> >   }
-> 
-> Or we change it to
-> 
-> 	struct packet_buffer {
-> 		char count[4];
-> 		char payload[LARGE_PACKET_MAX - 4];
-> 	};
-> 
-> and then ask the callers to allocate one of those beauties
-> Not sure how well we can guarantee that the compiler won't pad this,
-> though.
-
-Yeah, I almost suggested the same, but wasn't sure about padding. I
-think the standard allows there to be arbitrary padding between the two,
-so it's really up to the ABI to define. I'd be surprised if this struct
-is a problem in practice (we already have some structs which assume
-4-byte alignment, and nobody seems to have complained).
-
-> And then there is `write_packetized_from_buf()` whose `src` parameter can
-> come from `convert_to_git()` that _definitely_ would not be of the desired
-> form.
-
-Yep. It really does need to either use two writes or to copy, because
-it's slicing up a much larger buffer (it wouldn't be the end of the
-world for it to allocate a single LARGE_PACKET_MAX heap buffer for the
-duration of its run, though).
-
-> So I guess if we can get away with the 2-syscall version, that's kind of
-> better than that.
-
-I do prefer it, because then the whole thing just becomes an
-implementation detail that callers don't need to care about.
-
--Peff
+Keeping it similar to nearby code makes sense.
