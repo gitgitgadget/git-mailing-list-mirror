@@ -7,67 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56161C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E805DC4332B
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:25:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1749064F41
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:14:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADDD964F8C
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 14:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232605AbhBCOOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 09:14:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51770 "EHLO
+        id S232877AbhBCOZA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 09:25:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbhBCON7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 09:13:59 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 308C8C0613ED
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 06:13:19 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id w2so1632749ejk.13
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 06:13:19 -0800 (PST)
+        with ESMTP id S232691AbhBCOYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 09:24:38 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB93C0613ED
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 06:23:58 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id i5so4872571edu.10
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 06:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=txLX5JhkRgO9NXevP9Kn8XYLobehpLB/ZWeKRoR28gM=;
-        b=q/Q1hRqzxk4nFh/8vDPqfcZfaAH6dkxkgsGlQ3xnlZx77iKDxrRwTYaox6dtT9Uri0
-         NZax9iAF+S4PxeEOK9B7Qt+o49KZIiLyQlzvJzIJJV4Q/b2LkRl8UFdkH8pjzNkp/KDM
-         bwYTgntYIe0w7XFRMqLecKacmLMIlHNokaLxQlaPtFaLopF/YKlPYuUw8UsAl9gDDdLR
-         faY7HES0mgbEBuSOiSPSex1TP0pHsHmQKVxs23kbpxo1KjT8tjzvrcmYmcFCWBa1UHtA
-         I8PrXUkDRF5STBscNKZq4GSuLXY0hDf/x6JXEec6jWAaURH4upfnGic7JCFR2lnC5i2l
-         TCTQ==
+        bh=7F3KCyv6bUvXzyHs3/HN4+YQNhb+twDqvxt8vufgNqw=;
+        b=nl1JLbZ2pK2+1JL8eoPqZbI3ppMABUcm53/4ltM+qfGiXNUeUF3NazTLuMSKopeVhB
+         WTfkxM0+kKWcujL+slvDpkCpQMwaqi+YJQKqZvl3PclECih2Sn55sb+Or2AGF5F3NzdC
+         laXeBOj9Ady416IzRyl/17v6kiiBtgJdv31nJUtPEmc34mHobJpKK+gOHEfe9evBb2v8
+         /KeaCKWHSwc+qa3SDPgr6QbjmTnlB6zxXlfjs1IlT410fLwuOJyYsjg1xQU0Iz3nNt3h
+         HEvsmQQOojif65nG1m/ysnIRxgoYjlkfVr+2uAGlZv/279mZLDScUbE60Lk46uPEqp3n
+         YVmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=txLX5JhkRgO9NXevP9Kn8XYLobehpLB/ZWeKRoR28gM=;
-        b=oPlfafYyuci5qE8qj0+4w+XKvQh3R6le/oCeKOPOC1rprCDSG13WAd5GzZhe4p1XQ1
-         xJsu0qWuwRjdz47ANR3iGH1FqDl5XiwlYqkVnUf1IyA9I5N/L5a9YjcqAoexG2/ATu50
-         UTblhnr7bwSLmHmsxqY9+IJsuvvkq0hXjseHmYHd75iHttSDlLJP0ofJaWNA41VBH00U
-         ayN2F2h2naMRgfhijd5hijXDaj+d636xVOGSjldhlBPjecku+wYUu0HkBwXK4UPY2YXH
-         kSkzebUU/gLlyVb52ELXmcF17sbOW9uO1tgjRqwNkuQYBkvv1FfWGSJp6V+2+2tazz97
-         0eEg==
-X-Gm-Message-State: AOAM530nC2oWorgVQQuKoY3EwqKpz73Dlg9u+wxvH5kXOmlstzYvpkiV
-        UH9O0GOByOmdoqcs5NREoNUNBIgkrLDk0Q==
-X-Google-Smtp-Source: ABdhPJw0xl2UaAznfgCr3VQjHs2cWV/iLM34eD2CZbOeVc5o/KQ4COuSDFN88tJulHDL6QsTpYzHZQ==
-X-Received: by 2002:a17:906:9588:: with SMTP id r8mr3451725ejx.167.1612361597831;
-        Wed, 03 Feb 2021 06:13:17 -0800 (PST)
+        bh=7F3KCyv6bUvXzyHs3/HN4+YQNhb+twDqvxt8vufgNqw=;
+        b=eDVvWR6XX13AFp2M0FGwxgghVFjjK8BrHginfMLjuRDC9mq6hJuM+Nt9GCMpDeeN8d
+         f6nfCiSRFO/hDNlcKtdSOmnfM46BqM836MuEAZp/bqmfW1Ys7T7StqNNuYHdvu5Ng62J
+         YFZDqNECzz4anIC/Qj9yQ8ZDJLz+f2CBjsYbaB9SAvqYrL4g4YPHC/24UHpd+yAFNN0G
+         ENFkDGdE3FFZ7rScuheGFlyOMkAIk5D6Zg9MzpRLbm/tj0FOHcVMpEvFRxPZsGblF27t
+         nbGdViUOQSzozleKfSDmiHH6odA7zyfKpeLLyiPt1BgMyYsFRDQ3lVYYYRmUrD/gSzFs
+         WJCQ==
+X-Gm-Message-State: AOAM532M0F+faYUKU5xmQqgbxDLZmUQmCcfbNdRhi2Sw1cjpv7KuM4ZP
+        +Rm4kgUlPPxxP3s/UKu6mtw=
+X-Google-Smtp-Source: ABdhPJw64o5lSz5QF7siJJr7kvhK66ektSaAdrQCOgEUodD7FnTwh7AQcGwveROeSBJxgF9xNpOekw==
+X-Received: by 2002:a05:6402:5107:: with SMTP id m7mr3168989edd.52.1612362236984;
+        Wed, 03 Feb 2021 06:23:56 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id p21sm906555edx.90.2021.02.03.06.13.16
+        by smtp.gmail.com with ESMTPSA id k4sm1086522eji.82.2021.02.03.06.23.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 06:13:17 -0800 (PST)
+        Wed, 03 Feb 2021 06:23:56 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 22/25] Remove unused kwset.[ch]
-References: <20210203032811.14979-1-avarab@gmail.com>
- <20210203032811.14979-23-avarab@gmail.com>
- <CAPUEspgBmuTBHVZWY9fRtjbHWBRr0zHravLL1Czepc6jmib4HA@mail.gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Cloning with remote unborn HEAD
+References: <20210130044142.808860-1-jonathantanmy@google.com>
+ <20210202022254.1793991-1-jonathantanmy@google.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAPUEspgBmuTBHVZWY9fRtjbHWBRr0zHravLL1Czepc6jmib4HA@mail.gmail.com>
-Date:   Wed, 03 Feb 2021 15:13:16 +0100
-Message-ID: <87a6sldytf.fsf@evledraar.gmail.com>
+In-reply-to: <20210202022254.1793991-1-jonathantanmy@google.com>
+Date:   Wed, 03 Feb 2021 15:23:55 +0100
+Message-ID: <877dnpdybo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,40 +72,37 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Feb 03 2021, Carlo Arenas wrote:
+On Tue, Feb 02 2021, Jonathan Tan wrote:
 
-> this is still being used in Linux without Glibc (ex: alpine or void that
-> use musl), and other OS that rely on the compat layer by default for legacy
-> reasons (ex: macOS and Windows) or where PCRE2 is not widely used/available
-> (ex: OpenBSD, NetBSD)
+>> > I really don't care much, but this really needs a corresponding
+>> > documentation update. I.e. something like:
+>> > 
+>> >     init.defaultBranch::
+>> >         Allows overriding the default branch name e.g. when initializing a
+>> >         new repository or when cloning an empty repository.
+>> >     
+>> >         When cloning a repository over protocol v2 (i.e. ssh://, https://,
+>> >         file://, but not a /some/path), and if that repository has
+>> >         init.defaultBranch configured, the server will advertise its
+>> >         preferred default branch name, and we'll take its configuration over
+>> >         ours.
+>> 
+>> Thanks - I'll use some of your wording, but I think it's best to leave
+>> open the possibility that cloning using protocol v0 or the disk clone
+>> (/some/path) copies over the current HEAD as well.
+>
+> Looking back on this, I think that it's natural to think that both an
+> empty repository and a non-empty one have a HEAD that points somewhere,
+> and "git clone" would behave the same way in both cases. So I'll hold
+> off on the documentation change.
 
-Are you perhaps confusing kwset with NO_REGEX=1 and compat/regex/*? I
-just say that because that's a common "Linux without Glibc" && musl
-fallback.
+You mean for a v6 it'll do the same thing in the local clone case too
+and thus we won't need to document the exception? Sounds good.
 
-The kwset is not a fallback, we use it unconditionally on all platforms
-regardless of libc etc., until this series.
+I was mainly pointing out the need to document the current divergent
+behavior.
 
-Anyway, as far as PCRE v2 and compatibility go there's no compatibility
-concerns here we didn't address already & have in in-the-wild git
-releases since Since 48de2a768c (grep: remove the kwset optimization,
-2019-07-01) and b65abcafc7 (grep: use PCRE v2 for optimized fixed-string
-search, 2019-07-01).
-
-I.e. we haven't used kwset at all in the more commonly used grep code,
-just C library regex + PCRE if it's available.
-
-FWIW I think the commonly used packages on Windows and MacOS build with
-PCRE v2, but that's just from memory, I don't use those myself.
-
-> PS. hadn't yet tested this series, but thought it was a good idea to at
-> least mention this as a FYI to make sure tradeoffs are well known and
-> testing done as well.
-
-Indeed, and a glance at the log & past list traffic shows we had a lot
-of such portability fixes around pcre2 in the past.
-
-But in this case we're just directing the pickaxe to use the existing
-grep codepath, so I think we should be fine, sans small stuff like (sent
-a reply to the cover letter about this) me screwing up shell portability
-in the v1 etc.
+Documenting that something isn't consistent shouldn't be seen as a
+blessing that the divergence is a good idea, it's an aid to our users so
+they can understand why their git version does X when they might be
+expecting Y.
