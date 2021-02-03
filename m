@@ -5,57 +5,57 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 283ACC433E0
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A19E4C433DB
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1FAF64F74
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AC2964F74
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 03:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232759AbhBCD3n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Feb 2021 22:29:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54540 "EHLO
+        id S232761AbhBCD3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Feb 2021 22:29:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232710AbhBCD3j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Feb 2021 22:29:39 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 013BFC06178C
-        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:25 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id g10so22585509wrx.1
-        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:24 -0800 (PST)
+        with ESMTP id S232680AbhBCD3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Feb 2021 22:29:41 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03581C061793
+        for <git@vger.kernel.org>; Tue,  2 Feb 2021 19:28:26 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id l12so22587018wry.2
+        for <git@vger.kernel.org>; Tue, 02 Feb 2021 19:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hN5eqxAbcgOVluoOGksJ+3Djft9wOOrqeKVpO1EdDw4=;
-        b=cysloLqFYDyiJADv2++3lG5yNYKy5JyMg58dEoEqI2dLKY9HEMzucQtQUKuTHaVNLu
-         ius/UZExQefXqYeXkXzlRuU/pBOgnAMRtp3gdIOp39Bge8ZXDQ7Rk+Thm+LuujffMv+n
-         0mtxZ1RbTDwC1nP7rnhg79Yt6C0b/mhXLJeLkt371S7Py7ZKlvhviZJtaglE3Ty+Y91M
-         xG6sv/a1HcVAPMZGRAATH9QkhUpIrDOBi1O4nV+qp5W3Q1w6urYAp97SJRZwN3/Ouxov
-         WjXgDz1mf5mHhHNvqmKpZR0kZvILZDFAM5xMzt3gN0sYaZeaKB9l1pv69+NGmhF0OXRw
-         fgCQ==
+        bh=JrxhJITvh/JFLu/TQm4W9HxXuDchoeDmPm9ANtG+qqY=;
+        b=OcvgAb+og7WEeap9YdvkeLzndkIDk0PyqFQVorPk6m8C/PQjsIUVsQipAUVSMPQKJ6
+         y6ZN7fJR3zJwKe18iC0MSf0qffdKal+VCIERYDSpIMohHVzDa2FRj5QQNlm58mECp469
+         x7qOce5S0g2YwdR79MUyNU4ErhpGPU22C6owiWlH39v/q0/fB8BFTA7eYl9+d9cfxrJC
+         U1aMxSgxtD/0z8iNhbGEnR9NHbJzynKE3JIoGUsMMbS60W0pNu5hA3K6uWbCQe4ZogAk
+         ios8YBKfTgLO4UN4k28zUXoxhEvNjFS2bhTLlCR3UkQ+vuLqac2gArDyTDvCeBqiyR1R
+         Wvww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hN5eqxAbcgOVluoOGksJ+3Djft9wOOrqeKVpO1EdDw4=;
-        b=c7EIMkIXtMddgEmN5s3BaMOwNrsLluexLmb6vtaPH4SMKG37fiojKLSVAywm8Squw6
-         9v3tqxzKzbilcX9kCk8oUDAIrFA8sLutW6Q4FMvwLTySiWI6qF80DaysfM3N+a+LcaHK
-         iWnn0Z+MIXqHfMt5hLzW1G6EXI1sZ+sspLEFlCJ4UXl1wvhdhJTWJ9M39Jm8+M2zIC7E
-         naeSODyq+ANVlQH7qUw7slHl/Uc9HtueldAA6StYLvxdgApvFpUkc9zGNsWc+L0NWHSC
-         mA84zjI15gm1bhks50aM9Sk2gheAqozo2YnuFjMKjOj0Xg+6GoNI3b7k0Uh8cVK+5j7W
-         7zQA==
-X-Gm-Message-State: AOAM531hepSGmFWp2Axf9UPh5/BUy8Pds6HO5IpYVipWWFcurvSorSIv
-        NMIuvdDGhodxyQjDiqN7hKOWKgqG8MXvLA==
-X-Google-Smtp-Source: ABdhPJwT+l6rrZIB6Jfhtuq6WsjMn/A62YzIdQkqtCLvL5Y0GGTIYhLsc4672DIbm/YqC+UxLw1MzA==
-X-Received: by 2002:a05:6000:1803:: with SMTP id m3mr1066870wrh.34.1612322903477;
-        Tue, 02 Feb 2021 19:28:23 -0800 (PST)
+        bh=JrxhJITvh/JFLu/TQm4W9HxXuDchoeDmPm9ANtG+qqY=;
+        b=pT/g4R/nMralKJjkSzXe2ZGCfcUsFyEwxHRqzswRJfgSowtPoC83pJxCj3ehQ0tXUy
+         05cq16OKJpikfXfhsjDl0gDWsGT6F1u1cDvltE0LsPcs0WkXrCcbqOEyYflnZ1kHowbE
+         sEuThlxZVxqkkEremoeimsyxLhBX1DshMelt0lvuvE2+nR2TnjBdi5Y1YE0uO3JTcFtc
+         wtlne/CrvPcEi/StBCzdNvDyD2MrqgoqgxUzAx9YQQrNERC3nmeLTJVU/GLaIKIcacV/
+         5T6Fliu7p2lmZ8U81fbhsXtO847/R0XC9NJA+xt2JyzKHc6wortxjE73zMGsa0OyhkhG
+         sEjQ==
+X-Gm-Message-State: AOAM530gdPYUymdpniiGHyuAaPG1/LB04a9VD45ahXnTDfYwRgbdLjCf
+        ee5zjDMglPbuBRHjNveZEj/gBh8Uk3EF0Q==
+X-Google-Smtp-Source: ABdhPJxD2sla8gUX/aVUePpezqxB3oTo7oaWFkAcHfaYQo0QKXCVVtGkk3O5VzMIjCWmCpoc+BBr3A==
+X-Received: by 2002:adf:f905:: with SMTP id b5mr1017831wrr.129.1612322904549;
+        Tue, 02 Feb 2021 19:28:24 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.22
+        by smtp.gmail.com with ESMTPSA id c5sm971089wrn.77.2021.02.02.19.28.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Feb 2021 19:28:22 -0800 (PST)
+        Tue, 02 Feb 2021 19:28:23 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 07/25] grep/pcre2: use compile-time PCREv2 version test
-Date:   Wed,  3 Feb 2021 04:27:53 +0100
-Message-Id: <20210203032811.14979-8-avarab@gmail.com>
+Subject: [PATCH 08/25] grep/pcre2: use pcre2_maketables_free() function
+Date:   Wed,  3 Feb 2021 04:27:54 +0100
+Message-Id: <20210203032811.14979-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
 References: <20210203032811.14979-1-avarab@gmail.com>
@@ -78,61 +78,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace a use of pcre2_config(PCRE2_CONFIG_VERSION, ...) which I added
-in 95ca1f987ed (grep/pcre2: better support invalid UTF-8 haystacks,
-2021-01-24) with the same test done at compile-time.
+Make use of the pcre2_maketables_free() function to free the memory
+allocated by pcre2_maketables(). At first sight it's strange that
+10da030ab75 (grep: avoid leak of chartables in PCRE2, 2019-10-16)
+which added the free() call here doesn't make use of the pcre2_free()
+the author introduced in the preceding commit in 513f2b0bbd4 (grep:
+make PCRE2 aware of custom allocator, 2019-10-16).
 
-It might be cuter to do this at runtime since we don't have to do the
-"major >= 11 || (major >= 10 && ...)" test. But in the next commit
-we'll add another version comparison that absolutely needs to be done
-at compile-time, so we're better of being consistent across the board.
+The reason is that at the time the function didn't exist. It was first
+introduced in PCREv2 version 10.34, released on 2019-11-21.
+
+Let's make use of it behind a macro. I don't think this matters for
+anything to do with custom allocators, but it makes our use of PCREv2
+more discoverable. At some distant point in the future we'll be able
+to drop the version guard, as nobody will be running a version older
+than 10.34.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 18 ++++--------------
- grep.h |  3 +++
- 2 files changed, 7 insertions(+), 14 deletions(-)
+ grep.c | 4 ++++
+ grep.h | 3 +++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/grep.c b/grep.c
-index 7d262a23d8..e58044474d 100644
+index e58044474d..c63dbff4b2 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -400,21 +400,11 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 	    !(!opt->ignore_case && (p->fixed || p->is_fixed)))
- 		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
- 
-+#ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
- 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
--	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS)) {
--		struct strbuf buf;
--		int len;
--		int err;
--
--		if ((len = pcre2_config(PCRE2_CONFIG_VERSION, NULL)) < 0)
--			BUG("pcre2_config(..., NULL) failed: %d", len);
--		strbuf_init(&buf, len + 1);
--		if ((err = pcre2_config(PCRE2_CONFIG_VERSION, buf.buf)) < 0)
--			BUG("pcre2_config(..., buf.buf) failed: %d", err);
--		if (versioncmp(buf.buf, "10.36") < 0)
--			options |= PCRE2_NO_START_OPTIMIZE;
--		strbuf_release(&buf);
--	}
-+	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS))
-+		options |= PCRE2_NO_START_OPTIMIZE;
+@@ -490,7 +490,11 @@ static void free_pcre2_pattern(struct grep_pat *p)
+ 	pcre2_compile_context_free(p->pcre2_compile_context);
+ 	pcre2_code_free(p->pcre2_pattern);
+ 	pcre2_match_data_free(p->pcre2_match_data);
++#ifdef GIT_PCRE2_VERSION_10_34_OR_HIGHER
++	pcre2_maketables_free(pcre2_global_context, p->pcre2_tables);
++#else
+ 	free((void *)p->pcre2_tables);
 +#endif
- 
- 	p->pcre2_pattern = pcre2_compile((PCRE2_SPTR)p->pattern,
- 					 p->patternlen, options, &error, &erroffset,
+ }
+ #else /* !USE_LIBPCRE2 */
+ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt)
 diff --git a/grep.h b/grep.h
-index ae89d6254b..54e52042cb 100644
+index 54e52042cb..64666e9204 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -4,6 +4,9 @@
- #ifdef USE_LIBPCRE2
- #define PCRE2_CODE_UNIT_WIDTH 8
- #include <pcre2.h>
-+#if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 36) || PCRE2_MAJOR >= 11
-+#define GIT_PCRE2_VERSION_10_36_OR_HIGHER
+@@ -7,6 +7,9 @@
+ #if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 36) || PCRE2_MAJOR >= 11
+ #define GIT_PCRE2_VERSION_10_36_OR_HIGHER
+ #endif
++#if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 34) || PCRE2_MAJOR >= 11
++#define GIT_PCRE2_VERSION_10_34_OR_HIGHER
 +#endif
  #else
  typedef int pcre2_code;
