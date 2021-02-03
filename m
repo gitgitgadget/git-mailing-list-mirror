@@ -2,98 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F479C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 19:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4231C433E0
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:01:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 201DF64F93
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 19:43:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EE6464E07
+	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 20:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230316AbhBCTng (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 14:43:36 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60245 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbhBCTne (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 14:43:34 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A294910C601;
-        Wed,  3 Feb 2021 14:42:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jniq0B+ALcMg
-        4D6FCSNR4UOQLfk=; b=f/NkaVmZU8nZfKzvmS5MOG4apim9UVAJVy1kEnfhrkSJ
-        zSKVSc57nbQ/+qxIEU6+oNjiXWsCWb82TslwA9ocmexwNvQ7mRCMEoXw4g84LFJ3
-        3t0i1rCwyGdKZGK1cKegbhpXmjwBjPLIFOUlBtKgcVymgtzyCKTd0cSZffAO96U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=d/7zcB
-        q8dz/z92HgiNimdDg5+I2QLtXPN5LEj0xTjR6eA1sgxRtdQuT2Ls0O2hDc61gJsx
-        dsFOyiAzZuCi0CXUxkY7teCCOaTJOC1uVe4ZxFV6DHjGZLicmaIWdIniWckVTYmo
-        n7A0ggqREn6ZbpLggmVC/0rWVk0+Vme66/LLg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9AEC910C600;
-        Wed,  3 Feb 2021 14:42:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DBFE910C5FC;
-        Wed,  3 Feb 2021 14:42:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH 19/25] pickaxe -G: set -U0 for diff generation
-References: <20210203032811.14979-1-avarab@gmail.com>
-        <20210203032811.14979-20-avarab@gmail.com>
-        <874kitdy6r.fsf@evledraar.gmail.com>
-Date:   Wed, 03 Feb 2021 11:42:48 -0800
-In-Reply-To: <874kitdy6r.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 03 Feb 2021 15:26:52 +0100")
-Message-ID: <xmqqy2g5aqfb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231557AbhBCUBd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 15:01:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42316 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231528AbhBCUBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 15:01:31 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468B7C061573
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 12:00:51 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id m1so859456wml.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 12:00:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FE3OHPHHAOp7amJnJRIc7J9/eeDCPsDC1iNtQPdi0dg=;
+        b=NNwTLDolwPr2TQPFbCJ2ovY7eLDUxozR9emahlk6bMj0x5e3eHEExx3z5zISon0blV
+         eVdZmDTAS3xsyGd7m2efF+LW3efB8kq8WfkNv1WkHwD43rVlm1vC1eR/2ERe9rl54h4I
+         fZmIFl9jOUsJuFI51ERufcS2MpSfWqhrIMZ5/i5PMqAOdPsixrZcmOmrufv8Qt+fOlUQ
+         oYtr0Q3/j1uEBq++OCUY3ezSFbK0MTo2UTKn7JLn9FLoCsCTTe33YWxFFWgcHSJhF2yp
+         AhIuVLAOI+jSkxqpOZHfpK6BONY3XWDNRqHABXAU6zZId5XcNN5qfcTUTjN7c0vc2XIN
+         nBAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FE3OHPHHAOp7amJnJRIc7J9/eeDCPsDC1iNtQPdi0dg=;
+        b=DX6a/FaMbAU6nozCPP7LVLHDqE0GrgUDKRxpl7Y/qaIVpCm7nZSq4hJLcKjxDin0bB
+         qJJv4Bnkmuw2+HPd8lgZckVuTHrVFPxjnXJF9Dd7BudxoGtIE7EPYMStwCBc1LzlZH3k
+         EIa56QoRPpUL77Du2iAtMDMviNag0ud7JuEEDcrPqzCzwP+1GJP7Ky2TsjAuv/CXJgEB
+         0LOZdkdNtVgKM1N75JrUA6E2MM58G9S4ZMT9KAn17mDX9Ai1UZRH/TdSwLJX04SQ/wqB
+         8HeCVRJszGjntGmcUki/xV9oLJliDl15bSdYxoClguIbWxNcpbeh27PSN1FqE2xQ/4a9
+         dh9w==
+X-Gm-Message-State: AOAM533Or6wtU6pqU8v+BBXp/RmfUuhx+VlgIP0oCD7klUdIApy1g71j
+        JOtnvg0XuwgEw0xoJUyGXZriVm60V08=
+X-Google-Smtp-Source: ABdhPJwBd0twCTvzNN1vzSkgx9Eagy4GK4rsfRH63QZpzgMGYh6Fka0SYsOoq27pvlmFvHOOhGuqBw==
+X-Received: by 2002:a7b:c3ca:: with SMTP id t10mr3482885wmj.138.1612382450113;
+        Wed, 03 Feb 2021 12:00:50 -0800 (PST)
+Received: from szeder.dev (84-236-109-63.pool.digikabel.hu. [84.236.109.63])
+        by smtp.gmail.com with ESMTPSA id f14sm3839531wmc.32.2021.02.03.12.00.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Feb 2021 12:00:49 -0800 (PST)
+Date:   Wed, 3 Feb 2021 21:00:47 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Paul Jolly <paul@myitcv.io>,
+        git@vger.kernel.org
+Subject: Re: Bash completion suggests tags for git branch -D
+Message-ID: <20210203200047.GB1036595@szeder.dev>
+References: <CACoUkn6+9C3+HVVQF905t1siAD9Sqo1JvRa0Whw-J6x7V7icyg@mail.gmail.com>
+ <YBkVFTOP6K1//i6m@coredump.intra.peff.net>
+ <YBkZnY8X5VyNkXkR@coredump.intra.peff.net>
+ <xmqqpn1igznk.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FF78401A-6657-11EB-BE84-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqpn1igznk.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Tue, Feb 02, 2021 at 09:14:39AM -0800, Junio C Hamano wrote:
+> From: Jeff King <peff@peff.net>
+> Date: Tue Feb 2 04:02:13 2021 -0500
+> Subject: [PATCH] completion: treat "branch -D" the same way as "branch -d"
+> 
+> Paul Jolly noticed that the former offers not just branches but tags
+> as completion candidates.  Mimic how "branch -d" limits its suggestion
+> to branch names.
 
-> I since discovered Junio's f01cae918f (diff: teach --stat/--numstat to
-> honor -U$num, 2011-09-22) (as an aside we have no test for that
-> behavior).
->
-> I haven't looked carefully, but I don't think we'll have the same issue
-> here, as pickaxe currently doesn't care about whether something is on
-> the + or - line, when briefly looking at the diffstat edge cases it
-> seems that's what differs based on -U<n> for the diffstat.
+Uh-oh.  This is a bug from my second ever commit in Git! ;)
 
-With -U0 or different <n> in general, the matching between preimage
-and postimage may become different, and both -U3 (usual) and -U0 may
-express the same change "correctly" from the point of view of a
-program like "git apply", but humans would see them as different
-patches, and "diffstat" that counts number of +/- would give
-different results.  The patch IDs may also be different.  The old
-commit was to pessimize the logic (because we do not need context
-just to count +/- lines for the purpose of diffstat) to match human
-expectations.  They expect "'diffstat' must be counting 'diff -p'
-output" and we were counting "diff -p -U0" instead, resulting in
-different numbers.
+'-M' should be handled the same.
 
-With internally using -U0, the updated "pickaxe -G" is likely to get
-the same complaints: "'pickaxe -G<token>' found this commit, but in
-the 'git show' output, the token does not seem to be affected".
-
-You'd respond to "try 'git show -U0' and now you'd see the <token>",
-but again that is probably breaking human expectations.
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  contrib/completion/git-completion.bash | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 4b1f4264a6..b54113e2f9 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1447,7 +1447,7 @@ _git_branch ()
+>  	while [ $c -lt $cword ]; do
+>  		i="${words[c]}"
+>  		case "$i" in
+> -		-d|--delete|-m|--move)	only_local_ref="y" ;;
+> +		-d|--delete|-D|-m|--move)	only_local_ref="y" ;;
+>  		-r|--remotes)		has_r="y" ;;
+>  		esac
+>  		((c++))
+> -- 
+> 2.30.0-586-g047f30a795
+> 
