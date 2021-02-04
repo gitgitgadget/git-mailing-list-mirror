@@ -2,163 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82AB6C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 796BFC433DB
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:25:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FB4864FA7
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:14:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25EF764FA9
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbhBDVN4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 16:13:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbhBDVNx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 16:13:53 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FFFEC0613D6
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 13:13:12 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id s11so6079185edd.5
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 13:13:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0Vk43bV6ty6ggZCJEyoygd5EES5Lx2Tig6u83jpexdk=;
-        b=B8J+d/GMKxxU86euFEPwY4vxzaxA1zYSq8D5GDAKuGFhM+nrPZwBquORmqYgJm20hV
-         dWdUEB21W3Q1+ceWOi2owvo97KibBTH7o2YRRjO9P4wiHkowu8+0SrH5UZuicbtybHxP
-         9fxgntt+ipQr8vNde8VoFk2JzneO3DOJGnRI7aDFzKkznYWsibA2GbGVjJDxOHyTvNeX
-         Bkcgv4LmHkp+604K1JYv1dFkbJOd0bj6H+95X2wv8DfMydakr+d+ETzDEL5JVnE9E/pt
-         JtKjun3v1Sr71NRzOfTOtpE6ghYhGhcCNAXzJ4JKIeZxyCD1H4d70oU+0+dP5ig6qQTx
-         /TMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0Vk43bV6ty6ggZCJEyoygd5EES5Lx2Tig6u83jpexdk=;
-        b=SUv5xsd+rIvNoVG7HJ52j0dJZvZ4CyMvbaavVJHGBfu8Df31DXKbFqNoZK3lPIBUkQ
-         fMHT+/M3SUPJsSKevZQ6+5TdNQOezXIGT2OCUFGql82evvO/cXL2PdW+IC7/11ZRjvWx
-         ajuLrRIJnCe/GFL+LCrClYExFY47Wuc7VawlRQ0L128ggSAW0Xk+Qeauwh+cQX+vfbao
-         nRr4mIZ5Jsp4ZbQdk+aw3iDqF+1z2S4tlLaQZHA1r5aS/mzC/Wv3fF7AbyYUS8D+bIsH
-         M48X3VzBDyDpyaNSkVL+S3lytekuAKS1qLMjI1DeLsCBpMZg/Ea/N8XUzN4w0VNP8wmQ
-         ma4A==
-X-Gm-Message-State: AOAM5310/qCJrpKSx1vXc0xSyZAqB3HxjhHTFgiG6AWEjxJtfovlHh4u
-        0RdBpbOdiPAbWvuUAaCTfBc=
-X-Google-Smtp-Source: ABdhPJzN0S80fsFvMznX5ZsEtcysQqp8ShNZIBsFtKao9f6MkWrSIlrPOgKbfPvhKcKCayFs4G80qw==
-X-Received: by 2002:a50:9310:: with SMTP id m16mr522556eda.94.1612473191251;
-        Thu, 04 Feb 2021 13:13:11 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id i4sm2957882eje.90.2021.02.04.13.13.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 13:13:10 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        "Jeff King" <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH 14/25] pickaxe -S: remove redundant "sz" check in
- while-loop
-References: <20210203032811.14979-1-avarab@gmail.com>
- <20210203032811.14979-15-avarab@gmail.com>
- <4ef09db7-34f2-2fb5-b9e9-be69c7102787@web.de>
- <xmqqh7mr90ou.fsf@gitster.c.googlers.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqh7mr90ou.fsf@gitster.c.googlers.com>
-Date:   Thu, 04 Feb 2021 22:13:09 +0100
-Message-ID: <87pn1fcza2.fsf@evledraar.gmail.com>
+        id S229554AbhBDVZE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 16:25:04 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54548 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229518AbhBDVZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 16:25:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 29A0E123922;
+        Thu,  4 Feb 2021 16:24:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=33D+ouKUfobxZJavSlc/GH3V3ig=; b=CJPbdC
+        1YAU3dLR7hat4ve7iVqyKzz2pey16pBEDpY8FeRNuYlCKElAAWWZR6DqkpflEt6z
+        iCsAZltDR/1TIAYWO4FIFhV+AHytal7nuKfDHUC2ZwdKC5b4lgp4b00Wh0pNb/Qt
+        dpzpLEAoDyVNeRMEzV+Z8zn3aoBlpq5Nlopc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jAmL5WeKF8O4QiejXUJMkTDUVHPLaaWc
+        aNvlcPHYdRP8Q5XeGl0FJlqWY1nhQPWXhNQxcExE7Ezokc4SdWSDRQu40Py0tbTM
+        eXYIwVhgL29si88RND3Do+EzOoQmU1etDnJbyGD3XuDC0qccKv9ui2uSmU86Za45
+        qs387Vec2AY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 221BA123921;
+        Thu,  4 Feb 2021 16:24:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA1D012391E;
+        Thu,  4 Feb 2021 16:24:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 02/17] chunk-format: create chunk format write API
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+        <814512f216719d89f41822753d5c71df5e49385d.1611759716.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Feb 2021 13:24:12 -0800
+In-Reply-To: <814512f216719d89f41822753d5c71df5e49385d.1611759716.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 27 Jan 2021
+        15:01:41 +0000")
+Message-ID: <xmqq5z375xxf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 544344BE-672F-11EB-9A5C-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, Feb 04 2021, Junio C Hamano wrote:
+> +/*
+> + * When writing a chunk-based file format, collect the chunks in
+> + * an array of chunk_info structs. The size stores the _expected_
+> + * amount of data that will be written by write_fn.
+> + */
+> +struct chunk_info {
+> +	uint32_t id;
+> +	uint64_t size;
+> +	chunk_write_fn write_fn;
+> +};
+> +...
+> +void add_chunk(struct chunkfile *cf,
+> +	       uint64_t id,
+> +	       chunk_write_fn fn,
+> +	       size_t size)
+> +{
+> +	ALLOC_GROW(cf->chunks, cf->chunks_nr + 1, cf->chunks_alloc);
+> +
+> +	cf->chunks[cf->chunks_nr].id = id;
+> +	cf->chunks[cf->chunks_nr].write_fn = fn;
+> +	cf->chunks[cf->chunks_nr].size = size;
+> +	cf->chunks_nr++;
+> +}
 
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->>> -		while (sz &&
->>> -		       !regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
->>> +		while (!regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
->>
->> This will loop forever for regexes that match an empty string.  An
->> example would be /$/.  Silly, perhaps, but still I understand this check
->> less as an optimization and more as a correctness/robustness thing.
->>
->>>  			flags |=3D REG_NOTBOL;
->>>  			data +=3D regmatch.rm_eo;
->>>  			sz -=3D regmatch.rm_eo;
->>> -			if (sz && regmatch.rm_so =3D=3D regmatch.rm_eo) {
->>> +			if (regmatch.rm_so =3D=3D regmatch.rm_eo) {
->>>  				data++;
->>>  				sz--;
->>>  			}
->>
->> Before, if the match was an empty string and there was more data after
->> it, then the code would consume a character anyway, in order to avoid
->> matching the same empty string again.  With the patch, that character
->> is consumed even if there is no more data.  This leaves 'data'
->> pointing beyond the buffer and 'sz' rolls over to ULONG_MAX.  Oops. :(
->
-> While I do not care too much about NUL in the haystack, I do not
-> mind [13/25] either.  But this is bad.
->
-> This whole thing reminds me of f53c5de2 (pickaxe: fix segfault with
-> '-S<...> --pickaxe-regex', 2017-03-18), by the way.
+Somebody somewhere between the caller in the higher part of the
+callchain (that has to work with platform native types) and the
+on-disk format at the bottom of the callchain (that has to work
+with fixed size data fields) needs to make sure that the size that
+the higher level caller has fits on-disk data structure we define,
+and the data we read from disk fits the in-core structure our caller
+use on the reading side.
 
-Ren=C3=A9: Well spotted, thanks, and Oops.
+If there is a function at the one level closer to the disk than
+"struct chunk_info" that takes a "struct chunk_info" and writes the
+id and size to disk (and fills "struct chunk_info" from what is read
+from the disk, on the reading side), it would be a good place to do
+the size_t to uint64_t conversion.
 
-I've just sent a separate series with 01-10 of this one. I'm sitting on
-the diffcore-pickaxe patches for a while. I've got local fixes for a lot
-of issues in it, will fix this one too.
+It is OK to do the conversion-while-checking in add_chunk(), too.
 
-I've optimized the PCRE v2 codepath a lot more in my local
-version. Current results are:
+But a silent type casting from size_t to uint64_t done silently by
+assignment bothers me.  Also, I think you meant to make the incoming
+ID uint32_t; am I missing something, or did nobody notice it in the
+review of the previous round?
 
-    4209.1: git log -S'int main' <limit-rev>..                             =
-   0.38(0.36+0.01)   0.37(0.33+0.04) -2.6%
-    4209.2: git log -S'=C3=A6' <limit-rev>..                               =
-        0.51(0.47+0.04)   0.32(0.27+0.05) -37.3%
-    4209.3: git log --pickaxe-regex -S'(int|void|null)' <limit-rev>..      =
-   0.72(0.68+0.03)   0.57(0.54+0.03) -20.8%
-    4209.4: git log --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..       =
-   0.60(0.55+0.02)   0.39(0.34+0.05) -35.0%
-    4209.5: git log --pickaxe-regex -S'[=C3=A0=C3=A1=C3=A2=C3=A3=C3=A4=C3=
-=A5=C3=A6=C3=B1=C3=B8=C3=B9=C3=BA=C3=BB=C3=BC=C3=BD=C3=BE]' <limit-rev>..  =
-     0.43(0.40+0.03)   0.50(0.44+0.06) +16.3%
-    4209.6: git log -G'(int|void|null)' <limit-rev>..                      =
-   0.64(0.55+0.09)   0.63(0.56+0.05) -1.6%
-    4209.7: git log -G'if *\([^ ]+ & ' <limit-rev>..                       =
-   0.64(0.59+0.05)   0.63(0.56+0.06) -1.6%
-    4209.8: git log -G'[=C3=A0=C3=A1=C3=A2=C3=A3=C3=A4=C3=A5=C3=A6=C3=B1=C3=
-=B8=C3=B9=C3=BA=C3=BB=C3=BC=C3=BD=C3=BE]' <limit-rev>..                    =
-   0.63(0.54+0.08)   0.62(0.55+0.06) -1.6%
-    4209.9: git log -i -S'int main' <limit-rev>..                          =
-   0.39(0.35+0.03)   0.38(0.35+0.02) -2.6%
-    4209.10: git log -i -S'=C3=A6' <limit-rev>..                           =
-        0.39(0.33+0.06)   0.32(0.28+0.04) -17.9%
-    4209.11: git log -i --pickaxe-regex -S'(int|void|null)' <limit-rev>..  =
-   0.90(0.84+0.05)   0.58(0.53+0.04) -35.6%
-    4209.12: git log -i --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..   =
-   0.71(0.64+0.06)   0.40(0.37+0.03) -43.7%
-    4209.13: git log -i --pickaxe-regex -S'[=C3=A0=C3=A1=C3=A2=C3=A3=C3=A4=
-=C3=A5=C3=A6=C3=B1=C3=B8=C3=B9=C3=BA=C3=BB=C3=BC=C3=BD=C3=BE]' <limit-rev>.=
-.   0.43(0.40+0.03)   0.50(0.46+0.04) +16.3%
-    4209.14: git log -i -G'(int|void|null)' <limit-rev>..                  =
-   0.64(0.57+0.06)   0.62(0.56+0.05) -3.1%
-    4209.15: git log -i -G'if *\([^ ]+ & ' <limit-rev>..                   =
-   0.65(0.59+0.06)   0.63(0.54+0.08) -3.1%
-    4209.16: git log -i -G'[=C3=A0=C3=A1=C3=A2=C3=A3=C3=A4=C3=A5=C3=A6=C3=
-=B1=C3=B8=C3=B9=C3=BA=C3=BB=C3=BC=C3=BD=C3=BE]' <limit-rev>..              =
-     0.63(0.55+0.08)   0.62(0.56+0.05) -1.6%
+> +int write_chunkfile(struct chunkfile *cf, void *data)
+> +{
+> +	int i;
+> +	size_t cur_offset = cf->f->offset + cf->f->total;
 
-The main optimization was just moving the compilation of the pattern up
-the stack into the diff_options struct, the current version in this
-thread re-compiles it every time.
+That ought to be off_t, as it is a seek position inside a file
+(struct hashfile.total is already off_t).
+
+Use csum-file.h::hashfile_total() instead, perhaps?  .offset member
+is an implementation detail of the hashfile API (i.e. some leftover
+bits are kept in in-core buffer, until we accumulate enough to make
+it worth flushing to the disk), and by using the helper, this code
+does not have to know about it.
+
+> +	/* Add the table of contents to the current offset */
+> +	cur_offset += (cf->chunks_nr + 1) * CHUNK_LOOKUP_WIDTH;
+
+Is that 12 == sizeof(chunk_info.id) + sizeof(chunk_info.size)?
+If so, this makes sense.
+
+> +	for (i = 0; i < cf->chunks_nr; i++) {
+> +		hashwrite_be32(cf->f, cf->chunks[i].id);
+> +		hashwrite_be64(cf->f, cur_offset);
+> +
+> +		cur_offset += cf->chunks[i].size;
+> +	}
+> +
+> +	/* Trailing entry marks the end of the chunks */
+> +	hashwrite_be32(cf->f, 0);
+> +	hashwrite_be64(cf->f, cur_offset);
+
+OK.  This helper does not tell us anything about what comes in the
+on-disk file before this point, but we write a table of contents
+that says "chunk with this ID has this size, chunk with that ID has
+that size, ...", concluded by something that looks like another
+entry with chunk ID 0 that records the current offset as its size.
+
+> +	for (i = 0; i < cf->chunks_nr; i++) {
+> +		uint64_t start_offset = cf->f->total + cf->f->offset;
+
+Likewise about the type and use of hashfile_total().
+
+> +		int result = cf->chunks[i].write_fn(cf->f, data);
+> +
+> +		if (result)
+> +			return result;
+> +
+> +		if (cf->f->total + cf->f->offset - start_offset != cf->chunks[i].size)
+> +			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
+> +			    cf->chunks[i].size, cf->chunks[i].id,
+> +			    cf->f->total + cf->f->offset - start_offset);
+
+I won't complain, as this apparently is sufficient to abstract out
+the two existing chunked format files, but it somehow feels a bit
+limiting that the one that calls add_chunk() is required to know
+what the size of generated data would be, way before .write_fn() is
+called to produce the actual data here.
+
+> +	}
+> +
+> +	return 0;
+> +}
+> diff --git a/chunk-format.h b/chunk-format.h
+> new file mode 100644
+> index 00000000000..bfaed672813
+> --- /dev/null
+> +++ b/chunk-format.h
+> @@ -0,0 +1,20 @@
+> +#ifndef CHUNK_FORMAT_H
+> +#define CHUNK_FORMAT_H
+> +
+> +#include "git-compat-util.h"
+> +
+> +struct hashfile;
+> +struct chunkfile;
+> +
+> +struct chunkfile *init_chunkfile(struct hashfile *f);
+> +void free_chunkfile(struct chunkfile *cf);
+> +int get_num_chunks(struct chunkfile *cf);
+> +typedef int (*chunk_write_fn)(struct hashfile *f,
+> +			      void *data);
+
+Write this on a single line.
+
+> +void add_chunk(struct chunkfile *cf,
+> +	       uint64_t id,
+> +	       chunk_write_fn fn,
+> +	       size_t size);
+
+Shouldn't this match the order of members in chunk_info struct?
+
+> +int write_chunkfile(struct chunkfile *cf, void *data);
+> +
+> +#endif
