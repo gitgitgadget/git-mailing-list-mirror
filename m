@@ -2,181 +2,299 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F74C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAD84C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:41:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F257664FB2
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:31:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80CBD64E0F
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:41:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbhBDXa7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 18:30:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58028 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbhBDXah (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 18:30:37 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CABC06178A
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 15:29:57 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id l12so5605336wry.2
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 15:29:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dd583uWriwG49bIbEUTDscn44jngw72AKmY37eTAGRw=;
-        b=GuIHYwEE4tENl2RBSdu/EmyU3p59EbUYZyLOw8pJYGYF46a3SmgF7zh6p3WmbpG7Zv
-         7mSinwhvlNBI3CXr1xxORMb41Ew2w+WMNVFtbA4PoLErzrHIjBnHnnH+VFFwUSoNOytW
-         nuDc5IPMalbF/0RPMsL+i+aoZTdegFbh7SBgDzZWx1LmmdtZaMHv/43/ACw5Lee/28Tw
-         pKfJYBmYEjuRq6dJSCr0YVR9VAnHt3AN0F2Fpc+qEvTUQq/3pHoaZREuhg/Q5xMMW/2C
-         0njry9DbK6RhNsA7o3vN7U2hBQzhlTGUsFmbvB4VtpvmLY8xnw3++x+Ie9c2xu1sC9+4
-         RvDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dd583uWriwG49bIbEUTDscn44jngw72AKmY37eTAGRw=;
-        b=o68TIzWFHYoGd1m1s/TAFeQ/K5saFgmDKO43nE1uOijcpi8fsibB3HS7wv0n8acCj8
-         9LPWNlLp4XfaV9pgosyyjsgA7V2/U1GWn2ZmPvtdiexE/+LxiwaA7CteMWik48i5Hb2c
-         Fn14pBzuWnPRlpqPBsrjWFXHckaXxIZA4mZljVj/4OgBf1tBiRjWi0Zk9iHz8HNdXwz9
-         zlP3T05CP613II+GZzQKbGmyhGLOmNB7uBL+LSRpewiLc6NzQk5VdWQA/3/sUAw2t/eU
-         nAUYooE2qySVzQBVbx+OR7jvZzbJICJyQbNENnBTS8dqWEyFelPMAHl1h3VXE18XfroT
-         ffRg==
-X-Gm-Message-State: AOAM531yHzDc30eKDi+ffaV2LTeyD+LNAHYuWGLpepcIMOPs5XYNFy32
-        R9L71ogvw8Ja/jVNQ9u9DMPV+wP2kxA=
-X-Google-Smtp-Source: ABdhPJwzA6SrbUx6scv0xiYyyOkxTC1OpqQEVBdmnquLFqVc4QZB8nji4tadIa9FoFLt6H+9/ZPu8Q==
-X-Received: by 2002:a5d:6311:: with SMTP id i17mr1727617wru.195.1612481396095;
-        Thu, 04 Feb 2021 15:29:56 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2sm7512556wmf.15.2021.02.04.15.29.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 15:29:55 -0800 (PST)
-Message-Id: <04b5d75adbc3d80e9f9cf9cd380294949e7c68e8.1612481392.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
-References: <pull.841.v4.git.1612431093.gitgitgadget@gmail.com>
-        <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Feb 2021 23:29:51 +0000
-Subject: [PATCH v5 2/3] range-diff/format-patch: handle commit ranges other
- than A..B
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S230484AbhBDXlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 18:41:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52852 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230432AbhBDXk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 18:40:56 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4CDD1246E5;
+        Thu,  4 Feb 2021 18:40:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=RYvv2n5HDy5pq5qMuS36My4Kah8=; b=F3+jp2
+        G8msnBMBeqWWJDyRknhMbUcQ6C/4QkyqBO5PK7hnfYPji6GfA/G+jvsN5PQneLQS
+        b8nHd+af7y7PIs9WpHpG36LO0jJtta7h2+DP8ON4C8W8LfuYMSy08PIOYxWLqT7H
+        6cz9Qx7t+WWpgnurungTMF39tz2YFMzJS52NQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OIbteZm7fIV/unu0OCPh4UYBwjieEcu5
+        a35UpcOX3DXA+bbgK7y96P/mghbN8VqYQxiQsblXy18wPNrnhzrGJ42E0qqylJUy
+        uBqZzAcX7fV0atOHPPtPmo+2lyZz7QOpa9lSJMXg9TCLiimGKzlaoOn7wZFAMjms
+        2SBuogUb8m4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C73B1246E4;
+        Thu,  4 Feb 2021 18:40:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C53591246E2;
+        Thu,  4 Feb 2021 18:40:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 12/17] chunk-format: create read chunk API
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+        <d8d8e9e2aa3faf0fdda5dc688fb92e924fec423a.1611759716.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Feb 2021 15:40:03 -0800
+In-Reply-To: <d8d8e9e2aa3faf0fdda5dc688fb92e924fec423a.1611759716.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 27 Jan 2021
+        15:01:51 +0000")
+Message-ID: <xmqqczxf4d2k.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F24A6EA-6742-11EB-AB56-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
-described to specify commit ranges that `range-diff` does not yet
-accept: "<commit>^!" and "<commit>^-<n>".
+> We are re-using the anonymous 'struct chunkfile' data, as it is internal
+> to the chunk-format API. This gives it essentially two modes: write and
+> read. If the same struct instance was used for both reads and writes,
+> then there would be failures.
 
-Let's accept them, by parsing them via the revision machinery and
-looking for at least one interesting and one uninteresting revision in
-the resulting `pending` array.
+Writing it here won't help future developers very much.  I think
+that belongs to API/function doc for init_chunkfile().
 
-This also finally lets us reject arguments that _do_ contain `..` but
-are not actually ranges, e.g. `HEAD^{/do.. match this}`.
+> diff --git a/chunk-format.c b/chunk-format.c
+> index ab914c55856..74501084cf8 100644
+> --- a/chunk-format.c
+> +++ b/chunk-format.c
+> @@ -12,6 +12,8 @@ struct chunk_info {
+>  	uint32_t id;
+>  	uint64_t size;
+>  	chunk_write_fn write_fn;
+> +
+> +	const void *start;
+>  };
+>  
+>  struct chunkfile {
+> @@ -89,3 +91,81 @@ int write_chunkfile(struct chunkfile *cf, void *data)
+>  
+>  	return 0;
+>  }
+> +
+> +int read_table_of_contents(struct chunkfile *cf,
+> +			   const unsigned char *mfile,
+> +			   size_t mfile_size,
+> +			   uint64_t toc_offset,
+> +			   int toc_length)
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- range-diff.c          | 24 +++++++++++++++++++++++-
- range-diff.h          |  4 +---
- t/t3206-range-diff.sh | 13 +++++++++++++
- 3 files changed, 37 insertions(+), 4 deletions(-)
+It's a bit of mystery, having seen how the table-of-contents is laid
+out by reading the writing side of the code, how toc_offset and
+toc_length are discovered by the caller.  IIRC, the size to cover
+everything from the beginning of the file to the end of the
+table-of-contents was recorded as the length of a non-existent chunk
+with id 0, but we need to be able to somehow find it to use that as
+a way to get to the (end of) table-of-contents from the beginning of
+the file.   I guess we'll learn enough when we get to read the code
+that calls this function.
 
-diff --git a/range-diff.c b/range-diff.c
-index 9b93e08e8407..c307bca9de23 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -11,6 +11,7 @@
- #include "pretty.h"
- #include "userdiff.h"
- #include "apply.h"
-+#include "revision.h"
- 
- struct patch_util {
- 	/* For the search for an exact match */
-@@ -567,5 +568,26 @@ int show_range_diff(const char *range1, const char *range2,
- 
- int is_range_diff_range(const char *arg)
- {
--	return !!strstr(arg, "..");
-+	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
-+	const char *argv[] = { "", copy, "--", NULL };
-+	int i, positive = 0, negative = 0;
-+	struct rev_info revs;
-+
-+	init_revisions(&revs, NULL);
-+	if (setup_revisions(3, argv, &revs, 0) == 1)
-+		for (i = 0; i < revs.pending.nr; i++) {
-+			struct object *obj = revs.pending.objects[i].item;
-+
-+			if (obj->flags & UNINTERESTING)
-+				negative++;
-+			else
-+				positive++;
-+			if (obj->type == OBJ_COMMIT)
-+				clear_commit_marks((struct commit *)obj,
-+						   ALL_REV_FLAGS);
-+		}
-+
-+	free(copy);
-+	object_array_clear(&revs.pending);
-+	return negative > 0 && positive > 0;
- }
-diff --git a/range-diff.h b/range-diff.h
-index c17dbc2e75a8..4abd70c40fed 100644
---- a/range-diff.h
-+++ b/range-diff.h
-@@ -18,9 +18,7 @@ int show_range_diff(const char *range1, const char *range2,
- 
- /*
-  * Determine whether the given argument is usable as a range argument of `git
-- * range-diff`, e.g. A..B. Note that this only validates the format but does
-- * _not_ parse it, i.e. it does _not_ look up the specified commits in the
-- * local repository.
-+ * range-diff`, e.g. A..B.
-  */
- int is_range_diff_range(const char *arg);
- 
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 6eb344be0312..45f21ee215d7 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -150,6 +150,19 @@ test_expect_success 'simple A B C (unmodified)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'A^! and A^-<n> (unmodified)' '
-+	git range-diff --no-color topic^! unmodified^-1 >actual &&
-+	cat >expect <<-EOF &&
-+	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'A^{/..} is not mistaken for a range' '
-+	test_must_fail git range-diff topic^.. topic^{/..} 2>error &&
-+	test_i18ngrep "not a commit rang" error
-+'
-+
- test_expect_success 'trivial reordering' '
- 	git range-diff --no-color master topic reordered >actual &&
- 	cat >expect <<-EOF &&
--- 
-gitgitgadget
+> +{
+> +	uint32_t chunk_id;
+> +	const unsigned char *table_of_contents = mfile + toc_offset;
+> +
+> +	ALLOC_GROW(cf->chunks, toc_length, cf->chunks_alloc);
+> +
+> +	while (toc_length--) {
+> +		uint64_t chunk_offset, next_chunk_offset;
+> +
+> +		chunk_id = get_be32(table_of_contents);
+> +		chunk_offset = get_be64(table_of_contents + 4);
+> +
+> +		if (!chunk_id) {
+> +			error(_("terminating chunk id appears earlier than expected"));
+> +			return 1;
+> +		}
+> +
+> +		table_of_contents += CHUNK_LOOKUP_WIDTH;
+> +		next_chunk_offset = get_be64(table_of_contents + 4);
+> +
+> +		if (next_chunk_offset < chunk_offset ||
+> +		    next_chunk_offset > mfile_size - the_hash_algo->rawsz) {
 
+The chunks have to be recorded in toc in the order they appear, and
+there must be enough room to store the hashfile trailer checksum
+after the last chunk.  OK.
+
+> +			error(_("improper chunk offset(s) %"PRIx64" and %"PRIx64""),
+> +			      chunk_offset, next_chunk_offset);
+> +			return -1;
+> +		}
+> +
+> +		cf->chunks[cf->chunks_nr].id = chunk_id;
+> +		cf->chunks[cf->chunks_nr].start = mfile + chunk_offset;
+> +		cf->chunks[cf->chunks_nr].size = next_chunk_offset - chunk_offset;
+> +		cf->chunks_nr++;
+> +	}
+> +
+> +	chunk_id = get_be32(table_of_contents);
+> +	if (chunk_id) {
+> +		error(_("final chunk has non-zero id %"PRIx32""), chunk_id);
+> +		return -1;
+> +	}
+
+Shouldn't we be validating the size component associated with this
+"id=0" fake chunk that appears at the end as well?  IIRC, the size
+field should be pointing at the byte immediately after the TOC entry
+for the last true chunk, immediately before this zero chunk id?
+
+> +int pair_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       const unsigned char **p)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < cf->chunks_nr; i++) {
+> +		if (cf->chunks[i].id == chunk_id) {
+> +			*p = cf->chunks[i].start;
+> +			return 0;
+> +		}
+
+OK, the assumption here is that there will be at most one chunk that
+has the chunk_id we seek to find (or putting it differently, second
+and subsequent chunks with the same ID are ignored).  We may want to
+write it down somewhere.
+
+> +	}
+> +
+> +	return CHUNK_NOT_FOUND;
+> +}
+> +
+> +int read_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       chunk_read_fn fn,
+> +	       void *data)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < cf->chunks_nr; i++) {
+> +		if (cf->chunks[i].id == chunk_id)
+> +			return fn(cf->chunks[i].start, cf->chunks[i].size, data);
+
+It is curious why pair_chunk() exists in the first place.  With
+something like this:
+
+        int pair_chunk_fn(const unsigned char *chunk_start,
+                          size_t chunk_size,
+                          void *data)
+        {
+                const unsigned char **p = data;
+                *p = chunk_start;
+                return 0;
+        }
+
+instead of
+
+	const unsigned char *location;
+
+	pair_chunk(cf, chunk_id, &location);
+
+we can write
+
+	const unsigned char *location;
+
+	read_chunk(cf, chunk_id, pair_chunk_fn, &location);
+
+no?  That would allow us to reorganize the in-core TOC more easily
+if it turns out to be necessary in the future.
+
+> diff --git a/chunk-format.h b/chunk-format.h
+> index bfaed672813..b62c9bf8ba1 100644
+> --- a/chunk-format.h
+> +++ b/chunk-format.h
+> @@ -17,4 +17,37 @@ void add_chunk(struct chunkfile *cf,
+>  	       size_t size);
+>  int write_chunkfile(struct chunkfile *cf, void *data);
+>  
+> +int read_table_of_contents(struct chunkfile *cf,
+> +			   const unsigned char *mfile,
+> +			   size_t mfile_size,
+> +			   uint64_t toc_offset,
+> +			   int toc_length);
+> +
+> +#define CHUNK_NOT_FOUND (-2)
+> +
+> +/*
+> + * Find 'chunk_id' in the given chunkfile and assign the
+> + * given pointer to the position in the mmap'd file where
+> + * that chunk begins.
+> + *
+> + * Returns CHUNK_NOT_FOUND if the chunk does not exist.
+> + */
+> +int pair_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       const unsigned char **p);
+> +
+> +typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
+> +			     size_t chunk_size, void *data);
+
+Is the assumption throughout the chunked file API that reading is
+actually not done as a "seek+read+process", but as a normal memory
+access over mmapped region?  The reason I ask is because the answer
+affects the choice of the right type for the offset.  The function
+signature of read_table_of_contents() uses size_t to represent the
+length of the entire mmapped region that holds the data from the
+file, and that is better than off_t, especially if size_t were
+smaller than off_t (i.e. we may not be able to mmap a huge size that
+filesystem can handle and let us access with seek+read).
+
+But the assumption that the whole mfile can be mmapped in as a whole
+is only in read_table_of_contents(), and users of read_chunk() API
+can be oblivious, I think---IOW, we could "page in" the chunk's data
+in read_chunk() while the callback function works on it in-core, and
+then discard it, if we wanted to change the implementation [*].
+
+	Side note: for that to work, the API must say that the
+	callback function MUST NOT assume that the memory region
+	starting at chunk_start it is given will stay in memory
+	after it returns.  Otherwise, we cannot "page in" and "page
+	out".
+
+I am not advocating that we should not assume the entire file can be
+mapped in.  I would however advocate to be explicit in documenting
+what the users of API can and cannot do (e.g. if we want the "read"
+callbacks to take advantage of the fact that mfile will stay mapped
+until the chunkfile is discarded, we should say so, so that they will
+not make unnecessary copies out of the mmapped region).
+
+> +/*
+> + * Find 'chunk_id' in the given chunkfile and call the
+> + * given chunk_read_fn method with the information for
+> + * that chunk.
+> + *
+> + * Returns CHUNK_NOT_FOUND if the chunk does not exist.
+> + */
+> +int read_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       chunk_read_fn fn,
+> +	       void *data);
+
+Did I miss an update to free_chunkfile() to release resources used
+to read this file?  For some reason, unlike the writing side, the
+reading side of this API feels a bit incomplete to me.
+
+Thanks.
