@@ -2,137 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F26BC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 20:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E05B6C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:06:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE02764F39
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 20:54:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 92DB464FA7
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbhBDUyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 15:54:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52630 "EHLO
+        id S229876AbhBDVGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 16:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbhBDUyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 15:54:23 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7777C061786
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 12:53:42 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id jj19so7910346ejc.4
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 12:53:42 -0800 (PST)
+        with ESMTP id S229596AbhBDVGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 16:06:51 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531D3C0613D6
+        for <git@vger.kernel.org>; Thu,  4 Feb 2021 13:06:11 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id y187so4214659wmd.3
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 13:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/fCyX+G2ETyvYOy2qLxaTfpU6Ox8NvjHZOFw2d/j27I=;
-        b=fxNqznXgf9Jm7pgdDm0FyhVNweneShEZaxD2VK8ggf9cbQoQpuTXulyYW7/O2kUOgu
-         /eHZ+AfwDiRqcm+rMgSzek6Ml3I+Jdv5KS5J821gqask3BFxLLI4L91jdw93ita6zTWt
-         PEFuU8U0Csex+s4mwn4yJKwtk462LwraW2ldrigQritu0pxFWo15uS/DtThNUaGlC2/P
-         MAOqZXhfrb8FwnQGnBGOVdJyDnrYjtqzSXUsaLlvUL6mOSPOUx8fEqpz3AvpcBmEsb/I
-         U2AKazXEEPKxmsviVNrbA3xEvKoinmNKsC6lg8xgF90Xk12OTf3+B7LthcDNSLn2cE76
-         2biQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=luYlB0G8WF3KG4jVQvday2Ph41kbEEdGZFFa2pF1kP4=;
+        b=JiQBj5HRiatATSthEVmkTsEcM1ZzGTstPSW0N956exgMHinlmfNU6Bt/2cEsyAdJ6h
+         Gh0+HsyjOZhrhYqw9JGNZDG8EE7GJkBES9TfhnwALU6SbT2Ld7swO6AWAw/DEBAphGXw
+         pdje+ZWnyQYGJJcn2H+8UbP0sKV3JQQ5IiYn/yPEROvA5yMjQJm7FYmyyngdnQY5PV4u
+         N3w1eUfuSTIRKxLFsDzU1NIlWZneS0dd+hLAUNrH3e9H+pvbR7bhEAydrNKIwyHcVlYu
+         1wo+gHN9esNiW7orf/R4qwHkKV5B6tHjsr+C7yeT43cKJBOHmnrnzXUltVv8Sz9wB6tZ
+         yj7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/fCyX+G2ETyvYOy2qLxaTfpU6Ox8NvjHZOFw2d/j27I=;
-        b=I7oblC603/zpd3QZ6GKjAezQZPdO66zuBy5rBrEacK/5wUHrOCq3rfwPSFY0jU3AuX
-         GuTjZNGLfwaX5zx42pxig6GopVs1fV87Ero1Enzg2h15O8xpmAg9YpkNGKrtqDjbisn6
-         YQv6AfpAKg2/ijZnY26+FSS7cy2ltAu/5qSQIsTdeo+g1bOeya6CwS8yhG9LLFDDgv2D
-         5jYvaFIYaFpbAceEbal5koMckGs0kE08bjeBTLaugtuAHpRwFxyH0hZL5jRp4F7vvO7j
-         cSqXhfssKDAOyFo8wK4QEtDLMCU9/j7u6+3HylRnerGABU0SDtchuyb2fyRt+O+gjyNe
-         StTA==
-X-Gm-Message-State: AOAM532C6hwwRrLx95bA7nZ94imY6E+6HJRW+TPGiVeLRF8Oc9UWBsc7
-        Frv0Viv4Ur4Xf1PvFkRKg4rPTE0Av6TFVA==
-X-Google-Smtp-Source: ABdhPJwgu4ttDCsWiYeTpYpI5BNVdir+DvsUQN8u9kFQpUT2rPyjmgF4IS/RL6IBu5Hs2xPzafoiyw==
-X-Received: by 2002:a17:906:48e:: with SMTP id f14mr887572eja.152.1612472021025;
-        Thu, 04 Feb 2021 12:53:41 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id f11sm2926658eje.114.2021.02.04.12.53.40
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=luYlB0G8WF3KG4jVQvday2Ph41kbEEdGZFFa2pF1kP4=;
+        b=pl1GMrd/mByCZMORUWbQLJIyVAJoEVHmzGJ8ZpFbTkGaJ9ELAdZcFsmnopoF/IgJbD
+         p97GudaA3VUbzfn3APIc7xTP89aD2Gj4JZZki3N29TIyrWIz542urW7+ps3SUQ0cUQ3I
+         sTI/lvbD1rk/zPjaXNGBpUAccAsbgGocwgLPhyCC94YCxYdaXZcvbvWrfvOHwTkqS0ij
+         WZyffm6GApcax/5pfQqs01uETxYoTbNbTpWroXEpgPSi22+8j8sm5pvhcRy1EptRaXJe
+         Ejeuaeu/bZXUfgSDMnWF9PyN2u3XA9xpUa8ZSj9oDhjnWtIJD1QM8S67AivuLZsNjvgG
+         5nFQ==
+X-Gm-Message-State: AOAM531tdMy1RfiiADt4Bs/W/xAB+8w/W2z/4Cg2iF2t0TdvpmJc0NIq
+        9z+5Pb9QsAarc9pczO0XOFayLnTwb5E=
+X-Google-Smtp-Source: ABdhPJz1pOQ6PmXhTGOjYF3ZZgV2Zj76Ihx2imCCLQ2qdvbaE6Tc14K/9rKzSBBTpHC51ubgzYq0Aw==
+X-Received: by 2002:a7b:c087:: with SMTP id r7mr869185wmh.164.1612472769736;
+        Thu, 04 Feb 2021 13:06:09 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n5sm6779318wmq.7.2021.02.04.13.06.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 12:53:40 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Hariom verma <hariom18599@gmail.com>
-Cc:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] ref-filter: use pretty.c logic for trailers
-References: <pull.726.git.1599335291.gitgitgadget@gmail.com>
- <pull.726.v2.git.1611954543.gitgitgadget@gmail.com>
- <7b8cfb2721c349f2bcebec98f84291b1cffd3b49.1611954543.git.gitgitgadget@gmail.com>
- <875z3ep30j.fsf@evledraar.gmail.com>
- <CA+CkUQ_YDxF+fphzyQRD1OkFh7NGEmHUABvRiAjL-H52MHyH3Q@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CA+CkUQ_YDxF+fphzyQRD1OkFh7NGEmHUABvRiAjL-H52MHyH3Q@mail.gmail.com>
-Date:   Thu, 04 Feb 2021 21:53:39 +0100
-Message-ID: <87sg6bd06k.fsf@evledraar.gmail.com>
+        Thu, 04 Feb 2021 13:06:09 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/10] grep/pcre2: memory allocation fixes
+Date:   Thu,  4 Feb 2021 22:05:46 +0100
+Message-Id: <20210204210556.25242-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
+In-Reply-To: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
+References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series fixes up bugs in our PCRE v2 wrapper code and how it
+handles malloc()/free().
 
-On Thu, Feb 04 2021, Hariom verma wrote:
+Junio: I'm splitting this off my recently sent 25 patch series, which
+I should probably have sent as an RFC:
+https://lore.kernel.org/git/20210203032811.14979-1-avarab@gmail.com/
 
-> Hi,
->
-> On Sun, Jan 31, 2021 at 2:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> Given that the goal of this series is to unify this parsing logic
->> between log/for-each-ref, why do we need to then copy/paste the exact
->> same docs we have in pretty-formats.txt?
->>
->> At the very least we should move this to pretty-formats-trailers.txt or
->> something, and just include it in both places, or better yet just refer
->> to the relevan parts of "git log"'s man page, no?
->
-> Ok. I will refer to the trailers part of "pretty-formats"'s man page
-> in "git-for-each-ref"'s man page.
+It's on top of "next", as it would otherwise conflict with my
+in-flight ab/grep-pcre-invalid-utf8, ab/lose-grep-debug and ab/retire-pcre1.
 
-Sure, FWIW you can also (not saying it has to be this) include the same
-section in both, maybe with some blurb on the top saying it's not
-different between the two...
+06/10 is a follow-up improvement (not a fix, the in-flight works fine
+too) for ab/grep-pcre-invalid-utf8. The latter two just touch adjacent
+lines of code.
 
->> And similarly, here we have now mostly duplicated tests for this between
->> here and t/t4205-log-pretty-formats.sh.
->>
->> I think the right thing to do is to start by moving the tests that are
->> now in t/t4205-log-pretty-formats.sh relevant to this formatting into
->> its own file or something.
->>
->> Then instead of duplicating the tests here, just prepare them to be
->> changed so that we can add both "git log" and a "git for-each-ref"
->> invocation to some for-loop, so we'll test both.
->
-> With this unified trailer logic, "git log" and "git for-each-ref"
-> still behave differently.
-> For e.g.: "git log" does nothing for unknown/incorrect trailer option,
-> whereas "git for-each-ref" stops.
->
-> Even if we move trailer related tests for both into a new file, I
-> guess we still need to test trailers for both "git log" and "git
-> for-each-ref" separately?
+There's no notable new behavior here, just cleanup of existing
+functionality. In mid-2019 there was a lot of discussion around the
+code being fixed here:
 
-We have a few tests that define a test function to test these sorts of
-cases, t/t3070-wildmatch.sh is one, t/t3800-mktag.sh another.
+    https://lore.kernel.org/git/pull.306.git.gitgitgadget@gmail.com/#t
+    https://lore.kernel.org/git/pull.402.git.1571227613.gitgitgadget@gmail.com/
 
-So you can just do:
+As discussed in 08/10 I believe that fix was so difficult to get right
+because it was starting out with a fundamentally incorrect assumption
+about how PCRE v2's memory handling works. With 08-10/10 we end up
+with a much easier to reason about end-state, as the API itself is
+actually quite simple.
 
-    test_trailers A '%(trailers:keyonly)' 'Signed-off-by' 'ERR: error from =
-for-each-ref' # (or whatever)
+Ævar Arnfjörð Bjarmason (10):
+  grep/pcre2: drop needless assignment + assert() on opt->pcre2
+  grep/pcre2: drop needless assignment to NULL
+  grep/pcre2: correct reference to grep_init() in comment
+  grep/pcre2: prepare to add debugging to pcre2_malloc()
+  grep/pcre2: add GREP_PCRE2_DEBUG_MALLOC debug mode
+  grep/pcre2: use compile-time PCREv2 version test
+  grep/pcre2: use pcre2_maketables_free() function
+  grep/pcre2: actually make pcre2 use custom allocator
+  grep/pcre2: move back to thread-only PCREv2 structures
+  grep/pcre2: move definitions of pcre2_{malloc,free}
 
-And make the "test_trailers" function do the common setup, have both
-"log" and "for-each-ref" look at the "A" tag and assert what their
-output is, respectively (or an error, or whatever).
+ builtin/grep.c |  1 -
+ grep.c         | 99 ++++++++++++++++++++++----------------------------
+ grep.h         |  9 ++++-
+ 3 files changed, 51 insertions(+), 58 deletions(-)
 
-I think that's especially valuable in cases where you have similar
-codepaths, because it makes it easy for both the author and reviewers to
-eyeball intended an unintended differences.
+-- 
+2.30.0.284.gd98b1dd5eaa7
+
