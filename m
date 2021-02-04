@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 971C4C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E1EC433DB
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CDAE64FA7
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:07:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B8A164FA7
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229979AbhBDVGz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 16:06:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55304 "EHLO
+        id S229834AbhBDVHC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 16:07:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbhBDVGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 16:06:52 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0F1C061786
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 13:06:12 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id w4so4312630wmi.4
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 13:06:12 -0800 (PST)
+        with ESMTP id S229596AbhBDVGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 16:06:54 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CEF3C061788
+        for <git@vger.kernel.org>; Thu,  4 Feb 2021 13:06:13 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id f16so4304140wmq.5
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 13:06:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HP0yyJ4j7RACAlRFx8OBETIiftoiMIfiR5q9Tabuz8w=;
-        b=b/aeuef1XntTT0mrnRQ6xSn18zX9n37yTSt+FXsbMWcjf7AiE3ja6Kzu2+kKYzwNQJ
-         rodHER4RNY9ne4H8YskaNO9kN89uYW9Y9kDaJMNzGfF/mRBGKIEa3RU0IDIIAMhMxERz
-         RArfSYm3AzX6qp7vXLPAdXVSIeTLtR+YSwVPFFnPqeqaGs4FF/F3ox2fWpNMb4U/QbC1
-         IRSDDIq9dt1Qg3Hh/63KrGXTQivH6MROH00kiLPWs/+x/VRhfG/7fUgjZhCaJZ2f/S9h
-         cD6JwQVCF1Qgmp3ku93fKMx9c+AAnEcHLl+8cUHS242CejR7tEEyAxrWch/EOn/ImHG2
-         oMlg==
+        bh=nb2aFZd97c/wh37Gd4ijmsU13GYAH3g2f72fzvQUjWA=;
+        b=F5IEN0BNEB75rxE/slhRUsXsL/La/MDuuA7A1wUyo2j1Ue4fDrgPHp/WQWtPhorRIz
+         2yxIOEecHq/GoBs+RPU750zA6Dmo3Uxk+Dp8plaJi44gId9+SH1wNB+31/GXOT0oF8MP
+         VhcJ+iYhoCPTpZKHPQWd6F3Epi2/mbZ+cQqHYUADYrisDDPaIbb2jaoT4PDEadNLVCup
+         bDTOBhUVR0FDn55xnQysrKGsQeJO2Gt6zA42ysWy4dzgC0CPfZGLGjMhKeqfmfVWDsce
+         0/lecOhObpTPB7fEBOqIg/U8Z4Ywe4H31QgX4gKnYwN6KVXzrQ4TnslUDvhn+4nu9kxK
+         ioAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HP0yyJ4j7RACAlRFx8OBETIiftoiMIfiR5q9Tabuz8w=;
-        b=bJOgOT92yM2YOOIQZV/Yeq6YKqmqQgmE34svG19lnI+3QLBBJKPyKNI7QJoiNetsTl
-         QtSCYUEAyeSRd7aAsl2ZAKz9iRzJA7DUe8VG3FL661U0tuoA3BCrd9iMOUNoGU02DlHA
-         Kudds/aKk413nNGGEw2eo+adTcUGRRhIT8vrutMpaE+9zIXwmM6wXXA9JFbrKLBAg5jf
-         5R0YXV3UovJ5fKA3rAcgs8tW+VVjlOfmOVnd3x8SjidFCrTcl92df9abwt1/P5voSMJ7
-         wwzsCgTv1O3/WXn8eKlenrLZRf5EhaIEEwUNRTjujAT/IHwzsaGCWAlbi+CgRTYqCUqU
-         8sow==
-X-Gm-Message-State: AOAM533F2dXnMHvH5H5WdH87q//8Ep8bcTHpIEJcgdbf+tNbW55/+R5w
-        l58lFulfC7jn8vqMerEBdEFpffHfep4=
-X-Google-Smtp-Source: ABdhPJxtMn6G0slgEV/KKEKqW2FCzb8tWodf75MI0I2oF4dDlbmJiJy6xdfo6D2lwePrJaugfn9Vfg==
-X-Received: by 2002:a1c:bc46:: with SMTP id m67mr898485wmf.82.1612472770993;
-        Thu, 04 Feb 2021 13:06:10 -0800 (PST)
+        bh=nb2aFZd97c/wh37Gd4ijmsU13GYAH3g2f72fzvQUjWA=;
+        b=cS4BMo7qSfIfu6pSpzQIRlSNMUkuTfftIzHByNCqNR5gAZrlsFWQBI8St+aU4mTGQq
+         rknEIFydVCQRFqZ0iYDiJjnpeanj5yHhtMNK75iuLpyVEIqJnAZp6BFLyx6PTfP+NfOs
+         8C5x6i488rFGeGfJYuPJxWLn51/tb3pGMmqwz8w5mOd/NLqO9SDd+3AS1UHpjrcZpfNu
+         2+Dh69z1flWJTMFULom6shTt4Rk2v+/jyKMSvQHeU6tDRpF9ScU1XX4ZcHtBOLkuhT5D
+         T4u0WfIub2D7PNSU9cKKb1SkNMXjJmcfcV0IvO60e/o3EfktH4jL4Cvidu8TAk7IzWqq
+         0Bag==
+X-Gm-Message-State: AOAM532HGQuQcS6dhe7oS1emtH4DfpJOti44tXb8ZBTShOsvL5pVu0K0
+        aGy2Ne65yUMfpU8T+sAFF5PIPprPctGWxw==
+X-Google-Smtp-Source: ABdhPJyaEOjpwdskl1lfyym0d8XaI6yHWING38r/wRAbUpjEtkdfWwnGNqghs9s62xoFCSLmgMdEGw==
+X-Received: by 2002:a1c:a553:: with SMTP id o80mr874438wme.20.1612472772169;
+        Thu, 04 Feb 2021 13:06:12 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n5sm6779318wmq.7.2021.02.04.13.06.09
+        by smtp.gmail.com with ESMTPSA id n5sm6779318wmq.7.2021.02.04.13.06.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 13:06:10 -0800 (PST)
+        Thu, 04 Feb 2021 13:06:11 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 01/10] grep/pcre2: drop needless assignment + assert() on opt->pcre2
-Date:   Thu,  4 Feb 2021 22:05:47 +0100
-Message-Id: <20210204210556.25242-2-avarab@gmail.com>
+Subject: [PATCH 02/10] grep/pcre2: drop needless assignment to NULL
+Date:   Thu,  4 Feb 2021 22:05:48 +0100
+Message-Id: <20210204210556.25242-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
 References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
@@ -78,51 +78,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Drop an assignment added in b65abcafc7a (grep: use PCRE v2 for
-optimized fixed-string search, 2019-07-01) and the overly cautious
-assert() I added in 94da9193a6e (grep: add support for PCRE v2,
-2017-06-01).
+Remove a redundant assignment of pcre2_compile_context dating back to
+my 94da9193a6e (grep: add support for PCRE v2, 2017-06-01). In
+create_grep_pat() we xcalloc() the "grep_pat" struct, so there's no
+need to NULL out individual members here.
 
-There was never a good reason for this, it's just a relic from when I
-initially wrote the PCREv2 support. We're not going to have confusion
-about compile_pcre2_pattern() being called when it shouldn't just
-because we forgot to cargo-cult this opt->pcre2 option, and "opt"
-is (mostly) used for the options the user supplied, let's avoid the
-pattern of needlessly assigning to it.
-
-With my in-flight removal of PCREv1 [1] ("Remove support for v1 of the
-PCRE library", 2021-01-24) there'll be even less confusion around what
-we call where in these codepaths, which is one more reason to remove
-this.
-
-1. https://lore.kernel.org/git/xmqqmtwy29x8.fsf@gitster.c.googlers.com/
+I think this was probably something left over from an earlier
+development version of mine.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 3 ---
- 1 file changed, 3 deletions(-)
+ grep.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index aabfaaa4c3..816e23f17e 100644
+index 816e23f17e..f27c5de7f5 100644
 --- a/grep.c
 +++ b/grep.c
 @@ -373,8 +373,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
  	int patinforet;
  	size_t jitsizearg;
  
--	assert(opt->pcre2);
+-	p->pcre2_compile_context = NULL;
 -
- 	p->pcre2_compile_context = NULL;
- 
  	/* pcre2_global_context is initialized in append_grep_pattern */
-@@ -555,7 +553,6 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- #endif
- 	if (p->fixed || p->is_fixed) {
- #ifdef USE_LIBPCRE2
--		opt->pcre2 = 1;
- 		if (p->is_fixed) {
- 			compile_pcre2_pattern(p, opt);
- 		} else {
+ 	if (opt->ignore_case) {
+ 		if (!opt->ignore_locale && has_non_ascii(p->pattern)) {
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
