@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2487FC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F74C433DB
 	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:31:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D428E64FB0
+	by mail.kernel.org (Postfix) with ESMTP id F257664FB2
 	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 23:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbhBDXap (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 18:30:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58026 "EHLO
+        id S230256AbhBDXa7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 18:30:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbhBDXag (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 18:30:36 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95342C061786
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 15:29:56 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id a16so6851836wmm.0
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 15:29:56 -0800 (PST)
+        with ESMTP id S230216AbhBDXah (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 18:30:37 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CABC06178A
+        for <git@vger.kernel.org>; Thu,  4 Feb 2021 15:29:57 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id l12so5605336wry.2
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 15:29:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lWl5oMZywpdSWlIVHWwdXwp1SyJVtsfWXZNH7AT7K4Y=;
-        b=ZbY7nmQBW+g+yP5O+EFSE62eLwclSdvSIEVGAzBqATR11p5YP9xD4T+Tly/1VdEOtX
-         u6N7JqWgZeRr3GNHuMCBTddqFo7yCk6wyFBWbN1aqT583ejNpbuuEqi7s9D3+JX/DSNx
-         vSbWgX2v/+WDtEBMAwec6rJheisxB+e6DcNRU/mLYAuQZTbRGhQMZov2kic+I40lmzI2
-         sGHU0mPe1PXqRJN/NGAhq++7TR6tSaDxFooSz5pqkfAe4p7lFUiZKCVC85JYWvGthJLu
-         Ifc54nvln5U3c5YuBLl1cLl30uo+0Hn0UGbT2n7QgEm2tfP1e+tLY7QpmHR0e9WuKBx4
-         4S2g==
+        bh=dd583uWriwG49bIbEUTDscn44jngw72AKmY37eTAGRw=;
+        b=GuIHYwEE4tENl2RBSdu/EmyU3p59EbUYZyLOw8pJYGYF46a3SmgF7zh6p3WmbpG7Zv
+         7mSinwhvlNBI3CXr1xxORMb41Ew2w+WMNVFtbA4PoLErzrHIjBnHnnH+VFFwUSoNOytW
+         nuDc5IPMalbF/0RPMsL+i+aoZTdegFbh7SBgDzZWx1LmmdtZaMHv/43/ACw5Lee/28Tw
+         pKfJYBmYEjuRq6dJSCr0YVR9VAnHt3AN0F2Fpc+qEvTUQq/3pHoaZREuhg/Q5xMMW/2C
+         0njry9DbK6RhNsA7o3vN7U2hBQzhlTGUsFmbvB4VtpvmLY8xnw3++x+Ie9c2xu1sC9+4
+         RvDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lWl5oMZywpdSWlIVHWwdXwp1SyJVtsfWXZNH7AT7K4Y=;
-        b=by2Z2dZa/A5T8m9j8AhR+gTOBeZyHiTW4lI2gNkro0EfSDakttnl9yuXeMTYxMNe1d
-         e/fik5LauWBONtpQS/THcdwnrjMFN8CsjTvaIBEQlcGAJEMeZhyl759R8YgGUatVJhpL
-         8tGBOxeajWStSnJ/y0NocFkRNnxwCZkq/HOju9qAFS084w3bow11FHUe+9UMQ+K6191w
-         gLvxtZUAW3T3cAvCHU0iVYjlhyj67n7k1MsidYvZuCCMNYhvuKbgQ12UxlDzBeDa9+bn
-         fTYehonoNmr4MkHA5tH7seIlURVzKHZFZ5pshYXiUDMlaFNFVRLHwbh8fF3Qxo0aIa2z
-         bKWA==
-X-Gm-Message-State: AOAM532GOC4/tWzy6yPWoMcESF/GDnBz+dZeWBeCdomgDDQLhcJfD+IY
-        FuDGoYT4B+Ip8kN88/IHSK/rPhz3Khw=
-X-Google-Smtp-Source: ABdhPJyzHmUZJRH9ktJ8/wA7XxSrYMtVznBLNhBKLlInnMwOm9h1ucvBxkx7jbQuQLIyqla4nxcLGA==
-X-Received: by 2002:a7b:c153:: with SMTP id z19mr1159320wmi.87.1612481395101;
-        Thu, 04 Feb 2021 15:29:55 -0800 (PST)
+        bh=dd583uWriwG49bIbEUTDscn44jngw72AKmY37eTAGRw=;
+        b=o68TIzWFHYoGd1m1s/TAFeQ/K5saFgmDKO43nE1uOijcpi8fsibB3HS7wv0n8acCj8
+         9LPWNlLp4XfaV9pgosyyjsgA7V2/U1GWn2ZmPvtdiexE/+LxiwaA7CteMWik48i5Hb2c
+         Fn14pBzuWnPRlpqPBsrjWFXHckaXxIZA4mZljVj/4OgBf1tBiRjWi0Zk9iHz8HNdXwz9
+         zlP3T05CP613II+GZzQKbGmyhGLOmNB7uBL+LSRpewiLc6NzQk5VdWQA/3/sUAw2t/eU
+         nAUYooE2qySVzQBVbx+OR7jvZzbJICJyQbNENnBTS8dqWEyFelPMAHl1h3VXE18XfroT
+         ffRg==
+X-Gm-Message-State: AOAM531yHzDc30eKDi+ffaV2LTeyD+LNAHYuWGLpepcIMOPs5XYNFy32
+        R9L71ogvw8Ja/jVNQ9u9DMPV+wP2kxA=
+X-Google-Smtp-Source: ABdhPJwzA6SrbUx6scv0xiYyyOkxTC1OpqQEVBdmnquLFqVc4QZB8nji4tadIa9FoFLt6H+9/ZPu8Q==
+X-Received: by 2002:a5d:6311:: with SMTP id i17mr1727617wru.195.1612481396095;
+        Thu, 04 Feb 2021 15:29:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w25sm7642670wmc.42.2021.02.04.15.29.54
+        by smtp.gmail.com with ESMTPSA id l2sm7512556wmf.15.2021.02.04.15.29.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Feb 2021 15:29:54 -0800 (PST)
-Message-Id: <b98fa94b87037b811ea973c1aeb7cfe08d7c1bd6.1612481392.git.gitgitgadget@gmail.com>
+        Thu, 04 Feb 2021 15:29:55 -0800 (PST)
+Message-Id: <04b5d75adbc3d80e9f9cf9cd380294949e7c68e8.1612481392.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
 References: <pull.841.v4.git.1612431093.gitgitgadget@gmail.com>
         <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Feb 2021 23:29:50 +0000
-Subject: [PATCH v5 1/3] range-diff/format-patch: refactor check for commit
- range
+Date:   Thu, 04 Feb 2021 23:29:51 +0000
+Subject: [PATCH v5 2/3] range-diff/format-patch: handle commit ranges other
+ than A..B
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,98 +80,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Currently, when called with exactly two arguments, `git range-diff`
-tests for a literal `..` in each of the two. Likewise, the argument
-provided via `--range-diff` to `git format-patch` is checked in the same
-manner.
+In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
+described to specify commit ranges that `range-diff` does not yet
+accept: "<commit>^!" and "<commit>^-<n>".
 
-However, `<commit>^!` is a perfectly valid commit range, equivalent to
-`<commit>^..<commit>` according to the `SPECIFYING RANGES` section of
-gitrevisions[7].
+Let's accept them, by parsing them via the revision machinery and
+looking for at least one interesting and one uninteresting revision in
+the resulting `pending` array.
 
-In preparation for allowing more sophisticated ways to specify commit
-ranges, let's refactor the check into its own function.
+This also finally lets us reject arguments that _do_ contain `..` but
+are not actually ranges, e.g. `HEAD^{/do.. match this}`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/log.c        | 2 +-
- builtin/range-diff.c | 9 +++++----
- range-diff.c         | 5 +++++
- range-diff.h         | 8 ++++++++
- 4 files changed, 19 insertions(+), 5 deletions(-)
+ range-diff.c          | 24 +++++++++++++++++++++++-
+ range-diff.h          |  4 +---
+ t/t3206-range-diff.sh | 13 +++++++++++++
+ 3 files changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index bd6ff4f9f956..aeece57e86a2 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1680,7 +1680,7 @@ static void infer_range_diff_ranges(struct strbuf *r1,
- 				    struct commit *head)
- {
- 	const char *head_oid = oid_to_hex(&head->object.oid);
--	int prev_is_range = !!strstr(prev, "..");
-+	int prev_is_range = is_range_diff_range(prev);
- 
- 	if (prev_is_range)
- 		strbuf_addstr(r1, prev);
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 24c4162f7446..5b1f6326322f 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -3,6 +3,7 @@
- #include "parse-options.h"
- #include "range-diff.h"
- #include "config.h"
-+#include "revision.h"
- 
- static const char * const builtin_range_diff_usage[] = {
- N_("git range-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-@@ -46,12 +47,12 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		diffopt.use_color = 1;
- 
- 	if (argc == 2) {
--		if (!strstr(argv[0], ".."))
--			die(_("no .. in range: '%s'"), argv[0]);
-+		if (!is_range_diff_range(argv[0]))
-+			die(_("not a commit range: '%s'"), argv[0]);
- 		strbuf_addstr(&range1, argv[0]);
- 
--		if (!strstr(argv[1], ".."))
--			die(_("no .. in range: '%s'"), argv[1]);
-+		if (!is_range_diff_range(argv[1]))
-+			die(_("not a commit range: '%s'"), argv[1]);
- 		strbuf_addstr(&range2, argv[1]);
- 	} else if (argc == 3) {
- 		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
 diff --git a/range-diff.c b/range-diff.c
-index b9950f10c8c4..9b93e08e8407 100644
+index 9b93e08e8407..c307bca9de23 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -564,3 +564,8 @@ int show_range_diff(const char *range1, const char *range2,
+@@ -11,6 +11,7 @@
+ #include "pretty.h"
+ #include "userdiff.h"
+ #include "apply.h"
++#include "revision.h"
  
- 	return res;
- }
+ struct patch_util {
+ 	/* For the search for an exact match */
+@@ -567,5 +568,26 @@ int show_range_diff(const char *range1, const char *range2,
+ 
+ int is_range_diff_range(const char *arg)
+ {
+-	return !!strstr(arg, "..");
++	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
++	const char *argv[] = { "", copy, "--", NULL };
++	int i, positive = 0, negative = 0;
++	struct rev_info revs;
 +
-+int is_range_diff_range(const char *arg)
-+{
-+	return !!strstr(arg, "..");
-+}
++	init_revisions(&revs, NULL);
++	if (setup_revisions(3, argv, &revs, 0) == 1)
++		for (i = 0; i < revs.pending.nr; i++) {
++			struct object *obj = revs.pending.objects[i].item;
++
++			if (obj->flags & UNINTERESTING)
++				negative++;
++			else
++				positive++;
++			if (obj->type == OBJ_COMMIT)
++				clear_commit_marks((struct commit *)obj,
++						   ALL_REV_FLAGS);
++		}
++
++	free(copy);
++	object_array_clear(&revs.pending);
++	return negative > 0 && positive > 0;
+ }
 diff --git a/range-diff.h b/range-diff.h
-index 583ced2e8e74..c17dbc2e75a8 100644
+index c17dbc2e75a8..4abd70c40fed 100644
 --- a/range-diff.h
 +++ b/range-diff.h
-@@ -16,4 +16,12 @@ int show_range_diff(const char *range1, const char *range2,
- 		    const struct diff_options *diffopt,
- 		    const struct strvec *other_arg);
+@@ -18,9 +18,7 @@ int show_range_diff(const char *range1, const char *range2,
  
-+/*
-+ * Determine whether the given argument is usable as a range argument of `git
-+ * range-diff`, e.g. A..B. Note that this only validates the format but does
-+ * _not_ parse it, i.e. it does _not_ look up the specified commits in the
-+ * local repository.
-+ */
-+int is_range_diff_range(const char *arg);
+ /*
+  * Determine whether the given argument is usable as a range argument of `git
+- * range-diff`, e.g. A..B. Note that this only validates the format but does
+- * _not_ parse it, i.e. it does _not_ look up the specified commits in the
+- * local repository.
++ * range-diff`, e.g. A..B.
+  */
+ int is_range_diff_range(const char *arg);
+ 
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 6eb344be0312..45f21ee215d7 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -150,6 +150,19 @@ test_expect_success 'simple A B C (unmodified)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'A^! and A^-<n> (unmodified)' '
++	git range-diff --no-color topic^! unmodified^-1 >actual &&
++	cat >expect <<-EOF &&
++	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
++	EOF
++	test_cmp expect actual
++'
 +
- #endif
++test_expect_success 'A^{/..} is not mistaken for a range' '
++	test_must_fail git range-diff topic^.. topic^{/..} 2>error &&
++	test_i18ngrep "not a commit rang" error
++'
++
+ test_expect_success 'trivial reordering' '
+ 	git range-diff --no-color master topic reordered >actual &&
+ 	cat >expect <<-EOF &&
 -- 
 gitgitgadget
 
