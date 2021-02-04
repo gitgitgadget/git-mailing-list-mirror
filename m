@@ -2,97 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A931C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D988C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:52:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB35E64E3E
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:48:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4388D64E4D
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233132AbhBDGr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 01:47:56 -0500
-Received: from pv50p00im-ztdg10011901.me.com ([17.58.6.50]:51036 "EHLO
-        pv50p00im-ztdg10011901.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233070AbhBDGr4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 4 Feb 2021 01:47:56 -0500
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Feb 2021 01:47:55 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1612420745;
-        bh=CTvAa23D7k2Qjp3r8T5ZbelEst7UJLJSrVJzd9WE2j4=;
-        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
-        b=nmVSEQrlDMw87P3JlJLRiwpqMP8cBg7rk2BT1yWHWVHgs036LOx3pRtC7KDBYk48d
-         Vr4HGAEIwe4lu540WDccgmh4Dbk6RDcWVDCar48oseBr4h2i3/828IHBtVZ3AGly3L
-         4gNiE2PTHfAgaPuKu42sUDWBwQuve4qz+8WH8CzeNIAQw9g5Q8K3FUS9pOj9IvzhlY
-         t3WG9OZvKc0nfg9WSvPbarH/D0wUketp02IVYmI9GYJC6Yf33mEVK4r71XEI0WqIjP
-         5aiRCZuqg4phqO5aefDZOo8fX4oNBkMils6tED1m42Tls17SnwRUS5a1rTxCDssmso
-         KrQjAFgQvuxzg==
-Received: from [192.168.224.245] (unknown [218.1.30.66])
-        by pv50p00im-ztdg10011901.me.com (Postfix) with ESMTPSA id 3897F80032B
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 06:39:05 +0000 (UTC)
-From:   LiuShiyang <wingsdream1943@icloud.com>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: git command was killed
-Message-Id: <7CE44CBE-DF7B-42DD-AC0F-8125CB6A8403@icloud.com>
-Date:   Thu, 4 Feb 2021 14:38:55 +0800
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369,18.0.737
- definitions=2021-02-04_03:2021-02-03,2021-02-04 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2006250000 definitions=main-2102040039
+        id S233188AbhBDGvo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 01:51:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50078 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232796AbhBDGvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 01:51:43 -0500
+Received: (qmail 2538 invoked by uid 109); 4 Feb 2021 06:51:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Feb 2021 06:51:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11835 invoked by uid 111); 4 Feb 2021 06:51:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Feb 2021 01:51:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 4 Feb 2021 01:51:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/6] Makefile: remove "all" on "$(FUZZ_OBJS)"
+Message-ID: <YBuZVfnc0ECuoKkK@coredump.intra.peff.net>
+References: <20210128182310.26787-1-avarab@gmail.com>
+ <20210201111715.10200-2-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210201111715.10200-2-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,=20
+On Mon, Feb 01, 2021 at 12:17:10PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-I=E2=80=99d like to get your support to solve below issue. When I =
-upgraded my MacBook Pro (appple silicon ) , all git commands can not be =
-run, and it shows ******killed. I have tried to reset Xcode-select, =
-switch the path, or install again..no luck to resolve it.
+> Adding this as a dependency was intentionally done in
+> 5e472150800 (fuzz: add basic fuzz testing target., 2018-10-12).
+> 
+> I don't see why we need to prevent bitrot here under "all" for these
+> in particular, but not e.g. contrib/credential/**/*.c
+> 
+> In any case, these files are rather trivial and from their commit log
+> it seems the fuzz-all target is run by a few people already.
 
-Please advise how I can solve this issue.=20
+Part of me wants to love this commit, because I don't care about the
+fuzz code (since I don't run it myself[1]).
 
+But looking at "git log fuzz-*.c", I do think it will lead to bitrot.
+Many of those commits are things that do not care about fuzzing, but
+were just fixing up function interfaces as we go (e.g., my c8828530b,
+though see [2]).
 
-shiyangliu@ShiyangdeMacBook-Pro =EE=82=B0 ~ =EE=82=B0 git --version
-[1]    40011 killed     git =E2=80=94version
+The difference between contrib/credential/ and this is that those
+credential helpers do not rely on the rest of the source. They are
+independent programs that can be built totally out of tree.
 
-Brew config results:=20
+So I dunno. This puts the responsibility for fixing bitrot onto the
+people who actually use them, which is nice. But often times it is
+easier for the person making the original change to just fix them up
+along with the others (because they understand the point of the change
+better, and also because a bunch of rot doesn't accrue over time).
 
- shiyangliu@ShiyangdeMacBook-Pro =EE=82=B0 ~ =EE=82=B0 brew config
-HOMEBREW_VERSION: >=3D2.5.0 (shallow or no git repository)
-ORIGIN: (none)
-HEAD: (none)
-Last commit: never
-Core tap ORIGIN: (none)
-Core tap HEAD: (none)
-Core tap last commit: never
-Core tap branch: (none)
-HOMEBREW_PREFIX: /opt/homebrew
-HOMEBREW_CASK_OPTS: []
-HOMEBREW_MAKE_JOBS: 8
-Homebrew Ruby: 2.6.3 =3D> =
-/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby
-CPU: octa-core 64-bit arm_firestorm_icestorm
-clang: error: unable to find Xcode installation from active developer =
-path "/Library/Developer/CommandlineTools", use xcode-select to change
-Clang: N/A
-Git: N/A
-Curl: 7.64.1 =3D> /usr/bin/curl
-Java: 15.0.2
-macOS: 11.2-arm64
-CLT: 12.5.0.0.1.1611946261
-Xcode: dunno =3D> /Library/Developer/CommandlineTools
-Rosetta 2: false
+-Peff
 
+[1] I just ran "make fuzz-all", and it barfed at the link step. It looks
+    like I need to specify a bunch of llvm stuff manually. So no, I'd
+    guess not a lot of people are running this. :)
 
-Shiyang=
+[2] That one is particularly egregious because it fixed a copy-pasted
+    version of a public function header. Yuck.
