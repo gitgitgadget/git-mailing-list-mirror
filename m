@@ -2,87 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B317C43381
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 16:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1DDEC433E6
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 17:56:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31A0964E3F
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 16:21:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7408664E27
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 17:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237926AbhBDQVq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 11:21:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34922 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237013AbhBDPLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 10:11:41 -0500
-Received: from joooj.vinc17.net (joooj.vinc17.net [IPv6:2001:4b99:1:3:216:3eff:fe20:ac98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A07C061786
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 07:11:00 -0800 (PST)
-Received: from smtp-zira.vinc17.net (128.119.75.86.rev.sfr.net [86.75.119.128])
-        by joooj.vinc17.net (Postfix) with ESMTPSA id EDA7B4CE;
-        Thu,  4 Feb 2021 16:10:57 +0100 (CET)
-Received: by zira.vinc17.org (Postfix, from userid 1000)
-        id B5630C20303; Thu,  4 Feb 2021 16:10:56 +0100 (CET)
-Date:   Thu, 4 Feb 2021 16:10:56 +0100
-From:   Vincent Lefevre <vincent@vinc17.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] pager: exit without error on SIGPIPE
-Message-ID: <20210204151056.GH148009@zira.vinc17.org>
-References: <87wnvrefbv.fsf@evledraar.gmail.com>
- <xmqq8s87ld8y.fsf@gitster.c.googlers.com>
- <87tuqvdy1b.fsf@evledraar.gmail.com>
- <xmqqo8h3hybf.fsf@gitster.c.googlers.com>
- <xmqqczxjhwgv.fsf@gitster.c.googlers.com>
- <1dfb079e-a472-0259-2a00-100eb7a06297@kdbg.org>
- <xmqq35yegrcv.fsf@gitster.c.googlers.com>
- <12a440af-c080-089d-bf60-76262d5aec7a@kdbg.org>
- <xmqqwnvqdsax.fsf@gitster.c.googlers.com>
- <aa672f2b-6886-a2bf-5129-f10f4e488961@kdbg.org>
+        id S238293AbhBDR4v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 12:56:51 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56229 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237770AbhBDRt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 12:49:57 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 177B71197F6;
+        Thu,  4 Feb 2021 12:49:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tMUFvuOIw9EWbJ8m4/flkfPSpoE=; b=oe0di4
+        pgLWqkEYTiY/Dl559Hj1yYzTDo+eBFhRuq0sJ/HyTeomkczB2C73RZj+RYL9MvWi
+        O46JUpxsgacpTL+PrdxfEsw3WGCz0Clpnc0UPvQwz6q/b6n6MbGwAz4HngadqIaL
+        EKkZVkAHw159zirLiEq6nWCd4YeU+8ZMDyf/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=B/uwAmRl83NOd9YPZeCcGplH3miZyV1o
+        99NIyxu3EDZwMT8AHfp3xbB6BnZnfkWazyF9n3CCJ9z0cxe1e69ucTWxJeLyGlOm
+        7X9fmXxDb9SDC4wzNpRaFbae5zDYEBK9wF6MfbisgprLOWLYz3o97xBMnYxtZYeh
+        V3h8H9x5FJA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E5501197F5;
+        Thu,  4 Feb 2021 12:49:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5548B1197F4;
+        Thu,  4 Feb 2021 12:49:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] Makefile: add {program,xdiff,test,git}-objs &
+ objects targets
+References: <20210128182310.26787-1-avarab@gmail.com>
+        <20210201111715.10200-1-avarab@gmail.com>
+        <xmqqft2edkfg.fsf@gitster.c.googlers.com>
+        <YBuc5iOCCHk4fPqs@coredump.intra.peff.net>
+Date:   Thu, 04 Feb 2021 09:49:07 -0800
+In-Reply-To: <YBuc5iOCCHk4fPqs@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 4 Feb 2021 02:06:14 -0500")
+Message-ID: <xmqqo8gz910s.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aa672f2b-6886-a2bf-5129-f10f4e488961@kdbg.org>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.0.5+101 (ab6d0dc5) vl-132933 (2021-01-27)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 48840032-6711-11EB-91E3-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-02-03 18:07:02 +0100, Johannes Sixt wrote:
-> Then we do not agree. The exit code of `git log | less` is ignored,
-> and I regard `git -p log` just as a short-hand for that.
+Jeff King <peff@peff.net> writes:
 
-If git didn't have the -p feature, "git log | less" would just be
-one way to get a pager. For instance, I use an alias that does
+> On Tue, Feb 02, 2021 at 05:11:47PM -0800, Junio C Hamano wrote:
+>
+>> I do not see much point in the goal, not quite.  You can do "make
+>> git.o" and "make git" and you do not have to build unrelated things.
+>> ...
+> I do like the cleanups earlier in the series (I have mixed feelings on
+> the first patch, though; see my comments there).
 
-  pager-wrapper grep --color=always --line-buffered -E
+Sorry that I forgot to say so, but even though I do not see much
+point in the stated goal, I do not mind the clean-up changes in the
+earlier parts of the series.  I just didn't see much value in doing
+so, as a way to get to git.o (or "objects") target.
 
-which sends the grep output to a pager, and returns the exit status
-of the pager if non-zero, otherwise the exit status of grep, except
-when this is SIGPIPE. An unavoidable issue is that if there has been
-an error in grep, I could still get the exit status 0. But as a user,
-this is a choice I have done by quitting the pager before letting
-grep terminate in the normal way (which could have been costly) so
-that it could report the error, say, about unreadable files with a
-recursive grep (grep -r).
-
-So Git could do the same thing, and even better, because it controls
-its own exit status: if there has been an error in the generation of
-the Git output (for instance, I can see that there is a --check option
-of "git log" that can trigger an error), then this error should be
-reported (with a non-zero exit status) after the pager is quit, as if
-a pager were not used. Otherwise, terminate with the exit status of
-the pager.
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
