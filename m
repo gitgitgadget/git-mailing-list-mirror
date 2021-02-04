@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F40AC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52321C433DB
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D118364F6A
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:00:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDC6364F68
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232416AbhBDEAa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 23:00:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60452 "EHLO
+        id S232593AbhBDEA7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 23:00:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232814AbhBDD7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 22:59:35 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC674C0613D6
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 19:58:54 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id z22so1505615qto.7
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 19:58:54 -0800 (PST)
+        with ESMTP id S232159AbhBDEAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 23:00:30 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F44C06178A
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 19:59:16 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id a19so2172842qka.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 19:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=jYKeWecrw8cLxAZ34m2igv6eAKHd7g+fCAOupy0iX/w=;
-        b=cMt0V38cey8XcucsgCVIsJFzCBTifqtI02gSKaujLOrJdM4AhPD6DF5RhAKiSHByT+
-         m6YGfUyMcj4TkTsQ+eEPD5Du+t/VVM6kvSF0m1NaJgJ3QqdUEXaq+LgdQPJnpxY+RGCh
-         DpVYvQlDMO0zFT+aL5djsrdfMLAzr76X4tbe3TDjDnOA+o4vvMhvkgoiz2tZYt4f4H01
-         g3u6X2CI3/VP/ApCuULfUhxpO0ENUI8nFaZUmrWMcbMmg8Ef9m+A9Gt1wuAUHE7lU0nN
-         4gfk1pjx1F5hNQ/9Y3JMt3QR5cdrMcWQKM0oyxd+PlUU54dlwh0zilVQRaIeaZ7Ui5fW
-         K2Ew==
+        bh=p87MUy52mah7gn9Cd/dxh8jj1AQD9AiXxzxugefES70=;
+        b=V4b8C7x1g7vk2UuozJpSP3lKbTzVzcKaIi5iEkpoMmFhMyYGq8YvHHe2nBsZAEZAyQ
+         97OsgV93OJ8Htjy2z16o+MZOdCV+eS+tid9FQP19+x23H5s9woR0yTG7BoJ4VEjzBWX3
+         ly1APhMZBx1dzI9TW6IX+yJr5OWwnhpDzLs6PdQeQM/VY+4T60Cz0QiynE6Q2zc5Hyf5
+         9fMvzmrwHGIixxU+0AQKnQM3Vl0giA52herZyLTSshekWvqxUWgAdlYQS90KorMG4BqG
+         0E1DTrFFAn4TJCdBnUufXnp8JMQ4OewtU2lD04+c/TjJbTRGBy7YQiUFDtoXAazccTtF
+         orFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=jYKeWecrw8cLxAZ34m2igv6eAKHd7g+fCAOupy0iX/w=;
-        b=ZwOeEWs+3wT1ccpH2DBhtwjrBmsZyHFafKalHpEabuUKnGfTDFCZGfS1VRR47zTst8
-         U4103H42Z+3yNvSlqjwJyjPWgquvAGt4wHKSWt9WOZl/4dPs+rrXO2VinjCf6SjN2ctj
-         ed5/c+l3UagmUGYZ0x8ZnWJ++nxHStTZAVQRDDZm/w+5qdtP+SkqBcLJNcQkj7hGxCm9
-         xFpusZF4r9xc6eSRNgDcfwzPmD4Hgjy8In/2M6kjiVa/NcPjYIHUy0LZmeNDxg7uy/xC
-         0cAyjQLsVozLlZqilWdf+gPdQYlkR/yWbDjDGPS4fgLowxMYi/k7TG6neTL7fFT0+DJ4
-         ZCrQ==
-X-Gm-Message-State: AOAM531SWUYwRcPPqKoyYaGKUyM+fTzEjeNI2w3VbsU63zZidLuh0bfX
-        eiB9xsmwYOpCtjNDHjE4KoycfJFG0bzgzQ==
-X-Google-Smtp-Source: ABdhPJySRtj68V/FSdqDi4VaVh4sn8W9oBWEwXyCo+8fDx2bNtFerW8eYZr5CHegjgu61Cq6e8nlTQ==
-X-Received: by 2002:ac8:5995:: with SMTP id e21mr5438293qte.294.1612411133517;
-        Wed, 03 Feb 2021 19:58:53 -0800 (PST)
+        bh=p87MUy52mah7gn9Cd/dxh8jj1AQD9AiXxzxugefES70=;
+        b=ixxaC2qj9gtw45abdFNqmnP7sF1rBfFLQoKCs9arCrnpJKUO5ceGI8kFcpHGHJ/Moa
+         dRa+MnovT0kU6Srg4+TF1wKrMnd2MseROH8X3e7SrXuLNI/OsXOggjXmWRT5ebNwHxK0
+         BRKqaiU4a7xsRNpJyUU9D8AzazRlsDwgzn8r8cKOyTVS05fFU6fLLUqv5ypUy/QsaNkZ
+         SV5aIdT/cXpN7wWICif5xj7F88FMDHxMjzB4fpd0xa+pgNZLFRPPui2rOTSL0oni9yAj
+         mJOMvXOntQxLhP2modv0diSkFkkMlpEvTN4ZeJD8Pbm/DMkxWncj7Uf1oYWxWyrjNpqT
+         GjOw==
+X-Gm-Message-State: AOAM531fw1SKOc/wtLfPaIW1REbzGeAhZ1o2LYHPS9EID98qKlewMEMJ
+        KaMjjj0yVuaSjTMlbdgYslM8EfgUtvWV9w==
+X-Google-Smtp-Source: ABdhPJxrz6U0Wr1fJc6vy11+jLkhJZKj+3afy5eqpCYq+kgb2iSptGMQgINATrcSdZzzBvCL9xy8nA==
+X-Received: by 2002:ae9:eb95:: with SMTP id b143mr5888637qkg.442.1612411155809;
+        Wed, 03 Feb 2021 19:59:15 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:3a5f:649:7bf7:4ac8])
-        by smtp.gmail.com with ESMTPSA id i3sm3854839qkd.119.2021.02.03.19.58.52
+        by smtp.gmail.com with ESMTPSA id 17sm4228255qtu.23.2021.02.03.19.59.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 19:58:52 -0800 (PST)
-Date:   Wed, 3 Feb 2021 22:58:50 -0500
+        Wed, 03 Feb 2021 19:59:15 -0800 (PST)
+Date:   Wed, 3 Feb 2021 22:59:13 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v2 1/8] packfile: introduce 'find_kept_pack_entry()'
-Message-ID: <f7186147ebb0b2d01d8f1e0f742f367204d7d9c9.1612411123.git.me@ttaylorr.com>
+Subject: [PATCH v2 5/8] p5303: measure time to repack with keep
+Message-ID: <b5081c01b53beb568ef2e59956d25b36be9f24d0.1612411124.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
  <cover.1612411123.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -71,175 +71,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Future callers will want a function to fill a 'struct pack_entry' for a
-given object id but _only_ from its position in any kept pack(s).
+From: Jeff King <peff@peff.net>
 
-In particular, an new 'git repack' mode which ensures the resulting
-packs form a geometric progress by object count will mark packs that it
-does not want to repack as "kept in-core", and it will want to halt a
-reachability traversal as soon as it visits an object in any of the kept
-packs. But, it does not want to halt the traversal at non-kept, or
-.keep packs.
+This is the same as the regular repack test, except that we mark the
+single base pack as "kept" and use --assume-kept-packs-closed. The
+theory is that this should be faster than the normal repack, because
+we'll have fewer objects to traverse and process.
 
-The obvious alternative is 'find_pack_entry()', but this doesn't quite
-suffice since it only returns the first pack it finds, which may or may
-not be kept (and the mru cache makes it unpredictable which one you'll
-get if there are options).
+Here are some timings on a recent clone of the kernel. In the
+single-pack case, there is nothing do since there are no non-excluded
+packs:
 
-Short of that, you could walk over all packs looking for the object in
-each one, but it scales with the number of packs, which may be
-prohibitive.
+  5303.5: repack (1)                          57.42(54.88+10.64)
+  5303.6: repack with --stdin-packs (1)       0.01(0.01+0.00)
 
-Introduce 'find_kept_pack_entry()', a function which is like
-'find_pack_entry()', but only fills in objects in the kept packs.
+and in the 50-pack case, it is much faster to use `--stdin-packs`, since
+we avoid having to consider any objects in the excluded pack:
 
-Handle packs which have .keep files, as well as in-core kept packs
-separately, since certain callers will want to distinguish one from the
-other. (Though on-disk and in-core kept packs share the adjective
-"kept", it is best to think of the two sets as independent.)
+  5303.10: repack (50)                        71.26(88.24+4.96)
+  5303.11: repack with --stdin-packs (50)     3.49(11.82+0.28)
 
-There is a gotcha when looking up objects that are duplicated in kept
-and non-kept packs, particularly when the MIDX stores the non-kept
-version and the caller asked for kept objects only. This could be
-resolved by teaching the MIDX to resolve duplicates by always favoring
-the kept pack (if one exists), but this breaks an assumption in existing
-MIDXs, and so it would require a format change.
+but our improvements vanish as we approach 1000 packs.
 
-The benefit to changing the MIDX in this way is marginal, so we instead
-have a more thorough check here which is explained with a comment.
+  5303.15: repack (1000)                      215.64(491.33+14.80)
+  5303.16: repack with --stdin-packs (1000)   198.79(380.51+7.97)
 
-Callers will be added in subsequent patches.
+That's because the code paths around handling .keep files are known to
+scale badly; they look in every single pack file to find each object.
+Our solution to that was to notice that most repos don't have keep
+files, and to make that case a fast path. But as soon as you add a
+single .keep, that part of pack-objects slows down again (even if we
+have fewer objects total to look at).
 
-Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- packfile.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++-----
- packfile.h |  6 +++++
- 2 files changed, 65 insertions(+), 5 deletions(-)
+ t/perf/p5303-many-packs.sh | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 4b938b4372..5f35cfe788 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2031,7 +2031,10 @@ static int fill_pack_entry(const struct object_id *oid,
- 	return 1;
- }
+diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
+index d90d714923..b76a6efe00 100755
+--- a/t/perf/p5303-many-packs.sh
++++ b/t/perf/p5303-many-packs.sh
+@@ -31,8 +31,11 @@ repack_into_n () {
+ 	' "$1" >pushes &&
  
--int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
-+static int find_one_pack_entry(struct repository *r,
-+			       const struct object_id *oid,
-+			       struct pack_entry *e,
-+			       int kept_only)
- {
- 	struct list_head *pos;
- 	struct multi_pack_index *m;
-@@ -2041,26 +2044,77 @@ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pa
- 		return 0;
+ 	# create base packfile
+-	head -n 1 pushes |
+-	git pack-objects --delta-base-offset --revs staging/pack &&
++	base_pack=$(
++		head -n 1 pushes |
++		git pack-objects --delta-base-offset --revs staging/pack
++	) &&
++	test_export base_pack &&
  
- 	for (m = r->objects->multi_pack_index; m; m = m->next) {
--		if (fill_midx_entry(r, oid, e, m))
-+		if (!fill_midx_entry(r, oid, e, m))
-+			continue;
+ 	# and then incrementals between each pair of commits
+ 	last= &&
+@@ -49,6 +52,12 @@ repack_into_n () {
+ 		last=$rev
+ 	done <pushes &&
+ 
++	(
++		find staging -type f -name 'pack-*.pack' |
++			xargs -n 1 basename | grep -v "$base_pack" &&
++		printf "^pack-%s.pack\n" $base_pack
++	) >stdin.packs
 +
-+		if (!kept_only)
-+			return 1;
+ 	# and install the whole thing
+ 	rm -f .git/objects/pack/* &&
+ 	mv staging/* .git/objects/pack/
+@@ -91,6 +100,15 @@ do
+ 		  --reflog --indexed-objects --delta-base-offset \
+ 		  --stdout </dev/null >/dev/null
+ 	'
 +
-+		if (((kept_only & ON_DISK_KEEP_PACKS) && e->p->pack_keep) ||
-+		    ((kept_only & IN_CORE_KEEP_PACKS) && e->p->pack_keep_in_core))
- 			return 1;
- 	}
++	test_perf "repack with --stdin-packs ($nr_packs)" '
++		git pack-objects \
++		  --keep-true-parents \
++		  --stdin-packs \
++		  --non-empty \
++		  --delta-base-offset \
++		  --stdout <stdin.packs >/dev/null
++	'
+ done
  
- 	list_for_each(pos, &r->objects->packed_git_mru) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
--		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
--			list_move(&p->mru, &r->objects->packed_git_mru);
--			return 1;
-+		if (p->multi_pack_index && !kept_only) {
-+			/*
-+			 * If this pack is covered by the MIDX, we'd have found
-+			 * the object already in the loop above if it was here,
-+			 * so don't bother looking.
-+			 *
-+			 * The exception is if we are looking only at kept
-+			 * packs. An object can be present in two packs covered
-+			 * by the MIDX, one kept and one not-kept. And as the
-+			 * MIDX points to only one copy of each object, it might
-+			 * have returned only the non-kept version above. We
-+			 * have to check again to be thorough.
-+			 */
-+			continue;
-+		}
-+		if (!kept_only ||
-+		    (((kept_only & ON_DISK_KEEP_PACKS) && p->pack_keep) ||
-+		     ((kept_only & IN_CORE_KEEP_PACKS) && p->pack_keep_in_core))) {
-+			if (fill_pack_entry(oid, e, p)) {
-+				list_move(&p->mru, &r->objects->packed_git_mru);
-+				return 1;
-+			}
- 		}
- 	}
- 	return 0;
- }
- 
-+int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
-+{
-+	return find_one_pack_entry(r, oid, e, 0);
-+}
-+
-+int find_kept_pack_entry(struct repository *r,
-+			 const struct object_id *oid,
-+			 unsigned flags,
-+			 struct pack_entry *e)
-+{
-+	/*
-+	 * Load all packs, including midx packs, since our "kept" strategy
-+	 * relies on that. We're relying on the side effect of it setting up
-+	 * r->objects->packed_git, which is a little ugly.
-+	 */
-+	get_all_packs(r);
-+	return find_one_pack_entry(r, oid, e, flags);
-+}
-+
- int has_object_pack(const struct object_id *oid)
- {
- 	struct pack_entry e;
- 	return find_pack_entry(the_repository, oid, &e);
- }
- 
-+int has_object_kept_pack(const struct object_id *oid, unsigned flags)
-+{
-+	struct pack_entry e;
-+	return find_kept_pack_entry(the_repository, oid, flags, &e);
-+}
-+
- int has_pack_index(const unsigned char *sha1)
- {
- 	struct stat st;
-diff --git a/packfile.h b/packfile.h
-index a58fc738e0..624327f64d 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -161,13 +161,19 @@ int packed_object_info(struct repository *r,
- void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1);
- 
-+#define ON_DISK_KEEP_PACKS 1
-+#define IN_CORE_KEEP_PACKS 2
-+#define ALL_KEEP_PACKS (ON_DISK_KEEP_PACKS | IN_CORE_KEEP_PACKS)
-+
- /*
-  * Iff a pack file in the given repository contains the object named by sha1,
-  * return true and store its location to e.
-  */
- int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e);
-+int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsigned flags, struct pack_entry *e);
- 
- int has_object_pack(const struct object_id *oid);
-+int has_object_kept_pack(const struct object_id *oid, unsigned flags);
- 
- int has_pack_index(const unsigned char *sha1);
- 
+ # Measure pack loading with 10,000 packs.
 -- 
 2.30.0.533.g2f8b6b552f.dirty
 
