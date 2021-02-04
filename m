@@ -2,211 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 796BFC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6733DC433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:44:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25EF764FA9
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:25:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 12E3764FA0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 21:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbhBDVZE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 16:25:04 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54548 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbhBDVZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 16:25:02 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 29A0E123922;
-        Thu,  4 Feb 2021 16:24:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=33D+ouKUfobxZJavSlc/GH3V3ig=; b=CJPbdC
-        1YAU3dLR7hat4ve7iVqyKzz2pey16pBEDpY8FeRNuYlCKElAAWWZR6DqkpflEt6z
-        iCsAZltDR/1TIAYWO4FIFhV+AHytal7nuKfDHUC2ZwdKC5b4lgp4b00Wh0pNb/Qt
-        dpzpLEAoDyVNeRMEzV+Z8zn3aoBlpq5Nlopc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jAmL5WeKF8O4QiejXUJMkTDUVHPLaaWc
-        aNvlcPHYdRP8Q5XeGl0FJlqWY1nhQPWXhNQxcExE7Ezokc4SdWSDRQu40Py0tbTM
-        eXYIwVhgL29si88RND3Do+EzOoQmU1etDnJbyGD3XuDC0qccKv9ui2uSmU86Za45
-        qs387Vec2AY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 221BA123921;
-        Thu,  4 Feb 2021 16:24:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA1D012391E;
-        Thu,  4 Feb 2021 16:24:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
-        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 02/17] chunk-format: create chunk format write API
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
-        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
-        <814512f216719d89f41822753d5c71df5e49385d.1611759716.git.gitgitgadget@gmail.com>
-Date:   Thu, 04 Feb 2021 13:24:12 -0800
-In-Reply-To: <814512f216719d89f41822753d5c71df5e49385d.1611759716.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 27 Jan 2021
-        15:01:41 +0000")
-Message-ID: <xmqq5z375xxf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229572AbhBDVnr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 16:43:47 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53683 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229513AbhBDVnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 16:43:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1612474929;
+        bh=R92/KYxzKsHZ5zwMwiVjrEirT6RKWvdzqtXx8jMEXmk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AJigMiYUG08z8PounD3fPMg40Lh3L5vwbNFlEYfUzKUt7jsg+XKuJvp7ssryN9xmR
+         rc6I0c3NBPY9M8r3cqz8GtXTsZtnuGJ5QxfUkf2s7C3BqOWrcmBU6yqOYJu1vRWT/+
+         UxYS3IhSkl08gN0Xq32ZqkHOc/aQYe6SvJzZF1Xo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([89.1.214.8]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N95eJ-1m2kwp47vj-0169lp; Thu, 04
+ Feb 2021 22:42:09 +0100
+Date:   Thu, 4 Feb 2021 22:42:17 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 2/3] range-diff/format-patch: handle commit ranges
+ other than A..B
+In-Reply-To: <xmqq7dnn7jjz.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2102042027570.54@tvgsbejvaqbjf.bet>
+References: <pull.841.v3.git.1611765444.gitgitgadget@gmail.com> <pull.841.v4.git.1612431093.gitgitgadget@gmail.com> <448e6a64fa157990fcc973ce2fe4a9fc2ba1ab32.1612431093.git.gitgitgadget@gmail.com> <xmqq7dnn7jjz.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 544344BE-672F-11EB-9A5C-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:x0Zzyff+qEr9iVA+Ypb52XoiLnEj4MSWBlMuITSulpUjPcHQreI
+ NpTpgSejtGXYxwjg3/CuMIGDMu7YudMpp30WVDL/XFPH6XA6BsopbfTF00OkGYtReSjelnm
+ hB1YWIQTpBwEWlJ7tSa6t8oY9CqhOekh7NGPopzWmOv2o4P7M7DPNW7BIOuXTtjksFl2Gy5
+ SrgVIhaYww+AMjrQgKrCg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:S92h5GZdmuk=:5sOHW/neQlmGUVgMPt411h
+ CO9z7J+7qOs+rZVPmitR/yiEqOjzBWH9OauG86YkkddpU3QChxzrYL8eQy0VomaYePmY4PxOl
+ 8E9RP3FvhcGhMQ/tKNAjIa9/CUDuGwDwN7F+c3W3FreNql9UKHV45h/JQOEmiFePrsy5r+8ky
+ 5i6YYssx6+mwufve626aK5EylinERlypY6/UYSH9jibfcF44buOPGmdhvw820iWU6qmuJD7G9
+ UqWxjayZBwoji3/K88CFsCqQMp2eNLAjar13Q9dORKi17m+odHpusee1KAw0TvAjGELldqUlT
+ CSy8hAe2tKPrfadssglYxXa1P9MGPB3soJWpcsd4iXCgrlJg13xpZCkoK03vhhTAcjkUBMxSQ
+ g/pgtuw1TwR80TC8QUJKCVGj6mPkqnJACWt7d+3hxtu3EX7pFhqQ1fl8LEMiKTk8EGPP/PD3L
+ hoAvCdhNNdBJAzN/70x9PEweIGyL3clMzYumDWj9kSO895stcwz8GrgtVKkxeH+TK9bx5L+B5
+ ZIxzLZLlNXryDsn4HS/AtdepJxeN9Yn3IO9Oj+ZZLBCl0y8XoZpaQNCj6c65kFmMFmD0biUsR
+ IlSCZJ6rVXzPsYZ0JqSrOd9ajPJTd/PhHErZhzQ/vjUxGr9sT93BZDaL5cQEJ8IqYXaKYoqRI
+ NYRrtc9Ljz303FOoVrwww+A8fKS2dkSe7pr+IoVHwOOdprkjkrnANNS77i2V35c7bCRXV668o
+ xb39Qc1in0r0FoV8+sWTeQoGs0pCSIXJiWohyIRrrJiiqx15DPp/iYjoEJ5Ea3yQBXy9VrCB9
+ asceYchGr5lYmBqepX6ZCERZrxq7dXkuQNGGxPh046iLKk2J7OfXfOFylShN8OlGjRGOL+gg4
+ Prt4qKlTYMwyBsNwEYxwbqNXPDXkR0RJ+XcmBNu8g=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Junio,
 
-> +/*
-> + * When writing a chunk-based file format, collect the chunks in
-> + * an array of chunk_info structs. The size stores the _expected_
-> + * amount of data that will be written by write_fn.
-> + */
-> +struct chunk_info {
-> +	uint32_t id;
-> +	uint64_t size;
-> +	chunk_write_fn write_fn;
-> +};
-> +...
-> +void add_chunk(struct chunkfile *cf,
-> +	       uint64_t id,
-> +	       chunk_write_fn fn,
-> +	       size_t size)
-> +{
-> +	ALLOC_GROW(cf->chunks, cf->chunks_nr + 1, cf->chunks_alloc);
-> +
-> +	cf->chunks[cf->chunks_nr].id = id;
-> +	cf->chunks[cf->chunks_nr].write_fn = fn;
-> +	cf->chunks[cf->chunks_nr].size = size;
-> +	cf->chunks_nr++;
-> +}
+On Thu, 4 Feb 2021, Junio C Hamano wrote:
 
-Somebody somewhere between the caller in the higher part of the
-callchain (that has to work with platform native types) and the
-on-disk format at the bottom of the callchain (that has to work
-with fixed size data fields) needs to make sure that the size that
-the higher level caller has fits on-disk data structure we define,
-and the data we read from disk fits the in-core structure our caller
-use on the reading side.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> >  int is_range_diff_range(const char *arg)
+> >  {
+> > -	return !!strstr(arg, "..");
+> > +	char *copy =3D xstrdup(arg); /* setup_revisions() modifies it */
+> > +	const char *argv[] =3D { "", copy, "--", NULL };
+> > +	int i, positive =3D 0, negative =3D 0;
+> > +	struct rev_info revs;
+> > +
+> > +	init_revisions(&revs, NULL);
+> > +	if (setup_revisions(3, argv, &revs, 0) =3D=3D 1) {
+> > +		for (i =3D 0; i < revs.pending.nr; i++)
+> > +			if (revs.pending.objects[i].item->flags & UNINTERESTING)
+> > +				negative++;
+> > +			else
+> > +				positive++;
+> > +	}
+> > +
+> > +	free(copy);
+> > +	object_array_clear(&revs.pending);
+> > +	return negative > 0 && positive > 0;
+> >  }
+>
+> One thing that worries me with this code is that I do not see
+> anybody that clears UNINTERESTING bit in the flags.  In-core objects
+> are singletons, so if a user fed the command two ranges,
+>
+> 	git range-diff A..B C..A
+>
+> and this code first handled "A..B", smudging the in-core instance of
+> the commit object A with UNINTERESTING bit, that in-core instance
+> will be reused when the second range argument "C..A" is given to
+> this function again.
+>
+> At that point, has anybody cleared the UNINTERESTING bit in the
+> flags word for the in-core commit A?  I do not see it done in this
+> function, but perhaps I am missing it done in the init/setup
+> functions (I somehow doubt it, though)?
+>
+> Shoudn't we be calling clear_commit_marks(ALL_REF_FLAGS) on the
+> commits in revs.pending[] array before we clear it?
 
-If there is a function at the one level closer to the disk than
-"struct chunk_info" that takes a "struct chunk_info" and writes the
-id and size to disk (and fills "struct chunk_info" from what is read
-from the disk, on the reading side), it would be a good place to do
-the size_t to uint64_t conversion.
+Yes, we should ;-)
 
-It is OK to do the conversion-while-checking in add_chunk(), too.
+> Depending on the shape of "arg" that is end-user supplied, we may have
+> walked the history in handle_dotdot_1() to parse it (e.g. "A...B").
 
-But a silent type casting from size_t to uint64_t done silently by
-assignment bothers me.  Also, I think you meant to make the incoming
-ID uint32_t; am I missing something, or did nobody notice it in the
-review of the previous round?
+The code in `handle_dotdot_1()` that handles `...` calls
+`get_merge_bases()`, which eventually calls `get_merge_bases_many_0()`
+with the `cleanup` parameter set to `1`, i.e. it _does_ clean up the
+flags.
 
-> +int write_chunkfile(struct chunkfile *cf, void *data)
-> +{
-> +	int i;
-> +	size_t cur_offset = cf->f->offset + cf->f->total;
+Otherwise, `git log A...B` couldn't work, could it? ;-)
 
-That ought to be off_t, as it is a seek position inside a file
-(struct hashfile.total is already off_t).
+> Also we'd want to see what needs to be cleared in revs.cmdline
+> that would have been populated by calls to add_rev_cmdline().
 
-Use csum-file.h::hashfile_total() instead, perhaps?  .offset member
-is an implementation detail of the hashfile API (i.e. some leftover
-bits are kept in in-core buffer, until we accumulate enough to make
-it worth flushing to the disk), and by using the helper, this code
-does not have to know about it.
+Is this cleared, like, ever? I don't see any code that handles `cmdline`
+that way. Seems as we're willfully leaking this.
 
-> +	/* Add the table of contents to the current offset */
-> +	cur_offset += (cf->chunks_nr + 1) * CHUNK_LOOKUP_WIDTH;
+Ciao,
+Dscho
 
-Is that 12 == sizeof(chunk_info.id) + sizeof(chunk_info.size)?
-If so, this makes sense.
-
-> +	for (i = 0; i < cf->chunks_nr; i++) {
-> +		hashwrite_be32(cf->f, cf->chunks[i].id);
-> +		hashwrite_be64(cf->f, cur_offset);
-> +
-> +		cur_offset += cf->chunks[i].size;
-> +	}
-> +
-> +	/* Trailing entry marks the end of the chunks */
-> +	hashwrite_be32(cf->f, 0);
-> +	hashwrite_be64(cf->f, cur_offset);
-
-OK.  This helper does not tell us anything about what comes in the
-on-disk file before this point, but we write a table of contents
-that says "chunk with this ID has this size, chunk with that ID has
-that size, ...", concluded by something that looks like another
-entry with chunk ID 0 that records the current offset as its size.
-
-> +	for (i = 0; i < cf->chunks_nr; i++) {
-> +		uint64_t start_offset = cf->f->total + cf->f->offset;
-
-Likewise about the type and use of hashfile_total().
-
-> +		int result = cf->chunks[i].write_fn(cf->f, data);
-> +
-> +		if (result)
-> +			return result;
-> +
-> +		if (cf->f->total + cf->f->offset - start_offset != cf->chunks[i].size)
-> +			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
-> +			    cf->chunks[i].size, cf->chunks[i].id,
-> +			    cf->f->total + cf->f->offset - start_offset);
-
-I won't complain, as this apparently is sufficient to abstract out
-the two existing chunked format files, but it somehow feels a bit
-limiting that the one that calls add_chunk() is required to know
-what the size of generated data would be, way before .write_fn() is
-called to produce the actual data here.
-
-> +	}
-> +
-> +	return 0;
-> +}
-> diff --git a/chunk-format.h b/chunk-format.h
-> new file mode 100644
-> index 00000000000..bfaed672813
-> --- /dev/null
-> +++ b/chunk-format.h
-> @@ -0,0 +1,20 @@
-> +#ifndef CHUNK_FORMAT_H
-> +#define CHUNK_FORMAT_H
-> +
-> +#include "git-compat-util.h"
-> +
-> +struct hashfile;
-> +struct chunkfile;
-> +
-> +struct chunkfile *init_chunkfile(struct hashfile *f);
-> +void free_chunkfile(struct chunkfile *cf);
-> +int get_num_chunks(struct chunkfile *cf);
-> +typedef int (*chunk_write_fn)(struct hashfile *f,
-> +			      void *data);
-
-Write this on a single line.
-
-> +void add_chunk(struct chunkfile *cf,
-> +	       uint64_t id,
-> +	       chunk_write_fn fn,
-> +	       size_t size);
-
-Shouldn't this match the order of members in chunk_info struct?
-
-> +int write_chunkfile(struct chunkfile *cf, void *data);
-> +
-> +#endif
+> Other than that, I quite like the way the actual code turned out to
+> be.
+>
+> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > index 6eb344be0312..e217cecac9ed 100755
+> > --- a/t/t3206-range-diff.sh
+> > +++ b/t/t3206-range-diff.sh
+> > @@ -150,6 +150,14 @@ test_expect_success 'simple A B C (unmodified)' '
+> >  	test_cmp expect actual
+> >  '
+> >
+> > +test_expect_success 'A^! and A^-<n> (unmodified)' '
+> > +	git range-diff --no-color topic^! unmodified^-1 >actual &&
+> > +	cat >expect <<-EOF &&
+> > +	1:  $(test_oid t4) =3D 1:  $(test_oid u4) s/12/B/
+> > +	EOF
+> > +	test_cmp expect actual
+> > +'
+> > +
+> >  test_expect_success 'trivial reordering' '
+> >  	git range-diff --no-color master topic reordered >actual &&
+> >  	cat >expect <<-EOF &&
+>
