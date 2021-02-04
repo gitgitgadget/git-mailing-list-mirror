@@ -2,86 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25584C433E6
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 15:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5EC0C433E6
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 16:16:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF70F64F78
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 15:49:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8202D64E02
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 16:16:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237471AbhBDPrg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 10:47:36 -0500
-Received: from joooj.vinc17.net ([155.133.131.76]:58150 "EHLO joooj.vinc17.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237485AbhBDPi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 10:38:56 -0500
-Received: from smtp-zira.vinc17.net (128.119.75.86.rev.sfr.net [86.75.119.128])
-        by joooj.vinc17.net (Postfix) with ESMTPSA id E4265304;
-        Thu,  4 Feb 2021 16:38:12 +0100 (CET)
-Received: by zira.vinc17.org (Postfix, from userid 1000)
-        id 98937C20303; Thu,  4 Feb 2021 16:38:12 +0100 (CET)
-Date:   Thu, 4 Feb 2021 16:38:12 +0100
-From:   Vincent Lefevre <vincent@vinc17.net>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: git fails with a broken pipe when one quits the pager
-Message-ID: <20210204153812.GI148009@zira.vinc17.org>
-References: <YAG/vzctP4JwSp5x@zira.vinc17.org>
- <8735yhq3lc.fsf@evledraar.gmail.com>
- <20210131033652.GK623063@zira.vinc17.org>
- <87o8h4omqa.fsf@evledraar.gmail.com>
- <20210201103429.GT623063@zira.vinc17.org>
- <87im7cng42.fsf@evledraar.gmail.com>
- <20210201144857.GB24560@zira.vinc17.org>
- <87a6snokrr.fsf@evledraar.gmail.com>
- <20210203152634.GA22673@joooj.vinc17.net>
- <87v9b8d6zx.fsf@evledraar.gmail.com>
+        id S237901AbhBDQQR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 11:16:17 -0500
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:44670 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237454AbhBDQO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 11:14:56 -0500
+Received: by mail-ed1-f43.google.com with SMTP id q2so1723308eds.11
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 08:14:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=c0oWINXk/qSQf0ODuYkRl4iIekQ3x/lpryM71aFqOAk=;
+        b=lpkLgU4eYs8wBL4rSRte60YyDDF6+XxY5iTBOfZOo7XQApsR6a7MJHfx9TOhPG37zr
+         VWnVRQUMMk1S722fIxzyeh1OVsBuZSuH2CPDeNUiiRqjpMtUxnN6IEkbCtCmbKRTR84x
+         /wWMMDfvOhE/u/QgYuzg4S3pHv3xiuzTNJlNj8Le6QywHL0jKtD70xwGM7jHyleD01Ve
+         nyLiX1ugiX7/Jrv7Sn2IyEAlDr5mHJWXY1Jn8THSIypGshwIy4VXrhwh4wztRyiZSWdf
+         7/KXEN/ZKvyvsYkYvhp/Zvae4guDm4lTayS4GSeYsq6A4jiXmhM9w0xLxiNVcLDpeEq3
+         Mjyg==
+X-Gm-Message-State: AOAM5334f0fujjeVM4yBW/f5jm20YhobJvxqe5uXx5usKLbPm9C0mEgu
+        6lYQVXmeVGuZ0vkqGrpEAbMYOX/VvkM6XnvMKGE=
+X-Google-Smtp-Source: ABdhPJzzICCcBMHIMkcVUKyAo5YFhD/QiP2E3hweRe4lK1Vryjq0HSO3TJ1rV5m7wYArCMxnWojT4+xWOpp/sgpp5DQ=
+X-Received: by 2002:a05:6402:1914:: with SMTP id e20mr8572146edz.89.1612455253958;
+ Thu, 04 Feb 2021 08:14:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v9b8d6zx.fsf@evledraar.gmail.com>
-X-Mailer-Info: https://www.vinc17.net/mutt/
-User-Agent: Mutt/2.0.5+101 (ab6d0dc5) vl-132933 (2021-01-27)
+References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
+ <20210129182050.26143-8-charvi077@gmail.com> <CAPig+cQO_uHurPn3N-k-UwBFgvx2x8Bx2Uy+=sQxhmj3E6rt7Q@mail.gmail.com>
+ <54d1ef0f-6a50-b2cb-3ac6-c313cf9dd2f3@gmail.com>
+In-Reply-To: <54d1ef0f-6a50-b2cb-3ac6-c313cf9dd2f3@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 4 Feb 2021 11:14:02 -0500
+Message-ID: <CAPig+cRt3+CfGVKMTroCsLMLM+LxhM7ioLV=2-AAMU9MGzquaA@mail.gmail.com>
+Subject: Re: [PATCH v4 7/9] t3437: test script for fixup [-C|-c] options in
+ interactive rebase
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Charvi Mendiratta <charvi077@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2021-02-04 01:14:10 +0100, Ævar Arnfjörð Bjarmason wrote:
-> Have you reported this as a bug to zsh?
+On Thu, Feb 4, 2021 at 5:47 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> On 02/02/2021 02:01, Eric Sunshine wrote:
+> > Are the timestamps of these commits meaningful in this context?
+>
+> I think we want to ensure that the timestamp of the commits created with
+> the different author are different from the previous commits. We ought
+> to be checking that the author date of the rebased commit matches the
+> author date of the original commit and not the author date of the fixup
+> commit created with the different author.
 
-I repeat: there is no bug in zsh. It is my choice to output the
-exit status when it is non-zero because I want to know when the
-command I've typed fails. This is useful in practice. Ignoring the
-specific value 141 (corresponding to SIGPIPE) is not a solution
-because it can be a real failure with some utilities. BTW, the
-association with a signal like SIGPIPE is just a convention; apart
-from that, 141 is a non-zero status like others (in particular
-with programs that have not been written for POSIX).
-
-For instance, in any shell:
-
-$ sh -c "echo foo; exit 141"
-foo
-$ echo $?
-141
-
-while no broken pipe is involved here. How would you differentiate
-such a failure from a broken pipe?
-
-> I also tested "hg log", it behaves the same way, although interestingly
-> they cast SIGPIPE to 255 in their exit code.
-
-I get 141, like with git:
-
-$ hg log
-$ echo $?
-141
-
--- 
-Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+Such date-checking would indeed make sense and would remove any
+potential confusion a reader might have concerning the manual
+test_tick() calls. (It's not super important, but I still lean toward
+dropping the test_tick() calls until they are actually needed simply
+to avoid confusing readers. I asked about it in my review since their
+purpose was unclear and I was genuinely wondering if I was overlooking
+the reason for their presence. Future readers of the code may
+experience the same puzzlement without necessarily having ready access
+to the original author of the code from whom to receive an answer.)
