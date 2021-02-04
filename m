@@ -2,91 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04573C433DB
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 23:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD95C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:02:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A7B3D64F4E
-	for <git@archiver.kernel.org>; Wed,  3 Feb 2021 23:37:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32D0064E40
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:02:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233363AbhBCXhm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 18:37:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46758 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232458AbhBCXhl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 18:37:41 -0500
-Received: (qmail 22398 invoked by uid 109); 3 Feb 2021 23:37:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Feb 2021 23:37:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5999 invoked by uid 111); 3 Feb 2021 23:37:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 Feb 2021 18:37:00 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 3 Feb 2021 18:36:59 -0500
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Karsten Blees <blees@dcon.de>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/2] Optimization batch 6: make full use of exact
- renames
-Message-ID: <YBszm/s9na3ixUsO@coredump.intra.peff.net>
-References: <pull.842.git.1612331345.gitgitgadget@gmail.com>
- <pull.842.v2.git.1612382628.gitgitgadget@gmail.com>
- <xmqqlfc4byt6.fsf@gitster.c.googlers.com>
- <CABPp-BEgwfv70NRGgyAnHnQBPx4APSyYxNCbvH9F=7WGSj4DLQ@mail.gmail.com>
+        id S233927AbhBDABo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 19:01:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37554 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233234AbhBDABm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 19:01:42 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB9E2C061573
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 16:01:02 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 63so1730385oty.0
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 16:01:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qQCRFygkjJ6llF0FnLdytNejGFXSUoHD+V6OgJW5DqI=;
+        b=YD93ismPj+OAPTMB5pCSjEVtKN53sDgMIRVUpeRA7wHWRnAFYDURR8YgABMhqeX8tl
+         58yRf7iPt1id2PjFk/m5hzXhsjpC5LNtjgPoWz3Yq8RWmdRJs0iTKHG8fCYDODJKboUv
+         w/5Lh6joWaMFLWbLpe9I5xBctn79LlyG1TnLB6jPyOG8FxfCGvJKMWMzQxJNwpdIH6s4
+         dVWEBNCzYD9FjjxiYP0nkQTKDPS1L9cP9wRD7RSTIKdBOD+SFpT4KMFGSLjfoaPqVELX
+         oemkTLe3zJkv7P0HJgCJEVlSS0OPugUGZ2AsLHrysB9V3bB1UFP44vgFv5LMnSRpslp3
+         MjYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qQCRFygkjJ6llF0FnLdytNejGFXSUoHD+V6OgJW5DqI=;
+        b=ZVClL2yHRngilYfsjbdbbnWlOUPohGhNJXPo1DHDxtQWQtUijY6PT02T2wnX3cUuqg
+         dBerhrLDUX34SEoFJbETbgpHjM9EIF2roONrBBjIsOnkA8f72KIHKh8bW8QVwhpsYqXH
+         RYS+fMTHqdcP/pkDiat/T+NdFHt2bu36SvCxEPaI1BmSDkmC679Veqz9RRVeUIoo6IWo
+         yqD4aMZNPbwHSQB418+kY5JG8THMD0s1HcOLti6aNknTBDsXJwmaI67lsCQ2OvxTCGrS
+         cV7cx2jc1wMC2ofZfgNGUMCvNK0Rg5FVSJBXt92xbcx0jbGwkLWg3coCKrLALw0uSjM6
+         004w==
+X-Gm-Message-State: AOAM532nXK/h7wL2M/XryZSeAHNT8IPzyyWzcIurlIpRQAqarZn4IiAR
+        vNGtQD7FNurip0Ndz9K0Mf6wWOoOUvWIhCq/pDMhcvyva/0=
+X-Google-Smtp-Source: ABdhPJxxF9GEqK0KTunAeF3swiwgpkmMRaHK6AOijkWMx+NrmyaqsPvWGoPkvlNRJkz2jk3yHquEkBvMiGl0/yo+yAU=
+X-Received: by 2002:a9d:741a:: with SMTP id n26mr3721003otk.210.1612396862066;
+ Wed, 03 Feb 2021 16:01:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BEgwfv70NRGgyAnHnQBPx4APSyYxNCbvH9F=7WGSj4DLQ@mail.gmail.com>
+References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
+ <20210129182050.26143-7-charvi077@gmail.com> <CAPig+cQeBE7m8wf1e_soVrpvL3==u50MPyb90NwWLnFiUz1Byw@mail.gmail.com>
+ <CAPSFM5fZHZDnmRD2GzwPVKwBjogKD=GJbC7e=6aQSbu_iXBdNw@mail.gmail.com> <CAPig+cRxmFr_Sbwdf4OFMr8Vp1q6O6J7AbgYAD5cgdD--hgDuw@mail.gmail.com>
+In-Reply-To: <CAPig+cRxmFr_Sbwdf4OFMr8Vp1q6O6J7AbgYAD5cgdD--hgDuw@mail.gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Thu, 4 Feb 2021 05:30:50 +0530
+Message-ID: <CAPSFM5fLi-U3zVcXFip_kgchHSXiEUF9nngO2nSf31kAEBkq1w@mail.gmail.com>
+Subject: Re: [PATCH v4 6/9] rebase -i: add fixup [-C | -c] command
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 03, 2021 at 03:06:26PM -0800, Elijah Newren wrote:
+On Wed, 3 Feb 2021 at 10:35, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> >    In an early attempt, I tried to retire rename_src[j], once
-> >    rename_dst[i] has been found to be a "good enough" match for it,
-> >    from the pool of rename src candidates to find a good match for
-> >    rename_dst[k] for i < k, but naive implementation of it would not
-> >    work well for obvious reasons---rename_src[j] may match a lot
-> >    better with rename_dst[k] than rename_dst[i] but we do not know
-> >    that until we try to estimate similarity with rename_dst[k].
-> 
-> You may really like the next two series I submit.  I have a smarter
-> way to find a "good enough" match (comparing to exactly one other file
-> and often finding sufficient similarity), and one that'll make
-> intuitive sense to users.
+> > >     return command == TODO_FIXUP &&
+> > >         (flag == TODO_REPLACE_FIXUP_MSG ||
+> > >         flag == TODO_EDIT_FIXUP_MSG);
+> >
+> > I admit it resulted in a bit of confusion. Here, its true that flag is always
+> > going to be specific enum item( as command can be merge -c, fixup -c, or
+> > fixup -C ) and I combined the bag of bits to denote
+> > the specific enum item. So, maybe we can go with the first method?
+>
+> Sounds fine. It would clarify the intent.
+>
 
-Here's a really old thread with an approach that may or may not be
-similar to what you're thinking of:
+(Apology for confusion) After, looking again at the source code, as we are using
+the flag element of  the structure todo_item of in sequencer.h. So, I
+think right
+way is to let it be in binary only and change type from 'enum todo_item_flag' to
+'unsigned' , as you suggested below (better than first method) :
 
-  https://lore.kernel.org/git/596909b30710220240g665054d8hc40bc5d2234ba9e1@mail.gmail.com/
+Otherwise, if `flag` will actually be a bag of bits, then the argument
+should be declared as such:
 
-Though maybe start with this summary message:
+    static int check_fixup_flag(enum todo_command command,
+        unsigned flag)
 
-  https://lore.kernel.org/git/596909b30710220309l1a28e646r9fd47f967dc32574@mail.gmail.com/
+> > Agree, here it's checking if the command is fixup and the flag value (
+> > which implies either user has given command fixup -c or fixup -C )
+> > So, I wonder if we can write is_fixup_flag() ?
+>
+> Reasonable.
+>
+[...]
+> > I agree, this [tolower(bol[1]) == 'c'] is actually doing all the
+> > magic, but I am not
+> > sure if we should change it or not ? As in the source code just after
+> > this code we
+> > are checking in a similar way for the 'merge' command. So, maybe implementing
+> > in a similar way is easier to read ?
+>
+> Keeping it similar to nearby code makes sense.
 
-I remember experimenting some with it at the time, but never making
-things faster. It's entirely possible (likely, even) that I was simply
-not doing it well enough.
+Thanks for confirming!
 
-It's also been long enough since I looked at the rename code that I'm
-not sure how different it is in practice. It still has a quadratic
-matrix in the end. We basically do a similar strategy of
-rolling-hash-fingerprint-and-see-where-things-collide, but I think we
-may end up with more work during the quadratic part (again, it's been
-a while, so I may just be totally off-base).
-
-I've also wondered if something similar might be helpful for delta
-compression (which is now done with an O(m*n) sliding window).
-
--Peff
+Thanks and Regards,
+Charvi
