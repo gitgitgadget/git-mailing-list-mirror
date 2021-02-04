@@ -2,110 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69377C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF719C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1068164F5E
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:48:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89BF764E4F
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:53:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239371AbhBDSsB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 13:48:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53320 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239363AbhBDSrg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 13:47:36 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582ECC0613D6
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 10:46:55 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id m7so4730242oiw.12
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 10:46:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bJ3ogUdSLo+T78BlWUgaCgz0mcsDV2lQSK2SlDk88DQ=;
-        b=I7ufc02a/gSJHBQAYGQanwS0efhN0pMEI60xMgOLJ+hpGgIN/PQAT1nVjVTuy0X9Qs
-         fhzRVz/fjRBuft7FEp0d9S3m45yZCDpgQoi+QT4XIszVe/h8W0eZrDZb6sRsFm5Aqkqx
-         QgFjAhyvReelhSkJ7d3VVAhkZZOqNNGCedTfW49EVlqbhtf/twRHCJvVm7l+mBQcdVSe
-         U1igNXveWRsEYJtHwUnFbqUNi2I+apgUG1dIGQ8GXLGMfQ7NxLVEyWEEOJUmknXJQuHp
-         +2BvqBcOiaCEEgMLCh6XrvQCW9cRHH2jKQdNPe/H7TpzQwObSm/o7GewirsUqdeNYges
-         HlIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bJ3ogUdSLo+T78BlWUgaCgz0mcsDV2lQSK2SlDk88DQ=;
-        b=nILe3J1r+wwgSM6ZKbiHaFLu9pXjfQvgupSnWxHubSXUC+g/kX71cly18N5TET2Z6j
-         5PPljhP11j4JezzbsdaG2Fc8xRe5N4QGyAdQKzQXjFG+kWpayMI/RZBrvFYRiuPlj+G6
-         xb3dkQQQHkcWscEkounSVVEy4R9hgCWIqZyknfrnAiFo3BrHWj4pVWPzmBcQl3Lwrk+/
-         +hRyUdpmTQ5eFMuvq5DNW9xyw2Ue9652vqzBvWX1KqkRvlg913vwMF9UGfImiD6AVm49
-         tBaISfAPhIzP8oBwMrPfYIGzFT54WuZVvM7LGOd9o0l+MEWlCuYAAE9D7E7YOVIcCiIg
-         TH0w==
-X-Gm-Message-State: AOAM53187+ZNYS/MR+02Z3gDSDi3IQOVPdJ9zOmSMRbDgXUvboTv7EPj
-        P4oB0NSX8D84LqbOMe7en9DNgSsQYqCUT8Dvxkg=
-X-Google-Smtp-Source: ABdhPJyda+pOcNDMx993+jZdBREBE9vlK1Sn/aDG2eJhuMpNHkzwXfTcoQ5GmHJ3G+AJnaGsT4YShVIWCSBFb/3mEXM=
-X-Received: by 2002:aca:ab08:: with SMTP id u8mr613270oie.84.1612464414007;
- Thu, 04 Feb 2021 10:46:54 -0800 (PST)
+        id S239432AbhBDSwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 13:52:46 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58241 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239444AbhBDSwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 13:52:30 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F197B122861;
+        Thu,  4 Feb 2021 13:51:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=upgM2Is1K5kqcXCKFP3Kte/qCc0=; b=p8KdJG
+        rxjAVOEYoetQhoPZc5iCnEl0fjEWb+meeywmLkNc+VqvIU499OIpGM1ej2kAMkF5
+        4TuzXdv82PzU1h2FsRXZNj1f/OCZJ6udt3y/m3zYfBTE58/jc/F3KxLLOf3NXSvF
+        VaBnqR10bC81QSJJvIBvp1unuGPmpeIPbIZjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JZeiF5ThkmZOY/2+VVjEGhqer1bFgeyy
+        6MBxn11JtBoNbyoyZbIZh26tTnYh6OQutDU5wtSvff7h5PdU2FEAh5plKSmpoKJm
+        SlR1DHjHzBiTh20KXrOw1E/Wl93+/caSoXrPzkyA3tBAjdP1P6rWr7G7OuttMsPY
+        gcqwdXCrZFQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E92E2122860;
+        Thu,  4 Feb 2021 13:51:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3BC9612285F;
+        Thu,  4 Feb 2021 13:51:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 2/3] range-diff/format-patch: handle commit ranges
+ other than A..B
+References: <pull.841.v3.git.1611765444.gitgitgadget@gmail.com>
+        <pull.841.v4.git.1612431093.gitgitgadget@gmail.com>
+        <448e6a64fa157990fcc973ce2fe4a9fc2ba1ab32.1612431093.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Feb 2021 10:51:44 -0800
+In-Reply-To: <448e6a64fa157990fcc973ce2fe4a9fc2ba1ab32.1612431093.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Thu, 04 Feb 2021
+        09:31:31 +0000")
+Message-ID: <xmqq7dnn7jjz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.726.git.1599335291.gitgitgadget@gmail.com>
- <pull.726.v2.git.1611954543.gitgitgadget@gmail.com> <7b8cfb2721c349f2bcebec98f84291b1cffd3b49.1611954543.git.gitgitgadget@gmail.com>
- <875z3ep30j.fsf@evledraar.gmail.com>
-In-Reply-To: <875z3ep30j.fsf@evledraar.gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Fri, 5 Feb 2021 00:16:41 +0530
-Message-ID: <CA+CkUQ_YDxF+fphzyQRD1OkFh7NGEmHUABvRiAjL-H52MHyH3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] ref-filter: use pretty.c logic for trailers
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 07CCFD10-671A-11EB-8B0F-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Sun, Jan 31, 2021 at 2:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Given that the goal of this series is to unify this parsing logic
-> between log/for-each-ref, why do we need to then copy/paste the exact
-> same docs we have in pretty-formats.txt?
->
-> At the very least we should move this to pretty-formats-trailers.txt or
-> something, and just include it in both places, or better yet just refer
-> to the relevan parts of "git log"'s man page, no?
+>  int is_range_diff_range(const char *arg)
+>  {
+> -	return !!strstr(arg, "..");
+> +	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
+> +	const char *argv[] = { "", copy, "--", NULL };
+> +	int i, positive = 0, negative = 0;
+> +	struct rev_info revs;
+> +
+> +	init_revisions(&revs, NULL);
+> +	if (setup_revisions(3, argv, &revs, 0) == 1) {
+> +		for (i = 0; i < revs.pending.nr; i++)
+> +			if (revs.pending.objects[i].item->flags & UNINTERESTING)
+> +				negative++;
+> +			else
+> +				positive++;
+> +	}
+> +
+> +	free(copy);
+> +	object_array_clear(&revs.pending);
+> +	return negative > 0 && positive > 0;
+>  }
 
-Ok. I will refer to the trailers part of "pretty-formats"'s man page
-in "git-for-each-ref"'s man page.
+One thing that worries me with this code is that I do not see
+anybody that clears UNINTERESTING bit in the flags.  In-core objects
+are singletons, so if a user fed the command two ranges,
 
-> And similarly, here we have now mostly duplicated tests for this between
-> here and t/t4205-log-pretty-formats.sh.
->
-> I think the right thing to do is to start by moving the tests that are
-> now in t/t4205-log-pretty-formats.sh relevant to this formatting into
-> its own file or something.
->
-> Then instead of duplicating the tests here, just prepare them to be
-> changed so that we can add both "git log" and a "git for-each-ref"
-> invocation to some for-loop, so we'll test both.
+	git range-diff A..B C..A
 
-With this unified trailer logic, "git log" and "git for-each-ref"
-still behave differently.
-For e.g.: "git log" does nothing for unknown/incorrect trailer option,
-whereas "git for-each-ref" stops.
+and this code first handled "A..B", smudging the in-core instance of
+the commit object A with UNINTERESTING bit, that in-core instance
+will be reused when the second range argument "C..A" is given to
+this function again.
 
-Even if we move trailer related tests for both into a new file, I
-guess we still need to test trailers for both "git log" and "git
-for-each-ref" separately?
+At that point, has anybody cleared the UNINTERESTING bit in the
+flags word for the in-core commit A?  I do not see it done in this
+function, but perhaps I am missing it done in the init/setup
+functions (I somehow doubt it, though)?
 
-Thanks,
-Hariom.
+Shoudn't we be calling clear_commit_marks(ALL_REF_FLAGS) on the
+commits in revs.pending[] array before we clear it?  Depending on
+the shape of "arg" that is end-user supplied, we may have walked the
+history in handle_dotdot_1() to parse it (e.g. "A...B").
+
+Also we'd want to see what needs to be cleared in revs.cmdline
+that would have been populated by calls to add_rev_cmdline().
+
+Other than that, I quite like the way the actual code turned out to
+be.
+
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 6eb344be0312..e217cecac9ed 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -150,6 +150,14 @@ test_expect_success 'simple A B C (unmodified)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'A^! and A^-<n> (unmodified)' '
+> +	git range-diff --no-color topic^! unmodified^-1 >actual &&
+> +	cat >expect <<-EOF &&
+> +	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'trivial reordering' '
+>  	git range-diff --no-color master topic reordered >actual &&
+>  	cat >expect <<-EOF &&
