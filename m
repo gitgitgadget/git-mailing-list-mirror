@@ -2,95 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 010E6C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 19:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5714EC433DB
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 19:17:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BAEC864F6A
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 19:14:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1883364F38
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 19:17:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239391AbhBDTNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 14:13:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58968 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239186AbhBDTNe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 14:13:34 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DE8C0613D6
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 11:12:54 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id d7so4513520otf.3
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 11:12:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3pD1nRpNOJIOoiSxGHGvhHx0vwGKu1Q7xUtg9NvEYOs=;
-        b=oFSmUDJPnwpARpSD2lboX+XEaWLu7mpaYlwL8Pipgcr7wOYixWQ2EKGEjvsC/j9xne
-         e3WczDOYec18yqfOJJgMJ4p5CvEL4ifg53ZF4LOY2OH97j+eaRxDakTVCzwucxjAlIkB
-         CbCUewsYH2uiFzsEKocuBvFMuAKsL3mhHCInxTmNEjTixGg7DsJ4WuAsODPO057KWc6/
-         NRd28qtAUYRVOy0imX9R52pkaCpfgS8mtJDxWkJ+L31+GsuFG442imP24SrdoSx7BAIV
-         afkUhrfD1Syvo6Dc9gosjq07yv+bMOBEGDLuQ1NHrqgR1Lz6pozTK5c2RFXCjBcLY590
-         cWog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3pD1nRpNOJIOoiSxGHGvhHx0vwGKu1Q7xUtg9NvEYOs=;
-        b=gsmVXrJjUInrqChYHJF1JO3GAlhMZjq2J6W6caD1XeY/nM/OK4uzFVPpCMUZxZeh+X
-         zPkhmJI99uEmKMmFPBFUU5t7eDDRclfpay1urgY3qw3Ev47JSL3A9ix0h9LSaWz4EfJM
-         us3AvuDA6yi6Z0hUbPF19FvSGENBwgcatAnpVGM0qaz/tJ3jCFjZbEIfXULT6RQrgb7N
-         wTXE08Wvu8f6X9APhX57xeUu5w6jKt2XyFJcfnA/jD/dd/R9szZ92nkQjLeli2xG7EjQ
-         JWywwIHATBbxfA7o5g0as6FR/rQXwBwiqhgj5bOK69XHljz0GZwYQ3WfCq3rNbJjk42N
-         yX9A==
-X-Gm-Message-State: AOAM533dKqOl6gK9dk9F+VnraZ/zR+HMBxnE6gH8Q3CI5/xwYEeRybTo
-        FLSpmMDrPBuMPk/tX814C2k0P38GBOHQGmpFfEhtJZrEAso=
-X-Google-Smtp-Source: ABdhPJwyUgFKQJv8F9McnOmVn/EEUO2bPE7fwYcrYIlMoH2ejKd2DpI6heyN9SWTuxC0lJBC65rb54oLWJD1384cKB0=
-X-Received: by 2002:a9d:313:: with SMTP id 19mr652122otv.147.1612465973491;
- Thu, 04 Feb 2021 11:12:53 -0800 (PST)
+        id S239736AbhBDTRy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 14:17:54 -0500
+Received: from mail-co1nam11on2048.outbound.protection.outlook.com ([40.107.220.48]:28512
+        "EHLO NAM11-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S239201AbhBDTRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 14:17:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=De7/3L8BV2tebq/HU10rH0ogo2eQnmnmxxNSMSPnVUU5ULVnr48CaE2+U1he0jXAVVVxazCFmKVyitN6Ceh4wKpZSuaVCBpqVb6G8GeoeLieqMWm3YA2WT+4ULr8sNTw0VirycyiZVZpFUw/atxR+15fNhxmeoAYJfUkTv9JQvDvy16YhenX84Uga9NIUnMVnwifVj/Xp6kGH6GfaMrofyhsQJ1cojieBBQm9Jbykobdy0gF6s8r0gsun0Ohd/CcighgNjLFT+a4xIez5eXmDgrOAp3r1I5XHmMtknuFTmnAY0FrGbcyCgBMvp4KRJquWhCLzveWAR8ttnbK8ZwlDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tErAkPe9yCJt4LYcIdnB2PrjpYxw7nNczOMDFtJyJ88=;
+ b=Kz9zK6SYmf8KlpdRzjiV0DzcpCSBqAcHk1E6Wuz/kJWAboQMcR8unV1E30ALRmQX2LWooy8gFn5tsjUE8ic0DfhHZoa/ehBHwjn4kybGRXLWq4zqmzSWH8N+GwpsH1T8e0I8tLIm/3h/C5E+Eany9sH9dbsi0sykq/qrqlY28qoAL280taYlJznDfB4bGquXv2U9Sqw64GJi9u0GHPedBUBQwEWvioQV9q62n1S8TNLfRxACAnA0M3hzJ8fM3nlHitgIVtHIaKyeDbELD6pEh7NcWJkny9yEJJHTJtqyjBdQRps0JTjEky+Y4HoexIRSGNoqEJOxDEx1ia+8gIq88g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 50.201.127.2) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=astronics.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=astronics.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=astronics.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tErAkPe9yCJt4LYcIdnB2PrjpYxw7nNczOMDFtJyJ88=;
+ b=Kh/5x7jd0RM/wqF/LQ4s6L408931YZIrzyw5X/4q71GppAgUAY5yvmz8db+Pk1HdqnKXU3T6zsO7TeDPrIfhscqw7zTA1vp7+uVJhLQIG0Ld3T64FUkqWvE5B/NAIkqBzB/++NLCXnX3efuHndPBmCDQaEyd/OJHw/btedEHkAk=
+Received: from MW4PR03CA0099.namprd03.prod.outlook.com (2603:10b6:303:b7::14)
+ by CH2PR11MB4326.namprd11.prod.outlook.com (2603:10b6:610:3c::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3805.20; Thu, 4 Feb
+ 2021 19:16:52 +0000
+Received: from CO1NAM04FT007.eop-NAM04.prod.protection.outlook.com
+ (2603:10b6:303:b7:cafe::24) by MW4PR03CA0099.outlook.office365.com
+ (2603:10b6:303:b7::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3825.21 via Frontend
+ Transport; Thu, 4 Feb 2021 19:16:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 50.201.127.2)
+ smtp.mailfrom=astronics.com; vger.kernel.org; dkim=none (message not signed)
+ header.d=none;vger.kernel.org; dmarc=pass action=none
+ header.from=astronics.com;
+Received-SPF: Pass (protection.outlook.com: domain of astronics.com designates
+ 50.201.127.2 as permitted sender) receiver=protection.outlook.com;
+ client-ip=50.201.127.2; helo=KIRAST-MXS-02.astronics.com;
+Received: from KIRAST-MXS-02.astronics.com (50.201.127.2) by
+ CO1NAM04FT007.mail.protection.outlook.com (10.152.90.85) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.3784.12 via Frontend Transport; Thu, 4 Feb 2021 19:16:52 +0000
+Received: from KIRAST-MXS-06.astronics.com (172.27.4.113) by
+ KIRAST-MXS-02.astronics.com (172.27.4.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 4 Feb 2021 11:16:49 -0800
+Received: from KIRAST-MXS-06.astronics.com (172.27.4.113) by
+ KIRAST-MXS-06.astronics.com (172.27.4.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2106.2; Thu, 4 Feb 2021 11:16:48 -0800
+Received: from KIRAST-MXS-06.astronics.com ([fe80::cc97:5e0b:df06:aba1]) by
+ KIRAST-MXS-06.astronics.com ([fe80::cc97:5e0b:df06:aba1%3]) with mapi id
+ 15.01.2106.004; Thu, 4 Feb 2021 11:16:48 -0800
+From:   "Bulgrien, Dennis" <Dennis.Bulgrien@astronics.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: howto-index not found
+Thread-Topic: howto-index not found
+Thread-Index: Adb7KfhnHM5OLSTJSy+UoMjpWihHWQ==
+Date:   Thu, 4 Feb 2021 19:16:48 +0000
+Message-ID: <68e6a4e1991d4066a39b84ab5924202a@astronics.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.27.249.101]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20210124170405.30583-1-charvi077@gmail.com> <20210129182050.26143-1-charvi077@gmail.com>
- <20210129182050.26143-8-charvi077@gmail.com> <CAPig+cQO_uHurPn3N-k-UwBFgvx2x8Bx2Uy+=sQxhmj3E6rt7Q@mail.gmail.com>
-In-Reply-To: <CAPig+cQO_uHurPn3N-k-UwBFgvx2x8Bx2Uy+=sQxhmj3E6rt7Q@mail.gmail.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Fri, 5 Feb 2021 00:42:42 +0530
-Message-ID: <CAPSFM5eYMRuWoYaVFn9+5kZ16DoaLZ_8Pqu5hScbu9H0twXXiQ@mail.gmail.com>
-Subject: Re: [PATCH v4 7/9] t3437: test script for fixup [-C|-c] options in
- interactive rebase
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 2f012367-b344-484e-5816-08d8c9416d9e
+X-MS-TrafficTypeDiagnostic: CH2PR11MB4326:
+X-Microsoft-Antispam-PRVS: <CH2PR11MB4326BA31792BE21BE733B176E0B39@CH2PR11MB4326.namprd11.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: AsMbf54u5w5WWml/LIqVRWyKZqdUhdvneFjeMPlRYN41WPfgbW7PzpSnRRssD6ue4CA00F2PbkOqxFFxZcv3J/EgOS5JCn6etWoZeUhLFVPvcRfRFS3ofYzKoz3WXJG1o0QrtuQjDsyyoe6c9bi9J+vymKBJjqlXKxmHXhExSZKd7AAspgkFCE3wxOcKMk3Rw4XxiYZL1IzWw0b8GIfm3IiWGBmM+0+LSxalq6Cs/8Rms64gR+ovsFXM4CI0PNLqMKS2mSp9x+7jQv5mrveGTO9EhZFm45qpPBL+sqUfnYdyfvsLleLt7zcGWXubK/vh5VsjC+kHG1ij26ensq8HsLUXn4bkzL+wtI7Kvc0TznS5f6Yi1Y34HfCA4ME1SwlBpfmyPARbdNE5ueSYK28pka+6PS+QDzhszFuvI7miAnaYD7S0INZqxhsBb9TEihoh/ViPho6JzmUfQBgf3nu+gKfRC+aVlYWITSnzNae60EvvUAQKsr+9kZeZrUduFzwbb5FVthGJoFHgANVCGdQqLPXeXt2XkA7saKoEZ+I2KFeaySatcdqZnvV1M0f3TBcbghhoeL1X1RxjH7vM6FFeLC831yx04SVJrGehBleeRi7E1jQVSYooOle1rPlYp8YfvI+RUmOAJAfDJ9moQ8WkfkdjDVzGJwUqxeEeenFNVgGeEeNYHxSksm4x7bqYCXvQZ1lHdzCgSgLWuWcaunOm3MZwW0VWeEeL38OGfaxN9pw=
+X-Forefront-Antispam-Report: CIP:50.201.127.2;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KIRAST-MXS-02.astronics.com;PTR:mx2.astronics.com;CAT:NONE;SFS:(4636009)(39850400004)(346002)(396003)(136003)(376002)(46966006)(36840700001)(83380400001)(82310400003)(47076005)(3480700007)(478600001)(356005)(7066003)(82740400003)(108616005)(186003)(36860700001)(66574015)(5660300002)(8676002)(70206006)(70586007)(966005)(426003)(8936002)(166002)(2906002)(86362001)(6916009)(336012)(36756003)(24736004)(2616005)(26005)(7696005)(316002)(7636003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: astronics.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2021 19:16:52.1806
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2f012367-b344-484e-5816-08d8c9416d9e
+X-MS-Exchange-CrossTenant-Id: a2ce8a60-0840-49b7-9389-97ad811e2924
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a2ce8a60-0840-49b7-9389-97ad811e2924;Ip=[50.201.127.2];Helo=[KIRAST-MXS-02.astronics.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM04FT007.eop-NAM04.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR11MB4326
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+The https://git-scm.com/docs/gittutorial-2 says 'For some interesting examp=
+les of Git use, see the <a href=3D"http://git-scm.com/docs/howto-index">how=
+tos</a>"' but that does not exist and redirects to https://git-scm.com/docs=
+. Where should that link be updates it point?
 
-> > +test_expect_success 'fixup -C with conflicts gives correct message' '
-> > +       test_when_finished "test_might_fail git rebase --abort" &&
->
-> Is there a reason this isn't written as:
->
->     test_when_finished "reset_rebase" &&
->
-> which is more common? Is there something non-obvious which makes
-> reset_rebase() inappropriate in these tests?
->
+I found https://git-scm.com/docs/gitworkflows which looks somewhat fitting =
+or perhaps https://github.com/git/git/tree/master/Documentation/howto.
 
-I missed this earlier, but I confirmed before sending next version that as
-reset_rebase() removes the untracked files so we could not use this as otherwise
-it removes the fake-editor.sh file and will be required to set a fake
-editor for every
-test and also removes other untracked files which may be used to debug.
-So, I think it's okay with:
-test_when_finished "test_might_fail git rebase --abort"
+Dennis
 
-Thanks and regards,
-Charvi
+
+This E-mail is confidential. It may also be legally privileged. If you are =
+not the addressee you may not copy, forward, disclose or use any part of it=
+. If you have received this message in error, please delete it and all copi=
+es from your system and notify the sender immediately by return E-mail.
+
+Internet communications cannot be guaranteed to be timely, secure, error or=
+ virus-free. The sender does not accept liability for any errors or omissio=
+ns.
+PLEASE NOTE that Freedom Communication Technologies is now a part of Astron=
+ics Test Systems (ATS) and email addresses are changing. Please update my c=
+ontact info by replacing @freedomcte.com with @astronics.com to direct your=
+ messages to my new email address (for example, first.last@freedomcte.com w=
+ill be updated to first.last@astronics.com)
