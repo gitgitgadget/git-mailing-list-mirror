@@ -6,77 +6,97 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D988C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D238C433DB
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 07:07:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4388D64E4D
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 06:52:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F9E364F47
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 07:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233188AbhBDGvo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 01:51:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50078 "EHLO cloud.peff.net"
+        id S233746AbhBDHHB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 02:07:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50088 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232796AbhBDGvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 01:51:43 -0500
-Received: (qmail 2538 invoked by uid 109); 4 Feb 2021 06:51:01 -0000
+        id S232704AbhBDHGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 02:06:55 -0500
+Received: (qmail 2560 invoked by uid 109); 4 Feb 2021 07:06:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Feb 2021 06:51:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Feb 2021 07:06:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11835 invoked by uid 111); 4 Feb 2021 06:51:01 -0000
+Received: (qmail 11897 invoked by uid 111); 4 Feb 2021 07:06:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Feb 2021 01:51:01 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Feb 2021 02:06:14 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 4 Feb 2021 01:51:01 -0500
+Date:   Thu, 4 Feb 2021 02:06:14 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/6] Makefile: remove "all" on "$(FUZZ_OBJS)"
-Message-ID: <YBuZVfnc0ECuoKkK@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] Makefile: add {program,xdiff,test,git}-objs &
+ objects targets
+Message-ID: <YBuc5iOCCHk4fPqs@coredump.intra.peff.net>
 References: <20210128182310.26787-1-avarab@gmail.com>
- <20210201111715.10200-2-avarab@gmail.com>
+ <20210201111715.10200-1-avarab@gmail.com>
+ <xmqqft2edkfg.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210201111715.10200-2-avarab@gmail.com>
+In-Reply-To: <xmqqft2edkfg.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 01, 2021 at 12:17:10PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Feb 02, 2021 at 05:11:47PM -0800, Junio C Hamano wrote:
 
-> Adding this as a dependency was intentionally done in
-> 5e472150800 (fuzz: add basic fuzz testing target., 2018-10-12).
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> I don't see why we need to prevent bitrot here under "all" for these
-> in particular, but not e.g. contrib/credential/**/*.c
+> > A re-send of v1
+> > (https://lore.kernel.org/git/20210128182310.26787-1-avarab@gmail.com)
+> > + a trivial whitespace fix in 2/6.
 > 
-> In any case, these files are rather trivial and from their commit log
-> it seems the fuzz-all target is run by a few people already.
+> I'll reproduce what it said for those who are reading from
+> sidelines:
+> 
+>     As noted there I can just run "make git", which I'd somehow managed to
+>     miss. So that complexity isn't needed.
+> 
+>     But Jeff King suggested a hack to just get you to the point of
+>     git.o. I don't need that right now, but that seems sensible, so I
+>     implemented it.
+> 
+>     At the start of this series I've got a patch to make "all" stop
+>     redundantly depending on "FUZZ_OBJS", which also helps with such
+>     "rebase -i --exec=..." use-cases.
+> 
+> I do not see much point in the goal, not quite.  You can do "make
+> git.o" and "make git" and you do not have to build unrelated things.
+> 
+> Isn't that already happening at the tip of 'master' (or 'maint'), or
+> am I missing something?
 
-Part of me wants to love this commit, because I don't care about the
-fuzz code (since I don't run it myself[1]).
+I guess I can take some of the blame since my name came up in the
+justification above. ;)
 
-But looking at "git log fuzz-*.c", I do think it will lead to bitrot.
-Many of those commits are things that do not care about fuzzing, but
-were just fixing up function interfaces as we go (e.g., my c8828530b,
-though see [2]).
+The original use case I presented was quickly sifting through a series
+of commits for "oops, which one broke the compile". And so I wanted
+something like "make objects" to test each one as quickly as possible.
+And while that's a useful (if ugly) goal, I think it was misguided:
 
-The difference between contrib/credential/ and this is that those
-credential helpers do not rely on the rest of the source. They are
-independent programs that can be built totally out of tree.
+  - I usually know where the breakage is (after all, I saw it in the end
+    state). So "make foo.o" would be faster still! (it would be even
+    more so if the Makefile didn't insist on running GIT-VERSION-GEN,
+    but that's another story).
 
-So I dunno. This puts the responsibility for fixing bitrot onto the
-people who actually use them, which is nice. But often times it is
-easier for the person making the original change to just fix them up
-along with the others (because they understand the point of the change
-better, and also because a bunch of rot doesn't accrue over time).
+  - the link step in "make git" is not that much slower than building
+    the objects. And it catches more breakages (like undefined
+    functions). It doesn't catch problems in non-builtins, though.
+
+  - really, "make all" is not even that much slower than "make git".
+    It's a 200ms difference on my machine (wall-clock; "make -j16" helps
+    a lot here). That adds up if you are testing 100 commits, but it
+    probably isn't worth thinking too hard about.
+
+I do like the cleanups earlier in the series (I have mixed feelings on
+the first patch, though; see my comments there).
 
 -Peff
-
-[1] I just ran "make fuzz-all", and it barfed at the link step. It looks
-    like I need to specify a bunch of llvm stuff manually. So no, I'd
-    guess not a lot of people are running this. :)
-
-[2] That one is particularly egregious because it fixed a copy-pasted
-    version of a public function header. Yuck.
