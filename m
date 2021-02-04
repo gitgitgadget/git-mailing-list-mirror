@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 816D1C433E6
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E34FC433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42B1464E31
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4396364DA5
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 04:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232699AbhBDEBF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 23:01:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60678 "EHLO
+        id S231395AbhBDEBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 23:01:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232483AbhBDEAf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232507AbhBDEAf (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 3 Feb 2021 23:00:35 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E725EC06178C
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 19:59:24 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id v126so2096577qkd.11
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 19:59:24 -0800 (PST)
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A2DC061793
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 19:59:29 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id t17so1529878qtq.2
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 19:59:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=I+sQdE5BlUObmq5V9rJQa+VriLSwvSTanLLOnHF0c24=;
-        b=a5Y0yJ1CJBR1C9c3VXWpXYBu2LgzETeA5S84yNbPCBoLXRGyrDYMdHSSIAJfF4H/2O
-         B4G1qTeHOChkAuwStR8mktbOpLv7b0cZancq+Si0a0FBoUKSnpdHoohhWZEpxVrfbO+y
-         r+7v/i3ahwEu3Dk84cfeIlk0Dr38lpQgYRz0qyIxrTU7I5eUElKIt9Eg0E7Mfl6bgOcx
-         z62fvQ+PeUoYzj7hX6HxcwIkm2s7dy98qP9t+nXBc4VDb0d6xyHm09VyMffCf7eWSSQu
-         Vv1oH1mPowg9VmarI7egc6OEU03nuq40ZVBrxUB3OAUBG7hsLn/irA9rmonojpaAU8qQ
-         LPNg==
+        bh=isgUzkwVBn7fcHmqSZBNmmGQSAIIYRsCgJMj8nB3IjA=;
+        b=f1Yl+iyL4WgQZ15m18g7VcfKJzbdwKlmE6IYI7sWHf8JNnkumm6vcFFyfgV4a5XcVM
+         JHKiDuvpmJ5ekqIITxyX1KCK1/zU69P4HHm1W7kbp21dCaufQuHPv5OUuqK7IOgpgxZG
+         6DKQga1BBD/9YA6nsvCAp+XyD3254C+y77HFb2TQgogAQBCoZwgTkUSEKa/9T16Kl7An
+         2t7hzFd0y0I582PoqvdSFjI7v4Ido6ugnYA+WLZJ5rc+xiyBErtQv2GYbh+iaMAgMBPK
+         5O5JxJ/3MPxJHfirkNVnL2wMs5WyhkmNn8/ulQQGcFm8qOKMcf0aKLFHeBf2U67T/Qbb
+         D4VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=I+sQdE5BlUObmq5V9rJQa+VriLSwvSTanLLOnHF0c24=;
-        b=hZ5ll1rZAPbOJmx3V7I8cPKMWdyJHC84t1LLr3rS8Lftcja6FlPELmZs7DYu/bFZPG
-         SfbVWBTzKidPKkAOhnAHOYM6fFSRMsoB2YBqWpVIgwfFe1DZLzxnhl0U6fytpLAU/6Df
-         ghgwdqE2ut8IhYcKm7MKtpP7JThXJFkHbvGGoikuefqEX507WZxAzB/vEE/NTNKxwFrT
-         T/xKPHqkbivNizgtQ34n17elytQPBldUdZ+lqvssiexR8gznNMShTycO8bWIZZ8qVH8o
-         YWI5ObKgOJ1ZoxA9ZL2rxd5mi2p0HCDMYgUanbnfBkum7pLgzDZZfd7IgFOyk/e7iZmv
-         N84g==
-X-Gm-Message-State: AOAM5330EViBcKs3E9s/xbdyF4cSJ5wGwpUf8OEw+bcPAz9uAk07WNgt
-        0OJnCsYI5Zee93aAL7Z1xsct4GaTeIUvcw==
-X-Google-Smtp-Source: ABdhPJyy4SsCue451xsZCxSwcbpIngHN+dk4KJAkP1nY9sC4OYfB+UYx6uOLdvDVPtZ6atu9P0huDw==
-X-Received: by 2002:ae9:ed52:: with SMTP id c79mr5945646qkg.352.1612411163827;
-        Wed, 03 Feb 2021 19:59:23 -0800 (PST)
+        bh=isgUzkwVBn7fcHmqSZBNmmGQSAIIYRsCgJMj8nB3IjA=;
+        b=ZT403EBCOm8/DuOvGfoMzMn3GqbcIrzAXU6Nlj8DLoqPUxwmmOz7eVefIoxgMI/9VE
+         DL+AEthrcupLn1Spc6fMQiff44qvBgJFZIfFDPnCPvaCaPjulTFvypH2ULKyTUoeVIeH
+         UmSkfLoSjMpsIxOJdNWBci2WDKxbkntItPRH6cpKa6Ix3DxC8fzXaJmJx3+OQcSmhvKU
+         nONAtaTdbdq3tUoazW/RCiFEQ+vbpad/LFSrXYfqFbMSSdoyXwZIiODv1A8Y02CS9bTV
+         0aLYKI2FsKPzlGbW7MxuHFfWaIX2jF/HVZvgJc4S0d1ZDAvtI43hHOp4tlXKvkNqaB7P
+         EYew==
+X-Gm-Message-State: AOAM533eIqc7pv5hbg193Zxo+/k63o93svE+5qAOrDjnWW0kaLuYmMy4
+        W/yer4PCVT/rPivSbJ2IsxkPmv3OntbZPg==
+X-Google-Smtp-Source: ABdhPJy28Kokn37Oxc4Y73z9DM74AhJFPWQINGnzWKnIHopmw/cfWilYMwAh8Ux5y569XfK/NqsMsA==
+X-Received: by 2002:ac8:6607:: with SMTP id c7mr5561939qtp.341.1612411168557;
+        Wed, 03 Feb 2021 19:59:28 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:3a5f:649:7bf7:4ac8])
-        by smtp.gmail.com with ESMTPSA id a203sm4116891qkb.31.2021.02.03.19.59.23
+        by smtp.gmail.com with ESMTPSA id o88sm3421730qtd.79.2021.02.03.19.59.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Feb 2021 19:59:23 -0800 (PST)
-Date:   Wed, 3 Feb 2021 22:59:21 -0500
+        Wed, 03 Feb 2021 19:59:27 -0800 (PST)
+Date:   Wed, 3 Feb 2021 22:59:25 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v2 7/8] packfile: add kept-pack cache for
- find_kept_pack_entry()
-Message-ID: <f1c07324f62cf4d087c41165cefed98f554cfd78.1612411124.git.me@ttaylorr.com>
+Subject: [PATCH v2 8/8] builtin/repack.c: add '--geometric' option
+Message-ID: <d5561585c2221a9635eb0fc7a65298ee8a2b6348.1612411124.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
  <cover.1612411123.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,292 +71,501 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Often it is useful to both:
 
-In a recent patch we added a function 'find_kept_pack_entry()' to look
-for an object only among kept packs.
+  - have relatively few packfiles in a repository, and
 
-While this function avoids doing any lookup work in non-kept packs, it
-is still linear in the number of packs, since we have to traverse the
-linked list of packs once per object. Let's cache a reduced version of
-that list to save us time.
+  - avoid having so few packfiles in a repository that we repack its
+    entire contents regularly
 
-Note that this cache will last the lifetime of the program. We could
-invalidate it on reprepare_packed_git(), but there's not much point in
-being rigorous here:
+This patch implements a '--geometric=<n>' option in 'git repack'. This
+allows the caller to specify that they would like each pack to be at
+least a factor times as large as the previous largest pack (by object
+count).
 
-  - we might already fail to notice new .keep packs showing up after the
-    program starts. We only reprepare_packed_git() when we fail to find
-    an object. But adding a new pack won't cause that to happen.
-    Somebody repacking could add a new pack and delete an old one, but
-    most of the time we'd have a descriptor or mmap open to the old
-    pack anyway, so we might not even notice.
+Concretely, say that a repository has 'n' packfiles, labeled P1, P2,
+..., up to Pn. Each packfile has an object count equal to 'objects(Pn)'.
+With a geometric factor of 'r', it should be that:
 
-  - in pack-objects we already cache the .keep state at startup, since
-    56dfeb6263 (pack-objects: compute local/ignore_pack_keep early,
-    2016-07-29). So this is just extending that concept further.
+  objects(Pi) > r*objects(P(i-1))
 
-  - we don't have to worry about any packed_git being removed; we always
-    keep the old structs around, even after reprepare_packed_git()
+for all i in [1, n], where the packs are sorted by
 
-Here are p5303 results (as always, measured against the kernel):
+  objects(P1) <= objects(P2) <= ... <= objects(Pn).
 
-  Test                                        HEAD^                   HEAD
-  ----------------------------------------------------------------------------------------------
-  5303.5: repack (1)                          57.44(54.71+10.78)      57.06(54.29+10.96) -0.7%
-  5303.6: repack with --stdin-packs (1)       0.01(0.00+0.01)         0.01(0.01+0.00) +0.0%
-  5303.10: repack (50)                        71.32(88.38+4.90)       71.47(88.60+5.04) +0.2%
-  5303.11: repack with --stdin-packs (50)     3.43(11.81+0.22)        3.49(12.21+0.26) +1.7%
-  5303.15: repack (1000)                      215.59(493.75+14.62)    217.41(495.36+14.85) +0.8%
-  5303.16: repack with --stdin-packs (1000)   131.44(314.24+8.11)     126.75(309.88+8.09) -3.6%
+Since finding a true optimal repacking is NP-hard, we approximate it
+along two directions:
 
-Signed-off-by: Jeff King <peff@peff.net>
+  1. We assume that there is a cutoff of packs _before starting the
+     repack_ where everything to the right of that cut-off already forms
+     a geometric progression (or no cutoff exists and everything must be
+     repacked).
+
+  2. We assume that everything smaller than the cutoff count must be
+     repacked. This forms our base assumption, but it can also cause
+     even the "heavy" packs to get repacked, for e.g., if we have 6
+     packs containing the following number of objects:
+
+       1, 1, 1, 2, 4, 32
+
+     then we would place the cutoff between '1, 1' and '1, 2, 4, 32',
+     rolling up the first two packs into a pack with 2 objects. That
+     breaks our progression and leaves us:
+
+       2, 1, 2, 4, 32
+         ^
+
+     (where the '^' indicates the position of our split). To restore a
+     progression, we move the split forward (towards larger packs)
+     joining each pack into our new pack until a geometric progression
+     is restored. Here, that looks like:
+
+       2, 1, 2, 4, 32  ~>  3, 2, 4, 32  ~>  5, 4, 32  ~> ... ~> 9, 32
+         ^                   ^                ^                   ^
+
+This has the advantage of not repacking the heavy-side of packs too
+often while also only creating one new pack at a time. Another wrinkle
+is that we assume that loose, indexed, and reflog'd objects are
+insignificant, and lump them into any new pack that we create. This can
+lead to non-idempotent results.
+
+Suggested-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c |   6 +--
- object-store.h         |  10 ++++
- packfile.c             | 103 +++++++++++++++++++++++------------------
- packfile.h             |   4 --
- revision.c             |   8 ++--
- 5 files changed, 76 insertions(+), 55 deletions(-)
+ Documentation/git-repack.txt |  11 +++
+ builtin/repack.c             | 187 ++++++++++++++++++++++++++++++++++-
+ t/t7703-repack-geometric.sh  | 137 +++++++++++++++++++++++++
+ 3 files changed, 331 insertions(+), 4 deletions(-)
+ create mode 100755 t/t7703-repack-geometric.sh
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index fbd7b54d70..b2ba5aa14f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1225,9 +1225,9 @@ static int want_found_object(const struct object_id *oid, int exclude,
- 		 */
- 		unsigned flags = 0;
- 		if (ignore_packed_keep_on_disk)
--			flags |= ON_DISK_KEEP_PACKS;
-+			flags |= CACHE_ON_DISK_KEEP_PACKS;
- 		if (ignore_packed_keep_in_core)
--			flags |= IN_CORE_KEEP_PACKS;
-+			flags |= CACHE_IN_CORE_KEEP_PACKS;
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 92f146d27d..b1ffcfd974 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -165,6 +165,17 @@ depth is 4095.
+ 	Pass the `--delta-islands` option to `git-pack-objects`, see
+ 	linkgit:git-pack-objects[1].
  
- 		if (ignore_packed_keep_on_disk && p->pack_keep)
- 			return 0;
-@@ -3089,7 +3089,7 @@ static void read_packs_list_from_stdin(void)
- 	 * an optimization during delta selection.
- 	 */
- 	revs.no_kept_objects = 1;
--	revs.keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+	revs.keep_pack_cache_flags |= CACHE_IN_CORE_KEEP_PACKS;
- 	revs.blob_objects = 1;
- 	revs.tree_objects = 1;
- 	revs.tag_objects = 1;
-diff --git a/object-store.h b/object-store.h
-index c4fc9dd74e..4cbe8eae3c 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -105,6 +105,14 @@ static inline int pack_map_entry_cmp(const void *unused_cmp_data,
- 	return strcmp(pg1->pack_name, key ? key : pg2->pack_name);
- }
- 
-+#define CACHE_ON_DISK_KEEP_PACKS 1
-+#define CACHE_IN_CORE_KEEP_PACKS 2
++-g=<factor>::
++--geometric=<factor>::
++	Arrange resulting pack structure so that each successive pack
++	contains at least `<factor>` times the number of objects as the
++	next-largest pack.
+++
++`git repack` ensures this by determining a "cut" of packfiles that need to be
++repacked into one in order to ensure a geometric progression. It picks the
++smallest set of packfiles such that as many of the larger packfiles (by count of
++objects contained in that pack) may be left intact.
 +
-+struct kept_pack_cache {
-+	struct packed_git **packs;
-+	unsigned flags;
+ Configuration
+ -------------
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 2158b48f4c..b4e0e69661 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -296,6 +296,124 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ #define ALL_INTO_ONE 1
+ #define LOOSEN_UNREACHABLE 2
+ 
++struct pack_geometry {
++	struct packed_git **pack;
++	uint32_t pack_nr, pack_alloc;
++	uint32_t split;
 +};
 +
- struct raw_object_store {
- 	/*
- 	 * Set of all object directories; the main directory is first (and
-@@ -150,6 +158,8 @@ struct raw_object_store {
- 	/* A most-recently-used ordered version of the packed_git list. */
- 	struct list_head packed_git_mru;
- 
-+	struct kept_pack_cache *kept_pack_cache;
-+
- 	/*
- 	 * A map of packfiles to packed_git structs for tracking which
- 	 * packs have been loaded already.
-diff --git a/packfile.c b/packfile.c
-index 5f35cfe788..2a139c907b 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2031,10 +2031,7 @@ static int fill_pack_entry(const struct object_id *oid,
- 	return 1;
- }
- 
--static int find_one_pack_entry(struct repository *r,
--			       const struct object_id *oid,
--			       struct pack_entry *e,
--			       int kept_only)
-+int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
- {
- 	struct list_head *pos;
- 	struct multi_pack_index *m;
-@@ -2044,49 +2041,64 @@ static int find_one_pack_entry(struct repository *r,
- 		return 0;
- 
- 	for (m = r->objects->multi_pack_index; m; m = m->next) {
--		if (!fill_midx_entry(r, oid, e, m))
--			continue;
--
--		if (!kept_only)
--			return 1;
--
--		if (((kept_only & ON_DISK_KEEP_PACKS) && e->p->pack_keep) ||
--		    ((kept_only & IN_CORE_KEEP_PACKS) && e->p->pack_keep_in_core))
-+		if (fill_midx_entry(r, oid, e, m))
- 			return 1;
- 	}
- 
- 	list_for_each(pos, &r->objects->packed_git_mru) {
- 		struct packed_git *p = list_entry(pos, struct packed_git, mru);
--		if (p->multi_pack_index && !kept_only) {
--			/*
--			 * If this pack is covered by the MIDX, we'd have found
--			 * the object already in the loop above if it was here,
--			 * so don't bother looking.
--			 *
--			 * The exception is if we are looking only at kept
--			 * packs. An object can be present in two packs covered
--			 * by the MIDX, one kept and one not-kept. And as the
--			 * MIDX points to only one copy of each object, it might
--			 * have returned only the non-kept version above. We
--			 * have to check again to be thorough.
--			 */
--			continue;
--		}
--		if (!kept_only ||
--		    (((kept_only & ON_DISK_KEEP_PACKS) && p->pack_keep) ||
--		     ((kept_only & IN_CORE_KEEP_PACKS) && p->pack_keep_in_core))) {
--			if (fill_pack_entry(oid, e, p)) {
--				list_move(&p->mru, &r->objects->packed_git_mru);
--				return 1;
--			}
-+		if (!p->multi_pack_index && fill_pack_entry(oid, e, p)) {
-+			list_move(&p->mru, &r->objects->packed_git_mru);
-+			return 1;
- 		}
- 	}
- 	return 0;
- }
- 
--int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e)
-+static void maybe_invalidate_kept_pack_cache(struct repository *r,
-+					     unsigned flags)
- {
--	return find_one_pack_entry(r, oid, e, 0);
-+	if (!r->objects->kept_pack_cache)
-+		return;
-+	if (r->objects->kept_pack_cache->flags == flags)
-+		return;
-+	free(r->objects->kept_pack_cache->packs);
-+	FREE_AND_NULL(r->objects->kept_pack_cache);
++static uint32_t geometry_pack_weight(struct packed_git *p)
++{
++	if (open_pack_index(p))
++		die(_("cannot open index for %s"), p->pack_name);
++	return p->num_objects;
 +}
 +
-+static struct packed_git **kept_pack_cache(struct repository *r, unsigned flags)
++static int geometry_cmp(const void *va, const void *vb)
 +{
-+	maybe_invalidate_kept_pack_cache(r, flags);
++	uint32_t aw = geometry_pack_weight(*(struct packed_git **)va),
++		 bw = geometry_pack_weight(*(struct packed_git **)vb);
 +
-+	if (!r->objects->kept_pack_cache) {
-+		struct packed_git **packs = NULL;
-+		size_t nr = 0, alloc = 0;
-+		struct packed_git *p;
-+
-+		/*
-+		 * We want "all" packs here, because we need to cover ones that
-+		 * are used by a midx, as well. We need to look in every one of
-+		 * them (instead of the midx itself) to cover duplicates. It's
-+		 * possible that an object is found in two packs that the midx
-+		 * covers, one kept and one not kept, but the midx returns only
-+		 * the non-kept version.
-+		 */
-+		for (p = get_all_packs(r); p; p = p->next) {
-+			if ((p->pack_keep && (flags & CACHE_ON_DISK_KEEP_PACKS)) ||
-+			    (p->pack_keep_in_core && (flags & CACHE_IN_CORE_KEEP_PACKS))) {
-+				ALLOC_GROW(packs, nr + 1, alloc);
-+				packs[nr++] = p;
-+			}
-+		}
-+		ALLOC_GROW(packs, nr + 1, alloc);
-+		packs[nr] = NULL;
-+
-+		r->objects->kept_pack_cache = xmalloc(sizeof(*r->objects->kept_pack_cache));
-+		r->objects->kept_pack_cache->packs = packs;
-+		r->objects->kept_pack_cache->flags = flags;
-+	}
-+
-+	return r->objects->kept_pack_cache->packs;
- }
- 
- int find_kept_pack_entry(struct repository *r,
-@@ -2094,13 +2106,15 @@ int find_kept_pack_entry(struct repository *r,
- 			 unsigned flags,
- 			 struct pack_entry *e)
- {
--	/*
--	 * Load all packs, including midx packs, since our "kept" strategy
--	 * relies on that. We're relying on the side effect of it setting up
--	 * r->objects->packed_git, which is a little ugly.
--	 */
--	get_all_packs(r);
--	return find_one_pack_entry(r, oid, e, flags);
-+	struct packed_git **cache;
-+
-+	for (cache = kept_pack_cache(r, flags); *cache; cache++) {
-+		struct packed_git *p = *cache;
-+		if (fill_pack_entry(oid, e, p))
-+			return 1;
-+	}
-+
++	if (aw < bw)
++		return -1;
++	if (aw > bw)
++		return 1;
 +	return 0;
- }
- 
- int has_object_pack(const struct object_id *oid)
-@@ -2109,7 +2123,8 @@ int has_object_pack(const struct object_id *oid)
- 	return find_pack_entry(the_repository, oid, &e);
- }
- 
--int has_object_kept_pack(const struct object_id *oid, unsigned flags)
-+int has_object_kept_pack(const struct object_id *oid,
-+			 unsigned flags)
++}
++
++static void init_pack_geometry(struct pack_geometry **geometry_p)
++{
++	struct packed_git *p;
++	struct pack_geometry *geometry;
++
++	*geometry_p = xcalloc(1, sizeof(struct pack_geometry));
++	geometry = *geometry_p;
++
++	for (p = get_all_packs(the_repository); p; p = p->next) {
++		if (!pack_kept_objects && p->pack_keep)
++			continue;
++
++		ALLOC_GROW(geometry->pack,
++			   geometry->pack_nr + 1,
++			   geometry->pack_alloc);
++
++		geometry->pack[geometry->pack_nr] = p;
++		geometry->pack_nr++;
++	}
++
++	QSORT(geometry->pack, geometry->pack_nr, geometry_cmp);
++}
++
++static void split_pack_geometry(struct pack_geometry *geometry, int factor)
++{
++	uint32_t i;
++	uint32_t split;
++	off_t total_size = 0;
++
++	if (geometry->pack_nr <= 1) {
++		geometry->split = geometry->pack_nr;
++		return;
++	}
++
++	split = geometry->pack_nr - 1;
++
++	/*
++	 * First, count the number of packs (in descending order of size) which
++	 * already form a geometric progression.
++	 */
++	for (i = geometry->pack_nr - 1; i > 0; i--) {
++		struct packed_git *ours = geometry->pack[i];
++		struct packed_git *prev = geometry->pack[i - 1];
++		if (geometry_pack_weight(ours) >= factor * geometry_pack_weight(prev))
++			split--;
++		else
++			break;
++	}
++
++	if (split) {
++		/*
++		 * Move the split one to the right, since the top element in the
++		 * last-compared pair can't be in the progression. Only do this
++		 * when we split in the middle of the array (otherwise if we got
++		 * to the end, then the split is in the right place).
++		 */
++		split++;
++	}
++
++	/*
++	 * Then, anything to the left of 'split' must be in a new pack. But,
++	 * creating that new pack may cause packs in the heavy half to no longer
++	 * form a geometric progression.
++	 *
++	 * Compute an expected size of the new pack, and then determine how many
++	 * packs in the heavy half need to be joined into it (if any) to restore
++	 * the geometric progression.
++	 */
++	for (i = 0; i < split; i++)
++		total_size += geometry_pack_weight(geometry->pack[i]);
++	for (i = split; i < geometry->pack_nr; i++) {
++		struct packed_git *ours = geometry->pack[i];
++		if (geometry_pack_weight(ours) < factor * total_size) {
++			split++;
++			total_size += geometry_pack_weight(ours);
++		} else
++			break;
++	}
++
++	geometry->split = split;
++}
++
++static void clear_pack_geometry(struct pack_geometry *geometry)
++{
++	if (!geometry)
++		return;
++
++	free(geometry->pack);
++	geometry->pack_nr = 0;
++	geometry->pack_alloc = 0;
++	geometry->split = 0;
++}
++
+ int cmd_repack(int argc, const char **argv, const char *prefix)
  {
- 	struct pack_entry e;
- 	return find_kept_pack_entry(the_repository, oid, flags, &e);
-diff --git a/packfile.h b/packfile.h
-index 624327f64d..eb56db2a7b 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -161,10 +161,6 @@ int packed_object_info(struct repository *r,
- void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1);
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -303,6 +421,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list names = STRING_LIST_INIT_DUP;
+ 	struct string_list rollback = STRING_LIST_INIT_NODUP;
+ 	struct string_list existing_packs = STRING_LIST_INIT_DUP;
++	struct pack_geometry *geometry = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+ 	int i, ext, ret;
+ 	FILE *out;
+@@ -315,6 +434,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
+ 	int no_update_server_info = 0;
+ 	struct pack_objects_args po_args = {NULL};
++	int geometric_factor = 0;
  
--#define ON_DISK_KEEP_PACKS 1
--#define IN_CORE_KEEP_PACKS 2
--#define ALL_KEEP_PACKS (ON_DISK_KEEP_PACKS | IN_CORE_KEEP_PACKS)
--
- /*
-  * Iff a pack file in the given repository contains the object named by sha1,
-  * return true and store its location to e.
-diff --git a/revision.c b/revision.c
-index 4c5adb90b1..41c0478705 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2338,14 +2338,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		die(_("--unpacked=<packfile> no longer supported"));
- 	} else if (!strcmp(arg, "--no-kept-objects")) {
- 		revs->no_kept_objects = 1;
--		revs->keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
--		revs->keep_pack_cache_flags |= ON_DISK_KEEP_PACKS;
-+		revs->keep_pack_cache_flags |= CACHE_IN_CORE_KEEP_PACKS;
-+		revs->keep_pack_cache_flags |= CACHE_ON_DISK_KEEP_PACKS;
- 	} else if (skip_prefix(arg, "--no-kept-objects=", &optarg)) {
- 		revs->no_kept_objects = 1;
- 		if (!strcmp(optarg, "in-core"))
--			revs->keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+			revs->keep_pack_cache_flags |= CACHE_IN_CORE_KEEP_PACKS;
- 		if (!strcmp(optarg, "on-disk"))
--			revs->keep_pack_cache_flags |= ON_DISK_KEEP_PACKS;
-+			revs->keep_pack_cache_flags |= CACHE_ON_DISK_KEEP_PACKS;
- 	} else if (!strcmp(arg, "-r")) {
- 		revs->diff = 1;
- 		revs->diffopt.flags.recursive = 1;
+ 	struct option builtin_repack_options[] = {
+ 		OPT_BIT('a', NULL, &pack_everything,
+@@ -355,6 +475,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("repack objects in packs marked with .keep")),
+ 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
+ 				N_("do not repack this pack")),
++		OPT_INTEGER('g', "geometric", &geometric_factor,
++			    N_("find a geometric progression with factor <N>")),
+ 		OPT_END()
+ 	};
+ 
+@@ -381,6 +503,13 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE))
+ 		die(_(incremental_bitmap_conflict_error));
+ 
++	if (geometric_factor) {
++		if (pack_everything)
++			die(_("--geometric is incompatible with -A, -a"));
++		init_pack_geometry(&geometry);
++		split_pack_geometry(geometry, geometric_factor);
++	}
++
+ 	packdir = mkpathdup("%s/pack", get_object_directory());
+ 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
+ 
+@@ -395,9 +524,19 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		strvec_pushf(&cmd.args, "--keep-pack=%s",
+ 			     keep_pack_list.items[i].string);
+ 	strvec_push(&cmd.args, "--non-empty");
+-	strvec_push(&cmd.args, "--all");
+-	strvec_push(&cmd.args, "--reflog");
+-	strvec_push(&cmd.args, "--indexed-objects");
++	if (!geometry) {
++		/*
++		 * 'git pack-objects' will up all objects loose or packed
++		 * (either rolling them up or leaving them alone), so don't pass
++		 * these options.
++		 *
++		 * The implementation of 'git pack-objects --stdin-packs'
++		 * makes them redundant (and the two are incompatible).
++		 */
++		strvec_push(&cmd.args, "--all");
++		strvec_push(&cmd.args, "--reflog");
++		strvec_push(&cmd.args, "--indexed-objects");
++	}
+ 	if (has_promisor_remote())
+ 		strvec_push(&cmd.args, "--exclude-promisor-objects");
+ 	if (write_bitmaps > 0)
+@@ -428,17 +567,37 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				strvec_push(&cmd.env_array, "GIT_REF_PARANOIA=1");
+ 			}
+ 		}
++	} else if (geometry) {
++		strvec_push(&cmd.args, "--stdin-packs");
++		strvec_push(&cmd.args, "--unpacked");
+ 	} else {
+ 		strvec_push(&cmd.args, "--unpacked");
+ 		strvec_push(&cmd.args, "--incremental");
+ 	}
+ 
+-	cmd.no_stdin = 1;
++	if (geometry)
++		cmd.in = -1;
++	else
++		cmd.no_stdin = 1;
+ 
+ 	ret = start_command(&cmd);
+ 	if (ret)
+ 		return ret;
+ 
++	if (geometry) {
++		FILE *in = xfdopen(cmd.in, "w");
++		/*
++		 * The resulting pack should contain all objects in packs that
++		 * are going to be rolled up, but exclude objects in packs which
++		 * are being left alone.
++		 */
++		for (i = 0; i < geometry->split; i++)
++			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
++		for (i = geometry->split; i < geometry->pack_nr; i++)
++			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
++		fclose(in);
++	}
++
+ 	out = xfdopen(cmd.out, "r");
+ 	while (strbuf_getline_lf(&line, out) != EOF) {
+ 		if (line.len != the_hash_algo->hexsz)
+@@ -506,6 +665,25 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			if (!string_list_has_string(&names, sha1))
+ 				remove_redundant_pack(packdir, item->string);
+ 		}
++
++		if (geometry) {
++			struct strbuf buf = STRBUF_INIT;
++
++			uint32_t i;
++			for (i = 0; i < geometry->split; i++) {
++				struct packed_git *p = geometry->pack[i];
++				if (string_list_has_string(&names,
++							   hash_to_hex(p->hash)))
++					continue;
++
++				strbuf_reset(&buf);
++				strbuf_addstr(&buf, pack_basename(p));
++				strbuf_strip_suffix(&buf, ".pack");
++
++				remove_redundant_pack(packdir, buf.buf);
++			}
++			strbuf_release(&buf);
++		}
+ 		if (!po_args.quiet && isatty(2))
+ 			opts |= PRUNE_PACKED_VERBOSE;
+ 		prune_packed_objects(opts);
+@@ -527,6 +705,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	string_list_clear(&names, 0);
+ 	string_list_clear(&rollback, 0);
+ 	string_list_clear(&existing_packs, 0);
++	clear_pack_geometry(geometry);
+ 	strbuf_release(&line);
+ 
+ 	return 0;
+diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+new file mode 100755
+index 0000000000..96917fc163
+--- /dev/null
++++ b/t/t7703-repack-geometric.sh
+@@ -0,0 +1,137 @@
++#!/bin/sh
++
++test_description='git repack --geometric works correctly'
++
++. ./test-lib.sh
++
++GIT_TEST_MULTI_PACK_INDEX=0
++
++objdir=.git/objects
++midx=$objdir/pack/multi-pack-index
++
++test_expect_success '--geometric with no packs' '
++	git init geometric &&
++	test_when_finished "rm -fr geometric" &&
++	(
++		cd geometric &&
++
++		git repack --geometric 2 >out &&
++		test_i18ngrep "Nothing new to pack" out
++	)
++'
++
++test_expect_success '--geometric with an intact progression' '
++	git init geometric &&
++	test_when_finished "rm -fr geometric" &&
++	(
++		cd geometric &&
++
++		# These packs already form a geometric progression.
++		test_commit_bulk --start=1 1 && # 3 objects
++		test_commit_bulk --start=2 2 && # 6 objects
++		test_commit_bulk --start=4 4 && # 12 objects
++
++		find $objdir/pack -name "*.pack" | sort >expect &&
++		git repack --geometric 2 -d &&
++		find $objdir/pack -name "*.pack" | sort >actual &&
++
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--geometric with small-pack rollup' '
++	git init geometric &&
++	test_when_finished "rm -fr geometric" &&
++	(
++		cd geometric &&
++
++		test_commit_bulk --start=1 1 && # 3 objects
++		test_commit_bulk --start=2 1 && # 3 objects
++		find $objdir/pack -name "*.pack" | sort >small &&
++		test_commit_bulk --start=3 4 && # 12 objects
++		test_commit_bulk --start=7 8 && # 24 objects
++		find $objdir/pack -name "*.pack" | sort >before &&
++
++		git repack --geometric 2 -d &&
++
++		# Three packs in total; two of the existing large ones, and one
++		# new one.
++		find $objdir/pack -name "*.pack" | sort >after &&
++		test_line_count = 3 after &&
++		comm -3 small before | tr -d "\t" >large &&
++		grep -qFf large after
++	)
++'
++
++test_expect_success '--geometric with small- and large-pack rollup' '
++	git init geometric &&
++	test_when_finished "rm -fr geometric" &&
++	(
++		cd geometric &&
++
++		# size(small1) + size(small2) > size(medium) / 2
++		test_commit_bulk --start=1 1 && # 3 objects
++		test_commit_bulk --start=2 1 && # 3 objects
++		test_commit_bulk --start=2 3 && # 7 objects
++		test_commit_bulk --start=6 9 && # 27 objects &&
++
++		find $objdir/pack -name "*.pack" | sort >before &&
++
++		git repack --geometric 2 -d &&
++
++		find $objdir/pack -name "*.pack" | sort >after &&
++		comm -12 before after >untouched &&
++
++		# Two packs in total; the largest pack from before running "git
++		# repack", and one new one.
++		test_line_count = 1 untouched &&
++		test_line_count = 2 after
++	)
++'
++
++test_expect_success '--geometric ignores kept packs' '
++	git init geometric &&
++	test_when_finished "rm -fr geometric" &&
++	(
++		cd geometric &&
++
++		test_commit kept && # 3 objects
++		test_commit pack && # 3 objects
++
++		KEPT=$(git pack-objects --revs $objdir/pack/pack <<-EOF
++		refs/tags/kept
++		EOF
++		) &&
++		PACK=$(git pack-objects --revs $objdir/pack/pack <<-EOF
++		refs/tags/pack
++		^refs/tags/kept
++		EOF
++		) &&
++
++		# neither pack contains more than twice the number of objects in
++		# the other, so they should be combined. but, marking one as
++		# .kept on disk will "freeze" it, so the pack structure should
++		# remain unchanged.
++		touch $objdir/pack/pack-$KEPT.keep &&
++
++		find $objdir/pack -name "*.pack" | sort >before &&
++		git repack --geometric 2 -d &&
++		find $objdir/pack -name "*.pack" | sort >after &&
++
++		# both packs should still exist
++		test_path_is_file $objdir/pack/pack-$KEPT.pack &&
++		test_path_is_file $objdir/pack/pack-$PACK.pack &&
++
++		# and no new packs should be created
++		test_cmp before after &&
++
++		# Passing --pack-kept-objects causes packs with a .keep file to
++		# be repacked, too.
++		git repack --geometric 2 -d --pack-kept-objects &&
++
++		find $objdir/pack -name "*.pack" >after &&
++		test_line_count = 1 after
++	)
++'
++
++test_done
 -- 
 2.30.0.533.g2f8b6b552f.dirty
-
