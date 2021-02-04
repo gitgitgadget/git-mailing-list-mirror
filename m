@@ -2,87 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5517C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB58C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AB6064E22
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:23:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A6D064E22
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 18:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239024AbhBDSX1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 13:23:27 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57566 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238891AbhBDSXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 13:23:19 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0804A82CF;
-        Thu,  4 Feb 2021 13:22:36 -0500 (EST)
+        id S238933AbhBDSZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 13:25:29 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55557 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239059AbhBDSZV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 13:25:21 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9CAE9122513;
+        Thu,  4 Feb 2021 13:24:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=/r/9nZveBO8xoDd6Pzf3jV/B/
-        Ns=; b=xq03a6hj9oItmqja9RZzY/eit3+auhSWAQKRQXLTp8E6a/RTMAOIA5RnA
-        xggkY/u/vxmOEmZ99P+fvZXZg2EkE73kXcK8i64Z6SA8MVZ9ufZUoX4HJCMZO9ev
-        ShSWgYZkUQWSqrY0BshGsLjaF5019/p0JDksYfP3iMEjcTylQI=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OoqTxXIXAFiPZOux/aKPosTKqug=; b=km7L2R
+        ARl+ATKg6HWQooQDoyQI3AO8Hoy1dhimv4viP2ll5vi+hQpWB3osQBgWNwY7ZPKD
+        HgEQDr3a73oEXk66VtUF5bryhzvIPk+bnPKV2ctvvtnvT6VC/dth2WiGrWqUTGDg
+        EAyk1pYNIEEE+fySwUOBxMDeo45Lxe5FX474M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=QABfw2ojN/gJfWekklX
-        F14myCmynpCRzoLaS0l1BqBJ6AkJAKE54t/MpmpVKjoIImNhY5OemWRHk3HV9VIt
-        bhS4He8FvTcrRX8pa/xZnGcVPX/NnS2Rear7N1usRLsiQxmMFExSHER8HXnc5KkH
-        H8o04RZ0veKVB9tbrCA8jFaY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D94F2A82CE;
-        Thu,  4 Feb 2021 13:22:36 -0500 (EST)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IOOOjUwBs1LS+fNnxMiRcrOfW5FMqT/M
+        Tar0Vk1YkPNBew+UTfoiiqar+BDGg94zBKNBODHmei/F0gR2uC5Hb5uypPz1nOfl
+        uGTWd8x6gahaJ66iGAj+EXIsPWuI8Q4rmEqNB0fGpc8E39RAMPd14gYLHXKclgLe
+        0sIuYenQhEw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9515E122512;
+        Thu,  4 Feb 2021 13:24:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5B220A82CD;
-        Thu,  4 Feb 2021 13:22:36 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DBBC6122511;
+        Thu,  4 Feb 2021 13:24:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH 21/25] pickaxe: use PCREv2 for -G and -S
-References: <20210203032811.14979-1-avarab@gmail.com>
-        <20210203032811.14979-22-avarab@gmail.com>
-Date:   Thu, 04 Feb 2021 10:22:35 -0800
-Message-ID: <xmqqpn1f7kwk.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Li Linchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH] builtin/clone.c: add --no-shallow option
+References: <pull.865.git.1612409491842.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2102041458410.54@tvgsbejvaqbjf.bet>
+Date:   Thu, 04 Feb 2021 10:24:35 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2102041458410.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 4 Feb 2021 15:00:13 +0100 (CET)")
+Message-ID: <xmqqlfc37kt8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F4CC4170-6715-11EB-9D49-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3CA2792E-6716-11EB-B301-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Follow-up b65abcafc7a (grep: use PCRE v2 for optimized fixed-string
-> search, 2019-07-01) and remove the use of kwset in the pickaxe code
-> for fixed-string search, in favor of optimistically using PCRE v2.
+> Hi,
 >
-> This does mean that the semantics of the -G option subtly change,
-> before it's an ERE, whereas now it'll be a PCRE if we're compiled with
-> PCRE. Since PCRE is almost entirely a strict superset of ERE syntax I
-> think this is OK.
+> in addition to what Junio said:
+>
+> On Thu, 4 Feb 2021, Li Linchao via GitGitGadget wrote:
+>
+>> diff --git a/builtin/clone.c b/builtin/clone.c
+>> index e335734b4cfd..b07d867e6641
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -858,6 +860,9 @@ static int git_clone_config(const char *k, const char *v, void *cb)
+>>  		free(remote_name);
+>>  		remote_name = xstrdup(v);
+>>  	}
+>> +	if (!strcmp(k, "clone.rejectshallow")) {
+>> +		option_no_shallow = 1;
+>
+> This needs to use `git_config_bool(k, v)` to allow for
+> `clone.rejectShallow = false`.
 
-Since Git is no longer a tool shared among 100 developers who are at
-least acquaintances, there will be people who are bothered by the
-differences, and such a change deserves a backward-compatibility
-warning in the release notes, at least.
+Thanks.  I completely missed that.
 
-Recently, I discovered that I've been building my personal copy of
-Git without LIBPCRE support at all for a long time.  It is possible
-I've never built with LIBPCRE.  This series may give me incentive to
-start using "git grep -P" ;-)
-
-Thanks.
