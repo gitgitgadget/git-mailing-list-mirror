@@ -2,185 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8BC1C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 11:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78EE5C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 14:03:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9813564DE1
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 11:07:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3711E64F53
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 14:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235433AbhBDLH0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 06:07:26 -0500
-Received: from smtp515.hk.chengmail.me ([113.10.190.198]:46159 "EHLO
-        smtp515.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235499AbhBDLHY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 06:07:24 -0500
-X-Greylist: delayed 2023 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Feb 2021 06:07:23 EST
-X-CHENGMAILHOST: 113.10.190.198
-X-CHENGMAIL-INSTANCEID: 3141.601bcd53.6bbc.0
-Date:   Thu, 4 Feb 2021 18:32:52 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>,
-        dscho <johannes.schindelin@gmx.de>
-Subject: Re: Re: [PATCH] builtin/clone.c: add --no-shallow option
-References: <pull.865.git.1612409491842.gitgitgadget@gmail.com>, 
-        <xmqq35yc9yan.fsf@gitster.c.googlers.com>
-X-Priority: 3
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-X-source-message-id: <2021020418325250366956@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
-Message-ID: <57d5526c66d411eb81800024e87935e7@oschina.cn>
+        id S236494AbhBDODg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 09:03:36 -0500
+Received: from mout.gmx.net ([212.227.17.22]:36055 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236571AbhBDOBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 09:01:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1612447209;
+        bh=dtNlXQZnhb7mnLY5TTsGS7N+58XrFO2+IkaZq27cpPc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DR7yveZRj5SCB9ZB/928cMTAyq71uf24k2O2wgug61jvag6kDUY8RP8978/1XEdfc
+         y03RWSGrdZm9LL9ibTSr2/0BTomcbFH9YwVMUSc6OnPB3JnG2rcwwlS12XVr43C+l1
+         82jvZ7OznHdVflxrMLVyA6ctSyQPOC2lmsq7kJAI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([89.1.214.8]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VD8-1lzqQF0O6c-016uq7; Thu, 04
+ Feb 2021 15:00:09 +0100
+Date:   Thu, 4 Feb 2021 15:00:13 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Li Linchao <lilinchao@oschina.cn>,
+        lilinchao <lilinchao@oschina.cn>
+Subject: Re: [PATCH] builtin/clone.c: add --no-shallow option
+In-Reply-To: <pull.865.git.1612409491842.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2102041458410.54@tvgsbejvaqbjf.bet>
+References: <pull.865.git.1612409491842.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LMD72WhqHlXg7wFzyKmLUMa+qHiZr1eRZAVjssywGvqhUiNSoRy
+ oTSVTX9YE6x59k8SVeRVviA2BnUor0Xk/zNvnkebDCbUMNLnGXdubVlTUcACDC8zZ/uzIE8
+ vpts2/ElopaGvPgnRz3/E/WoDbT9PZQN6wl+ilLvegdSRkQlQ9t97vEuu//p3N1uRyGBkcj
+ +27i8Ar6p0XZINfC8hTdg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E0TNKo9kmB4=:JdqR4GsLS50L7JMtUANyEX
+ LxdqmNp43pbA1DdbxS4gIo0PnIN2saPWKt/O2EyihP46nx1dc4qNv2JSXS2ZPAdqoSd39zoES
+ +/fCxi8CpQ7cKmyqDShf2pczF54c++lzd2GifMd+jB8mnYvorEv2bmAiJzJ5TKlkhSaO7NnIW
+ 95Skv5f4EdkwV7rSl1UKKz406mfpYxp/Tjti6aT5oq+PNgNolF70+2s5+WhPerWmjDOqFETDU
+ jk37LWaAVd+awgrnfTVgDZ6lKI2gopzOOHDzq5eDLh7jUUjgEAi7WkWt7kDLzP5tuGfxQmMEf
+ F4LpOlFvzLzeBX63KRrP8BQPCJrR+sTr/uzMLVgBsjayEDVi7Or6k7yCOMo/pquFTEcsqhTWx
+ cHE1KF+5dqf8C1/3KQfTlpRXFn/0jESPLzHTuxuD2vFoHNTqsY7iBbahUhiGELieqvs7v9+Zs
+ ys9XNEsKrYym/1s7sDPTN3b8OXFnDJhApvfWsRpOVpxz8dT34LqIMjRVjYdSUXZuBsti2xRvE
+ y7Wi/gOoLsIheWuq1d9IfLvlBmXFGsAzyPs4ug4XvkiXR0ACeH80IheWteYTQHLe5/rWiBwvK
+ o3EbKZ5tXX3vQeGkD27TXiIrzjvCpZO/4fu8rNp/8n66qf8VgWbjGl6rBJuzZr7lmS7sg6S3E
+ hP3CqV2RGpb/KMdwLkL0eRkJSyFTCZJL41tk3aKAdTJBqWko9TMdwYBqgz8vsj1WKDQnyezGP
+ f4/+u18yqX+GRlqpgBFFMw4QmxrlzYN5D54kZrJuk2hpbVC5GDiAGrQM+mx9W2tNRdWQiFYhv
+ txwI0teDQJ88Le2LvNn7YbTpRT/TUM8nDlawPZlktCy3ZwRSSosV5lqrlYQzkHmb7LUfZN194
+ amn9pJkMiIa1WGmMCOWYAut+iWACrJs7NJK/ys/Xs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ci0tLS0tLS0tLS0tLS0tCmxpbGluY2hhb0Bvc2NoaW5hLmNuCj4iTGkgTGluY2hhbyB2aWEgR2l0
-R2l0R2FkZ2V0IiA8Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4gd3JpdGVzOgo+Cj4+IEZyb206IGxp
-bGluY2hhbyA8bGlsaW5jaGFvQG9zY2hpbmEuY24+Cj4+Cj4+IFRoaXMgcGF0Y2ggYWRkIGEgbmV3
-IG9wdGlvbiB0aGF0IHJlamVjdCB0byBjbG9uZSBhIHNoYWxsb3cgcmVwb3NpdG9yeS4KPgo+QSBj
-YW5vbmljYWwgZm9ybSBvZiBvdXIgbG9nIG1lc3NhZ2Ugc3RhcnRzIGJ5IGV4cGxhaW5pbmcgdGhl
-IG5lZWQsCj5hbmQgdGhlbiBwcmVzZW50cyB0aGUgc29sdXRpb24gYXQgdGhlIGVuZC4gCgpPaywg
-d2lsbCBkby4KCj4KPj4gQ2xpZW50cyBkb24ndCBrbm93IGl0J3MgYSBzaGFsbG93IHJlcG9zaXRv
-cnkgdW50aWwgdGhleSBkb3dubG9hZCBpdAo+PiBsb2NhbGx5LCBpbiBzb21lIHNjZW5hcmlvcnMs
-IGNsaWVudHMganVzdCBkb24ndCB3YW50IHRvIGNsb25lIHRoaXMga2luZAo+Cj4ic2NlbmFyaW9z
-Ii7CoCAiaW4gc29tZSBzY2VuYXJpb3MiIHdvdWxkIGhhdmUgdG8gYmUgY2xhcmlmaWVkIGEgYml0
-Cj5tb3JlIHRvIGp1c3RpZnkgd2h5IGl0IGlzIGEgZ29vZCBpZGVhIHRvIGhhdmUgc3VjaCBhIGZl
-YXR1cmUuIAoKSSBmb3VuZCBhbiBpc3N1ZSBkZXNjcmliZWQgbGlrZSB0aGlzOgoKwqAgwqDCoFRo
-ZSBibGFtZSBpbmZvcm1hdGlvbiBjYW4gYmUgY29tcGxldGVseSB3cm9uZyB3aGVuwqBmZXRjaGlu
-ZyBpdCBmcm9tCsKgIMKgIGEgc2hhbGxvdyBjbG9uZSwgd2l0aG91dCBlcnJvcnMgb3Igd2Fybmlu
-Z3MuwqBXaGVuIHRoZSBvdXRjb21lIGlzIGludmFsaWQKwqAgwqDCoGRhdGEsIGl0J3MgZXh0cmVt
-ZWx5IGRpZmZpY3VsdCB0byBkaWFnbm9zZSB0aGF0IGl0IGNvbWVzIGZyb20gYSBzaGFsbG93IGNs
-b25lLgrCoCDCoMKgSWYgYSBsaW5lIGluIGEgZmlsZSB3YXMgbm90IGNoYW5nZWQgaW4gdGhlIGNv
-bW1pdHMgdGhhdCB3ZXJlIGRvd25sb2FkZWQgYXMKwqAgwqDCoHBhcnQgb2YgdGhlIHNoYWxsb3cg
-ZmV0Y2gsIGdpdCB3aWxsIHJlcG9ydCB0aGUgZmlyc3Qga25vd24gY29tbWl0IGFzIHRoZSBhdXRo
-b3IuCsKgIMKgwqBUaGlzIGhhcyBhIGJpZyBpbXBhY3Qgb24gdGhlIGF1dG8tYXNzaWdubWVudCBv
-ZiBuZXcgaXNzdWVzLgoKSXQgbG9va3MgbGlrZSB0aGlzIGlzIGFub3RoZXIgc2NlbmFyaW8gdGhh
-dCBjYW4gcHJvdmUgdGhpcyBmZWF0dXJlIGlzwqBuZWNlc3NhcnkuCgo+Cj4+IG9mIHJlcG9zaXRv
-cnksIGFuZCB3YW50IHRvIGV4aXQgdGhlIHByb2Nlc3MgaW1tZWRpYXRlbHkgd2l0aG91dCBjcmVh
-dGluZwo+PiBhbnkgdW5uZWNlc3NhcnkgZmlsZXMuCj4KPiJjbGllbnRzIGRvbid0IGtub3cgaXQn
-cyBhIHNoYWxsb3cgcmVwb3NpdG9yeSB1bnRpbCB0aGV5IGRvd25sb2FkIgo+bGVhZGluZyB0byAi
-c28gbGV0J3MgcmVqZWN0IGltbWVkaWF0ZWx5IHVwb24gZmluZGluZyBvdXQgdGhhdCB0aGV5Cj5h
-cmUgc2hhbGxvdyIgZG9lcyBtYWtlIHNlbnNlIGFzIGEgZmxvdyBvZiB0aG91Z2h0LCB0aG91Z2gu
-Cj4KPj4gKy0tbm8tc2hhbGxvdzo6Cj4+ICsJRG9uJ3QgY2xvbmUgYSBzaGFsbG93IHNvdXJjZSBy
-ZXBvc2l0b3J5LiBJbiBzb21lIHNjZW5hcmlvcnMsIGNsaWVudHMKPgo+InNjZW5hcmlvcyIgKG5v
-ICdyJykuCj4KPj4gZGlmZiAtLWdpdCBhL2J1aWx0aW4vY2xvbmUuYyBiL2J1aWx0aW4vY2xvbmUu
-Ywo+PiBvbGQgbW9kZSAxMDA2NDQKPj4gbmV3IG1vZGUgMTAwNzU1Cj4KPlVud2FycmFudGVkICJj
-aG1vZCAreCI7IGFjY2lkZW50cyBkbyBoYXBwZW4sIGJ1dCBwbGVhc2UgYmUgY2FyZWZ1bAo+YmVm
-b3JlIG1ha2luZyB3aGF0IHlvdSBkaWQgcHVibGljIDstKSAKCk9vcHMsIHRoaXMgaGFwcGVuZWQg
-d2hlbiBJIGVkaXRlZCBpdCBpbiBWUyBDb2RlLCBpdCBub3RpY2VkIG1lICdwZXJtaXNzaW9uIGRl
-bmllZCcgd2hlbgpJIHdhbnQgdG8gc2F2ZSB0aGUgZmlsZS7CoAoKPgo+PiBAQCAtOTAsNiArOTEs
-NyBAQCBzdGF0aWMgc3RydWN0IG9wdGlvbiBidWlsdGluX2Nsb25lX29wdGlvbnNbXSA9IHsKPj7C
-oCBPUFRfX1ZFUkJPU0lUWSgmb3B0aW9uX3ZlcmJvc2l0eSksCj4+wqAgT1BUX0JPT0woMCwgInBy
-b2dyZXNzIiwgJm9wdGlvbl9wcm9ncmVzcywKPj7CoCBOXygiZm9yY2UgcHJvZ3Jlc3MgcmVwb3J0
-aW5nIikpLAo+PiArCU9QVF9CT09MKDAsICJuby1zaGFsbG93IiwgJm9wdGlvbl9ub19zaGFsbG93
-LCBOXygiZG9uJ3QgY2xvbmUgc2hhbGxvdyByZXBvc2l0b3J5IikpLAo+PsKgIE9QVF9CT09MKCdu
-JywgIm5vLWNoZWNrb3V0IiwgJm9wdGlvbl9ub19jaGVja291dCwKPj7CoCBOXygiZG9uJ3QgY3Jl
-YXRlIGEgY2hlY2tvdXQiKSksCj4+wqAgT1BUX0JPT0woMCwgImJhcmUiLCAmb3B0aW9uX2JhcmUs
-IE5fKCJjcmVhdGUgYSBiYXJlIHJlcG9zaXRvcnkiKSksCj4KPkl0IGlzIGEgYmFkIGlkZWEgdG8g
-Z2l2ZSBhIG5hbWUgdGhhdCBiZWdpbnMgd2l0aCAibm8tIiB0byBhbiBvcHRpb24KPndob3NlIGRl
-ZmF1bHQgY2FuIGJlIHR3ZWFrZWQgYnkgYSBjb25maWd1cmF0aW9uIHZhcmlhYmxlIFsqXS7CoCBJ
-Zgo+dGhlIGNvbmZpZ3VyYXRpb24gaXMgbmFtZWQgInJlamVjdHNoYWxsb3ciLCBwZXJoYXBzIGl0
-IGlzIGJldHRlciB0bwo+Y2FsbCBpdCAiLS1yZWplY3Qtc2hhbGxvdyIgaW5zdGVhZC4gCj4KPlRo
-aXMgaXMgYmVjYXVzZSBjb25maWd1cmVkIGRlZmF1bHQgbXVzdCBiZSBvdmVycmlkYWJsZSBmcm9t
-IHRoZQo+Y29tbWFuZCBsaW5lLsKgIEkuZS4gZXZlbiBpZiB5b3UgaGF2ZSBpbiB5b3VyIH4vLmdp
-dGNvbmZpZyB0aGlzOgo+Cj7CoMKgwqAgW2Nsb25lXQo+wqDCoMKgwqDCoMKgwqAgcmVqZWN0c2hh
-bGxvdyA9IHRydWUKPgo+eW91IHNob3VsZCBiZSBhYmxlIHRvIHNheSAiYWxsb3cgaXQgb25seSB0
-aGlzIHRpbWUiLCB3aXRoCj4KPiAkIGdpdCBjbG9uZSAtLW5vLXJlamVjdC1zaGFsbG93IGh0dHA6
-Ly9naXRodWIuY29tL2dpdC9naXQvIGdpdAo+Cj5hbmQgeW91IGRvIG5vdCB3YW50IHRvIGhhdmUg
-dG8gc2F5ICItLW5vLW5vLXNoYWxsb3ciLCB3aGljaCBzb3VuZHMKPmp1c3Qgc2lsbHkuCj4KPglT
-aWRlIG5vdGUuIGl0IGlzIGEgYmFkIGlkZWEgaW4gZ2VuZXJhbCwgZXZlbiBpZiB0aGUgb3B0aW9u
-Cj4JZG9lcyBub3QgaGF2ZSBjb3JyZXNwb25kaW5nIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUuwqAg
-VGhlCj4JZXhpc3RpbmcgIm5vLWNoZWNrb3V0IiBpcyBhIGhpc3RvcmljYWwgYWNjaWRlbnQgdGhh
-dAo+CWhhcHBlbmVkIGxvbmcgdGltZSBhZ28gYW5kIGNhbm5vdCBiZSByZW1vdmVkIGR1ZSB0bwo+
-CWNvbXBhdGliaWxpdHkuwqAgTGV0J3Mgbm90IGludHJvZHVjZSBhIG5ldyBvcHRpb24gdGhhdAo+
-CWZvbGxvd3Mgc3VjaCBhIGJhZCBwYXR0ZXJuLiAKPiAKCllvdSdyZSByaWdodCwgIi0tcmVqZWN0
-LXNoYWxsb3ciIGlzIG11Y2ggYmV0dGVyLsKgCkkgZGlkbid0IHJlYWxpemUgdGhhdCBib29sIG9w
-dGlvbnMgaGF2ZSBkZWZhdWx0IFtuby1dIG9wdGlvbi4KCj4+IEBAIC05NjMsNiArOTY4LDcgQEAg
-c3RhdGljIGludCBwYXRoX2V4aXN0cyhjb25zdCBjaGFyICpwYXRoKQo+PsKgIGludCBjbWRfY2xv
-bmUoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCj4+wqAg
-ewo+PsKgIGludCBpc19idW5kbGUgPSAwLCBpc19sb2NhbDsKPj4gKwlpbnQgaXNfc2hhbGxvdyA9
-IDA7Cj4+wqAgY29uc3QgY2hhciAqcmVwb19uYW1lLCAqcmVwbywgKndvcmtfdHJlZSwgKmdpdF9k
-aXI7Cj4+wqAgY2hhciAqcGF0aCwgKmRpciwgKmRpc3BsYXlfcmVwbyA9IE5VTEw7Cj4+wqAgaW50
-IGRlc3RfZXhpc3RzLCByZWFsX2Rlc3RfZXhpc3RzID0gMDsKPj4gQEAgLTEyMTUsNiArMTIyMSw3
-IEBAIGludCBjbWRfY2xvbmUoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFy
-ICpwcmVmaXgpCj4+wqAgaWYgKGZpbHRlcl9vcHRpb25zLmNob2ljZSkKPj7CoCB3YXJuaW5nKF8o
-Ii0tZmlsdGVyIGlzIGlnbm9yZWQgaW4gbG9jYWwgY2xvbmVzOyB1c2UgZmlsZTovLyBpbnN0ZWFk
-LiIpKTsKPj7CoCBpZiAoIWFjY2Vzcyhta3BhdGgoIiVzL3NoYWxsb3ciLCBwYXRoKSwgRl9PSykp
-IHsKPj4gKwlpc19zaGFsbG93ID0gMTsKPj7CoCBpZiAob3B0aW9uX2xvY2FsID4gMCkKPj7CoCB3
-YXJuaW5nKF8oInNvdXJjZSByZXBvc2l0b3J5IGlzIHNoYWxsb3csIGlnbm9yaW5nIC0tbG9jYWwi
-KSk7Cj4+wqAgaXNfbG9jYWwgPSAwOwo+Cj5UaGlzIGNoYW5nZSBpcyB0byB0aGUgbG9jYWwgY2xv
-bmUgY29kZXBhdGguwqAgQ2xvbmluZyBvdmVyIHRoZSB3aXJlCj53b3VsZCBub3QgZ28gdGhyb3Vn
-aCB0aGlzIHBhcnQuwqAgQW5kIHRocm91Z2hvdXQgdGhlIHBhdGNoLCB0aGlzIGlzCj50aGUgb25s
-eSBwbGFjZSB0aGF0IHNldHMgaXNfc2hhbGxvdyB0byAxLgo+Cj5BbHNvIGxldCdzIG5vdGUgdGhh
-dCB0aGlzIGlzIGFmdGVyIHdlIGNhbGxlZCBwYXJzZV9vcHRpb25zKCksIHNvIHRoZQo+dmFsdWUg
-b2Ygb3B0aW9uX25vX3NoYWxsb3cgaXMga25vd24gYXQgdGhpcyBwb2ludC4KPgo+U28sIHRoaXMg
-cGF0Y2ggZG9lcyBub3QgZXZlbiAqbmVlZCogdG8gaW50cm9kdWNlIGEgbmV3ICJpc19zaGFsbG93
-Igo+dmFyaWFibGUgYXQgYWxsLsKgIEl0IG9ubHkgbmVlZHMgdG8gYWRkCj4KPsKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKG9wdGlvbl9ub19zaGFsbG93
-KQo+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgZGllKC4uLik7Cj4KPmluc3RlYWQgb2YgYWRkaW5nICJpc19zaGFsbG93ID0gMSIg
-dG8gdGhlIGFib3ZlIGh1bmsuCj4KPkkgc29tZWhvdyB0aGluayB0aGF0IHRoaXMgaXMgb25seSBo
-YWxmIGEgZmVhdHVyZS0tLXdvdWxkbid0IGl0IGJlCj5tb3JlIHVzZWZ1bCBpZiB3ZSBhbHNvIHJl
-amVjdGVkIGEgbm9uLWxvY2FsIGNsb25lIGZyb20gYSBzaGFsbG93Cj5yZXBvc2l0b3J5PyAKPgo+
-QW5kIGZvciB0aGF0IC4uLgo+CsKgwqAKQWZ0ZXIgSSBhcHBsaWVkIHlvdXIgcmV2aWV3IHN1Z2dl
-c3Rpb25zIGFib3ZlLCB0aGVuIHdlIGNhbiByZWplY3QgYcKgCm5vbi1sb2NhbCBjbG9uZSBmcm9t
-IHNoYWxsb3cgcmVwby4gRm9yIG5vdywgaXQgd2lsbCBjbG9uZSBhIGVtcHR5wqAKcmVwbyB3aXRo
-IC0tbm8tbG9jYWwgb3B0aW9uLgoKPgo+PiBkaWZmIC0tZ2l0IGEvdC90NTYwNi1jbG9uZS1vcHRp
-b25zLnNoIGIvdC90NTYwNi1jbG9uZS1vcHRpb25zLnNoCj4+IGluZGV4IDdmMDgyZmIyM2I2YS4u
-OWQzMTBkYmIxNThhIDEwMDc1NQo+PiAtLS0gYS90L3Q1NjA2LWNsb25lLW9wdGlvbnMuc2gKPj4g
-KysrIGIvdC90NTYwNi1jbG9uZS1vcHRpb25zLnNoCj4+IEBAIC00Miw2ICs0MiwxMyBAQCB0ZXN0
-X2V4cGVjdF9zdWNjZXNzICdkaXNhbGxvd3MgLS1iYXJlIHdpdGggLS1zZXBhcmF0ZS1naXQtZGly
-JyAnCj4+wqAKPj7CoCAnCj4+wqAKPj4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3JlamVjdCBjbG9u
-ZSBzaGFsbG93IHJlcG9zaXRvcnknICcKPj4gKwlnaXQgY2xvbmUgLS1kZXB0aD0xIC0tbm8tbG9j
-YWwgcGFyZW50IHNoYWxsb3ctcmVwbyAmJgo+PiArCXRlc3RfbXVzdF9mYWlsIGdpdCBjbG9uZSAt
-LW5vLXNoYWxsb3cgc2hhbGxvdy1yZXBvIG91dCAyPmVyciAmJgo+PiArCXRlc3RfaTE4bmdyZXAg
-LWUgInNvdXJjZSByZXBvc2l0b3J5IGlzIHNoYWxsb3csIHJlamVjdCB0byBjbG9uZS4iIGVycgo+
-PiArCj4+ICsnCj4+ICsKPgo+Li4uIGluIGFkZGl0aW9uIHRvIHRoZSB0ZXN0IGZvciBhIGxvY2Fs
-IGNsb25lIGFib3ZlLCB5b3UnZCBhbHNvIHdhbnQKPnRvIHRlc3QgYSBub24tbG9jYWwgY2xvbmUs
-IHBlcmhhcHMgbGlrZSBzbzoKPgo+dGVzdF9leHBlY3Rfc3VjY2VzcyAncmVqZWN0IGNsb25lIHNo
-YWxsb3cgcmVwb3NpdG9yeScgJwo+CXJtIC1mciBzaGFsbG93LXJlcG8gJiYKPglnaXQgY2xvbmUg
-LS1kZXB0aD0xIC0tbm8tbG9jYWwgcGFyZW50IHNoYWxsb3ctcmVwbyAmJgo+CXRlc3RfbXVzdF9m
-YWlsIGdpdCBjbG9uZSAtLW5vLXNoYWxsb3cgLS1uby1sb2NhbCBzaGFsbG93LXJlcG8gb3V0IDI+
-ZXJyICYmCj4JdGVzdF9pMThuZ3JlcCAtZSAic291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywg
-cmVqZWN0IHRvIGNsb25lLiIgZXJyCj4KPicgCj4KPkRpdHRvIGZvciB0aGUgb3RoZXIgdGVzdCBz
-Y3JpcHQuCj4KPkFsc28sIHlvdSB3b3VsZCB3YW50IHRvIG1ha2Ugc3VyZSB0aGF0IHRoZSBjb21t
-YW5kIGxpbmUgb3ZlcnJpZGVzCj50aGUgY29uZmlndXJlZCBkZWZhdWx0LsKgIEkuZS4KPgo+CWdp
-dCAtYyBjbG9uZS5yZWplY3RzaGFsbG93PWZhbHNlIGNsb25lIC0tcmVqZWN0LXNoYWxsb3cKPgo+
-c2hvdWxkIHJlZnVzZSB0byBjbG9uZSBmcm9tIGEgc2hhbGxvdyBvbmUsIHdoaWxlIHRoZXJlIHNo
-b3VsZCBiZSBhCj53YXkgdG8gY291bnRlcm1hbmQgYSBjb25maWd1cmVkICJJIGFsd2F5cyByZWZ1
-c2UgdG8gY2xvbmUgZnJvbSBhCj5zaGFsbG93IHJlcG9zaXRvcnkiIHdpdGggImJ1dCBsZXQncyBh
-bGxvdyBpdCBvbmx5IHRoaXMgdGltZSIsIGkuZS4KPgo+CWdpdCAtYyBjbG9uZS5yZWplY3RzaGFs
-bG93PXRydWUgY2xvbmUgLS1uby1yZWplY3Qtc2hhbGxvdwo+Cj5vciBzb21ldGhpbmcgYWxvbmcg
-dGhlIGxpbmUuCj4KPgo+PiBkaWZmIC0tZ2l0IGEvdC90NTYxMS1jbG9uZS1jb25maWcuc2ggYi90
-L3Q1NjExLWNsb25lLWNvbmZpZy5zaAo+PiBpbmRleCA4ZTBmZDM5ODIzNmIuLjNhYWI4NmFkNGRl
-ZiAxMDA3NTUKPj4gLS0tIGEvdC90NTYxMS1jbG9uZS1jb25maWcuc2gKPj4gKysrIGIvdC90NTYx
-MS1jbG9uZS1jb25maWcuc2gKPj4gQEAgLTkyLDYgKzkyLDEzIEBAIHRlc3RfZXhwZWN0X3N1Y2Nl
-c3MgJ2Nsb25lIC1jIHJlbW90ZS48cmVtb3RlPi5mZXRjaD08cmVmc3BlYz4gLS1vcmlnaW49PG5h
-bWU+JyAnCj4+wqAgdGVzdF9jbXAgZXhwZWN0IGFjdHVhbAo+PsKgICcKPj7CoAo+PiArdGVzdF9l
-eHBlY3Rfc3VjY2VzcyAnY2xvbmUgLWMgY2xvbmUucmVqZWN0c2hhbGxvdycgJwo+PiArCXJtIC1y
-ZiBjaGlsZCAmJgo+PiArCWdpdCBjbG9uZSAtLWRlcHRoPTEgLS1uby1sb2NhbCAuIGNoaWxkICYm
-Cj4+ICsJdGVzdF9tdXN0X2ZhaWwgZ2l0IGNsb25lIC1jIGNsb25lLnJlamVjdHNoYWxsb3cgY2hp
-bGQgb3V0IDI+ZXJyICYmCj4KPlRoaXMgaXMgbm90IHF1aXRlIHJpZ2h0LCBldmVuIHRob3VnaCBp
-dCBtYXkgaGFwcGVuIHRvIHdvcmsuwqAgVGhlCj4iY2xvbmUucmVqZWN0c2hhbGxvdyIgdmFyaWFi
-bGUgaXMgYSBjb25maWd1cmF0aW9uIGFib3V0IHdoYXQgc2hvdWxkCj5oYXBwZW4gd2hlbiBjcmVh
-dGluZyBhIG5ldyByZXBvc2l0b3J5IGJ5IGNsb25pbmcsIHNvIGxldHRpbmcgImdpdAo+Y2xvbmUg
-LWMgdmFyWz12YWxdIiB0byBzZXQgdGhlIHZhcmlhYmxlIF9pbl8gdGhlIHJlc3VsdGluZyByZXBv
-c2l0b3J5Cj53b3VsZCBub3QgbWFrZSBtdWNoIHNlbnNlLsKgIEV2ZW4gaWYgdGhlIGNsb25lIHN1
-Y2NlZWRlZCwgbm9ib2R5IHdvdWxkCj5sb29rIGF0IHRoYXQgcGFydGljdWxhciBjb25maWd1cmF0
-aW9uIHZhcmlhYmxlIHRoYXQgaXMgc2V0IGluIHRoZQo+cmVzdWx0aW5nIHJlcG9zaXRvcnkuCj4K
-PkkgdGhpbmsgaXQgd291bGQgY29tbXVuaWNhdGUgdG8gdGhlIHJlYWRlcnMgYmV0dGVyIHdoYXQg
-d2UgYXJlCj50cnlpbmcgdG8gZG8sIGlmIHdlIHdyaXRlCj4KPgl0ZXN0X211c3RfZmFpbCBnaXQg
-LWMgY2xvbmUucmVqZWN0c2hhbGxvdz10cnVlIGNsb25lIGNoaWxkIG91dAo+Cj5pbnN0ZWFkLgo+
-IAo+VGhhbmtzLiAKClRoYW5rIHlvdSBmb3Igc28gbWFueSBlZmZlY3RpdmUgc3VnZ2VzdGlvbnMs
-IEkgd2lsbCB3cml0ZSB0ZXN0IGNhc2UgbW9yZSBjYXJlZnVsbHkgOik=
+Hi,
 
+in addition to what Junio said:
+
+On Thu, 4 Feb 2021, Li Linchao via GitGitGadget wrote:
+
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index e335734b4cfd..b07d867e6641
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -858,6 +860,9 @@ static int git_clone_config(const char *k, const char *v, void *cb)
+>  		free(remote_name);
+>  		remote_name = xstrdup(v);
+>  	}
+> +	if (!strcmp(k, "clone.rejectshallow")) {
+> +		option_no_shallow = 1;
+
+This needs to use `git_config_bool(k, v)` to allow for
+`clone.rejectShallow = false`.
+
+Ciao,
+Dscho
