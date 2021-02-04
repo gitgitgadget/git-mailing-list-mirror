@@ -2,133 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37C3EC4332E
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D15D4C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:12:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE2EA64DF5
-	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A703C64F4C
+	for <git@archiver.kernel.org>; Thu,  4 Feb 2021 00:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234209AbhBDAGd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Feb 2021 19:06:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38616 "EHLO
+        id S234278AbhBDAMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Feb 2021 19:12:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234179AbhBDAGY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Feb 2021 19:06:24 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67665C061573
-        for <git@vger.kernel.org>; Wed,  3 Feb 2021 16:05:44 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id d20so1853377oiw.10
-        for <git@vger.kernel.org>; Wed, 03 Feb 2021 16:05:44 -0800 (PST)
+        with ESMTP id S234173AbhBDAMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Feb 2021 19:12:13 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E10D8C061573
+        for <git@vger.kernel.org>; Wed,  3 Feb 2021 16:11:32 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id y187so1413542wmd.3
+        for <git@vger.kernel.org>; Wed, 03 Feb 2021 16:11:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=diamand.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vD9gmRmkdhfypqT1XEvDBsXG9aXVFsyBMA32mjeyVWY=;
-        b=DReldKtwkpCfeKwrr5Zc0KDdia5K/mBkRtm6+XkCBg6a5HmNBagcwiinGErkDt7ykJ
-         S7o1wZdPc9u7vWjsa8nBIaBoOyAA9X9C+cy6sClnXD1z9o9YgbfYWR3cQGiQJBWIHKkW
-         PzV2SMyWqKDy0dtCDvJrMQVH6BahrXzsra5QsHfHIUA5Kihwq24PScqw5EFC3kI/ixES
-         6JV1wcHpSivOQpU26JvNAU+kanrFfyCOP+f/k+WrWNI3nlp0k6dlyrecz75FiNZoPVv/
-         byFKHuNLFCUxFmjSvtH1/uC8dzqL16r1xdyunA/PmJVyh+ra+7SEpmEZ0q12FZtmEx27
-         rBSA==
+         :cc:content-transfer-encoding;
+        bh=GOW2I3mpBfBCYAD52h5UKW6R4yI0escdJG7Vj3yr7Qw=;
+        b=P217/4VHsXszglwWwF5g+XsCqmhNr86y5Sbp/IUrIGtieDTUW0yZTdOnL4aPIQldq7
+         +2K7KfURSx/60pySPLznEaHi1IB6JhQENICMP8Vg0cwHnRpU64dzgWEM1wO5obFVDX2/
+         sF9O8O0qIxDooy5lCbFP2Lir8cVtRgropFkaw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vD9gmRmkdhfypqT1XEvDBsXG9aXVFsyBMA32mjeyVWY=;
-        b=c+Iv5O2VNTiKmHnIhvJ+c2Nc8jvqp9uNSucZpuanacW9t5ljVzLkNdkZdzPiuwQviT
-         /VuiaVkIitbTm7VbnZE0uisz07evznuz5FRnmOik2KG/2c1APNxGZ5v5+bQXvdH4KThO
-         aUUow/ctE1K5+vX+x/bQuYvAKjMZuX51ua4Jwim08hK3bAm0oHc5ooPrjm+wDTIwFJrF
-         3NfmmQfzdpgnZWSlacUlfv3nW0+e0py+YGaO1Zyg6Bqf3kyvX8lBwUuG521SZa7uIsf6
-         zONGrV8g6Trw+bqjTOFnrQ/4HgpifM7aaLfQSMZcuGJigAivQW+eXgiF4R2hEgwHOvwQ
-         lX5Q==
-X-Gm-Message-State: AOAM5337sHVmuj4Cf6Wg5lhyjYYehJVssX+cmRrp5Ghfh0x2qaSTm9Tv
-        EByvcEbrcwMqTltgmakES09dF2byZQDNasBjEIg=
-X-Google-Smtp-Source: ABdhPJwGV/O24IxJxW8V2YxZODHM4TGvJODi8xfgcDEr3U6P4ja2i8KtfPZQGMONhD2a/ufJtXKQNDc2hZtwaTBT210=
-X-Received: by 2002:a54:4790:: with SMTP id o16mr3571086oic.39.1612397143789;
- Wed, 03 Feb 2021 16:05:43 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GOW2I3mpBfBCYAD52h5UKW6R4yI0escdJG7Vj3yr7Qw=;
+        b=K+URb10LdlnNLan0Q6ssmEZCcH/bykdQz/1s0ZE9q3AfIjyZhwRjMWw51ZnpR9riuB
+         Owc4pbfRWHLfbaA77FKLpocSewjHJf573WsggIrLQPBAS6c2GwEcf2HqXe8bIDvsbjt0
+         px1IWreim53FtpJgYutbZlfbjjVRqLqIfvtw1diW+Z5+Q8XDS3sc9OCWHG6GJ12R8t5n
+         FGMgm3/CyK6eJnkVvH44tRxdbZvPbxIps42/t1xvMlg+CZvmk4wXhAIKSEFASla6pICe
+         Rof6ADk1GmcKEUBFDOzmnCXztIzyRUasZxNgQP2MZfkIYDZRZSnCqubm4S6NBSyerYG6
+         FYnw==
+X-Gm-Message-State: AOAM532+lQBQF+Q8+ikSyd1ZvEC5fuC0SM4Uvpw4IxhxnJ0iysHLGdRb
+        mP5QQA0XQHxMSD2GGbC/4JRcXR9kWAldDCdEOxrQeA==
+X-Google-Smtp-Source: ABdhPJxqEkEARYFfQJkfVxNuLfyAy3E/0+QbIoS3nc/UA9YJQoU44bcwrS0FV2ViapEEVWzkpl45y5DDQPhUnRdxopo=
+X-Received: by 2002:a1c:b6c5:: with SMTP id g188mr3729372wmf.27.1612397491550;
+ Wed, 03 Feb 2021 16:11:31 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.842.git.1612331345.gitgitgadget@gmail.com>
- <pull.842.v2.git.1612382628.gitgitgadget@gmail.com> <xmqqlfc4byt6.fsf@gitster.c.googlers.com>
- <CABPp-BEgwfv70NRGgyAnHnQBPx4APSyYxNCbvH9F=7WGSj4DLQ@mail.gmail.com> <YBszm/s9na3ixUsO@coredump.intra.peff.net>
-In-Reply-To: <YBszm/s9na3ixUsO@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 3 Feb 2021 16:05:32 -0800
-Message-ID: <CABPp-BHMDi2i=9etq-L=0H=OO7Mbo=RFwMWTNebNB3H9Vbm3+A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Optimization batch 6: make full use of exact renames
-To:     Jeff King <peff@peff.net>
+References: <pull.864.git.1612371600332.gitgitgadget@gmail.com>
+ <xmqqpn1gbzdh.fsf@gitster.c.googlers.com> <BD039BE8-643F-4F61-A0DB-E3581C6B6B10@feiyangxue.com>
+In-Reply-To: <BD039BE8-643F-4F61-A0DB-E3581C6B6B10@feiyangxue.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Thu, 4 Feb 2021 00:11:20 +0000
+Message-ID: <CAE5ih7-F9efsiV5AQmw3ocjiy+BT6ZAT5fA0Lx0OSkVTO8Kqjg@mail.gmail.com>
+Subject: Re: [PATCH] git-p4: handle non-unicode characters in p4 cl
+To:     Feiyang Xue <me@feiyangxue.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Karsten Blees <blees@dcon.de>,
-        Derrick Stolee <stolee@gmail.com>
+        Feiyang via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        Feiyang <github@feiyangxue.com>, Ben Keene <seraphire@gmail.com>,
+        Yang Zhao <yang.zhao@skyboxlabs.com>,
+        Scott Lamb <slamb@slamb.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 3, 2021 at 3:37 PM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Feb 03, 2021 at 03:06:26PM -0800, Elijah Newren wrote:
->
-> > >    In an early attempt, I tried to retire rename_src[j], once
-> > >    rename_dst[i] has been found to be a "good enough" match for it,
-> > >    from the pool of rename src candidates to find a good match for
-> > >    rename_dst[k] for i < k, but naive implementation of it would not
-> > >    work well for obvious reasons---rename_src[j] may match a lot
-> > >    better with rename_dst[k] than rename_dst[i] but we do not know
-> > >    that until we try to estimate similarity with rename_dst[k].
-> >
-> > You may really like the next two series I submit.  I have a smarter
-> > way to find a "good enough" match (comparing to exactly one other file
-> > and often finding sufficient similarity), and one that'll make
-> > intuitive sense to users.
->
-> Here's a really old thread with an approach that may or may not be
-> similar to what you're thinking of:
->
->   https://lore.kernel.org/git/596909b30710220240g665054d8hc40bc5d2234ba9e1@mail.gmail.com/
->
-> Though maybe start with this summary message:
->
->   https://lore.kernel.org/git/596909b30710220309l1a28e646r9fd47f967dc32574@mail.gmail.com/
+We've started getting this quite a lot as we switched to a new P4
+server and I suspect that the i18N options are incorrect. So I think
+this would be welcome.
 
-Interesting thread; thanks for the link.  It's not remotely similar to
-what I have done, but a brief glance through it reminds me of the
-ideas at https://github.com/gitgitgadget/git/issues/519.
+A test case would be useful, as debugging these decoding problems is a
+bit of a nightmare.
 
-> I remember experimenting some with it at the time, but never making
-> things faster. It's entirely possible (likely, even) that I was simply
-> not doing it well enough.
+Luke
+
+On Wed, 3 Feb 2021 at 22:42, Feiyang Xue <me@feiyangxue.com> wrote:
 >
-> It's also been long enough since I looked at the rename code that I'm
-> not sure how different it is in practice. It still has a quadratic
-> matrix in the end. We basically do a similar strategy of
-> rolling-hash-fingerprint-and-see-where-things-collide, but I think we
-> may end up with more work during the quadratic part (again, it's been
-> a while, so I may just be totally off-base).
-
-I'm not sure if I should spoil the surprise for the patchsets I
-haven't yet submitted but... when I get done, for the testcases I have
-looked at, rename detection is no longer the slowest part of
-merging/rebasing/cherry-picking -- not even when there are tens of
-thousands of renames on one side of history.  And I didn't achieve
-that by making other parts of the code slower.
-
-If someone can come up with a real-world testcase where rename
-detection is still really slow in a merge/rebase/cherry-pick with my
-implemented optimizations, I've got at least one more optimization
-that I hadn't bothered implementing because everything was fast enough
-for me already.  And the idea you linked above and the ideas in the
-gitgitgadget issue linked above all have more possibilities that are
-complementary to what I have done that might help further.
-
-> I've also wondered if something similar might be helpful for delta
-> compression (which is now done with an O(m*n) sliding window).
+>
+>
+> On Feb 3, 2021, at 3:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Feiyang via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> From: Feiynag Xue <fxue@roku.com>
+>
+> P4 allows non-unicode characters in changelist description body,
+> so git-p4 needs to be character encoding aware when reading p4 cl
+>
+> This change adds 2 config options, one specifies encoding,
+> the other specifies erro handling upon unrecognized character.
+> Those configs  apply when it reads p4 description text, mostly
+> from commands "p4 describe" and "p4 changes".
+>
+> Signed-off-by: Feiynag Xue <fxue@roku.com>
+> ---
+>
+>
+> Adding a few people who had meaningful (read: needs some Perforce
+> knowledge) changes to this part of the codebase to Cc: to ask for
+> their reviews.
+>
+>
+> Adding Yang Zhao <yang.zhao@skyboxlabs.com>, who had made character
+> encodings related changes for paths.
+>
+> Adding Scott Lamb <slamb@slamb.org>, who had made changes to this
+> =E2=80=9Cp4CmdList()=E2=80=9D method.
+>
+>
+>
+>    git-p4: handle non-unicode characters in p4 changelist description
+>
+>    P4 allows non-unicode characters in changelist description body, so
+>    git-p4 needs to be character encoding aware when reading p4 cl.
+>
+>    This change adds 2 config options: one specifies encoding, the other
+>    specifies erro handling upon unrecognized character. Those configs app=
+ly
+>    when it reads p4 description text, mostly from commands "p4 describe"
+>    and "p4 changes".
+>
+>    ----------------------------------------------------------------------=
+--
+>
+>    I have an open question in mind: what might be the best default config
+>    to use?
+>
+>    Currently the python's bytes.decode() is called with default utf-8 and
+>    strict error handling, so git-p4 pukes on non-unicode characters. I
+>    encountered it when git p4 sync attempts to ingest a certain CL.
+>
+>    It seems to make sense to default to replace so that it gets rid of
+>    non-unicode chars while trying to retain information. However, i am
+>    uncertain on if we have use cases where it relies on the
+>    stop-on-non-unicode behavior. (Hypothetically say an automation that's
+>    expected to return error on non-unicode char in order to stop them fro=
+m
+>    propagating further?)
+>
+>    ----------------------------------------------------------------------=
+--
+>
+>    I tested it with git p4 sync to a P4 CL that somehow has non-unicode
+>    control character in description. With
+>    git-p4.cldescencodingerrhandling=3Dignore, it proceeded without error.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-864%2Ff=
+eiyeung%2Fdescription-text-encoding-handling-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-864/feiyeu=
+ng/description-text-encoding-handling-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/864
+>
+> Documentation/git-p4.txt | 13 +++++++++++++
+> git-p4.py                | 12 +++++++++++-
+> 2 files changed, 24 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+> index f89e68b424c..01a0e0b1067 100644
+> --- a/Documentation/git-p4.txt
+> +++ b/Documentation/git-p4.txt
+> @@ -638,6 +638,19 @@ git-p4.pathEncoding::
+> to transcode the paths to UTF-8. As an example, Perforce on Windows
+> often uses "cp1252" to encode path names.
+>
+> +git-p4.clDescEncoding::
+> + Perforce allows non-unicode characters in changelist description.
+> + Use this config to tell git-p4 what encoding Perforce had used for
+> + description text. This encoding is used to transcode the text to
+> + UTF-8. Defaults to "utf_8".
+>
+>
+> Would it still work if you replaced "utf_8" here with "UTF-8"?  If
+> we can use "UTF-8", this description (and the code that does so)
+> would read much less awkward, I would think.
+>
+>
+> I doubt =E2=80=9CUTF-8=E2=80=9D would work; I do believe the lower case =
+=E2=80=9Cutf-8=E2=80=9D would.
+>
+> Looking at Python3 documentation on encodings, UTF-8 is specified as =E2=
+=80=9Cutf_8=E2=80=9D.
+> It allows aliases of using dash to replace underscore, as pointed out by =
+the
+> samge page: https://docs.python.org/3/library/codecs.html#standard-encodi=
+ngs
+> > Notice that spelling alternatives that only differ in case or use a hyp=
+hen
+> > instead of an underscore are also valid aliases; therefore, e.g. 'utf-8=
+=E2=80=99
+> > is a valid alias for the 'utf_8' codec.
+>
+> I used underscore one =E2=80=9Cutf_8=E2=80=9D for consistency reason: thi=
+s file already has
+> uses of =E2=80=9Cutf_8=E2=80=9D.
+>
+>
+>
+> +git-p4.clDescNonUnicodeHandling::
+> + Perforce allows non-unicode characters in changelist description.
+> + Use this config to tell git-p4 what to do when it does not recognize
+> + the character encoding in description body. Defaults to "strict" for
+> + stopping upon encounter. "ignore" for skipping unrecognized
+> + characters; "replace" for attempting to convert into UTF-8.
+> +
+> git-p4.largeFileSystem::
+> Specify the system that is used for large (binary) files. Please note
+> that large file systems do not support the 'git p4 submit' command.
+> diff --git a/git-p4.py b/git-p4.py
+> index 09c9e93ac40..abbeb9156bd 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -206,6 +206,13 @@ def decode_path(path):
+>                 print('Path with non-ASCII characters detected. Used {} t=
+o decode: {}'.format(encoding, path))
+>         return path
+>
+> +def decode_changlist_description(text):
+> +    """Decode bytes or bytearray using configured changelist description=
+ encoding options
+> +    """
+> +    encoding =3D gitConfig('git-p4.clDescEncoding') or 'utf_8'
+> +    err_handling =3D gitConfig('git-p4.clDescEncodingErrHandling') or 's=
+trict'
+> +    return text.decode(encoding, err_handling)
+> +
+> def run_git_hook(cmd, param=3D[]):
+>     """Execute a hook if the hook exists."""
+>     if verbose:
+> @@ -771,7 +778,10 @@ def p4CmdList(cmd, stdin=3DNone, stdin_mode=3D'w+b',=
+ cb=3DNone, skip_info=3DFalse,
+>                 for key, value in entry.items():
+>                     key =3D key.decode()
+>                     if isinstance(value, bytes) and not (key in ('data', =
+'path', 'clientFile') or key.startswith('depotFile')):
+> -                        value =3D value.decode()
+> +                        if key =3D=3D 'desc':
+> +                            value =3D decode_changlist_description(value=
+)
+> +                        else:
+> +                            value =3D value.decode()
+>                     decoded_entry[key] =3D value
+>                 # Parse out data if it's an error response
+>                 if decoded_entry.get('code') =3D=3D 'error' and 'data' in=
+ decoded_entry:
+>
+> base-commit: e6362826a0409539642a5738db61827e5978e2e4
+>
+>
