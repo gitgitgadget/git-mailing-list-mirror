@@ -2,87 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B9B7C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82CA8C433E6
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:15:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DFAD664E05
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:09:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 398D164E40
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232009AbhBER07 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 12:26:59 -0500
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:46327 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233243AbhBERPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 12:15:19 -0500
-Received: by mail-ej1-f47.google.com with SMTP id w2so13450919ejk.13
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:57:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+lFTtdk9FyVpAkp6mcPIM8zfPA0T+1uBFKdEHJTb5zw=;
-        b=UAXYBJbxudeLMettpjf4bYwMH1tox4W5KbcTPKWEceqfkdpR3VnNuGCBe72NDG+Onm
-         8Gw81gRy1//cl8Max31lP2fllYY7q8PIpF/usthWv0FT6CiPJmdtI5mt3jXy5smXLGQ9
-         P30ti5uoYYrMoVsTnhZmeUx21bzFk9mpwZILP2cq93FYe90+X98oCa/9XHVztTFxoE/y
-         EMLPzgk0YMNEWQHlK1XYSiuMHeRHG8MpwO09/qFgrPXGcGlXEMgc0dXqNN466Xyc7nCf
-         rjA3N/9bdGgTWgmycIXlv9sQyYs7e7fYGBg4raWx7q9uD/DO5iSYKJ3GrFqBOPhHHugn
-         3zUQ==
-X-Gm-Message-State: AOAM530JtNta3SRqfIx2w7pudOYGQCmtIZwzAUrUB/Viqt87hMPfxJvg
-        KuhhPzxuHE9ttBUWUguW6SErip8UHkzH+yQbJvo=
-X-Google-Smtp-Source: ABdhPJw7FMyVtUOrk8bBjpWDLQycKW5WE83rQHyMz+2lRYVFS5Zj+6NSe2fUX2z1o3CezNdcQL1LsG9JF6NIze5XrkI=
-X-Received: by 2002:a17:907:98c3:: with SMTP id kd3mr5369927ejc.482.1612551420268;
- Fri, 05 Feb 2021 10:57:00 -0800 (PST)
-MIME-Version: 1.0
-References: <20210129182050.26143-1-charvi077@gmail.com> <20210204190507.26487-1-charvi077@gmail.com>
- <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
- <CAPSFM5f0Jk03tWCTerZP1JhcMHG4MXjVSZjPKm2uzQYc+cOwsw@mail.gmail.com> <CAP8UFD0VpgT=mTydWQRmqo9TFQvdfDiXuA1TcwAqG1BtXXdKxA@mail.gmail.com>
-In-Reply-To: <CAP8UFD0VpgT=mTydWQRmqo9TFQvdfDiXuA1TcwAqG1BtXXdKxA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 5 Feb 2021 13:56:48 -0500
-Message-ID: <CAPig+cR44eisWjbcsSiTyHqVKeqPKXMnc=-9BEjK5MFxPUBFkQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
+        id S233387AbhBERdA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 12:33:00 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51181 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233490AbhBERbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 12:31:39 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E30771238A3;
+        Fri,  5 Feb 2021 14:13:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9wycNGOlWkMbHj3/pSXDc9Hsy8Q=; b=ii6aXy
+        IYyxh5fYX43CSQvCPuDAZ0oOXNI40BPfof2cVttTbrvy7icm8E6Qi7rB6ZWVnHUn
+        tyHun9uga0YE3WG/C4tzQTS1nfAa0y7AJHR1+njFOeKNWlfoxCXgPmCQCbh1nXgt
+        2RBJ1pWmUiEJHLQqdBkYsKcxSLVbz5frJe0H8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pKmeIt/AJQtXVBrs6pu2TI/EWviQe55T
+        0QL7Rs3J9DlewZKV4WR8RwoBYqTPhSewepHpstm/iwXBU6ZpBkW2+CKuzAY2FaqQ
+        jb/99iDVrw5Fj359jE6z3KDNx8iEBJeX34OybX5wXDW6ookSzVJvZj6Xiy63efkY
+        eo67QKWdqJM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DB2AA1238A1;
+        Fri,  5 Feb 2021 14:13:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2B27A123898;
+        Fri,  5 Feb 2021 14:13:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     Charvi Mendiratta <charvi077@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
+References: <20210129182050.26143-1-charvi077@gmail.com>
+        <20210204190507.26487-1-charvi077@gmail.com>
+        <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
+        <CAPSFM5f0Jk03tWCTerZP1JhcMHG4MXjVSZjPKm2uzQYc+cOwsw@mail.gmail.com>
+        <CAP8UFD0VpgT=mTydWQRmqo9TFQvdfDiXuA1TcwAqG1BtXXdKxA@mail.gmail.com>
+Date:   Fri, 05 Feb 2021 11:13:13 -0800
+In-Reply-To: <CAP8UFD0VpgT=mTydWQRmqo9TFQvdfDiXuA1TcwAqG1BtXXdKxA@mail.gmail.com>
+        (Christian Couder's message of "Fri, 5 Feb 2021 19:25:27 +0100")
+Message-ID: <xmqqmtwi1g6u.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3279EB28-67E6-11EB-A7B9-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 5, 2021 at 1:25 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+Christian Couder <christian.couder@gmail.com> writes:
+
 > On Fri, Feb 5, 2021 at 10:42 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > On Fri, 5 Feb 2021 at 13:00, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > These changes are still worthwhile and can easily be done
-> > > incrementally atop what is already in next, I would think.
-> >
-> > I agree, these fixes are required. So, I am not sure but now to do these
-> > fixup shall I send another patch cleaning this patch series(v4) and rebase the
-> > patch on the 'next' branch ? Is it the right way ?
+>
+>> On Fri, 5 Feb 2021 at 13:00, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+>> > > * changed the flag type from enum todo_item_flags to unsigned
+>> > > * Replaced fixup_-* with fixup-* in lib-rebase.sh
+>> > > * fixup a small nit in Documentation
+>> >
+>> > These changes are still worthwhile and can easily be done
+>> > incrementally atop what is already in next, I would think.
+>>
+>> I agree, these fixes are required. So, I am not sure but now to do these
+>> fixup shall I send another patch cleaning this patch series(v4) and rebase the
+>> patch on the 'next' branch ? Is it the right way ?
 >
 > Yeah, I think you can send each of the above 3 changes in a different
 > patch on top of the 'next' branch. That would create a new 3 patch
 > long series, which you should give a new name and not consider v5 of
 > the previous patch series.
 
-Yes, whatever issues from my reviews seem worth fixing atop the
-existing v4 can be included in this new patch series. (I think there
-may have been a few things beyond the three listed in the v5 cover
-letter, but I didn't bother doing a full audit of my review emails, so
-I could be wrong.) As Christian said, just make it a new series,
-though be sure to build it atop your v4 rather than building it atop
-"next". (The problem with building atop "next" is that your series
-then gets held hostage by _every_ series already in "next", which
-makes it nearly impossible for your series to graduate to "master"
-since it can't graduate until every other existing series in "next"
-graduates to "master".) The one other important thing is to mention in
-the cover letter that your new series is built atop "cm/rebase-i",
-which lets Junio know where to place the new series when he picks it
-up (and also lets reviewers know where to apply it if they want to
-test it themselves).
+Correct, except that it shouldn't be on top of the 'next' branch.
+
+Please "git log --first-parent --oneline master..next" to find the
+tip of what got merged, and build on top of that instead.  I.e.
+
+    $ git show -s --oneline \
+	"origin/next^{/ branch 'cm/rebase-i' into }"
+    4f9aa6cec3 Merge branch 'cm/rebase-i' into next
+    $ git checkout -b my-follow-up-topic 4f9aa6cec3^2
+    ... work work work ...
+
+That is what we mean by "after getting merged to 'next', the topic
+gets polished incrementally".
+
+Alternatively, you can have branches from the broken-out repository
+handy, e.g.
+
+    $ git remote add brokenout https://github.com/gitster/git
+
+and you'd find the topic as I see it like so:
+
+    $ git fetch brokenout
+    $ git log --oneline brokenout/master..brokenout/cm/rebase-i
+
+HTH; thanks.
+
+
+
+
