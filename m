@@ -2,101 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25650C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83ADDC433E6
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:31:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBC7764DFA
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:18:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F8A264F70
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231274AbhBEHR6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 02:17:58 -0500
-Received: from mail-ej1-f51.google.com ([209.85.218.51]:37372 "EHLO
-        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231263AbhBEHR5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 02:17:57 -0500
-Received: by mail-ej1-f51.google.com with SMTP id jj19so10220936ejc.4
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 23:17:41 -0800 (PST)
+        id S231484AbhBEHbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 02:31:13 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:46645 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231388AbhBEHa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 02:30:59 -0500
+Received: by mail-ed1-f49.google.com with SMTP id y18so7570362edw.13
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 23:30:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=eJxN1l82GrDO+dgJnwo2UXQJGXlf5flEbFVBad18XIg=;
-        b=AHJZHccJqNVAS3T4+obZvWLAxrr/UZDaO3hrMgTNOA/y47mdiHaPVCEcK1jGIQMQ3/
-         t3DTG/ERrY9wKfWZodqyj7Pva9/py6Md35a+Fg4Du6l4pIZQ+Qz0UzBEuSUzyPMdgCt4
-         efSzWRzJUYKYSMxnwIyh/AO7wuoPoCZvF08AJ2G+kvm9cj+Gz1+sa+EAKgtzGrSQ7n60
-         vUASbFrHqdhbaOunVpNbJ9+pJ3nibdNucSQYVp9UxnRswBi7vTH11SM4lb0nK62Yl4/J
-         OmqCyfu7zg4NN6arKEeNUdk9riJC7KeN5dTp0bJVCv6JTLRhsuyshli26Wvqgh9TIV7x
-         19mg==
-X-Gm-Message-State: AOAM533NIZ9Yh2CxEJuts50ULl1k3PVsH/nFSYuaHR8xf/oCfGcaBGvK
-        +X5bUaXVwaNU42CIL5fZeotR/fz2ltou5YrPZ/s=
-X-Google-Smtp-Source: ABdhPJzEKzlWfSDOTm4IFvvLsMr8zuYQN4my4WrPoaM64MXZ4A/d7j7OuElL1Vls75jc7LWct/VfsQOElQfgY4RnwZ8=
-X-Received: by 2002:a17:906:3649:: with SMTP id r9mr2761068ejb.202.1612509435569;
- Thu, 04 Feb 2021 23:17:15 -0800 (PST)
+        bh=FrxYKcVZem7HCdoi61nim1m3/DIhThWejUe1taapE1A=;
+        b=lo8OXuMph8EjVYsKJK4msksIrCoPQmmXbz/s2DQs0mCL/2zRi9yZGQNTeMALz/ixJB
+         HQNrqSMSnaXPThTO+zDbo644Vxsqo+DptUFlgJwBuXgp76WsCGFTIzr9IGwSZ6HqcJaT
+         CR+HZ+GaVZUr1TyyeGJXw2vkgTx5CDgApk14+ZBuEOSoBZfcUNrmZizbwh5lg2/LeMyY
+         3zfdQUQR86ArOdE3UO3KIltUc1ZpX+xDqWEp+0t1p+Lo7IAOKc6OqXg7gCjhzWQ6bCzL
+         KdleOKoz7+36EmEZRX6I/yn4CdGyYEOevRhbMD7Wp2mXCMnJADDs6IHdjrzJD7SMyUwv
+         EStA==
+X-Gm-Message-State: AOAM530RjzMTt2ZT5ihorziz3gxAQ3YYGLrp5PA+LUKHnHKLx6PSkWz5
+        Rp/fP082TBYnzxsgaPoTuP+MBCsWWgqGFx/mnEfn3bCGZr4=
+X-Google-Smtp-Source: ABdhPJw8sKDNiWaqUacMhhcTPtClOyTuBoPQan56zqVoepfAhYY8lS2tK7fpEqv4++8PPS9YyRJ/P8GnemztZ5QO5X0=
+X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr2255351edt.221.1612510217024;
+ Thu, 04 Feb 2021 23:30:17 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.954.git.git.1612388043875.gitgitgadget@gmail.com> <xmqqa6skbw9u.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqa6skbw9u.fsf@gitster.c.googlers.com>
+References: <20210129182050.26143-1-charvi077@gmail.com> <20210204190507.26487-1-charvi077@gmail.com>
+In-Reply-To: <20210204190507.26487-1-charvi077@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 5 Feb 2021 02:17:04 -0500
-Message-ID: <CAPig+cRos+wGuwqbjuAV11kM5U0TPbBO9F4o4VJzQ4eZyxArMA@mail.gmail.com>
-Subject: Re: [PATCH] status: fix verbose status coloring inconsistency
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lance Ward via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Lance Ward <ljward10@gmail.com>
+Date:   Fri, 5 Feb 2021 02:30:06 -0500
+Message-ID: <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 3, 2021 at 5:51 PM Junio C Hamano <gitster@pobox.com> wrote:
-> "Lance Ward via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >  t/t7527-status-color-pipe.sh | 55 ++++++++++++++++++++++++++++++++++++
+On Thu, Feb 4, 2021 at 2:05 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> Changes from v4 :
+> (Thanks to Eric Sunshine, Christian Couder and Phillip Wood for suggestions
+>  and reviews)
+
+Thanks for working on this and re-rolling. Unfortunately, it seems
+that v4 already landed in Junio's `next` branch which means that he
+won't be replacing v4 wholesale as would have been the case if it was
+still in the `seen` branch. Once patches are in `next`, improvements
+are made by building changes atop them (incrementally) rather than
+replacing them. Whether or not it makes sense for you to spend time
+re-doing these patches as incremental changes is not clear. In fact...
+
+> The major change in this version is to remove the working of `fixup -C`
+> with amend! commit and will include in the another patch series, in order
+> to avoid the confusion. So there are following changes :
+> * removed the patch (rebase -i : teach --autosquash to work with amend!)
+> * updated the test script (t3437-*.sh), changed the test setup and removed
+>   two tests.
 >
-> Don't we already have test that checks "status" output including its
-> coloring already? I'd rather see us adding to existing test script,
-> than allocating a new number for a small subset of features being
-> tested for a command.  After all, test numbers are limited resource.
+>   Earlier every test includes the commit message having subject starting
+>   with amend! So, now it includes a setup of different branch for testing
+>   fixup with options and also updated all the tests.
+>   Removed the test - "skip fixup -C removes amend! from message" and also
+>   "sequence of fixup, fixup -C & squash --signoff works" as I think it would
+>   be better to test this also in the branch with amend! commit with different
+>   author. (Will add these tests with amend! commit implementation)
 
-t7508 seems like a good place for these tests.
+Despite these being nice cleanups to the standalone series, I'm not
+sure it's worth spending your time creating new patches to undo these
+from `next`. Removing them only to add them back later is not
+necessarily going to help "unconfuse" someone reading the commits in
+the permanent project history.
 
-> > +test_expect_success 'git status' '
-> > +     git status >raw &&
-> > +     test_decode_color <raw >out &&
-> > +     grep "original$" out
-> > +'
->
-> Not "new file: *original$" or something less false-positive prone?
+> * changed the flag type from enum todo_item_flags to unsigned
+> * Replaced fixup_-* with fixup-* in lib-rebase.sh
+> * fixup a small nit in Documentation
 
-The "new file:" message is localized, so this `grep` will need to
-become `test_i18ngrep` again (as it was in the original submission) if
-this approach is adopted, which is fine.
+These changes are still worthwhile and can easily be done
+incrementally atop what is already in next, I would think.
 
-> > +test_expect_success 'git -c color.status=never status' '
-> > +     git -c color.status=never status >raw &&
-> > +     test_decode_color <raw >out &&
-> > +     grep "original$" out
-> > +'
->
-> Would it make sense to have tests for color.status=true, I wonder.
-> It requires tty to actually "see" the colors output but sending
-> the output to tty is the normal use case, so we should care...
-
-I wondered if `color.status=true` might already be tested by t7508 but
-apparently it only checks `auto`.
-
-> > +test_expect_success 'git -c color.status=always status -v' '
-> > +     git -c color.status=always status -v >raw &&
-> > +     test_decode_color <raw >out &&
-> > +     grep "<CYAN>@@ -0,0 +1 @@<RESET>" out &&
-> > +     grep "GREEN>+<RESET><GREEN>1<RESET>" out
-> > +'
->
-> Are we forcing the standard palette?
-
-As this is a stand-alone test script with a well-controlled initial
-configuration, I expect it would be using the default palette. t7508
-does assign a custom palette for `color.status` but not, apparently,
-for `color.diff`, so it presumably should be okay there, as well.
+Anyhow, use your best judgment to decide how much work to devote to this.
