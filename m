@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E90C0C433E6
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97CC0C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:27:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85D5664EFE
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:27:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04A2564EE8
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:27:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231398AbhBEQoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 11:44:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44122 "EHLO
+        id S233000AbhBEQon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 11:44:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230064AbhBEQkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 11:40:53 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E98C061786
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 10:22:34 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id b3so8722810wrj.5
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:22:33 -0800 (PST)
+        with ESMTP id S233308AbhBEQky (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 11:40:54 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62FA5C06178A
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 10:22:35 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id p15so8693940wrq.8
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:22:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=73PanmKylEvqjb3EGhj/cA5vVvduH5Ze/XXY8XVnxuQ=;
-        b=nsaWo0Acznz94RcuDVOkVHR7bwQq/9yxFQKHhZ1rrd4eIvg4AGTQklmSTdh6ehKQ4U
-         DHEQoVF8YH56hubuTL/GFdzIXzAmUQc+BzZtvLCfTxHRytIuF82NkVSy99gYjeNBrm1Z
-         +QXuMPgubIXUlNzzMyxDls3GPwrmyw990f0EYuw/MD5drCj0QNNh5kKftpO9ahXWIw/f
-         4EbL8D0Aa9y5JsPFKgdTMjz8czGhVFCxoDvtYslccUAqZNXSVt82gQADXAyIERj5Ddy9
-         rAbAtxgEfSR47crLj2QdAI1QRoXL2wb3kJDpTI/7vb6cdU+sF2YTgTqFsoFTE1kLsahC
-         MWQg==
+        bh=cUIxkiOWcZNSGyVaoSleR4SOVvfUesYE0h+OiU8ZPts=;
+        b=ZFK5gPjb/0fvMc4sNuv93cyyjrTM/TDXgyThGNWVXJz9mrDj43cVIu/YZC//PIDcMC
+         Tmk2RcOVtk1cWYKIzfzGk8m++78qRPe6iHgIumgSf99lc6zNlgYgzECzYpldPcsl0BFQ
+         ltI8N+fPk6RxkR0+CGH7VYRNGEk8JyGPr/fL6z5CWq38JIwVYnGRjn02Il0QnnHawE4F
+         3QGYwP20gnoURblSgvqedifbi5uV6egsw4WdFk7sfIQRnXFeSrCBlBOyerwcobRa8Mew
+         +xAhG1SZf3D04DfbJH2isBeJFYL/W3YUh3HKTK98qLpHPoW4Yq1i3mEZiNRQbv7EY/QZ
+         7nKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=73PanmKylEvqjb3EGhj/cA5vVvduH5Ze/XXY8XVnxuQ=;
-        b=trumabbJQVrrb2FgDQMurOftNs07+/wETMAcUnlLWeAKf5RSpo0PjXARrcYgyXxYjz
-         1zwN0XXrLFD5VIt6QJlj501ejOFUQRp601MEHErGTvlQsZ+A7ecIiZmjBD+2fLQb7s01
-         VkWS2SgF64nei0+X+XL+ZqDSAsirJJNfmJH+JMe3MFNY3MjQuJVBGyT7OIx6AkFKurld
-         M5h5c3v6EYltdtO27S7b+9WRlQnNhGajMbB/0M9LccNsEnSG1IfZmWHzNQeE+MqWY/Zb
-         1ZY+NZ0qnhN25zm4GAmM59nucfjhpcJLpr6l7XAA+2eC+1MbMUM7lcIUIGAAqGa13wvI
-         1thw==
-X-Gm-Message-State: AOAM533g1VJNmcN4wXUDuBJkgs2gi240L2oF6VeiUM+NWWqJ2qpFcfgc
-        ws7fnSkxfXjsyrS7NQEm85cwFQAOr9w=
-X-Google-Smtp-Source: ABdhPJx1DrnkaMcj1oof76n15eFFn2AO67dNVamv4vP8/r0VhXX61EouiBSEKBMzzBtnDGfktxyt1A==
-X-Received: by 2002:a5d:6c66:: with SMTP id r6mr6343594wrz.86.1612549352368;
-        Fri, 05 Feb 2021 10:22:32 -0800 (PST)
+        bh=cUIxkiOWcZNSGyVaoSleR4SOVvfUesYE0h+OiU8ZPts=;
+        b=lM5I0pltn9EorvU/gtrvJmGHiN2vN9ujsRsVyGs/6YCCt6Ujju4FZoxx4NnAAVgN/3
+         T1pUo877F91H5Fp+wxNscmKFJo/O8EaW7H+6ayT03DlKxY3rQu0pdznL2l3LcKgdZxxM
+         5IpuQcIxopxdXJ7T2jHYU7saqvGY5kb6sHFt5AtNTJW+Cx6DECOb6ITsln7OCdVzv9aR
+         MHOQS5uxVWfwgfPcV4nF5O5SE14b1xQ/gD4Rcn5YWHTInLrrKmrEHzQrMCMqvfV7ZdFL
+         clpQb6HprMEOSws3pdWYU//w1mAJhxFV+NRetU+4W8JBrTRfJDMB8c04yZEvLkcNdcyO
+         Mm/w==
+X-Gm-Message-State: AOAM532l0JhGvFq0FUJ4yyxUvRYG0sgLV1GZJOpRcK2hiIg+Vle3Sknt
+        IvZ9dN3ZkqAyNnrO62Bpu+SU814f7Lg=
+X-Google-Smtp-Source: ABdhPJxmYTz09tlO3FLpY5mSKlnusSQGs032uYTqFDPTYemVhfRTlclnXxs5QYs0VwJdTTdD65wVoQ==
+X-Received: by 2002:adf:ea51:: with SMTP id j17mr6732799wrn.382.1612549353610;
+        Fri, 05 Feb 2021 10:22:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z1sm13194619wru.70.2021.02.05.10.22.31
+        by smtp.gmail.com with ESMTPSA id o18sm1509760wmp.19.2021.02.05.10.22.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 10:22:31 -0800 (PST)
-Message-Id: <7c78d0c1c30add2a8937e0a6fb725509738a858c.1612549349.git.gitgitgadget@gmail.com>
+        Fri, 05 Feb 2021 10:22:32 -0800 (PST)
+Message-Id: <69ebc9a8f19ac6f37415a47dc315ca3a2f6938a7.1612549349.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.858.v3.git.1612549349.gitgitgadget@gmail.com>
 References: <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
         <pull.858.v3.git.1612549349.gitgitgadget@gmail.com>
 From:   "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 18:22:24 +0000
-Subject: [PATCH v3 1/6] doc hash-function-transition: fix asciidoc output
+Date:   Fri, 05 Feb 2021 18:22:25 +0000
+Subject: [PATCH v3 2/6] doc hash-function-transition: use SHA-1 and SHA-256
+ consistently
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,268 +81,311 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Thomas Ackermann <th.acker@arcor.de>
 
-Asciidoc requires lists to start with an empty line and uses
-different characters for indentation levels ("-", "*", "**", ...).
-For special symbols like a dash "--" has to be used and there is
-no double arrow "<->", so a left and right arrow "<-->" has to be
-combined for that. Lastly for verbatim output a newline followed
-by an indentation has to be used.
-
-Fix asciidoc output for lists, special characters and verbatim
-text while retaining the readabilty of the original text file.
+Use SHA-1 and SHA-256 instead of sha1 and sha256  when referring
+to the hash type.
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- .../technical/hash-function-transition.txt    | 79 +++++++++++--------
- 1 file changed, 45 insertions(+), 34 deletions(-)
+ .../technical/hash-function-transition.txt    | 126 +++++++++---------
+ 1 file changed, 63 insertions(+), 63 deletions(-)
 
 diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 6fd20ebbc254..b23d23151a57 100644
+index b23d23151a57..8c01608cbfa0 100644
 --- a/Documentation/technical/hash-function-transition.txt
 +++ b/Documentation/technical/hash-function-transition.txt
-@@ -94,7 +94,7 @@ Overview
- --------
- We introduce a new repository format extension. Repositories with this
- extension enabled use SHA-256 instead of SHA-1 to name their objects.
--This affects both object names and object content --- both the names
-+This affects both object names and object content -- both the names
- of objects and all references to other objects within an object are
- switched to the new hash function.
+@@ -107,7 +107,7 @@ mapping to allow naming objects using either their SHA-1 and SHA-256 names
+ interchangeably.
  
-@@ -191,21 +191,21 @@ hash functions. They have the following format (all integers are in
- network byte order):
+ "git cat-file" and "git hash-object" gain options to display an object
+-in its sha1 form and write an object given its sha1 form. This
++in its SHA-1 form and write an object given its SHA-1 form. This
+ requires all objects referenced by that object to be present in the
+ object database so that they can be named using the appropriate name
+ (using the bidirectional hash mapping).
+@@ -115,7 +115,7 @@ object database so that they can be named using the appropriate name
+ Fetches from a SHA-1 based server convert the fetched objects into
+ SHA-256 form and record the mapping in the bidirectional mapping table
+ (see below for details). Pushes to a SHA-1 based server convert the
+-objects being pushed into sha1 form so the server does not have to be
++objects being pushed into SHA-1 form so the server does not have to be
+ aware of the hash function the client is using.
  
- - A header appears at the beginning and consists of the following:
--  - The 4-byte pack index signature: '\377t0c'
--  - 4-byte version number: 3
--  - 4-byte length of the header section, including the signature and
-+  * The 4-byte pack index signature: '\377t0c'
-+  * 4-byte version number: 3
-+  * 4-byte length of the header section, including the signature and
-     version number
--  - 4-byte number of objects contained in the pack
--  - 4-byte number of object formats in this pack index: 2
--  - For each object format:
--    - 4-byte format identifier (e.g., 'sha1' for SHA-1)
--    - 4-byte length in bytes of shortened object names. This is the
-+  * 4-byte number of objects contained in the pack
-+  * 4-byte number of object formats in this pack index: 2
-+  * For each object format:
-+    ** 4-byte format identifier (e.g., 'sha1' for SHA-1)
-+    ** 4-byte length in bytes of shortened object names. This is the
-       shortest possible length needed to make names in the shortened
-       object name table unambiguous.
--    - 4-byte integer, recording where tables relating to this format
-+    ** 4-byte integer, recording where tables relating to this format
-       are stored in this index file, as an offset from the beginning.
--  - 4-byte offset to the trailer from the beginning of this file.
--  - Zero or more additional key/value pairs (4-byte key, 4-byte
-+  * 4-byte offset to the trailer from the beginning of this file.
-+  * Zero or more additional key/value pairs (4-byte key, 4-byte
-     value). Only one key is supported: 'PSRC'. See the "Loose objects
-     and unreachable objects" section for supported values and how this
-     is used.  All other keys are reserved. Readers must ignore
-@@ -213,37 +213,36 @@ network byte order):
- - Zero or more NUL bytes. This can optionally be used to improve the
-   alignment of the full object name table below.
- - Tables for the first object format:
--  - A sorted table of shortened object names.  These are prefixes of
-+  * A sorted table of shortened object names.  These are prefixes of
-     the names of all objects in this pack file, packed together
-     without offset values to reduce the cache footprint of the binary
-     search for a specific object name.
+ Detailed Design
+@@ -151,38 +151,38 @@ repository extensions.
  
--  - A table of full object names in pack order. This allows resolving
-+  * A table of full object names in pack order. This allows resolving
-     a reference to "the nth object in the pack file" (from a
-     reachability bitmap or from the next table of another object
-     format) to its object name.
+ Object names
+ ~~~~~~~~~~~~
+-Objects can be named by their 40 hexadecimal digit sha1-name or 64
+-hexadecimal digit sha256-name, plus names derived from those (see
++Objects can be named by their 40 hexadecimal digit SHA-1 name or 64
++hexadecimal digit SHA-256 name, plus names derived from those (see
+ gitrevisions(7)).
  
--  - A table of 4-byte values mapping object name order to pack order.
-+  * A table of 4-byte values mapping object name order to pack order.
-     For an object in the table of sorted shortened object names, the
-     value at the corresponding index in this table is the index in the
-     previous table for that same object.
--
-     This can be used to look up the object in reachability bitmaps or
-     to look up its name in another object format.
+-The sha1-name of an object is the SHA-1 of the concatenation of its
+-type, length, a nul byte, and the object's sha1-content. This is the
++The SHA-1 name of an object is the SHA-1 of the concatenation of its
++type, length, a nul byte, and the object's SHA-1 content. This is the
+ traditional <sha1> used in Git to name objects.
  
--  - A table of 4-byte CRC32 values of the packed object data, in the
-+  * A table of 4-byte CRC32 values of the packed object data, in the
-     order that the objects appear in the pack file. This is to allow
-     compressed data to be copied directly from pack to pack during
-     repacking without undetected data corruption.
+-The sha256-name of an object is the SHA-256 of the concatenation of its
+-type, length, a nul byte, and the object's sha256-content.
++The SHA-256 name of an object is the SHA-256 of the concatenation of its
++type, length, a nul byte, and the object's SHA-256 content.
  
--  - A table of 4-byte offset values. For an object in the table of
-+  * A table of 4-byte offset values. For an object in the table of
-     sorted shortened object names, the value at the corresponding
-     index in this table indicates where that object can be found in
-     the pack file. These are usually 31-bit pack file offsets, but
-     large offsets are encoded as an index into the next table with the
-     most significant bit set.
+ Object format
+ ~~~~~~~~~~~~~
+ The content as a byte sequence of a tag, commit, or tree object named
+-by sha1 and sha256 differ because an object named by sha256-name refers to
+-other objects by their sha256-names and an object named by sha1-name
+-refers to other objects by their sha1-names.
++by SHA-1 and SHA-256 differ because an object named by SHA-256 name refers to
++other objects by their SHA-256 names and an object named by SHA-1 name
++refers to other objects by their SHA-1 names.
  
--  - A table of 8-byte offset entries (empty for pack files less than
-+  * A table of 8-byte offset entries (empty for pack files less than
-     2 GiB). Pack files are organized with heavily used objects toward
-     the front, so most object references should not need to refer to
-     this table.
-@@ -252,10 +251,10 @@ network byte order):
-   up to and not including the table of CRC32 values.
- - Zero or more NUL bytes.
- - The trailer consists of the following:
--  - A copy of the 20-byte SHA-256 checksum at the end of the
-+  * A copy of the 20-byte SHA-256 checksum at the end of the
-     corresponding packfile.
+-The sha256-content of an object is the same as its sha1-content, except
+-that objects referenced by the object are named using their sha256-names
+-instead of sha1-names. Because a blob object does not refer to any
+-other object, its sha1-content and sha256-content are the same.
++The SHA-256 content of an object is the same as its SHA-1 content, except
++that objects referenced by the object are named using their SHA-256 names
++instead of SHA-1 names. Because a blob object does not refer to any
++other object, its SHA-1 content and SHA-256 content are the same.
  
--  - 20-byte SHA-256 checksum of all of the above.
-+  * 20-byte SHA-256 checksum of all of the above.
+-The format allows round-trip conversion between sha256-content and
+-sha1-content.
++The format allows round-trip conversion between SHA-256 content and
++SHA-1 content.
  
- Loose object index
- ~~~~~~~~~~~~~~~~~~
-@@ -351,7 +350,7 @@ the following steps:
- 3. convert to sha256: open a new (sha256) packfile. Read the topologically
+ Object storage
+ ~~~~~~~~~~~~~~
+ Loose objects use zlib compression and packed objects use the packed
+ format described in Documentation/technical/pack-format.txt, just like
+-today. The content that is compressed and stored uses sha256-content
+-instead of sha1-content.
++today. The content that is compressed and stored uses SHA-256 content
++instead of SHA-1 content.
+ 
+ Pack index
+ ~~~~~~~~~~
+@@ -287,18 +287,18 @@ To remove entries (e.g. in "git pack-refs" or "git-prune"):
+ 
+ Translation table
+ ~~~~~~~~~~~~~~~~~
+-The index files support a bidirectional mapping between sha1-names
+-and sha256-names. The lookup proceeds similarly to ordinary object
+-lookups. For example, to convert a sha1-name to a sha256-name:
++The index files support a bidirectional mapping between SHA-1 names
++and SHA-256 names. The lookup proceeds similarly to ordinary object
++lookups. For example, to convert a SHA-1 name to a SHA-256 name:
+ 
+  1. Look for the object in idx files. If a match is present in the
+-    idx's sorted list of truncated sha1-names, then:
+-    a. Read the corresponding entry in the sha1-name order to pack
++    idx's sorted list of truncated SHA-1 names, then:
++    a. Read the corresponding entry in the SHA-1 name order to pack
+        name order mapping.
+-    b. Read the corresponding entry in the full sha1-name table to
++    b. Read the corresponding entry in the full SHA-1 name table to
+        verify we found the right object. If it is, then
+-    c. Read the corresponding entry in the full sha256-name table.
+-       That is the object's sha256-name.
++    c. Read the corresponding entry in the full SHA-256 name table.
++       That is the object's SHA-256 name.
+  2. Check for a loose object. Read lines from loose-object-idx until
+     we find a match.
+ 
+@@ -312,10 +312,10 @@ Since all operations that make new objects (e.g., "git commit") add
+ the new objects to the corresponding index, this mapping is possible
+ for all objects in the object store.
+ 
+-Reading an object's sha1-content
+-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-The sha1-content of an object can be read by converting all sha256-names
+-its sha256-content references to sha1-names using the translation table.
++Reading an object's SHA-1 content
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++The SHA-1 content of an object can be read by converting all SHA-256 names
++its SHA-256 content references to SHA-1 names using the translation table.
+ 
+ Fetch
+ ~~~~~
+@@ -338,7 +338,7 @@ the following steps:
+ 1. index-pack: inflate each object in the packfile and compute its
+    SHA-1. Objects can contain deltas in OBJ_REF_DELTA format against
+    objects the client has locally. These objects can be looked up
+-   using the translation table and their sha1-content read as
++   using the translation table and their SHA-1 content read as
+    described above to resolve the deltas.
+ 2. topological sort: starting at the "want"s from the negotiation
+    phase, walk through objects in the pack and emit a list of them,
+@@ -347,12 +347,12 @@ the following steps:
+    (This list only contains objects reachable from the "wants". If the
+    pack from the server contained additional extraneous objects, then
+    they will be discarded.)
+-3. convert to sha256: open a new (sha256) packfile. Read the topologically
++3. convert to SHA-256: open a new SHA-256 packfile. Read the topologically
     sorted list just generated. For each object, inflate its
-    sha1-content, convert to sha256-content, and write it to the sha256
--   pack. Record the new sha1<->sha256 mapping entry for use in the idx.
-+   pack. Record the new sha1<-->sha256 mapping entry for use in the idx.
+-   sha1-content, convert to sha256-content, and write it to the sha256
+-   pack. Record the new sha1<-->sha256 mapping entry for use in the idx.
++   SHA-1 content, convert to SHA-256 content, and write it to the SHA-256
++   pack. Record the new SHA-1<-->SHA-256 mapping entry for use in the idx.
  4. sort: reorder entries in the new pack to match the order of objects
-    in the pack the server generated and include blobs. Write a sha256 idx
+-   in the pack the server generated and include blobs. Write a sha256 idx
++   in the pack the server generated and include blobs. Write a SHA-256 idx
     file
-@@ -391,6 +390,7 @@ existing "gpgsig" field. Its signed payload is the sha256-content of the
+ 5. clean up: remove the SHA-1 based pack file, index, and
+    topologically sorted list obtained from the server in steps 1
+@@ -377,16 +377,16 @@ experimenting to get this to perform well.
+ Push
+ ~~~~
+ Push is simpler than fetch because the objects referenced by the
+-pushed objects are already in the translation table. The sha1-content
++pushed objects are already in the translation table. The SHA-1 content
+ of each object being pushed can be read as described in the "Reading
+-an object's sha1-content" section to generate the pack written by git
++an object's SHA-1 content" section to generate the pack written by git
+ send-pack.
+ 
+ Signed Commits
+ ~~~~~~~~~~~~~~
+ We add a new field "gpgsig-sha256" to the commit object format to allow
+ signing commits without relying on SHA-1. It is similar to the
+-existing "gpgsig" field. Its signed payload is the sha256-content of the
++existing "gpgsig" field. Its signed payload is the SHA-256 content of the
  commit object with any "gpgsig" and "gpgsig-sha256" fields removed.
  
  This means commits can be signed
-+
- 1. using SHA-1 only, as in existing signed commit objects
- 2. using both SHA-1 and SHA-256, by using both gpgsig-sha256 and gpgsig
-    fields.
-@@ -408,6 +408,7 @@ sha256-content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
+@@ -404,7 +404,7 @@ Signed Tags
+ ~~~~~~~~~~~
+ We add a new field "gpgsig-sha256" to the tag object format to allow
+ signing tags without relying on SHA-1. Its signed payload is the
+-sha256-content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
++SHA-256 content of the tag with its gpgsig-sha256 field and "-----BEGIN PGP
  SIGNATURE-----" delimited in-body signature removed.
  
  This means tags can be signed
-+
- 1. using SHA-1 only, as in existing signed tag objects
- 2. using both SHA-1 and SHA-256, by using gpgsig-sha256 and an in-body
-    signature.
-@@ -598,7 +599,7 @@ The user can also explicitly specify which format to use for a
- particular revision specifier and for output, overriding the mode. For
- example:
+@@ -416,11 +416,11 @@ This means tags can be signed
  
--git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
-+    git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
+ Mergetag embedding
+ ~~~~~~~~~~~~~~~~~~
+-The mergetag field in the sha1-content of a commit contains the
+-sha1-content of a tag that was merged by that commit.
++The mergetag field in the SHA-1 content of a commit contains the
++SHA-1 content of a tag that was merged by that commit.
  
- Choice of Hash
- --------------
-@@ -636,6 +637,7 @@ We choose SHA-256.
- Transition plan
- ---------------
- Some initial steps can be implemented independently of one another:
-+
- - adding a hash function API (vtable)
- - teaching fsck to tolerate the gpgsig-sha256 field
- - excluding gpgsig-* from the fields copied by "git commit --amend"
-@@ -647,9 +649,9 @@ Some initial steps can be implemented independently of one another:
- - introducing index v3
- - adding support for the PSRC field and safer object pruning
+-The mergetag field in the sha256-content of the same commit contains the
+-sha256-content of the same tag.
++The mergetag field in the SHA-256 content of the same commit contains the
++SHA-256 content of the same tag.
  
--
- The first user-visible change is the introduction of the objectFormat
- extension (without compatObjectFormat). This requires:
-+
- - teaching fsck about this mode of operation
- - using the hash function API (vtable) when computing object names
- - signing objects and verifying signatures
-@@ -657,6 +659,7 @@ extension (without compatObjectFormat). This requires:
-   repository
+ Submodules
+ ~~~~~~~~~~
+@@ -495,7 +495,7 @@ Caveats
+ -------
+ Invalid objects
+ ~~~~~~~~~~~~~~~
+-The conversion from sha1-content to sha256-content retains any
++The conversion from SHA-1 content to SHA-256 content retains any
+ brokenness in the original object (e.g., tree entry modes encoded with
+ leading 0, tree objects whose paths are not sorted correctly, and
+ commit objects without an author or committer). This is a deliberate
+@@ -514,15 +514,15 @@ allow lifting this restriction.
  
- Next comes introduction of compatObjectFormat:
-+
- - implementing the loose-object-idx
- - translating object names between object formats
- - translating object content between object formats
-@@ -669,6 +672,7 @@ Next comes introduction of compatObjectFormat:
-   "Object names on the command line" above)
+ Alternates
+ ~~~~~~~~~~
+-For the same reason, a sha256 repository cannot borrow objects from a
+-sha1 repository using objects/info/alternates or
++For the same reason, a SHA-256 repository cannot borrow objects from a
++SHA-1 repository using objects/info/alternates or
+ $GIT_ALTERNATE_OBJECT_REPOSITORIES.
  
- The next step is supporting fetches and pushes to SHA-1 repositories:
-+
+ git notes
+ ~~~~~~~~~
+-The "git notes" tool annotates objects using their sha1-name as key.
++The "git notes" tool annotates objects using their SHA-1 name as key.
+ This design does not describe a way to migrate notes trees to use
+-sha256-names. That migration is expected to happen separately (for
++SHA-256 names. That migration is expected to happen separately (for
+ example using a file at the root of the notes tree to describe which
+ hash it uses).
+ 
+@@ -556,7 +556,7 @@ unclear:
+ 
+ 	Git 2.12
+ 
+-Does this mean Git v2.12.0 is the commit with sha1-name
++Does this mean Git v2.12.0 is the commit with SHA-1 name
+ e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7 or the commit with
+ new-40-digit-hash-name e7e07d5a4fcc2a203d9873968ad3e6bd4d7419d7?
+ 
+@@ -676,7 +676,7 @@ The next step is supporting fetches and pushes to SHA-1 repositories:
  - allow pushes to a repository using the compat format
  - generate a topologically sorted list of the SHA-1 names of fetched
    objects
-@@ -734,6 +738,7 @@ Using hash functions in parallel
- Objects newly created would be addressed by the new hash, but inside
- such an object (e.g. commit) it is still possible to address objects
- using the old hash function.
-+
- * You cannot trust its history (needed for bisectability) in the
-   future without further work
- * Maintenance burden as the number of supported hash functions grows
-@@ -749,6 +754,7 @@ sha1-content based signatures.
+-- convert the fetched packfile to sha256 format and generate an idx
++- convert the fetched packfile to SHA-256 format and generate an idx
+   file
+ - re-sort to match the order of objects in the fetched packfile
+ 
+@@ -748,38 +748,38 @@ using the old hash function.
+ Signed objects with multiple hashes
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Instead of introducing the gpgsig-sha256 field in commit and tag objects
+-for sha256-content based signatures, an earlier version of this design
+-added "hash sha256 <sha256-name>" fields to strengthen the existing
+-sha1-content based signatures.
++for SHA-256 content based signatures, an earlier version of this design
++added "hash sha256 <SHA-256 name>" fields to strengthen the existing
++SHA-1 content based signatures.
  
  In other words, a single signature was used to attest to the object
  content using both hash functions. This had some advantages:
-+
+ 
  * Using one signature instead of two speeds up the signing process.
  * Having one signed payload with both hashes allows the signer to
-   attest to the sha1-name and sha256-name referring to the same object.
-@@ -756,6 +762,7 @@ content using both hash functions. This had some advantages:
+-  attest to the sha1-name and sha256-name referring to the same object.
++  attest to the SHA-1 name and SHA-256 name referring to the same object.
+ * All users consume the same signature. Broken signatures are likely
    to be detected quickly using current versions of git.
  
  However, it also came with disadvantages:
-+
- * Verifying a signed object requires access to the sha1-names of all
+ 
+-* Verifying a signed object requires access to the sha1-names of all
++* Verifying a signed object requires access to the SHA-1 names of all
    objects it references, even after the transition is complete and
    translation table is no longer needed for anything else. To support
-@@ -782,16 +789,17 @@ Document History
- bmwill@google.com, jonathantanmy@google.com, jrnieder@gmail.com,
- sbeller@google.com
+-  this, the design added fields such as "hash sha1 tree <sha1-name>"
+-  and "hash sha1 parent <sha1-name>" to the sha256-content of a signed
++  this, the design added fields such as "hash sha1 tree <SHA-1 name>"
++  and "hash sha1 parent <SHA-1 name>" to the SHA-256 content of a signed
+   commit, complicating the conversion process.
+-* Allowing signed objects without a sha1 (for after the transition is
++* Allowing signed objects without a SHA-1 (for after the transition is
+   complete) complicated the design further, requiring a "nohash sha1"
+-  field to suppress including "hash sha1" fields in the sha256-content
++  field to suppress including "hash sha1" fields in the SHA-256 content
+   and signed payload.
  
--Initial version sent to
--http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
-+* Initial version sent to http://lore.kernel.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com
+ Lazily populated translation table
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Some of the work of building the translation table could be deferred to
+ push time, but that would significantly complicate and slow down pushes.
+-Calculating the sha1-name at object creation time at the same time it is
+-being streamed to disk and having its sha256-name calculated should be
++Calculating the SHA-1 name at object creation time at the same time it is
++being streamed to disk and having its SHA-256 name calculated should be
+ an acceptable cost.
  
- 2017-03-03 jrnieder@gmail.com
- Incorporated suggestions from jonathantanmy and sbeller:
-+
- * describe purpose of signed objects with each hash type
- * redefine signed object verification using object content under the
-   first hash function
- 
+ Document History
+@@ -801,7 +801,7 @@ Incorporated suggestions from jonathantanmy and sbeller:
  2017-03-06 jrnieder@gmail.com
-+
+ 
  * Use SHA3-256 instead of SHA2 (thanks, Linus and brian m. carlson).[1][2]
- * Make sha3-based signatures a separate field, avoiding the need for
+-* Make sha3-based signatures a separate field, avoiding the need for
++* Make SHA3-based signatures a separate field, avoiding the need for
    "hash" and "nohash" fields (thanks to peff[3]).
-@@ -805,6 +813,7 @@ Incorporated suggestions from jonathantanmy and sbeller:
-   especially Junio).
- 
- 2017-09-27 jrnieder@gmail.com, sbeller@google.com
-+
- * use placeholder NewHash instead of SHA3-256
- * describe criteria for picking a hash function.
- * include a transition plan (thanks especially to Brandon Williams
-@@ -816,12 +825,14 @@ Incorporated suggestions from jonathantanmy and sbeller:
- 
- Later history:
- 
-- See the history of this file in git.git for the history of subsequent
-- edits. This document history is no longer being maintained as it
-- would now be superfluous to the commit log
-+* See the history of this file in git.git for the history of subsequent
-+  edits. This document history is no longer being maintained as it
-+  would now be superfluous to the commit log
-+
-+References:
- 
--[1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
--[2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
--[3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
--[4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
--[5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
-+ [1] http://lore.kernel.org/git/CA+55aFzJtejiCjV0e43+9oR3QuJK2PiFiLQemytoLpyJWe6P9w@mail.gmail.com/
-+ [2] http://lore.kernel.org/git/CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com/
-+ [3] http://lore.kernel.org/git/20170306084353.nrns455dvkdsfgo5@sigill.intra.peff.net/
-+ [4] http://lore.kernel.org/git/20170304224936.rqqtkdvfjgyezsht@genre.crustytoothpaste.net
-+ [5] https://lore.kernel.org/git/CAJo=hJtoX9=AyLHHpUJS7fueV9ciZ_MNpnEPHUz8Whui6g9F0A@mail.gmail.com/
+ * Add a sorting phase to fetch (thanks to Junio for noticing the need
+   for this).
 -- 
 gitgitgadget
 
