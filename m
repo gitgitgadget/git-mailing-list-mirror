@@ -2,279 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEA7DC433E6
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCCB2C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 05:26:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C329E64F45
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CC0A64F95
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 05:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231214AbhBEE7m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 23:59:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbhBEE7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 23:59:24 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE996C06178C
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 20:58:43 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id w22so3653399pll.6
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 20:58:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=3qA5U0eSO7FYCrtpzziYgWTqVrrAMC33eQ3CKXTU2eo=;
-        b=oScovOswxEfrfM7EiLwYiK9RCLngLRTrAbymJpljTZ952toRLwbbMuI4BGMnNX9uXm
-         A6/bBi8J7CQE5CM2Yx/sqGmsp28BUspwKgnKuXczVZujE1OLjpKwYH55Ax3oWvJP4rFX
-         L1icTeWGgO0pgoL3YAfHknpCFRlCeNLWfO6VpmnCxjb6pSJJynNkpFwRHFku/5KMwX3F
-         uu52N9TuTnqSqS8wszjeo4mYg48MlV5ifXio+E/Ef6yJWGoWg8crmX9nxkPdolvg5mwR
-         02ra7Qp5JxMhSdp8Z2BoDCtLqdZtjByuNfxORC509cTIobRNowaDjqXBOxLdEPb+yytk
-         Czug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=3qA5U0eSO7FYCrtpzziYgWTqVrrAMC33eQ3CKXTU2eo=;
-        b=FNtsepky/w1bXFlJyviddqbZuKjq4BxyIRkSlbPUQY++bgNWyurMYlAzgH0VM9UYCc
-         gsBXsfmvlJnl3+unpuyCwOLVG0Qtu7snXHH6ftfWzzHlbYgW33K9TnxiEWBDfMznsR8q
-         v+EzdGodBmOTlnK2r6Xqby3ubvXc+0XOfIg594fwCkIxe7J8GwUkDarlTv2v6cwMl9AM
-         oMNfQiD8SE1cYEZLdzJ6KEzyIivI/4VK8tHQNpembdCyBmtsQlyC++UQ0QfZjA8Cl+M4
-         aVl5+64FBO5UOnwe/wZL3i6fdiYsb0naw64J/DR5E6L5JicUtj/HxdvlHPXYxxTdhY8r
-         40og==
-X-Gm-Message-State: AOAM532pjYT1Q29oxn2YI91Azruaf1KvfQGAUO60Jy0Ihru/Q9Mou5oe
-        bASx2A1yNNDWz6Tz/Mjc2QlCuhTdtfk/WPYxgMgHRZV6u622F+y0rBD2JrxXlSaq8gQ4rpxVNBM
-        NAiosPCL0RON2pyZktvw700gbvRrIIiW+vKHwv0Y7aFj63m7XUOryZT9SqMCbjsiHuWk3qsRF0c
-        MH
-X-Google-Smtp-Source: ABdhPJxFYcjhigQUsIzGp1A8R4FmEMrPc32gKaj6yIqD3iWnSxaqiKsyvFq/xrRAmfA8/sUb4gBUO6Y+PG81ba+Brb3N
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:94b5:0:b029:1d7:f868:e48d with
- SMTP id a21-20020aa794b50000b02901d7f868e48dmr766597pfl.9.1612501122791; Thu,
- 04 Feb 2021 20:58:42 -0800 (PST)
-Date:   Thu,  4 Feb 2021 20:58:33 -0800
-In-Reply-To: <cover.1612493309.git.jonathantanmy@google.com>
-Message-Id: <a3e5a0a7c530c7fa41db5df639617218cdb1a2f6.1612493309.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201208013121.677494-1-jonathantanmy@google.com> <cover.1612493309.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH v7 3/3] clone: respect remote unborn HEAD
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S230483AbhBEF0l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 00:26:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57424 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229998AbhBEF0k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 00:26:40 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E010B7CA7;
+        Fri,  5 Feb 2021 00:25:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Rw9zA/QQBWZQBn/j5G43ogA6gC8=; b=NRFFTb
+        3mR9BEgXZTd51a1G1AMTyUVdLBl79vX6yMIAh4EZuDVDkOTZHmulm5Il5GwlDf7v
+        INAKVgFQ1VlshTyJWe3V2bPfKx05CG1yJqrHqg7qTD/wyuRVJFcJ1lDJaMHNPKVd
+        Yv3CxQJdEOovF+2n6NeJh/3t8qwJc2qYibmck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NDrOFPDN4J9QyN+t5/A22j+DYF5yjZe+
+        JKy5YNkjTand+5ll1JSpzq/2BlSzlkin+HGQr3ukxArueR7dcRFhaJPqniKwqvUR
+        qi4mD9rp+kl9btB7cVv9KEjZM+cRt2Nad/VOQ6B2OwbAqybmiEJ2u3CjH7YHV5Fq
+        cio775BPymw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 32F77B7CA6;
+        Fri,  5 Feb 2021 00:25:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AABB8B7CA5;
+        Fri,  5 Feb 2021 00:25:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v7 0/3] Cloning with remote unborn HEAD
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+        <cover.1612493309.git.jonathantanmy@google.com>
+Date:   Thu, 04 Feb 2021 21:25:57 -0800
+In-Reply-To: <cover.1612493309.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 4 Feb 2021 20:58:30 -0800")
+Message-ID: <xmqq5z372ihm.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A03C120E-6772-11EB-8D91-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach Git to use the "unborn" feature introduced in a previous patch as
-follows: Git will always send the "unborn" argument if it is supported
-by the server. During "git clone", if cloning an empty repository, Git
-will use the new information to determine the local branch to create. In
-all other cases, Git will ignore it.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/init.txt |  2 +-
- builtin/clone.c               | 16 ++++++++++++++--
- connect.c                     | 28 ++++++++++++++++++++++++++--
- t/t5606-clone-options.sh      |  8 +++++---
- t/t5702-protocol-v2.sh        | 25 +++++++++++++++++++++++++
- transport.h                   |  8 ++++++++
- 6 files changed, 79 insertions(+), 8 deletions(-)
+> For what it's worth, here's v7 with advertise/allow/ignore and by
+> default, advertise. I think that some server operators will have use for
+> this feature, and people who want to disable it for whatever reason can
+> still do so. The main disadvantage is complexity - the server knob that
+> server administrators will need to control (but between a simpler
+> allow/ignore knob and a more complicated advertise/allow/ignore knob, I
+> think we might as well go for the slightly more complex one) and
+> complexity in the code (but now that is constrained to one function and
+> a few global variables).
+>
+> As you can see from the range-diff, not much has changed from v6.
+>
+> I've also included Junio's suggestion of tightening the promise made by
+> the server (when the client says "unborn").
 
-diff --git a/Documentation/config/init.txt b/Documentation/config/init.txt
-index dc77f8c844..79c79d6617 100644
---- a/Documentation/config/init.txt
-+++ b/Documentation/config/init.txt
-@@ -4,4 +4,4 @@ init.templateDir::
- 
- init.defaultBranch::
- 	Allows overriding the default branch name e.g. when initializing
--	a new repository or when cloning an empty repository.
-+	a new repository.
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 211d4f54b0..09dcd97a2e 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1330,8 +1330,19 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		remote_head = NULL;
- 		option_no_checkout = 1;
- 		if (!option_bare) {
--			const char *branch = git_default_branch_name();
--			char *ref = xstrfmt("refs/heads/%s", branch);
-+			const char *branch;
-+			char *ref;
-+
-+			if (transport_ls_refs_options.unborn_head_target &&
-+			    skip_prefix(transport_ls_refs_options.unborn_head_target,
-+					"refs/heads/", &branch)) {
-+				ref = transport_ls_refs_options.unborn_head_target;
-+				transport_ls_refs_options.unborn_head_target = NULL;
-+				create_symref("HEAD", ref, reflog_msg.buf);
-+			} else {
-+				branch = git_default_branch_name();
-+				ref = xstrfmt("refs/heads/%s", branch);
-+			}
- 
- 			install_branch_config(0, branch, remote_name, ref);
- 			free(ref);
-@@ -1385,5 +1396,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	junk_mode = JUNK_LEAVE_ALL;
- 
- 	strvec_clear(&transport_ls_refs_options.ref_prefixes);
-+	free(transport_ls_refs_options.unborn_head_target);
- 	return err;
- }
-diff --git a/connect.c b/connect.c
-index 328c279250..879669df93 100644
---- a/connect.c
-+++ b/connect.c
-@@ -376,7 +376,8 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- }
- 
- /* Returns 1 when a valid ref has been added to `list`, 0 otherwise */
--static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
-+static int process_ref_v2(struct packet_reader *reader, struct ref ***list,
-+			  char **unborn_head_target)
- {
- 	int ret = 1;
- 	int i = 0;
-@@ -397,6 +398,25 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list)
- 		goto out;
- 	}
- 
-+	if (!strcmp("unborn", line_sections.items[i].string)) {
-+		i++;
-+		if (unborn_head_target &&
-+		    !strcmp("HEAD", line_sections.items[i++].string)) {
-+			/*
-+			 * Look for the symref target (if any). If found,
-+			 * return it to the caller.
-+			 */
-+			for (; i < line_sections.nr; i++) {
-+				const char *arg = line_sections.items[i].string;
-+
-+				if (skip_prefix(arg, "symref-target:", &arg)) {
-+					*unborn_head_target = xstrdup(arg);
-+					break;
-+				}
-+			}
-+		}
-+		goto out;
-+	}
- 	if (parse_oid_hex_algop(line_sections.items[i++].string, &old_oid, &end, reader->hash_algo) ||
- 	    *end) {
- 		ret = 0;
-@@ -461,6 +481,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	const char *hash_name;
- 	struct strvec *ref_prefixes = transport_options ?
- 		&transport_options->ref_prefixes : NULL;
-+	char **unborn_head_target = transport_options ?
-+		&transport_options->unborn_head_target : NULL;
- 	*list = NULL;
- 
- 	if (server_supports_v2("ls-refs", 1))
-@@ -490,6 +512,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	if (!for_push)
- 		packet_write_fmt(fd_out, "peel\n");
- 	packet_write_fmt(fd_out, "symrefs\n");
-+	if (server_supports_feature("ls-refs", "unborn", 0))
-+		packet_write_fmt(fd_out, "unborn\n");
- 	for (i = 0; ref_prefixes && i < ref_prefixes->nr; i++) {
- 		packet_write_fmt(fd_out, "ref-prefix %s\n",
- 				 ref_prefixes->v[i]);
-@@ -498,7 +522,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 
- 	/* Process response from server */
- 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
--		if (!process_ref_v2(reader, &list))
-+		if (!process_ref_v2(reader, &list, unborn_head_target))
- 			die(_("invalid ls-refs response: %s"), reader->line);
- 	}
- 
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 7f082fb23b..ca6339a5fb 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -102,11 +102,13 @@ test_expect_success 'redirected clone -v does show progress' '
- '
- 
- test_expect_success 'chooses correct default initial branch name' '
--	git init --bare empty &&
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+	git -c init.defaultBranch=foo init --bare empty &&
-+	test_config -C empty lsrefs.unborn advertise &&
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
- 	git -c init.defaultBranch=up clone empty whats-up &&
--	test refs/heads/up = $(git -C whats-up symbolic-ref HEAD) &&
--	test refs/heads/up = $(git -C whats-up config branch.up.merge)
-+	test refs/heads/foo = $(git -C whats-up symbolic-ref HEAD) &&
-+	test refs/heads/foo = $(git -C whats-up config branch.foo.merge)
- '
- 
- test_expect_success 'guesses initial branch name correctly' '
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 7d5b17909b..b2ead93af9 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -209,6 +209,31 @@ test_expect_success 'clone with file:// using protocol v2' '
- 	grep "ref-prefix refs/tags/" log
- '
- 
-+test_expect_success 'clone of empty repo propagates name of default branch' '
-+	test_when_finished "rm -rf file_empty_parent file_empty_child" &&
-+
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+	git -c init.defaultBranch=mydefaultbranch init file_empty_parent &&
-+
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+	git -c init.defaultBranch=main -c protocol.version=2 \
-+		clone "file://$(pwd)/file_empty_parent" file_empty_child &&
-+	grep "refs/heads/mydefaultbranch" file_empty_child/.git/HEAD
-+'
-+
-+test_expect_success '...but not if explicitly forbidden by config' '
-+	test_when_finished "rm -rf file_empty_parent file_empty_child" &&
-+
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+	git -c init.defaultBranch=mydefaultbranch init file_empty_parent &&
-+	test_config -C file_empty_parent lsrefs.unborn ignore &&
-+
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-+	git -c init.defaultBranch=main -c protocol.version=2 \
-+		clone "file://$(pwd)/file_empty_parent" file_empty_child &&
-+	! grep "refs/heads/mydefaultbranch" file_empty_child/.git/HEAD
-+'
-+
- test_expect_success 'fetch with file:// using protocol v2' '
- 	test_when_finished "rm -f log" &&
- 
-diff --git a/transport.h b/transport.h
-index 1f5b60e4d3..24e15799e7 100644
---- a/transport.h
-+++ b/transport.h
-@@ -243,6 +243,14 @@ struct transport_ls_refs_options {
- 	 * provided ref_prefixes.
- 	 */
- 	struct strvec ref_prefixes;
-+
-+	/*
-+	 * If unborn_head_target is not NULL, and the remote reports HEAD as
-+	 * pointing to an unborn branch, transport_get_remote_refs() stores the
-+	 * unborn branch in unborn_head_target. It should be freed by the
-+	 * caller.
-+	 */
-+	char *unborn_head_target;
- };
- #define TRANSPORT_LS_REFS_OPTIONS_INIT { STRVEC_INIT }
- 
--- 
-2.30.0.365.g02bc693789-goog
+This looks reasonable overall, especially with the feature turned on
+by default, we'd hopefully get reasonable exposure from the get-go.
 
+Let's mark the topic to be merged to 'next' soonish, unless people
+object.
+
+Thanks.
