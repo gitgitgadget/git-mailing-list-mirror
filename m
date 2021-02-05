@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4E69C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2580C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:26:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8955D64E75
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:26:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F6EA64E75
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233313AbhBEQno (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 11:43:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44144 "EHLO
+        id S231630AbhBEQo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 11:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233331AbhBEQk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 11:40:57 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E8EC061793
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 10:22:38 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id w4so6747780wmi.4
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:22:38 -0800 (PST)
+        with ESMTP id S233269AbhBEQkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 11:40:55 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA42C06178B
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 10:22:36 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id c4so8682809wru.9
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:22:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=l6FtnOpglT3mK3SEVJz/3kN9LAgIBU9mWvZcmxVv3ck=;
-        b=EVhjuSDASBveU775niA0EpN7HnMVg7LkMv0M6NWCctC7CayY8PaBsKPgFGGewLKCde
-         aVIEV+FMKJ2v5oiIYZtYQ5GpdjrWCs6o+PV0CaDG208Zdru13dk8gkju8qx4Aaaj/UmX
-         C8MwqMBGCYkZ3dLYAZdigg/M1FF6Jy4PddvWjgOyKYT9Bzxxf3EaF1ZCTs1Us/2hvcyR
-         dyX6dC2fsHB3yRcoBVdJ+UG1lujNtNMJXWe7zjrGo9Ef1cPjuvFt1YzsOhpjrD4Gcrll
-         TW3pKzn4QuYTMP0l20LYDBpuFuZAZwLL6CiDwoueZufa/wiPOKQTTqF/30u7tWBeLfzG
-         5Rvg==
+        bh=8+g1/GHHS722X/SiBgQQpJwcszLIHLP4uLMT0hi6i/c=;
+        b=NnAZM7MVK19a6QTyg0uDYQOhLK+2DdozsvlkEmcpCVQ5aqZ9iEv19f4B/MYT2ktZWh
+         s+nlYfWy+n4T/Zj3mB4yjcXXNjcdk3+qfpKhVptXTAp8mcWMAM8eekjSyy1Uj9pUW8IO
+         1ALKL+QyAk2h8umGNHVf/iUvaEfKwxKs4NKZ07qNGkis99yh55F52Y0Wi4wvAwmmA5Zd
+         NDLjOZe9HdFMx+PDiWypDpB7tIcgQUTcs3u3hkUpZL8OMQMI1mEUAUQhjKXN1iI3SnvW
+         op5ur43AZzKBp4q6n7F4YjIp8ywi9xN9UZ/Gb6xnGkm+ucsMpFQsqsV0gwD8/yQ9BQnp
+         75pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=l6FtnOpglT3mK3SEVJz/3kN9LAgIBU9mWvZcmxVv3ck=;
-        b=L8ah97NuQOafPA/wu0E7EP46455RJiGY69267nxiTm3WpbaPBwR5xvU2oM3BHEyaGj
-         31RxQgdpzl10Aqmc6GEYIweTehhHMFesj0bl5GcjI4ZEdZvN4ArCisMfPMGT+jbTqTOR
-         azrGKLqEdtcZShvLAIg6RyJ4AwKfErp7DCgNFJXH0MMOMt0xTdJBrehRoCvuUKANbkiS
-         BpCYF+tfSy/a0/5ejCKoovwNv7pRqb0rJtuHAimecfUoYr7WtaR8lkkhsk7Y4Kv4kc8I
-         Bw9Fnwt3Z0wPN4hYOLuaFvSRNyLfGsqEhFsCDVsheok8OnuCNLDrkBQc23bxD9hDm7ck
-         pAbw==
-X-Gm-Message-State: AOAM533ymuQO9L9l4s6erAZiKDreg8kHF7VVdMTkWQtKn1t1eNL5hbAH
-        AQettLiOUogsEglCBqPtN/7sQptBBks=
-X-Google-Smtp-Source: ABdhPJxq/E12JfVxTkSEL7muewB7+1qbRrjWW8LF2I2gbyBimBeWvKea1PCDTSTs4oUi77/74FU4VA==
-X-Received: by 2002:a1c:ab57:: with SMTP id u84mr4807717wme.115.1612549357092;
-        Fri, 05 Feb 2021 10:22:37 -0800 (PST)
+        bh=8+g1/GHHS722X/SiBgQQpJwcszLIHLP4uLMT0hi6i/c=;
+        b=HoobnCbsrPYWlGuUodT4NLBOFKcMvv+lLPsDf4L9VJBhG8N3Gnyg0aFKKJZGjOpnjz
+         5FnRHeSPi+lAJ1D4Y0/7ec7nZpa992/dzFcHzCNLAgFh2tJV08tUnJrIXcqLmEmSlr8o
+         42q4F9UCvKYVoH0Sx2d+O0kt4pFgflhpU9UgZ4Lu5xATRkyI+YjRvtk7XtfabnExWXTc
+         M6j3RIo6wc/WwEAXgxk33DOwiF7AIRvOzK4zAjoIrlLs/DR1kpeOICf6zUiMyrT2um6F
+         91/bUHkc2VBsbbFJWveVhljN55v/NBtuFx/XlHe7gCkpMNd0jD7HyM8OYz/DnRzBdfaP
+         0Dpg==
+X-Gm-Message-State: AOAM532ueupjST8XCahjykD6Up59SCOhY7i0UQIpG6pYn9Xzxji/8Nlb
+        esk7zYXHgzSgVJd5UBRgj+mdq/xNNVY=
+X-Google-Smtp-Source: ABdhPJy3URAV1IEj2pETpkddni16Lz5JuvFYofy5i+3lMKhOgLqUcwHBaJE4XDggH+77/+YitALPKA==
+X-Received: by 2002:adf:e381:: with SMTP id e1mr6316066wrm.22.1612549354874;
+        Fri, 05 Feb 2021 10:22:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o18sm9413286wmh.20.2021.02.05.10.22.36
+        by smtp.gmail.com with ESMTPSA id e11sm13022702wrt.35.2021.02.05.10.22.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 10:22:36 -0800 (PST)
-Message-Id: <ee0fa2ec1d0fb4875c6a10af26686d2d5b3cb489.1612549349.git.gitgitgadget@gmail.com>
+        Fri, 05 Feb 2021 10:22:33 -0800 (PST)
+Message-Id: <06b781206e4cd5cfe23747f77d9228e5dc7e42c4.1612549349.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.858.v3.git.1612549349.gitgitgadget@gmail.com>
 References: <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
         <pull.858.v3.git.1612549349.gitgitgadget@gmail.com>
 From:   "Thomas Ackermann via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 18:22:28 +0000
-Subject: [PATCH v3 5/6] doc hash-function-transition: move rationale upwards
+Date:   Fri, 05 Feb 2021 18:22:26 +0000
+Subject: [PATCH v3 3/6] doc hash-function-transition: use upper case
+ consistently
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,119 +81,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Thomas Ackermann <th.acker@arcor.de>
 
-Move rationale for new hash function to beginning of document
-so that it appears before the concrete move to SHA-256 is described.
-
-Remove some of the details about SHA-1 weaknesses and add references
-to the details on how the new hash function was chosen instead.
+Use upper case consistently in Document History.
 
 Signed-off-by: Thomas Ackermann <th.acker@arcor.de>
 ---
- .../technical/hash-function-transition.txt    | 76 +++++++++----------
- 1 file changed, 34 insertions(+), 42 deletions(-)
+ .../technical/hash-function-transition.txt         | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index 5ff9ee027cff..0c4cb98cd4e9 100644
+index 8c01608cbfa0..9e13919a0e5b 100644
 --- a/Documentation/technical/hash-function-transition.txt
 +++ b/Documentation/technical/hash-function-transition.txt
-@@ -33,16 +33,9 @@ researchers. On 23 February 2017 the SHAttered attack
+@@ -794,8 +794,8 @@ sbeller@google.com
+ 2017-03-03 jrnieder@gmail.com
+ Incorporated suggestions from jonathantanmy and sbeller:
  
- Git v2.13.0 and later subsequently moved to a hardened SHA-1
- implementation by default, which isn't vulnerable to the SHAttered
--attack.
-+attack, but SHA-1 is still weak.
+-* describe purpose of signed objects with each hash type
+-* redefine signed object verification using object content under the
++* Describe purpose of signed objects with each hash type
++* Redefine signed object verification using object content under the
+   first hash function
  
--Thus Git has in effect already migrated to a new hash that isn't SHA-1
--and doesn't share its vulnerabilities, its new hash function just
--happens to produce exactly the same output for all known inputs,
--except two PDFs published by the SHAttered researchers, and the new
--implementation (written by those researchers) claims to detect future
--cryptanalytic collision attacks.
--
--Regardless, it's considered prudent to move past any variant of SHA-1
-+Thus it's considered prudent to move past any variant of SHA-1
- to a new hash. There's no guarantee that future attacks on SHA-1 won't
- be published in the future, and those attacks may not have viable
- mitigations.
-@@ -57,6 +50,38 @@ SHA-1 still possesses the other properties such as fast object lookup
- and safe error checking, but other hash functions are equally suitable
- that are believed to be cryptographically secure.
+ 2017-03-06 jrnieder@gmail.com
+@@ -814,13 +814,13 @@ Incorporated suggestions from jonathantanmy and sbeller:
  
-+Choice of Hash
-+--------------
-+The hash to replace the hardened SHA-1 should be stronger than SHA-1
-+was: we would like it to be trustworthy and useful in practice for at
-+least 10 years.
-+
-+Some other relevant properties:
-+
-+1. A 256-bit hash (long enough to match common security practice; not
-+   excessively long to hurt performance and disk usage).
-+
-+2. High quality implementations should be widely available (e.g., in
-+   OpenSSL and Apple CommonCrypto).
-+
-+3. The hash function's properties should match Git's needs (e.g. Git
-+   requires collision and 2nd preimage resistance and does not require
-+   length extension resistance).
-+
-+4. As a tiebreaker, the hash should be fast to compute (fortunately
-+   many contenders are faster than SHA-1).
-+
-+There were several contenders for a successor hash to SHA-1, including
-+SHA-256, SHA-512/256, SHA-256x16, K12, and BLAKE2bp-256.
-+
-+In late 2018 the project picked SHA-256 as its successor hash.
-+
-+See 0ed8d8da374 (doc hash-function-transition: pick SHA-256 as
-+NewHash, 2018-08-04) and numerous mailing list threads at the time,
-+particularly the one starting at
-+https://lore.kernel.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/
-+for more information.
-+
- Goals
- -----
- 1. The transition to SHA-256 can be done one local repository at a time.
-@@ -601,39 +626,6 @@ example:
+ 2017-09-27 jrnieder@gmail.com, sbeller@google.com
  
-     git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
+-* use placeholder NewHash instead of SHA3-256
+-* describe criteria for picking a hash function.
+-* include a transition plan (thanks especially to Brandon Williams
++* Use placeholder NewHash instead of SHA3-256
++* Describe criteria for picking a hash function.
++* Include a transition plan (thanks especially to Brandon Williams
+   for fleshing these ideas out)
+-* define the translation table (thanks, Shawn Pearce[5], Jonathan
++* Define the translation table (thanks, Shawn Pearce[5], Jonathan
+   Tan, and Masaya Suzuki)
+-* avoid loose object overhead by packing more aggressively in
++* Avoid loose object overhead by packing more aggressively in
+   "git gc --auto"
  
--Choice of Hash
----------------
--In early 2005, around the time that Git was written, Xiaoyun Wang,
--Yiqun Lisa Yin, and Hongbo Yu announced an attack finding SHA-1
--collisions in 2^69 operations. In August they published details.
--Luckily, no practical demonstrations of a collision in full SHA-1 were
--published until 10 years later, in 2017.
--
--Git v2.13.0 and later subsequently moved to a hardened SHA-1
--implementation by default that mitigates the SHAttered attack, but
--SHA-1 is still believed to be weak.
--
--The hash to replace this hardened SHA-1 should be stronger than SHA-1
--was: we would like it to be trustworthy and useful in practice for at
--least 10 years.
--
--Some other relevant properties:
--
--1. A 256-bit hash (long enough to match common security practice; not
--   excessively long to hurt performance and disk usage).
--
--2. High quality implementations should be widely available (e.g., in
--   OpenSSL and Apple CommonCrypto).
--
--3. The hash function's properties should match Git's needs (e.g. Git
--   requires collision and 2nd preimage resistance and does not require
--   length extension resistance).
--
--4. As a tiebreaker, the hash should be fast to compute (fortunately
--   many contenders are faster than SHA-1).
--
--We choose SHA-256.
--
- Transition plan
- ---------------
- Some initial steps can be implemented independently of one another:
+ Later history:
 -- 
 gitgitgadget
 
