@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2FDEC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC186C433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9826264E22
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77F6464E22
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 04:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhBEE7Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 23:59:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
+        id S231200AbhBEE72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 23:59:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbhBEE7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 23:59:18 -0500
+        with ESMTP id S231168AbhBEE7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 23:59:20 -0500
 Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D42C061786
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 20:58:38 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id e23so4028520pfl.20
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 20:58:38 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A9AC06178A
+        for <git@vger.kernel.org>; Thu,  4 Feb 2021 20:58:39 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id t16so4048492pfh.22
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 20:58:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=hSDjlzoL8yJQM+iQ+NY+IMfQLmZiAhYCsEGLQrYJ61s=;
-        b=hecMMlDCx1L5VtHxuuXVdNReSxLuhiwrVU4lZpcZArcHBs056mR/sURyW3upA/0O6/
-         EJTfxqrxXl1N35jtm56pErzcRBhy0oAO5Jq80vNOtto11eDek4yKsE8k/EwpcF3PtG93
-         3gSdM+N9XeWYHtSh9MmM8FdalJYCwWgO3NvDwYNz5eSAPtOmSxZlifXcUZSDmulIfzFJ
-         pPCpNXQ4awdKtx7dWVMBPqtvSPOoSskJHo4tqMPZo/bt8+Ow7IfK30u609gPC4uCUwBV
-         S2GUInBkmsSlIn21BaYYbaHvdRXL55oThQUVOhqm7Lf9nFgM1yg5OiBH4sgtL837HBNe
-         01+w==
+        bh=44iXLyYlG6pFAz+0dCRTOvE38Y784hK0/VnCluqyfYw=;
+        b=blqxI74WqxFrt37grLQHfvn+wgBN/0i6GfET8dOYx0tgoq+1xukfEuYpcjT35RN9x8
+         62ERb92ZFQVBxHPeP2feVbLxlTQKy6Fg6LERD/xfuzvqK3Tg5fV98voziLdvDSsmecih
+         xBjjEZidA9AiwvSQOi+d8/2g9R7CcODp30Mpp18BLO0CJPzD2MznypkYYl0mLYtTXLQj
+         L0/CVw0lkYgin1/1oHKa82nWFav7ZLCQyqq6EJK73lmrC1Dj3ceCytZnBj1molWVa5j8
+         na6ajPaImRsjOfxHzT39W3Hwe3oFpknQLc2UQ6k5q7J/lEO1i1UOm6qqtJlIR7yaX4ha
+         H3jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=hSDjlzoL8yJQM+iQ+NY+IMfQLmZiAhYCsEGLQrYJ61s=;
-        b=o7VvvkQ4KSI89zEAzmwvqtBm+VPUdur0fLcI/gmP+agh7fqmkY18z5TIuZRt7QCByl
-         GYyBxap5cqfdKpknl7RReSb4VFAEQpszZZUgtq0sAqnzMPt2VBw05Dn0bkaup8fui3Kh
-         XwtnM4HVMkeLO2ZbIBaCI5mwxpqS9Xd601ZapCFkoHPU06xxRQNvI4VxmgS8b0kP389F
-         8Um8LCJWQhE62W35jQaWKQcoc1LN3ihh8p5YcwehPLzfJFcIHCHXUZYj5qZNZr29PApH
-         X08hPCk/MNIRh5ptcfenytnqPtEus7gPS3xpnoGD9e77Qj815lpWxe0bJn5snHis+7BY
-         Kl3g==
-X-Gm-Message-State: AOAM533kU+LD7EP04lKI2adKww8WePw9rnbdj535wMbahWFYF3as4unI
-        2H2mpwN//92Ry6LSsXYQz/zSlFYBiMAoFS2ATtXwx92ac4MY1Q4y+wuO/0q3zxg3CjyztmVVAxd
-        TzZT/utXRngxxL11mhYatqW7NDvnHhbnHoTKX1Xl4I4wOIYDz/gykjokeU8anuW/ijqkHmqwyth
-        iL
-X-Google-Smtp-Source: ABdhPJxj20Gqv/OHaBWt6SFNxzf6GMKunIfTgZQRokWmSjl5GIzBJU/EeXMEtYyequgRTkcTw849I8S8QzxRIUe5ein7
+        bh=44iXLyYlG6pFAz+0dCRTOvE38Y784hK0/VnCluqyfYw=;
+        b=cxpqpusYkVBUAvNOSUJEABAgGxfUhpYh+qBvj6s/FDu/JHV69qR8uSlDADuxyWxmxG
+         i7F3fJ23KA9Q6wPyuQajT2IV7EQyineQUIQO0gXJ+2Bm2go7HM6UFp3eTxzJFT51u2zG
+         4bd/TQLTjVHqN2pC1oOriZRdQ40EnQX1W2C3i2GuhPiCDRnua49qHb99rUHBFgDkiq+E
+         /+lV9+mBRTRyLN1pNgg6hjV/v3r9elQWH8n6yIhvPGLdyesUhtrS7+/7DoLvSFwF3hm8
+         zuZQ+I7RaI8Z1j40PRLBLUE0TAsrs/ezcS2/9bf7nULatteXbrXp17BAjnuowSnwZAv0
+         iamw==
+X-Gm-Message-State: AOAM532pyT5IZCoY8DPMuGqUNXEa5fq/kT/bWR6U3H9MCU7jETxJLpLY
+        IBlMYR5yFrfQ4Rt04K1A6H2uy9xrc0B5UQWtfQAmFdDoqkjOEAK12Pq/4SmND8KiNthfwbg1+7d
+        xsmKNFyaLgZEh4Vth9IF9fBxi9bul3wBnvU4G9eFNb69gpq/Qgne9SgRk6WBAwzOtL/3oJ4K/pD
+        RF
+X-Google-Smtp-Source: ABdhPJzQGEOxSH5O75J6DjepAyfDMo8JmMjJjClfta6RFQYtxrQUO2krpEd+fEXWMB7Hj63vcceU5KkHtGjCw5zCEctq
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:158c:0:b029:1bf:15c6:33be with
- SMTP id 134-20020a62158c0000b02901bf15c633bemr2722976pfv.56.1612501117542;
- Thu, 04 Feb 2021 20:58:37 -0800 (PST)
-Date:   Thu,  4 Feb 2021 20:58:30 -0800
-In-Reply-To: <20201208013121.677494-1-jonathantanmy@google.com>
-Message-Id: <cover.1612493309.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:9690:b029:e1:5a03:87b5 with
+ SMTP id n16-20020a1709029690b02900e15a0387b5mr2377120plp.39.1612501119306;
+ Thu, 04 Feb 2021 20:58:39 -0800 (PST)
+Date:   Thu,  4 Feb 2021 20:58:31 -0800
+In-Reply-To: <cover.1612493309.git.jonathantanmy@google.com>
+Message-Id: <2d3507536924346637bb138af5a3562ce8f2abc2.1612493309.git.jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20201208013121.677494-1-jonathantanmy@google.com>
+References: <20201208013121.677494-1-jonathantanmy@google.com> <cover.1612493309.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH v7 0/3] Cloning with remote unborn HEAD
+Subject: [PATCH v7 1/3] ls-refs: report unborn targets of symrefs
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
@@ -72,159 +72,273 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For what it's worth, here's v7 with advertise/allow/ignore and by
-default, advertise. I think that some server operators will have use for
-this feature, and people who want to disable it for whatever reason can
-still do so. The main disadvantage is complexity - the server knob that
-server administrators will need to control (but between a simpler
-allow/ignore knob and a more complicated advertise/allow/ignore knob, I
-think we might as well go for the slightly more complex one) and
-complexity in the code (but now that is constrained to one function and
-a few global variables).
+When cloning, we choose the default branch based on the remote HEAD.
+But if there is no remote HEAD reported (which could happen if the
+target of the remote HEAD is unborn), we'll fall back to using our local
+init.defaultBranch. Traditionally this hasn't been a big deal, because
+most repos used "master" as the default. But these days it is likely to
+cause confusion if the server and client implementations choose
+different values (e.g., if the remote started with "main", we may choose
+"master" locally, create commits there, and then the user is surprised
+when they push to "master" and not "main").
 
-As you can see from the range-diff, not much has changed from v6.
+To solve this, the remote needs to communicate the target of the HEAD
+symref, even if it is unborn, and "git clone" needs to use this
+information.
 
-I've also included Junio's suggestion of tightening the promise made by
-the server (when the client says "unborn").
+Currently, symrefs that have unborn targets (such as in this case) are
+not communicated by the protocol. Teach Git to advertise and support the
+"unborn" feature in "ls-refs" (by default, this is advertised, but
+server administrators may turn this off through the lsrefs.unborn
+config). This feature indicates that "ls-refs" supports the "unborn"
+argument; when it is specified, "ls-refs" will send the HEAD symref with
+the name of its unborn target.
 
-Jonathan Tan (3):
-  ls-refs: report unborn targets of symrefs
-  connect, transport: encapsulate arg in struct
-  clone: respect remote unborn HEAD
+This change is only for protocol v2. A similar change for protocol v0
+would require independent protocol design (there being no analogous
+position to signal support for "unborn") and client-side plumbing of the
+data required, so the scope of this patch set is limited to protocol v2.
 
+The client side will be updated to use this in a subsequent commit.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
  Documentation/config.txt                |  2 +
- Documentation/config/init.txt           |  2 +-
  Documentation/config/lsrefs.txt         |  9 +++
  Documentation/technical/protocol-v2.txt | 11 +++-
- builtin/clone.c                         | 34 +++++++++---
- builtin/fetch-pack.c                    |  3 +-
- builtin/fetch.c                         | 18 +++---
- builtin/ls-remote.c                     |  9 +--
- connect.c                               | 32 ++++++++++-
  ls-refs.c                               | 74 ++++++++++++++++++++++++-
  ls-refs.h                               |  1 +
- remote.h                                |  4 +-
  serve.c                                 |  2 +-
- t/t5606-clone-options.sh                |  8 ++-
  t/t5701-git-serve.sh                    |  2 +-
- t/t5702-protocol-v2.sh                  | 25 +++++++++
- transport-helper.c                      |  5 +-
- transport-internal.h                    | 10 +---
- transport.c                             | 23 ++++----
- transport.h                             | 29 +++++++---
- 20 files changed, 240 insertions(+), 63 deletions(-)
+ 7 files changed, 95 insertions(+), 6 deletions(-)
  create mode 100644 Documentation/config/lsrefs.txt
 
-Range-diff against v6:
-1:  411bbafe25 ! 1:  2d35075369 ls-refs: report unborn targets of symrefs
-    @@ Commit message
-         Currently, symrefs that have unborn targets (such as in this case) are
-         not communicated by the protocol. Teach Git to advertise and support the
-         "unborn" feature in "ls-refs" (by default, this is advertised, but
-    -    server administrators may turn this off through the lsrefs.allowunborn
-    +    server administrators may turn this off through the lsrefs.unborn
-         config). This feature indicates that "ls-refs" supports the "unborn"
-         argument; when it is specified, "ls-refs" will send the HEAD symref with
-         the name of its unborn target.
-    @@ Documentation/config.txt: include::config/interactive.txt[]
-     
-      ## Documentation/config/lsrefs.txt (new) ##
-     @@
-    -+lsrefs.allowUnborn::
-    -+	Allow the server to send information about unborn symrefs during the
-    -+	protocol v2 ref advertisement.
-    ++lsrefs.unborn::
-    ++	May be "advertise" (the default), "allow", or "ignore". If "advertise",
-    ++	the server will respond to the client sending "unborn" (as described in
-    ++	protocol-v2.txt) and will advertise support for this feature during the
-    ++	protocol v2 capability advertisement. "allow" is the same as
-    ++	"advertise" except that the server will not advertise support for this
-    ++	feature; this is useful for load-balanced servers that cannot be
-    ++	updated automatically (for example), since the administrator could
-    ++	configure "allow", then after a delay, configure "advertise".
-     
-      ## Documentation/technical/protocol-v2.txt ##
-     @@ Documentation/technical/protocol-v2.txt: ls-refs takes in the following arguments:
-    @@ Documentation/technical/protocol-v2.txt: ls-refs takes in the following argument
-     +included in the client's request.
-     +
-     +    unborn
-    -+	The server may send symrefs pointing to unborn branches in the form
-    -+	"unborn <refname> symref-target:<target>".
-    ++	The server will send information about HEAD even if it is a symref
-    ++	pointing to an unborn branch in the form "unborn HEAD
-    ++	symref-target:<target>".
-     +
-      The output of ls-refs is as follows:
-      
-    @@ ls-refs.c
-      #include "config.h"
-      
-     +static int config_read;
-    ++static int advertise_unborn;
-     +static int allow_unborn;
-     +
-     +static void ensure_config_read(void)
-     +{
-    ++	char *str = NULL;
-    ++
-     +	if (config_read)
-     +		return;
-     +
-    -+	if (repo_config_get_bool(the_repository, "lsrefs.allowunborn",
-    -+				 &allow_unborn))
-    ++	if (repo_config_get_string(the_repository, "lsrefs.unborn", &str)) {
-     +		/*
-    -+		 * If there is no such config, set it to 1 to allow it by
-    ++		 * If there is no such config, advertise and allow it by
-     +		 * default.
-     +		 */
-    ++		advertise_unborn = 1;
-     +		allow_unborn = 1;
-    ++	} else {
-    ++		if (!strcmp(str, "advertise")) {
-    ++			advertise_unborn = 1;
-    ++			allow_unborn = 1;
-    ++		} else if (!strcmp(str, "allow")) {
-    ++			allow_unborn = 1;
-    ++		} else if (!strcmp(str, "ignore")) {
-    ++			/* do nothing */
-    ++		} else {
-    ++			die(_("invalid value '%s' for lsrefs.unborn"), str);
-    ++		}
-    ++	}
-     +	config_read = 1;
-     +}
-     +
-    @@ ls-refs.c: int ls_refs(struct repository *r, struct strvec *keys,
-     +{
-     +	if (value) {
-     +		ensure_config_read();
-    -+		if (allow_unborn)
-    ++		if (advertise_unborn)
-     +			strbuf_addstr(value, "unborn");
-     +	}
-     +
-2:  fad1ebe6b6 = 2:  d4ed13d02e connect, transport: encapsulate arg in struct
-3:  45a48ccc0d ! 3:  a3e5a0a7c5 clone: respect remote unborn HEAD
-    @@ t/t5606-clone-options.sh: test_expect_success 'redirected clone -v does show pro
-     -	git init --bare empty &&
-     +	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-     +	git -c init.defaultBranch=foo init --bare empty &&
-    -+	test_config -C empty lsrefs.allowUnborn true &&
-    ++	test_config -C empty lsrefs.unborn advertise &&
-      	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-      	git -c init.defaultBranch=up clone empty whats-up &&
-     -	test refs/heads/up = $(git -C whats-up symbolic-ref HEAD) &&
-    @@ t/t5702-protocol-v2.sh: test_expect_success 'clone with file:// using protocol v
-     +
-     +	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-     +	git -c init.defaultBranch=mydefaultbranch init file_empty_parent &&
-    -+	test_config -C file_empty_parent lsrefs.allowUnborn false &&
-    ++	test_config -C file_empty_parent lsrefs.unborn ignore &&
-     +
-     +	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
-     +	git -c init.defaultBranch=main -c protocol.version=2 \
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 6ba50b1104..d08e83a148 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -398,6 +398,8 @@ include::config/interactive.txt[]
+ 
+ include::config/log.txt[]
+ 
++include::config/lsrefs.txt[]
++
+ include::config/mailinfo.txt[]
+ 
+ include::config/mailmap.txt[]
+diff --git a/Documentation/config/lsrefs.txt b/Documentation/config/lsrefs.txt
+new file mode 100644
+index 0000000000..e003856c08
+--- /dev/null
++++ b/Documentation/config/lsrefs.txt
+@@ -0,0 +1,9 @@
++lsrefs.unborn::
++	May be "advertise" (the default), "allow", or "ignore". If "advertise",
++	the server will respond to the client sending "unborn" (as described in
++	protocol-v2.txt) and will advertise support for this feature during the
++	protocol v2 capability advertisement. "allow" is the same as
++	"advertise" except that the server will not advertise support for this
++	feature; this is useful for load-balanced servers that cannot be
++	updated automatically (for example), since the administrator could
++	configure "allow", then after a delay, configure "advertise".
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index 85daeb5d9e..f772d90eaf 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -192,11 +192,20 @@ ls-refs takes in the following arguments:
+ 	When specified, only references having a prefix matching one of
+ 	the provided prefixes are displayed.
+ 
++If the 'unborn' feature is advertised the following argument can be
++included in the client's request.
++
++    unborn
++	The server will send information about HEAD even if it is a symref
++	pointing to an unborn branch in the form "unborn HEAD
++	symref-target:<target>".
++
+ The output of ls-refs is as follows:
+ 
+     output = *ref
+ 	     flush-pkt
+-    ref = PKT-LINE(obj-id SP refname *(SP ref-attribute) LF)
++    obj-id-or-unborn = (obj-id | "unborn")
++    ref = PKT-LINE(obj-id-or-unborn SP refname *(SP ref-attribute) LF)
+     ref-attribute = (symref | peeled)
+     symref = "symref-target:" symref-target
+     peeled = "peeled:" obj-id
+diff --git a/ls-refs.c b/ls-refs.c
+index a1e0b473e4..e08fd43e7a 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -7,6 +7,39 @@
+ #include "pkt-line.h"
+ #include "config.h"
+ 
++static int config_read;
++static int advertise_unborn;
++static int allow_unborn;
++
++static void ensure_config_read(void)
++{
++	char *str = NULL;
++
++	if (config_read)
++		return;
++
++	if (repo_config_get_string(the_repository, "lsrefs.unborn", &str)) {
++		/*
++		 * If there is no such config, advertise and allow it by
++		 * default.
++		 */
++		advertise_unborn = 1;
++		allow_unborn = 1;
++	} else {
++		if (!strcmp(str, "advertise")) {
++			advertise_unborn = 1;
++			allow_unborn = 1;
++		} else if (!strcmp(str, "allow")) {
++			allow_unborn = 1;
++		} else if (!strcmp(str, "ignore")) {
++			/* do nothing */
++		} else {
++			die(_("invalid value '%s' for lsrefs.unborn"), str);
++		}
++	}
++	config_read = 1;
++}
++
+ /*
+  * Check if one of the prefixes is a prefix of the ref.
+  * If no prefixes were provided, all refs match.
+@@ -32,6 +65,7 @@ struct ls_refs_data {
+ 	unsigned peel;
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
++	unsigned unborn : 1;
+ };
+ 
+ static int send_ref(const char *refname, const struct object_id *oid,
+@@ -47,7 +81,10 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	if (!ref_match(&data->prefixes, refname_nons))
+ 		return 0;
+ 
+-	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++	if (oid)
++		strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++	else
++		strbuf_addf(&refline, "unborn %s", refname_nons);
+ 	if (data->symrefs && flag & REF_ISSYMREF) {
+ 		struct object_id unused;
+ 		const char *symref_target = resolve_ref_unsafe(refname, 0,
+@@ -61,7 +98,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 			    strip_namespace(symref_target));
+ 	}
+ 
+-	if (data->peel) {
++	if (data->peel && oid) {
+ 		struct object_id peeled;
+ 		if (!peel_ref(refname, &peeled))
+ 			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
+@@ -74,6 +111,23 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
++static void send_possibly_unborn_head(struct ls_refs_data *data)
++{
++	struct strbuf namespaced = STRBUF_INIT;
++	struct object_id oid;
++	int flag;
++	int oid_is_null;
++
++	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
++	if (!resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag))
++		return; /* bad ref */
++	oid_is_null = is_null_oid(&oid);
++	if (!oid_is_null ||
++	    (data->unborn && data->symrefs && (flag & REF_ISSYMREF)))
++		send_ref(namespaced.buf, oid_is_null ? NULL : &oid, flag, data);
++	strbuf_release(&namespaced);
++}
++
+ static int ls_refs_config(const char *var, const char *value, void *data)
+ {
+ 	/*
+@@ -91,6 +145,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+ 
+ 	memset(&data, 0, sizeof(data));
+ 
++	ensure_config_read();
+ 	git_config(ls_refs_config, NULL);
+ 
+ 	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
+@@ -103,14 +158,27 @@ int ls_refs(struct repository *r, struct strvec *keys,
+ 			data.symrefs = 1;
+ 		else if (skip_prefix(arg, "ref-prefix ", &out))
+ 			strvec_push(&data.prefixes, out);
++		else if (!strcmp("unborn", arg))
++			data.unborn = allow_unborn;
+ 	}
+ 
+ 	if (request->status != PACKET_READ_FLUSH)
+ 		die(_("expected flush after ls-refs arguments"));
+ 
+-	head_ref_namespaced(send_ref, &data);
++	send_possibly_unborn_head(&data);
+ 	for_each_namespaced_ref(send_ref, &data);
+ 	packet_flush(1);
+ 	strvec_clear(&data.prefixes);
+ 	return 0;
+ }
++
++int ls_refs_advertise(struct repository *r, struct strbuf *value)
++{
++	if (value) {
++		ensure_config_read();
++		if (advertise_unborn)
++			strbuf_addstr(value, "unborn");
++	}
++
++	return 1;
++}
+diff --git a/ls-refs.h b/ls-refs.h
+index 7b33a7c6b8..a99e4be0bd 100644
+--- a/ls-refs.h
++++ b/ls-refs.h
+@@ -6,5 +6,6 @@ struct strvec;
+ struct packet_reader;
+ int ls_refs(struct repository *r, struct strvec *keys,
+ 	    struct packet_reader *request);
++int ls_refs_advertise(struct repository *r, struct strbuf *value);
+ 
+ #endif /* LS_REFS_H */
+diff --git a/serve.c b/serve.c
+index eec2fe6f29..ac20c72763 100644
+--- a/serve.c
++++ b/serve.c
+@@ -73,7 +73,7 @@ struct protocol_capability {
+ 
+ static struct protocol_capability capabilities[] = {
+ 	{ "agent", agent_advertise, NULL },
+-	{ "ls-refs", always_advertise, ls_refs },
++	{ "ls-refs", ls_refs_advertise, ls_refs },
+ 	{ "fetch", upload_pack_advertise, upload_pack_v2 },
+ 	{ "server-option", always_advertise, NULL },
+ 	{ "object-format", object_format_advertise, NULL },
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index a1f5fdc9fd..df29504161 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -12,7 +12,7 @@ test_expect_success 'test capability advertisement' '
+ 	cat >expect <<-EOF &&
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
+-	ls-refs
++	ls-refs=unborn
+ 	fetch=shallow
+ 	server-option
+ 	object-format=$(test_oid algo)
 -- 
 2.30.0.365.g02bc693789-goog
 
