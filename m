@@ -2,124 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 193D2C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 09:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D55C433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 10:16:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBAC364DB1
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 09:46:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F1F9964FE8
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 10:16:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbhBEJqZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 04:46:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48104 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbhBEJnm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 04:43:42 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A09E0C0613D6
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 01:42:56 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id w124so6823106oia.6
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 01:42:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SayrXfWZzRp+Xrzd1dWdPqi1qjfCovblBw+32zGYt+4=;
-        b=XNunXoTlH21tNJ8JVPaxFVw9rCp4Ph7MP2IwA2Z0GPuM2AD+pDuwLcbqU8qjwn856x
-         3rkkobZz4KxONGZyoWfjp0BJSz4rTrGmU03s2oBYckabDGQM6Gu8JSc1CeTQaXr+nvH+
-         DepCIamyauH58YKG03ANSi+dRUhFStGdRO5VTEdv+QrbmuDsKOim1OShHVh/InF4ig3+
-         HmVykONRVFLjVPXvjGOFB2uN9ABzYtd1V04Ii5bJqTWJcElWKHKkblX4YOLuuMDp9Ia9
-         rcLQN7Ej6ghOO+hHaBA6oGkStmID0Vdk218ONvd/R5nhmvn55b1uwE7CDbqgwD1WpZjH
-         CcTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SayrXfWZzRp+Xrzd1dWdPqi1qjfCovblBw+32zGYt+4=;
-        b=GeRmpskvF/Ckc4t3MqgswXSHGljDIbsAkxfgT3AAb77K7np9gDpB8mmu8VlTKHfiIp
-         RrKQmkie0ajdoYHr84JmIp9lbig9YNuEYGurYluMh6NqBgS6uUt2esBtaGEFfefbtMIa
-         Rrr5otQPqGLH6Yz/elxmJPx0382pekgSyIa71Ri/Wsq2vZ/cNv5eugPyQPLAsq5p5olf
-         w3U/xWbmesOT25rK9hLmwl0HaGnBqBCGJ2UJKIagVKf+Z0WZaT0yl7PcaIKDvSgSABE3
-         2zDSluqc4eWK05zcbvYmWztaPk8/isZAxEGYN+A0P2MCoXgd5/xJwH0UJcCrXxNv+dJX
-         R0YQ==
-X-Gm-Message-State: AOAM530gBHDlygxVZzQIRduCxQ1PYEA9EjMjwnnls/iyj0IdpGg/DxjH
-        WgD0boM0+gmre/DWQVSsDwJm5gVROM/D4JwTl1E=
-X-Google-Smtp-Source: ABdhPJz47LbOx29/W24zR9idK6fqQ5azKxsrYvqsNw2Fm3xceAUr3F7RSU8Sg97nm9P6TPMO3TNUbiHVk8oOrvmUlDU=
-X-Received: by 2002:aca:b255:: with SMTP id b82mr2435496oif.98.1612518175994;
- Fri, 05 Feb 2021 01:42:55 -0800 (PST)
+        id S231251AbhBEKPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 05:15:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51446 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229793AbhBEKMl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 05:12:41 -0500
+Received: (qmail 16620 invoked by uid 109); 5 Feb 2021 10:11:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Feb 2021 10:11:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28997 invoked by uid 111); 5 Feb 2021 10:11:49 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Feb 2021 05:11:49 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 5 Feb 2021 05:11:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/6] Optionally restrict range-diff output to "left" or
+ "right" range only
+Message-ID: <YB0Z5JXbe22ko2Mj@coredump.intra.peff.net>
+References: <pull.869.git.1612469275.gitgitgadget@gmail.com>
+ <xmqqtuqr4frw.fsf@gitster.c.googlers.com>
+ <YBx5rmVsg1LJhSKN@nand.local>
+ <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <20210129182050.26143-1-charvi077@gmail.com> <20210204190507.26487-1-charvi077@gmail.com>
- <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Fri, 5 Feb 2021 15:12:44 +0530
-Message-ID: <CAPSFM5f0Jk03tWCTerZP1JhcMHG4MXjVSZjPKm2uzQYc+cOwsw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Feb 04, 2021 at 04:56:16PM -0800, Junio C Hamano wrote:
 
-On Fri, 5 Feb 2021 at 13:00, Eric Sunshine <sunshine@sunshineco.com> wrote:
-[...]
-> Thanks for working on this and re-rolling. Unfortunately, it seems
-> that v4 already landed in Junio's `next` branch which means that he
-> won't be replacing v4 wholesale as would have been the case if it was
-> still in the `seen` branch. Once patches are in `next`, improvements
-> are made by building changes atop them (incrementally) rather than
-> replacing them. Whether or not it makes sense for you to spend time
-> re-doing these patches as incremental changes is not clear. In fact...
->
-
-Okay, I admit I was not aware of this, before.
-
-> > The major change in this version is to remove the working of `fixup -C`
-> > with amend! commit and will include in the another patch series, in order
-> > to avoid the confusion. So there are following changes :
-> > * removed the patch (rebase -i : teach --autosquash to work with amend!)
-> > * updated the test script (t3437-*.sh), changed the test setup and removed
-> >   two tests.
+> > As an aside: I am curious if I'm missing something when you say the
+> > "only way" is to ask for a 'git range-diff ...@{u}'. IIUC what you're
+> > describing, I often resort to using 'git cherry' for that exact thing.
+> > But, I may not be quite understanding your use-case (and why git-cherry
+> > doesn't do what you want already).
 > >
-> >   Earlier every test includes the commit message having subject starting
-> >   with amend! So, now it includes a setup of different branch for testing
-> >   fixup with options and also updated all the tests.
-> >   Removed the test - "skip fixup -C removes amend! from message" and also
-> >   "sequence of fixup, fixup -C & squash --signoff works" as I think it would
-> >   be better to test this also in the branch with amend! commit with different
-> >   author. (Will add these tests with amend! commit implementation)
->
-> Despite these being nice cleanups to the standalone series, I'm not
-> sure it's worth spending your time creating new patches to undo these
-> from `next`. Removing them only to add them back later is not
-> necessarily going to help "unconfuse" someone reading the commits in
-> the permanent project history.
->
+> > My latter question is purely for satisfying my own curiosity; I don't
+> > have any problem with a '--{left,right}-only' option in range-diff. From
+> > my quick read of the patches, it all looks pretty sane to me.
+> 
+> The question is addressed to Dscho, and I am also somewhat curious.
+> Perhaps the reason would be that the output from cherry is not as
+> easy to read as range-diff, without any post-processing.
 
-Yes, I was also thinking that let's not remove the working of `fixup -C` with
-amend! commit as it's true that it is intended to work like that way.
+I had the same curiosity; I'd use git-cherry (or rev-list --cherry) for
+this.
 
-> > * changed the flag type from enum todo_item_flags to unsigned
-> > * Replaced fixup_-* with fixup-* in lib-rebase.sh
-> > * fixup a small nit in Documentation
->
-> These changes are still worthwhile and can easily be done
-> incrementally atop what is already in next, I would think.
->
+I suspect the big difference is the quality of the matching. git-cherry
+is purely looking at patch-ids. So it is quite likely to say "this was
+not applied upstream" when what got applied differed slightly (e.g.,
+fixups upstream, applied to a different base, etc). Whereas range-diff
+has some cost heuristics for deciding that two patches are basically the
+same thing.  So it would find more cases (and as a bonus, give you the
+diff to see what tweaks were made upstream).
 
-I agree, these fixes are required. So, I am not sure but now to do these
-fixup shall I send another patch cleaning this patch series(v4) and rebase the
-patch on the 'next' branch ? Is it the right way ?
+It does make me wonder if it would be useful for rev-list, etc to have
+an option to make "--cherry" use the more clever heuristics instead of
+just a patch-id. It would never show the same diff output as range-diff,
+but maybe more scripts would find the advanced heuristic useful.
 
-Thanks and Regards,
-Charvi
+I know it would probably make rebase's "ignore if in upstream" feature
+less clunky when I rebase topics. But it would also make it more
+dangerous! E.g., right now I see any upstream tweaks as potential
+conflicts when I rebase, and I manually review them for sanity.
+
+-Peff
