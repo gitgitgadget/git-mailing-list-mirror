@@ -4,215 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5789EC433E6
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 21:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 944F7C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 21:59:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D29864FB2
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 21:52:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3799B64FF0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 21:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230154AbhBEVnT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 16:43:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49190 "EHLO
+        id S233016AbhBEV6e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 16:58:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233017AbhBEO76 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:59:58 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10114C061756
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:38:12 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id hs11so12949275ejc.1
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:38:11 -0800 (PST)
+        with ESMTP id S232990AbhBEO6v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:58:51 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FFBFC06121F
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:28:50 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id l12so6502715wmq.2
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WT8+PdZXgx+ouFFnMyR0znv7pFSnh4A0ykDacXA77Pw=;
-        b=bhW19WnaBp0tEGDEdvYR7tlTz0qE99EZWxuOvGSVqGLe4eZCHUAik0MspsgdWAYxuU
-         LJwD2VD423KuHE1efV4F5moj5ERgFKl7zFSz3xfVVg94szCXiXY65+DJuV7SFB/Z3KqA
-         aH3+E6LjHvbInEV+TS+daJU7WxpycXhGAz1+/w4gcIZmoAwAQMLkBh9RJ0DIMHNxMhft
-         ImElv8rXY2V6Qe0oLzhvKJQ0bUJfeYrBq5JVq83FULAx3CW5cKAqx5Ni3Y/bqJK0waze
-         THKOPST782+HV0cNuNeXMu3lE/tA15qUV3YB664yeDnzHyoMbebjmqR0ZxiDI/Ya+Ps4
-         JDEA==
+        bh=5Z1+Cfk2iul7MZhTGGh3/zmJzJYC6ZYLog0Jd0Fq/7c=;
+        b=HJ2Bqpb4Hbl6Si/LV+iMLR1UEN4OWag4Y6EhbvqaL/OlKOB39wfteRibieCyslfa65
+         2XsgDGlzIBExHLIR01d1ZqDt6mceSO4TCZu+O50Q7IJWYsYI4C+pdhmmFQn4c3X/r9ri
+         3Oxuq5NYO9QV/7Hr23uOP1+isDzZIUZ+g2uiC2/MUQOQYcG1uGZlfdF2seW6b5G0WAXs
+         hvdNDEugJ1jVC87tUKShkL9nV4+Vq+pcH/Cqnte+Apl7VOovMvgt9M8EHY/YB1UMG78K
+         LV9ixaoU0GrEeYN7M1wbmVzh4ibgUmaHNFFvJr1cBs6ulLv9WmmwOy4/xlyMmwSJ3Xsn
+         6rrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WT8+PdZXgx+ouFFnMyR0znv7pFSnh4A0ykDacXA77Pw=;
-        b=acXML+//7GKc760NDZdUIwQYLFKMQSvefF10LEvF7LGuVeat9OTMlQtNjpaSMJDgFb
-         zUrL+fGygWDh0+p3nnFcsXrUctvedqEos60JUZK7Xm8O/vuA81mxaVern6aAP6wTVmM0
-         yxha/ow2hm+xYP6iI1nAKmzwJV53eZuJVjv7Hk3OJjmL6MjaK/mPJp2DYpyqsZ5MfKVp
-         5rnFKf2hK39LEEC9mKwpVfuROHsAe4mWVloxhr6OlBfc16p+wpLhHU8/Vt3/CxiN78t1
-         XYX+oKjqMx3L+E6nJPKCqKnqkf5HOF4AMjzPsia5kVQtjr296A3DWODEnmP5N8Ik2UGK
-         Kcdw==
-X-Gm-Message-State: AOAM530ktyqVuYTSPKLHEBhL3a5718QgwjvCUc7CTt1ZcKI1WT54IRLx
-        fiGYBm5B7In6pI8kasWGWYbUFv2Yx+4=
-X-Google-Smtp-Source: ABdhPJze0toOP5WDvxSMb79bFDeQFu/UV8eyMlpDO9Nc4R8yFqBQbt2SAuvgBtDB60lNAE2heVB48w==
-X-Received: by 2002:adf:fb49:: with SMTP id c9mr5556074wrs.72.1612536379527;
-        Fri, 05 Feb 2021 06:46:19 -0800 (PST)
+        bh=5Z1+Cfk2iul7MZhTGGh3/zmJzJYC6ZYLog0Jd0Fq/7c=;
+        b=ue6bGxQXlbIjlu7/zXZ/w81OgG+fv1nCQRb9LMFMPe5xOHTjaAVaKfxtO9hNZnmcrE
+         G2yhsOch+rgdNeTay13rm01bSdQIG9idHtTtij0tDCnbV6ZmSsD2NBXBIDMgPe1s2AW0
+         AzbpYUNfzGLdKPEqa48lsZpKpOvALcidH6Kpaip/v+Rd28phQaS+cgg0tTFbjeFaA4ya
+         mUZ+Qg+OeSJ6ojYKJZXngVgp220tDtn6E9fEvWV3QICzVR8x1gNdds7nohMHUMMXozn7
+         Bf2jpjvH21eyU2CQA+oJOkpoaB76q/F9YKQ2C4q4Euu1VvMbnG0SI9F++hD5JSnt5W7Y
+         vfeg==
+X-Gm-Message-State: AOAM533+uzOk2zCihzZaC3ZS7QOZ83wEbrfilOJpxCWXyznlbZpEcidB
+        a9lxg1U7WyGOnT87yAwfEw6u83g3vYs=
+X-Google-Smtp-Source: ABdhPJwjzcgDMjjbVQtgWVw/kMJfuyu2o+Zx1nOp3fUWmddI3cWz3j9VTpe5+pGj0Dw6VRZTh1zOyQ==
+X-Received: by 2002:a1c:7e15:: with SMTP id z21mr3848385wmc.27.1612536291298;
+        Fri, 05 Feb 2021 06:44:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k4sm13357620wrm.53.2021.02.05.06.46.18
+        by smtp.gmail.com with ESMTPSA id x22sm3320493wmc.25.2021.02.05.06.44.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 06:46:19 -0800 (PST)
-Message-Id: <a6285292b4f12bf3e57aed115595bc254a63dabf.1612536373.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.869.v2.git.1612536373.gitgitgadget@gmail.com>
-References: <pull.869.git.1612469275.gitgitgadget@gmail.com>
-        <pull.869.v2.git.1612536373.gitgitgadget@gmail.com>
+        Fri, 05 Feb 2021 06:44:50 -0800 (PST)
+Message-Id: <pull.841.v6.git.1612536290.gitgitgadget@gmail.com>
+In-Reply-To: <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
+References: <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 14:46:12 +0000
-Subject: [PATCH v2 5/6] range-diff: move the diffopt initialization down one
- layer
+Date:   Fri, 05 Feb 2021 14:44:46 +0000
+Subject: [PATCH v6 0/3] Range diff with ranges lacking dotdot
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
+Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+In
+https://lore.kernel.org/git/20200306091933.mx2jmurmdnsjua4b@pengutronix.de/,
+it was reported that git range-diff does not handle commit ranges like
+rev^!. This patch series fixes that.
 
-It is actually only the `output()` function that uses those diffopts. By
-moving the diffopt initialization down into that function, it is
-encapsulated better.
+Changes since v5:
 
-Incidentally, it will also make it easier to implement the `--left-only`
-and `--right-only` options in `git range-diff` because the `output()`
-function is now receiving all range-diff options as a parameter, not
-just the diffopts.
+ * The commit marks are now cleared in a separate loop.
+ * The regression test no longer looks only for "rang" but for "range" in
+   the error message.
+ * We now pass NULL as opt parameter to setup_revisions(), not 0.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- range-diff.c | 64 +++++++++++++++++++++++++---------------------------
- 1 file changed, 31 insertions(+), 33 deletions(-)
+Changes since v4:
 
-diff --git a/range-diff.c b/range-diff.c
-index 25d4c244799c..001b6e174079 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -465,12 +465,35 @@ static void patch_diff(const char *a, const char *b,
- 	diff_flush(diffopt);
- }
- 
-+static struct strbuf *output_prefix_cb(struct diff_options *opt, void *data)
-+{
-+	return data;
-+}
-+
- static void output(struct string_list *a, struct string_list *b,
--		   struct diff_options *diffopt)
-+		   struct range_diff_options *range_diff_opts)
- {
- 	struct strbuf buf = STRBUF_INIT, dashes = STRBUF_INIT;
- 	int patch_no_width = decimal_width(1 + (a->nr > b->nr ? a->nr : b->nr));
- 	int i = 0, j = 0;
-+	struct diff_options opts;
-+	struct strbuf indent = STRBUF_INIT;
-+
-+	if (range_diff_opts->diffopt)
-+		memcpy(&opts, range_diff_opts->diffopt, sizeof(opts));
-+	else
-+		diff_setup(&opts);
-+
-+	if (!opts.output_format)
-+		opts.output_format = DIFF_FORMAT_PATCH;
-+	opts.flags.suppress_diff_headers = 1;
-+	opts.flags.dual_color_diffed_diffs =
-+		range_diff_opts->dual_color;
-+	opts.flags.suppress_hunk_header_line_count = 1;
-+	opts.output_prefix = output_prefix_cb;
-+	strbuf_addstr(&indent, "    ");
-+	opts.output_prefix_data = &indent;
-+	diff_setup_done(&opts);
- 
- 	/*
- 	 * We assume the user is really more interested in the second argument
-@@ -491,7 +514,7 @@ static void output(struct string_list *a, struct string_list *b,
- 
- 		/* Show unmatched LHS commit whose predecessors were shown. */
- 		if (i < a->nr && a_util->matching < 0) {
--			output_pair_header(diffopt, patch_no_width,
-+			output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, a_util, NULL);
- 			i++;
- 			continue;
-@@ -499,7 +522,7 @@ static void output(struct string_list *a, struct string_list *b,
- 
- 		/* Show unmatched RHS commits. */
- 		while (j < b->nr && b_util->matching < 0) {
--			output_pair_header(diffopt, patch_no_width,
-+			output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, NULL, b_util);
- 			b_util = ++j < b->nr ? b->items[j].util : NULL;
- 		}
-@@ -507,22 +530,18 @@ static void output(struct string_list *a, struct string_list *b,
- 		/* Show matching LHS/RHS pair. */
- 		if (j < b->nr) {
- 			a_util = a->items[b_util->matching].util;
--			output_pair_header(diffopt, patch_no_width,
-+			output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, a_util, b_util);
--			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
-+			if (!(opts.output_format & DIFF_FORMAT_NO_OUTPUT))
- 				patch_diff(a->items[b_util->matching].string,
--					   b->items[j].string, diffopt);
-+					   b->items[j].string, &opts);
- 			a_util->shown = 1;
- 			j++;
- 		}
- 	}
- 	strbuf_release(&buf);
- 	strbuf_release(&dashes);
--}
--
--static struct strbuf *output_prefix_cb(struct diff_options *opt, void *data)
--{
--	return data;
-+	strbuf_release(&indent);
- }
- 
- int show_range_diff(const char *range1, const char *range2,
-@@ -539,31 +558,10 @@ int show_range_diff(const char *range1, const char *range2,
- 		res = error(_("could not parse log for '%s'"), range2);
- 
- 	if (!res) {
--		struct diff_options opts;
--		struct strbuf indent = STRBUF_INIT;
--
--		if (range_diff_opts->diffopt)
--			memcpy(&opts, range_diff_opts->diffopt, sizeof(opts));
--		else
--			diff_setup(&opts);
--
--		if (!opts.output_format)
--			opts.output_format = DIFF_FORMAT_PATCH;
--		opts.flags.suppress_diff_headers = 1;
--		opts.flags.dual_color_diffed_diffs =
--			range_diff_opts->dual_color;
--		opts.flags.suppress_hunk_header_line_count = 1;
--		opts.output_prefix = output_prefix_cb;
--		strbuf_addstr(&indent, "    ");
--		opts.output_prefix_data = &indent;
--		diff_setup_done(&opts);
--
- 		find_exact_matches(&branch1, &branch2);
- 		get_correspondences(&branch1, &branch2,
- 				    range_diff_opts->creation_factor);
--		output(&branch1, &branch2, &opts);
--
--		strbuf_release(&indent);
-+		output(&branch1, &branch2, range_diff_opts);
- 	}
- 
- 	string_list_clear(&branch1, 1);
+ * The commit marks are now cleared in is_range_diff_range().
+ * A regression test now verifies that HEAD^{/something..or other} isn't
+   mistaken for a commit range.
+ * The manual page no longer mentions "symmetric range", to avoid
+   contentious language.
+
+Changes since v3:
+
+ * The revision machinery is now used directly to validate the commit
+   ranges.
+
+Changes since v2:
+
+ * Move the helper function from revision.c to range-diff.c and rename it.
+ * Use a regex to make it easier to understand what we're trying to match.
+ * Fix the documentation that claimed that we used git merge-base internally
+   when git range-diff parses ...-style arguments, which is not the case.
+
+Changes since v1:
+
+ * In addition to git range-diff, git format-patch --range-diff gets the
+   same improvement.
+ * The comment talking about ^@ was removed.
+ * The parsing was made a bit safer (e.g. catching ! by its own as an
+   invalid range).
+
+Johannes Schindelin (3):
+  range-diff/format-patch: refactor check for commit range
+  range-diff/format-patch: handle commit ranges other than A..B
+  range-diff(docs): explain how to specify commit ranges
+
+ Documentation/git-range-diff.txt | 11 +++++++++++
+ builtin/log.c                    |  2 +-
+ builtin/range-diff.c             |  9 +++++----
+ range-diff.c                     | 29 +++++++++++++++++++++++++++++
+ range-diff.h                     |  6 ++++++
+ t/t3206-range-diff.sh            | 13 +++++++++++++
+ 6 files changed, 65 insertions(+), 5 deletions(-)
+
+
+base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-841%2Fdscho%2Frange-diff-with-ranges-lacking-dotdot-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-841/dscho/range-diff-with-ranges-lacking-dotdot-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/841
+
+Range-diff vs v5:
+
+ 1:  b98fa94b8703 = 1:  b98fa94b8703 range-diff/format-patch: refactor check for commit range
+ 2:  04b5d75adbc3 ! 2:  f8e6a1ad9d3d range-diff/format-patch: handle commit ranges other than A..B
+     @@ range-diff.c: int show_range_diff(const char *range1, const char *range2,
+      +	struct rev_info revs;
+      +
+      +	init_revisions(&revs, NULL);
+     -+	if (setup_revisions(3, argv, &revs, 0) == 1)
+     -+		for (i = 0; i < revs.pending.nr; i++) {
+     -+			struct object *obj = revs.pending.objects[i].item;
+     -+
+     -+			if (obj->flags & UNINTERESTING)
+     ++	if (setup_revisions(3, argv, &revs, NULL) == 1) {
+     ++		for (i = 0; i < revs.pending.nr; i++)
+     ++			if (revs.pending.objects[i].item->flags & UNINTERESTING)
+      +				negative++;
+      +			else
+      +				positive++;
+     ++		for (i = 0; i < revs.pending.nr; i++) {
+     ++			struct object *obj = revs.pending.objects[i].item;
+     ++
+      +			if (obj->type == OBJ_COMMIT)
+      +				clear_commit_marks((struct commit *)obj,
+      +						   ALL_REV_FLAGS);
+      +		}
+     ++	}
+      +
+      +	free(copy);
+      +	object_array_clear(&revs.pending);
+     @@ t/t3206-range-diff.sh: test_expect_success 'simple A B C (unmodified)' '
+      +
+      +test_expect_success 'A^{/..} is not mistaken for a range' '
+      +	test_must_fail git range-diff topic^.. topic^{/..} 2>error &&
+     -+	test_i18ngrep "not a commit rang" error
+     ++	test_i18ngrep "not a commit range" error
+      +'
+      +
+       test_expect_success 'trivial reordering' '
+ 3:  bc5de807735d = 3:  08c5f8732747 range-diff(docs): explain how to specify commit ranges
+
 -- 
 gitgitgadget
-
