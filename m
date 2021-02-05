@@ -2,121 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E53BBC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A803AC433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:28:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B31F964FDC
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:28:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F6AB64FEE
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232144AbhBEW15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 17:27:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232075AbhBEOUK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:20:10 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9FAC0698C3
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 07:56:39 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id w1so12611954ejf.11
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 07:56:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GDK16P2e0rTeYMiBGwvWsBHGJpVBBYm+JTdtKixPLIE=;
-        b=N/puu1ticPrVVnoV8QYaGTI7PErmhUNzPFwuahjI4N+mMCGkQv9jW4zi/M7EEV2dSV
-         OtxmALwfHIxlavzH1ngNBUAYewRH4Queeyt9yRKuDqhNPIeAEXQICdTkRE856/yltOK6
-         HXPLK9C9WOJLj0BJ4J9IXa9nEX1Om+1ShTknrIC4Xq8T+6C8RMJvYIUVs/hJhyOvovPS
-         IvAyvnOCwliP6yrLBqHxel5nwZlXyUzARDVWru9bczd7SUqHPHnkwVNxHAc/ZVeMmE6R
-         Uka5BOywa7gEyoDFx0tm0PLpUWb89ZkUAOg3rgi1HlGrk69+OqkytTO1RAAoCjAznBC4
-         zVPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GDK16P2e0rTeYMiBGwvWsBHGJpVBBYm+JTdtKixPLIE=;
-        b=gJSIN5IAXG0yx6yGuDo6rm5v1ceiFONn304MKr8AH+bWjQTg+y6G537mhYl0aDPO4e
-         KxdvzjQnf+m2GiAqcZe0d4Hj/SLKvPBNl+KIxaRcGUAmeG8B4TKFceEunVES217HicrY
-         EechBjCyZJHCXxqXWm91YK4k+yyTWpm4XmalN1t2Hup2Z7cfKggEgvO7X4LNX3loXluH
-         +vAOO+C/pFcyKQuyJFSwB2JIHS2wP1T8BG6FXQh1fABVLtMKoZjlRuLOfpPOZIVBekC8
-         U6smG9VYNq7C9Bebb2OkfGX2Z/388HbXcxZa996a0CwtsTxIB4nG8Lk5t4FLv2CZNeYP
-         L4wQ==
-X-Gm-Message-State: AOAM531gwzrCGG06QBLbGWeLpUGqLLFQBVTIr8lwta9HMbJVxhHnDArQ
-        s6z4CZFxV8oIb5JvYTz3dlylk0nAjd+suA==
-X-Google-Smtp-Source: ABdhPJx6JPMH9qXo9vEavZ+kpPjSaeDHh2RHtrbMZz2prp6LptNJ81RaoQuE3mZMgsXJK7mdyxj6DQ==
-X-Received: by 2002:a05:6000:1547:: with SMTP id 7mr5323426wry.301.1612534656062;
-        Fri, 05 Feb 2021 06:17:36 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j15sm12630172wrw.9.2021.02.05.06.17.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 06:17:35 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Micha=C5=82=20K=C4=99pie=C5=84?= <michal@isc.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] diff: plug memory leak from regcomp() on {log,diff} -I
-Date:   Fri,  5 Feb 2021 15:13:20 +0100
-Message-Id: <20210205141320.18076-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
-In-Reply-To: <20201020064809.14297-1-michal@isc.org>
-References: <20201020064809.14297-1-michal@isc.org>
+        id S231751AbhBEW2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 17:28:12 -0500
+Received: from mout.gmx.net ([212.227.17.20]:38107 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232116AbhBEOVt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:21:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1612540744;
+        bh=Fqq8g4Hi6myYtUzy0ZttL12bCsmbbBcOrfVK37PO3iE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=E7zNGKU5cM+Qf+oLskh9+XcYOahxXj8uQwYaF7L3EmHi/Y5UI/Dpi/GW9sk0CI2FZ
+         qrLRbFvTb2X4aMSQyRHJQMi/JLwIc6gRRp/nOBxd88rSCraE6NvbJR0lm/m21OS6wR
+         UgAZzeo9utTJUzloAQfSJh4gdfVmDTmPiVpf6uiE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([89.1.214.8]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQv8x-1lKJxG33gt-00O3YK; Fri, 05
+ Feb 2021 15:13:21 +0100
+Date:   Fri, 5 Feb 2021 15:13:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 4/6] range-diff: combine all options in a single data
+ structure
+In-Reply-To: <CAPig+cSNCVT8h-wFBGvDWB4u0OUQM-Q-1DwuLepnjTdwEpk_4A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2102051513050.54@tvgsbejvaqbjf.bet>
+References: <pull.869.git.1612469275.gitgitgadget@gmail.com> <b620be042eb31c0e771230434951d983f4173ecf.1612469275.git.gitgitgadget@gmail.com> <CAPig+cSNCVT8h-wFBGvDWB4u0OUQM-Q-1DwuLepnjTdwEpk_4A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9x8u2AkkP7PoBAn8CYrJZZJX+3JKDMk+DHWhWyWFhXmA8QwSzwS
+ jK9qd9cZdi9wevXnMm0/GHk0djSgvgLaNUFL74Avy6zyPsJXKRhOnO6OetvFsdJKev95019
+ U4gS7a7Ubh4kxommQAIrUzlciWzj9V8ZoWC+4WVKnyv5rxRKUf6yaUa2ZBtHvjHkokKwNfm
+ pnLuY/slGBPSs9aAIDpYg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Tvd1xqhd4ho=:9ooRMesLDGVLs+ygS1FuDe
+ sMRPpt7mzKcUX7Yr84NP021/vjvwSfu8oK8HOxO7e0T9xFlNxchkb7wOxLJDm6KjBwMfktj70
+ 6rQFWwOhiojmD+Wkh2l2nhcT/hWv5I31xCZ6R/I2h8mguCpiloaoucZQqRgFKit/NfPnlzWq2
+ H83v7gsMOpv5vW3DVui7g0jFhAvj/zvWKhYqVp1AT6ooi/8tGkSk+CY7AJuI4mrFduSxfxhX0
+ arKIa7hQQBkzu6hAvChxLBNCJuMhHRPtyrsdYXuPCop3poQU+3Uolj4b1dEmhtmkFaqL9DAgj
+ OFH/qkx6hOW8fI1BywjquVBdwbG5rFdJVpQW9M9ekN5+cAn07qwVEHwlxtL0GhdQUTHBl8bS1
+ qCKQaGXxfhaCgpMZSNIhUnKCtEtMmKBPMF6N9IsElMfUuZFw1K1vvAR5kioLGVgmbp45gsfHb
+ W29iwQaa4Qm9scBjEvMDBGys+G9aPDRI7Le7+TEbFVPpnKGbJVh+BCiol0BGs6n+04hYNp+NM
+ IsDV8MnziyE4nimX6OZJHvFG7NAuRd3W3VYw0IB6TZkPCYGOltru2E65RmmcQdzZ9nWNddg6X
+ 5zfhtQkyh0P0lFON/puDvw/3QYU+ZrxCZcwYTriJ/NlXKGTlHnXJ56S3O2Dsjxo5uOGkV1a+m
+ dg2smtPLbl9jxcfzmzSEv/pgvlEjvO1QttNxAmjmin/JUPIP3b0/9wn44e3KDNgiGSF7cIBu2
+ qlUwB6QDiH6RnSdb2BR5FuzD3hGmbOH+8XmJzbdJvkuobfZy+TpKd1Sfzs9dvFjmHqOyUBoRL
+ qW30FEywZ0j1KLZM95u4qQSummC0SxOC2lpfV1Hnn8ZMeNE03G8+wt/6CaH7N2e0XzANO84eG
+ 8ORxn2h6+BC3ZFkb5t0VUGZuAnZY1hvIlIKSMDavA=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in 296d4a94e7 (diff: add -I<regex> that ignores
-matching changes, 2020-10-20) by freeing the memory it allocates in
-the newly introduced diff_free(). See the previous commit for details
-on that.
+Hi Eric,
 
-This memory leak was intentionally introduced in 296d4a94e7, see the
-discussion on a previous iteration of it in
-https://lore.kernel.org/git/xmqqeelycajx.fsf@gitster.c.googlers.com/
+On Thu, 4 Feb 2021, Eric Sunshine wrote:
 
-At that time freeing the memory was somewhat tedious, but since it
-isn't anymore with the newly introduced diff_free() let's use it.
+> On Thu, Feb 4, 2021 at 3:24 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > This will make it easier to implement the `--left-only` and
+> > `--right-only` options.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/range-diff.h b/range-diff.h
+> > @@ -6,15 +6,20 @@
+> > +struct range_diff_options {
+> > +       int creation_factor;
+> > +       unsigned dual_color:1;
+> > +       const struct diff_options *diffopt;
+> > +       const struct strvec *other_arg;
+> > +};
+> > +
+> >  /*
+> >   * Compare series of commits in RANGE1 and RANGE2, and emit to the
+> >   * standard output.  NULL can be passed to DIFFOPT to use the built-i=
+n
+> >   * default.
+> >   */
+> >  int show_range_diff(const char *range1, const char *range2,
+> > -                   int creation_factor, int dual_color,
+> > -                   const struct diff_options *diffopt,
+> > -                   const struct strvec *other_arg);
+> > +                   struct range_diff_options *opts);
+>
+> The function comment's mention of DIFFOPT becomes outdated with this
+> change. Perhaps update it to say `opts.diffopt` or something.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- diff.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+I actually moved the comment to the new `struct`.
 
-diff --git a/diff.c b/diff.c
-index 3e6f8f0a71..24257759bb 100644
---- a/diff.c
-+++ b/diff.c
-@@ -6450,10 +6450,17 @@ void diff_flush(struct diff_options *options)
- 
- void diff_free(struct diff_options *options)
- {
-+	int i;
- 	if (options->no_free)
- 		return;
- 	if (options->fclose_file)
- 		fclose(options->file);
-+
-+	for (i = 0; i < options->ignore_regex_nr; i++) {
-+		regfree(options->ignore_regex[i]);
-+		free(options->ignore_regex[i]);
-+	}
-+	free(options->ignore_regex);
- }
- 	
- 
--- 
-2.30.0.284.gd98b1dd5eaa7
-
+Thanks,
+Dscho
