@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D3DC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 00:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30FC2C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 00:06:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52EF064FB3
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 00:01:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BA1D64FB5
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 00:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231461AbhBEABJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Feb 2021 19:01:09 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51069 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231239AbhBEABH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Feb 2021 19:01:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B293912497A;
-        Thu,  4 Feb 2021 19:00:23 -0500 (EST)
+        id S231591AbhBEAGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Feb 2021 19:06:19 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52428 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231448AbhBEAGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Feb 2021 19:06:14 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF089AAA16;
+        Thu,  4 Feb 2021 19:05:29 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JlT1dxu7d94J0ziowxGl9LJ5uD8=; b=YiAxli
-        BaSOhuKpAN+8uZuClVqQPo4YCusEymZMx9nVxkVT+oMiS4h0nIJCyHRWPOJTxUsp
-        tCIn7sEdwojZ1BsrPK0YIgbLIqawmEAlL5w7Qjqg98bRyLGcQN2A/LqRzQER4JWw
-        SzZqf/4xZJlhN6ZobKRDiwEw1nJmk/d8mp0P0=
+        :content-type; s=sasl; bh=LkBYs4mu8JBMfV2MWHrxDM4vpUA=; b=T6IFjD
+        XowSQ1d7gS4wYaP4qTXy+CL1NhwOQusyZ9cTzmoarWMGKx9mfQtNX5SbQKPjmAO/
+        OJKdGQU7548aEpEF7w3frU07rYobl1X3eiaW4C7YlOyx1ShmuRvsEkgNcj8KZDG4
+        ZvxGU8XF6+qpsO99FJ0ikyLonNjGbSj6i702E=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YrNoCqteRi2vl1oBUtmC8+MCP2Gy23A8
-        IWa1RYDUDI3OuJgYIour9gLgyfYVJ2Miny0d22GPL9yOPZZMGYKhCw+9ebIZtZlo
-        Djem53/O38U8+1W5et8zrJtrbmZU4P+572RvvhKIpevQ0S3SWnpE018ycsE7hGDR
-        Qnw1riQYVpk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AB537124979;
-        Thu,  4 Feb 2021 19:00:23 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=CJ6X9NA5uJAMe2POO2GtR7kFw9hWfCHl
+        elhrTVUV9xxdB7j0OEANrs4inOP3bEla3eJFBFVdSvI8o77XiLF9DuH2j7hk4Bcc
+        14jv3HeritPjz3I+9c2Me2JPlM6lYJ2J1aapyL+xl+k+ZpPnGVqQ1TaR2/n27cs2
+        kw08uB5i4eU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D492AAAA14;
+        Thu,  4 Feb 2021 19:05:29 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EDAC2124978;
-        Thu,  4 Feb 2021 19:00:20 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 54FE1AAA13;
+        Thu,  4 Feb 2021 19:05:29 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
@@ -52,19 +52,19 @@ Cc:     git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
         Derrick Stolee <stolee@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 15/17] midx: use 64-bit multiplication for chunk sizes
+Subject: Re: [PATCH v2 16/17] chunk-format: restore duplicate chunk checks
 References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
         <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
-        <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
-Date:   Thu, 04 Feb 2021 16:00:19 -0800
-In-Reply-To: <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
+        <669eeec707ab92a3e5983ad12baddc2c15012d43.1611759716.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Feb 2021 16:05:28 -0800
+In-Reply-To: <669eeec707ab92a3e5983ad12baddc2c15012d43.1611759716.git.gitgitgadget@gmail.com>
         (Derrick Stolee via GitGitGadget's message of "Wed, 27 Jan 2021
-        15:01:54 +0000")
-Message-ID: <xmqq8s834c4s.fsf@gitster.c.googlers.com>
+        15:01:55 +0000")
+Message-ID: <xmqq4kir4bw7.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 23706DC4-6745-11EB-BACA-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: DB3F457E-6745-11EB-A6E3-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -73,49 +73,59 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> When calculating the sizes of certain chunks, we should use 64-bit
-> multiplication always. This allows us to properly predict the chunk
-> sizes without risk of overflow.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  midx.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Before refactoring into the chunk-format API, the commit-graph parsing
+> logic included checks for duplicate chunks. It is unlikely that we would
+> desire a chunk-based file format that allows duplicate chunk IDs in the
+> table of contents, so add duplicate checks into
+> read_table_of_contents().
 
-This one I find somewhat questionable for multiple reasons.
+Makes sense.  This answers a question I had while reading one of the
+previous steps about the design, I think.
 
- * the fourth parameter of add_chunk() is of size_t, not uint64_t;
-   shouldn't the multiplication be done in type size_t instead?
+However...
 
- * these mutiplications were introduced in "midx: use chunk-format
-   API in write_midx_internal()"; that step should use the
-   arithmetic with cast (if necessary) from the start, no?
-
- * There is "ctx.entries_nr * MIDX_CHUNKID_OFFSET_WIDTH" passed to
-   add_chunk(), in the post-context of the first hunk.  Shouldn't
-   that be covered as well?  I didn't grep for all uses of
-   add_chunk(), but I wouldn't be surprised if this patch missed
-   some of the calls that need the same treatment.
-
-> diff --git a/midx.c b/midx.c
-> index e94dcd34b7f..a365dac6bbc 100644
-> --- a/midx.c
-> +++ b/midx.c
-> @@ -913,7 +913,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
->  	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT,
->  		  write_midx_oid_fanout, MIDX_CHUNK_FANOUT_SIZE);
->  	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
-> -		  write_midx_oid_lookup, ctx.entries_nr * the_hash_algo->rawsz);
-> +		  write_midx_oid_lookup, (uint64_t)ctx.entries_nr * the_hash_algo->rawsz);
->  	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
->  		  write_midx_object_offsets,
->  		  ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH);
-> @@ -921,7 +921,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
->  	if (ctx.large_offsets_needed)
->  		add_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS,
->  			write_midx_large_offsets,
-> -			ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH);
-> +			(uint64_t)ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH);
+> diff --git a/chunk-format.c b/chunk-format.c
+> index 74501084cf8..1ee875df423 100644
+> --- a/chunk-format.c
+> +++ b/chunk-format.c
+> @@ -14,6 +14,7 @@ struct chunk_info {
+>  	chunk_write_fn write_fn;
 >  
->  	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
->  	write_chunkfile(cf, &ctx);
+>  	const void *start;
+> +	unsigned found:1;
+
+This defines a .found member ...
+
+> @@ -98,6 +99,7 @@ int read_table_of_contents(struct chunkfile *cf,
+>  			   uint64_t toc_offset,
+>  			   int toc_length)
+>  {
+> +	int i;
+>  	uint32_t chunk_id;
+>  	const unsigned char *table_of_contents = mfile + toc_offset;
+>  
+> @@ -124,6 +126,14 @@ int read_table_of_contents(struct chunkfile *cf,
+>  			return -1;
+>  		}
+>  
+> +		for (i = 0; i < cf->chunks_nr; i++) {
+> +			if (cf->chunks[i].id == chunk_id) {
+> +				error(_("duplicate chunk ID %"PRIx32" found"),
+> +					chunk_id);
+> +				return -1;
+> +			}
+> +		}
+> +
+>  		cf->chunks[cf->chunks_nr].id = chunk_id;
+>  		cf->chunks[cf->chunks_nr].start = mfile + chunk_offset;
+>  		cf->chunks[cf->chunks_nr].size = next_chunk_offset - chunk_offset;
+
+... and no new code touches it.
+
+The way duplicate is found is by having a inner loop that checks the
+IDs of chunks we've seen so far (quadratic, but presumably that
+would not matter as long as we'd be dealing with just half a dozen
+chunk types).
+
+Is the .found bit used for something else and needs to be added in a
+different step?
