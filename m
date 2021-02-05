@@ -2,162 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2484AC433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 05:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBAD7C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 06:08:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDC9F64F9F
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 05:50:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA7A764E0A
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 06:08:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbhBEFuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 00:50:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54574 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbhBEFt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 00:49:59 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C375FC0613D6
-        for <git@vger.kernel.org>; Thu,  4 Feb 2021 21:49:19 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id e62so5839332yba.5
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 21:49:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:message-id:mime-version:subject:from:to:cc;
-        bh=KRvy67m6PuUIJjvCMVNkcFis/07uxtwphggk4k+gGik=;
-        b=nBwfeNMLlz/Cj9vuajeo6UQ2MDv8tDfZCH/cFnLNHorPAMkHOb/x3I6TbUHEYhzSNT
-         FOMw/+vvQ5f6SwcH9OnYi7iU0PKVrM1/L3Qxqetb1qvzcOlHfxw27fOfUmp3Ja/6ddbc
-         OCgOk0e3YbMj03QFj9R5FIFMHUzIQ/S0Qo4gZonZmu1EdPBZ+gjTrv/jiG+F7n8vBzsb
-         XftcBWq9pWzpOrKcb89IiHbW1uFLMOZqKeZ86zTsrocBPGqppvzTOA4q1/bs42WqyVfn
-         TV7yfTfXDXjtnQfCHzRkr3tRgv8QIyXqNEDrOxTTOXe4Is3SJdXM58By0Qj+kkGX/h28
-         JNPw==
+        id S230400AbhBEGIK convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 5 Feb 2021 01:08:10 -0500
+Received: from mail-ej1-f45.google.com ([209.85.218.45]:39503 "EHLO
+        mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230353AbhBEGII (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 01:08:08 -0500
+Received: by mail-ej1-f45.google.com with SMTP id p20so9913743ejb.6
+        for <git@vger.kernel.org>; Thu, 04 Feb 2021 22:07:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
-         :to:cc;
-        bh=KRvy67m6PuUIJjvCMVNkcFis/07uxtwphggk4k+gGik=;
-        b=VPEXR9ajH5zk40kfSEe1WRPeetGveJJXk7jlWmdske5OPyaEt/paeWRNalvurlMUiS
-         mwQPBGhsblIx/DFYbPCpFig/JSx3dUtIN8ps5BP02KdPP8BvjlaITAXYHB0dOjZbwWRl
-         ZQT8zujB73RxqbZz17xVRmhCmLgPWRnZ+2hIQWprBcDjjNu1n2rhYL3miuIYAbzC70vE
-         9oXWVFEWYjdXkSpa42S2J43pmY4EmI9p3e06jIWQSIvoMc0Wrrz1FZZ5M2gNgQQjkelV
-         w215pCQGsetNbDvv8vws6I3CFdPAMaC85E2/zo7PTdpR4w0pqAnTg5v+h43C4sM5mbza
-         GBhA==
-X-Gm-Message-State: AOAM531+4ncdbH3yTPNl8O8GzipcdcraAi6Nqq2AUBGREbVg/g6pqwHR
-        vJ5AhAwPHOXl+ZW8Kt/3G2WkQlGAANMhXJEmE3HyZ9TqYQR7JKiZRDvyTeIXCXC398JLq5KyhiK
-        S4O6Z9y1POMpY6UPl++xRUpgRQ/AIdLvQbrOHa6GzBi4YREUsrEtpCZQDReWlsgo60p829T10oP
-        Pe
-X-Google-Smtp-Source: ABdhPJy9BRthaMXH0GLGJ53azpo1J1GfqqfrVVhZG1IlyLuHiBFXvvAp5VFirZ3/J0TvOmcf75+wxIpg7KBdjabAw5tn
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:aba1:: with SMTP id
- v30mr4090362ybi.318.1612504158885; Thu, 04 Feb 2021 21:49:18 -0800 (PST)
-Date:   Thu,  4 Feb 2021 21:49:14 -0800
-Message-Id: <20210205054914.104640-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH] usage: trace2 BUG() invocations
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=64IFn4hYepZjvZn8GIjGhgvArZYDo6t4j7qy0UifT8s=;
+        b=TY1hQpVwAWqM+EHKb0UWkJBRwC7wIKe2lvgX6b/r9yBN1FU9RoAxrOKjmErunk1KMW
+         y8lMVWj7nq9NxbSDr2ps0z31byeQdDAN1Cvx0H7pVgY1glOyc0XsLV+PD1BZ1y2RETw2
+         zAuTkL0ORXg9vbaOU9AdEpIsI/i6pD5Nm/R/5QKbUg1JP2+2wCmKlsekJMyOqfyZQkIg
+         6I65hT2Jq9DxY8BKavg1zW2ksoS4eG3mkZMTcBxXRy8Q7eACWGPhTYOH5YQ422aoBZb+
+         X96jeZtpQfXzlW/pKjCtKu3uMFOFWW76T0kgDF185kKvbcLtf1OaOAAReUOZJGaYDAFc
+         uGcg==
+X-Gm-Message-State: AOAM531cVAxdFC/CIfE0LGrzLhRAxzW1ryGBgmF/KIy5OP89D1w4lqp9
+        /bRJdhK3NpwlDEsfmGekxZOGvqHDYA66bXOpBDY=
+X-Google-Smtp-Source: ABdhPJyJ/zvVZSk+LREcqOEsLY+QlDF3qx4BKTw9jJL0Nh5FO0B0j4UKOGhcQn22VBC3DMSjbvk5U5WAPsJkuBC25ys=
+X-Received: by 2002:a17:906:3105:: with SMTP id 5mr2661837ejx.168.1612505246454;
+ Thu, 04 Feb 2021 22:07:26 -0800 (PST)
+MIME-Version: 1.0
+References: <7CE44CBE-DF7B-42DD-AC0F-8125CB6A8403@icloud.com>
+In-Reply-To: <7CE44CBE-DF7B-42DD-AC0F-8125CB6A8403@icloud.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 5 Feb 2021 01:07:15 -0500
+Message-ID: <CAPig+cRyCW3CtANyp6YyAOA5hddSRMX-Ld1YdwN--FPjTrpNzQ@mail.gmail.com>
+Subject: Re: git command was killed
+To:     LiuShiyang <wingsdream1943@icloud.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-die() messages are traced in trace2, but BUG() messages are not. Anyone
-tracking die() messages would have even more reason to track BUG().
-Therefore, write to trace2 when BUG() is invoked.
+On Thu, Feb 4, 2021 at 1:48 AM LiuShiyang <wingsdream1943@icloud.com> wrote:
+> I’d like to get your support to solve below issue. When I upgraded my MacBook Pro (appple silicon ) , all git commands can not be run, and it shows ******killed. I have tried to reset Xcode-select, switch the path, or install again..no luck to resolve it.
+>
+>  shiyangliu@ShiyangdeMacBook-Pro  ~  brew config
+> CPU: octa-core 64-bit arm_firestorm_icestorm
+> macOS: 11.2-arm64
+> Rosetta 2: false
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This was noticed when we observed at $DAYJOB that a certain BUG()
-invocation [1] wasn't written to traces.
+This problem may be specific to Homebrew's installation of Git.
+Apparently, Homebrew wasn't originally able to build for Apple
+"Silicon" and the various supported "formulas" need to be upgraded
+manually for "Silicon". This page [1] shows a (perhaps) outdated
+status of each package.
 
-[1] https://lore.kernel.org/git/YBn3fxFe978Up5Ly@google.com/
----
- t/helper/test-trace2.c   |  9 +++++++++
- t/t0210-trace2-normal.sh | 19 +++++++++++++++++++
- usage.c                  |  6 ++++++
- 3 files changed, 34 insertions(+)
+Somewhere in [1] there is mention that you may be able to install a
+package as x86_64 rather than as arm64 and then run it via Rosetta, so
+you might want to try that (assuming Rosetta works for you). Or maybe
+you already installed x86_64 and Rosetta is failing for you(?), in
+which case try the arm64 version. Otherwise, probably best would be to
+ask at the Homebrew project.
 
-diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-index 823f33ceff..f93633f895 100644
---- a/t/helper/test-trace2.c
-+++ b/t/helper/test-trace2.c
-@@ -198,6 +198,14 @@ static int ut_006data(int argc, const char **argv)
- 	return 0;
- }
- 
-+static int ut_007bug(int argc, const char **argv)
-+{
-+	/*
-+	 * Exercise BUG() to ensure that the message is printed to trace2.
-+	 */
-+	BUG("the bug message");
-+}
-+
- /*
-  * Usage:
-  *     test-tool trace2 <ut_name_1> <ut_usage_1>
-@@ -214,6 +222,7 @@ static struct unit_test ut_table[] = {
- 	{ ut_004child,    "004child",  "[<child_command_line>]" },
- 	{ ut_005exec,     "005exec",   "<git_command_args>" },
- 	{ ut_006data,     "006data",   "[<category> <key> <value>]+" },
-+	{ ut_007bug,      "007bug",    "" },
- };
- /* clang-format on */
- 
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index ce7574edb1..81af180c4c 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -147,6 +147,25 @@ test_expect_success 'normal stream, error event' '
- 	test_cmp expect actual
- '
- 
-+# Verb 007bug
-+#
-+# Check that BUG writes to trace2
-+
-+test_expect_success 'normal stream, exit code 1' '
-+	test_when_finished "rm trace.normal actual expect" &&
-+	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
-+	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	cat >expect <<-EOF &&
-+		version $V
-+		start _EXE_ trace2 007bug
-+		cmd_name trace2 (trace2)
-+		error the bug message
-+		exit elapsed:_TIME_ code:99
-+		atexit elapsed:_TIME_ code:99
-+	EOF
-+	test_cmp expect actual
-+'
-+
- sane_unset GIT_TRACE2_BRIEF
- 
- # Now test without environment variables and get all Trace2 settings
-diff --git a/usage.c b/usage.c
-index 1868a24f7a..16272c5348 100644
---- a/usage.c
-+++ b/usage.c
-@@ -273,6 +273,12 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
- 	else
- 		snprintf(prefix, sizeof(prefix), "BUG: ");
- 
-+	/*
-+	 * We call this trace2 function first and expect it to va_copy 'params'
-+	 * before using it (because an 'ap' can only be walked once).
-+	 */
-+	trace2_cmd_error_va(fmt, params);
-+
- 	vreportf(prefix, fmt, params);
- 	if (BUG_exit_code)
- 		exit(BUG_exit_code);
--- 
-2.30.0.365.g02bc693789-goog
-
+[1]: https://github.com/Homebrew/brew/issues/7857
