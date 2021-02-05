@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67ED1C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C84D1C432C3
 	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:18:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CC0D64EE4
+	by mail.kernel.org (Postfix) with ESMTP id 9C65A61492
 	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 22:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233061AbhBEWRe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 17:17:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44552 "EHLO
+        id S233146AbhBEWRx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 17:17:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232694AbhBEOgf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:36:35 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 495EDC061786
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:14:40 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id c127so6322160wmf.5
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:14:40 -0800 (PST)
+        with ESMTP id S232654AbhBEOap (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:30:45 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEFD1C061356
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:08:11 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id z22so9324930edb.9
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:08:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sgUJGixoYfN4DpB6eRKdzHk/vq3xeR3NlBM/Tpw0GqY=;
-        b=P/sCYx7IDQQ0Y6rOCAB7Klb0XUQQbzOSiSDY6s8o8H4F3imNljCjKiLfMD8dDlv42a
-         zsmEQ1AhncyrhxjnSJ3q+7/FLYXKJZXjMGCxqRaFt/FJbyTdbTLM60ehRzb4hCpWpPTq
-         bng/tIUZTQp5s0ZdTSJh7HpThO6KkXVRjBxnR35muCI2JAO7dX0QiwEgaghv7Yd6jZcS
-         DZf9f9pN0DoQeJDLzFdGKis8OVtRjjSM9T0xYzklRdD7yuXFRx19po8gI6KEnzOYBwsk
-         MxNuIRraJEYxGYrnNGagxiKCTDyIblvkruboZDAwukNNHLD/bgO46htTY2Mu1rbXI3OR
-         JS2Q==
+        bh=At4JRoTc29IW16Y+2nXz7iB3R7DOXkEhdA+z+7Y3wdk=;
+        b=Zp4CjUxANaxxlf7BoraQvf7Ss4KR4rf0LJ6XbYVPiTcZBbhDnzlZWArEk/0mWVHA6M
+         CVVPh2ufSvh6358zim38FtdalnizharqGjC8Adf/VXCbJ6GV85L+E/JfVMAKH1aLz0Sx
+         B69+ayltN3eyJ91cSvzKTKp6N3cQVoiEOnrReodYNU3wCh+EboHLjCm40l52jRgjc9gP
+         QJ/gUOsAwpbLeyANMCZn0+t+BI3Ycrhc+ZkhjpVEcZMfQS1jxy+uClIQnig5HSLxZIYC
+         lfzkNv778/quUGKGv4jgGKn1XacSGpELb+dv5ksJCo6jldMZ4VjmujaKjONYpY9UW8sr
+         l0Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sgUJGixoYfN4DpB6eRKdzHk/vq3xeR3NlBM/Tpw0GqY=;
-        b=CC2LBfVS6eqbc/nc1ZiBCKRPBK6ItWTs2cXjaL9OQjEeZI+ypTvMWjz7zn+p4DsN/a
-         bqMWLNkTvj/JzCLKepH2CPXW4e2Ra3MEfs9lRXj4Sgy2zu7vbaEXytT4RnvzYM9coJG4
-         kijNuBStgnvRDH5eC0KkTPN1vJwGfeKnDbRFM9YxaHU1jsT9O+YJaEQgQUvwYM9AapZ0
-         Wv3L53dOyeZEB8ycnq8wpRfoVnc59VK4ZVFGAwDB+kzhu+flnvzhaeu1e/RfG5i1WAdA
-         ensKQpo7N7mTen7aj2VqHvR/AuqkUZL70uGfS0XX2IKtdZSn+9J0nBZwR8I7oVcvqtw2
-         jePQ==
-X-Gm-Message-State: AOAM533R73mrew7Ui0t20+r7IK/cAAOsrRQGWpjeK1HWIRbnebHaMX4Y
-        5N8vc0c9f7Th4NKMmGu1Mudhk0Tch6Y=
-X-Google-Smtp-Source: ABdhPJxunNCFWgu536Sjo1dyb14BMp28YhWoGjciLcFmzy1PETNYX3TS4qsDxkCqTvGrxZkicdXknw==
-X-Received: by 2002:a7b:cb05:: with SMTP id u5mr3831402wmj.140.1612535458560;
-        Fri, 05 Feb 2021 06:30:58 -0800 (PST)
+        bh=At4JRoTc29IW16Y+2nXz7iB3R7DOXkEhdA+z+7Y3wdk=;
+        b=MOAn1jJUvoz0AyTVZGFzvAG9sXldxsJCwFL9ykqU0hkBY8EZRi8yNijhr6zMvmFPTt
+         KQ9Ze+RMcyKQ3k6MuYc90qIBwJZZlcI2GYp4qolTXkwyPvI4Ia3uXNbnQr9t8imbltlq
+         tTAiPhE0w5bKDnAletAzjE8t70C3N+0OgSPlTh3WUES2jg/mxAkiKBf+dEMVYQRApZy8
+         EvGWqhVM8ndTndRc0oRdU7Z6a9nQKx7SPgogZm9TFooVXb2ElKPZY5/jfS+61JSAceGw
+         lRzRJXW935Mmo3AiL1W0OEWqISPf/hCSOP33FmKHzWQxkGOUvuIPF3aOZ+P7niP2tAiC
+         12KQ==
+X-Gm-Message-State: AOAM531unaooDcglWv/iqPFBMw09HfGt2Bv2tK9JT7YXiFrKGJG9LZb/
+        UW5OhjpfUXh9DJoUAPXlnlWy9n3Oh2E=
+X-Google-Smtp-Source: ABdhPJxpmmpH5iHjs78+gKiwCp3Dy+ABdN1WD8+LcbOcrMed1w4EuK0MRqtORu4fSFNva4z5SnaD1w==
+X-Received: by 2002:a5d:414f:: with SMTP id c15mr5427739wrq.42.1612535465874;
+        Fri, 05 Feb 2021 06:31:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2sm8022770wmn.10.2021.02.05.06.30.57
+        by smtp.gmail.com with ESMTPSA id r15sm12592299wrj.61.2021.02.05.06.31.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 06:30:58 -0800 (PST)
-Message-Id: <66ff49ed93091ea34cb21eff60b3114eba006ff3.1612535453.git.gitgitgadget@gmail.com>
+        Fri, 05 Feb 2021 06:31:05 -0800 (PST)
+Message-Id: <787cd7f18d2e47d975e10bf0f56188bc35589124.1612535453.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
 References: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
         <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 14:30:39 +0000
-Subject: [PATCH v3 04/17] midx: rename pack_info to write_midx_context
+Date:   Fri, 05 Feb 2021 14:30:46 +0000
+Subject: [PATCH v3 11/17] midx: use chunk-format API in write_midx_internal()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,280 +79,165 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In an effort to streamline our chunk-based file formats, align some of
-the code structure in write_midx_internal() to be similar to the
-patterns in write_commit_graph_file().
-
-Specifically, let's create a "struct write_midx_context" that can be
-used as a data parameter to abstract function types.
-
-This change only renames "struct pack_info" to "struct
-write_midx_context" and the names of instances from "packs" to "ctx". In
-future changes, we will expand the data inside "struct
-write_midx_context" and align our chunk-writing method with the
-chunk-format API.
+The chunk-format API allows writing the table of contents and all chunks
+using the anonymous 'struct chunkfile' type. We only need to convert our
+local chunk logic to this API for the multi-pack-index writes to share
+that logic with the commit-graph file writes.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 130 ++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 65 insertions(+), 65 deletions(-)
+ midx.c | 105 +++++++++++----------------------------------------------
+ 1 file changed, 20 insertions(+), 85 deletions(-)
 
 diff --git a/midx.c b/midx.c
-index 79c282b070d2..561f65a63a5b 100644
+index 4f4aa351e60e..d9c7411b083b 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -451,7 +451,7 @@ static int pack_info_compare(const void *_a, const void *_b)
- 	return strcmp(a->pack_name, b->pack_name);
- }
+@@ -11,6 +11,7 @@
+ #include "trace2.h"
+ #include "run-command.h"
+ #include "repository.h"
++#include "chunk-format.h"
  
--struct pack_list {
-+struct write_midx_context {
- 	struct pack_info *info;
- 	uint32_t nr;
- 	uint32_t alloc;
-@@ -463,37 +463,37 @@ struct pack_list {
- static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			     const char *file_name, void *data)
+ #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
+ #define MIDX_VERSION 1
+@@ -799,18 +800,15 @@ static int write_midx_large_offsets(struct hashfile *f,
+ static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
+ 			       struct string_list *packs_to_drop, unsigned flags)
  {
--	struct pack_list *packs = (struct pack_list *)data;
-+	struct write_midx_context *ctx = data;
- 
- 	if (ends_with(file_name, ".idx")) {
--		display_progress(packs->progress, ++packs->pack_paths_checked);
--		if (packs->m && midx_contains_pack(packs->m, file_name))
-+		display_progress(ctx->progress, ++ctx->pack_paths_checked);
-+		if (ctx->m && midx_contains_pack(ctx->m, file_name))
- 			return;
- 
--		ALLOC_GROW(packs->info, packs->nr + 1, packs->alloc);
-+		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
- 
--		packs->info[packs->nr].p = add_packed_git(full_path,
--							  full_path_len,
--							  0);
-+		ctx->info[ctx->nr].p = add_packed_git(full_path,
-+						      full_path_len,
-+						      0);
- 
--		if (!packs->info[packs->nr].p) {
-+		if (!ctx->info[ctx->nr].p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
- 			return;
- 		}
- 
--		if (open_pack_index(packs->info[packs->nr].p)) {
-+		if (open_pack_index(ctx->info[ctx->nr].p)) {
- 			warning(_("failed to open pack-index '%s'"),
- 				full_path);
--			close_pack(packs->info[packs->nr].p);
--			FREE_AND_NULL(packs->info[packs->nr].p);
-+			close_pack(ctx->info[ctx->nr].p);
-+			FREE_AND_NULL(ctx->info[ctx->nr].p);
- 			return;
- 		}
- 
--		packs->info[packs->nr].pack_name = xstrdup(file_name);
--		packs->info[packs->nr].orig_pack_int_id = packs->nr;
--		packs->info[packs->nr].expired = 0;
--		packs->nr++;
-+		ctx->info[ctx->nr].pack_name = xstrdup(file_name);
-+		ctx->info[ctx->nr].orig_pack_int_id = ctx->nr;
-+		ctx->info[ctx->nr].expired = 0;
-+		ctx->nr++;
- 	}
- }
- 
-@@ -801,7 +801,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+-	unsigned char cur_chunk, num_chunks = 0;
+ 	char *midx_name;
  	uint32_t i;
  	struct hashfile *f = NULL;
  	struct lock_file lk;
--	struct pack_list packs;
-+	struct write_midx_context ctx = { 0 };
- 	uint32_t *pack_perm = NULL;
- 	uint64_t written = 0;
- 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
-@@ -820,40 +820,40 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 			  midx_name);
+ 	struct write_midx_context ctx = { 0 };
+-	uint64_t header_size = 0;
+-	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
+-	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
+ 	int pack_name_concat_len = 0;
+ 	int dropped_packs = 0;
+ 	int result = 0;
++	struct chunkfile *cf;
  
- 	if (m)
--		packs.m = m;
-+		ctx.m = m;
- 	else
--		packs.m = load_multi_pack_index(object_dir, 1);
+ 	midx_name = get_midx_filename(object_dir);
+ 	if (safe_create_leading_directories(midx_name))
+@@ -923,98 +921,35 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	if (ctx.m)
+ 		close_midx(ctx.m);
+ 
+-	cur_chunk = 0;
+-	num_chunks = ctx.large_offsets_needed ? 5 : 4;
 -
--	packs.nr = 0;
--	packs.alloc = packs.m ? packs.m->num_packs : 16;
--	packs.info = NULL;
--	ALLOC_ARRAY(packs.info, packs.alloc);
--
--	if (packs.m) {
--		for (i = 0; i < packs.m->num_packs; i++) {
--			ALLOC_GROW(packs.info, packs.nr + 1, packs.alloc);
--
--			packs.info[packs.nr].orig_pack_int_id = i;
--			packs.info[packs.nr].pack_name = xstrdup(packs.m->pack_names[i]);
--			packs.info[packs.nr].p = NULL;
--			packs.info[packs.nr].expired = 0;
--			packs.nr++;
-+		ctx.m = load_multi_pack_index(object_dir, 1);
-+
-+	ctx.nr = 0;
-+	ctx.alloc = ctx.m ? ctx.m->num_packs : 16;
-+	ctx.info = NULL;
-+	ALLOC_ARRAY(ctx.info, ctx.alloc);
-+
-+	if (ctx.m) {
-+		for (i = 0; i < ctx.m->num_packs; i++) {
-+			ALLOC_GROW(ctx.info, ctx.nr + 1, ctx.alloc);
-+
-+			ctx.info[ctx.nr].orig_pack_int_id = i;
-+			ctx.info[ctx.nr].pack_name = xstrdup(ctx.m->pack_names[i]);
-+			ctx.info[ctx.nr].p = NULL;
-+			ctx.info[ctx.nr].expired = 0;
-+			ctx.nr++;
- 		}
- 	}
- 
--	packs.pack_paths_checked = 0;
-+	ctx.pack_paths_checked = 0;
- 	if (flags & MIDX_PROGRESS)
--		packs.progress = start_delayed_progress(_("Adding packfiles to multi-pack-index"), 0);
-+		ctx.progress = start_delayed_progress(_("Adding packfiles to multi-pack-index"), 0);
- 	else
--		packs.progress = NULL;
-+		ctx.progress = NULL;
- 
--	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &packs);
--	stop_progress(&packs.progress);
-+	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &ctx);
-+	stop_progress(&ctx.progress);
- 
--	if (packs.m && packs.nr == packs.m->num_packs && !packs_to_drop)
-+	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
- 		goto cleanup;
- 
--	entries = get_sorted_entries(packs.m, packs.info, packs.nr, &nr_entries);
-+	entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &nr_entries);
- 
- 	for (i = 0; i < nr_entries; i++) {
- 		if (entries[i].offset > 0x7fffffff)
-@@ -862,19 +862,19 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 			large_offsets_needed = 1;
- 	}
- 
--	QSORT(packs.info, packs.nr, pack_info_compare);
-+	QSORT(ctx.info, ctx.nr, pack_info_compare);
- 
- 	if (packs_to_drop && packs_to_drop->nr) {
- 		int drop_index = 0;
- 		int missing_drops = 0;
- 
--		for (i = 0; i < packs.nr && drop_index < packs_to_drop->nr; i++) {
--			int cmp = strcmp(packs.info[i].pack_name,
-+		for (i = 0; i < ctx.nr && drop_index < packs_to_drop->nr; i++) {
-+			int cmp = strcmp(ctx.info[i].pack_name,
- 					 packs_to_drop->items[drop_index].string);
- 
- 			if (!cmp) {
- 				drop_index++;
--				packs.info[i].expired = 1;
-+				ctx.info[i].expired = 1;
- 			} else if (cmp > 0) {
- 				error(_("did not see pack-file %s to drop"),
- 				      packs_to_drop->items[drop_index].string);
-@@ -882,7 +882,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 				missing_drops++;
- 				i--;
- 			} else {
--				packs.info[i].expired = 0;
-+				ctx.info[i].expired = 0;
- 			}
- 		}
- 
-@@ -898,19 +898,19 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	 *
- 	 * pack_perm[old_id] = new_id
- 	 */
--	ALLOC_ARRAY(pack_perm, packs.nr);
--	for (i = 0; i < packs.nr; i++) {
--		if (packs.info[i].expired) {
-+	ALLOC_ARRAY(pack_perm, ctx.nr);
-+	for (i = 0; i < ctx.nr; i++) {
-+		if (ctx.info[i].expired) {
- 			dropped_packs++;
--			pack_perm[packs.info[i].orig_pack_int_id] = PACK_EXPIRED;
-+			pack_perm[ctx.info[i].orig_pack_int_id] = PACK_EXPIRED;
- 		} else {
--			pack_perm[packs.info[i].orig_pack_int_id] = i - dropped_packs;
-+			pack_perm[ctx.info[i].orig_pack_int_id] = i - dropped_packs;
- 		}
- 	}
- 
--	for (i = 0; i < packs.nr; i++) {
--		if (!packs.info[i].expired)
--			pack_name_concat_len += strlen(packs.info[i].pack_name) + 1;
-+	for (i = 0; i < ctx.nr; i++) {
-+		if (!ctx.info[i].expired)
-+			pack_name_concat_len += strlen(ctx.info[i].pack_name) + 1;
- 	}
- 
- 	if (pack_name_concat_len % MIDX_CHUNK_ALIGNMENT)
-@@ -921,19 +921,19 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
- 	f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
- 	FREE_AND_NULL(midx_name);
- 
--	if (packs.m)
--		close_midx(packs.m);
-+	if (ctx.m)
-+		close_midx(ctx.m);
- 
- 	cur_chunk = 0;
- 	num_chunks = large_offsets_needed ? 5 : 4;
- 
--	if (packs.nr - dropped_packs == 0) {
-+	if (ctx.nr - dropped_packs == 0) {
+ 	if (ctx.nr - dropped_packs == 0) {
  		error(_("no pack files to index."));
  		result = 1;
  		goto cleanup;
  	}
  
--	written = write_midx_header(f, num_chunks, packs.nr - dropped_packs);
-+	written = write_midx_header(f, num_chunks, ctx.nr - dropped_packs);
+-	header_size = write_midx_header(f, num_chunks, ctx.nr - dropped_packs);
+-
+-	chunk_ids[cur_chunk] = MIDX_CHUNKID_PACKNAMES;
+-	chunk_offsets[cur_chunk] = header_size + (num_chunks + 1) * MIDX_CHUNKLOOKUP_WIDTH;
+-
+-	cur_chunk++;
+-	chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDFANOUT;
+-	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + pack_name_concat_len;
+-
+-	cur_chunk++;
+-	chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDLOOKUP;
+-	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + MIDX_CHUNK_FANOUT_SIZE;
+-
+-	cur_chunk++;
+-	chunk_ids[cur_chunk] = MIDX_CHUNKID_OBJECTOFFSETS;
+-	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + ctx.entries_nr * the_hash_algo->rawsz;
+-
+-	cur_chunk++;
+-	chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] + ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH;
+-	if (ctx.large_offsets_needed) {
+-		chunk_ids[cur_chunk] = MIDX_CHUNKID_LARGEOFFSETS;
+-
+-		cur_chunk++;
+-		chunk_offsets[cur_chunk] = chunk_offsets[cur_chunk - 1] +
+-					   ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH;
+-	}
+-
+-	chunk_ids[cur_chunk] = 0;
+-
+-	for (i = 0; i <= num_chunks; i++) {
+-		if (i && chunk_offsets[i] < chunk_offsets[i - 1])
+-			BUG("incorrect chunk offsets: %"PRIu64" before %"PRIu64,
+-			    chunk_offsets[i - 1],
+-			    chunk_offsets[i]);
+-
+-		if (chunk_offsets[i] % MIDX_CHUNK_ALIGNMENT)
+-			BUG("chunk offset %"PRIu64" is not properly aligned",
+-			    chunk_offsets[i]);
+-
+-		hashwrite_be32(f, chunk_ids[i]);
+-		hashwrite_be64(f, chunk_offsets[i]);
+-	}
+-
+-	for (i = 0; i < num_chunks; i++) {
+-		if (f->total + f->offset != chunk_offsets[i])
+-			BUG("incorrect chunk offset (%"PRIu64" != %"PRIu64") for chunk id %"PRIx32,
+-			    chunk_offsets[i],
+-			    f->total + f->offset,
+-			    chunk_ids[i]);
++	cf = init_chunkfile(f);
  
- 	chunk_ids[cur_chunk] = MIDX_CHUNKID_PACKNAMES;
- 	chunk_offsets[cur_chunk] = written + (num_chunks + 1) * MIDX_CHUNKLOOKUP_WIDTH;
-@@ -990,7 +990,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+-		switch (chunk_ids[i]) {
+-			case MIDX_CHUNKID_PACKNAMES:
+-				write_midx_pack_names(f, &ctx);
+-				break;
++	add_chunk(cf, MIDX_CHUNKID_PACKNAMES, pack_name_concat_len,
++		  write_midx_pack_names);
++	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT, MIDX_CHUNK_FANOUT_SIZE,
++		  write_midx_oid_fanout);
++	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
++		  ctx.entries_nr * the_hash_algo->rawsz,
++		  write_midx_oid_lookup);
++	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
++		  ctx.entries_nr * MIDX_CHUNK_OFFSET_WIDTH,
++		  write_midx_object_offsets);
  
- 		switch (chunk_ids[i]) {
- 			case MIDX_CHUNKID_PACKNAMES:
--				written += write_midx_pack_names(f, packs.info, packs.nr);
-+				written += write_midx_pack_names(f, ctx.info, ctx.nr);
- 				break;
+-			case MIDX_CHUNKID_OIDFANOUT:
+-				write_midx_oid_fanout(f, &ctx);
+-				break;
+-
+-			case MIDX_CHUNKID_OIDLOOKUP:
+-				write_midx_oid_lookup(f, &ctx);
+-				break;
+-
+-			case MIDX_CHUNKID_OBJECTOFFSETS:
+-				write_midx_object_offsets(f, &ctx);
+-				break;
+-
+-			case MIDX_CHUNKID_LARGEOFFSETS:
+-				write_midx_large_offsets(f, &ctx);
+-				break;
+-
+-			default:
+-				BUG("trying to write unknown chunk id %"PRIx32,
+-				    chunk_ids[i]);
+-		}
+-	}
++	if (ctx.large_offsets_needed)
++		add_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS,
++			ctx.num_large_offsets * MIDX_CHUNK_LARGE_OFFSET_WIDTH,
++			write_midx_large_offsets);
  
- 			case MIDX_CHUNKID_OIDFANOUT:
-@@ -1027,15 +1027,15 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+-	if (hashfile_total(f) != chunk_offsets[num_chunks])
+-		BUG("incorrect final offset %"PRIu64" != %"PRIu64,
+-		    hashfile_total(f),
+-		    chunk_offsets[num_chunks]);
++	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
++	write_chunkfile(cf, &ctx);
+ 
+ 	finalize_hashfile(f, NULL, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
++	free_chunkfile(cf);
  	commit_lock_file(&lk);
  
  cleanup:
--	for (i = 0; i < packs.nr; i++) {
--		if (packs.info[i].p) {
--			close_pack(packs.info[i].p);
--			free(packs.info[i].p);
-+	for (i = 0; i < ctx.nr; i++) {
-+		if (ctx.info[i].p) {
-+			close_pack(ctx.info[i].p);
-+			free(ctx.info[i].p);
- 		}
--		free(packs.info[i].pack_name);
-+		free(ctx.info[i].pack_name);
- 	}
- 
--	free(packs.info);
-+	free(ctx.info);
- 	free(entries);
- 	free(pack_perm);
- 	free(midx_name);
 -- 
 gitgitgadget
 
