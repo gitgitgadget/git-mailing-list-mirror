@@ -2,87 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D55C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 10:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F584C433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 11:06:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1F9964FE8
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 10:16:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6A3E60241
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 11:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbhBEKPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 05:15:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51446 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229793AbhBEKMl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 05:12:41 -0500
-Received: (qmail 16620 invoked by uid 109); 5 Feb 2021 10:11:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Feb 2021 10:11:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28997 invoked by uid 111); 5 Feb 2021 10:11:49 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Feb 2021 05:11:49 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 5 Feb 2021 05:11:48 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/6] Optionally restrict range-diff output to "left" or
- "right" range only
-Message-ID: <YB0Z5JXbe22ko2Mj@coredump.intra.peff.net>
-References: <pull.869.git.1612469275.gitgitgadget@gmail.com>
- <xmqqtuqr4frw.fsf@gitster.c.googlers.com>
- <YBx5rmVsg1LJhSKN@nand.local>
- <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
+        id S231986AbhBELGR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 06:06:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36422 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231894AbhBEK76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 05:59:58 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 815BFC06178B
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 02:59:18 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id v5so7078837lft.13
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 02:59:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xjZLdd+wsnprPpwJkqrqQW7hzi8vFE/4skt4svztTVQ=;
+        b=muh5THGcjHr6kfcDrSsIHdKpRd0vpcMkDfxVeA/Z7X0kNojAAVlZOgU9YmFfisKF9g
+         JLLLAwhhm7QzSDFbR8iOZw5uTAfp5qm9HoHVYIkiOYhfAm+69bNORil1WQ6HvU2FgUz2
+         L+zOT6lw+Okkjdtzx9VE/tyviLCfE3c9TooApuUmKAAsH6LnSTsdq6Sa8d5pgwPVq8Pr
+         IMl+Lz1uf/71WVbxyznVK+Eeo8Gg80l4Q7btFuEwyX8fKrj94Aim5+88w8BdcjVhmUVX
+         MZNIcTnk9HQAXIcIlYiusT4u5eQiHINolyYO6ArspIhZ3ipgDEHenzxpCvdZgDPfA5Uk
+         q2Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xjZLdd+wsnprPpwJkqrqQW7hzi8vFE/4skt4svztTVQ=;
+        b=XCTJFsItRoFmyhz8hvly0yE7aDijouIjuVEkMhKYEyFkTX2gtBcnddJtN7JGeMxh1z
+         nb2gbQytFrO9fwJy+9jF5NoH3CeGvBTEmP+6XLkDUkxkK6wXc35Ob/bmWnRx3xroc9ef
+         6wlpFAniO/dphtrafkqxUyeM56nBQKrqyDCCRshqx8nb8N+lH7NP4W091BtRp0vjoyWS
+         WoCwwCX83YCr1mbWXZ29Zbnsf4cokNfVyAjumaRVkps1tMVTxorxYuTzS5nnwdyBc6s0
+         jC+Unhx9MW1Di1PO4jQGIl61oDorVKHWsmMmMLhHUxg3yfxaeSzXwJ6RWm7Nc9pnfGWN
+         9T8w==
+X-Gm-Message-State: AOAM530wJKEMrrx2vBzUWiDZ3+m5iugWNYrv6daunvRTN6ibVyolPB2q
+        IiWXxCqM4EJRUFGAyqcxrD4eldQj9Io7gGm0qNE=
+X-Google-Smtp-Source: ABdhPJxn8a3F/uAne/Qn/6hcm7/qsJHt9+ToOC/hLspxFHcJDXijH2WES2IvzJ3CTatf6Ya8yFsYYEVCAawq+aaQXUo=
+X-Received: by 2002:a19:3806:: with SMTP id f6mr2347043lfa.242.1612522757061;
+ Fri, 05 Feb 2021 02:59:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+ <pull.848.v2.git.1611759716.gitgitgadget@gmail.com> <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
+ <xmqq8s834c4s.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq8s834c4s.fsf@gitster.c.googlers.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Fri, 5 Feb 2021 02:59:06 -0800
+Message-ID: <CAPx1GvcNTkXo-6rdaRc4YNGAq8AoCtwT86AEUT+A6c22erVW0g@mail.gmail.com>
+Subject: Re: [PATCH v2 15/17] midx: use 64-bit multiplication for chunk sizes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        szeder.dev@gmail.com, Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 04, 2021 at 04:56:16PM -0800, Junio C Hamano wrote:
+On Thu, Feb 4, 2021 at 4:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+>  * the fourth parameter of add_chunk() is of size_t, not uint64_t;
+>    shouldn't the multiplication be done in type size_t instead?
 
-> > As an aside: I am curious if I'm missing something when you say the
-> > "only way" is to ask for a 'git range-diff ...@{u}'. IIUC what you're
-> > describing, I often resort to using 'git cherry' for that exact thing.
-> > But, I may not be quite understanding your use-case (and why git-cherry
-> > doesn't do what you want already).
-> >
-> > My latter question is purely for satisfying my own curiosity; I don't
-> > have any problem with a '--{left,right}-only' option in range-diff. From
-> > my quick read of the patches, it all looks pretty sane to me.
-> 
-> The question is addressed to Dscho, and I am also somewhat curious.
-> Perhaps the reason would be that the output from cherry is not as
-> easy to read as range-diff, without any post-processing.
+There are (still) systems with 32-bit size_t (but 64-bit
+off_t / file sizes), so ... probably not.  Is size_t ever more than
+64 bits these days?
 
-I had the same curiosity; I'd use git-cherry (or rev-list --cherry) for
-this.
-
-I suspect the big difference is the quality of the matching. git-cherry
-is purely looking at patch-ids. So it is quite likely to say "this was
-not applied upstream" when what got applied differed slightly (e.g.,
-fixups upstream, applied to a different base, etc). Whereas range-diff
-has some cost heuristics for deciding that two patches are basically the
-same thing.  So it would find more cases (and as a bonus, give you the
-diff to see what tweaks were made upstream).
-
-It does make me wonder if it would be useful for rev-list, etc to have
-an option to make "--cherry" use the more clever heuristics instead of
-just a patch-id. It would never show the same diff output as range-diff,
-but maybe more scripts would find the advanced heuristic useful.
-
-I know it would probably make rebase's "ignore if in upstream" feature
-less clunky when I rebase topics. But it would also make it more
-dangerous! E.g., right now I see any upstream tweaks as potential
-conflicts when I rebase, and I manually review them for sanity.
-
--Peff
+Chris
