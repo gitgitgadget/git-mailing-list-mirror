@@ -2,92 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB80C433E0
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92816C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47BE064F05
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:29:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 489CD64EE8
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 18:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233635AbhBEQqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 11:46:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44788 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233396AbhBEQn6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 11:43:58 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A7B4C06174A
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 10:25:40 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id p20so13376375ejb.6
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 10:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kujECtnFlOV9wFhar8jRUEZJHV5FVGQZSSUbsfO52Cw=;
-        b=S51XHgLbVUnyxFHR60X/EwJ4R8YsqRi1cAYJF8dIU40o/vfNm9hk9LdJU728OE/cSO
-         dg0duRDfYlICnowcVi358XCua4f8d3OicDrdydLybwY8GKPvce7B1k07r1FYGYK/uzbz
-         xGi93hqm+lFe94FfJFi0vPC9n1ATNHu0LY5pkaeF6sZVEo3BgGjFPwFsqtkfL4RDPlzM
-         34vGWVQHIFo4i08VOVgZjHfmop5/9SbzyXyzYN+u2jrNG18TFFtHAKrC2GoSgRv4WhXF
-         zyAC1H/kexwj8br4PIvj4MiOE4YssKFryQ0VxMHmqNbJhENFj09LMCw4xuCm1wRrEv2Y
-         GOBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kujECtnFlOV9wFhar8jRUEZJHV5FVGQZSSUbsfO52Cw=;
-        b=qod3k9UwPc4JgfbpIAyavFjQuCJ9050cwS0nOs/L4Qe9NwVOVvGskFgLxZ8r8zDB9E
-         qZ+We/YMFJ3cJjSIf5xYq5PZoxlTEE4wvJygeLcvcBqhyaDU2p2lAOGm7aV8RRAnkZA0
-         OAC7qS8MoWpjcCLIKcVGqVJxqNcsjeMOyZevCp1F3VUJTyBIcFa+vOQdNKZPGXdxnDl4
-         2UvJm915JL9YLa8lezvVrQ/5VaQUyDuw5OwjzdEtRcXWP5UiSi3B67Zuymax+c8w5wGh
-         E5PxoXTFA1nkLfs2j/mi45x446/AoN9kCs03vrhNQjXpOiSDDpoJ32AzTFtjiCfk7Ad0
-         M9xA==
-X-Gm-Message-State: AOAM531xi6I4hHCJIKTjBVjohe5zwkEKvXOz7lkS/Cw6X6wR7tiuwjBO
-        tUQPb7cY0i5yhsQbFcTz2SpktuEjTlGIw6KVpgM=
-X-Google-Smtp-Source: ABdhPJz9RwSfwkuSdxVLArLa/H27fxoBu1HyzaaiOVufUCsPIlZNNgGWChbAQp+CwpfGcAoSgf3XIiECfBfGraUpNgc=
-X-Received: by 2002:a17:906:8410:: with SMTP id n16mr5322598ejx.551.1612549538837;
- Fri, 05 Feb 2021 10:25:38 -0800 (PST)
+        id S233508AbhBEQzy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 11:55:54 -0500
+Received: from siwi.pair.com ([209.68.5.199]:20560 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233455AbhBEQtS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 11:49:18 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 335B33F40D9;
+        Fri,  5 Feb 2021 13:30:54 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id BC3843F4090;
+        Fri,  5 Feb 2021 13:30:53 -0500 (EST)
+Subject: Re: [PATCH v2 04/14] pkt-line: optionally skip the flush packet in
+ write_packetized_from_buf()
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
+ <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
+ <0832f7d324da643d7a480111d693ff5559c2b7a7.1612208747.git.gitgitgadget@gmail.com>
+ <YBkf/KOv+YBZ5hQF@coredump.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <352af03f-916f-9104-d2d7-ed7457d37911@jeffhostetler.com>
+Date:   Fri, 5 Feb 2021 13:30:53 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <20210129182050.26143-1-charvi077@gmail.com> <20210204190507.26487-1-charvi077@gmail.com>
- <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com> <CAPSFM5f0Jk03tWCTerZP1JhcMHG4MXjVSZjPKm2uzQYc+cOwsw@mail.gmail.com>
-In-Reply-To: <CAPSFM5f0Jk03tWCTerZP1JhcMHG4MXjVSZjPKm2uzQYc+cOwsw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 5 Feb 2021 19:25:27 +0100
-Message-ID: <CAP8UFD0VpgT=mTydWQRmqo9TFQvdfDiXuA1TcwAqG1BtXXdKxA@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <YBkf/KOv+YBZ5hQF@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 5, 2021 at 10:42 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
 
-> On Fri, 5 Feb 2021 at 13:00, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> > > * changed the flag type from enum todo_item_flags to unsigned
-> > > * Replaced fixup_-* with fixup-* in lib-rebase.sh
-> > > * fixup a small nit in Documentation
-> >
-> > These changes are still worthwhile and can easily be done
-> > incrementally atop what is already in next, I would think.
->
-> I agree, these fixes are required. So, I am not sure but now to do these
-> fixup shall I send another patch cleaning this patch series(v4) and rebase the
-> patch on the 'next' branch ? Is it the right way ?
+On 2/2/21 4:48 AM, Jeff King wrote:
+> On Mon, Feb 01, 2021 at 07:45:37PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> 
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> This function currently has only one caller: `apply_multi_file_filter()`
+>> in `convert.c`. That caller wants a flush packet to be written after
+>> writing the payload.
+>>
+>> However, we are about to introduce a user that wants to write many
+>> packets before a final flush packet, so let's extend this function to
+>> prepare for that scenario.
+> 
+> I think this is a sign that the function is not very well-designed in
+> the first place. It seems like the code would be easier to understand
+> overall if that caller just explicitly did the flush itself. It even
+> already does so in other cases!
+> 
 
-Yeah, I think you can send each of the above 3 changes in a different
-patch on top of the 'next' branch. That would create a new 3 patch
-long series, which you should give a new name and not consider v5 of
-the previous patch series.
+I agree.  I'll move flush to the caller and rename the write packetized
+function slightly to guard against new callers assuming the old behavior
+during the transition.
 
-Best,
-Christian.
+Jeff
+
+
+> Something like (untested):
+> 
+>   convert.c  | 4 ++++
+>   pkt-line.c | 4 ----
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/convert.c b/convert.c
+> index ee360c2f07..3968ac37b9 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -890,6 +890,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+>   	if (err)
+>   		goto done;
+>   
+> +	err = packet_flush_gently(process->in);
+> +	if (err)
+> +		goto done;
+> +
+>   	err = subprocess_read_status(process->out, &filter_status);
+>   	if (err)
+>   		goto done;
+> diff --git a/pkt-line.c b/pkt-line.c
+> index d633005ef7..014520a9c2 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -256,8 +256,6 @@ int write_packetized_from_fd(int fd_in, int fd_out)
+>   			break;
+>   		err = packet_write_gently(fd_out, buf, bytes_to_write);
+>   	}
+> -	if (!err)
+> -		err = packet_flush_gently(fd_out);
+>   	return err;
+>   }
+>   
+> @@ -277,8 +275,6 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out)
+>   		err = packet_write_gently(fd_out, src_in + bytes_written, bytes_to_write);
+>   		bytes_written += bytes_to_write;
+>   	}
+> -	if (!err)
+> -		err = packet_flush_gently(fd_out);
+>   	return err;
+>   }
+>   
+> 
+> -Peff
+> 
