@@ -2,95 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83ADDC433E6
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FCE7C433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:48:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F8A264F70
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:31:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42E4264EE2
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 07:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231484AbhBEHbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 02:31:13 -0500
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:46645 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbhBEHa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 02:30:59 -0500
-Received: by mail-ed1-f49.google.com with SMTP id y18so7570362edw.13
-        for <git@vger.kernel.org>; Thu, 04 Feb 2021 23:30:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FrxYKcVZem7HCdoi61nim1m3/DIhThWejUe1taapE1A=;
-        b=lo8OXuMph8EjVYsKJK4msksIrCoPQmmXbz/s2DQs0mCL/2zRi9yZGQNTeMALz/ixJB
-         HQNrqSMSnaXPThTO+zDbo644Vxsqo+DptUFlgJwBuXgp76WsCGFTIzr9IGwSZ6HqcJaT
-         CR+HZ+GaVZUr1TyyeGJXw2vkgTx5CDgApk14+ZBuEOSoBZfcUNrmZizbwh5lg2/LeMyY
-         3zfdQUQR86ArOdE3UO3KIltUc1ZpX+xDqWEp+0t1p+Lo7IAOKc6OqXg7gCjhzWQ6bCzL
-         KdleOKoz7+36EmEZRX6I/yn4CdGyYEOevRhbMD7Wp2mXCMnJADDs6IHdjrzJD7SMyUwv
-         EStA==
-X-Gm-Message-State: AOAM530RjzMTt2ZT5ihorziz3gxAQ3YYGLrp5PA+LUKHnHKLx6PSkWz5
-        Rp/fP082TBYnzxsgaPoTuP+MBCsWWgqGFx/mnEfn3bCGZr4=
-X-Google-Smtp-Source: ABdhPJw8sKDNiWaqUacMhhcTPtClOyTuBoPQan56zqVoepfAhYY8lS2tK7fpEqv4++8PPS9YyRJ/P8GnemztZ5QO5X0=
-X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr2255351edt.221.1612510217024;
- Thu, 04 Feb 2021 23:30:17 -0800 (PST)
+        id S231514AbhBEHsj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 02:48:39 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:56342 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230486AbhBEHsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 02:48:38 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4DX6wB3Rw2z5tlC;
+        Fri,  5 Feb 2021 08:47:54 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 1D8824B8D;
+        Fri,  5 Feb 2021 08:47:53 +0100 (CET)
+Subject: Re: [PATCH v2 2/5] pager: test for exit code with and without SIGPIPE
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Vincent Lefevre <vincent@vinc17.net>,
+        Chris Torek <chris.torek@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+References: <20210201144921.8664-1-avarab@gmail.com>
+ <20210202020001.31601-3-avarab@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <9c686629-82d9-f441-a255-a288fe322881@kdbg.org>
+Date:   Fri, 5 Feb 2021 08:47:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-References: <20210129182050.26143-1-charvi077@gmail.com> <20210204190507.26487-1-charvi077@gmail.com>
-In-Reply-To: <20210204190507.26487-1-charvi077@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 5 Feb 2021 02:30:06 -0500
-Message-ID: <CAPig+cTj5erQ6GoikwU7aeJTH0+QCC2SqkSuZ_T=n0LVxf1pBQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/8][Outreachy] rebase -i: add options to fixup command
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210202020001.31601-3-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 4, 2021 at 2:05 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> Changes from v4 :
-> (Thanks to Eric Sunshine, Christian Couder and Phillip Wood for suggestions
->  and reviews)
+Am 02.02.21 um 02:59 schrieb Ævar Arnfjörð Bjarmason:
+> Add tests for how git behaves when the pager itself exits with
+> non-zero, as well as for us exiting with 141 when we're killed with
+> SIGPIPE due to the pager not consuming its output.
+> 
+> There is some recent discussion[1] about these semantics, but aside
+> from what we want to do in the future, we should have a test for the
+> current behavior.
+> 
+> This test construct is stolen from 7559a1be8a0 (unblock and unignore
+> SIGPIPE, 2014-09-18). The reason not to make the test itself depend on
+> the MINGW prerequisite is to make a subsequent commit easier to read.
 
-Thanks for working on this and re-rolling. Unfortunately, it seems
-that v4 already landed in Junio's `next` branch which means that he
-won't be replacing v4 wholesale as would have been the case if it was
-still in the `seen` branch. Once patches are in `next`, improvements
-are made by building changes atop them (incrementally) rather than
-replacing them. Whether or not it makes sense for you to spend time
-re-doing these patches as incremental changes is not clear. In fact...
+At least for my Windows build, the MINGW games do not make a difference:
+The test is skipped anyway due to the unsatisfied TTY prerequisite.
 
-> The major change in this version is to remove the working of `fixup -C`
-> with amend! commit and will include in the another patch series, in order
-> to avoid the confusion. So there are following changes :
-> * removed the patch (rebase -i : teach --autosquash to work with amend!)
-> * updated the test script (t3437-*.sh), changed the test setup and removed
->   two tests.
->
->   Earlier every test includes the commit message having subject starting
->   with amend! So, now it includes a setup of different branch for testing
->   fixup with options and also updated all the tests.
->   Removed the test - "skip fixup -C removes amend! from message" and also
->   "sequence of fixup, fixup -C & squash --signoff works" as I think it would
->   be better to test this also in the branch with amend! commit with different
->   author. (Will add these tests with amend! commit implementation)
+> 
+> 1. https://lore.kernel.org/git/87o8h4omqa.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t7006-pager.sh | 82 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+> 
+> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+> index fdb450e446a..0aa030962b1 100755
+> --- a/t/t7006-pager.sh
+> +++ b/t/t7006-pager.sh
+> @@ -656,4 +656,86 @@ test_expect_success TTY 'git tag with auto-columns ' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success TTY 'git returns SIGPIPE on early pager exit' '
+> +	test_when_finished "rm pager-used" &&
+> +	test_config core.pager ">pager-used; head -n 1; exit 0" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test_match_signal 13 "$OUT"
+> +	else
+> +		test_terminal git log
+> +	fi &&
+> +	test_path_is_file pager-used
+> +'
+> +
+> +test_expect_success TTY 'git returns SIGPIPE on early pager non-zero exit' '
+> +	test_when_finished "rm pager-used" &&
+> +	test_config core.pager ">pager-used; head -n 1; exit 1" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test_match_signal 13 "$OUT"
+> +	else
+> +		test_terminal git log
+> +	fi &&
+> +	test_path_is_file pager-used
+> +'
+> +
+> +test_expect_success TTY 'git discards pager non-zero exit without SIGPIPE' '
+> +	test_when_finished "rm pager-used" &&
+> +	test_config core.pager "wc >pager-used; exit 1" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test "$OUT" -eq 0
+> +	else
+> +		test_terminal git log
+> +	fi &&
+> +	test_path_is_file pager-used
+> +'
+> +
+> +test_expect_success TTY 'git discards nonexisting pager without SIGPIPE' '
+> +	test_when_finished "rm pager-used" &&
+> +	test_config core.pager "wc >pager-used; does-not-exist" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test "$OUT" -eq 0
+> +	else
+> +		test_terminal git log
+> +	fi &&
+> +	test_path_is_file pager-used
+> +'
+> +
+> +test_expect_success TTY 'git attempts to page to nonexisting pager command, gets SIGPIPE' '
+> +	test_config core.pager "does-not-exist" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test_match_signal 13 "$OUT"
+> +	else
+> +		test_terminal git log
+> +	fi
+> +'
+> +
+> +test_expect_success TTY 'git returns SIGPIPE on propagated signals from pager' '
+> +	test_when_finished "rm pager-used" &&
+> +	test_config core.pager ">pager-used; test-tool sigchain" &&
+> +
+> +	if test_have_prereq !MINGW
+> +	then
+> +		OUT=$( ((test_terminal git log; echo $? 1>&3) | :) 3>&1 ) &&
+> +		test_match_signal 13 "$OUT"
+> +	else
+> +		test_terminal git log
+> +	fi &&
+> +	test_path_is_file pager-used
+> +'
+> +
+>  test_done
+> 
 
-Despite these being nice cleanups to the standalone series, I'm not
-sure it's worth spending your time creating new patches to undo these
-from `next`. Removing them only to add them back later is not
-necessarily going to help "unconfuse" someone reading the commits in
-the permanent project history.
-
-> * changed the flag type from enum todo_item_flags to unsigned
-> * Replaced fixup_-* with fixup-* in lib-rebase.sh
-> * fixup a small nit in Documentation
-
-These changes are still worthwhile and can easily be done
-incrementally atop what is already in next, I would think.
-
-Anyhow, use your best judgment to decide how much work to devote to this.
