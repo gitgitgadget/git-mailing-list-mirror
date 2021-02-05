@@ -2,126 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9B3C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6DDEC433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:57:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BBD764FBA
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:45:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69EAB64E51
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 19:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233529AbhBESDJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 13:03:09 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58866 "EHLO
+        id S233105AbhBESOc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 13:14:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51901 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233660AbhBESA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 13:00:57 -0500
+        with ESMTP id S233215AbhBESN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 13:13:59 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4144195C9D;
-        Fri,  5 Feb 2021 14:42:34 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 475CB95DB1;
+        Fri,  5 Feb 2021 14:55:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tJEEqUSNWbOKoOA7wLe7KUkzN+w=; b=MhKHiP
-        vWpu9bQzGiiBVBIZsD6MjJe+D4hUFHFgpMHFuUjFHjGMoq5sXx//WnRmN/C4ZQ5n
-        w5KYhAf1+xuI4jJNlO6mBHXjJyNfV0n+GSBbM9Jtg1iW2NZXp466swfeMGRcE1wC
-        HnWBu2LKVG1hcyDrGxpv8f7QSBm7cO9uMeAl4=
+        :content-type; s=sasl; bh=/AoumrkD0HLK/K7usehIc5oBmMw=; b=d7Unvq
+        u5PhsvcwmsiF4NeafFQtMuSo8WSDOzcLw5TavhErUbz00BQUEvLTavkIOnYtvUyx
+        VvxyJmGO7dQGbjHEQGtR1Z0Ax9p3OILQrt8xzx2nlyDiytZSeBomna4WSDR+btN0
+        0OXNCDoz0X2adfsBIj9vEG/5Mm4F9Owz/k+4A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=SelnVUDQ+QyuYJBGsQmFjr9y1DcwOxAA
-        Yxd/ndz2GXGfaCe/reJwcp9VWCNfDz8YGAfE/7D21gYFiZzDHtVxCawZhtGdaw9l
-        gfD2RUVO5nBlkEKEUAbeN3HiZn0svGAKrooCYK1AQpjrT/1EVTKXDtX94aztSYDd
-        AOqHd83MmD8=
+        :content-type; q=dns; s=sasl; b=qQucUuPXTVN9yU4xjpiQR9VDu+IjXD6d
+        evpbYZZ7wxhgOJBQHYIWDVmZS0qDURySF/qMwPrkMpvuMkjYNnf4pF7EqXiwROlB
+        8nMkOraEz/qfelFeT7DoLcRF2/yIOu00ssFOdj9mcfhQCLL06/FGAwafqdBuxdAL
+        bhXL0zhRhX0=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36E1C95C9B;
-        Fri,  5 Feb 2021 14:42:34 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EFA995DAF;
+        Fri,  5 Feb 2021 14:55:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A57CA95C98;
-        Fri,  5 Feb 2021 14:42:33 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A5BF595DAD;
+        Fri,  5 Feb 2021 14:55:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
-        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 15/17] midx: use 64-bit multiplication for chunk sizes
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
-        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
-        <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
-        <xmqq8s834c4s.fsf@gitster.c.googlers.com>
-        <7c209432-82e6-7785-a5c1-1068ec3f0378@gmail.com>
-Date:   Fri, 05 Feb 2021 11:42:33 -0800
-In-Reply-To: <7c209432-82e6-7785-a5c1-1068ec3f0378@gmail.com> (Derrick
-        Stolee's message of "Fri, 5 Feb 2021 07:30:42 -0500")
-Message-ID: <xmqqa6si1ety.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: candidate branches for `maint`, was Re: [PATCH v2 00/14] Simple
+ IPC Mechanism
+References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
+        <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
+        <xmqq5z3bjuqs.fsf@gitster.c.googlers.com>
+        <1be67634-4188-9ef3-306c-72b78ea856b5@jeffhostetler.com>
+        <nycvar.QRO.7.76.6.2102030003300.54@tvgsbejvaqbjf.bet>
+        <xmqqmtwj647t.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2102051356210.54@tvgsbejvaqbjf.bet>
+Date:   Fri, 05 Feb 2021 11:55:39 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2102051356210.54@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 5 Feb 2021 14:19:19 +0100 (CET)")
+Message-ID: <xmqq35ya1e84.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4AA03FB4-67EA-11EB-BD33-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 1F1E75A2-67EC-11EB-A48E-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 2/4/2021 7:00 PM, Junio C Hamano wrote:
->> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->>> From: Derrick Stolee <dstolee@microsoft.com>
->>>
->>> When calculating the sizes of certain chunks, we should use 64-bit
->>> multiplication always. This allows us to properly predict the chunk
->>> sizes without risk of overflow.
->>>
->>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->>> ---
->>>  midx.c | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->> 
->> This one I find somewhat questionable for multiple reasons.
->> 
->>  * the fourth parameter of add_chunk() is of size_t, not uint64_t;
->>    shouldn't the multiplication be done in type size_t instead?
+>> Are there other topics that deserve to be in 'maint' that are
+>> "obviously correct" people can think of?
 >
-> This is probably appropriate because we will truncate to size_t if
-> it is smaller than uint64_t.
+> I looked over the branches merged into `master` that are not in `maint`,
+> and from a cursory look, these seem to be good candidates:
+> ...
+> There are also a couple test updates that might be nice to have in
+> `maint`:
+> ...
+> Finally, there are documentation updates that I would probably merge, if I
+> was tasked with updating `maint`:
+> ...
 
-In other words, if size_t turns out to be too small, doing
-multiplication in uint64_t would not help at all and add_chunk() API
-needs its parameter types updated [*].
 
-    side note: I really wish that the language and the compiler
-    helped us so that we didn't have to do this---after all, our
-    function prototype says the result will be passed as a certain
-    type, so it would be nice if the arithmetic to compute that
-    result were automatically carried out in a way not to cause
-    truncation.
+Your list more or less matches what the ML (merge later) script on
+the todo/ branch produces when it is fed the RelNotes (the script
+just greps for "merge laster to maint" comments and shows the result
+in way a bit easier to use for me).
 
->>  * these mutiplications were introduced in "midx: use chunk-format
->>    API in write_midx_internal()"; that step should use the
->>    arithmetic with cast (if necessary) from the start, no?
->
-> I wanted to isolate these changes specifically so we could be
-> careful about the multiplications and not be distracted by them
-> when converting to the chunk-format API. The multiplications were
-> "moved" by that patch, not "introduced".
+The ones that are in RelNotes but not in your list are 
 
-Hmph, I somehow had an impression that they did not have truncation
-issue in the original context, but perhaps I was wrong.  OK.
+    ab/branch-sort # 7 (11 days ago) 
+    ar/t6016-modernise # 1 (3 weeks ago) 
+    dl/p4-encode-after-kw-expansion # 1 (3 weeks ago) 
+    fc/t6030-bisect-reset-removes-auxiliary-files # 1 (4 weeks ago) 
+    ma/doc-pack-format-varint-for-sizes # 1 (3 weeks ago) 
+    ma/more-opaque-lock-file # 5 (11 days ago) 
+    ma/t1300-cleanup # 3 (3 weeks ago) 
+    zh/arg-help-format # 2 (3 weeks ago) 
 
-> I did a full inspection of all multiplications in midx.c and
-> found a few more instances of possible overflow. Two are on the
-> read side, but they require the object lookup chunk to have size
-> 4gb or larger. This is not _that_ far off from possibility! My
-> multi-pack-index for the Windows repository is currently ~1.6 GB
-> (in total, including the other chunks).
+and I think all of them are safe to merge down.
 
-Thanks.
+Thanks for being an independent source I can rely on to sanity check
+what is in RelNotes.  Very much appreciated.
+
+
