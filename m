@@ -8,177 +8,296 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B3CBC433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 16:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E21BC433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 16:41:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4471564EA1
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 16:35:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0084764EE0
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 16:41:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232902AbhBEOzu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 09:55:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48172 "EHLO
+        id S233037AbhBEPB5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 10:01:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232452AbhBEOw7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 09:52:59 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D0FC06121C
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:31:04 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id hs11so12915024ejc.1
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:31:04 -0800 (PST)
+        with ESMTP id S232983AbhBEO6g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 09:58:36 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7ACC061223
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:28:55 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id s3so9443478edi.7
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:28:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4vOvP8GvypLyqwVS8j8edlPeLJbqOe1KQrGSvUN46RE=;
-        b=ab6E/089WRPOyiy2HegvLSN7mrjK77w133hgcc6Vc5DAVLGUoU/r3ZYufa2/axRtW2
-         YvZm051ZYY6QGfvnfbAGj1tFiC5/oUejPdPmrmU/yOuWdfCF06uhrS6ist2vHagsKQJI
-         qPnKee0OnZJqtCPYyuosr58Ehw39d0b6KA5WqkMIjEnUisrzvreyr0v75g1ieDRMfcSw
-         uY7YcT5ZAh1hS7O8TMGKOjDDvIWvI8gAoR6e0ThwafzFd4QJxH3/Fg5YMuC9sgE2wlC0
-         Mpnmz37DTuQnZbUtl24du+URNHejyBP+t2U2jv86ohxkzHl7TCqUjnHj5CcPb/FnubFz
-         bstA==
+        bh=9rbRQ+4gSMEK2h+y1E/hg18dGvaKEJCIVpGJN9anMY4=;
+        b=nlG04GI+vgooir4Do+O/vtLMs1B8wOMSbxCsU37UwC75po/SXjdoNxWy1zUDTDONZq
+         VtReksXt1VEfcNL7X/0Fx/YakFwyh8HCLBsvH41avybjwz1i/HXT73LBQfT8ScOz1ixh
+         pmM4AGK+gmgSoziCUbM1RJUeMUXV2KwcHO2CgXzVj5WRYWJgH7lmrJ5nenKAyqbP8xKr
+         C1P4F119RjUxg+HGlnq9sqjpHaThOHpYfHsFhOOrY67ZianBpTdKuuNFsqNdVqiZU0/F
+         WHJ7e1/Zt+hZsgdR2sp95sLKt7Mdri9R0PTLFDa3oVR0f0+FwMAlz+DOWXLmA8r/iuvR
+         /AAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4vOvP8GvypLyqwVS8j8edlPeLJbqOe1KQrGSvUN46RE=;
-        b=Yt3WBuFcPMQjH5Yj00V3hKzzsaT3K/V0RQ8Ezehqdo1jgisGfbjTXFwRqNJKs1nDTl
-         ijDMbdaqoyqE6/xqYzzGDp1Eb+sHNVohmaOxg+4xxyUUB/9GNvgr5bh0w/1s0qRR6ESG
-         suB9TZJubwHFMBni5Sg3fsziywgc7V89BfFko+6XTsTRT8wDy+eW1pNnoVN9+njJ0Aaf
-         OYOo16dn3TvF5MBxb/oQYa0TojtoNDjqAJX74U9RiINpNxCElZBgH19GWqRVTlhNhJDv
-         m7skjffMGL6a0zcX2MAZs+NDL+7riHFaJ3LJVSAsfqDi41eziDO9fuJMhk3jey5aqh+V
-         bYmQ==
-X-Gm-Message-State: AOAM532/GxwBlnhFehSOVW2x55vfLqD15BNuFS8lg7WlqJvgaWqsIGLk
-        fl6rk3KPogXJR/WBkGSGpeLC2JuYqpw=
-X-Google-Smtp-Source: ABdhPJwu95+DZ1AfnKNYNpoT4AsWdlksigU86nem0L2nwb0AedxEIs6kv6twzI164Ci3+LvyR0A8Jg==
-X-Received: by 2002:adf:d206:: with SMTP id j6mr5304297wrh.427.1612536293566;
-        Fri, 05 Feb 2021 06:44:53 -0800 (PST)
+        bh=9rbRQ+4gSMEK2h+y1E/hg18dGvaKEJCIVpGJN9anMY4=;
+        b=fMTUjpZXs/3V5lIz2K9vKNh/dl9HdDi3fSFnp3ZlKAwuZ7cJKu6wHrO8H6t4b5LTAy
+         54pV5IPZY7vghUmU67quPSesCJds1vNk4JQOP2UrtJwrILHeC5JfQb2N59Yqo1ANwoMd
+         HlvT6E2mSkmkdgG/ZLJB9VDswLuN+t12TGAWLV5vUXFfiHJkHfsPzGzFhJro9ZpYiYBW
+         ehh2oiGHG2/CKUtI4LqMllCQn9BG+xywssHHBogy2BGU+SbfU7fzpmodz8qVbEAN5m5s
+         zQ1JGDCypBObI7FVqwAG3epgglF1TxZ2un5eNLfsdrZmnGyzKLR5Atr8b01jsZv2SyZk
+         KfHw==
+X-Gm-Message-State: AOAM533+SPy63DM3t7Q4HNPbRh1IRsWWsxG5ZbeJ6uFg+2U4Tgh3eAjK
+        sFSv8mxjppwv2A5ynT//lRRPdJXMvJU=
+X-Google-Smtp-Source: ABdhPJxUi25h6Q/xkWSJjfs2LI4DXyhEGXoxZMiL05v/fVj+11MJ1wVRhui3Ihu6H+R+amOQBgufUg==
+X-Received: by 2002:adf:e610:: with SMTP id p16mr5289561wrm.169.1612535463728;
+        Fri, 05 Feb 2021 06:31:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c20sm8757126wmb.38.2021.02.05.06.44.52
+        by smtp.gmail.com with ESMTPSA id u4sm11928802wrr.37.2021.02.05.06.31.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 06:44:52 -0800 (PST)
-Message-Id: <f8e6a1ad9d3df20383edbb30592461974f439db8.1612536290.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.841.v6.git.1612536290.gitgitgadget@gmail.com>
-References: <pull.841.v5.git.1612481392.gitgitgadget@gmail.com>
-        <pull.841.v6.git.1612536290.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 14:44:48 +0000
-Subject: [PATCH v6 2/3] range-diff/format-patch: handle commit ranges other
- than A..B
+        Fri, 05 Feb 2021 06:31:03 -0800 (PST)
+Message-Id: <7aa3242e15b7a0cca7b7d4394311697ed84bc05a.1612535453.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+References: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+        <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 05 Feb 2021 14:30:44 +0000
+Subject: [PATCH v3 09/17] midx: return success/failure in chunk write methods
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Uwe =?UTF-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     me@ttaylorr.com, gitster@pobox.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-In the `SPECIFYING RANGES` section of gitrevisions[7], two ways are
-described to specify commit ranges that `range-diff` does not yet
-accept: "<commit>^!" and "<commit>^-<n>".
+Historically, the chunk-writing methods in midx.c have returned the
+amount of data written so the writer method could compare this with the
+table of contents. This presents with some interesting issues:
 
-Let's accept them, by parsing them via the revision machinery and
-looking for at least one interesting and one uninteresting revision in
-the resulting `pending` array.
+1. If a chunk writing method has a bug that miscalculates the written
+   bytes, then we can satisfy the table of contents without actually
+   writing the right amount of data to the hashfile. The commit-graph
+   writing code checks the hashfile struct directly for a more robust
+   verification.
 
-This also finally lets us reject arguments that _do_ contain `..` but
-are not actually ranges, e.g. `HEAD^{/do.. match this}`.
+2. There is no way for a chunk writing method to gracefully fail.
+   Returning an int presents an opportunity to fail without a die().
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+3. The current pattern doesn't match chunk_write_fn type exactly, so we
+   cannot share code with commit-graph.c
+
+For these reasons, convert the midx chunk writer methods to return an
+'int'. Since none of them fail at the moment, they all return 0.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- range-diff.c          | 26 +++++++++++++++++++++++++-
- range-diff.h          |  4 +---
- t/t3206-range-diff.sh | 13 +++++++++++++
- 3 files changed, 39 insertions(+), 4 deletions(-)
+ midx.c | 63 +++++++++++++++++++++++++---------------------------------
+ 1 file changed, 27 insertions(+), 36 deletions(-)
 
-diff --git a/range-diff.c b/range-diff.c
-index 9b93e08e8407..a88612cb8923 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -11,6 +11,7 @@
- #include "pretty.h"
- #include "userdiff.h"
- #include "apply.h"
-+#include "revision.h"
- 
- struct patch_util {
- 	/* For the search for an exact match */
-@@ -567,5 +568,28 @@ int show_range_diff(const char *range1, const char *range2,
- 
- int is_range_diff_range(const char *arg)
- {
--	return !!strstr(arg, "..");
-+	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
-+	const char *argv[] = { "", copy, "--", NULL };
-+	int i, positive = 0, negative = 0;
-+	struct rev_info revs;
-+
-+	init_revisions(&revs, NULL);
-+	if (setup_revisions(3, argv, &revs, NULL) == 1) {
-+		for (i = 0; i < revs.pending.nr; i++)
-+			if (revs.pending.objects[i].item->flags & UNINTERESTING)
-+				negative++;
-+			else
-+				positive++;
-+		for (i = 0; i < revs.pending.nr; i++) {
-+			struct object *obj = revs.pending.objects[i].item;
-+
-+			if (obj->type == OBJ_COMMIT)
-+				clear_commit_marks((struct commit *)obj,
-+						   ALL_REV_FLAGS);
-+		}
-+	}
-+
-+	free(copy);
-+	object_array_clear(&revs.pending);
-+	return negative > 0 && positive > 0;
+diff --git a/midx.c b/midx.c
+index 5be081f229ad..c92a6c47be01 100644
+--- a/midx.c
++++ b/midx.c
+@@ -650,7 +650,7 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
+ 	return deduplicated_entries;
  }
-diff --git a/range-diff.h b/range-diff.h
-index c17dbc2e75a8..4abd70c40fed 100644
---- a/range-diff.h
-+++ b/range-diff.h
-@@ -18,9 +18,7 @@ int show_range_diff(const char *range1, const char *range2,
  
- /*
-  * Determine whether the given argument is usable as a range argument of `git
-- * range-diff`, e.g. A..B. Note that this only validates the format but does
-- * _not_ parse it, i.e. it does _not_ look up the specified commits in the
-- * local repository.
-+ * range-diff`, e.g. A..B.
-  */
- int is_range_diff_range(const char *arg);
+-static size_t write_midx_pack_names(struct hashfile *f, void *data)
++static int write_midx_pack_names(struct hashfile *f, void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+ 	uint32_t i;
+@@ -678,14 +678,13 @@ static size_t write_midx_pack_names(struct hashfile *f, void *data)
+ 	if (i < MIDX_CHUNK_ALIGNMENT) {
+ 		memset(padding, 0, sizeof(padding));
+ 		hashwrite(f, padding, i);
+-		written += i;
+ 	}
  
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 6eb344be0312..2b518378d4a0 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -150,6 +150,19 @@ test_expect_success 'simple A B C (unmodified)' '
- 	test_cmp expect actual
- '
+-	return written;
++	return 0;
+ }
  
-+test_expect_success 'A^! and A^-<n> (unmodified)' '
-+	git range-diff --no-color topic^! unmodified^-1 >actual &&
-+	cat >expect <<-EOF &&
-+	1:  $(test_oid t4) = 1:  $(test_oid u4) s/12/B/
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'A^{/..} is not mistaken for a range' '
-+	test_must_fail git range-diff topic^.. topic^{/..} 2>error &&
-+	test_i18ngrep "not a commit range" error
-+'
-+
- test_expect_success 'trivial reordering' '
- 	git range-diff --no-color master topic reordered >actual &&
- 	cat >expect <<-EOF &&
+-static size_t write_midx_oid_fanout(struct hashfile *f,
+-				    void *data)
++static int write_midx_oid_fanout(struct hashfile *f,
++				 void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+ 	struct pack_midx_entry *list = ctx->entries;
+@@ -710,17 +709,16 @@ static size_t write_midx_oid_fanout(struct hashfile *f,
+ 		list = next;
+ 	}
+ 
+-	return MIDX_CHUNK_FANOUT_SIZE;
++	return 0;
+ }
+ 
+-static size_t write_midx_oid_lookup(struct hashfile *f,
+-				    void *data)
++static int write_midx_oid_lookup(struct hashfile *f,
++				 void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+ 	unsigned char hash_len = the_hash_algo->rawsz;
+ 	struct pack_midx_entry *list = ctx->entries;
+ 	uint32_t i;
+-	size_t written = 0;
+ 
+ 	for (i = 0; i < ctx->entries_nr; i++) {
+ 		struct pack_midx_entry *obj = list++;
+@@ -734,19 +732,17 @@ static size_t write_midx_oid_lookup(struct hashfile *f,
+ 		}
+ 
+ 		hashwrite(f, obj->oid.hash, (int)hash_len);
+-		written += hash_len;
+ 	}
+ 
+-	return written;
++	return 0;
+ }
+ 
+-static size_t write_midx_object_offsets(struct hashfile *f,
+-					void *data)
++static int write_midx_object_offsets(struct hashfile *f,
++				     void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+ 	struct pack_midx_entry *list = ctx->entries;
+ 	uint32_t i, nr_large_offset = 0;
+-	size_t written = 0;
+ 
+ 	for (i = 0; i < ctx->entries_nr; i++) {
+ 		struct pack_midx_entry *obj = list++;
+@@ -766,20 +762,17 @@ static size_t write_midx_object_offsets(struct hashfile *f,
+ 			    obj->offset);
+ 		else
+ 			hashwrite_be32(f, (uint32_t)obj->offset);
+-
+-		written += MIDX_CHUNK_OFFSET_WIDTH;
+ 	}
+ 
+-	return written;
++	return 0;
+ }
+ 
+-static size_t write_midx_large_offsets(struct hashfile *f,
+-				       void *data)
++static int write_midx_large_offsets(struct hashfile *f,
++				    void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+ 	struct pack_midx_entry *list = ctx->entries;
+ 	struct pack_midx_entry *end = ctx->entries + ctx->entries_nr;
+-	size_t written = 0;
+ 	uint32_t nr_large_offset = ctx->num_large_offsets;
+ 
+ 	while (nr_large_offset) {
+@@ -795,12 +788,12 @@ static size_t write_midx_large_offsets(struct hashfile *f,
+ 		if (!(offset >> 31))
+ 			continue;
+ 
+-		written += hashwrite_be64(f, offset);
++		hashwrite_be64(f, offset);
+ 
+ 		nr_large_offset--;
+ 	}
+ 
+-	return written;
++	return 0;
+ }
+ 
+ static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
+@@ -812,7 +805,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	struct hashfile *f = NULL;
+ 	struct lock_file lk;
+ 	struct write_midx_context ctx = { 0 };
+-	uint64_t written = 0;
++	uint64_t header_size = 0;
+ 	uint32_t chunk_ids[MIDX_MAX_CHUNKS + 1];
+ 	uint64_t chunk_offsets[MIDX_MAX_CHUNKS + 1];
+ 	struct progress *progress = NULL;
+@@ -940,10 +933,10 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 		goto cleanup;
+ 	}
+ 
+-	written = write_midx_header(f, num_chunks, ctx.nr - dropped_packs);
++	header_size = write_midx_header(f, num_chunks, ctx.nr - dropped_packs);
+ 
+ 	chunk_ids[cur_chunk] = MIDX_CHUNKID_PACKNAMES;
+-	chunk_offsets[cur_chunk] = written + (num_chunks + 1) * MIDX_CHUNKLOOKUP_WIDTH;
++	chunk_offsets[cur_chunk] = header_size + (num_chunks + 1) * MIDX_CHUNKLOOKUP_WIDTH;
+ 
+ 	cur_chunk++;
+ 	chunk_ids[cur_chunk] = MIDX_CHUNKID_OIDFANOUT;
+@@ -981,39 +974,37 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 
+ 		hashwrite_be32(f, chunk_ids[i]);
+ 		hashwrite_be64(f, chunk_offsets[i]);
+-
+-		written += MIDX_CHUNKLOOKUP_WIDTH;
+ 	}
+ 
+ 	if (flags & MIDX_PROGRESS)
+ 		progress = start_delayed_progress(_("Writing chunks to multi-pack-index"),
+ 					  num_chunks);
+ 	for (i = 0; i < num_chunks; i++) {
+-		if (written != chunk_offsets[i])
++		if (f->total + f->offset != chunk_offsets[i])
+ 			BUG("incorrect chunk offset (%"PRIu64" != %"PRIu64") for chunk id %"PRIx32,
+ 			    chunk_offsets[i],
+-			    written,
++			    f->total + f->offset,
+ 			    chunk_ids[i]);
+ 
+ 		switch (chunk_ids[i]) {
+ 			case MIDX_CHUNKID_PACKNAMES:
+-				written += write_midx_pack_names(f, &ctx);
++				write_midx_pack_names(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_OIDFANOUT:
+-				written += write_midx_oid_fanout(f, &ctx);
++				write_midx_oid_fanout(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_OIDLOOKUP:
+-				written += write_midx_oid_lookup(f, &ctx);
++				write_midx_oid_lookup(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_OBJECTOFFSETS:
+-				written += write_midx_object_offsets(f, &ctx);
++				write_midx_object_offsets(f, &ctx);
+ 				break;
+ 
+ 			case MIDX_CHUNKID_LARGEOFFSETS:
+-				written += write_midx_large_offsets(f, &ctx);
++				write_midx_large_offsets(f, &ctx);
+ 				break;
+ 
+ 			default:
+@@ -1025,9 +1016,9 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 	}
+ 	stop_progress(&progress);
+ 
+-	if (written != chunk_offsets[num_chunks])
++	if (hashfile_total(f) != chunk_offsets[num_chunks])
+ 		BUG("incorrect final offset %"PRIu64" != %"PRIu64,
+-		    written,
++		    hashfile_total(f),
+ 		    chunk_offsets[num_chunks]);
+ 
+ 	finalize_hashfile(f, NULL, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
 -- 
 gitgitgadget
 
