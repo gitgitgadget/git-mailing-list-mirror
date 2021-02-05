@@ -2,179 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E384CC433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A4BAC433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:40:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F89A64FBB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:10:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C50EE64EE8
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:40:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233565AbhBES2D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 13:28:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38810 "EHLO
+        id S233067AbhBES5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 13:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233741AbhBES12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 13:27:28 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD63C06174A
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 12:09:12 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id y8so5037830plg.5
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 12:09:12 -0800 (PST)
+        with ESMTP id S232908AbhBEPDP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 10:03:15 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C23C06174A
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 08:41:16 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id s11so9515949edd.5
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 08:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=vGYYnPoEojSG5uquJsJ0BxYbISLULa9+gJdeAFFbwX8=;
-        b=jgE0spBNmHvzrSQCQMBvX1Mi6xwY2tGgcMhQl5u1q9VN633z6jVFETZKh38DwbuvAS
-         1IzRVmS7nkhGQ7DHY5OKyFXem9WTcX2xGCbmOUp9ysqM1kYYjMRg7NwlzDUMu6Ak6Sf3
-         HBOZrdMBQWw3dlYom3maiY7PHlU6bVR4EH29dwaOtLSa16Q114Fd+RCrxg7cZIP4u/Ua
-         xIg4PaXkr6mAnhetW7UzLP9epF46cWO/jOWaraR3jqAC1WMaTT9ftcAZ0L1zK6ED57/N
-         0eXucm69LlSHfrUq5ip7Az0vRVIX8q//vX/KLuFlg0eH52/ouUiqjTeP17Bj5AtL3o5m
-         kJPw==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=l65d8udfkzCvo108kV8k2aW7CWwXTuaSE/34F4Un0S4=;
+        b=MJFIx2jHRLBiqum/RzaL/MPl+32IAgYY3d8yvDbGvh5ufj/XZHB/5Z1oayFBhcwvIP
+         rJ2Y536pHfXhvqKH050oD5cjHlbyau1yLVLyPkTbIv58zol7vpfKVD3LBVrP6uzAV6ME
+         1jLPCAsKZHFWid447aZe1RDjzbRlbLm9e6d7r3mQJ1YrTef0pVltMHBhGmgf9FlGUMta
+         wqAEI8vU7tizu4c6hqGDt8nQMyK2YeaXMhVXYijJq7QAIyhVX/q8oWrUXVM4SR4iqKZV
+         /ppJn/I2UmTBjRfulwPHzXte976HgzzA0n3zaodv8OyqNXSn/hT20TItpX2YgPdXNQb3
+         k+7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=vGYYnPoEojSG5uquJsJ0BxYbISLULa9+gJdeAFFbwX8=;
-        b=YdkYbahGFvP1b0grO0uc94S/KuJr0GnR9zHbT/ipZJTm1JP2NssI5tOOGTcpYW2DrI
-         nS2jhGMGkiLQElfwcJY6XOeKxhpLOn8px6eBuM6rucn3hlpt/aen/85z5hhMAlpVY0RI
-         4NSzS2bpLjDdLZEa9ieS6lg1lA7HcYP1Z18KdsTuGgAAgFcOhScrkO5UDUJDYHi0QvRK
-         CdsRa4MHoZsxiCqSUkm/v+kyVhyTjatHhz+5NGdd1CbVy2hG+9Ob0P4QSCbMa/H1dBfK
-         Lt0vNFdj8Tf6f7iOnlbltLERKs/LX0EHsNSppamAKKLY2rsgh39NyuoCwjJygltBh3pY
-         yVGA==
-X-Gm-Message-State: AOAM5337nAv8PQocVT5jK7g9JZis4LPoGDbuzeJwK9njzPHUAFamdn0K
-        s+QxxHALowIIUdDNIg/AD3oSo7wmrnsX6M1hhNBeogYeRCcVgFonI77Mu57Al0MxlIU5Dgx3ltn
-        +t7SRTsXbFz502FnCrLnvSyYg1l5FNJIPJHSiqWn2V2Km52gjJGtoePbn0zFSPR/NNB+hky/gPR
-        2n
-X-Google-Smtp-Source: ABdhPJwcNsKa2BT5kiLj2g5MF52geSBQSacckg4RXUeCzKxvoxaZTs2a471plbjrjml1coEyt0kV2JDMtBhOmcwOlWH7
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:1865:: with SMTP id
- 37mr5935669pgy.206.1612555752006; Fri, 05 Feb 2021 12:09:12 -0800 (PST)
-Date:   Fri,  5 Feb 2021 12:09:08 -0800
-In-Reply-To: <20210205054914.104640-1-jonathantanmy@google.com>
-Message-Id: <20210205200908.805639-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20210205054914.104640-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH v2] usage: trace2 BUG() invocations
-From:   Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=l65d8udfkzCvo108kV8k2aW7CWwXTuaSE/34F4Un0S4=;
+        b=PueKKi8HBJKdgVNB9EVrEa9mZT/2TqOeoV4YXRM/PNoSkN+K1OkozwggSD3EyIJf1C
+         VxJOkuqly1OvMSw2+Kc3mwkyM+yqsiBXdrt/ky3oLVkhMqbSLX8HvE25z1zqPtNuo9bJ
+         AyCa+uwrg3yK/191DNnhx+lw3OCqKCfoSoLkkXrHQ8VV2XO5sx+pfE57NzOqfmQuGSuI
+         xkGFaVVLRPxepTq23fULzpsLjCj+4rZvMxd519p2vCcE5LyYfyMbmOhDu75p5F0SCcvA
+         E+NO0Ux+PcXeEoj/R0OxrWzr/41Te0VGSmu/QgJsD/vT4I1t3VrT0ijSotavf8MSSkEO
+         DeAw==
+X-Gm-Message-State: AOAM533jPVWEp1Q1vPkQf3HR3Seq5hJpX/qZmqVpGB/DbkmSZIfWIGHT
+        lCRG/2vUYSdoCFZt2f0lyF4O2ihQcVU=
+X-Google-Smtp-Source: ABdhPJwwJ/rJdwIAiqgh6Ur2UVwfnVVRASGi1th9fEeRWZKLdJh+38Ej7XPzMjYQP4DiRMTDxwX3qQ==
+X-Received: by 2002:adf:9523:: with SMTP id 32mr5571719wrs.361.1612536377431;
+        Fri, 05 Feb 2021 06:46:17 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r13sm9852514wmh.9.2021.02.05.06.46.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Feb 2021 06:46:16 -0800 (PST)
+Message-Id: <a36631b663e2310f60c5477df5efeda9dccfcce9.1612536373.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.869.v2.git.1612536373.gitgitgadget@gmail.com>
+References: <pull.869.git.1612469275.gitgitgadget@gmail.com>
+        <pull.869.v2.git.1612536373.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 05 Feb 2021 14:46:10 +0000
+Subject: [PATCH v2 3/6] range-diff: simplify code spawning `git log`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
-        stolee@gmail.com, gitster@pobox.com, jeffhost@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-die() messages are traced in trace2, but BUG() messages are not. Anyone
-tracking die() messages would have even more reason to track BUG().
-Therefore, write to trace2 when BUG() is invoked.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Thanks everyone for your suggestions. I've used an in_bug static
-variable (which does prevent the infinite loop - I injected the bug that
-Peff described and verified that it indeed loops without the mitigation
-and doesn't loop with the mitigation) and moved the trace2 to be below
-the vreportf (necessitating a va_copy).
----
- t/helper/test-trace2.c   |  9 +++++++++
- t/t0210-trace2-normal.sh | 19 +++++++++++++++++++
- usage.c                  | 11 +++++++++++
- 3 files changed, 39 insertions(+)
+Previously, we waited for the child process to be finished in every
+failing code path as well as at the end of the function
+`show_range_diff()`.
 
-diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
-index 823f33ceff..f93633f895 100644
---- a/t/helper/test-trace2.c
-+++ b/t/helper/test-trace2.c
-@@ -198,6 +198,14 @@ static int ut_006data(int argc, const char **argv)
+However, we do not need to wait that long. Directly after reading the
+output of the child process, we can wrap up the child process.
+
+This also has the advantage that we don't do a bunch of unnecessary work
+in case `finish_command()` returns with an error anyway.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ range-diff.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/range-diff.c b/range-diff.c
+index 8844359d416f..d0d941a25add 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -81,6 +81,8 @@ static int read_patches(const char *range, struct string_list *list,
+ 		finish_command(&cp);
+ 		return -1;
+ 	}
++	if (finish_command(&cp))
++		return -1;
+ 
+ 	line = contents.buf;
+ 	size = contents.len;
+@@ -102,7 +104,6 @@ static int read_patches(const char *range, struct string_list *list,
+ 				string_list_clear(list, 1);
+ 				strbuf_release(&buf);
+ 				strbuf_release(&contents);
+-				finish_command(&cp);
+ 				return -1;
+ 			}
+ 			util->matching = -1;
+@@ -118,7 +119,6 @@ static int read_patches(const char *range, struct string_list *list,
+ 			string_list_clear(list, 1);
+ 			strbuf_release(&buf);
+ 			strbuf_release(&contents);
+-			finish_command(&cp);
+ 			return -1;
+ 		}
+ 
+@@ -228,9 +228,6 @@ static int read_patches(const char *range, struct string_list *list,
+ 	strbuf_release(&buf);
+ 	free(current_filename);
+ 
+-	if (finish_command(&cp))
+-		return -1;
+-
  	return 0;
  }
  
-+static int ut_007bug(int argc, const char **argv)
-+{
-+	/*
-+	 * Exercise BUG() to ensure that the message is printed to trace2.
-+	 */
-+	BUG("the bug message");
-+}
-+
- /*
-  * Usage:
-  *     test-tool trace2 <ut_name_1> <ut_usage_1>
-@@ -214,6 +222,7 @@ static struct unit_test ut_table[] = {
- 	{ ut_004child,    "004child",  "[<child_command_line>]" },
- 	{ ut_005exec,     "005exec",   "<git_command_args>" },
- 	{ ut_006data,     "006data",   "[<category> <key> <value>]+" },
-+	{ ut_007bug,      "007bug",    "" },
- };
- /* clang-format on */
- 
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index ce7574edb1..81af180c4c 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -147,6 +147,25 @@ test_expect_success 'normal stream, error event' '
- 	test_cmp expect actual
- '
- 
-+# Verb 007bug
-+#
-+# Check that BUG writes to trace2
-+
-+test_expect_success 'normal stream, exit code 1' '
-+	test_when_finished "rm trace.normal actual expect" &&
-+	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
-+	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
-+	cat >expect <<-EOF &&
-+		version $V
-+		start _EXE_ trace2 007bug
-+		cmd_name trace2 (trace2)
-+		error the bug message
-+		exit elapsed:_TIME_ code:99
-+		atexit elapsed:_TIME_ code:99
-+	EOF
-+	test_cmp expect actual
-+'
-+
- sane_unset GIT_TRACE2_BRIEF
- 
- # Now test without environment variables and get all Trace2 settings
-diff --git a/usage.c b/usage.c
-index 1868a24f7a..1b206de36d 100644
---- a/usage.c
-+++ b/usage.c
-@@ -266,6 +266,10 @@ int BUG_exit_code;
- static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
- {
- 	char prefix[256];
-+	va_list params_copy;
-+	static int in_bug;
-+
-+	va_copy(params_copy, params);
- 
- 	/* truncation via snprintf is OK here */
- 	if (file)
-@@ -274,6 +278,13 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
- 		snprintf(prefix, sizeof(prefix), "BUG: ");
- 
- 	vreportf(prefix, fmt, params);
-+
-+	if (in_bug)
-+		abort();
-+	in_bug = 1;
-+
-+	trace2_cmd_error_va(fmt, params_copy);
-+
- 	if (BUG_exit_code)
- 		exit(BUG_exit_code);
- 	abort();
 -- 
-2.30.0.365.g02bc693789-goog
+gitgitgadget
 
