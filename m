@@ -2,147 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59EB3C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F69FC433E6
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:58:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 134B964EE4
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:57:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32E1964EE4
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233789AbhBETPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 14:15:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48786 "EHLO
+        id S233810AbhBETPp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 14:15:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233739AbhBETOD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233741AbhBETOD (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 5 Feb 2021 14:14:03 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99997C061756
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 12:48:47 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id t5so10394948eds.12
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 12:48:47 -0800 (PST)
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4741CC0613D6
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 12:48:52 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id 70so6916257qkh.4
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 12:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=flgLNC36vx0KZgqEiYQjMVcBwzN0HXjnkVPeAnmSr/I=;
-        b=GATZG0y6hhRb5xiWXU/PATQxlwMNTgnuSjWhCQ9XIT0nuowReYha8DguT/lzYNOooV
-         gouBPMA2LEX3b3q+BPtsxo6KFWXTgRzMkeBVrhsA4bPP1UYdrPazmZA9DU9iJZ7lHdJv
-         TBs4XMPLDS7cZfkHO6GxM7A5UhU1BxVM7BTIu6sCwqOzmKdJPGWrByWrT7ERjSKi0+Vu
-         JxvMAMEE20CP9N301FNzRyKalI0/dZxnN4kXFRvAIZIeeH5UyJRnbezGVKIb12MAEvfS
-         8KGGdH6+OkahR8HSBNxHk61Fbj+cHsIbs2DjbJkdZZCLoHQ2+6IC0YNWZhiLysU5dE1S
-         7Zyg==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=MSEstI0OOSZv49BTCgIaLzh/dwIFth+2yLyA7eGroxU=;
+        b=ijUTmslN48ykMxMvrH9JPINfLg5t9PDXKoWLwTqsUopM4SyMxkZmoR+dbCtlYxyZFD
+         KL9kvqLm8SzSkkYCPgC3wd8421ecalLkiI7wk9AZPfxT8sEV7MafqPGnmXl519nIUDCy
+         y/D/PhgJR4SG0iXUOWqinhl6seaXhdJh+H9hGBG9YD51RkgdIK5v5Us7Bns0rIouqpsD
+         7XSELFZXrBGqrSxuUlDuuiu/Q6U4I9bC8jOmjrnUKPYi9QlqR/j3vC5cX1f1bLq+sbp2
+         zlUbrsklbZ9s5G8QagpgsO7aDe4bbp1h+5eV9Yg1OuGPdJOQbok+O43MwXLJSM8nDCOH
+         HDkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=flgLNC36vx0KZgqEiYQjMVcBwzN0HXjnkVPeAnmSr/I=;
-        b=jvxewtN/GWeyUB1euCTfcCDVz1nH3eiX9H2Zbhh3Vc5io27stqiI+sfvl0MIHzX2IN
-         8jluIJ9QtbEFlsu47Q0KvFzMyNE9LXD4EFbOcZ7I9dhjHDC+mK8OyfuVngFaTjBE4SpX
-         kAtG+koLbtevsGU54hFhRB4JiLE4GCTq8edayfJBvHctuu8BjoCACxYe/+vmiImKN1KS
-         +xn/XMwnR87/hNnTAUunFWXPZnayE1ZSNa7njRy4V55C4C9wZg9OriWXdLDySnkfjNcJ
-         OUpS1EWEMo167THKyY8Sq4qrQiW85Q7qbfh38sk0OP1JZC2iRFI9wqav549SRN1iaTk3
-         7iUw==
-X-Gm-Message-State: AOAM530qhdjBPdjAAOQebJJ6HsMokeZowxXRqleddJ2Ht4pfhJ83RjBg
-        6VkNjtfcsD7U2vq11I2kn7M=
-X-Google-Smtp-Source: ABdhPJwR8C4ihqD3KEctsld/GHdqiN7vRYtU59oggnTzXffc1K44txtJSUhiTyFravjXicuLNRqGKQ==
-X-Received: by 2002:a05:6402:186:: with SMTP id r6mr5646567edv.234.1612558126205;
-        Fri, 05 Feb 2021 12:48:46 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id c18sm4463661edu.20.2021.02.05.12.48.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 12:48:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thomas Ackermann via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Thomas Ackermann <th.acker@arcor.de>
-Subject: Re: [PATCH v3 5/6] doc hash-function-transition: move rationale
- upwards
-References: <pull.858.v2.git.1612282749.gitgitgadget@gmail.com>
- <pull.858.v3.git.1612549349.gitgitgadget@gmail.com>
- <ee0fa2ec1d0fb4875c6a10af26686d2d5b3cb489.1612549349.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <ee0fa2ec1d0fb4875c6a10af26686d2d5b3cb489.1612549349.git.gitgitgadget@gmail.com>
-Date:   Fri, 05 Feb 2021 21:48:44 +0100
-Message-ID: <87h7mqckb7.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=MSEstI0OOSZv49BTCgIaLzh/dwIFth+2yLyA7eGroxU=;
+        b=U8qV+WdMWEGcYFT6sRowaPCh84mh0UrtVT9as5Ne7UVKqVah8HlDt8H9TQvkHImxSh
+         0GkgU49IrtWts4ZRLBz6pFz4O0nKaIXjmYSlGuxGsaZYZ5ZrcuibBT6GnYjWnYQojMLi
+         H5L6ux5IumrQZWmcoVyqDWpdiKOL3GfGGZh0D1PZy0+gnfsemxjUVSZAxDuUixymiorw
+         hv9WFy2/07uUsRjME2o0ZHwRNQw/5DETTiIrW3ZqQ2qtdc6Kiwiobmh84W7b//Y/OZ/M
+         a9bp7lJzd7WeNI0pnx0Up5QOHc6+4ZuCVu/DA35AlIiHdjvXnHWYQqebSbt7pgbMZA3U
+         K+Dw==
+X-Gm-Message-State: AOAM533jWrPDZuG8oESkGmD+9GDELNW7JImnNGNufa7VD03rpt1C7HzF
+        eRpPrif+77uhzzhtrkvzGoQCYXELdvXg92S0L3m7rsfDMlnBinJcymKQcSEnpklh/HoTvEwAPFs
+        4PfsWlJJqTnHhDNjnZhz4lhuKitMFG8hINc6Y4PJaiEcDLYDUe9PTPOinxnidpjRtVLoHUwf0qh
+        aK
+X-Google-Smtp-Source: ABdhPJw28pMuEaNVv/ypYwOEvUm1skPRlBevTo+uYTR24p2R9j3qd++SEZYBVoulIWYugzjIKlgo1B6ebWcq22eho+VW
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:b912:: with SMTP id
+ u18mr6127865qvf.2.1612558132101; Fri, 05 Feb 2021 12:48:52 -0800 (PST)
+Date:   Fri,  5 Feb 2021 12:48:46 -0800
+In-Reply-To: <20201208013121.677494-1-jonathantanmy@google.com>
+Message-Id: <cover.1612557937.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: [PATCH v8 0/3] Cloning with remote unborn HEAD
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        peff@peff.net
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Peff sent a review (which I don't see in lore.kernel.org/git, but I do
+see it in my inbox); here's v8 in response to that.
 
-On Fri, Feb 05 2021, Thomas Ackermann via GitGitGadget wrote:
+As you can see from the range-diff, there are just minor changes to v7
+(wording in documentation and a memory leak fix).
 
-> diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-> index 5ff9ee027cff..0c4cb98cd4e9 100644
-> --- a/Documentation/technical/hash-function-transition.txt
-> +++ b/Documentation/technical/hash-function-transition.txt
-> @@ -33,16 +33,9 @@ researchers. On 23 February 2017 the SHAttered attack
->  
->  Git v2.13.0 and later subsequently moved to a hardened SHA-1
->  implementation by default, which isn't vulnerable to the SHAttered
-> -attack.
-> +attack, but SHA-1 is still weak.
->  
-> -Thus Git has in effect already migrated to a new hash that isn't SHA-1
-> -and doesn't share its vulnerabilities, its new hash function just
-> -happens to produce exactly the same output for all known inputs,
-> -except two PDFs published by the SHAttered researchers, and the new
-> -implementation (written by those researchers) claims to detect future
-> -cryptanalytic collision attacks.
-> -
-> -Regardless, it's considered prudent to move past any variant of SHA-1
-> +Thus it's considered prudent to move past any variant of SHA-1
->  to a new hash. There's no guarantee that future attacks on SHA-1 won't
->  be published in the future, and those attacks may not have viable
->  mitigations.
-> @@ -57,6 +50,38 @@ SHA-1 still possesses the other properties such as fast object lookup
->  and safe error checking, but other hash functions are equally suitable
->  that are believed to be cryptographically secure.
+Jonathan Tan (3):
+  ls-refs: report unborn targets of symrefs
+  connect, transport: encapsulate arg in struct
+  clone: respect remote unborn HEAD
 
-I missed version 2 of this. I don't think it's an improvement to
-completely remove the description of us using sha1collisiondetection by
-default, i.e. effectively revert 5988eb631a3 (doc
-hash-function-transition: clarify what SHAttered means, 2018-03-26)
+ Documentation/config.txt                |  2 +
+ Documentation/config/init.txt           |  2 +-
+ Documentation/config/lsrefs.txt         |  9 +++
+ Documentation/technical/protocol-v2.txt | 11 +++-
+ builtin/clone.c                         | 34 +++++++++---
+ builtin/fetch-pack.c                    |  3 +-
+ builtin/fetch.c                         | 18 +++---
+ builtin/ls-remote.c                     |  9 +--
+ connect.c                               | 32 ++++++++++-
+ ls-refs.c                               | 74 ++++++++++++++++++++++++-
+ ls-refs.h                               |  1 +
+ remote.h                                |  4 +-
+ serve.c                                 |  2 +-
+ t/t5606-clone-options.sh                |  8 ++-
+ t/t5701-git-serve.sh                    |  2 +-
+ t/t5702-protocol-v2.sh                  | 25 +++++++++
+ transport-helper.c                      |  5 +-
+ transport-internal.h                    | 10 +---
+ transport.c                             | 23 ++++----
+ transport.h                             | 29 +++++++---
+ 20 files changed, 240 insertions(+), 63 deletions(-)
+ create mode 100644 Documentation/config/lsrefs.txt
 
-I can see how my comment on v1 could have been read like that. FWIW I
-didn't mean remove the whole thing, but that I don't think it adds much
-value to our description of how we use SHA-1 to go into the level of
-detail of mentioning several researchers by name, there's Wikipedia for
-that.
+Range-diff against v7:
+1:  2d35075369 ! 1:  8b0f55b5e4 ls-refs: report unborn targets of symrefs
+    @@ Documentation/config/lsrefs.txt (new)
+     +	protocol v2 capability advertisement. "allow" is the same as
+     +	"advertise" except that the server will not advertise support for this
+     +	feature; this is useful for load-balanced servers that cannot be
+    -+	updated automatically (for example), since the administrator could
+    ++	updated atomically (for example), since the administrator could
+     +	configure "allow", then after a delay, configure "advertise".
+     
+      ## Documentation/technical/protocol-v2.txt ##
+    @@ ls-refs.c
+     +
+     +static void ensure_config_read(void)
+     +{
+    -+	char *str = NULL;
+    ++	const char *str = NULL;
+     +
+     +	if (config_read)
+     +		return;
+     +
+    -+	if (repo_config_get_string(the_repository, "lsrefs.unborn", &str)) {
+    ++	if (repo_config_get_string_tmp(the_repository, "lsrefs.unborn", &str)) {
+     +		/*
+     +		 * If there is no such config, advertise and allow it by
+     +		 * default.
+2:  d4ed13d02e = 2:  f09bd56d5f connect, transport: encapsulate arg in struct
+3:  a3e5a0a7c5 = 3:  a5495a42f1 clone: respect remote unborn HEAD
+-- 
+2.30.0.365.g02bc693789-goog
 
-I think what we should instead do is have some brief summary of the
-vulnerabilities and how they're impacting git.
-
-Maybe I'm barking up the wrong tree here, and what I'm describing should
-be in a "man 5 gitsecurity" or something.
-
-But anyway, I think it adds a lot of value to somewhere have not just
-what amounts to "sha-1 sucks, see research papers", but to have some
-brief human-readable summary of what the practical impact is on users.
-
-In 2018 it was true that sha1collisiondetection was mitigating the known
-attack in practice, and that's also true about this new attack[1] (maybe
-there's others I missed ...).
-
-Then there's the fact that we don't *just* rely on SHA-1, but e.g. the
-"don't re-write objects we have already". So as a practical attack on
-someone using git ...
-
-Oh, and the attacks currently all seem to require file formats like JPEG
-or PDF for anything practical, i.e. being able to spew in lots of
-arbitrary data into some data segment, as opposed to e.g. creating a
-program that compiles.
-
-None of this is meant as some overall defense of SHA-1, just that most
-of our users aren't security researchers, and will be helped by a
-summary of how this system they're using using SHA-1, and having read
-that it's "broken" or "believed to be weak" translates to a threat to
-them in practice.
-
-1. https://eprint.iacr.org/2020/014.pdf
