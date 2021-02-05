@@ -2,117 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-26.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A55C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E384CC433DB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:10:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 258AE64FBB
-	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:09:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F89A64FBB
+	for <git@archiver.kernel.org>; Fri,  5 Feb 2021 20:10:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233456AbhBES0b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Feb 2021 13:26:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37640 "EHLO
+        id S233565AbhBES2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Feb 2021 13:28:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233518AbhBESXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Feb 2021 13:23:45 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF6AC06174A
-        for <git@vger.kernel.org>; Fri,  5 Feb 2021 12:05:54 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id n15so8166440qkh.8
-        for <git@vger.kernel.org>; Fri, 05 Feb 2021 12:05:54 -0800 (PST)
+        with ESMTP id S233741AbhBES12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Feb 2021 13:27:28 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD63C06174A
+        for <git@vger.kernel.org>; Fri,  5 Feb 2021 12:09:12 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id y8so5037830plg.5
+        for <git@vger.kernel.org>; Fri, 05 Feb 2021 12:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UAuHbCUq+l876enoEyDd0GydNd+uGcbGqzYvHHVbntM=;
-        b=HreJEVzy/kRYkFheDXHDYsA0vi5Hec0zPO6pefRiFqqiW4uqPNLxIAFTRSkrkP7EIF
-         R0aK5X0RWmGK0Wo9+btB1/0uFWbP6kxeeCeZ0T3NpWUTBOuEcOHy0GGqTZ47HJ5l10n6
-         Y7c60THACSulVgUQastBADt7prgX9uEq0Fs/JOde15UTkEFSmQyyQy9DBSwQp4ujZ9sl
-         p9Pq02pY2scBdhdAY0qg8qmSi8hQnnWZDgvkoba5YrGbP8oaq3cgb3kKxtddIUq39+1j
-         0Q6b5hY93FGdmZWUvDlRIb9r5Bju97cqnKpQKdI9rKwXf8pgHfdNFALxIfxjP1YqXx8p
-         iXgA==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=vGYYnPoEojSG5uquJsJ0BxYbISLULa9+gJdeAFFbwX8=;
+        b=jgE0spBNmHvzrSQCQMBvX1Mi6xwY2tGgcMhQl5u1q9VN633z6jVFETZKh38DwbuvAS
+         1IzRVmS7nkhGQ7DHY5OKyFXem9WTcX2xGCbmOUp9ysqM1kYYjMRg7NwlzDUMu6Ak6Sf3
+         HBOZrdMBQWw3dlYom3maiY7PHlU6bVR4EH29dwaOtLSa16Q114Fd+RCrxg7cZIP4u/Ua
+         xIg4PaXkr6mAnhetW7UzLP9epF46cWO/jOWaraR3jqAC1WMaTT9ftcAZ0L1zK6ED57/N
+         0eXucm69LlSHfrUq5ip7Az0vRVIX8q//vX/KLuFlg0eH52/ouUiqjTeP17Bj5AtL3o5m
+         kJPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UAuHbCUq+l876enoEyDd0GydNd+uGcbGqzYvHHVbntM=;
-        b=hmWO1xSqv4Y74WOTqO5Ter+wFlPCYMZBKc6SpP3k/nA+ciaXArzRLb2FaeItAuq/p+
-         8HUHDONbCEei9NMK4+kBWaNUYjRHjz8rCp8wV+9FasIdTjN7l64vh2XH+DDV2SiVUO8W
-         JcZ5rdt4tCoE8SCsnODrVo/j8D8ujDqvXEjKMd4G9EuuWV5KxRSHXowvX5eEvRB4+3Qf
-         tVpH8mQ3y7ERSQJvKAKdefbWyyO8+ogsrb3fGv105YB9eJUCpIsTKFlJ7CO8a1UDM/Mj
-         9QV12b261cxfkqSaDrhia3RhRUU4pdjDyUWCdSBxMHZ/dLJJlmlZUa/AmoY0vN5GvJ+Q
-         +KNQ==
-X-Gm-Message-State: AOAM533hEk1IUjpf++WMvwAexVVLarBWGZKLExXATYc7DYom7eyIhzbn
-        blRhD1R7j2Et7WZZef4K1XSlzw==
-X-Google-Smtp-Source: ABdhPJy2hn6m8493dXvTCtskGXuIPKrcUZImv6O5FUm7U21bDAvP+heMuPBpyqsjRuURPW5OOYvdaA==
-X-Received: by 2002:a37:a802:: with SMTP id r2mr6107328qke.197.1612555554225;
-        Fri, 05 Feb 2021 12:05:54 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:5271:ed06:5498:6bb0])
-        by smtp.gmail.com with ESMTPSA id k8sm10410663qkk.79.2021.02.05.12.05.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Feb 2021 12:05:53 -0800 (PST)
-Date:   Fri, 5 Feb 2021 15:05:50 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/6] Optionally restrict range-diff output to "left" or
- "right" range only
-Message-ID: <YB2lHmLxe8ArFz0v@nand.local>
-References: <pull.869.git.1612469275.gitgitgadget@gmail.com>
- <xmqqtuqr4frw.fsf@gitster.c.googlers.com>
- <YBx5rmVsg1LJhSKN@nand.local>
- <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtuqr2uz3.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=vGYYnPoEojSG5uquJsJ0BxYbISLULa9+gJdeAFFbwX8=;
+        b=YdkYbahGFvP1b0grO0uc94S/KuJr0GnR9zHbT/ipZJTm1JP2NssI5tOOGTcpYW2DrI
+         nS2jhGMGkiLQElfwcJY6XOeKxhpLOn8px6eBuM6rucn3hlpt/aen/85z5hhMAlpVY0RI
+         4NSzS2bpLjDdLZEa9ieS6lg1lA7HcYP1Z18KdsTuGgAAgFcOhScrkO5UDUJDYHi0QvRK
+         CdsRa4MHoZsxiCqSUkm/v+kyVhyTjatHhz+5NGdd1CbVy2hG+9Ob0P4QSCbMa/H1dBfK
+         Lt0vNFdj8Tf6f7iOnlbltLERKs/LX0EHsNSppamAKKLY2rsgh39NyuoCwjJygltBh3pY
+         yVGA==
+X-Gm-Message-State: AOAM5337nAv8PQocVT5jK7g9JZis4LPoGDbuzeJwK9njzPHUAFamdn0K
+        s+QxxHALowIIUdDNIg/AD3oSo7wmrnsX6M1hhNBeogYeRCcVgFonI77Mu57Al0MxlIU5Dgx3ltn
+        +t7SRTsXbFz502FnCrLnvSyYg1l5FNJIPJHSiqWn2V2Km52gjJGtoePbn0zFSPR/NNB+hky/gPR
+        2n
+X-Google-Smtp-Source: ABdhPJwcNsKa2BT5kiLj2g5MF52geSBQSacckg4RXUeCzKxvoxaZTs2a471plbjrjml1coEyt0kV2JDMtBhOmcwOlWH7
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:1865:: with SMTP id
+ 37mr5935669pgy.206.1612555752006; Fri, 05 Feb 2021 12:09:12 -0800 (PST)
+Date:   Fri,  5 Feb 2021 12:09:08 -0800
+In-Reply-To: <20210205054914.104640-1-jonathantanmy@google.com>
+Message-Id: <20210205200908.805639-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20210205054914.104640-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
+Subject: [PATCH v2] usage: trace2 BUG() invocations
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        stolee@gmail.com, gitster@pobox.com, jeffhost@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 04, 2021 at 04:56:16PM -0800, Junio C Hamano wrote:
-> > I'd add an additional use-case, which is ignoring new commits from
-> > upstream when displaying a range-diff in rerolled patch series.
-> >
-> > Oftentimes I'll find that the automatically-prepared range diff that
-> > 'git format-patch --cover-letter --range-diff' generates will include
-> > new commits from upstream, so these new options should help me ignore
-> > those in the output.
->
-> Do you mean that the new round is based on an updated upstream
-> commit, while the old series was based on a bit older upstream?
-> After rebasing your topic, "range-diff @{1}..." would find the
-> updates in the base (made in the upstream) plus the new round of
-> your work on the right hand side of the symmetric range, while the
-> left hand side solely consists of your old round (unless the
-> upstream rewound their work, which should not happen).  But that
-> must not be it, I guess, because in such a case, among the commits
-> in @{1}..HEAD, we cannot (eh, at least range-diff cannot) tell which
-> one came from upstream and which one came from our fingers.
->
-> So I am a bit puzzled there.
+die() messages are traced in trace2, but BUG() messages are not. Anyone
+tracking die() messages would have even more reason to track BUG().
+Therefore, write to trace2 when BUG() is invoked.
 
-I'm talking about a situation where a later re-roll is based of of a
-newer upstream. But your judgement is right: upstream's updates look
-like "new" commits on the right-hand side.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks everyone for your suggestions. I've used an in_bug static
+variable (which does prevent the infinite loop - I injected the bug that
+Peff described and verified that it indeed loops without the mitigation
+and doesn't loop with the mitigation) and moved the trace2 to be below
+the vreportf (necessitating a va_copy).
+---
+ t/helper/test-trace2.c   |  9 +++++++++
+ t/t0210-trace2-normal.sh | 19 +++++++++++++++++++
+ usage.c                  | 11 +++++++++++
+ 3 files changed, 39 insertions(+)
 
-I have some scripts built around this, but they all boil down to passing
-'--range-diff=@{1}' (where @{1} is the tip of the previous reroll) to
-format-patch. See:
+diff --git a/t/helper/test-trace2.c b/t/helper/test-trace2.c
+index 823f33ceff..f93633f895 100644
+--- a/t/helper/test-trace2.c
++++ b/t/helper/test-trace2.c
+@@ -198,6 +198,14 @@ static int ut_006data(int argc, const char **argv)
+ 	return 0;
+ }
+ 
++static int ut_007bug(int argc, const char **argv)
++{
++	/*
++	 * Exercise BUG() to ensure that the message is printed to trace2.
++	 */
++	BUG("the bug message");
++}
++
+ /*
+  * Usage:
+  *     test-tool trace2 <ut_name_1> <ut_usage_1>
+@@ -214,6 +222,7 @@ static struct unit_test ut_table[] = {
+ 	{ ut_004child,    "004child",  "[<child_command_line>]" },
+ 	{ ut_005exec,     "005exec",   "<git_command_args>" },
+ 	{ ut_006data,     "006data",   "[<category> <key> <value>]+" },
++	{ ut_007bug,      "007bug",    "" },
+ };
+ /* clang-format on */
+ 
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index ce7574edb1..81af180c4c 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -147,6 +147,25 @@ test_expect_success 'normal stream, error event' '
+ 	test_cmp expect actual
+ '
+ 
++# Verb 007bug
++#
++# Check that BUG writes to trace2
++
++test_expect_success 'normal stream, exit code 1' '
++	test_when_finished "rm trace.normal actual expect" &&
++	test_must_fail env GIT_TRACE2="$(pwd)/trace.normal" test-tool trace2 007bug &&
++	perl "$TEST_DIRECTORY/t0210/scrub_normal.perl" <trace.normal >actual &&
++	cat >expect <<-EOF &&
++		version $V
++		start _EXE_ trace2 007bug
++		cmd_name trace2 (trace2)
++		error the bug message
++		exit elapsed:_TIME_ code:99
++		atexit elapsed:_TIME_ code:99
++	EOF
++	test_cmp expect actual
++'
++
+ sane_unset GIT_TRACE2_BRIEF
+ 
+ # Now test without environment variables and get all Trace2 settings
+diff --git a/usage.c b/usage.c
+index 1868a24f7a..1b206de36d 100644
+--- a/usage.c
++++ b/usage.c
+@@ -266,6 +266,10 @@ int BUG_exit_code;
+ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
+ {
+ 	char prefix[256];
++	va_list params_copy;
++	static int in_bug;
++
++	va_copy(params_copy, params);
+ 
+ 	/* truncation via snprintf is OK here */
+ 	if (file)
+@@ -274,6 +278,13 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
+ 		snprintf(prefix, sizeof(prefix), "BUG: ");
+ 
+ 	vreportf(prefix, fmt, params);
++
++	if (in_bug)
++		abort();
++	in_bug = 1;
++
++	trace2_cmd_error_va(fmt, params_copy);
++
+ 	if (BUG_exit_code)
+ 		exit(BUG_exit_code);
+ 	abort();
+-- 
+2.30.0.365.g02bc693789-goog
 
-    https://github.com/ttaylorr/dotfiles/blob/work-gh/bin/git-mail#L8-L10
-
-for details.
-
-IIUC this series, I think I'd also want to start passing '--left-only'
-to ignore the new commits from upstream in a range-diff, no?
-
-Thanks,
-Taylor
