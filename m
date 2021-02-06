@@ -2,96 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6984FC433DB
-	for <git@archiver.kernel.org>; Sat,  6 Feb 2021 20:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C466C433E0
+	for <git@archiver.kernel.org>; Sat,  6 Feb 2021 22:53:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3032B64E35
-	for <git@archiver.kernel.org>; Sat,  6 Feb 2021 20:36:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54E4664E34
+	for <git@archiver.kernel.org>; Sat,  6 Feb 2021 22:53:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbhBFUgG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Feb 2021 15:36:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43178 "EHLO
+        id S229618AbhBFWxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Feb 2021 17:53:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbhBFUgF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Feb 2021 15:36:05 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59FBC06174A
-        for <git@vger.kernel.org>; Sat,  6 Feb 2021 12:35:24 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id a12so15916289lfb.1
-        for <git@vger.kernel.org>; Sat, 06 Feb 2021 12:35:24 -0800 (PST)
+        with ESMTP id S229537AbhBFWxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Feb 2021 17:53:01 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85B40C061756
+        for <git@vger.kernel.org>; Sat,  6 Feb 2021 14:52:21 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id b3so12515823wrj.5
+        for <git@vger.kernel.org>; Sat, 06 Feb 2021 14:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MD+X/Ke9HW5PRGZEiM+y/zy5wU7BmG6OMsn9TYhFBCg=;
-        b=KHVdneLamk3jEO7SqjLA9V7x24mF8Omgk6rztx2s7WJYUMkC4tkbjpV7Alc0kQIu69
-         QebYKeZltbe6KGjT+TpVJunRVQrdc53rDmquPx4wkbzqJ28u4EdygHmOLXYWaMFSq1w+
-         XS1L9yuaZK+DZHCvnC5sHYwXsNIfMNqKrrvimOPzc9kZNFncHWw0tqtjyZebvbns6eeY
-         raCj9LFItTQvgCgr6qsER7fzalcOTZOV+3LjwIy8AzdLxi1tIaZ0E/j9+O2AFbzZWNyh
-         eVByfS99Jt0b5YKREjDvnNaqxtNBPsDchbqm6V82WK7v5TeCK/5FtGEIaX5TAQRBIiWm
-         aomg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4Z3xowqJGcAVTcCt9pLILej9TBFmNpMdDHO/l+AiqLI=;
+        b=kkwlsMFnSSROu0l4a3ixbPAii/W3SB3R7aSrjXV0K+A1aekMlvrzZNvHwSNNrsSNaf
+         Ir4woqZkuiXUsqnpPkd+GWx8m28kRYSbPGhFY6W1vWXF2a2xsPWLP/XlI2+3ba0TP7kH
+         PgZMhFdy9VwA2pJ8fiEWSfhl2h1e1RhgX+E/pg8/801T5VZxyjia4sxRlCTVC8KAZtyT
+         HABbcmPC+xQ+5FO7NJOogGeJwiVO+R3lJy+NA2hXVgNH15y4JNyppJcZTOrsgpXza0jJ
+         0ZjGg+ulF73uYKcvs7KgwJHZWL0daYNcDcSeFN6+zKp2hkdpkqtN4UE+lLovZV0OMolv
+         DGkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MD+X/Ke9HW5PRGZEiM+y/zy5wU7BmG6OMsn9TYhFBCg=;
-        b=GZtRXXSn0U0YwGIfK9mWQxyeFFjck5MDXvmPtE9ow62VzM7Z8Ry/DFI4yN3kI/ZkiY
-         JlNKcZSXSVW/1yc+f01oHHMSXtFUxTgsCbkkkt5/0rAWC60Y38bUUxi73EKF9Jdsg+RF
-         d0m6KgrUdLWOQJnbIK6Zv4QoFhIa8KynMNz76yVDnwE1hG2lwjk5W5aCB6N5nlYn7dT7
-         2bJiceq63PhTcbO/h7bBErQltbhKqUYDswI1qDLJTllYS1smITrocCHChfDo8dRrY+cN
-         AHy0CgzXQBfiyGOCVnx2JBSBSZmNoEO0Su4F0YMsr17O1RJ0WqmkIUqX1pySKQ09Niz3
-         ZYBw==
-X-Gm-Message-State: AOAM5301YRE0Kf8PytznM7unnYDFsu1LV2zp0Rrbk41dOVjDwpreQi41
-        vmVyTgW8f3N+IlMO2R+I07LQLjSQpDQNXLN7+2U=
-X-Google-Smtp-Source: ABdhPJwFAV+dnHG+86KLAzgF23iS0s4X39+ywzXtjZxnbPIeb8jX5HA+inxAsIkLakUsSbAUCMGaUOym/ApJjzW4Zhc=
-X-Received: by 2002:a05:6512:398a:: with SMTP id j10mr5880642lfu.167.1612643722689;
- Sat, 06 Feb 2021 12:35:22 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4Z3xowqJGcAVTcCt9pLILej9TBFmNpMdDHO/l+AiqLI=;
+        b=CzaauW/2OCMl86jHkMe39umPxVHtYjtUUGvr0k7XwZtH1MM3AWntIpxYLH4YJ1J4uI
+         Mg1rF3gCfWs8RRS1tPkq8a/K2efRuvMEtXM6CP/mEQHxWL1Huezumkfp5n2oCfgh6Ggk
+         MhWSL+56KBNWb7Hss380Ysk6klFn2GiPqFrlORvwnGbD6KVTKKaec/GtKDIgmByhtB02
+         3oZ8YwAUGFTeC2XImggChZKNKiB5r2+I17UxI8C5/Yyy1ibk9FO0FcH/2ezrWCqwL7gv
+         Ey3p02gswmB1C5AvxCK6a2PZL2nndYP5V2AL3rsSsMnDZJDCWW06k/flFYzDmQaIYYJd
+         UPSg==
+X-Gm-Message-State: AOAM533uZwE0oJAUCoJAHZxUjepREKS0RYx2pd8ytwxNOIQKuKRnr7W3
+        xpGhgkRqsXtRcZu2M1DniZLJy8NF1CM=
+X-Google-Smtp-Source: ABdhPJwYudP8xa5+Mpttv5cv4vDtEtZTYrpXlRaDDsYDVFX+MRe+oa3TaaXP9mlSngiFoiQnZjZqFg==
+X-Received: by 2002:adf:decf:: with SMTP id i15mr12126047wrn.405.1612651940121;
+        Sat, 06 Feb 2021 14:52:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i18sm19090110wrn.29.2021.02.06.14.52.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 06 Feb 2021 14:52:19 -0800 (PST)
+Message-Id: <377a4a39fa864a09eb1d90e1addcc5d61d6b026c.1612651937.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.843.git.1612651937.gitgitgadget@gmail.com>
+References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 06 Feb 2021 22:52:15 +0000
+Subject: [PATCH 1/3] diffcore-rename: compute basenames of all source and dest
+ candidates
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
- <pull.848.v2.git.1611759716.gitgitgadget@gmail.com> <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
- <xmqq8s834c4s.fsf@gitster.c.googlers.com> <CAPx1GvcNTkXo-6rdaRc4YNGAq8AoCtwT86AEUT+A6c22erVW0g@mail.gmail.com>
- <xmqqwnvmz1pv.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqwnvmz1pv.fsf@gitster.c.googlers.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Sat, 6 Feb 2021 12:35:10 -0800
-Message-ID: <CAPx1Gvfc9ryYSLJkfej+ryZdbtOtT==EDXpFeSZCBC6=RV6U4w@mail.gmail.com>
-Subject: Re: [PATCH v2 15/17] midx: use 64-bit multiplication for chunk sizes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        szeder.dev@gmail.com, Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 5, 2021 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Chris Torek <chris.torek@gmail.com> writes:
-> > There are (still) systems with 32-bit size_t (but 64-bit
-> > off_t / file sizes), so ... probably not.  Is size_t ever more than
-> > 64 bits these days?
->
-> Sorry, you lost me.  I do not see how it would help to perform the
-> multiplication in uint64_t, when you suspect that size_t is too
-> small, if the final destination of the result of the multiplication
-> is a function argument of type size_t?
+From: Elijah Newren <newren@gmail.com>
 
-No, you and Derrick Stolee are right, I wasn't looking out far enough
-here (to the actual function).
+We want to make use of unique basenames to help inform rename detection,
+so that more likely pairings can be checked first.  Add a new function,
+not yet used, which creates a map of the unique basenames within
+rename_src and another within rename_dst, together with the indices
+within rename_src/rename_dst where those basenames show up.  Non-unique
+basenames still show up in the map, but have an invalid index (-1).
 
-(I was wondering though if there are systems where the valid range
-for size_t could exceed that for off_t.  Are there still systems
-using 32-bit off_t?  Sometimes I think there are too many abstracted
-types running around here -- how do we know which sizes are big
-enough?  There is always uintmax_t, though, and for unsigned
-types, ((T)-1) gets you the maximum possible value.)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ diffcore-rename.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-Chris
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 74930716e70d..1c52077b04e5 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -367,6 +367,59 @@ static int find_exact_renames(struct diff_options *options)
+ 	return renames;
+ }
+ 
++MAYBE_UNUSED
++static int find_basename_matches(struct diff_options *options,
++				 int minimum_score,
++				 int num_src)
++{
++	int i;
++	struct strintmap sources;
++	struct strintmap dests;
++
++	/* Create maps of basename -> fullname(s) for sources and dests */
++	strintmap_init_with_options(&sources, -1, NULL, 0);
++	strintmap_init_with_options(&dests, -1, NULL, 0);
++	for (i = 0; i < num_src; ++i) {
++		char *filename = rename_src[i].p->one->path;
++		char *base;
++
++		/* exact renames removed in remove_unneeded_paths_from_src() */
++		assert(!rename_src[i].p->one->rename_used);
++
++		base = strrchr(filename, '/');
++		base = (base ? base+1 : filename);
++
++		/* Record index within rename_src (i) if basename is unique */
++		if (strintmap_contains(&sources, base))
++			strintmap_set(&sources, base, -1);
++		else
++			strintmap_set(&sources, base, i);
++	}
++	for (i = 0; i < rename_dst_nr; ++i) {
++		char *filename = rename_dst[i].p->two->path;
++		char *base;
++
++		if (rename_dst[i].is_rename)
++			continue; /* involved in exact match already. */
++
++		base = strrchr(filename, '/');
++		base = (base ? base+1 : filename);
++
++		/* Record index within rename_dst (i) if basename is unique */
++		if (strintmap_contains(&dests, base))
++			strintmap_set(&dests, base, -1);
++		else
++			strintmap_set(&dests, base, i);
++	}
++
++	/* TODO: Make use of basenames source and destination basenames */
++
++	strintmap_clear(&sources);
++	strintmap_clear(&dests);
++
++	return 0;
++}
++
+ #define NUM_CANDIDATE_PER_DST 4
+ static void record_if_better(struct diff_score m[], struct diff_score *o)
+ {
+-- 
+gitgitgadget
+
