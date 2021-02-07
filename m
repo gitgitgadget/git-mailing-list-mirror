@@ -2,111 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B364DC433DB
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 17:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14482C433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:13:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86C4664DF2
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 17:37:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDACF64D9A
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbhBGRhE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 12:37:04 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43274 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229491AbhBGRhE (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 7 Feb 2021 12:37:04 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S229537AbhBGSNU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 13:13:20 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58183 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229445AbhBGSNT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 13:13:19 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EF74F11300B;
+        Sun,  7 Feb 2021 13:12:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=g5LfHO6Lxhrh4PMIBmjyDfOLM2s=; b=P1wvMp
+        c0hVXgj8Eh572qunGr1ydaKbMbSEQrT6oLWChC+Hxaw0Z7pGsgMh5woKoMunOYbn
+        mUD84wY2vBNY0aFEectHtu2DImT7xsAt0YeZtLuWb6tZeY6n9L8OK+FqHhTU4yad
+        M2ftOB77DF2EVmCGT8iQEkPabuSGUGorX6K/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BslU3WxwcIM25BVPVX5kwmCEeTHQM2Qy
+        9KDd8hb3mZAofbpL/3YqiyQR1ehgU8B8proYfA1BcQycagB5hy63vMIuj8iB9uHi
+        Tm95IBXvpofDhXkAIced+bIxVA0OJP2PbpepY4ynU1pdpaCaGxNCKk4N8XKXjROH
+        xAiukCT8qT4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E81BB11300A;
+        Sun,  7 Feb 2021 13:12:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A183660B19;
-        Sun,  7 Feb 2021 17:35:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1612719352;
-        bh=3wNN0wdK/F0FdpDVbcaZ+CRxkSDX86ldHbm9JOMLumI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=kiCIK0uvru09FK4dshIJQr6oikHvpF/hc5CPM5hnwIFWRI/tPoK5h62UzrCPxMpZn
-         +GjsmWxyyomJ1w+NDNnIYq8N1UU/sGuhMk7S92DCAPk3CszEAR82WUmRPt+ka8/TuT
-         Mkr+yPppfXB6ueNu/G5pimPQr6v4UafwGEvSluHaAskiNxmQ9TzTbIcfzA2ciiLK82
-         v+mBbOTudKUVn89P7ieeUjCcYWJoq0Cago9Rf91R/uddWf82jV5IcUNtHIYkUfKuRy
-         qvm/V0KBokvVM8X1lQQtwO6obcTivsbxrls7zKwiH7H7oLb++rzOfbBmqLBXO7ZJgE
-         CbqBK78GxiCVIkOlKCuDv0SiOSiGTlLuAPDwy7lrcjqU7mdHjeoO12SRJHV/0VO5b9
-         Fj59jwaJ/G7rkqokLlj+XxOxJcY1B7ertdPw7AcUnZ6f5QIUSyY7VlTQ2QVNeZKhDM
-         7wXdIF82iGLHcxr4vIBhTRTtNTwgdOK09b4unObYY8rp210Q5YX
-Date:   Sun, 7 Feb 2021 17:35:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     M Douglas McIlroy <m.douglas.mcilroy@dartmouth.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: default editor
-Message-ID: <YCAk8Zx8KvZhaJMx@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        M Douglas McIlroy <m.douglas.mcilroy@dartmouth.edu>,
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3E845113009;
+        Sun,  7 Feb 2021 13:12:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     M Douglas McIlroy <m.douglas.mcilroy@dartmouth.edu>,
         git@vger.kernel.org
+Subject: Re: default editor
 References: <CAKH6PiWS5DvqctFnvZ+uyOzBs75hcy9HzbW_3gUCu+RE+oOYyw@mail.gmail.com>
+        <YCAk8Zx8KvZhaJMx@camp.crustytoothpaste.net>
+Date:   Sun, 07 Feb 2021 10:12:33 -0800
+In-Reply-To: <YCAk8Zx8KvZhaJMx@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Sun, 7 Feb 2021 17:35:45 +0000")
+Message-ID: <xmqqlfbz927i.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bGVN7WjdKoFKeyVn"
-Content-Disposition: inline
-In-Reply-To: <CAKH6PiWS5DvqctFnvZ+uyOzBs75hcy9HzbW_3gUCu+RE+oOYyw@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0DBD8962-6970-11EB-A23E-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---bGVN7WjdKoFKeyVn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> First of all, I don't use Windows and this sounds like a
+> Windows-specific problem, so you may have more help at the Git for
+> Windows issue tracker.  But I'll try to help anyway.
 
-On 2021-02-07 at 13:24:07, M Douglas McIlroy wrote:
-> While downloading git, I was asked to name a default editor, which I
-> did: ed. from cygwin. It worked in the enuing test, but was rejected
-> because it returned an error. I suppose this is because
-> cygwin return  conventions are those of Unix, not Windows. That raises
-> the question: does it matter? Does any other part of git depend on the
-> editor's return value?
+I don't do Windows, either ;-)
 
-First of all, I don't use Windows and this sounds like a
-Windows-specific problem, so you may have more help at the Git for
-Windows issue tracker.  But I'll try to help anyway.
+> I don't think the return value is the problem.  Both Unix and Windows
+> return 0 on success and nonzero on error, and Git will interpret
+> editor return codes that way.
 
-At the command line, what does "git var GIT_EDITOR" print?  Is it
-"/usr/bin/ed" or the like?  Or is it something like "/c/..."?  Also,
-what is the exact error message you receive from trying to run your
-command (copy and paste)?
+When git spawns an editor, it is asking the editor to give the text
+file that has been edited by the end user into a shape that the end
+user is happy with.  A non-zero exit is a way for the end user to
+tell the editor (and hence git) that, even though the user has ended
+the editor session, the resulting contents is not satisfactory and
+not to be used.
 
-The reason I ask is that Git for Windows ships with a POSIX-like
-environment called MSYS, and as such, Unix-style paths are interpreted
-according to that.  So to specify a path for Cygwin, you'd need to
-specify it as a Unix-style path under /c (or /d, or whatever drive) so
-that it could be invoked as a normal Windows program and not something
-relative to the MSYS environment.  However, the path is handed off to
-the shell, so it needs to be in a form that uses slashes.
+If the 'ed' in question behaves the same as traditional UNIX 'ed' (I
+am guessing so, as even this is on Windows, Cygwin was mentioned),
+you can start making changes and attempt to quit without saving by
+typing 'q<RET>' twice (the first one will be greeted with '?'
+meaning "are you sure you want to quit without saving", and the
+second one lets you quit).  'ed' will signal the calling environment
+that the editor session was aborted by exiting with a non-zero
+status.
 
-I don't think the return value is the problem.  Both Unix and Windows
-return 0 on success and nonzero on error, and Git will interpret
-editor return codes that way.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---bGVN7WjdKoFKeyVn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYCAk8QAKCRB8DEliiIei
-gQ43AP9NeBAH37WcI57GV+zxiuYpmTPNsj9rigYaE7JSj01pvAEA6Smay7NfojuT
-g5LDRhuEyaPajto0EFtO2QCRPye+6QA=
-=KS7x
------END PGP SIGNATURE-----
-
---bGVN7WjdKoFKeyVn--
