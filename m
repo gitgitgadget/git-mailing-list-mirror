@@ -2,111 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F967C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 20:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16D88C433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 20:21:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DD6B64DFF
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 20:13:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB0B064E35
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 20:21:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229565AbhBGUNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 15:13:01 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60072 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhBGUM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 15:12:59 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E7CD113B2E;
-        Sun,  7 Feb 2021 15:12:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vNtL+jzt9w7L
-        YWAXukJZMR4C3OI=; b=W1SIKVwcHpvujFUx/iuoTypFOOlCh2xAPJDvrOntdixC
-        YXg0VKQutftD7jkZk1Iyn0CBQNz1J6Az3NzlP/X3QrgeT9U5lSgK5RhOih9GRVdb
-        VHO8xWM0EEfLWtPT2h7412NiXqZB/pXIOT39qkUOyQgK3safLG0bQKlPfJseafs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Rq6r3T
-        7FcFrA9lJJjIzaD20CE57xk6fYkoSi/jPSFUTmwS8TqYz90ytJN0iniaoQhGx6Ja
-        cpyqyr70SWrkHF90dFYeIEzRjV7h/APgr58VaJlinO2ps0tnkoOl9y0S0ArNnVva
-        8obs9gtuTFF3s51CucQVKXmyjK6xeD7jiJCyg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 76D64113B2D;
-        Sun,  7 Feb 2021 15:12:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BAE9F113B29;
-        Sun,  7 Feb 2021 15:12:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
-        abhishekkumar8222@gmail.com, Taylor Blau <ttaylorr@github.com>,
+        id S229615AbhBGUV0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 15:21:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229445AbhBGUVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 15:21:25 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 263C6C061756
+        for <git@vger.kernel.org>; Sun,  7 Feb 2021 12:20:45 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id s11so15808473edd.5
+        for <git@vger.kernel.org>; Sun, 07 Feb 2021 12:20:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wb8rDdeinMSHdr3hHoFmcwnvVW9lrA9qVVpN4tanSq4=;
+        b=MQHvsAtjmILUEE25lMohyN+EPAFAuhgqC35SnGagDOtGGwmnPTQAIg4TjI1pul3o+i
+         AZWUAIKqzIt1IwFVuM0J4nZwT+RrMbDW+qnxiMmPOwpIRx1WmNaORuJpHwAA7Bc0rwii
+         phAfGnYW84r43aQ5B5pQjpNH0bLCiZmusoPJqlbW1WJVsHYAWf7fviyhsSiVpQg4oUCl
+         9TesrniMxzbwEdd5bllmtUxuc76T3n8iS8uByb7SDAMCiT+/p6k4N4NBjt6Z3vs0+C0d
+         HVlTV93XTe6Qzkb6eRsS+uYwT6JLYFjXTMhCbxd40/6BA7QdxHMdFSoyzTvl4wTQSG1h
+         iaeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wb8rDdeinMSHdr3hHoFmcwnvVW9lrA9qVVpN4tanSq4=;
+        b=EXdjnIiTWRecPm/RJNllZWVbAqpAGVKaL5PVtzINh5Ohh3pK8LiWxokxutAZtAt68Y
+         n4DkQ2YhjTsUwyAO4UPRNN75BladRTqtjGnwgSfBeBuVy4IOBk5DlglQSp+MKxYR+hXr
+         A6Gvm4FBBiGaFnnD3lFdJ/BdbexTq5gFox4Mou1lWlGxBGJc0xkCV2gLP9eBwbSDgnWa
+         y0b3er1P0Mh9ovdsjAE1MKysfTsVEQIwjofYxpIxhhULRpKLTVClzODHtMNSFloQJezN
+         GS3D6bneMzdYWDXhoekSfVWac1xlzj1DLMPww+B30BDB/4OHBFgimESITNkjoZ27IOjD
+         xagA==
+X-Gm-Message-State: AOAM530IPtYT/SHw9ojPnyrEu2Sl3XCW+BvnxBwfuhpkTi5hhOjtcFC+
+        Fn4WLjarr0MGTbuvAS0gJ+M=
+X-Google-Smtp-Source: ABdhPJwRhuTouWh14XUBCvS/NrnHYp12LE8jy60tHZjwwkwpoUazf4fk5mXJUT01m7DzX9pwm2C5cg==
+X-Received: by 2002:a05:6402:50ce:: with SMTP id h14mr13955950edb.283.1612729243934;
+        Sun, 07 Feb 2021 12:20:43 -0800 (PST)
+Received: from szeder.dev (62-165-236-114.pool.digikabel.hu. [62.165.236.114])
+        by smtp.gmail.com with ESMTPSA id 94sm6293285edq.91.2021.02.07.12.20.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Feb 2021 12:20:43 -0800 (PST)
+Date:   Sun, 7 Feb 2021 21:20:42 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        l.s.r@web.de, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
- commit_graph_data_at()
-References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
-        <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
-        <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
-        <YBn3fxFe978Up5Ly@google.com>
-        <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
-        <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
-        <20210207190415.GB1015009@szeder.dev>
-Date:   Sun, 07 Feb 2021 12:12:13 -0800
-In-Reply-To: <20210207190415.GB1015009@szeder.dev> ("SZEDER =?utf-8?Q?G?=
- =?utf-8?Q?=C3=A1bor=22's?= message
-        of "Sun, 7 Feb 2021 20:04:15 +0100")
-Message-ID: <xmqqh7mn7i3m.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+Subject: Re: [PATCH v3 12/17] chunk-format: create read chunk API
+Message-ID: <20210207202042.GC1015009@szeder.dev>
+References: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+ <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+ <366eb2afee839feccdfd2244b231d2ad718c76d4.1612535453.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C5106750-6980-11EB-83E9-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <366eb2afee839feccdfd2244b231d2ad718c76d4.1612535453.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Fri, Feb 05, 2021 at 02:30:47PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> Add the capability to read the table of contents, then pair the chunks
+> with necessary logic using read_chunk_fn pointers. Callers will be added
+> in future changes, but the typical outline will be:
+> 
+>  1. initialize a 'struct chunkfile' with init_chunkfile(NULL).
+>  2. call read_table_of_contents().
 
-> On Tue, Feb 02, 2021 at 06:06:51PM -0800, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->>=20
->> >> - what is the recommended way to recover from this state?  "git fsc=
-k"
->> >>   shows the repositories to have no problems.  "git help commit-gra=
-ph"
->> >>   doesn't show a command for users to use; is
->> >>   `rm -fr .git/objects/info/commit-graphs/` the recommended recover=
-y
->> >>   command?
->>=20
->> "rm -f .git/objects/info/commit-graph" as well, no?
->>=20
->> > That, followed by `git commit-graph write --reachable [--changed-pat=
-hs]`
->> > depending on what they want.
->>=20
->> Just out of curiosity, how important is "--reachable"?  It only
->> traverses from the tips of refs and unlike fsck and repack, not from
->> reflog entries (or the index for that matter, but that shouldn't
->> make much difference as there is no _commit_ in the index).
->
-> Scanning all objects in all packfiles is a very inefficient way to
-> find the commits to be recorded in the commit-graph, and depending on
-> the repository's shape and size can have several times higher runtime
-> and memory footprint.
+A reader should call read_table_of_contents(), noted.
 
-But wouldn't it make the resulting graph file not very useful for
-the purpose of say deciding what object to pack when running "gc" or
-"repack" or "prune"?  The fact that it ignores the index and the reflog
-entries as roots of traversal with "--reachable" bothers me.
+>  3. for each chunk to parse,
+>     a. call pair_chunk() to assign a pointer with the chunk position, or
+>     b. call read_chunk() to run a callback on the chunk start and size.
+>  4. call free_chunkfile() to clear the 'struct chunkfile' data.
+
+How could a user of this API learn about all chunks present in the
+chunkfile, including unrecognized chunks?
+
+> We are re-using the anonymous 'struct chunkfile' data, as it is internal
+> to the chunk-format API. This gives it essentially two modes: write and
+> read. If the same struct instance was used for both reads and writes,
+> then there would be failures.
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+
+> diff --git a/chunk-format.h b/chunk-format.h
+> index 9a1d770accec..0edcc57db4e7 100644
+> --- a/chunk-format.h
+> +++ b/chunk-format.h
+> @@ -6,6 +6,19 @@
+>  struct hashfile;
+>  struct chunkfile;
+>  
+> +/*
+> + * Initialize a 'struct chunkfile' for writing _or_ reading a file
+> + * with the chunk format.
+> + *
+> + * If writing a file, supply a non-NULL 'struct hashfile *' that will
+> + * be used to write.
+> + *
+> + * If reading a file, then supply the memory-mapped data to the
+> + * pair_chunk() or read_chunk() methods, as appropriate.
+
+And call read_table_of_contents() in between.
+
+> + *
+> + * DO NOT MIX THESE MODES. Use different 'struct chunkfile' instances
+> + * for reading and writing.
+> + */
+>  struct chunkfile *init_chunkfile(struct hashfile *f);
+>  void free_chunkfile(struct chunkfile *cf);
+>  int get_num_chunks(struct chunkfile *cf);
+> @@ -16,4 +29,37 @@ void add_chunk(struct chunkfile *cf,
+>  	       chunk_write_fn fn);
+>  int write_chunkfile(struct chunkfile *cf, void *data);
+>  
+> +int read_table_of_contents(struct chunkfile *cf,
+> +			   const unsigned char *mfile,
+> +			   size_t mfile_size,
+> +			   uint64_t toc_offset,
+> +			   int toc_length);
+> +
+> +#define CHUNK_NOT_FOUND (-2)
+> +
+> +/*
+> + * Find 'chunk_id' in the given chunkfile and assign the
+> + * given pointer to the position in the mmap'd file where
+> + * that chunk begins.
+> + *
+> + * Returns CHUNK_NOT_FOUND if the chunk does not exist.
+> + */
+> +int pair_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       const unsigned char **p);
+> +
+> +typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
+> +			     size_t chunk_size, void *data);
+> +/*
+> + * Find 'chunk_id' in the given chunkfile and call the
+> + * given chunk_read_fn method with the information for
+> + * that chunk.
+> + *
+> + * Returns CHUNK_NOT_FOUND if the chunk does not exist.
+> + */
+> +int read_chunk(struct chunkfile *cf,
+> +	       uint32_t chunk_id,
+> +	       chunk_read_fn fn,
+> +	       void *data);
+> +
+>  #endif
+> -- 
+> gitgitgadget
+> 
