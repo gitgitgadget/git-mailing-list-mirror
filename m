@@ -2,161 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 500B5C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 12:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A49C433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 12:56:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1999964DF2
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 12:08:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C791D64E32
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 12:56:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229562AbhBGMHj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 07:07:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43516 "EHLO
+        id S229590AbhBGM4b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 07:56:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229548AbhBGMHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 07:07:38 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4EC7C06174A
-        for <git@vger.kernel.org>; Sun,  7 Feb 2021 04:06:57 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id q4so2796560ood.8
-        for <git@vger.kernel.org>; Sun, 07 Feb 2021 04:06:57 -0800 (PST)
+        with ESMTP id S229510AbhBGM4a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 07:56:30 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41CABC06174A
+        for <git@vger.kernel.org>; Sun,  7 Feb 2021 04:55:50 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id j25so12878480oii.0
+        for <git@vger.kernel.org>; Sun, 07 Feb 2021 04:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9H17jD1TXcN/GlD53Vi34r86bi5kpF/odTMDZLtZo6E=;
-        b=l/u1Y7I0BmKbfcIaqMr9wnw7VrZ0cWYO/pCGqgFIHd7ZdBp0ZzrHq9N3Nk2MUx8E56
-         JWnPVyVLPEVaD6QtzYb0lkUrx/X9cV4OJmeOFSFcpUDLM3r92TAKN7SyFoEIVZa86beZ
-         4oZC3J6DcFyNKgmX6FhD1ZdRL2ccofOn5w+IqW//NMPEcr7xGxi+LRe2o6JnYcYNFkje
-         rr8I6cz6nspTJL/XTvojeFdRftlnz1VvN7qpQJ1L71GPe6ZvJ2JvbTz/hZP0UOVqrZep
-         kNni6sDCvaN3q1AjSRJ8K2GWPIuDFFIRntdTnc59cVIlci9o+7+vRAxmeYuuuTwyxObb
-         dKWA==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=aF2jFHA6HhXAsnYyW6jL2+tqCLVvWQOnAbw4EJ0C2XY=;
+        b=jpPJWA6Z6HuxcOS6KvKj1Ctt3rmTV6MIHNmF/eQ0Mbl5NUpeMtLUBzlpemV78YORyG
+         wsRXRje9bzWq/1eUefh/dQlq3gOwmVAiPXQ4tkMXek6K8RiencXEG+nkTlwRXNb+bJJ/
+         HzJYwnw3O+0asoXvvG3a3JgxHW06FY6LcvxDzn7z7GY5ak7c93sfICQ5a7/DTfjeTiTA
+         VS8AyP6mp/oUluUY266GtfaafaQzaKEfQR22SMHa1DHsHySW+YM35SFBer72VcXSC6rR
+         N45TRg6DYwfktHPhZnT89aocV4t0oG3qrWGaY2feQvkKStkF8RWaHoqgps7yqXK6j6hW
+         Tncw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9H17jD1TXcN/GlD53Vi34r86bi5kpF/odTMDZLtZo6E=;
-        b=pjHn21O7KNiOkL75sPmvqL1sjFv6er70Bp/qTFWy3WLMQFulXvywU0Lm3Ng76xn5f/
-         RK3BrJBXrEgdoDT4GOoFzwD9Aw18+cWylN4RLAuBlKvRBbYpPiq9NLLpquySskDGe3Ki
-         SoH6TM94fm2i4+SfDcdyCCTOvkKNW+K3v0dATbgSqia/klRai2tbc7sNqgGAqKOadLdv
-         +uDVSdGvdQLBmxJHhNfR6qoz+O79iPICZBKdN6+gNQfcDud9ahkv/2XTpWmtjQQN3ip2
-         IMw3L1GnjwyjeElqAH75Zo7ugkcjTxxm5230DF8lxZzvBasAZJgrjF1vyesDVCpYkEzQ
-         O1tg==
-X-Gm-Message-State: AOAM530TIc0TfbnUyCsV9e5BNY44nvjWrhVEuoARAnYqerovk3oAtN3v
-        ngl2ckHvnbmcKvsxUYRe5YFZZI1w7GyD2CRIerg=
-X-Google-Smtp-Source: ABdhPJyXHLrg67zmKrFrSaZ55+vFmXyEe+tCdqBDMakyVq040VwAwB+kOe3IH1+xJC9LViiCNzGwal6F6wHZIyt/+cs=
-X-Received: by 2002:a4a:decb:: with SMTP id w11mr9359559oou.32.1612699616800;
- Sun, 07 Feb 2021 04:06:56 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=aF2jFHA6HhXAsnYyW6jL2+tqCLVvWQOnAbw4EJ0C2XY=;
+        b=nfztDNBrfpoj/YZxWcq7tsItYCdGDLkkcLM1Z9RlM/inSWT52U4fbVJENVxqZ6dUQo
+         leBIJWA1+QgBnOTlS8ORNZX3DmeI/0Qpgo+ZD3GW8PTqhkVWJ4ZULMYdkd4f0GRUeBaC
+         DtTTl2kzlnPFiIuxF7bqouUYag8M4xl6I/wY63aIj0X2tSyxhbXB51Czr4+tbF8nhehJ
+         MYP2UVjYD/XtieMi0uaTIZbui1pwLbGaTF1ADJRjLYAiC+GI2JAX8Q7WHwsMgJb2SF/0
+         8SgknQ6cQbtR1gNFbST3WDf+WfNBHhyhbZUp6+9eZCQLjvYXE23ym5Z868cTFfxiHX57
+         si8w==
+X-Gm-Message-State: AOAM532jT7Nq/X4o018L1MIrzIMy/RYrRQ69TgFGasL4Ax6Ba6AS10Yf
+        Ey5yclN3x7tU+7g+fbGKxLpWiPbCWiwuh7fga3M=
+X-Google-Smtp-Source: ABdhPJxjE7SpPJVcOcI6cNzMvFm6UrTt6yJXAYRpVedHwt6JIdNWcB0lTYQ6SLP/CS+B6mDqywlWvb2CPNp/g09Spl0=
+X-Received: by 2002:aca:52d1:: with SMTP id g200mr8712909oib.44.1612702549598;
+ Sun, 07 Feb 2021 04:55:49 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.726.v2.git.1611954543.gitgitgadget@gmail.com>
- <pull.726.v3.git.1612602945.gitgitgadget@gmail.com> <47d89f872314cad6dc6010ff3c8ade43a70bc540.1612602945.git.gitgitgadget@gmail.com>
- <xmqqpn1c8m7u.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqpn1c8m7u.fsf@gitster.c.googlers.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Sun, 7 Feb 2021 17:36:45 +0530
-Message-ID: <CA+CkUQ9-OCiEkMDRTpyF3rp-g1mSSzn4s9MgqJZ2BJY=XJCoEw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] ref-filter: use pretty.c logic for trailers
+From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
+Date:   Sun, 7 Feb 2021 20:57:56 +0800
+Message-ID: <CAOLTT8S1xMS+MMiSbQNqpw+BVtu6V-TBSOCrWjJv-6pT4h5g1Q@mail.gmail.com>
+Subject: Re: Specify resume point with git difftool?
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, rtzoeller@rtzoeller.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi,Junio,
 
-On Sun, Feb 7, 2021 at 11:15 AM Junio C Hamano <gitster@pobox.com> wrote:
+I try to reslove this issue,but there may be a little change
+in my approach:
+
+>  - At the beginning, see if $GIT_DIR/difftool-skip-to file exists.
 >
-> "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>    - If exists, read its contents.
 >
-> > +test_trailer_option() {
-> > +     title="$1"
-> > +     option="$2"
-> > +     expect="$3"
-> > +     test_expect_success "$title" '
-> > +             printf "$expect\n" >expect &&
-> > +             git for-each-ref --format="%($option)" refs/heads/main >actual &&
-> > +             test_cmp expect actual &&
-> > +             git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
-> > +             test_cmp expect actual
-> > +     '
-> > +}
-> > +
-> > +test_trailer_option '%(trailers:key=foo) shows that trailer' \
-> > +     'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>\n'
+Which have been read now we called it "SAVE_POINT_NUM".
+
+And then,divided into two situations:
+If the index of the file($GIT_DIFF_PATH_COUNTER)we are
+viewing is 1,if $SAVE_POINT_NUM larger than
+$GIT_DIFF_PATH_COUNTER, ask users if they
+want to skip to last time save point $SAVE_POINT_NUM:
+if the answer is no,we continue show difftool of first file;
+if the answer is yes,we `return`.
+If the index of the file we are viewing is large than 1,we just check the
+if $SAVE_POINT_NUM large than $GIT_DIFF_PATH_COUNTER,if true,
+`return` ;if false,we continue show difftool of files.
+
+And everytime before we view the diff,we save the
+$GIT_DIFF_PATH_COUNTER to $GIT_DIR/difftool-skip-to.
+
+>    - Remove that file (we are at the 15th path and done skipping).
+finally,when success viewed last file diff,we delete the
+`$GIT_DIR/difftool-skip-to`.
 >
-> This is *not* an issue about the test script and its helper
-> function, but I just noticed that --format="%(trailers:key=<key>)"
-> is expected to write the matching trailers *AND* an empty line, and
-> I wonder if that is a sensible thing to expect.
+>  - Update the "Viewing .../ Launch?" prompt and offer another choice
+>    "Skip to?".
 >
-> The "--pretty" side does not give such an extra blank line after the
-> output, though.
->
->  $ git show -s --pretty=format:"%(trailers:key=Signed-off-by:)" \
->    js/range-diff-wo-dotdot
->  Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->  Signed-off-by: Junio C Hamano <gitster@pobox.com>
->  $ git show -s --pretty=format:"%(trailers:key=None:)" \
->    js/range-diff-wo-dotdot
->  $ exit
->
-> Unlike the above, when there is no matching trailer lines, the
-> "for-each-ref" in this series shows zero lines, and when there is
-> one matching trailer line, it gives that single line plus an empty
-> line, two lines in total.  The inconsistency is a bit disturbing.
->
-> Is the extra blank line given on purpose?  I don't see why we would
-> want it.  Or is it a bug we did not catch during the previous two
-> rounds of reviews?
+>  - Update the if/then/fi statement that processes the answer to the
+>    prompt (right now, it takes n as a sign to skip the file).  When
+>    the user says "skip to 15th", create $GIT_DIR/difftool-skip-to
+>    file and record "15" in it and 'return'.
+When we were at an index in the middle, I didn't think there was any
+good way to go back to the previous index, so I didn't deal with random jumping.
 
-I don't think that "extra blank line" is due to this patch series.
-Wait. Let me see.
+After all, this question focuses on the save point of the last exit.
 
-Since "for-each-ref"'s original code does not support
-"trailers:key=<KEY>", Let's check original code for "trailers:only":
-```
-  $ git for-each-ref refs/heads/master --format="%(trailers:only)"
-  Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I have a question: If the user has two different `git difftool`
+(e.g. first time user call `git difftool HEAD~` and exits midway,
+second time call `git difftool HEAD~2`, the "GIT_DIR/difftool-skip-to "
+still exists), I did not do the consistency check for the two.
 
-  $ exit
-```
-I see. The original code also gives an extra blank line.
+But this is not a big hindrance, because the user can choose not to
+skip before viewing the first file.
 
-Now, let's check for this patch series:
-```
-  $ ./bin-wrappers/git for-each-ref refs/heads/master
---format="%(trailers:key=Signed-off-by)"
-  Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-  $ ./bin-wrappers/git for-each-ref refs/heads/master
---format="%(trailers:key=None)"
-
-  $ exit
-```
-when there is no matching trailer lines, the "for-each-ref" in this
-series shows one empty line, and when there is one matching trailer
-line, it gives that single line plus an empty line, two lines in
-total. Seems consistent to me.
-
-So this isn't about the patch series. Question still remains the same.
-Why extra blank line?
-Let's dig a bit.
-Ah. I guess I found the reason. It's due to `putchar('\n');` in
-`show_ref_array_item() [1]`. It puts a new line after each ref item.
-
-Do you want me to include a patch to get rid of this "extra blank
-line" for trailers in "for-each-ref"?
-
-Thanks,
-Hariom.
-
-[1]: https://github.com/git/git/blob/fb7fa4a1fd273f22efcafdd13c7f897814fd1eb9/ref-filter.c#L2435
+My patch will send soon.
+If there are errors or omissions in my thinking,please tell me,thanks.
