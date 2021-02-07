@@ -6,69 +6,74 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8E2C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D04C433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:55:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 672A764DF6
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:50:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9379064DF8
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:55:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbhBGSuu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 13:50:50 -0500
-Received: from mail-ej1-f45.google.com ([209.85.218.45]:43609 "EHLO
+        id S229651AbhBGSzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 13:55:37 -0500
+Received: from mail-ej1-f45.google.com ([209.85.218.45]:40773 "EHLO
         mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbhBGSuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 13:50:40 -0500
-Received: by mail-ej1-f45.google.com with SMTP id y9so21190198ejp.10
-        for <git@vger.kernel.org>; Sun, 07 Feb 2021 10:50:24 -0800 (PST)
+        with ESMTP id S229623AbhBGSzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 13:55:36 -0500
+Received: by mail-ej1-f45.google.com with SMTP id i8so21215678ejc.7
+        for <git@vger.kernel.org>; Sun, 07 Feb 2021 10:55:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Fj+iOQEr0Oh8naTEH/Q60jYOf+jyRQLZvYo4EfA5+YM=;
-        b=SRIcvPHrVI+ga0C89qWdYQuBLV7pQi4ylY8ychnymBUv92xs1wW6pfYzoYDDDGo+Yp
-         7Mnzg19RF16RpkAQeoSn28EuPNDm0m0IrFPq0hfw2KVMXhn7ntd7Fq7kdLOXMRE+OTFf
-         POGqTkqaqO1ZKFOU+Uz51Jp6Ywr+Arg/OBStKyx/oWIxB9T6eJMKUtytHRSRLAeDzwTk
-         VtZ6soPi/5z5gdNOBPFSgOjJMr1naWe0edVBOsVsLwm7VLwquhSCMhZ4DRLxEa15hCAh
-         6wEegZ0CC1sroinosq2pH9a0A3VCzO39nInNbNtPSLVJm1CKSkQUFY8ZKnzojhikEFKw
-         ksSQ==
-X-Gm-Message-State: AOAM530gb/G4S1Ks9YKZyFPjtJ1ShKFqPf+lggO/FCCd7ZNk3+G0iY3l
-        UEQNbGyYCUjDjQQIGTeit6XZheFRjXX5BAHjZQ4=
-X-Google-Smtp-Source: ABdhPJzYL8Mv3f2L4hwv3NjBd+SSxrLUsgj39+a7knYE37nhH6eqfJpYlZ0AenKOBpo54/rySbmbvT0Av2J0wu+PaRw=
-X-Received: by 2002:a17:906:a1c2:: with SMTP id bx2mr14081114ejb.138.1612723798472;
- Sun, 07 Feb 2021 10:49:58 -0800 (PST)
+        bh=5Cjb/jGnySicDRuup1vvx13pOARIil0skEO3alLl0Ug=;
+        b=HpybTSnUlxKFIPwc6FBenLLFFF0E3zRzl2W2nDnBX8AV2GbK/YI4jGvhuOfxfOkIIi
+         DKQwkoOFMw0bhire2kj+3u7R16MlDaVeKlb2hT70j3IjZmvrxXSlcMPtEgTZ7oNrih3S
+         ZkZXzR83KaRxoF1H1kvujjHxX/ChhNX0JBtrQOsmEfoEIByQGb3PsvUyJFs92/K6jrb3
+         U8kqVE86VRpPpmr9GDdL7aRpzgAUkPu1TrQunnuWz/nR7LZklTQkvLIFFx2GoBE6oFBw
+         7w7+Fy4NELHrSrC3rPJBChxbtvleJtsq1jXs5uVZEpT2Pc94ndMOJgQS9ngn/JEmSovM
+         g1zA==
+X-Gm-Message-State: AOAM5338aCJzCUh/3cQrfDn0M4ppy4H8uoT05YsqXSNb1Z0stwE30EGk
+        GO91dDAUoXhoQvPrWBht8Z3NKMxSwfaMTYFQWxk=
+X-Google-Smtp-Source: ABdhPJyqZnXNjMDSiUkgO6UnVCNBTy22VxrvgnHwx1AOSx7Psf61HPQzqftX9zN/5WgaSqm4xipR6agjia6T4CFjGv4=
+X-Received: by 2002:a17:906:a1c2:: with SMTP id bx2mr14093498ejb.138.1612724094920;
+ Sun, 07 Feb 2021 10:54:54 -0800 (PST)
 MIME-Version: 1.0
-References: <20210207181439.1178-1-charvi077@gmail.com> <20210207181439.1178-4-charvi077@gmail.com>
-In-Reply-To: <20210207181439.1178-4-charvi077@gmail.com>
+References: <20210207181439.1178-1-charvi077@gmail.com> <20210207181439.1178-6-charvi077@gmail.com>
+In-Reply-To: <20210207181439.1178-6-charvi077@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 7 Feb 2021 13:49:47 -0500
-Message-ID: <CAPig+cS-QK7dZ63NfEY8S2z+wveY43dHkQWV3krNDP_dYSfyJw@mail.gmail.com>
-Subject: Re: [PATCH 3/7] rebase -i: clarify and fix 'fixup -c' rebase-todo help
+Date:   Sun, 7 Feb 2021 13:54:44 -0500
+Message-ID: <CAPig+cQ+_neX_FLCQawG44US6Rtu_4wgVe+HMNseh7AvjTu=Qg@mail.gmail.com>
+Subject: Re: [PATCH 5/7] t3437: fix indendation of the here-doc
 To:     Charvi Mendiratta <charvi077@gmail.com>
 Cc:     Git List <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sun, Feb 7, 2021 at 1:19 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> When `-c` says "edit the commit message" it's not clear what will be
-> edited. The original's commit message or the replacement's message or a
-> combination of the two. Word it such that it states more precisely what
-> exactly will be edited and also remove the use of a period and
-> capitalized word in the to-do help text.
+> In the test scripts, the here-doc body and EOF are indented the same
+> amount as the command which opened the here-doc. Let's remove
+> one level of indendation.
 
-If you happen to re-roll for some reason, it might be a good idea to
-explain why you are removing the period and capitalization since the
-reason is not otherwise clear to the casual reader. So, perhaps:
+s/indendation/indentation/
 
-    ... exactly will be edited. While at it, also drop the jarring
-    period and capitalization, neither of which is otherwise present
-    in the message.
+I found "In the test scripts" ambiguous. It isn't clear if you are
+talking about all test scripts or the script(s) this patch is fixing
+up. Sp, if you happen to re-roll for some reason, perhaps clarify by
+saying something like:
 
-or something like that.
+    The most common way to format here-docs in Git test scripts is for
+    the body and EOF to be indented the same amount as the command
+    which opened the here-doc. Fix a few here-docs in this script to
+    conform to that standard.
+
+> Original-patch-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+
+I don't think this new patch is based upon Phillip's, so you can
+probably drop this attribution.
 
 > Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
