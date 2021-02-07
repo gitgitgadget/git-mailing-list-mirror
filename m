@@ -2,112 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4307C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 05:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0468FC433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 06:06:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8917F64E8A
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 05:46:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BA41464DD9
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 06:06:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229537AbhBGFq1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 00:46:27 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58038 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbhBGFq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 00:46:26 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B5B6CA2230;
-        Sun,  7 Feb 2021 00:45:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gmSzjPtGTGBgDNLOBXjPRVL5yyU=; b=r56v5K
-        Hb7X7uP0igbkY7obcTKERDaZHDStqI3ENBtCG69j3dKfVZhTVqq96RXRw8u7NYl2
-        2vbBYjpYWCEDXvyOQWpL2mRP5Ec90OJMJv1tIOawb6zaLblI05wN4xovbf85Yldr
-        cJhDkaee8uFQMEzm5jpgCxB06WyICec9ZX4Sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qpP+EbKVmfbK1eOou7V8nYG8KjYYfZ9P
-        RQZ8uKSLLLuPUeyeE6jdco4jDe48kEXoLcvuZt8/tCPMMGFJKt7/6eXsbTzLRxzt
-        hYv9g/R1X8G1N1Nd7qOlSsdmOOikRreOA4SWI6IGoDiWs7FTNRgRM5wewJuzFvN/
-        UokXbBbc6dg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AE2DAA222F;
-        Sun,  7 Feb 2021 00:45:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 420CFA222D;
-        Sun,  7 Feb 2021 00:45:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH v3 3/3] ref-filter: use pretty.c logic for trailers
-References: <pull.726.v2.git.1611954543.gitgitgadget@gmail.com>
-        <pull.726.v3.git.1612602945.gitgitgadget@gmail.com>
-        <47d89f872314cad6dc6010ff3c8ade43a70bc540.1612602945.git.gitgitgadget@gmail.com>
-Date:   Sat, 06 Feb 2021 21:45:41 -0800
-In-Reply-To: <47d89f872314cad6dc6010ff3c8ade43a70bc540.1612602945.git.gitgitgadget@gmail.com>
-        (Hariom Verma via GitGitGadget's message of "Sat, 06 Feb 2021 09:15:44
-        +0000")
-Message-ID: <xmqqpn1c8m7u.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229522AbhBGGFz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 01:05:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51314 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229445AbhBGGFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 01:05:54 -0500
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F61C06174A
+        for <git@vger.kernel.org>; Sat,  6 Feb 2021 22:05:14 -0800 (PST)
+Received: by mail-oo1-xc2e.google.com with SMTP id x23so2705266oop.1
+        for <git@vger.kernel.org>; Sat, 06 Feb 2021 22:05:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cYES7wvbW6+1FHfNsS3XlLhLjqVM4Hbs2gHtA0xLRm8=;
+        b=QXDTL+JBrE4D5cHIFiPguEzh9gTq5Q8P4/pa8wV4nyTrLc+kT1x2e+FhaIOe4TuCSv
+         j2q/NsS0/M6sauZlCR5EMWKjKSngtwUGXtw37lYB5Ye2sZd0r6hoKpixgmF5bJ3iqr9C
+         xgMe0Ucq24CXXlvKw4TcuT7v0RVJOu6NBN4Gsdrdw6boE6Z3L82rMoUTaukJYb6+qe1R
+         t3qxN3hONdzvXhObfuGVc4dFYEgd3vXdxux0d08BQcLesGhms576jDt/TM3Stz0bL0G3
+         S98RNcXl/4XYBNH9joubv5ZeXkv+gpGhexPWw6SCZdDm7p7ibS3OAnFyzNn9TKa/u8+h
+         ERpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cYES7wvbW6+1FHfNsS3XlLhLjqVM4Hbs2gHtA0xLRm8=;
+        b=t2KKXDIRnoA96mtQsXUHx8u2BI59S96tImWQDhWQYE4e4VQ3cC/2w4lh1GgH1EjnNz
+         IpMOtpwCAWXKIyHBOrvfEMZv/UTuKctMvGbgs39BHPe9xAL+ndvSRPNQqdsMiCjn05Ta
+         3yKSd8fwvZO1Op1vHcv8eRhOAre7XHqAKMdIYM8Lwuc2JGVN4OOxskr7+29+a4axvSkW
+         8xM63X5LyDmf2vc3xTQgpcCSImQXrsn175tBbL+kKcUyxcqwYTFRaAqGHteXO+wteacJ
+         FH7ro/WpsaJTBpgn4md7GaVPyFNVYkc54ScLiB2Wm5SD2OV+kWC/UNck/k3sfGyDwEP9
+         oN4g==
+X-Gm-Message-State: AOAM532GG6cGRTDdWwOHDrAwTizQGvH8aVT89aR/eFtH7gACxS1lOVBl
+        xXgxAeGsMR3rz6adY5PZCiCfGK1iPSQoYxAhn52HKQaluxQ=
+X-Google-Smtp-Source: ABdhPJxQKs8Lx3kx+AX46m+irOpcmwWtLMCxPqIi2S5S18cwJTtWOFnBuzHeO+wuPq9oCx5CS7/PT+ycDm1z7WEG+Rg=
+X-Received: by 2002:a4a:9d0e:: with SMTP id w14mr8614570ooj.7.1612677913396;
+ Sat, 06 Feb 2021 22:05:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B71E92EE-6907-11EB-8F6A-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <pull.843.git.1612651937.gitgitgadget@gmail.com> <xmqqtuqo8nfz.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqtuqo8nfz.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 6 Feb 2021 22:05:02 -0800
+Message-ID: <CABPp-BFyWETzOM4C44HjHctSzg6Mr5BEn+OEO5RT888QX71CTA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Optimization batch 7: use file basenames to guide
+ rename detection
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sat, Feb 6, 2021 at 9:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > This series depends on ort-perf-batch-6[1], which has not yet appeared in
+> > seen despite being reviewed by both Junio and Stolee.
+>
+> It is because that one depends on something not in, but soon about
+> to go in, 'master' and I didn't want to add to "this topic depends
+> on top of that other topic" mess.
 
-> +test_trailer_option() {
-> +	title="$1"
-> +	option="$2"
-> +	expect="$3"
-> +	test_expect_success "$title" '
-> +		printf "$expect\n" >expect &&
-> +		git for-each-ref --format="%($option)" refs/heads/main >actual &&
-> +		test_cmp expect actual &&
-> +		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
-> +		test_cmp expect actual
-> +	'
-> +}
-> +
-> +test_trailer_option '%(trailers:key=foo) shows that trailer' \
-> +	'trailers:key=Signed-off-by' 'Signed-off-by: A U Thor <author@example.com>\n'
-
-This is *not* an issue about the test script and its helper
-function, but I just noticed that --format="%(trailers:key=<key>)"
-is expected to write the matching trailers *AND* an empty line, and
-I wonder if that is a sensible thing to expect.
-
-The "--pretty" side does not give such an extra blank line after the
-output, though.
-
- $ git show -s --pretty=format:"%(trailers:key=Signed-off-by:)" \
-   js/range-diff-wo-dotdot
- Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
- Signed-off-by: Junio C Hamano <gitster@pobox.com>
- $ git show -s --pretty=format:"%(trailers:key=None:)" \
-   js/range-diff-wo-dotdot
- $ exit
-
-Unlike the above, when there is no matching trailer lines, the
-"for-each-ref" in this series shows zero lines, and when there is
-one matching trailer line, it gives that single line plus an empty
-line, two lines in total.  The inconsistency is a bit disturbing.
-
-Is the extra blank line given on purpose?  I don't see why we would
-want it.  Or is it a bug we did not catch during the previous two
-rounds of reviews?
-
-Thanks.
+Ah, makes sense.
