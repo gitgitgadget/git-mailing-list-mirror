@@ -2,310 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E76BC433DB
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F3EC433E0
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:31:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A5DC64E31
-	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:20:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60BDD64DE7
+	for <git@archiver.kernel.org>; Sun,  7 Feb 2021 18:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbhBGSUK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 13:20:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38294 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhBGSUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 13:20:06 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65865C06178B
-        for <git@vger.kernel.org>; Sun,  7 Feb 2021 10:19:26 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id t11so5107637pgu.8
-        for <git@vger.kernel.org>; Sun, 07 Feb 2021 10:19:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qa98g+97FQeBkK5gcs/N6WYNQQO0UeoEdnJ8RNAG32M=;
-        b=QzNplF28VQd5ZORcM/Qyp3J82nXzdDiKuIyu2Zoh5NfNlbpnYBwkgm9HzyN/ZuV8gN
-         WebV60VzXbQSLTPWsh5JhbuC3UWxBeGAuDiQiGwddWuWa/abrFKl3y14fgCxL/DWz8JL
-         byWqUlf7wHF7U3A75VyMPfmIXuonxyaIveOJKoxU6x279XDRyKeEFOqesOLnS9I8817T
-         Gggr9e0WmJkRmmrDC0nQFW+fude1mcG0m4D2AQ+dYX2xouemFIIkH3qynrZN7/fNNPMJ
-         TtYsstwE4gCuUfs0oZekoArj1u5n2lWR7gXZX+4kmNQDm65pK524rh5kjkT/qKH0W9wP
-         GV6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qa98g+97FQeBkK5gcs/N6WYNQQO0UeoEdnJ8RNAG32M=;
-        b=VLOOCCw9vF/qrLp2ENGVbZIVzC2eNb/2c5VqzjQOr0UFPpT/w7bITzNjWXV7ZnUPud
-         +mtYW06XJBzqJ4WFeciqsfhqGIlajCZRuvJaOuQ/AcWhQv3DQ1quf7KDuC4MaZkXlSyB
-         Ctt0m33Ni/GztDKQgiyPefnkYGC73yppjJwSQM6b4F7gRsWB5oY1IvbLhiWFDQD7YPXq
-         zYtRf2jSYm3c0CocxM0/YH0D1OdPJSDcP7/FenDwBI8bbPr8FRd6zYyS6rzHjDnGDZdk
-         LGBB4j08V8k2y7K575iKmhGKxkAIjNaPQvp+jAgHkUsfn9XjrizRTTpz6vJ//HSKkRRQ
-         QDTQ==
-X-Gm-Message-State: AOAM530JJf+d99+lgptqmNR+xvI/0TvqBzdifwzAemO1snNzF1OF3EJS
-        t3WVtZIIG5mdtTbCSWmvDzmpzgtpxY200g==
-X-Google-Smtp-Source: ABdhPJx2Ec/S7Cr5gqaEw4hxz+BRAiEBYsZAe4hPLTzQmidOJFeAr/lGqI/I/wRhqO5S3yDGQ3st3w==
-X-Received: by 2002:a63:fb18:: with SMTP id o24mr3389483pgh.55.1612721965638;
-        Sun, 07 Feb 2021 10:19:25 -0800 (PST)
-Received: from localhost.localdomain ([2409:4050:2e07:af0b:4438:7fbe:1d1f:8bc])
-        by smtp.googlemail.com with ESMTPSA id n7sm16375194pfn.141.2021.02.07.10.19.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Feb 2021 10:19:25 -0800 (PST)
-From:   Charvi Mendiratta <charvi077@gmail.com>
-To:     git@vger.kernel.org
-Cc:     sunshine@sunshineco.com, christian.couder@gmail.com,
-        phillip.wood123@gmail.com, Charvi Mendiratta <charvi077@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 6/7] t/t3437: update the tests
-Date:   Sun,  7 Feb 2021 23:44:39 +0530
-Message-Id: <20210207181439.1178-7-charvi077@gmail.com>
-X-Mailer: git-send-email 2.29.0.rc1
-In-Reply-To: <20210207181439.1178-1-charvi077@gmail.com>
-References: <20210207181439.1178-1-charvi077@gmail.com>
+        id S229771AbhBGSau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Feb 2021 13:30:50 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58488 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229763AbhBGSao (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Feb 2021 13:30:44 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE3CE113242;
+        Sun,  7 Feb 2021 13:29:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=QbxT8mFCgfuz
+        RjGIH/NACejaubQ=; b=rK7XxnJf1lrtiOIwEuvAu/dvyLnuibNfVEDgwkrOkpl5
+        mxB9OEU3ftRFTUnUkM1uzXAYkj0p1C0XY73T7CixZ08G2U02tjEVcFD/rWLevBPS
+        +AYaX4RKbDh2m/pED7NkL1Ir0oGc7kylgvFE5YfYFINTgmZUsL7dHiXEeKt5tGc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UHqon2
+        WeMdNmR7KArk/ulYzaGZTSxcj3j+o5gLQjEuYQwYZyJFyq4gL/bglUHOQ6dZse+n
+        ukG8OQ2Z0h+orjQ1EWvZB89fPhJPcszILrlR8sC9rr5AA8eDIK1jGHwIyyEedxoc
+        TVc8HDpLQLmrAVsG2Vz8vMxUYww9F7TwepBo4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A63F4113240;
+        Sun,  7 Feb 2021 13:29:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8DA2811323F;
+        Sun,  7 Feb 2021 13:29:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?=E9=98=BF=E5=BE=B7=E7=83=88_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?6Zi/5b6354OI?= <adlternative@gmail.com>
+Subject: Re: [PATCH] git-difftool-helper.sh: learn a new way skip to save point
+References: <pull.870.git.1612711153591.gitgitgadget@gmail.com>
+Date:   Sun, 07 Feb 2021 10:29:54 -0800
+In-Reply-To: <pull.870.git.1612711153591.gitgitgadget@gmail.com>
+ (=?utf-8?B?IumYv+W+t+eDiA==?= via
+        GitGitGadget"'s message of "Sun, 07 Feb 2021 15:19:13 +0000")
+Message-ID: <xmqqczxb91el.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 7A6B2E50-6972-11EB-B610-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's do the changes listed below to make tests more easier to follow :
+"=E9=98=BF=E5=BE=B7=E7=83=88 via GitGitGadget"  <gitgitgadget@gmail.com> =
+writes:
 
--Remove the dependency of 'expected-message' file from earlier tests to
-make it easier to run tests selectively with '--run' or 'GIT_SKIP_TESTS'.
+> From: ZheNing Hu <adlternative@gmail.com>
 
--Add author timestamp to check that the author date of fixed up commit
-is unchanged.
+I am a bit confused.  Are =E8=83=A1=E5=93=B2=E5=AE=81 and =E9=98=BF=E5=BE=
+=B7=E7=83=88 and ZeNing Hu all the
+same person (I am asking that an earlier question came under the
+name first listed in this sentence, and the patch uses the latter
+two names, where I guess )?
 
--Simplify the test_commit_message() and add comments before the
-function.
-
--Clarify the working of 'fixup -c' with "amend!" in the test-description.
-
--Remove unnecessary curly braces and use the named commits in the
-tests so that they will still refer to the same commit if the setup
-gets changed in the future whereas 'branch~2' will change which commit
-it points to.
-
-Original-patch-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
----
- t/t3437-rebase-fixup-options.sh | 82 ++++++++++++++++++---------------
- 1 file changed, 45 insertions(+), 37 deletions(-)
-
-diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
-index 3de899f68a..96f3a94831 100755
---- a/t/t3437-rebase-fixup-options.sh
-+++ b/t/t3437-rebase-fixup-options.sh
-@@ -8,8 +8,10 @@ test_description='git rebase interactive fixup options
- This test checks the "fixup [-C|-c]" command of rebase interactive.
- In addition to amending the contents of the commit, "fixup -C"
- replaces the original commit message with the message of the fixup
--commit. "fixup -c" also replaces the original message, but opens the
--editor to allow the user to edit the message before committing.
-+commit and similar to "fixup" command that works with "fixup!", "fixup -C"
-+works with "amend!" upon --autosquash. "fixup -c" also replaces the original
-+message, but opens the editor to allow the user to edit the message before
-+committing.
- '
-
- . ./test-lib.sh
-@@ -18,36 +20,34 @@ editor to allow the user to edit the message before committing.
-
- EMPTY=""
-
-+# test_commit_message <rev> -m <msg>
-+# test_commit_message <rev> <path>
-+# Verify that the commit message of <rev> matches
-+# <msg> or the content of <path>.
- test_commit_message () {
--	rev="$1" && # commit or tag we want to test
--	file="$2" && # test against the content of a file
--	git show --no-patch --pretty=format:%B "$rev" >actual-message &&
--	if test "$2" = -m
--	then
--		str="$3" && # test against a string
--		printf "%s\n" "$str" >tmp-expected-message &&
--		file="tmp-expected-message"
--	fi
--	test_cmp "$file" actual-message
-+	git show --no-patch --pretty=format:%B "$1" >actual &&
-+    case "$2" in
-+    -m) echo "$3" >expect &&
-+	    test_cmp expect actual ;;
-+    *) test_cmp "$2" actual ;;
-+    esac
- }
-
- get_author () {
- 	rev="$1" &&
--	git log -1 --pretty=format:"%an %ae" "$rev"
-+	git log -1 --pretty=format:"%an %ae %at" "$rev"
- }
-
- test_expect_success 'setup' '
- 	cat >message <<-EOF &&
- 	amend! B
--	${EMPTY}
-+	$EMPTY
- 	new subject
--	${EMPTY}
-+	$EMPTY
- 	new
- 	body
- 	EOF
-
--	sed "1,2d" message >expected-message &&
--
- 	test_commit A A &&
- 	test_commit B B &&
- 	get_author HEAD >expected-author &&
-@@ -68,40 +68,43 @@ test_expect_success 'setup' '
- 	echo B1 >B &&
- 	test_tick &&
- 	git commit --fixup=HEAD -a &&
-+	git tag B1 &&
- 	test_tick &&
- 	git commit --allow-empty -F - <<-EOF &&
- 	amend! B
--	${EMPTY}
-+	$EMPTY
- 	B
--	${EMPTY}
-+	$EMPTY
- 	edited 1
- 	EOF
- 	test_tick &&
- 	git commit --allow-empty -F - <<-EOF &&
- 	amend! amend! B
--	${EMPTY}
-+	$EMPTY
- 	B
--	${EMPTY}
-+	$EMPTY
- 	edited 1
--	${EMPTY}
-+	$EMPTY
- 	edited 2
- 	EOF
- 	echo B2 >B &&
- 	test_tick &&
- 	FAKE_COMMIT_AMEND="edited squash" git commit --squash=HEAD -a &&
-+	git tag B2 &&
- 	echo B3 >B &&
- 	test_tick &&
- 	git commit -a -F - <<-EOF &&
- 	amend! amend! amend! B
--	${EMPTY}
-+	$EMPTY
- 	B
--	${EMPTY}
-+	$EMPTY
- 	edited 1
--	${EMPTY}
-+	$EMPTY
- 	edited 2
--	${EMPTY}
-+	$EMPTY
- 	edited 3
- 	EOF
-+	git tag B3 &&
-
- 	GIT_AUTHOR_NAME="Rebase Author" &&
- 	GIT_AUTHOR_EMAIL="rebase.author@example.com" &&
-@@ -134,6 +137,7 @@ test_expect_success 'simple fixup -c works' '
- test_expect_success 'fixup -C removes amend! from message' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout --detach A1 &&
-+	git log -1 --pretty=format:%b >expected-message &&
- 	FAKE_LINES="1 fixup-C 2" git rebase -i A &&
- 	test_cmp_rev HEAD^ A &&
- 	test_cmp_rev HEAD^{tree} A1^{tree} &&
-@@ -145,13 +149,14 @@ test_expect_success 'fixup -C removes amend! from message' '
- test_expect_success 'fixup -C with conflicts gives correct message' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout --detach A1 &&
-+	git log -1 --pretty=format:%b >expected-message &&
-+	test_write_lines "" "edited" >>expected-message &&
- 	test_must_fail env FAKE_LINES="1 fixup-C 2" git rebase -i conflicts &&
- 	git checkout --theirs -- A &&
- 	git add A &&
- 	FAKE_COMMIT_AMEND=edited git rebase --continue &&
- 	test_cmp_rev HEAD^ conflicts &&
- 	test_cmp_rev HEAD^{tree} A1^{tree} &&
--	test_write_lines "" edited >>expected-message &&
- 	test_commit_message HEAD expected-message &&
- 	get_author HEAD >actual-author &&
- 	test_cmp expected-author actual-author
-@@ -167,12 +172,12 @@ test_expect_success 'skipping fixup -C after fixup gives correct message' '
- '
-
- test_expect_success 'sequence of fixup, fixup -C & squash --signoff works' '
--	git checkout --detach branch &&
-+	git checkout --detach B3 &&
- 	FAKE_LINES="1 fixup 2 fixup-C 3 fixup-C 4 squash 5 fixup-C 6" \
- 		FAKE_COMMIT_AMEND=squashed \
- 		FAKE_MESSAGE_COPY=actual-squash-message \
- 		git -c commit.status=false rebase -ik --signoff A &&
--	git diff-tree --exit-code --patch HEAD branch -- &&
-+	git diff-tree --exit-code --patch HEAD B3 -- &&
- 	test_cmp_rev HEAD^ A &&
- 	test_i18ncmp "$TEST_DIRECTORY/t3437/expected-squash-message" \
- 		actual-squash-message
-@@ -180,7 +185,7 @@ test_expect_success 'sequence of fixup, fixup -C & squash --signoff works' '
-
- test_expect_success 'first fixup -C commented out in sequence fixup fixup -C fixup -C' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
--	git checkout branch && git checkout --detach branch~2 &&
-+	git checkout --detach B2~ &&
- 	git log -1 --pretty=format:%b >expected-message &&
- 	FAKE_LINES="1 fixup 2 fixup-C 3 fixup-C 4" git rebase -i A &&
- 	test_cmp_rev HEAD^ A &&
-@@ -190,13 +195,16 @@ test_expect_success 'first fixup -C commented out in sequence fixup fixup -C fix
- test_expect_success 'multiple fixup -c opens editor once' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout --detach A3 &&
--	base=$(git rev-parse HEAD~4) &&
--	FAKE_COMMIT_MESSAGE="Modified-A3" \
-+	git log -1 --pretty=format:%B >expected-message &&
-+	test_write_lines "" "Modified-A3" >>expected-message &&
-+	FAKE_COMMIT_AMEND="Modified-A3" \
- 		FAKE_LINES="1 fixup-C 2 fixup-c 3 fixup-c 4" \
- 		EXPECT_HEADER_COUNT=4 \
--		git rebase -i $base &&
--	test_cmp_rev $base HEAD^ &&
--	test 1 = $(git show | grep Modified-A3 | wc -l)
-+		git rebase -i A &&
-+	test_cmp_rev HEAD^ A &&
-+	get_author HEAD >actual-author &&
-+	test_cmp expected-author actual-author &&
-+	test_commit_message HEAD expected-message
- '
-
- test_expect_success 'sequence squash, fixup & fixup -c gives combined message' '
-@@ -211,12 +219,12 @@ test_expect_success 'sequence squash, fixup & fixup -c gives combined message' '
- '
-
- test_expect_success 'fixup -C works upon --autosquash with amend!' '
--	git checkout --detach branch &&
-+	git checkout --detach B3 &&
- 	FAKE_COMMIT_AMEND=squashed \
- 		FAKE_MESSAGE_COPY=actual-squash-message \
- 		git -c commit.status=false rebase -ik --autosquash \
- 						--signoff A &&
--	git diff-tree --exit-code --patch HEAD branch -- &&
-+	git diff-tree --exit-code --patch HEAD B3 -- &&
- 	test_cmp_rev HEAD^ A &&
- 	test_i18ncmp "$TEST_DIRECTORY/t3437/expected-squash-message" \
- 		actual-squash-message
---
-2.29.0.rc1
-
+>
+> `git difftool` only allow us to select file to view In turn.
+> If there is a commit with many files and we exit in search,
+> We will have to traverse list again to get the file diff which
+> we want to see.Therefore,here is a new method:every time before
+> we view the file diff,the current coordinates will be stored in
+> `GIT_DIR/difftool_skip_to`,this file will be deleted after
+> successful traversing.But if an unexpected exit occurred midway,
+> git will view the coordinates in the save point,ask user if they
+> want continue from the last saved point.This will improve the
+> user experience.
+>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>     git-difftool-helper.sh: learn a new way skip to save point
+>    =20
+>     this patch's origin discuss is here:
+>     https://lore.kernel.org/git/gOXOaoqn-E9A2ob7ykWEcDc7ZxmSwAjcP5CCFKf=
+r5ejCOWZQ1lfAUZcbgYT9AyQCcDgJvCrnrtziXiels-Hxol3xlkGTVHk24SvAdaSUtKQ=3D@r=
+tzoeller.com/
+>    =20
+>     git user may should travel the diff list to choice file diff to vie=
+w, if
+>     they exit in midway,they must travel it again. I=E2=80=99m on the b=
+asis of the
+>     "difftool_skip_to" suggested by Junio,Provides a possibility for th=
+is
+>     user-friendly solution.
+>    =20
+>     Thanks!
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-870%2=
+Fadlternative%2Fdifftool_save_point-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-870/adlt=
+ernative/difftool_save_point-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/870
+>
+>  git-difftool--helper.sh | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+>
+> diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+> index 46af3e60b718..56ec1d38a7a1 100755
+> --- a/git-difftool--helper.sh
+> +++ b/git-difftool--helper.sh
+> @@ -6,6 +6,7 @@
+>  # Copyright (c) 2009, 2010 David Aguilar
+> =20
+>  TOOL_MODE=3Ddiff
+> +GIT_DIFFTOOL_SKIP_TO_FILE=3D"$GIT_DIR/difftool-skip-to"
+>  . git-mergetool--lib
+> =20
+>  # difftool.prompt controls the default prompt/no-prompt behavior
+> @@ -40,6 +41,31 @@ launch_merge_tool () {
+>  	# the user with the real $MERGED name before launching $merge_tool.
+>  	if should_prompt
+>  	then
+> +		if test -f "$GIT_DIFFTOOL_SKIP_TO_FILE"
+> +		then
+> +			SAVE_POINT_NUM=3D$(cat "$GIT_DIFFTOOL_SKIP_TO_FILE")
+> +			if test $SAVE_POINT_NUM -le $GIT_DIFF_PATH_TOTAL &&
+> +				test $SAVE_POINT_NUM -gt $GIT_DIFF_PATH_COUNTER
+> +			then
+> +				# choice skip or not skip when check first file.
+> +				if test $GIT_DIFF_PATH_COUNTER -eq "1"
+> +				then
+> +					printf "do you want to skip to last time difftool save point($SAV=
+E_POINT_NUM) [Y/n]?"
+> +					read skip_ans || return
+> +					if test "$skip_ans" =3D y
+> +					then
+> +						return
+> +					fi
+> +				else
+> +					return
+> +				fi
+> +			fi
+> +		fi
+> +		# write the current coordinates to .git/difftool-skip-to
+> +		if test !$SAVE_POINT_NUM || $SAVE_POINT_NUM -ne $GIT_DIFF_PATH_COUNT=
+ER
+> +		then
+> +			echo $GIT_DIFF_PATH_COUNTER > $GIT_DIFFTOOL_SKIP_TO_FILE
+> +		fi
+>  		printf "\nViewing (%s/%s): '%s'\n" "$GIT_DIFF_PATH_COUNTER" \
+>  			"$GIT_DIFF_PATH_TOTAL" "$MERGED"
+>  		if use_ext_cmd
+> @@ -102,4 +128,10 @@ else
+>  	done
+>  fi
+> =20
+> +if test -f $GIT_DIFFTOOL_SKIP_TO_FILE &&
+> +	test $GIT_DIFF_PATH_COUNTER -eq $GIT_DIFF_PATH_TOTAL
+> +then
+> +	rm $GIT_DIFFTOOL_SKIP_TO_FILE
+> +
+> +fi
+>  exit 0
+>
+> base-commit: e6362826a0409539642a5738db61827e5978e2e4
