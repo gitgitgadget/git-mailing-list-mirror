@@ -7,89 +7,117 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39BAFC433DB
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 13:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB196C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 13:36:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E2B3A64E0B
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 13:34:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9359E64E0B
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 13:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbhBHNd6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 08:33:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58984 "EHLO
+        id S230400AbhBHNgM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 08:36:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbhBHNdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 08:33:53 -0500
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30256C061786
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 05:33:13 -0800 (PST)
-Received: by mail-oo1-xc29.google.com with SMTP id g46so3434825ooi.9
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 05:33:13 -0800 (PST)
+        with ESMTP id S229752AbhBHNgJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 08:36:09 -0500
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD80C061786
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 05:35:29 -0800 (PST)
+Received: by mail-qv1-xf34.google.com with SMTP id v19so2135739qvl.7
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 05:35:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Xsx+2SYuLFD1sckTvNX/VKzNmwbq9li96MyWQEPRoaw=;
-        b=cXTDtnuXJBcsHRiGy1WM2m21yC6u5Xe7G19cpDAZarzs5v2gzl1w6uFlP2QP+hgxIj
-         /Ile5fvHe8NITyW4iWCQPmZ5T9sJIjanu9EI97VzgxO7p3ZcuQYUx0OnsOhd09eozokQ
-         A6Mabx5BY/9KEDLsRVfA3bhG2ivhQpOAVs6uPRR6sp8HufZ6JZ3RhvQaSOXYLuP963ID
-         fdpahEfX2Pa3kvP7Ejnz6J58t1TEbLMZgD0fc8uPC6pQTkbFPRlCukeMsPzAFODLRj5c
-         7mkJs7pB5Gg3m93s9277+43KKN3fUn1fwYjMHpXAGPCDGkncRKfjSewd3qJFouJiGGpP
-         YJow==
+        bh=q8nsdt5gzZnG9irBY6q+x0FebJPSuiKeWFUZEyc9MZU=;
+        b=XzjzR8P+eV2vY7zyZLMklxlyKE9g11IpY4KvtsMQeCSvhoWk+e7nvNtr4MvRaxkCXV
+         j/qKFTT9LFnsfebECgRr3L3S4fypJDvfDr6j2qQiRZ/Ir/YjUa2r30FvHTHimhEK7W+Q
+         2lHlRByZzu/rEWeKyLqgfLsEjZ42tVaMmljtta45G96Mhmce0buxHBj7yJsc8/nmGpul
+         3k9w9vM7oPRcsjZQU2XH+xlCSxCxAW7ol5PVw5mrfNmwZ+XKtOBdcP7hgagtinbRv5q0
+         87icLPGupMtrPgSrE+X7IanvxnqbxSClCfdcKIedVG9jT0NWae4QS5jbTpVfzN0K9RuB
+         tE2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Xsx+2SYuLFD1sckTvNX/VKzNmwbq9li96MyWQEPRoaw=;
-        b=rvKT4CBLr4l7xbW87YCAORNWK+IuST/gECCDOT9QkglhRJ6pdNOvZsS1Ksb9ujrarw
-         v0PDauvSuv79xY4wvZ9qmGH/4FZxTfxnwDAYX4hwPJIBlQYv1kiZWonMUY3X4C+lUN0P
-         7e65EXr+PXNk5Hc9NmaRHBiVdctawmiI0vb1W1ddcRjgH1XTNLELb9ceq2QY6tEyYTYb
-         +4RcmMZygw468dca6Bn1QWby0Dsua7xlJnwu11nr9d5HapMnzk8Gfn6q9ZG9sMHEdZaP
-         y0YlNOmCxjl4RklV/5ELNgQ3LjZghtHlNHrMOEX3paI2b7j3IEB0+3q+z/py6hUoBeC6
-         6DUg==
-X-Gm-Message-State: AOAM533SeXnSgMZ9lCGUMpu4Nln+SyJskzrmPrU/BizVo8O9noWqGjZm
-        X84fnpRc8Ho/VindQzzlo30=
-X-Google-Smtp-Source: ABdhPJz9aUxZ85b2rr+KyTQVfK3SAgze+6YOeDBERRxJZYIK4zALDJUXqgC0P6B8lDLoRSPxNTrp1w==
-X-Received: by 2002:a4a:2f56:: with SMTP id p83mr3150189oop.56.1612791192542;
-        Mon, 08 Feb 2021 05:33:12 -0800 (PST)
+        bh=q8nsdt5gzZnG9irBY6q+x0FebJPSuiKeWFUZEyc9MZU=;
+        b=ZJhAOxZRIZ/HgYqU7/CYBbkfDHjXfEPdLy6rIpJXhGK7jySupAj01W7i4wm4RUQKy9
+         anjv8wniNQDVMnUUs/RkLfucHsEy2IXxwm9d7FvJRC1hJIHi25iFgcfND27zCa1m6l1X
+         AenjCsPE3Dc+BppKNoeiZtwHPJJHyo9Q/uxpX4U4F+FOn/X5BE4k9A2VkD1N2GZMaIP+
+         KyOGKBfgLR/Xc3dGy/aSGwqAT0VMkUDKqpz7A4Jbl1/KRA2uSk34jNNZw5NZUc52GPlR
+         ZZhFly2zj+4Qo1ZvY+Lv+JhM0AH3eEivYjV0H56M7GinXZf2dsU/EUMPFw5Qku9gEShh
+         gRRw==
+X-Gm-Message-State: AOAM532R9ODoizT/lsjjy9pHJcYglK0ivJ54/23EI4EVSvnG/k6Ok3Vg
+        QCkSbCa7bBRiOHPxw6cEADQ=
+X-Google-Smtp-Source: ABdhPJxCYddga2mGgPBVGELb2R3SSLg+zu/+mgBNmufbURKyVuTwg6qnCL0VKsJ0eAIMHtlp3KXrXQ==
+X-Received: by 2002:a0c:ca0f:: with SMTP id c15mr16037772qvk.61.1612791328495;
+        Mon, 08 Feb 2021 05:35:28 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:b91a:dd2f:a591:6ed1? ([2600:1700:e72:80a0:b91a:dd2f:a591:6ed1])
-        by smtp.gmail.com with UTF8SMTPSA id 3sm628825oid.27.2021.02.08.05.33.11
+        by smtp.gmail.com with UTF8SMTPSA id q6sm16328490qkd.41.2021.02.08.05.35.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Feb 2021 05:33:11 -0800 (PST)
-Message-ID: <a6228e5f-0552-f4e1-b064-df3bea217f06@gmail.com>
-Date:   Mon, 8 Feb 2021 08:33:11 -0500
+        Mon, 08 Feb 2021 05:35:28 -0800 (PST)
+Message-ID: <f860ef94-567a-371d-7834-8f2221cdf7df@gmail.com>
+Date:   Mon, 8 Feb 2021 08:35:27 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
-Subject: Re: [PATCH v2 0/2] builtin/clone.c: add --no-shallow option
+Subject: Re: [PATCH v3 12/17] chunk-format: create read chunk API
 Content-Language: en-US
-To:     Li Linchao via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        dscho <johannes.schindelin@gmx.de>,
-        Li Linchao <lilinchao@oschina.cn>
-References: <pull.865.git.1612409491842.gitgitgadget@gmail.com>
- <pull.865.v2.git.1612773119.gitgitgadget@gmail.com>
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        l.s.r@web.de, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+ <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+ <366eb2afee839feccdfd2244b231d2ad718c76d4.1612535453.git.gitgitgadget@gmail.com>
+ <20210207202042.GC1015009@szeder.dev>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.865.v2.git.1612773119.gitgitgadget@gmail.com>
+In-Reply-To: <20210207202042.GC1015009@szeder.dev>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/8/2021 3:31 AM, Li Linchao via GitGitGadget wrote:
-> Range-diff vs v1:
+On 2/7/2021 3:20 PM, SZEDER Gábor wrote:
+> On Fri, Feb 05, 2021 at 02:30:47PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> Add the capability to read the table of contents, then pair the chunks
+>> with necessary logic using read_chunk_fn pointers. Callers will be added
+>> in future changes, but the typical outline will be:
+>>
+>>  1. initialize a 'struct chunkfile' with init_chunkfile(NULL).
+>>  2. call read_table_of_contents().
 > 
->  1:  594323684af0 = 1:  2f9602495eb5 builtin/clone.c: add --no-shallow option
->  -:  ------------ > 2:  cfcfc3ec6b37 builtin/clone.c: add --reject-shallow option
+> A reader should call read_table_of_contents(), noted.
+> 
+>>  3. for each chunk to parse,
+>>     a. call pair_chunk() to assign a pointer with the chunk position, or
+>>     b. call read_chunk() to run a callback on the chunk start and size.
+>>  4. call free_chunkfile() to clear the 'struct chunkfile' data.
+> 
+> How could a user of this API learn about all chunks present in the
+> chunkfile, including unrecognized chunks?
 
-You should rewrite your history to make this one commit again. You can
-do this by running 'git rebase -i HEAD~2' then editing the todo file
-to 'squash' the second commit in to the first. You will be prompted to
-edit the combined commit message, and you should preserve only the message
-from the second commit.
+That could certainly be added (when needed) without modifying the data
+structures.
 
+>> +/*
+>> + * Initialize a 'struct chunkfile' for writing _or_ reading a file
+>> + * with the chunk format.
+>> + *
+>> + * If writing a file, supply a non-NULL 'struct hashfile *' that will
+>> + * be used to write.
+>> + *
+>> + * If reading a file, then supply the memory-mapped data to the
+>> + * pair_chunk() or read_chunk() methods, as appropriate.
+> 
+> And call read_table_of_contents() in between.
+
+Yes, you are right.
+ 
 Thanks,
 -Stolee
-
