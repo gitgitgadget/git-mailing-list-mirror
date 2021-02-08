@@ -2,95 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1DEAC433E0
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1F7C433E9
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:48:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6304960238
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:45:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C5A564E6E
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235103AbhBHTpG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 14:45:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54208 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236372AbhBHToS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 14:44:18 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5315C061786
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 11:43:37 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id z22so11219456qto.7
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 11:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nvCWsvX0e+YyiTPTnAT4gz5MGlq/WfrHGA6L/iYsrgU=;
-        b=MHpht3s8b/03rJGSdzEaJ2bgNJ/feN6i2AFKag9w13oHcqeGSbN78Wx/BxkfFSF1tU
-         gNO46+Y1OUOwwC+HW7OgNXkFurj/S9EmssijAiQjH9sBMBdqmAZFgilFYZbpmihBh6zt
-         9OP7lsOWQxfKAGWzH0aX+1Ctihz2T/KwcRwUFW1Zy6gE6VoKPLMbuiIL2JDpAlaq/4Zg
-         5Wa0pUuzlG5dkZ2fQhilyPParlseuyOUtrwu2FoboimrfK8DEoFdZ6us/e56qZ1o4ozq
-         ctJw3qXMCzCmXyEc6oBWFaAxgO4aMim9pjLP4emgal/BsrNT/JU4Yxgf1hVWDtEqqKYs
-         OvLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nvCWsvX0e+YyiTPTnAT4gz5MGlq/WfrHGA6L/iYsrgU=;
-        b=hnwtZuU0JU3Y7uh39yT2xIaA3/QEey1gQT6hLv4SL0FIXwYcmUPqlTRvg7MyDHuc2p
-         GgGl5DBz8C9qShS7cYEnAF8CheWMB5ZdzoE7WCds/8VyBHKTjnKq68Jn9ZoVTLsfh4L+
-         ySHCOuLlqLP7ipRQse+gGpPwYJQdzYVLecFwc/nuAHSSXPchjjYaj8es49aUixVTQ6yR
-         918gPLA/VD3Lgfjge2jpnEKH7m0U699aw0mqzO31fYgFq8i5V4hszMfnTQ3zXnDYI0/Z
-         tbXu0HBTHKDnPU7u+/xBVx8Xg6Ru7O53zvsLmcjlawpcew9OOKs+NC7r64Le9JNevr7a
-         vjRA==
-X-Gm-Message-State: AOAM531xNXpxTSb/Ynd0iN226gW2lOLTJeqbgAJAMLhAh5FChB43Z/EI
-        /oZBWmA5mJnaM98VxkbBAlfGD5lpFtT8Kw==
-X-Google-Smtp-Source: ABdhPJwv/UVoSolG3y5MCfzjIK4s/D3gIN4+IzjyxfbiEuEnEq8gZQbHBSggBUYekpFIZpEGucD5Bg==
-X-Received: by 2002:aed:2847:: with SMTP id r65mr5199280qtd.79.1612813416708;
-        Mon, 08 Feb 2021 11:43:36 -0800 (PST)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id m190sm8005930qkc.66.2021.02.08.11.43.34
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Feb 2021 11:43:35 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Subject: [PATCH] grep: error out if --untracked is used with --cached
-Date:   Mon,  8 Feb 2021 16:43:28 -0300
-Message-Id: <5bd9dce8f611c5fe380c9f58dbdfa2dc6d2fd51f.1612813249.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.29.2
+        id S235152AbhBHTsa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 14:48:30 -0500
+Received: from mout.web.de ([212.227.17.12]:43561 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236475AbhBHTsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 14:48:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1612813567;
+        bh=q+dzEVAe5daiRmZOod3YCg2uECjRWFb7sPV54VnIHPs=;
+        h=X-UI-Sender-Class:From:Subject:To:References:Date:In-Reply-To;
+        b=RhYetEirJBppGJ3W/khEzre+AZg2lwz6Xv//a/I9J4xZtgj3a0N04Ttpy4qcFe8Ew
+         GySa7QM+DtiddV6iSSKPfCWRp2SV7ef/CE3KcGxFXBKRWFLChijFypOHvTOLtdcvv7
+         nmodfm2ncL/W7yHKspbge9/pnSpMF1TB6Uq8dEHQ=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 1MoeY7-1lfoOc1Kh7-00p7mr; Mon, 08 Feb 2021 20:46:07 +0100
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: Re: gitattributes export-subst and software versioning
+To:     Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+Message-ID: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+Date:   Mon, 8 Feb 2021 20:46:06 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9b5Rw+7Ee0FDHJLY9pucRGG1FvGayqMBbIsfa4x8Iz6dx1ysYNn
+ RBK3gGBrbgBC1mgjXeuHjuSn4boN9TQqmmGPzt4iLE/nVO16R1yUFnKxqH2CMUWQZ0yR9CJ
+ J3QrwpXT3PUbJ6dS5Wfggm4h9coyKR3+glcTI5ZCgTpCage02306TH7wsOwi6z9YQexSW2b
+ PvHSXYg47D5yG3raOtEWQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oYGS7FtHrss=:jtNrhBJXEb0RFJMvSuXSSD
+ J+a5UtgrpkWB6wYEV3HujaDJ6xqyNjH24V7AvAidKq6OlCpa0Ebe0UBPVpL0mSjZgK/5YBakr
+ vIzT8dSCQ6wuSc1ke0Wqks8jT//KuAflqceCyTyTaUvOoFiPkGOVdCg4vC3pHDLMj3LyJO0V+
+ bvY3aPc9DIBTC808BbSTHBPnUpkI5AOwlIXzTZcvNGeJbADS6v6zygjE0fLtmUzaGSyAlp+ah
+ HOaPnogHF/njKBDT2UR7id0F0MagC+WlZjbtgfESQVMkGaKI0EDqQegb0BoecHI2w/ol8PMTF
+ Jn34jmLKkCeqxdiieOe1tgiL9kjl/3VAvu1y8WC/d39DhijeHOxdZQQY75oLyuwjBx4v/8AWt
+ YVPo2tg/x4Cn/8eOToE+9KhBPsZT67CvGGcn0/y6FD+SSPPG/INpdPIhb9uLd81jx9JEGvHsX
+ 9p/3qwFJoQIgQ6lMgKqZzJxFYVozTqM4Ohv3wP/1WbSF9+A7soPsHAcn2HKvYGyHDGVspHxUH
+ 5Q4M6bd8pWObK4HuiMBexqGzgvzy296rdhzgB7QeKeUSKGH8PxeXgJzhOJvSfPY8egApOZLCA
+ eIGngeOd8B7+2K/ZlKLRrcO2gRtSgYxJIn4TY5bl5qPYW79p2RPgKuQPHIxgf/cW4vUS6lNs+
+ CAnsCras/Xergd09VuSCik4iK+7ttHVp+kHj255YypmwPfL/T4tNJUw4v9uyqFndhh2Mye3NL
+ PnTH8kP2lTGRHtipJ9P5C8RaZeoq02RsMoCg13d6bb/Kei/P2i5h2xh6dFcZc9Z3HX/tFlz30
+ XPFw8CWOhEVKmBCDHLFuj+Y1qbKIWk8DdZA5qoX+PO8ttZhFPqN45pTCwVqKEEz33ko3oMqbg
+ B1i32oVB1ANLB7glf/ag==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The options --untracked and --cached are not compatible, but if they are
-used together, grep just silently ignores --cached and searches the
-working tree. Error out, instead, to avoid any potential confusion.
+Am 25.01.21 um 01:32 schrieb Eli Schwartz:
+> Periodically, I wonder if there is some better way for managing
+> tagged releases for software in git. Current state of the art seems
+> to be "write a custom Makefile that takes a version and seds out the
+> existing version, then runs git tag for you". Inelegant solutions
+> also abound; people release code that does not build properly unless
+> you build it from a git checkout so it can run git describe. (There
+> are half a dozen individually popular but mutually exclusive python
+> ecosystems for this, in fact, all of them varying degrees of
+> broken.)
+>
+> git does have a way to automatically insert metadata via the
+> export-subst attribute on a file, but it's very awkward to use and
+> you cannot get much info out of it.
+>
+> # get tags into a file, only on exact match:
+>
+> $ cat VERSION $Format:%d$ $Format:%D$
+>
+> $ git archive HEAD | bsdtar -xOf - VERSION (HEAD -> master, tag:
+> 1.0) HEAD -> master, tag: 1.0
+>
+> With sufficient regex, you can get a release out of this, but it
+> doesn't work if you try getting an autogenerated tarball for a commit
+> that isn't exactly a release.
+>
+> $ git commit --allow-empty -m ... $ git archive HEAD | bsdtar -xOf -
+> VERSION (HEAD -> master) HEAD -> master
+>
+> I think it would be much, much nicer if there was a format
+> placeholder for git describe.
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- builtin/grep.c | 3 +++
- 1 file changed, 3 insertions(+)
+Totally.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index ca259af441..392acf8cab 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1157,6 +1157,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (!use_index && (untracked || cached))
- 		die(_("--cached or --untracked cannot be used with --no-index"));
- 
-+	if (untracked && cached)
-+		die(_("--untracked cannot be used with --cached"));
+> It doesn't even need option support -- the default output in most
+> cases could be a replacement for or fall back to existing invocations
+> of the "git" program, followed by post-processing with e.g. "sed".
+>
+> However, the existence of current pretty formats such as %C() or
+> %(trailer:options) implies that options could be passed in a
+> git-describe format too. e.g. %(describe:--long --tags --match=3D"v*")
+>
+> Thoughts?
+
+git archive uses the pretty format code for export-subst.  It is used by
+git log and others as well.  git describe uses all object flags to find
+the best description.  Simply plugging it into the pretty format code
+would clash with the object flag use of git log.
+
+And replacing the flags with a commit slab doesn't seem to be enough,
+either -- I get good results lots of commits, but for some git log with
+the new placeholder would just show some nonsensical output, as it
+seems to get the depth calculation wrong for them somehow.
+
+Anyway, we can of course do something like in the patch below.  It
+works, it's easy, it's fast enough for git archive, and it's quite
+hideous.  Hopefully it's bad enough to motivate someone to come up with
+a cleaner, faster solution.
+
+Ren=C3=A9
+
+
+=2D--
+ pretty.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/pretty.c b/pretty.c
+index 3922f6f9f2..bbfb5ca3e7 100644
+=2D-- a/pretty.c
++++ b/pretty.c
+@@ -12,6 +12,7 @@
+ #include "reflog-walk.h"
+ #include "gpg-interface.h"
+ #include "trailer.h"
++#include "run-command.h"
+
+ static char *user_format;
+ static struct cmt_fmt_map {
+@@ -1213,6 +1214,21 @@ static size_t format_commit_one(struct strbuf *sb, =
+/* in UTF-8 */
+ 		return parse_padding_placeholder(placeholder, c);
+ 	}
+
++	if (skip_prefix(placeholder, "(describe)", &arg)) {
++		struct child_process cmd =3D CHILD_PROCESS_INIT;
++		struct strbuf out =3D STRBUF_INIT;
 +
- 	if (!use_index || untracked) {
- 		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
- 		hit = grep_directory(&opt, &pathspec, use_exclude, use_index);
--- 
-2.29.2
++		cmd.git_cmd =3D 1;
++		strvec_push(&cmd.args, "describe");
++		strvec_push(&cmd.args, "--always");
++		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
++		pipe_command(&cmd, NULL, 0, &out, 0, NULL, 0);
++		strbuf_rtrim(&out);
++		strbuf_addbuf(sb, &out);
++		strbuf_release(&out);
++		return arg - placeholder;
++	}
++
+ 	/* these depend on the commit */
+ 	if (!commit->object.parsed)
+ 		parse_object(the_repository, &commit->object.oid);
+=2D-
+2.30.0
 
