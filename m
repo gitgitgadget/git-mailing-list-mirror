@@ -2,226 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EA6BC433DB
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 22:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55760C43381
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 22:28:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B4D264E50
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 22:16:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2570F64EA4
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 22:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbhBHWQr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 17:16:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58588 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbhBHWQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 17:16:46 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3789C061786
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 14:16:05 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id u20so16706391iot.9
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 14:16:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ceQETYgHFXyHNcPekvPTvpZ4lA0gr/bZsMsn7YEcDIY=;
-        b=LXbzTHooIdJ9xCFIC0+vklZR8VOxQtx2ZKK+9O6n6A8OuKAFgmzp9+T1bpYT+6X6id
-         V89bpRiahzuMDqqEoKngVDgcnrEFYb12Af2NZ75+B+IKAcoikUBClAFV89ySSkgYxRrt
-         Ya+vIiSPtW1t7mK6sBDBZJyr1skyB91NjdkJUfA/H7qZFQfDnLpDFjKjzf925ndWgzCd
-         aO7GMzW2NoaiVDKJPd72H72piEMFcvqedLJJ/2UNscy2LXxTA/HrY3yjbFw/hCSxx3WU
-         B/0rrEq+w++RoO9ay51gkd5SkSiVtvIxKtpwlPauY2nh5ASu5GrZxNRH6JhZzyePTcuf
-         +g7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ceQETYgHFXyHNcPekvPTvpZ4lA0gr/bZsMsn7YEcDIY=;
-        b=Dzl1Wk3Nvyxknf0Z2hBI30l+xSv//pWH9Ngqx5/2hRq2X7QU7E6NsfV1UxDh3uvKeJ
-         tdxn5ZRkuk/e4RNQezj99OdTBYbxb7xBFUNW81Cc+20ipuppzNk+K6xP2J9XAkmahbM+
-         QitWi00lEqiKScJbbXsqELdY79krJPmT9Q3Bzc1s1YIXo7mXNM5RyIN29j9xRz7EPcbh
-         qizi6smTFL+2rLcx1uWJqSaKryWt3YsRDlrtN0czAkmgNqcyOYtdt3ZJnBzDaPI4tTCS
-         b0PpRPeKX5FB8DEPe39byhGYze2DJZ4j50Y5IkXfTvceKxqHdC/CQssbTACS9kkK5oj3
-         5RbA==
-X-Gm-Message-State: AOAM5310R3JON5NwYr3iPEvKSnRzJ1+fgC0d1gWjkHKgcVarsc3X9pp5
-        1ASCXs51MIavgziKWKwzuMZVsqrfSvnOUtzufio=
-X-Google-Smtp-Source: ABdhPJzazgrQsC1uZTn3URPz8IRMvsDoV+puO/zqjb5QnHIHRcbgT01I4Kp9r9dcNNuDWfxQaEGX0aCJfBhHW99h+jA=
-X-Received: by 2002:a05:6638:3795:: with SMTP id w21mr19702085jal.65.1612822564940;
- Mon, 08 Feb 2021 14:16:04 -0800 (PST)
+        id S230413AbhBHW2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 17:28:06 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50964 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231837AbhBHW1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 17:27:46 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F741123BFA;
+        Mon,  8 Feb 2021 17:27:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=SJGozPBmgVyTHIczUFzB8O/uLDA=; b=IjJptT
+        R7kaDf+VB5W1l+gQ4WhoeiIoT4SZnhCqkxNeGZUv7HOIpAIlliUYWR7qjnggn7OB
+        UhVQDLC5mgcEa0QLLVoH6+AjAO/h1eqgb5yIFIZLUK2/zHWeZTghDbsM7/I+JISp
+        U6JBUYa3haPKyRApTWA1HoqzQp5l4sc0VJm2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=B7Wv6A9C6s5ft37eQGssv+i6NIkJU7dS
+        Q9L+YS64/1rbQz1cXjjVZmSPvpT0dZ8FdzapUFuAx/fQ8v//cKZ/sPzPKSTjdTh/
+        DsDlzap6lIzhALddqTlOS//idtdLwLOsU98y2yvs133wmfC2T6BLUZfKtxTzoT1c
+        TLXYQOgKD1g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78ADC123BF9;
+        Mon,  8 Feb 2021 17:27:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C1B7D123BF7;
+        Mon,  8 Feb 2021 17:27:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 12/17] chunk-format: create read chunk API
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+        <d8d8e9e2aa3faf0fdda5dc688fb92e924fec423a.1611759716.git.gitgitgadget@gmail.com>
+        <xmqqczxf4d2k.fsf@gitster.c.googlers.com>
+        <1278de82-417c-a6ee-a5fe-055fa0ef1903@gmail.com>
+        <xmqqeehu1f1q.fsf@gitster.c.googlers.com>
+Date:   Mon, 08 Feb 2021 14:26:58 -0800
+In-Reply-To: <xmqqeehu1f1q.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 05 Feb 2021 11:37:53 -0800")
+Message-ID: <xmqqh7mm42ml.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.870.git.1612711153591.gitgitgadget@gmail.com> <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com>
-In-Reply-To: <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com>
-From:   David Aguilar <davvid@gmail.com>
-Date:   Mon, 8 Feb 2021 14:15:28 -0800
-Message-ID: <CAJDDKr4AyxuS-MQ+62XGnK4UvJ+cFDdnMwOK1GSn-oiFrWoxyw@mail.gmail.com>
-Subject: Re: [PATCH v2] git-difftool-helper.sh: learn a new way go back to
- last save point
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Ryan Zoeller <rtzoeller@rtzoeller.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C31F8232-6A5C-11EB-8E44-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(cc'd Ryan since the thread involving him was mentioned in the commit message)
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Feb 8, 2021 at 9:02 AM ZheNing Hu via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: ZheNing Hu <adlternative@gmail.com>
->
-> `git difftool` only allow us to select file to view in turn.
-> If there is a commit with many files and we exit in the search,
-> We will have to traverse list again to get the file diff which
-> we want to see. Therefore, here is a new method: every time before
-> we view the file diff, the current coordinates will be stored in
-> `GIT_DIR/difftool-last-position`, this file will be deleted after
-> successful traversing. But if an unexpected exit occurred midway or
-> users similar to using "ctrl+c" kill the process,and the user wants
-> to redo the same `git difftoool`, git will view the coordinates in
-> the save point, ask user if they want continue from the last position.
-> This will improve the user experience.
->
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->     git-difftool-helper.sh: learn a new way skip to save point
->
->     git user may should travel the diff list to choice file diff to view, if
->     they exit in midway,they must travel it again. By saving current
->     coordinates in GIT_DIR/difftool-last-position method, provides a
->     possibility for this user-friendly solution.
->
->     this patch's origin discuss is here:
->     https://lore.kernel.org/git/gOXOaoqn-E9A2ob7ykWEcDc7ZxmSwAjcP5CCFKfr5ejCOWZQ1lfAUZcbgYT9AyQCcDgJvCrnrtziXiels-Hxol3xlkGTVHk24SvAdaSUtKQ=@rtzoeller.com/
->
->     Thanks!
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-870%2Fadlternative%2Fdifftool_save_point-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-870/adlternative/difftool_save_point-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/870
->
-> Range-diff vs v1:
->
->  1:  e77c3e33ba85 ! 1:  2468eaff322b git-difftool-helper.sh: learn a new way skip to save point
->      @@ Metadata
->       Author: ZheNing Hu <adlternative@gmail.com>
->
->        ## Commit message ##
->      -    git-difftool-helper.sh: learn a new way skip to save point
->      +    git-difftool-helper.sh: learn a new way go back to last save point
->
->      -    `git difftool` only allow us to select file to view In turn.
->      -    If there is a commit with many files and we exit in search,
->      +    `git difftool` only allow us to select file to view in turn.
->      +    If there is a commit with many files and we exit in the search,
->           We will have to traverse list again to get the file diff which
->      -    we want to see.Therefore,here is a new method:every time before
->      -    we view the file diff,the current coordinates will be stored in
->      -    `GIT_DIR/difftool_skip_to`,this file will be deleted after
->      -    successful traversing.But if an unexpected exit occurred midway,
->      -    git will view the coordinates in the save point,ask user if they
->      -    want continue from the last saved point.This will improve the
->      -    user experience.
->      +    we want to see. Therefore, here is a new method: every time before
->      +    we view the file diff, the current coordinates will be stored in
->      +    `GIT_DIR/difftool-last-position`, this file will be deleted after
->      +    successful traversing. But if an unexpected exit occurred midway or
->      +    users similar to using "ctrl+c" kill the process,and the user wants
->      +    to redo the same `git difftoool`, git will view the coordinates in
->      +    the save point, ask user if they want continue from the last position.
->      +    This will improve the user experience.
->
->           Signed-off-by: ZheNing Hu <adlternative@gmail.com>
->
->      @@ git-difftool--helper.sh
->        # Copyright (c) 2009, 2010 David Aguilar
->
->        TOOL_MODE=diff
->      -+GIT_DIFFTOOL_SKIP_TO_FILE="$GIT_DIR/difftool-skip-to"
->      ++GIT_DIFFTOOL_LAST_POSITION="$GIT_DIR/difftool-last-position"
->      ++DIFFTOOL_FIRST_NUM="1"
->        . git-mergetool--lib
->
->        # difftool.prompt controls the default prompt/no-prompt behavior
->      @@ git-difftool--helper.sh: launch_merge_tool () {
->         # the user with the real $MERGED name before launching $merge_tool.
->         if should_prompt
->         then
->      -+         if test -f "$GIT_DIFFTOOL_SKIP_TO_FILE"
->      ++         if test -f "$GIT_DIFFTOOL_LAST_POSITION"
->       +         then
->      -+                 SAVE_POINT_NUM=$(cat "$GIT_DIFFTOOL_SKIP_TO_FILE")
->      -+                 if test $SAVE_POINT_NUM -le $GIT_DIFF_PATH_TOTAL &&
->      -+                         test $SAVE_POINT_NUM -gt $GIT_DIFF_PATH_COUNTER
->      ++                 if SAVE_POINT_NUM=$(cat 2>/dev/null "$GIT_DIFFTOOL_LAST_POSITION") &&
->      ++                         test "$SAVE_POINT_NUM" -le "$GIT_DIFF_PATH_TOTAL" &&
->      ++                                 test "$SAVE_POINT_NUM" -gt "$GIT_DIFF_PATH_COUNTER"
->       +                 then
->      -+                         # choice skip or not skip when check first file.
->      -+                         if test $GIT_DIFF_PATH_COUNTER -eq "1"
->      ++                         if test "$GIT_DIFF_PATH_COUNTER" -eq "$DIFFTOOL_FIRST_NUM"
->       +                         then
->      -+                                 printf "do you want to skip to last time difftool save point($SAVE_POINT_NUM) [Y/n]?"
->      ++                                 printf "Do you want to start from the possible last file you were viewing? [Y/n]?"
->       +                                 read skip_ans || return
->       +                                 if test "$skip_ans" = y
->       +                                 then
->      @@ git-difftool--helper.sh: launch_merge_tool () {
->       +                         fi
->       +                 fi
->       +         fi
+> The users of pair_chunk() presumably are not ready to (or simply do
+> not want to) process the data immediately by using read_chunk() with
+> callback, but when they get ready to process the data, unlike
+> read_chunk callbacks, they do not get to learn how much they ought
+> to process---all they learn is the address of the beginning of the
+> chunk.  I do not see a way to write pair_chunk() users safely to
+> guarantee that they do not overrun at the tail end of the chunk they
+> are processing.
+
+I've read through v3 and found it mostly done, but the above
+question still stands.  I find it questionable why callers of
+pair_chunk() only can learn where a chunk data begins, without
+being able to learn how big the region of memory is.  IOW, why
+can we get away without doing something like this?  The users
+of pair_chunk() won't even know when they overrun the end of
+the data the are given without something like this, no?
+
+Thanks.
+
++struct memory_region {
++	const unsigned char *p;
++	size_t sz;
++};
++
+ static int pair_chunk_fn(const unsigned char *chunk_start,
+                          size_t chunk_size,
+                          void *data)
+ {
+-        const unsigned char **p = data;
+-        *p = chunk_start;
++        struct memory_region *x = data;
++        x->p = chunk_start;
++        x->sz = chunk_size;
+         return 0;
+ }
 
 
-Similar to Junio's question about, "where does this possible come
-from?", I wasn't able to make out the behavior in the following
-situation.
 
-What about when the user switches branches or specifies a pathspec on
-the command-line or some other avenue that ends up with the number of
-files to diff being very different than the last difftool invocation?
+ int pair_chunk(struct chunkfile *cf,
+                uint32_t chunk_id,
+-                const unsigned char **p)
++                const unsigned char **p,
++                size_t *sz)
+ {
++        int ret;
++        struct memory_region x;
+=        return read_chunk(cf, chunk_id, pair_chunk_fn, &x);
++        ret = read_chunk(cf, chunk_id, pair_chunk_fn, &x);
++        *p = x.p;
++        *sz = x.sz;
++        return ret;
+ }
 
-Will difftool, for example, skip over a smaller set of files on
-invocation 2 if invocation 1 involved many files and we exited out
-with a counter number that is very high?
-
-One thing that's not too good about having state files in .git/ is
-that they're global data and we also have to think about, "what if the
-user has multiple difftools running?" and those kind of complexities.
-
-I don't want this to seem like I'm trying to be dismissive of this
-feature which does seem like a useful thing in general, so I'll try to
-come up with an alternative interface that is slightly more general
-but a admittedly a little bit more cumbersome because it's not as
-automatic.
-
-What if instead of global state, maybe the user could specify a path
-that difftool could skip forward to?   For example, we could teach
-difftool to resume by telling it where we last left off:
-
-   git difftool --resume-from=foo/bar099.txt
-
-Then we don't need the global counter state file?
-
-
-Finally, I'm going to plug what I believe to be the right tool for the
-job here.  Have you tried git cola?[1]  Difftool is tightly
-integrated, and the UI is such that you can trivially choose any of
-the modified/staged files and difftool them by using the Ctrl-d
-hotkey.
-
-https://github.com/git-cola/git-cola/
-
-Cola is purpose-built for driving difftool, and for interactive
-staging, so not mentioning it in the context of wanting a better UI
-for difftool would be a disservice to difftool users.
--- 
-David
