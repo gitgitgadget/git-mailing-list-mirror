@@ -2,91 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70173C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 05:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DE4C433DB
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 07:25:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 417DF64DF6
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 05:56:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3FCD64E16
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 07:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbhBHF40 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 00:56:26 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56280 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbhBHF4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 00:56:21 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A65DC11748E;
-        Mon,  8 Feb 2021 00:55:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YPPdJODlSni5/pbhRYX+29qAiEg=; b=VkI6ZU
-        3M1VXKuTUC34xk08thYW6RjkwnoxX2ivftHdC3vP2suA05Gp+kxru6WfnK8BNef3
-        iB8mu0rY8146CPVtKyFrhFVdy64Vz4V9YJhSizeaZQJrqIpKpqPNS+akUOb9VYxO
-        k297dCEVo5Gxzn6d7XuJ170ixwywULJK1zcmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FyQ27cIe7acBLUIBeWNg+fxBbby4YVi3
-        5hEC7V5zUH3dxEu7afq9iclUy4CK76fuiscCgs/w+I+xxscZyiaI9RnKSIjwn129
-        CJ5uC7QrcOZjrLNJC92MLiExei+iP2qWGAcbArwAPgMRshy7troab77pMeCyVIe4
-        osQ3J1voXbg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9E2E211748D;
-        Mon,  8 Feb 2021 00:55:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E6EA3117488;
-        Mon,  8 Feb 2021 00:55:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
-        abhishekkumar8222@gmail.com, Taylor Blau <ttaylorr@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 2/6] commit-graph: always parse before
- commit_graph_data_at()
-References: <pull.850.git.1612199707.gitgitgadget@gmail.com>
-        <pull.850.v2.git.1612234883.gitgitgadget@gmail.com>
-        <454b183b9ba502da7f40dc36aaa95cc3d12b5c2f.1612234883.git.gitgitgadget@gmail.com>
-        <YBn3fxFe978Up5Ly@google.com>
-        <1dab0bf0-9a7f-370a-c807-25d67ac7a0a0@gmail.com>
-        <xmqq7dnpewg4.fsf@gitster.c.googlers.com>
-        <20210207190415.GB1015009@szeder.dev>
-        <xmqqh7mn7i3m.fsf@gitster.c.googlers.com>
-        <74f1eeab-3211-71e5-c83c-19c0b7c0257d@gmail.com>
-Date:   Sun, 07 Feb 2021 21:55:35 -0800
-In-Reply-To: <74f1eeab-3211-71e5-c83c-19c0b7c0257d@gmail.com> (Derrick
-        Stolee's message of "Sun, 7 Feb 2021 21:01:44 -0500")
-Message-ID: <xmqq8s7z6r3c.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229742AbhBHHZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 02:25:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36016 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229608AbhBHHZB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 02:25:01 -0500
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BFDC06174A
+        for <git@vger.kernel.org>; Sun,  7 Feb 2021 23:24:02 -0800 (PST)
+Received: by mail-pg1-x52f.google.com with SMTP id r38so9597894pgk.13
+        for <git@vger.kernel.org>; Sun, 07 Feb 2021 23:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JHKwD1CP17SpX/Gk3YgdvYd04jS9CCnsOaqhIeD2wOM=;
+        b=hjYbnrPwC5gbr1iN0A+6C23FvdFw/tfmSGLoAWRYyaEelfwgE25boPibrFoHjJJRBr
+         F2Je4ylQBquV5uxWC7Az0zltZ9d1fW4vx0qbVNSoEEyl3tEMSRBgfnH5R75SxSMb4R1m
+         lNs1DZxsuW5KT/LNJ/9rcNDbVlEJoKRH0mA0Wn73uf4Lh7ne97h5T2/Ls3UQp7aWX4hE
+         bnDYS1vXbu+lYBUN/RhFnbrrp9UDDSctLNTt5e/kXMcCLqFv2IKColj6mvVNL1DZnz1q
+         2+lS8PIwJTiTLpZsYFCNQ8Zn56L1J+ogZeUbpnwuFfwPlBb85ouj9y5X4mxXnNgwqT/P
+         GcGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JHKwD1CP17SpX/Gk3YgdvYd04jS9CCnsOaqhIeD2wOM=;
+        b=eUl+nfH+KpmYHWY1T4D8LNWtEypo4NBUoJuLe+BKST6BOq54CEM8GFy6axVL9LKpTV
+         Fa6BGwC3fS8F5nrGCgGV+GBAl5FoI38gEhKGpL9rh/krYGQvPGKJbph33r5ubxeeAa8z
+         KiUTm5DoNNH5L4DsdNo7lv/jtaZX0+fryOR/YmT/z8nbEoOrBzfVCT/cpu4a8k7VJhhw
+         6AyvUOxUclwah3QHXGW8MNH2I44XB50C+HT1h+V2BhichFkCzdr57E1PxnSt9yICGTC6
+         Q1aUEP45o82EbpAoYFqoe+xDxRQTQtsKdIGEtaoE9z+Vmcx0uu1uBBBoi9xOF3qEf+yH
+         r31A==
+X-Gm-Message-State: AOAM530UU2tqGy5GHQip8ssSFz+yhzil86uuEi+0mQkj3YwJ7rlz03Hj
+        sxHfh5NBugFJMeH1j30ohI4=
+X-Google-Smtp-Source: ABdhPJxzHoemkYY85NoAnvj49xNRPsoZ0fZhmyLanSOyMLdKtL8+whTfzompTyRumBvZW67H96ARqw==
+X-Received: by 2002:a62:78c8:0:b029:1d3:85cc:2133 with SMTP id t191-20020a6278c80000b02901d385cc2133mr16836693pfc.65.1612769041400;
+        Sun, 07 Feb 2021 23:24:01 -0800 (PST)
+Received: from konoha ([182.64.196.99])
+        by smtp.gmail.com with ESMTPSA id x81sm17503555pfc.46.2021.02.07.23.23.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Feb 2021 23:24:00 -0800 (PST)
+Date:   Mon, 8 Feb 2021 12:53:37 +0530
+From:   Shourya Shukla <periperidip@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     christian.couder@gmail.com, levraiphilippeblain@gmail.com,
+        peff@peff.net, Johannes.Schindelin@gmx.de,
+        derrickstolee@github.com, git@vger.kernel.org
+Subject: Re: [RFC] [BUDFIX] 'git rm --cached <submodule>' does not stage the
+ changed .gitmodules
+Message-ID: <20210208072337.GA7955@konoha>
+References: <20210207144144.GA42182@konoha>
+ <xmqq1rdr8yl2.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 43FD18BE-69D2-11EB-9CE6-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1rdr8yl2.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On 07/02 11:30, Junio C Hamano wrote:
+> Shourya Shukla <periperidip@gmail.com> writes:
+> 
+> > So, my question is, do we need to fix this to make sure that the changed
+> > '.gitmodules' is staged?
+> 
+> When "--cached" is given, the user is asking the module to be
+> removed ONLY from the index, without removing it from the working
+> tree, no?
+> 
+> So I think ".gitmodules" in the working tree should not be touched
+> at all.
+> 
+> Removing the entry for the module from the ".gitmodules" registered
+> in the index, when a submodule registered in the index, might be
+> desirable, and what you say here
+> 
+> > And its entry is not removed from the file. What should be done about
+> > this? I would appreciate your opinions.
+> 
+> may be related to it.
+> 
+> But I doubt it is a good idea to let "git rm" be the one touching
+> ".gitmodules" either in the index or in the working tree for that to
+> happen.
 
-> The reflog _might_ have something of value there, but the hope is
-> that very few commits are actually being force-pushed away. The focus
-> is to prioritize the deep history, and it would definitely be an
-> anti-pattern if the commits in the reflog are so numerous that they
-> must be tracked by the commit-graph. Of course, skipping the --reachable
-> option enables a way to gather these commits as necessary.
+We can remove the entry of the SM from the '.gitmodules' at least no?
+Since the SM won't be relevant to us. At the end an empty '.gitmodules'
+file would stand.
 
-Sure.  As long as gaps in commit-graph coverage only affect
-performance and never correctness (e.g. even if the things that are
-only reachable from reflog entries are not covered by commit-graph,
-when 'git prune' wants to know if an object can safely pruned, we
-will correctly say "no, do not prune it yet"), that is perfectly fine.
+> The reason I am hesitant to teach anything about ".gitmodules" to
+> the basic level tools like "add", "rm" is because I consider, while
+> the "gitlink" design that allows the tip-commit from a submodule in
+> the superproject is a good thing to be done at the structural level
+> in the core part of Git, administrative information stored in the
+> ".gitmodules" is not part of pure "Git" and alternative designs on
+> top of the core part of Git that uses different strategy other than
+> what we have are possible and they could even turn out to be better
+> than what we currently have.  In other words, I have this suspicion
+> that the ".gitmodules" based submodule handling we currently have,
+> done using "git submodule" command, should not be the only and final
+> form of submodule support Git would offer.
+> 
+> That leads me to think that anything that touch ".gitmodules" should
+> be done with "git submodule" suite of commands, not by the low level
+> "add", "rm", etc.  Such a separation of concern would allow a new
+> "git submodule2" design that may be radically different from the
+> current ".gitmodules" one to be introduced, possibly even replacing,
+> or living next to each other, the current "git submodule" together
+> with ".gitmodules" file, without affecting the low-level "add", "rm"
+> tools at all.
+> 
+> So from that point of view, if we were to fix the system, it may be
+> preferrable to make "git rm [--options] <submodule>" only about the
+> submodule in the working tree and/or the index, without touching
+> ".gitmodules" at all, and let "git submodule rm [--cached]
+> <submodule>" be the interface on top.  The implementation of "git
+> submodule rm [--cached]" may use "git rm [--cached]" internally as a
+> building block to deal with the index and/or the working tree, but
+> the info kept in ".gitmodules" for administrative reasons should be
+> dealt within "git submodule" without exposing any such policy to the
+> lower level tools like "git rm" and "git add".
+
+Hmmmm.. You are correct here. But, won't we be replicating the
+functionality of 'git rm [--options] <submodule>' when we create another
+new command say 'git submodule rm [--options] <submodule>'. I might be
+being a bit naive here so take this with a grain of salt. For now, we
+could make sure that the submodule does not have a trace in the
+'.gitmodules' for the very least, no?
+
+> Having said all that, please do not take anything I say about
+> submodule design as the final decision.  It is just an opinion by
+> one development community member (i.e. me) and there are a lot more
+> people who are heavily invested in the current design and interested
+> in improving it than I am.
+
+Yeah, I will tag along a couple of others who I think might help. Thank
+you for your opinion BTW :)
+
+Thanks,
+Shourya Shukla
+
