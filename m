@@ -7,303 +7,251 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E05DC433E0
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 08:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFE0C433DB
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 08:27:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E72564E7D
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 08:06:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9508164E7E
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 08:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbhBHIGr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 03:06:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
+        id S230128AbhBHI1p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 03:27:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbhBHIFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 03:05:14 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DD51C06174A
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 00:04:15 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id i3so3862753oif.1
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 00:04:15 -0800 (PST)
+        with ESMTP id S229894AbhBHI1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 03:27:43 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA15C06174A
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 00:27:02 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id y11so13449997otq.1
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 00:27:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=lOAYUMkbMKacEixJvAI5M1ieiYKjawUJt5b/OY2avCs=;
-        b=Vj6tCjU3Okzrum1lum9cM9/91YPStWkPipdQcQTF9pMZwE4F5y0I3UymiVR8kKbpKs
-         QfSnrvV9z1iVcDatrrrlqYMV7vrxzUAwrszVG9B+rXmD/DdNqDxTQbNg0kePYlh+FpI6
-         9kxrNkJcG7ikwk5U04Izabsr6MNtcxAtjWVVOw0VysnsL602al2BaSbFA4bppg8bIHTA
-         bo3nK/TodqK8kVuwsB8haVYJaZFKQo8TsvkLzqgOEKx9jxj19h3Uhm0naql5U7g3LbWE
-         9gev4DZ/EvM6hg6gXp5Jy5pdCSIJhkad0dS5D197cGG6bu8agBcrIPbLz2I+ZfPSnHA/
-         NbvA==
+        bh=6D2+QdcgY00/c8b9r8NgG181eUcRRlfUTYi3/8+hfCU=;
+        b=lH/aOPGZPxQ2pM6kTry3oAUk0p+XW/tOqT1g2j9Q9p+EYSNtR0DKlJ32lx3iKBWGZX
+         BwTv4zCCpPbHxwhD5JSEAqGoej2FsEM51+DGeie+w0ETE+6uwYV77A2+fFvsKGQZkKYr
+         Klf6CIxUPNMlUjWegOeE+19rukzu0uFs26RQJ56u2HqqfL1issgMMOAlx3LBo+JzLSSY
+         1Air35fML5lnw0iMg1kNw/X5PCxSyGWeN8/a00FkSc2ssAZ9juWnlAidhpxZvPB6b5mm
+         eIdbyp1JpKXnROS/USoDSHzRFovzDbOvOkj3cgXiERdXIypgYsqGTvtJeCOdp22lA3jm
+         N/uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lOAYUMkbMKacEixJvAI5M1ieiYKjawUJt5b/OY2avCs=;
-        b=ALucJajmo+jV8Y9B8mjcGtT7JTDesJDGtlozBS3bqa5Ndr0hcHyqF7aHs77LMTDTS7
-         DB5trYVnMhXV4nIhqv7LKz1KSij07h+qF3XGR81mRqvyZ8r/zvC2fTehA5XQZbNzf65V
-         5TgQrC/VcwQpkXrf7OtT8O7tOYg9JKJVF4CiTCFCXOVVwsrMlME+sX4371FBWx/AG0AM
-         Ar0KHlJ1CHtNJnaayYvA6ZgKW/mQldtixxGqnSAFa4BwZR9x/URTvzaQvtacFKTSLIAo
-         jQ5dFxqgUxE89pT6/nPzEt2uGIpC0P7tA7XU4Gt1hFDlnfeAufLQabV22ktWvSq5LWwF
-         9Ohg==
-X-Gm-Message-State: AOAM533694tj+yygTi4MnfVeCtosaynpg9EAkXWtzE0/BPrPsurU3cr5
-        iaqTAf2hciyNCzD+JhvdG21680sN0sRjNqGnxQ4=
-X-Google-Smtp-Source: ABdhPJw1XDw+/HU4k2bVwWYHZAzNuvq/I8/+8cQPZ9rF3ACyxfCOLubdVeHVv6hcE0aEpO/hTCc7wy0JVdT5oJRaOiQ=
-X-Received: by 2002:aca:5b46:: with SMTP id p67mr10597026oib.179.1612771454805;
- Mon, 08 Feb 2021 00:04:14 -0800 (PST)
+        bh=6D2+QdcgY00/c8b9r8NgG181eUcRRlfUTYi3/8+hfCU=;
+        b=bxOVVjDZfew60HAMpuAj87lJLuHFUbmk9RS9HQk7sf7w3n93Pt2TVWerHWuV/Aupr1
+         j+WOobk/+sfz5hYmothh82nKXxtC7GRXTAoQUdQPDRvvC5e4PF/JSkgL/bOOHVRQHYDA
+         UsaFwS6s+XAC0AsRsmfluxaCpGWSHT1eKdrv/3vY9U+RvVqHSVaNHo87oSGY+TVZk2XS
+         qB1M8nidAh7SCPu8y7OwvezJO8g/ghjQdPKuYzekba81XOo8E3HvsyjrLJzLMnoJj6Sq
+         z2cDUdTB6qmeLxR8Rv08s+wFQs5Xf9Mf6qO+bGDxwb1hKkHzrnzg0VCqn4vWA2Fu8H/D
+         Jzew==
+X-Gm-Message-State: AOAM530QXlyqGpBFNY2ONMMuh8WdJ52Uq1g8wAt+aPo5rmzMdLDaWr0q
+        poDGrst18/Px+4upT7tp/5AKgMFrvr1mfVteH6M=
+X-Google-Smtp-Source: ABdhPJxrSH4i2X0u3oUZOzDOAwQMCjvI1NddaW7w7hAOFZ0ymGzzHRD4/h3O1/BwueV6iiZ3GOD4WS85gsxeBn8WqLU=
+X-Received: by 2002:a9d:7dd3:: with SMTP id k19mr1451002otn.162.1612772822179;
+ Mon, 08 Feb 2021 00:27:02 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.870.git.1612711153591.gitgitgadget@gmail.com> <xmqq8s7z8zsg.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8s7z8zsg.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?B?6IOh5ZOy5a6B?= <adlternative@gmail.com>
-Date:   Mon, 8 Feb 2021 16:06:20 +0800
-Message-ID: <CAOLTT8TnkzU397Bnx1NdpJY-P4fYpTPzjtuzwPzLEpE_Si4Fjw@mail.gmail.com>
-Subject: Re: [PATCH] git-difftool-helper.sh: learn a new way skip to save point
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?6Zi/5b6354OIIHZpYSBHaXRHaXRHYWRnZXQ=?= 
-        <gitgitgadget@gmail.com>, Git List <git@vger.kernel.org>
+References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
+ <1d941c35076e8d515c8ff7ef01d6b9d8c092aaa9.1612651937.git.gitgitgadget@gmail.com>
+ <9fbed0f9-032e-3f99-8467-f8a9cfa2d8f1@gmail.com>
+In-Reply-To: <9fbed0f9-032e-3f99-8467-f8a9cfa2d8f1@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 8 Feb 2021 00:27:00 -0800
+Message-ID: <CABPp-BHPgUHFFzTd7suhqj=zEXQ61vxKU6X9gZvow5a=TLg3iw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] diffcore-rename: guide inexact rename detection based
+ on basenames
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=888=E6=97=
-=A5=E5=91=A8=E4=B8=80 =E4=B8=8A=E5=8D=883:04=E5=86=99=E9=81=93=EF=BC=9A
->
-> Sorry, but a not-yet-written reply went out by accident; please
-> discard it.
->
+Hi,
 
-Never mind. I have synchronized different signatures of git, gmail,
-github.
-
-> > `git difftool` only allow us to select file to view In turn.
+On Sun, Feb 7, 2021 at 6:38 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> Funny capitalization "In"?
->
-> > If there is a commit with many files and we exit in search,
-> > We will have to traverse list again to get the file diff which
-> > we want to see.Therefore,here is a new method:every time before
->
-> It makes it hard to lack SP after punctuation like '.', ',', and
-> ':'.
->
-> > we view the file diff,the current coordinates will be stored in
-> > `GIT_DIR/difftool_skip_to`,this file will be deleted after
-> > successful traversing.But if an unexpected exit occurred midway,
-> > git will view the coordinates in the save point,ask user if they
-> > want continue from the last saved point.This will improve the
-> > user experience.
->
-> I think the idea sounds good.  Admittedly I do not use difftool
-> myself, so I do not even know if and how the current end user
-> experience is so bad to require a patch like this (e.g. I do not
-> know how "unexpected exit" is "unexpected"---isn't it the end user
-> initiated action to "quit", or does the tool crash or something?).
->
-
-Generally speaking, It is the user of git manually use [Ctrl+c].
-However, if the program itself fails and causes the exit, I think
-this "save point" can also be well recorded, because it will be
-stored before view the diff.
-
-> So I won't be the best qualified person to judge if the solution
-> presented is the best one for the problem.
->
->     $ git shortlog --no-merges git-diff-helper.sh
->
-> might be a good way to find whom to ask for review and help.
->
-
-Thanks for reminding, I will -cc these authors.
-
-> Having said that, I do have one opinion on the "skip-to" filename.
-> I do not think it is wise to call it after the purpose you want to
-> use it for (i.e. "I want to use it to skip to the recorded
-> position").  Instead, if the file records "the last visited
-> position", it is better to name it after that
-> (e.g. "difftool-last-position".  If it records "the next file to be
-> visited", then "difftool-next-file" may be a good name).
->
-
-Indeed, "last-position" can better express this patch function.
-I will modify it according to your suggestions.
-
-> The reason is because your first design may be to visit the file the
-> user was visiting before the "crash" happened, but you may later
-> want to revise the design to allow the user to say "start at one
-> file before the file I was visiting" etc.  The location recorded in
-> the file may still be used to decide where the code skips to when
-> restarting, but no longer exactly where the code "skips to".  If you
-> name it after what it is, not what it is (currently) used for, the
-> design would become clearer.
->
-
-You are right,But I think based on this patch, the function of "skip to"
-may can be added later.
-
->
-> > diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-> > index 46af3e60b718..56ec1d38a7a1 100755
-> > --- a/git-difftool--helper.sh
-> > +++ b/git-difftool--helper.sh
-> > @@ -6,6 +6,7 @@
-> >  # Copyright (c) 2009, 2010 David Aguilar
+> On 2/6/21 5:52 PM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> >  TOOL_MODE=3Ddiff
-> > +GIT_DIFFTOOL_SKIP_TO_FILE=3D"$GIT_DIR/difftool-skip-to"
-> >  . git-mergetool--lib
+> > Make use of the new find_basename_matches() function added in the last
+> > two patches, to find renames more rapidly in cases where we can match u=
+p
+> > files based on basenames.
+>
+> This is a valuable heuristic.
+>
+> > For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
+> > performance work; instrument with trace2_region_* calls", 2020-10-28),
+> > this change improves the performance as follows:
 > >
-> >  # difftool.prompt controls the default prompt/no-prompt behavior
-> > @@ -40,6 +41,31 @@ launch_merge_tool () {
-> >       # the user with the real $MERGED name before launching $merge_too=
-l.
-> >       if should_prompt
-> >       then
-> > +             if test -f "$GIT_DIFFTOOL_SKIP_TO_FILE"
-> > +             then
-> > +                     SAVE_POINT_NUM=3D$(cat "$GIT_DIFFTOOL_SKIP_TO_FIL=
-E")
+> >                             Before                  After
+> >     no-renames:       13.815 s =C2=B1  0.062 s    13.138 s =C2=B1  0.08=
+6 s
+> >     mega-renames:   1799.937 s =C2=B1  0.493 s   169.488 s =C2=B1  0.49=
+4 s
+> >     just-one-mega:    51.289 s =C2=B1  0.019 s     5.061 s =C2=B1  0.01=
+7 s
 >
-> You can avoid the TOCTTOU race by
+> These numbers are very impressive.
 >
->                 if SAVE_POINT=3D$(cat 2>/dev/null "$GIT_DIFFTOOL_SKIP_TO_=
-FILE")
->                 then
->
-> but that wouldn't probably matter in this application.
->
-> > +                     if test $SAVE_POINT_NUM -le $GIT_DIFF_PATH_TOTAL =
-&&
-> > +                             test $SAVE_POINT_NUM -gt $GIT_DIFF_PATH_C=
-OUNTER
->
-> Think what happens if the file is corrupt and SAVE_POINT_NUM has (1)
-> an empty string, (2) garbage that has $IFS whitespace, (3) non
-> number, in it.  At least, quoting the variable inside double-quotes,
-> i.e. "$SAVE_POINT_NUM", would help an error condition reported
-> correctly at the runtime.
+> Before I get too deep into reviewing these patches, I do want
+> to make it clear that the speed-up is coming at the cost of
+> a behavior change. We are restricting the "best match" search
+> to be first among files with common base name (although maybe
+> I would use 'suffix'?). If we search for a rename among all
+> additions and deletions ending the ".txt" we might find a
+> similarity match that is 60% and declare that a rename, even
+> if there is a ".txt" -> ".md" pair that has a 70% match.
 
-Understand now.A variable with '""'can show correct error usage when
-these error conditions occur.
+I'm glad you all are open to possible behavioral changes, but I was
+proposing a much smaller behavioral change that is quite different
+than what you have suggested here.  Perhaps my wording was poor; I
+apologize for forgetting that "basename" has different meanings in
+different contexts.  Let me try again; I am not treating the filename
+extension as special in any manner here; by "basename" I just mean the
+portion of the path ignoring any leading directories.  Thus
+    src/foo.txt
+might be a good match against
+    source/foo.txt
+but this optimization as a preliminary step would not consider
+matching src/foo.txt against any of
+    source/bar.txt
+    source/foo.md
+since the basenames ('bar.txt' and 'foo.md') do not match our original
+file's basename ('foo.txt').
+
+Of course, if this preliminary optimization step fails to find another
+"foo.txt" to match src/foo.txt against (or finds more than one and
+thus doesn't compare against any of them), then the fallback inexact
+rename detection matrix might match it against either of those two
+latter paths, as it always has.
+
+> This could be documented in a test case, to demonstrate that
+> we are making this choice explicitly.
+>
+> For example, here is a test that passes now, but would
+> start failing with your patches (if I understand them
+> correctly):
+>
+> diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+> index c16486a9d41..e4c71fcf3be 100755
+> --- a/t/t4001-diff-rename.sh
+> +++ b/t/t4001-diff-rename.sh
+> @@ -262,4 +262,21 @@ test_expect_success 'diff-tree -l0 defaults to a big=
+ rename limit, not zero' '
+>         grep "myotherfile.*myfile" actual
+>  '
+>
+> +test_expect_success 'multiple similarity choices' '
+> +       test_write_lines line1 line2 line3 line4 line5 \
+> +                        line6 line7 line8 line9 line10 >delete.txt &&
+> +       git add delete.txt &&
+> +       git commit -m "base txt" &&
+> +
+> +       rm delete.txt &&
+> +       test_write_lines line1 line2 line3 line4 line5 \
+> +                         line6 line7 line8 >add.txt &&
+> +       test_write_lines line1 line2 line3 line4 line5 \
+> +                         line6 line7 line8 line9 >add.md &&
+> +       git add add.txt add.md &&
+> +       git commit -a -m "rename" &&
+> +       git diff-tree -M HEAD HEAD^ >actual &&
+> +       grep "add.md    delete.txt" actual
+> +'
+> +
+>  test_done
+>
+> Personally, I'm fine with making this assumption. All of
+> our renames are based on heuristics, so any opportunity
+> to reduce the number of content comparisons is a win in
+> my mind. We also don't report a rename unless there _is_
+> an add/delete pair that is sufficiently close in content.
+>
+> So, in this way, we are changing the optimization function
+> that is used to determine the "best" rename available. It
+> might be good to update documentation for how we choose
+> renames:
+
+Seems reasonable; I'll add some commentary below on the rules...
 
 >
-> > +                     then
-> > +                             # choice skip or not skip when check firs=
-t file.
->
-> A bit funny language.  Isn't the code clear enough without this comment?
->
-> > +                             if test $GIT_DIFF_PATH_COUNTER -eq "1"
->
-> No need to quote the constant "1"; quoting the variable side may be
-> a good practice, even though I think in this codepath we know
-> GIT_DIFF_PATH_COUNTER is a well-formatted number.
-
-Truly. I will use "DIFFTOOL_FIRST_NUM" instread of "1".
-
->
-> > +                             then
-> > +                                     printf "do you want to skip to la=
-st time difftool save point($SAVE_POINT_NUM) [Y/n]?"
->
-> "Skip" is probably an implementation detail that the user does not
-> have to know.  "Do you want to start from the last file you were
-> viewing?", perhaps?
-
-Yeah. Because users may choice another totally different diff,
-I will use "Do you want to start from the possible last file you
-were viewing?".
-
->
-> > +                                     read skip_ans || return
-> > +                                     if test "$skip_ans" =3D y
-> > +                                     then
-> > +                                             return
-> > +                                     fi
-> > +                             else
-> > +                                     return
-> > +                             fi
-> > +                     fi
-> > +             fi
-> > +             # write the current coordinates to .git/difftool-skip-to
-> > +             if test !$SAVE_POINT_NUM || $SAVE_POINT_NUM -ne $GIT_DIFF=
-_PATH_COUNTER
->
-> Have this code been tested?  I think "test" is missing after the
-> "||", and I am not quite sure what you are trying to check with
-> "test !$SAVE_POINT_NUM", either.  The "test" utility, when given a
-> non-operator string (like "!23" this one is checking when the last
-> visited path was the 23rd one), returns true if the string is not an
-> empty string, and by definition a string made by appending anything
-> after "!" would not be empty, so the entire "|| $SAVE_POINT_NUM ..."
-> have been skipped in your test, I think.
->
-
-Is indeed a mistake of mine, `test -z "$SAVE_POINT_NUM"` will be fine.
-Shell script syntax I will pay more attention.
-
-> Is writing the current position to the file unconditionally good
-> enough?  After all, we are about to go interactive with the user, so
-> the body of this "if" statement won't be performance critical in any
-> sense, no?  Or is there something more subtle going on and
-> correctness of the code depends on this condition?  I cannot quite
-> tell.
->
-> > +             then
-> > +                     echo $GIT_DIFF_PATH_COUNTER > $GIT_DIFFTOOL_SKIP_=
-TO_FILE
->
->                 echo "$GIT_DIFF_PATH_COUNTER" >"$GIT_DIFFTOOL_SKIP_TO_FIL=
-E"
->
-> cf. Documentation/CodingGuidelines
->
->  - Redirection operators should be written with space before, but no
->    space after them.  In other words, write 'echo test >"$file"'
->    instead of 'echo test> $file' or 'echo test > $file'.  Note that
->    even though it is not required by POSIX to double-quote the
->    redirection target in a variable (as shown above), our code does so
->    because some versions of bash issue a warning without the quotes.
->
->         (incorrect)
->         cat hello > world < universe
->         echo hello >$world
->
->         (correct)
->         cat hello >world <universe
->         echo hello >"$world"
->
->
->
+>   An add/delete pair is marked as a rename based on the
+>   following similarity function:
 >
 
-OK, I will read Documentation/CodingGuidelines more times.
+0. Unless break detection is on, files with the same fullname are
+considered the same file even if their content is completely
+different.  (With break detection turned on, we can have e.g. both
+src/foo.txt -> src/bar.txt and otherdir/baz.txt -> src/foo.txt, i.e.
+src/foo.txt can be both a source and a destination of a rename.)
 
-> > +             fi
-> >               printf "\nViewing (%s/%s): '%s'\n" "$GIT_DIFF_PATH_COUNTE=
-R" \
-> >                       "$GIT_DIFF_PATH_TOTAL" "$MERGED"
-> >               if use_ext_cmd
-> > @@ -102,4 +128,10 @@ else
-> >       done
-> >  fi
-> >
-> > +if test -f $GIT_DIFFTOOL_SKIP_TO_FILE &&
-> > +     test $GIT_DIFF_PATH_COUNTER -eq $GIT_DIFF_PATH_TOTAL
-> > +then
-> > +     rm $GIT_DIFFTOOL_SKIP_TO_FILE
-> > +
-> > +fi
-> >  exit 0
->
-> Wouldn't it be simpler to clear when we have reached at the end, i.e.
->
->         if test "$GIT_DIFF_PATH_COUNTER" -eq "$GIT_DIFF_PATH_TOTAL"
->         then
->                 rm -f "$GIT_DIFFTOOL_SKIP_TO_FILE"
->         fi
->
-> Thanks.
+[The merge machinery never turns break detection on, but
+diffcore-rename is used by git diff, git log, etc. too, so if we're
+documenting the rules we should cover all the cases.]
 
-Thanks for the advice and correct, Junio.
+>   1. If the blob content is identical, then those files
+>      are marked as a rename. (Should we break ties here
+>      based on the basename?)
+
+find_identical_files() already breaks ties based on basename_same(),
+yes.  So there's another area of the code that uses basenames to guide
+rename detection already, just in a much more limited fashion.
+
+>   2. Among pairs whose content matches the minimum
+>      similarity limit, we optimize for:
+>
+>      i. among files with the same basename (trailer
+>         after final '.') select pairs with highest
+>         similarity.
+
+This is an interesting idea, but is not what I implemented.  It is
+possible that your suggestion is also a useful optimization; it'd be
+hard to know without trying.  However, as noted in optimization batch
+8 that I'll be submitting later, I'm worried about having any
+optimization pre-steps doing more than O(1) comparisons per path (and
+here you suggest comparing each .txt file with all other .txt files);
+doing that can interact badly with optimization batch 9.
+Additionally, unless we do something to avoid re-comparing files again
+when doing the later all-unmatched-files-against-each-other check,
+then worst case behavior can approach twice as slow as the original
+code.
+
+Anyway, the explanation I'd use for the optimization I've added in
+this series is:
+
+       i. if looking through the two sets (of add pairs, and of delete
+pairs), there is exactly one file with the same basename from each
+set, and they have the minimum similarity, then mark them as a rename
+
+Optimization batch 8 will extend this particular rule.
+
+Optimization batches 9 and 10 will optimize the rename detection more,
+but instead of using rule changes, will instead pass in a list of
+"irrelevant" sources that can be skipped.  The trick is in determining
+source files that are irrelevant and why.  I'm not sure if we want to
+also mention in the rules that different areas of the code (the merge
+machinery, log --follow, etc.) can make the rename detection focus
+just on some "relevant" subset of files.  (Which will also touch on
+optimization batch 12.)
+
+>     ii. if no files with the same basename have the
+>         minimum similarity, then select pairs with
+>         highest similarity across all filenames.
+
+Yes, this will remain as the fallback at the very end.
+
+> The above was written quickly as an attempt, so it will
+> require careful editing to actually make sense to end
+> users.
+
+Yeah, and we probably also need to mention copy detection above
+somehow too, and add more precise wording about how break detection is
+involved.
