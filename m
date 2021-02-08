@@ -2,170 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1F7C433E9
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14AE6C433DB
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 20:16:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C5A564E6E
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 19:48:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC45C64DBD
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 20:16:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235152AbhBHTsa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 14:48:30 -0500
-Received: from mout.web.de ([212.227.17.12]:43561 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236475AbhBHTsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 14:48:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1612813567;
-        bh=q+dzEVAe5daiRmZOod3YCg2uECjRWFb7sPV54VnIHPs=;
-        h=X-UI-Sender-Class:From:Subject:To:References:Date:In-Reply-To;
-        b=RhYetEirJBppGJ3W/khEzre+AZg2lwz6Xv//a/I9J4xZtgj3a0N04Ttpy4qcFe8Ew
-         GySa7QM+DtiddV6iSSKPfCWRp2SV7ef/CE3KcGxFXBKRWFLChijFypOHvTOLtdcvv7
-         nmodfm2ncL/W7yHKspbge9/pnSpMF1TB6Uq8dEHQ=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1MoeY7-1lfoOc1Kh7-00p7mr; Mon, 08 Feb 2021 20:46:07 +0100
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: Re: gitattributes export-subst and software versioning
-To:     Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
-Message-ID: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
-Date:   Mon, 8 Feb 2021 20:46:06 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.0
+        id S236615AbhBHUQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 15:16:05 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52190 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236410AbhBHUPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 15:15:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1BB3122D8C;
+        Mon,  8 Feb 2021 15:13:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yB/zlUrQc2jofhXfmT8xzH8C4gw=; b=fqmRZl
+        /FP19NF2Md7nQm6C2dPhnyTVWkjCSbMXJDzvO80OZ89C72vnaN8kJbmleEIvMqOV
+        fgKwwsBJA1Q6W6pNixw+VvuKggHF+bCVGTo3EM7QberUbHw3f1sUYXCHluCuCWNu
+        G0VnAyRnb/AFIaMbNc6tRYu7t+h6O4fafo+Qo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jtY7y1nXLWHhCACDNfncOQ3x92DY/W1c
+        3ANZYfo3dHLMRdw/ksH2m8+54Y2qpk/EVqIXnz6AEviNhwQl0C0bfaIsK5CEfbyB
+        tr6uIOqM0koPOh9GTZ+7WGgUajaKJKCU5GbfX0v9xBt5kj79ujg0lXJm8xtrYGGX
+        Qe16dLWCNwY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A9FA2122D8B;
+        Mon,  8 Feb 2021 15:13:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E3D4C122D8A;
+        Mon,  8 Feb 2021 15:13:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v2] git-difftool-helper.sh: learn a new way go back to
+ last save point
+References: <pull.870.git.1612711153591.gitgitgadget@gmail.com>
+        <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com>
+Date:   Mon, 08 Feb 2021 12:13:54 -0800
+In-Reply-To: <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com> (ZheNing
+        Hu via GitGitGadget's message of "Mon, 08 Feb 2021 17:02:23 +0000")
+Message-ID: <xmqqczxa5nct.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:9b5Rw+7Ee0FDHJLY9pucRGG1FvGayqMBbIsfa4x8Iz6dx1ysYNn
- RBK3gGBrbgBC1mgjXeuHjuSn4boN9TQqmmGPzt4iLE/nVO16R1yUFnKxqH2CMUWQZ0yR9CJ
- J3QrwpXT3PUbJ6dS5Wfggm4h9coyKR3+glcTI5ZCgTpCage02306TH7wsOwi6z9YQexSW2b
- PvHSXYg47D5yG3raOtEWQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oYGS7FtHrss=:jtNrhBJXEb0RFJMvSuXSSD
- J+a5UtgrpkWB6wYEV3HujaDJ6xqyNjH24V7AvAidKq6OlCpa0Ebe0UBPVpL0mSjZgK/5YBakr
- vIzT8dSCQ6wuSc1ke0Wqks8jT//KuAflqceCyTyTaUvOoFiPkGOVdCg4vC3pHDLMj3LyJO0V+
- bvY3aPc9DIBTC808BbSTHBPnUpkI5AOwlIXzTZcvNGeJbADS6v6zygjE0fLtmUzaGSyAlp+ah
- HOaPnogHF/njKBDT2UR7id0F0MagC+WlZjbtgfESQVMkGaKI0EDqQegb0BoecHI2w/ol8PMTF
- Jn34jmLKkCeqxdiieOe1tgiL9kjl/3VAvu1y8WC/d39DhijeHOxdZQQY75oLyuwjBx4v/8AWt
- YVPo2tg/x4Cn/8eOToE+9KhBPsZT67CvGGcn0/y6FD+SSPPG/INpdPIhb9uLd81jx9JEGvHsX
- 9p/3qwFJoQIgQ6lMgKqZzJxFYVozTqM4Ohv3wP/1WbSF9+A7soPsHAcn2HKvYGyHDGVspHxUH
- 5Q4M6bd8pWObK4HuiMBexqGzgvzy296rdhzgB7QeKeUSKGH8PxeXgJzhOJvSfPY8egApOZLCA
- eIGngeOd8B7+2K/ZlKLRrcO2gRtSgYxJIn4TY5bl5qPYW79p2RPgKuQPHIxgf/cW4vUS6lNs+
- CAnsCras/Xergd09VuSCik4iK+7ttHVp+kHj255YypmwPfL/T4tNJUw4v9uyqFndhh2Mye3NL
- PnTH8kP2lTGRHtipJ9P5C8RaZeoq02RsMoCg13d6bb/Kei/P2i5h2xh6dFcZc9Z3HX/tFlz30
- XPFw8CWOhEVKmBCDHLFuj+Y1qbKIWk8DdZA5qoX+PO8ttZhFPqN45pTCwVqKEEz33ko3oMqbg
- B1i32oVB1ANLB7glf/ag==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2BC6AD3C-6A4A-11EB-A5DF-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.01.21 um 01:32 schrieb Eli Schwartz:
-> Periodically, I wonder if there is some better way for managing
-> tagged releases for software in git. Current state of the art seems
-> to be "write a custom Makefile that takes a version and seds out the
-> existing version, then runs git tag for you". Inelegant solutions
-> also abound; people release code that does not build properly unless
-> you build it from a git checkout so it can run git describe. (There
-> are half a dozen individually popular but mutually exclusive python
-> ecosystems for this, in fact, all of them varying degrees of
-> broken.)
->
-> git does have a way to automatically insert metadata via the
-> export-subst attribute on a file, but it's very awkward to use and
-> you cannot get much info out of it.
->
-> # get tags into a file, only on exact match:
->
-> $ cat VERSION $Format:%d$ $Format:%D$
->
-> $ git archive HEAD | bsdtar -xOf - VERSION (HEAD -> master, tag:
-> 1.0) HEAD -> master, tag: 1.0
->
-> With sufficient regex, you can get a release out of this, but it
-> doesn't work if you try getting an autogenerated tarball for a commit
-> that isn't exactly a release.
->
-> $ git commit --allow-empty -m ... $ git archive HEAD | bsdtar -xOf -
-> VERSION (HEAD -> master) HEAD -> master
->
-> I think it would be much, much nicer if there was a format
-> placeholder for git describe.
+"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Totally.
+> diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
+> index 46af3e60b718..a01aa7c9d551 100755
+> --- a/git-difftool--helper.sh
+> +++ b/git-difftool--helper.sh
+> @@ -6,6 +6,8 @@
+>  # Copyright (c) 2009, 2010 David Aguilar
+>  
+>  TOOL_MODE=diff
+> +GIT_DIFFTOOL_LAST_POSITION="$GIT_DIR/difftool-last-position"
+> +DIFFTOOL_FIRST_NUM="1"
 
-> It doesn't even need option support -- the default output in most
-> cases could be a replacement for or fall back to existing invocations
-> of the "git" program, followed by post-processing with e.g. "sed".
->
-> However, the existence of current pretty formats such as %C() or
-> %(trailer:options) implies that options could be passed in a
-> git-describe format too. e.g. %(describe:--long --tags --match=3D"v*")
->
-> Thoughts?
+Do we need this constant?  I do not think it makes the resulting
+code easier to follow.
 
-git archive uses the pretty format code for export-subst.  It is used by
-git log and others as well.  git describe uses all object flags to find
-the best description.  Simply plugging it into the pretty format code
-would clash with the object flag use of git log.
+>  . git-mergetool--lib
+>  
+>  # difftool.prompt controls the default prompt/no-prompt behavior
+> @@ -40,6 +42,30 @@ launch_merge_tool () {
+>  	# the user with the real $MERGED name before launching $merge_tool.
+>  	if should_prompt
+>  	then
+> +		if test -f "$GIT_DIFFTOOL_LAST_POSITION"
+> +		then
+> +			if SAVE_POINT_NUM=$(cat 2>/dev/null "$GIT_DIFFTOOL_LAST_POSITION") &&
+> +				test "$SAVE_POINT_NUM" -le "$GIT_DIFF_PATH_TOTAL" &&
+> +					test "$SAVE_POINT_NUM" -gt "$GIT_DIFF_PATH_COUNTER"
+> +			then
 
-And replacing the flags with a commit slab doesn't seem to be enough,
-either -- I get good results lots of commits, but for some git log with
-the new placeholder would just show some nonsensical output, as it
-seems to get the depth calculation wrong for them somehow.
+No need to push the subsequent lines that far to the right,
+especially when your variable names are already overly long.  It
+just makes things harder to read.
 
-Anyway, we can of course do something like in the patch below.  It
-works, it's easy, it's fast enough for git archive, and it's quite
-hideous.  Hopefully it's bad enough to motivate someone to come up with
-a cleaner, faster solution.
+			if test -r "$GIT_DIFFTOOL_LAST_POSITION" &&
+			   SAVE_POINT_NUM=$(cat "$GIT_DIFFTOOL_LAST_POSITION") &&
+			   test "$SAVE_POINT_NUM" -le "$GIT_DIFF_PATH_TOTAL" &&
+			   test "$SAVE_POINT_NUM" -gt "$GIT_DIFF_PATH_COUNTER"
+			then
 
-Ren=C3=A9
+> +				if test "$GIT_DIFF_PATH_COUNTER" -eq "$DIFFTOOL_FIRST_NUM"
+> +				then
+> +					printf "Do you want to start from the possible last file you were viewing? [Y/n]?"
 
+Where does that "possible" come from?  If the reason is "We might
+have miscomputed or misrecorded an incorrect last position", we
+probably should work harder to make sure we don't ;-)
 
-=2D--
- pretty.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+At this point in the code, do we have the _name_ of the file we are
+going to skip to readily available, or do we actually need to seek
+to that position before we can find it out?
 
-diff --git a/pretty.c b/pretty.c
-index 3922f6f9f2..bbfb5ca3e7 100644
-=2D-- a/pretty.c
-+++ b/pretty.c
-@@ -12,6 +12,7 @@
- #include "reflog-walk.h"
- #include "gpg-interface.h"
- #include "trailer.h"
-+#include "run-command.h"
+	You were looking at 'hello-world.txt' the last time.
+	Do you want to restart from there [Y/n]?
 
- static char *user_format;
- static struct cmt_fmt_map {
-@@ -1213,6 +1214,21 @@ static size_t format_commit_one(struct strbuf *sb, =
-/* in UTF-8 */
- 		return parse_padding_placeholder(placeholder, c);
- 	}
+would be far easier to answer for an end-user than an unspecified
+"possible last file".
 
-+	if (skip_prefix(placeholder, "(describe)", &arg)) {
-+		struct child_process cmd =3D CHILD_PROCESS_INIT;
-+		struct strbuf out =3D STRBUF_INIT;
-+
-+		cmd.git_cmd =3D 1;
-+		strvec_push(&cmd.args, "describe");
-+		strvec_push(&cmd.args, "--always");
-+		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
-+		pipe_command(&cmd, NULL, 0, &out, 0, NULL, 0);
-+		strbuf_rtrim(&out);
-+		strbuf_addbuf(sb, &out);
-+		strbuf_release(&out);
-+		return arg - placeholder;
-+	}
-+
- 	/* these depend on the commit */
- 	if (!commit->object.parsed)
- 		parse_object(the_repository, &commit->object.oid);
-=2D-
-2.30.0
+> +		fi
+> +		if test -z "$SAVE_POINT_NUM" ||
+> +			test "$SAVE_POINT_NUM" -ne "$GIT_DIFF_PATH_COUNTER"
 
+Ditto about indentation.
+
+Is this behaviour something we can write a test for in
+t/t7800-difftool.sh, by the way?
+
+Other than these, i.e. (cosmetic) indentation and overly long lines
+(ui) giving filename is easier to work with for the users and (dev)
+lack of tests, looking quite good.
+
+Thanks.
