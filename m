@@ -2,90 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD710C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 04:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1BB7C433DB
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 05:42:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 866AB64D73
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 04:32:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B107364E25
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 05:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbhBHEcb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Feb 2021 23:32:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbhBHEcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Feb 2021 23:32:07 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C08C06174A
-        for <git@vger.kernel.org>; Sun,  7 Feb 2021 20:31:26 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id l23so1351051otn.10
-        for <git@vger.kernel.org>; Sun, 07 Feb 2021 20:31:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Jyyf/NeyE9ESW12//Egy9BzvJbvMemHA2R5Lb6C0kqs=;
-        b=dydTSAk+7562NscwOn7CacCjj6oDuOab0gyFwUHImh1hVcB8Ae2LF0hcFlpuCoEq2P
-         t/uqvBv5r0jwVqPGuBtl+MpTL+gotj0lDlOqPfZuEodf80/aqJTxhxTkESq5bFV3gj8B
-         HxAqe7/RrSP58pdU8INt2UEipPJ7SefRmCcw6N86u0kp9vLTd3BEwPMjAwiTuPaIRkSs
-         q0SMm4fdDq6iCV2gWhwrN+D+FNDn4gXqfawphXx9Ih+g1wkJ5DMM153RJGfKWdf8c02j
-         R+nmga8ZIOQjH2MX66oGpl/7w6zr9JNzoAeWpqVan0uE/UXIf1VD2PnPGG4B/UK3Qpdb
-         PomQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Jyyf/NeyE9ESW12//Egy9BzvJbvMemHA2R5Lb6C0kqs=;
-        b=rj9NruMfkYPO2c6rNNsRyzcnSIflhDfccBqwn09WGl9gJTVLUYvaVx4NBSS4ZDdpEP
-         uS6Q6/TMt7hRhv3OaTHpH/ZrYyqX1wdZt93fipL44LYAsslHNyCBk5uYW/XIwDTW/DSy
-         8wbmV1/7XiC4ohBFlv9Bq/MAoMoinfmBRR0TlPVo26GPYlJNvzgbLf15wHdhPwBU9NPm
-         +cRH9NBQTvbQaSyCIe6fUEt0BxK1d2R2U1xm/Z010R7xNYXfzbQP7MQP5NYcGOQEubpF
-         bTRS9Foy+KeejHrXwG4vMu9WlOXHUHAYjYh1IilNcPtb5IcKERu57Un5Ovxi9xwMlv63
-         ZYlA==
-X-Gm-Message-State: AOAM5304W2VI7UXuae46/oaTCz+pvYi8YWoQCc/dp7Zm94brZ9TWID6L
-        kk52ehkG51vb3IiNNdo9S9XJm2G91Ri6sk3XwLo=
-X-Google-Smtp-Source: ABdhPJxg+DoEHJKflB79TmLFoAuOZFPbW5W3BAivUnYUMq4A8l70etbgfq5Dsg60s8IY6dGvb6NxBBaP0vMSIiq9i5k=
-X-Received: by 2002:a9d:7550:: with SMTP id b16mr4916876otl.184.1612758686343;
- Sun, 07 Feb 2021 20:31:26 -0800 (PST)
+        id S229565AbhBHFmo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 00:42:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58921 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229482AbhBHFmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 00:42:42 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B529111DC5C;
+        Mon,  8 Feb 2021 00:42:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Pgh5ZOEWUgDW
+        qSKR3tOrQyt19u4=; b=ESyTk6vf01fWWHrZ3rtXNpUbQcoZh3hB2b2BWppo/TmW
+        x5Bge8kjLmgHhBdYYnLNQejw8oeIw92t6yUWlhMgJG2Rob0Cf0v/P1BOKu3bqmNU
+        mdh23oqu0w5nyxvqtakv05UC+jElBfTX9V2Qec57nRFSB9sUO2zhdjZyez70kKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GvfHKd
+        Tngiw685KHkmEt9pSV+Y2ofT7hmqzna+aQ+tsDOVHpZw2FZZ63gbc5UaxsQyBlah
+        SG0NlIErVoEtL1PTen/9GzUv0mtGTIjmidewL3vsOHBWn4Cq78jfnUVzFljbkT9F
+        QknWz2W7YzdRx/nbCgVFqgGn3tYSPiTgTeUww=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9DD2211DC5A;
+        Mon,  8 Feb 2021 00:42:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2B3711DC59;
+        Mon,  8 Feb 2021 00:41:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
+        Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 15/17] midx: use 64-bit multiplication for chunk sizes
+References: <pull.848.git.1611676886.gitgitgadget@gmail.com>
+        <pull.848.v2.git.1611759716.gitgitgadget@gmail.com>
+        <83d292532a0fa3f3a0ad343421be4a99a03471d0.1611759716.git.gitgitgadget@gmail.com>
+        <xmqq8s834c4s.fsf@gitster.c.googlers.com>
+        <20210207195053.GA1016223@szeder.dev>
+Date:   Sun, 07 Feb 2021 21:41:56 -0800
+In-Reply-To: <20210207195053.GA1016223@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message
+        of "Sun, 7 Feb 2021 20:50:53 +0100")
+Message-ID: <xmqqczxb6rq3.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <20210207181439.1178-1-charvi077@gmail.com> <CAPig+cTQaP_FvixPiwosPybxy-C91pvV_FvQfwf7cO0QGpH7UQ@mail.gmail.com>
-In-Reply-To: <CAPig+cTQaP_FvixPiwosPybxy-C91pvV_FvQfwf7cO0QGpH7UQ@mail.gmail.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Mon, 8 Feb 2021 10:01:15 +0530
-Message-ID: <CAPSFM5fG1jSUM1tuw8UCzkLigpM9SqVqDO=wA1CQ_fs5Xy+04w@mail.gmail.com>
-Subject: Re: [PATCH 0/7][Outreachy] Improve the 'fixup [-C | -c]' in
- interactive rebase
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5BC6CB04-69D0-11EB-8683-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 8 Feb 2021 at 00:28, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Sun, Feb 7, 2021 at 1:18 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > This patch series is build on the top of "cm/rebase-i" in the 'next' branch and
-> > improves it. It fixup the source code of 'fixup [-C | -c]' command in the
-> > sequencer, do some fixes in rebase -i, improves the 'fixup_-C' like commands
-> > in lib-rebase.sh, update the test-script 't3437' and fixes a typo in the
-> > documentation.
->
-> Thanks for working on this. I looked over the entire series and left a
-> few minor comments. As mentioned in my [6/7] review, you might also
-> want to consider splitting that patch into several patches (though
-> it's not clear if the extra work of doing so is warranted). Anyhow,
-> aside from some botched indentation in [6/7], it all looked clean.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Thanks for the corrections. I admit there are few silly mistakes, will
-fixup all and
-also split [6/7] in the next version.
+> No, that patch also removes lines like:=20
+>
+> -       chunk_offsets[cur_chunk] =3D chunk_offsets[cur_chunk - 1] + ctx=
+.entries_nr * the_hash_algo->rawsz;
+>
+> -               chunk_offsets[cur_chunk] =3D chunk_offsets[cur_chunk - =
+1] +
+> -                                          ctx.num_large_offsets * MIDX=
+_CHUNK_LARGE_OFFSET_WIDTH;
 
-Thanks and Regards,
-Charvi
+OK.  In other words, the above was replaced in the same patch with
+
+    add_chunk(...., U32 * U32);
+
+where the called function expects the result of the multiplication
+as size_t in its function prototype.  It is a bit sad that U32*U32
+to compute the argument that is to be passed as U64 must be casted
+as (uint64_t)U32*U32 by the caller X-<.
+
+The original that the above replaced, shown in your quote, is:
+
+    U64 =3D U64 + U32 * U32;
+
+I also wish that the fact that it is added to U64 is sufficient not
+to require the RHS to be written as U64 + (uint64_t) U32 * U32 (in
+other words, the original that was removed was OK without cast).
+
+Sad.
+
