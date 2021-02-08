@@ -2,281 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75076C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 17:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CFCC433DB
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 17:38:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4329264DFF
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 17:33:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AABAE64E7D
+	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 17:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234262AbhBHRdW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 12:33:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53672 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234160AbhBHRbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 12:31:07 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD457C06178B
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 09:30:26 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id s3so19376911edi.7
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 09:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arrikto-com.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:cc:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=EClfM6LFleFbxquMFhjr7QnlQ3jjAnDkolp/mVCnJk0=;
-        b=teiQN/QIOuN5WlD8cjN/CBNJFg5JueALvyGtcb5AcJbIGD1VtWZbf7Vbzdp/rRPsZR
-         Xvy9qBOSCP+WneDYrsVTWXWOYrpZyNIfofkMfrj2kfJ92/1pBNW05BApn+XVEwv3U0zZ
-         6BBURjMaRN2XXbDP3tTblqiv9lgCosDRlWaoY0st8NNhStSq23UV5KtD48nE0MnUyrv4
-         Mf3DOj3JJ/o2qVbHI1040YaMTFlPvmI6S5kr5M96EV7/o8xX1j42xr3eKBp7+l1Sf9tc
-         VUuEy6YyDeZsz5SSHOWLdCkABWX2qzz0AAnHsbo0G+mJDAk6Ja2/X86pYZL5ZeZiXoLj
-         vmKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:cc:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=EClfM6LFleFbxquMFhjr7QnlQ3jjAnDkolp/mVCnJk0=;
-        b=YiZcFD1RXugOeu6/brs5/5xLsBdiJnSj6xduYaPVObMAUq530rwa7QxT6pzJkgCF5a
-         JJvt7k5GaW1zxbFPxHvLx5C9m+6gS7YaqUz2Rjat1gsY7EDRo2Z5e14ewAy1uXeQak6U
-         rfOiL1mG8cescqoXpzUJvsJEXIteXrm6Pf+KeFvNoe5FahRDQ0LLL230w67Dvh7/x1Ka
-         5kJ0l8j3ASWblghHstv46xEZZhQ91KmUtZ/SLUpuHxu6pmL25C245wK6UKs0iy+ioqrv
-         yxKAi8MnbzvPiC07XDo5g0AWM/g1A+wgMWsoaonXIkkKqJgSk/j2YyqnIOSb/Sqxrg7C
-         rBKQ==
-X-Gm-Message-State: AOAM530bqBNVr+A5aGGnRejtdZ7WN6yBDwnM6ebBgUK3r6kO6j3AxArx
-        2TJKPYrtcXNbOZ/1u1trSBZ42g4Jq69GHg==
-X-Google-Smtp-Source: ABdhPJw/Cta8oqAVTbuHIbcIeANWVJZYak3w3HroaUTJ1WENRTwX95U0CL29WfBv8eDMHcE+6DjMeQ==
-X-Received: by 2002:a05:6402:1014:: with SMTP id c20mr8656484edu.53.1612805425485;
-        Mon, 08 Feb 2021 09:30:25 -0800 (PST)
-Received: from [192.168.1.122] (adsl-226.176.58.195.tellas.gr. [176.58.195.226])
-        by smtp.gmail.com with ESMTPSA id w26sm4344768edq.46.2021.02.08.09.30.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Feb 2021 09:30:24 -0800 (PST)
-To:     git@vger.kernel.org
-From:   Yannis Zarkadas <yanniszark@arrikto.com>
-Subject: Directory rename detection breaks if repo has a lot of
- similar/identical files
-Cc:     vkoukis@arrikto.com
-Message-ID: <4ceea1ec-59fe-af8e-b91d-aced4e6a1b0f@arrikto.com>
-Date:   Mon, 8 Feb 2021 19:30:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+        id S232985AbhBHRie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 12:38:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52476 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234998AbhBHRiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 12:38:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 24AD8AECD5;
+        Mon,  8 Feb 2021 12:37:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2mIytjy5Hxmu0y/I+aZT94wL1jI=; b=x3IF5H
+        RdCMJqx+g7lGNJzlI+8k7SeBZVMghh3WLeN+2Ml95+GqZ1xvqNl5d5syeCaU0TFC
+        KVUhWpMbCNHHKBfmc3/YWjYd7PEhqW5+BQ5jKCjZ+fNPPUSexvNI+g9o8UDPqIiO
+        XyG4NhMBnroknxtqoiPiQdGxlnr5qkHh8CJEY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RcPOY3/OSJxexiPqcrHWa4TOvehym9mZ
+        W48dk01Aiyk/jGL1de4rwwBWcN8HBBvHKXGmc/tdOxEyAiThfG2LV6dJhhlUp4C0
+        t1OH03V8k9SxTvweNwCX0A0e84zUtFbDOOmoudAxoB4g7hJ6jT+ZWM+d/6Y7yAGZ
+        eYifCMAySrg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BB1EAECD4;
+        Mon,  8 Feb 2021 12:37:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 86FA6AECD3;
+        Mon,  8 Feb 2021 12:37:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] diffcore-rename: guide inexact rename detection
+ based on basenames
+References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
+        <1d941c35076e8d515c8ff7ef01d6b9d8c092aaa9.1612651937.git.gitgitgadget@gmail.com>
+        <9fbed0f9-032e-3f99-8467-f8a9cfa2d8f1@gmail.com>
+        <xmqqsg677j2u.fsf@gitster.c.googlers.com>
+        <CABPp-BGAgi+ooq==ZY2tWif0--W4Cruz02GDvxueHe6GjQEAXQ@mail.gmail.com>
+Date:   Mon, 08 Feb 2021 09:37:23 -0800
+In-Reply-To: <CABPp-BGAgi+ooq==ZY2tWif0--W4Cruz02GDvxueHe6GjQEAXQ@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 8 Feb 2021 00:38:00 -0800")
+Message-ID: <xmqq4kim7964.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E14B430-6A34-11EB-998B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone! I believe I have found a use-case that breaks git's directory
-rename detection algorithm. In short, when a repo has a lot of identical 
-files,
-directory rename detection breaks. I believe this happens because git feeds
-misleading renames to the directory rename detection algorithm.
+Elijah Newren <newren@gmail.com> writes:
 
-For example, suppose a changeset (COMMIT_A, COMMIT_B). If `x/a` and `y/b` in
-COMMIT_A are the same as `new/x/a` and `new/y/b` in COMMIT_B, then git may
-decide the renames are `x/a -> new/y/b` and `y/b -> new/x/a` instead of
-`x/a -> new/x/a` and `y/b -> new/y/b`. Of course, this confuses the 
-directory
-rename detection algorithm.
+> idea is still possible.  For example, A.txt could have been compared
+> to source/some-module/A.txt.  And I don't do anything in the final
+> "full matrix" stage to avoid re-comparing those two files again.
+> However, it is worth noting that A.txt will have been compared to at
+> most one other file, not N files.
 
-To make a long story short (I am including all the individual steps to
-investigate this below), it seems the following enhancement would work 
-to solve
-this particular problem:
+Sorry, but where does this "at most one other file" come from?  "It
+is rare to remove source/some-other-module/A.txt at the same time
+while the above is happening"?  If so, yes, that sounds like a
+sensible thing.
 
-If file `a/base/base.txt` in COMMIT_A is the same as 
-`new/a/base/base.txt` AND
-`new/z/base/base.txt` in COMMIT_B, then prefer the rename
-`a/base/base.txt->new/a/base/base.txt` over the rename
-`a/base/base.txt->new/z/base/base.txt`. I have included a more generic 
-algorithm
-below.
+> 1) The most expensive comparison is the first one,...
 
+Yes. we keep the spanhash table across comparison.
 
-Problem
-=======
+> 2) This would only save us from at most N comparisons in the N x M
+> matrix (since no file in this optimization is compared to more than
+> one other)
 
-The original repo was very large, so I tried to find a simpler example that
-caused git to detect directory renames incorrectly. I managed to create such
-an environment with the following script:
-https://gist.github.com/yanniszark/4165bd8f92d9838e143495e5a8df2ce0
+True, but doesn't rename_src[] and rename_dst[] entries have the
+original pathname, where you can see A.txt and some-module/A.txt
+share the same filename part cheaply?  Is that more expensive than
+comparing spanhash tables?
 
-The script creates a repo (/tmp/demo) with 3 branches:
-- *upstream*: Contains a lot of folders, with some files being identical 
-across
-   folders.
-- *upstream-restructured*: Same as upstream, but with all folders moved 
-under
-   `new/`. For example, `a/`->`new/a`
-- *downstream*: Based on upstream, adds some extra files under every 
-folder of
-   upstream.
+Having asked these, I do think it is not worth pursuing, especially
+because I agree with Derrick that this "we see a new file whose name
+is the same as the one deleted from a different directory, so if
+they are similar enough, let's declare victory and not bother
+finding a better match" needs to be used with higher similarity bar
+than the normal one.  If -M60 says "only consider pairs that are
+with at least 60% similarity index", finding one at 60% similarity
+and stopping at it only because the pair looks to move a file from
+one directory to another directory while retaining the same name,
+rejecting other paring, feels a bit too crude a heuristics.  And if
+we require higher similarity levels to short-circuit, the later full
+matrix stage won't be helped with "we must have already rejected"
+logic.  A.txt and some-module/A.txt may not have been similar enough
+to short-circuit and reject others in the earlier part, but the
+full-matrix part work at a lower bar, which may consider the pair
+good enough to keep as match candidates.
 
-Then, it tries to rebase downstream ontop of upstream-restructured. Git 
-detects
-the WRONG directory rename `z/->new/a/` and fails with a wrong conflict.
-
-$ git -c merge.directoryRenames=true rebase -v -m --onto 
-upstream-restructured upstream
-Path updated: z/overlays/develop/overlay.txt added in 9bf94f0 (Add 
-overlay for z) inside a directory that was renamed in HEAD; moving it to 
-new/a/overlays/develop/overlay.txt.
-CONFLICT (rename/rename): Rename 
-a/overlays/develop/overlay.txt->new/a/overlays/develop/overlay.txt in 
-HEAD. Rename 
-z/overlays/develop/overlay.txt->new/a/overlays/develop/overlay.txt in 
-9bf94f0 (Add overlay for z)
-
-
-We are going to work with this example for the rest of this mail.
-
-
-Analysis
-========
-
-After learning a bit about how git works internally, I found out:
-- Rebasing with the merge backend (`-m`) uses cherry-pick underneath.
-- Cherry-pick frames the problem as a merge, with the merge-base being the
-   parent of the REMOTE commit.
-- The merge algorithm accepts 3 inputs (BASE, LOCAL, REMOTE), computes the
-   changesets of (BASE, LOCAL) and (BASE, REMOTE), and finally combines 
-them.
-
-
-With this background in mind, I run the demo script and got this message:
-
-Path updated: z/overlays/develop/overlay.txt added in 9bf94f0 (Add 
-overlay for z) inside a directory that was renamed in HEAD; moving it to 
-new/a/overlays/develop/overlay.txt.
-CONFLICT (rename/rename): Rename 
-a/overlays/develop/overlay.txt->new/a/overlays/develop/overlay.txt in 
-HEAD. Rename 
-z/overlays/develop/overlay.txt->new/a/overlays/develop/overlay.txt in 
-9bf94f0 (Add overlay for z)
-
-Applying our knowledge of rebase, cherry-pick and merge from above, let's
-calculate the BASE, LOCAL and REMOTE commits.
-
-LOCAL=HEAD
-REMOTE=9bf94f0  # same as the error message
-BASE=REMOTE~    # based on how cherry-pick works
-
-At this point, we can peek at what changesets git's merge algorithm is 
-seeing:
-
-git diff --find-renames --stat $BASE $LOCAL
-git diff --find-renames --stat $BASE $REMOTE
-
-The first command is the interesting one and returns suspicious entries 
-like the
-following:
-
-{z => new/a}/base/base.txt                   | 0
-{a => new/a}/overlays/develop/overlay.txt    | 0
-{a => new/a}/overlays/upstream/file_1.txt    | 0
-{z => new/a}/overlays/upstream/file_3.txt    | 0
-{z => new/a}/overlays/upstream/file_5.txt    | 0
-{a => new/a}/overlays/upstream/file_a.txt    | 0
-{z => new/a}/overlays/upstream/overlay.txt   | 0
-[...]
-{a => new/z}/base/base.txt                   | 0
-{z => new/z}/overlays/upstream/file_1.txt    | 0
-{a => new/z}/overlays/upstream/file_3.txt    | 0
-{a => new/z}/overlays/upstream/file_5.txt    | 0
-{z => new/z}/overlays/upstream/file_z.txt    | 0
-{a => new/z}/overlays/upstream/overlay.txt   | 0
-
-
-Hypothesis
-==========
-
-At this point, I formed a hypothesis:
-- git detects renames between (BASE, LOCAL) as they appear in the `git diff`
-   command above.
-- git feeds those renames in the directory rename detection algorithm, which
-   gets confused about what directory renames actually happened.
-
-
-Confirming the Hypothesis
-=========================
-
-I tried to confirm my hypothesis by diving in the source code. My C is a bit
-rusty, but I managed to find out the function that handles the renames, 
-called
-`detect_and_process_renames` (inside `merge-recursive.c`). The following 
-part
-is particularly interesting:
-
-head_pairs = get_diffpairs(opt, common, head);
-merge_pairs = get_diffpairs(opt, common, merge);
-[...]
-     dir_re_head = get_directory_renames(head_pairs);
-     dir_re_merge = get_directory_renames(merge_pairs);
-
-The first part is computing the changeset for (BASE, LOCAL) and (BASE, 
-REMOTE).
-The second part is feeding the changeset to the get_directory_renames 
-function
-for calculating directory renames.
-
-By inspecting the `head_pairs` variable with my debugger, I confirmed 
-that the
-changeset is the one I saw with `git diff`. Indeed, git is feeding the
-`get_directory_renames` function confusing renames.
-
-
-Proposed Enhancement
-====================
-
-Now that we know what is most likely going on, I can describe what I 
-would like
-git to do.
-
-Intuition: If file `a/base/base.txt` in BASE is the same as
-`new/a/base/base.txt` AND `new/z/base/base.txt` in LOCAL, then prefer 
-the rename
-`a/base/base.txt->new/a/base/base.txt` over the rename
-`a/base/base.txt->new/z/base/base.txt`.
-
-In other words, if multiple rename candidates are possible, prefer the 
-ones that
-look more like the user move the file/folder from one path to another.
-
-Possible Algorithm:
-
-More generally, if files `A1`, `A2`, ..., `An` in commit A are the same 
-as `B1`,
-`B2`, `Bm` in commit B, then:
-- Calculate a sorted list of scores `S(Ai, Bj), i=1,...,n and 
-j=1,...,m`, where
-   `S(Ai, Bj)` is the length of the suffix match of `Ai` and `Bj`.
-- Walk the sorted list and for each element:
-     - If `Ai` and `Bj` is not used in a rename yet, apply the rename.
-     - Stop when you have found `min(n, m)` renames.
-- The remaining `max(n, m) - min(n, m)` files are either deletes (if 
-they are on
-   commit A) or copies (if they are on commit B).
-
-
-Conclusion
-==========
-
-I want to attempt to implement something like what I described above, when I
-have more time to get familiar with diff's internals. In the meantime, I 
-would
-love to hear the opinion of more seasoned git developers on this issue. 
-Do you
-agree with my findings and the direction I proposed? Is there something 
-I have
-overlooked? Perhaps someone is already having these problems.
-
-
-Thanks in advance,
-Yannis Zarkadas
+Thanks.
 
