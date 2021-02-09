@@ -2,189 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 535C9C433E9
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 10:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EE7BC433E0
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 10:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0330F64E15
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 10:16:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C731964EAC
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 10:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231446AbhBIKQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 05:16:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41498 "EHLO
+        id S230520AbhBIKQo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 05:16:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231366AbhBIKHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 05:07:38 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E009EC061793
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 02:06:57 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id r75so5215751oie.11
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 02:06:57 -0800 (PST)
+        with ESMTP id S231618AbhBIKIK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 05:08:10 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 960FBC0617AA
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 02:07:24 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id t25so16990084otc.5
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 02:07:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=RB9GH2aOxkdceRb7YWYsD+iVgg3ITTSLiKum7QcXBHY=;
-        b=p5xc/0SalPsRsDm2klU6f4RF8stLezqb+2g2QKVLki0hQerp+OYxtpH5mAZS5RYyDS
-         bMWMvuP82RVW9w9mX9MzAZyfuckg0Is091GjNdoF+OeJAYIxo6ebLZDqOE0y/fJZ+eLQ
-         XTh7qqTy3idMIdbFq1KHPo3zBlKWZRR8K6q9FCcnXcL7RpgDjCbF0+aGmFz5dniAAFVO
-         6Ez1anNouepwjtZK4kIfPw4/RBEFRPH/BE1Z0fBWSXBQz4GW0nmOAa/AvwMm2drORBKt
-         uAx3EAzusliWOY4w7Eog0WcGARnmW63KmM1pR8XBDmZ8a0hH3M2GNg4PC1vgYh9YWWFS
-         sRkw==
+        bh=yBLaVy2R5Lt3yoLYMy3fIP5oLepw++oRv/6F7Yv3Eco=;
+        b=Fa+ehyARPGBA1csRF50yGgq4S5rvrJ8qUviT2ptC3NKc3lTJ3xdc2C5B/ZQkMMkiWX
+         TngGL8F7gWOcEpnrdTcf8XPTGkSDYzv7HJeHeSIugzD2UPhrSsSBJxY7Qx/tDFs3ZKPL
+         njgdemnyFOAwxryr8PBzM4Om10rCKCKeZFJc30+hIruYW/7eRH2gNip1OLlS02CwR4qP
+         K1vU0FZtQ6dj/UKyigBZ9Omq1oa24fFOLmucv+rWsg/+Y8fmK3Hi3/1vwT8oVnP5QQ6X
+         deLyFgoWL0n6rTPkfKPsIm1UhvphL7sORyRXLy/PVlYF68aZNivu7C2obgG5tbU9BmMx
+         UUlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=RB9GH2aOxkdceRb7YWYsD+iVgg3ITTSLiKum7QcXBHY=;
-        b=GXTIt9HTYoucJV80XVFkGndu9gn2PneZ6oT+HVOyx+NAIkk1x8cmn5vazuFw2L4M4/
-         bwUVsH6IsgEXtH4W0BtxSAHXxI+cuwL0Azgf6qTd/x2TKxSLLrSvQoEBvUnNZEHw9QPm
-         rkXTNUsMLtmZ2gBsoJXtkxoV4LocU9hconBRcRRR48qs+YbwMad4B67YU8JKif+NdIFZ
-         xnbh7v2be+5xxywUG3FHLzFicoHmsECNLm0NLIl1mRBPkOnRJoMDPXUhwwddK4+Deuce
-         jjoGGEwfU6a07njtEX+ankjzAhh4oWVcLZgRKDvoXxSWfj1sLaZbcXX8bZG8MMJeFXjj
-         q5Xg==
-X-Gm-Message-State: AOAM531ieQrMakEseHQIAmOYcJjlhcPGjFUOFYskF+VqozKnB1m7CI1n
-        TwGzi46mzZqFYDe/uvhLXsxBDCPL8QNQMQ8aObo=
-X-Google-Smtp-Source: ABdhPJzDlDFvRkKmbFLhCXi0SWWB50KsKG6TbPi48G2qzMCCSBNgJFkxWCXxgf15xKLnkUkWs2/aalKt6LSjGCyra+g=
-X-Received: by 2002:a54:4790:: with SMTP id o16mr1924572oic.39.1612865217185;
- Tue, 09 Feb 2021 02:06:57 -0800 (PST)
+        bh=yBLaVy2R5Lt3yoLYMy3fIP5oLepw++oRv/6F7Yv3Eco=;
+        b=t6F/vp+Jj1HEvi/f47rdBR402zpe2SNw2AHAiygoTDUm8+7HzO1/cUbnlihJx85a6j
+         m15FlpzxpXiR029P3qkS5UdyEetbGm18OTQKXLc9HDQGlPG9yLpgkpdKuxRAUNzwfYuv
+         jVfFPQEMQCt5aE+G59MxyAMB/2iVFxbzLnSNW2MEwu3j+aXX+Rwb8lG/0b/V3Qse4Gnw
+         mkX7NJ56u6ReoEHkEQ4KVgseH9gJfGKAVpf5WgHlrpV13VAoS2tf7RbTWaoeBD8yAgKz
+         VfkwgciljijBMUs2CAvuZhd/Eizea7+FYwZJilWPgr7nF48FdLIxVIEXH3SO/4Q/x9KU
+         TJUg==
+X-Gm-Message-State: AOAM530MntAlo5j9VtxTouanrLpolfaKXEdS6J9Z8B2ChniIyAeNDu+q
+        VltNYVgbLNUyHIIf64cfE8Lp+mHAXkmenO6s4XI=
+X-Google-Smtp-Source: ABdhPJyPEAEaZ+zrnkYISk83TOrMNCUEqRumOIv9zuoaBAvGwHmr/hVhcDjwKws6unp0WiAG2F5e2GVuak0/4B8dT3U=
+X-Received: by 2002:a9d:7dd3:: with SMTP id k19mr4905740otn.162.1612865244017;
+ Tue, 09 Feb 2021 02:07:24 -0800 (PST)
 MIME-Version: 1.0
-References: <YCGxos2vB6mgHOTA@nand.local> <20210208232159.100543-1-matheus.bernardino@usp.br>
-In-Reply-To: <20210208232159.100543-1-matheus.bernardino@usp.br>
+References: <5bd9dce8f611c5fe380c9f58dbdfa2dc6d2fd51f.1612813249.git.matheus.bernardino@usp.br>
+In-Reply-To: <5bd9dce8f611c5fe380c9f58dbdfa2dc6d2fd51f.1612813249.git.matheus.bernardino@usp.br>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 9 Feb 2021 02:06:46 -0800
-Message-ID: <CABPp-BFouwiACwwS5mDdgBRF=YK--=NfqZ9r=qkFouEvyJfnGQ@mail.gmail.com>
+Date:   Tue, 9 Feb 2021 02:07:12 -0800
+Message-ID: <CABPp-BFx6HmoVBsS2Aeb+GgZTC8axwGcuWrkpaCFxM-j2SOMww@mail.gmail.com>
 Subject: Re: [PATCH] grep: error out if --untracked is used with --cached
 To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 8, 2021 at 3:27 PM Matheus Tavares
+On Mon, Feb 8, 2021 at 11:47 AM Matheus Tavares
 <matheus.bernardino@usp.br> wrote:
 >
+> The options --untracked and --cached are not compatible, but if they are
+> used together, grep just silently ignores --cached and searches the
+> working tree. Error out, instead, to avoid any potential confusion.
 >
-> On Mon, Feb 8, 2021 at 6:48 PM Taylor Blau <me@ttaylorr.com> wrote:
-> >
-> > On Mon, Feb 08, 2021 at 04:43:28PM -0300, Matheus Tavares wrote:
-> > > The options --untracked and --cached are not compatible, but if they are
-> > > used together, grep just silently ignores --cached and searches the
-> > > working tree. Error out, instead, to avoid any potential confusion.
-> > >
-> > > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> > > ---
-> > >  builtin/grep.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/builtin/grep.c b/builtin/grep.c
-> > > index ca259af441..392acf8cab 100644
-> > > --- a/builtin/grep.c
-> > > +++ b/builtin/grep.c
-> > > @@ -1157,6 +1157,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
-> > >       if (!use_index && (untracked || cached))
-> > >               die(_("--cached or --untracked cannot be used with --no-index"));
-> > >
-> > > +     if (untracked && cached)
-> > > +             die(_("--untracked cannot be used with --cached"));
-> > > +
-> >
-> > Are these really incompatible? --untracked says that untracked files are
-> > searched in addition to tracked ones in the working tree.
-> > --cached says that the index is searched instead of tracked files. From
-> > my reading, that seems to imply that the combination you're proposing
-> > getting rid of would mean: "search the index,and untracked files".
->
-> Yeah, I agree that there is nothing conceptually wrong with the use case
-> "search the index, and untracked files". The problem is that git-grep is
-> currently not able to search both these places in the same execution.
-> In fact, I don't think it can combine working tree and index searches
-> in any way (besides with --assume-unchanged paths).
->
-> When --cached is used with --untracked, git-grep silently ignores
-> --cached and searches the working tree only:
->
-> $ echo 'cached A' >A
-> $ git add A
-> $ git commit -m A
-> $ echo 'modified A' >A
-> $ echo 'untracked' >B
-> $ git grep --cached --untracked .
-> A:modified A
-> B:untracked
->
-> Perhaps, instead of erroring out with this currently invalid
-> combination, should we make it valid by teaching git-grep how to search
-> the two places on a single run? I.e. something like:
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
+>  builtin/grep.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
 > diff --git a/builtin/grep.c b/builtin/grep.c
-> index ca259af441..b0e99096ff 100644
+> index ca259af441..392acf8cab 100644
 > --- a/builtin/grep.c
 > +++ b/builtin/grep.c
-> @@ -699,7 +699,7 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
->  }
->
->  static int grep_directory(struct grep_opt *opt, const struct pathspec *pathspec,
-> -                         int exc_std, int use_index)
-> +                         int exc_std, int use_index, int untracked_only)
->  {
->         struct dir_struct dir;
->         int i, hit = 0;
-> @@ -712,7 +712,13 @@ static int grep_directory(struct grep_opt *opt, const struct pathspec *pathspec,
->
->         fill_directory(&dir, opt->repo->index, pathspec);
->         for (i = 0; i < dir.nr; i++) {
-> -               hit |= grep_file(opt, dir.entries[i]->name);
-> +               struct dir_entry *ent = dir.entries[i];
-> +
-> +               if (untracked_only &&
-> +                   !index_name_is_other(opt->repo->index, ent->name, ent->len))
-> +                       continue;
-> +
-> +               hit |= grep_file(opt, ent->name);
->                 if (hit && opt->status_only)
->                         break;
->         }
-> @@ -1157,9 +1163,14 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+> @@ -1157,6 +1157,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
 >         if (!use_index && (untracked || cached))
 >                 die(_("--cached or --untracked cannot be used with --no-index"));
 >
-> -       if (!use_index || untracked) {
-> +       if (cached && untracked) {
-> +               hit = grep_cache(&opt, &pathspec, 1);
-> +               hit |= grep_directory(&opt, &pathspec, !!opt_exclude, 1, 1);
+> +       if (untracked && cached)
+> +               die(_("--untracked cannot be used with --cached"));
 > +
-> +       } else if (!use_index || untracked) {
+>         if (!use_index || untracked) {
 >                 int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
-> -               hit = grep_directory(&opt, &pathspec, use_exclude, use_index);
-> +               hit |= grep_directory(&opt, &pathspec, use_exclude, use_index, 0);
-> +
->         } else if (0 <= opt_exclude) {
->                 die(_("--[no-]exclude-standard cannot be used for tracked contents"));
->         } else if (!list.nr) {
->
-> With this, the `git grep --cached --untracked .` search from the
-> previous example would produce the following output:
->
-> A:cached A
-> B:untracked
->
-> In this case, should we also add an 'untracked:' / 'cached:' prefix to
-> the filenames, like we do for revision searches (e.g. 'HEAD:A:cached A') ?
+>                 hit = grep_directory(&opt, &pathspec, use_exclude, use_index);
+> --
+> 2.29.2
 
-Ick, no.  --untracked was a modifier on working tree searches.  I
-think doing this adds a really weird inconsistency for all the other
-option combinations.  I say mark --untracked and --cached as
-incompatible like you did in your original patch, unless you're
-willing to make grep generally be able to have options to search two
-or more locations from any of (revisions of history, the cache, the
-working tree), including being able to simultaneously search two
-different revisions of history.  Even then, I'd be tempted to say that
---untracked is only used in combination with a search of the working
-tree.
+Reviewed-by: Elijah Newren <newren@gmail.com>
