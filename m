@@ -2,78 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C972C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6E0C433E9
 	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 00:11:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3643564E0D
+	by mail.kernel.org (Postfix) with ESMTP id A2A0964E3E
 	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 00:11:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235091AbhBJAKW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 19:10:22 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60261 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234915AbhBIXYG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 18:24:06 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A978E10D75A;
-        Tue,  9 Feb 2021 18:23:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KxsrXX+L0vDzLIHDmO+m+bbjoOE=; b=hNvswV
-        J4VZvSIZIfToQNCRGtvVvhz6fZb+mf1BpmeR/yb6cX1zJd+OxJh9SVyc8zcdFKoT
-        W57pmPxf51gZ34CkzI69IR2BOOjoJG5HP9RYnKsu437VpWUfWvT+tDI1LiwxE57D
-        AfCVJCeMsclXlJ2AI34Ivq8lUDWhlzp/75wiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FpA/GNUdxj5jnoe+JPLrpJNvWgq8popS
-        mk8t9ZMcjH/S8pywHRvAxiDj+AmhRQXVzcq42fXx5qeBe/d7uYAR6licCuQGn5rG
-        PwldmPYjNh9Fa5X7grJG53h7QGw7a7w3ICsVaqufeySzCXgp5Cx1DpF7Wae5rTPN
-        yZVh5jmI0y4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A20BB10D759;
-        Tue,  9 Feb 2021 18:23:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DF85C10D756;
-        Tue,  9 Feb 2021 18:23:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, stolee@gmail.com, newren@gmail.com
-Subject: Re: [PATCH v7] grep: honor sparse-checkout on working tree searches
-References: <cover.1599758167.git.matheus.bernardino@usp.br>
-        <5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.1612901326.git.matheus.bernardino@usp.br>
-Date:   Tue, 09 Feb 2021 15:23:04 -0800
-In-Reply-To: <5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.1612901326.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Tue, 9 Feb 2021 18:33:30 -0300")
-Message-ID: <xmqqtuqkygfb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S235117AbhBJAKp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 19:10:45 -0500
+Received: from out02.mta.xmission.com ([166.70.13.232]:43256 "EHLO
+        out02.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234362AbhBIX2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 18:28:22 -0500
+Received: from in02.mta.xmission.com ([166.70.13.52])
+        by out02.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l9cPf-00ClsX-Ie; Tue, 09 Feb 2021 16:27:19 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1l9cPd-001iMA-Es; Tue, 09 Feb 2021 16:27:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id 446005016BB;
+        Tue,  9 Feb 2021 16:27:17 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Dsnjvyu8vTsv; Tue,  9 Feb 2021 16:27:17 -0700 (MST)
+Received: from ellen.lan (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 939BA5015B1;
+        Tue,  9 Feb 2021 16:27:16 -0700 (MST)
+Date:   Tue, 9 Feb 2021 16:27:14 -0700
+From:   Seth House <seth@eseth.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Message-ID: <20210209232714.GA172268@ellen.lan>
+References: <20210130054655.48237-1-seth@eseth.com>
+ <20210209200712.156540-1-seth@eseth.com>
+ <xmqqeehozybq.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C34E1A44-6B2D-11EB-8BBA-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeehozybq.fsf@gitster.c.googlers.com>
+X-XM-SPF: eid=1l9cPd-001iMA-Es;;;mid=<20210209232714.GA172268@ellen.lan>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: Re: [PATCH v11 0/3]  mergetool: add hideResolved configuration (was
+ automerge)
+X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
+X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+On Tue, Feb 09, 2021 at 02:11:05PM -0800, Junio C Hamano wrote:
+> Thanks for all these iterations.  The resuling series looks good to
+> me.
 
-> This new version includes only the bug fix for the working tree grep, as
-> discussed in [1]. I think there are a couple other patches that could be
-> extracted from the previous v6 [2] and sent as standalone topics,
-> without the risk of conflicting with the sparse-index work. E.g. the
-> unification of the git-grep.txt and config/grep.txt doc files. I'll look
-> into that tomorrow.
-
-As mt/rm-sparse-checkout depends on the v6 that you are ejecting
-with this patch, I'll stop merging that topic to 'seen' for now.
-
-Thanks for keeping an eye on this one.
+Woot! Thanks for all the great feedback and for walking me through the
+process. I'm really happy with where this ended up.
 
