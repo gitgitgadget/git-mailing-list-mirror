@@ -2,102 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6722C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DDB7C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:36:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7886764E0D
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:07:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA05F60C3F
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230352AbhBIOHw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 09:07:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36682 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230186AbhBIOHn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 09:07:43 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2853C061786
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 06:07:02 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id t5so23742428eds.12
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 06:07:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=zXBavbZX4zgHSuA2sVlldbcLxzZU9tltdFJ6zrKIf2s=;
-        b=Dv502sm5TmHjlx2hp+GUwNKTydVOOEsNH8vvSsCkvHWb69W+JandWnhr3BI7kBP/PO
-         50+ISDcM4e0xt/qW5hnujKB0wteam6aITWXc42IaoxfI4SgDyMR2drrEoGZSXKgDhkpv
-         6oufo4NAKmwNvMV4W7OlTpKSKaoV58DyBkADHlkMdhpFf0Z9YEqlFublJ94EWGVEYnd7
-         cJKa+rWWW6Wz7lf1Axw1uyWWi5ZYYEtZaNfU1Wo39is6qjks19XUXHW+mMvcWOBPIeP+
-         tv4eMmbyWXzbRIxwGmhmBIaoG3nkWaJA/2ZkYbyswjx4IVbFeIUCAnrElzh5EeEmHPzB
-         peYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=zXBavbZX4zgHSuA2sVlldbcLxzZU9tltdFJ6zrKIf2s=;
-        b=UfMaeheOt0iaYL+SmzTxyB0I7NVUxjCuwLDAPEGktrBwnjGOFmNePCg5GAYD+cfJcS
-         Ai0ejZEu92j9vRe52Bu9qC7xPLZfL8tYHb1LH2mRNuQTy7gENPBwX7N+yRFCjb1tvB+B
-         l6IVriDga5bp+Wdxf34GST25n/tuyEDWAQVjHw3ukoq3ypLKdhKYH2NCZq3ODRk9xX6q
-         gj41SsQIH4kxt9HOsl+HnSKjtVpVPd73y90cul/OJUPRqYeNzAbdG+7pxEsh83AS9cqY
-         mdlDSE1C+fDueMZC6h3CMeqQn8NgmNP3r7vfJs+z6/9gpBoPxprDQHbAEf35YyxAHJJQ
-         fosQ==
-X-Gm-Message-State: AOAM533zXMlbLK7dxJ18OdQqivThA08dzyWlVQGCkarjKSx/d/X2CD57
-        63P50mU7i0iw8Fbov3oOlgZHM5UkPTDaLw==
-X-Google-Smtp-Source: ABdhPJxM6uMRlCTDUyJlFWwtiRziRgVTGoapG7ulYCjuDMbPzqec6rRpJv6aAtKMlkJLYb3vQv1abA==
-X-Received: by 2002:a05:6402:215:: with SMTP id t21mr23284452edv.363.1612879621437;
-        Tue, 09 Feb 2021 06:07:01 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id ha21sm4724830ejb.97.2021.02.09.06.07.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Feb 2021 06:07:00 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 2/8] maintenance: add --schedule option and config
-References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
- <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
- <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
-Date:   Tue, 09 Feb 2021 15:06:59 +0100
-Message-ID: <87blctcp30.fsf@evledraar.gmail.com>
+        id S231673AbhBIOg2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 09:36:28 -0500
+Received: from cpanel8.indieserve.net ([199.212.143.3]:55470 "EHLO
+        cpanel8.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232146AbhBIOfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 09:35:51 -0500
+X-Greylist: delayed 2218 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Feb 2021 09:35:50 EST
+Received: from cpeac202e043973-cmac202e043970.sdns.net.rogers.com ([174.114.100.179]:56260 helo=fedora)
+        by cpanel8.indieserve.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1l9TWq-0001Nh-CQ
+        for git@vger.kernel.org; Tue, 09 Feb 2021 08:58:08 -0500
+Date:   Tue, 9 Feb 2021 08:58:06 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: how to most effectively cherry pick by selective patch hunk?
+Message-ID: <566b38df-307c-f342-b583-3a50a81b5057@crashcourse.ca>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel8.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel8.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel8.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 15 2020, Derrick Stolee via GitGitGadget wrote:
+  (i'm looking for a solution not just for current git but, sadly,
+going back to git-2.9.2, which is installed on my current contract
+build system, and i have little authority to bump it up.)
 
-> +--schedule::
-> +	When combined with the `run` subcommand, run maintenance tasks
-> +	only if certain time conditions are met, as specified by the
-> +	`maintenance.<task>.schedule` config value for each `<task>`.
-> +	This config value specifies a number of seconds since the last
-> +	time that task ran, according to the `maintenance.<task>.lastRun`
-> +	config value. The tasks that are tested are those provided by
-> +	the `--task=<task>` option(s) or those with
-> +	`maintenance.<task>.enabled` set to true.
+  summary: made a couple dozen commits on branch, call it "oldb",
+where i was relatively undisciplined about enforcing clean, modular
+commits so i want to go back and clean things up -- refactor by
+changing order, combining some trivial commits into one, breaking
+large, unwieldy commits into smaller pieces, better commit messages
+and so on, so i start a new branch "newb" at the same origin, and
+here's the problem.
 
-I see from searching on list and from spying on your repo that patches
-for this maintenance.<task>.lastRun feature exist, but there's no code
-for it in git.git.
+  every old commit consisted of adding a new patch to an existing
+openembedded recipe, so every commit had two components:
 
-So we've got a 2.30.0 release with a mention of that, and it can't work,
-because it's only in the doc due to b08ff1fee00 (maintenance: add
---schedule option and config, 2020-09-11).
+  * a brand new patch file to be placed under "files/", and
+  * adding a new line to SRC_URI variable, as in:
 
+    SRC_URI += " \
+	first.patch \
+	second.patch \
+	third.patch \
+	... etc etc ...
+    "
+
+  i think you see the problem. a commit adding a brand new file will
+never create a merge conflict, as it's a new file. but if i start
+reordering commits, then the addition of that line to the .bbappend
+file will *certainly* conflict as the patches will almost certainly be
+renamed and in a different order.
+
+  what would be great is some sort of "-p" (patch selection) option
+with cherry-pick, but i don't see that.
+
+  what would work for me is to auto-get the addition of the patch file
+from the old branch, at which point i am more than happy to manually
+fix the .bbappend file and manually do another commit. i'm thinking i
+can just "git checkout" the new patch file from the old branch, and
+take it from there.
+
+  thoughts? am i overthinking this?
+
+rday
