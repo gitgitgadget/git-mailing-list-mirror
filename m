@@ -2,139 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBEB4C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5949CC433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:55:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77DF964DD6
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:53:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 097E964EAC
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:55:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232953AbhBIQxE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 11:53:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55060 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233182AbhBIQwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 11:52:16 -0500
-Received: (qmail 27001 invoked by uid 109); 9 Feb 2021 16:51:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Feb 2021 16:51:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7613 invoked by uid 111); 9 Feb 2021 16:51:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 09 Feb 2021 11:51:21 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 9 Feb 2021 11:51:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Andrew Klotz via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Andrew Klotz <agc.klotz@gmail.com>
-Subject: Re: [PATCH v2] config: improve error message for boolean config
-Message-ID: <YCK9iRyQGTl+5J4g@coredump.intra.peff.net>
-References: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
- <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
+        id S233039AbhBIQz1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 11:55:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232846AbhBIQzY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 11:55:24 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14563C061574
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 08:54:44 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id k10so15718451otl.2
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 08:54:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=JUc1g/+GyDrdIp4/Eobu/WgthT0flupLbwAp3tz0cZk=;
+        b=FfgbWTmq4Mp0zsucu/Yj4t19mwOq216/tWLE63Lyhb89kL23hty9jK0BsfayGeg5hU
+         IDp3uwJcxW9WV2tuho4xH7USm8W0Fg4OoXi4CthMPX6F4c930CP7JrBxq0cX6IsPpvDa
+         mG1rxDnHcsQKko6ae0CpIXzjiEbPtRowv8bsAAKmOCkSyOYIVDiYY27F3NTyimvISvmC
+         jp+DiYB1B7JwnM7Fq7hfz8bsnH9XAULtdkhr7ENxOh5CYM/S65uygl80uduTt+H7EIuk
+         g0A7mg3+w+9a9hQrBt872NZf/Eej+dwDLRzO5uTBcGmXI6Ys9tzaNcaxRE+JPVaOCXIS
+         xVhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=JUc1g/+GyDrdIp4/Eobu/WgthT0flupLbwAp3tz0cZk=;
+        b=WS1++BIiN68R+ApV0dPbfxBEi8FC4hrWWF/5BDWiQ8H5Yt86nLY++qkXQtRm1SxjSZ
+         rwYOx7cmbTcVfoNl7qM/cBe7y1QC68LGxqfdWbtuckwlcXwb4wg0wEV4J02YsPxI3aL3
+         hDJ695LQ7gYBeMjXrZxtpvZYpWyYdF/3U2Dwq4Tg2NeyAspNQUefE/vbFPKnJY+PARmd
+         jELe/jxaD3QvJQqd8vZxYg5JwatnLjPwt4gJntbyfd5t0C76iuGDNMM7Jx/GdXyogEZx
+         6McPAKjv7FixwwapVm8Jo6O8Oyf3ivm5SacpccYqeIzU8O1l+wBq+z0OBPb0Izp2EK/F
+         vCYw==
+X-Gm-Message-State: AOAM530+c1NKtITiOySZg6UcCYx9gJgiT18sgiWAN/5fqMubVGUQMA/D
+        xmu1idPaGOGovTqpqS9/eJw=
+X-Google-Smtp-Source: ABdhPJzo6IOH4zPII68e85TeTSNLsQI5U0eXYLorzDsjmuTXLoxT8rEFoMcIFcOKV3SwdLbLKI3hxQ==
+X-Received: by 2002:a05:6830:1d82:: with SMTP id y2mr335864oti.204.1612889682909;
+        Tue, 09 Feb 2021 08:54:42 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
+        by smtp.gmail.com with UTF8SMTPSA id h6sm389880otn.38.2021.02.09.08.54.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Feb 2021 08:54:42 -0800 (PST)
+Message-ID: <1eff631f-b079-d097-b16d-36dc974efea9@gmail.com>
+Date:   Tue, 9 Feb 2021 11:54:41 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
+ Thunderbird/86.0
+Subject: Re: [PATCH v4 2/8] maintenance: add --schedule option and config
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
+        sluongng@gmail.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
+ <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
+ <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
+ <87blctcp30.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <87blctcp30.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 09, 2021 at 01:25:08AM +0000, Andrew Klotz via GitGitGadget wrote:
-
-> Currently invalid boolean config values return messages about 'bad
-> numeric', which is slightly misleading when the error was due to a
-> boolean value. We can improve the developer experience by returning a
-> boolean error message when we know the value is neither a bool text or
-> int.
-
-Thanks for keeping at this. The goal makes sense. The implementation
-looks OK to me, but I had a few really tiny comments.
-
-> before with an invalid boolean value of `non-boolean`, its unclear what
-> numeric is referring to:
-> ```
-> fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
-> ```
+On 2/9/2021 9:06 AM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> now the error message mentions `non-boolean` is a bad boolean value:
-> ```
-> fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
-> ```
+> On Thu, Oct 15 2020, Derrick Stolee via GitGitGadget wrote:
+> 
+>> +--schedule::
+>> +	When combined with the `run` subcommand, run maintenance tasks
+>> +	only if certain time conditions are met, as specified by the
+>> +	`maintenance.<task>.schedule` config value for each `<task>`.
+>> +	This config value specifies a number of seconds since the last
+>> +	time that task ran, according to the `maintenance.<task>.lastRun`
+>> +	config value. The tasks that are tested are those provided by
+>> +	the `--task=<task>` option(s) or those with
+>> +	`maintenance.<task>.enabled` set to true.
+> 
+> I see from searching on list and from spying on your repo that patches
+> for this maintenance.<task>.lastRun feature exist, but there's no code
+> for it in git.git.
+> 
+> So we've got a 2.30.0 release with a mention of that, and it can't work,
+> because it's only in the doc due to b08ff1fee00 (maintenance: add
+> --schedule option and config, 2020-09-11).
 
-Our commit messages aren't generally formatted as markdown. So this
-looks a little nicer using indentation (which also happens to generate
-nice markdown output):
+Thank you for pointing out this docbug. This is based on an early
+version of the patch series and should have been changed.
 
-  numeric is referring to:
+Please see this patch which attempts to do a better job. I can
+create a new thread with this submission if we need more edits.
 
-      fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
+Thanks,
+-Stolee
 
-  now the error message mentions `non-boolean` is a bad boolean value:
+--- >8 ---
 
-      fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
+From 46436b06caf65ee824e781603a8108413bb87705 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Tue, 9 Feb 2021 11:51:32 -0500
+Subject: [PATCH] maintenance: properly document --schedule
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Not worth a re-roll on its own, though.
+The documentation for the '--schedule' option is incorrect and based on
+an early version of the background maintenance feature. Update the
+documentation to describe the actual use of the option.
 
-> +NORETURN
-> +static void die_bad_bool(const char *name, const char *value)
-> +{
-> +	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
-> +		/*
-> +		 * We explicitly *don't* use _() here since it would
-> +		 * cause an infinite loop with _() needing to call
-> +		 * use_gettext_poison().
-> +		 */
-> +		die("bad boolean config value '%s' for '%s'", value, name);
-> +	else
-> +		die(_("bad boolean config value '%s' for '%s'"), value, name);
-> +}
+The most important thing is that Git takes this option as a hint for
+which tasks it should run. Users should not run this command arbitrarily
+and expect that Git will enforce some timing restrictions.
 
-The duplication is ugly, but I think it's the least-bad solution (and I
-still dream that GETTEXT_POISON may one day go away :) ).
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/git-maintenance.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-> @@ -1102,8 +1116,11 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
->  
->  int git_config_bool(const char *name, const char *value)
->  {
-> -	int discard;
-> -	return !!git_config_bool_or_int(name, value, &discard);
-> +	int v = git_parse_maybe_bool(value);
-> +	if (0 <= v)
-> +		return v;
-> +	else
-> +		die_bad_bool(name, value);
+diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+index 6fec1eb8dc2..d4b5aea6760 100644
+--- a/Documentation/git-maintenance.txt
++++ b/Documentation/git-maintenance.txt
+@@ -155,15 +155,15 @@ OPTIONS
+ 	exceeds the `gc.autoPackLimit` config setting. Not compatible with
+ 	the `--schedule` option.
+ 
+---schedule::
++--schedule=<frequency>::
+ 	When combined with the `run` subcommand, run maintenance tasks
+-	only if certain time conditions are met, as specified by the
+-	`maintenance.<task>.schedule` config value for each `<task>`.
+-	This config value specifies a number of seconds since the last
+-	time that task ran, according to the `maintenance.<task>.lastRun`
+-	config value. The tasks that are tested are those provided by
+-	the `--task=<task>` option(s) or those with
+-	`maintenance.<task>.enabled` set to true.
++	whose `maintenance.<task>.schedule` config value is equal to
++	`<frequency>`. There is no timing restriction imposed by this
++	option, but instead is used to inform the Git process which
++	frequency to use. The command scheduler created by
++	`git maintenance start` runs this command with `<frequency>`
++	equal to `hourly`, `daily`, and `weekly` at the appropriate
++	intervals.
+ 
+ --quiet::
+ 	Do not report progress or other information over `stderr`.
+-- 
+2.30.0.vfs.0.0.exp
 
-I had to look at this a minute to be sure we always returned a value.
-But the compiler knows that die_bad_bool() doesn't return, and that we
-always take one of the two conditionals.
 
-I do think it might be easier to read as:
 
-  int v = git_parse_maybe_bool(value);
-  if (v < 0)
-          die_bad_bool(name, value);
-  return v;
-
-but I admit that's nit-picking.
-
-> diff --git a/t/t0205-gettext-poison.sh b/t/t0205-gettext-poison.sh
-> index f9fa16ad8363..b66d34c6f2bc 100755
-> --- a/t/t0205-gettext-poison.sh
-> +++ b/t/t0205-gettext-poison.sh
-> @@ -33,7 +33,7 @@ test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
->  
->  test_expect_success "gettext: invalid GIT_TEST_GETTEXT_POISON value doesn't infinitely loop" "
->  	test_must_fail env GIT_TEST_GETTEXT_POISON=xyz git version 2>error &&
-> -	grep \"fatal: bad numeric config value 'xyz' for 'GIT_TEST_GETTEXT_POISON': invalid unit\" error
-> +	grep \"fatal: bad boolean config value 'xyz' for 'GIT_TEST_GETTEXT_POISON'\" error
->  "
-
-Do we want a separate test in t1300 that doesn't rely on GETTEXT_POISON
-continuing to hang around (the idea has been thrown around elsewhere of
-it maybe going away entirely)?
-
--Peff
