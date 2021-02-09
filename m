@@ -2,150 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40191C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82CA4C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:17:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E471964E4F
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:08:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2ED5264EA1
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:17:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230409AbhBIDHx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 22:07:53 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:44490 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230131AbhBIDGR (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Feb 2021 22:06:17 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 294066079B;
-        Tue,  9 Feb 2021 03:05:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1612839902;
-        bh=cyzoT/j8UBF1V7rexLSrvT70UMzsExh9zWAs3GDbwJc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=DvzQUuPJ3asY6uu7ACznw4FA3ykuxmx1iAfRnn9fcVFIOMWEptU4zEMOqQsdNOc3/
-         TCLFRC0UfQ2Q3msDDadsvTX92m8F2o9jZL7bwKTc2XISYj8tqJsgj3XhLMVSkYllyL
-         xu47q9aRhIjlP9ZoJ+ld7sofjAsD1Q7QR2T87CTWfRV3XRMvKH1wlf3G2R3mHfLn6K
-         1U5PvJheN3BhsqCZxV6QXF3AV0GZZ3xzzGeeVvEkhTwiQ38RsNAcQFI+Gr3LYOFhbU
-         3xlsIPNGeBWGFr8Af5uzf/z6xf+l64Fault9eFzc6O1IN3A1imqY3qYcE0P6F94B7n
-         DwK3bl0uvP3pTDbArjOgch7uRn878LGY1bwcX3zDYeRHEX5o8E7NlssPgvlgle+1Xl
-         Rg1R6zdfKE8dmc5a8eHy95MTA5+t88wkWYEAbS+907IY0eyjGNLbIWHIrgsPaY+eSh
-         qVvRyX2R4AvKXp1OT85sKCxd+hNOn+4sC04JEwxz1zUL9kfS7RV
-Date:   Tue, 9 Feb 2021 03:04:55 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Hariom verma <hariom18599@gmail.com>,
-        Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 3/3] ref-filter: use pretty.c logic for trailers
-Message-ID: <YCH71+ck1Wmk1Css@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Hariom Verma via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <pull.726.v3.git.1612602945.gitgitgadget@gmail.com>
- <47d89f872314cad6dc6010ff3c8ade43a70bc540.1612602945.git.gitgitgadget@gmail.com>
- <xmqqpn1c8m7u.fsf@gitster.c.googlers.com>
- <CA+CkUQ9-OCiEkMDRTpyF3rp-g1mSSzn4s9MgqJZ2BJY=XJCoEw@mail.gmail.com>
- <xmqqh7mn91w2.fsf@gitster.c.googlers.com>
- <CA+CkUQ9kHhbDVMru=pRO90o+k7cc_ykxN9JRFGMvoG3hkeGJpA@mail.gmail.com>
- <xmqqlfbz7i7i.fsf@gitster.c.googlers.com>
- <CA+CkUQ_cdUmuP+_yUeCytn=6cc8SjMBE1aTLzWJL-U_V01uzog@mail.gmail.com>
- <xmqqv9b25s7f.fsf@gitster.c.googlers.com>
- <xmqqlfby5o9h.fsf@gitster.c.googlers.com>
+        id S229968AbhBIDQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 22:16:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230020AbhBIDOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 22:14:00 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D43C061786
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 19:12:59 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id v206so5107705qkb.3
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 19:12:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=ecdwtuBQmdsZhzJ6aVkg8/xWRyoOeonvqTr5JvYVIuE=;
+        b=bL34sT2w7KuzSsttkxIeJQmxz3eMoknSKXmwPUFRbev1BXRW94LqH2TyIFDwwi8T1K
+         ImD2QBNwMt4BdiD5NSQU04c1Imv+UR/jLtW454ZpmKH4jTRpI7rbv3Xhn59Q5TXDltU6
+         i4JQtohpijAAdjA0NcZsr2McW9hBHaaA3GZjM2jQPRFOr2iS9o71G/Or2AbFUrKO4bG6
+         Y/puVP0GgPg4fbWDdIf7q6sFF6YBXe4mn8vd+s6MtTzFaMpwUyS8Tvk4YrCSC1rlcU0h
+         12k/iuV5SH7sw/7wmSHtZsmdPYrh7acFCJRR278blih4+NCHjcz/cXYJexnqHrIXDPuH
+         pjsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ecdwtuBQmdsZhzJ6aVkg8/xWRyoOeonvqTr5JvYVIuE=;
+        b=s6GoNzwvn3gG6o7CWcHfGNg9DkNFKoZfjRXPLXmFRK1b+2dxDrX8HtngXpGMtDDXDQ
+         b7quT/0NKzwMgeDpJ/evMHTpmqptRFOynBQNu4Z5SOcVHphiPgefLpH2fGiHvAQuQ/9e
+         +kR1PoPzepqH6TpoFSkBiB7hpaejD0dpec8VXjDPJgkIpWZ5Pmzm8zNPHVG+INFippVs
+         EUUNfiY3lJCcCe/4xn7U8XuLNogwYh+V1Du1kINqDWmk2TAArfNQiVkmzPKc8EvinanQ
+         eYh0oOt7z2C3L3xWD09KLR8yAffgVcDqo2AeLFYS/x5LrwkSIoGBNjXoFFMtQvJnc8Zk
+         1KZQ==
+X-Gm-Message-State: AOAM533D2vsIAmWbRzygDgKMp7+mjwiG/cBUXUuUbagxlGwov0HDgpHk
+        URkyBJx3ZWUE5b+Bw+4KduqPO7+u2Wtx/g==
+X-Google-Smtp-Source: ABdhPJxLp+BPgyoiLHD6mif8dEcDn5dvcc+CRgNcYbnLJ/E2pD+qplWDHWlmaIZTDMuD/YExx3xy2g==
+X-Received: by 2002:ae9:f20b:: with SMTP id m11mr20547686qkg.464.1612840378385;
+        Mon, 08 Feb 2021 19:12:58 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id i65sm18093592qkf.105.2021.02.08.19.12.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Feb 2021 19:12:57 -0800 (PST)
+Subject: Re: Git Commit Signature Encoding
+To:     Rene Schumacher <Rene.Schumacher@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+ <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+ <328de960-ac67-e313-ecc3-b5b505e42bea@gmail.com>
+ <AM7PR83MB04346479474921F3DC0688CFEEBB9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <962853bc-9e60-968f-c64d-35757f72e8d1@gmail.com>
+Date:   Mon, 8 Feb 2021 22:12:56 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="afNWWTAtyK6HvEAj"
-Content-Disposition: inline
-In-Reply-To: <xmqqlfby5o9h.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <AM7PR83MB04346479474921F3DC0688CFEEBB9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi René,
 
---afNWWTAtyK6HvEAj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Le 2021-01-27 à 04:41, Rene Schumacher a écrit :
+> Hi Philippe,
+> 
+> thanks for getting back to me so quickly! And sorry for not providing all the details right away.
+> 
+> I'm using Git 2.30.0.windows.1 (I believe that's the latest), gpg 2.2.27 (installed via gpg4win 3.1.15), and PowerShell 7.1.1. You might have seen my second email to the list in which I described that setting the OutputEncoding in PowerShell to UTF-8 fixed at least the display of the é (and probably all other umlauts and special printable characters). The signature output from git show --show-signatur is still printing the ^M carriage return character at the end of each line:
+> 
+> commit 69022a47744fcb3801572ac5d14295bcab274295 (HEAD -> master)
+> gpg: Signature made 26.01.2021 17:55:36 W. Europe Standard Time^M
+> gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF^M
+> gpg: Good signature from "René Schumacher <rene.schumacher@microsoft.com>" [ultimate]^M
+> gpg:                 aka "René Schumacher <reneschu@microsoft.com>" [ultimate]^M
+> Author: René Schumacher <reneschu@microsoft.com>
+> Date:   Tue Jan 26 17:55:36 2021 +0100
+> 
+>      another commit with signature
+> 
+> diff --git a/file1.txt b/file1.txt
+> index a7f8d9e..6ddadea 100644
+> --- a/file1.txt
+> +++ b/file1.txt
+> @@ -1 +1,2 @@
+>   bla
+> +blub
+> 
+> Since git verify-commit does not have those carriage return characters, I'm still wondering where they might come from.
+> 
+> Cheers,
+> René
 
-On 2021-02-08 at 19:54:18, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > By the way, when merged to 'seen' (you can try the above that shows
-> > %(subject) followed by %(trailers) with the tip of 'seen'), it dies
-> > like this:
-> >
-> >     $ git for-each-ref \
-> > 	--format=3D"%(subject)%0a%(trailers:key=3DSigned-off-by:)" \
-> > 	refs/heads/js/range-diff-wo-dotdot
-> >     free(): double free detected in tcache 2
-> >     Aborted
-> >
-> > There must be some interaction with another topic but I didn't dig
-> > deeper.
->=20
-> It seems brian's bc/signed-objects-with-both-hashes topic alone has
-> the double-free issue, without the "trailers" topic.
->=20
->     $ git checkout --detach bc/signed-objects-with-both-hashes
->     $ make git
->     $ ./git for-each-ref --format=3D'%(subject)%(body)' refs/heads/maint
->     free(): double free detected in tcache 2
->     Aborted
->=20
-> So for now, you do not have to worry about it in your topic.  Of
-> course, you are very much welcome to help debugging and fixing it
-> ;-)
 
-I'll send out a fixed patch tomorrow, but for the moment, here's the
-gist of the change if you want to an immediate fix to squash in:
+I've tried to replicate with 2.30.0.windows.2 and gpg 2.2.27 (that comes with Git-for-Windows), and could not, neither in Git Bash, Cmd, Windows Powershell or Powershell Core 7.1.1.
 
-------- %< ---------
-diff --git a/ref-filter.c b/ref-filter.c
-index e6c8106377..5f8a443be5 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1344,8 +1344,8 @@ static void grab_sub_body_contents(struct atom_value =
-*val, int deref, void *buf)
- 		} else if (atom->u.contents.option =3D=3D C_BARE)
- 			v->s =3D xstrdup(subpos);
-=20
--		free((void *)sigpos);
- 	}
-+	free((void *)sigpos);
- }
-=20
- /*
-------- %< ---------
+Maybe if you can provide a complete reproducer with all needed steps (git init, gpg --gen-key, etc)
+you would get more help in the Git-for-Windows issue tracker:
+https://github.com/git-for-windows/git/issues
 
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Cheers,
+Philippe.
 
---afNWWTAtyK6HvEAj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYCH71wAKCRB8DEliiIei
-gRjLAPsGLwA5FoMUOy1MC4qdaTaKF0731KLAg+yoUOSqq5zlQQEAgQPxMSBQbwns
-QdAEIx9AtYl6EysZUA9mgNnTTv8QGg4=
-=ykVu
------END PGP SIGNATURE-----
-
---afNWWTAtyK6HvEAj--
