@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50CF5C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 07:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9B6C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 07:30:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1FF0A64EB8
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 07:30:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17A1564EB8
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 07:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbhBIHaF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 02:30:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35802 "EHLO
+        id S229843AbhBIHaZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 02:30:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230179AbhBIH3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 02:29:54 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F698C06178A
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 23:29:14 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id g3so9270319plp.2
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 23:29:14 -0800 (PST)
+        with ESMTP id S230319AbhBIH3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 02:29:55 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1764C06178B
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 23:29:15 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id nm1so1064924pjb.3
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 23:29:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BU0Hi7RAV2KElXGBIE71hMJoCEINqunWPtqs8tMqIso=;
-        b=Ce6aISntrpWryYOiRG8OCTkQwrV4okWE1faZOVTg86jpb931kbbnRwSioGlqoOC4bh
-         d0PZphIStg1CtOgxZcnArKzaZvfQSl0ZbP/IGelH5NIZN/YzxS3Q7slgwskC1yODLft2
-         zIU6LKNKS7VQh5YDv5bSZlVN9GL7P2oxdc7U+bbKF5EmPXa8LtXiJMov51oSP9+9o0kF
-         HjVgl7nGj8QnfjQnFs61mcJAfM6VoYJG7q7Y9FWcE0JX3wM2J57XxUjrODCWqRC/p9sF
-         og4KTCnhL276kJfG+nkAvB0T7O5jEowCPsewpG9/mPbgC7pEH+/KsHpb+u/DpsNeIRGN
-         O7Bw==
+        bh=Fa4WF191om12EiQOY/vS3OYpTRVsVVT2Ao7zH3DjI8U=;
+        b=SUGbEO0LvwwPrtXkJZRLXHs1DF/8wIL35319m5QYgvOvqIh1wx0oD5aG2q0EXsfJeJ
+         Z1+6/rEOnoRz8ZNI3AaPlph12vip9BRurqhheBwRlpEn3LIdh6x7OLFC7yhbHVsr7TfO
+         GEHGc8IPB0DUSZkLOVcOGs0+NhXQMScos16tVwjIPuTBiNQc26/woTtAVpILqpL/OYUb
+         Rx4AE8P7oS+6ryKzes8SZxC/v8f4fhHPrOH5qMZW7DCy7+7CwrFgnsTqB13HL1Qimcba
+         F7NCW0zErVB7nfWoBaFJy+TGh6BKWg5IelIYJ2yvyVi81RyYFDBaubanPEWebJfOhRGU
+         t2Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BU0Hi7RAV2KElXGBIE71hMJoCEINqunWPtqs8tMqIso=;
-        b=cgQ4Q3ZQGXEca1AjtKxr1rnOZTYsntky96eHe9+OO+iTcNZJSH8Rv32daQs4BTSNK+
-         3fVq3mnFejT7psNqRJt0YS/RgEVT2vxxQKT1XnI81oqf4wBMR8u5SDUvV2ueMXh7IU1e
-         saWgphrQ9bQ5qEUS56YXaxHiPU/hR4WLTF4YcIO97LQHYrcaNLz8U1D5kD0xzuJPi0dY
-         zg/FlAkG7mDZVDWwhjzmzy11MRcKnYU1GJFOx5GG8k5+cRR+X0c35cuuDgp+h7/zW60F
-         cmRRVkuGGGofzDRj0iOHnJ/YKtvCgkk0EFPFyLA7TuQzqNvkK4HfQG9oXiEc5M2oOn4Z
-         0XvA==
-X-Gm-Message-State: AOAM5330cubJVJyCMF764alKAoDKYRRPK/c48vGI0vq/n5oQiAMRrNoS
-        Z8h/TKCvmDghJcbidDn91LYFJ2Y/61g=
-X-Google-Smtp-Source: ABdhPJw6qLKi+CFay/qMGjalXLQxpfl48f41bbTBSOqqhVR6Kyt3Ya9eJasYIf1uIXM/HPiO9i0gyw==
-X-Received: by 2002:a17:90a:b292:: with SMTP id c18mr2786970pjr.134.1612855753779;
-        Mon, 08 Feb 2021 23:29:13 -0800 (PST)
+        bh=Fa4WF191om12EiQOY/vS3OYpTRVsVVT2Ao7zH3DjI8U=;
+        b=QoIWF8zFMjJ6YlIcrZjLVRUinu/ROq/gIlhN5ZEVtRrMV/u1d7sKo4I3ZcGO+F5PxH
+         P7iNXU/DNLBaOFsK2ojcSjKdL/kiyOgNStdegMimilrDXQWdM74W7XoBTbYQdTDpkyJa
+         LXy9hM6+eUjlWYh3jbuu0GaDeCQA+7IpnQksKrEkMjNG9YShjNfSKJNdF5u0NQ++ImWr
+         ADmNh10CV1PwvS79a0reDU/+oDcdW1cvReocusmi5AROLcZam3xgpKZhR7tY1BAW0OPy
+         9QmKIHdVjyTf6ISNf7WVDXwtVHk0JIS0N/YPsik/zv4c8Lxw1nPi6YmFjFlJb/vFjQxM
+         J92A==
+X-Gm-Message-State: AOAM530kRmgCdvv5Zdn+tZkYx19JyZWkqnVcv6LR1ETuxmIqzUTdy87T
+        k4f+vxsYglnFqu3yq59JGsp2HWMaMtw=
+X-Google-Smtp-Source: ABdhPJzc4syi3CZ0vWZ4tEq9XvmcMol3GMA6zkByPIiip/WzQL6kYdz+G0jOGjMenE/exLEu1ousAg==
+X-Received: by 2002:a17:90a:4546:: with SMTP id r6mr2767610pjm.213.1612855755042;
+        Mon, 08 Feb 2021 23:29:15 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id w4sm5670443pfn.45.2021.02.08.23.29.12
+        by smtp.gmail.com with ESMTPSA id w4sm5670443pfn.45.2021.02.08.23.29.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Feb 2021 23:29:13 -0800 (PST)
+        Mon, 08 Feb 2021 23:29:14 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 2/9] t3905: remove spaces after redirect operators
-Date:   Mon,  8 Feb 2021 23:28:48 -0800
-Message-Id: <45ed17bfe2dad4702904a07a4a77a8d219df8379.1612855690.git.liu.denton@gmail.com>
+Subject: [PATCH v2 3/9] t3905: move all commands into test cases
+Date:   Mon,  8 Feb 2021 23:28:49 -0800
+Message-Id: <5bda09b4bd55168f6e69f20026d0112b1a43f45f.1612855690.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.30.0.478.g8a0d178c01
 In-Reply-To: <cover.1612855690.git.liu.denton@gmail.com>
 References: <cover.1612258145.git.liu.denton@gmail.com> <cover.1612855690.git.liu.denton@gmail.com>
@@ -72,163 +72,235 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For shell scripts, the usual convention is for there to be no space
-after redirection operators, (e.g. `>file`, not `> file`). Remove these
-spaces wherever they appear.
+In order to modernize the tests, move commands that currently run
+outside of test cases into a test case. Where possible, clean up files
+that are produced using test_when_finished() but in the case where files
+persist over multiple test cases, create a new test case to perform
+cleanup.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3905-stash-include-untracked.sh | 40 +++++++++++++++---------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ t/t3905-stash-include-untracked.sh | 147 +++++++++++++++--------------
+ 1 file changed, 75 insertions(+), 72 deletions(-)
 
 diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index f075c7f1f3..1d416944b7 100755
+index 1d416944b7..892a2c8057 100755
 --- a/t/t3905-stash-include-untracked.sh
 +++ b/t/t3905-stash-include-untracked.sh
-@@ -8,16 +8,16 @@ test_description='Test git stash --include-untracked'
- . ./test-lib.sh
- 
- test_expect_success 'stash save --include-untracked some dirty working directory' '
--	echo 1 > file &&
-+	echo 1 >file &&
- 	git add file &&
- 	test_tick &&
- 	git commit -m initial &&
--	echo 2 > file &&
-+	echo 2 >file &&
- 	git add file &&
--	echo 3 > file &&
-+	echo 3 >file &&
- 	test_tick &&
--	echo 1 > file2 &&
--	echo 1 > HEAD &&
-+	echo 1 >file2 &&
-+	echo 1 >HEAD &&
- 	mkdir untracked &&
- 	echo untracked >untracked/untracked &&
- 	git stash --include-untracked &&
-@@ -25,7 +25,7 @@ test_expect_success 'stash save --include-untracked some dirty working directory
+@@ -25,48 +25,48 @@ test_expect_success 'stash save --include-untracked some dirty working directory
  	git diff-index --cached --quiet HEAD
  '
  
--cat > expect <<EOF
-+cat >expect <<EOF
- ?? actual
- ?? expect
- EOF
-@@ -37,7 +37,7 @@ test_expect_success 'stash save --include-untracked cleaned the untracked files'
- 
- tracked=$(git rev-parse --short $(echo 1 | git hash-object --stdin))
- untracked=$(git rev-parse --short $(echo untracked | git hash-object --stdin))
--cat > expect.diff <<EOF
-+cat >expect.diff <<EOF
- diff --git a/HEAD b/HEAD
- new file mode 100644
- index 0000000..$tracked
-@@ -60,7 +60,7 @@ index 0000000..$untracked
- @@ -0,0 +1 @@
- +untracked
- EOF
--cat > expect.lstree <<EOF
-+cat >expect.lstree <<EOF
- HEAD
- file2
- untracked
-@@ -85,7 +85,7 @@ test_expect_success 'stash save --patch --all fails' '
- 
- git clean --force --quiet
- 
--cat > expect <<EOF
-+cat >expect <<EOF
-  M file
- ?? HEAD
- ?? actual
-@@ -105,14 +105,14 @@ test_expect_success 'stash pop after save --include-untracked leaves files untra
- git clean --force --quiet -d
- 
- test_expect_success 'stash save -u dirty index' '
--	echo 4 > file3 &&
-+	echo 4 >file3 &&
- 	git add file3 &&
- 	test_tick &&
- 	git stash -u
- '
- 
- blob=$(git rev-parse --short $(echo 4 | git hash-object --stdin))
--cat > expect <<EOF
-+cat >expect <<EOF
- diff --git a/file3 b/file3
- new file mode 100644
- index 0000000..$blob
-@@ -128,12 +128,12 @@ test_expect_success 'stash save --include-untracked dirty index got stashed' '
+-cat >expect <<EOF
+-?? actual
+-?? expect
+-EOF
+-
+ test_expect_success 'stash save --include-untracked cleaned the untracked files' '
++	cat >expect <<-EOF &&
++	?? actual
++	?? expect
++	EOF
++
+ 	git status --porcelain >actual &&
  	test_cmp expect actual
  '
  
--git reset > /dev/null
-+git reset >/dev/null
+-tracked=$(git rev-parse --short $(echo 1 | git hash-object --stdin))
+-untracked=$(git rev-parse --short $(echo untracked | git hash-object --stdin))
+-cat >expect.diff <<EOF
+-diff --git a/HEAD b/HEAD
+-new file mode 100644
+-index 0000000..$tracked
+---- /dev/null
+-+++ b/HEAD
+-@@ -0,0 +1 @@
+-+1
+-diff --git a/file2 b/file2
+-new file mode 100644
+-index 0000000..$tracked
+---- /dev/null
+-+++ b/file2
+-@@ -0,0 +1 @@
+-+1
+-diff --git a/untracked/untracked b/untracked/untracked
+-new file mode 100644
+-index 0000000..$untracked
+---- /dev/null
+-+++ b/untracked/untracked
+-@@ -0,0 +1 @@
+-+untracked
+-EOF
+-cat >expect.lstree <<EOF
+-HEAD
+-file2
+-untracked
+-EOF
+-
+ test_expect_success 'stash save --include-untracked stashed the untracked files' '
++	tracked=$(git rev-parse --short $(echo 1 | git hash-object --stdin)) &&
++	untracked=$(git rev-parse --short $(echo untracked | git hash-object --stdin)) &&
++	cat >expect.diff <<-EOF &&
++	diff --git a/HEAD b/HEAD
++	new file mode 100644
++	index 0000000..$tracked
++	--- /dev/null
++	+++ b/HEAD
++	@@ -0,0 +1 @@
++	+1
++	diff --git a/file2 b/file2
++	new file mode 100644
++	index 0000000..$tracked
++	--- /dev/null
++	+++ b/file2
++	@@ -0,0 +1 @@
++	+1
++	diff --git a/untracked/untracked b/untracked/untracked
++	new file mode 100644
++	index 0000000..$untracked
++	--- /dev/null
++	+++ b/untracked/untracked
++	@@ -0,0 +1 @@
++	+untracked
++	EOF
++	cat >expect.lstree <<-EOF &&
++	HEAD
++	file2
++	untracked
++	EOF
++
+ 	test_path_is_missing file2 &&
+ 	test_path_is_missing untracked &&
+ 	test_path_is_missing HEAD &&
+@@ -83,18 +83,21 @@ test_expect_success 'stash save --patch --all fails' '
+ 	test_must_fail git stash --patch --all
+ '
  
+-git clean --force --quiet
++test_expect_success 'clean up untracked/untracked file to prepare for next tests' '
++	git clean --force --quiet
+ 
+-cat >expect <<EOF
+- M file
+-?? HEAD
+-?? actual
+-?? expect
+-?? file2
+-?? untracked/
+-EOF
++'
+ 
+ test_expect_success 'stash pop after save --include-untracked leaves files untracked again' '
++	cat >expect <<-EOF &&
++	 M file
++	?? HEAD
++	?? actual
++	?? expect
++	?? file2
++	?? untracked/
++	EOF
++
+ 	git stash pop &&
+ 	git status --porcelain >actual &&
+ 	test_cmp expect actual &&
+@@ -102,7 +105,9 @@ test_expect_success 'stash pop after save --include-untracked leaves files untra
+ 	test untracked = "$(cat untracked/untracked)"
+ '
+ 
+-git clean --force --quiet -d
++test_expect_success 'clean up untracked/ directory to prepare for next tests' '
++	git clean --force --quiet -d
++'
+ 
+ test_expect_success 'stash save -u dirty index' '
+ 	echo 4 >file3 &&
+@@ -111,25 +116,24 @@ test_expect_success 'stash save -u dirty index' '
+ 	git stash -u
+ '
+ 
+-blob=$(git rev-parse --short $(echo 4 | git hash-object --stdin))
+-cat >expect <<EOF
+-diff --git a/file3 b/file3
+-new file mode 100644
+-index 0000000..$blob
+---- /dev/null
+-+++ b/file3
+-@@ -0,0 +1 @@
+-+4
+-EOF
+-
+ test_expect_success 'stash save --include-untracked dirty index got stashed' '
++	blob=$(git rev-parse --short $(echo 4 | git hash-object --stdin)) &&
++	cat >expect <<-EOF &&
++	diff --git a/file3 b/file3
++	new file mode 100644
++	index 0000000..$blob
++	--- /dev/null
++	+++ b/file3
++	@@ -0,0 +1 @@
++	+4
++	EOF
++
+ 	git stash pop --index &&
++	test_when_finished "git reset" &&
+ 	git diff --cached >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-git reset >/dev/null
+-
  # Must direct output somewhere where it won't be considered an untracked file
  test_expect_success 'stash save --include-untracked -q is quiet' '
--	echo 1 > file5 &&
--	git stash save --include-untracked --quiet > .git/stash-output.out 2>&1 &&
-+	echo 1 >file5 &&
-+	git stash save --include-untracked --quiet >.git/stash-output.out 2>&1 &&
- 	test_line_count = 0 .git/stash-output.out &&
- 	rm -f .git/stash-output.out
- '
-@@ -141,7 +141,7 @@ test_expect_success 'stash save --include-untracked -q is quiet' '
- test_expect_success 'stash save --include-untracked removed files' '
+ 	echo 1 >file5 &&
+@@ -142,23 +146,22 @@ test_expect_success 'stash save --include-untracked removed files' '
  	rm -f file &&
  	git stash save --include-untracked &&
--	echo 1 > expect &&
-+	echo 1 >expect &&
+ 	echo 1 >expect &&
++	test_when_finished "rm -f expect" &&
  	test_cmp expect file
  '
  
-@@ -152,14 +152,14 @@ test_expect_success 'stash save --include-untracked removed files got stashed' '
+-rm -f expect
+-
+ test_expect_success 'stash save --include-untracked removed files got stashed' '
+ 	git stash pop &&
  	test_path_is_missing file
  '
  
--cat > .gitignore <<EOF
-+cat >.gitignore <<EOF
- .gitignore
- ignored
- ignored.d/
- EOF
- 
+-cat >.gitignore <<EOF
+-.gitignore
+-ignored
+-ignored.d/
+-EOF
+-
  test_expect_success 'stash save --include-untracked respects .gitignore' '
--	echo ignored > ignored &&
-+	echo ignored >ignored &&
++	cat >.gitignore <<-EOF &&
++	.gitignore
++	ignored
++	ignored.d/
++	EOF
++
+ 	echo ignored >ignored &&
  	mkdir ignored.d &&
  	echo ignored >ignored.d/untracked &&
- 	git stash -u &&
-@@ -169,7 +169,7 @@ test_expect_success 'stash save --include-untracked respects .gitignore' '
- '
- 
- test_expect_success 'stash save -u can stash with only untracked files different' '
--	echo 4 > file4 &&
-+	echo 4 >file4 &&
- 	git stash -u &&
- 	test_path_is_missing file4
- '
-@@ -214,7 +214,7 @@ test_expect_success 'stash push with $IFS character' '
+@@ -214,12 +217,12 @@ test_expect_success 'stash push with $IFS character' '
  	test_path_is_file bar
  '
  
--cat > .gitignore <<EOF
-+cat >.gitignore <<EOF
- ignored
- ignored.d/*
- EOF
-@@ -224,7 +224,7 @@ test_expect_success 'stash previously ignored file' '
+-cat >.gitignore <<EOF
+-ignored
+-ignored.d/*
+-EOF
+-
+ test_expect_success 'stash previously ignored file' '
++	cat >.gitignore <<-EOF &&
++	ignored
++	ignored.d/*
++	EOF
++
+ 	git reset HEAD &&
  	git add .gitignore &&
  	git commit -m "Add .gitignore" &&
- 	>ignored.d/foo &&
--	echo "!ignored.d/foo" >> .gitignore &&
-+	echo "!ignored.d/foo" >>.gitignore &&
- 	git stash save --include-untracked &&
- 	test_path_is_missing ignored.d/foo &&
- 	git stash pop &&
 -- 
 2.30.0.478.g8a0d178c01
 
