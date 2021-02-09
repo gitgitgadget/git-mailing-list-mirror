@@ -2,204 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85912C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E50C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:25:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3930964E54
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:18:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50AC964E85
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232787AbhBIRSF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 12:18:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49640 "EHLO
+        id S233073AbhBIRZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 12:25:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231845AbhBIRSD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 12:18:03 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6230C061756
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 09:17:23 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id g84so6406913oib.0
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 09:17:23 -0800 (PST)
+        with ESMTP id S233106AbhBIRYo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 12:24:44 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EAA5C0613D6
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 09:24:01 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id k10so15818533otl.2
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 09:24:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=22sDOB6xW4BIepbtOhNx/m2LUOs00qcV06mNNE3VIk0=;
-        b=Y8V4lh4UlHRaGoocdu3v0dU4nFERVgudnIpF9ZZyL3ozaYFkqmzMSJ4yllAQa8LMOJ
-         Sj+s1zoG2zU9ahQ88g+lZ7Cc88TLDxKOwGACE83cVxg0SXq5G5paXaVK/8x0p+q50/a7
-         LnBcodEaPlF/s4pMraGwIWh84BOvjHooSTzcs1DtN/PMONHzJ1XyypcCc6h0mq6BcOBy
-         +gdJyqliQtkxBbnYHTSUdMjRBODkJKsHFv48PDM/lLXRgnVfeu8FhG4Ho1jsEAX4ToTT
-         kDQRdKvQohNiLppG4EikYQgr6hV0ExgDRFJXXp9YOtcCgm3Yl5TkIV+61rCVCtSQIBAk
-         CL9w==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=r/u4VyLfw2rlunMA3CEQSOwbKjr+xHAPSAygF7fY9+Q=;
+        b=EaUItA3vRnTjlfk4mcq+6045Zh+dmhIPvWmnqcesXx+FAs7jiOVVVwVxHsfRVbIDvd
+         yGuerVzOSccRTCvBtEaQxkrGXsRaxFKMD1TwK2LjH9VLf4lSfmJLhW8h247EbgHpdY2d
+         +rux7MbfLvuxC2QLiJ+ySeLg6Jz98Zk6JpXSPXcCGtl8ij9WX+K67Mhkzo6mD/CyvL48
+         cEFEp/Jctj+sHmc5h+6pBA5TjInw/rPVxyDBzQB+5wDQgBnbE3ZNER16M5u3z0EDsuhD
+         yuROhCPD2fjgS85t9/bM/9ovRFwWvdJuuTy5T3TQC0Mq/h+VF0LzpecojHqTX0CPp8mi
+         kv6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=22sDOB6xW4BIepbtOhNx/m2LUOs00qcV06mNNE3VIk0=;
-        b=h9Do/+jD+X3sm0ihbkyl5uXeWYS3z/aRo4UXdEu/6L5U2LJ+gUXMcko3uPndjgsKUW
-         Kxg2AUasmpoagKZTEVj/shOvV+p23OA69+kctCDw30HCjPos+CSzG9fEVwRGFpg3S7ue
-         +OVsnXI31s8oqV/HTmQBSfVvG3ygN+ohd+wF6ofNrb3LcVdH3rgcUmc/dEszwEA8Asjh
-         /i3oX+G1Kpdv8ek+xzLjfUN6NuRfUay5DD3YV9xUZa7qJ4h19UN/fExSKeOG6na7lb09
-         7KVrdFy7/IPtoUu54dn0ZQH6ZTcC5hPr78kBqFFUFdOWJ4YlcMuyWsgeqCcX8nOA1dDZ
-         cHuQ==
-X-Gm-Message-State: AOAM531MTpyTTXMeSEHVVaTOezhTxdDCH58rW/k4jnimkWxKgKcyy97B
-        u0tz+zOyBfhQ9ZCBvLrqSYllSUTVDdBSJVy0wu1+D+lDmYk=
-X-Google-Smtp-Source: ABdhPJxjgvg2CFMLoFMeUjVNH+4bHvBQ6sg1HxIvbvBBvWFRHTqGU1hUrhu3YUv/aoNLgS5TimPJO/IrbnPfbXCE0ug=
-X-Received: by 2002:a54:4790:: with SMTP id o16mr3113857oic.39.1612891043169;
- Tue, 09 Feb 2021 09:17:23 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=r/u4VyLfw2rlunMA3CEQSOwbKjr+xHAPSAygF7fY9+Q=;
+        b=Q3MMUKcPvr/uL9X9gfwmWOIwd7GTuT5uj1PQ3PK+sjXHMVtaMf6+JzFF3qYpdcyCgk
+         8XJE/5g6TXq96VPQuTORg+Tn4LcTDNr0RfxcOVdzf74L4WMl6ND8fZZepBQOokT6YoKt
+         MR5bbjdc72BBaE3gxrI/8OOnFja3NMgXO7RqAbCdAOQ0FMlBjo4wlYV9L2vFIPAy+V6z
+         7iPAhIS6+lzRMZbPuAiVXb6ELGaRSzbnx7QQccu/wF8j2nnM4jXYwfOOA9xmuL0mXVcm
+         3ASxst8i7MVbsMc3VwtjEn9nkgglV2AEeOjwqDDFu3hWbSju4cnYqN7ioagooGCQNbcK
+         X/Ew==
+X-Gm-Message-State: AOAM530HkxPae4k0gLNPln1B99PI8IH/IrBQAFf1aVkVB20knnZw8+dO
+        NnL/8w4QmjP+8xYBzBHONwk=
+X-Google-Smtp-Source: ABdhPJwyEpQbR/Hd5TayWq2kwvuXIj5M38T98I6v0d9dVFz+xQrI7f+v+CO0knZwiIonpGe7y6epNw==
+X-Received: by 2002:a9d:76c7:: with SMTP id p7mr16662495otl.69.1612891441014;
+        Tue, 09 Feb 2021 09:24:01 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
+        by smtp.gmail.com with UTF8SMTPSA id m10sm4474721oim.42.2021.02.09.09.23.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Feb 2021 09:24:00 -0800 (PST)
+Message-ID: <50ed919d-99ad-d4e7-6ebd-514f13ec181a@gmail.com>
+Date:   Tue, 9 Feb 2021 12:23:58 -0500
 MIME-Version: 1.0
-References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
- <pull.843.v2.git.1612870326.gitgitgadget@gmail.com> <dcd0175229aa6fba576425e78875b95385acb58d.1612870326.git.gitgitgadget@gmail.com>
- <b64e30ab-9cb3-ffee-ec5e-1b94529ce636@gmail.com>
-In-Reply-To: <b64e30ab-9cb3-ffee-ec5e-1b94529ce636@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 9 Feb 2021 09:17:11 -0800
-Message-ID: <CABPp-BEz7ZUUUPF6EkK0RzWq5O=kYbNFFtg=iMbk607kQ-nmbg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] diffcore-rename: complete find_basename_matches()
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
+ Thunderbird/86.0
+Subject: Re: [PATCH 16/27] unpack-trees: make sparse aware
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.847.git.1611596533.gitgitgadget@gmail.com>
+ <45cf57c9c40bebb7383b8aab19c82fc4e41d2cd3.1611596534.git.gitgitgadget@gmail.com>
+ <CABPp-BEjm1NJ8GAn6iKJDvgFYw7mMrR8T66RZtUi6nwgPcXRHQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CABPp-BEjm1NJ8GAn6iKJDvgFYw7mMrR8T66RZtUi6nwgPcXRHQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 9, 2021 at 5:25 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 2/9/2021 6:32 AM, Elijah Newren via GitGitGadget wrote:
-> > +     /*
-> > +      * When I checked, over 76% of file renames in linux just moved
->
-> Perhaps "In late 2020," instead of "When I checked".
+On 2/1/2021 3:50 PM, Elijah Newren wrote:
+> On Mon, Jan 25, 2021 at 9:42 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> It is important to be careful about the trailing directory separator
+>> that exists in the sparse directory entries but not in the subtree
+>> paths.
+> 
+> The comment makes me wonder if leaving the trailing directory
+> separator out would be better, as it'd allow direct comparisons.  Of
+> course, you have a better idea of what is easier or harder based on
+> this decision.  Is there any chance you have a quick list of the
+> places that the code was simplified by this decision and a list of
+> places like this one that were made slightly harder?
 
-In early 2020 (in fact, it might have been 2019, but I have no records
-to verify the actual year), but sure I can change that.
+I'm going through all of your comments and making notes about areas
+to fix and clean up before starting a new series for full review.
 
-> > +      * files to a different directory but kept the same basename.  gcc
-> > +      * did that with over 64% of renames, gecko did it with over 79%,
-> > +      * and WebKit did it with over 89%.
-> > +      *
-> > +      * Therefore we can bypass the normal exhaustive NxM matrix
-> > +      * comparison of similarities between all potential rename sources
-> > +      * and destinations by instead using file basename as a hint, checking
-> > +      * for similarity between files with the same basename, and if we
-> > +      * find a pair that are sufficiently similar, record the rename
-> > +      * pair and exclude those two from the NxM matrix.
-> > +      *
-> > +      * This *might* cause us to find a less than optimal pairing (if
-> > +      * there is another file that we are even more similar to but has a
-> > +      * different basename).  Given the huge performance advantage
-> > +      * basename matching provides, and given the frequency with which
-> > +      * people use the same basename in real world projects, that's a
-> > +      * trade-off we are willing to accept when doing just rename
-> > +      * detection.  However, if someone wants copy detection that
-> > +      * implies they are willing to spend more cycles to find
-> > +      * similarities between files, so it may be less likely that this
-> > +      * heuristic is wanted.
-> > +      */
-> > +
-> > +     int i, renames = 0;
-> >       struct strintmap sources;
-> >       struct strintmap dests;
->
-> ...
->
-> > +      * copy detection.  find_basename_matches() is only used when detecting
-> > +      * renames, not when detecting copies, so it'll only be used when a file
-> > +      * only existed in the source.  Since we already know that the file
->
-> There are two "only"s in this sentence. Just awkward, not wrong.
->
-> > +      * won't be unmodified, there's no point checking for it; that's just a
-> > +      * waste of resources.  So set skip_unmodified to 0 so that
-> > +      * estimate_similarity() and prefetch() won't waste resources checking
-> > +      * for something we already know is false.
-> > +      */
-> > +     int skip_unmodified = 0;
-> > +
->
->
->
-> > -     /* TODO: Make use of basenames source and destination basenames */
-> > +     /* Now look for basename matchups and do similarity estimation */
-> > +     for (i = 0; i < num_src; ++i) {
-> > +             char *filename = rename_src[i].p->one->path;
-> > +             char *base = NULL;
-> > +             intptr_t src_index;
-> > +             intptr_t dst_index;
-> > +
-> > +             /* Get the basename */
-> > +             base = strrchr(filename, '/');
-> > +             base = (base ? base+1 : filename);
->
-> Here is the third instance of this in the same function. At minimum we should
-> extract a helper for you to consume.
+This question of the trailing slash is important, and I will take
+particular care about answering it as I rework the series. However,
+the questions in this patch poke at the right places...
 
-Where by "this" you mean these last two lines, right?
+>> +       /* remove directory separator if a sparse directory entry */
+>> +       if (S_ISSPARSEDIR(ce))
+>> +               ce_len--;
+> 
+> Here's where your comment about trailing separator comes in; makes sense.
+> 
+>>         return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
+>>  }
+>>
+>> @@ -989,6 +999,10 @@ static int compare_entry(const struct cache_entry *ce, const struct traverse_inf
+>>         if (cmp)
+>>                 return cmp;
+>>
+>> +       /* If ce is a sparse directory, then allow equality here. */
+>> +       if (S_ISSPARSEDIR(ce))
+>> +               return 0;
+>> +
+> 
+> This seems surprising to me.  Is there a chance you are comparing
+> sparse directory A with sparse directory B and you return with
+> equality?  Or sparse_directory A with regular file B?  Do the callers
+> still do the right thing?  If your code change here is right, it seems
+> like it deserves an extra comment either in the code or the commit
+> message.
 
-And perhaps explain why I'm not using either basename(3) or
-gitbasename() from git-compat-util.h?  (The latter of which I just
-learned about while responding to the review of this patch.)
+Sometimes a caller is asking for the first index entry corresponding
+to a directory. In these cases, the input could be "A/B/C/". We want
+to ensure that a sparse directory entry corresponding exactly to that
+directory is correctly matched. If we place "A/B/C" in the index instead,
+this search becomes more complicated (I think; I will justify this more
+after thinking about it). 
 
-or maybe gitbasename can do the job, but the skip_dos_drive_prefix()
-and the munging of the string passed in both worry me.  And the
-is_dir_sep() looks inefficient since I know I'm dealing with filenames
-as stored in git internally, and thus can only use '/' characters.
-Hmm...
+At this point in time, we are just saying "We found the entry with
+equal path value!" and not failing with the check in the rest of the
+method:
 
-Yeah, I think I'll add my own helper in this file, since you want one,
-and just use it.
+	/*
+	 * Even if the beginning compared identically, the ce should
+	 * compare as bigger than a directory leading up to it!
+	 */
+	return ce_namelen(ce) > traverse_path_len(info, tree_entry_len(n));
 
-> > +             /* Find out if this basename is unique among sources */
-> > +             src_index = strintmap_get(&sources, base);
-> > +             if (src_index == -1)
-> > +                     continue; /* not a unique basename; skip it */
-> > +             assert(src_index == i);
-> > +
-> > +             if (strintmap_contains(&dests, base)) {
-> > +                     struct diff_filespec *one, *two;
-> > +                     int score;
-> > +
-> > +                     /* Find out if this basename is unique among dests */
-> > +                     dst_index = strintmap_get(&dests, base);
-> > +                     if (dst_index == -1)
-> > +                             continue; /* not a unique basename; skip it */
-> > +
-> > +                     /* Ignore this dest if already used in a rename */
-> > +                     if (rename_dst[dst_index].is_rename)
-> > +                             continue; /* already used previously */
-> > +
-> > +                     /* Estimate the similarity */
-> > +                     one = rename_src[src_index].p->one;
-> > +                     two = rename_dst[dst_index].p->two;
-> > +                     score = estimate_similarity(options->repo, one, two,
-> > +                                                 minimum_score, skip_unmodified);
-> > +
-> > +                     /* If sufficiently similar, record as rename pair */
-> > +                     if (score < minimum_score)
-> > +                             continue;
-> > +                     record_rename_pair(dst_index, src_index, score);
-> > +                     renames++;
-> > +
-> > +                     /*
-> > +                      * Found a rename so don't need text anymore; if we
-> > +                      * didn't find a rename, the filespec_blob would get
-> > +                      * re-used when doing the matrix of comparisons.
-> > +                      */
-> > +                     diff_free_filespec_blob(one);
-> > +                     diff_free_filespec_blob(two);
-> > +             }
-> > +     }
->
-> Makes sense to me.
->
-> Thanks,
-> -Stolee
+>> -               if (traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+>> +               if (recurse &&
+>> +                   traverse_trees_recursive(n, dirmask, mask & ~dirmask,
+>>                                              names, info) < 0)
+>>                         return -1;
+>>                 return mask;
+> 
+> The unpack_callback() code has some comparison to a cache-tree, but
+> I'd assume that you'd need to update cache-tree.c somewhat to take
+> advantage of these sparse directory entries.  Am I wrong, and you just
+> get cache-tree.c working with sparse directory entries for free?  Or
+> is this something coming in a later patch?
+
+In the RFC, I integrate the cache-tree with the sparse-index at the
+very end. I will move that integration to be much earlier in the next
+submission, so it becomes part of the format discussion.
+
+Thanks,
+-Stolee
