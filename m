@@ -2,174 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5949CC433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04F46C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:57:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 097E964EAC
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:55:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0DD764DFF
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:57:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233039AbhBIQz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 11:55:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44728 "EHLO
+        id S233183AbhBIQ5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 11:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232846AbhBIQzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 11:55:24 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14563C061574
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 08:54:44 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id k10so15718451otl.2
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 08:54:44 -0800 (PST)
+        with ESMTP id S233175AbhBIQ5f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 11:57:35 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C97C06174A
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 08:56:54 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id r21so9581056otk.13
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 08:56:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=JUc1g/+GyDrdIp4/Eobu/WgthT0flupLbwAp3tz0cZk=;
-        b=FfgbWTmq4Mp0zsucu/Yj4t19mwOq216/tWLE63Lyhb89kL23hty9jK0BsfayGeg5hU
-         IDp3uwJcxW9WV2tuho4xH7USm8W0Fg4OoXi4CthMPX6F4c930CP7JrBxq0cX6IsPpvDa
-         mG1rxDnHcsQKko6ae0CpIXzjiEbPtRowv8bsAAKmOCkSyOYIVDiYY27F3NTyimvISvmC
-         jp+DiYB1B7JwnM7Fq7hfz8bsnH9XAULtdkhr7ENxOh5CYM/S65uygl80uduTt+H7EIuk
-         g0A7mg3+w+9a9hQrBt872NZf/Eej+dwDLRzO5uTBcGmXI6Ys9tzaNcaxRE+JPVaOCXIS
-         xVhQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xIplPIKHkogXZ1pKFQ8s4Uj2PbyryE8ueI46lCTvWz0=;
+        b=YeEv135PKgnsbCRbBOgBIA3slFBViucaadVLU7xWzSv+KF3Oe6ZSGELkhkq07rrF8W
+         pNh4NjDc0kumqRMeGLMH9D1/4+qSMdt5rO+JSxCaOg6yk9Q+iwNTsKbjJ0fiv6mqxorb
+         453x1nKfhEz+ZefCbIv+eBJ2qAWqaMzGk2OszJ+4o3qXeFxqhBeDCx1sSpGd3xxNA04T
+         0tcfiw/MQD+6df7cgRUyWAHTnHyh8KFxHV6szykcpYerhpGiJ02P/W847GzXQl8onVIv
+         1jAcrYIM2GFQpX3PnvBeQXkez2rV1lBgJJJWbL+CsihmCrSrBLCg0/I/ZPIR0mUm3v1U
+         JcSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=JUc1g/+GyDrdIp4/Eobu/WgthT0flupLbwAp3tz0cZk=;
-        b=WS1++BIiN68R+ApV0dPbfxBEi8FC4hrWWF/5BDWiQ8H5Yt86nLY++qkXQtRm1SxjSZ
-         rwYOx7cmbTcVfoNl7qM/cBe7y1QC68LGxqfdWbtuckwlcXwb4wg0wEV4J02YsPxI3aL3
-         hDJ695LQ7gYBeMjXrZxtpvZYpWyYdF/3U2Dwq4Tg2NeyAspNQUefE/vbFPKnJY+PARmd
-         jELe/jxaD3QvJQqd8vZxYg5JwatnLjPwt4gJntbyfd5t0C76iuGDNMM7Jx/GdXyogEZx
-         6McPAKjv7FixwwapVm8Jo6O8Oyf3ivm5SacpccYqeIzU8O1l+wBq+z0OBPb0Izp2EK/F
-         vCYw==
-X-Gm-Message-State: AOAM530+c1NKtITiOySZg6UcCYx9gJgiT18sgiWAN/5fqMubVGUQMA/D
-        xmu1idPaGOGovTqpqS9/eJw=
-X-Google-Smtp-Source: ABdhPJzo6IOH4zPII68e85TeTSNLsQI5U0eXYLorzDsjmuTXLoxT8rEFoMcIFcOKV3SwdLbLKI3hxQ==
-X-Received: by 2002:a05:6830:1d82:: with SMTP id y2mr335864oti.204.1612889682909;
-        Tue, 09 Feb 2021 08:54:42 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
-        by smtp.gmail.com with UTF8SMTPSA id h6sm389880otn.38.2021.02.09.08.54.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Feb 2021 08:54:42 -0800 (PST)
-Message-ID: <1eff631f-b079-d097-b16d-36dc974efea9@gmail.com>
-Date:   Tue, 9 Feb 2021 11:54:41 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xIplPIKHkogXZ1pKFQ8s4Uj2PbyryE8ueI46lCTvWz0=;
+        b=Qi1+7FAkijoQbKUk7xTAhYydrt8z028EGYyx9oG5a1CmBu6Z4LwDPj1t9etWqdgjcw
+         Ou1POjzyDrvHngRcUWAM5Goc+PDzWyNFrY1IxcQ/wYPD5c9z9Eie4jZK8CdOE5wc4UlC
+         SilUckOf8DR6K1maboq3JrG7Xvo8XTX6LmI3hdghM8UOI8EoAECVlSgBacUSFLRy+Cfc
+         jh+iLSdXkypT+OJiMTfxN1ROQvb2thfaC0+xLnrTXiejGuar3OIK0f+1sRtkkoXD9frK
+         bproE5+7OL1JcePFIMEYDuqhpI9zHZrgDojAePvLPbuDyUqNk/UkkbBuxLZyBtJvjKpe
+         6Vvg==
+X-Gm-Message-State: AOAM533mLbqM3tWfwmYcAMBUtgEnm/6YKSQZozzTBj9DMVoJGjx1XSUW
+        ig1Hwru38ycMveYEJp2WhzsO881SEG6LTwagftQ=
+X-Google-Smtp-Source: ABdhPJykfgN/XH5Ghh8xXuiWCloG2nXvWvd5+EzSe/ggythY44wO1HTeE+mnbSyE2Tzy/XIE2aSsy4WlieA/ECZo8dc=
+X-Received: by 2002:a05:6830:1e3b:: with SMTP id t27mr14285846otr.316.1612889813421;
+ Tue, 09 Feb 2021 08:56:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH v4 2/8] maintenance: add --schedule option and config
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
- <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
- <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
- <87blctcp30.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <87blctcp30.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
+ <pull.843.v2.git.1612870326.gitgitgadget@gmail.com> <381a45d239bb52a70373c385d8978005c9cb4800.1612870326.git.gitgitgadget@gmail.com>
+ <dfbffe97-51de-9e8b-37a4-417909358323@gmail.com>
+In-Reply-To: <dfbffe97-51de-9e8b-37a4-417909358323@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 9 Feb 2021 08:56:42 -0800
+Message-ID: <CABPp-BEsuOiUyvbkwPC384eho8pgSWuRdcvw9t5gkXhf+_j-3A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] diffcore-rename: compute basenames of all source
+ and dest candidates
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/9/2021 9:06 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Oct 15 2020, Derrick Stolee via GitGitGadget wrote:
-> 
->> +--schedule::
->> +	When combined with the `run` subcommand, run maintenance tasks
->> +	only if certain time conditions are met, as specified by the
->> +	`maintenance.<task>.schedule` config value for each `<task>`.
->> +	This config value specifies a number of seconds since the last
->> +	time that task ran, according to the `maintenance.<task>.lastRun`
->> +	config value. The tasks that are tested are those provided by
->> +	the `--task=<task>` option(s) or those with
->> +	`maintenance.<task>.enabled` set to true.
-> 
-> I see from searching on list and from spying on your repo that patches
-> for this maintenance.<task>.lastRun feature exist, but there's no code
-> for it in git.git.
-> 
-> So we've got a 2.30.0 release with a mention of that, and it can't work,
-> because it's only in the doc due to b08ff1fee00 (maintenance: add
-> --schedule option and config, 2020-09-11).
+Hi,
 
-Thank you for pointing out this docbug. This is based on an early
-version of the patch series and should have been changed.
+On Tue, Feb 9, 2021 at 5:17 AM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> On 2/9/2021 6:32 AM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > We want to make use of unique basenames to help inform rename detection,
+> > so that more likely pairings can be checked first.  (src/moduleA/foo.txt
+> > and source/module/A/foo.txt are likely related if there are no other
+> > 'foo.txt' files among the deleted and added files.)  Add a new function,
+> > not yet used, which creates a map of the unique basenames within
+> > rename_src and another within rename_dst, together with the indices
+> > within rename_src/rename_dst where those basenames show up.  Non-unique
+> > basenames still show up in the map, but have an invalid index (-1).
+> >
+> > This function was inspired by the fact that in real world repositories,
+> > most renames often do not involve a basename change.  Here are some
+> > sample repositories and the percentage of their historical renames (as of
+> > early 2020) that did not involve a basename change:
+>
+> I found this difficult to parse. Perhaps instead
+>
+>   "the percentage of their renames that preserved basenames".
 
-Please see this patch which attempts to do a better job. I can
-create a new thread with this submission if we need more edits.
+Ooh, I like it; happy to make that change.
 
-Thanks,
--Stolee
+> We might also need something stronger, though: which percentage of renames
+> preserved the basename but also had no other copy of that basename in the
+> scope of all add/deletes?
 
---- >8 ---
+I don't think it's useful to try to prove that this idea can save time
+or how much time we can save before we try it; I think the only
+purpose of these numbers should be to motivate the idea behind why it
+was worth trying.  If we attempt to prove how much we'll save apriori,
+then what you have is also too weak.  We would need "percentage of
+total adds/deletes that are renames that preserved the basename but
+also had no other copy of that basename in the scope of all
+add/deletes".  But that is also wrong, actually; we need "for any
+given two commits that we are likely to diff, what is the average
+percentage of total adds/deletes between them that are renames that
+preserved the basename but also had no other copy of that basename in
+the scope of all add/deletes".  In particular, my script did not look
+at the "any two given likely-to-be-diffed commits" viewpoint, I simply
+added the number of renames within individual commits that preserved
+renames, and divided by the total number of renames in individual
+commits.  But even if we could calculate the "any two given
+likely-to-be-diffed commits" viewpoint in some sane manner, it'd still
+be misleading.  The next series is going to change the "no other copy
+of that basename in the scope of all adds/deletes" caveat, by adding a
+way to match up _some_ of those files (when it can find a way to
+compare any given file to exactly one of the other files with the same
+basename).  And even if you consider all the above and calculated it
+in order to try to show how much could be saved, you might need to
+start worrying about details like the fact that the first comparison
+between files in diffcore-rename.c is _much_ more expensive than
+subsequent comparisons (due to the fact that the spanhash is cached).
 
-From 46436b06caf65ee824e781603a8108413bb87705 Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Tue, 9 Feb 2021 11:51:32 -0500
-Subject: [PATCH] maintenance: properly document --schedule
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Trying to account for all these details and describe them fully is
+completely beside the point, though; I didn't bother to check any of
+this before implementing the algorithm -- I just looked up these very
+rough numbers and felt they provided sufficient motivation that there
+was an optimization worth trying.
 
-The documentation for the '--schedule' option is incorrect and based on
-an early version of the background maintenance feature. Update the
-documentation to describe the actual use of the option.
+> Is this reproducible from a shell command that could be documented here?
 
-The most important thing is that Git takes this option as a hint for
-which tasks it should run. Users should not run this command arbitrarily
-and expect that Git will enforce some timing restrictions.
+No, trying to parse log output with full handling of proper quoting in
+the case of filenames with funny characters is too complex to attempt
+in shell.  I was surprised by how long it turned out to be in python.
+(And I dread attempting to calculate "something stronger" in any
+accurate way given how involved just this rough calculation was.  That
+idea seems harder to me than actually implementing this series.)
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-maintenance.txt | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+If you're curious, though, and don't care about
+quickly-hacked-together-script-not-designed-for-reuse:
+https://github.com/newren/git/blob/ort/rebase-testcase/count-renames.py
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 6fec1eb8dc2..d4b5aea6760 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -155,15 +155,15 @@ OPTIONS
- 	exceeds the `gc.autoPackLimit` config setting. Not compatible with
- 	the `--schedule` option.
- 
----schedule::
-+--schedule=<frequency>::
- 	When combined with the `run` subcommand, run maintenance tasks
--	only if certain time conditions are met, as specified by the
--	`maintenance.<task>.schedule` config value for each `<task>`.
--	This config value specifies a number of seconds since the last
--	time that task ran, according to the `maintenance.<task>.lastRun`
--	config value. The tasks that are tested are those provided by
--	the `--task=<task>` option(s) or those with
--	`maintenance.<task>.enabled` set to true.
-+	whose `maintenance.<task>.schedule` config value is equal to
-+	`<frequency>`. There is no timing restriction imposed by this
-+	option, but instead is used to inform the Git process which
-+	frequency to use. The command scheduler created by
-+	`git maintenance start` runs this command with `<frequency>`
-+	equal to `hourly`, `daily`, and `weekly` at the appropriate
-+	intervals.
- 
- --quiet::
- 	Do not report progress or other information over `stderr`.
--- 
-2.30.0.vfs.0.0.exp
+> > +MAYBE_UNUSED
+> > +static int find_basename_matches(struct diff_options *options,
+> > +                              int minimum_score,
+> > +                              int num_src)
+> > +{
+> > +     int i;
+> > +     struct strintmap sources;
+> > +     struct strintmap dests;
+> > +
+> > +     /* Create maps of basename -> fullname(s) for sources and dests */
+> > +     strintmap_init_with_options(&sources, -1, NULL, 0);
+> > +     strintmap_init_with_options(&dests, -1, NULL, 0);
+>
+> Initially, I was wondering why we need the map for each side, but we will need
+> to enforce uniqueness in each set, so OK.
+>
+>> > +     for (i = 0; i < num_src; ++i) {
+> > +             char *filename = rename_src[i].p->one->path;
+> > +             char *base;
+> > +
+> > +             /* exact renames removed in remove_unneeded_paths_from_src() */
+> > +             assert(!rename_src[i].p->one->rename_used);
+> > +
+> > +             base = strrchr(filename, '/');
+> > +             base = (base ? base+1 : filename);
+>
+> nit: "base + 1"
 
+Will fix.
 
+> Also, this is used here and below. Perhaps it's worth pulling out as a
+> helper? I see similar code being duplicated in these existing spots:
+>
+> * diff-no-index.c:append_basename()
+> * help.c:append_similar_ref()
+> * packfile.c:pack_basename()
+> * replace-object.c:register_replace_ref()
+> * setup.c:read_gitfile_gently()
+> * builtin/rebase.c:cmd_rebase()
+> * builtin/stash.c:do_create_stash()
+> * builtin/worktree.c:add_worktree()
+> * contrib/credential/gnome-keyring/git-credential-gnome-keyring.c:usage()
+> * contrib/credential/libsecret/git-credential-libsecret.c:usage()
+> * trace2/tr2_dst.c:tr2_dst_try_auto_path()
 
+Honestly asking: would anyone ever search for such a two-line helper
+function?  I wouldn't have even thought to look, since it seems so
+simple.
+
+However, my real concern here is that this type of change would risk
+introducing conflicts with unrelated series.  This series is the
+second in what will be a 9-series deep dependency chain of
+optimizations[1], and the later series are going to be longer than
+these first two were (the latter ones are 6-11 patches each).  We've
+already discussed previously whether we possibly want to hold the
+first couple optimization series out of the upcoming git-2.31 release
+in order to keep the optimizations all together, but that might
+increase the risk of conflicts with unrelated patches if we try a
+bigger tree refactor like this.  (Junio never commented on that,
+though.)  It might be better to keep the series touching only
+merge-ort.c & diffcore-rename.c, and then do cleanups like the one you
+suggest here after the whole series.
+
+That said, it's not a difficult initial change, so I'm mostly
+expressing this concern out of making things harder for Junio.  It'd
+be best to get his opinion -- Junio, your thoughts?
+
+[1] https://github.com/gitgitgadget/git/pulls?q=is%3Apr+author%3Anewren+Optimization+batch
+
+> There are other places that use strchr(_, '/') but they seem to be related
+> to peeling basenames off of paths and using the leading portion of the path.
+>
+> > +             /* Record index within rename_src (i) if basename is unique */
+> > +             if (strintmap_contains(&sources, base))
+> > +                     strintmap_set(&sources, base, -1);
+> > +             else
+> > +                     strintmap_set(&sources, base, i);
+> > +     }
+> > +     for (i = 0; i < rename_dst_nr; ++i) {
+> > +             char *filename = rename_dst[i].p->two->path;
+> > +             char *base;
+> > +
+> > +             if (rename_dst[i].is_rename)
+> > +                     continue; /* involved in exact match already. */
+> > +
+> > +             base = strrchr(filename, '/');
+> > +             base = (base ? base+1 : filename);
+> > +
+> > +             /* Record index within rename_dst (i) if basename is unique */
+> > +             if (strintmap_contains(&dests, base))
+> > +                     strintmap_set(&dests, base, -1);
+> > +             else
+> > +                     strintmap_set(&dests, base, i);
+> > +     }
+> > +
+> > +     /* TODO: Make use of basenames source and destination basenames */
+> > +
+> > +     strintmap_clear(&sources);
+> > +     strintmap_clear(&dests);
+> > +
+> > +     return 0;
+> > +}
+>
+> Thanks,
+> -Stolee
+
+Thanks for the review!
