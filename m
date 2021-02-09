@@ -2,203 +2,262 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 946B5C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 00:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D12C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 01:26:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62C9F64E54
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 00:20:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B203D6023B
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 01:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229972AbhBIAUx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 19:20:53 -0500
-Received: from mail.archlinux.org ([95.216.189.61]:53432 "EHLO
-        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbhBIAUv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 19:20:51 -0500
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-rsa; t=1612830008;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+/tMslJWUQqkMQFXCb/aoLT3IDMBEKyWq+n7y4rRhOQ=;
-        b=IP9w1RucxwjJgg4Tsuowfrt+hLh750lVmjVO7oqp9LvYCrNhuUXKg9V7AKhp0wJDnce/AM
-        N7rwzPtXVzNwGevKTL+AqcR6QjSfGd2x3aiqQsyj/bYDQKXz7uz29yeYTxyFIdg/jwaVBB
-        lcd4REC1bZG/zkcMHwu/gj9hlELhqWGgklboPqjjP2ORxp1n0CPNnk1sCP1WSzfSVIxZH+
-        UZTGPcNUlXB4XHMY6ge6mxj1C0eUEwBFv7dbhZB3mh72W3oL0aBYEWx4UK5rtNPTShdU/+
-        Ld78PSbepuKO8lRkCiit6UF8KAbMtAECmBY1gz/CM3ZmruG2XnNcHWQiJVFUC4jgUX98bt
-        qAfBu/d/DqWwy2Kto9UuWC+EBO6Xiqq9eJvMXJnN/dWME72sGP2yO7wCnkRPX3+BhErqML
-        k0fawmrhhkCifpCsp8YiueW6jjVxuSivBv5thESAAwSMEpFHv7qq7QHF4owTovRd5lwYYg
-        Vs55yP5kFsf8YNCiaMXX/XZEkbL2OkQPF/5xGGrW8f2m+zOt/9av8NdTqWnED7I2xj8mQw
-        ojXBWp2BCw6RPZW2ZJk6XXoTqN2pwCbC2L2U7jZbrK7BntyxFpZ6Atr/oQO6zKERtllTDi
-        KJb0EFlQp/WOhZm31TcPLkXOy1U0bji9m3YUeKdPxWX6SG3B4Yoo8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
-        s=dkim-ed25519; t=1612830008;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=+/tMslJWUQqkMQFXCb/aoLT3IDMBEKyWq+n7y4rRhOQ=;
-        b=4bK195B8Nx9l0G+D9b54Rhj9FCHv2MDyvbXFniL4nrImiLWjZSgQairFbaP62Nww5rKemW
-        cHGjDAp42i2LiWBg==
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
- <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
-From:   Eli Schwartz <eschwartz@archlinux.org>
-Subject: Re: gitattributes export-subst and software versioning
-X-Clacks-Overhead:  GNU Terry Pratchett
-Message-ID: <4f65f02c-1d16-aa2c-3e7b-28d807b9ebe9@archlinux.org>
-Date:   Mon, 8 Feb 2021 19:19:59 -0500
+        id S229648AbhBIBZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 20:25:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42672 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230314AbhBIBZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 20:25:53 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E44CDC061788
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 17:25:12 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id m1so1011256wml.2
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 17:25:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=r2BIuKYkt+BfTzofOmH7P5WZtBcUxoG76hKeBRXyf1c=;
+        b=l2Ch10IgJDxrIw/150IpHK2OHdCu9RYedk3zZhGKmRFTGqKcCtGRwIs8eRBeGuyA0+
+         n5z0qajuL65z2jKurWLEqDySTaFq5Iosl9XF7NxBK2yYufjnxzdgyLpsA8/jzxVXwh4Y
+         cossvNKfBtNjNp2cNJjtoPslQCjPOWNI1Qo6QgSzOTOfcRvDn7iSCwg+S/PXzidsBPxy
+         IXXDS5Yp6pjABi+Yop3btjaKc1k3zagpyTsZ4uYeNT0NpEXu23L4LKS/gP6FKb/rmfsB
+         K8E5cU5O1jxxdRew3VQVFP9dQMvDIqFanRoL5NKlAl1VhAs/4cEHIf1QgF5xgsJ1VKy1
+         S2NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=r2BIuKYkt+BfTzofOmH7P5WZtBcUxoG76hKeBRXyf1c=;
+        b=ikuwckUiUqKZ3vJkfppEJkY8g+pPVHoI+gg+9TjMvx0Smb2RqMskBL1y7G3GfdBeI7
+         jpQG+4pQj47/efr3QFw6BgPjTrV+JFvhiSyHP/+c59GG/UezA/BjSo5Ch3nEAEbY0Lom
+         pAN1XZxy9psYhaKeEgi/5VgDJRQrY+jxjWAMcvpFXA1UirIniWrdH+SrcVfzSPstodAL
+         sBr9ZfWQQziEsz7vOaDKCzDVwYmNK8vg8jUIV5pYyWyTIk3R2bFYVeUnguWn8kSrRpgq
+         LUveKXnejqAfgCHZ47ZqwBBdEBdjeXttQZb9BrqwMMzZdRbSgdD+eFFEPx5D5QBzWKs4
+         nuGA==
+X-Gm-Message-State: AOAM533mkalhCB9zOwHXvlcj2UZ/dxYQCX9qCYRmLqxQcRsXNw4jjeCa
+        pLUY/D8Lh7zqNA5qo0WkV/+nCGaL0eI=
+X-Google-Smtp-Source: ABdhPJxgHZtCHoDQWPwopwlfLnyVIun/rGQ98/HvBJX7e7b2SV5AfLUb11VGkl2s2iGQCiuHua8hDg==
+X-Received: by 2002:a7b:cd07:: with SMTP id f7mr1145414wmj.126.1612833911359;
+        Mon, 08 Feb 2021 17:25:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n5sm1449481wmq.7.2021.02.08.17.25.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Feb 2021 17:25:10 -0800 (PST)
+Message-Id: <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
+In-Reply-To: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
+References: <pull.841.git.git.1600395427.gitgitgadget@gmail.com>
+From:   "Andrew Klotz via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 09 Feb 2021 01:25:08 +0000
+Subject: [PATCH v2] config: improve error message for boolean config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq"
-Authentication-Results: mail.archlinux.org;
-        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Andrew Klotz <agc.klotz@gmail.com>,
+        Andrew Klotz <agc.klotz@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq
-Content-Type: multipart/mixed; boundary="0LqOZhCVydUpUsv101x31qWWZWPZHVvl3";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@archlinux.org>
-To: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Message-ID: <4f65f02c-1d16-aa2c-3e7b-28d807b9ebe9@archlinux.org>
-Subject: Re: gitattributes export-subst and software versioning
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
- <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
-In-Reply-To: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+From: Andrew Klotz <agc.klotz@gmail.com>
 
---0LqOZhCVydUpUsv101x31qWWZWPZHVvl3
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US-large
-Content-Transfer-Encoding: quoted-printable
+Currently invalid boolean config values return messages about 'bad
+numeric', which is slightly misleading when the error was due to a
+boolean value. We can improve the developer experience by returning a
+boolean error message when we know the value is neither a bool text or
+int.
 
-On 2/8/21 2:46 PM, Ren=C3=A9 Scharfe wrote:
-> git archive uses the pretty format code for export-subst.  It is used b=
-y
-> git log and others as well.  git describe uses all object flags to find=
+before with an invalid boolean value of `non-boolean`, its unclear what
+numeric is referring to:
+```
+fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
+```
 
-> the best description.  Simply plugging it into the pretty format code
-> would clash with the object flag use of git log.
+now the error message mentions `non-boolean` is a bad boolean value:
+```
+fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
+```
 
-Yeah, I was afraid there might be bad interactions with a pretty
-archive-centric placeholder and something that isn't git-archive.
+Signed-off-by: Andrew Klotz <agc.klotz@gmail.com>
+---
+    config: improve error message for boolean config
+    
+    Currently invalid boolean config values return messages about 'bad
+    numeric', which I found misleading when the error was due to a boolean
+    string value. This change makes the error message reflect the boolean
+    value.
+    
+    The current approach relies on GIT_TEST_GETTEXT_POISON being a boolean
+    value, moving its special case out from die_bad_number() and into
+    git_config_bool_or_int(). An alternative could be for die_bad_number()
+    to handle boolean values when erroring, although the function name might
+    need to change if it is handling non-numeric values.
+    
+    changes since v1
+    
+     * moved boolean error message change out of git_config_bool_or_int to
+       just in git_config_bool and added die_bad_boolean instead of
+       modifying die_bad_number.
+    
+    Signed-off-by: Andrew Klotz agc.klotz@gmail.com
 
-On the other hand, with my zero knowledge of the code but having read
-lots of man pages... %S documents that it "only works with git log", so
-maybe it is possible to add an option that is documented to only work
-for git archive?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-841%2FKlotzAndrew%2Fbetter_bool_errors-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-841/KlotzAndrew/better_bool_errors-v2
+Pull-Request: https://github.com/git/git/pull/841
 
-e.g. if you do use it,
+Range-diff vs v1:
 
-$ cat VERSION
-$Format:%d$
-$Format:%S$
-
-$ git archive HEAD | bsdtar -xOf - VERSION
- (HEAD -> master, tag: 1.0)
-%S
-
-It's apparently completely ignored and treated as raw characters. The
-same restriction could theoretically be added in the other direction for
-a new placeholder.
-
-This would neatly resolve Junio's concern about the resource-intensive
-nature of "describe" not being a good fit for "log".
-
-> And replacing the flags with a commit slab doesn't seem to be enough,
-> either -- I get good results lots of commits, but for some git log with=
-
-> the new placeholder would just show some nonsensical output, as it
-> seems to get the depth calculation wrong for them somehow.
-
-You mean git describe <commit> produces wrong results for those?
-
-> Anyway, we can of course do something like in the patch below.  It
-> works, it's easy, it's fast enough for git archive, and it's quite
-> hideous.  Hopefully it's bad enough to motivate someone to come up with=
-
-> a cleaner, faster solution.
-
-:D :D an important part of the resolution process, to be sure.
-
-> ---
->  pretty.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->=20
-> diff --git a/pretty.c b/pretty.c
-> index 3922f6f9f2..bbfb5ca3e7 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -12,6 +12,7 @@
->  #include "reflog-walk.h"
->  #include "gpg-interface.h"
->  #include "trailer.h"
-> +#include "run-command.h"
->=20
->  static char *user_format;
->  static struct cmt_fmt_map {
-> @@ -1213,6 +1214,21 @@ static size_t format_commit_one(struct strbuf *s=
-b, /* in UTF-8 */
->  		return parse_padding_placeholder(placeholder, c);
->  	}
->=20
-> +	if (skip_prefix(placeholder, "(describe)", &arg)) {
-> +		struct child_process cmd =3D CHILD_PROCESS_INIT;
-> +		struct strbuf out =3D STRBUF_INIT;
-> +
-> +		cmd.git_cmd =3D 1;
-> +		strvec_push(&cmd.args, "describe");
-> +		strvec_push(&cmd.args, "--always");
-> +		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
-> +		pipe_command(&cmd, NULL, 0, &out, 0, NULL, 0);
-> +		strbuf_rtrim(&out);
-> +		strbuf_addbuf(sb, &out);
-> +		strbuf_release(&out);
-> +		return arg - placeholder;
-> +	}
-> +
->  	/* these depend on the commit */
->  	if (!commit->object.parsed)
->  		parse_object(the_repository, &commit->object.oid);
-> --
-> 2.30.0
->=20
-
-
---=20
-Eli Schwartz
-Arch Linux Bug Wrangler and Trusted User
+ 1:  689d84672422 ! 1:  32dd4ee1e373 config: improve error message for boolean config
+     @@ Commit message
+          boolean error message when we know the value is neither a bool text or
+          int.
+      
+     -    `GIT_TEST_GETTEXT_POISON` is a boolean so we no longer fail on
+     -    evaluating it as an int in `git_config_int`. Because of that we can
+     -    move the special translation case into the boolean config check where
+     -    we are now failing with an updated message
+     -
+          before with an invalid boolean value of `non-boolean`, its unclear what
+          numeric is referring to:
+          ```
+     @@ Commit message
+      
+       ## config.c ##
+      @@ config.c: static void die_bad_number(const char *name, const char *value)
+     - 	if (!value)
+     - 		value = "";
+     - 
+     --	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+     --		/*
+     --		 * We explicitly *don't* use _() here since it would
+     --		 * cause an infinite loop with _() needing to call
+     --		 * use_gettext_poison(). This is why marked up
+     --		 * translations with N_() above.
+     --		 */
+     --		die(bad_numeric, value, name, error_type);
+     --
+     - 	if (!(cf && cf->name))
+     - 		die(_(bad_numeric), value, name, _(error_type));
+     - 
+     -@@ config.c: int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+     - 		return v;
+       	}
+     - 	*is_bool = 0;
+     --	return git_config_int(name, value);
+     -+	if (git_parse_int(value, &v))
+     -+		return v;
+     -+
+     + }
+     + 
+     ++NORETURN
+     ++static void die_bad_bool(const char *name, const char *value)
+     ++{
+      +	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+      +		/*
+      +		 * We explicitly *don't* use _() here since it would
+     @@ config.c: int git_config_bool_or_int(const char *name, const char *value, int *i
+      +		die("bad boolean config value '%s' for '%s'", value, name);
+      +	else
+      +		die(_("bad boolean config value '%s' for '%s'"), value, name);
+     - }
+     ++}
+     ++
+     + int git_config_int(const char *name, const char *value)
+     + {
+     + 	int ret;
+     +@@ config.c: int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+       
+       int git_config_bool(const char *name, const char *value)
+     + {
+     +-	int discard;
+     +-	return !!git_config_bool_or_int(name, value, &discard);
+     ++	int v = git_parse_maybe_bool(value);
+     ++	if (0 <= v)
+     ++		return v;
+     ++	else
+     ++		die_bad_bool(name, value);
+     + }
+     + 
+     + int git_config_string(const char **dest, const char *var, const char *value)
+      
+       ## t/t0205-gettext-poison.sh ##
+      @@ t/t0205-gettext-poison.sh: test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
+ 2:  1e9caf1911d3 < -:  ------------ formatting for error messages
 
 
---0LqOZhCVydUpUsv101x31qWWZWPZHVvl3--
+ config.c                  | 21 +++++++++++++++++++--
+ t/t0205-gettext-poison.sh |  2 +-
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
---1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+diff --git a/config.c b/config.c
+index 4c0cf3a1c15d..5e4fd6b5561b 100644
+--- a/config.c
++++ b/config.c
+@@ -1030,6 +1030,20 @@ static void die_bad_number(const char *name, const char *value)
+ 	}
+ }
+ 
++NORETURN
++static void die_bad_bool(const char *name, const char *value)
++{
++	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
++		/*
++		 * We explicitly *don't* use _() here since it would
++		 * cause an infinite loop with _() needing to call
++		 * use_gettext_poison().
++		 */
++		die("bad boolean config value '%s' for '%s'", value, name);
++	else
++		die(_("bad boolean config value '%s' for '%s'"), value, name);
++}
++
+ int git_config_int(const char *name, const char *value)
+ {
+ 	int ret;
+@@ -1102,8 +1116,11 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+ 
+ int git_config_bool(const char *name, const char *value)
+ {
+-	int discard;
+-	return !!git_config_bool_or_int(name, value, &discard);
++	int v = git_parse_maybe_bool(value);
++	if (0 <= v)
++		return v;
++	else
++		die_bad_bool(name, value);
+ }
+ 
+ int git_config_string(const char **dest, const char *var, const char *value)
+diff --git a/t/t0205-gettext-poison.sh b/t/t0205-gettext-poison.sh
+index f9fa16ad8363..b66d34c6f2bc 100755
+--- a/t/t0205-gettext-poison.sh
++++ b/t/t0205-gettext-poison.sh
+@@ -33,7 +33,7 @@ test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
+ 
+ test_expect_success "gettext: invalid GIT_TEST_GETTEXT_POISON value doesn't infinitely loop" "
+ 	test_must_fail env GIT_TEST_GETTEXT_POISON=xyz git version 2>error &&
+-	grep \"fatal: bad numeric config value 'xyz' for 'GIT_TEST_GETTEXT_POISON': invalid unit\" error
++	grep \"fatal: bad boolean config value 'xyz' for 'GIT_TEST_GETTEXT_POISON'\" error
+ "
+ 
+ test_done
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmAh1S8ACgkQzrFn77Vy
-K9ag/RAA4Iui9ftiSEUgRM4R876zhJxVjshEKNRo+u/F7QBZAS+f0VasmnCCryNZ
-wi1ynyiO4T1i32akqMeEoNFNp/YvQieQqrWwY9cScwSci+iWnkIh0GhbD1TVdmGJ
-9WfrvRR+E1HChds7l87VSh4Kz0bIN95eQCnLgWdDOEdOgp9eQXfz28L8MaNYpc/L
-atywWhZ37p9+uECMb9i6oVNPzZkhnK/sPpVWo9+ZnHYFpgWWo8/iFaq05uCkCJCE
-OlkZdUXAuixAFUzk2tBe+iFQiIj06N19y8+mayRnAnCgXjWwPmf4v4FS4WJb5Gwx
-9VBov4usGkanTzfaDKxk3gO0unLGbZH8v8peRWfayzUM9etdVa7Ik0JzhV+I3Q7m
-gNgra07ut6ul0xSFlHBXRnhdjZJw8f0PQBYdxEsORmaUTyGd5FWqeewtvwqRe7sX
-VgFFRt3/WPte1EMR4s/neCy+nJy2gVvY3NKUnwfgQjaZqsOPv+YZWYS0Idjr9m5c
-HZ6ASVOQDRv9Jvqo2/NfDqjYBkSmEcd+WOpjArmUim0YGxNJVlXaaVfFkdUvYAQ9
-fmEGUITSwS9NQNL7Qlt7XXnawO02ZE+36KFakbHQ+/orzN0p9gdUgcrN3VvJKhhL
-OGerFUnQ8ElHv78kxxxdZ1KyJUROBcVjgaW8dw1Fnu+/zASqfeQ=
-=Yn0F
------END PGP SIGNATURE-----
-
---1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq--
+base-commit: 66e871b6647ffea61a77a0f82c7ef3415f1ee79c
+-- 
+gitgitgadget
