@@ -2,75 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82CA4C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8C66C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 04:09:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ED5264EA1
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 03:17:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A316E64EAA
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 04:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhBIDQl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 22:16:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37588 "EHLO
+        id S229706AbhBIEJW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 23:09:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbhBIDOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 22:14:00 -0500
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D43C061786
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 19:12:59 -0800 (PST)
-Received: by mail-qk1-x72b.google.com with SMTP id v206so5107705qkb.3
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 19:12:59 -0800 (PST)
+        with ESMTP id S229702AbhBIEHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 23:07:10 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0BF1C061786
+        for <git@vger.kernel.org>; Mon,  8 Feb 2021 19:56:02 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id u20so16815914qku.7
+        for <git@vger.kernel.org>; Mon, 08 Feb 2021 19:56:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=ecdwtuBQmdsZhzJ6aVkg8/xWRyoOeonvqTr5JvYVIuE=;
-        b=bL34sT2w7KuzSsttkxIeJQmxz3eMoknSKXmwPUFRbev1BXRW94LqH2TyIFDwwi8T1K
-         ImD2QBNwMt4BdiD5NSQU04c1Imv+UR/jLtW454ZpmKH4jTRpI7rbv3Xhn59Q5TXDltU6
-         i4JQtohpijAAdjA0NcZsr2McW9hBHaaA3GZjM2jQPRFOr2iS9o71G/Or2AbFUrKO4bG6
-         Y/puVP0GgPg4fbWDdIf7q6sFF6YBXe4mn8vd+s6MtTzFaMpwUyS8Tvk4YrCSC1rlcU0h
-         12k/iuV5SH7sw/7wmSHtZsmdPYrh7acFCJRR278blih4+NCHjcz/cXYJexnqHrIXDPuH
-         pjsw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0mlel9TQgrfojKn1NfgqOo7MNhbcBNAZDZjSgyqcqYI=;
+        b=RzA1+oOzYBU4uGNzcahABR24nhBmB/77Dg0WjWngqjl/4x98oFlolR4PdrSfR7kV9N
+         WqXlAwIMuyusAz982arlYMaBkxd2YTp6JsMQZitbpRNyX3p29E0/SICnegZ8bjdqQaar
+         4NY5ptxzWNDaz0i/Thh8QhXWqOk3T7VVb8X9ToCML0cb9rQyCoCPfv4ahRNimMGOvWxS
+         ZXAg5GBTZHPZn+juVp8Y9sJsWg3KyAKrBVj9wKl71GsdDegaCjWfBMXSf5HW90Q7pm1x
+         ppiSxnwXhWUfChpGvXBM3SRCGEjl0ct944n1cFKzPvQOY5PHnklQ3GVIUAOWo0HDKfNZ
+         85jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ecdwtuBQmdsZhzJ6aVkg8/xWRyoOeonvqTr5JvYVIuE=;
-        b=s6GoNzwvn3gG6o7CWcHfGNg9DkNFKoZfjRXPLXmFRK1b+2dxDrX8HtngXpGMtDDXDQ
-         b7quT/0NKzwMgeDpJ/evMHTpmqptRFOynBQNu4Z5SOcVHphiPgefLpH2fGiHvAQuQ/9e
-         +kR1PoPzepqH6TpoFSkBiB7hpaejD0dpec8VXjDPJgkIpWZ5Pmzm8zNPHVG+INFippVs
-         EUUNfiY3lJCcCe/4xn7U8XuLNogwYh+V1Du1kINqDWmk2TAArfNQiVkmzPKc8EvinanQ
-         eYh0oOt7z2C3L3xWD09KLR8yAffgVcDqo2AeLFYS/x5LrwkSIoGBNjXoFFMtQvJnc8Zk
-         1KZQ==
-X-Gm-Message-State: AOAM533D2vsIAmWbRzygDgKMp7+mjwiG/cBUXUuUbagxlGwov0HDgpHk
-        URkyBJx3ZWUE5b+Bw+4KduqPO7+u2Wtx/g==
-X-Google-Smtp-Source: ABdhPJxLp+BPgyoiLHD6mif8dEcDn5dvcc+CRgNcYbnLJ/E2pD+qplWDHWlmaIZTDMuD/YExx3xy2g==
-X-Received: by 2002:ae9:f20b:: with SMTP id m11mr20547686qkg.464.1612840378385;
-        Mon, 08 Feb 2021 19:12:58 -0800 (PST)
+        bh=0mlel9TQgrfojKn1NfgqOo7MNhbcBNAZDZjSgyqcqYI=;
+        b=Zg9ZgHfMXVKEAZNlG3eTEpTehEplV5O+g+hUeWaw0XL08P8Gj4SPa8aWQ10ULH6IIL
+         n6Pm0rdpk/RzI6cSS2MUiwmQv5LMNhzpBxLL+6QEABi3PChxkxY7pr7akffoHhRTQX6g
+         q6eHzR4JZ/thOR9+i7qp7zZGS5xx8JhPflG7B5z6OeOHH0eiko3I4R62fNXzM5aki/ua
+         NATyOJOGy0ny9GNaZY2GI/Fh+WE9ooP2KrXFU7wLWHWKWPXjTvVxU+NQ3eJX+vyycmi4
+         mQZzg4NgXJ35ZO03WY5tg2PZnwUOAI/HK0xIfoPuMm1kM9mHhk0do61lUS7+dV9I3HTv
+         Mqig==
+X-Gm-Message-State: AOAM533YAdzbnmbY7IEl1E5dUPraQte6kL+FkTW6YwZAuiV6A/mIfuud
+        utAzW/1iYPyqF70AkdTkBLuLQKG+/jrqCCCR
+X-Google-Smtp-Source: ABdhPJxIq0M6VaeyAn/NLHVlCvuQLMzbQ1fnxRMi0q6FmTf/DBcpttE8OeoTglhYPjRn8qW3+NZRlw==
+X-Received: by 2002:a37:b2c6:: with SMTP id b189mr20375652qkf.363.1612842962019;
+        Mon, 08 Feb 2021 19:56:02 -0800 (PST)
 Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id i65sm18093592qkf.105.2021.02.08.19.12.56
+        by smtp.gmail.com with ESMTPSA id u45sm13598003qte.3.2021.02.08.19.56.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Feb 2021 19:12:57 -0800 (PST)
-Subject: Re: Git Commit Signature Encoding
-To:     Rene Schumacher <Rene.Schumacher@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM7PR83MB0434B67B0F15E4433347D555EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
- <AM7PR83MB04349E882710B0EC0E186A09EEBC9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
- <328de960-ac67-e313-ecc3-b5b505e42bea@gmail.com>
- <AM7PR83MB04346479474921F3DC0688CFEEBB9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+        Mon, 08 Feb 2021 19:56:01 -0800 (PST)
+Subject: Re: [RFC] [BUDFIX] 'git rm --cached <submodule>' does not stage the
+ changed .gitmodules
+To:     Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <periperidip@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        javier.moradesambricio@rtx.com, cousteaulecommandant@gmail.com
+References: <20210207144144.GA42182@konoha>
+ <xmqq1rdr8yl2.fsf@gitster.c.googlers.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <962853bc-9e60-968f-c64d-35757f72e8d1@gmail.com>
-Date:   Mon, 8 Feb 2021 22:12:56 -0500
+Message-ID: <d76656cf-a7c6-e09a-0fa8-4bf33dd950bf@gmail.com>
+Date:   Mon, 8 Feb 2021 22:55:59 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.7.0
 MIME-Version: 1.0
-In-Reply-To: <AM7PR83MB04346479474921F3DC0688CFEEBB9@AM7PR83MB0434.EURPRD83.prod.outlook.com>
+In-Reply-To: <xmqq1rdr8yl2.fsf@gitster.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -78,45 +78,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi René,
+Hi Junio,
 
-Le 2021-01-27 à 04:41, Rene Schumacher a écrit :
-> Hi Philippe,
+[CC'ing the original submitter of the issue]
+
+Le 2021-02-07 à 14:30, Junio C Hamano a écrit :
+> Shourya Shukla <periperidip@gmail.com> writes:
 > 
-> thanks for getting back to me so quickly! And sorry for not providing all the details right away.
+>> So, my question is, do we need to fix this to make sure that the changed
+>> '.gitmodules' is staged?
 > 
-> I'm using Git 2.30.0.windows.1 (I believe that's the latest), gpg 2.2.27 (installed via gpg4win 3.1.15), and PowerShell 7.1.1. You might have seen my second email to the list in which I described that setting the OutputEncoding in PowerShell to UTF-8 fixed at least the display of the é (and probably all other umlauts and special printable characters). The signature output from git show --show-signatur is still printing the ^M carriage return character at the end of each line:
+> When "--cached" is given, the user is asking the module to be
+> removed ONLY from the index, without removing it from the working
+> tree, no?
 > 
-> commit 69022a47744fcb3801572ac5d14295bcab274295 (HEAD -> master)
-> gpg: Signature made 26.01.2021 17:55:36 W. Europe Standard Time^M
-> gpg:                using RSA key 3848D5B2A3D45419D7F564F97802B995CDB4A2EF^M
-> gpg: Good signature from "René Schumacher <rene.schumacher@microsoft.com>" [ultimate]^M
-> gpg:                 aka "René Schumacher <reneschu@microsoft.com>" [ultimate]^M
-> Author: René Schumacher <reneschu@microsoft.com>
-> Date:   Tue Jan 26 17:55:36 2021 +0100
+> So I think ".gitmodules" in the working tree should not be touched
+> at all.
 > 
->      another commit with signature
+> Removing the entry for the module from the ".gitmodules" registered
+> in the index, when a submodule registered in the index [IS REMOVED], might be
+> desirable, and what you say here
 > 
-> diff --git a/file1.txt b/file1.txt
-> index a7f8d9e..6ddadea 100644
-> --- a/file1.txt
-> +++ b/file1.txt
-> @@ -1 +1,2 @@
->   bla
-> +blub
+>> And its entry is not removed from the file. What should be done about
+>> this? I would appreciate your opinions.
 > 
-> Since git verify-commit does not have those carriage return characters, I'm still wondering where they might come from.
-> 
-> Cheers,
-> René
+> may be related to it.
+
+This seems to be what the original email [1] was about, i.e. Javier seemed to
+expect that the changes to ".gitmodules" should be staged but the worktree version
+of the file untouched. This would be more in line (I think) with the current
+behaviour of 'git rm <submodule>', which removes the submodule worktree and
+relevant sections of '.gitmodules' in some cases since 95c16418f0 (rm: delete .gitmodules
+entry of submodules removed from the work tree, 2013-08-06).
 
 
-I've tried to replicate with 2.30.0.windows.2 and gpg 2.2.27 (that comes with Git-for-Windows), and could not, neither in Git Bash, Cmd, Windows Powershell or Powershell Core 7.1.1.
+> 
+> But I doubt it is a good idea to let "git rm" be the one touching
+> ".gitmodules" either in the index or in the working tree for that to
+> happen.
+> 
 
-Maybe if you can provide a complete reproducer with all needed steps (git init, gpg --gen-key, etc)
-you would get more help in the Git-for-Windows issue tracker:
-https://github.com/git-for-windows/git/issues
+That's already the behaviour, at least for 'git rm <submodule>', see
+the commit cited above, and the whole topic that introduced it,
+b02f5aeda6 (Merge branch 'jl/submodule-mv', 2013-09-09) that added
+some knowledge of '.gitmodules' to 'git mv' and 'git rm'.
+
+> The reason I am hesitant to teach anything about ".gitmodules" to
+> the basic level tools like "add", "rm" is because I consider, while
+> the "gitlink" design that allows the tip-commit from a submodule in
+> the superproject is a good thing to be done at the structural level
+> in the core part of Git, administrative information stored in the
+> ".gitmodules" is not part of pure "Git" and alternative designs on
+> top of the core part of Git that uses different strategy other than
+> what we have are possible and they could even turn out to be better
+> than what we currently have.  In other words, I have this suspicion
+> that the ".gitmodules" based submodule handling we currently have,
+> done using "git submodule" command, should not be the only and final
+> form of submodule support Git would offer.
+> 
+> That leads me to think that anything that touch ".gitmodules" should
+> be done with "git submodule" suite of commands, not by the low level
+> "add", "rm", etc.  Such a separation of concern would allow a new
+> "git submodule2" design that may be radically different from the
+> current ".gitmodules" one to be introduced, possibly even replacing,
+> or living next to each other, the current "git submodule" together
+> with ".gitmodules" file, without affecting the low-level "add", "rm"
+> tools at all.
+> 
+> So from that point of view, if we were to fix the system, it may be
+> preferrable to make "git rm [--options] <submodule>" only about the
+> submodule in the working tree and/or the index, without touching
+> ".gitmodules" at all, and let "git submodule rm [--cached]
+> <submodule>" be the interface on top.  The implementation of "git
+> submodule rm [--cached]" may use "git rm [--cached]" internally as a
+> building block to deal with the index and/or the working tree, but
+> the info kept in ".gitmodules" for administrative reasons should be
+> dealt within "git submodule" without exposing any such policy to the
+> lower level tools like "git rm" and "git add".
+
+I personnally think this is not the direction I wish Git would go in.
+Submodules are hard, and part of the reason they are disliked so much
+is because they were not initially well integrated in the rest of the system,
+and this "belief" has stuck despite major efforts e.g. adding '--recurse-submodules'
+and flags and 'submodule.recurse' configs for several commands.
+
+So I would really prefer for "core" Git commands -- as you call them, for me all
+of the porcelain commands are on the same level -- to be more intelligent
+submodule-wise, like in this case, adding functionality to 'git rm' instead
+of adding another 'git submdule' subcommand.
 
 Cheers,
+
 Philippe.
 
+
+
+[1] https://lore.kernel.org/git/ea91c2ea29064079914f6a522db5115a@UUSALE0Z.utcmail.com/T/#u
