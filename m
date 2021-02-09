@@ -2,134 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCA72C433E6
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAA46C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93CC964E6C
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:03:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 888FA64E6C
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 17:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233088AbhBIRDh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 12:03:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46496 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232925AbhBIRDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 12:03:33 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB55C061574
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 09:02:52 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id l19so7655938oih.6
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 09:02:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=zV8wraS7kuZ4juToQpniNJ4OUN9mYDNElM+XDJNdfjw=;
-        b=WXI+pogE6MhqBCC3Hgkm61YHvd5p6qbywv6a9aQaCnC/SnOE4vyptCpZXEGfm3MaLw
-         aJQUsBxnQuS168fWDzspIfQd/GSvzwPbxKZiLSclI9RJDW1Mztze0iTVoXlIKqdJAXx9
-         I2elwHUxkpev56SAuHZbRSM6XeO8nLc9qaVIw1xh1Cr5ZJN3WKkGILmqhZqykXLqxWCk
-         gFf4VljIq2mESOhtCQL2PES5KrdMElyk5SNxmWcDEdLlwpjzsJuIE+H029vpVWHskd0o
-         rw/jR++UN1EuJUHRVXIGIpTSCmP0d9BgtKyKACZ2mHd/dLTc3/fYvlckyOtmRgcEhkLT
-         7G5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zV8wraS7kuZ4juToQpniNJ4OUN9mYDNElM+XDJNdfjw=;
-        b=Ju59jVaW9SJWmJAXzawTmVKxdrWUpXFkk+iJpOJGa/+yTJM3xbUhgY91L2SmWDzohM
-         B+/G7sjcFFgkkOZXYbne90OfH/bHLMqUoFER9k/GVKxmt9AbAJ3hYLh9/qAARLPGTowg
-         jxlhd3+USGZr0DAy1n0ijfCHsClxNHnuA4qgETzldGFqQveJhee2d6GlzzjfX4m/i18s
-         dMam+h39V7lCkxFiL4+GXpL+2NCavmSbuo00ot1hQ3ThumVRtWIYlHK9hDQh0l10kiOo
-         35YojVQYu0CTs0t25YV6zlAhFZ6B9G3HHvTu4azZ/rqFxUnpbFsPdW8wCaIYKJ71sCG8
-         6/8w==
-X-Gm-Message-State: AOAM530N8JcsBoGfqMU3CPiTV59NYqEZ7QLiU91oE7POc91Ngd2rMtkK
-        pgAhIp7UhpqsLbkao4vDQfs=
-X-Google-Smtp-Source: ABdhPJx0MTv1l9RNOMtMbaoGnLgo06W5gS7QS666azzYfdSUPfLFtLSlzauKrJsRaiXApMtSq8TsHg==
-X-Received: by 2002:a05:6808:1144:: with SMTP id u4mr3120792oiu.11.1612890171709;
-        Tue, 09 Feb 2021 09:02:51 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
-        by smtp.gmail.com with UTF8SMTPSA id g6sm4388936ooh.29.2021.02.09.09.02.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Feb 2021 09:02:51 -0800 (PST)
-Message-ID: <9d8ee4be-33d7-6c50-f14b-0b92a4ebe949@gmail.com>
-Date:   Tue, 9 Feb 2021 12:02:50 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH v2 1/4] diffcore-rename: compute basenames of all source
- and dest candidates
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
+        id S233011AbhBIREv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 12:04:51 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51335 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232762AbhBIREg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 12:04:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 28D2910A784;
+        Tue,  9 Feb 2021 12:03:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BekwvCqLoGMUU7pyqimHv9z4yoI=; b=xh8Mxu
+        drvznGQoSL8WAUNc2pqpCPzl8aOWF51x2HkKXVBOjwSIoQVfwBvqi6Tw3rtGaMM5
+        hhr+W3NYWUce/W1zrexS18jwgNDPdA1moiTcdLuUvKcs5QFNr5pZ567wQBL573l1
+        vPrXEona8O3fozDmz7UAr4q3LgrMEx0IeItXs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EckPD6yvkRnl7W+I23cznAK6XQR5D34R
+        srFGgMGnRSVpqmiZmhQCDcLtPMtzDwqrwkf1n0CiIYUihAIFXohmVf/1IBpsXTE2
+        SHHahLyHYBtEIyTZ50OpJRvmxsURKPQm4fpzuinMSwP4ND1RZqtGTHPUT9zCZEyU
+        HdBFwu3aXbE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0FB2E10A783;
+        Tue,  9 Feb 2021 12:03:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 518A410A77D;
+        Tue,  9 Feb 2021 12:03:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 4/4] gitdiffcore doc: mention new preliminary step
+ for rename detection
 References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
- <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
- <381a45d239bb52a70373c385d8978005c9cb4800.1612870326.git.gitgitgadget@gmail.com>
- <dfbffe97-51de-9e8b-37a4-417909358323@gmail.com>
- <CABPp-BEsuOiUyvbkwPC384eho8pgSWuRdcvw9t5gkXhf+_j-3A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BEsuOiUyvbkwPC384eho8pgSWuRdcvw9t5gkXhf+_j-3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
+        <a0e75d8cd6bd32fb1ab2a209bc2079c30995b257.1612870326.git.gitgitgadget@gmail.com>
+        <6aa32f94-9c8c-ad26-09ab-4c2028ef1d67@gmail.com>
+Date:   Tue, 09 Feb 2021 09:03:38 -0800
+In-Reply-To: <6aa32f94-9c8c-ad26-09ab-4c2028ef1d67@gmail.com> (Derrick
+        Stolee's message of "Tue, 9 Feb 2021 07:59:09 -0500")
+Message-ID: <xmqqo8gt2mxh.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1F6475A-6AF8-11EB-8BAE-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/9/2021 11:56 AM, Elijah Newren wrote:
->> Also, this is used here and below. Perhaps it's worth pulling out as a
->> helper? I see similar code being duplicated in these existing spots:
->>
->> * diff-no-index.c:append_basename()
->> * help.c:append_similar_ref()
->> * packfile.c:pack_basename()
->> * replace-object.c:register_replace_ref()
->> * setup.c:read_gitfile_gently()
->> * builtin/rebase.c:cmd_rebase()
->> * builtin/stash.c:do_create_stash()
->> * builtin/worktree.c:add_worktree()
->> * contrib/credential/gnome-keyring/git-credential-gnome-keyring.c:usage()
->> * contrib/credential/libsecret/git-credential-libsecret.c:usage()
->> * trace2/tr2_dst.c:tr2_dst_try_auto_path()
-> Honestly asking: would anyone ever search for such a two-line helper
-> function?  I wouldn't have even thought to look, since it seems so
-> simple.
-> 
-> However, my real concern here is that this type of change would risk
-> introducing conflicts with unrelated series.  This series is the
-> second in what will be a 9-series deep dependency chain of
-> optimizations[1], and the later series are going to be longer than
-> these first two were (the latter ones are 6-11 patches each).  We've
-> already discussed previously whether we possibly want to hold the
-> first couple optimization series out of the upcoming git-2.31 release
-> in order to keep the optimizations all together, but that might
-> increase the risk of conflicts with unrelated patches if we try a
-> bigger tree refactor like this.  (Junio never commented on that,
-> though.)  It might be better to keep the series touching only
-> merge-ort.c & diffcore-rename.c, and then do cleanups like the one you
-> suggest here after the whole series.
-> 
-> That said, it's not a difficult initial change, so I'm mostly
-> expressing this concern out of making things harder for Junio.  It'd
-> be best to get his opinion -- Junio, your thoughts?
-> 
-> [1] https://github.com/gitgitgadget/git/pulls?q=is%3Apr+author%3Anewren+Optimization+batch
- 
-I don't consider the step of "go put the helper in all these other
-places" necessary for the current series. However, the "get basename"
-code appears a total of three times in this series, so it would be
-good to at least extract it to a static inline method to reduce
-the duplication isolated to this change.
+Derrick Stolee <stolee@gmail.com> writes:
 
-Thanks,
--Stolee
+>> +Note that when rename detection is on but both copy and break
+>> +detection are off, rename detection adds a preliminary step that first
+>> +checks files with the same basename.  If files with the same basename
+>
+> I find myself wanting a definition of 'basename' here, but perhaps I'm
+> just being pedantic. A quick search clarifies this as a standard term [1]
+> of which I was just ignorant.
+>
+> [1] https://man7.org/linux/man-pages/man3/basename.3.html
+>
+>> +are sufficiently similar, it will mark them as renames and exclude
+>> +them from the later quadratic step (the one that pairwise compares all
+>> +unmatched files to find the "best" matches, determined by the highest
+>> +content similarity).
+
+While I do not think `basename` is unacceptably bad, we should aim
+to do better.  For "direc/tory/hello.txt", both "hello.txt" or
+"hello" are what would come up to people's mind with the technical
+term "basename" (i.e. basename as opposed to dirname, vs basename as
+opposed to filename with .extension).
+
+Avoiding this ambiguity and using a word understandable by those not
+versed well with UNIX/POSIX lingo may be done at the same time,
+hopefully.
+
+For example, can we frame the description around this key sentence:
+
+    The heuristics is based on an observation that a file is often
+    moved across directories while keeping its filename the same.
+
+The term "filename" alone can be ambiguous (i.e. both "hello.txt"
+and "direc/tory/hello.txt" are valid interpretations in the earlier
+example), but in the context of a sentence that talks about "moved
+across directories", the former would become the only valid one.  We
+can even say just "name" and there is no ambiguity in the above "key
+sentence".
+
+Then keeping that in mind, we can rewrite the above you quoted like
+so without going technical and without risking ambiguity, like this:
+
+    ... a preliminary step that checks if files are moved across
+    directories while keeping their filenames the same.  If there is
+    a file added to a directory whose contents is sufficiently
+    similar to a file with the same name that got deleted from a
+    different directory, ...
 
