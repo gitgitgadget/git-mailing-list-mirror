@@ -2,111 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4B9FC433DB
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 23:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 946B5C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 00:20:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D16364E6C
-	for <git@archiver.kernel.org>; Mon,  8 Feb 2021 23:53:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62C9F64E54
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 00:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbhBHXxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Feb 2021 18:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229884AbhBHXxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Feb 2021 18:53:38 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A97C061786
-        for <git@vger.kernel.org>; Mon,  8 Feb 2021 15:52:57 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id v193so12117188oie.8
-        for <git@vger.kernel.org>; Mon, 08 Feb 2021 15:52:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SNkOJoYbbwDCpNdPhN2hC2iId8++w27740jCz7+u2bw=;
-        b=hcuiZuntLA06p+dDbNRggM1jELCBwj0JpVjFpZ0kevxQnt8AbpPxxFbJPB/XgLSN2B
-         JYtS+5S/ITN0ck/GDj4xKsJ1Pu43/FfJDOYSvD4EZ3PMFxOI2NXaSxe43LKVign69Ptv
-         DD9XVTubOXtmIR1jsxWLNOc1R7A3p8G0brkaw4b6IlRTXBnePX9mWRlbsjJPWc7S6MUO
-         p2TCoeB9SYRibs3IuShRpek9aX7mHUtwToXdzz5M85BeBY7Ehli64lunb7Ftv/mP0z+O
-         nRRM2MgZZxgYy62IBfTyr4AcNHQ2KSdf89hh+OQrXs4Rb6nnL5X6+xpP2O1zEj6K79pF
-         ZAqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SNkOJoYbbwDCpNdPhN2hC2iId8++w27740jCz7+u2bw=;
-        b=c9l8OTKW9VOwF6JRzJG+C8zrk0sSFQgER50Icpfbzfuh9pkph/6yuWAH6saD9FMUD/
-         fwbP0EokHcUp+9blL+e40O2fYMh0/xzJOcS/hZ5IqNsG9VMSjjgVsiYt7nUftiLHpZmR
-         kZ+Lr5lr5Q/Ov3uzhvBCSq+GRoxAGIijuJu9Bv/gAOk/kTaYmo2sOu3NzE5/R5MTHULA
-         +H7ITCryp89yCA8OJ6/KeSuD52XC3xIBiastJTByr0glIi/NJhZhKa8bpqEuPLq/Wcvv
-         emdMPBldme17HU15XstRNWqfIwD8X19b5at57hgwklja8LY87irc6WxUnwmpWd7yqvUc
-         uLXw==
-X-Gm-Message-State: AOAM533qciaBRu4+UiB0lUEwfSG+KCpSuo+rCFXgbfiKanUmvm9z9pqd
-        Czq7MP8lkmOddVOJ97OAnCY7JAC9bEsD2IbeqBsXVGRS8Xo=
-X-Google-Smtp-Source: ABdhPJw0xFkO23LJyaSyF4One12/tFk6vqzJfHzccI+VSzct0/WoytN58OkzDXctMzxhtnkwuVD25laFfME8nx/4VQI=
-X-Received: by 2002:aca:550e:: with SMTP id j14mr798255oib.31.1612828376893;
- Mon, 08 Feb 2021 15:52:56 -0800 (PST)
+        id S229972AbhBIAUx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Feb 2021 19:20:53 -0500
+Received: from mail.archlinux.org ([95.216.189.61]:53432 "EHLO
+        mail.archlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229554AbhBIAUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Feb 2021 19:20:51 -0500
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-rsa; t=1612830008;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+/tMslJWUQqkMQFXCb/aoLT3IDMBEKyWq+n7y4rRhOQ=;
+        b=IP9w1RucxwjJgg4Tsuowfrt+hLh750lVmjVO7oqp9LvYCrNhuUXKg9V7AKhp0wJDnce/AM
+        N7rwzPtXVzNwGevKTL+AqcR6QjSfGd2x3aiqQsyj/bYDQKXz7uz29yeYTxyFIdg/jwaVBB
+        lcd4REC1bZG/zkcMHwu/gj9hlELhqWGgklboPqjjP2ORxp1n0CPNnk1sCP1WSzfSVIxZH+
+        UZTGPcNUlXB4XHMY6ge6mxj1C0eUEwBFv7dbhZB3mh72W3oL0aBYEWx4UK5rtNPTShdU/+
+        Ld78PSbepuKO8lRkCiit6UF8KAbMtAECmBY1gz/CM3ZmruG2XnNcHWQiJVFUC4jgUX98bt
+        qAfBu/d/DqWwy2Kto9UuWC+EBO6Xiqq9eJvMXJnN/dWME72sGP2yO7wCnkRPX3+BhErqML
+        k0fawmrhhkCifpCsp8YiueW6jjVxuSivBv5thESAAwSMEpFHv7qq7QHF4owTovRd5lwYYg
+        Vs55yP5kFsf8YNCiaMXX/XZEkbL2OkQPF/5xGGrW8f2m+zOt/9av8NdTqWnED7I2xj8mQw
+        ojXBWp2BCw6RPZW2ZJk6XXoTqN2pwCbC2L2U7jZbrK7BntyxFpZ6Atr/oQO6zKERtllTDi
+        KJb0EFlQp/WOhZm31TcPLkXOy1U0bji9m3YUeKdPxWX6SG3B4Yoo8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=archlinux.org;
+        s=dkim-ed25519; t=1612830008;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+/tMslJWUQqkMQFXCb/aoLT3IDMBEKyWq+n7y4rRhOQ=;
+        b=4bK195B8Nx9l0G+D9b54Rhj9FCHv2MDyvbXFniL4nrImiLWjZSgQairFbaP62Nww5rKemW
+        cHGjDAp42i2LiWBg==
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+ <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+From:   Eli Schwartz <eschwartz@archlinux.org>
+Subject: Re: gitattributes export-subst and software versioning
+X-Clacks-Overhead:  GNU Terry Pratchett
+Message-ID: <4f65f02c-1d16-aa2c-3e7b-28d807b9ebe9@archlinux.org>
+Date:   Mon, 8 Feb 2021 19:19:59 -0500
 MIME-Version: 1.0
-References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
- <1d941c35076e8d515c8ff7ef01d6b9d8c092aaa9.1612651937.git.gitgitgadget@gmail.com>
- <9fbed0f9-032e-3f99-8467-f8a9cfa2d8f1@gmail.com> <xmqqsg677j2u.fsf@gitster.c.googlers.com>
- <CABPp-BGAgi+ooq==ZY2tWif0--W4Cruz02GDvxueHe6GjQEAXQ@mail.gmail.com>
- <xmqq4kim7964.fsf@gitster.c.googlers.com> <CABPp-BH_DWEE-3M96e=PPNwDqeYPaax9s1kBDhS8a6GtxsW=Mg@mail.gmail.com>
- <xmqqzh0e2kib.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqzh0e2kib.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 8 Feb 2021 15:52:45 -0800
-Message-ID: <CABPp-BE9dPYgTsrAKjjmPTfy-xY56ajg-1ZYPf7X97YR0T_n3Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] diffcore-rename: guide inexact rename detection based
- on basenames
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq"
+Authentication-Results: mail.archlinux.org;
+        auth=pass smtp.auth=eschwartz smtp.mailfrom=eschwartz@archlinux.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 8, 2021 at 3:43 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > I'm sorry, but I'm not following you.  As best I can tell, you seem to
-> > be suggesting that if we were to use a higher similarity bar for
-> > checking same-basename files, that such a difference would end up not
-> > accelerating the diffcore-rename algorithm at all?
->
-> No.  If we assume we use the minimum similarity threashold in the
-> new middle step that consider only the files that were moved across
-> directories without changing their names, and the last "full matrix"
-> step sees a src that did *not* pair with a dst of the same name in a
-> different directory surviving, we know that the pair would not be
-> similar enough (because we are using the same "minimum similarity"
-> in the middle step and the full matrix step) without comparing them
-> again.  But if we used higher similarity in the middle step, the
-> fact that such a src/dst pair surviving the middle step without
-> producing a match only means that the pair was not similar enough
-> with a raised bar used in the middle, and the full-matrix step need
-> to consider the possibility that they may still be similar enough
-> when using "minimum similarity" used for all the other pairs.
->
-> And because I was assuming that requiring higher similarity in the
-> middle step would be a prudent thing to do to avoid false matches
-> that discard better matches elsewhere, my conclusion was that it
-> would not be a useful optimization to do in the final full-matrix
-> step to see if a pair is something that was a candidate in the
-> middle step but did not match well enough (because the fact that the
-> pair did not compare well enough with higher bar does not mean it
-> would not compare well to pass the lower "minimum" bar).
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq
+Content-Type: multipart/mixed; boundary="0LqOZhCVydUpUsv101x31qWWZWPZHVvl3";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@archlinux.org>
+To: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Message-ID: <4f65f02c-1d16-aa2c-3e7b-28d807b9ebe9@archlinux.org>
+Subject: Re: gitattributes export-subst and software versioning
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+ <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+In-Reply-To: <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
 
-Ah, gotcha!  Thanks for clarifying.  Yes, yet another reason to not
-even try to avoid "redoing" the O(N) spanhash comparisons.
+--0LqOZhCVydUpUsv101x31qWWZWPZHVvl3
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US-large
+Content-Transfer-Encoding: quoted-printable
+
+On 2/8/21 2:46 PM, Ren=C3=A9 Scharfe wrote:
+> git archive uses the pretty format code for export-subst.  It is used b=
+y
+> git log and others as well.  git describe uses all object flags to find=
+
+> the best description.  Simply plugging it into the pretty format code
+> would clash with the object flag use of git log.
+
+Yeah, I was afraid there might be bad interactions with a pretty
+archive-centric placeholder and something that isn't git-archive.
+
+On the other hand, with my zero knowledge of the code but having read
+lots of man pages... %S documents that it "only works with git log", so
+maybe it is possible to add an option that is documented to only work
+for git archive?
+
+e.g. if you do use it,
+
+$ cat VERSION
+$Format:%d$
+$Format:%S$
+
+$ git archive HEAD | bsdtar -xOf - VERSION
+ (HEAD -> master, tag: 1.0)
+%S
+
+It's apparently completely ignored and treated as raw characters. The
+same restriction could theoretically be added in the other direction for
+a new placeholder.
+
+This would neatly resolve Junio's concern about the resource-intensive
+nature of "describe" not being a good fit for "log".
+
+> And replacing the flags with a commit slab doesn't seem to be enough,
+> either -- I get good results lots of commits, but for some git log with=
+
+> the new placeholder would just show some nonsensical output, as it
+> seems to get the depth calculation wrong for them somehow.
+
+You mean git describe <commit> produces wrong results for those?
+
+> Anyway, we can of course do something like in the patch below.  It
+> works, it's easy, it's fast enough for git archive, and it's quite
+> hideous.  Hopefully it's bad enough to motivate someone to come up with=
+
+> a cleaner, faster solution.
+
+:D :D an important part of the resolution process, to be sure.
+
+> ---
+>  pretty.c | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>=20
+> diff --git a/pretty.c b/pretty.c
+> index 3922f6f9f2..bbfb5ca3e7 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -12,6 +12,7 @@
+>  #include "reflog-walk.h"
+>  #include "gpg-interface.h"
+>  #include "trailer.h"
+> +#include "run-command.h"
+>=20
+>  static char *user_format;
+>  static struct cmt_fmt_map {
+> @@ -1213,6 +1214,21 @@ static size_t format_commit_one(struct strbuf *s=
+b, /* in UTF-8 */
+>  		return parse_padding_placeholder(placeholder, c);
+>  	}
+>=20
+> +	if (skip_prefix(placeholder, "(describe)", &arg)) {
+> +		struct child_process cmd =3D CHILD_PROCESS_INIT;
+> +		struct strbuf out =3D STRBUF_INIT;
+> +
+> +		cmd.git_cmd =3D 1;
+> +		strvec_push(&cmd.args, "describe");
+> +		strvec_push(&cmd.args, "--always");
+> +		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
+> +		pipe_command(&cmd, NULL, 0, &out, 0, NULL, 0);
+> +		strbuf_rtrim(&out);
+> +		strbuf_addbuf(sb, &out);
+> +		strbuf_release(&out);
+> +		return arg - placeholder;
+> +	}
+> +
+>  	/* these depend on the commit */
+>  	if (!commit->object.parsed)
+>  		parse_object(the_repository, &commit->object.oid);
+> --
+> 2.30.0
+>=20
+
+
+--=20
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
+
+
+--0LqOZhCVydUpUsv101x31qWWZWPZHVvl3--
+
+--1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmAh1S8ACgkQzrFn77Vy
+K9ag/RAA4Iui9ftiSEUgRM4R876zhJxVjshEKNRo+u/F7QBZAS+f0VasmnCCryNZ
+wi1ynyiO4T1i32akqMeEoNFNp/YvQieQqrWwY9cScwSci+iWnkIh0GhbD1TVdmGJ
+9WfrvRR+E1HChds7l87VSh4Kz0bIN95eQCnLgWdDOEdOgp9eQXfz28L8MaNYpc/L
+atywWhZ37p9+uECMb9i6oVNPzZkhnK/sPpVWo9+ZnHYFpgWWo8/iFaq05uCkCJCE
+OlkZdUXAuixAFUzk2tBe+iFQiIj06N19y8+mayRnAnCgXjWwPmf4v4FS4WJb5Gwx
+9VBov4usGkanTzfaDKxk3gO0unLGbZH8v8peRWfayzUM9etdVa7Ik0JzhV+I3Q7m
+gNgra07ut6ul0xSFlHBXRnhdjZJw8f0PQBYdxEsORmaUTyGd5FWqeewtvwqRe7sX
+VgFFRt3/WPte1EMR4s/neCy+nJy2gVvY3NKUnwfgQjaZqsOPv+YZWYS0Idjr9m5c
+HZ6ASVOQDRv9Jvqo2/NfDqjYBkSmEcd+WOpjArmUim0YGxNJVlXaaVfFkdUvYAQ9
+fmEGUITSwS9NQNL7Qlt7XXnawO02ZE+36KFakbHQ+/orzN0p9gdUgcrN3VvJKhhL
+OGerFUnQ8ElHv78kxxxdZ1KyJUROBcVjgaW8dw1Fnu+/zASqfeQ=
+=Yn0F
+-----END PGP SIGNATURE-----
+
+--1HhEHLOlyGCCXZ9xN1lpHvY3xQzHR2Ubq--
