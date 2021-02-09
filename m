@@ -5,65 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 718D0C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9670AC433E6
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 13:18:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2A5EF64E75
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:59:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45B6264EE2
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 13:18:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbhBIM7y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 07:59:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50250 "EHLO
+        id S231347AbhBINSv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 08:18:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229988AbhBIM7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 07:59:53 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17EC7C061786
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 04:59:12 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id q85so5454960qke.8
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 04:59:12 -0800 (PST)
+        with ESMTP id S231352AbhBINSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 08:18:36 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D51FEC061788
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 05:17:55 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id h16so12829382qth.11
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 05:17:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OoPOI4AefDkckPw2tbAJFm3MSUekd03kjOlawZx+rXo=;
-        b=CUXlBZsymrQYfNsgrkA17PKbT5SQCTm5LnEqIJwT7FcflyBngP1RPUh0QxSWKHht/F
-         5w1FOeG5WNejs/GgrufDqVpKvyh8jEnPofla/Qryhna3sDzDlI9uHHABztfy0Ph2DlIe
-         XDYA99E0pR4kthcyAtBVN9LVbeFpby+D0vwMDhwkraiJSlknyd06Qy9Yr24bXQynMMbJ
-         RbaMN9xw0DYfu0PYZ7xoR7lT51MUCM7QaauCIrP0YFTBl1wMgOtIwb7qtHKngGfPMqLJ
-         Au4tEPuXFO6Ox+7fjMLcmDvEo734SzHbh47OTO6ZTADpDgffoEwaRqs07OroOu6eVuaX
-         C0sg==
+        bh=6uvQGWr8qWB933IHVA/sitRFHl8xMjzIAFMugUxgnw8=;
+        b=pXhJspT7yKs3S3U0RA6WW6BE8g3bLGyXHx0Sl8JiIn/Tf1cIzzCWf7JHG72EWom0Th
+         bh7AIEtygUt+7yuYWlqHmlTo4F9dDCAehDpKdST/X6e6MDCE00yMKbl0E5uUzTCrxqKU
+         xovAScrTsYyNd1kt86hqQ38h8pV572JLgEwXBG+FnUpZLSxkMdSZ98Oo8vki4Urz87Bl
+         0b0lIW8yMR+dY2mN4VyREY0zqYmhmiHVwEYb0yfXa6wq1ltrxEBt9aenW5AUL2mxjYub
+         WpDUZHngw03Yj3MZl43nLb4zL42nDqJz46w6DYWIqNcBKWTUcWObJkqdSb1Piy7BmLP3
+         BA8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=OoPOI4AefDkckPw2tbAJFm3MSUekd03kjOlawZx+rXo=;
-        b=T17wv0KFZFGHBVXzOCowEU+yKSwszSTTh8ji75G0DrLHi10UrRoqRGKZQHng91o6So
-         hg//GOLHTqCyHyzG95T9A9lg08wd2mhWTT1ICLfiR4L7n7bGCmqmva9bdumrHMuvKGoh
-         L4N6SWdubrxR01YyFRMqLxVvC4dD0OQouPnAJe1HU/CGNAQ3YxLrC66CVKo6zNvcDGsZ
-         +NB2GRvcfIaoqYbcw0NgFv/T9J88cxBLLC2NYAHNo8YO3hlN6jQy3hufv1OXspEk6Zzj
-         Eq45HkmSiwwbc0oUAxucy2l/US3LlZI7iP+LgzXSA/A2ULlqOKfWJfH2vaKaB2NLHs0i
-         OSbQ==
-X-Gm-Message-State: AOAM533Mzvp1Ynd83qarF4ZxY1oJBRij1/DE01YVc7PcHlVZmMKITgDt
-        xjX2NonDlbaoydIlWmBUk9tj2z2VLdT45jJV
-X-Google-Smtp-Source: ABdhPJxcKjR7QYnzuvMjnv8yDeBCcC5qI40SbdyK/ieqSUGETBgoxUJZFi9sJBQ44sBc8d8yUrMXlA==
-X-Received: by 2002:a37:8c6:: with SMTP id 189mr5816575qki.470.1612875551154;
-        Tue, 09 Feb 2021 04:59:11 -0800 (PST)
+        bh=6uvQGWr8qWB933IHVA/sitRFHl8xMjzIAFMugUxgnw8=;
+        b=tSP+6kWJky/sj7OnyPS3Vr5xjOzHisHDfoUW4RnTK4YasEF+m+3KszATR0EznpeYqo
+         dIwb2Niu1babBQT7LtX0ZgbD6xfWDSCTymNMvQjn/KBpwevX/lxGQI8MIcQ6RjRSKSvJ
+         nli56/6D4I7mqY/M2UosHBliARKPm5yeo9vJEgspEEWsm56GJGaQOLsRXNyuioIO9mk+
+         ld4it2pt12Wiz7gV/bSIcemlezRPLQE7zJfVJUDHzpsUDegjdDcvTvbkhDsMcHwqgPSo
+         BKcZddsT+hTFkkiCA8q0x1s2wW5NB40owqS+o0VLOnGTLznNCebOKV0rfQN4DZk4Z8fF
+         y9dw==
+X-Gm-Message-State: AOAM531RPJV4tw1CWC7jBhrY5tNZTxNYyy9+XY243FaXYA5kXHhlhwHv
+        18NBqzyeTP+qZzfYmZAMlqQ=
+X-Google-Smtp-Source: ABdhPJxQQHHbkG4qPtL4H1fCPMyZgDCGnHbzWDepRUMJSCB9cIAPcDdWTcIVLUcOgDCtGqhnmCMl4Q==
+X-Received: by 2002:a05:622a:149:: with SMTP id v9mr18870695qtw.50.1612876675011;
+        Tue, 09 Feb 2021 05:17:55 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
-        by smtp.gmail.com with UTF8SMTPSA id q15sm5472448qti.9.2021.02.09.04.59.10
+        by smtp.gmail.com with UTF8SMTPSA id q25sm19084345qkq.32.2021.02.09.05.17.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Feb 2021 04:59:10 -0800 (PST)
-Message-ID: <6aa32f94-9c8c-ad26-09ab-4c2028ef1d67@gmail.com>
-Date:   Tue, 9 Feb 2021 07:59:09 -0500
+        Tue, 09 Feb 2021 05:17:54 -0800 (PST)
+Message-ID: <dfbffe97-51de-9e8b-37a4-417909358323@gmail.com>
+Date:   Tue, 9 Feb 2021 08:17:53 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
-Subject: Re: [PATCH v2 4/4] gitdiffcore doc: mention new preliminary step for
- rename detection
+Subject: Re: [PATCH v2 1/4] diffcore-rename: compute basenames of all source
+ and dest candidates
 Content-Language: en-US
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -74,9 +73,9 @@ Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
 References: <pull.843.git.1612651937.gitgitgadget@gmail.com>
  <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
- <a0e75d8cd6bd32fb1ab2a209bc2079c30995b257.1612870326.git.gitgitgadget@gmail.com>
+ <381a45d239bb52a70373c385d8978005c9cb4800.1612870326.git.gitgitgadget@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <a0e75d8cd6bd32fb1ab2a209bc2079c30995b257.1612870326.git.gitgitgadget@gmail.com>
+In-Reply-To: <381a45d239bb52a70373c385d8978005c9cb4800.1612870326.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -86,73 +85,106 @@ X-Mailing-List: git@vger.kernel.org
 On 2/9/2021 6:32 AM, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 > 
-> The last few patches have introduced a new preliminary step when rename
-> detection is on but both break detection and copy detection are off.
-> Document this new step.  While we're at it, add a testcase that checks
-> the new behavior as well.
+> We want to make use of unique basenames to help inform rename detection,
+> so that more likely pairings can be checked first.  (src/moduleA/foo.txt
+> and source/module/A/foo.txt are likely related if there are no other
+> 'foo.txt' files among the deleted and added files.)  Add a new function,
+> not yet used, which creates a map of the unique basenames within
+> rename_src and another within rename_dst, together with the indices
+> within rename_src/rename_dst where those basenames show up.  Non-unique
+> basenames still show up in the map, but have an invalid index (-1).
+> 
+> This function was inspired by the fact that in real world repositories,
+> most renames often do not involve a basename change.  Here are some
+> sample repositories and the percentage of their historical renames (as of
+> early 2020) that did not involve a basename change:
 
-Thanks for adding this documentation and test.
+I found this difficult to parse. Perhaps instead
 
-> +Note that when rename detection is on but both copy and break
-> +detection are off, rename detection adds a preliminary step that first
-> +checks files with the same basename.  If files with the same basename
+  "the percentage of their renames that preserved basenames".
 
-I find myself wanting a definition of 'basename' here, but perhaps I'm
-just being pedantic. A quick search clarifies this as a standard term [1]
-of which I was just ignorant.
+We might also need something stronger, though: which percentage of renames
+preserved the basename but also had no other copy of that basename in the
+scope of all add/deletes?
 
-[1] https://man7.org/linux/man-pages/man3/basename.3.html
+Is this reproducible from a shell command that could be documented here?
 
-> +are sufficiently similar, it will mark them as renames and exclude
-> +them from the later quadratic step (the one that pairwise compares all
-> +unmatched files to find the "best" matches, determined by the highest
-> +content similarity).  So, for example, if docs/extensions.txt and
-> +docs/config/extensions.txt have similar content, then they will be
-> +marked as a rename even if it turns out that docs/extensions.txt was
-> +more similar to src/extension-checks.c.  At most, one comparison is
-> +done per file in this preliminary pass; so if there are several
-> +extensions.txt files throughout the directory hierarchy that were
-> +added and deleted, this preliminary step will be skipped for those
-> +files.
-
-> +test_expect_success 'basename similarity vs best similarity' '
-> +	mkdir subdir &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			 line6 line7 line8 line9 line10 >subdir/file.txt &&
-> +	git add subdir/file.txt &&
-> +	git commit -m "base txt" &&
+> +MAYBE_UNUSED
+> +static int find_basename_matches(struct diff_options *options,
+> +				 int minimum_score,
+> +				 int num_src)
+> +{
+> +	int i;
+> +	struct strintmap sources;
+> +	struct strintmap dests;
 > +
-> +	git rm subdir/file.txt &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			  line6 line7 line8 >file.txt &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			  line6 line7 line8 line9 >file.md &&
-> +	git add file.txt file.md &&
-> +	git commit -a -m "rename" &&
-> +	git diff-tree -r -M --name-status HEAD^ HEAD >actual &&
-> +	# subdir/file.txt is 89% similar to file.md, 78% similar to file.txt,
-> +	# but since same basenames are checked first...
-> +	cat >expected <<-\EOF &&
-> +	A	file.md
-> +	R078	subdir/file.txt	file.txt
-> +	EOF
-> +	test_cmp expected actual
-> +'
+> +	/* Create maps of basename -> fullname(s) for sources and dests */
+> +	strintmap_init_with_options(&sources, -1, NULL, 0);
+> +	strintmap_init_with_options(&dests, -1, NULL, 0);
+
+Initially, I was wondering why we need the map for each side, but we will need
+to enforce uniqueness in each set, so OK.
+
+> +	for (i = 0; i < num_src; ++i) {
+> +		char *filename = rename_src[i].p->one->path;
+> +		char *base;
 > +
+> +		/* exact renames removed in remove_unneeded_paths_from_src() */
+> +		assert(!rename_src[i].p->one->rename_used);
+> +
+> +		base = strrchr(filename, '/');
+> +		base = (base ? base+1 : filename);
 
-I appreciate the additional comments in this test to make it clear
-what you are testing. A minor nit is that the test could have been
-added at the start of the series to document the _old_ behavior.
-The 'expected' file would have this content:
+nit: "base + 1"
 
-+	cat >expected <<-\EOF &&
-+	A	file.txt
-+	R078	subdir/file.txt	file.md
-+	EOF
+Also, this is used here and below. Perhaps it's worth pulling out as a
+helper? I see similar code being duplicated in these existing spots:
 
-Then, this test case would change the expected output in the same
-patch that introduces the behavior change.
+* diff-no-index.c:append_basename()
+* help.c:append_similar_ref()
+* packfile.c:pack_basename()
+* replace-object.c:register_replace_ref()
+* setup.c:read_gitfile_gently()
+* builtin/rebase.c:cmd_rebase()
+* builtin/stash.c:do_create_stash()
+* builtin/worktree.c:add_worktree()
+* contrib/credential/gnome-keyring/git-credential-gnome-keyring.c:usage()
+* contrib/credential/libsecret/git-credential-libsecret.c:usage()
+* trace2/tr2_dst.c:tr2_dst_try_auto_path()
+
+There are other places that use strchr(_, '/') but they seem to be related
+to peeling basenames off of paths and using the leading portion of the path.
+
+> +		/* Record index within rename_src (i) if basename is unique */
+> +		if (strintmap_contains(&sources, base))
+> +			strintmap_set(&sources, base, -1);
+> +		else
+> +			strintmap_set(&sources, base, i);
+> +	}
+> +	for (i = 0; i < rename_dst_nr; ++i) {
+> +		char *filename = rename_dst[i].p->two->path;
+> +		char *base;
+> +
+> +		if (rename_dst[i].is_rename)
+> +			continue; /* involved in exact match already. */
+> +
+> +		base = strrchr(filename, '/');
+> +		base = (base ? base+1 : filename);
+> +
+> +		/* Record index within rename_dst (i) if basename is unique */
+> +		if (strintmap_contains(&dests, base))
+> +			strintmap_set(&dests, base, -1);
+> +		else
+> +			strintmap_set(&dests, base, i);
+> +	}
+> +
+> +	/* TODO: Make use of basenames source and destination basenames */
+> +
+> +	strintmap_clear(&sources);
+> +	strintmap_clear(&dests);
+> +
+> +	return 0;
+> +}
 
 Thanks,
 -Stolee
-
