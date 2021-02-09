@@ -2,91 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FD03C433E9
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 13:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6722C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:07:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EBFB64ED7
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 13:45:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7886764E0D
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 14:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231586AbhBINpf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 08:45:35 -0500
-Received: from mout.gmx.net ([212.227.17.22]:33921 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231582AbhBINnd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 08:43:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1612878118;
-        bh=w2LVkmNInaBJ5IkOk/X2RjmGnr3eqt1+wCfVe3wrSew=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=br4EatTsPfxSDKeK47aiEYgiFSW3zvi2Wo7KostNCddJAJiptYWcDne/2MHsn00Ow
-         DDlrEqJxg/9OrFvLQtN90N6NbOU+pUOJaHvEZOGOKicBsj0fKbOsqNyFxbHJQPxUBs
-         ozcCU+toH8c2Wewlzbe3R4BvXd/+BH301/vWsPE8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az53-677.nwdgkkx1u4zu5dacgxidvoho3a.cx.internal.cloudapp.net
- ([20.186.6.204]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1N33ET-1lv1Ng3kkf-013NPW; Tue, 09 Feb 2021 14:41:58 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.30.1
-Date:   Tue,  9 Feb 2021 13:41:55 +0000
-Message-Id: <20210209134155.6350-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.30.0
-Content-Type: text/plain; charset=UTF-8
+        id S230352AbhBIOHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 09:07:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36682 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230186AbhBIOHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 09:07:43 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2853C061786
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 06:07:02 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id t5so23742428eds.12
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 06:07:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=zXBavbZX4zgHSuA2sVlldbcLxzZU9tltdFJ6zrKIf2s=;
+        b=Dv502sm5TmHjlx2hp+GUwNKTydVOOEsNH8vvSsCkvHWb69W+JandWnhr3BI7kBP/PO
+         50+ISDcM4e0xt/qW5hnujKB0wteam6aITWXc42IaoxfI4SgDyMR2drrEoGZSXKgDhkpv
+         6oufo4NAKmwNvMV4W7OlTpKSKaoV58DyBkADHlkMdhpFf0Z9YEqlFublJ94EWGVEYnd7
+         cJKa+rWWW6Wz7lf1Axw1uyWWi5ZYYEtZaNfU1Wo39is6qjks19XUXHW+mMvcWOBPIeP+
+         tv4eMmbyWXzbRIxwGmhmBIaoG3nkWaJA/2ZkYbyswjx4IVbFeIUCAnrElzh5EeEmHPzB
+         peYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=zXBavbZX4zgHSuA2sVlldbcLxzZU9tltdFJ6zrKIf2s=;
+        b=UfMaeheOt0iaYL+SmzTxyB0I7NVUxjCuwLDAPEGktrBwnjGOFmNePCg5GAYD+cfJcS
+         Ai0ejZEu92j9vRe52Bu9qC7xPLZfL8tYHb1LH2mRNuQTy7gENPBwX7N+yRFCjb1tvB+B
+         l6IVriDga5bp+Wdxf34GST25n/tuyEDWAQVjHw3ukoq3ypLKdhKYH2NCZq3ODRk9xX6q
+         gj41SsQIH4kxt9HOsl+HnSKjtVpVPd73y90cul/OJUPRqYeNzAbdG+7pxEsh83AS9cqY
+         mdlDSE1C+fDueMZC6h3CMeqQn8NgmNP3r7vfJs+z6/9gpBoPxprDQHbAEf35YyxAHJJQ
+         fosQ==
+X-Gm-Message-State: AOAM533zXMlbLK7dxJ18OdQqivThA08dzyWlVQGCkarjKSx/d/X2CD57
+        63P50mU7i0iw8Fbov3oOlgZHM5UkPTDaLw==
+X-Google-Smtp-Source: ABdhPJxM6uMRlCTDUyJlFWwtiRziRgVTGoapG7ulYCjuDMbPzqec6rRpJv6aAtKMlkJLYb3vQv1abA==
+X-Received: by 2002:a05:6402:215:: with SMTP id t21mr23284452edv.363.1612879621437;
+        Tue, 09 Feb 2021 06:07:01 -0800 (PST)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id ha21sm4724830ejb.97.2021.02.09.06.07.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Feb 2021 06:07:00 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
+        sluongng@gmail.com,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 2/8] maintenance: add --schedule option and config
+References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
+ <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
+ <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <dae8c04bb5523c9b63c770862a1104a0ff4aa6c4.1602782524.git.gitgitgadget@gmail.com>
+Date:   Tue, 09 Feb 2021 15:06:59 +0100
+Message-ID: <87blctcp30.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:ymb+FP3YzX58cWZbz8IDwPP4mrXYspj+XbkZ8ehrAiwdQT/Wn/D
- 4bW2tmxRdVc9FO33J3+fMaQeJrHGZDGDftCrYohd3hFKJ75S3QopQrW6TGQ0LIbExwpdYuQ
- BE6IkNiqvRJsGESGp4dJfBBhI68Npt0vTIaFw3RsafMzmL6Ons8xW6ypj1WoiLdWUVEBC1u
- Ha27igsFOeIF0XYF2l9QQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:MBA67t4kJZI=:B75hW4DmNqd2mLnfPe9UlW
- ECkabMJq9Ob8zFGCtdmx4gNXYqbpW1gYULUWHhkEwo/7WnU87jclXA0F/iobgNzxDdKK+/NSz
- xi89qYkvAYZ/ID9Qe+flSdLRbl6BXcgk1iNTo/r1h8FP6jNHjpweY0wdmwuTGKvUnN5X8Mi+i
- jk9R8HEbBN7iRsEypz0sjbser7Xlyod67DRxlWowUPvlcCYh5zYAxx67aOS5cm1YKPMlvEkyt
- qeJhsXSciyIjQTHL6VJuhAAfLq+R3AxsnsYtRmSSJ3Pg80a/W9lIF0pAhLTzry7oxawrKZvTq
- Cj+TIzrHA3YHGNHGQn4X8HNgqRzb4tN+vBSRaZIlhGnMgzl0Jlc8Atl16Lg/l9thMpxdUaPQM
- HT9hDBpTPMmg0rzg5Yb4Jza8rBIsOZssKpBxf4NvOeOzPzyKfbtVFh2c/LgT6mDLoxLImPB1A
- 7Fhp5nUgdSsmirTSNU3ITfnpy2AUFIJJy+SxiYlDszF/aM//y2XNLNi0d/WwyRpDLOrmTV3M1
- 8XqspuN/DsMLAEFaX62aQHQkdGy+KYZ+m3/cmAtkxaugWZDy0wGofuaI2a+1Srzq9C/ZronZh
- Cq2fsEDQjeTxu3sJbK0nGj9uktGejX3+Ufkh7HWKLYMKM1HqMj1eGIdPKdggy0u3Oz2aps3QC
- +iJINqLwHWDzwZiIp9tJy8cvwMC/nozJPGHrhOdr9OAxgaRSidfMgC/UhuYdMYhtyMlSBpstR
- 9APFLdUREhnP/4u68YUZK5wBGxov1V8DM2W1HO+ReE80HUCX6TSsR6r/mrOc96bbgB9SIz9vQ
- sf+cgRCwkzNv3UiYHP0FB9HLOBPWckblF6Ns7eLD+/aRtK2AK8z8lMZKC7sJfl7AQloQhwAQ5
- KpPdE4BA1FnXH3piiL3MWTUdAY0ZBxQLrxBdzVW+c=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
 
-I hereby announce that Git for Windows 2.30.1 is available from:
+On Thu, Oct 15 2020, Derrick Stolee via GitGitGadget wrote:
 
-    https://gitforwindows.org/
+> +--schedule::
+> +	When combined with the `run` subcommand, run maintenance tasks
+> +	only if certain time conditions are met, as specified by the
+> +	`maintenance.<task>.schedule` config value for each `<task>`.
+> +	This config value specifies a number of seconds since the last
+> +	time that task ran, according to the `maintenance.<task>.lastRun`
+> +	config value. The tasks that are tested are those provided by
+> +	the `--task=<task>` option(s) or those with
+> +	`maintenance.<task>.enabled` set to true.
 
-Changes since Git for Windows v2.30.0(2) (January 14th 2021)
+I see from searching on list and from spying on your repo that patches
+for this maintenance.<task>.lastRun feature exist, but there's no code
+for it in git.git.
 
-New Features
+So we've got a 2.30.0 release with a mention of that, and it can't work,
+because it's only in the doc due to b08ff1fee00 (maintenance: add
+--schedule option and config, 2020-09-11).
 
-  * Comes with Git v2.30.1.
-  * Comes with Perl v5.32.1.
-  * Comes with cURL v7.75.0.
-
-Git-2.30.1-64-bit.exe | f1358ec93e8975fb4eaacbb71e010fadcb097fb00b8af9ab6d003ba69c08367d
-Git-2.30.1-32-bit.exe | cd0e3b2f468be76fbf0f1e8b233c97a299726fc20f8122fd992e00097a76b17e
-PortableGit-2.30.1-64-bit.7z.exe | 54bb3a0035bad71148fb6c771942a880d46a8dc6f3a0cb42eda88ca1374f1570
-PortableGit-2.30.1-32-bit.7z.exe | 931dc2f5495cd41c714c9cfb69288ff9f1026469c291912bfa789165ce9eeed6
-MinGit-2.30.1-64-bit.zip | 3c2642fd874c4057267b10161f0c23289afcdd339f7f89a6362a3d2a6397a91e
-MinGit-2.30.1-32-bit.zip | 6956ff9418016ee55e822a10a935a430752913fd1ce60efa4fd8ead227ccf702
-MinGit-2.30.1-busybox-64-bit.zip | 8ce8ed8d56bcecb9f59acde4396b360ac2459414e9a00dfec0f012ca6db54b84
-MinGit-2.30.1-busybox-32-bit.zip | f8b1675e50a9761ee4661ea2c6d4f30e8375b8500c192ba544ea9594b6b82c42
-Git-2.30.1-64-bit.tar.bz2 | 1a0ee557fb63b0841e967cf374556eeb95efa0e983f1d03a6f202e98091dfcc2
-Git-2.30.1-32-bit.tar.bz2 | 9beae44fdba41ca49f99a5106979e595c89c3ef40587154a2485adc3209e29b6
-
-Ciao,
-Johannes
