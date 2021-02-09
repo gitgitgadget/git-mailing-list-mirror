@@ -2,101 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 393C4C433E6
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 15:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2C41C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:33:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CC6164E05
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 15:46:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F5AE64D9D
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 16:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232640AbhBIPqg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 10:46:36 -0500
-Received: from siwi.pair.com ([209.68.5.199]:25657 "EHLO siwi.pair.com"
+        id S232748AbhBIQd2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 11:33:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55014 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232609AbhBIPq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 10:46:26 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8E77A3F40FA;
-        Tue,  9 Feb 2021 10:45:44 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D9D5D3F40D9;
-        Tue,  9 Feb 2021 10:45:43 -0500 (EST)
-Subject: Re: [PATCH v2 09/14] simple-ipc: add t/helper/test-simple-ipc and
- t0052
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Chris Torek <chris.torek@gmail.com>,
+        id S229683AbhBIQdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 11:33:25 -0500
+Received: (qmail 26918 invoked by uid 109); 9 Feb 2021 16:32:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 09 Feb 2021 16:32:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7414 invoked by uid 111); 9 Feb 2021 16:32:43 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 09 Feb 2021 11:32:43 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 9 Feb 2021 11:32:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Chris Torek <chris.torek@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 11/14] unix-socket: add options to unix_stream_listen()
+Message-ID: <YCK5K/nK4tGnTvou@coredump.intra.peff.net>
 References: <pull.766.git.1610465492.gitgitgadget@gmail.com>
  <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
- <f0bebf1cdb31f94cb111df100b3bcb5e2d93a91e.1612208747.git.gitgitgadget@gmail.com>
- <20210202213523.GD2091@szeder.dev>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7a84352f-1b86-ff3d-27f0-131b873573b5@jeffhostetler.com>
-Date:   Tue, 9 Feb 2021 10:45:41 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+ <7a6a69dfc20c6ff190cb020931c46bf4d88bab59.1612208747.git.gitgitgadget@gmail.com>
+ <YBkmD14Nqqxe4pxG@coredump.intra.peff.net>
+ <b7a6f741-c52a-db24-3349-dc69610ce21f@jeffhostetler.com>
 MIME-Version: 1.0
-In-Reply-To: <20210202213523.GD2091@szeder.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b7a6f741-c52a-db24-3349-dc69610ce21f@jeffhostetler.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 05, 2021 at 06:28:13PM -0500, Jeff Hostetler wrote:
 
-
-On 2/2/21 4:35 PM, SZEDER Gábor wrote:
-> On Mon, Feb 01, 2021 at 07:45:42PM +0000, Jeff Hostetler via GitGitGadget wrote:
->> diff --git a/t/t0052-simple-ipc.sh b/t/t0052-simple-ipc.sh
->> new file mode 100755
->> index 00000000000..69588354545
->> --- /dev/null
->> +++ b/t/t0052-simple-ipc.sh
->> @@ -0,0 +1,129 @@
->> +#!/bin/sh
->> +
->> +test_description='simple command server'
->> +
->> +. ./test-lib.sh
->> +
->> +test-tool simple-ipc SUPPORTS_SIMPLE_IPC || {
->> +	skip_all='simple IPC not supported on this platform'
->> +	test_done
->> +}
->> +
->> +stop_simple_IPC_server () {
->> +	test -n "$SIMPLE_IPC_PID" || return 0
->> +
->> +	kill "$SIMPLE_IPC_PID" &&
->> +	SIMPLE_IPC_PID=
->> +}
->> +
->> +test_expect_success 'start simple command server' '
->> +	{ test-tool simple-ipc daemon --threads=8 & } &&
->> +	SIMPLE_IPC_PID=$! &&
->> +	test_atexit stop_simple_IPC_server &&
->> +
->> +	sleep 1 &&
+> > OK. I'm still not sure of the endgame here for writing non-racy code to
+> > establish the socket (which is going to require either some atomic
+> > renaming or some dot-locking in the caller).  But it's plausible to me
+> > that this option will be a useful primitive.
 > 
-> This will certainly lead to occasional failures when the daemon takes
-> longer than that mere 1 second delay under heavy load or in CI jobs.
+> In part 14/14 in `ipc-unix-sockets.c:create_listener_socket()` I have
+> code in the calling layer to (try to) handle both the startup races
+> and basic collisions with existing long-running servers already using
+> the socket.
 
+There you make a temp socket and then try to rename it into place.  But
+because rename() overwrites the destination, it still seems like two
+creating processes can race each other. Something like:
 
-Good point.  Thanks!
+  0. There's no "foo" socket (or maybe there is a stale one that
+     nobody's listening on).
 
+  1. Process A wants to become the listener. So it creates foo.A.
 
-> 
->> +
->> +	test-tool simple-ipc is-active
->> +'
+  2. Process B likewise. It creates foo.B.
+
+  3. Process A renames foo.A to foo. It believes it will now service
+     clients.
+
+  4. Process B renames foo.B to foo. Now process A is stranded but
+     doesn't realize it.
+
+I.e., I don't think this is much different than an unlink+create
+strategy. You've eliminated the window where a process C shows up during
+steps 3 and 4 and sees no socket (because somebody else is in the midst
+of a non-atomic unlink+create operation). But there's no atomicity
+between the "ping the socket" and "create the socket" steps.
+
+> But you're right, it might be good to revisit that as a primitive at
+> this layer.  We only have 1 other caller right now and I don't know
+> enough about `credential-cache--daemon` to know if it would benefit
+> from this or not.
+
+Yeah, having seen patch 14, it looks like your only new caller always
+sets the new unlink option to 1. So it might not be worth making it
+optional if you don't need it (especially because the rename trick,
+assuming it's portable, is superior to unlink+create; and you'd always
+be fine with an unlink on the temp socket).
+
+The call in credential-cache--daemon is definitely racy. It's pretty
+much the same thing: it pings the socket to see if it's alive, but is
+still susceptible to the problem above. I was was never too concerned
+about it, since the whole point of the daemon is to hang around until
+its contents expire. If it loses the race and nobody contacts it, the
+worst case is it waits 30 seconds for somebody to give it data before
+exiting. It would benefit slightly from switching to the rename
+strategy, but the bigger race would remain.
+
+-Peff
