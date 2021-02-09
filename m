@@ -3,70 +3,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDDF7C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 19:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87393C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 19:39:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E92364E8B
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 19:37:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C86064EAC
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 19:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233522AbhBITgP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 14:36:15 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:40887 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233608AbhBITYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 14:24:40 -0500
-Received: by mail-ej1-f53.google.com with SMTP id i8so33600324ejc.7
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 11:23:29 -0800 (PST)
+        id S233713AbhBIThL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 14:37:11 -0500
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:36232 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233679AbhBIT0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 14:26:05 -0500
+Received: by mail-ed1-f41.google.com with SMTP id l12so25376573edt.3
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 11:25:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=c3GmdUZKTu+zVLaGYEcOa5Yiv0qK6pf3+j2g6mSPXnY=;
-        b=jPPUE0+xHpbKmzWyF8L5quuDKgw/ES3D7R1k0aYfHIF1e5KL+Zzz+0ReTEpStS+l76
-         hvmQAyzHDHhssDqHewN8tSnzxRwjvt9zcrtLxnV5C8J7dZOHmcM2ykbG4NlKA0buZpCA
-         Zbdo4B2tgm40fBYYfaIuRxXlt1HmPlNUqaeSzYhZrQj6PBAHbaIqQ6LHuYwx5hMMdzz7
-         Q0+lCCAae6uelLp4tqLPFX0jIgazK+n+JdRpp4+i/oOgIfuNVx6wZjaW6dforXLtSavu
-         LCvVWP0PM+gjazsGNRrC3Bj/wRrgyyS/KprrifO9cu+ZkJjJHTd6gbIqW6Q243j67T9/
-         JX7Q==
-X-Gm-Message-State: AOAM532ouqLOB8B1PapO/k7/zO/S6hVUKncb7hR0ZgptQADnnHeBXLna
-        +idKkgSD4Jcqur1gRPe1L7klbtBxx8Ersx7apVOiaUAJnOo=
-X-Google-Smtp-Source: ABdhPJzL6rzwPpKG6u5JtgJWt45XOwkgaEczY5Mm4huwdP6tOiQ6bwR2FYRpms0dCItBoRJLWbCmZrshgC4IjNCLDZU=
-X-Received: by 2002:a17:906:488:: with SMTP id f8mr23146401eja.311.1612898005482;
- Tue, 09 Feb 2021 11:13:25 -0800 (PST)
+        bh=u+Q620ACJi8eVG61UlVGjB427Py+UoMv+YudW0QvC+o=;
+        b=tITch2XhF9g1NQHkXTMwiCWezP40Bd9wR199k9j+T3iIRUQo40HQ9EgL8EbmudC+VR
+         fpsz97xyRnI+Cfxnt8n7OTO5t+7y3Hb1E/nGQN3imMjRjvxMJ6liPWUQqxk/E4T7+7FN
+         6ygVWWKyKW3sRySnkQZd2f2L+/HUJE9bcKoAN+GNTDbC/SFBuDAZ5mM8tcZd81XKxbHT
+         ZMydX9NHYuvKbpgYjvY6h51wmqAq2l0nPlGSErOC4sFYdE5F87xyTDStOMyq+Jsn+BZv
+         pB4G0q6HUE82DyzG3dOqcpnQ5loMfuiAzCVOXWnUeYSgVyv/PAuiUwZ5RwLDvyciYl7G
+         2DKg==
+X-Gm-Message-State: AOAM531JuX4lJY/hs8B5fj+3vRaDkpNJWIrfrbolfAG8oXxXQM0VvJeZ
+        1NSPVgjeJuoKPHzoNspRBHQvuinw8gOAAmxECUrKJNaXNoGJWA==
+X-Google-Smtp-Source: ABdhPJyW2DDXbb7iNjWbH6v+i/H/B7xzGcMWusjVBSTZJkplGEY/WZWO3XkXK3sCSL2964AkXtQ6ZinOOQjbBJEx81k=
+X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr24448436edt.221.1612898693296;
+ Tue, 09 Feb 2021 11:24:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20210207181439.1178-1-charvi077@gmail.com> <20210208192528.21399-4-charvi077@gmail.com>
- <xmqq5z325k3j.fsf@gitster.c.googlers.com> <CAPSFM5dN=gs7m8VskCPMzD10i42ETQ_7UzuGKmi=X-xs2QkYSg@mail.gmail.com>
- <CAPig+cSoa4Vw0N53vJgMCWiW5yVS0j1H0ejS_01xs1WDF2d82g@mail.gmail.com> <xmqq5z312h5w.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq5z312h5w.fsf@gitster.c.googlers.com>
+References: <20210209173254.17712-1-shubhunic@gmail.com>
+In-Reply-To: <20210209173254.17712-1-shubhunic@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 9 Feb 2021 14:13:14 -0500
-Message-ID: <CAPig+cR0aC-XynowmvAz23-h=LP8+vhF7_c3fUg+M+XHg5o8bA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/11] rebase -i: clarify and fix 'fixup -c'
- rebase-todo help
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Charvi Mendiratta <charvi077@gmail.com>, git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Date:   Tue, 9 Feb 2021 14:24:42 -0500
+Message-ID: <CAPig+cREkd2rdDzETBzwYFgra4WV7PdM6expXRrC=kdFnZMk5A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/10] Modernizing the t7001 test script
+To:     shubham verma <shubhunic@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 9, 2021 at 2:08 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Here's another more concise attempt:
-> >
-> >     like "squash" but keep only the previous commit's log message,
-> >     unless -C is used, in which case keep only this commit's message;
-> >     -c is same as -C but opens editor
+On Tue, Feb 9, 2021 at 12:35 PM shubham verma <shubhunic@gmail.com> wrote:
+> In this patch series modernize the t7001 test script by changing the
+> style of its tests from an old one to the modern one and by cleaning
+> up the test script.
 >
-> Nice.
+> Changes since v1:
+>
+> - Change commit messages and added brief explanation about commit.
+> - Modernize subshell formatting
+> - Use ': >' rather than '>'
 
-For conciseness, I intentionally omitted "the", however, upon
-reflection, it probably would be a good idea to insert "the" between
-"opens" and "editor".
+For readers new to this series, v1 is here:
+https://lore.kernel.org/git/20200925170256.11490-1-shubhunic@gmail.com/T/
