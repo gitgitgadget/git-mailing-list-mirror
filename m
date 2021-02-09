@@ -7,134 +7,90 @@ X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEE16C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C67D6C433E6
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:44:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 92F6D64EB9
-	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:43:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FF5B64E60
+	for <git@archiver.kernel.org>; Tue,  9 Feb 2021 12:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230345AbhBIMnd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Feb 2021 07:43:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46656 "EHLO
+        id S230408AbhBIMn6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Feb 2021 07:43:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbhBIMnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Feb 2021 07:43:05 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3687C061786
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 04:42:24 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id g84so5450346oib.0
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 04:42:24 -0800 (PST)
+        with ESMTP id S230306AbhBIMnQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Feb 2021 07:43:16 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520BFC061788
+        for <git@vger.kernel.org>; Tue,  9 Feb 2021 04:42:36 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id h6so19272116oie.5
+        for <git@vger.kernel.org>; Tue, 09 Feb 2021 04:42:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9v6WlIjIyhayQL8CNZJOHzBguEHXfT2zKWvqbqohyqM=;
-        b=mToWaeGZ0EzFPiftFxM/DLT7jzkBbt8vQ3FSKCQlsmz9L9Mr3Sk9pbR5/SZqqaEhUQ
-         0XaabgLNokNX979sRx6u72RETOfHFljLWJnE5rWLUZIMK/81ojfmc5TY3aIgBBjk8b3L
-         sZsJR7hrpuhA2UflhFotSSIM78J7wquKfEvb3eUCESs3m9n09M3HfY6jrrjrKac6jaac
-         nGihCeWYB1mTu7aEK7kPvERjIrFFQKKZ6UT03CfuUGcm6kjF2lMxxv84GXEwcI1k1QI+
-         SZ6qLw10LO4zgpjoTtWxHj/yN+9xJJWbw80exUAf+c8HS1z4YbbP2j2OR4ScE6CHrXvQ
-         Y+gQ==
+        bh=XomVUom4/ZukQBZVjOzX6Jm7lgb1tmVhtk1lEIkdZqk=;
+        b=GDE2HNqBsvZhSS9IYgDOPlxUg07lSHBNv8JSQynVgr39PtnYK+MxAoQyxsR/9uMMSJ
+         8oLAY1x0M279klo88l3DeoxIqPzGvfprJAXt0so4M2RytlBasE8TwpSVkQ88H72Uoi17
+         0mryvdwy5OR0uc+vEpyn32n2CthStnNNsrq+hd4huQSwvl4a+bWhgXzQtrSgpE8RByhF
+         aLaKKiU2o/nxAcfZrXJ/sGvnWoBqo+FWBhikZ1QV1shtnAYRCMrcunkqk5yVshpU89sR
+         QAr2QYSUy6Hyqkah6dCx/L2lTxJ6UpcQpOs8gef6EVEiwBUghbRUbSMfsdZ9mO1VuV3l
+         gnmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=9v6WlIjIyhayQL8CNZJOHzBguEHXfT2zKWvqbqohyqM=;
-        b=CDvsSJQcNagiw+hb1WDxPrnZRn82OPEgcxQwMdNTXg281Ii3GTevyxBb1BTKto9zvR
-         9xqeXeUT2R6aZL3kPS6ILV11ayvhRpxrp4e91g5MC+TUv4W+IscM/Bxt4OzkGQqYEEHQ
-         408/aFE7AgJtsNgR9FNTkhxYs8K+uSvc8NXJdIMcRH6bsbfVfIXyVBNwBJ2Yfou9Erdu
-         IooqRZYVC6kkxc0s5onXdnWXfskQcsY8mi56wdfmsgAsnNKVm+Eh6iv6l31nbxw/v5BX
-         BlmPX45/CBrDH4k84vRBrVZZV4KL0eV9SHx74JSq1HMhOo+1wWJXurgQ8NEtyM0NRm5L
-         ejsg==
-X-Gm-Message-State: AOAM533ohFniNPw8GrYErqU6WFTQVs6f0rvQqrKwI4oYzC/LEkf3Ints
-        Il4zvItfKh99r8h1QZReylU=
-X-Google-Smtp-Source: ABdhPJxqsNOvix0WfLxmPx40B4W8TuvzXgMPFhbRj+GyHZy6eGEqo1+mwGD8mAMvh0hL14AgmrDqUA==
-X-Received: by 2002:aca:3944:: with SMTP id g65mr2269723oia.66.1612874544079;
-        Tue, 09 Feb 2021 04:42:24 -0800 (PST)
+        bh=XomVUom4/ZukQBZVjOzX6Jm7lgb1tmVhtk1lEIkdZqk=;
+        b=F3qzuDxYrZqs5vPujyTADAmZKF0QmKQp0219GmWeD24JhKITfSa04KjhkyaptTNLS0
+         0gOcwCt5H9ImJJ5f7yx5yh9xv3QfloxIrRBmKQL5ehWsCz5EELrTF5liANdqeJbB4NUZ
+         U/BGSFwmD/hp1ggXHRuXifqN9hrJxwlPy9KuVVJnMA2JrN9ubXZAQrw2jluz1f1A8pZ9
+         4yfSZIcCi1Qmb8o69E9IxsO3EHh0/6jjOJo6cGub9we07FYFAumMDK2VPXQwMgztxOsT
+         svGrk6qEH5XG3d07IgrVr2CUbJR31RmEO78F4Y2ZfNP60592/Ub21EP8+BWI4KwOyP3y
+         K7Zw==
+X-Gm-Message-State: AOAM532mqSaCCRsRjUDFihtdFG4quAckFMQmsOYw74kiL87r7r5tiGQZ
+        2PFKAaVZ2dJ48K9MsNCLyY8=
+X-Google-Smtp-Source: ABdhPJxSflz8um2NNIuY9HsEkXCQEsknDBAxqjTuVB4YF3peOHg24WMlw6lmnEgFJ0ML8Yd1nc9MpA==
+X-Received: by 2002:aca:f06:: with SMTP id 6mr2256230oip.107.1612874555768;
+        Tue, 09 Feb 2021 04:42:35 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:7c18:1f04:a165:5ea0? ([2600:1700:e72:80a0:7c18:1f04:a165:5ea0])
-        by smtp.gmail.com with UTF8SMTPSA id w10sm540603ote.29.2021.02.09.04.42.22
+        by smtp.gmail.com with UTF8SMTPSA id y10sm1984720otq.71.2021.02.09.04.42.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Feb 2021 04:42:23 -0800 (PST)
-Message-ID: <f8df68ee-32a9-4bd1-99d9-4641b582992d@gmail.com>
-Date:   Tue, 9 Feb 2021 07:42:22 -0500
+        Tue, 09 Feb 2021 04:42:35 -0800 (PST)
+Message-ID: <a4bf6692-9e45-fc2e-66e6-5a3671a1daa9@gmail.com>
+Date:   Tue, 9 Feb 2021 07:42:34 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
 Subject: Re: [PATCH 1/2] maintenance: add pack-refs task
 Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sluongng@gmail.com,
-        martin.agren@gmail.com, sunshine@sunshineco.com,
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.871.git.1612795943.gitgitgadget@gmail.com>
  <33b7a74af4eb45756c3648eb7b002d06e4ec3563.1612795943.git.gitgitgadget@gmail.com>
- <YCHA991dv0V0hNb+@nand.local>
+ <CAPig+cTOv_Hq-FM2s8-XaGHz6FSUt5Dr41sOB9wP12tQJ_kcmA@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YCHA991dv0V0hNb+@nand.local>
+In-Reply-To: <CAPig+cTOv_Hq-FM2s8-XaGHz6FSUt5Dr41sOB9wP12tQJ_kcmA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/8/2021 5:53 PM, Taylor Blau wrote:
-> On Mon, Feb 08, 2021 at 02:52:22PM +0000, Derrick Stolee via GitGitGadget wrote:
+On 2/8/2021 6:06 PM, Eric Sunshine wrote:
+> On Mon, Feb 8, 2021 at 9:52 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >> +pack-refs::
->> +	The `pack-refs` task collects the loose reference files and
->> +	collects them into a single file. This speeds up operations that
->> +	need to iterate across many refereences. See linkgit:git-pack-refs[1]
->> +	for more information.
->> +
+>> +       The `pack-refs` task collects the loose reference files and
+>> +       collects them into a single file. This speeds up operations that
+>> +       need to iterate across many refereences. See linkgit:git-pack-refs[1]
+>> +       for more information.
 > 
-> Do you think it's worth documenting here or in git-gc(1) that running
-> this has the effect of disabling the same step during gc?
-
-It doesn't disable the step during gc.
-
-Perhaps I should use a better term than "extract". The 'gc' task shouldn't
-change as we make some of its steps also available as independent tasks.
-
-Instead, users can select a subset of its steps by enabling them directly.
-Other such tasks could include:
-
- * prune-reflog
- * full-repack (as opposed to the existing incremental-repack task)
-
->> +struct maintenance_run_opts;
->> +static int maintenance_task_pack_refs(struct maintenance_run_opts *opts)
-> 
-> It may be worth calling this "unused", since you explicitly pass NULL
-> below.
-
-Good idea.
-
->> +	if (pack_refs && maintenance_task_pack_refs(NULL))
->> +		die(FAILED_RUN, "pack-refs");
-> 
-> Hmm. Am I missing where opting into the maintenance step disables this
-> in gc? You suggest that it does in the commit message, but I can't seem
-> to see it here.
-
-My commit message suggests wrong.
+> s/refereences/references/
  
->> +test_expect_success 'pack-refs task' '
->> +	for n in $(test_seq 1 5)
->> +	do
->> +		git branch -f to-pack/$n HEAD || return 1
->> +	done &&
->> +	git maintenance run --task=pack-refs &&
->> +	ls .git/refs/heads/ >after &&
->> +	test_must_be_empty after
-> 
-> Worth testing that $GIT_DIR/packed-refs exists, too?
-
-That would start breaking if we change the backing store, right? I
-want to be sure this doesn't create test breakages with reftable.
-
-I _could_ add a 'test_subcommand' check here, though.
-
-Thanks,
+Thanks!
 -Stolee
