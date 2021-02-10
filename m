@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 634D9C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CA5C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:42:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 231B464E40
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:42:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E2D864E40
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230231AbhBJLmb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 06:42:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33290 "EHLO
+        id S230296AbhBJLmh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 06:42:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbhBJLkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 06:40:14 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4406C06178A
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:38:09 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id g3so1063567plp.2
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:38:09 -0800 (PST)
+        with ESMTP id S230148AbhBJLkQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 06:40:16 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D2FC06178C
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:38:24 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id o7so1062237pgl.1
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vB/vp16qXROfq3bntBD1qroyPdmfkJY699iQWDu/g2A=;
-        b=nv0yY5YGf/W4WsNiIXvBqYXqUmUANOhXgVUHbRbZBa1toSF5f0keQlA/NywIiRoqpt
-         HHGBOj3ENPOdfUfqBqtxqm6d5wg5DLcGIf3I9XaX/CC47qsgj18R9gGNZV9ZgZQo/Z74
-         xmnK7VEuhCROo7xVxo6+bN2ji1MX7PjypeAiBUSBjNzBuU07tI3wbZ23NuUMBjRYwxbF
-         prF1NznZNXuetT798KE/xwbYTiJ9LUJeCgVQeuvFi9X/SU4PUW4K+PFXB8v8YsqmH6X1
-         +w9fM+yCxiqiy06dla6SCfKCYpfyleVMwaAjhkVp0vE2jQkwMog1MXEN7wso4kX8Gt0N
-         hlEw==
+        bh=zNL8g7U1+kOdX7W3rW7enYJEIT8uPDc4xfpItJ936bc=;
+        b=bb2iMXnCi17y2i+IKk7ptcusSZNgmJCeEqyEmfLXsOX2pk1vSkQpZt9Hd5l5HJ2D4K
+         VMmRAFSTETnP6YA3sqBsuMKNOFrdSpmDQfGf+14l2E4bKt6sDVSgNQeXpFuuuzY3IYM9
+         ery5p2w3ZNX1Q7bTqRBv4XNIUtGZRKKc/qmVO6oOhCQvnnhK/SDtnNBq33Si4+0WSkKb
+         1uXmnjol37v+KpiUD/j+Zg+yH0VsLK8P9LWrpPrIGchEnobJzVco0sOom45iQQjvI6XD
+         +E6grEx0mTGt9ZX1xvth/rIKRjqjOE0wVmQfTokYSL9wTKsSjmA25Ez1l4ZmgsZEIJv6
+         7ZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vB/vp16qXROfq3bntBD1qroyPdmfkJY699iQWDu/g2A=;
-        b=DCBZzmCUbfWcSO2cPFfNTZOyrjV+oMJlwI25OYtBWuhfFSOrXFM1/lbPOtGF7GtYn5
-         arb2KPDK0Rc4qEYYmKGFV+gSLu7ytrEzX/vqVSviFq2uj54ldxaSZC/xbmxfEp99xQ68
-         T5qqO36pxEHwqQPDMnnTo49JHkVPpzJ7qEpdR/I5QwuDL1KHYqWMiXDXYeuMiXy4f4xK
-         v5g2zFj6oWZuPqPnYexBOmxeLA553y4QKPbb6NqrNF+CuTimjdKVXk3f5UVR5k2gNdzv
-         luj83jvQFi0uoBkggMp16x7LB+fQrDYUXwjwh32zu4GSkEtyYcGf+FdE1GfgYJrqpVjf
-         HUTg==
-X-Gm-Message-State: AOAM530iFDTQy94Mt7MzkSZqmtWBbHpQrTlKpbVhUeNj5/3NAGi35Csj
-        5Z1SOGJQ/QtJCq8xcFPXIIxMKkv1F96lTg==
-X-Google-Smtp-Source: ABdhPJxFlPHsYHHzDJOnitHSnIRsPPRSfRSZ7jB/yJ7wRMsnw8cFSW6y6OZYYTFPx0byIOy8mR2RYw==
-X-Received: by 2002:a17:90a:4287:: with SMTP id p7mr2745751pjg.226.1612957089141;
-        Wed, 10 Feb 2021 03:38:09 -0800 (PST)
+        bh=zNL8g7U1+kOdX7W3rW7enYJEIT8uPDc4xfpItJ936bc=;
+        b=imHWu0YmdiikCaEndEaoqOFqgk1lkVtLtKYinozGEvzA0pdVYgiiDuKgPO16aP4XQ7
+         VyE06I7RiYXHKfQreRos254GgFrQGnhCdJir8hagsAcYEZct2tpTS2HPKNI8I9Z3SrVZ
+         I+uzVtNEM72fNa/P+RRjIXzX5fJOIYYrq6XUuAYGCIjU5RsWfMo9reQW7EzWUwyTo8bs
+         gcl+UKXpnCYpkkTVdJ5wr0V8I7CKL5mpWwgoDsAFaqDGldBoj+EYX8Aqdqc6ZzCuph0c
+         lZUY/4rD2W8PidjrcfpaY/i57hjAfIgRaC0PDGtP6qBndnzqZNBc1x7nQ5lKOpVR55zA
+         o/iw==
+X-Gm-Message-State: AOAM530O2zOBeDP6xkBhPk9FU7zM/39HAInaK7hysRA0+3fnu33c344c
+        IwDMuIsLZuok9EpA7aYdH4Yhj6nEIFcQbA==
+X-Google-Smtp-Source: ABdhPJwY8wbyoEDyvmLUWdg3LGa4jga10eZtUp11tdYoMoGX7vOU3TxmkQp/ozNdSnokGyeI34VTBQ==
+X-Received: by 2002:a62:b416:0:b029:1e4:fb5a:55bb with SMTP id h22-20020a62b4160000b02901e4fb5a55bbmr2836439pfn.80.1612957103688;
+        Wed, 10 Feb 2021 03:38:23 -0800 (PST)
 Received: from localhost.localdomain ([171.76.0.223])
-        by smtp.googlemail.com with ESMTPSA id y3sm2123731pfr.125.2021.02.10.03.37.59
+        by smtp.googlemail.com with ESMTPSA id y3sm2123731pfr.125.2021.02.10.03.38.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 03:38:08 -0800 (PST)
+        Wed, 10 Feb 2021 03:38:23 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sunshine@sunshineco.com,
@@ -63,9 +63,9 @@ Cc:     gitster@pobox.com, sunshine@sunshineco.com,
         Charvi Mendiratta <charvi077@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 03/11] rebase -i: clarify and fix 'fixup -c' rebase-todo help
-Date:   Wed, 10 Feb 2021 17:06:43 +0530
-Message-Id: <20210210113650.19715-4-charvi077@gmail.com>
+Subject: [PATCH v3 05/11] t/t3437: fixup here-docs in the 'setup' test
+Date:   Wed, 10 Feb 2021 17:06:45 +0530
+Message-Id: <20210210113650.19715-6-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210207181439.1178-1-charvi077@gmail.com>
 References: <20210207181439.1178-1-charvi077@gmail.com>
@@ -75,47 +75,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `-c` says "edit the commit message" it's not clear what will be
-edited. The original's commit message or the replacement's message or a
-combination of the two. Word it such that it states more precisely what
-exactly will be edited. While at it, also drop the jarring period and
-capitalization, neither of which is otherwise present in the message.
+The most common way to format here-docs in Git test scripts is for the
+body and EOF to be indented the same amount as the command which opened
+the here-doc. Fix a few here-docs in this script to conform to that
+standard and also remove the unnecessary curly braces.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- rebase-interactive.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ t/t3437-rebase-fixup-options.sh | 62 ++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/rebase-interactive.c b/rebase-interactive.c
-index c3bd02adee..b6cbd16a17 100644
---- a/rebase-interactive.c
-+++ b/rebase-interactive.c
-@@ -44,9 +44,10 @@ void append_todo_help(int command_count,
- "r, reword <commit> = use commit, but edit the commit message\n"
- "e, edit <commit> = use commit, but stop for amending\n"
- "s, squash <commit> = use commit, but meld into previous commit\n"
--"f, fixup [-C | -c] <commit> = like \"squash\", but discard this\n"
--"                   commit's log message. Use -C to replace with this\n"
--"                   commit message or -c to edit the commit message\n"
-+"f, fixup [-C | -c] <commit> = like \"squash\" but keep only the previous\n"
-+"                   commit's log message, unless -C is used, in which case\n"
-+"                   keep only this commit's message; -c is same as -C but\n"
-+"                   opens the editor\n"
- "x, exec <command> = run command (the rest of the line) using shell\n"
- "b, break = stop here (continue rebase later with 'git rebase --continue')\n"
- "d, drop <commit> = remove commit\n"
-@@ -55,7 +56,7 @@ void append_todo_help(int command_count,
- "m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]\n"
- ".       create a merge commit using the original merge commit's\n"
- ".       message (or the oneline, if no original merge commit was\n"
--".       specified). Use -c <commit> to reword the commit message.\n"
-+".       specified); use -c <commit> to reword the commit message\n"
- "\n"
- "These lines can be re-ordered; they are executed from top to bottom.\n");
- 	unsigned edit_todo = !(shortrevisions && shortonto);
+diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
+index 945df2555b..f599da3e08 100755
+--- a/t/t3437-rebase-fixup-options.sh
++++ b/t/t3437-rebase-fixup-options.sh
+@@ -38,13 +38,13 @@ get_author () {
+ 
+ test_expect_success 'setup' '
+ 	cat >message <<-EOF &&
+-		amend! B
+-		${EMPTY}
+-		new subject
+-		${EMPTY}
+-		new
+-		body
+-		EOF
++	amend! B
++	$EMPTY
++	new subject
++	$EMPTY
++	new
++	body
++	EOF
+ 
+ 	sed "1,2d" message >expected-message &&
+ 
+@@ -70,38 +70,38 @@ test_expect_success 'setup' '
+ 	git commit --fixup=HEAD -a &&
+ 	test_tick &&
+ 	git commit --allow-empty -F - <<-EOF &&
+-		amend! B
+-		${EMPTY}
+-		B
+-		${EMPTY}
+-		edited 1
+-		EOF
++	amend! B
++	$EMPTY
++	B
++	$EMPTY
++	edited 1
++	EOF
+ 	test_tick &&
+ 	git commit --allow-empty -F - <<-EOF &&
+-		amend! amend! B
+-		${EMPTY}
+-		B
+-		${EMPTY}
+-		edited 1
+-		${EMPTY}
+-		edited 2
+-		EOF
++	amend! amend! B
++	$EMPTY
++	B
++	$EMPTY
++	edited 1
++	$EMPTY
++	edited 2
++	EOF
+ 	echo B2 >B &&
+ 	test_tick &&
+ 	FAKE_COMMIT_AMEND="edited squash" git commit --squash=HEAD -a &&
+ 	echo B3 >B &&
+ 	test_tick &&
+ 	git commit -a -F - <<-EOF &&
+-		amend! amend! amend! B
+-		${EMPTY}
+-		B
+-		${EMPTY}
+-		edited 1
+-		${EMPTY}
+-		edited 2
+-		${EMPTY}
+-		edited 3
+-		EOF
++	amend! amend! amend! B
++	$EMPTY
++	B
++	$EMPTY
++	edited 1
++	$EMPTY
++	edited 2
++	$EMPTY
++	edited 3
++	EOF
+ 
+ 	GIT_AUTHOR_NAME="Rebase Author" &&
+ 	GIT_AUTHOR_EMAIL="rebase.author@example.com" &&
 -- 
 2.29.0.rc1
 
