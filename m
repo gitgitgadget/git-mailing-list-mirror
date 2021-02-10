@@ -2,131 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C28C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7833C433E6
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC9ED64E3B
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:28:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86E5964E3B
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbhBJM1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 07:27:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231511AbhBJMZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 07:25:27 -0500
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D651C061788
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 04:24:47 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id e9so132045qvy.3
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 04:24:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/wohsc9YI0V8+vjDqBZwujZcfakFmJjJTLvXKJyzMh4=;
-        b=BNflEkxNgy5Tkl3UoodISWCgERaXl8DnIgy1tDXE7CYE3D+1lgZJfzkivJF+V9y4LP
-         57pAqfNHLq5BWuN+e7r/XxmTwAPqLUZ2x33DdZ1ifKbdxwFlz8YEcnNQK++vBPU2G6hv
-         ZNH9Hqrvr8WIw1sHA5uH9eOyPFKQM1q8ZFGca3mIMQupOA46F4qDyRFgDtWpdk1NjWS8
-         QzuOZ+9Cqbe8uybpH+qwCyXV2uF0ReJ9RWwRLG67nsx2Hxb6tRbjY2ZCHvKbw0gZsKmh
-         b/ny5wrXHbz5pDkG2xEAdNTqeq7OoMPq5TS3g4QrhtkvXSaNtEKuOD5Y2ndc9XZWw0/5
-         C6Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/wohsc9YI0V8+vjDqBZwujZcfakFmJjJTLvXKJyzMh4=;
-        b=SE5dlqQSQxCXxabomczkBHoG8RXwvVHym+nXOno3NCgtx1+1lq82ip/Vx9FNhs/iz0
-         k6SidkK8TrupAl+SDzobn7cByKqTPZBjV6XjP6Gg5LCKObF3Gx7+PdFuz4ldQqyMv+A6
-         thbpqi9fdjds2chZJ6dzLFi9ux+k+qX51GbtVQE39euYsNMUH1MGqyScfLR9Vj51pXnk
-         DRJyCZE1oZ52MHiRlJkPcuDMN/ESNddC9KOaHEvOW0zIhIs9JAllsPhpLbkN/JSaAxdg
-         vmaQWZr2pt7tNRfYttMrYFT9Hl9vr2/raKuXDd/nv3tlabzSaTLvgMEyYrD9M8PQ8pe8
-         GHVA==
-X-Gm-Message-State: AOAM532ODeZMkJj2tPIMhjZdLD0p2AUB3VJosyWDTQ0NMWNi/h3nTVa8
-        pMImkIqhg3jf2b048rRtmteRzxqNF57FFA==
-X-Google-Smtp-Source: ABdhPJydr6sqXAgRo4sn9jtE0I6I00cIFnWvtSDOcHkGU3Vpk3s1ee9b4lYwx+WcFvfeSrp5ATQB3g==
-X-Received: by 2002:ad4:5a42:: with SMTP id ej2mr1166403qvb.60.1612959886133;
-        Wed, 10 Feb 2021 04:24:46 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:3593:b85d:ba2c:2d31? ([2600:1700:e72:80a0:3593:b85d:ba2c:2d31])
-        by smtp.gmail.com with UTF8SMTPSA id q8sm1341892qkm.38.2021.02.10.04.24.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Feb 2021 04:24:45 -0800 (PST)
-Message-ID: <962a2abc-6352-4d19-c39f-29f3c744f861@gmail.com>
-Date:   Wed, 10 Feb 2021 07:24:45 -0500
+        id S230465AbhBJMmL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 07:42:11 -0500
+Received: from mout.gmx.net ([212.227.15.18]:43141 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231933AbhBJMkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 07:40:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1612960702;
+        bh=OYIYEQo0HWo/F4Hx5hgjVkAuflQZw8x6lntNh0PwUl8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Qo8vf5G6HTNoGqBxPupG0ai3Ku5K0MMpb69q/iRWnOP68hO03vulHFCC49QF4FYA0
+         vaAeVtYP7cruFfNefRUBmxg0SzEIMVsUA5J8kdwlzgXwAeCkp0SatZ3+o+vPP+Bfmx
+         SeZzYypkhitLpuYWB7OcxiUX2UqVd6MC2EsHqkxc=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([213.196.212.209]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MybGh-1m7pKN0oXN-00yvQ7; Wed, 10
+ Feb 2021 13:38:22 +0100
+Date:   Wed, 10 Feb 2021 13:38:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Subject: Re: [PATCH 08/10] grep/pcre2: actually make pcre2 use custom
+ allocator
+In-Reply-To: <20210204210556.25242-9-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2102101338220.29765@tvgsbejvaqbjf.bet>
+References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com> <20210204210556.25242-9-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: BUG: commit-reach.c:66: bad generation skip
-Content-Language: en-US
-To:     Filippo Valsorda <valsorda@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-References: <CA+2K_KotVrV=rjE6fcd_FfxxS0sewkywvO0EMVZdoHbSiqJTQw@mail.gmail.com>
- <CA+2K_KqH=Gn=Yx-UYzMBO+gZje3G3PJ_3-5HeO81wyZKvVwOSA@mail.gmail.com>
- <c19b6e23-96cd-fd0a-163d-826b46b51da0@gmail.com>
- <CA+2K_KqEzH7XmrHXd0Vniu+tBQpFwFnYPyzoj-kMhyN2NnoZFQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CA+2K_KqEzH7XmrHXd0Vniu+tBQpFwFnYPyzoj-kMhyN2NnoZFQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-1170852189-1612960719=:29765"
+X-Provags-ID: V03:K1:IedHEhDDhHX3OIjS10DINxWco+DuO8SXeiKYQ0+g9U2E+yDxhj+
+ AahAhsUbKZprg6vny+zuEVtzWR7vLZtzxvcD0z/jITmcQGOxub8p1eWov0i9hKDxTUZmK5r
+ Z3H0TJPCxuveyp8SLeGm8paTbNRk1EAtQuhwa74wSIw7bUYJNl5XmV3Yw7a/fg0jMw/iCu+
+ L6kKw437FlxPhQ8Mvn/Bg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cG/XYslsMqU=:oPl4FxN/jXBfS0TnuRwAFs
+ aMWxydJRm+nKqoXdrGYYaL6NeLe+esKXBwLxslIKa1iff2QjwKWBaArPMZxgkam7D7lDRCvqS
+ LVeeqnZ0rTgU+Z289JSL4FgycbgON+id6Kf2Z2fTa8PlGvtAsK9Csn6BWPX+AAt5nFLG/rNvD
+ SHr9mpy7VmaqeA986LZAFyObtvgpPz96AkrS/yr0cvQgFuZeVz19AwbnG35MbRg7D/sNqzhhb
+ HK0n0XQ6kB3xah7lGCD8yNjDcUSvIK5env/Iuj+ysMONWI0xVihu42nc2O0EjQ9myYDFsmze9
+ Qm3aeObeMlo0izUQL77lpEX+wPSLXPD08tpgRJCC+AggK5PGsTqRchwupaFug1M413pne7vc4
+ JiODUf2yuTQXq0/bS16KhX3gdN0JjSLX+mKBGzeDVeQPLziAmco4s7XgKK/BWfVuefYzdXoWx
+ Dgchc21oflFGxfi1xQoSVylIvzH5v8SP7YRbISdPvp4hauAMqIFbDY33b5spWbBAAejL1jSq5
+ kBGzOOoqzVUMNI4jvJj1s+BSI0zC7pk8HLoIrlijgI9gUoutCH1Stw3GDj5mB6RExbClrlB0j
+ x+EtlyT6qIYNqoLKPU2bIkbLvbPzV/FCutjCxXDiQshFRPIxK5SRTKVGt09gLgG4prRfc/1Ff
+ U7LuQ2kyRf5TJdhbSl75rUaSgXsxAJl+HWIWCEksjzKynm35b4S/GGyu460s3zwaoicrtsG4w
+ xbQowI8TByAV6ehDht+yvjhI5EvtlxKu+ydQULc7vnHHkK0/YY1wLcSOnx1uFjRR9/z//3tq5
+ tx9Qzdx/zlkmE1EwtQL48MjDkOI16x5gbmjUZZJ5uHhjo5/MT1QwRz7Kl0zhpKqZbevZYaa5h
+ 5iX6VqGgMUETvjJ63jwXzGYhq5AMs9e9ASakO+DaI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/10/2021 7:18 AM, Filippo Valsorda wrote:
-> On Mon, Feb 8, 2021 at 3:26 AM Derrick Stolee <stolee@gmail.com> wrote:
->> _This_ is interesting. I haven't heard of this problem happening
->> in a released version of Git.
->>
->> I'm CC'ing Jonathan Nieder who recently saw this happening, but that
->> was on a newer version than 2.30.0 with a topic that is not part
->> of 2.30.0. But maybe the version shipped internally is versioned
->> without extra information on top of the latest tag? (I see your
->> @google.com email, which makes me think you have an internal version.)
-> 
-> Ah, the issue indeed first showed up as I was using the internal
-> version. I then installed mainline 2.30.0 to check that it reproduced
-> on the same local repository before reporting a bug.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The mainline does have the BUG() statement, but it's really reflecting
-bad data in the commit-graph file. That data was written by the internal
-version and was not reset until you rewrote the file.
+--8323328-1170852189-1612960719=:29765
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
->> To better understand your situation, could you please run the
->> following commands?
->>
->>         git config --get-regexp graph
->>         git config features.experimental
->>
->> I'm specifically looking for values of fetch.writeCommitGraph and
->> gc.writeCommitGraph.
-> 
-> fetch.writecommitgraph is enabled on the internal version.
-> 
-> $ git version
-> git version 2.30.0.478.g8a0d178c01-goog
-> $ git config --get-regexp graph
-> fetch.writecommitgraph true
-> $ git config features.experimental
-> $ ~/homebrew/bin/git version
-> git version 2.30.0
-> $ ~/homebrew/bin/git config --get-regexp graph
-> $ ~/homebrew/bin/git config features.experimental
-> 
-> I zipped up the repository and the worktree before running gc, so I can
-> run other commands for you if you need, but unfortunately I can't share
-> the archive, as it fetched from a private branch with security fixes.
+Hi =C3=86var,
 
-Thanks, but let me know if it reproduces again. The bug should be fixed
-in ds/commit-graph-genno-fix [1], and I think the Google internal release
-has been rolled back until that branch is included.
+ACK!
 
-[1] https://github.com/gitster/git/commits/ds/commit-graph-genno-fix
+And thank you for this patch,
+Dscho
 
-Thanks,
--Stolee
+On Thu, 4 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> Continue work started in 513f2b0bbd4 (grep: make PCRE2 aware of custom
+> allocator, 2019-10-16) and make PCREv2 use our pcre2_{malloc,free}().
+> functions for allocation. We'll now use it for all PCREv2 allocations.
+>
+> The reason 513f2b0bbd4 worked as a bugfix for the USE_NED_ALLOCATOR
+> issue is because it managed to target pretty much the allocation freed
+> via free(), as opposed to by a pcre2_*free() function. I.e. the
+> pcre2_maketables() and pcre2_maketables_free() pair. For most of the
+> rest we continued allocating with stock malloc() inside PCREv2 itself,
+> but didn't segfault because we'd use its corresponding free().
+>
+> In a preceding commit of mine I changed the free() to
+> pcre2_maketables_free() on versions of PCREv2 10.34 and newer. So as
+> far as fixing the segfault goes we could revert 513f2b0bbd4. But then
+> we wouldn't use the desired allocator, let's just use it instead.
+>
+> Before this patch we'd on e.g.:
+>
+>     grep --threads=3D1 -iP =C3=A6.*var.*xyz
+>
+> Only use pcre2_{malloc,free}() for 2 malloc() calls and 2
+> corresponding free() call. Now it's 12 calls to each. This can be
+> observed with the GREP_PCRE2_DEBUG_MALLOC debug mode.
+>
+> Reading the history of how this bug got introduced it wasn't present
+> in Johannes's original patch[1] to fix the issue.
+>
+> My reading of that thread is that the approach the follow-up patches
+> to Johannes's original pursued were based on misunderstanding of how
+> the PCREv2 API works. In particular this part of [2]:
+>
+>     "most of the time (like when using UTF-8) the chartable (and
+>     therefore the global context) is not needed (even when using
+>     alternate allocators)"
+>
+> That's simply not how PCREv2 memory allocation works. It's easy to see
+> how the misunderstanding came about. It's because (as noted above) the
+> issue was noticed because of our use of free() in our own grep.c for
+> freeing the memory allocated by pcre2_maketables().
+>
+> Thus the misunderstanding that PCREv2's compile context is something
+> only needed for pcre2_maketables(), and e.g. an aborted earlier
+> attempt[3] to only set it up when we ourselves called
+> pcre2_maketables().
+>
+> That's not what PCREv2's compile context is. To quote PCREv2's
+> documentation:
+>
+>     "This context just contains pointers to (and data for) external
+>     memory management functions that are called from several places in
+>     the PCRE2 library."
+>
+> Thus the failed attempts to go down the route of only creating the
+> general context in cases where we ourselves call pcre2_maketables(),
+> before finally settling on the approach 513f2b0bbd4 took of always
+> creating it.
+>
+> Instead we should always create it, and then pass the general context
+> to those functions that accept it, so that they'll consistently use
+> our preferred memory allocation functions.
+>
+> 1. https://public-inbox.org/git/3397e6797f872aedd18c6d795f4976e1c579514b=
+.1565005867.git.gitgitgadget@gmail.com/
+> 2. https://lore.kernel.org/git/CAPUEsphMh_ZqcH3M7PXC9jHTfEdQN3mhTAK2JDkd=
+vKBp53YBoA@mail.gmail.com/
+> 3. https://lore.kernel.org/git/20190806085014.47776-3-carenas@gmail.com/
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  grep.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index c63dbff4b2..0116ff5f09 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -390,7 +390,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>  			if (!pcre2_global_context)
+>  				BUG("pcre2_global_context uninitialized");
+>  			p->pcre2_tables =3D pcre2_maketables(pcre2_global_context);
+> -			p->pcre2_compile_context =3D pcre2_compile_context_create(NULL);
+> +			p->pcre2_compile_context =3D pcre2_compile_context_create(pcre2_glob=
+al_context);
+>  			pcre2_set_character_tables(p->pcre2_compile_context,
+>  							p->pcre2_tables);
+>  		}
+> @@ -411,7 +411,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
+, const struct grep_opt *opt
+>  					 p->pcre2_compile_context);
+>
+>  	if (p->pcre2_pattern) {
+> -		p->pcre2_match_data =3D pcre2_match_data_create_from_pattern(p->pcre2=
+_pattern, NULL);
+> +		p->pcre2_match_data =3D pcre2_match_data_create_from_pattern(p->pcre2=
+_pattern, pcre2_global_context);
+>  		if (!p->pcre2_match_data)
+>  			die("Couldn't allocate PCRE2 match data");
+>  	} else {
+> --
+> 2.30.0.284.gd98b1dd5eaa7
+>
+>
+
+--8323328-1170852189-1612960719=:29765--
