@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A613C433DB
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 18:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEE79C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 18:10:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A22164ED7
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 18:09:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F47364DE1
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 18:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233802AbhBJSJq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 13:09:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59228 "EHLO
+        id S233610AbhBJSJx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 13:09:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233760AbhBJSCi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 13:02:38 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBBD1C061793
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 10:01:35 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id u14so2597860wmq.4
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 10:01:35 -0800 (PST)
+        with ESMTP id S233765AbhBJSCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 13:02:44 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 038D9C061574
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 10:02:04 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id o24so2601773wmh.5
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 10:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8EPNwhCL+PbgQ7SvRHHk2O8mf+lDIOYt6IfBmTK04eM=;
-        b=nRT56fquyu1D1xsi1gaC/cyy79/o+CLnhzwlatbmE0QP7kCLU4luSh7SIp6lD8zwXW
-         xRy0K/JJh54hL56iiJBOsN8jmgQQ2aNtfyaoWZEbViY0fwfwlFvGNbbt8rPkPjJChQLo
-         SG66TtW/76xU7gyUHCgQQ2Z859TYrl9nKNHr/E6IEPC9wv0duYdbnrUjCKRrdhCwZLLk
-         WEVV/icgs4ksQr8y3aip4jPCzC65SQ85h74BFep9Y4R8Y1UNnneVki64R1DzjYkWEGds
-         QsapuqjXlK2OYFq1Vq8WKUHiRplZN8ykatJhaDGnn9wq4SPgElpmt7LKguUWTtdss7ph
-         tINQ==
+        bh=o+viT2o/wr/aBDIuNzvf/3eXrCEmSYRPxd+z/Cg9JAg=;
+        b=g7AF5eDdDtZIQKmZPE4lHo7dyrWKp09KKLQQ7nL0A/plpMpO75TaM4GtlHPnRvC4+K
+         +HtC0AYJTz5ikBKrwVS3H33GzUw0+vide7qJmWdc0Gv7m6jdmPxquW/BARoH3r4asRWz
+         zVfSgrjfNdwIYduQo/wglFwRpkM2YlMwD3HUZni0SmX4BeD7czRLPXYbeY97aBw7WnkP
+         kkSlAnJfuW/3jx3B2SJbSEj04jG3giQa16wIIq4C4RzyqAng+LjumupYzX1/1EAAtWMW
+         koTqWO4oJShCtHdEkZnrbAte1X+1Vi36vwrKd1f9nW+LZjIGF2ZAVZqXCfGjnY0qE90h
+         4OJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8EPNwhCL+PbgQ7SvRHHk2O8mf+lDIOYt6IfBmTK04eM=;
-        b=VMj6ChyFqVdcU+TwF6vaEFkOcvArDuJRX/z9u4vKINRIvC/STN4gsAihYNoSmqavRn
-         SD9+qrypEEMIQfaSsps1WIEyZjSaem8SiWRfq5SEMdGrXnzg+kmh3B3hf+4C2wWVz8dd
-         C3R/bpBhIRZIRcEuK/zE7fJw40WeFPZeYgSyHOe99Wpuhng7UcQLzPgnQdUSzS2J2WuR
-         jw03O2xiZXf4Vv6GzaGMsemtn6uS0TG+s/OwmXVfmOFWEHEAT7m9NR95THNzffhMdtI0
-         ZRnXFWRFbL0GrAjsy7gUe88SyQbnpFlhqksm9rAcTYMHpLiUSQLsvvTM6QLd4F5ktfVt
-         aS7A==
-X-Gm-Message-State: AOAM531M2Lpe3s79N/87hj2BoVPpSB3C8ukh2qUuuLaIihPJgkCETBwT
-        L2/uEKB7F13oiSa9UyKbG5C72ta1+q0=
-X-Google-Smtp-Source: ABdhPJwgmYKKMQP68RNGRKallg3wCbG+x0wwQSMgIUaWdFoFcoDYUvEl8bUiJrU2zoCz9JbchXg9iQ==
-X-Received: by 2002:a7b:c852:: with SMTP id c18mr97195wml.118.1612980094607;
-        Wed, 10 Feb 2021 10:01:34 -0800 (PST)
+        bh=o+viT2o/wr/aBDIuNzvf/3eXrCEmSYRPxd+z/Cg9JAg=;
+        b=ikzP+SbwvPQznzhYLvyPs1GTpDpPfHAS/lZSESda988XNG0ydim6/BQISwECszg4FB
+         Dj+bx0LMZRR+mX2k5+uProaKAxOD+41PMDV1nOVokbVPyz2ehFRUQxl44fSPLkQCCtxF
+         NAZx4p9rAa6FBklZEVWjnNmOrr1zrtZih5r+TU0bnvWLOk3m4bo6AkIF3ByyntusmG/v
+         xFBxOe99FKG6ATq1AZTo/PHuMP4uvC9Edj4wH0458vLzoqb7Nfuwut2XlLFgiaOIQrxF
+         2kUyIdJrwwLcswgtDbZCv7KyZOhUCqJjyHHFNjmk1YV+R34lsSg4mVQ040Wx7UKhBFO6
+         mbaQ==
+X-Gm-Message-State: AOAM533AQUml7Dxgyh2L+1Pg+9JyG2CLKRqQiZPOevgMYGV5zTpfE2A3
+        SOLu/V14Q8j9jCbP9gz6QhI1nXj2Yc8=
+X-Google-Smtp-Source: ABdhPJx+fJVUfBAQvm3t3KPs9Qk6ekuxwh6e2wxbnaHJ0tMIjaAeBDfcNDC2yt1QYbeSeyZ+/M0Tgg==
+X-Received: by 2002:a1c:608b:: with SMTP id u133mr63703wmb.149.1612980096040;
+        Wed, 10 Feb 2021 10:01:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j71sm3315847wmj.31.2021.02.10.10.01.33
+        by smtp.gmail.com with ESMTPSA id o13sm3291077wmh.2.2021.02.10.10.01.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 10:01:33 -0800 (PST)
-Message-Id: <24d43d121162a9052f31c760a5fc929fdaad76b5.1612980090.git.gitgitgadget@gmail.com>
+        Wed, 10 Feb 2021 10:01:35 -0800 (PST)
+Message-Id: <03efb76b31e46ffe340fe0c6ab5fc4d804b2c273.1612980090.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.874.git.1612980090.gitgitgadget@gmail.com>
 References: <pull.874.git.1612980090.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Feb 2021 18:01:29 +0000
-Subject: [PATCH 1/2] t1450: robustify `remove_object()`
+Date:   Wed, 10 Feb 2021 18:01:30 +0000
+Subject: [PATCH 2/2] fsck --name-objects: be more careful parsing generation
+ numbers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,46 +76,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This function can be simplified by using the `test_oid_to_path()`
-helper, which incidentally also makes it more robust by not relying on
-the exact file system layout of the loose object files.
+In 7b35efd734e (fsck_walk(): optionally name objects on the go,
+2016-07-17), the `fsck` machinery learned to optionally name the
+objects, so that it is easier to see what part of the repository is in a
+bad shape, say, when objects are missing.
 
-While at it, do not define those functions in a test case, it buys us
-nothing.
+To save on complexity, this machinery uses a parser to determine the
+name of a parent given a commit's name: any `~<n>` suffix is parsed and
+the parent's name is formed from the prefix together with `~<n+1>`.
+
+However, this parser has a bug: if it finds a suffix `<n>` that is _not_
+`~<n>`, it will mistake the empty string for the prefix and `<n>` for
+the generation number. In other words, it will generate a name of the
+form `~<bogus-number>`.
+
+Let's fix this.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1450-fsck.sh | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ fsck.c          |  5 +++++
+ t/t1450-fsck.sh | 10 ++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
+diff --git a/fsck.c b/fsck.c
+index 73f30773f28a..83d727c6fe33 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -461,6 +461,11 @@ static int fsck_walk_commit(struct commit *commit, void *data, struct fsck_optio
+ 				generation += power * (name[--len] - '0');
+ 			if (power > 1 && len && name[len - 1] == '~')
+ 				name_prefix_len = len - 1;
++			else {
++				/* Maybe a non-first parent, e.g. HEAD^2 */
++				generation = 0;
++				name_prefix_len = len;
++			}
+ 		}
+ 	}
+ 
 diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 02478bc4ece2..779f700ac4a0 100755
+index 779f700ac4a0..bfa3588f37ab 100755
 --- a/t/t1450-fsck.sh
 +++ b/t/t1450-fsck.sh
-@@ -41,17 +41,13 @@ test_expect_success 'HEAD is part of refs, valid objects appear valid' '
- # specific corruption you test afterwards, lest a later test trip over
- # it.
+@@ -607,13 +607,15 @@ test_expect_success 'fsck --name-objects' '
+ 	git init name-objects &&
+ 	(
+ 		cd name-objects &&
++		git config core.logAllRefUpdates false &&
+ 		test_commit julius caesar.t &&
+-		test_commit augustus &&
+-		test_commit caesar &&
++		test_commit augustus44 &&
++		test_commit caesar  &&
+ 		remove_object $(git rev-parse julius:caesar.t) &&
+-		test_must_fail git fsck --name-objects >out &&
+ 		tree=$(git rev-parse --verify julius:) &&
+-		test_i18ngrep "$tree (refs/tags/julius:" out
++		git tag -d julius &&
++		test_must_fail git fsck --name-objects >out &&
++		test_i18ngrep "$tree (refs/tags/augustus44\\^:" out
+ 	)
+ '
  
--test_expect_success 'setup: helpers for corruption tests' '
--	sha1_file() {
--		remainder=${1#??} &&
--		firsttwo=${1%$remainder} &&
--		echo ".git/objects/$firsttwo/$remainder"
--	} &&
-+sha1_file () {
-+	git rev-parse --git-path objects/$(test_oid_to_path "$1")
-+}
- 
--	remove_object() {
--		rm "$(sha1_file "$1")"
--	}
--'
-+remove_object() {
-+	rm "$(sha1_file "$1")"
-+}
- 
- test_expect_success 'object with bad sha1' '
- 	sha=$(echo blob | git hash-object -w --stdin) &&
 -- 
 gitgitgadget
-
