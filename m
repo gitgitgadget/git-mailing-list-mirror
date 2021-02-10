@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A65C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F26C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:04:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 092C564EBB
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:04:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76C3E60238
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233557AbhBJXD4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 18:03:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39476 "EHLO
+        id S233646AbhBJXEZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 18:04:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233460AbhBJXDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 18:03:49 -0500
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48820C06174A
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:03:09 -0800 (PST)
-Received: by mail-qv1-xf35.google.com with SMTP id j13so1731554qvu.10
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:03:09 -0800 (PST)
+        with ESMTP id S233554AbhBJXDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 18:03:55 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24EEAC061756
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:03:15 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id w20so2907283qta.0
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:03:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=fDWzLTb3RLMRw0XvYnJ4/fOhMe4rEETEFQoOAZPN1lw=;
-        b=XahASoggBSjS7blYdBUr0FgQrya0r9NHPMqBkNiAABHgd0Hf6hLkAtGgN20jHnIP5A
-         K+jzfmBTko3i/Q40mWspM13gZvSTQF6XAtfcMWcTPmNAtnRrsZaGnAC59hF8yWbfids0
-         5JSoaJTEh0bkDs3rZh1o8JXZx62LR8iV0yf3EryOD6f2TxDcJEis7LfxVARdHGR5QLfC
-         lDH91+m4Ez3hdh9T8Ltgf99lKGaf8yY+vThHSyWeuYsGd0U267vm7gVaFx2NCwnw4Nx4
-         L3ppczk0ZhevY1Swsk9XhXAtf5HPto5SiO76lPLL59dQKNc/pgKhApEF85vcgPoyzbqN
-         j40A==
+        bh=GO+/MaJhqNMc6Vq2gvQI6+qn9o0YJhq46OdH2wbWPzM=;
+        b=IVGJh102SXWA3RpaD5ondhVo0/l6LgSPtTu9uLCB9byWukcTu4B+C9En178oSkXV11
+         td+e8ogo6EuTLGF7Q5GO/9sVwXV7BHv04tTm0J1/yGqZ+HGpVgQWUfvNkaPEDKWp+nq/
+         AGroSaMFh1UHY0hGRlPX8tDLk5TtMHUxNo34/AdMNJyqf1/eSQjaY2QseMzTNgoxooo5
+         ZGP7ts2lSNOjpjGDde2D4jQ0k2GcrzzcvZ8s8ae1KPzeh31non0CXAZkBYl3z4+nYJiH
+         PO5qE0N/xaOsB4PkJiOPZVbJkKPH3K59s6pnPtIMdupuSZLsHekDBxMw1KJFOSrOHbEw
+         iG+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=fDWzLTb3RLMRw0XvYnJ4/fOhMe4rEETEFQoOAZPN1lw=;
-        b=RKCup4sdhtf4nSMEZFaxXcGoH4ca4PRJYaSe9KKqBQTTo3QR+m38WsAM5rqy4RdMBr
-         G+/MikxyKxoAXrL8CO75JbJT8lmqpbYDvN/IRXiSuGzzaWg0GJjBxZpNJ0+sBPbzHaMD
-         GDHOeaj0hbqLH5EYb4+V3KahL1aK9p8bqmFHqe6fJw7x7Sww+KRKbvRCZMHCbbYuGLps
-         lYrzbWh81+xDtLvt+RsO/xWC5hJpNerPImzg/TzE9peWOzZc/krrk9BSvy6jbG92gabI
-         6vMjkBZVqPo0l17TOWSjHWv519+kgdvi5w8P5bZQR4+noovvjqQsS9disg7jHoi1JjrW
-         mtBw==
-X-Gm-Message-State: AOAM533ZRhyaVlf8/gTJ6j1zs6YeA6hYeiOtAZdJYxL4E4CQxrLnYvm3
-        EiDh5ogxQ2KaTg061CMD4sQkOrgLZ7W+nN1z
-X-Google-Smtp-Source: ABdhPJzmyyKH5TbJ1LTK+CixfKFVQ1ktC9YSgyrf8hdRJJGeMyRAbH/QuvP8SP4V2LZYlwRUgiVwUQ==
-X-Received: by 2002:a0c:f0d2:: with SMTP id d18mr898746qvl.58.1612998188245;
-        Wed, 10 Feb 2021 15:03:08 -0800 (PST)
+        bh=GO+/MaJhqNMc6Vq2gvQI6+qn9o0YJhq46OdH2wbWPzM=;
+        b=hvJ5AfcOhg/g/eTCcdN9g6DtyRruc1PVreX6xvDC8d+rykugykbTj/sM+kvkX1BX4H
+         ifYg9XZPilRB0j002D4SwK5b0nU0PwTdKl3ZP2xpnDWSF05Kjtdt2NnDi0x869JJxsrb
+         g/Rpx00anYHcMNy6g2oVUszJW6oSIlUl8XlWPvNcxM8WBGCruFvqCgyyOW+JfmVmpgyg
+         oN01nKss88KMAplOatQdfHA3I5cZikOqHtUehO6QOUszufFG95gerMjWsG+lpba62Lga
+         k8OhrlJP+aRYqOpgXjZJFgN1Ihbq7Ba6OoY3xvvpFaMIKIW16mdMUql+2nem8+D7rq3J
+         abIw==
+X-Gm-Message-State: AOAM532ypvgDF7kAfRd5DqeMgb969zkW+3qtBDVhwFuSGD4wm90hJpjJ
+        V/IgklOsJsGKbFNtfXMCOBE6d6DwL2g1ijhY
+X-Google-Smtp-Source: ABdhPJzsChOtVD1iyjmHdD3+9xK+JgKGKPhS5tmrwvPtrVOZtF1x9Kh5Qz89f80BYrUcTe8iFL4Jpg==
+X-Received: by 2002:a05:622a:42:: with SMTP id y2mr4909937qtw.186.1612998194025;
+        Wed, 10 Feb 2021 15:03:14 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:2c3d:3179:bfad:c65])
-        by smtp.gmail.com with ESMTPSA id x79sm2542327qka.75.2021.02.10.15.03.07
+        by smtp.gmail.com with ESMTPSA id w38sm2308855qth.79.2021.02.10.15.03.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 15:03:07 -0800 (PST)
-Date:   Wed, 10 Feb 2021 18:03:05 -0500
+        Wed, 10 Feb 2021 15:03:13 -0800 (PST)
+Date:   Wed, 10 Feb 2021 18:03:11 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 5/9] midx: make some functions non-static
-Message-ID: <953beabaa493eb0869b0b1f1f24c05067e333f8d.1612998106.git.me@ttaylorr.com>
+Subject: [PATCH 6/9] Documentation/technical: describe multi-pack reverse
+ indexes
+Message-ID: <e64504bad6e181522946a8f234e12f569bede89e.1612998106.git.me@ttaylorr.com>
 References: <cover.1612998106.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,61 +71,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a subsequent commit, pack-revindex.c will become responsible for
-sorting a list of objects in the "MIDX pack order" (which will be
-defined in the following patch). To do so, it will need to be know the
-pack identifier and offset within that pack for each object in the MIDX.
+As a prerequisite to implementing multi-pack bitmaps, motivate and
+describe the format and ordering of the multi-pack reverse index.
 
-The MIDX code already has functions for doing just that
-(nth_midxed_offset() and nth_midxed_pack_int_id()), but they are
-statically declared.
+The subsequent patch will implement reading this format, and the patch
+after that will implement writing it while producing a multi-pack index.
 
-Since there is no reason that they couldn't be exposed publicly, and
-because they are already doing exactly what the caller in
-pack-revindex.c will want, expose them publicly so that they can be
-reused there.
-
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 4 ++--
- midx.h | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ Documentation/technical/pack-format.txt | 83 +++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
-diff --git a/midx.c b/midx.c
-index 6e47c726af..bf258c4fde 100644
---- a/midx.c
-+++ b/midx.c
-@@ -260,7 +260,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 	return oid;
- }
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 8833b71c8b..a14722f119 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -376,3 +376,86 @@ CHUNK DATA:
+ TRAILER:
  
--static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
-+off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
- {
- 	const unsigned char *offset_data;
- 	uint32_t offset32;
-@@ -279,7 +279,7 @@ static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
- 	return offset32;
- }
- 
--static uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
-+uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos)
- {
- 	return get_be32(m->chunk_object_offsets + pos * MIDX_CHUNK_OFFSET_WIDTH);
- }
-diff --git a/midx.h b/midx.h
-index e7fea61109..93bd68189e 100644
---- a/midx.h
-+++ b/midx.h
-@@ -40,6 +40,8 @@ struct multi_pack_index {
- struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local);
- int prepare_midx_pack(struct repository *r, struct multi_pack_index *m, uint32_t pack_int_id);
- int bsearch_midx(const struct object_id *oid, struct multi_pack_index *m, uint32_t *result);
-+off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos);
-+uint32_t nth_midxed_pack_int_id(struct multi_pack_index *m, uint32_t pos);
- struct object_id *nth_midxed_object_oid(struct object_id *oid,
- 					struct multi_pack_index *m,
- 					uint32_t n);
+ 	Index checksum of the above contents.
++
++== multi-pack-index reverse indexes
++
++Similar to the pack-based reverse index, the multi-pack index can also
++be used to generate a reverse index.
++
++Instead of mapping between offset, pack-, and index position, this
++reverse index maps between an object's position within the midx, and
++that object's position within a pseudo-pack that the midx describes.
++Crucially, the objects' positions within this pseudo-pack are the same
++as their bit positions in a multi-pack reachability bitmap.
++
++As a motivating example, consider the multi-pack reachability bitmap
++(which does not yet exist, but is what we are building towards here). We
++need each bit to correspond to an object covered by the midx, and we
++need to be able to convert bit positions back to index positions (from
++which we can get the oid, etc).
++
++One solution is to let each bit position in the index correspond to
++the same position in the oid-sorted index stored by the midx. But
++because oids are effectively random, there resulting reachability
++bitmaps would have no locality, and thus compress poorly. (This is the
++reason that single-pack bitmaps use the pack ordering, and not the .idx
++ordering, for the same purpose.)
++
++So we'd like to define an ordering for the whole midx based around
++pack ordering. We can think of it as a pseudo-pack created by the
++concatenation of all of the packs in the midx. E.g., if we had a midx
++with three packs (a, b, c), with 10, 15, and 20 objects respectively, we
++can imagine an ordering of the objects like:
++
++    |a,0|a,1|...|a,9|b,0|b,1|...|b,14|c,0|c,1|...|c,19|
++
++where the ordering of the packs is defined by the midx's pack list,
++and then the ordering of objects within each pack is the same as the
++order in the actual packfile.
++
++Given the list of packs and their counts of objects, you can
++na&iuml;vely reconstruct that pseudo-pack ordering (e.g., the object at
++position 27 must be (c,1) because packs "a" and "b" consumed 25 of the
++slots). But there's a catch. Objects may be duplicated between packs, in
++which case the midx only stores one pointer to the object (and thus we'd
++want only one slot in the bitmap).
++
++Callers could handle duplicates themselves by reading objects in order
++of their bit-position, but that's linear in the number of objects, and
++much too expensive for ordinary bitmap lookups. Building a reverse index
++solves this, since it is the logical inverse of the index, and that
++index has already removed duplicates. But, building a reverse index on
++the fly can be expensive. Since we already have an on-disk format for
++pack-based reverse indexes, let's reuse it for the midx's pseudo-pack,
++too.
++
++Objects from the midx are ordered as follows to string together the
++pseudo-pack. Let _pack(o)_ return the pack from which _o_ was selected
++by the midx, and define an ordering of packs based on their numeric ID
++(as stored by the midx). Let _offset(o)_ return the object offset of _o_
++within _pack(o)_. Then, compare _o~1~_ and _o~2~_ as follows:
++
++  - If one of _pack(o~1~)_ and _pack(o~2~)_ is preferred and the other
++    is not, then the preferred one sorts first.
+++
++(This is a detail that allows the midx bitmap to determine which
++pack should be used by the pack-reuse mechanism, since it can ask
++the midx for the pack containing the object at bit position 0).
++
++  - If _pack(o~1~) &ne; pack(o~2~)_, then sort the two objects in
++    descending order based on the pack ID.
++
++  - Otherwise, _pack(o~1~) &equals; pack(o~2~)_, and the objects are
++    sorted in pack-order (i.e., _o~1~_ sorts ahead of _o~2~_ exactly
++    when _offset(o~1~) &lt; offset(o~2~)_).
++
++In short, a midx's pseudo-pack is the de-duplicated concatenation of
++objects in packs stored by the midx, laid out in pack order, and the
++packs arranged in midx order (with the preferred pack coming first).
++
++Finally, note that the midx's reverse index is not stored as a chunk in
++the multi-pack-index itself. This is done because the reverse index
++includes the checksum of the pack or midx to which it belongs, which
++makes it impossible to write in the midx. To avoid races when rewriting
++the midx, a midx reverse index includes the midx's checksum in its
++filename (e.g., `multi-pack-index-xyz.rev`).
 -- 
 2.30.0.667.g81c0cbc6fd
 
