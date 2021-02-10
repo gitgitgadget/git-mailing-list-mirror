@@ -2,100 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B88AC433DB
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16CC2C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:21:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 274C264DF5
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 11:45:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE1A064E08
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229806AbhBJLpN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 06:45:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33872 "EHLO
+        id S231518AbhBJMVb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 07:21:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229600AbhBJLmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 06:42:54 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3F3C061356
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:39:00 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id d2so981836pjs.4
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 03:39:00 -0800 (PST)
+        with ESMTP id S229806AbhBJMTU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 07:19:20 -0500
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36D0CC061756
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 04:18:38 -0800 (PST)
+Received: by mail-il1-x136.google.com with SMTP id w1so432603ilm.12
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 04:18:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cPF7JN9EXFHoXUAgjyQ8SEXELSTyAI2x2DbPyESxQcM=;
-        b=qw450KQ3hI7E+Ys/UgyE8FphbWIQEyOyQ9iD/b4Ptr3i0Yl89vSVGkndFSl7R8RI6f
-         snwkiAxd0In2M8YugMYZrL33sbHCTF1827xyilKIG08oZVV7pv43cTSJkU7OSLx2hUQ/
-         2mmeoOmr98/8l8/CPGytmb+XExRkaetgN89D14AHoBMuABprnsHZRjtgJMyN8L/SiKJB
-         6VlLCqFra9heDf6+Vw+ZwrXToLpNFcvdE3uV6BmHkH3e6zFjbNMtvzY23iHMGH7lUfGE
-         q1ry0W3GenBRWo7cYRMUmSE0/UMms1jY9B6+AMKNSpWuDV3QRLmI09uTtLXbqxzClKqe
-         JQKg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0hGVc71eIIzP+Um1HrQ/EPkdZS3wemsHVZ5Wm+iz/Ls=;
+        b=sISibyBGEATTufyPyZJi/nKyc21w4Pi9HqniKEkcB4bkxIMSj2OKS1/UpTO4FS55Gp
+         A3SexFZBVs4luq2GAtiMxWHHJ+Pjla+s4HUzQT4Cy+R0/W6AGqiC6G340hu6mLPbv7Sn
+         acMMvCuxKtfO+KOtlZRI5VpXsTF1k2XrBry4A7+/i9vt1XKbV9bbSp3CQ7KFlsmGc6ap
+         zbx/LfQHv07nbh88oC2QthhdKcLoUK8bfPO5XRCoOI7h4K9BDqz6P987kVQG6p4/xFO+
+         as9co1AFza+F9pELTZtz0/upanRHUlDXXkDe2mIcn6DGPyf6q1u2GPMm6t+q+Xvzthui
+         JRmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cPF7JN9EXFHoXUAgjyQ8SEXELSTyAI2x2DbPyESxQcM=;
-        b=tjLeNFIvX5WC4pGwj2ZFZcZyuotC1tBbfGXkds333ynskhL/nyO83Q2/r9PyU0aJzo
-         tm4UU7zenzOvE80/HdcYrNaorNwVkNhG9HEHz5D4xmH3IAECPJw28LIsUIssKhrIA6U+
-         mMs4K7LCzV6yjAzByBQB0Fsq0/DOMncLaQqhOz30BE8+BOyy0ViHsW8M4pLnik9qz4V/
-         yCclbVbe6+c9Y7UJ66V6bCL82GjM2HgdvnobLjNYBisQilqFT2I97swt2E6a+B99cDRZ
-         CTBgG8q+yd21XuG4Oe8TBWdJZzhL+Gf1rauUwb2kPykxh6FIAxgtjl65PZpIP8s/0FMu
-         zywg==
-X-Gm-Message-State: AOAM533y4HDmm/t026E/m26rjDf74GG4c5FrX5KhyD7RqS9/HglufAzZ
-        Wg+ah+oPKoEGrzGyKnhQ8B4RlkHGyxPYZA==
-X-Google-Smtp-Source: ABdhPJzKBz0Us0S2yp3CmY4AM7EHkKxCz6TsT5BW7+sQHy0uX7UckZY4NLyZ2SI2nlwmwoFe/kXkEQ==
-X-Received: by 2002:a17:90b:33ca:: with SMTP id lk10mr2714379pjb.186.1612957140106;
-        Wed, 10 Feb 2021 03:39:00 -0800 (PST)
-Received: from localhost.localdomain ([171.76.0.223])
-        by smtp.googlemail.com with ESMTPSA id y3sm2123731pfr.125.2021.02.10.03.38.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 03:38:59 -0800 (PST)
-From:   Charvi Mendiratta <charvi077@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sunshine@sunshineco.com,
-        christian.couder@gmail.com, phillip.wood123@gmail.com,
-        Charvi Mendiratta <charvi077@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 11/11] doc/rebase -i: fix typo in the documentation of 'fixup' command
-Date:   Wed, 10 Feb 2021 17:06:51 +0530
-Message-Id: <20210210113650.19715-12-charvi077@gmail.com>
-X-Mailer: git-send-email 2.29.0.rc1
-In-Reply-To: <20210207181439.1178-1-charvi077@gmail.com>
-References: <20210207181439.1178-1-charvi077@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0hGVc71eIIzP+Um1HrQ/EPkdZS3wemsHVZ5Wm+iz/Ls=;
+        b=Y62QIriy2iTSKJq2q/yJXXzxjTCcRRrsa6U+Esta71QOphVPICf0fDJlMqlHLNHok3
+         JDGKy3plJAmk87vK5/bUaaVAxL+aOMws+eT8q7J+G4JL8LrWJ0oyYNXiAiOzVQudJgma
+         1SxZImqbdRWzRE8R9SlxihZgQFuPdEyVI0DOLuONIaNrsfZwD0CHkCTZd8nB8hteMtPN
+         cpItnvbfUxcxMXfpGUSxGJfENSiWr+xNz0Q0m7Rl3M5aAoSW7KnF8KeGR0HrJ+FdmLQS
+         9i9c3N2TBHkWMsibJFKYiA+ga20fuvyCW1ibwKkxnSB6p0bKHCuehvBvG4Ty2sdXiJMO
+         cu5w==
+X-Gm-Message-State: AOAM5301ICz/hDiaAso3mTfDa1osN5YDKSLoI16u/ydfGbVSiD4yqtVI
+        WEAA4szYuyDwW+lSen//xqY0C6nbhJ+/dmiWfbGtvD6WdeXJrA==
+X-Google-Smtp-Source: ABdhPJwsUbHuWqN73RSbh3oZ8/VwPdAjMK0xVPzmEDpJLWJQ/g9AqzLP2f8ME7Z8Jwu3FjFedTeRbCEzVZNjMOudfYo=
+X-Received: by 2002:a92:c24b:: with SMTP id k11mr796502ilo.276.1612959517388;
+ Wed, 10 Feb 2021 04:18:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CA+2K_KotVrV=rjE6fcd_FfxxS0sewkywvO0EMVZdoHbSiqJTQw@mail.gmail.com>
+ <CA+2K_KqH=Gn=Yx-UYzMBO+gZje3G3PJ_3-5HeO81wyZKvVwOSA@mail.gmail.com> <c19b6e23-96cd-fd0a-163d-826b46b51da0@gmail.com>
+In-Reply-To: <c19b6e23-96cd-fd0a-163d-826b46b51da0@gmail.com>
+From:   Filippo Valsorda <valsorda@google.com>
+Date:   Wed, 10 Feb 2021 13:18:11 +0100
+Message-ID: <CA+2K_KqEzH7XmrHXd0Vniu+tBQpFwFnYPyzoj-kMhyN2NnoZFQ@mail.gmail.com>
+Subject: Re: BUG: commit-reach.c:66: bad generation skip
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
----
- Documentation/git-rebase.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, Feb 8, 2021 at 3:26 AM Derrick Stolee <stolee@gmail.com> wrote:
+> _This_ is interesting. I haven't heard of this problem happening
+> in a released version of Git.
+>
+> I'm CC'ing Jonathan Nieder who recently saw this happening, but that
+> was on a newer version than 2.30.0 with a topic that is not part
+> of 2.30.0. But maybe the version shipped internally is versioned
+> without extra information on top of the latest tag? (I see your
+> @google.com email, which makes me think you have an internal version.)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index a6903419c4..8bfa5a9272 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -894,7 +894,7 @@ is used.  In that case the suggested commit message is only the message
- of the "fixup -c" commit, and an editor is opened allowing you to edit
- the message.  The contents (patch) of the "fixup -c" commit are still
- incorporated into the folded commit. If there is more than one "fixup -c"
--commit, the message from the last last one is used.  You can also use
-+commit, the message from the final one is used.  You can also use
- "fixup -C" to get the same behavior as "fixup -c" except without opening
- an editor.
- 
--- 
-2.29.0.rc1
+Ah, the issue indeed first showed up as I was using the internal
+version. I then installed mainline 2.30.0 to check that it reproduced
+on the same local repository before reporting a bug.
 
+> To better understand your situation, could you please run the
+> following commands?
+>
+>         git config --get-regexp graph
+>         git config features.experimental
+>
+> I'm specifically looking for values of fetch.writeCommitGraph and
+> gc.writeCommitGraph.
+
+fetch.writecommitgraph is enabled on the internal version.
+
+$ git version
+git version 2.30.0.478.g8a0d178c01-goog
+$ git config --get-regexp graph
+fetch.writecommitgraph true
+$ git config features.experimental
+$ ~/homebrew/bin/git version
+git version 2.30.0
+$ ~/homebrew/bin/git config --get-regexp graph
+$ ~/homebrew/bin/git config features.experimental
+
+I zipped up the repository and the worktree before running gc, so I can
+run other commands for you if you need, but unfortunately I can't share
+the archive, as it fetched from a private branch with security fixes.
