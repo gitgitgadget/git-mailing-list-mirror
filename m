@@ -2,87 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E51CDC433DB
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 21:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A08EC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 21:44:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1B3B64E66
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 21:34:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EAC464EE1
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 21:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232164AbhBJVe4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 16:34:56 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62265 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232097AbhBJVez (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 16:34:55 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 503C71066C7;
-        Wed, 10 Feb 2021 16:34:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TmAfZA12hNiM
-        cq9B29a5greW0Y8=; b=MEvwoz4E/92ZOALJj4I3t+8f7YqzpgUWlsYAjBANu7te
-        lTJFOcccFDVc7AopBiKhlVWaSuU46jiAIxBHFqW3RBqv1jn7W3w7fNlz9VpXQRju
-        qnZcivMIlSUAgTmhfvLEizj1xlYzQkDckcslR/OHFYgDKL7JrZ48hyDScy3g29k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PS9klf
-        90qv8lsRpqPK9fYlNHe+tsxAiYIDv/aIneMY78ugC81kp77IUEvVWGEs+UsKdVuC
-        BOW8zVhAHok89042doeE/trsRXh+ZS5oPaWGwkcKZTU3i4+nTVHiycja47rF4dpt
-        IGD4TnPEJYTO5Fclty5mwSV+tq+VrJtHgNsDk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 496B21066C4;
-        Wed, 10 Feb 2021 16:34:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C063A1066C3;
-        Wed, 10 Feb 2021 16:34:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH 00/10] grep/pcre2: memory allocation fixes
-References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
-        <20210204210556.25242-1-avarab@gmail.com>
-Date:   Wed, 10 Feb 2021 13:34:10 -0800
-In-Reply-To: <20210204210556.25242-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 4 Feb 2021 22:05:46 +0100")
-Message-ID: <xmqqlfbv1ub1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B7131FE4-6BE7-11EB-AE0F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        id S232101AbhBJVoy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 16:44:54 -0500
+Received: from mout.gmx.net ([212.227.15.15]:34789 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232097AbhBJVov (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 16:44:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1612993395;
+        bh=/jZNmwAGA8HulsOz1UhEbz0U6t689LOA/aSqT0L6/s8=;
+        h=X-UI-Sender-Class:Subject:From:In-Reply-To:Date:Cc:References:To;
+        b=Q9/STgtriEVMkjRJpjuluuhZdOWitZXOHnEA+I9OxYB9l7eIEOC0QUPMv/kZri4OH
+         TYmbfn9k9vWmwWyrCTb2qJ7UURMECdv7qQfLq0v/+D7VsdPMayYbU5qrlt3e5b7b6v
+         KlMESiiFR1lRhWmtGe77brMR1ev8pk1x1sETE4Lk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.101] ([62.202.181.185]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDywo-1l05tX1NO0-00A1NL; Wed, 10
+ Feb 2021 22:43:15 +0100
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.17\))
+Subject: Re: [PATCH] doc: mention bigFileThreshold for packing
+From:   Christian Walther <cwalther@gmx.ch>
+In-Reply-To: <xmqqim70zzaf.fsf@gitster.c.googlers.com>
+Date:   Wed, 10 Feb 2021 22:43:14 +0100
+Cc:     Christian Walther via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <F63929A8-7BC9-43A7-9E7B-118433F62588@gmx.ch>
+References: <pull.872.git.1612897624121.gitgitgadget@gmail.com>
+ <xmqqim70zzaf.fsf@gitster.c.googlers.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3445.104.17)
+X-Provags-ID: V03:K1:EUkk4u4fmHLT1pUWnizy6JicnPP0b5inB7aJAjAoybTNQUH81Vf
+ rJ2ilppU8wXZ4HohPHZG5SU5obxDINK4KmuNh2W3VzBPa/6tn5r02BlrhxNfsP3weQ5P2QW
+ adq9eMhtqhl07bqTflE5YUvCuhlOt5ptsqpRCtGDG8gayqmx2BdcajEdP84ralcsyEpY0MI
+ j0BxOqEEqTxhCj6uK+9iA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sa6p6gqxzEg=:njy6/VW9N3/s9yOOwUUhED
+ EKpvux5Z0aUhdjMoumV0yo+5e60sP6LOvum2TMhrV9SvOAhsc1FgoZO3f84oT8jhV619+yN8U
+ c2oh+vf1h8NngaDuX1xKyPR2ysT5tO9ZvcGV/3+Sp38m8kwZXaXx8sSeOWZQpHqT89qd4N8F7
+ d2L1Xm3ynN94i+rMDfFjeqInMMbRXc5Lsehsibjc/HNUocW4CKCHtvG/kRHoT24+EinWNTsAs
+ hxRqdyuBIAD1F7LoDyPupwMqkViGtp1QL+Twb64JHsqbfxPLp4Wqa+lrl4q2uYcdQVUd8KBVy
+ MFEiTe42VPyb7yrl2Hwljtp8JWGd+Oqq0cFju0qAAn+U/FZVY0Uhc9aZ68ts4fK3YU6t1tC9e
+ 812BemwUW+nRJuvNaamAlxQSjglv/bKwW3OL9fKrA61JplOlbS3x9sV3X9GtfYl7ZHhSVvPf4
+ rwSi7DFWY7u2e3xv37f7jO/u80FB1sCFuNSUZqYG+aaa6PEzoYLTflb0LAtFehq0Frfvcox+C
+ HEwgqf+luvUS7qK1jzyfmwwBJF0amMkjpJGouH36tuwgYYNwNoHyss9VhmxzSpZL5ugHm0DBn
+ WzZ12L1Z1nhhyzFrhxbBDhyX3Z+XPbtlUKtw3Wmvcs/EW0uOeWg0DxcQTBFDDwAeZ4L1Actcm
+ JLRlJRyROS7KbvzlGKjecD1sum5Q21NcdXy3+RlwSEnoq8M0Kb76kv+3ZuAGRm6/fGxke/AJc
+ n/a7QjRsGgmKqbkpAKKmBPCyFqHjZx8SsJBJimBYAKTSw+LiTAt68SLKRoI26pktJsYOokeid
+ mippw4VAnDo4Az8nIByl+hfDM5pTBKnwPcDilFblOVV0Jv3qOBUkfXy0pHHJFAGwJQggbQhSz
+ PSA017BA661PPpk/JFeg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano wrote:
 
-> This series fixes up bugs in our PCRE v2 wrapper code and how it
-> handles malloc()/free().
->
-> Junio: I'm splitting this off my recently sent 25 patch series, which
-> I should probably have sent as an RFC:
-> https://lore.kernel.org/git/20210203032811.14979-1-avarab@gmail.com/
->
-> It's on top of "next", as it would otherwise conflict with my
-> in-flight ab/grep-pcre-invalid-utf8, ab/lose-grep-debug and ab/retire-p=
-cre1.
+> I doubt that the description of --window/--depth command line
+> options, for both repack and pack-objects, is the best place to add
+> this "Note".  Even if we were to add it as an appendix to these
+> places, please do not break the flow of explanation by inserting it
+> before the description of the default values of these options.
 
-These three seem to be solid and I am planning to merge them down to
-'master' soonish.  I was hoping that the series would get enough
-reviews by the time it happens so that I can expect an update that
-cleanly applies on top of 'master', and the plan seems to be working
-well ;-)
+OK. That was where I would have looked for it, because it explains why =
+--window wasn't effective in my attempts to get better compression, but =
+I don't insist on it - any place would have worked, as I read both =
+manpages back and forth several times.
+
+In git-repack.txt, there is a "Configuration" section at the bottom, I =
+guess it would fit there? There is none in git-pack-objects.txt, but I =
+could add it. What do you think?
+
+
+>>    I recently spent a lot of time trying to figure out why git repack =
+would
+>>    create huge packs on some clones of my repository and small ones =
+on
+>>    others
+>=20
+> Not related to the contents of the patch, but I am somewhat curious
+> to know what configuration resulted in the "huge" ones and "small"
+> ones.  Documentation/config/core.txt::core.bigFileThreashold may be
+> helped by addition of a success story, and the configuration for the
+> "small" ones may be a good place to start.
+
+The "huge" repository had bigFileThreshold =3D 1m. That was set by =
+SubGit when converting from Subversion, for reasons unknown to me (see =
+some discussion at =
+https://support.tmatesoft.com/t/reduce-repository-size/2551 and =
+https://issues.tmatesoft.com/issue/SGT-604). The result is a pack file =
+of about 3 GB.
+
+The "small" repository has it unset, so the default 512m applies, =
+resulting in a pack file of about 50 MB.
+
+What causes the huge difference is that the repository contains a =
+"changelog" file that changes in almost every commit and has grown to =
+2.4 MB over 10000 commits. So it exists in about that many different =
+versions, of which about 6000 are larger than 1 MB, but they only differ =
+from each other by successive addition of small pieces.
+
+I'm not sure if that makes for a good success story. 1m seems a rather =
+extreme value to me. If you think so, I can try to come up with =
+something.
+
+Thanks
+
+ Christian
 
