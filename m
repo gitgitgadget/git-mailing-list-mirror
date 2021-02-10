@@ -2,95 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7271C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 06:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16495C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 07:19:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7338264E3E
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 06:22:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A740364E53
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 07:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231569AbhBJGWF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 01:22:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbhBJGWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 01:22:04 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926E2C061574
-        for <git@vger.kernel.org>; Tue,  9 Feb 2021 22:12:19 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id d7so824377otq.6
-        for <git@vger.kernel.org>; Tue, 09 Feb 2021 22:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QOeLg+yaGVzSCNVhkO1zpqxFbk/AKXVZBhvKzUyS2PM=;
-        b=KAQdnQNLE7ZjYenktiC5cSlogjJVTrOhFRMipq1RRJGRJvCMN2Rnqt5JPalOLC66aX
-         fkzeZ9r8Yx7Bvb5ioUfuWZMbX1d2K/dWSAHyLlEdNZvsV/hTVtVbYdGAl90agK/Bb9KW
-         qYD6aNWmKOb3U3DcAPM1VhaqtNJ7YmifSp6+F8WmFI5G3J9FAa3TWkf0G3XLW8L5jPlo
-         2YtSG8DF4cmVkdou2nQ3HNNvGBLOrmh3vGZsOYswG+/KnH6ti35buDQX1EMDP7XDQe1+
-         lvPc230pvB763KJezMrWZgiXaCHr7kHQetW7NpZuFlhSKXVPTOmWNUgg20KGj4ASngR4
-         xplA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QOeLg+yaGVzSCNVhkO1zpqxFbk/AKXVZBhvKzUyS2PM=;
-        b=LweeOEcQY8W+2cotzy3iiO9XsGkcUKF3St1HTk/VfnCw0zYPXtTmwqRA1qdZHo1CWl
-         TzYVzOQyUjgeI5wpjJDgViYv7eQPmtrDKzoCeiaD9l5fPjcnGC8f1F5X2kNfMq5+AdGD
-         WAIrhlndFHfoBDIYKUeBZeFrEOm1YSlwZ+S+qCSq2SaIKqv9a1zcOKYoiFvegYhzk6/L
-         uq8y1/JUNXGG2AJHeK7XOE9tYCguAB3tnQtVu4h8UZL4kEnwrGo1ZkZbLnSf2szDadNU
-         LNNkzXrrEZeGmCIfY2gPGTlha7z6Z+P71wY2AbVOq8gmWBwCeFLqwpp21bmg14UtikRk
-         +OYw==
-X-Gm-Message-State: AOAM530f/bj0aI625d0LdKLA46ZMQPEubLCa9kjKdgeYSDv/rw8E9U1b
-        TQzwUm9Y/LS8Av1dmpj2LAgnyEWIAIzd2I6bSbI=
-X-Google-Smtp-Source: ABdhPJzANxnI+baAcef+HTfGFvhSOdGn3eOda2sY9ocw5T9s/DvsSqKHe2l5XbcYYQsBCM/4nBV9u+KphTRjuMrkSnI=
-X-Received: by 2002:a9d:7dd3:: with SMTP id k19mr1020508otn.162.1612937539024;
- Tue, 09 Feb 2021 22:12:19 -0800 (PST)
+        id S232313AbhBJHSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 02:18:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58191 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231886AbhBJHSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 02:18:42 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7FCC01105DD;
+        Wed, 10 Feb 2021 02:17:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fjxFrU/+qX+NSmqcb+PlMy1IGDw=; b=FckxNx
+        wTL3TPG9FDMnbfXjSQyhgpOdUJVpv18rG5ceWBR4dbpGkVOcltVJTL3ML+Dc5Zy7
+        JioBGrqnklO9Z37qDBgykI2tabsYcpdvpafW+m7cZWJ5/7yDWfdMl7HF1BMO/U4O
+        zQSeanRufRWg2fl3KpspPOvoPErfP5V7/MRkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lLCulwyCsdu+roZZKPvKlxNURvdnfKlg
+        5EPcCfwYNkk51m9iStAZ0FZBLdyyPpkB/aNVKYtd2RCzCtR7lhU1BsT3gww1vbow
+        z8z009+2fcboz4F6YHKZNaMXNbh4IGFHOqwMDCNjnk8l6qHvDuAhnFuOjBHReZrx
+        Jf+1FhJ+9mU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7853C1105DB;
+        Wed, 10 Feb 2021 02:17:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C508A1105DA;
+        Wed, 10 Feb 2021 02:17:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/9] git-stash.txt: be explicit about subcommand options
+References: <cover.1612258145.git.liu.denton@gmail.com>
+        <cover.1612855690.git.liu.denton@gmail.com>
+        <5697f14f1c67abbb529b450c8f2a02f2bc59963f.1612855690.git.liu.denton@gmail.com>
+Date:   Tue, 09 Feb 2021 23:17:54 -0800
+In-Reply-To: <5697f14f1c67abbb529b450c8f2a02f2bc59963f.1612855690.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 8 Feb 2021 23:28:47 -0800")
+Message-ID: <xmqqv9b04cil.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1599758167.git.matheus.bernardino@usp.br>
- <5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.1612901326.git.matheus.bernardino@usp.br>
- <xmqqtuqkygfb.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtuqkygfb.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 9 Feb 2021 22:12:08 -0800
-Message-ID: <CABPp-BFMk7XX-qkXC_C6vh_x7OPUS+Dfu-6SFWvm2WVA14zLSg@mail.gmail.com>
-Subject: Re: [PATCH v7] grep: honor sparse-checkout on working tree searches
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1933179C-6B70-11EB-88C9-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 9, 2021 at 3:23 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
->
-> > This new version includes only the bug fix for the working tree grep, as
-> > discussed in [1]. I think there are a couple other patches that could be
-> > extracted from the previous v6 [2] and sent as standalone topics,
-> > without the risk of conflicting with the sparse-index work. E.g. the
-> > unification of the git-grep.txt and config/grep.txt doc files. I'll look
-> > into that tomorrow.
->
-> As mt/rm-sparse-checkout depends on the v6 that you are ejecting
-> with this patch, I'll stop merging that topic to 'seen' for now.
->
-> Thanks for keeping an eye on this one.
+Denton Liu <liu.denton@gmail.com> writes:
 
-Yeah, Matheus and I have been talking about both topics off-list a
-bit; I hadn't yet responded to his final revision of a newer
-mt/rm-sparse-checkout but he has a good replacement for that topic now
-that he'll send to the list soon.
+> Currently, the options for the `list` and `show` subcommands are just
+> listed as `<options>`. This seems to imply, from a cursory glance at the
+> summary, that they take the stash options listed below. However, reading
+> more carefully, we see that they take log options and diff options
+> respectively.
+>
+> Make it more obvious that they take log and diff options by explicitly
+> stating this in the subcommand summary.
 
-Anyway, for the patch submitted here you can add a
+Makes sense.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 31f1beb65b..04e55eb826 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -67,7 +67,7 @@ save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q
+>  	Instead, all non-option arguments are concatenated to form the stash
+>  	message.
+>  
+> -list [<options>]::
+> +list [<log-options>]::
+>  
+>  	List the stash entries that you currently have.  Each 'stash entry' is
+>  	listed with its name (e.g. `stash@{0}` is the latest entry, `stash@{1}` is
+> @@ -83,7 +83,7 @@ stash@{1}: On master: 9cc0589... Add git-stash
+>  The command takes options applicable to the 'git log'
+>  command to control what is shown and how. See linkgit:git-log[1].
+>  
+> -show [<options>] [<stash>]::
+> +show [<diff-options>] [<stash>]::
+>  
+>  	Show the changes recorded in the stash entry as a diff between the
+>  	stashed contents and the commit back when the stash entry was first
+
+This makes me wonder if we should also update the SYNOPSIS that
+talks about the "list" and "show" operations taking a generic
+"<options>", though.
