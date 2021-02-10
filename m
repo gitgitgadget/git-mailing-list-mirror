@@ -5,33 +5,33 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7833C433E6
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3496EC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:44:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86E5964E3B
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:42:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0BDF64E05
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 12:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230465AbhBJMmL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 07:42:11 -0500
-Received: from mout.gmx.net ([212.227.15.18]:43141 "EHLO mout.gmx.net"
+        id S231891AbhBJMoV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 07:44:21 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57361 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231933AbhBJMkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 07:40:06 -0500
+        id S231860AbhBJMmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 07:42:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1612960702;
-        bh=OYIYEQo0HWo/F4Hx5hgjVkAuflQZw8x6lntNh0PwUl8=;
+        s=badeba3b8450; t=1612960842;
+        bh=6CggOUaydezoRdDKzEOVEkswoA5PEbKZpmQpWLA/heY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Qo8vf5G6HTNoGqBxPupG0ai3Ku5K0MMpb69q/iRWnOP68hO03vulHFCC49QF4FYA0
-         vaAeVtYP7cruFfNefRUBmxg0SzEIMVsUA5J8kdwlzgXwAeCkp0SatZ3+o+vPP+Bfmx
-         SeZzYypkhitLpuYWB7OcxiUX2UqVd6MC2EsHqkxc=
+        b=Jq+pR1DJjd9LGy6q7T+w0NfQdynt1qWWQhKzcbc44SmQ3mWG2Ok9WWjKZeaK3k9cc
+         40u5S4g36m8ZuCYRwmT1g8bW6b1ha+uA2hwXsPS1UFlojlDcHJweRgW0YWSGXEl67j
+         10pcY7JpEATPXcRb+L8gWEd3NuDNYxZhLa5VXBwY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.19.95.40] ([213.196.212.209]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MybGh-1m7pKN0oXN-00yvQ7; Wed, 10
- Feb 2021 13:38:22 +0100
-Date:   Wed, 10 Feb 2021 13:38:37 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MkHMZ-1lc3510rmr-00kjsL; Wed, 10
+ Feb 2021 13:40:42 +0100
+Date:   Wed, 10 Feb 2021 13:40:58 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -39,32 +39,32 @@ To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?=
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Subject: Re: [PATCH 08/10] grep/pcre2: actually make pcre2 use custom
- allocator
-In-Reply-To: <20210204210556.25242-9-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2102101338220.29765@tvgsbejvaqbjf.bet>
-References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com> <20210204210556.25242-9-avarab@gmail.com>
+Subject: Re: [PATCH 10/10] grep/pcre2: move definitions of
+ pcre2_{malloc,free}
+In-Reply-To: <20210204210556.25242-11-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2102101339560.29765@tvgsbejvaqbjf.bet>
+References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com> <20210204210556.25242-11-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1170852189-1612960719=:29765"
-X-Provags-ID: V03:K1:IedHEhDDhHX3OIjS10DINxWco+DuO8SXeiKYQ0+g9U2E+yDxhj+
- AahAhsUbKZprg6vny+zuEVtzWR7vLZtzxvcD0z/jITmcQGOxub8p1eWov0i9hKDxTUZmK5r
- Z3H0TJPCxuveyp8SLeGm8paTbNRk1EAtQuhwa74wSIw7bUYJNl5XmV3Yw7a/fg0jMw/iCu+
- L6kKw437FlxPhQ8Mvn/Bg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cG/XYslsMqU=:oPl4FxN/jXBfS0TnuRwAFs
- aMWxydJRm+nKqoXdrGYYaL6NeLe+esKXBwLxslIKa1iff2QjwKWBaArPMZxgkam7D7lDRCvqS
- LVeeqnZ0rTgU+Z289JSL4FgycbgON+id6Kf2Z2fTa8PlGvtAsK9Csn6BWPX+AAt5nFLG/rNvD
- SHr9mpy7VmaqeA986LZAFyObtvgpPz96AkrS/yr0cvQgFuZeVz19AwbnG35MbRg7D/sNqzhhb
- HK0n0XQ6kB3xah7lGCD8yNjDcUSvIK5env/Iuj+ysMONWI0xVihu42nc2O0EjQ9myYDFsmze9
- Qm3aeObeMlo0izUQL77lpEX+wPSLXPD08tpgRJCC+AggK5PGsTqRchwupaFug1M413pne7vc4
- JiODUf2yuTQXq0/bS16KhX3gdN0JjSLX+mKBGzeDVeQPLziAmco4s7XgKK/BWfVuefYzdXoWx
- Dgchc21oflFGxfi1xQoSVylIvzH5v8SP7YRbISdPvp4hauAMqIFbDY33b5spWbBAAejL1jSq5
- kBGzOOoqzVUMNI4jvJj1s+BSI0zC7pk8HLoIrlijgI9gUoutCH1Stw3GDj5mB6RExbClrlB0j
- x+EtlyT6qIYNqoLKPU2bIkbLvbPzV/FCutjCxXDiQshFRPIxK5SRTKVGt09gLgG4prRfc/1Ff
- U7LuQ2kyRf5TJdhbSl75rUaSgXsxAJl+HWIWCEksjzKynm35b4S/GGyu460s3zwaoicrtsG4w
- xbQowI8TByAV6ehDht+yvjhI5EvtlxKu+ydQULc7vnHHkK0/YY1wLcSOnx1uFjRR9/z//3tq5
- tx9Qzdx/zlkmE1EwtQL48MjDkOI16x5gbmjUZZJ5uHhjo5/MT1QwRz7Kl0zhpKqZbevZYaa5h
- 5iX6VqGgMUETvjJ63jwXzGYhq5AMs9e9ASakO+DaI=
+Content-Type: multipart/mixed; boundary="8323328-766125519-1612960859=:29765"
+X-Provags-ID: V03:K1:qhqr+p8jbY6X8CyKGgOAfC5b0S8WX0ESErhApYBchKll3mzLe18
+ mqVYnUzd5iem2ed1c5OxA7a/EzKQZSb0hJ3l8V/fPmJRxvh+EoYesSsomes1JJducTo6kWj
+ r+NFKjlSiVD4YeHtWxuls9E10DwxNQCKBesgkT+i0ANSbmiEZF47BWEj4/nSnCslPJNg2m8
+ DoCVsMGqEp9EA4LeGAiOg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JBN/wn1xnvY=:hn00NKepHfybz6muFLnbl8
+ e81vpgVBv9I7eBDEAdTTqS3KftBWd1bXyD0K8QSgWmrL+fEjhtzEZaV10UGMMuc4RcG8Wnii0
+ X/rShs72lbwoeyvddRAy9kPUOd6bVVfrWDOZwbfYtPePuCkT2QLnR/ImB0EbWZuJrQWvYl4uA
+ rxeg7Usp/tHWUU+tNwfsYHAR5y9n3fLgy1N+gDKV93BaqMSin3ss87x1oM8kJnUL647kQppd1
+ MNq9P9fzyv9VET/dLup6h/4acFScfUhyp2PsnHAoCYAZUTlGwymMz7mtFrg0/GRH1V9fBZkcH
+ ADgdXP9gPZVJad4ZIkf95jymz+zkCrmQyalOKrsmAHoiobywc3bB2P8LTAqR1wdR6iwJUVOkB
+ dEm0R1Z8uIb1dlP2wLidQae2kndsyrHMB1RoYz4kUMyVE6ETIif+jk3UTDqnTdKOubOCMGNfi
+ DUlJu+L3VQWgez5IQihX2wwKscIUecbixIaMBsOcOAaaGT/v9vuTr5c0zGJZ09qApqgeL6shw
+ neXsnGw4gm2OBRlPJoDSrouz4Z8LUWJxxBg+v/Rj3BrnatJ/ufwKOukOVHAnCPpJRHeG3ZOyz
+ BFbRjySJWhAxhSvHCXcucBw11wJ0J4cfH6f80JeEpyYt10jcPSmqHlWQQJ7Qe59JRgr1D3+4h
+ ocS45zPoI+F06vBgeb9QRez1PVN60RhdjbwVF+Rx71RUs0cogZkF+foQYyvatL9sAAC04mi47
+ 3JdpLQVZET/Ot30l6L3lV5XAuAnXTCxe2eQo0X8+cz68r3PTwyL0sxkDScq6XYsnic3NwSJRg
+ Dtilt0ZRcOPUjQJM3fvrHb8AsyejoQJrB9ZaF3ju/JEGTtGIweTOVbJyjpWu7hfzdBHYlRu6a
+ KxHr6esbzKKCA1Up6Ju50kRGIeeon035p+B8nZSwk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -72,121 +72,105 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1170852189-1612960719=:29765
+--8323328-766125519-1612960859=:29765
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 Hi =C3=86var,
 
-ACK!
-
-And thank you for this patch,
-Dscho
-
 On Thu, 4 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Continue work started in 513f2b0bbd4 (grep: make PCRE2 aware of custom
-> allocator, 2019-10-16) and make PCREv2 use our pcre2_{malloc,free}().
-> functions for allocation. We'll now use it for all PCREv2 allocations.
->
-> The reason 513f2b0bbd4 worked as a bugfix for the USE_NED_ALLOCATOR
-> issue is because it managed to target pretty much the allocation freed
-> via free(), as opposed to by a pcre2_*free() function. I.e. the
-> pcre2_maketables() and pcre2_maketables_free() pair. For most of the
-> rest we continued allocating with stock malloc() inside PCREv2 itself,
-> but didn't segfault because we'd use its corresponding free().
->
-> In a preceding commit of mine I changed the free() to
-> pcre2_maketables_free() on versions of PCREv2 10.34 and newer. So as
-> far as fixing the segfault goes we could revert 513f2b0bbd4. But then
-> we wouldn't use the desired allocator, let's just use it instead.
->
-> Before this patch we'd on e.g.:
->
->     grep --threads=3D1 -iP =C3=A6.*var.*xyz
->
-> Only use pcre2_{malloc,free}() for 2 malloc() calls and 2
-> corresponding free() call. Now it's 12 calls to each. This can be
-> observed with the GREP_PCRE2_DEBUG_MALLOC debug mode.
->
-> Reading the history of how this bug got introduced it wasn't present
-> in Johannes's original patch[1] to fix the issue.
->
-> My reading of that thread is that the approach the follow-up patches
-> to Johannes's original pursued were based on misunderstanding of how
-> the PCREv2 API works. In particular this part of [2]:
->
->     "most of the time (like when using UTF-8) the chartable (and
->     therefore the global context) is not needed (even when using
->     alternate allocators)"
->
-> That's simply not how PCREv2 memory allocation works. It's easy to see
-> how the misunderstanding came about. It's because (as noted above) the
-> issue was noticed because of our use of free() in our own grep.c for
-> freeing the memory allocated by pcre2_maketables().
->
-> Thus the misunderstanding that PCREv2's compile context is something
-> only needed for pcre2_maketables(), and e.g. an aborted earlier
-> attempt[3] to only set it up when we ourselves called
-> pcre2_maketables().
->
-> That's not what PCREv2's compile context is. To quote PCREv2's
-> documentation:
->
->     "This context just contains pointers to (and data for) external
->     memory management functions that are called from several places in
->     the PCRE2 library."
->
-> Thus the failed attempts to go down the route of only creating the
-> general context in cases where we ourselves call pcre2_maketables(),
-> before finally settling on the approach 513f2b0bbd4 took of always
-> creating it.
->
-> Instead we should always create it, and then pass the general context
-> to those functions that accept it, so that they'll consistently use
-> our preferred memory allocation functions.
->
-> 1. https://public-inbox.org/git/3397e6797f872aedd18c6d795f4976e1c579514b=
-.1565005867.git.gitgitgadget@gmail.com/
-> 2. https://lore.kernel.org/git/CAPUEsphMh_ZqcH3M7PXC9jHTfEdQN3mhTAK2JDkd=
-vKBp53YBoA@mail.gmail.com/
-> 3. https://lore.kernel.org/git/20190806085014.47776-3-carenas@gmail.com/
+> Move the definitions of the pcre2_{malloc,free} functions above the
+> compile_pcre2_pattern() function they're used it. Before the preceding
+
+s/it/in/
+
+Thank you for this entire patch series. I like its intention and its
+execution.
+
+Ciao,
+Dscho
+
+> commit they used to be needed earlier, but now we can move them to be
+> adjacent to the other PCREv2 functions.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  grep.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  grep.c | 46 ++++++++++++++++++++++------------------------
+>  1 file changed, 22 insertions(+), 24 deletions(-)
 >
 > diff --git a/grep.c b/grep.c
-> index c63dbff4b2..0116ff5f09 100644
+> index 2599f329cd..636ac48bf0 100644
 > --- a/grep.c
 > +++ b/grep.c
-> @@ -390,7 +390,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  			if (!pcre2_global_context)
->  				BUG("pcre2_global_context uninitialized");
->  			p->pcre2_tables =3D pcre2_maketables(pcre2_global_context);
-> -			p->pcre2_compile_context =3D pcre2_compile_context_create(NULL);
-> +			p->pcre2_compile_context =3D pcre2_compile_context_create(pcre2_glob=
-al_context);
->  			pcre2_set_character_tables(p->pcre2_compile_context,
->  							p->pcre2_tables);
->  		}
-> @@ -411,7 +411,7 @@ static void compile_pcre2_pattern(struct grep_pat *p=
-, const struct grep_opt *opt
->  					 p->pcre2_compile_context);
+> @@ -40,30 +40,6 @@ static struct grep_opt grep_defaults =3D {
+>  	.output =3D std_output,
+>  };
 >
->  	if (p->pcre2_pattern) {
-> -		p->pcre2_match_data =3D pcre2_match_data_create_from_pattern(p->pcre2=
-_pattern, NULL);
-> +		p->pcre2_match_data =3D pcre2_match_data_create_from_pattern(p->pcre2=
-_pattern, pcre2_global_context);
->  		if (!p->pcre2_match_data)
->  			die("Couldn't allocate PCRE2 match data");
->  	} else {
+> -#ifdef USE_LIBPCRE2
+> -#define GREP_PCRE2_DEBUG_MALLOC 0
+> -
+> -static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_da=
+ta)
+> -{
+> -	void *pointer =3D malloc(size);
+> -#if GREP_PCRE2_DEBUG_MALLOC
+> -	static int count =3D 1;
+> -	fprintf(stderr, "PCRE2:%p -> #%02d: alloc(%lu)\n", pointer, count++, s=
+ize);
+> -#endif
+> -	return pointer;
+> -}
+> -
+> -static void pcre2_free(void *pointer, MAYBE_UNUSED void *memory_data)
+> -{
+> -#if GREP_PCRE2_DEBUG_MALLOC
+> -	static int count =3D 1;
+> -	if (pointer)
+> -		fprintf(stderr, "PCRE2:%p -> #%02d: free()\n", pointer, count++);
+> -#endif
+> -	free(pointer);
+> -}
+> -#endif
+> -
+>  static const char *color_grep_slots[] =3D {
+>  	[GREP_COLOR_CONTEXT]	    =3D "context",
+>  	[GREP_COLOR_FILENAME]	    =3D "filename",
+> @@ -355,6 +331,28 @@ static int is_fixed(const char *s, size_t len)
+>  }
+>
+>  #ifdef USE_LIBPCRE2
+> +#define GREP_PCRE2_DEBUG_MALLOC 0
+> +
+> +static void *pcre2_malloc(PCRE2_SIZE size, MAYBE_UNUSED void *memory_da=
+ta)
+> +{
+> +	void *pointer =3D malloc(size);
+> +#if GREP_PCRE2_DEBUG_MALLOC
+> +	static int count =3D 1;
+> +	fprintf(stderr, "PCRE2:%p -> #%02d: alloc(%lu)\n", pointer, count++, s=
+ize);
+> +#endif
+> +	return pointer;
+> +}
+> +
+> +static void pcre2_free(void *pointer, MAYBE_UNUSED void *memory_data)
+> +{
+> +#if GREP_PCRE2_DEBUG_MALLOC
+> +	static int count =3D 1;
+> +	if (pointer)
+> +		fprintf(stderr, "PCRE2:%p -> #%02d: free()\n", pointer, count++);
+> +#endif
+> +	free(pointer);
+> +}
+> +
+>  static void compile_pcre2_pattern(struct grep_pat *p, const struct grep=
+_opt *opt)
+>  {
+>  	int error;
 > --
 > 2.30.0.284.gd98b1dd5eaa7
 >
 >
 
---8323328-1170852189-1612960719=:29765--
+--8323328-766125519-1612960859=:29765--
