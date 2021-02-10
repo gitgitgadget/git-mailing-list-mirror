@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CE8C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F73EC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:03:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E332A64ED3
-	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:03:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 548C664DD6
+	for <git@archiver.kernel.org>; Wed, 10 Feb 2021 23:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233448AbhBJXDo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 18:03:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39406 "EHLO
+        id S232331AbhBJXDq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 18:03:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232578AbhBJXDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 18:03:32 -0500
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7A0C061786
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:02:52 -0800 (PST)
-Received: by mail-qv1-xf34.google.com with SMTP id v19so1734753qvl.7
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:02:52 -0800 (PST)
+        with ESMTP id S233460AbhBJXDk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 18:03:40 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B381DC061788
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:02:59 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id h8so3515902qkk.6
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 15:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=EYhNG6uDl36Fk636pecOvD3mGyFobqJeCJlYOUVp89E=;
-        b=GOlgDXNRViXoA1wZh5TNOMLl2UD49X+Ea9v3vRfJ4poWQzzX3tfKV1jCBz0n423+UM
-         VJMdFUURefVTJKJcjF8b0RDrxVMFrFjCuzWycAzTyxxsrclGda4QNkAWfKS5aWYKuGhx
-         fPixMs/dIu2Bmd+zaxF88CXzJ2pyXFtaYt/oT8Jyfyc10ucF9iX8XHXiUfyOASbkdILP
-         S86MLbzXIF6KJk63ygHL+bLsCO5i2EOBr7LIwx/kVqKYJDZ3Pr4dDaZOGuxZXmMBfCp4
-         VnciYENSVovSarcdYlk+pK/I/JAnBVif5lWamgdhGnbCQIzLOSKlBFRXjFxNCUL1/HHK
-         E2Tg==
+        bh=6kQ743JZ5c97JwYFYoMgV/9Jpqg1GQEms1AMox4wPFQ=;
+        b=xODB6PGlaoJZMpBNvk/ao9VJlV95L8YmoaNJqTmF6LPceDLsIuOcZDDUZHkP5+bYUi
+         SbMrnimxNMdsx7hiT2ysO953lKoWWrKc1Sx1VCVslblC4/mHx7usQRkelVTm7j0A+krz
+         l9f2YJotikX8xErjveK2sXf8zWZoVPWECFko+x7UmGG3K13O/vzaa1upLS1JusBwX2hO
+         4LElSK/tcJblU7qxtRD/nwlLbRZmu33sUjY437ICWBpi0wSIcutNXnyQzYadWc1zHP3x
+         jyj7piw5fzhqtae+1+rXyIRLmuCDgKMpW0xXSj7Vr3BLjsoR2bnmLSWmMUudjR5emxeg
+         0LNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=EYhNG6uDl36Fk636pecOvD3mGyFobqJeCJlYOUVp89E=;
-        b=EoegGuSdkuuX9vcMKLP2opnwuZBZQCX/YutlGnnBptU6k81BJq7cl3fII2lFAyx1Pb
-         +bhZq2XL6/JLyODn6jWr0jfw+TXM7jkDsWlQ1o8NnU8w8JNU73P4bX0ULbpYT52m+1nK
-         Gy92hOdIqCWQd2dJSgSybGeqsMq6w7/7UBDULGXMT/z71qWbQtvDO9RPGmVwXhIzvTtU
-         IoNZXW6j3wu6k6hB1iZegt3tssjbcaTk8aQMasH6YUNxZnVDHHCQ1Q015Kg8/Ung0Gsw
-         GQVVSmkLB52jNVbk3kQDZ4K4PC7xW0lc2yo5nwqBgE/1juKDwWbUgMk/O7vPPBGEMAwp
-         ToOg==
-X-Gm-Message-State: AOAM530UeY0ITeEV5npqdsV1DryUuUAlM+pHkH1Z343LHvvoevlO/3SO
-        9oNbJ/PvoV4jyk25JAR+OiU4Z4uwNXQ5mhu5
-X-Google-Smtp-Source: ABdhPJxHxNMtiUVZeeNRy2QwGWInUbQqqBdJEbzbIqb6ZuA/36TcHW+G8SDZenJgONz2r9SXelobxA==
-X-Received: by 2002:ad4:542b:: with SMTP id g11mr5222048qvt.47.1612998171050;
-        Wed, 10 Feb 2021 15:02:51 -0800 (PST)
+        bh=6kQ743JZ5c97JwYFYoMgV/9Jpqg1GQEms1AMox4wPFQ=;
+        b=FoP2VIgYCf81PReKSaFo9lAaJ1ld9ZPdPAITAC19ou9eN/hXsdnkXYrnH7cI4veDyH
+         eXqJJTK9lmlmVi7GL0NLlzCwe5zHRhZleVvHmmIgAycDNMm9Hhfm5KOs//oo674UlvY3
+         hgcYwZXhX741SufYKGGCYzGFL87N/JZHrZ0Nm64aioI8atfSq+iv/p3ELgFuscwjpC6r
+         nfcvGoCDyVFNw4mZdwwhM/T/fenfgZSv8bDLFhL18NmROwGJM02s4ahV+OWB593Qz8EK
+         1VQIGEybaNYUJV5Zaot/hhb1rp/8q1GnVC0UQRa0fjxyiM9TpVjzrQ9jFLCTrx2kX63/
+         Z9nQ==
+X-Gm-Message-State: AOAM530qqOktkrBXL8xTFX7DOpXfPJ9qery1aw9Y8WL+Jjgj6pmPZ49A
+        lwEqdTVRLYpWei6SPzIOQDQj5UTGwAgnQ8GT
+X-Google-Smtp-Source: ABdhPJxv6qJ4r47uJuFvtYWNCrbNDe9GhGRC/9KZ38/j44aHA/DwN5ngxlN1yiPfOBJKozSOQP/dHg==
+X-Received: by 2002:a05:620a:227:: with SMTP id u7mr3945503qkm.226.1612998178755;
+        Wed, 10 Feb 2021 15:02:58 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:2c3d:3179:bfad:c65])
-        by smtp.gmail.com with ESMTPSA id f9sm1384475qkm.28.2021.02.10.15.02.50
+        by smtp.gmail.com with ESMTPSA id j124sm2467329qkf.113.2021.02.10.15.02.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 15:02:50 -0800 (PST)
-Date:   Wed, 10 Feb 2021 18:02:48 -0500
+        Wed, 10 Feb 2021 15:02:58 -0800 (PST)
+Date:   Wed, 10 Feb 2021 18:02:55 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 3/9] midx: don't free midx_name early
-Message-ID: <218474158a56d3638290989cfda3db92dd2ca606.1612998106.git.me@ttaylorr.com>
+Subject: [PATCH 4/9] midx: keep track of the checksum
+Message-ID: <b4b842fa1e8c711af30cc93b6f1100661791416c.1612998106.git.me@ttaylorr.com>
 References: <cover.1612998106.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,27 +70,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A subsequent patch will need to refer back to 'midx_name' later on in
-the function. In fact, this variable is already free()'d later on, so
-this makes the later free() no longer redundant.
+write_midx_internal() uses a hashfile to write the multi-pack index, but
+discards its checksum. This makes sense, since nothing that takes place
+after writing the MIDX cares about its checksum.
+
+That is about to change in a subsequent patch, when the optional
+reverse index corresponding to the MIDX will want to include the MIDX's
+checksum.
+
+Store the checksum of the MIDX in preparation for that.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- midx.c | 1 -
- 1 file changed, 1 deletion(-)
+ midx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index 064670c0c0..34fb9de3f3 100644
+index 34fb9de3f3..6e47c726af 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -995,7 +995,6 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+@@ -837,6 +837,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ {
+ 	unsigned char cur_chunk, num_chunks = 0;
+ 	char *midx_name;
++	unsigned char midx_hash[GIT_MAX_RAWSZ];
+ 	uint32_t i;
+ 	struct hashfile *f = NULL;
+ 	struct lock_file lk;
+@@ -1098,7 +1099,7 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
+ 		    written,
+ 		    chunk_offsets[num_chunks]);
  
- 	hold_lock_file_for_update(&lk, midx_name, LOCK_DIE_ON_ERROR);
- 	f = hashfd(get_lock_file_fd(&lk), get_lock_file_path(&lk));
--	FREE_AND_NULL(midx_name);
+-	finalize_hashfile(f, NULL, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
++	finalize_hashfile(f, midx_hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+ 	commit_lock_file(&lk);
  
- 	if (packs.m)
- 		close_midx(packs.m);
+ cleanup:
 -- 
 2.30.0.667.g81c0cbc6fd
 
