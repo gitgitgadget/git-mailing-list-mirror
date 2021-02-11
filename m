@@ -2,106 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E68DDC433DB
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6809CC433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:46:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A4F8864E3E
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:45:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B31A64DD7
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229933AbhBKWpk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 17:45:40 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52098 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229871AbhBKWpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 17:45:39 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B91D9ACF68;
-        Thu, 11 Feb 2021 17:44:53 -0500 (EST)
+        id S229936AbhBKWqP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 17:46:15 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53125 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229694AbhBKWqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 17:46:14 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A953A110C75;
+        Thu, 11 Feb 2021 17:45:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pVeciRr7uFimXD1KG1H5EhesPQ4=; b=bIAXr4
-        H96WMXivW6JoylfXHZpB26TB+rgAXUewVMHSNpvq/U1OWf1719ICxQ14eVp96RYI
-        6vfuLnuIVLuDoibdm6U8bmL58QJf8/mFP7tEIgj787Tyf7BRpm172YiG16Tok8Vw
-        lE3qpM25UiNf8pbkQRZZQgTTP8tGRMgolFWxk=
+        :content-type:content-transfer-encoding; s=sasl; bh=CburMkW6n508
+        mSx2ISDfu9w3ldg=; b=M+7TWVTxEXvLb29dTUCN2CBR4yHGg6XaImqikYK6lW/S
+        vGjxVX+aaUlJ8iBpPsU2kG/Nvu1Vxt1GfDa5xwpUh+hEKxc+QI7BJ8y+2ITQzXRp
+        nrkPS07h6h33bX6QXYUXTqyl8PXg2iVZZsXWYQEMeI96qXXUhVYpybJqIL9Z1FE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Lklak4qwqz+OjGwyXwY4+/mJd1dCSbZA
-        xU1ZxD0onvmkKTHqfWDA1NM1KQiuynfvU10DvTEteveiHFo2k2beXFMexEVOEr24
-        2XjO5Ip1Ls6ASbZfkvqsmGWnJjTp7b1Q0YIXzCA/0N6z283wyM2yBHNjXGR26G0G
-        bPYU+wRw11I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B002DACF67;
-        Thu, 11 Feb 2021 17:44:53 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MQx1ah
+        NTugZbHaiwLcInk3z5MAUGqziZbpl9s7deF9tZgiDUPZMmDpTCBr3RrEYn1UAs2l
+        9s0lKa8EokZtgtNcz7WGdCL8fjDKA99Nw9YXwTe5mIBcF3NfOfYD+7a5+Roq2jSV
+        GmeM20jOMhaNzHN7F3mUHFpToVt7pNuukNmzs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E27A110C74;
+        Thu, 11 Feb 2021 17:45:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 44A60ACF66;
-        Thu, 11 Feb 2021 17:44:53 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BB7FE110C73;
+        Thu, 11 Feb 2021 17:45:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 00/11][Outreachy] Improve the 'fixup [-C | -c]' in
- interactive rebase
-References: <20210207181439.1178-1-charvi077@gmail.com>
-        <20210210113650.19715-1-charvi077@gmail.com>
-        <xmqqeehmy129.fsf@gitster.c.googlers.com>
-        <CAPSFM5fWmTXRHKseqXwZyE6MOVccR2OPSs5kyEu-k1K1p01EPw@mail.gmail.com>
-Date:   Thu, 11 Feb 2021 14:44:52 -0800
-In-Reply-To: <CAPSFM5fWmTXRHKseqXwZyE6MOVccR2OPSs5kyEu-k1K1p01EPw@mail.gmail.com>
-        (Charvi Mendiratta's message of "Fri, 12 Feb 2021 03:56:34 +0530")
-Message-ID: <xmqqblcqw7ff.fsf@gitster.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 09/12] test libs: rename "diff-lib" to "lib-diff"
+References: <20210209214159.22815-1-avarab@gmail.com>
+        <20210209214159.22815-10-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2102112312400.29765@tvgsbejvaqbjf.bet>
+Date:   Thu, 11 Feb 2021 14:45:27 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2102112312400.29765@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Thu, 11 Feb 2021 23:13:56 +0100
+        (CET)")
+Message-ID: <xmqq7dnew7eg.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C19D7BC0-6CBA-11EB-A212-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D6C455A0-6CBA-11EB-B6D4-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Charvi Mendiratta <charvi077@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, 11 Feb 2021 at 22:49, Junio C Hamano <gitster@pobox.com> wrote:
->>[...]
->> Thanks.  Looking good.  Unless there is any other nits, let's
->> declare victory and merge the two topics down to 'next' and then to
->> 'master' for the next release?
+> Hi =C3=86var,
 >
-> Thanks for confirming. Here in these two topics  `fixup -C` works with
-> "amend!" commit in interactive rebase and we are still working on some
-> improvements on the new patch series ( to be sent)  that implements
-> "amend! " commit . So I think to rebase that  work also on this topic,
-> to make project history clear and avoid the confusion ( it also
-> improves the same test script in this topic).
+> On Tue, 9 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> So maybe please wait for that, before merging to master.
+>> diff --git a/t/.gitattributes b/t/.gitattributes
+>> index d778bfad052..dafa17c3e61 100644
+>> --- a/t/.gitattributes
+>> +++ b/t/.gitattributes
+>> @@ -1,6 +1,6 @@
+>>  t[0-9][0-9][0-9][0-9]/* -whitespace
+>>  /chainlint/*.expect eol=3Dlf
+>> -/diff-lib/* eol=3Dlf
+>> +/lib-diff/* eol=3Dlf
+>>  /t0110/url-* binary
+>>  /t3206/* eol=3Dlf
+>>  /t3900/*.txt eol=3Dlf
+>
+> Lucky coincidence that this is still sorted ;-)
+>
+> The patch looks good to me. Thanks!
+> Dscho
 
-Sorry, but I do not quite understand.
-
-Aren't you talking about adding even more features to what is
-already there in the cm/rebase-i plus cm/rebase-i-updates topics?
-Or are you saying that what is in these two topics is still buggy
-and we need fixes to it before we can give them to the general
-public?
-
-I had an impression that it was the former, and if that is the case,
-then moving them to 'next' and then to 'master', regardless of the
-follow-up changes, would be a useful thing to do.  Of course, if it
-is the latter, i.e. these two topics make "git rebase -i" worse by
-introducing an unfinished feature that is not yet usable and/or
-buggy without further work, yes, it would be prudent to wait merging
-the cm/rebase-i-updates topic to 'next' and replace it with a fixed
-version.
-
-But then you'd be stopping me from merging the "updates" one to
-'next', not to 'master'.
-
+Yup.  It still needs to be signed off.
