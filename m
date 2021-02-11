@@ -2,238 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=BAYES_00,BIGNUM_EMAILS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF780C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 08:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A93F3C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 09:47:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5C6864E7D
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 08:17:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7872A64E87
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 09:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbhBKIRZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 03:17:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbhBKIRO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 03:17:14 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6750EC06178A
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:56 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id w4so4426328wmi.4
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=MeEArXXMflp+URAUCekXIHJ/+BfExcgxrDq0SnIySvs=;
-        b=IMUURQaQzX6+IyoWcNzAMY7MvNi70hyYxe0Od/eA0TWBAMPOzV1GmoEURZSnvJ4tzb
-         iabx9UPf3Ydf/fIN6Qxcmxrw3LIsQgwWj0ZBH+GY0I0qREQsY0DlJiOGq5Wpk0+IU1Cq
-         OHWlYNBmU9PYewasTJVKWHhWZTb7GPytbRsvq8IChNe5rImjOT5weAwVRieESsgNeWl8
-         gpNq6RyX4RZ86qcOKKxvD4gCRI1+pSEuhR6FCBnKAxMF697QWnFwUx/paTWFZjb3U6iL
-         mxfFURNhdOv0TTJ8sbK+DpUU8mMEipNOzAFI0w9cIePLPloB4f0lfhrLyx9fDNRDA2Nt
-         gkSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=MeEArXXMflp+URAUCekXIHJ/+BfExcgxrDq0SnIySvs=;
-        b=OG4LKykMg9jM03CcBEe1zjEgYHQxaUU1sMh4L4acjXQOk02X3iSTSkQ6SHFzgQr14o
-         sNtCQv5bseVpsdVX6ZY0pJeYk3ecRcFzwyscjExtP92opCQU7QKY+WSikBSnsg3HEWPy
-         FmcfR5OT+FDKdXhjAX4PFuynMhQv2NhG6EnV/3QXBXteey+Kn5j4TJJApujwmne47Hj1
-         jVN1nzEAFvXnwWYq4JMEfvAtn+LCL3ki7v6HcPNzqA9FOYovdfmxfF9AWxeEyOSJeK47
-         H9xrx6UCBlvBaa6JqsvwQ9xx0JkTQOrwysuM7UVAC+51NDuawjvJSN8WTdrmOMtoywh4
-         RJ8g==
-X-Gm-Message-State: AOAM531wXOH6fJnuE5iGkveOxrZRC/jOFGtX8CjMz0X9B4+mV63VsDzK
-        xsTfdiGzhccRmRrxsHw9yBxlZbx6eyw=
-X-Google-Smtp-Source: ABdhPJxkvP7jijjCZR6eqYKpqsnn6JSeBhLlrdCfKyUVAgpEXFzFB7WBKsUNHZX0xbFlIKIhiQsCjg==
-X-Received: by 2002:a1c:29c6:: with SMTP id p189mr3932907wmp.110.1613031355186;
-        Thu, 11 Feb 2021 00:15:55 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q19sm8570135wmj.23.2021.02.11.00.15.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 00:15:54 -0800 (PST)
-Message-Id: <fedb3d323d948dfdc6e40e036563fd56983f0ad6.1613031350.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.843.v4.git.1613031350.gitgitgadget@gmail.com>
-References: <pull.843.v3.git.1612970140.gitgitgadget@gmail.com>
-        <pull.843.v4.git.1613031350.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Feb 2021 08:15:49 +0000
-Subject: [PATCH v4 6/6] merge-ort: call diffcore_rename() directly
+        id S230090AbhBKJrg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 04:47:36 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54751 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229919AbhBKJmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 04:42:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1613036447;
+        bh=fvHa5VdVtR243yuPA2a1GFv4ypAJbf0GncGxD7xhf/g=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=d7UnGWz5G2B011esQOi6wGLRtZvf+8uTDvKCgkrbhhkNcsotvJYTLLGCOWrhpo5z7
+         0wuvWhcZ2FPungYZAKFIJcj4mABanDxJqYyCns7TYI3KlCvXUR0ssHSY6tFpmawdK5
+         6oJ0q6cJv2eiVtdCP/fS4U3vt8tTDgOr41O+iWp0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([213.196.212.209]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mj8qd-1lmkvq2Jcb-00f9wp; Thu, 11
+ Feb 2021 10:40:47 +0100
+Date:   Thu, 11 Feb 2021 10:40:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Micha=C5=82_K=C4=99pie=C5=84?= <michal@isc.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 1/2] diff: add an API for deferred freeing
+In-Reply-To: <878s7vcnqo.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2102111039080.29765@tvgsbejvaqbjf.bet>
+References: <20201020064809.14297-1-michal@isc.org> <20210205141320.18076-1-avarab@gmail.com> <nycvar.QRO.7.76.6.2102101557160.29765@tvgsbejvaqbjf.bet> <878s7vcnqo.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-441505537-1613036447=:29765"
+X-Provags-ID: V03:K1:PguJwlhDaVT2x0TdGqurGNs4di/YJKZybL0xiroo+i5kSJmnSWF
+ lUiqbx4xhGe/kDMnMSz2pKD8y7kNTQh3V2YOC15lOpqVCllawCAjh9ou6uLXVVi7dbb4AY6
+ v7Gf7KcabAjufJuq+mw3kTGbHgInrOCgqgJXyQugdaORnEl2N79uhBZ/+tf/doBuICUVr/S
+ 8Nt0e8UHVMdyFEkDQZ7aw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lQ2ZXTSOjRo=:dfbtxB3+tgQ42yQ/JuH0E7
+ 6MHLypJMa9aYGpKN6NglkF3kT0Nr5ZW55BINhxC8kT/zsEH5n7I7d0PgxwL6h26BDFftCuGlM
+ nZEFmY5iOmESuYLdB5IrwsBiMqHlj7XnXiY7aV9Eufl39JSUOfqob3w7aHW4QsU/zD6gzH/DZ
+ C4dj3FMlK2rjWWkCOy3gPKEoGodibydc+uxrE/3aALKo6gZUPwpZRpu/CDv50QjvTJxLjLzY8
+ igVbDIDWVHpdcvw2lV7UXR+8/56eo87AqeLzt8gEw7i7FTq4D4lf51xfrxewmwUmU/octK7zo
+ 19W+jYnuQy13Nje/IIgOM0zYqcKXIKIA0j4DvJ6d84gOeeuHqHB/Xepepoj0+1thkT+gJP8ak
+ CGrbObheFHDTNFBWdUl+Fd1HccSOY0Dcv/JJKE+KREMJH1OLm0ra/dv2FYvgExZGX9OikG0m6
+ LEy9lX/PgnKBdaY+EqmSsLHKSqVQ7C2v2t1eN9KjCi69La4Gcu6yJGJnzkBK2etGSQ1OKlcGU
+ kkgJrP8qsvgSaTRa9RKiUVldB1aW6bC/IxDcXfkWL4zromKBHwhvYyrAEke3r9w4p7Shvk9vM
+ tSLJUy/SzDhXzEiMBg/wDYLslwUh5IBdFgmLAjz768IWwDA4nersgsYF7cqHMhcnPGbeW5B9q
+ r1u9nwxK9PeRlgODcgE598w7h3jXx1wzILiHWGxzRyKLAGCsdrDNHYpyBbvfY/ZOxXS5oWVnf
+ CSmuQBS39gZTSNzMQr/od5HPpt8+dlcVVsB4HZ/9U6Pibpt7071yt3fTr/5WC2547tiRfV2ox
+ zY/NxvGtZg8yLAPrrEe95u5SNgSvy5bvyVKGeM87hQmi3ebGal5dh90WSqdcnsEryqB6Pvi/9
+ ntrq4Jx2yokSsbeNXWzX02OWAIH4+XS8s1maHcPCM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-We want to pass additional information to diffcore_rename() (or some
-variant thereof) without plumbing that extra information through
-diff_tree_oid() and diffcore_std().  Further, since we will need to
-gather additional special information related to diffs and are walking
-the trees anyway in collect_merge_info(), it seems odd to have
-diff_tree_oid()/diffcore_std() repeat those tree walks.  And there may
-be times where we can avoid traversing into a subtree in
-collect_merge_info() (based on additional information at our disposal),
-that the basic diff logic would be unable to take advantage of.  For all
-these reasons, just create the add and delete pairs ourself and then
-call diffcore_rename() directly.
+--8323328-441505537-1613036447=:29765
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This change is primarily about enabling future optimizations; the
-advantage of avoiding extra tree traversals is small compared to the
-cost of rename detection, and the advantage of avoiding the extra tree
-traversals is somewhat offset by the extra time spent in
-collect_merge_info() collecting the additional data anyway.  However...
+Hi =C3=86var,
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+On Thu, 11 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-                            Before                  After
-    no-renames:       13.294 s ±  0.103 s    12.775 s ±  0.062 s
-    mega-renames:    187.248 s ±  0.882 s   188.754 s ±  0.284 s
-    just-one-mega:     5.557 s ±  0.017 s     5.599 s ±  0.019 s
+> On Wed, Feb 10 2021, Johannes Schindelin wrote:
+>
+> > On Fri, 5 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> Add a diff_free() function to free anything we may have allocated in
+> >> the "diff_options" struct, and the ability to make calling it a noop
+> >> by setting "no_free" in "diff_options".
+> >
+> > Why do we need a `no_free` flag? Why not simply set the `free()`d (or
+> > `fclose()`d) attributes to `NULL`?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 59 insertions(+), 7 deletions(-)
+Hmm. That was not even clear to me until I read this reply.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 931b91438cf1..603d30c52170 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -535,6 +535,23 @@ static void setup_path_info(struct merge_options *opt,
- 	result->util = mi;
- }
- 
-+static void add_pair(struct merge_options *opt,
-+		     struct name_entry *names,
-+		     const char *pathname,
-+		     unsigned side,
-+		     unsigned is_add /* if false, is_delete */)
-+{
-+	struct diff_filespec *one, *two;
-+	struct rename_info *renames = &opt->priv->renames;
-+	int names_idx = is_add ? side : 0;
-+
-+	one = alloc_filespec(pathname);
-+	two = alloc_filespec(pathname);
-+	fill_filespec(is_add ? two : one,
-+		      &names[names_idx].oid, 1, names[names_idx].mode);
-+	diff_queue(&renames->pairs[side], one, two);
-+}
-+
- static void collect_rename_info(struct merge_options *opt,
- 				struct name_entry *names,
- 				const char *dirname,
-@@ -544,6 +561,7 @@ static void collect_rename_info(struct merge_options *opt,
- 				unsigned match_mask)
- {
- 	struct rename_info *renames = &opt->priv->renames;
-+	unsigned side;
- 
- 	/* Update dirs_removed, as needed */
- 	if (dirmask == 1 || dirmask == 3 || dirmask == 5) {
-@@ -554,6 +572,21 @@ static void collect_rename_info(struct merge_options *opt,
- 		if (sides & 2)
- 			strset_add(&renames->dirs_removed[2], fullname);
- 	}
-+
-+	if (filemask == 0 || filemask == 7)
-+		return;
-+
-+	for (side = MERGE_SIDE1; side <= MERGE_SIDE2; ++side) {
-+		unsigned side_mask = (1 << side);
-+
-+		/* Check for deletion on side */
-+		if ((filemask & 1) && !(filemask & side_mask))
-+			add_pair(opt, names, fullname, side, 0 /* delete */);
-+
-+		/* Check for addition on side */
-+		if (!(filemask & 1) && (filemask & side_mask))
-+			add_pair(opt, names, fullname, side, 1 /* add */);
-+	}
- }
- 
- static int collect_merge_info_callback(int n,
-@@ -2079,6 +2112,27 @@ static int process_renames(struct merge_options *opt,
- 	return clean_merge;
- }
- 
-+static void resolve_diffpair_statuses(struct diff_queue_struct *q)
-+{
-+	/*
-+	 * A simplified version of diff_resolve_rename_copy(); would probably
-+	 * just use that function but it's static...
-+	 */
-+	int i;
-+	struct diff_filepair *p;
-+
-+	for (i = 0; i < q->nr; ++i) {
-+		p = q->queue[i];
-+		p->status = 0; /* undecided */
-+		if (!DIFF_FILE_VALID(p->one))
-+			p->status = DIFF_STATUS_ADDED;
-+		else if (!DIFF_FILE_VALID(p->two))
-+			p->status = DIFF_STATUS_DELETED;
-+		else if (DIFF_PAIR_RENAME(p))
-+			p->status = DIFF_STATUS_RENAMED;
-+	}
-+}
-+
- static int compare_pairs(const void *a_, const void *b_)
- {
- 	const struct diff_filepair *a = *((const struct diff_filepair **)a_);
-@@ -2089,8 +2143,6 @@ static int compare_pairs(const void *a_, const void *b_)
- 
- /* Call diffcore_rename() to compute which files have changed on given side */
- static void detect_regular_renames(struct merge_options *opt,
--				   struct tree *merge_base,
--				   struct tree *side,
- 				   unsigned side_index)
- {
- 	struct diff_options diff_opts;
-@@ -2108,11 +2160,11 @@ static void detect_regular_renames(struct merge_options *opt,
- 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	diff_setup_done(&diff_opts);
- 
-+	diff_queued_diff = renames->pairs[side_index];
- 	trace2_region_enter("diff", "diffcore_rename", opt->repo);
--	diff_tree_oid(&merge_base->object.oid, &side->object.oid, "",
--		      &diff_opts);
--	diffcore_std(&diff_opts);
-+	diffcore_rename(&diff_opts);
- 	trace2_region_leave("diff", "diffcore_rename", opt->repo);
-+	resolve_diffpair_statuses(&diff_queued_diff);
- 
- 	if (diff_opts.needed_rename_limit > renames->needed_limit)
- 		renames->needed_limit = diff_opts.needed_rename_limit;
-@@ -2212,8 +2264,8 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	memset(&combined, 0, sizeof(combined));
- 
- 	trace2_region_enter("merge", "regular renames", opt->repo);
--	detect_regular_renames(opt, merge_base, side1, MERGE_SIDE1);
--	detect_regular_renames(opt, merge_base, side2, MERGE_SIDE2);
-+	detect_regular_renames(opt, MERGE_SIDE1);
-+	detect_regular_renames(opt, MERGE_SIDE2);
- 	trace2_region_leave("merge", "regular renames", opt->repo);
- 
- 	trace2_region_enter("merge", "directory renames", opt->repo);
--- 
-gitgitgadget
+Doesn't this indicate that the closing is done at the wrong layer? If we
+want to call a function N times and only at the last iteration should it
+clean up our resources, doesn't that indicate that the clean-up should be
+pulled out from that function?
+
+I thought that's exactly what you did, but I must have glanced over
+something obvious...
+
+Ciao,
+Dscho
+
+--8323328-441505537-1613036447=:29765--
