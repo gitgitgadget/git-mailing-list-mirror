@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F05CC433DB
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7A3C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7064464EBC
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:09:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5786D64EE8
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbhBKCJi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 21:09:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45908 "EHLO
+        id S229734AbhBKCJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 21:09:44 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45910 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229587AbhBKCJe (ORCPT
+        by vger.kernel.org with ESMTP id S229702AbhBKCJe (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 10 Feb 2021 21:09:34 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 42B3A60B19;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AD48E60CF8;
         Thu, 11 Feb 2021 02:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1613009300;
-        bh=FmtUhyouguXRjT/AjMAE1ABWDIUzU8+uEqqGVOBwuZk=;
+        bh=YpnY2F6kovQZgcGd8OFSHsbSPutbLyMKVQBu0l1kCC4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=CJKW0P/ZrKH8VMzbcZqPJ53Q6t+v9uR6nKc0mMgpMzHFVjmXQxfgliKiO7r90dnrc
-         hgNXR4ki03pMrR7vy3JZec6hczPp5x03bxD/walvy5wiJixHckNJILuRv2T4p+rNQJ
-         Gnh6g3mn30Jcr2UOJsoVsIxI6DKGrOKdP/OeSq6ijCv8kj63laHILJ1j/Ui+eZafs+
-         ZvRSC87cRwwD0/LJ635OWVYFmmSc0HMYoz1S+4JgpqY/LnucPaaoBLsTuz8q1dkN5T
-         Af8f8l7BTgZzsT2IdfKPUXS+OdPSQFWODxlOc8IC/c3oLTkK55URwrQqIITIwyaIVq
-         6hXR0UZDnQ92nbPeaTNEh1MVbvWLCcanlINrf8kXV2ErBk+tTLABhLPS9UOqXG+Piy
-         eScL5Ud7ywxaVZByN7evzdA0c2/+MgAwjF2j2uM3pYSaovG+SSa1Ta4al5l4SkN11y
-         3tsV8FCH/G5dny4Rm8VAT1xpjz15SGKQWj3NfBLzDGgG9dYtWID
+        b=d3Vzx2/S4Pu1QIg0EeWDokHxGRHRLWVnNaN1nL1D9kJokH8v7DgvPd5aDG3RV2vFb
+         ssWOBJQO+z2DaoCXkTikYkmMdONWMc76HDs1XLf5/mntBFVC1XjwJi9cB9rxq3HNxQ
+         ZjauIgdf7dTUUbSfo6M/cbWevCtr54AidxrT67kC2F5RXu8QCxyLR4y26YJ/m96tth
+         irdu+0bwIaQdgsQxxJ20EKNi1vhTir2OtWgdlNTXPz6GK8Lvwxpwun5H5HN6GYUguJ
+         zWR20d250HZvL0u3G20cmTajx/+4wsTktOu/Y/vcRMr+K98o38JCKgTqLO0psRMyEk
+         M8PIhmFw9EOGgBwXykAm7HY3ejxpcNvgYXaJSwl4yS9xNSKJ+tv3TdH+J/6CBTNKVG
+         AKXj3OelS6atahtOFBSouQoLH8TVX3Lan0A3KcVZ34rNw91FohKuBXTPHRgzHen2B+
+         OTr9n4bAoSWZ/YBMDgSrJsqTXGJNB/zURoo0wZtXrwJejTKCtWk
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 2/6] commit: ignore additional signatures when parsing signed commits
-Date:   Thu, 11 Feb 2021 02:08:02 +0000
-Message-Id: <20210211020806.288523-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 3/6] gpg-interface: improve interface for parsing tags
+Date:   Thu, 11 Feb 2021 02:08:03 +0000
+Message-Id: <20210211020806.288523-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210211020806.288523-1-sandals@crustytoothpaste.net>
 References: <20210118234915.2036197-1-sandals@crustytoothpaste.net>
@@ -54,230 +54,378 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we create a commit with multiple signatures, neither of these
-signatures includes the other.  Consequently, when we produce the
-payload which has been signed so we can verify the commit, we must strip
-off any other signatures, or the payload will differ from what was
-signed.  Do so, and in preparation for verifying with multiple
-algorithms, pass the algorithm we want to verify into
-parse_signed_commit.
+We have a function which parses a buffer with a signature at the end,
+parse_signature, and this function is used for signed tags.  However,
+we'll need to store values for multiple algorithms, and we'll do this by
+using a header for the non-default algorithm.
+
+Adjust the parse_signature interface to store the parsed data in two
+strbufs and turn the existing function into parse_signed_buffer.  The
+latter is still used in places where we know we always have a signed
+buffer, such as push certs.
+
+Adjust all the callers to deal with this new interface.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- commit.c                 | 54 +++++++++++++++++++++++++---------------
- commit.h                 |  3 ++-
- log-tree.c               |  2 +-
- t/t7510-signed-commit.sh | 43 +++++++++++++++++++++++++++++++-
- 4 files changed, 79 insertions(+), 23 deletions(-)
+ builtin/receive-pack.c |  4 ++--
+ builtin/tag.c          | 16 ++++++++++++----
+ commit.c               |  9 ++++++---
+ fmt-merge-msg.c        | 29 ++++++++++++++++++-----------
+ gpg-interface.c        | 13 ++++++++++++-
+ gpg-interface.h        |  9 ++++++++-
+ log-tree.c             | 13 +++++++------
+ ref-filter.c           | 18 ++++++++++++++----
+ tag.c                  | 15 ++++++++-------
+ 9 files changed, 87 insertions(+), 39 deletions(-)
 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index d49d050e6e..b89ce31bf2 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -764,7 +764,7 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 
+ 		memset(&sigcheck, '\0', sizeof(sigcheck));
+ 
+-		bogs = parse_signature(push_cert.buf, push_cert.len);
++		bogs = parse_signed_buffer(push_cert.buf, push_cert.len);
+ 		check_signature(push_cert.buf, bogs, push_cert.buf + bogs,
+ 				push_cert.len - bogs, &sigcheck);
+ 
+@@ -2050,7 +2050,7 @@ static void queue_commands_from_cert(struct command **tail,
+ 		die("malformed push certificate %.*s", 100, push_cert->buf);
+ 	else
+ 		boc += 2;
+-	eoc = push_cert->buf + parse_signature(push_cert->buf, push_cert->len);
++	eoc = push_cert->buf + parse_signed_buffer(push_cert->buf, push_cert->len);
+ 
+ 	while (boc < eoc) {
+ 		const char *eol = memchr(boc, '\n', eoc - boc);
+diff --git a/builtin/tag.c b/builtin/tag.c
+index e8b85eefd8..4237dc724c 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -198,11 +198,17 @@ static void write_tag_body(int fd, const struct object_id *oid)
+ {
+ 	unsigned long size;
+ 	enum object_type type;
+-	char *buf, *sp;
++	char *buf, *sp, *orig;
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
+ 
+-	buf = read_object_file(oid, &type, &size);
++	orig = buf = read_object_file(oid, &type, &size);
+ 	if (!buf)
+ 		return;
++	if (parse_signature(buf, size, &payload, &signature)) {
++		buf = payload.buf;
++		size = payload.len;
++	}
+ 	/* skip header */
+ 	sp = strstr(buf, "\n\n");
+ 
+@@ -211,9 +217,11 @@ static void write_tag_body(int fd, const struct object_id *oid)
+ 		return;
+ 	}
+ 	sp += 2; /* skip the 2 LFs */
+-	write_or_die(fd, sp, parse_signature(sp, buf + size - sp));
++	write_or_die(fd, sp, buf + size - sp);
+ 
+-	free(buf);
++	free(orig);
++	strbuf_release(&payload);
++	strbuf_release(&signature);
+ }
+ 
+ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *result)
 diff --git a/commit.c b/commit.c
-index bab8d5ab07..1006c85ca8 100644
+index 1006c85ca8..ccb912b9b5 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -1036,20 +1036,18 @@ static int do_sign_commit(struct strbuf *buf, const char *keyid)
- }
+@@ -1136,8 +1136,10 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
+ 	struct merge_remote_desc *desc;
+ 	struct commit_extra_header *mergetag;
+ 	char *buf;
+-	unsigned long size, len;
++	unsigned long size;
+ 	enum object_type type;
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
  
- int parse_signed_commit(const struct commit *commit,
--			struct strbuf *payload, struct strbuf *signature)
-+			struct strbuf *payload, struct strbuf *signature,
-+			const struct git_hash_algo *algop)
- {
+ 	desc = merge_remote_util(parent);
+ 	if (!desc || !desc->obj)
+@@ -1145,8 +1147,7 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
+ 	buf = read_object_file(&desc->obj->oid, &type, &size);
+ 	if (!buf || type != OBJ_TAG)
+ 		goto free_return;
+-	len = parse_signature(buf, size);
+-	if (size == len)
++	if (!parse_signature(buf, size, &payload, &signature))
+ 		goto free_return;
+ 	/*
+ 	 * We could verify this signature and either omit the tag when
+@@ -1165,6 +1166,8 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
  
- 	unsigned long size;
- 	const char *buffer = get_commit_buffer(commit, &size);
--	int in_signature, saw_signature = -1;
--	const char *line, *tail;
--	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(the_hash_algo)];
--	int gpg_sig_header_len = strlen(gpg_sig_header);
-+	int in_signature = 0, saw_signature = 0, other_signature = 0;
-+	const char *line, *tail, *p;
-+	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(algop)];
+ 	**tail = mergetag;
+ 	*tail = &mergetag->next;
++	strbuf_release(&payload);
++	strbuf_release(&signature);
+ 	return;
  
- 	line = buffer;
- 	tail = buffer + size;
--	in_signature = 0;
--	saw_signature = 0;
- 	while (line < tail) {
- 		const char *sig = NULL;
- 		const char *next = memchr(line, '\n', tail - line);
-@@ -1057,9 +1055,15 @@ int parse_signed_commit(const struct commit *commit,
- 		next = next ? next + 1 : tail;
- 		if (in_signature && line[0] == ' ')
- 			sig = line + 1;
--		else if (starts_with(line, gpg_sig_header) &&
--			 line[gpg_sig_header_len] == ' ')
--			sig = line + gpg_sig_header_len + 1;
-+		else if (skip_prefix(line, gpg_sig_header, &p) &&
-+			 *p == ' ') {
-+			sig = line + strlen(gpg_sig_header) + 1;
-+			other_signature = 0;
+ free_return:
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 46f6015c44..1e51492a05 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -510,22 +510,28 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 	for (i = 0; i < origins.nr; i++) {
+ 		struct object_id *oid = origins.items[i].util;
+ 		enum object_type type;
+-		unsigned long size, len;
++		unsigned long size;
+ 		char *buf = read_object_file(oid, &type, &size);
++		char *origbuf = buf;
++		unsigned long len = size;
+ 		struct signature_check sigc = { NULL };
+-		struct strbuf sig = STRBUF_INIT;
++		struct strbuf payload = STRBUF_INIT, sig = STRBUF_INIT;
+ 
+ 		if (!buf || type != OBJ_TAG)
+ 			goto next;
+-		len = parse_signature(buf, size);
+ 
+-		if (size == len)
+-			; /* merely annotated */
+-		else if (check_signature(buf, len, buf + len, size - len, &sigc) &&
+-			!sigc.gpg_output)
+-			strbuf_addstr(&sig, "gpg verification failed.\n");
+-		else
+-			strbuf_addstr(&sig, sigc.gpg_output);
++		if (!parse_signature(buf, size, &payload, &sig))
++			;/* merely annotated */
++		else {
++			buf = payload.buf;
++			len = payload.len;
++			if (check_signature(payload.buf, payload.len, sig.buf,
++					 sig.len, &sigc) &&
++				!sigc.gpg_output)
++				strbuf_addstr(&sig, "gpg verification failed.\n");
++			else
++				strbuf_addstr(&sig, sigc.gpg_output);
 +		}
-+		else if (starts_with(line, "gpgsig"))
-+			other_signature = 1;
-+		else if (other_signature && line[0] != ' ')
-+			other_signature = 0;
- 		if (sig) {
- 			strbuf_add(signature, sig, next - sig);
- 			saw_signature = 1;
-@@ -1068,7 +1072,8 @@ int parse_signed_commit(const struct commit *commit,
- 			if (*line == '\n')
- 				/* dump the whole remainder of the buffer */
- 				next = tail;
--			strbuf_add(payload, line, next - line);
-+			if (!other_signature)
-+				strbuf_add(payload, line, next - line);
- 			in_signature = 0;
- 		}
- 		line = next;
-@@ -1082,23 +1087,29 @@ int remove_signature(struct strbuf *buf)
- 	const char *line = buf->buf;
- 	const char *tail = buf->buf + buf->len;
- 	int in_signature = 0;
--	const char *sig_start = NULL;
--	const char *sig_end = NULL;
-+	struct sigbuf {
-+		const char *start;
-+		const char *end;
-+	} sigs[2], *sigp = &sigs[0];
-+	int i;
-+	const char *orig_buf = buf->buf;
-+
-+	memset(sigs, 0, sizeof(sigs));
+ 		signature_check_clear(&sigc);
  
- 	while (line < tail) {
- 		const char *next = memchr(line, '\n', tail - line);
- 		next = next ? next + 1 : tail;
- 
- 		if (in_signature && line[0] == ' ')
--			sig_end = next;
-+			sigp->end = next;
- 		else if (starts_with(line, "gpgsig")) {
- 			int i;
- 			for (i = 1; i < GIT_HASH_NALGOS; i++) {
- 				const char *p;
- 				if (skip_prefix(line, gpg_sig_headers[i], &p) &&
- 				    *p == ' ') {
--					sig_start = line;
--					sig_end = next;
-+					sigp->start = line;
-+					sigp->end = next;
- 					in_signature = 1;
- 				}
- 			}
-@@ -1106,15 +1117,18 @@ int remove_signature(struct strbuf *buf)
- 			if (*line == '\n')
- 				/* dump the whole remainder of the buffer */
- 				next = tail;
-+			if (in_signature && sigp - sigs != ARRAY_SIZE(sigs))
-+				sigp++;
- 			in_signature = 0;
+ 		if (!tag_number++) {
+@@ -548,9 +554,10 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
+ 					strlen(origins.items[i].string));
+ 			fmt_tag_signature(&tagbuf, &sig, buf, len);
  		}
- 		line = next;
++		strbuf_release(&payload);
+ 		strbuf_release(&sig);
+ 	next:
+-		free(buf);
++		free(origbuf);
  	}
- 
--	if (sig_start)
--		strbuf_remove(buf, sig_start - buf->buf, sig_end - sig_start);
-+	for (i = ARRAY_SIZE(sigs) - 1; i >= 0; i--)
-+		if (sigs[i].start)
-+			strbuf_remove(buf, sigs[i].start - orig_buf, sigs[i].end - sigs[i].start);
- 
--	return sig_start != NULL;
-+	return sigs[0].start != NULL;
+ 	if (tagbuf.len) {
+ 		strbuf_addch(out, '\n');
+diff --git a/gpg-interface.c b/gpg-interface.c
+index b499270836..c6274c14af 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -345,7 +345,7 @@ void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
+ 		fputs(output, stderr);
  }
  
- static void handle_signed_tag(struct commit *parent, struct commit_extra_header ***tail)
-@@ -1165,7 +1179,7 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+-size_t parse_signature(const char *buf, size_t size)
++size_t parse_signed_buffer(const char *buf, size_t size)
+ {
+ 	size_t len = 0;
+ 	size_t match = size;
+@@ -361,6 +361,17 @@ size_t parse_signature(const char *buf, size_t size)
+ 	return match;
+ }
  
- 	sigc->result = 'N';
++int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct strbuf *signature)
++{
++	size_t match = parse_signed_buffer(buf, size);
++	if (match != size) {
++		strbuf_add(payload, buf, match);
++		strbuf_add(signature, buf + match, size - match);
++		return 1;
++	}
++	return 0;
++}
++
+ void set_signing_key(const char *key)
+ {
+ 	free(configured_signing_key);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index f4e9b4f371..80567e4894 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -37,13 +37,20 @@ struct signature_check {
  
--	if (parse_signed_commit(commit, &payload, &signature) <= 0)
-+	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
- 		goto out;
- 	ret = check_signature(payload.buf, payload.len, signature.buf,
- 		signature.len, sigc);
-diff --git a/commit.h b/commit.h
-index f4e7b0158e..030aa65ab8 100644
---- a/commit.h
-+++ b/commit.h
-@@ -317,7 +317,8 @@ void set_merge_remote_desc(struct commit *commit,
- struct commit *get_merge_parent(const char *name);
+ void signature_check_clear(struct signature_check *sigc);
  
- int parse_signed_commit(const struct commit *commit,
--			struct strbuf *message, struct strbuf *signature);
-+			struct strbuf *message, struct strbuf *signature,
-+			const struct git_hash_algo *algop);
- int remove_signature(struct strbuf *buf);
++/*
++ * Look at a GPG signed tag object.  If such a signature exists, store it in
++ * signature and the signed content in payload.  Return 1 if a signature was
++ * found, and 0 otherwise.
++ */
++int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct strbuf *signature);
++
+ /*
+  * Look at GPG signed content (e.g. a signed tag object), whose
+  * payload is followed by a detached signature on it.  Return the
+  * offset where the embedded detached signature begins, or the end of
+  * the data when there is no such signature.
+  */
+-size_t parse_signature(const char *buf, size_t size);
++size_t parse_signed_buffer(const char *buf, size_t size);
  
  /*
+  * Create a detached signature for the contents of "buffer" and append
 diff --git a/log-tree.c b/log-tree.c
-index e048467650..0f9ef836d4 100644
+index 0f9ef836d4..60bbe1d5df 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -502,7 +502,7 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+@@ -548,7 +548,8 @@ static int show_one_mergetag(struct commit *commit,
+ 	struct strbuf verify_message;
  	struct signature_check sigc = { 0 };
- 	int status;
+ 	int status, nth;
+-	size_t payload_size;
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
  
--	if (parse_signed_commit(commit, &payload, &signature) <= 0)
-+	if (parse_signed_commit(commit, &payload, &signature, the_hash_algo) <= 0)
- 		goto out;
+ 	hash_object_file(the_hash_algo, extra->value, extra->len,
+ 			 type_name(OBJ_TAG), &oid);
+@@ -571,13 +572,11 @@ static int show_one_mergetag(struct commit *commit,
+ 		strbuf_addf(&verify_message,
+ 			    "parent #%d, tagged '%s'\n", nth + 1, tag->tag);
  
- 	status = check_signature(payload.buf, payload.len, signature.buf,
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index f4bf925bdd..8df5a74f1d 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -175,7 +175,7 @@ test_expect_success GPG 'show signed commit with signature' '
- 	git cat-file commit initial >cat &&
- 	grep -v -e "gpg: " -e "Warning: " show >show.commit &&
- 	grep -e "gpg: " -e "Warning: " show >show.gpg &&
--	grep -v "^ " cat | grep -v "^$(test_oid header) " >cat.commit &&
-+	grep -v "^ " cat | grep -v "^gpgsig.* " >cat.commit &&
- 	test_cmp show.commit commit &&
- 	test_cmp show.gpg verify.2 &&
- 	test_cmp cat.commit verify.1
-@@ -337,4 +337,45 @@ test_expect_success GPG 'show double signature with custom format' '
- 	test_cmp expect actual
- '
+-	payload_size = parse_signature(extra->value, extra->len);
+ 	status = -1;
+-	if (extra->len > payload_size) {
++	if (parse_signature(extra->value, extra->len, &payload, &signature)) {
+ 		/* could have a good signature */
+-		status = check_signature(extra->value, payload_size,
+-					 extra->value + payload_size,
+-					 extra->len - payload_size, &sigc);
++		status = check_signature(payload.buf, payload.len,
++					 signature.buf, signature.len, &sigc);
+ 		if (sigc.gpg_output)
+ 			strbuf_addstr(&verify_message, sigc.gpg_output);
+ 		else
+@@ -588,6 +587,8 @@ static int show_one_mergetag(struct commit *commit,
  
+ 	show_sig_lines(opt, status, verify_message.buf);
+ 	strbuf_release(&verify_message);
++	strbuf_release(&payload);
++	strbuf_release(&signature);
+ 	return 0;
+ }
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index cf617a62e1..040a24402e 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1215,7 +1215,13 @@ static void find_subpos(const char *buf,
+ 			size_t *nonsiglen,
+ 			const char **sig, size_t *siglen)
+ {
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
+ 	const char *eol;
++	const char *end = buf + strlen(buf);
++	const char *sigstart;
 +
-+test_expect_success GPG 'verify-commit verifies multiply signed commits' '
-+	git init multiply-signed &&
-+	cd multiply-signed &&
-+	test_commit first &&
-+	echo 1 >second &&
-+	git add second &&
-+	tree=$(git write-tree) &&
-+	parent=$(git rev-parse HEAD^{commit}) &&
-+	git commit --gpg-sign -m second &&
-+	git cat-file commit HEAD &&
-+	# Avoid trailing whitespace.
-+	sed -e "s/^Q//" -e "s/^Z/ /" >commit <<-EOF &&
-+	Qtree $tree
-+	Qparent $parent
-+	Qauthor A U Thor <author@example.com> 1112912653 -0700
-+	Qcommitter C O Mitter <committer@example.com> 1112912653 -0700
-+	Qgpgsig -----BEGIN PGP SIGNATURE-----
-+	QZ
-+	Q iHQEABECADQWIQRz11h0S+chaY7FTocTtvUezd5DDQUCX/uBDRYcY29tbWl0dGVy
-+	Q QGV4YW1wbGUuY29tAAoJEBO29R7N3kMNd+8AoK1I8mhLHviPH+q2I5fIVgPsEtYC
-+	Q AKCTqBh+VabJceXcGIZuF0Ry+udbBQ==
-+	Q =tQ0N
-+	Q -----END PGP SIGNATURE-----
-+	Qgpgsig-sha256 -----BEGIN PGP SIGNATURE-----
-+	QZ
-+	Q iHQEABECADQWIQRz11h0S+chaY7FTocTtvUezd5DDQUCX/uBIBYcY29tbWl0dGVy
-+	Q QGV4YW1wbGUuY29tAAoJEBO29R7N3kMN/NEAn0XO9RYSBj2dFyozi0JKSbssYMtO
-+	Q AJwKCQ1BQOtuwz//IjU8TiS+6S4iUw==
-+	Q =pIwP
-+	Q -----END PGP SIGNATURE-----
-+	Q
-+	Qsecond
-+	EOF
-+	head=$(git hash-object -t commit -w commit) &&
-+	git reset --hard $head &&
-+	git verify-commit $head 2>actual &&
-+	grep "Good signature from" actual &&
-+	! grep "BAD signature from" actual
-+'
 +
- test_done
+ 	/* skip past header until we hit empty line */
+ 	while (*buf && *buf != '\n') {
+ 		eol = strchrnul(buf, '\n');
+@@ -1228,14 +1234,15 @@ static void find_subpos(const char *buf,
+ 		buf++;
+ 
+ 	/* parse signature first; we might not even have a subject line */
+-	*sig = buf + parse_signature(buf, strlen(buf));
+-	*siglen = strlen(*sig);
++	parse_signature(buf, end - buf, &payload, &signature);
++	*sig = strbuf_detach(&signature, siglen);
++	sigstart = buf + parse_signed_buffer(buf, strlen(buf));
+ 
+ 	/* subject is first non-empty line */
+ 	*sub = buf;
+ 	/* subject goes to first empty line before signature begins */
+ 	if ((eol = strstr(*sub, "\n\n"))) {
+-		eol = eol < *sig ? eol : *sig;
++		eol = eol < sigstart ? eol : sigstart;
+ 	/* check if message uses CRLF */
+ 	} else if (! (eol = strstr(*sub, "\r\n\r\n"))) {
+ 		/* treat whole message as subject */
+@@ -1253,7 +1260,7 @@ static void find_subpos(const char *buf,
+ 		buf++;
+ 	*body = buf;
+ 	*bodylen = strlen(buf);
+-	*nonsiglen = *sig - buf;
++	*nonsiglen = sigstart - buf;
+ }
+ 
+ /*
+@@ -1291,6 +1298,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 		struct used_atom *atom = &used_atom[i];
+ 		const char *name = atom->name;
+ 		struct atom_value *v = &val[i];
++
+ 		if (!!deref != (*name == '*'))
+ 			continue;
+ 		if (deref)
+@@ -1336,7 +1344,9 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, void *buf)
+ 			v->s = strbuf_detach(&s, NULL);
+ 		} else if (atom->u.contents.option == C_BARE)
+ 			v->s = xstrdup(subpos);
++
+ 	}
++	free((void *)sigpos);
+ }
+ 
+ /*
+diff --git a/tag.c b/tag.c
+index 1ed2684e45..3e18a41841 100644
+--- a/tag.c
++++ b/tag.c
+@@ -13,26 +13,27 @@ const char *tag_type = "tag";
+ static int run_gpg_verify(const char *buf, unsigned long size, unsigned flags)
+ {
+ 	struct signature_check sigc;
+-	size_t payload_size;
++	struct strbuf payload = STRBUF_INIT;
++	struct strbuf signature = STRBUF_INIT;
+ 	int ret;
+ 
+ 	memset(&sigc, 0, sizeof(sigc));
+ 
+-	payload_size = parse_signature(buf, size);
+-
+-	if (size == payload_size) {
++	if (!parse_signature(buf, size, &payload, &signature)) {
+ 		if (flags & GPG_VERIFY_VERBOSE)
+-			write_in_full(1, buf, payload_size);
++			write_in_full(1, buf, size);
+ 		return error("no signature found");
+ 	}
+ 
+-	ret = check_signature(buf, payload_size, buf + payload_size,
+-				size - payload_size, &sigc);
++	ret = check_signature(payload.buf, payload.len, signature.buf,
++				signature.len, &sigc);
+ 
+ 	if (!(flags & GPG_VERIFY_OMIT_STATUS))
+ 		print_signature_buffer(&sigc, flags);
+ 
+ 	signature_check_clear(&sigc);
++	strbuf_release(&payload);
++	strbuf_release(&signature);
+ 	return ret;
+ }
+ 
