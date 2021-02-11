@@ -2,89 +2,277 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FB3CC433DB
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2618C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:45:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDA1C64E38
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:27:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6244F64E3E
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 22:45:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbhBKW13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 17:27:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57924 "EHLO
+        id S229836AbhBKWpI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 17:45:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229951AbhBKW1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 17:27:25 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE97AC061574
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 14:26:45 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id k204so7962110oih.3
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 14:26:45 -0800 (PST)
+        with ESMTP id S229478AbhBKWpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 17:45:05 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10129C061574
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 14:44:25 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id e9so4291305pjj.0
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 14:44:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nvOA3i8EANf1COcWR/6MrKQ2Ywjt9CPlG8cu30UMacs=;
-        b=P7omfbOwQJ9o9xTuf7D+gECac1d+Dsi4GA3pjA+rmGaUVoEYJUSSH+4ZSpYTbRNqa5
-         8gIqHlPzUugcMLIp0631Z4+s+gDfyF+O9/lgeiEUShX42+ZecB1LnVilKY0vupSek2zr
-         FY9N8MlVYDcO8jxguFw8oJB4Qz2qYd3QwVn0KqMcLNkZPcL+adFvvQ39nyJCEEO9tZ+k
-         AB8sNkIWav9ImiNtn2+Si+5Y4bgQr+zgkK1byrOwMoJdTEHbvbF7WIH3ONecrHcA2eow
-         k2bAWotcuqK3WWp/2++WnFbQCceEpKoGuD9LdfC/xoBYz9hYl1C+Dso4TmyKvnZ5ilC6
-         pl5Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=y3qUFXKDcAt7M+RZdA8NFO5oGPLQ4SsjvRDLEHb6R00=;
+        b=qe5byaJIsSgtgDjgpK3ElcXZzPH6SvAaaJBg5gbce39PoNY0C3aJakpOpAyWfIAoOK
+         hQvIhiYzqXPfCFlQJSmvxW3Pf4s1pTjPmiy+eTspYddu4yvR2OSOu+0iSfIbQ/heq/SR
+         bYIdEr3OM5A1SuhLkMwiBBjn+Uq5HUzlz8n/XqqbsDhMCGt5l0Bgp/PRC7OfozjjW9iR
+         JMPauqLkAp53xmB1AmXqFVPEJEMw3uQYwFM4SEJkFIHfOdW7Uj8FXi5igkfk/PAttj6c
+         dvMmuE9PnQIcsUzWTUI26ADVTURi33c2Ysx2x1INAm/zGwykQPRvWC4D/xM6RU7bjWmg
+         m1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nvOA3i8EANf1COcWR/6MrKQ2Ywjt9CPlG8cu30UMacs=;
-        b=e4mxRIv5od7IUqFQOdyMX74IV01izHx+oVkpT4rt0rdnTz1NugT6JGICyVj1ZfV0Pz
-         FqXJO/8fp3kGWUc0P402Noqo5S7FEKtjK+QVJBWpKKrImWBT50JaLRkt4I+evkcnU7LA
-         q8wer87agqMcs3hiPJjA1qiuGde3Cg9J40wFt/tgH8eq4gtdj0zYuEIhjdo4MdZMVi32
-         CMI8AhOO3G2PagawyXtMzuD/G13jke2+5iLkikxpbpVvy3WZa3CVCpUPZ0gP3wX9Doil
-         P6pu9gGurlkq3syBsoc1wxgNDcZs1i+r0ORVvc930ohSRBWKWuB1PT2WQZh937gQF5Dg
-         oAvw==
-X-Gm-Message-State: AOAM5311k7erD88L5zltULBsHANN6+LOqPdmhuFIfnrpMCBcrNDrwSoV
-        RzGZ52fP39MXyQ/7SlL0desd3FSLp5jISSNfDlE=
-X-Google-Smtp-Source: ABdhPJwjKYfgY2scy4/P8fkY9FkLeGB/PrfqmKdCKdKfq+j0H0RfKT6oSentiARKtGj8IHYKTXsHBEURQSCb5OZSA/Y=
-X-Received: by 2002:a05:6808:aa6:: with SMTP id r6mr20346oij.163.1613082405333;
- Thu, 11 Feb 2021 14:26:45 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=y3qUFXKDcAt7M+RZdA8NFO5oGPLQ4SsjvRDLEHb6R00=;
+        b=aj1kRZ6Nrw5J9ovfTXXGVz1Rd1zJgK1HGbBWcW323JFv7giKkxCAbMj4EAR12aZmwc
+         CnIHUeG6jBJtyYUAGwB/EbAtxKV932wgSJZK+m8Z1kI9I7pReQ05slb27yleJyxc1lKp
+         sfq7mceUMXpO9WptZWKcO+svRxhzSoaVG87c/N6Y24uApmHc4pZuq+/mN5T+4aa83/+d
+         xDZV98wo0sLPO2m4othNXn/0eJi+6kgAcWI3NWlWnyxuEjYMSwu1Ad2cRsGX2qUM3L1P
+         3RvBRH7spbqojALHeR0NIob63yqTCBpprKU3xY774ctcHg5sz/l6M4TkhTVvTvyZDXH6
+         k4Xg==
+X-Gm-Message-State: AOAM530WlDYMU5IVVpjWRx2iLDy6Co69bHeQRypP0tlf/2EPc7Hi7OE2
+        NJOWcb1HcGitMmz227CPZroRCQ==
+X-Google-Smtp-Source: ABdhPJydepuBn+9lJHwBCUmkzqD+lpWYAMvwas5VEXdWTyLColYWvqPhsimtG9W2p6DyvV+1sfiNwg==
+X-Received: by 2002:a17:902:7c0d:b029:e2:e9cd:6280 with SMTP id x13-20020a1709027c0db02900e2e9cd6280mr322704pll.22.1613083464273;
+        Thu, 11 Feb 2021 14:44:24 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:f121:ef28:9889:fde1])
+        by smtp.gmail.com with ESMTPSA id t15sm5935655pjy.37.2021.02.11.14.44.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Feb 2021 14:44:23 -0800 (PST)
+Date:   Thu, 11 Feb 2021 14:44:18 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 08/17] hook: add 'run' subcommand
+Message-ID: <YCWzQi2vbiZ18tOF@google.com>
+References: <20201222000220.1491091-9-emilyshaffer@google.com>
+ <20210131042254.1032233-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <20210207181439.1178-1-charvi077@gmail.com> <20210210113650.19715-1-charvi077@gmail.com>
- <xmqqeehmy129.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqeehmy129.fsf@gitster.c.googlers.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Fri, 12 Feb 2021 03:56:34 +0530
-Message-ID: <CAPSFM5fWmTXRHKseqXwZyE6MOVccR2OPSs5kyEu-k1K1p01EPw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/11][Outreachy] Improve the 'fixup [-C | -c]' in
- interactive rebase
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210131042254.1032233-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Sat, Jan 30, 2021 at 08:22:54PM -0800, Jonathan Tan wrote:
+> 
+> > In order to enable hooks to be run as an external process, by a
+> > standalone Git command, or by tools which wrap Git, provide an external
+> > means to run all configured hook commands for a given hook event.
+> > 
+> > For now, the hook commands will run in config order, in series. As
+> > alternate ordering or parallelism is supported in the future, we should
+> > add knobs to use those to the command line as well.
+> > 
+> > As with the legacy hook implementation, all stdout generated by hook
+> > commands is redirected to stderr. Piping from stdin is not yet
+> > supported.
+> > 
+> > Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
+> > execution list. For now, there is no way to disable them.
+> 
+> Not true anymore now that we have hook.runHookDir :-)
 
-On Thu, 11 Feb 2021 at 22:49, Junio C Hamano <gitster@pobox.com> wrote:
->[...]
-> Thanks.  Looking good.  Unless there is any other nits, let's
-> declare victory and merge the two topics down to 'next' and then to
-> 'master' for the next release?
+Updated.
 
-Thanks for confirming. Here in these two topics  `fixup -C` works with
-"amend!" commit in interactive rebase and we are still working on some
-improvements on the new patch series ( to be sent)  that implements
-"amend! " commit . So I think to rebase that  work also on this topic,
-to make project history clear and avoid the confusion ( it also
-improves the same test script in this topic).
+> 
+> > @@ -64,6 +65,32 @@ in the order they should be run, and print the config scope where the relevant
+> >  `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
+> >  This output is human-readable and the format is subject to change over time.
+> >  
+> > +run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] `<hook-name>`::
+> > +
+> > +Runs hooks configured for `<hook-name>`, in the same order displayed by `git
+> > +hook list`. Hooks configured this way are run prepended with `sh -c`, so paths
+> > +containing special characters or spaces should be wrapped in single quotes:
+> > +`command = '/my/path with spaces/script.sh' some args`.
+> 
+> I learned recently that this may not work the way I expect [1], so you
+> might want to specifically call this out for someone who knows how
+> run-command and running-with-shell works.
 
-So maybe please wait for that, before merging to master.
+I think it might be good enough to say "may be prepended" instead - the
+quoting advice (wrap your paths) still holds.
 
-Thanks and Regards,
-Charvi
+> 
+> [1] https://lore.kernel.org/git/YAs9pTBsdskC8CPN@coredump.intra.peff.net/
+> 
+> > @@ -135,6 +136,56 @@ enum hookdir_opt configured_hookdir_opt(void)
+> >  	return HOOKDIR_UNKNOWN;
+> >  }
+> >  
+> > +static int should_include_hookdir(const char *path, enum hookdir_opt cfg)
+> > +{
+> > +	struct strbuf prompt = STRBUF_INIT;
+> > +	/*
+> > +	 * If the path doesn't exist, don't bother adding the empty hook and
+> > +	 * don't bother checking the config or prompting the user.
+> > +	 */
+> > +	if (!path)
+> > +		return 0;
+> > +
+> > +	switch (cfg)
+> > +	{
+> > +		case HOOKDIR_NO:
+> > +			return 0;
+> > +		case HOOKDIR_UNKNOWN:
+> > +			fprintf(stderr,
+> > +				_("Unrecognized value for 'hook.runHookDir'. "
+> > +				  "Is there a typo? "));
+> > +			/* FALLTHROUGH */
+> 
+> Same comment (about UNKNOWN and defaulting to WARN instead of YES) as in
+> one of the previous patches.
+
+Like in the previous patch, I opted to make it match the design doc
+(UNKNOWN matches default, aka YES). I left the typo warning, though, as
+it might be useful for someone trying to debug why "itneractive" isn't
+working as they expect.
+
+> 
+> > +		case HOOKDIR_WARN:
+> > +			fprintf(stderr, _("Running legacy hook at '%s'\n"),
+> > +				path);
+> > +			return 1;
+> > +		case HOOKDIR_INTERACTIVE:
+> > +			do {
+> > +				/*
+> > +				 * TRANSLATORS: Make sure to include [Y] and [n]
+> > +				 * in your translation. Only English input is
+> > +				 * accepted. Default option is "yes".
+> > +				 */
+> > +				fprintf(stderr, _("Run '%s'? [Yn] "), path);
+> > +				git_read_line_interactively(&prompt);
+> > +				strbuf_tolower(&prompt);
+> > +				if (starts_with(prompt.buf, "n")) {
+> > +					strbuf_release(&prompt);
+> > +					return 0;
+> > +				} else if (starts_with(prompt.buf, "y")) {
+> > +					strbuf_release(&prompt);
+> > +					return 1;
+> > +				}
+> > +				/* otherwise, we didn't understand the input */
+> > +			} while (prompt.len); /* an empty reply means "Yes" */
+> > +			strbuf_release(&prompt);
+> > +			return 1;
+> > +		case HOOKDIR_YES:
+> > +		default:
+> > +			return 1;
+> > +	}
+> > +}
+> 
+> [snip]
+> 
+> > +int run_hooks(const char *hookname, struct run_hooks_opt *options)
+> > +{
+> > +	struct strbuf hookname_str = STRBUF_INIT;
+> > +	struct list_head *to_run, *pos = NULL, *tmp = NULL;
+> > +	int rc = 0;
+> > +
+> > +	if (!options)
+> > +		BUG("a struct run_hooks_opt must be provided to run_hooks");
+> > +
+> > +	strbuf_addstr(&hookname_str, hookname);
+> > +
+> > +	to_run = hook_list(&hookname_str);
+> > +
+> > +	list_for_each_safe(pos, tmp, to_run) {
+> > +		struct child_process hook_proc = CHILD_PROCESS_INIT;
+> > +		struct hook *hook = list_entry(pos, struct hook, list);
+> > +
+> > +		hook_proc.env = options->env.v;
+> > +		hook_proc.no_stdin = 1;
+> > +		hook_proc.stdout_to_stderr = 1;
+> > +		hook_proc.trace2_hook_name = hook->command.buf;
+> > +		hook_proc.use_shell = 1;
+> 
+> I think this is based on run_hook_ve() in run-command.c - could we
+> refactor that to avoid duplication of code?
+
+Hm. At the end of part II of this series "run_hook_ve()" is deleted
+entirely; the implementation of "run_hooks" diverges significantly as
+the series progresses (supporting stdin/stdout, etc) so I'd rather not
+try to keep one of them based on the other, as I think it'll be more
+complicated than it seems in this patch.
+
+> 
+> > +
+> > +		if (hook->from_hookdir) {
+> > +		    if (!should_include_hookdir(hook->command.buf, options->run_hookdir))
+> > +			continue;
+> > +		    /*
+> > +		     * Commands from the config could be oneliners, but we know
+> > +		     * for certain that hookdir commands are not.
+> > +		     */
+> > +		    hook_proc.use_shell = 0;
+> > +		}
+> > +
+> > +		/* add command */
+> > +		strvec_push(&hook_proc.args, hook->command.buf);
+> > +
+> > +		/*
+> > +		 * add passed-in argv, without expanding - let the user get back
+> > +		 * exactly what they put in
+> > +		 */
+> > +		strvec_pushv(&hook_proc.args, options->args.v);
+> > +
+> > +		rc |= run_command(&hook_proc);
+> > +	}
+> > +
+> > +	return rc;
+> > +}
+> 
+> [snip]
+> 
+> > +struct run_hooks_opt
+> > +{
+> > +	/* Environment vars to be set for each hook */
+> > +	struct strvec env;
+> > +
+> > +	/* Args to be passed to each hook */
+> > +	struct strvec args;
+> > +
+> > +	/*
+> > +	 * How should the hookdir be handled?
+> > +	 * Leave the RUN_HOOKS_OPT_INIT default in most cases; this only needs
+> > +	 * to be overridden if the user can override it at the command line.
+> > +	 */
+> > +	enum hookdir_opt run_hookdir;
+> > +};
+> > +
+> > +#define RUN_HOOKS_OPT_INIT  {   		\
+> > +	.env = STRVEC_INIT, 				\
+> > +	.args = STRVEC_INIT, 			\
+> > +	.run_hookdir = configured_hookdir_opt()	\
+> > +}
+> 
+> I don't think we have function invocations in our declarations like
+> this. Maybe stick to just using run_hooks_opt_init().
+
+Sure.
+
+> 
+> [snip tests]
+> 
+> The tests look good.
+
+Thanks for the detailed review.
+
+ - Emily
