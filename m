@@ -2,96 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D714C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC1DC433E9
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:23:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE6D064DA1
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:14:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE7A664E00
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbhBKTIt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 14:08:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43518 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230320AbhBKTIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 14:08:45 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C6F5C061574
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:08:05 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id u15so3837643plf.1
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:08:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AyYlCZYGVEWXsx11as8iSLbadERSHF3k41S7n126HSo=;
-        b=MJAD3IPwANLIElMHGJIY16i4ixTKRh9hzvOZssqjV+Fj/z18u4lz4sOCFlK4EJT/Wv
-         paTJQOo56N0FG7GY6VScM/SF4+f9kgwayBq61WghCPxJt7GGKoJl0bhvK8b9Ba4IjsG7
-         yt7Fbjzh3hBNgiaYKDPU8F75A8nhiQtslJ66E6sYwyTenf+HqZxlQzosEGonjC7jSFjT
-         hbWiZEGdZiIi3Cai4Gyk18X3DIzLYA/VCZjy+72Ew3fF/Ekh5LEmaFQKayaWVKkaIAHb
-         gq9JA6dG6wScEZsiUJGsrszPIz2xp57O3PqtFZ5Rt6Bs67cnXqt4wto9mkakABy/1T3A
-         TQzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AyYlCZYGVEWXsx11as8iSLbadERSHF3k41S7n126HSo=;
-        b=q8spiac7V05BAsqJnbCVCnA66pjxG+O/bNaXzDJSCsAjnPj3rZzfrGZhF5N8+U0SKl
-         vE2h6PWlc2Zw90cH3deNL+3Nf/Y1bmxFOv4VBcwLmLVdzWTgIC1NnJSoh2VdydBX0FoB
-         NtSN4Onq5Mfyb7Cx1Xmm0JwX4MXLxw00jvwAMRDpppx5Ynf5xurcBNAZukCn/eExv25a
-         DKR6XR17VNEIaXc+VDwDEmp49CYoK7c1HxhFNABZF4sw3WUgPH1UsgpDXZX8MoOKDnDl
-         aTKaZEI8jkxs9a4Pd6O5kcUOHNxCEP7gVKroR7CEdaam0QGQ2fmzUdk9zo/nXzSm6OcI
-         JfLg==
-X-Gm-Message-State: AOAM53069D+Z83cjIdat0C9XGaD5+yqDTLm5kolfc9C9y3MrLQUXoeRp
-        3XvQxVw/iQIi6+UyKGwk7I23xCpgTYY=
-X-Google-Smtp-Source: ABdhPJzKxV/TXehtvAU8o/O7DQQ2o0OAi8b8nWmR0jJs3VKZnDIoO1fkqnPW7oSPjXSbx7lpr0HDGg==
-X-Received: by 2002:a17:90b:1a8b:: with SMTP id ng11mr5440467pjb.160.1613070484485;
-        Thu, 11 Feb 2021 11:08:04 -0800 (PST)
-Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id c188sm6231626pfa.98.2021.02.11.11.08.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 11:08:03 -0800 (PST)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] fixup! git-stash.txt: be explicit about subcommand options
-Date:   Thu, 11 Feb 2021 11:07:53 -0800
-Message-Id: <54f6fe119c61517d92a0aa43921ef9c1a52bb080.1613070418.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.30.0.478.g8a0d178c01
-In-Reply-To: <xmqqv9b04cil.fsf@gitster.c.googlers.com>
-References: <xmqqv9b04cil.fsf@gitster.c.googlers.com>
+        id S232014AbhBKRfE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 12:35:04 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51342 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232256AbhBKRcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 12:32:53 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 244DB10E5D5;
+        Thu, 11 Feb 2021 12:32:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ssUK0IfJz+ay
+        g+6ZVVUWmnaB9H8=; b=Qa/+QelSbEmN8xWIesZmMq4b1LkY4nzSOOhwNozU3odv
+        8XT/eV8VRAq6RoKTEQ2nnmk83OIkGvGSpoMfq6mgvIUFYUU9YYA9Uj4pFTN4glCJ
+        DfI357yJHFHEcT+JCDLUYIQR1RWZCNGaGv4NoCb7EWWmN5mKVTGhbzwgNgC4wf8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uvc5fb
+        cqVnD2ZmsbXTcsbcyI9KMSSdVyH1qJswNfmvpprYGgGl9S+wZPVrmxrprpjzp3r2
+        xlIfhx8d5qyCzTabw4CPmyaUZbt5pzG9DQMJfAgsbnNc5a4wE7m8KDkOsaZzsKIU
+        Gx5joY6y/SA3WOwLerheNP9St0Kma104RNHkY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D98510E5D3;
+        Thu, 11 Feb 2021 12:32:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6508110E5D1;
+        Thu, 11 Feb 2021 12:32:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 4/4] tests: remove most uses of test_i18ncmp
+References: <20210120182759.31102-1-avarab@gmail.com>
+        <20210211015353.28680-5-avarab@gmail.com>
+Date:   Thu, 11 Feb 2021 09:32:03 -0800
+In-Reply-To: <20210211015353.28680-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 11 Feb 2021 02:53:53 +0100")
+Message-ID: <xmqqa6say0h8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0F180DE2-6C8F-11EB-84F1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/git-stash.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 04e55eb826..f1197d641b 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -8,8 +8,8 @@ git-stash - Stash the changes in a dirty working directory away
- SYNOPSIS
- --------
- [verse]
--'git stash' list [<options>]
--'git stash' show [<options>] [<stash>]
-+'git stash' list [<log-options>]
-+'git stash' show [<diff-options>] [<stash>]
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--- 
-2.30.0.478.g8a0d178c01
+> As a follow-up to d162b25f956 (tests: remove support for
+> GIT_TEST_GETTEXT_POISON, 2021-01-20) remove most uses of test_i18ncmp
+> via a simple s/test_i18ncmp/test_cmp/g search-replacement.
+
+I am a bit hesitant to take this step, primarily because the
+distinction between test_cmp and test_i18ncmp is serving as a sign
+for tests to identify if they are dealing with translatable messages
+or plumbing/machine-readable messages.
+
+If a totally different approach to test i18n messging part
+(e.g. Dscho's rot13) appears any time soon, it would be helpful to
+leave these distinction in, rather than ripping them out, with two
+caveats.
+
+ - If such a change does happen soon enough, then the codebase this
+   huge patch touches would not be all that different by the time
+   when it happens, so reverting this patch should not be too
+   involved, which means my hesitation is not all that warranted.
+
+ - If such a change does not happen for some time, then it would
+   become impractical to revert this patch when it does happen due
+   to changes in the codebase, if we apply it with the intention of
+   "we can easily revert if we need to".  But even if we drop this
+   step, until such a change appears, we surely will gain more calls
+   to test_cmp (and possibly test_i18ncmp) in the codebase, and at
+   that point, we can trust the distinction between test_cmp and
+   test_i18ncmp even less, which means it does not help all that
+   much if we tried to keep test_i18ncmp.
+
+So, perhaps we should bite the bullet and just take this step.
+
 
