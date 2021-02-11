@@ -2,137 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A717C433DB
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 15:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AE9FC433E6
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 16:20:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0137E64E6C
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 15:42:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D69F664E95
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 16:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231360AbhBKPmM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 10:42:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55076 "EHLO
+        id S230035AbhBKQUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 11:20:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230219AbhBKPj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 10:39:57 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EEC0C061786
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 07:39:16 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id g6so4569282wrs.11
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 07:39:16 -0800 (PST)
+        with ESMTP id S231452AbhBKQSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 11:18:30 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39A15C061756
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 08:17:50 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id s77so5683121qke.4
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 08:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=u1d970izniqFs2wBYpEsCluywHf7Fmatziixa6isIok=;
-        b=ER/Pqe/Jbsu0sYVtRdAqvjqCwpRylOrPhY116CaddyN/wm/ImXgeit9w1uNA5XqzCK
-         3pfm7nS2Py1riPthdt1Z02/tSLHGhN/BlQYYzaFQWd8sIt7WGWZI3zh8jP1SxOXR2pqL
-         iJb23ZD7iSNcsHjrTU6uk378rmfNXA7dzBc+mmlbyFR7OCODzcS1Rzmdt0+8MQyXgZgo
-         j2iGGssSZWRgAfGtxikE3njeE9AIVvzXsQoAeQdH6J/ASCbzvKhrtbt5YReS6ck4KVj0
-         yVbr3jQhTf1xR7RBQhWkDVMm0rSw8yeXqSGNuCIKGzNcPioDQoD/is0g3k8r+rG/ELb+
-         31hg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mZJxdjxM+DIgiXNIRWcitHrRHZEJp8xZFlj7XYmbDUA=;
+        b=Z5fTUkzfl5dXOrJP20PpuUjSLrcx9TujbKnw09729tgaEhbkcxOCHWBwH4q4VFHqI+
+         kDzQTZspp4jifc16qn72RGPPBg/xNfe1LFU9m7U/njnFCwBpx/+Lwvfe6kHGcUe5LuI+
+         xQ2q8333QQDNTM0Cqwl4ALhwpiM5FE9bjF98oFw3rWLDpK1kzGxyGQcyiVRIlQRsiKuN
+         Yp3nBb9JiyxIBkAC0nUKRCw7/Lvg0BrpB2QTsF04UWscBjkUzVYG0FErYVW2J9swo7Hz
+         NyV1Od+fko89eWc+HoPZjZABLE+9M8JK4ogDQEpJv5Ykijn+A78iXJNo602gVYbEOyHn
+         Tn8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=u1d970izniqFs2wBYpEsCluywHf7Fmatziixa6isIok=;
-        b=mXh/TUUOLtfNSPOCmc3BKNOAwLiXAeZFfM7AQ8fBySzINQ8/xaa8ZS9KWd1OOwDVAX
-         q3/VgF6plt2+x572fKZ5W1IldG7wq4/0C4lqXsq5KJlQhM4Z4lwWcxoyRieixZXPhZym
-         wGy5wCa7XYjv7G/+HlXiKGbQoY2mejyTYpZxp9kbNmFy5PIyQGJqyp4DGOtR9kGRzzK+
-         Mgp+ewLGzroLOzTP6YqPsayPaqCz7hYXeKJJiWTjMVnUAtH5HD473d58EZCxVfROhcFN
-         SO3CfypfhgaP3xJxfqI5rpgi6Wi96pByBhMK9p0WPnD2qvIszQETCC1AIQgOtAQcmSXB
-         T/2A==
-X-Gm-Message-State: AOAM530ng3vx0ENjgwyk0PFKUkRvZJxkmViZs9ZsHQLV/qrc/6Xy7xqL
-        flDi/48j+UzL318RuT0IvrwlaNIYtFw=
-X-Google-Smtp-Source: ABdhPJyWGwUjx+oEun22UY4ix6alJVElaRd+fEL8WWHxtuY/kvL2dtFBY6ZP+AaL487oZ/ulNqtJBQ==
-X-Received: by 2002:adf:fe0d:: with SMTP id n13mr6270698wrr.258.1613057955323;
-        Thu, 11 Feb 2021 07:39:15 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x9sm11533580wmb.14.2021.02.11.07.39.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 07:39:15 -0800 (PST)
-Message-Id: <pull.875.git.1613057954213.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Feb 2021 15:39:13 +0000
-Subject: [PATCH] commit-graph: when incompatible with graphs, indicate why
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=mZJxdjxM+DIgiXNIRWcitHrRHZEJp8xZFlj7XYmbDUA=;
+        b=uW8SDIBnHGaRW3+B0I/LhKtRh7bNMN0M/4YvA+AclIHfGPRck0EbroHawF9tSZXqlh
+         QpEGprEEa43cwsOnnhTmnKilcGbfkjBUVgyOX++VQM6uWdCUKmy+TTlMkpQFzHVxAEpR
+         BwmiW0N3gu7dU8Kissr1diKa6LYwNP08kE0o//PFNm0KCHJ0ga0PJI4iqKppkCcU2iQ9
+         EK8T7lP3RtL8tMjI/89cH/he/2ClI4zOtwC43j5HgsUWHrmjgUtiiNpbA0ckt7ykW+0O
+         uJrc/ioBQLa4wta0JfbSsk1JJlz/lnPuqdm9xeNxoPxKiupCDHiAov0ahfbkk+MGQ5Ju
+         Gdag==
+X-Gm-Message-State: AOAM532Qho/5ssjBPMXVojaSSUYp5612wm6ak9gOaBBXuhMCss4gtAtO
+        FcXPEjQXWmtjxGoWoqZwcts=
+X-Google-Smtp-Source: ABdhPJzkvGb5VcNOUflyA+9iSIxA2akw7239RSJH/9FJrsj72hJDykwcKBn9Pq5yf/XnO9ITca2oqg==
+X-Received: by 2002:a05:620a:98d:: with SMTP id x13mr4028074qkx.432.1613060269404;
+        Thu, 11 Feb 2021 08:17:49 -0800 (PST)
+Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:5030:63f6:1d3e:64d9])
+        by smtp.gmail.com with ESMTPSA id 199sm4307730qkm.126.2021.02.11.08.17.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Feb 2021 08:17:48 -0800 (PST)
+Subject: Re: [PATCH] commit-graph: when incompatible with graphs, indicate why
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.875.git.1613057954213.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <aa368496-2875-c383-e862-06e9c587af60@gmail.com>
+Date:   Thu, 11 Feb 2021 11:17:47 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
+MIME-Version: 1.0
+In-Reply-To: <pull.875.git.1613057954213.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 2/11/21 10:39 AM, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> When `gc.writeCommitGraph = true`, it is possible that the commit-graph
+> is _still_ not written: replace objects, grafts and shallow repositories
+> are incompatible with the commit-graph feature.
+> 
+> Under such circumstances, we need to indicate to the user why the
+> commit-graph was not written instead of staying silent about it.
 
-When `gc.writeCommitGraph = true`, it is possible that the commit-graph
-is _still_ not written: replace objects, grafts and shallow repositories
-are incompatible with the commit-graph feature.
+This feedback is valuable for these corner cases, especially now
+that the commit-graph is getting less and less "optional" as time
+goes on.
 
-Under such circumstances, we need to indicate to the user why the
-commit-graph was not written instead of staying silent about it.
+> +		if (hashmap_get_size(&r->objects->replace_map->map)) {
+> +			warning(_("repository contains replace objects; "
+> +			       "skipping commit-graph"));
+...
+> +		warning(_("repository is shallow; skipping commit-graph"));
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Be clear why commit-graph was skipped
-    
-    After repairing my local checkout
-    [https://github.com/gitgitgadget/git/pull/873], I was puzzled that the
-    commit-graph file was not written. Turns out that I still had almost a
-    dozen replace objects. But I only found out that they were blocking the
-    commit-graph when I stepped through git gc in a debugger. This is my
-    attempt to make it more straight-forward to recover from similar
-    situations in the future.
+These warnings make sense to me.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-875%2Fdscho%2Fwarn-if-commit-graph-is-skipped-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-875/dscho/warn-if-commit-graph-is-skipped-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/875
-
- commit-graph.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 65410602714e..9ad176fa7c8e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -205,16 +205,24 @@ static int commit_graph_compatible(struct repository *r)
- 
- 	if (read_replace_refs) {
- 		prepare_replace_object(r);
--		if (hashmap_get_size(&r->objects->replace_map->map))
-+		if (hashmap_get_size(&r->objects->replace_map->map)) {
-+			warning(_("repository contains replace objects; "
-+			       "skipping commit-graph"));
- 			return 0;
-+		}
- 	}
- 
- 	prepare_commit_graft(r);
- 	if (r->parsed_objects &&
--	    (r->parsed_objects->grafts_nr || r->parsed_objects->substituted_parent))
-+	    (r->parsed_objects->grafts_nr || r->parsed_objects->substituted_parent)) {
-+		warning(_("repository contains (deprecated) grafts; "
-+		       "skipping commit-graph"));
- 		return 0;
--	if (is_repository_shallow(r))
-+	}
-+	if (is_repository_shallow(r)) {
-+		warning(_("repository is shallow; skipping commit-graph"));
- 		return 0;
-+	}
- 
- 	return 1;
- }
-
-base-commit: f9f2520108bab26a750bcbb00518dc27672cf0a2
--- 
-gitgitgadget
+Thanks,
+-Stolee
