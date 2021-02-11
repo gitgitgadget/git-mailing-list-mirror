@@ -2,67 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 092DCC433E0
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 07:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63872C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 07:31:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5A4364E77
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 07:29:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 334EA61490
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 07:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbhBKH3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 02:29:48 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:38767 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbhBKH3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 02:29:47 -0500
-Received: by mail-ed1-f46.google.com with SMTP id s11so5911757edd.5
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 23:29:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qmNAphgyVt2k0asoK7ADgT2iUzoWHq/omM1FfSfBksc=;
-        b=uejpc2ydZ0Nuoo4og4tKsor+mUKb5O3+NmfQVf3c0fktnkSEGQ901lFjogdfnJERgW
-         EoUvcFc2RVG+zXWCHcesxK3mVzy8VN+PrsP/d3Vh6nvSI26CtNCZmFpkKoSPH2Ch/WQv
-         nKgcuLsmfd4xkWkyq+GLNo2XJTtlbg+hZ+sAYyS6L9LvEpZZXLlVodRbVQa5iAk9dRnM
-         29fq6TJLy4Anmh6P5jxq3HBkXOhJ5fG4xPVcrJobgn8nMv4N0ekFRCc/vTcXQwzFkxtS
-         4soI2z+E7e6kMJP9vsm9ejKMOZn4yBobZezOeSXTr2FCpLmfrsFMYdfLBWzuEnqXgDU1
-         inbg==
-X-Gm-Message-State: AOAM532Dt+FqMG8X1/QT7Sbs5HIbdItnnJf4irTReMQSUmANxsZ/WGJy
-        r2E3pRYEN8WQvZDxwxHQ7oWiIbPhGmXay8GZt/s=
-X-Google-Smtp-Source: ABdhPJz5mxHa7VztSCVOAopgnaIQNQHaaFLOq4SR133Nhe2Nz3Lm3e+j5DitWJdaoltyZpgUc4sQptUZHNST7ZUBvTs=
-X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr6871331edt.221.1613028545362;
- Wed, 10 Feb 2021 23:29:05 -0800 (PST)
+        id S229501AbhBKHbT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 02:31:19 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53574 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229451AbhBKHbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 02:31:16 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B43AE119946;
+        Thu, 11 Feb 2021 02:30:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zk00zuEu74sgMU73nTVinXM3XpE=; b=wox+kl
+        bZD9m8C888++JZjvCAJumVaGebcv6hnx9ynJMRLXKUjrXcqGUm60cJMjFukwryjc
+        klrH7wTYwhLRVnzAkVrr8uSn4Kua4aFRro+sKEBK1u711KY9j7/i9EfnXQkD7Nq1
+        hKwwEjvxjgv7GlMA/mtEFNEEIDRQHbeB9j2jk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tPAp7lyasA8eZlFb4534lwfoxc+AgNej
+        6FfxZ9ZI2yBkH1FZjOzmecTJjQioc1WhNEYTJnBYZx0IpZl9TqjsaNUbo6lWYDmL
+        dCmGK2DX4BBliG2dDgyy/4iRQOlm9C0kJvsE8rpenpz57o4CKz4QENB0BYcVuLW5
+        L+D+v0E/D4c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AC64F119945;
+        Thu, 11 Feb 2021 02:30:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E239F119943;
+        Thu, 11 Feb 2021 02:30:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin von Zweigbergk <martinvonz@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] docs: clarify that refs/notes/ do not keep the attached
+ objects alive
+References: <e7fde2369495f32c7aa88c7b6b74ebee1a1bed24.1613000292.git.martinvonz@google.com>
+        <xmqqo8grzbjv.fsf@gitster.c.googlers.com>
+        <CAESOdVDgpe9yacMxKLO_AjAnadcSjrik_NdwhW-4vDELf+UxPw@mail.gmail.com>
+Date:   Wed, 10 Feb 2021 23:30:28 -0800
+In-Reply-To: <CAESOdVDgpe9yacMxKLO_AjAnadcSjrik_NdwhW-4vDELf+UxPw@mail.gmail.com>
+        (Martin von Zweigbergk's message of "Wed, 10 Feb 2021 21:14:15 -1000")
+Message-ID: <xmqqeehnysbv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <20210209173254.17712-1-shubhunic@gmail.com> <xmqqy2fwyhjy.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqy2fwyhjy.fsf@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 11 Feb 2021 02:28:54 -0500
-Message-ID: <CAPig+cSXi7Ct48gqkBVvBtOm6bMqDhPcxXeiK3ZytAitZXNT5Q@mail.gmail.com>
-Subject: Re: [PATCH v2 00/10] Modernizing the t7001 test script
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     shubham verma <shubhunic@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0481A0AE-6C3B-11EB-8B68-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 9, 2021 at 6:13 PM Junio C Hamano <gitster@pobox.com> wrote:
-> shubham verma <shubhunic@gmail.com> writes:
-> > In this patch series modernize the t7001 test script by changing the
-> > style of its tests from an old one to the modern one and by cleaning
-> > up the test script.
-> >
-> I would have used test_write_lines instead of here-doc in 9/10, but
-> that is such a minor preference thing that it is not worth going
-> back and replace.  Nothing else stood out during my cursory scan.
+Martin von Zweigbergk <martinvonz@google.com> writes:
 
-I read over the entire series and likewise didn't find anything to
-comment on, thus consider it in good shape. For what it's worth,
-consider this series:
+> Good point. You dropped the bit about the notes (texts) being kept
+> alive. I don't know if you did that intentionally are not.
 
-    Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+Yes, I did it on purpose, because it is just one of the things that
+can be reached from refs/, but we shouldn't write our document for
+those like me, who know what notes and other things in Git are.
+
+> I initially
+> thought that we should keep that bit, but it's probably not actually
+> very useful information. Users probably don't have large amounts of
+> information stored in notes, so they probably don't care whether notes
+> text is kept, especially since there's no good way of pruning the
+> notes.
+
+I am not sure if I agree with any part of the above.  End-user data
+is precious no matter the volume, and we keep notes by making them
+reachable from refs in the refs/notes/ hierarchy.
+
+I am not sure what qualifies, in your eyes, "good" way, but "git
+notes prune" is a good way to remove notes that are attached to
+objects that have already been pruned away.
+
