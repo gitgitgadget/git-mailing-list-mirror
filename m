@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE82C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3500FC433E6
 	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEC1164E45
+	by mail.kernel.org (Postfix) with ESMTP id DF77964DE9
 	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230379AbhBKTsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 14:48:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51996 "EHLO
+        id S231614AbhBKTso (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 14:48:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231437AbhBKTsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229873AbhBKTsQ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 Feb 2021 14:48:16 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CBFFC0617A9
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:19 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id u15so3894850plf.1
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:19 -0800 (PST)
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D7EC0617A7
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:17 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id k22so3885068pll.6
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=tZev5n64exraIkBO6lpZsj5owZ1J75NCF+GxB3Z7Pgg=;
-        b=rNkKGhh08l/sCHD3PsYw6x60TN5HPma/de523TOXzQZWhuwgKMJiZjE17D8dkiAtDU
-         qqB31UiIHmhznAZyrUpu9UBAVfcUXg8Et1WwFkJyokOMjMtxVIFPrss9m48Mi3Xs5egA
-         2o2pYM5U+cqK/42drmtbj8Bhow3BIOcPKXBOzZfhsDXOQLMRjS2mjwuR74O9HfRHCqaS
-         kg58nrXaM2P/l5eoiaCa9lLOwMaOElp42EmNqZMib98DGUvccsVtyCyjLnjabmixhkWy
-         sS7vzLPFfsxCt3TeVb1CuAuHi8OGtfEHrPDTgaU0SyEQVYMzhWWDS0uZXFy2CPqFjeOD
-         bvsA==
+        bh=uGrxZl9dAzunzOcvSDb8Ny+ykoCovHrWNq9nuBmoDZE=;
+        b=R2RO1gF2X+bc56digNfWWwnep1BBJzMGvGSGB9FsxL0DCSEEkMxA2IbPDm3rEgY3RW
+         GkwJX/5pOHZqMDD+PYRYkY18tiyXMHcv3WzPK+CGUEt7mQoHrZqxNf8UXbcgoDNv+fP0
+         wRKsmVsYqX0Z5GLGAJ48oZyi84LmW5kOVoztvbB2/sdqteEn9zkbGjRzej/lg9PaD/7m
+         qVcwf2co4ya1iitRa0u9KbiK8xujAJTkIVLO14eUhmRikbADw3NFtJonRoamhXJGQbtT
+         wCEOzOyCe/yUQ9tWstD+s/cIy9JnnKNZoiN3vezN5TLzuBlPdio3i3vUmCxrD2kzACcT
+         m2Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tZev5n64exraIkBO6lpZsj5owZ1J75NCF+GxB3Z7Pgg=;
-        b=W6DfkhtY6BgC4bTTnQPiNgl1JMoVGuWaxIQhpu1epF3x0RrndfNUgcmQkk6GLJwWo7
-         q+XDydQURmf1eUzBFZCFxXVei1NVSl0kk7w270zQBlAXcSXxsOd3D9cjvmNyMjkL9OmR
-         XLeWJJI2jbtf3MkgtrVIse4bg0SBYFnpzNP1ENoCTId50ZeByfqDm4Mh9mYnk1GJikFR
-         9df6A83ewQkFvKcAoKN/CEUDUIANx6bOK2LaUh35n4FxH9KveQrUC11u6o0yBkhH3SSr
-         V2eB9faOZSqqVkEYvKgG9eE3eRQmOEYZ3/eQj0QvA3t6r70S+E2wP2WOlg5jr9KGysO5
-         9fJg==
-X-Gm-Message-State: AOAM531fxmRW8ZtnTopHZPeAl8nUPnrWXT0LfHSr9rLhpyuydhV+sed4
-        4YNlWT22BX/effnRcBbzyWLSXZ9VsvCtIA==
-X-Google-Smtp-Source: ABdhPJy2pkfRe1gT/lpTDAHsI0O4KqPOku7RpdtHxI301DKpN4yxmB0X81DReG7ucPHEo7+ECNZQkA==
-X-Received: by 2002:a17:90b:4c0b:: with SMTP id na11mr5138672pjb.45.1613072838672;
-        Thu, 11 Feb 2021 11:47:18 -0800 (PST)
+        bh=uGrxZl9dAzunzOcvSDb8Ny+ykoCovHrWNq9nuBmoDZE=;
+        b=SacK+PWJUgZSKhLRm4UyiLkR/OIx/pRS8GIyy5haIBP3FLw90/DkLh9Z0o8l7+wavw
+         zDDKpS+zig6Dxk+nNJRHZZOc1xyWdLpNpNs0vKRuwzvLpeaaOzY372+XqRe+0N9ZH+Qn
+         e+qTvbmZ8gM2eP0eBJ2Aty81uQRP1LaBtWYeqSJ+GWjCZjTnHoXUXXnrF99qav6AQ/W7
+         7rRjQYBftIVsCRLF5CMnobiXEfZ1rbjpw6el1OglakYYFSEAUXWjLzr5mb8GjaBRwhLd
+         G+XdfsHAEwS56FAtYwWUBVFKG967o6E+ILeCGhY76gQlw58pzBEWIt9guNHSwZEENkNp
+         d9+Q==
+X-Gm-Message-State: AOAM531Ezg+hic1k0W2UgpXPetjE/JCIoPFW/b10YhaBMOtEXqib5fNM
+        sQPUfQfX0HfRYwapOwAUTDsvXEOsGSGmrw==
+X-Google-Smtp-Source: ABdhPJzRxqgDmSOsuZK3sqaY1lEbKxTa9Bhr7GnMrZaNEvkup71IUtkAXrScxijF3hcik0xKQXygzg==
+X-Received: by 2002:a17:902:6808:b029:e2:b405:fc0d with SMTP id h8-20020a1709026808b02900e2b405fc0dmr8701088plk.10.1613072835912;
+        Thu, 11 Feb 2021 11:47:15 -0800 (PST)
 Received: from localhost.localdomain ([47.8.36.172])
-        by smtp.gmail.com with ESMTPSA id a141sm6524778pfa.189.2021.02.11.11.47.16
+        by smtp.gmail.com with ESMTPSA id a141sm6524778pfa.189.2021.02.11.11.47.14
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 11:47:18 -0800 (PST)
+        Thu, 11 Feb 2021 11:47:15 -0800 (PST)
 From:   Shubham Verma <shubhunic@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v3 03/10] t7001: remove unnecessary blank lines
-Date:   Fri, 12 Feb 2021 01:16:57 +0530
-Message-Id: <20210211194704.28913-4-shubhunic@gmail.com>
+Subject: [PATCH v3 02/10] t7001: indent with TABs instead of spaces
+Date:   Fri, 12 Feb 2021 01:16:56 +0530
+Message-Id: <20210211194704.28913-3-shubhunic@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210211194704.28913-1-shubhunic@gmail.com>
 References: <20210211194704.28913-1-shubhunic@gmail.com>
@@ -71,98 +71,226 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some tests use a deprecated style in which there are unnecessary
-blank lines after the opening quote of the test body and before the
-closing quote. So we should remove these unnecessary blank lines.
-
 Signed-off-by: Shubham Verma <shubhunic@gmail.com>
 ---
- t/t7001-mv.sh | 12 ------------
- 1 file changed, 12 deletions(-)
+ t/t7001-mv.sh | 120 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 60 insertions(+), 60 deletions(-)
 
 diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 0f74c6339c..e98b44f7a1 100755
+index 4bbb51e578..0f74c6339c 100755
 --- a/t/t7001-mv.sh
 +++ b/t/t7001-mv.sh
-@@ -182,7 +182,6 @@ test_expect_success "Sergey Vlasov's test case" '
+@@ -4,72 +4,72 @@ test_description='git mv in subdirs'
+ . ./test-lib.sh
+ 
+ test_expect_success 'prepare reference tree' '
+-     mkdir path0 path1 &&
+-     cp "$TEST_DIRECTORY"/../COPYING path0/COPYING &&
+-     git add path0/COPYING &&
+-     git commit -m add -a
++	mkdir path0 path1 &&
++	cp "$TEST_DIRECTORY"/../COPYING path0/COPYING &&
++	git add path0/COPYING &&
++	git commit -m add -a
  '
  
- test_expect_success 'absolute pathname' '(
--
- 	rm -fr mine &&
- 	mkdir mine &&
- 	cd mine &&
-@@ -196,12 +195,9 @@ test_expect_success 'absolute pathname' '(
- 	! test -d sub &&
- 	test -d in &&
- 	git ls-files --error-unmatch in/file
--
--
- )'
- 
- test_expect_success 'absolute pathname outside should fail' '(
--
- 	rm -fr mine &&
- 	mkdir mine &&
- 	cd mine &&
-@@ -216,7 +212,6 @@ test_expect_success 'absolute pathname outside should fail' '(
- 	test -d sub &&
- 	! test -d ../in &&
- 	git ls-files --error-unmatch sub/file
--
- )'
- 
- test_expect_success 'git mv to move multiple sources into a directory' '
-@@ -232,7 +227,6 @@ test_expect_success 'git mv to move multiple sources into a directory' '
+ test_expect_success 'moving the file out of subdirectory' '
+-     cd path0 && git mv COPYING ../path1/COPYING
++	cd path0 && git mv COPYING ../path1/COPYING
  '
  
- test_expect_success 'git mv should not change sha1 of moved cache entry' '
--
- 	rm -fr .git &&
- 	git init &&
- 	echo 1 >dirty &&
-@@ -243,7 +237,6 @@ test_expect_success 'git mv should not change sha1 of moved cache entry' '
- 	echo 2 >dirty2 &&
- 	git mv dirty2 dirty &&
- 	[ "$entry" = "$(git ls-files --stage dirty | cut -f 1)" ]
--
+ # in path0 currently
+ test_expect_success 'commiting the change' '
+-     cd .. && git commit -m move-out -a
++	cd .. && git commit -m move-out -a
  '
  
- rm -f dirty dirty2
-@@ -266,7 +259,6 @@ test_expect_success 'git mv error on conflicted file' '
+ test_expect_success 'checking the commit' '
+-     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+-     grep "^R100..*path0/COPYING..*path1/COPYING" actual
++	git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
++	grep "^R100..*path0/COPYING..*path1/COPYING" actual
  '
  
- test_expect_success 'git mv should overwrite symlink to a file' '
--
- 	rm -fr .git &&
- 	git init &&
- 	echo 1 >moved &&
-@@ -279,13 +271,11 @@ test_expect_success 'git mv should overwrite symlink to a file' '
- 	test "$(cat symlink)" = 1 &&
- 	git update-index --refresh &&
- 	git diff-files --quiet
--
+ test_expect_success 'moving the file back into subdirectory' '
+-     cd path0 && git mv ../path1/COPYING COPYING
++	cd path0 && git mv ../path1/COPYING COPYING
  '
  
- rm -f moved symlink
- 
- test_expect_success 'git mv should overwrite file with a symlink' '
--
- 	rm -fr .git &&
- 	git init &&
- 	echo 1 >moved &&
-@@ -296,11 +286,9 @@ test_expect_success 'git mv should overwrite file with a symlink' '
- 	! test -e symlink &&
- 	git update-index --refresh &&
- 	git diff-files --quiet
--
+ # in path0 currently
+ test_expect_success 'commiting the change' '
+-     cd .. && git commit -m move-in -a
++	cd .. && git commit -m move-in -a
  '
  
- test_expect_success SYMLINKS 'check moved symlink' '
--
- 	test -h moved
+ test_expect_success 'checking the commit' '
+-     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+-     grep "^R100..*path1/COPYING..*path0/COPYING" actual
++	git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
++	grep "^R100..*path1/COPYING..*path0/COPYING" actual
  '
  
+ test_expect_success 'mv --dry-run does not move file' '
+-     git mv -n path0/COPYING MOVED &&
+-     test -f path0/COPYING &&
+-     test ! -f MOVED
++	git mv -n path0/COPYING MOVED &&
++	test -f path0/COPYING &&
++	test ! -f MOVED
+ '
+ 
+ test_expect_success 'checking -k on non-existing file' '
+-     git mv -k idontexist path0
++	git mv -k idontexist path0
+ '
+ 
+ test_expect_success 'checking -k on untracked file' '
+-     touch untracked1 &&
+-     git mv -k untracked1 path0 &&
+-     test -f untracked1 &&
+-     test ! -f path0/untracked1
++	touch untracked1 &&
++	git mv -k untracked1 path0 &&
++	test -f untracked1 &&
++	test ! -f path0/untracked1
+ '
+ 
+ test_expect_success 'checking -k on multiple untracked files' '
+-     touch untracked2 &&
+-     git mv -k untracked1 untracked2 path0 &&
+-     test -f untracked1 &&
+-     test -f untracked2 &&
+-     test ! -f path0/untracked1 &&
+-     test ! -f path0/untracked2
++	touch untracked2 &&
++	git mv -k untracked1 untracked2 path0 &&
++	test -f untracked1 &&
++	test -f untracked2 &&
++	test ! -f path0/untracked1 &&
++	test ! -f path0/untracked2
+ '
+ 
+ test_expect_success 'checking -f on untracked file with existing target' '
+-     touch path0/untracked1 &&
+-     test_must_fail git mv -f untracked1 path0 &&
+-     test ! -f .git/index.lock &&
+-     test -f untracked1 &&
+-     test -f path0/untracked1
++	touch path0/untracked1 &&
++	test_must_fail git mv -f untracked1 path0 &&
++	test ! -f .git/index.lock &&
++	test -f untracked1 &&
++	test -f path0/untracked1
+ '
+ 
+ # clean up the mess in case bad things happen
+@@ -79,77 +79,77 @@ rm -f idontexist untracked1 untracked2 \
+ rmdir path1
+ 
+ test_expect_success 'moving to absent target with trailing slash' '
+-     test_must_fail git mv path0/COPYING no-such-dir/ &&
+-     test_must_fail git mv path0/COPYING no-such-dir// &&
+-     git mv path0/ no-such-dir/ &&
+-     test_path_is_dir no-such-dir
++	test_must_fail git mv path0/COPYING no-such-dir/ &&
++	test_must_fail git mv path0/COPYING no-such-dir// &&
++	git mv path0/ no-such-dir/ &&
++	test_path_is_dir no-such-dir
+ '
+ 
+ test_expect_success 'clean up' '
+-     git reset --hard
++	git reset --hard
+ '
+ 
+ test_expect_success 'moving to existing untracked target with trailing slash' '
+-     mkdir path1 &&
+-     git mv path0/ path1/ &&
+-     test_path_is_dir path1/path0/
++	mkdir path1 &&
++	git mv path0/ path1/ &&
++	test_path_is_dir path1/path0/
+ '
+ 
+ test_expect_success 'moving to existing tracked target with trailing slash' '
+-     mkdir path2 &&
+-     >path2/file && git add path2/file &&
+-     git mv path1/path0/ path2/ &&
+-     test_path_is_dir path2/path0/
++	mkdir path2 &&
++	>path2/file && git add path2/file &&
++	git mv path1/path0/ path2/ &&
++	test_path_is_dir path2/path0/
+ '
+ 
+ test_expect_success 'clean up' '
+-     git reset --hard
++	git reset --hard
+ '
+ 
+ test_expect_success 'adding another file' '
+-     cp "$TEST_DIRECTORY"/../README.md path0/README &&
+-     git add path0/README &&
+-     git commit -m add2 -a
++	cp "$TEST_DIRECTORY"/../README.md path0/README &&
++	git add path0/README &&
++	git commit -m add2 -a
+ '
+ 
+ test_expect_success 'moving whole subdirectory' '
+-     git mv path0 path2
++	git mv path0 path2
+ '
+ 
+ test_expect_success 'commiting the change' '
+-     git commit -m dir-move -a
++	git commit -m dir-move -a
+ '
+ 
+ test_expect_success 'checking the commit' '
+-     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+-     grep "^R100..*path0/COPYING..*path2/COPYING" actual &&
+-     grep "^R100..*path0/README..*path2/README" actual
++	git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
++	grep "^R100..*path0/COPYING..*path2/COPYING" actual &&
++	grep "^R100..*path0/README..*path2/README" actual
+ '
+ 
+ test_expect_success 'succeed when source is a prefix of destination' '
+-     git mv path2/COPYING path2/COPYING-renamed
++	git mv path2/COPYING path2/COPYING-renamed
+ '
+ 
+ test_expect_success 'moving whole subdirectory into subdirectory' '
+-     git mv path2 path1
++	git mv path2 path1
+ '
+ 
+ test_expect_success 'commiting the change' '
+-     git commit -m dir-move -a
++	git commit -m dir-move -a
+ '
+ 
+ test_expect_success 'checking the commit' '
+-     git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
+-     grep "^R100..*path2/COPYING..*path1/path2/COPYING" actual &&
+-     grep "^R100..*path2/README..*path1/path2/README" actual
++	git diff-tree -r -M --name-status  HEAD^ HEAD >actual &&
++	grep "^R100..*path2/COPYING..*path1/path2/COPYING" actual &&
++ 	grep "^R100..*path2/README..*path1/path2/README" actual
+ '
+ 
+ test_expect_success 'do not move directory over existing directory' '
+-     mkdir path0 && mkdir path0/path2 && test_must_fail git mv path2 path0
++	mkdir path0 && mkdir path0/path2 && test_must_fail git mv path2 path0
+ '
+ 
+ test_expect_success 'move into "."' '
+-     git mv path1/path2/ .
++	git mv path1/path2/ .
+ '
+ 
+ test_expect_success "Michael Cassar's test case" '
 -- 
 2.25.1
 
