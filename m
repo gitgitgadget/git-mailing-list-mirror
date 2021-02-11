@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158CDC433E9
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C2A3C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD2B464E4D
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F2D464DE9
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 19:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbhBKTtM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 14:49:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52002 "EHLO
+        id S231540AbhBKTt1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 14:49:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231451AbhBKTsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 14:48:17 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8825EC0617AA
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:21 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id o63so4644203pgo.6
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:21 -0800 (PST)
+        with ESMTP id S231571AbhBKTsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 14:48:33 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9E8C061356
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:25 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id l18so4025571pji.3
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 11:47:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=59HdyrGbW0mTL24biggdJfhnFcKsv/h3JsK/7auLcxk=;
-        b=tPZPIdPnty1M2zzHGHCiJ+L5beaXpSJOIxf+GYd3LqpZG36lVHn9PCs8/WPY82I0C+
-         EH+2Ip4KxNpaI9d+4M5IWeIWjtEDHT4+87lLV1beECCjL0aLlqHrE6dB1hoCYu6m1hmw
-         hAaUP7h71zmElSNS7sC8hx3m0hw27XrGTRdQlhszgLuEvW7gNSw+ZRpk4FcLTaHqS7z1
-         r5s94V6GdXw9cFwvFhncNoD7xjjm892DS+XSPEH+aoNmKPC/4NNprdqdY3o9omZ9dXPC
-         rx3HNJylUuhJ/LwPAr6EvtOkg3ZOGXcEhEXf5NOcOHbsoFN3eMWMwD5sG/6bxgc1ZvJm
-         zZOw==
+        bh=nNJRwLOcEvrOVGiaQx/Ydlqpt9SLFaOr70gDT0alteM=;
+        b=XIcSVzF7xN39Xaf+YLV0WvjlSKbOLjc8ENJE86gVhpn2evm76TmYDoPlomdIFkl2QR
+         +mpfhoJhFIzzOw685zltg0q5AhtUtCcyJ8IIuZR1wS2xik10YkYa7rz/mgp9aCjbg8Mf
+         XbZqYmVCSid5SnrXZMyY7TIobjsKhThyVsEsgxujRxXKreSJwO3l/SHJKUGBeiyivyxH
+         J5+6OuLnbTU9f/ZTGdMhpQ9JqGtdhoYpSqujMSMWNAgQsAhU9wxY2ZbSmp9q4QxNfE9D
+         Pkn5hhDne2ODnqRYoWw6KgXpKAKiFKKbvEIKg+zguXUXjrWknlQcPl4HvB5lBi4Gte02
+         801w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=59HdyrGbW0mTL24biggdJfhnFcKsv/h3JsK/7auLcxk=;
-        b=U41WIPcLlpdGd/bo54+gfHvM1YegIgs/3gtyxe+I0NZuQ/9+yrJRPR8mgYa4sUKy+0
-         XvGgATGcsdT+og+x8/nPHYj5Z5UyKQXvPXXbDVquchBafYvH1DlS4j5ILDovmY/6Gxbm
-         GQwWg1Tl7AUpUNcZ08J/nFnymZZXIFynNGQC6MCNmu59uU4ng5AvUmXDxF0PaugT3HT5
-         HZpnjp2hRLDAKn3Yorq7QmB5op2Tcj2uLodKv05Z6O3eSnQps55Ipne73ZX3s7yvmZbL
-         EeumfS/bCgV4AkQIoDE81uKEmJbyLU/DdsVRM1p1aSA7O9yjw6Cb1wII7HWZI95f4tHv
-         8GYA==
-X-Gm-Message-State: AOAM533hBfXhLTnrgsawlOICeyzxWxsEiDdaz3lWOE8Bwjmrwufalcay
-        YVT8wytLAqTEhjVRvQzfgU5dwW0zWNGW3w==
-X-Google-Smtp-Source: ABdhPJwHhwQqXnhtwYCpX4Cv0fDaEV6G7W5nKVbwzw+6qA2TCNFCyuf7dl85ubzT+EVoB4pVF6KuQA==
-X-Received: by 2002:a63:3648:: with SMTP id d69mr9564712pga.155.1613072840813;
-        Thu, 11 Feb 2021 11:47:20 -0800 (PST)
+        bh=nNJRwLOcEvrOVGiaQx/Ydlqpt9SLFaOr70gDT0alteM=;
+        b=qcZDRAZ470oet2jPLCU3lh/1y2/fmZE4K15SeTlb4+7Z3fIzyVEwE/C4oqox1bBsQs
+         7DwQ61uBaZgbt/3ABc6H0oa9vZeM7x626QeA0bPKE8Bp6NxGUptcz2HYae6BFuarSxxU
+         JuIJLNZp6Pq2pGrXEGXut6WPcqbNVYHobTMh/+hLnnckhbNKy1Yd6Y7nyF6bcjd/Bf0G
+         qbJoj43CI2N90ElzRZm69KsgFcND1FiAX7FJ0FW4yuynuv3uaCFbcx7sVyp6yEQ6pZBY
+         n7BI2D2cRwlD6cToo4I/74CIdZ8OO2Cz6kFD/TTIsPneLhMO1NpGlT/US9ifQLzLcZc+
+         uzVA==
+X-Gm-Message-State: AOAM532I16db+YS30aDQ9Jhd3MTLFHWNqjvQiBituL75UVJaCmmMEn8u
+        KZ9y6pe+xexb4Gvy6vKhkUFS/P4Zusi0bA==
+X-Google-Smtp-Source: ABdhPJwRDMib6NMkEUxWvD95PIRt0T+kaTHyGo4HMgNTRMGFxtYx2UZioPp54GEihoLeoQak1TTg/w==
+X-Received: by 2002:a17:90a:f302:: with SMTP id ca2mr5421367pjb.233.1613072844665;
+        Thu, 11 Feb 2021 11:47:24 -0800 (PST)
 Received: from localhost.localdomain ([47.8.36.172])
-        by smtp.gmail.com with ESMTPSA id a141sm6524778pfa.189.2021.02.11.11.47.19
+        by smtp.gmail.com with ESMTPSA id a141sm6524778pfa.189.2021.02.11.11.47.23
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 11:47:20 -0800 (PST)
+        Thu, 11 Feb 2021 11:47:24 -0800 (PST)
 From:   Shubham Verma <shubhunic@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v3 04/10] t7001: modernize subshell formatting
-Date:   Fri, 12 Feb 2021 01:16:58 +0530
-Message-Id: <20210211194704.28913-5-shubhunic@gmail.com>
+Subject: [PATCH v3 06/10] t7001: avoid using `cd` outside of subshells
+Date:   Fri, 12 Feb 2021 01:17:00 +0530
+Message-Id: <20210211194704.28913-7-shubhunic@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210211194704.28913-1-shubhunic@gmail.com>
 References: <20210211194704.28913-1-shubhunic@gmail.com>
@@ -71,120 +71,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some test use an old style for formatting subshells:
+Avoid using `cd` outside of subshells since, if the test fails,
+there is no guarantee that the current working directory is the
+expected one, which may cause subsequent tests to run in the wrong
+directory.
 
-        (command &&
-            ...
-
-Update them to the modern style:
-
-        (
-            command &&
-            ...
+While at it, make some other tests more concise by replacing
+simple subshells with `git -C`.
 
 Signed-off-by: Shubham Verma <shubhunic@gmail.com>
 ---
- t/t7001-mv.sh | 74 ++++++++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 34 deletions(-)
+ t/t7001-mv.sh | 43 +++++++++++--------------------------------
+ 1 file changed, 11 insertions(+), 32 deletions(-)
 
 diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index e98b44f7a1..7fd4341988 100755
+index 2e49e9af81..6412c4f882 100755
 --- a/t/t7001-mv.sh
 +++ b/t/t7001-mv.sh
-@@ -181,38 +181,42 @@ test_expect_success "Sergey Vlasov's test case" '
- 	git mv ab a
+@@ -11,12 +11,12 @@ test_expect_success 'prepare reference tree' '
  '
  
--test_expect_success 'absolute pathname' '(
--	rm -fr mine &&
--	mkdir mine &&
--	cd mine &&
--	test_create_repo one &&
--	cd one &&
--	mkdir sub &&
--	>sub/file &&
--	git add sub/file &&
--
--	git mv sub "$(pwd)/in" &&
--	! test -d sub &&
--	test -d in &&
--	git ls-files --error-unmatch in/file
--)'
--
--test_expect_success 'absolute pathname outside should fail' '(
--	rm -fr mine &&
--	mkdir mine &&
--	cd mine &&
--	out=$(pwd) &&
--	test_create_repo one &&
--	cd one &&
--	mkdir sub &&
--	>sub/file &&
--	git add sub/file &&
--
--	test_must_fail git mv sub "$out/out" &&
--	test -d sub &&
--	! test -d ../in &&
--	git ls-files --error-unmatch sub/file
--)'
-+test_expect_success 'absolute pathname' '
-+	(
-+		rm -fr mine &&
-+		mkdir mine &&
-+		cd mine &&
-+		test_create_repo one &&
-+		cd one &&
-+		mkdir sub &&
-+		>sub/file &&
-+		git add sub/file &&
-+
-+		git mv sub "$(pwd)/in" &&
-+		! test -d sub &&
-+		test -d in &&
-+		git ls-files --error-unmatch in/file
-+	)
-+'
-+
-+test_expect_success 'absolute pathname outside should fail' '
-+	(
-+		rm -fr mine &&
-+		mkdir mine &&
-+		cd mine &&
-+		out=$(pwd) &&
-+		test_create_repo one &&
-+		cd one &&
-+		mkdir sub &&
-+		>sub/file &&
-+		git add sub/file &&
-+
-+		test_must_fail git mv sub "$out/out" &&
-+		test -d sub &&
-+		! test -d ../in &&
-+		git ls-files --error-unmatch sub/file
-+	)
-+'
+ test_expect_success 'moving the file out of subdirectory' '
+-	cd path0 && git mv COPYING ../path1/COPYING
++	git -C path0 mv COPYING ../path1/COPYING
+ '
  
- test_expect_success 'git mv to move multiple sources into a directory' '
- 	rm -fr .git && git init &&
-@@ -503,14 +507,16 @@ test_expect_success 'moving a submodule in nested directories' '
- test_expect_success 'moving nested submodules' '
- 	git commit -am "cleanup commit" &&
- 	mkdir sub_nested_nested &&
--	(cd sub_nested_nested &&
-+	(
-+		cd sub_nested_nested &&
- 		touch nested_level2 &&
- 		git init &&
- 		git add . &&
- 		git commit -m "nested level 2"
- 	) &&
- 	mkdir sub_nested &&
--	(cd sub_nested &&
-+	(
-+		cd sub_nested &&
- 		touch nested_level1 &&
- 		git init &&
- 		git add . &&
+ # in path0 currently
+ test_expect_success 'commiting the change' '
+-	cd .. && git commit -m move-out -a
++	git commit -m move-out -a
+ '
+ 
+ test_expect_success 'checking the commit' '
+@@ -25,12 +25,12 @@ test_expect_success 'checking the commit' '
+ '
+ 
+ test_expect_success 'moving the file back into subdirectory' '
+-	cd path0 && git mv ../path1/COPYING COPYING
++	git -C path0 mv ../path1/COPYING COPYING
+ '
+ 
+ # in path0 currently
+ test_expect_success 'commiting the change' '
+-	cd .. && git commit -m move-in -a
++	git commit -m move-in -a
+ '
+ 
+ test_expect_success 'checking the commit' '
+@@ -328,10 +328,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and no .gitm
+ 	git mv sub mod/sub &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+ '
+@@ -351,10 +348,7 @@ test_expect_success 'git mv moves a submodule with a .git directory and .gitmodu
+ 	git mv sub mod/sub &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	echo mod/sub >expected &&
+ 	git config -f .gitmodules submodule.sub.path >actual &&
+ 	test_cmp expected actual &&
+@@ -368,16 +362,10 @@ test_expect_success 'git mv moves a submodule with gitfile' '
+ 	git submodule update &&
+ 	entry="$(git ls-files --stage sub | cut -f 1)" &&
+ 	mkdir mod &&
+-	(
+-		cd mod &&
+-		git mv ../sub/ .
+-	) &&
++	git -C mod mv ../sub/ . &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	echo mod/sub >expected &&
+ 	git config -f .gitmodules submodule.sub.path >actual &&
+ 	test_cmp expected actual &&
+@@ -396,10 +384,7 @@ test_expect_success 'mv does not complain when no .gitmodules file is found' '
+ 	test_must_be_empty actual.err &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+ '
+@@ -420,10 +405,7 @@ test_expect_success 'mv will error out on a modified .gitmodules file unless sta
+ 	test_must_be_empty actual.err &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+ '
+@@ -441,10 +423,7 @@ test_expect_success 'mv issues a warning when section is not found in .gitmodule
+ 	test_i18ncmp expect.err actual.err &&
+ 	! test -e sub &&
+ 	[ "$entry" = "$(git ls-files --stage mod/sub | cut -f 1)" ] &&
+-	(
+-		cd mod/sub &&
+-		git status
+-	) &&
++	git -C mod/sub status &&
+ 	git update-index --refresh &&
+ 	git diff-files --quiet
+ '
 -- 
 2.25.1
 
