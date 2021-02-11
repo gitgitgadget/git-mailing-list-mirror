@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E6CC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C867BC433E6
 	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 08:17:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 872E564E7D
+	by mail.kernel.org (Postfix) with ESMTP id 9FC2264DFF
 	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 08:17:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229837AbhBKIQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 03:16:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44922 "EHLO
+        id S229818AbhBKIQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 03:16:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbhBKIQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 03:16:34 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA108C0613D6
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:53 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id 190so4436967wmz.0
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:53 -0800 (PST)
+        with ESMTP id S229777AbhBKIQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 03:16:35 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D41C061574
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:54 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id u16so779472wmq.1
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 00:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qRSc+dm1tQkHMASnWY40JsX73g/hNfM0nZohRVo2Sjo=;
-        b=RK+R/D7bDaAorDxtRAgInsFvqlXSVVcaZfUlqW7ki0+7E2ptYPUfU77r9VPqqu6bXr
-         Zf+k4ObmiD2nJXJP58kx2oM2AYzbqYo3qEiMMZpyBSUzY9Rj7MjOKgx88apV8gy0dmZ6
-         XpSNnft19HYHD0WB7q6jJ5EZhhgC2ixTR/WjRcrgSG+vGJZi037NIXwxQ1/Ds71BzcbD
-         p0/s3ecthwiyfhE/XekWgNQn6YhAVMcEtr2yq6HxRbZvqq6TPf3C+DlYOPaCII6Cb2hK
-         k+GatgoetoIW/uj7AzLGfIUa/jKDoO2ISaTDinxT+PweR8bXFQuQZJrM866NX2WgR+jC
-         VU1g==
+        bh=mj5Y7AlVUBbet8Wcga40zNKhfgQmVARKb2P7Xr/sYP4=;
+        b=jOlO7IvYf27+jKS3+Q/VvVz8GAMRYt5qVbiROdBjjkICLDBV6sTBHI2nu4bDefXp4D
+         LjnzDvs8jhP7CKyr1+qgIloK2MhLPd3Iyh6mPWOVIshiNy9kQfeq8CqeiUO7eLMsdOuA
+         0mETT+NxnaICbidi8pyXG3t31iEjigrAJOe1TYy1XHvF74XnbUrfUKei3VXLIAHAEkce
+         8uEMx3uwDwZPfK7XIiVeBw4S8PPZWLWOALNl0Qz6EHoZ9jsu2WCamW/Htc9N9NLg+BKi
+         ZqG5bvs2NoPVIWxjgdMydH44v4R2nE5QNejTkjgi85OCaMi4oQqUZu7ytrlGbTYAjzYu
+         xkmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qRSc+dm1tQkHMASnWY40JsX73g/hNfM0nZohRVo2Sjo=;
-        b=nt2ajowukuKNrG5ewjQvoPDv3zjcw+psUu86kfoNDR/4e9ZlthKPRUX+35RA6y/NMm
-         S9SWL7iN+69CXr6i8Us0w0bPiq+FRJ3q/9qNK2foTjhe77WplL4+CVRaH6UpRgS8k2zg
-         uHTE5N6vPSyeGCyTxA+fTBQAbG6Xa9hbH9R1iakjQOTCcc8esOOa83wj4QygPNqqAhlW
-         0f4MrgW+sI+RF58v4utPcnm0ETL0ZCTWqNzrU9kGkTv0OX+QkJsQuy/VBPdqLWKE35Ic
-         oHrets2xVzCH9iTkfVp0Teswkb0jsPuOpbjvnWJXPyE7sP/bboxPe+b9us+ThSg7T6LZ
-         Ay1A==
-X-Gm-Message-State: AOAM532OSE7GuN1zOLLlOM84U/6qvrXNh1P/hz0NJrvzMKxqpAz+sCvt
-        YCBeUWVo4gCkMoHmCQhCkCGx4H5w6MQ=
-X-Google-Smtp-Source: ABdhPJxbYobt8Ww8CRrkPmJ55ND6kg8J1jMnp4RS1wNi6KET/RK7f/Tz4vafxuJi5sjm/xfWNxlv/w==
-X-Received: by 2002:a05:600c:8a6:: with SMTP id l38mr503458wmp.44.1613031352405;
-        Thu, 11 Feb 2021 00:15:52 -0800 (PST)
+        bh=mj5Y7AlVUBbet8Wcga40zNKhfgQmVARKb2P7Xr/sYP4=;
+        b=tdn2TkS2aFMYzPqO8V++w8Irwl3AyX0qzspKNUsmbYZSw4MMC/0rUzV3cd6pwXiDU8
+         R3Jn6lw4TV9megZyEwA9KwYl9Vq8SoUjJMtGA+4Fa6+UV3vK77TAzVvm7EQbDRdXwl5G
+         ycOKKaoIXjyMP+fLAENNu/uLMRmGAh4wcNLzD6U7tkcb/waq8+Oet/NY6HhMqPzzEJxI
+         AJEFxJOY5MfTATZij+93QsJUoOOTSpynGsdCCBTeDGgnrYYJs/6JhMv3zCxeXVcJXXPf
+         frt/AyUtSfJKiwBylZZy2YVlIeeuFJ1CujYl/1cqGke0RUx7Xx/eF1TtQstBTGzxY/1z
+         6frw==
+X-Gm-Message-State: AOAM532CrFBmer816lLSX2ZWLZOb9tV5xMkoViAsljRYrCqTLPvfja30
+        29OFgJQm77pEarfH37Lnj2Ml2x9qh+w=
+X-Google-Smtp-Source: ABdhPJzYwrUvcU4G2UoEwFwz3a3htXBFelPkHiv7p6XQuDVTidMFpI+R+Qxsw1gkGYzwLP+jJ/jC3Q==
+X-Received: by 2002:a1c:60c1:: with SMTP id u184mr1942937wmb.22.1613031353206;
+        Thu, 11 Feb 2021 00:15:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x10sm895431wmg.6.2021.02.11.00.15.52
+        by smtp.gmail.com with ESMTPSA id g16sm7699303wmi.30.2021.02.11.00.15.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 11 Feb 2021 00:15:52 -0800 (PST)
-Message-Id: <4fff9b1ff57b62587b1cbec2031f96199a214702.1613031350.git.gitgitgadget@gmail.com>
+Message-Id: <dc26881e4ed3447c6efdcd492463be294f99b8c4.1613031350.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.843.v4.git.1613031350.gitgitgadget@gmail.com>
 References: <pull.843.v3.git.1612970140.gitgitgadget@gmail.com>
         <pull.843.v4.git.1613031350.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Feb 2021 08:15:45 +0000
-Subject: [PATCH v4 2/6] diffcore-rename: compute basenames of all source and
- dest candidates
+Date:   Thu, 11 Feb 2021 08:15:46 +0000
+Subject: [PATCH v4 3/6] diffcore-rename: complete find_basename_matches()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,105 +82,180 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We want to make use of unique basenames to help inform rename detection,
-so that more likely pairings can be checked first.  (src/moduleA/foo.txt
-and source/module/A/foo.txt are likely related if there are no other
-'foo.txt' files among the deleted and added files.)  Add a new function,
-not yet used, which creates a map of the unique basenames within
-rename_src and another within rename_dst, together with the indices
-within rename_src/rename_dst where those basenames show up.  Non-unique
-basenames still show up in the map, but have an invalid index (-1).
+It is not uncommon in real world repositories for the majority of file
+renames to not change the basename of the file; i.e. most "renames" are
+just a move of files into different directories.  We can make use of
+this to avoid comparing all rename source candidates with all rename
+destination candidates, by first comparing sources to destinations with
+the same basenames.  If two files with the same basename are
+sufficiently similar, we record the rename; if not, we include those
+files in the more exhaustive matrix comparison.
 
-This function was inspired by the fact that in real world repositories,
-files are often moved across directories without changing names.  Here
-are some sample repositories and the percentage of their historical
-renames (as of early 2020) that preserved basenames:
-  * linux: 76%
-  * gcc: 64%
-  * gecko: 79%
-  * webkit: 89%
-These statistics alone don't prove that an optimization in this area
-will help or how much it will help, since there are also unpaired adds
-and deletes, restrictions on which basenames we consider, etc., but it
-certainly motivated the idea to try something in this area.
+This means we are adding a set of preliminary additional comparisons,
+but for each file we only compare it with at most one other file.  For
+example, if there was a include/media/device.h that was deleted and a
+src/module/media/device.h that was added, and there were no other
+device.h files added or deleted between the commits being compared,
+then these two files would be compared in the preliminary step.
+
+This commit does not yet actually employ this new optimization, it
+merely adds a function which can be used for this purpose.  The next
+commit will do the necessary plumbing to make use of it.
+
+Note that this optimization might give us different results than without
+the optimization, because it's possible that despite files with the same
+basename being sufficiently similar to be considered a rename, there's
+an even better match between files without the same basename.  I think
+that is okay for four reasons: (1) it's easy to explain to the users
+what happened if it does ever occur (or even for them to intuitively
+figure out), (2) as the next patch will show it provides such a large
+performance boost that it's worth the tradeoff, and (3) it's somewhat
+unlikely that despite having unique matching basenames that other files
+serve as better matches.  Reason (4) takes a full paragraph to
+explain...
+
+If the previous three reasons aren't enough, consider what rename
+detection already does.  Break detection is not the default, meaning
+that if files have the same _fullname_, then they are considered related
+even if they are 0% similar.  In fact, in such a case, we don't even
+bother comparing the files to see if they are similar let alone
+comparing them to all other files to see what they are most similar to.
+Basically, we override content similarity based on sufficient filename
+similarity.  Without the filename similarity (currently implemented as
+an exact match of filename), we swing the pendulum the opposite
+direction and say that filename similarity is irrelevant and compare a
+full N x M matrix of sources and destinations to find out which have the
+most similar contents.  This optimization just adds another form of
+filename similarity comparison, but augments it with a file content
+similarity check as well.  Basically, if two files have the same
+basename and are sufficiently similar to be considered a rename, mark
+them as such without comparing the two to all other rename candidates.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ diffcore-rename.c | 95 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 92 insertions(+), 3 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 74930716e70d..3eb49a098adf 100644
+index 3eb49a098adf..001645624e71 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -367,6 +367,67 @@ static int find_exact_renames(struct diff_options *options)
- 	return renames;
- }
- 
-+static const char *get_basename(const char *filename)
-+{
+@@ -384,10 +384,52 @@ static int find_basename_matches(struct diff_options *options,
+ 				 int minimum_score,
+ 				 int num_src)
+ {
+-	int i;
 +	/*
-+	 * gitbasename() has to worry about special drivers, multiple
-+	 * directory separator characters, trailing slashes, NULL or
-+	 * empty strings, etc.  We only work on filenames as stored in
-+	 * git, and thus get to ignore all those complications.
++	 * When I checked in early 2020, over 76% of file renames in linux
++	 * just moved files to a different directory but kept the same
++	 * basename.  gcc did that with over 64% of renames, gecko did it
++	 * with over 79%, and WebKit did it with over 89%.
++	 *
++	 * Therefore we can bypass the normal exhaustive NxM matrix
++	 * comparison of similarities between all potential rename sources
++	 * and destinations by instead using file basename as a hint (i.e.
++	 * the portion of the filename after the last '/'), checking for
++	 * similarity between files with the same basename, and if we find
++	 * a pair that are sufficiently similar, record the rename pair and
++	 * exclude those two from the NxM matrix.
++	 *
++	 * This *might* cause us to find a less than optimal pairing (if
++	 * there is another file that we are even more similar to but has a
++	 * different basename).  Given the huge performance advantage
++	 * basename matching provides, and given the frequency with which
++	 * people use the same basename in real world projects, that's a
++	 * trade-off we are willing to accept when doing just rename
++	 * detection.
++	 *
++	 * If someone wants copy detection that implies they are willing to
++	 * spend more cycles to find similarities between files, so it may
++	 * be less likely that this heuristic is wanted.  If someone is
++	 * doing break detection, that means they do not want filename
++	 * similarity to imply any form of content similiarity, and thus
++	 * this heuristic would definitely be incompatible.
 +	 */
-+	const char *base = strrchr(filename, '/');
-+	return base ? base + 1 : filename;
-+}
 +
-+MAYBE_UNUSED
-+static int find_basename_matches(struct diff_options *options,
-+				 int minimum_score,
-+				 int num_src)
-+{
-+	int i;
-+	struct strintmap sources;
-+	struct strintmap dests;
++	int i, renames = 0;
+ 	struct strintmap sources;
+ 	struct strintmap dests;
+ 
++	/*
++	 * The prefeteching stuff wants to know if it can skip prefetching
++	 * blobs that are unmodified...and will then do a little extra work
++	 * to verify that the oids are indeed different before prefetching.
++	 * Unmodified blobs are only relevant when doing copy detection;
++	 * when limiting to rename detection, diffcore_rename[_extended]()
++	 * will never be called with unmodified source paths fed to us, so
++	 * the extra work necessary to check if rename_src entries are
++	 * unmodified would be a small waste.
++	 */
++	int skip_unmodified = 0;
 +
-+	/* Create maps of basename -> fullname(s) for sources and dests */
-+	strintmap_init_with_options(&sources, -1, NULL, 0);
-+	strintmap_init_with_options(&dests, -1, NULL, 0);
+ 	/* Create maps of basename -> fullname(s) for sources and dests */
+ 	strintmap_init_with_options(&sources, -1, NULL, 0);
+ 	strintmap_init_with_options(&dests, -1, NULL, 0);
+@@ -420,12 +462,59 @@ static int find_basename_matches(struct diff_options *options,
+ 			strintmap_set(&dests, base, i);
+ 	}
+ 
+-	/* TODO: Make use of basenames source and destination basenames */
++	/* Now look for basename matchups and do similarity estimation */
 +	for (i = 0; i < num_src; ++i) {
 +		char *filename = rename_src[i].p->one->path;
-+		const char *base;
++		const char *base = NULL;
++		intptr_t src_index;
++		intptr_t dst_index;
 +
-+		/* exact renames removed in remove_unneeded_paths_from_src() */
-+		assert(!rename_src[i].p->one->rename_used);
-+
-+		/* Record index within rename_src (i) if basename is unique */
++		/* Find out if this basename is unique among sources */
 +		base = get_basename(filename);
-+		if (strintmap_contains(&sources, base))
-+			strintmap_set(&sources, base, -1);
-+		else
-+			strintmap_set(&sources, base, i);
++		src_index = strintmap_get(&sources, base);
++		if (src_index == -1)
++			continue; /* not a unique basename; skip it */
++		assert(src_index == i);
++
++		if (strintmap_contains(&dests, base)) {
++			struct diff_filespec *one, *two;
++			int score;
++
++			/* Find out if this basename is unique among dests */
++			dst_index = strintmap_get(&dests, base);
++			if (dst_index == -1)
++				continue; /* not a unique basename; skip it */
++
++			/* Ignore this dest if already used in a rename */
++			if (rename_dst[dst_index].is_rename)
++				continue; /* already used previously */
++
++			/* Estimate the similarity */
++			one = rename_src[src_index].p->one;
++			two = rename_dst[dst_index].p->two;
++			score = estimate_similarity(options->repo, one, two,
++						    minimum_score, skip_unmodified);
++
++			/* If sufficiently similar, record as rename pair */
++			if (score < minimum_score)
++				continue;
++			record_rename_pair(dst_index, src_index, score);
++			renames++;
++
++			/*
++			 * Found a rename so don't need text anymore; if we
++			 * didn't find a rename, the filespec_blob would get
++			 * re-used when doing the matrix of comparisons.
++			 */
++			diff_free_filespec_blob(one);
++			diff_free_filespec_blob(two);
++		}
 +	}
-+	for (i = 0; i < rename_dst_nr; ++i) {
-+		char *filename = rename_dst[i].p->two->path;
-+		const char *base;
-+
-+		if (rename_dst[i].is_rename)
-+			continue; /* involved in exact match already. */
-+
-+		/* Record index within rename_dst (i) if basename is unique */
-+		base = get_basename(filename);
-+		if (strintmap_contains(&dests, base))
-+			strintmap_set(&dests, base, -1);
-+		else
-+			strintmap_set(&dests, base, i);
-+	}
-+
-+	/* TODO: Make use of basenames source and destination basenames */
-+
-+	strintmap_clear(&sources);
-+	strintmap_clear(&dests);
-+
-+	return 0;
-+}
-+
+ 
+ 	strintmap_clear(&sources);
+ 	strintmap_clear(&dests);
+ 
+-	return 0;
++	return renames;
+ }
+ 
  #define NUM_CANDIDATE_PER_DST 4
- static void record_if_better(struct diff_score m[], struct diff_score *o)
- {
 -- 
 gitgitgadget
 
