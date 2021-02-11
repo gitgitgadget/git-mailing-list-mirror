@@ -2,127 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC94C433DB
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:10:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB41DC433DB
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:28:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B398F64EDF
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:10:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 821D264EC0
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:28:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhBKCJ4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 21:09:56 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45912 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229733AbhBKCJp (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Feb 2021 21:09:45 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0910460DE3;
-        Thu, 11 Feb 2021 02:08:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1613009302;
-        bh=cM8VAcsryztCeluStcbS2q6jd24g6y1lJSwvI36NJr4=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=YHycIUlR3Wf4uFArSsKH32BAjFSV974D861tL7Qxw3FXfBs8CZTMSLsz0LU80yrvh
-         9iacO6W8iYgLkOJfk2JxeLSkocgt2dpw/5BR8j7fRP1hLZsyN6AKPJvJNy3zwI9TxZ
-         NHqlRX1KtzgZ10PpMIqZpCW71BmsHlMfNuLHNM/vO676hV/7LQhvQX6vtdzEyvnc+M
-         wyK4JURX8VPXkj5VNQDQW7VAikfiXeNWFh0gDkHZ7fj2dBOLB2TyDRtVqm8znFqMVR
-         G2Z26aTD/1v9w+14VZB876POzYc30NmqxZrezHW6PdhlSHZPI89z3NznZSerPLcfsO
-         e4IQrC2/ZEQdnJSV+dfYRT00Dqovog1tiaaf8vwAq+0AKH2AlbU3qg852t0iMZESu0
-         BSUV4gbv5lMB5G6gZfovJkLvHUCGFuJcij9l4FixBazSFosoYsXTtWCzepNKsberob
-         KYw6uSEMw+AK8Txaub5MvfXaWF5ExxmVll9ZR/JeR0POa54ZcrC
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 6/6] gpg-interface: remove other signature headers before verifying
-Date:   Thu, 11 Feb 2021 02:08:06 +0000
-Message-Id: <20210211020806.288523-7-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
-In-Reply-To: <20210211020806.288523-1-sandals@crustytoothpaste.net>
-References: <20210118234915.2036197-1-sandals@crustytoothpaste.net>
- <20210211020806.288523-1-sandals@crustytoothpaste.net>
+        id S229665AbhBKC2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 21:28:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229598AbhBKC2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 21:28:13 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2980C061574
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 18:27:32 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id r21so3825048otk.13
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 18:27:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=s5lKTuvU74b3X8xob8bLCrUi+w94Wky8Q5TwBlolnEg=;
+        b=Mh3R83aO8v6pvCD/L7PrSBJfy+EvN8owaBYhCB42l7skIyZnf9XoWBQrzPA6WDfh78
+         gJdBoiCeIIfnoFzKodWZlEDwhpvrhwxvQx/iGntA/dDfY4aCJEK/DyQwHkPuJsK9G58N
+         DHOAJX1VVHR+4bEejonvBBpVT8LaU+Nglbi4reKbWzYyAjf4gyMK5kP5rqV/hlgHNhqg
+         KAuhI2tIEAuVlaRbPr5TqYO9dwvNYGx8HvzrYNCfY/hbu+ng1Gf50aB0jxwGeJDrxA9T
+         QBl1iW/tkO2IIpLBkYFqzXAM8ArpPECuWxFFY0cP97tA7UPnoOc9sz6D0K5Nb6ytVDBS
+         CiAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=s5lKTuvU74b3X8xob8bLCrUi+w94Wky8Q5TwBlolnEg=;
+        b=HYbAwTBF/Ik952FVvoEkqi0iyNaA0+WcHZLXplW4duIHwxpaobps2BZgdwQv0BvfeA
+         k3qtqtlLYMzRarNYhFkJ8w0JdZ3+2Tv7Z/Z/omtWSKsUizzWeWa/pNTgiEWyfWTl48rD
+         Kq9Mm3lXH3AvpwxN2s0/EspJ5UWf+I6Xe8AZYYSIINQcsGobGXMqCeOOTnwTe7JGBY6U
+         hMyM9TrrdxnaTGEzxq4vx0iPiY59ibDLV1Fc3JO0PX12V4vGxcccfVAfL2uRRnzCIpem
+         7kQmVBxHxub1vPnwID4hiS+gW+GS3DBbZ6Wrj0rdsMuTns98RCOTZ2ZbgNHrnEacXrjH
+         7ztw==
+X-Gm-Message-State: AOAM5329rVYbIv4oswa4x1mgBhlAityGHRQ9mVMCiszhuwIBALsl30mN
+        PQ3hMKEZ/wYjcyjKJ7zd4zn5pLRZcZBshA==
+X-Google-Smtp-Source: ABdhPJxgqdzqpSe1m4yS9LRpop7VYTEajL5kNYL9RjfiJ+Cqb0pdILSrUzqORKTJBquZAxdbfayl6g==
+X-Received: by 2002:a05:6830:18e6:: with SMTP id d6mr4405542otf.251.1613010452288;
+        Wed, 10 Feb 2021 18:27:32 -0800 (PST)
+Received: from Derricks-MBP.attlocal.net ([2600:1700:e72:80a0:5030:63f6:1d3e:64d9])
+        by smtp.gmail.com with ESMTPSA id u126sm897497oig.55.2021.02.10.18.27.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Feb 2021 18:27:31 -0800 (PST)
+Subject: Re: [PATCH 1/9] t/helper/test-read-midx.c: add '--show-objects'
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <e36acb005d3563db772711207d2af3df03685bd4.1612998106.git.me@ttaylorr.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7b422082-d6a9-5e64-17a0-559da7777a08@gmail.com>
+Date:   Wed, 10 Feb 2021 21:27:29 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <e36acb005d3563db772711207d2af3df03685bd4.1612998106.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we have a multiply signed commit, we need to remove the signature
-in the header before verifying the object, since the trailing signature
-will not be over both pieces of data.  Do so, and verify that we
-validate the signature appropriately.
+On 2/10/21 6:02 PM, Taylor Blau wrote:
+> +	if (show_objects) {
+> +		struct object_id oid;
+> +		struct pack_entry e;
+> +
+> +		for (i = 0; i < m->num_objects; i++) {
+> +			nth_midxed_object_oid(&oid, m, i);
+> +			fill_midx_entry(the_repository, &oid, &e, m);
+> +
+> +			printf("%s %"PRIu64"\t%s\n",
+> +			       oid_to_hex(&oid), e.offset, e.p->pack_name);
+> +		}
+> +		return 0;
+> +	}
+> +
+>  	printf("header: %08x %d %d %d %d\n",
+>  	       m->signature,
+>  	       m->version,
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- gpg-interface.c |  2 ++
- t/t7004-tag.sh  | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+It seems a little odd to me that the list of objects happens after
+the header information. Probably doesn't matter in your test cases,
+but I sometimes use the test helpers to diagnose data during development
+and could see piping this output into 'less' and wanting the header
+at the top.
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index c6274c14af..127aecfc2b 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "commit.h"
- #include "config.h"
- #include "run-command.h"
- #include "strbuf.h"
-@@ -366,6 +367,7 @@ int parse_signature(const char *buf, size_t size, struct strbuf *payload, struct
- 	size_t match = parse_signed_buffer(buf, size);
- 	if (match != size) {
- 		strbuf_add(payload, buf, match);
-+		remove_signature(payload);
- 		strbuf_add(signature, buf + match, size - match);
- 		return 1;
- 	}
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 943a7d5c1d..400b83a49e 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -20,6 +20,13 @@ tag_exists () {
- 	git show-ref --quiet --verify refs/tags/"$1"
- }
- 
-+test_expect_success 'setup' '
-+	test_oid_cache <<-EOM
-+	othersigheader sha1:gpgsig-sha256
-+	othersigheader sha256:gpgsig
-+	EOM
-+'
-+
- test_expect_success 'listing all tags in an empty tree should succeed' '
- 	git tag -l &&
- 	git tag
-@@ -1374,6 +1381,24 @@ test_expect_success GPG \
- 	'test_config gpg.program echo &&
- 	 test_must_fail git tag -s -m tail tag-gpg-failure'
- 
-+# try to produce invalid signature
-+test_expect_success GPG 'git verifies tag is valid with double signature' '
-+	git tag -s -m tail tag-gpg-double-sig &&
-+	git cat-file tag tag-gpg-double-sig >tag &&
-+	othersigheader=$(test_oid othersigheader) &&
-+	sed -ne "/^\$/q;p" tag >new-tag &&
-+	cat <<-EOM >>new-tag &&
-+	$othersigheader -----BEGIN PGP SIGNATURE-----
-+	 someinvaliddata
-+	 -----END PGP SIGNATURE-----
-+	EOM
-+	sed -e "1,/^tagger/d" tag >>new-tag &&
-+	new_tag=$(git hash-object -t tag -w new-tag) &&
-+	git update-ref refs/tags/tag-gpg-double-sig $new_tag &&
-+	git verify-tag tag-gpg-double-sig &&
-+	git fsck
-+'
-+
- # try to sign with bad user.signingkey
- test_expect_success GPGSM \
- 	'git tag -s fails if gpgsm is misconfigured (bad key)' \
+Thanks,
+-Stolee
