@@ -2,249 +2,478 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D829CC433E0
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 20:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0504C433DB
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 21:32:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A58E164D73
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 20:32:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88DA464E45
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 21:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231252AbhBKUbx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 15:31:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33110 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230470AbhBKUbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 15:31:37 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D76AC061756
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 12:30:57 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id a16so6563731wmm.0
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 12:30:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=p9V6ywcrEhQofrUK1TYNQGXKjGL+IVGuoeqzIK51kFI=;
-        b=GQHLTVaFY4hFKNkhsbCB46/1Lh2ci8rfEDrvIMS+CvCVzDJJSRGrGlBWPMDGoE4yK/
-         9FZmhbqxm6vdI9bx0OFFKaaOoA6b229GTV4o5WQ3ab93UHXjbgcfUa2XnKQPi6MwXxUz
-         ysojb9nfuQYsaQNvvEL1KzpyXKT85oCtxGUuT+p4r5A8kyfPgkDIhVkBbcaMmXWzTo5z
-         uYS1ThqGEfF+ZPB+FyjyKneGbkSoDu+B5UGpv+5xyqDztm43BeJ5APBEfNq6jT1ONgIO
-         23N0CXfN6SafXwhFN9SvjpHidD8SBmoVDD06PWdIK8X/BZXjBENRtsJ4+l95HMpkb41w
-         XhRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p9V6ywcrEhQofrUK1TYNQGXKjGL+IVGuoeqzIK51kFI=;
-        b=IJtokpKSqioqtsdJMhj52RkdOlrPYFxWQfSF/dLPD9FU3Xe+uTbj0NNHBChxBh/sYx
-         J7YFWZXxqiW+6N2cTOz48xs1hua5zKvr0Z4wb1IWCB4MLLEa1mcsU+I5wnThjmG4xP4d
-         gByAFYPUWidZIUCxogQv9t7YLTahKRxMIoF9K/lt+dTXR3jFFmNOfaEmbjQI1+yZn6Ge
-         T5UF7V888ocaIOMzvh6PcYoD1pOGT4DQanGhCDMOcYMqYFaJCqMFgslIyhsUF0jltBha
-         3AJsSJRYzkiYPVL3AL+1oKB2wY9dDmhVIpHmTAwW+fwckDpAmaqhid97JP1stnUaHUvo
-         KQrg==
-X-Gm-Message-State: AOAM533THtiFdG9ApI/Od46UrzI0vNfIc5oxGNCwHWYR7X8IPnjYov0/
-        UpI/6BLkaxkY9/b6y1QXh0NhWzqD5CM=
-X-Google-Smtp-Source: ABdhPJwTCj/+0bKpgeGTrwzfFUGnhyrOsZZTh6yMU4iqj20PzccyktDYiIcWcoJdkJnRY9hOQSb8Nw==
-X-Received: by 2002:a1c:6308:: with SMTP id x8mr6900533wmb.78.1613075455920;
-        Thu, 11 Feb 2021 12:30:55 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l10sm6844248wro.4.2021.02.11.12.30.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Feb 2021 12:30:55 -0800 (PST)
-Message-Id: <pull.841.v3.git.git.1613075454274.gitgitgadget@gmail.com>
-In-Reply-To: <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
-References: <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
-From:   "Andrew Klotz via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Feb 2021 20:30:53 +0000
-Subject: [PATCH v3] config: improve error message for boolean config
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S229807AbhBKVcu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Feb 2021 16:32:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61107 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229626AbhBKVcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Feb 2021 16:32:48 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B05DAC781;
+        Thu, 11 Feb 2021 16:32:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
+         bh=+fXBRMLcnWj/UQ7O5vstMvzEkGo=; b=pMzcCcQNmSPDoTz89nc0r3wPjG/6
+        VAAUBxFu3HoBaNQYNzrwmZ06rbz6oUKdvLyTJY4rBa7ncRWLYoAxU46YkWcPNCUE
+        AcoEiIZJbFGe8JAk2fjeF8Rf2G9WyHtbhle0VGC4Sxf2NNUtCU6naDlI2UnddaRC
+        t5r9YXORcZw+4JI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+        uHJAJLSkgzsfuC571dPrPDDon6k1ov5ef/YPG1eLtdgsvZm4mmzvuLSRvG4gHkZl
+        bDKd8+fR4R/9jsMOkYmglt31Ennsxf3iw7dut/MSN+PQROxmeUpjiXFeKbAcx2ub
+        Pudklq8oWjZTy1FAX+9otFeAFNGnWR2gnutrTaTM7BQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 140EBAC780;
+        Thu, 11 Feb 2021 16:32:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9AEF7AC77F;
+        Thu, 11 Feb 2021 16:32:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Andrew Klotz <agc.klotz@gmail.com>,
-        Andrew Klotz <agc.klotz@gmail.com>
+Subject: [PATCH] diff: --{rotate,skip}-to=<path>
+cc:     ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 11 Feb 2021 13:32:01 -0800
+Message-ID: <xmqqo8gqwasu.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 94819284-6CB0-11EB-9C48-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrew Klotz <agc.klotz@gmail.com>
+In the implementation of "git difftool", there is a case where the
+user wants to start viewing the diffs at a specific path and
+continue on to the rest, optionally wrapping around to the
+beginning.  Since it is somewhat cumbersome to implement such a
+feature as a post-processing step of "git diff" output, let's
+support it internally with two new options.
 
-Currently invalid boolean config values return messages about 'bad
-numeric', which is slightly misleading when the error was due to a
-boolean value. We can improve the developer experience by returning a
-boolean error message when we know the value is neither a bool text or
-int.
+ - "git diff --rotate-to=C", when the resulting patch would show
+   paths A B C D E without the option, would "rotate" the paths to
+   shows patch to C D E A B instead.  It is an error when there is
+   no patch for C is shown.
 
-before with an invalid boolean value of `non-boolean`, its unclear what
-numeric is referring to:
-  fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
+ - "git diff --skip-to=C" would instead "skip" the paths before C,
+   and shows patch to C D E.  Again, it is an error when there is no
+   patch for C is shown.
 
-now the error message mentions `non-boolean` is a bad boolean value:
-  fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
+ - "git log [-p]" also accepts these two options, but it is not an
+   error if there is no change to the specified path.  Instead, the
+   set of output paths are rotated or skipped to the specified path
+   or the first path that sorts after the specified path.
 
-Signed-off-by: Andrew Klotz <agc.klotz@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-    config: improve error message for boolean config
-    
-    Currently invalid boolean config values return messages about 'bad
-    numeric', which I found misleading when the error was due to a boolean
-    string value. This change makes the error message reflect the boolean
-    value.
-    
-    The current approach relies on GIT_TEST_GETTEXT_POISON being a boolean
-    value, moving its special case out from die_bad_number() and into
-    git_config_bool_or_int(). An alternative could be for die_bad_number()
-    to handle boolean values when erroring, although the function name might
-    need to change if it is handling non-numeric values.
-    
-    changes since v1
-    
-     * moved boolean error message change out of git_config_bool_or_int to
-       just in git_config_bool and added die_bad_boolean instead of
-       modifying die_bad_number.
-    
-    changes since v2
-    
-     * added a test for boolean config values
-     * changed the condition to hit die_bad_bool from if (0 <= v) to if (v <
-       0)
-     * removed change in get-text-poison.sh test
-    
-    Signed-off-by: Andrew Klotz agc.klotz@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-841%2FKlotzAndrew%2Fbetter_bool_errors-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-841/KlotzAndrew/better_bool_errors-v3
-Pull-Request: https://github.com/git/git/pull/841
+ * Please do not take the presense of --skip-to and --rotate-to as
+   encouraging "git difftool" to gain the same pair of options.  I
+   think "--skip-to" would suffice for the originally presented use
+   case (i.e. eeek, my difftool session got interrupted when I was
+   looking at path X, and I only have just a few more paths to go,
+   X, Y and Z) and if that is the case, there is no need to expose
+   "--rotate-to" to the end users.  Of course, if it is easy to quit
+   the "difftool" session in the middle, then giving the users only
+   "--rotate-to" without exposing "--skip-to" is also OK.
 
-Range-diff vs v2:
+   I decided to diagnose a pathname that is not in the diff-queue as
+   an error when running the "diff" family, while allowing the
+   command to continue when running the "log" family, so it may turn
+   out to be that "git difftool --skip-to" do not have to implement
+   its own error handling after all.
 
- 1:  32dd4ee1e373 ! 1:  45a51e18c1d3 config: improve error message for boolean config
-     @@ Commit message
-      
-          before with an invalid boolean value of `non-boolean`, its unclear what
-          numeric is referring to:
-     -    ```
-     -    fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
-     -    ```
-     +      fatal: bad numeric config value 'non-boolean' for 'commit.gpgsign': invalid unit
-      
-          now the error message mentions `non-boolean` is a bad boolean value:
-     -    ```
-     -    fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
-     -    ```
-     +      fatal: bad boolean config value 'non-boolean' for 'commit.gpgsign'
-      
-          Signed-off-by: Andrew Klotz <agc.klotz@gmail.com>
-      
-     @@ config.c: int git_config_bool_or_int(const char *name, const char *value, int *i
-      -	int discard;
-      -	return !!git_config_bool_or_int(name, value, &discard);
-      +	int v = git_parse_maybe_bool(value);
-     -+	if (0 <= v)
-     -+		return v;
-     -+	else
-     ++	if (v < 0)
-      +		die_bad_bool(name, value);
-     ++	return v;
-       }
-       
-       int git_config_string(const char **dest, const char *var, const char *value)
-      
-     - ## t/t0205-gettext-poison.sh ##
-     -@@ t/t0205-gettext-poison.sh: test_expect_success 'eval_gettext: our eval_gettext() fallback has poison semant
-     - 
-     - test_expect_success "gettext: invalid GIT_TEST_GETTEXT_POISON value doesn't infinitely loop" "
-     - 	test_must_fail env GIT_TEST_GETTEXT_POISON=xyz git version 2>error &&
-     --	grep \"fatal: bad numeric config value 'xyz' for 'GIT_TEST_GETTEXT_POISON': invalid unit\" error
-     -+	grep \"fatal: bad boolean config value 'xyz' for 'GIT_TEST_GETTEXT_POISON'\" error
-     - "
-     + ## t/t1300-config.sh ##
-     +@@ t/t1300-config.sh: test_expect_success 'invalid unit' '
-     + 	test_i18ngrep "bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit" actual
-     + '
-       
-     - test_done
-     ++test_expect_success 'invalid unit boolean' '
-     ++	git config commit.gpgsign "1true" &&
-     ++	test_cmp_config 1true commit.gpgsign &&
-     ++	test_must_fail git config --bool --get commit.gpgsign 2>actual &&
-     ++	test_i18ngrep "bad boolean config value .1true. for .commit.gpgsign." actual
-     ++'
-     ++
-     + test_expect_success 'line number is reported correctly' '
-     + 	printf "[bool]\n\tvar\n" >invalid &&
-     + 	test_must_fail git config -f invalid --path bool.var 2>actual &&
+   It has been quite a long time for me to write any real patch with
+   a non-trivial amount of code change myself, so I may be getting
+   rusty, but it is refreshing to write code every so often ;-)
 
+ Documentation/diff-options.txt |  8 ++++
+ Documentation/gitdiffcore.txt  | 21 ++++++++++
+ Makefile                       |  1 +
+ builtin/diff-files.c           |  1 +
+ builtin/diff-index.c           |  2 +
+ builtin/diff-tree.c            |  3 ++
+ builtin/diff.c                 |  1 +
+ diff.c                         | 21 ++++++++++
+ diff.h                         | 21 ++++++++++
+ diffcore-rotate.c              | 46 ++++++++++++++++++++++
+ diffcore.h                     |  1 +
+ t/t4056-diff-order.sh          | 72 +++++++++++++++++++++++++++++++++-
+ 12 files changed, 197 insertions(+), 1 deletion(-)
+ create mode 100644 diffcore-rotate.c
 
- config.c          | 20 ++++++++++++++++++--
- t/t1300-config.sh |  7 +++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
-
-diff --git a/config.c b/config.c
-index b922b4f28572..f90b633dba21 100644
---- a/config.c
-+++ b/config.c
-@@ -1180,6 +1180,20 @@ static void die_bad_number(const char *name, const char *value)
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index e5733ccb2d..7c5b3cf42b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -700,6 +700,14 @@ matches a pattern if removing any number of the final pathname
+ components matches the pattern.  For example, the pattern "`foo*bar`"
+ matches "`fooasdfbar`" and "`foo/bar/baz/asdf`" but not "`foobarx`".
+ 
++--skip-to=<file>::
++--rotate-to=<file::
++	Discard the files before the named <file> from the output
++	(i.e. 'skip to'), or move them to the end of the output
++	(i.e. 'rotate to').  These were invented primarily for use
++	of the `git difftool` command, and may not be very useful
++	otherwise.
++
+ ifndef::git-format-patch[]
+ -R::
+ 	Swap two inputs; that is, show differences from index or
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index c970d9fe43..2bd1220477 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -74,6 +74,7 @@ into another list.  There are currently 5 such transformations:
+ - diffcore-merge-broken
+ - diffcore-pickaxe
+ - diffcore-order
++- diffcore-rotate
+ 
+ These are applied in sequence.  The set of filepairs 'git diff-{asterisk}'
+ commands find are used as the input to diffcore-break, and
+@@ -276,6 +277,26 @@ Documentation
+ t
+ ------------------------------------------------
+ 
++diffcore-rotate: For Changing At Which Path Output Starts
++---------------------------------------------------------
++
++This transformation takes one pathname, and rotates the set of
++filepairs so that the filepair for the given pathname comes first,
++optionally discarding the paths that come before it.  This is used
++to implement the `--skip-to` and the `--rotate-to` options.  It is
++an error when the specified pathname is not in the set of filepairs,
++but it is not useful to error out when used with "git log" family of
++commands, because it is unreasonable to expect that a given path
++would be modified by each and every commit shown by the "git log"
++command.  For this reason, when used with "git log", the filepair
++that sorts the same as, or the first one that sorts after, the given
++pathname is where the output starts.
++
++Use of this transformation combined with diffcore-order will produce
++unexpected results, as the input to this transformation is likely
++not sorted when diffcore-order is in effect.
++
++
+ SEE ALSO
+ --------
+ linkgit:git-diff[1],
+diff --git a/Makefile b/Makefile
+index 5a239cac20..9b1bde2e0e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -863,6 +863,7 @@ LIB_OBJS += diffcore-delta.o
+ LIB_OBJS += diffcore-order.o
+ LIB_OBJS += diffcore-pickaxe.o
+ LIB_OBJS += diffcore-rename.o
++LIB_OBJS += diffcore-rotate.o
+ LIB_OBJS += dir-iterator.o
+ LIB_OBJS += dir.o
+ LIB_OBJS += editor.o
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 4742a4559b..e037efb07e 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -54,6 +54,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
  	}
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
++	rev.diffopt.rotate_to_strict = 1;
+ 
+ 	/*
+ 	 * Make sure there are NO revision (i.e. pending object) parameter,
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 7f5281c461..06635e8fb2 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -41,6 +41,8 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+ 
++	rev.diffopt.rotate_to_strict = 1;
++
+ 	/*
+ 	 * Make sure there is one revision (i.e. pending object),
+ 	 * and there is no revision filtering parameters.
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 9fc95e959f..b6a9a9328e 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -156,6 +156,8 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 	if (merge_base && opt->pending.nr != 2)
+ 		die(_("--merge-base only works with two commits"));
+ 
++	opt->diffopt.rotate_to_strict = 1;
++
+ 	/*
+ 	 * NOTE!  We expect "a..b" to expand to "^a b" but it is
+ 	 * perfectly valid for revision range parser to yield "b ^a",
+@@ -192,6 +194,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 		int saved_nrl = 0;
+ 		int saved_dcctc = 0;
+ 
++		opt->diffopt.rotate_to_strict = 0;
+ 		if (opt->diffopt.detect_rename) {
+ 			if (!the_index.cache)
+ 				repo_read_index(the_repository);
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 5cfe1717e8..f1b88c7389 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -491,6 +491,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	rev.diffopt.flags.recursive = 1;
++	rev.diffopt.rotate_to_strict = 1;
+ 
+ 	setup_diff_pager(&rev.diffopt);
+ 
+diff --git a/diff.c b/diff.c
+index 69e3bc00ed..71e4738548 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5348,6 +5348,19 @@ static int diff_opt_word_diff_regex(const struct option *opt,
+ 	return 0;
  }
  
-+NORETURN
-+static void die_bad_bool(const char *name, const char *value)
++static int diff_opt_rotate_to(const struct option *opt, const char *arg, int unset)
 +{
-+	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
-+		/*
-+		 * We explicitly *don't* use _() here since it would
-+		 * cause an infinite loop with _() needing to call
-+		 * use_gettext_poison().
-+		 */
-+		die("bad boolean config value '%s' for '%s'", value, name);
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	if (!strcmp(opt->long_name, "skip-to"))
++		options->skip_instead_of_rotate = 1;
 +	else
-+		die(_("bad boolean config value '%s' for '%s'"), value, name);
++		options->skip_instead_of_rotate = 0;
++	options->rotate_to = arg;
++	return 0;
 +}
 +
- int git_config_int(const char *name, const char *value)
+ static void prep_parse_options(struct diff_options *options)
  {
- 	int ret;
-@@ -1252,8 +1266,10 @@ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+ 	struct option parseopts[] = {
+@@ -5599,6 +5612,12 @@ static void prep_parse_options(struct diff_options *options)
+ 			  DIFF_PICKAXE_REGEX, PARSE_OPT_NONEG),
+ 		OPT_FILENAME('O', NULL, &options->orderfile,
+ 			     N_("control the order in which files appear in the output")),
++		OPT_CALLBACK_F(0, "rotate-to", options, N_("<path>"),
++			       N_("show the change in the specified path first"),
++			       PARSE_OPT_NONEG, diff_opt_rotate_to),
++		OPT_CALLBACK_F(0, "skip-to", options, N_("<path>"),
++			       N_("skip the output to the specified path"),
++			       PARSE_OPT_NONEG, diff_opt_rotate_to),
+ 		OPT_CALLBACK_F(0, "find-object", options, N_("<object-id>"),
+ 			       N_("look for differences that change the number of occurrences of the specified object"),
+ 			       PARSE_OPT_NONEG, diff_opt_find_object),
+@@ -6669,6 +6688,8 @@ void diffcore_std(struct diff_options *options)
+ 		diffcore_pickaxe(options);
+ 	if (options->orderfile)
+ 		diffcore_order(options->orderfile);
++	if (options->rotate_to)
++		diffcore_rotate(options);
+ 	if (!options->found_follow)
+ 		/* See try_to_follow_renames() in tree-diff.c */
+ 		diff_resolve_rename_copy();
+diff --git a/diff.h b/diff.h
+index 2ff2b1c7f2..45300e3597 100644
+--- a/diff.h
++++ b/diff.h
+@@ -227,6 +227,27 @@ enum diff_submodule_format {
+ struct diff_options {
+ 	const char *orderfile;
  
- int git_config_bool(const char *name, const char *value)
- {
--	int discard;
--	return !!git_config_bool_or_int(name, value, &discard);
-+	int v = git_parse_maybe_bool(value);
-+	if (v < 0)
-+		die_bad_bool(name, value);
-+	return v;
- }
++	/*
++	 * "--rotate-to=<file>" would start showing at <file> and when
++	 * the output reaches the end, wrap around by default.
++	 * Setting skip_instead_of_rotate to true stops the output at the
++	 * end, effectively discarding the earlier part of the output
++	 * before <file>'s diff (this is used to implement the
++	 * "--skip-to=<file>" option).
++	 *
++	 * When rotate_to_strict is set, it is an error if there is no
++	 * <file> in the diff.  Otherwise, the output starts at the
++	 * path that is the same as, or first path that sorts after,
++	 * <file>.  Because it is unreasonable to require the exact
++	 * match for "git log -p --rotate-to=<file>" (i.e. not all
++	 * commit would touch that single <file>), "git log" sets it
++	 * to false.  "git diff" sets it to true to detect an error
++	 * in the command line option.
++	 */
++	const char *rotate_to;
++	int skip_instead_of_rotate;
++	int rotate_to_strict;
++
+ 	/**
+ 	 * A constant string (can and typically does contain newlines to look for
+ 	 * a block of text, not just a single line) to filter out the filepairs
+diff --git a/diffcore-rotate.c b/diffcore-rotate.c
+new file mode 100644
+index 0000000000..445f060ab0
+--- /dev/null
++++ b/diffcore-rotate.c
+@@ -0,0 +1,46 @@
++/*
++ * Copyright (C) 2021, Google LLC.
++ * Based on diffcore-order.c, which is Copyright (C) 2005, Junio C Hamano
++ */
++#include "cache.h"
++#include "diff.h"
++#include "diffcore.h"
++
++void diffcore_rotate(struct diff_options *opt)
++{
++	struct diff_queue_struct *q = &diff_queued_diff;
++	struct diff_queue_struct outq;
++	int rotate_to, i;
++
++	if (!q->nr)
++		return;
++
++	for (i = 0; i < q->nr; i++) {
++		int cmp = strcmp(opt->rotate_to, q->queue[i]->two->path);
++		if (!cmp)
++			break; /* exact match */
++		if (!opt->rotate_to_strict && cmp < 0)
++			break; /* q->queue[i] is now past the target pathname */
++	}
++
++	if (q->nr <= i) {
++		/* we did not find the specified path */
++		if (opt->rotate_to_strict)
++			die(_("No such path '%s' in the diff"), opt->rotate_to);
++		return;
++	}
++
++	DIFF_QUEUE_CLEAR(&outq);
++	rotate_to = i;
++
++	for (i = rotate_to; i < q->nr; i++)
++		diff_q(&outq, q->queue[i]);
++	for (i = 0; i < rotate_to; i++) {
++		if (opt->skip_instead_of_rotate)
++			diff_free_filepair(q->queue[i]);
++		else
++			diff_q(&outq, q->queue[i]);
++	}
++	free(q->queue);
++	*q = outq;
++}
+diff --git a/diffcore.h b/diffcore.h
+index d2a63c5c71..c1592bcd01 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -164,6 +164,7 @@ void diffcore_rename(struct diff_options *);
+ void diffcore_merge_broken(void);
+ void diffcore_pickaxe(struct diff_options *);
+ void diffcore_order(const char *orderfile);
++void diffcore_rotate(struct diff_options *);
  
- int git_config_string(const char **dest, const char *var, const char *value)
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 936d72041bab..e0dd5d65ceda 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -675,6 +675,13 @@ test_expect_success 'invalid unit' '
- 	test_i18ngrep "bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit" actual
- '
+ /* low-level interface to diffcore_order */
+ struct obj_order {
+diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
+index 63ea7144bb..aec1d9d1b4 100755
+--- a/t/t4056-diff-order.sh
++++ b/t/t4056-diff-order.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
  
-+test_expect_success 'invalid unit boolean' '
-+	git config commit.gpgsign "1true" &&
-+	test_cmp_config 1true commit.gpgsign &&
-+	test_must_fail git config --bool --get commit.gpgsign 2>actual &&
-+	test_i18ngrep "bad boolean config value .1true. for .commit.gpgsign." actual
+-test_description='diff order'
++test_description='diff order & rotate'
+ 
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+@@ -127,4 +127,74 @@ do
+ 	'
+ done
+ 
++### rotate and skip
++
++test_expect_success 'rotate and skip setup' '
++	>sample1.t &&
++	>sample2.t &&
++	>sample3.t &&
++	>sample4.t &&
++	git add sample[1234].t &&
++	git commit -m "added" sample[1234].t &&
++	echo modified >>sample1.t &&
++	echo modified >>sample2.t &&
++	echo modified >>sample4.t &&
++	git commit -m "updated" sample[1234].t
 +'
 +
- test_expect_success 'line number is reported correctly' '
- 	printf "[bool]\n\tvar\n" >invalid &&
- 	test_must_fail git config -f invalid --path bool.var 2>actual &&
-
-base-commit: c6102b758572c7515f606b2423dfe38934fe6764
++test_expect_success 'diff --rotate-to' '
++	git diff --rotate-to=sample2.t --name-only HEAD^ >actual &&
++	test_write_lines sample2.t sample4.t sample1.t >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --skip-to' '
++	git diff --skip-to=sample2.t --name-only HEAD^ >actual &&
++	test_write_lines sample2.t sample4.t >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff --rotate/skip-to error condition' '
++	test_must_fail git diff --rotate-to=sample3.t HEAD^ &&
++	test_must_fail git diff --skip-to=sample3.t HEAD^
++'
++
++test_expect_success 'log --rotate-to' '
++	git log --rotate-to=sample3.t --raw HEAD~2.. >raw &&
++	# just distill the commit header and paths
++	sed -n -e "s/^commit.*/commit/p" \
++	       -e "/^:/s/^.*	//p" raw >actual &&
++
++	cat >expect <<-\EOF &&
++	commit
++	sample4.t
++	sample1.t
++	sample2.t
++	commit
++	sample3.t
++	sample4.t
++	sample1.t
++	sample2.t
++	EOF
++
++	test_cmp expect actual
++'
++
++test_expect_success 'log --skip-to' '
++	git log --skip-to=sample3.t --raw HEAD~2.. >raw &&
++	# just distill the commit header and paths
++	sed -n -e "s/^commit.*/commit/p" \
++	       -e "/^:/s/^.*	//p" raw >actual &&
++
++	cat >expect <<-\EOF &&
++	commit
++	sample4.t
++	commit
++	sample3.t
++	sample4.t
++	EOF
++
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-gitgitgadget
+2.30.1-633-gb004a83696
+
