@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE97C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 01:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E3CCC433DB
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:00:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8306464DBD
-	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 01:59:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5BDC364DBD
+	for <git@archiver.kernel.org>; Thu, 11 Feb 2021 02:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbhBKB6f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Feb 2021 20:58:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47426 "EHLO
+        id S229849AbhBKB7f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Feb 2021 20:59:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229741AbhBKBzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Feb 2021 20:55:05 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CFC4C061786
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 17:54:09 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id t142so3562947wmt.1
-        for <git@vger.kernel.org>; Wed, 10 Feb 2021 17:54:09 -0800 (PST)
+        with ESMTP id S230050AbhBKB43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Feb 2021 20:56:29 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26A6C061756
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 17:54:11 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id o15so1774041wmq.5
+        for <git@vger.kernel.org>; Wed, 10 Feb 2021 17:54:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sRMx9XTdBrmo/nZFlts+8tVq/hlYoTvczMF3w4Ws9ao=;
-        b=MlPydzK89MIhRtnKnb6dRpDtAlyEl1ElVHG9kkf3WaTJoAy+WvE/dUzeLeW4MPg5Ui
-         SGd+TWnna+/AHWPmGgTQyLemQ1zxm/VmPQPy50rKul1CUfwdHwkAFeWRKFPC8zy1hjRl
-         CWBwUZYSai4HE4SvGuoDYXZxWb+rJB9iegpuC+9sodKIJwgxy0x9rrIBKtrpT5/RKdVf
-         nDvOtX8XdqjW3X6dIzMnkOXyTNdcb0pHkYpVWQWRW+G5ls6onGKIELgm0IYglu/WmZxP
-         n7vg06ULezlepeS7WIKtzyU1PdBwGD9g3LXo295K8WGe9Z6ScsdmbSeNE88PrG9qWOGt
-         O6MA==
+        bh=Rq2oXo4eRvpdMRF2skzampiTNg3YlTh8drCZjRjARqI=;
+        b=MB7m41KJ8U4/DqSG3Sevm5025HWvvuzhGCsRZivEaDlairfeCOAe6QJPzEwMU+MI+O
+         1lK4oS43yRmCqgYE0vO9UOa4Am0nb7M4LNdO++1pOaq2CkEK3I4ZF79/SQUwQ1fvqqzs
+         qp5kN114g14JGjKAuNALkuqZXbG52zoX4g+5WCPwgVsEHJ9dEkWU3jnZMeKjP1WdP/Qf
+         bF5Iik/yiy1U1LBgF9yUbeoXodI20ckCyM1wUBMiTui7imTz2bjzC71SBoPWtiV21w2F
+         abIEAiMSD+tGjVchedUnPuuip76w2vKaJJwML9WCdHNxAGfhpialVyKifad8C7fMVebi
+         mpgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sRMx9XTdBrmo/nZFlts+8tVq/hlYoTvczMF3w4Ws9ao=;
-        b=NrBqtKcpKjSA2RAh3VfYQm4oYosStt09Z9UJ7DTtZ//80hvWWSeWVl9ZJTRdCtJNGi
-         +yzwLr3KVzBoQxxcbUFf+AGkGqMLJI9I0ARcztLV6EvBhPr7p4bNdNbyCqBBqAJuQ5if
-         H+rzOTakCeTGpqCmR4bvv29CQ4NLEucwAHvT3Qby5VikDDPojnh+MO6FgK/DegMqCPT9
-         JJc2nGphIdJlERcjxnUMz8IozWn5UEfKdFe1U2PJbla3Hg464+d7xbmFU0KTn7lsld+e
-         jPmdZbjQK5IxYAF8UoucJF2nZ5q0uLX5bGyh41jk9LPXkfFnXH8VhE4sOWpkZ9XvjE/Q
-         31pA==
-X-Gm-Message-State: AOAM531auymUgcLEnAHKaso1qYmvCQt6LZwD2BebV3r/Ot1r0qWqkVvD
-        10wDWcfa4hlFOd3YB+smaO2Nk/iZJQdKSg==
-X-Google-Smtp-Source: ABdhPJxgT9MiwRzN7k/QS6m38KXw1fQDqY36K3hb+m+SNNaKnAHZmsH2DhbhKEy8oFmjNLZE5Ou/nw==
-X-Received: by 2002:a1c:bcc3:: with SMTP id m186mr2130468wmf.165.1613008448099;
-        Wed, 10 Feb 2021 17:54:08 -0800 (PST)
+        bh=Rq2oXo4eRvpdMRF2skzampiTNg3YlTh8drCZjRjARqI=;
+        b=LzHpXbmSIuV9xNnjTMqPXg6FjuVK/djprWtVWlSI54CfEoqd6K7c21Qv6Jk0Vn8S3R
+         kmIr4oVL95s/15pMqQ6AnOy24gqbDNf3CIfACmNGpH51nHh0L4AwjoWiVW9q8o80iHZn
+         8QzvGQVkAsMIpbOb+qAl47wQDxWSA9DQEQezf28AlaW+UMrS0UxUYNFBesGcna20e52i
+         TPWhGxfFbFAejBbP0IjGvsSuo09wtiuznaMcOMeqrqDZ1YymsX9xL2G/v0ueDe2MBKNK
+         Yg3g2611OdfJgUz4IdA2fS1RCXjLJC5WudWHAg0JruGOvnP1iHKSB4fBCa8G7yupIJ+a
+         aOlg==
+X-Gm-Message-State: AOAM530vE8uFm17eTeIvuU0xvR4EJyMuPx6K7zQ5eDRQY4B7VrTk9KLE
+        6idQXhzmnyZ+od/uV4DhYjLPSyAXYBed4g==
+X-Google-Smtp-Source: ABdhPJzYTNCc8IBoelnmc9WlBiG+UF0dBSIpOXhxxhGy8BcBhWm7EuGXnWAvT0Wt3CW47pV+qIAunQ==
+X-Received: by 2002:a7b:c753:: with SMTP id w19mr2214010wmk.41.1613008450272;
+        Wed, 10 Feb 2021 17:54:10 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m2sm5362486wml.34.2021.02.10.17.54.07
+        by smtp.gmail.com with ESMTPSA id m2sm5362486wml.34.2021.02.10.17.54.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 17:54:07 -0800 (PST)
+        Wed, 10 Feb 2021 17:54:09 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/4] tests: remove last uses of GIT_TEST_GETTEXT_POISON=false
-Date:   Thu, 11 Feb 2021 02:53:50 +0100
-Message-Id: <20210211015353.28680-2-avarab@gmail.com>
+Subject: [PATCH 3/4] tests: remove last uses of C_LOCALE_OUTPUT
+Date:   Thu, 11 Feb 2021 02:53:52 +0100
+Message-Id: <20210211015353.28680-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210120182759.31102-1-avarab@gmail.com>
 References: <20210120182759.31102-1-avarab@gmail.com>
@@ -78,54 +78,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-up my 73c01d25fe2 (tests: remove uses of
-GIT_TEST_GETTEXT_POISON=false, 2021-01-20) by removing the last uses
-of GIT_TEST_GETTEXT_POISON=*.
+Remove the last uses of the C_LOCALE_OUTPUT prerequisite as well as
+the prerequisite itself. This is a follow-up to d162b25f956 (tests:
+remove support for GIT_TEST_GETTEXT_POISON, 2021-01-20), as well as
+the preceding commit where we removed the simpler uses of
+C_LOCALE_OUTPUT.
 
-These assignments were part of branch that was in-flight at the time
-of the gettext poison removal. See 466f94ec45e (Merge branch
-'ab/detox-gettext-tests', 2021-02-10) and c7d6d419b0d (Merge branch
-'ab/mktag', 2021-01-25) for the merging of the two branches.
+Here I'm slightly refactoring a test added in 21e5ad50fc5 (safecrlf:
+Add mechanism to warn about irreversible crlf conversions,
+2008-02-06), as well as getting rid of another "test_have_prereq
+C_LOCALE_OUTPUT" use.
+
+I'm not leaving the prerequisite itself in place for in-flight changes
+as there currently are none that introduce new tests that rely on it,
+and because C_LOCALE_OUTPUT is currently a noop on the master branch
+we likely won't have any new submissions that use it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3800-mktag.sh | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ t/t0020-crlf.sh             | 6 ++----
+ t/t9003-help-autocorrect.sh | 7 ++-----
+ t/test-lib.sh               | 5 -----
+ 3 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index 86bfeb271ec..60a666da595 100755
---- a/t/t3800-mktag.sh
-+++ b/t/t3800-mktag.sh
-@@ -13,13 +13,11 @@ test_description='git mktag: tag object verify test'
- 
- check_verify_failure () {
- 	test_expect_success "$1" "
--		test_must_fail env GIT_TEST_GETTEXT_POISON=false \
--			git mktag <tag.sig 2>message &&
-+		test_must_fail git mktag <tag.sig 2>message &&
- 		grep '$2' message &&
- 		if test '$3' != '--no-strict'
- 		then
--			test_must_fail env GIT_TEST_GETTEXT_POISON=false \
--				git mktag --no-strict <tag.sig 2>message.no-strict &&
-+			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&xb
- 			grep '$2' message.no-strict
- 		fi
- 	"
-@@ -443,11 +441,9 @@ test_expect_success 'invalid header entry config & fsck' '
- 	git -c fsck.extraHeaderEntry=ignore mktag --no-strict <tag.sig &&
- 
- 	git fsck &&
--	env GIT_TEST_GETTEXT_POISON=false \
--		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
-+	git -c fsck.extraHeaderEntry=warn fsck 2>err &&
- 	grep "warning .*extraHeaderEntry:" err &&
--	test_must_fail env GIT_TEST_GETTEXT_POISON=false \
--		git -c fsck.extraHeaderEntry=error 2>err fsck &&
-+	test_must_fail git -c fsck.extraHeaderEntry=error 2>err fsck &&
- 	grep "error .* extraHeaderEntry:" err
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 375cf943985..f25ae8b5e1f 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -87,10 +87,8 @@ test_expect_success 'safecrlf: print warning only once' '
+ 	git commit -m "nowarn" &&
+ 	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >doublewarn &&
+ 	git add doublewarn 2>err &&
+-	if test_have_prereq C_LOCALE_OUTPUT
+-	then
+-		test $(grep "CRLF will be replaced by LF" err | wc -l) = 1
+-	fi
++	grep "CRLF will be replaced by LF" err >err.warnings &&
++	test_line_count = 1 err.warnings
  '
  
+ 
+diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
+index 03cd5c54236..f00deaf3815 100755
+--- a/t/t9003-help-autocorrect.sh
++++ b/t/t9003-help-autocorrect.sh
+@@ -56,11 +56,8 @@ test_expect_success 'autocorrect can be declined altogether' '
+ 	git config help.autocorrect never &&
+ 
+ 	test_must_fail git lfg 2>actual &&
+-	if test_have_prereq C_LOCALE_OUTPUT
+-	then
+-		grep "is not a git command" actual &&
+-		test_line_count = 1 actual
+-	fi
++	grep "is not a git command" actual &&
++	test_line_count = 1 actual
+ '
+ 
+ test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 431adba0fb3..6d188a8075d 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1519,11 +1519,6 @@ test -n "$USE_LIBPCRE2" && test_set_prereq PCRE
+ test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
+ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
+ 
+-# Used to be used for GIT_TEST_GETTEXT_POISON=false. Only here as a
+-# shim for other in-flight changes. Should not be used and will be
+-# removed soon.
+-test_set_prereq C_LOCALE_OUTPUT
+-
+ if test -z "$GIT_TEST_CHECK_CACHE_TREE"
+ then
+ 	GIT_TEST_CHECK_CACHE_TREE=true
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
