@@ -2,98 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93A75C433DB
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 19:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12055C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 19:53:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E9C864DF0
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 19:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D399364E2B
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 19:52:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231725AbhBLTgr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 14:36:47 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62907 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231317AbhBLTgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 14:36:45 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D43771186A9;
-        Fri, 12 Feb 2021 14:36:02 -0500 (EST)
+        id S231348AbhBLTw6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 14:52:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56292 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230368AbhBLTwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 14:52:55 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE3C4ACBF4;
+        Fri, 12 Feb 2021 14:52:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wIpjNM5o8Ek6R3JUTv6z7KzVveo=; b=gtCzei
-        sgbBVPUyWzFzhRFfaRRaiGplbsisU8DvDdlqZfU0xWk/6z7gG5dmYDBsHGf8a/AW
-        pyPBuAZMfxS3v0Zp3m9EancR20ZRhXQUCeKi8aav6CD81PdyrK169+feW9Vg+7hu
-        vE9MCOh2S0M/xkhBkNRxTtNiaH40VMlcErxm0=
+        :content-type:content-transfer-encoding; s=sasl; bh=ISUiVQcVdn1p
+        51eXptoYHYu/3KA=; b=mlM+8QBOR9J43nQKIxJLQ3JTL2ph8FEMP/RDsBkF5xpP
+        qMQQkuVEzBQXMRSI8ECvDR3XgJXwsyQ2THBIJqemOyPPqIVxIiDJq+vmEZCV6kwL
+        iYDK/yzHS2xWpETq6gbP2J+jFtewVEx7ZxpLeLPH4Ihz7nEWhembEkR7b8X8VXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xFLN8Pq5zaKaxS78Lsr/RreoFW0LvdyY
-        BMQz60TDD7xm2Q+vgkaJ7UGhUWJ2vS269j10Yf24g7IVPeL9sWVvjMMV0lrG4ghC
-        dO408pV+gHqL0KMpsDYUn+Eo3vBbtEvB7vCa8AWgh6otznO1UmiYD4In+dIGBKhZ
-        zWZ/t+8iAgY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCBC31186A8;
-        Fri, 12 Feb 2021 14:36:02 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=E+bcX2
+        rHmQkJ/CG/XGsfbgCm9YYbPpKYNf6Xus6n0GxBDDW+idb1aBUYecWqxSF4NUVgvp
+        mKwj9p5xfZ54bt4FlSCayzARLrL6oB59AhyaIoONm6VJYc4SlUtNMWIq2KkC68ez
+        h62czSejN/MFwlZXTjZ8yidafmnZtQ0bV6XMc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E503FACBF3;
+        Fri, 12 Feb 2021 14:52:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.243.138.161])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E4EE1186A4;
-        Fri, 12 Feb 2021 14:35:59 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6BD6FACBF2;
+        Fri, 12 Feb 2021 14:52:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] reflog expire --stale-fix: be generous about missing
- objects
-References: <pull.873.git.1612973499110.gitgitgadget@gmail.com>
-        <xmqqy2fv1x98.fsf@gitster.c.googlers.com>
-        <YCUQkqXNXFzBs7aA@coredump.intra.peff.net>
-        <nycvar.QRO.7.76.6.2102121702120.29765@tvgsbejvaqbjf.bet>
-Date:   Fri, 12 Feb 2021 11:35:58 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2102121702120.29765@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Fri, 12 Feb 2021 17:04:08 +0100
-        (CET)")
-Message-ID: <xmqqy2ftuli9.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Andrew Klotz via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Andrew Klotz <agc.klotz@gmail.com>
+Subject: Re: [PATCH v3] config: improve error message for boolean config
+References: <pull.841.v2.git.git.1612833909210.gitgitgadget@gmail.com>
+        <pull.841.v3.git.git.1613075454274.gitgitgadget@gmail.com>
+        <YCZarBDX2E3U0OXU@coredump.intra.peff.net>
+Date:   Fri, 12 Feb 2021 11:52:08 -0800
+In-Reply-To: <YCZarBDX2E3U0OXU@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 12 Feb 2021 05:38:36 -0500")
+Message-ID: <xmqqtuqhukrb.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 88E68768-6D69-11EB-96C2-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CAB339DC-6D6B-11EB-9FDD-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> Possibly the correct answer here is "turn off reflogs in new.git", but
->> they are sometimes useful, and things _mostly_ work (for history that
->> doesn't rewind, or where the rewound bits are specific to new.git). So
->> it's useful to be able to run something like "reflog expire --stale-fix"
->> to clear out the occasional problem.
->>
->> (A careful reader will note that objects mentioned only in the index
->> have a similar problem; but again, those tend to be local to new.git,
->> and don't exist at all in a server context).
+> Thanks, all the changes here look good to me except for one curiosity:
 >
-> I want to add the experience with that half year during which `git gc`
-> with worktrees was broken, as it would happily ignore the reflogs of the
-> worktree-specific `HEAD`s, all except the one from the worktree from which
-> `git gc` was run. That was some fun time, and `--stale-fix` was a life
-> saver.
+>> diff --git a/config.c b/config.c
+>> index b922b4f28572..f90b633dba21 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -1180,6 +1180,20 @@ static void die_bad_number(const char *name, co=
+nst char *value)
+>>  	}
+>>  }
+>> =20
+>> +NORETURN
+>> +static void die_bad_bool(const char *name, const char *value)
+>> +{
+>> +	if (!strcmp(name, "GIT_TEST_GETTEXT_POISON"))
+>> +		/*
+>> +		 * We explicitly *don't* use _() here since it would
+>> +		 * cause an infinite loop with _() needing to call
+>> +		 * use_gettext_poison().
+>> +		 */
+>> +		die("bad boolean config value '%s' for '%s'", value, name);
+>> +	else
+>> +		die(_("bad boolean config value '%s' for '%s'"), value, name);
+>> +}
+>
+> ...if this is rebased on the current master that does not have
+> GIT_TEST_GETTEXT_POISON anymore, then I think this whole function can b=
+e
+> simplified down to the final line.
+>
+> Since it looks like Junio applied this on top of v2.30.1, which still
+> has GETTEXT_POISON, we need it here. But we should remember to remove i=
+t
+> with the rest of the GETTEXT_POISON once it's all merged together.
 
-The option was invented for a specific case, but if its "fix"
-applies for breakages caused by more recent bugs and user induced
-actions, I would agree that that it gives us a good reason to keep
-it around.
+Thanks for being extra careful.  I sort-of considered that this was
+a bugfix and that was why it is made mergeable down to the maint
+track, but I do not mind making this one of the "incentives" to
+upgrade for our users ;-)
 
-I have to wonder if the explanation in the documentation for the
-option needs to be made less specific to the originally motivating
-case, though.
+I actually suspect that without any of us worrying about it, =C3=86var
+will take care of the cleaning up when the dust settles.
 
 Thanks.
