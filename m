@@ -2,130 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DDC7C433E0
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 22:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A65C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 22:22:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7094264E0A
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 22:16:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D16F964E92
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 22:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230296AbhBLWQH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 17:16:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53100 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbhBLWQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 17:16:03 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F074C061574
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 14:15:23 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id e9so429088pjj.0
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 14:15:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ISj3jhmD0eYZ+DIxYBCF+vZS9BQWAMq7JCD29fZdP9k=;
-        b=S2t96P0cXpn2UrVR3lo1BHnA22Z4VimDUwtAYqIafCK4Nk9CHXnntL7vQYseA/bq8U
-         fHQhBHPIrH04xM6T3wXZtpRGc9DBIKdlvcbbniLKuiS2odtgzO1/KmOuYNyGdtXZi3Mh
-         mLFo0OSoYyOFYtvMYd08REcFFN8UtlA30whSmJUFr3lPlBAdJvd3GP+tDNuAfz2g0z2L
-         V3V3jwVNSjVyqXmsDh7XZ7NNnLr5mnOsvGg0BdEvGXtMzsnpFzvazFet2Fl0bXvnV7lI
-         E7oSmhwSyP9mN2uunEKzhgoNLcAFFGRz+urhDDivJTLBLcphQ9y3PSk3hK1L+OANwSCh
-         XJRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ISj3jhmD0eYZ+DIxYBCF+vZS9BQWAMq7JCD29fZdP9k=;
-        b=iZI6JC86P5SuLXlEEuHz9/FcNXu/kCqBPtJifMENHXz7uhA5MbVYtx8e5e/YJeMc4y
-         83ZXl2W4barw6QrsFI5a9UKYUlosFJ/L2PjVrPFTqZX/mWC9bQ5NJE6ZfMwZhk12rK56
-         dOSKKlVtBIjK3BuPGROJLVq50FvQlPg9U9UX9ChkZcIp6lwML+ScqVb0mKbOs06r6Zsd
-         ZvVIDP2WsuCaOtefqzHmFdKEhgoTwNppRJOQrgjn9YYfIjqprizasypTqTzYYew7OHi2
-         K6Rr8oDKMKCcWVtVFkyJr2srnqgXqpQak8zi9qW3nbTPGLgLvz3gCGhZwQrJCI2MTDSI
-         gG5A==
-X-Gm-Message-State: AOAM533o2ESgDI9o7oCStRX0iNDv8m98l8tVOGtHKdZUrPnL0JlY1HNn
-        kb6yYyynwK6ek7lTVwnDoJFdzdctSdnBog==
-X-Google-Smtp-Source: ABdhPJz6BhHyzXW60TZ8hZStb0fu1ucbmZhJw1SVAnRvfx62gDiTzfRlxn/HlPn5wN2I6HYotGZgAg==
-X-Received: by 2002:a17:90a:ea0b:: with SMTP id w11mr4640200pjy.140.1613168122433;
-        Fri, 12 Feb 2021 14:15:22 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:d80d:72f8:54c:94f])
-        by smtp.gmail.com with ESMTPSA id u10sm2742995pjr.27.2021.02.12.14.15.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Feb 2021 14:15:21 -0800 (PST)
-Date:   Fri, 12 Feb 2021 14:15:17 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7 09/17] hook: replace find_hook() with hook_exists()
-Message-ID: <YCb99egCYoTJUU8B@google.com>
-References: <20201222000220.1491091-10-emilyshaffer@google.com>
- <20210131043928.1036246-1-jonathantanmy@google.com>
+        id S231249AbhBLWWT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 17:22:19 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63402 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229583AbhBLWWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 17:22:17 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 13FD5127910;
+        Fri, 12 Feb 2021 17:21:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l3lrkL6Zq+cLebucJa6XtA+e2lw=; b=TqeZGo
+        /zBPtrpeqeGTFVAB5O3DP196+ToGeyanUlllp98nXbgH/iu5UxPE0smZb/va45jp
+        39vDYhSjqx9qeraD8l0+g1WVPJm2E4l/+nZwFllZHnk8dyt6XNS8kV3Al4b7osGX
+        AZ78NkvVvxGIBnQxnPa+NZ6/OpgEVvdPsaZfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PcEv7MZV7nvtLGxf0FOa+y7KZw9CH8OO
+        RzpVIeV25VS85o+ZrYb8l7pIJybimvy+DEluByEgKh2yM9/BtVCkenTgTW+Bzwy9
+        5W5Pa3GgCT37qK8628XR8aoE5I8qkX0PlXYLuACE72V5LBJ+WkLEnLl+lRb7Qevk
+        0OWZL/XsDto=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D0D912790F;
+        Fri, 12 Feb 2021 17:21:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 05DDE12790B;
+        Fri, 12 Feb 2021 17:21:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Nicholas Guriev <nicholas@guriev.su>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] mergetools: support difftool.tabbed setting
+References: <2fb58fd30ae730ccd3e88ec51b5fe6d80ab7a8c7.camel@guriev.su>
+        <CAJDDKr4zM1ZuNc+JpQnAtqwa5Ljv7_5bL3X-cC3e5Xg3z2Cbcw@mail.gmail.com>
+Date:   Fri, 12 Feb 2021 14:21:29 -0800
+In-Reply-To: <CAJDDKr4zM1ZuNc+JpQnAtqwa5Ljv7_5bL3X-cC3e5Xg3z2Cbcw@mail.gmail.com>
+        (David Aguilar's message of "Thu, 11 Feb 2021 21:51:24 -0800")
+Message-ID: <xmqqmtw9udue.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210131043928.1036246-1-jonathantanmy@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A8375F9A-6D80-11EB-81A2-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 30, 2021 at 08:39:28PM -0800, Jonathan Tan wrote:
-> 
-> > Add a helper to easily determine whether any hooks exist for a given
-> > hook event.
-> > 
-> > Many callers want to check whether some state could be modified by a
-> > hook; that check should include the config-based hooks as well. Optimize
-> > by checking the config directly. Since commands which execute hooks
-> > might want to take args to replace 'hook.runHookDir', let
-> > 'hook_exists()' mirror the behavior of 'hook.runHookDir'.
-> 
-> The text makes sense, but the title might better be "introduce
-> hook_exists()" instead of "replace", since find_hook() is still around.
-> 
-> Also maybe briefly mention the future plans - e.g. in the future, no
-> code will use find_hook() except <whatever the hook-internal functions
-> are>, because all of them will use hook_exists() and run_hook().
-> 
-> > +/*
-> > + * Returns 1 if any hooks are specified in the config or if a hook exists in the
-> > + * hookdir. Typically, invoke hook_exsts() like:
-> > + *   hook_exists(hookname, configured_hookdir_opt());
-> > + * Like with run_hooks, if you take a --run-hookdir flag, reflect that
-> > + * user-specified behavior here instead.
-> > + */
-> > +int hook_exists(const char *hookname, enum hookdir_opt should_run_hookdir);
-> 
-> I wonder if enum hookdir_opt should support a "unspecified" instead, in
-> which case hook_exists() will automatically read the config (instead of
-> relying on the caller to call configured_hookdir_opt()), but I see that
-> this patch set is version 7 and perhaps this design point has already
-> been discussed.
+David Aguilar <davvid@gmail.com> writes:
 
-No, I don't think it has been. So you mean something like:
+> I'm not really sure if "tabbed" is the best name for what's going on,
+> though.  It's really more of a "diff everything in one shot" mode, and
+> it just so happens that the tools in question use tabs.
 
-  enum hookdir_opt
-  {
-  	HOOKDIR_NO,
-  	HOOKDIR_WARN,
-  	HOOKDIR_INTERACTIVE,
-  	HOOKDIR_YES,
-  	HOOKDIR_USE_CFG,
-  	HOOKDIR_UNKNOWN,
-  };
+This statement matches my reaction to this new feature exactly.
 
-(name subject to quibbling) and then reimagining
-configured_hookdir_opt() to something like:
+The way the external commands are triggered via GIT_EXTERNAL_DIFF
+mechanism makes it "easy" to show changes for one path at a time and
+"hard" to do so for all paths at once, but the resulting end-user
+experience that is forced to view one path at a time may be awkward.
 
-  enum hookdir_opt resolve_hookdir_opt(enum hookdir_opt o)
-  {
-  	if (o != HOOKDIR_USE_CFG)
-		return o;
-	/* former contents of configured_hookdir_opt here */
-  }
+> That said, I wonder whether we need this new feature, or whether we
+> should instead improve an existing one.  I'm leaning towards improving
+> the existing dir-diff feature as a better alternative. ...
 
-I like that, if nobody has complaints.
+As a non-user, I have no strong opinion on the "new feature"; other
+than that I trust your judgement on the "difftool" design issues,
+that is.
 
- - Emily
+Thanks.
