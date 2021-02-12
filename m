@@ -2,102 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22B7FC433E0
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 00:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01D84C433E0
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 05:53:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9B1364DD5
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 00:21:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9F9B64E70
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 05:53:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230202AbhBLAUw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Feb 2021 19:20:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53978 "EHLO
+        id S229575AbhBLFwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 00:52:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230176AbhBLAUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Feb 2021 19:20:49 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68A4C061788
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 16:20:09 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id o12so6911147ote.12
-        for <git@vger.kernel.org>; Thu, 11 Feb 2021 16:20:09 -0800 (PST)
+        with ESMTP id S229503AbhBLFwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 00:52:41 -0500
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32764C061574
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 21:52:01 -0800 (PST)
+Received: by mail-io1-xd2d.google.com with SMTP id u20so8183398iot.9
+        for <git@vger.kernel.org>; Thu, 11 Feb 2021 21:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=fXtlz8kmykXmn+qgnwU9+LTJpczp9DuMAepYZRDRQA0=;
-        b=ekfrrOb4L1dIZs7zFIv+pE/uBCpAMPCFP1kS/7KiO72WYGUWc+gV3QG6fosweJB8x+
-         USDKgd4O99tIKf9MeZQQeST7IKFM/NgCmwwMS+GHTbiJEHozByEoHnV1nhFpNcgnT3IC
-         c/xtWAmYlBJeFrA/yZ1/StBB+FM/PyuED+PMbLKFXi+VVUeHT9xGSRxcQzldbBusl/MT
-         7hlpXYERiJTQTTjU9yM96xe1kL1HKqWwUrhCFQAl1C4VlYwH20SxgBvkvxdXd21EMOUy
-         elsx56xsX+RcK5+lOuhOt2xT3y9w5V/lcx7kDV8x3VS87us2/MGpRvVfV3Uyz8wvzGQh
-         4CgQ==
+        bh=iUgZ7V40T1els9lCFIJSVqI4PH03vAexkB9BAKaZ7K0=;
+        b=R/ohRhxoMzeCspU/mA5F9WsApYTT1sDIStTorNfGVh6UuWVoD+Ayjs/Lk/x44a5SF+
+         /t793e5sMdnuSLXOSm2V5eGWuRgna6Fzd1TiPTIQVn15XzOkN4eS3lZCC34wQ6ThTCK1
+         MxRVdY62jM1Ypbr3HkiHdy/0htc74ZKU7bZFQzEn4dhRgNvFHHFlzwJ/4xlKF9aYbbSq
+         gGM4PO6F90C1FzO8KLuNG9vVwWFCiFHRxHaHpGYhrud9qS05XF2IR7Jixl3ryxjkCNYC
+         krCSwr0uunbxFxq8QgmyitWxV0TcrBum9CrrohPtGeGVrljZ3nGp+KYXxFctNCmS5dWE
+         7ADQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=fXtlz8kmykXmn+qgnwU9+LTJpczp9DuMAepYZRDRQA0=;
-        b=qfuDLEr1S4BxKPtjMJRVoBdYypEN5KqfEcszfqr01LtAzAoeoXq1TD5kVz8+Frq7Io
-         TdIF6eb1FRIUSdfYgKPBPmZTCdkskWAuiKauDjbhCXcgx6Ps+ekJ6Sc7uqVmOpB/YESd
-         LTelE0KD5uMrS7yC+omLZkbP/fPdxXBCvewiUAtBepTTzU2oZAQ193ScRRoV+Z+jCszM
-         XR4p28PYJ9OO5h9xk8iSU1IVyUaf6l0Fc+ugNEvxs0PMXYvsMQC/pzPyWMVvLMwPSOQa
-         kLi5Jk7EWeAnnZFb9EYy+96Fgugy7iEmJZRTi01Ng1TAAEFJyZu9WFDBI4dP9+1oS4Ay
-         BW+w==
-X-Gm-Message-State: AOAM5325fQ+lXa14z8CI01/6g5rRM74PHaqKjT7OIn5KP4EQ2qF/gBtJ
-        zoqJZUF448OokDukMkMnYDuG2v6FjOGvAzMpa4A=
-X-Google-Smtp-Source: ABdhPJwXwsjuT6kxULU//E5PtPZLc3LZX52t7KiHqRKcRAMMTys7xzxODyXnfNTu4vBbQIW71wDrlQJCiSnuSzZgjUY=
-X-Received: by 2002:a9d:313:: with SMTP id 19mr364674otv.147.1613089209095;
- Thu, 11 Feb 2021 16:20:09 -0800 (PST)
+        bh=iUgZ7V40T1els9lCFIJSVqI4PH03vAexkB9BAKaZ7K0=;
+        b=FPL1KmcSNM5ohhichB5pf0s/BwZCgfBwTs8N72np0jEz90wBQ67YLZqQJU63gc3+w1
+         rMAqkLZ9xxdYv11XnK1majxG26IsDLlDjMe++g8MXSCsQHuEpKhnFLhjm7RUXxxVgLv6
+         8mJ6hGMkAD26DinJlhZwLA+qA5cJSUH4rYy8BvTi2K9hM8kbFB4kVLJOTJ1u5B8qTuHe
+         Sdmb25Pi0bqKadjVQRTFMxH4IF0zZh44xmphD6qggAAVH/jNi0m8fUBH9ibVjPC2+Rdi
+         SE/EdyxCJhb7jpQEQ0eOxr9RLGxHZ8syeQTxQL7XbwyPfW6jaeViRr30qeXk9+5OpxW7
+         AQiA==
+X-Gm-Message-State: AOAM533ikOK2QeXR0RTMWchBJaR3MPmfYoUiIuzmFJrHPVHzlx+mHzg5
+        LDSMkq5azSj8LxABxfHD+5YtSBHfY+9oa4rhLnTXVmPmUuGfZA==
+X-Google-Smtp-Source: ABdhPJyyw40f7q1gAJZmAyUToXs1LBLFdbK10qOpIsr4dzWuBK810QKC5dB0qVUpZ/g4LQ/IsBxA6T5LPNpUCczUMO0=
+X-Received: by 2002:a05:6602:1693:: with SMTP id s19mr1031930iow.68.1613109120687;
+ Thu, 11 Feb 2021 21:52:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20210207181439.1178-1-charvi077@gmail.com> <20210210113650.19715-1-charvi077@gmail.com>
- <xmqqeehmy129.fsf@gitster.c.googlers.com> <CAPSFM5fWmTXRHKseqXwZyE6MOVccR2OPSs5kyEu-k1K1p01EPw@mail.gmail.com>
- <xmqqblcqw7ff.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqblcqw7ff.fsf@gitster.c.googlers.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Fri, 12 Feb 2021 05:49:57 +0530
-Message-ID: <CAPSFM5d2FMU+ofJMPbNW0MhuEUpgurYJNHyHHSjq4h1rknHd8w@mail.gmail.com>
-Subject: Re: [PATCH v3 00/11][Outreachy] Improve the 'fixup [-C | -c]' in
- interactive rebase
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+References: <2fb58fd30ae730ccd3e88ec51b5fe6d80ab7a8c7.camel@guriev.su>
+In-Reply-To: <2fb58fd30ae730ccd3e88ec51b5fe6d80ab7a8c7.camel@guriev.su>
+From:   David Aguilar <davvid@gmail.com>
+Date:   Thu, 11 Feb 2021 21:51:24 -0800
+Message-ID: <CAJDDKr4zM1ZuNc+JpQnAtqwa5Ljv7_5bL3X-cC3e5Xg3z2Cbcw@mail.gmail.com>
+Subject: Re: [RFC PATCH] mergetools: support difftool.tabbed setting
+To:     Nicholas Guriev <nicholas@guriev.su>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 12 Feb 2021 at 04:14, Junio C Hamano <gitster@pobox.com> wrote:
-
-> Sorry, but I do not quite understand.
+On Tue, Jan 12, 2021 at 10:07 PM Nicholas Guriev <nicholas@guriev.su> wrote:
+>
+> I was asked how to configure "git difftool" to open files using several
+> tabs and stop spawning diff application on every modified file. I looked
+> into Git source and found no possibility to run diff tool at one step.
+>
+> The patch allows a user to view diffs in single window at one go. The
+> current implementation is still poor and it can be used solely for
+> demonstration purposes. To see it in action, tweak the local gitconfig:
+>
+>     git config difftool.prompt false
+>     git config difftool.tabbed true
+>
+> Then run:
+>
+>     git difftool -t vimdiff
+>
+> Or:
+>
+>     git difftool -t meld
+>
+> The solution has some restrictions, diffing up to ten files works now (I
+> did not bother with dynamic memory allocation), and it does not handle spaces
+> in file names (I do not know how to pass them correctly to underlying tools
+> without "xargs -0").
+>
+> I think the git-difftool--helper should be changed so that it could
+> process many files in single invocation and it would not use a temporary
+> file by itself. A similar behaviour can be done in git-mergetool, too.
+>
+> Do you have ideas how to better implement such a feature? Any comments
+> are welcome.
+>
+> P.S.: I'm attaching screenshots for a clear demo what I mean.
+> ---
+>  diff.c                |  4 ++--
+>  git-mergetool--lib.sh | 36 +++++++++++++++++++++++++++++++++++-
+>  mergetools/meld       |  4 ++++
+>  mergetools/vimdiff    | 17 +++++++++++++++++
+>  4 files changed, 58 insertions(+), 3 deletions(-)
+>
+>
 >
 
-I thought to rebase the "[WIP] Implementation of amend! commit"
-that adds option to `git commit --fixup` , as discussed
-earlier[1] onto cm/rebase-i.
-Because cm/rebase-i branch includes the working of the
-"amend!" commit upon --autosquash and also in sequencer with
-command `fixup -C`. But..
+I'm not really sure if "tabbed" is the best name for what's going on,
+though.  It's really more of a "diff everything in one shot" mode, and
+it just so happens that the tools in question use tabs.
 
-> Aren't you talking about adding even more features to what is
-> already there in the cm/rebase-i plus cm/rebase-i-updates topics?
+General note -- similar to the convention followed by
+mergetool.hideResolved and other difftool things I think it would make
+sense for tools to be able to override this on a per-tool basis.
 
-..Yes, it's correct ...
+That said, I wonder whether we need this new feature, or whether we
+should instead improve an existing one.  I'm leaning towards improving
+the existing dir-diff feature as a better alternative.
 
-> Or are you saying that what is in these two topics is still buggy
-> and we need fixes to it before we can give them to the general
-> public?
->
-> I had an impression that it was the former, and if that is the case,
-> then moving them to 'next' and then to 'master', regardless of the
-> follow-up changes, would be a useful thing to do.
+It's unfortunate that the "git difftool --dir-diff" feature doesn't
+seem to mesh well with vimdiff.  It does work well with other tools
+that support diffing arbitrary directories, notably meld, xxdiff, etc.
 
-...Okay, I agree and will do it in this way.
+Regarding vimdiff + git difftool -d, there is this advice:
+https://stackoverflow.com/questions/8156493/git-vimdiff-and-dirdiff
 
-Thanks and Regards,
-Charvi
+meld works just fine with "git difftool -d" (arguably nicer, since it
+gives you a directory view and a diff view in separate tabs), so if
+the only improvement is for vimdiff, then maybe the advice with the
+DirDiff plugin might be a better way to go.
 
-[1] https://lore.kernel.org/git/CAPSFM5f+cm87N5TO3V+rJvWyrcazybNb_Zu_bJZ+sBH4N4iyow@mail.gmail.com/
+Having something like a "difftool.vimdiff.useDirDiff" configuration
+variable could be a way for us to adopt the advice that they offer
+there.  We could have the dir-diff difftool mode set a variable that
+the vimdiff scriptlet could use to detect that we're in dir-diff mode.
+Then, when that variable is set, vimdiff could use,
+
+    vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
+
+(as mentioned in the SO page) to invoke dir-diff mode in vim.
+
+That way the user only needs to set:
+
+git config difftool.vimdiff.useDirDiff
+
+... and then "git diffftool -d" will integrate with the DirDiff plugin.
+
+What do you think about improving the vimdiff scriptlet to better
+integrate with "git difftool -d" instead?
+-- 
+David
