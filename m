@@ -2,194 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05ACFC433E6
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 15:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BC4FC433E0
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 16:06:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B898D64E39
-	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 15:23:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 157FB64E70
+	for <git@archiver.kernel.org>; Fri, 12 Feb 2021 16:06:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231567AbhBLPXG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 10:23:06 -0500
-Received: from ndjsvnpf103.ndc.nasa.gov ([198.117.1.153]:39610 "EHLO
-        ndjsvnpf103.ndc.nasa.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232065AbhBLPU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 10:20:57 -0500
-Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=2a01:111:f400:7d05::208; helo=gcc02-bl0-obe.outbound.protection.outlook.com; envelope-from=thomas.c.doggett@nasa.gov; receiver=git@vger.kernel.org 
-DKIM-Filter: OpenDKIM Filter v2.11.0 ndjsvnpf103.ndc.nasa.gov 1551E400AD3B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nasa.gov;
-        s=letsgomars; t=1613143209;
-        bh=Yoauo6wgseQHqW32uzJFAdRfCpX54Olnn3BeWjRIW4Q=;
-        h=From:To:CC:Subject:Date:From;
-        b=RDYDFQRDKa+OMIx1cMliNwm+Dp2pXvqffeoVCk126BXLwwiXMHxJseX8LLV9Cl+OY
-         vfncYhXHmGe0ft56jJ9vPxqNBuGC1VR2xcLKQFjiO+yB8EQIaQtyMGEljIJh59PSNJ
-         ove8dYoXSDzBzKgLRqPSHqb1GMMQBXi4PVV38KQ/KovC6qw9JVrFmJ/qmsR3xxC2da
-         F4mL1AwAVscZJxsjXuNp2KzGJMaT0zBTFR6DgF4naN478tMpO3FMdF8AK3Oyt/Rf0k
-         prRUg0opmA/ls/D2Fr3ZujEYFvmeWF+qSAGdBH47khl5LO/Kzc2kAu5CC1QIYHOeSW
-         ebxVc6cMthqvQ==
-Received: from GCC02-BL0-obe.outbound.protection.outlook.com (mail-bl0gcc02lp20208.outbound.protection.outlook.com [IPv6:2a01:111:f400:7d05::208])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ndjsvnpf103.ndc.nasa.gov (Postfix) with ESMTPS id 1551E400AD3B
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 09:20:09 -0600 (CST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=D4SQMwJB67NXTtMwM7bDfqBUBWClxu5IQzSeJuy5X29Y91qoA0mWnNtxYmaJ8bbiqnqUIjzDM8Tc1mPM6wtyJTUeLSyBrCsNVf1L+/5EqifjLSc3TeawQdEKkcWUstkSGi64nj2Sz/KjkAvzZYnr1EZPCc6B4sRYoxy7a5rtuK+JKStVqRRD9dmOd11uZTeD+PKwTYGeugZ/wnEFuCg6WWrgf80IL9bSbDmY7Hw8fK/zkjdlXu0BU4pgTPLMqcPeDANdlSUIiojHdbCly1E01zI7JjInOehbU2ke6pNQPWNHjB/8hnDhzAofK7iofAoTAlV1BOR9+NPe1x/v2qw9dA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Yoauo6wgseQHqW32uzJFAdRfCpX54Olnn3BeWjRIW4Q=;
- b=S6B/uZ8LkI34ycIpNdtYWomiCG0f/S+ufB5EkNn9dRcXUFBN5qoGfLY6EmcflCBKb7gcvzQU2w49zkO+Y32SeINe9ZpRb65qBFoHAec14zZgV6f0L29RLpzFdMFeRtrEpOC/x4BQCJ/yLj8EQUmRNbQiE6sG8z1KJsWA7FRyg+vBecevnky5WEBliXkui8GMjhxsx9X6r48Gg8KakYcrmYwvbARNK5dM9rsH7FyLCloKPFR3200XPdvlDfkTJkrU50VU4eFfmhdcpTQDawtaAKh5P/kyedUmVZ42FUP0C3p/ryMskRwJHywtahCBTVod0BWfBVrjqGNBP1QYCl7kpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nasa.gov; dmarc=pass action=none header.from=nasa.gov;
- dkim=pass header.d=nasa.gov; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nasa.onmicrosoft.com;
- s=selector2-nasa-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Yoauo6wgseQHqW32uzJFAdRfCpX54Olnn3BeWjRIW4Q=;
- b=Sup1Gm0kzMeV6BljGNeTF7+tn8JXX8qc68+A3nTNn5rYvAsPFZAmKCgb3evbCUS8mEj58Q1nFgVg8qGneIyMJti86x01TkAQK2fNh3P1OeEme5QBux7U8W/zmcFr2WM+853Tjj1L1IuhcGmwy8roU3lynUoz4JGqQhEkEb72nOQ=
-Received: from SA9PR09MB5807.namprd09.prod.outlook.com (2603:10b6:806:46::19)
- by SA1PR09MB7920.namprd09.prod.outlook.com (2603:10b6:806:183::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3846.25; Fri, 12 Feb
- 2021 15:20:07 +0000
-Received: from SA9PR09MB5807.namprd09.prod.outlook.com
- ([fe80::8490:83f0:a8ca:1ab9]) by SA9PR09MB5807.namprd09.prod.outlook.com
- ([fe80::8490:83f0:a8ca:1ab9%5]) with mapi id 15.20.3805.039; Fri, 12 Feb 2021
- 15:20:07 +0000
-From:   "Doggett, Thomas C. (GSFC-705.0)[TELOPHASE CORP]" 
-        <thomas.c.doggett@nasa.gov>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Zhang, Cynthia X. (GSFC-705.0)[TELOPHASE CORP]" 
-        <cynthia.x.zhang@nasa.gov>
-Subject: inquiry on Git GUI for Windows 2.30.0
-Thread-Topic: inquiry on Git GUI for Windows 2.30.0
-Thread-Index: AdcBUoCz/jMQRIOwScuB9edroXD0Tg==
-Date:   Fri, 12 Feb 2021 15:20:07 +0000
-Message-ID: <SA9PR09MB5807B61FB32C4865C1A2246DB68B9@SA9PR09MB5807.namprd09.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none header.from=nasa.gov;
-x-originating-ip: [192.92.191.143]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: f10955c8-15e1-498b-a23a-08d8cf69ae82
-x-ms-traffictypediagnostic: SA1PR09MB7920:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SA1PR09MB7920B6DF7C8439DEEBD63CC0B68B9@SA1PR09MB7920.namprd09.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EPbWPkdrerw5m3SZ0wWHteHYEa13+IlSHVKXcE6Mfc+s2cC+jIfNs9wDk2xXEiil0uha39Bwd/vBkDWy+SEKAt8U58dxtQSvRL09XMv6dGI9HKQSo1Km5/lh5O/EXzHWGB8NBfd7nFxT6kSu1+Og6sQNOy4P23Q0E+0j5k7Vj4t58tKnozdSl7kPGPw9q2ZNUCN39iKib11AWE3UJIAO+Dx8R14pgEI4YrNOUHrGGoymRWjOXdz1gJ96BwISQ0g/YaIEmtz+hVuP/wTIysyIX0mS6ITZJAvBRqLVhlSZ9KSjOaOqegiPjXCO7nCGSJWmJTu4g3xq3spF+77B6d0ZIsP8LP3qJYucrxhqBBN3LMWrR+s2/vRvkLAHWv4TuKPoYRpicHRf1AZo9WAG3ztkQAzXFXEJrMtUwv+UeevutDZGaInuBkkPWp2AV+p51hBhCeGqeX0ZFViycbohqVaZ1O0H5ddISfBRRu/vNn9BaWxKfbkhYvDCbz8wZ3xeiVC/s2Qay+z3sk9MZfWOt08aI2HtFTqN8/KX+UgFvLLARL0Cbvwk9b7SGrLlRrDE39FX8UiVKmgpZQHWFe46HE30Q3xPtVRJpldqldev+LvrZlqmmpdt17OF1/03mii4UB5aPi0mMPZ3DMn8swlFRO1myRFjqu3r2AFuGkN3AGg6AzU=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA9PR09MB5807.namprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(136003)(39860400002)(376002)(346002)(396003)(9686003)(2906002)(66446008)(8936002)(4326008)(66946007)(66556008)(55016002)(107886003)(966005)(6916009)(33656002)(316002)(64756008)(66476007)(26005)(83080400002)(478600001)(186003)(5660300002)(83380400001)(76116006)(52536014)(8676002)(86362001)(71200400001)(6506007)(7696005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?B+VaJUuvOiouh3jPt8dwKcI6PXKfxEuYpNNsXboJum9j7UFPs+f1PaZ3Oe?=
- =?iso-8859-1?Q?1dShiRnTRrDrnp+/gHkAzggs+HZBdiUNWv6O8z+WNMT/oSDn77Hs7VA0Vm?=
- =?iso-8859-1?Q?AyT0iyfuT6N2MYoqGNrrw+TrOSQNgP+gJXZ8o4kbyibXbGSNIHColJZi1w?=
- =?iso-8859-1?Q?jxLh9whL7Bec1uRN2BXi3utJNEp2MOK+rFgaeQ27huLgmKt3tnCsDhpgIo?=
- =?iso-8859-1?Q?yUjl7KIDt+vSslwQZ+t0zgq7VY5jAIjuibKn5X994+GscBcgytNY4KI6ya?=
- =?iso-8859-1?Q?U9SHu8M8W8PzDUz4aPvo2/Hmh2sXL0Cv0wbAedktjH/8OcO+iKzEBUS2WR?=
- =?iso-8859-1?Q?T7yKsUw/kUv/aDxRJeHlbh4kP6mtcJzON7rZgw455gH0YLnSONvlwXKxYw?=
- =?iso-8859-1?Q?l8pU7cyJ8vzQYCophhy5GZwGhsrtxkaCUz+nl5Ddp/yh4TCF82FvGq468Y?=
- =?iso-8859-1?Q?B86VHWTfvoXCKiz0AaoyNR1MaSnTh1x1OASBiZ6pqrd5cgFOCocq/oreup?=
- =?iso-8859-1?Q?1LmJ/oFifBfnmKE69gNx1s7JwVbwcf/wyTOqoRGACECQmp8FCG8l9NTSBC?=
- =?iso-8859-1?Q?6FmVUY4ccDVjn1QhcDMvO7VaZsqkM9Pqgd42QX1hVjWF88sKXbIJxh4IMT?=
- =?iso-8859-1?Q?77KzorayvCs+6wuhokD7BJzUh9JFyE4sMtqZe8TTVk6rBPJ2qsd1ZSbqIt?=
- =?iso-8859-1?Q?LJNfZsgue4QLlPS6Xb805eblRnbusTYK1oSDI21UyXJ+8k20b8L3G93NYq?=
- =?iso-8859-1?Q?Yh5ei7wG3rZXoJP4pwhHUpT6vcsgJVLwCn0x65B6YVVyx3KbBfZ1UkkbRk?=
- =?iso-8859-1?Q?YQ7Qr0YQv0UlZB567mxwDtgLQYJJfzS6gOwfmmEmS7FzkTpd8aDFGjSsZs?=
- =?iso-8859-1?Q?gMBHhhTvSibviWGURiTd9fJ6z0OnHnpTf9vf9uqEwEpxlUpSzAJ8Ov+7jc?=
- =?iso-8859-1?Q?T9uHg0g8MOmlBm7wcRu4IEHj9ppynE3LI2pYLUR+MYan+8Y1Ye29VGshiS?=
- =?iso-8859-1?Q?V1B6ID0XWZNWyl8wlbQxkNHPqANIkl6QW6cz/+/Utnv0lO3ob+CFSdpdAl?=
- =?iso-8859-1?Q?n2dJMXu2TTvOCvMnihcx0knCRozlF/1BZ0kmdeAeBOxKPs8Sf86q5mA+Ow?=
- =?iso-8859-1?Q?sCDlJNfg4dp62s9HbpaVq5Goxj5WfoEXxcOPdif7WlAkEp/G4TUyCs+tiK?=
- =?iso-8859-1?Q?PG7B4hQyJ2WcFFSzI1FfaPdEUMVmo6cZnVA9+61MM/rLft3mv7VOwvvcbu?=
- =?iso-8859-1?Q?9n982BZ30xwCkjYyAZxdsMdUoCLwtf0jiW2rng6dv1f6YGuHfqoRhBoInQ?=
- =?iso-8859-1?Q?zX88j3z+JaTMMuze9JtONooZzJIj/j2ODbw5m9QwLSOpxarfFn7ngq5XNV?=
- =?iso-8859-1?Q?Q5fQjhR9+4?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S231858AbhBLQF4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 11:05:56 -0500
+Received: from mout.gmx.net ([212.227.17.22]:36281 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230006AbhBLQFy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 11:05:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1613145848;
+        bh=azkgYQDxYq9/3B/K/DXoXQrW/AZjTGvCp2NqowErV/c=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JYsloWhHb5/RahoPzEF/I3vtgLPhryB1laKXLEYpE2W/1wn27ehtPqiyxwcLfqp21
+         CHDjzBUV1v28qo14DYBbgGKGP4iymkBkhaORxnqGxlRqrindNXbXFmf0pY3zaFzj9H
+         s8q/w1kmf3n7Y7sIZI52pBBwdeqs2zcSiYHo6PMA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.95.40] ([213.196.212.209]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwQXN-1m0Uer2YcP-00sLWV; Fri, 12
+ Feb 2021 17:04:08 +0100
+Date:   Fri, 12 Feb 2021 17:04:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] reflog expire --stale-fix: be generous about missing
+ objects
+In-Reply-To: <YCUQkqXNXFzBs7aA@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2102121702120.29765@tvgsbejvaqbjf.bet>
+References: <pull.873.git.1612973499110.gitgitgadget@gmail.com> <xmqqy2fv1x98.fsf@gitster.c.googlers.com> <YCUQkqXNXFzBs7aA@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: nasa.gov
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA9PR09MB5807.namprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f10955c8-15e1-498b-a23a-08d8cf69ae82
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2021 15:20:07.8670
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7005d458-45be-48ae-8140-d43da96dd17b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xUMxP1QIFmCKW0lYD2GcR04FesdKt3KaqaYkJvXcQ5IaF8/H5iS2emhd8C5PufPFraC68VJveOVFuJtzs71XQg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR09MB7920
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:TOgevgi/Ym2TR628lNkk/FBXm3WGOdCWdTTBoMZO/U201pHyMaw
+ b4JrsSrDH/UmHCwo/kq8+pnpDyn0LNUZ/rUjnd8clE0Zf5hW79KeraEN+ajrEgurDjcy5fh
+ 3tUb7mLDYYXAf6ha4f/qn3Z3dEbe2fgxdJP5OocwetD4+/HkTIF9lSQ4ZiME8ZxUNx9Mjs5
+ vMI1bTHwnBb2JrvDqVulg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:dzB81TU1rwg=:oZuALRJBVEjcRhE1T0f7lg
+ XNqeZkj7fBU2TMVcC8/KJnFuHTGjUCStK7SXvMu7zAz6wxdsCUQTh6w7Z2N7/3DHbbFUIJk01
+ +4OoQB0cVYl4mlqBWHHCvIgA7K4SZycHFpTIN29gQ7pDbIHUKZljRMPbJnqD1JFdkDQg7DcuQ
+ k8dT36NPT0CfBS9HAPENAFJfIRsKexFYKRoc1zt7Sr1k+TuNbG0V1e229Tlq+NoaWrM8NDZj2
+ Cjqo5do31EsganbbA5MQ43r5BmABiCVFFE8lUB8Kkh4PmL3PmCmltA1nZOXdH/rCdSMMt+LME
+ GQqhyBwSAq/MyTYFI6LT9c+ePFnrSEOrNZSShTp4hN8brdn+5sGpeuKQDFWsERYI1TyDZGup5
+ +kFes2cUt1LqP8lUkUCAHjRjQW6xMbjV3xpf0ByaqMfrfJpGKMgobcDf5KmSTP3NxY6Ky2oLJ
+ ruTWFVUfCsds5Nxk1CQSSUsOwlZz3/upOXfoaRiirbkXLC4CVDHQ2rsShOjPlG0ETWNkkUhqY
+ WLtO2BuLMAWYqrjkxo0Lp2EbrU23v92E64fw7WGCrMtf+/0rXXFadMaETOCXk0m3kiC48jrCY
+ TqsjCpw6d0O6r4BpyfFO5cEOR3QVsPlsYKiD2vLZKt75BvBSH8DZrM0VwwOIqXwvRUzx6ApLJ
+ OlKH0oE4SMWbzyTGbNkl779J3cTMy1jba8V56KUDMvKt3sKlV/aLqDzbsSnxXST4K7UzGrG4W
+ uINEkGwidcCPrQA+xrk20bac9yHepDLJeH+Wb82cbHGO9AXaeKvXWVbhM1NoUdTPjjB8dnCRT
+ 0xiZ0yKFZ5gqnSPp2ohxjdzLY3AuPJpdKEOQDdDS9tUQftneDof1rZdNoX0E+GjFfumca7sS/
+ v7P9YrMQFgJERNnEJjWumqUemVNieZ2SefaZhB2Tg=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,=20
+Hi,
 
-My name is Thomas Doggett and I am a Supply Chain Risk Management Coordinat=
-or at NASA.  As such, I ensure that all NASA acquisitions of Covered Articl=
-es comply with Section 208 of the Further Consolidated Appropriations Act, =
-2020, Public Law 116-94, enacted December 20, 2019.  To do so, the Country =
-of Origin (CoO) information must be obtained from the company that develops=
-, produces, manufactures, or assembles the product(s).  Specifically, ident=
-ify the country where each of the following products were developed, manufa=
-ctured, and assembled:
-=20
-Git GUI for Windows 2.30.0 =20
-=20
-If the CoO is outside the United States, please provide any information you=
- may have stating that testing is performed in the United States prior to s=
-upplying products to customers. Additionally, if available, please identify=
- all authorized resellers of the product(s) in question.
-=20
-Lastly, as required by Section 889 of the Fiscal Year 2019 National Defense=
- Authorization Act (NDAA) please=20
+On Thu, 11 Feb 2021, Jeff King wrote:
 
-1.) advise if the product(s) in question is/are not manufactured by, contai=
-n components manufactured by or substantial influence from prohibited entit=
-ies - Huawei, ZTE, Hytera, Hikvision, and Dahua and their subsidiaries and =
-affiliates, and,=20
+> On Wed, Feb 10, 2021 at 12:30:27PM -0800, Junio C Hamano wrote:
+>
+> > I appreciate an effort of making it looser and less likely to get in
+> > trouble when running in a corrupt repository, but --stale-fix is a
+> > bit special and should probably be removed.
+> >
+> > The only reason the option was added was because we needed to have
+> > an easy way to recover from a specific kind of reflog corruption
+> > that would have resulted by a (then known) bug in "git reflog" in
+> > the released version of Git that came immediately before the version
+> > of Git that added the "fix" option, while the root cause of the
+> > corruption got fixed.
+> >
+> > Back when 1389d9dd (reflog expire --fix-stale, 2007-01-06) was
+> > written, it was very useful to have a way to recover from the
+> > corruption likely to have happened with the version of Git that came
+> > before it.  But it no longer is relevant after this many years.
+> > There may be other ways to break the reflog entries, but --stale-fix
+> > was never designed to deal with anything but a specific way the
+> > reflog gets corrupted (namely, by the old version of Git that
+> > corrupted reflog in a specific way), so keeping it would not be very
+> > useful.
 
-2.) advise if your organization has the covered telecommunications and/or v=
-ideo surveillance equipment or services as a substantial or essential compo=
-nent of any system, or as critical technology as part of any system within =
-the organization.
+Thank you for the original historical context.
 
-Product / Service Description: Git GUI for Windows 2.30.0
-Model Number	(if applicable): 2.30.0
-Country (or Countries) of Origin: [[please provide your answer here]]
-NDAA Section 889, Part A Compliant (Y, N, N/A) : [[please provide your answ=
-er here - (Y, N, N/A) ]]
-NDAA Section 889, Part B Compliant (Y, N) : [[please provide your answer he=
-re - (Y, N) ]]=09
+> FWIW, I have used --stale-fix for cases where a repo's reflog was
+> "corrupted" by its alternate pruning objects.
+>
+> E.g., if you do something like this:
+>
+>   git clone -s orig.git new.git
+>
+> you're now at risk of "git gc" in orig.git corrupting new.git, because
+> its reachability check doesn't know anything about those refs. You can
+> mitigate that by keeping a copy of new.git's refs in orig.git. Something
+> like:
+>
+>   git -C orig.git fetch ../new.git refs/*:refs/preserve/*
+>   git -C orig.git gc
+>
+> But that doesn't know about reflogs at all! It will still corrupt them
+> (but only sometimes; depending how often you do that fetch, you might
+> catch the same values in orig.git's reflog).
+>
+> Possibly the correct answer here is "turn off reflogs in new.git", but
+> they are sometimes useful, and things _mostly_ work (for history that
+> doesn't rewind, or where the rewound bits are specific to new.git). So
+> it's useful to be able to run something like "reflog expire --stale-fix"
+> to clear out the occasional problem.
+>
+> (A careful reader will note that objects mentioned only in the index
+> have a similar problem; but again, those tend to be local to new.git,
+> and don't exist at all in a server context).
 
-Is final testing performed in the United States?: 	=09
+I want to add the experience with that half year during which `git gc`
+with worktrees was broken, as it would happily ignore the reflogs of the
+worktree-specific `HEAD`s, all except the one from the worktree from which
+`git gc` was run. That was some fun time, and `--stale-fix` was a life
+saver.
 
-Recognizing that these questions don't fit open source software very well, =
-will add that I've tried some workarounds - like your affiliation with the =
-Software Freedom Conservancy, but their entry on SAM.gov is expired (curren=
-t entries would have NDAA attestations on them).
+With this _additional_ historical context, I would deem it wise to keep
+`--stale-fix` around.
 
-For these purposes, the country of origin of software is the country where =
-the software was compiled and converted into object code.
-
-Thanks,
-
-=A0
-Thomas Doggett=A0
-SCRM Analyst | NASA=A0
-=A0
-Supply Chain Risk Management=A0(SCRM)=A0
-Office of Cybersecurity Services (OCSS)=A0
-Office of the Chief Information Officer (OCIO)=A0
-"The cosmos is within us. We are made of star-stuff" - Carl Sagan=A0
-=A0
-(703).244.8719=A0
-https://inside.nasa.gov/ocio/security/OCSS/SCRM=A0=A0
-
-
+Ciao,
+Dscho
