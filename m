@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEAB4C433E6
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F701C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:10:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CED664D5D
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:10:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6CC3964E92
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231256AbhBMAKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 19:10:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49162 "EHLO
+        id S229497AbhBMAKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 19:10:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbhBMAKA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 19:10:00 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08772C061786
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:19 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id n8so1316706wrm.10
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:19 -0800 (PST)
+        with ESMTP id S229903AbhBMAKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 19:10:01 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C292C06178A
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:20 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id v14so1334382wro.7
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eKIITmcddPWeE1VBlgWVjIuBS5dmDXJSUzTRMH0h5jc=;
-        b=lnJVM0a5BdC+Qi1SMa83Rdckn7NWG/hPBm6/vsLcDpm6Pnj6pN9c+1jiZYx7mH+9mv
-         wIIMsoCw35YmhuiRD8a0Kf49m76xg70LqQ8lEkEX2/3zudBOo3gMzV/GshPh3ubkaH2I
-         6q2cXR1r6Vn2M/rt2KhDEh5ETuqDDj/sM/rfkVcZPAf2wnzx6ziISqj/wWTm1bkBDx8u
-         A3M+y5wgAE61rtdmRtwjQghCiIcGVCAvxfOgU38T2LXTfCXrnTZAKqgFTjK7EASA3145
-         fHtnuBJBsx7+nfkm15Cps/8fjbncz4HJdqEVSvQjAqoaNGCXY9Bb4dVjVGz5hSyesHXT
-         jaNw==
+        bh=yOVx8B7rIEXDZ/mpDexA8Qe2BDO2imKZikCVpUgG7e8=;
+        b=GsHr4M2Tu5Q6CZ/aOgbE1QxeWODNKzbCdOwSr6iu8QJ1wfuTSpgqF5WwJr58WZ3el5
+         bXzsfj/XGtGQ7ifTa//Ms6tVwuBNeg5gN1zRFY0aUcBMuVwGtHsLAn6WdbTW9xRqKW0+
+         FZ9zuae0glg+q7BelMvpD+DWhGocSJVgkyWKPfs3nnuyN0aWGcCPvqqxSP5hogNRPGTv
+         WpcnZDe3aPn3KJCm2947U0kVgEXhuuvt9Jtq1Oaxi9at8UjUO0HTXNoakGPorXnOVgG7
+         Ol93G2WOUeZXqwptcEAYHLjZ3urORsHhnyNC5MJaZAkgt00+2WvNpYFKEIJT2MsWGv8u
+         vLyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eKIITmcddPWeE1VBlgWVjIuBS5dmDXJSUzTRMH0h5jc=;
-        b=N7uhmB3kh+K7wcV2198FwdLoEqkfC2an8pMLqSD0V2yc7npSin9RX6TyG4MyVu7+5p
-         Nxl+ujg4b2ahFBv4bH9IzAdrx5m+eaHbGuaGOcz1sksFQl5Fzf6dWn15PfV6lUsdY4et
-         y5bvL1ApPGZMspFwK6X3j4/0sEpGu0TaYSCBh4CPEF9c7koAp6ita4Skh0aBSjVp9pKB
-         5cEFMvHs781qElW3hKSABsRFBuFrRQ86gYwJRdQWYiY2MVGfu9eWDpZn2BSRmbnWhycb
-         4u968t0TfQAtW5UgPcEJJ1cRG3JUIdglj3SJ+q6m/QKu1pvSubkj38SguebVTGtBmVcD
-         xcHw==
-X-Gm-Message-State: AOAM5323vynsNCqmceix5ZUtiTGengvnWuG9lda/lPE/WMALjNIBc9oH
-        ZmgUFQZM/GSXb2d4H7hAbf7ogwlWG7s=
-X-Google-Smtp-Source: ABdhPJyWUc7fV/JimDM7ex0pEZc4in16d5vOGXBa7UwnIzn9mwMNlIHhSrHvHVeMc+pExIqm0SL/jw==
-X-Received: by 2002:a5d:61d0:: with SMTP id q16mr6161981wrv.387.1613174958578;
-        Fri, 12 Feb 2021 16:09:18 -0800 (PST)
+        bh=yOVx8B7rIEXDZ/mpDexA8Qe2BDO2imKZikCVpUgG7e8=;
+        b=uCTHEFXSfgvgs7sfB6UEi16uNzGqS9W80vig646IpNDAEQcW4c64mt5U0BKw5I5VPZ
+         NIRFwviz/hiOXq64QgaMLsMORG1Qm8xRCEkROlIMx0oFLmbhQybhJ7AH8WfJ4Nt7UHe/
+         RWdEq/y5G1x4NqrOoFFDnuliOdIR5ab9JHsg5to7JULswEhJrXeZJU3J8YbPM+Hxj2we
+         9JLRp0+gBvvTvWF+mTUoS6gZpPM4rIhxWkMK0W/LZAZvdBKMG1xb3ItHCueBo4ApQwYf
+         0J8j09rgfWpSKhlxc9c9x9+J30VxOmlNAPf0jZR1sXSISeJq9+C06MV8nozGUygobW9+
+         oe0g==
+X-Gm-Message-State: AOAM532E5lopbg4/pKf1yz+iXRf2D+pAHlHw2/WcqMzThFCQkBaeNDqQ
+        UTdsNfdZsSUVTKQIKoOm99vV9wV1vvw=
+X-Google-Smtp-Source: ABdhPJwdnvEbugDGSqVMV+jUgRBMXE5CAT7j1sXGvWhFkf6kIQvnyOQ35q3iawd7X4BJdmejqIzcVQ==
+X-Received: by 2002:a5d:6045:: with SMTP id j5mr6011043wrt.365.1613174959250;
+        Fri, 12 Feb 2021 16:09:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l7sm12302185wrn.11.2021.02.12.16.09.18
+        by smtp.gmail.com with ESMTPSA id w12sm15364879wmi.4.2021.02.12.16.09.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 12 Feb 2021 16:09:18 -0800 (PST)
-Message-Id: <81e14bed955c6b50e155f6f73cb642d6c9f2fd73.1613174954.git.gitgitgadget@gmail.com>
+Message-Id: <22eec60761a88107b2e337ce13eed1020352aa73.1613174954.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
 References: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
         <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Feb 2021 00:09:05 +0000
-Subject: [PATCH v3 04/12] pkt-line: add options argument to
- read_packetized_to_strbuf()
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 13 Feb 2021 00:09:06 +0000
+Subject: [PATCH v3 05/12] simple-ipc: design documentation for new IPC
+ mechanism
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,83 +73,64 @@ Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update the calling sequence of `read_packetized_to_strbuf()` to take
-an options argument and not assume a fixed set of options.  Update the
-only existing caller accordingly to explicitly pass the
-formerly-assumed flags.
-
-The `read_packetized_to_strbuf()` function calls `packet_read()` with
-a fixed set of assumed options (`PACKET_READ_GENTLE_ON_EOF`).  This
-assumption has been fine for the single existing caller
-`apply_multi_file_filter()` in `convert.c`.
-
-In a later commit we would like to add other callers to
-`read_packetized_to_strbuf()` that need a different set of options.
+Brief design documentation for new IPC mechanism allowing
+foreground Git client to talk with an existing daemon process
+at a known location using a named pipe or unix domain socket.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- convert.c  | 3 ++-
- pkt-line.c | 4 ++--
- pkt-line.h | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ Documentation/technical/api-simple-ipc.txt | 34 ++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+ create mode 100644 Documentation/technical/api-simple-ipc.txt
 
-diff --git a/convert.c b/convert.c
-index bccf7afa8797..9f44f00d841f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -908,7 +908,8 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 		if (err)
- 			goto done;
- 
--		err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
-+		err = read_packetized_to_strbuf(process->out, &nbuf,
-+						PACKET_READ_GENTLE_ON_EOF) < 0;
- 		if (err)
- 			goto done;
- 
-diff --git a/pkt-line.c b/pkt-line.c
-index 83c46e6b46ee..18ecad65e08c 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -442,7 +442,7 @@ char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
- 	return packet_read_line_generic(-1, src, src_len, dst_len);
- }
- 
--ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
-+ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out, int options)
- {
- 	int packet_len;
- 
-@@ -458,7 +458,7 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
- 			 * that there is already room for the extra byte.
- 			 */
- 			sb_out->buf + sb_out->len, LARGE_PACKET_DATA_MAX+1,
--			PACKET_READ_GENTLE_ON_EOF);
-+			options);
- 		if (packet_len <= 0)
- 			break;
- 		sb_out->len += packet_len;
-diff --git a/pkt-line.h b/pkt-line.h
-index 2e472efaf2c5..e347fe46832a 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -142,7 +142,7 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
- /*
-  * Reads a stream of variable sized packets until a flush packet is detected.
-  */
--ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
-+ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out, int options);
- 
- /*
-  * Receive multiplexed output stream over git native protocol.
+diff --git a/Documentation/technical/api-simple-ipc.txt b/Documentation/technical/api-simple-ipc.txt
+new file mode 100644
+index 000000000000..670a5c163e39
+--- /dev/null
++++ b/Documentation/technical/api-simple-ipc.txt
+@@ -0,0 +1,34 @@
++simple-ipc API
++==============
++
++The simple-ipc API is used to send an IPC message and response between
++a (presumably) foreground Git client process to a background server or
++daemon process.  The server process must already be running.  Multiple
++client processes can simultaneously communicate with the server
++process.
++
++Communication occurs over a named pipe on Windows and a Unix domain
++socket on other platforms.  Clients and the server rendezvous at a
++previously agreed-to application-specific pathname (which is outside
++the scope of this design).
++
++This IPC mechanism differs from the existing `sub-process.c` model
++(Documentation/technical/long-running-process-protocol.txt) and used
++by applications like Git-LFS.  In the simple-ipc model the server is
++assumed to be a very long-running system service.  In contrast, in the
++LFS-style sub-process model the helper is started with the foreground
++process and exits when the foreground process terminates.
++
++How the simple-ipc server is started is also outside the scope of the
++IPC mechanism.  For example, the server might be started during
++maintenance operations.
++
++The IPC protocol consists of a single request message from the client and
++an optional request message from the server.  For simplicity, pkt-line
++routines are used to hide chunking and buffering concerns.  Each side
++terminates their message with a flush packet.
++(Documentation/technical/protocol-common.txt)
++
++The actual format of the client and server messages is application
++specific.  The IPC layer transmits and receives an opaque buffer without
++any concern for the content within.
 -- 
 gitgitgadget
 
