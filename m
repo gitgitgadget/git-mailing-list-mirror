@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB0BDC433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 134EFC433DB
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A426864DC3
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDE9C64DC3
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232025AbhBMAL2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 19:11:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49362 "EHLO
+        id S231835AbhBMALf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 19:11:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231663AbhBMAKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 19:10:53 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0979BC061794
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:23 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id v15so1365730wrx.4
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:22 -0800 (PST)
+        with ESMTP id S231753AbhBMAKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 19:10:54 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3605C0617A9
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:25 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id a16so1372171wmm.0
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ASF8+rFWzj6aUvWIsRo10Spu216IfvU7//f0qbC+iF8=;
-        b=sYxiAu+qt7noTY43B9g6XjklBE/saIPy0Oi4DxAIwadvuWyJuYBYNynB+IXrCEYhRc
-         EYN5qTWiBZTeJseZ2Jvtv9XkIggrC2GAWxTKXTDrHymdskXXwz/a5EFillVBhAGHc7/O
-         tziEUfQ6dph5iHnJOBxlIg5tR0BpSD+aOweg4KqvaY8q2riy7ETDgeySVV2FKoBOZPK8
-         1hOPBajCoaHf9+69glHBvtVhpUxG4caPBCSsC9z2LvrLuffwN1KVyzVPfjoMXU1VM2nB
-         cSuK+hPa4zyaZ9YddaZQYU1eiVqjcuPuY0kWLXn8K5DR7awHgwdU1vWifuW3jg50/B9I
-         nvoA==
+        bh=BotalnfufejzC+XjwCf1vvrEZjvDIasfuvdQCQUcLtw=;
+        b=JI6+HoGvv9M37INw6ICow2SKcERxyTxtZoUz/hN/AT3ZnOEX4SI+A4nHRHBUn1g/X6
+         TH2i2nXnyKhykAku+a9Py9BXAaEEA1imsvZzLYH/I1ONvxbbcKwknZ28Ol/pPgqtOTAD
+         DaHvp1FevsDy6kqUn6/jIU0bmFdZksWA3yB34n5RaRQtyumaUjML9bn2e534D+nuGnu+
+         m+PIkT47P+V/r9h+9hBN7Q26TZDB42kHB5YRu8EO0+5NSkWiVc5gNhi4usIKK50bErlE
+         Z0IhXIwW5pKRsN8WR/GoZitKaT8oYAkQ285UbAizyVhp6fw3U1ERv+yDwkzItXMZvfyD
+         XLHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ASF8+rFWzj6aUvWIsRo10Spu216IfvU7//f0qbC+iF8=;
-        b=eoTjS0BVvXrJtCSi/x8qOueZDkWul56QlJZKAFmD91zdglJIKOqiw7KStXxcoOaDL1
-         FOPWYguuG/86RfJsnihoOil4U85NZmMylr0FTvHUE+IxrkwicfSuNrzee5xwABDhVHtX
-         ql4cf72xv3/iO9YrWe9S7PtUhUzLoHJJeU6m4P+CDDP1MaxqFN2uHoWlcIRNUT/MIDRw
-         Mqc0INvSm76RAhLSqPItfvR795f+KYXrnQa2SQklrxrBxSnsc0fZMP/syJ8DzNRJ7v70
-         gAnVIxA7V8M9L0q/tHB/7mj0/hXRuXEJAF2JZy01TdILd+yzUKu/exVB9pNk7PMyYyNS
-         +I0A==
-X-Gm-Message-State: AOAM530eV37APuTA/VNR5M80SkXKOtR6Ugo5ImlPMXk9HRrWXy+fSUjT
-        vKwzo/DzGT+pzZC91a1b5y2pIlwBlU4=
-X-Google-Smtp-Source: ABdhPJz+er/7xPAvbC3mEOdtBboVCkNwysgEf1Ex3tEVjwAa3i41C43KaKZyUT3IMUQqCCiFw2avLA==
-X-Received: by 2002:adf:c40a:: with SMTP id v10mr6164876wrf.10.1613174961872;
-        Fri, 12 Feb 2021 16:09:21 -0800 (PST)
+        bh=BotalnfufejzC+XjwCf1vvrEZjvDIasfuvdQCQUcLtw=;
+        b=QTgIARspMexe1RHo1FUU9kNoct1j4K9NHasO7K0mYsH/CqGNoPDCON77pf++vJWnT0
+         SttDw6U5J2M7Mnl3S5TMO4Rhei6s1GgmabRSJj0Jz178L9yM8V79d51DwEdP1HqtU3Ds
+         84r5E8KEUvsuJXG2oqxaMlbzMQRc1fcmYtUDDSYmH6tZM/O/9Ww8thDdvYkFAT0/+jcL
+         elLe4xhCDx45qP57dBJfUM2imflHeQo2FsB029ckms0slPz6X7ArFreQAKYGbwEK0QVK
+         S2EsHYvOqKa3RnJaby6nwGVp25yNWnDdoqH6TudQQHD2hMwuwqOwA9Oa5hqgR1ds2x0A
+         bEKQ==
+X-Gm-Message-State: AOAM531OBgB/ghN8Rue6VWD4y0bzqUTPRk6hDeJr2amiMQZUIqG5RWrI
+        g7jWQgbJYiTH7AXuZelS1EeKNVka17M=
+X-Google-Smtp-Source: ABdhPJwSCGjIY2bV/HMLX6BOoSqjcvxIpX9fECmxiIin1tF6M5qSa5Lk3fOoCFIgYFo/g3QyaUS8aQ==
+X-Received: by 2002:a1c:b6c5:: with SMTP id g188mr4698175wmf.27.1613174963672;
+        Fri, 12 Feb 2021 16:09:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b19sm15130940wmj.22.2021.02.12.16.09.21
+        by smtp.gmail.com with ESMTPSA id 36sm14354213wrj.97.2021.02.12.16.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Feb 2021 16:09:21 -0800 (PST)
-Message-Id: <1bfa36409d0706d5e22703f80bf95dfa1a313a83.1613174954.git.gitgitgadget@gmail.com>
+        Fri, 12 Feb 2021 16:09:23 -0800 (PST)
+Message-Id: <1e5c856ade8557d7514d9bee1c58bf978aba062c.1613174954.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
 References: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
         <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Feb 2021 00:09:10 +0000
-Subject: [PATCH v3 09/12] unix-socket: disallow chdir() when creating unix
- domain sockets
+Date:   Sat, 13 Feb 2021 00:09:13 +0000
+Subject: [PATCH v3 12/12] t0052: add simple-ipc tests and
+ t/helper/test-simple-ipc tool
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,115 +80,929 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Calls to `chdir()` are dangerous in a multi-threaded context.  If
-`unix_stream_listen()` or `unix_stream_connect()` is given a socket
-pathname that is too long to fit in a `sockaddr_un` structure, it will
-`chdir()` to the parent directory of the requested socket pathname,
-create the socket using a relative pathname, and then `chdir()` back.
-This is not thread-safe.
+Create t0052-simple-ipc.sh with unit tests for the "simple-ipc" mechanism.
 
-Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when this
-flag is set.
+Create t/helper/test-simple-ipc test tool to exercise the "simple-ipc"
+functions.
+
+When the tool is invoked with "run-daemon", it runs a server to listen
+for "simple-ipc" connections on a test socket or named pipe and
+responds to a set of commands to exercise/stress the communication
+setup.
+
+When the tool is invoked with "start-daemon", it spawns a "run-daemon"
+command in the background and waits for the server to become ready
+before exiting.  (This helps make unit tests in t0052 more predictable
+and avoids the need for arbitrary sleeps in the test script.)
+
+The tool also has a series of client "send" commands to send commands
+and data to a server instance.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/credential-cache.c |  2 +-
- unix-socket.c              | 17 ++++++++++++-----
- unix-socket.h              |  4 +++-
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ Makefile                   |   1 +
+ t/helper/test-simple-ipc.c | 713 +++++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c       |   1 +
+ t/helper/test-tool.h       |   1 +
+ t/t0052-simple-ipc.sh      | 134 +++++++
+ 5 files changed, 850 insertions(+)
+ create mode 100644 t/helper/test-simple-ipc.c
+ create mode 100755 t/t0052-simple-ipc.sh
 
-diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
-index 9b3f70990597..76a6ba37223f 100644
---- a/builtin/credential-cache.c
-+++ b/builtin/credential-cache.c
-@@ -14,7 +14,7 @@
- static int send_request(const char *socket, const struct strbuf *out)
- {
- 	int got_data = 0;
--	int fd = unix_stream_connect(socket);
-+	int fd = unix_stream_connect(socket, 0);
- 
- 	if (fd < 0)
- 		return -1;
-diff --git a/unix-socket.c b/unix-socket.c
-index 5ac7dafe9828..1eaa8cf759c0 100644
---- a/unix-socket.c
-+++ b/unix-socket.c
-@@ -28,16 +28,23 @@ static void unix_sockaddr_cleanup(struct unix_sockaddr_context *ctx)
- }
- 
- static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
--			      struct unix_sockaddr_context *ctx)
-+			      struct unix_sockaddr_context *ctx,
-+			      int disallow_chdir)
- {
- 	int size = strlen(path) + 1;
- 
- 	ctx->orig_dir = NULL;
- 	if (size > sizeof(sa->sun_path)) {
--		const char *slash = find_last_dir_sep(path);
-+		const char *slash;
- 		const char *dir;
- 		struct strbuf cwd = STRBUF_INIT;
- 
-+		if (disallow_chdir) {
-+			errno = ENAMETOOLONG;
-+			return -1;
+diff --git a/Makefile b/Makefile
+index 08a4c88b92f5..93f2e7ca9e1f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -740,6 +740,7 @@ TEST_BUILTINS_OBJS += test-serve-v2.o
+ TEST_BUILTINS_OBJS += test-sha1.o
+ TEST_BUILTINS_OBJS += test-sha256.o
+ TEST_BUILTINS_OBJS += test-sigchain.o
++TEST_BUILTINS_OBJS += test-simple-ipc.o
+ TEST_BUILTINS_OBJS += test-strcmp-offset.o
+ TEST_BUILTINS_OBJS += test-string-list.o
+ TEST_BUILTINS_OBJS += test-submodule-config.o
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+new file mode 100644
+index 000000000000..92aa7f843cfa
+--- /dev/null
++++ b/t/helper/test-simple-ipc.c
+@@ -0,0 +1,713 @@
++/*
++ * test-simple-ipc.c: verify that the Inter-Process Communication works.
++ */
++
++#include "test-tool.h"
++#include "cache.h"
++#include "strbuf.h"
++#include "simple-ipc.h"
++#include "parse-options.h"
++#include "thread-utils.h"
++#include "strvec.h"
++
++#ifndef SUPPORTS_SIMPLE_IPC
++int cmd__simple_ipc(int argc, const char **argv)
++{
++	die("simple IPC not available on this platform");
++}
++#else
++
++/*
++ * The test daemon defines an "application callback" that supports a
++ * series of commands (see `test_app_cb()`).
++ *
++ * Unknown commands are caught here and we send an error message back
++ * to the client process.
++ */
++static int app__unhandled_command(const char *command,
++				  ipc_server_reply_cb *reply_cb,
++				  struct ipc_server_reply_data *reply_data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int ret;
++
++	strbuf_addf(&buf, "unhandled command: %s", command);
++	ret = reply_cb(reply_data, buf.buf, buf.len);
++	strbuf_release(&buf);
++
++	return ret;
++}
++
++/*
++ * Reply with a single very large buffer.  This is to ensure that
++ * long response are properly handled -- whether the chunking occurs
++ * in the kernel or in the (probably pkt-line) layer.
++ */
++#define BIG_ROWS (10000)
++static int app__big_command(ipc_server_reply_cb *reply_cb,
++			    struct ipc_server_reply_data *reply_data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int row;
++	int ret;
++
++	for (row = 0; row < BIG_ROWS; row++)
++		strbuf_addf(&buf, "big: %.75d\n", row);
++
++	ret = reply_cb(reply_data, buf.buf, buf.len);
++	strbuf_release(&buf);
++
++	return ret;
++}
++
++/*
++ * Reply with a series of lines.  This is to ensure that we can incrementally
++ * compute the response and chunk it to the client.
++ */
++#define CHUNK_ROWS (10000)
++static int app__chunk_command(ipc_server_reply_cb *reply_cb,
++			      struct ipc_server_reply_data *reply_data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int row;
++	int ret;
++
++	for (row = 0; row < CHUNK_ROWS; row++) {
++		strbuf_setlen(&buf, 0);
++		strbuf_addf(&buf, "big: %.75d\n", row);
++		ret = reply_cb(reply_data, buf.buf, buf.len);
++	}
++
++	strbuf_release(&buf);
++
++	return ret;
++}
++
++/*
++ * Slowly reply with a series of lines.  This is to model an expensive to
++ * compute chunked response (which might happen if this callback is running
++ * in a thread and is fighting for a lock with other threads).
++ */
++#define SLOW_ROWS     (1000)
++#define SLOW_DELAY_MS (10)
++static int app__slow_command(ipc_server_reply_cb *reply_cb,
++			     struct ipc_server_reply_data *reply_data)
++{
++	struct strbuf buf = STRBUF_INIT;
++	int row;
++	int ret;
++
++	for (row = 0; row < SLOW_ROWS; row++) {
++		strbuf_setlen(&buf, 0);
++		strbuf_addf(&buf, "big: %.75d\n", row);
++		ret = reply_cb(reply_data, buf.buf, buf.len);
++		sleep_millisec(SLOW_DELAY_MS);
++	}
++
++	strbuf_release(&buf);
++
++	return ret;
++}
++
++/*
++ * The client sent a command followed by a (possibly very) large buffer.
++ */
++static int app__sendbytes_command(const char *received,
++				  ipc_server_reply_cb *reply_cb,
++				  struct ipc_server_reply_data *reply_data)
++{
++	struct strbuf buf_resp = STRBUF_INIT;
++	const char *p = "?";
++	int len_ballast = 0;
++	int k;
++	int errs = 0;
++	int ret;
++
++	if (skip_prefix(received, "sendbytes ", &p))
++		len_ballast = strlen(p);
++
++	/*
++	 * Verify that the ballast is n copies of a single letter.
++	 * And that the multi-threaded IO layer didn't cross the streams.
++	 */
++	for (k = 1; k < len_ballast; k++)
++		if (p[k] != p[0])
++			errs++;
++
++	if (errs)
++		strbuf_addf(&buf_resp, "errs:%d\n", errs);
++	else
++		strbuf_addf(&buf_resp, "rcvd:%c%08d\n", p[0], len_ballast);
++
++	ret = reply_cb(reply_data, buf_resp.buf, buf_resp.len);
++
++	strbuf_release(&buf_resp);
++
++	return ret;
++}
++
++/*
++ * An arbitrary fixed address to verify that the application instance
++ * data is handled properly.
++ */
++static int my_app_data = 42;
++
++static ipc_server_application_cb test_app_cb;
++
++/*
++ * This is "application callback" that sits on top of the "ipc-server".
++ * It completely defines the set of command verbs supported by this
++ * application.
++ */
++static int test_app_cb(void *application_data,
++		       const char *command,
++		       ipc_server_reply_cb *reply_cb,
++		       struct ipc_server_reply_data *reply_data)
++{
++	/*
++	 * Verify that we received the application-data that we passed
++	 * when we started the ipc-server.  (We have several layers of
++	 * callbacks calling callbacks and it's easy to get things mixed
++	 * up (especially when some are "void*").)
++	 */
++	if (application_data != (void*)&my_app_data)
++		BUG("application_cb: application_data pointer wrong");
++
++	if (!strcmp(command, "quit")) {
++		/*
++		 * The client sent a "quit" command.  This is an async
++		 * request for the server to shutdown.
++		 *
++		 * We DO NOT send the client a response message
++		 * (because we have nothing to say and the other
++		 * server threads have not yet stopped).
++		 *
++		 * Tell the ipc-server layer to start shutting down.
++		 * This includes: stop listening for new connections
++		 * on the socket/pipe and telling all worker threads
++		 * to finish/drain their outgoing responses to other
++		 * clients.
++		 *
++		 * This DOES NOT force an immediate sync shutdown.
++		 */
++		return SIMPLE_IPC_QUIT;
++	}
++
++	if (!strcmp(command, "ping")) {
++		const char *answer = "pong";
++		return reply_cb(reply_data, answer, strlen(answer));
++	}
++
++	if (!strcmp(command, "big"))
++		return app__big_command(reply_cb, reply_data);
++
++	if (!strcmp(command, "chunk"))
++		return app__chunk_command(reply_cb, reply_data);
++
++	if (!strcmp(command, "slow"))
++		return app__slow_command(reply_cb, reply_data);
++
++	if (starts_with(command, "sendbytes "))
++		return app__sendbytes_command(command, reply_cb, reply_data);
++
++	return app__unhandled_command(command, reply_cb, reply_data);
++}
++
++/*
++ * This process will run as a simple-ipc server and listen for IPC commands
++ * from client processes.
++ */
++static int daemon__run_server(const char *path, int argc, const char **argv)
++{
++	struct ipc_server_opts opts = {
++		.nr_threads = 5
++	};
++
++	const char * const daemon_usage[] = {
++		N_("test-helper simple-ipc run-daemon [<options>"),
++		NULL
++	};
++	struct option daemon_options[] = {
++		OPT_INTEGER(0, "threads", &opts.nr_threads,
++			    N_("number of threads in server thread pool")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, NULL, daemon_options, daemon_usage, 0);
++
++	if (opts.nr_threads < 1)
++		opts.nr_threads = 1;
++
++	/*
++	 * Synchronously run the ipc-server.  We don't need any application
++	 * instance data, so pass an arbitrary pointer (that we'll later
++	 * verify made the round trip).
++	 */
++	return ipc_server_run(path, &opts, test_app_cb, (void*)&my_app_data);
++}
++
++#ifndef GIT_WINDOWS_NATIVE
++/*
++ * This is adapted from `daemonize()`.  Use `fork()` to directly create and
++ * run the daemon in a child process.
++ */
++static int spawn_server(const char *path,
++			const struct ipc_server_opts *opts,
++			pid_t *pid)
++{
++	*pid = fork();
++
++	switch (*pid) {
++	case 0:
++		if (setsid() == -1)
++			error_errno(_("setsid failed"));
++		close(0);
++		close(1);
++		close(2);
++		sanitize_stdfds();
++
++		return ipc_server_run(path, opts, test_app_cb, (void*)&my_app_data);
++
++	case -1:
++		return error_errno(_("could not spawn daemon in the background"));
++
++	default:
++		return 0;
++	}
++}
++#else
++/*
++ * Conceptually like `daemonize()` but different because Windows does not
++ * have `fork(2)`.  Spawn a normal Windows child process but without the
++ * limitations of `start_command()` and `finish_command()`.
++ */
++static int spawn_server(const char *path,
++			const struct ipc_server_opts *opts,
++			pid_t *pid)
++{
++	char test_tool_exe[MAX_PATH];
++	struct strvec args = STRVEC_INIT;
++	int in, out;
++
++	GetModuleFileNameA(NULL, test_tool_exe, MAX_PATH);
++
++	in = open("/dev/null", O_RDONLY);
++	out = open("/dev/null", O_WRONLY);
++
++	strvec_push(&args, test_tool_exe);
++	strvec_push(&args, "simple-ipc");
++	strvec_push(&args, "run-daemon");
++	strvec_pushf(&args, "--threads=%d", opts->nr_threads);
++
++	*pid = mingw_spawnvpe(args.v[0], args.v, NULL, NULL, in, out, out);
++	close(in);
++	close(out);
++
++	strvec_clear(&args);
++
++	if (*pid < 0)
++		return error(_("could not spawn daemon in the background"));
++
++	return 0;
++}
++#endif
++
++/*
++ * This is adapted from `wait_or_whine()`.  Watch the child process and
++ * let it get started and begin listening for requests on the socket
++ * before reporting our success.
++ */
++static int wait_for_server_startup(const char * path, pid_t pid_child,
++				   int max_wait_sec)
++{
++	int status;
++	pid_t pid_seen;
++	enum ipc_active_state s;
++	time_t time_limit, now;
++
++	time(&time_limit);
++	time_limit += max_wait_sec;
++
++	for (;;) {
++		pid_seen = waitpid(pid_child, &status, WNOHANG);
++
++		if (pid_seen == -1)
++			return error_errno(_("waitpid failed"));
++
++		else if (pid_seen == 0) {
++			/*
++			 * The child is still running (this should be
++			 * the normal case).  Try to connect to it on
++			 * the socket and see if it is ready for
++			 * business.
++			 *
++			 * If there is another daemon already running,
++			 * our child will fail to start (possibly
++			 * after a timeout on the lock), but we don't
++			 * care (who responds) if the socket is live.
++			 */
++			s = ipc_get_active_state(path);
++			if (s == IPC_STATE__LISTENING)
++				return 0;
++
++			time(&now);
++			if (now > time_limit)
++				return error(_("daemon not online yet"));
++
++			continue;
 +		}
 +
-+		slash = find_last_dir_sep(path);
- 		if (!slash) {
- 			errno = ENAMETOOLONG;
- 			return -1;
-@@ -63,13 +70,13 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
- 	return 0;
- }
- 
--int unix_stream_connect(const char *path)
-+int unix_stream_connect(const char *path, int disallow_chdir)
- {
- 	int fd = -1, saved_errno;
- 	struct sockaddr_un sa;
- 	struct unix_sockaddr_context ctx;
- 
--	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
-+	if (unix_sockaddr_init(&sa, path, &ctx, disallow_chdir) < 0)
- 		return -1;
- 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
- 	if (fd < 0)
-@@ -99,7 +106,7 @@ int unix_stream_listen(const char *path,
- 
- 	unlink(path);
- 
--	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
-+	if (unix_sockaddr_init(&sa, path, &ctx, opts->disallow_chdir) < 0)
- 		return -1;
- 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
- 	if (fd < 0)
-diff --git a/unix-socket.h b/unix-socket.h
-index 06a5a05b03fe..2c0b2e79d7b3 100644
---- a/unix-socket.h
-+++ b/unix-socket.h
-@@ -3,6 +3,7 @@
- 
- struct unix_stream_listen_opts {
- 	int listen_backlog_size;
-+	unsigned int disallow_chdir:1;
- };
- 
- #define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
-@@ -10,9 +11,10 @@ struct unix_stream_listen_opts {
- #define UNIX_STREAM_LISTEN_OPTS_INIT \
- { \
- 	.listen_backlog_size = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG, \
-+	.disallow_chdir = 0, \
- }
- 
--int unix_stream_connect(const char *path);
-+int unix_stream_connect(const char *path, int disallow_chdir);
- int unix_stream_listen(const char *path,
- 		       const struct unix_stream_listen_opts *opts);
- 
++		else if (pid_seen == pid_child) {
++			/*
++			 * The new child daemon process shutdown while
++			 * it was starting up, so it is not listening
++			 * on the socket.
++			 *
++			 * Try to ping the socket in the odd chance
++			 * that another daemon started (or was already
++			 * running) while our child was starting.
++			 *
++			 * Again, we don't care who services the socket.
++			 */
++			s = ipc_get_active_state(path);
++			if (s == IPC_STATE__LISTENING)
++				return 0;
++
++			/*
++			 * We don't care about the WEXITSTATUS() nor
++			 * any of the WIF*(status) values because
++			 * `cmd__simple_ipc()` does the `!!result`
++			 * trick on all function return values.
++			 *
++			 * So it is sufficient to just report the
++			 * early shutdown as an error.
++			 */
++			return error(_("daemon failed to start"));
++		}
++
++		else
++			return error(_("waitpid is confused"));
++	}
++}
++
++/*
++ * This process will start a simple-ipc server in a background process and
++ * wait for it to become ready.  This is like `daemonize()` but gives us
++ * more control and better error reporting (and makes it easier to write
++ * unit tests).
++ */
++static int daemon__start_server(const char *path, int argc, const char **argv)
++{
++	pid_t pid_child;
++	int ret;
++	int max_wait_sec = 60;
++	struct ipc_server_opts opts = {
++		.nr_threads = 5
++	};
++
++	const char * const daemon_usage[] = {
++		N_("test-helper simple-ipc start-daemon [<options>"),
++		NULL
++	};
++
++	struct option daemon_options[] = {
++		OPT_INTEGER(0, "max-wait", &max_wait_sec,
++			    N_("seconds to wait for daemon to startup")),
++		OPT_INTEGER(0, "threads", &opts.nr_threads,
++			    N_("number of threads in server thread pool")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, NULL, daemon_options, daemon_usage, 0);
++
++	if (max_wait_sec < 0)
++		max_wait_sec = 0;
++	if (opts.nr_threads < 1)
++		opts.nr_threads = 1;
++
++	/*
++	 * Run the actual daemon in a background process.
++	 */
++	ret = spawn_server(path, &opts, &pid_child);
++	if (pid_child <= 0)
++		return ret;
++
++	/*
++	 * Let the parent wait for the child process to get started
++	 * and begin listening for requests on the socket.
++	 */
++	ret = wait_for_server_startup(path, pid_child, max_wait_sec);
++
++	return ret;
++}
++
++/*
++ * This process will run a quick probe to see if a simple-ipc server
++ * is active on this path.
++ *
++ * Returns 0 if the server is alive.
++ */
++static int client__probe_server(const char *path)
++{
++	enum ipc_active_state s;
++
++	s = ipc_get_active_state(path);
++	switch (s) {
++	case IPC_STATE__LISTENING:
++		return 0;
++
++	case IPC_STATE__NOT_LISTENING:
++		return error("no server listening at '%s'", path);
++
++	case IPC_STATE__PATH_NOT_FOUND:
++		return error("path not found '%s'", path);
++
++	case IPC_STATE__INVALID_PATH:
++		return error("invalid pipe/socket name '%s'", path);
++
++	case IPC_STATE__OTHER_ERROR:
++	default:
++		return error("other error for '%s'", path);
++	}
++}
++
++/*
++ * Send an IPC command to an already-running server daemon and print the
++ * response.
++ *
++ * argv[2] contains a simple (1 word) command verb that `test_app_cb()`
++ * (in the daemon process) will understand.
++ */
++static int client__send_ipc(int argc, const char **argv, const char *path)
++{
++	const char *command = argc > 2 ? argv[2] : "(no command)";
++	struct strbuf buf = STRBUF_INIT;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++
++	if (!ipc_client_send_command(path, &options, command, &buf)) {
++		if (buf.len) {
++			printf("%s\n", buf.buf);
++			fflush(stdout);
++		}
++		strbuf_release(&buf);
++
++		return 0;
++	}
++
++	return error("failed to send '%s' to '%s'", command, path);
++}
++
++/*
++ * Send an IPC command followed by ballast to confirm that a large
++ * message can be sent and that the kernel or pkt-line layers will
++ * properly chunk it and that the daemon receives the entire message.
++ */
++static int do_sendbytes(int bytecount, char byte, const char *path,
++			const struct ipc_client_connect_options *options)
++{
++	struct strbuf buf_send = STRBUF_INIT;
++	struct strbuf buf_resp = STRBUF_INIT;
++
++	strbuf_addstr(&buf_send, "sendbytes ");
++	strbuf_addchars(&buf_send, byte, bytecount);
++
++	if (!ipc_client_send_command(path, options, buf_send.buf, &buf_resp)) {
++		strbuf_rtrim(&buf_resp);
++		printf("sent:%c%08d %s\n", byte, bytecount, buf_resp.buf);
++		fflush(stdout);
++		strbuf_release(&buf_send);
++		strbuf_release(&buf_resp);
++
++		return 0;
++	}
++
++	return error("client failed to sendbytes(%d, '%c') to '%s'",
++		     bytecount, byte, path);
++}
++
++/*
++ * Send an IPC command with ballast to an already-running server daemon.
++ */
++static int client__sendbytes(int argc, const char **argv, const char *path)
++{
++	int bytecount = 1024;
++	char *string = "x";
++	const char * const sendbytes_usage[] = {
++		N_("test-helper simple-ipc sendbytes [<options>]"),
++		NULL
++	};
++	struct option sendbytes_options[] = {
++		OPT_INTEGER(0, "bytecount", &bytecount, N_("number of bytes")),
++		OPT_STRING(0, "byte", &string, N_("byte"), N_("ballast")),
++		OPT_END()
++	};
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++	options.uds_disallow_chdir = 0;
++
++	argc = parse_options(argc, argv, NULL, sendbytes_options, sendbytes_usage, 0);
++
++	return do_sendbytes(bytecount, string[0], path, &options);
++}
++
++struct multiple_thread_data {
++	pthread_t pthread_id;
++	struct multiple_thread_data *next;
++	const char *path;
++	int bytecount;
++	int batchsize;
++	int sum_errors;
++	int sum_good;
++	char letter;
++};
++
++static void *multiple_thread_proc(void *_multiple_thread_data)
++{
++	struct multiple_thread_data *d = _multiple_thread_data;
++	int k;
++	struct ipc_client_connect_options options
++		= IPC_CLIENT_CONNECT_OPTIONS_INIT;
++
++	options.wait_if_busy = 1;
++	options.wait_if_not_found = 0;
++	/*
++	 * A multi-threaded client should not be randomly calling chdir().
++	 * The test will pass without this restriction because the test is
++	 * not otherwise accessing the filesystem, but it makes us honest.
++	 */
++	options.uds_disallow_chdir = 1;
++
++	trace2_thread_start("multiple");
++
++	for (k = 0; k < d->batchsize; k++) {
++		if (do_sendbytes(d->bytecount + k, d->letter, d->path, &options))
++			d->sum_errors++;
++		else
++			d->sum_good++;
++	}
++
++	trace2_thread_exit();
++	return NULL;
++}
++
++/*
++ * Start a client-side thread pool.  Each thread sends a series of
++ * IPC requests.  Each request is on a new connection to the server.
++ */
++static int client__multiple(int argc, const char **argv, const char *path)
++{
++	struct multiple_thread_data *list = NULL;
++	int k;
++	int nr_threads = 5;
++	int bytecount = 1;
++	int batchsize = 10;
++	int sum_join_errors = 0;
++	int sum_thread_errors = 0;
++	int sum_good = 0;
++
++	const char * const multiple_usage[] = {
++		N_("test-helper simple-ipc multiple [<options>]"),
++		NULL
++	};
++	struct option multiple_options[] = {
++		OPT_INTEGER(0, "bytecount", &bytecount, N_("number of bytes")),
++		OPT_INTEGER(0, "threads", &nr_threads, N_("number of threads")),
++		OPT_INTEGER(0, "batchsize", &batchsize, N_("number of requests per thread")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, NULL, multiple_options, multiple_usage, 0);
++
++	if (bytecount < 1)
++		bytecount = 1;
++	if (nr_threads < 1)
++		nr_threads = 1;
++	if (batchsize < 1)
++		batchsize = 1;
++
++	for (k = 0; k < nr_threads; k++) {
++		struct multiple_thread_data *d = xcalloc(1, sizeof(*d));
++		d->next = list;
++		d->path = path;
++		d->bytecount = bytecount + batchsize*(k/26);
++		d->batchsize = batchsize;
++		d->sum_errors = 0;
++		d->sum_good = 0;
++		d->letter = 'A' + (k % 26);
++
++		if (pthread_create(&d->pthread_id, NULL, multiple_thread_proc, d)) {
++			warning("failed to create thread[%d] skipping remainder", k);
++			free(d);
++			break;
++		}
++
++		list = d;
++	}
++
++	while (list) {
++		struct multiple_thread_data *d = list;
++
++		if (pthread_join(d->pthread_id, NULL))
++			sum_join_errors++;
++
++		sum_thread_errors += d->sum_errors;
++		sum_good += d->sum_good;
++
++		list = d->next;
++		free(d);
++	}
++
++	printf("client (good %d) (join %d), (errors %d)\n",
++	       sum_good, sum_join_errors, sum_thread_errors);
++
++	return (sum_join_errors + sum_thread_errors) ? 1 : 0;
++}
++
++int cmd__simple_ipc(int argc, const char **argv)
++{
++	const char *path = "ipc-test";
++
++	if (argc == 2 && !strcmp(argv[1], "SUPPORTS_SIMPLE_IPC"))
++		return 0;
++
++	/*
++	 * Use '!!' on all dispatch functions to map from `error()` style
++	 * (returns -1) style to `test_must_fail` style (expects 1).  This
++	 * makes shell error messages less confusing.
++	 */
++
++	if (argc == 2 && !strcmp(argv[1], "is-active"))
++		return !!client__probe_server(path);
++
++	if (argc >= 2 && !strcmp(argv[1], "run-daemon"))
++		return !!daemon__run_server(path, argc, argv);
++
++	if (argc >= 2 && !strcmp(argv[1], "start-daemon"))
++		return !!daemon__start_server(path, argc, argv);
++
++	/*
++	 * Client commands follow.  Ensure a server is running before
++	 * going any further.
++	 */
++	if (client__probe_server(path))
++		return 1;
++
++	if ((argc == 2 || argc == 3) && !strcmp(argv[1], "send"))
++		return !!client__send_ipc(argc, argv, path);
++
++	if (argc >= 2 && !strcmp(argv[1], "sendbytes"))
++		return !!client__sendbytes(argc, argv, path);
++
++	if (argc >= 2 && !strcmp(argv[1], "multiple"))
++		return !!client__multiple(argc, argv, path);
++
++	die("Unhandled argv[1]: '%s'", argv[1]);
++}
++#endif
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 9d6d14d92937..a409655f03b5 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -64,6 +64,7 @@ static struct test_cmd cmds[] = {
+ 	{ "sha1", cmd__sha1 },
+ 	{ "sha256", cmd__sha256 },
+ 	{ "sigchain", cmd__sigchain },
++	{ "simple-ipc", cmd__simple_ipc },
+ 	{ "strcmp-offset", cmd__strcmp_offset },
+ 	{ "string-list", cmd__string_list },
+ 	{ "submodule-config", cmd__submodule_config },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index a6470ff62c42..564eb3c8e911 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -54,6 +54,7 @@ int cmd__sha1(int argc, const char **argv);
+ int cmd__oid_array(int argc, const char **argv);
+ int cmd__sha256(int argc, const char **argv);
+ int cmd__sigchain(int argc, const char **argv);
++int cmd__simple_ipc(int argc, const char **argv);
+ int cmd__strcmp_offset(int argc, const char **argv);
+ int cmd__string_list(int argc, const char **argv);
+ int cmd__submodule_config(int argc, const char **argv);
+diff --git a/t/t0052-simple-ipc.sh b/t/t0052-simple-ipc.sh
+new file mode 100755
+index 000000000000..e36b786709ec
+--- /dev/null
++++ b/t/t0052-simple-ipc.sh
+@@ -0,0 +1,134 @@
++#!/bin/sh
++
++test_description='simple command server'
++
++. ./test-lib.sh
++
++test-tool simple-ipc SUPPORTS_SIMPLE_IPC || {
++	skip_all='simple IPC not supported on this platform'
++	test_done
++}
++
++stop_simple_IPC_server () {
++	test-tool simple-ipc send quit
++}
++
++test_expect_success 'start simple command server' '
++	test_atexit stop_simple_IPC_server &&
++	test-tool simple-ipc start-daemon --threads=8 &&
++	test-tool simple-ipc is-active
++'
++
++test_expect_success 'simple command server' '
++	test-tool simple-ipc send ping >actual &&
++	echo pong >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'servers cannot share the same path' '
++	test_must_fail test-tool simple-ipc run-daemon &&
++	test-tool simple-ipc is-active
++'
++
++test_expect_success 'big response' '
++	test-tool simple-ipc send big >actual &&
++	test_line_count -ge 10000 actual &&
++	grep -q "big: [0]*9999\$" actual
++'
++
++test_expect_success 'chunk response' '
++	test-tool simple-ipc send chunk >actual &&
++	test_line_count -ge 10000 actual &&
++	grep -q "big: [0]*9999\$" actual
++'
++
++test_expect_success 'slow response' '
++	test-tool simple-ipc send slow >actual &&
++	test_line_count -ge 100 actual &&
++	grep -q "big: [0]*99\$" actual
++'
++
++# Send an IPC with n=100,000 bytes of ballast.  This should be large enough
++# to force both the kernel and the pkt-line layer to chunk the message to the
++# daemon and for the daemon to receive it in chunks.
++#
++test_expect_success 'sendbytes' '
++	test-tool simple-ipc sendbytes --bytecount=100000 --byte=A >actual &&
++	grep "sent:A00100000 rcvd:A00100000" actual
++'
++
++# Start a series of <threads> client threads that each make <batchsize>
++# IPC requests to the server.  Each (<threads> * <batchsize>) request
++# will open a new connection to the server and randomly bind to a server
++# thread.  Each client thread exits after completing its batch.  So the
++# total number of live client threads will be smaller than the total.
++# Each request will send a message containing at least <bytecount> bytes
++# of ballast.  (Responses are small.)
++#
++# The purpose here is to test threading in the server and responding to
++# many concurrent client requests (regardless of whether they come from
++# 1 client process or many).  And to test that the server side of the
++# named pipe/socket is stable.  (On Windows this means that the server
++# pipe is properly recycled.)
++#
++# On Windows it also lets us adjust the connection timeout in the
++# `ipc_client_send_command()`.
++#
++# Note it is easy to drive the system into failure by requesting an
++# insane number of threads on client or server and/or increasing the
++# per-thread batchsize or the per-request bytecount (ballast).
++# On Windows these failures look like "pipe is busy" errors.
++# So I've chosen fairly conservative values for now.
++#
++# We expect output of the form "sent:<letter><length> ..."
++# With terms (7, 19, 13) we expect:
++#   <letter> in [A-G]
++#   <length> in [19+0 .. 19+(13-1)]
++# and (7 * 13) successful responses.
++#
++test_expect_success 'stress test threads' '
++	test-tool simple-ipc multiple \
++		--threads=7 \
++		--bytecount=19 \
++		--batchsize=13 \
++		>actual &&
++	test_line_count = 92 actual &&
++	grep "good 91" actual &&
++	grep "sent:A" <actual >actual_a &&
++	cat >expect_a <<-EOF &&
++		sent:A00000019 rcvd:A00000019
++		sent:A00000020 rcvd:A00000020
++		sent:A00000021 rcvd:A00000021
++		sent:A00000022 rcvd:A00000022
++		sent:A00000023 rcvd:A00000023
++		sent:A00000024 rcvd:A00000024
++		sent:A00000025 rcvd:A00000025
++		sent:A00000026 rcvd:A00000026
++		sent:A00000027 rcvd:A00000027
++		sent:A00000028 rcvd:A00000028
++		sent:A00000029 rcvd:A00000029
++		sent:A00000030 rcvd:A00000030
++		sent:A00000031 rcvd:A00000031
++	EOF
++	test_cmp expect_a actual_a
++'
++
++# Sending a "quit" message to the server causes it to start an "async
++# shutdown" -- queuing shutdown events to all socket/pipe thread-pool
++# threads.  Each thread will process that event after finishing
++# (draining) any in-progress IO with other clients.  So when the "send
++# quit" client command exits, the ipc-server may still be running (but
++# it should be cleaning up).
++#
++# So, insert a generous sleep here to give the server time to shutdown.
++#
++test_expect_success '`quit` works' '
++	test-tool simple-ipc send quit &&
++
++	sleep 5 &&
++
++	test_must_fail test-tool simple-ipc is-active &&
++	test_must_fail test-tool simple-ipc send ping
++'
++
++test_done
 -- 
 gitgitgadget
-
