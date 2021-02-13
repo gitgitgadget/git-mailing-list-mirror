@@ -2,91 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4185C433DB
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E126AC433E6
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:53:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9253A64E01
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:50:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A90E064EA1
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231317AbhBMBuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 20:50:21 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65385 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhBMBuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 20:50:20 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 538F011ACC0;
-        Fri, 12 Feb 2021 20:49:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=2SEbZhdZlBjnsxCx8keg4q/bf9g=; b=Tpazqc
-        CnrbSKjrDMYKIrzOJHbfEMDVZ6JUK81q2zXR7Z6LKi5SiKUXKy1Hdkzu5gSTvrsM
-        tkCV245U6yGOCVDvoxQhfceECPMERWEx6wUFTGy/l0jDh+0OIb0+boWKokd31Ija
-        fO9Ad6CfrK6sMeWxqRvcOcJrS/IvRmrzpNvhc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=maBSkIMljKQQQCgIJUwceFSwI7ahIq6A
-        4dSIOs1D9jrhfMZ2L5kjqmbZFflUGyA01Drxx2PeqNkPjJBTlB4LYVIjRUMyCd3R
-        Sd1cYEyPQlNaWQwMeUB/nbNxyPap+p5329+8S6YJhok35d6ohfliEpaA89J6d4xg
-        KrNmSr5HBJ8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4BD3611ACBF;
-        Fri, 12 Feb 2021 20:49:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9984D11ACBC;
-        Fri, 12 Feb 2021 20:49:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 4/5] diffcore-rename: guide inexact rename detection
- based on basenames
-References: <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
-        <pull.843.v3.git.1612970140.gitgitgadget@gmail.com>
-        <2493f4b2f55d2b602e448db3f09da1ee3a97c81b.1612970140.git.gitgitgadget@gmail.com>
-Date:   Fri, 12 Feb 2021 17:49:33 -0800
-In-Reply-To: <2493f4b2f55d2b602e448db3f09da1ee3a97c81b.1612970140.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Wed, 10 Feb 2021
-        15:15:39 +0000")
-Message-ID: <xmqqo8gou47m.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232246AbhBMBx3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 20:53:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43192 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229918AbhBMBx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 20:53:27 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ABECC061756
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 17:52:47 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id i9so1531685wmq.1
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 17:52:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=79t9jJ+yZK63eTMvmuldDuFRk21XscqyhvqiHozR0Bk=;
+        b=dyC5NNSDszRODFzV7rMyHUb5t+umXA+tgX3LhB4GscfcaTKz1rIS6uDmC3446SDswz
+         TlMwKMTDYWHRI5VK0+eN/aQcKta0Gdj0RgwHWo012gydpKyNY8z4jWDTMkGnwRVS+bxI
+         DJqHdyfP2pQgkbFvrM6ZE+Qmc9vxfxDHk3BeFkxiPhqbuj8lhnJh2zHSGmvSndxFl/Xk
+         1ItCPFNabK886oXHkrmZBeyfOdzzuEnvGtxq6yEEsdJgi+m1dSNQ2Ti4aOX5vNE3IAGf
+         VlJ3dyji3HgkhsfeOfhNjTyWvkL16rAdynoWvL+2thmsApwHz8TVCIS2k5ArtTEIsxpq
+         pWFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=79t9jJ+yZK63eTMvmuldDuFRk21XscqyhvqiHozR0Bk=;
+        b=N7/HQsjBMLHT4GMK2H8rr4FZ/fnluGj3Ll98L9r5fU8BYgWe3LFdVRhsqYJurjL+Me
+         LC0x9R8oZV8hXmwNL9dDhQE8uGOSHC3pzhi/V7nDaNpA5eytnigFA24GpFpuISIoSZle
+         e/UWoYzLNcCxYpLpm4WaRUxZeGXdjYmcwEAfCbESB2cFHjrHsK/08Wp9Zf86/JUiYPQL
+         wsPJOPOA8vA5OOuWmR8gTeKF4i0COE5NIo4V8O3SMtu4776czUG1TDZsDfKJZ3Az7zg6
+         WgQurmF9Y+sqqa8lgZ0viNZw7JYSewqIxy+4If7/YOLnbcWSBr3pGeuEA9iM82Efe3ia
+         HaHA==
+X-Gm-Message-State: AOAM532OzTOW83xkHej6hEAKTMjJoWZVN//9/Q79lXJXqAGdnJJwQd4G
+        Sg+wTX5lEpfn/yBe5Kn7eTXL6oyZ/OE=
+X-Google-Smtp-Source: ABdhPJzdjAS/cs+F8oEl8YA70Yy3KSE+sADYY7hnXKlD/NXB1Ifz3ki27VTzaeSWHPSyTAPI8uWl/w==
+X-Received: by 2002:a05:600c:2351:: with SMTP id 17mr4929624wmq.2.1613181165667;
+        Fri, 12 Feb 2021 17:52:45 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e12sm4944347wrv.59.2021.02.12.17.52.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Feb 2021 17:52:45 -0800 (PST)
+Message-Id: <410b02dbad20c77662dd4581f9985783ca08fc70.1613181163.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.726.v4.git.1613181163.gitgitgadget@gmail.com>
+References: <pull.726.v3.git.1612602945.gitgitgadget@gmail.com>
+        <pull.726.v4.git.1613181163.gitgitgadget@gmail.com>
+From:   "Hariom Verma via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 13 Feb 2021 01:52:40 +0000
+Subject: [PATCH v4 1/4] t6300: use function to test trailer options
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B99F71C4-6D9D-11EB-9124-E43E2BB96649-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Hariom Verma <hariom18599@gmail.com>
 
-> diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-> index 797343b38106..bf62537c29a0 100755
-> --- a/t/t4001-diff-rename.sh
-> +++ b/t/t4001-diff-rename.sh
-> @@ -280,8 +280,8 @@ test_expect_success 'basename similarity vs best similarity' '
->  	# subdir/file.txt is 89% similar to file.md, 78% similar to file.txt,
->  	# but since same basenames are checked first...
+Add a function to test trailer options. This will make tests look cleaner,
+as well as will make it easier to add new tests for trailers in the future.
 
-Here lies the answer to my earlier question ;-)
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Heba Waly <heba.waly@gmail.com>
+Signed-off-by: Hariom Verma <hariom18599@gmail.com>
+---
+ t/t6300-for-each-ref.sh | 90 +++++++++++++++++++++--------------------
+ 1 file changed, 47 insertions(+), 43 deletions(-)
 
->  	cat >expected <<-\EOF &&
-> -	R088	subdir/file.txt	file.md
-> -	A	file.txt
-> +	A	file.md
-> +	R078	subdir/file.txt	file.txt
->  	EOF
->  	test_cmp expected actual
->  '
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index ca62e764b586..a8faddd18a9b 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -814,53 +814,57 @@ test_expect_success 'set up trailers for next test' '
+ 	EOF
+ '
+ 
+-test_expect_success '%(trailers:unfold) unfolds trailers' '
+-	{
+-		unfold <trailers
+-		echo
+-	} >expect &&
+-	git for-each-ref --format="%(trailers:unfold)" refs/heads/main >actual &&
+-	test_cmp expect actual &&
+-	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/main >actual &&
+-	test_cmp expect actual
+-'
++test_trailer_option () {
++	title=$1 option=$2
++	cat >expect
++	test_expect_success "$title" '
++		git for-each-ref --format="%($option)" refs/heads/main >actual &&
++		test_cmp expect actual &&
++		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
++		test_cmp expect actual
++	'
++}
+ 
+-test_expect_success '%(trailers:only) shows only "key: value" trailers' '
+-	{
+-		grep -v patch.description <trailers &&
+-		echo
+-	} >expect &&
+-	git for-each-ref --format="%(trailers:only)" refs/heads/main >actual &&
+-	test_cmp expect actual &&
+-	git for-each-ref --format="%(contents:trailers:only)" refs/heads/main >actual &&
+-	test_cmp expect actual
+-'
++test_trailer_option '%(trailers:unfold) unfolds trailers' \
++	'trailers:unfold' <<-EOF
++	$(unfold <trailers)
+ 
+-test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
+-	{
+-		grep -v patch.description <trailers | unfold &&
+-		echo
+-	} >expect &&
+-	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/main >actual &&
+-	test_cmp expect actual &&
+-	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/main >actual &&
+-	test_cmp actual actual &&
+-	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/main >actual &&
+-	test_cmp expect actual &&
+-	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/main >actual &&
+-	test_cmp actual actual
+-'
+-
+-test_expect_success '%(trailers) rejects unknown trailers arguments' '
+-	# error message cannot be checked under i18n
+-	cat >expect <<-EOF &&
++	EOF
++
++test_trailer_option '%(trailers:only) shows only "key: value" trailers' \
++	'trailers:only' <<-EOF
++	$(grep -v patch.description <trailers)
++
++	EOF
++
++test_trailer_option '%(trailers:only) and %(trailers:unfold) work together' \
++	'trailers:only,unfold' <<-EOF
++	$(grep -v patch.description <trailers | unfold)
++
++	EOF
++
++test_trailer_option '%(trailers:unfold) and %(trailers:only) work together' \
++	'trailers:unfold,only' <<-EOF
++	$(grep -v patch.description <trailers | unfold)
++
++	EOF
++
++test_failing_trailer_option () {
++	title=$1 option=$2
++	cat >expect
++	test_expect_success "$title" '
++		# error message cannot be checked under i18n
++		test_must_fail git for-each-ref --format="%($option)" refs/heads/main 2>actual &&
++		test_i18ncmp expect actual &&
++		test_must_fail git for-each-ref --format="%(contents:$option)" refs/heads/main 2>actual &&
++		test_i18ncmp expect actual
++	'
++}
++
++test_failing_trailer_option '%(trailers) rejects unknown trailers arguments' \
++	'trailers:unsupported' <<-\EOF
+ 	fatal: unknown %(trailers) argument: unsupported
+ 	EOF
+-	test_must_fail git for-each-ref --format="%(trailers:unsupported)" 2>actual &&
+-	test_i18ncmp expect actual &&
+-	test_must_fail git for-each-ref --format="%(contents:trailers:unsupported)" 2>actual &&
+-	test_i18ncmp expect actual
+-'
+ 
+ test_expect_success 'if arguments, %(contents:trailers) shows error if colon is missing' '
+ 	cat >expect <<-EOF &&
+-- 
+gitgitgadget
+
