@@ -2,66 +2,262 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE715C433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 13:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31ED3C433E6
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:28:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA11B64E3F
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 13:26:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F174564D9E
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:28:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbhBMN0X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Feb 2021 08:26:23 -0500
-Received: from smtp1-g21.free.fr ([212.27.42.1]:20986 "EHLO smtp1-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229574AbhBMN0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Feb 2021 08:26:22 -0500
-Received: from [IPv6:2a01:e0a:562:1540:2499:88b1:dbb6:7c20] (unknown [IPv6:2a01:e0a:562:1540:2499:88b1:dbb6:7c20])
-        by smtp1-g21.free.fr (Postfix) with ESMTPS id E73F7B00533
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 14:25:03 +0100 (CET)
-Message-ID: <24e39c2c4b7b86aa4a671601a069eaee767a63fb.camel@free.fr>
-Subject: git ability
-From:   PANEL Christian <ch.panel@free.fr>
-To:     git@vger.kernel.org
-Date:   Sat, 13 Feb 2021 14:25:03 +0100
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.38.4 (by Flathub.org) 
+        id S229706AbhBMO1z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Feb 2021 09:27:55 -0500
+Received: from ndjsvnpf103.ndc.nasa.gov ([198.117.1.153]:36232 "EHLO
+        ndjsvnpf103.ndc.nasa.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229651AbhBMO1s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Feb 2021 09:27:48 -0500
+Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=2a01:111:f400:7d05::200; helo=gcc02-bl0-obe.outbound.protection.outlook.com; envelope-from=thomas.c.doggett@nasa.gov; receiver=sandals@crustytoothpaste.net 
+DKIM-Filter: OpenDKIM Filter v2.11.0 ndjsvnpf103.ndc.nasa.gov 47A3440094B9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nasa.gov;
+        s=letsgomars; t=1613226424;
+        bh=A7eI4X+5t33nQwCiUE4v1sNqiQjDPmdGmvQbp7dikNA=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=BpCSM7ruSwnhRyjNxpHAI0PoDHDaT8StKSq/7ce/lntnB/sdqSRTaYvmGucm8d6C6
+         mUXFuVJ08PTvNZ/7SK+WsMYfQe6gmDikADrtkPpzeZV46CRcaBcKy9sXEZXxzje5K0
+         /0EgHdQt9a4Caxvgb1wzvsY54eoWhYo556o2xuPyYnrPulLIM+BYBpnA9GNtZLNFbb
+         3ZHTZciolvv77aHuqdyCWINuPStPrTQYTxruPA5+AtrY2xH5/qlPHyd7HZ/0Vl2rgA
+         qbiJ2m10yBzn4ztoftNf0uRVKRksHKdn1yez2vIyAgs4Cf7PXm+CUPRB/fXDshEGUC
+         6wykOw+HjfFew==
+Received: from GCC02-BL0-obe.outbound.protection.outlook.com (mail-bl0gcc02lp20200.outbound.protection.outlook.com [IPv6:2a01:111:f400:7d05::200])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ndjsvnpf103.ndc.nasa.gov (Postfix) with ESMTPS id 47A3440094B9;
+        Sat, 13 Feb 2021 08:27:04 -0600 (CST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=oDdeQG6iryyY9eQZimdqeq79oIjmHUsGlblRD2c9yr/mRKP+g5ut8ZYjKmKyqLTRMXRujrVJSkIXv+lIdbugOpl1szFKnDeYkKoa0ECFnfN2C//zhI4m+xB5K5VnCcEi52ZwmG/edFN1AuxoU8bjL+GiTTkT3H2QgMKuRVvNd++SBvquV/jH3gyTMISNoIqbK9Xs1jfC3YssiucpgplPtPvk6jbDd7LPTUTtLra5D7uoWrE40dHCfmoZoajhVbtAlJ/oflmfeBg/4f+nJj3Mw/ULIz4EPm92F5d77ZmxUsnd0a4f4y5My+05ZDBbBOuzs0NVJco5PD71rKeJ+sosKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A7eI4X+5t33nQwCiUE4v1sNqiQjDPmdGmvQbp7dikNA=;
+ b=L4NOQjYEHXbMfsDOHUQ3Q3R6AjnOWYTNTRre4edvgde2RpQHYje8TIQanreCtuxa4vu1Ji4d9im5as/eRZNbnU4UlzI290K8sO/Wvd7ZTyIouqqWvSuRBRv0QHlWyk4kU5uqPj7xZpKfwZMnewtvGJ0Azg5Uq7ogvTVkHyPsVkGB3aS2ko2+OAoM4rmiFH2Doy3CUimrjWAJPsggGSZFwSWOPBG+nGRocty4j7hYKEZTPTOi8uA/pX4uNys6JT87+nWaPaT5MsD2URZzQ35o2xc5KieOuhja6K9d+5kIBIMk70Mnn8WYj5RMbx52ZyewD9LXa6xNO67J/2zuvJi+fQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nasa.gov; dmarc=pass action=none header.from=nasa.gov;
+ dkim=pass header.d=nasa.gov; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nasa.onmicrosoft.com;
+ s=selector2-nasa-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A7eI4X+5t33nQwCiUE4v1sNqiQjDPmdGmvQbp7dikNA=;
+ b=aOVU6PX01dO3iIS8pVvd7inVE4lVQPI7uY82i6CuhWZVAMaHVkAb+o57q6Dnr71trKeIJhqX83Rnw/6w9MYdibLZyU62CIc/Y+6pWZD9uAKkSKOYEsbWbISbOqB0iSQGFV3uaGBRT4xbkFwTqPDTxzZ29YwtWVi0WXtzhvMfjE8=
+Received: from MN2PR09MB5804.namprd09.prod.outlook.com (2603:10b6:208:219::11)
+ by BLAPR09MB6801.namprd09.prod.outlook.com (2603:10b6:208:2a4::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3846.29; Sat, 13 Feb
+ 2021 14:27:02 +0000
+Received: from MN2PR09MB5804.namprd09.prod.outlook.com
+ ([fe80::45b8:b28a:229d:2918]) by MN2PR09MB5804.namprd09.prod.outlook.com
+ ([fe80::45b8:b28a:229d:2918%6]) with mapi id 15.20.3805.039; Sat, 13 Feb 2021
+ 14:27:02 +0000
+From:   "Doggett, Thomas C. (GSFC-705.0)[TELOPHASE CORP]" 
+        <thomas.c.doggett@nasa.gov>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Zhang, Cynthia X. (GSFC-705.0)[TELOPHASE CORP]" 
+        <cynthia.x.zhang@nasa.gov>
+Subject: RE: [EXTERNAL] Re: inquiry on Git GUI for Windows 2.30.0
+Thread-Topic: [EXTERNAL] Re: inquiry on Git GUI for Windows 2.30.0
+Thread-Index: AdcBUoCz/jMQRIOwScuB9edroXD0TgAU3ocAABrEw2A=
+Date:   Sat, 13 Feb 2021 14:27:02 +0000
+Message-ID: <MN2PR09MB580442BEA46CD39D6C47BC9BB68A9@MN2PR09MB5804.namprd09.prod.outlook.com>
+References: <SA9PR09MB5807B61FB32C4865C1A2246DB68B9@SA9PR09MB5807.namprd09.prod.outlook.com>
+ <YCcoorkH+E/dx5i1@camp.crustytoothpaste.net>
+In-Reply-To: <YCcoorkH+E/dx5i1@camp.crustytoothpaste.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: crustytoothpaste.net; dkim=none (message not signed)
+ header.d=none;crustytoothpaste.net; dmarc=none action=none
+ header.from=nasa.gov;
+x-originating-ip: [192.92.191.2]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 27bf3626-039e-495c-d639-08d8d02b6e37
+x-ms-traffictypediagnostic: BLAPR09MB6801:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BLAPR09MB6801171B41840B31E3104150B68A9@BLAPR09MB6801.namprd09.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bqmuFnjPr+M0yn6F/o7c1thIJQ/Td/URwQvkQ8ght7LVbU3oOC9SzIFdJBz7KkSxlgVkwk4EAuE/OgI7SIJwN7l4s6Txk3JPoykTqMtDeo+2zDUerBv2U2BWknBR9npN6EUP5tqi51LXffcOG6LgbiENZbEs3ne1RWQ390Aki1jLtDO7zf3jSLsqy3zkirubaJQoYhkT97M8D96l4HYhzA8wxxXmgtyWJIoGwPDNoUVmFCq+sxV8hK1wnVVXHOQZ1G0UFveLFuqURTxziKsKpRzcL9Unih+RJ7t3E+RhqPVfEmqoy/U3Y/rW40Rtg62oTBEayRAesn0Rb3jRLrv9ILqXgKSnDuoEkov9XoFoK6h2ouTnSeqfRfw99uJsSSCGjZtaU5vyvDYgLCxiMX3UA3In9eCCy90fyQgXQu8HUWtNIvkEQxCwYRQv3G/dU+LJ/8Bx1jNYmMOCgouO+dHN+V7C/snMH05/zLbI/CMZLDfZFx9kmxQaJKT6fp6yvVddgiCLoxb/LHzUPiZgii4bvbMjL+yPZlnv8PeNxIuN4sQpC6GLekzr2R4PuxmtX7pFBQlLWJzJkgvsWn0SAsOICFEU35BtCJo7FQMZrYtNs2iKugyOvK1sf0MumX2XeES+ir7+Hx+N8N9lF0kCFL/NTmRy1uC0VLnmtAGRXClgHTI=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR09MB5804.namprd09.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(39860400002)(136003)(346002)(366004)(396003)(316002)(54906003)(107886003)(66556008)(33656002)(9686003)(83380400001)(7696005)(66946007)(76116006)(966005)(66446008)(478600001)(66476007)(64756008)(2906002)(5660300002)(26005)(186003)(6506007)(53546011)(83080400002)(52536014)(4326008)(8676002)(55016002)(8936002)(6916009)(86362001)(71200400001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: =?utf-8?B?YUY5eU5pdUxmR25scC9oZkFscU03UW1xcjBJOXV4alJRREduR3A2WHY3TElW?=
+ =?utf-8?B?MHlkdUlsR1hDa0FRTU9sT0dMbitBcTBUUEk0WWZ1TVBydjcxc2pYYW9jdmFI?=
+ =?utf-8?B?RkJiYiszODlDVGRTZ0RaTVZBUDZ1NFRJTnVvZjZHK2lxaEZHVkdzNFZMb0Fs?=
+ =?utf-8?B?aERqTVNsSExYQ1JnMDlUa1M1b0s5WE9Lbm45RVpyMGZZa0djYXNtMDk1Zlpm?=
+ =?utf-8?B?OUR2VndDSGNiVFU0YkovVnlzQzBQSitCRExtOVVnWUx3Mzl6Qm5wWmZ1SUFV?=
+ =?utf-8?B?YVZzb0MxZlFPckFxN0RyK21EWjc2Y09zaUF6WDd3dGhzNGNFUTRCRnNHN3RE?=
+ =?utf-8?B?TUdUV1JERGl0dDFSWTNGQVdFM0VTdDYrWjgyQ3BlMGIrSlR4QzUwbS9Sb0VG?=
+ =?utf-8?B?WkdtTmJmdkErcUxnL3UwSlJGMXg2cWh5U05nOHZVdHZXZkI0anZCNnVVNXdF?=
+ =?utf-8?B?REpJWk5mL0JLaUNHSjRSTjhGMHYzMzZPM2pCZGp1RHlRRGNrMmEvYVlQWDVC?=
+ =?utf-8?B?YVJEWjBEWTRScFNMNURKeE5PdmwrcjQyakZvZGkxYWxlVURpUlB1L3htQlFu?=
+ =?utf-8?B?STVzc3JrdWZ5RlVqQVhNWHdzS0U5WiswR0lWd3QrYUlKZWp2d3hLeGNjWWxH?=
+ =?utf-8?B?WVN2bC9jVUI1bnRQZmxMaFlWSWRtQTk4M0hzTnRXZWt2dk9tV0x6ZFp6ZTZ2?=
+ =?utf-8?B?c3g3eFBmTXpQaWE4Yk4wL2hZWkc1QWliSGRvcGFMZUIrcmJoYVpYVG0wTnJB?=
+ =?utf-8?B?SUlaMHNuNFUyQ083Nm00SUtLYURiN3NTQjlkaW9TSHNxMG16aktkNDBremgz?=
+ =?utf-8?B?aWJsT1NTVjJlOWV5ZHNlZlMvSEwrRXpSRDExNWpNL3BreXRhZml2TlU5UmxJ?=
+ =?utf-8?B?dDBXdGtYM3RKMlNlTGEzbDB3QkFhYk91ZjdmZks3amtQNlZXZlhkdGI4MmMv?=
+ =?utf-8?B?TUM0TzBkc2hKeU5KYXVSY3JMUHQ2NHJkZ2c4WmpYeENZbkRaOXZJaTl6ZDY4?=
+ =?utf-8?B?ZGU2UFdBcjZqd0dPdjRVU2dsZWlCN3VJbkNLRDFwMXp5WlczK3I5NXJLOENt?=
+ =?utf-8?B?MlRRRlRJVGJxWWtoMFVIcVJxVklSLy9TRlRWMUpXRS9kQjI0aEZtVHpzVktw?=
+ =?utf-8?B?VkxrempxVWlWdHI1czNuUXdIa29zZkJycWhPNURFUXpOelVUU3BhNGtKTWZs?=
+ =?utf-8?B?Zzg2UG1nNmlkSmkrUWNKa1BnSDZtNjdqMzlRQzcvUHFNT2NrOU9Pd0kzTnlv?=
+ =?utf-8?B?MDQydjFmd1dIMll0TFRsVzIrSEV1NDlzYVdUTDYyeC9nT3p5RnIzR21pZVA2?=
+ =?utf-8?B?ZnZNRUVtUCtJbTlHcmdncEJxb1F0TjM2K2FaSWFVV2dwUDB6b1NFM09CQlpp?=
+ =?utf-8?B?ZitBNms1Sll2UGk4Qlg0am9SQXBJdGgyaTFzKzdpZis0ajdEczJoYU9NNWNV?=
+ =?utf-8?B?SnRYeTlYZmg2N1NibHBBOTBLRlRJdXM4MzZJN05maUZ5Y0RqNnZSSUlrelVZ?=
+ =?utf-8?B?c3ZCbTBFdTFqam9kUVY0cHgyMHZCM2xlYkFqMlpBUjFuVE1IZUI0Yzl6aStk?=
+ =?utf-8?B?cWl0Rm1iTkxLeVBQNVl2TElUVFREVEFseFZMVm9hWEpjUUZ3c2R4RVgvV3Zr?=
+ =?utf-8?B?ekROQnUxSVRZVmpuVDk3bkFhT0NIb1lhb2V2dmk5RmkzSUpRU1cvWUZGTlRq?=
+ =?utf-8?B?NUd4MWUzaEJGaVFadGN3VHIxcVlBMER4SWtzU0wzbURRWmJwV0dnczJVYWpt?=
+ =?utf-8?Q?x/QGDWijb8pzOWtgOSgoGghGJlf2tA3IRO5C2pf?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: nasa.gov
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR09MB5804.namprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27bf3626-039e-495c-d639-08d8d02b6e37
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Feb 2021 14:27:02.3203
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7005d458-45be-48ae-8140-d43da96dd17b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zFbSiLe2uWG6wYWCNfbkfdyGJ7Wl94yT6o5wMobw8xYoLJ+VSsjRUeepasT78hz6GOzGGY+UDs+rcfKoJgyXdA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR09MB6801
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hello,
-
-does git have the ability to handle a repository on a removable disk?
-
-here is the experience I had:
-
-I have a project that I manage on a removable disk (therefore with a
-".git" directory on it).
-
-until now I did "commits" and "push" on the server from windows10.
-
-I made changes to the source and made a "commit" from linux (on the
-same computer). Git asked me again for my username (email and user
-name): I then thought that these were not stored in the ".git"
-directory
-
-I then saw a new branch called "linuxcompatibility" appear.
-
-I would like to understand.
-
-I thought to myself that I would then merge the "linuxcompatibility"
-branch to the "master" branch and push it all back to the server.
-
-if that went well with me, on the server the branch
-"linuxcompatibility" remained.
-
-how to get rid of it: nothing seems indicated in the documentation.
-
-Thanks for any clarification
-
+QnJpYW4sDQoNClRoYW5rIHlvdSBmb3IgeW91ciByZXNwb25zZS4gIFRvdGFsbHkgdW5kZXJzdGFu
+ZCB3aGVyZSB5b3UgYXJlIGNvbWluZyBmcm9tLiAgV2UgYXJlIHdvcmtpbmcgb3V0IGhvdyB0byBi
+b3RoIGNvbXBseSB3aXRoIHRoZSBsYXcgYXMgd3JpdHRlbiBhbmQgdGhlIHJlcXVlc3RzIG9mIE5B
+U0EgZW1wbG95ZWVzIGZvciB1cyB0byBjbGVhciBvcGVuIHNvdXJjZSBzb2Z0d2FyZSBmb3IgdGhl
+aXIgdXNlLg0KDQpTcGVha2luZyBwZXJzb25hbGx5LCBteSBiYWNrZ3JvdW5kIGlzIGJvdGggaW4g
+YWNhZGVtaWEgKHBsYW5ldGFyeSBzY2llbmNlKSAtIHdoZXJlIHVzaW5nIG9wZW4gc291cmNlIHNv
+ZnR3YXJlIHdhcyBpbnRlZ3JhbCB0byBvdXIgZGFpbHkgd29yay4uLiBhbmQgYmVmb3JlIHRoYXQg
+YXMgYSBmb3JlaWduIHNlcnZpY2UgYnJhdCB3aG8gbGl2ZWQgYWNyb3NzIEV1cmFzaWEgYW5kIEFm
+cmljYSBncm93aW5nIHVwLCBzbyBJIGdldCBib3RoIGhvdyBhc2tpbmcgdGhlc2UgcXVlc3Rpb25z
+IHRvIGEgbm9uLVVTIGNpdGl6ZW4gYW5kL29yIG9wZW4gc291cmNlIHByb2dyYW1tZXIgaW5zdGVh
+ZCBvZiBjb3Jwb3JhdGUgb2ZmaWNlcnMgY2FuIGNvbWUgYWNyb3NzLi4uIGFuZCBhbHNvIHdoeSBv
+dXIgTkFTQSBjb21tdW5pdHkgbmVlZHMgdGhpcyBzb2Z0d2FyZSBmb3IgdGhlaXIgd29yay4gIEkg
+d2lsbCB3b3JrIG91dCBob3cgdG8gYmV0dGVyIHByZWZhY2UgdG8gb3VyIHN0YW5kYXJkIGlucXVp
+cnkgZm9yIGJvdGggdGhpcyBzcGVjaWZpYyBpbnN0YW5jZSBhbmQgb3BlbiBzb3VyY2Ugc29mdHdh
+cmUgaW4gZ2VuZXJhbC4NCg0KSSBhbSBhbHNvIGdvaW5nIHRvIGNsYXJpZnkgd2l0aCB0aGUgZW5k
+IHVzZXIgd2hldGhlciB0aGV5IHdhbnQgR2l0IEdVSSBvciBHSVQgU0NNIGJlZm9yZSBwcm9jZWVk
+aW5nIGFueSBmdXJ0aGVyLCBiZWNhdXNlIHRoZSBpbmZvcm1hdGlvbiB0aGV5IHN1Ym1pdHRlZCBp
+cyBjbGVhcmx5IG11ZGRsZWQuDQoNCi0gVGhvbWFzDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
+LS0tDQpGcm9tOiBicmlhbiBtLiBjYXJsc29uIDxzYW5kYWxzQGNydXN0eXRvb3RocGFzdGUubmV0
+PiANClNlbnQ6IEZyaWRheSwgRmVicnVhcnkgMTIsIDIwMjEgODoxNyBQTQ0KVG86IERvZ2dldHQs
+IFRob21hcyBDLiAoR1NGQy03MDUuMClbVEVMT1BIQVNFIENPUlBdIDx0aG9tYXMuYy5kb2dnZXR0
+QG5hc2EuZ292Pg0KQ2M6IGdpdEB2Z2VyLmtlcm5lbC5vcmc7IFpoYW5nLCBDeW50aGlhIFguIChH
+U0ZDLTcwNS4wKVtURUxPUEhBU0UgQ09SUF0gPGN5bnRoaWEueC56aGFuZ0BuYXNhLmdvdj4NClN1
+YmplY3Q6IFtFWFRFUk5BTF0gUmU6IGlucXVpcnkgb24gR2l0IEdVSSBmb3IgV2luZG93cyAyLjMw
+LjANCg0KT24gMjAyMS0wMi0xMiBhdCAxNToyMDowNywgRG9nZ2V0dCwgVGhvbWFzIEMuIChHU0ZD
+LTcwNS4wKVtURUxPUEhBU0UgQ09SUF0gd3JvdGU6DQo+IEhlbGxvLA0KPiANCj4gTXkgbmFtZSBp
+cyBUaG9tYXMgRG9nZ2V0dCBhbmQgSSBhbSBhIFN1cHBseSBDaGFpbiBSaXNrIE1hbmFnZW1lbnQg
+Q29vcmRpbmF0b3IgYXQgTkFTQS4gIEFzIHN1Y2gsIEkgZW5zdXJlIHRoYXQgYWxsIE5BU0EgYWNx
+dWlzaXRpb25zIG9mIENvdmVyZWQgQXJ0aWNsZXMgY29tcGx5IHdpdGggU2VjdGlvbiAyMDggb2Yg
+dGhlIEZ1cnRoZXIgQ29uc29saWRhdGVkIEFwcHJvcHJpYXRpb25zIEFjdCwgMjAyMCwgUHVibGlj
+IExhdyAxMTYtOTQsIGVuYWN0ZWQgRGVjZW1iZXIgMjAsIDIwMTkuICBUbyBkbyBzbywgdGhlIENv
+dW50cnkgb2YgT3JpZ2luIChDb08pIGluZm9ybWF0aW9uIG11c3QgYmUgb2J0YWluZWQgZnJvbSB0
+aGUgY29tcGFueSB0aGF0IGRldmVsb3BzLCBwcm9kdWNlcywgbWFudWZhY3R1cmVzLCBvciBhc3Nl
+bWJsZXMgdGhlIHByb2R1Y3QocykuICBTcGVjaWZpY2FsbHksIGlkZW50aWZ5IHRoZSBjb3VudHJ5
+IHdoZXJlIGVhY2ggb2YgdGhlIGZvbGxvd2luZyBwcm9kdWN0cyB3ZXJlIGRldmVsb3BlZCwgbWFu
+dWZhY3R1cmVkLCBhbmQgYXNzZW1ibGVkOg0KPiANCj4gR2l0IEdVSSBmb3IgV2luZG93cyAyLjMw
+LjANCg0KWW91IGFyZSByZWZlcnJpbmcgdG8gd2hhdCBpcyBwcm9iYWJseSBwYXJ0IG9mIEdpdCBm
+b3IgV2luZG93cyBhbmQgc2hvdWxkIGJlIGFkZHJlc3NlZCB0byB0aGUgR2l0IGZvciBXaW5kb3dz
+IHByb2plY3QgYXQgaHR0cHM6Ly9naXRodWIuY29tL2dpdC1mb3Itd2luZG93cy9naXQvLiAgVGhl
+eSBwcm92aWRlIHRoZSBXaW5kb3dzIGJpbmFyaWVzLCBzaW5jZSB0aGUgR2l0IHByb2plY3QgZG9l
+c24ndCBwcm92aWRlIGJpbmFyaWVzIG9mIGFueSBzb3J0Lg0KVGhlIHZhc3QgbWFqb3JpdHkgb2Yg
+dGhlIGNvZGUgZm9yIEdpdCBHVUkgaXMgc2hhcmVkIGJldHdlZW4gdGhlIHR3byBwcm9qZWN0cywg
+dGhvdWdoLg0KDQo+IElmIHRoZSBDb08gaXMgb3V0c2lkZSB0aGUgVW5pdGVkIFN0YXRlcywgcGxl
+YXNlIHByb3ZpZGUgYW55IGluZm9ybWF0aW9uIHlvdSBtYXkgaGF2ZSBzdGF0aW5nIHRoYXQgdGVz
+dGluZyBpcyBwZXJmb3JtZWQgaW4gdGhlIFVuaXRlZCBTdGF0ZXMgcHJpb3IgdG8gc3VwcGx5aW5n
+IHByb2R1Y3RzIHRvIGN1c3RvbWVycy4gQWRkaXRpb25hbGx5LCBpZiBhdmFpbGFibGUsIHBsZWFz
+ZSBpZGVudGlmeSBhbGwgYXV0aG9yaXplZCByZXNlbGxlcnMgb2YgdGhlIHByb2R1Y3QocykgaW4g
+cXVlc3Rpb24uDQo+IA0KPiBMYXN0bHksIGFzIHJlcXVpcmVkIGJ5IFNlY3Rpb24gODg5IG9mIHRo
+ZSBGaXNjYWwgWWVhciAyMDE5IE5hdGlvbmFsIA0KPiBEZWZlbnNlIEF1dGhvcml6YXRpb24gQWN0
+IChOREFBKSBwbGVhc2UNCj4gDQo+IDEuKSBhZHZpc2UgaWYgdGhlIHByb2R1Y3QocykgaW4gcXVl
+c3Rpb24gaXMvYXJlIG5vdCBtYW51ZmFjdHVyZWQgYnksIA0KPiBjb250YWluIGNvbXBvbmVudHMg
+bWFudWZhY3R1cmVkIGJ5IG9yIHN1YnN0YW50aWFsIGluZmx1ZW5jZSBmcm9tIA0KPiBwcm9oaWJp
+dGVkIGVudGl0aWVzIC0gSHVhd2VpLCBaVEUsIEh5dGVyYSwgSGlrdmlzaW9uLCBhbmQgRGFodWEg
+YW5kIA0KPiB0aGVpciBzdWJzaWRpYXJpZXMgYW5kIGFmZmlsaWF0ZXMsIGFuZCwNCj4gDQo+IDIu
+KSBhZHZpc2UgaWYgeW91ciBvcmdhbml6YXRpb24gaGFzIHRoZSBjb3ZlcmVkIHRlbGVjb21tdW5p
+Y2F0aW9ucyBhbmQvb3IgdmlkZW8gc3VydmVpbGxhbmNlIGVxdWlwbWVudCBvciBzZXJ2aWNlcyBh
+cyBhIHN1YnN0YW50aWFsIG9yIGVzc2VudGlhbCBjb21wb25lbnQgb2YgYW55IHN5c3RlbSwgb3Ig
+YXMgY3JpdGljYWwgdGVjaG5vbG9neSBhcyBwYXJ0IG9mIGFueSBzeXN0ZW0gd2l0aGluIHRoZSBv
+cmdhbml6YXRpb24uDQo+IA0KPiBQcm9kdWN0IC8gU2VydmljZSBEZXNjcmlwdGlvbjogR2l0IEdV
+SSBmb3IgV2luZG93cyAyLjMwLjANCj4gTW9kZWwgTnVtYmVyCShpZiBhcHBsaWNhYmxlKTogMi4z
+MC4wDQo+IENvdW50cnkgKG9yIENvdW50cmllcykgb2YgT3JpZ2luOiBbW3BsZWFzZSBwcm92aWRl
+IHlvdXIgYW5zd2VyIGhlcmVdXSANCj4gTkRBQSBTZWN0aW9uIDg4OSwgUGFydCBBIENvbXBsaWFu
+dCAoWSwgTiwgTi9BKSA6IFtbcGxlYXNlIHByb3ZpZGUgeW91ciANCj4gYW5zd2VyIGhlcmUgLSAo
+WSwgTiwgTi9BKSBdXSBOREFBIFNlY3Rpb24gODg5LCBQYXJ0IEIgQ29tcGxpYW50IChZLCBOKSAN
+Cj4gOiBbW3BsZWFzZSBwcm92aWRlIHlvdXIgYW5zd2VyIGhlcmUgLSAoWSwgTikgXV0NCj4gDQo+
+IElzIGZpbmFsIHRlc3RpbmcgcGVyZm9ybWVkIGluIHRoZSBVbml0ZWQgU3RhdGVzPzoNCj4gDQo+
+IFJlY29nbml6aW5nIHRoYXQgdGhlc2UgcXVlc3Rpb25zIGRvbid0IGZpdCBvcGVuIHNvdXJjZSBz
+b2Z0d2FyZSB2ZXJ5IHdlbGwsIHdpbGwgYWRkIHRoYXQgSSd2ZSB0cmllZCBzb21lIHdvcmthcm91
+bmRzIC0gbGlrZSB5b3VyIGFmZmlsaWF0aW9uIHdpdGggdGhlIFNvZnR3YXJlIEZyZWVkb20gQ29u
+c2VydmFuY3ksIGJ1dCB0aGVpciBlbnRyeSBvbiBTQU0uZ292IGlzIGV4cGlyZWQgKGN1cnJlbnQg
+ZW50cmllcyB3b3VsZCBoYXZlIE5EQUEgYXR0ZXN0YXRpb25zIG9uIHRoZW0pLg0KPiANCj4gRm9y
+IHRoZXNlIHB1cnBvc2VzLCB0aGUgY291bnRyeSBvZiBvcmlnaW4gb2Ygc29mdHdhcmUgaXMgdGhl
+IGNvdW50cnkgd2hlcmUgdGhlIHNvZnR3YXJlIHdhcyBjb21waWxlZCBhbmQgY29udmVydGVkIGlu
+dG8gb2JqZWN0IGNvZGUuDQoNCkkgd2lsbCBqdXN0IHNheSB0aGF0IHNpbmNlIEdpdCBpcyBvcGVu
+IHNvdXJjZSBzb2Z0d2FyZSwgaXQncyBhIGJpdCBydWRlIG9mIHlvdSB0byBhc2sgdXMgdG8gZG8g
+eW91ciBjb21wbGlhbmNlIHBhcGVyd29yayBmb3IgeW91LCBzaW5jZSBpdCdzIHNpZ25pZmljYW50
+IHdvcmsgd2l0aCBubyBvdGhlciBiZW5lZml0IHlvdSBhcmUgbm90IHBheWluZyB1cyBmb3IsIGFu
+ZCB3ZSdyZSBvdGhlcndpc2UgdW5kZXIgbm8gb2JsaWdhdGlvbiB0byBkbyBzby4gIE1hbnkgY29u
+dHJpYnV0b3JzIGNvbnRyaWJ1dGUgdG8gR2l0IG9uIHRoZWlyIG93biB0aW1lIGFuZCBlcXVpcG1l
+bnQgaW4gb3JkZXIgdG8gYmVuZWZpdCB0aGUgY29tbXVuaXR5IGFuZCBhcmVuJ3QgaW4gbmVlZCBv
+ZiBhZGRpdGlvbmFsIHBhcGVyd29yay4gIFNpbmNlIHdlIHByb3ZpZGUgb3BlbiBzb3VyY2Ugc29m
+dHdhcmUsIGlmIHlvdSBuZWVkIGEgdmVyc2lvbiB0aGF0IGlzIGNvbXBpbGVkIG9yIHRlc3RlZCBp
+biBhIHBhcnRpY3VsYXIgbG9jYWxlIG9yIGEgcGFydGljdWxhciB3YXksIHlvdSBhcmUgb2YgY291
+cnNlIGZyZWUgdG8gZG8gc28gb24geW91ciBvd24gc3lzdGVtcyBhdCB5b3VyIG93biBleHBlbnNl
+LCBvciBoaXJlIGFuIGFwcHJvcHJpYXRlIHBhcnR5IHRvIGRvIGl0IGZvciB5b3UsIHN1Y2ggYXMg
+MThGWzBdLg0KDQpNb3Jlb3ZlciwgaW4gbWFueSBjYXNlcyB0aGUgY29kZSBjb3VsZCBoYXZlIGJl
+ZW4gY29tcGlsZWQgb24gYW4gZXBoZW1lcmFsIGNsb3VkIHNlcnZlciBpbiBvbmUgb2YgbWFueSBs
+b2NhdGlvbnMsIHNvIHRoZSBpbmZvcm1hdGlvbiB5b3Ugc2VlayBtYXkgbm90IGV2ZW4gYmUga25v
+d2FibGUuICBNYWpvciBMaW51eCBkaXN0cm9zIHN1Y2ggYXMgRGViaWFuIGV2ZW4gY29tcGlsZSBw
+YWNrYWdlcyBmb3IgZGlmZmVyZW50IGFyY2hpdGVjdHVyZXMgaW4gZGlmZmVyZW50IGxvY2F0aW9u
+czoNCmFtZDY0IHBhY2thZ2VzIGFyZSBjb21waWxlZCBpbiBBdXN0cmlhLCBHcmVlY2UsIHRoZSBV
+bml0ZWQgU3RhdGVzLCBvciBDYW5hZGEsIGJ1dCB0aGUgcHBjNjRlbCBwYWNrYWdlcyBmcm9tIHRo
+ZSBzYW1lIHNvdXJjZSBjb2RlIG1pZ2h0IGJlIGluIGVpdGhlciB0aGUgVW5pdGVkIFN0YXRlcyBv
+ciBCcmF6aWwsIGFuZCBkaWZmZXJlbnQgdmVyc2lvbnMsIGluY2x1ZGluZyBzZWN1cml0eSB1cGRh
+dGVzLCBtYXkgYmUgY29tcGlsZWQgb24gZGlmZmVyZW50IHN5c3RlbXMgaW4gZGlmZmVyZW50IGNv
+dW50cmllcy4NCg0KR2l0LCBhbmQgR2l0IGZvciBXaW5kb3dzLCBoYXZlIG51bWVyb3VzIGNvbnRy
+aWJ1dG9ycyBmcm9tIGFsbCBvdmVyIHRoZSB3b3JsZCwgYW5kIHdlIGFwcHJlY2lhdGUgYWxsIG9m
+IHRoZWlyIGNvbnRyaWJ1dGlvbnMsIHJlZ2FyZGxlc3Mgb2YgdGhlaXIgcmVzcGVjdGl2ZSBuYXRp
+b25hbGl0aWVzLiAgV2UgZG9uJ3QgaW5xdWlyZSBhYm91dCB3aGVyZSBwZW9wbGUgZG8gdGhlaXIg
+ZGV2ZWxvcG1lbnQgd29yaywgc2luY2UgdGhhdCBpbmZvcm1hdGlvbiwgZ2l2ZW4gb3VyIHJlc3Bl
+Y3RpdmUgcHJvamVjdHMgYW5kIHRoZSBjb250ZXh0IG9mIG9wZW4gc291cmNlIHNvZnR3YXJlLCBp
+cyBpcnJlbGV2YW50IGFuZCBhc2tpbmcgd291bGQgYmUgc2VlbiBhcyBpbnZhc2l2ZS4gIEFzIGEg
+cmVzdWx0LCB0aGF0IGluZm9ybWF0aW9uIGlzIGFsc28gcHJvYmFibHkgdW5rbm93YWJsZS4gIChG
+b3IgZXhhbXBsZSwgSSBkb24ndCByZWNhbGwgd2hpY2ggY291bnRyaWVzIEksIHBlcnNvbmFsbHks
+IGhhdmUgZG9uZSBHaXQgZGV2ZWxvcG1lbnQgaW4sIGFsdGhvdWdoIEkga25vdyB0aGUgbnVtYmVy
+IGlzIGdyZWF0ZXIgdGhhbg0Kb25lLikNCg0KQmVmb3JlIHlvdSBoZWFkIG92ZXIgdG8gR2l0IGZv
+ciBXaW5kb3dzLCBJIHNob3VsZCBhbHNvIHBvaW50IG91dCB0aGF0IHRoZSBtYWluIEdpdCBmb3Ig
+V2luZG93cyBtYWludGFpbmVyLCB3aGlsZSByZXNpZGluZyBvdXQgb2YgdGhlIFVuaXRlZCBTdGF0
+ZXMsIGlzIGEgY29sbGVhZ3VlIGFuZCBhIHJlc3BlY3RlZCBtZW1iZXIgb2YgdGhpcyBjb21tdW5p
+dHksIGFuZCBJIHZlcnkgbXVjaCB2YWx1ZSBoaXMgY29udHJpYnV0aW9ucyB0byB0aGlzIHByb2pl
+Y3QgYW5kIHRoYXQgb25lLiAgWW91ciBxdWVzdGlvbnMsIGV2ZW4gaWYgcmVxdWlyZWQgYnkgbGF3
+LCBzZWVtIGxpa2UgdGhleSBtaWdodCBjb21lIG9mZiBhcyBvZmZlbnNpdmUgb3IgaW5zZW5zaXRp
+dmUsIGFuZCBzbyBJJ2QgZW5jb3VyYWdlIHlvdSB0byBiZSB2ZXJ5IGNhcmVmdWwgdHJlYWRpbmcg
+aGVyZSB0byBhdm9pZCBvZmZlbnNlLiAgSW4gdGhhdCB2ZWluLCBJIHdvdWxkIGFsc28gYWR2aXNl
+IHlvdSB0byByZWFkIGFuZCB1bmRlcnN0YW5kIHRoZSBjb2RlcyBvZiBjb25kdWN0IGZvciBHaXQg
+YW5kIEdpdCBmb3IgV2luZG93cy4NCg0KU28gdG8gZ2V0IGF0IGxlYXN0IHNvbWUgb2YgdGhlIGlu
+Zm9ybWF0aW9uIHlvdSBzZWVrIGhlcmUsIHlvdSdkIGhhdmUgdG8gYXNrIHRoZSBHaXQgZm9yIFdp
+bmRvd3MgcHJvamVjdCwgYnV0IGRvbid0IGJlIHN1cnByaXNlZCBpZiB0aGUgbWFpbnRhaW5lcnMg
+YXJlbid0IGRlbGlnaHRlZCB5b3UgY2FtZSBieS4NCg0KWzBdIGh0dHBzOi8vMThmLmdzYS5nb3Yv
+DQotLQ0KYnJpYW4gbS4gY2FybHNvbiAoaGUvaGltIG9yIHRoZXkvdGhlbSkNCkhvdXN0b24sIFRl
+eGFzLCBVUw0K
