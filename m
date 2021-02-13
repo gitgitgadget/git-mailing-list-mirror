@@ -2,195 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB2AC433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 19:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34073C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 23:56:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F0C9614A5
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 19:32:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDE9164E3D
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 23:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229675AbhBMTcG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Feb 2021 14:32:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbhBMTcE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Feb 2021 14:32:04 -0500
-X-Greylist: delayed 384 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 13 Feb 2021 11:31:24 PST
-Received: from coral.adamspiers.org (coral.adamspiers.org [IPv6:2001:ba8:1f1:f27f::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9B9CBC061574
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 11:31:24 -0800 (PST)
-Received: from localhost (243.103.2.81.in-addr.arpa [81.2.103.243])
-        by coral.adamspiers.org (Postfix) with ESMTPSA id 0279C2E5CC;
-        Sat, 13 Feb 2021 19:24:55 +0000 (GMT)
-From:   Adam Spiers <git@adamspiers.org>
-To:     git list <git@vger.kernel.org>
-Cc:     Protesilaos Stavrou <info@protesilaos.com>
-Subject: [PATCH] userdiff: add support for Emacs Lisp
-Date:   Sat, 13 Feb 2021 19:24:47 +0000
-Message-Id: <20210213192447.6114-1-git@adamspiers.org>
-X-Mailer: git-send-email 2.30.1.490.ge54fde04c8.dirty
+        id S229742AbhBMXzy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Feb 2021 18:55:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57730 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229690AbhBMXzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Feb 2021 18:55:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F67DBCA4B;
+        Sat, 13 Feb 2021 18:55:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0FY8ix+fXq8DlX7ToAWCidKcNUI=; b=lfu0mI
+        HawDRL32YKahuOPqHO2+XLpoI/c7uFwbPbXyMjfls0/wUBwQvCpxNQWeY13sRjlg
+        EXIGLR5COJWehX9+Hy4g/MtvUgYvF7MR7SyNb7cyvRpmRiysnIK54glEQ/m+Figy
+        ivn8M2a+ZolNxyiP2TPr/BNwDKLpGjsUMEc/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=IajqQECQpBsbnhrTFyCyhqlzGZHzFODm
+        iFQqtHefMdborPaHnmaslpsNsY0HBgW56Xl7EDYh2bEmpllfzY65SnZycO9mJBtG
+        cnRafnpjOeZqOrQ/ZBNFRo+zdyxR/3QASDG+shhbK3+lg7dGUaLDt+Umr+QtLMuf
+        CdRn5Ui9f/A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8FE5BBCA4A;
+        Sat, 13 Feb 2021 18:55:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A760BCA48;
+        Sat, 13 Feb 2021 18:55:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 3/5] diffcore-rename: complete find_basename_matches()
+References: <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
+        <pull.843.v3.git.1612970140.gitgitgadget@gmail.com>
+        <dc26881e4ed3447c6efdcd492463be294f99b8c4.1612970140.git.gitgitgadget@gmail.com>
+        <xmqqsg60u49i.fsf@gitster.c.googlers.com>
+        <CABPp-BF_cj1GEYT75aj9funUk1mYvtM2OvKiNb1JAZzA6E5mgQ@mail.gmail.com>
+Date:   Sat, 13 Feb 2021 15:55:04 -0800
+In-Reply-To: <CABPp-BF_cj1GEYT75aj9funUk1mYvtM2OvKiNb1JAZzA6E5mgQ@mail.gmail.com>
+        (Elijah Newren's message of "Sat, 13 Feb 2021 10:34:50 -0800")
+Message-ID: <xmqqft1zttev.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E5C22530-6E56-11EB-AE5A-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a diff driver which recognises Elisp top-level forms and outline
-headings for display in hunk headers, and which correctly renders word
-diffs.
+Elijah Newren <newren@gmail.com> writes:
 
-This approach was previously discussed on the emacs-devel mailing list:
+> I can change that.  I can also simplify it further to
+>
+>         if (0 <= (dst_index = (strintmap_get(&dests, base)))) {
+>
+> since dests uses a default value of -1.  That will decrease the number
+> of strmap lookups here from 2 to 1.
 
-   https://lists.gnu.org/archive/html/emacs-devel/2021-02/msg00705.html
+Which would be a real win, unlike what I said in the message you are
+responding to.
 
-* userdiff.c (builtin_drivers): Provide regexen for Elisp top level
-  forms and outline headings, and for word diffs.
-* t/t4018-diff-funcname.sh (diffpatterns): Add test for elisp driver
-* t/t4018/elisp-outline-heading: Test fixture for outline headings
-* t/t4018/elisp-top-level-form: Test fixture for top level forms
-* t/t4034-diff-words.sh: Add test for elisp driver
-* t/t4034/elisp/*: Test fixtures for word diffs
+>> It feels incompatible with the spirit of these two steps aim for
+>> (i.e. only use this optimization on a pair of src/dst with UNIQUE
+>> basenames).  For the purpose of "we only handle unique ones", the
+>> paths that already have matched should participate in deciding if
+>> the files that survived "exact" phase have unique basename among
+>> the original inpu?
+>
+> Yeah, I should have been more careful with my wording.  Stated a
+> different way, what confidence can we associate with an exact rename?
 
-Signed-off-by: Protesilaos Stavrou <info@protesilaos.com>
-Signed-off-by: Adam Spiers <git@adamspiers.org>
----
- Documentation/gitattributes.txt | 2 ++
- t/t4018-diff-funcname.sh        | 1 +
- t/t4018/elisp-outline-heading   | 6 ++++++
- t/t4018/elisp-top-level-form    | 7 +++++++
- t/t4034-diff-words.sh           | 1 +
- t/t4034/elisp/expect            | 9 +++++++++
- t/t4034/elisp/post              | 4 ++++
- t/t4034/elisp/pre               | 4 ++++
- userdiff.c                      | 9 +++++++++
- 9 files changed, 43 insertions(+)
- create mode 100644 t/t4018/elisp-outline-heading
- create mode 100644 t/t4018/elisp-top-level-form
- create mode 100644 t/t4034/elisp/expect
- create mode 100644 t/t4034/elisp/post
- create mode 100644 t/t4034/elisp/pre
+Suppose you start with a/Makefile, b/Makefile and c/Makefile and
+then they all disappeared while a1/Makefile, b1/Makefile and
+c1/Makefile now are in the tree.  The contents a/Makefile used to
+have appears without any difference in a1/Makefile, the same for b
+and b1, but c/Makefile and c1/Makefile are different.  The c vs c1
+pair may worth investigating, so it goes through the "same basename"
+phase.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index e84e104f93..0026055f99 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -815,6 +815,8 @@ patterns are available:
- 
- - `dts` suitable for devicetree (DTS) files.
- 
-+- `elisp` suitable for source code in the Emacs Lisp language.
-+
- - `elixir` suitable for source code in the Elixir language.
- 
- - `fortran` suitable for source code in the Fortran language.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 9675bc17db..a9ea2d3cd5 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -33,6 +33,7 @@ diffpatterns="
- 	csharp
- 	css
- 	dts
-+	elisp
- 	elixir
- 	fortran
- 	fountain
-diff --git a/t/t4018/elisp-outline-heading b/t/t4018/elisp-outline-heading
-new file mode 100644
-index 0000000000..c13bdafafe
---- /dev/null
-+++ b/t/t4018/elisp-outline-heading
-@@ -0,0 +1,6 @@
-+;;; A top-level outline heading
-+;;;; A second-level outline heading RIGHT
-+
-+;; This is a ChangeMe comment outside top-level forms
-+(defun foo ()
-+  (bar 1 2 3)
-diff --git a/t/t4018/elisp-top-level-form b/t/t4018/elisp-top-level-form
-new file mode 100644
-index 0000000000..683f7ffcf1
---- /dev/null
-+++ b/t/t4018/elisp-top-level-form
-@@ -0,0 +1,7 @@
-+;;; Outline heading
-+
-+;; This is a comment
-+(RIGHT
-+  (list 1 2 3)
-+  ChangeMe
-+  (list a b c))
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 0c8fb39ced..a546ee831a 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -315,6 +315,7 @@ test_language_driver cpp
- test_language_driver csharp
- test_language_driver css
- test_language_driver dts
-+test_language_driver elisp
- test_language_driver fortran
- test_language_driver html
- test_language_driver java
-diff --git a/t/t4034/elisp/expect b/t/t4034/elisp/expect
-new file mode 100644
-index 0000000000..29a6ef2520
---- /dev/null
-+++ b/t/t4034/elisp/expect
-@@ -0,0 +1,9 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index 4a39df8..6619e96 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,4 +1,4 @@<RESET>
-+(defun <RED>myfunc<RESET><GREEN>my-func<RESET> (<RED>a b<RESET><GREEN>first second<RESET>)
-+  "This is a <RED>really<RESET><GREEN>(moderately)<RESET> cool function."
-+  (let ((c (<RED>+ a b<RESET><GREEN>1+ first<RESET>)))
-+    (format "one more than the total is %d" (<RED>1+<RESET><GREEN>+<RESET> c <GREEN>second<RESET>))))
-diff --git a/t/t4034/elisp/post b/t/t4034/elisp/post
-new file mode 100644
-index 0000000000..6619e96657
---- /dev/null
-+++ b/t/t4034/elisp/post
-@@ -0,0 +1,4 @@
-+(defun my-func (first second)
-+  "This is a (moderately) cool function."
-+  (let ((c (1+ first)))
-+    (format "one more than the total is %d" (+ c second))))
-diff --git a/t/t4034/elisp/pre b/t/t4034/elisp/pre
-new file mode 100644
-index 0000000000..4a39df8ffb
---- /dev/null
-+++ b/t/t4034/elisp/pre
-@@ -0,0 +1,4 @@
-+(defun myfunc (a b)
-+  "This is a really cool function."
-+  (let ((c (+ a b)))
-+    (format "one more than the total is %d" (1+ c))))
-diff --git a/userdiff.c b/userdiff.c
-index 3f81a2261c..292e51674a 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -53,6 +53,15 @@ PATTERNS("dts",
- 	 /* Property names and math operators */
- 	 "[a-zA-Z0-9,._+?#-]+"
- 	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
-+PATTERNS("elisp",
-+	 /* Top level forms and outline headings */
-+	 "^((\\(|;;;+ +).+)",
-+	 /*
-+	  * Emacs Lisp allows symbol names containing any characters.
-+	  * However spaces within the symbol must be escaped.
-+	  */
-+	 "(\\.|[^ ()])+"
-+	 ),
- PATTERNS("elixir",
- 	 "^[ \t]*((def(macro|module|impl|protocol|p)?|test)[ \t].*)$",
- 	 /* -- */
--- 
-2.30.1.490.ge54fde04c8.dirty
+Now, in a slightly different situation, a vs a1 are still identical,
+but b vs b1 have only one blank line removal but without any other
+change.  It looks odd that such a change has to pessimize c vs c1
+optimization opportunity, but an interesting part of the story is
+that we can only say "such a change", not "such a miniscule change",
+because we have just finished the "exact" phase, and we do not know
+how big a difference b vs b1 pair actually had.
 
+That makes me feel that this whole "we must treat unique one that
+remains specially" is being incoherent.  If "because we have only
+small number of removed and added Makefiles spread across the trees,
+first full-matrix matching among them without anything else with
+higher bar may be worth an optimization" were the optimization, then
+I would understand and support the design to omit those that have
+already been matched in the "exact" phase.
+
+But IIRC, limiting this "same basename" phase to unique add/del pair
+was sold as a way to make it less likely for the heuristics to make
+mistakes, yet the definition of "unique", as shown above, is not all
+that solid.  That I find it rather unsatisfactory.
+
+In other words, it is not "what confidence do we have in exact
+phase?"  "exact" matching may have found perfect matching pair.  But
+the found pair should be happy just between themselves, and should
+not have undue effect on how _other_ pairs are compared.  Stopping
+the "exact" pair from participating in the "uniqueness" definition
+is placing "exact" phase too much weight to affect how other filepairs
+are found.
+
+> By the exact same argument, you
+> could take this a step further and say that we should calculate the
+> basenames of *all* files in the tree, not just add/delete pairs, and
+> only match up the ones via basename that are *truly* unique.  After
+> all, break detection exists, so perhaps we don't have full confidence
+> that files with an unchanged fullname are actually related.
+
+Sorry, but you are not making sense.  These optimizations are done
+only when we are not using copies and breaks, no?  What _other_
+changes that kept the paths the same, or modified in place, have any
+effect on matching added and deleted pairs?
