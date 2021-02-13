@@ -7,127 +7,97 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76215C433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C04DEC433DB
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 15:14:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C63264DEB
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:39:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80BB364E39
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 15:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbhBMOjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Feb 2021 09:39:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36672 "EHLO
+        id S229617AbhBMPOD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Feb 2021 10:14:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhBMOjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Feb 2021 09:39:49 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66914C061574
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:39:08 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id w1so4106125ejf.11
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:39:08 -0800 (PST)
+        with ESMTP id S229531AbhBMPOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Feb 2021 10:14:03 -0500
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C77F2C061574
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 07:13:22 -0800 (PST)
+Received: by mail-yb1-xb2e.google.com with SMTP id f4so2567872ybk.11
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 07:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=P3ZTyyP7fZboTps2vh45yYWwPCm0CfSD4K71pcV2w1o=;
-        b=LncNOSIW+7g79DQqftPOOWeSJdMHw3O7dpJ5hLVwdlEmDmT4TLC1C/kWQf8R+4jfvD
-         nH3lecj/GEJ51m9/j+MB+2PS8jrkeuCUkKVpqPkq/F45/dlBJBz53L7gfEASpGmOuRFJ
-         cmR4SR4xdD4yjlBRErPNUr6AuK/f75swdUzJ8jn6/3mtvNhpCewX97QAFa4IAIfDCzkL
-         oGKjuml+aitbjE6RSXwDwC80moGX7hTpbDMuXedW2flCQpmq2rC7t1SJs56lzgASWUQc
-         GqDZDVYhrVbhk08p+cgTTjCanJXbTE286325JFq+R7TJMIDFtBukmfYRAlaZr7PXnp0N
-         OT5Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Cqb3KdmnXAmsRacKstSFJMiLQVerm4x/3OyL4iTcbkQ=;
+        b=BZSlNfEtorVwg9MHF13vWmkpSs4YRNVkK836wocLI0rBE+XO5TJwgIZZdCJ8W1iQgW
+         UlHEUXE+eeWg5cx/ggVc3DSMiA5YqKwJ3hydWZDUXxa4aeg2y5xwWb7aXz4QNmBqLrci
+         m/zajhpF3WNvod3z5bgHmfGTc/Fsd9iPEdjftv/DA1U2DdtKO2xKjk98BhiN4rLluI7P
+         NvTQRZOvZdEi//+Vtv7vuOCHle3aJ3O3GaRBkvjqSn2TuQeQDqU6RuigbWfacF0p0l0L
+         xIOcBNORAIPyarbfEz9jOIK8aHdiw6n4lhli1tiNa5W78XMOByMI00V629xSmxiIJ6sT
+         BpTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=P3ZTyyP7fZboTps2vh45yYWwPCm0CfSD4K71pcV2w1o=;
-        b=GzYk3jKgMUk6IDplmAJQ22g09b0Uq0+mmwzTVpW4T8tElvuJokrCEF7xffmW+m6Jqk
-         xaOnlXTXTByncVAhCFfYVR0uOo9exvDXxBsltqsVL0OuCcC8/CfiDgU1BKtXz0edv/qQ
-         Wm5ptJEzsVPiWFDxBYg+bHi2VCLyLuOBPfVMSLPjJOu2O38rU/iIKaAvhCTdnq85/m+w
-         0xhrsyACuLdEZv5Ta81BzCuSrpEBhJLuPsnvWJGpXMkVyim98O66mwXNf7VHaexo046K
-         JplOg8jRHqSDkmnVnBSplbrzDanAHokLIRVHueN12beeV8wRQZd9ickZpba+3i3X4StO
-         LSIw==
-X-Gm-Message-State: AOAM533WUqRkaUsjlPVQi+8LnLKUDoRp8io++CNWl0jFRMZbFAbT6F10
-        /l4KaBm9os6KNJwHkykCrHs=
-X-Google-Smtp-Source: ABdhPJydB5fJnN6D1kA7zKZLsXC9kYfv0WmYLOn7DHX801mutmngIMb8P20ugUdN+qyejwk94J7jdQ==
-X-Received: by 2002:a17:907:2bef:: with SMTP id gv47mr7796556ejc.457.1613227147024;
-        Sat, 13 Feb 2021 06:39:07 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id bw22sm359844ejb.78.2021.02.13.06.39.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 06:39:06 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 12/12] test-lib-functions: split out {debug,path,text}
- helpers
-References: <20210209214159.22815-1-avarab@gmail.com>
- <20210209214159.22815-13-avarab@gmail.com>
- <xmqqpn18yee4.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2102112317330.29765@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <nycvar.QRO.7.76.6.2102112317330.29765@tvgsbejvaqbjf.bet>
-Date:   Sat, 13 Feb 2021 15:39:05 +0100
-Message-ID: <87zh08av7a.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Cqb3KdmnXAmsRacKstSFJMiLQVerm4x/3OyL4iTcbkQ=;
+        b=UNKKii3P8o3O27T7XV1C5L0CulfO4ASN0QIf9BxDoQPpkbL0k0LkFehR5kGzi5rs3+
+         iILsalV1euunjZhlNfbsrp4ORuNeBXjs15nfBNd+BkNjh1sq9sKrXcDNt6nHddZu+JfO
+         rBnC/vURF7KEfXTwe20tJRifx6/2OTG7sgAihcoSowKHG0pqWXBaML71RrzPR74Ke0P+
+         1PDzuBg+Yp2PLkuWhRYvERjmNaoaXZHN35NTWNkSnhvfCJH84aPmMQ3MbKIzz3hg3pPN
+         ILWGQKXhf0BiXdlY7ogQ5QlTBmNm0nnvwrP5CE9lTmeSDC0+LWZpW8DbmmpFsVitRkYp
+         BX2w==
+X-Gm-Message-State: AOAM531gZ7IjHOgtiuezrf7mZaUCgbUghvKxeXreRIJw9mSYEYk2psYk
+        k6CByOcF79nHhY3qj1myS58FmTcXwSqCSEWcF9Y=
+X-Google-Smtp-Source: ABdhPJwWmISuZlLvg/eZFzILAtUu7k1PYO9oovDZzMbnnpilO+4Cvn2+NKF+d0RYzflu045t5yzyWbUibeaEmF99QC4=
+X-Received: by 2002:a25:1842:: with SMTP id 63mr10639746yby.238.1613229202044;
+ Sat, 13 Feb 2021 07:13:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20210120124906.GA8396@szeder.dev> <20210121025331.21658-1-worldhello.net@gmail.com>
+ <xmqqft22w9v2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqft22w9v2.fsf@gitster.c.googlers.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 13 Feb 2021 23:13:08 +0800
+Message-ID: <CANYiYbHZsvGpVPUbtpm3fPWgnNaL32yUMk5B-rrm_NUkm9fXmg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] use unique out file in t5411
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Feb 11 2021, Johannes Schindelin wrote:
-
-> Hi,
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8812=E6=97=
+=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=885:52=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On Tue, 9 Feb 2021, Junio C Hamano wrote:
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->>
->> > Split out the debug, path and text miscellaneous helpers into their
->> > own files. The "test -[efsd]" etc. helpers were not all in one place
->> > in test-lib-functions.sh, I think moving them into their own file
->> > makes it easier to follow the code.
->>
->> I'd prefer not to see this done.  It would be fine to move them in
->> different sections but still in the same file to group related
->> helpers together, but I am having enough trouble when deciding to
->> look into which between test-lib.sh and test-lib-functions.sh in the
->> current organization already.  And it will make the situation even
->> worse if we did this, no?
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > t5411 has some test cases for the behavior of failed 'git push'
+> > commands.  Even the 'git push' command ended, the output file
+> > may still be updated with messages from 'git-receive-pack' command
+> > running in background.  This breaks test cases which reuse the
+> > same 'out' file.
 >
-> As much as I would love to see a better organization, I agree with Junio
-> that this split would make it more tedious to find the correct function.
+> I do not recall hearing from SZEDER who raised concerns about "a lot
+> of churn that can be avoided by a change in the code to die more
+> gracefully" in his previous round's review.  This has been in 'seen'
+> for a long time, so let's move it down to 'next'.
 >
-> I had a look over the rest of the series and like what I saw, leaving only
-> one or two comments.
 
-Junio / SZEDER / Johannes: Yeah I agree that that 12/12 sucked in its
-current form.
+SZEDER's concerns about "a lot of churn that can be avoided ..." is in
+this post:
 
-Having eyeballed test-lib.sh and test-lib-functions.sh as part of this
-though there seems to be a pretty obvious way to split this up which I
-think would increase the readability:
+    https://public-inbox.org/git/20210120124906.GA8396@szeder.dev/
 
- * test-lib.sh: main entry, reading/setting global vars/state,
-   command-line parsing (and other CLI / Makefile interface), loading
-   test-lib-functions.sh, set global prereqs, actual setup for the test
-   about to be run.
+I think current implementation of the client side of git-push is OK.
+It's no necessary to add more code and more roundtrips for git-push
+client side to complete the protocol in order to wait for end of the
+server.
 
- * test-lib-functions.sh: the top-level "library" used everywhere,
-   i.e. test_expect_success/test_expect_failure etc, Hopefully we could
-   move the internal functions like test_ok_, test_failure_ etc. from
-   test-lib.sh to test-lib-functions.sh (they need some global variables
-   in test-lib.sh now).
-
-   Also things part of core test "flow" like test_config,
-   test_when_finished, nongit etc.
-
- * lib-common.sh: what I was trying to start with in this 12/12,
-   i.e. utility functions common enough that we want them
-   "everywhere". We'd just have test-lib-functions.sh load this.
-
-That seems like a much more obvious split & organization to me than the
-mis-match with a bit of everything everyhere we have right now.
+--
+Jiang Xin
