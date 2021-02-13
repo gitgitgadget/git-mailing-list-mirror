@@ -2,126 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B717C433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 075BCC433DB
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:18:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D67F64DA5
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:16:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BACF464E8E
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 01:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbhBMBQX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 20:16:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61349 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbhBMBQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 20:16:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9EA13AED31;
-        Fri, 12 Feb 2021 20:15:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=46L20/SHmMVMBaLsFLxc6CLJxQo=; b=U8/Dhm
-        5RBoGEeuNC4GIdSFvR+EHnhPlX5HB0PudpaSxd7ZRZJkcjYOupI+/jAnTS1wwx8T
-        xybXRXq+lgpJ8leflO0Ieu9qX9wuzFr4JclscND6x7WFko6++n6pOei+/9uIRlhW
-        B5kl8zVofMZ/PULPYRaZr19rvAr6coHXCmO/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jqL8OG6lyF5505uB8BeKcpCMhLMAiRfO
-        +hkCH2EjS1rtB3d4FEXUdkfoh1UeMQq8RMJEemR7Vu+HzzeRqDyxAcWAwaRXsPGH
-        KVG6bEk2ToVxWBz9NtFcNgf+be4u0V9dMNqjzygcWg0V8TPzP9/B6lyAShOiid25
-        uisApiKHLiw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93C89AED30;
-        Fri, 12 Feb 2021 20:15:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232429AbhBMBSV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 20:18:21 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:47282 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232105AbhBMBSM (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 12 Feb 2021 20:18:12 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 13025AED2F;
-        Fri, 12 Feb 2021 20:15:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 1/5] t4001: add a test comparing basename similarity
- and content similarity
-References: <pull.843.v2.git.1612870326.gitgitgadget@gmail.com>
-        <pull.843.v3.git.1612970140.gitgitgadget@gmail.com>
-        <3e6af929d135ef2dc239e2f47f92a7e2e91cbd17.1612970140.git.gitgitgadget@gmail.com>
-Date:   Fri, 12 Feb 2021 17:15:30 -0800
-In-Reply-To: <3e6af929d135ef2dc239e2f47f92a7e2e91cbd17.1612970140.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Wed, 10 Feb 2021
-        15:15:36 +0000")
-Message-ID: <xmqq4kigvkct.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BA1DE6079B;
+        Sat, 13 Feb 2021 01:17:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1613179050;
+        bh=fwN8nvc8hvPqCNPvhFTztXirIKLRwV1Y5zNxhChjT94=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=XK3NzM3Rf4/4qL1gF6OzImP47m11xIQTFA32aIAX69wBr3RUSFF7ZxGaQFqGwhYWn
+         +j34dUf1G5hhqeJ4tye++doTsnNfXawh1x4xtUx9vqJDrQbD/Ll45XZw6Ad58ywmnK
+         HEnp7AdBBni8oVIaXCCyiMNh+rpXHk5yLcEBc5iqeHe0+0En2GO0gv0xBWiaBKH+87
+         Qwb5xN43mMoIo/KKXB1snJjZ6h4SJWaYu6EoMeUQuDwAAte1Kdoik3t907Bk+bdyQi
+         QKUvTWrGIl5qjAAqZBPsD7goHE0GPiaHGPdv0Eo4gZ4dSf3MT6ODxcmCmndXbwXA7L
+         y4WZKHFyjvBHXHTHYn0otJfwek6rZE/E2nNzeln0xE+2suXTkegqtJ79YoNg7c0oC9
+         h55rD43+bRkgXXVBoua6pAYpOMcV41Sp+ZQczQS23y2VK59Z57eRpql2lj1QuqamIC
+         46ps1J2Do/tFTIezBqtKksI2TYbBHA9GBrJJeBCUIXSOe3lAxby
+Date:   Sat, 13 Feb 2021 01:17:22 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Doggett, Thomas C. (GSFC-705.0)[TELOPHASE CORP]" 
+        <thomas.c.doggett@nasa.gov>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Zhang, Cynthia X. (GSFC-705.0)[TELOPHASE CORP]" 
+        <cynthia.x.zhang@nasa.gov>
+Subject: Re: inquiry on Git GUI for Windows 2.30.0
+Message-ID: <YCcoorkH+E/dx5i1@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Doggett, Thomas C. (GSFC-705.0)[TELOPHASE CORP]" <thomas.c.doggett@nasa.gov>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Zhang, Cynthia X. (GSFC-705.0)[TELOPHASE CORP]" <cynthia.x.zhang@nasa.gov>
+References: <SA9PR09MB5807B61FB32C4865C1A2246DB68B9@SA9PR09MB5807.namprd09.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F6FA6FE2-6D98-11EB-B004-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3S7wDL2K+AVV9rqK"
+Content-Disposition: inline
+In-Reply-To: <SA9PR09MB5807B61FB32C4865C1A2246DB68B9@SA9PR09MB5807.namprd09.prod.outlook.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> Add a simple test where a removed file is similar to two different added
-> files; one of them has the same basename, and the other has a slightly
-> higher content similarity.  Without break detection, filename similarity
-> of 100% trumps content similarity for pairing up related files.  For
-> any filename similarity less than 100%, the opposite is true -- content
-> similarity is all that matters.  Add a testcase that documents this.
+--3S7wDL2K+AVV9rqK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I am not sure why it is the "opposite".  When contents are similar
-to the same degree of 100%, we tiebreak with the filename.  We never
-favor a pair between the same filename over a pair between different
-filenames with better content similarity.
+On 2021-02-12 at 15:20:07, Doggett, Thomas C. (GSFC-705.0)[TELOPHASE CORP] =
+wrote:
+> Hello,
+>=20
+> My name is Thomas Doggett and I am a Supply Chain Risk Management Coordin=
+ator at NASA.  As such, I ensure that all NASA acquisitions of Covered Arti=
+cles comply with Section 208 of the Further Consolidated Appropriations Act=
+, 2020, Public Law 116-94, enacted December 20, 2019.  To do so, the Countr=
+y of Origin (CoO) information must be obtained from the company that develo=
+ps, produces, manufactures, or assembles the product(s).  Specifically, ide=
+ntify the country where each of the following products were developed, manu=
+factured, and assembled:
+>=20
+> Git GUI for Windows 2.30.0
 
-And when contents are similar to the same degree of less than 100%,
-we do not favor a pair between the same filename over a pair between
-different filenames, as long as they are similar to the same degree.
+You are referring to what is probably part of Git for Windows and should
+be addressed to the Git for Windows project at
+https://github.com/git-for-windows/git/.  They provide the Windows
+binaries, since the Git project doesn't provide binaries of any sort.
+The vast majority of the code for Git GUI is shared between the two
+projects, though.
 
-So, I do not think "opposite" is helping readers to understand what
-is going on.
+> If the CoO is outside the United States, please provide any information y=
+ou may have stating that testing is performed in the United States prior to=
+ supplying products to customers. Additionally, if available, please identi=
+fy all authorized resellers of the product(s) in question.
+>=20
+> Lastly, as required by Section 889 of the Fiscal Year 2019 National Defen=
+se Authorization Act (NDAA) please
+>=20
+> 1.) advise if the product(s) in question is/are not manufactured by, cont=
+ain components manufactured by or substantial influence from prohibited ent=
+ities - Huawei, ZTE, Hytera, Hikvision, and Dahua and their subsidiaries an=
+d affiliates, and,
+>=20
+> 2.) advise if your organization has the covered telecommunications and/or=
+ video surveillance equipment or services as a substantial or essential com=
+ponent of any system, or as critical technology as part of any system withi=
+n the organization.
+>=20
+> Product / Service Description: Git GUI for Windows 2.30.0
+> Model Number	(if applicable): 2.30.0
+> Country (or Countries) of Origin: [[please provide your answer here]]
+> NDAA Section 889, Part A Compliant (Y, N, N/A) : [[please provide your an=
+swer here - (Y, N, N/A) ]]
+> NDAA Section 889, Part B Compliant (Y, N) : [[please provide your answer =
+here - (Y, N) ]]
+>=20
+> Is final testing performed in the United States?:
+>=20
+> Recognizing that these questions don't fit open source software very well=
+, will add that I've tried some workarounds - like your affiliation with th=
+e Software Freedom Conservancy, but their entry on SAM.gov is expired (curr=
+ent entries would have NDAA attestations on them).
+>=20
+> For these purposes, the country of origin of software is the country wher=
+e the software was compiled and converted into object code.
 
-> +test_expect_success 'basename similarity vs best similarity' '
-> +	mkdir subdir &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			 line6 line7 line8 line9 line10 >subdir/file.txt &&
-> +	git add subdir/file.txt &&
-> +	git commit -m "base txt" &&
-> +
-> +	git rm subdir/file.txt &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			  line6 line7 line8 >file.txt &&
-> +	test_write_lines line1 line2 line3 line4 line5 \
-> +			  line6 line7 line8 line9 >file.md &&
-> +	git add file.txt file.md &&
-> +	git commit -a -m "rename" &&
-> +	git diff-tree -r -M --name-status HEAD^ HEAD >actual &&
-> +	# subdir/file.txt is 89% similar to file.md, 78% similar to file.txt,
-> +	# but since same basenames are checked first...
+I will just say that since Git is open source software, it's a bit rude
+of you to ask us to do your compliance paperwork for you, since it's
+significant work with no other benefit you are not paying us for, and
+we're otherwise under no obligation to do so.  Many contributors
+contribute to Git on their own time and equipment in order to benefit
+the community and aren't in need of additional paperwork.  Since we
+provide open source software, if you need a version that is compiled or
+tested in a particular locale or a particular way, you are of course
+free to do so on your own systems at your own expense, or hire an
+appropriate party to do it for you, such as 18F[0].
 
-I am not sure what the second line of this comment wants to imply
-with the ellipses here.  Care to finish the sentence?
+Moreover, in many cases the code could have been compiled on an
+ephemeral cloud server in one of many locations, so the information you
+seek may not even be knowable.  Major Linux distros such as Debian even
+compile packages for different architectures in different locations:
+amd64 packages are compiled in Austria, Greece, the United States, or
+Canada, but the ppc64el packages from the same source code might be in
+either the United States or Brazil, and different versions, including
+security updates, may be compiled on different systems in different
+countries.
 
-Or was the second line planned to be added when we start applying
-the "check only the same filename first and see if we find a
-better-than-reasonable match" heuristics but somehow survived
-"rebase -i" and ended up here?
+Git, and Git for Windows, have numerous contributors from all over the
+world, and we appreciate all of their contributions, regardless of their
+respective nationalities.  We don't inquire about where people do their
+development work, since that information, given our respective projects
+and the context of open source software, is irrelevant and asking would
+be seen as invasive.  As a result, that information is also probably
+unknowable.  (For example, I don't recall which countries I, personally,
+have done Git development in, although I know the number is greater than
+one.)
 
-> +	cat >expected <<-\EOF &&
-> +	R088	subdir/file.txt	file.md
-> +	A	file.txt
-> +	EOF
-> +	test_cmp expected actual
+Before you head over to Git for Windows, I should also point out that
+the main Git for Windows maintainer, while residing out of the United
+States, is a colleague and a respected member of this community, and I
+very much value his contributions to this project and that one.  Your
+questions, even if required by law, seem like they might come off as
+offensive or insensitive, and so I'd encourage you to be very careful
+treading here to avoid offense.  In that vein, I would also advise you
+to read and understand the codes of conduct for Git and Git for Windows.
 
-Thanks.
+So to get at least some of the information you seek here, you'd have to
+ask the Git for Windows project, but don't be surprised if the
+maintainers aren't delighted you came by.
+
+[0] https://18f.gsa.gov/
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--3S7wDL2K+AVV9rqK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYCcooQAKCRB8DEliiIei
+geSdAP9dG3Tz6Pmi4CKUxh0yp91bsiPtcys0V0S7i0TltR1j8wEA1UtMjIP2TjJb
+2RR2qI6Wx5uZoOotL5AgUbyTum7MQAI=
+=SE5O
+-----END PGP SIGNATURE-----
+
+--3S7wDL2K+AVV9rqK--
