@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44E5DC433E0
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E894AC433DB
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 198A164D5D
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE48A64DC3
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 00:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231759AbhBMAK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 12 Feb 2021 19:10:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49312 "EHLO
+        id S232010AbhBMAL0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 12 Feb 2021 19:11:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbhBMAKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Feb 2021 19:10:41 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695A2C061793
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:22 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id i9so1380933wmq.1
-        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:22 -0800 (PST)
+        with ESMTP id S231699AbhBMAKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Feb 2021 19:10:53 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABDEAC061797
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:23 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id g10so1388650wrx.1
+        for <git@vger.kernel.org>; Fri, 12 Feb 2021 16:09:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3DE2LGbxZPS99naynGsZAiR5LTnfiDo7m2CNe53QjEk=;
-        b=gl6TLB07y0RBDaClruZhfjRI2g7dfJ9K06K1bKq1bsqLvL6hr5bHh5RgLiq1rDDswr
-         9u7hivpHZaqkqFYOMHK5cPZ03Pn5v0/4/NS0XvMC+K74OiOiM1Hilo+NRMy0vyBNsvO0
-         BTJiolpnAO6wW0M5+rTm5tst/Q/bMGYqFrhhD1x2OI3XfdOlGCBDzaheWhgQFdmNlxy9
-         tQ/omIYdDi+aCczzUEvFR65qeN/UmalEnuLnarEDFiK0Uvh1F1f8sS+Srnw1Mz6+cVBj
-         6iywoYRHtjOmZwNNb2a0dS9RARzudJ3nuL/RiZWlYwiDceeKTZ9SFfjSkOaEMHJzQELI
-         IVTw==
+        bh=BxZO76/AviWURZU430dd0Mk+fI3Wg10NNXpI5VTJui4=;
+        b=OOmZq4+g6x2ZrKtuHwzGu7uYTFhCMhRDUS6OyobpnkUF+iAK5XSNiS4Tpr5bsawOwX
+         XXjeL7J3UCGl+pLEnpn2HIDKajCVqPZZ3fF4pVG5Ux9stFiU7jQQ5aVd+2yPEE+/+uRF
+         jllLqJPO7qL9gMq1sZzdSAhgflvUMermhdTZfsWz3sqgRS8F1H8FvL/z7zUXSN1hV8au
+         18dVamSXVIt4ScyrNeDa5bjHQAq+BHIe/vg5fN3UcEQsrDz6ACLyme355aZl/ctDzVTR
+         v9IRDoalBsWw1WwRkbjL4vUCzcqRpf7hVwSrIIURp8n4UK5Y1SNFsQBrlWPC5GZy09rM
+         BTmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3DE2LGbxZPS99naynGsZAiR5LTnfiDo7m2CNe53QjEk=;
-        b=aAgjfxdL8Pe4YGWgQYQWxg5ZwWX5JepzXX8Kzw6+/xDYdxzOKyozQB28fw90L3cimA
-         S2VwBi56xfAHib62hug2kb4dr3JhsXozLWMH0Ci5KYPSlBy3I+dYKcJMHUty9wHwYtD9
-         CTWNhkGzNECTGHNcd2EuQXotDse0cxwcEQzYGY4o2Pyk84/7EeSwUHtuc35fX9t9TsrO
-         Ir3pSK0XmX1/qpPxHuED8UvluDUDW0ZmaBVSkWyProu66j3g+iZ4YMr5vzuRbSQHUCsW
-         DBNJLwUw2vZdqGnKyz4iP3AbDluqV4I/m0B51inMcWzc/Oas/GrPLaDNPOEAbX5SAPSV
-         uLuw==
-X-Gm-Message-State: AOAM530S4hirDj1B9JajszICVLL56xXNKY352ZGjfI53+aGjnCFxsUlb
-        5fvGkqtB4/iNE7QfXcqgBzsV1enQQK4=
-X-Google-Smtp-Source: ABdhPJyeGnPLRNzeYLyvajabTfk3jKd29c5v8MY9Cw9uNRvK/FuZ0+3cRkSlCqT/wve20GfngM1hEQ==
-X-Received: by 2002:a1c:e255:: with SMTP id z82mr4582705wmg.93.1613174961247;
-        Fri, 12 Feb 2021 16:09:21 -0800 (PST)
+        bh=BxZO76/AviWURZU430dd0Mk+fI3Wg10NNXpI5VTJui4=;
+        b=bk/YDTq9TjVjw9jYsHYr3cqaPxTk6HEePPYlrrOlgiU2ms0YWZbgcXnJSwrOTwLltB
+         Z2mvs9dImDocR8c472ZyNc9sgqEoIyEHeLafoxxi7sYOUvGrYNxW0lPRQZwMY/VoX9I0
+         MmEDJZbcJahGqtIZ4TUAjyeAc97lrjYyr1VfBB1fXGKFQhn4MopRfx9rY6SO7nqA5GBf
+         4djwCT2hbUOuB5zkdexC2AMC6PwXgPzTET1tRqufjYv/IDXecq/kXjUwZku97/SE5D+u
+         HmcYtSI0uuPYsjKdKvEg5MeWHm7v2XT46AhQBEbYjqvloTPsXV1OyHz5Tq/1iG1l8vRb
+         EOEA==
+X-Gm-Message-State: AOAM533DOcITl8K3F8oqQo0RrSLuDk8tXwuxLh/mlVKedvslau6hSY1c
+        A8iHOn7XovUFtTZOS8VGnpTUvE60UmU=
+X-Google-Smtp-Source: ABdhPJwogP9orp6WLole0Kp5bl/xX3rnqQ70YaC7JC5PYtH4ojZR2NXuQluwuVbQRbalPDKtX24evQ==
+X-Received: by 2002:adf:ee84:: with SMTP id b4mr5979795wro.339.1613174962422;
+        Fri, 12 Feb 2021 16:09:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j16sm8638879wra.17.2021.02.12.16.09.20
+        by smtp.gmail.com with ESMTPSA id a17sm14832850wrx.63.2021.02.12.16.09.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Feb 2021 16:09:20 -0800 (PST)
-Message-Id: <985b2e02b2df7725d70f1365f7cd2e525c9f3ade.1613174954.git.gitgitgadget@gmail.com>
+        Fri, 12 Feb 2021 16:09:22 -0800 (PST)
+Message-Id: <b443e11ac32fd3082a59ada42ada8c8973fa0b8a.1613174954.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
 References: <pull.766.v2.git.1612208747.gitgitgadget@gmail.com>
         <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 13 Feb 2021 00:09:09 +0000
-Subject: [PATCH v3 08/12] unix-socket: add backlog size option to
- unix_stream_listen()
+Date:   Sat, 13 Feb 2021 00:09:11 +0000
+Subject: [PATCH v3 10/12] unix-socket: create
+ `unix_stream_server__listen_with_lock()`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,85 +80,217 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Update `unix_stream_listen()` to take an options structure to override
-default behaviors.  This commit includes the size of the `listen()` backlog.
+Create a version of `unix_stream_listen()` that uses a ".lock" lockfile
+to create the unix domain socket in a race-free manner.
+
+Unix domain sockets have a fundamental problem on Unix systems because
+they persist in the filesystem until they are deleted.  This is
+independent of whether a server is actually listening for connections.
+Well-behaved servers are expected to delete the socket when they
+shutdown.  A new server cannot easily tell if a found socket is
+attached to an active server or is leftover cruft from a dead server.
+The traditional solution used by `unix_stream_listen()` is to force
+delete the socket pathname and then create a new socket.  This solves
+the latter (cruft) problem, but in the case of the former, it orphans
+the existing server (by stealing the pathname associated with the
+socket it is listening on).
+
+We cannot directly use a .lock lockfile to create the socket because
+the socket is created by `bind(2)` rather than the `open(2)` mechanism
+used by `tempfile.c`.
+
+As an alternative, we hold a plain lockfile ("<path>.lock") as a
+mutual exclusion device.  Under the lock, we test if an existing
+socket ("<path>") is has an active server.  If not, create a new
+socket and begin listening.  Then we rollback the lockfile in all
+cases.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/credential-cache--daemon.c |  3 ++-
- unix-socket.c                      |  9 +++++++--
- unix-socket.h                      | 14 +++++++++++++-
- 3 files changed, 22 insertions(+), 4 deletions(-)
+ unix-socket.c | 115 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ unix-socket.h |  29 +++++++++++++
+ 2 files changed, 144 insertions(+)
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index c61f123a3b81..4c6c89ab0de2 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -203,9 +203,10 @@ static int serve_cache_loop(int fd)
- 
- static void serve_cache(const char *socket_path, int debug)
- {
-+	struct unix_stream_listen_opts opts = UNIX_STREAM_LISTEN_OPTS_INIT;
- 	int fd;
- 
--	fd = unix_stream_listen(socket_path);
-+	fd = unix_stream_listen(socket_path, &opts);
- 	if (fd < 0)
- 		die_errno("unable to bind to '%s'", socket_path);
- 
 diff --git a/unix-socket.c b/unix-socket.c
-index 69f81d64e9d5..5ac7dafe9828 100644
+index 1eaa8cf759c0..647bbde37f97 100644
 --- a/unix-socket.c
 +++ b/unix-socket.c
-@@ -89,9 +89,11 @@ int unix_stream_connect(const char *path)
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "lockfile.h"
+ #include "unix-socket.h"
+ 
+ static int chdir_len(const char *orig, int len)
+@@ -132,3 +133,117 @@ int unix_stream_listen(const char *path,
+ 	errno = saved_errno;
  	return -1;
  }
- 
--int unix_stream_listen(const char *path)
-+int unix_stream_listen(const char *path,
-+		       const struct unix_stream_listen_opts *opts)
- {
- 	int fd = -1, saved_errno;
-+	int backlog;
- 	struct sockaddr_un sa;
- 	struct unix_sockaddr_context ctx;
- 
-@@ -106,7 +108,10 @@ int unix_stream_listen(const char *path)
- 	if (bind(fd, (struct sockaddr *)&sa, sizeof(sa)) < 0)
- 		goto fail;
- 
--	if (listen(fd, 5) < 0)
-+	backlog = opts->listen_backlog_size;
-+	if (backlog <= 0)
-+		backlog = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG;
-+	if (listen(fd, backlog) < 0)
- 		goto fail;
- 
- 	unix_sockaddr_cleanup(&ctx);
-diff --git a/unix-socket.h b/unix-socket.h
-index e271aeec5a07..06a5a05b03fe 100644
---- a/unix-socket.h
-+++ b/unix-socket.h
-@@ -1,7 +1,19 @@
- #ifndef UNIX_SOCKET_H
- #define UNIX_SOCKET_H
- 
-+struct unix_stream_listen_opts {
-+	int listen_backlog_size;
-+};
 +
-+#define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
++static int is_another_server_alive(const char *path,
++				   const struct unix_stream_listen_opts *opts)
++{
++	struct stat st;
++	int fd;
 +
-+#define UNIX_STREAM_LISTEN_OPTS_INIT \
-+{ \
-+	.listen_backlog_size = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG, \
++	if (!lstat(path, &st) && S_ISSOCK(st.st_mode)) {
++		/*
++		 * A socket-inode exists on disk at `path`, but we
++		 * don't know whether it belongs to an active server
++		 * or whether the last server died without cleaning
++		 * up.
++		 *
++		 * Poke it with a trivial connection to try to find
++		 * out.
++		 */
++		fd = unix_stream_connect(path, opts->disallow_chdir);
++		if (fd >= 0) {
++			close(fd);
++			return 1;
++		}
++	}
++
++	return 0;
 +}
 +
- int unix_stream_connect(const char *path);
--int unix_stream_listen(const char *path);
-+int unix_stream_listen(const char *path,
-+		       const struct unix_stream_listen_opts *opts);
++struct unix_stream_server_socket *unix_stream_server__listen_with_lock(
++	const char *path,
++	const struct unix_stream_listen_opts *opts)
++{
++	struct lock_file lock = LOCK_INIT;
++	int fd_socket;
++	struct unix_stream_server_socket *server_socket;
++
++	/*
++	 * Create a lock at "<path>.lock" if we can.
++	 */
++	if (hold_lock_file_for_update_timeout(&lock, path, 0,
++					      opts->timeout_ms) < 0) {
++		error_errno(_("could not lock listener socket '%s'"), path);
++		return NULL;
++	}
++
++	/*
++	 * If another server is listening on "<path>" give up.  We do not
++	 * want to create a socket and steal future connections from them.
++	 */
++	if (is_another_server_alive(path, opts)) {
++		errno = EADDRINUSE;
++		error_errno(_("listener socket already in use '%s'"), path);
++		rollback_lock_file(&lock);
++		return NULL;
++	}
++
++	/*
++	 * Create and bind to a Unix domain socket at "<path>".
++	 */
++	fd_socket = unix_stream_listen(path, opts);
++	if (fd_socket < 0) {
++		error_errno(_("could not create listener socket '%s'"), path);
++		rollback_lock_file(&lock);
++		return NULL;
++	}
++
++	server_socket = xcalloc(1, sizeof(*server_socket));
++	server_socket->path_socket = strdup(path);
++	server_socket->fd_socket = fd_socket;
++	lstat(path, &server_socket->st_socket);
++
++	/*
++	 * Always rollback (just delete) "<path>.lock" because we already created
++	 * "<path>" as a socket and do not want to commit_lock to do the atomic
++	 * rename trick.
++	 */
++	rollback_lock_file(&lock);
++
++	return server_socket;
++}
++
++void unix_stream_server__free(
++	struct unix_stream_server_socket *server_socket)
++{
++	if (!server_socket)
++		return;
++
++	if (server_socket->fd_socket >= 0) {
++		if (!unix_stream_server__was_stolen(server_socket))
++			unlink(server_socket->path_socket);
++		close(server_socket->fd_socket);
++	}
++
++	free(server_socket->path_socket);
++	free(server_socket);
++}
++
++int unix_stream_server__was_stolen(
++	struct unix_stream_server_socket *server_socket)
++{
++	struct stat st_now;
++
++	if (!server_socket)
++		return 0;
++
++	if (lstat(server_socket->path_socket, &st_now) == -1)
++		return 1;
++
++	if (st_now.st_ino != server_socket->st_socket.st_ino)
++		return 1;
++
++	/* We might also consider the ctime on some platforms. */
++
++	return 0;
++}
+diff --git a/unix-socket.h b/unix-socket.h
+index 2c0b2e79d7b3..8faf5b692f90 100644
+--- a/unix-socket.h
++++ b/unix-socket.h
+@@ -2,14 +2,17 @@
+ #define UNIX_SOCKET_H
  
+ struct unix_stream_listen_opts {
++	long timeout_ms;
+ 	int listen_backlog_size;
+ 	unsigned int disallow_chdir:1;
+ };
+ 
++#define DEFAULT_UNIX_STREAM_LISTEN_TIMEOUT (100)
+ #define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
+ 
+ #define UNIX_STREAM_LISTEN_OPTS_INIT \
+ { \
++	.timeout_ms = DEFAULT_UNIX_STREAM_LISTEN_TIMEOUT, \
+ 	.listen_backlog_size = DEFAULT_UNIX_STREAM_LISTEN_BACKLOG, \
+ 	.disallow_chdir = 0, \
+ }
+@@ -18,4 +21,30 @@ int unix_stream_connect(const char *path, int disallow_chdir);
+ int unix_stream_listen(const char *path,
+ 		       const struct unix_stream_listen_opts *opts);
+ 
++struct unix_stream_server_socket {
++	char *path_socket;
++	struct stat st_socket;
++	int fd_socket;
++};
++
++/*
++ * Create a Unix Domain Socket at the given path under the protection
++ * of a '.lock' lockfile.
++ */
++struct unix_stream_server_socket *unix_stream_server__listen_with_lock(
++	const char *path,
++	const struct unix_stream_listen_opts *opts);
++
++/*
++ * Close and delete the socket.
++ */
++void unix_stream_server__free(
++	struct unix_stream_server_socket *server_socket);
++
++/*
++ * Return 1 if the inode of the pathname to our socket changes.
++ */
++int unix_stream_server__was_stolen(
++	struct unix_stream_server_socket *server_socket);
++
  #endif /* UNIX_SOCKET_H */
 -- 
 gitgitgadget
