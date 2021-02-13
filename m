@@ -7,69 +7,69 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4254DC433DB
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76215C433E0
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:39:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0756564E35
-	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:32:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C63264DEB
+	for <git@archiver.kernel.org>; Sat, 13 Feb 2021 14:39:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229651AbhBMOcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 13 Feb 2021 09:32:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35048 "EHLO
+        id S229608AbhBMOjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 13 Feb 2021 09:39:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbhBMOcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Feb 2021 09:32:09 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45D86C061574
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:31:28 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id i8so4145544ejc.7
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:31:28 -0800 (PST)
+        with ESMTP id S229531AbhBMOjt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Feb 2021 09:39:49 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66914C061574
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:39:08 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id w1so4106125ejf.11
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 06:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=q+4j5KxfWdgFYk+liL+jxHfVqFyGJ1nhxLIAipwNeps=;
-        b=B34ecqXAdNkMvVn2VO701JPlhJ/bMq6SONd2yU/nZLUs+YR/Oy49NfhwlzjV9DD5QR
-         PPun4BLUZ4wC3pluYnp0KKnPcG8sjryROaR3N7rZ1j6VdPa8CFuSZUrmCzxBJdzu/se5
-         zzF2z2sjvrAZANrQJAGFoWTmaVaA1sTUtcYbKRgRguz4IpmwfXbIyZ7AZDTRDWmz+W5w
-         Qt1EKe2MTcXAvLQlQZGGiO7gYfnPv4n9dG9zXjitRF2036SW85uBe9Sm4cneAZcuuv0D
-         6TMcuAiJZPuByrBHmI4X6MnewHvz3V6C4yIN8Npq2Kp8WjCCdCFdMqoNQ7EU32DuqfTN
-         Et3Q==
+        bh=P3ZTyyP7fZboTps2vh45yYWwPCm0CfSD4K71pcV2w1o=;
+        b=LncNOSIW+7g79DQqftPOOWeSJdMHw3O7dpJ5hLVwdlEmDmT4TLC1C/kWQf8R+4jfvD
+         nH3lecj/GEJ51m9/j+MB+2PS8jrkeuCUkKVpqPkq/F45/dlBJBz53L7gfEASpGmOuRFJ
+         cmR4SR4xdD4yjlBRErPNUr6AuK/f75swdUzJ8jn6/3mtvNhpCewX97QAFa4IAIfDCzkL
+         oGKjuml+aitbjE6RSXwDwC80moGX7hTpbDMuXedW2flCQpmq2rC7t1SJs56lzgASWUQc
+         GqDZDVYhrVbhk08p+cgTTjCanJXbTE286325JFq+R7TJMIDFtBukmfYRAlaZr7PXnp0N
+         OT5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=q+4j5KxfWdgFYk+liL+jxHfVqFyGJ1nhxLIAipwNeps=;
-        b=qHO4vZKUw/bcAFe6eMYlbfavV/GqfJiAXiPFSkvf7OlI8A2R7mXDeOuLESP7mmhbfh
-         9CJldixF038Wgtehe4ZjNjItx2qTrTUQsrEgZZxCrUS5HfYoF1jGfTZNpTs7B+UW6tpa
-         LTog8jzJm6QzcPvrBsm5leW7NpzE9kEXzn/COms5/ihWp0rEjExOhItWtn97eDhmjKt/
-         Ws7Li6ZMtb58Yg8zIbdu51dRUkmGca9q2ny8IaN+gkIlLqvuqj3/nQj5wDAp4SF2qhm4
-         0yLU5vUgNyu98SpI9usWrZrCuQ/mhGbMHaLdgUv9gH07QlFwCy6XpEg01hEM+P7TkTqP
-         Jobw==
-X-Gm-Message-State: AOAM5313cN6CMmIdDWGts2YdDTvYxFwa5UeO5J4txaKJFODXz3LWr+L1
-        1ID0pJQX4FJEjot4H9Zj8ts=
-X-Google-Smtp-Source: ABdhPJyzHEsUWYLVBsq0tseRmS1XgMsH8NwavqCl8fy9+Jm9P9CFsYaEivIhEX+8g1vg9yRLB0tOhQ==
-X-Received: by 2002:a17:907:1b12:: with SMTP id mp18mr8026399ejc.128.1613226686735;
-        Sat, 13 Feb 2021 06:31:26 -0800 (PST)
+        bh=P3ZTyyP7fZboTps2vh45yYWwPCm0CfSD4K71pcV2w1o=;
+        b=GzYk3jKgMUk6IDplmAJQ22g09b0Uq0+mmwzTVpW4T8tElvuJokrCEF7xffmW+m6Jqk
+         xaOnlXTXTByncVAhCFfYVR0uOo9exvDXxBsltqsVL0OuCcC8/CfiDgU1BKtXz0edv/qQ
+         Wm5ptJEzsVPiWFDxBYg+bHi2VCLyLuOBPfVMSLPjJOu2O38rU/iIKaAvhCTdnq85/m+w
+         0xhrsyACuLdEZv5Ta81BzCuSrpEBhJLuPsnvWJGpXMkVyim98O66mwXNf7VHaexo046K
+         JplOg8jRHqSDkmnVnBSplbrzDanAHokLIRVHueN12beeV8wRQZd9ickZpba+3i3X4StO
+         LSIw==
+X-Gm-Message-State: AOAM533WUqRkaUsjlPVQi+8LnLKUDoRp8io++CNWl0jFRMZbFAbT6F10
+        /l4KaBm9os6KNJwHkykCrHs=
+X-Google-Smtp-Source: ABdhPJydB5fJnN6D1kA7zKZLsXC9kYfv0WmYLOn7DHX801mutmngIMb8P20ugUdN+qyejwk94J7jdQ==
+X-Received: by 2002:a17:907:2bef:: with SMTP id gv47mr7796556ejc.457.1613227147024;
+        Sat, 13 Feb 2021 06:39:07 -0800 (PST)
 Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id hd19sm7442637ejc.83.2021.02.13.06.31.25
+        by smtp.gmail.com with ESMTPSA id bw22sm359844ejb.78.2021.02.13.06.39.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 06:31:25 -0800 (PST)
+        Sat, 13 Feb 2021 06:39:06 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] tests: remove most uses of test_i18ncmp
-References: <20210120182759.31102-1-avarab@gmail.com>
- <20210211015353.28680-5-avarab@gmail.com>
- <xmqqa6say0h8.fsf@gitster.c.googlers.com>
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 12/12] test-lib-functions: split out {debug,path,text}
+ helpers
+References: <20210209214159.22815-1-avarab@gmail.com>
+ <20210209214159.22815-13-avarab@gmail.com>
+ <xmqqpn18yee4.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2102112317330.29765@tvgsbejvaqbjf.bet>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <xmqqa6say0h8.fsf@gitster.c.googlers.com>
-Date:   Sat, 13 Feb 2021 15:31:25 +0100
-Message-ID: <8735y0ca4i.fsf@evledraar.gmail.com>
+In-reply-to: <nycvar.QRO.7.76.6.2102112317330.29765@tvgsbejvaqbjf.bet>
+Date:   Sat, 13 Feb 2021 15:39:05 +0100
+Message-ID: <87zh08av7a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -78,63 +78,56 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Feb 11 2021, Junio C Hamano wrote:
+On Thu, Feb 11 2021, Johannes Schindelin wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> Hi,
 >
->> As a follow-up to d162b25f956 (tests: remove support for
->> GIT_TEST_GETTEXT_POISON, 2021-01-20) remove most uses of test_i18ncmp
->> via a simple s/test_i18ncmp/test_cmp/g search-replacement.
+> On Tue, 9 Feb 2021, Junio C Hamano wrote:
 >
-> I am a bit hesitant to take this step, primarily because the
-> distinction between test_cmp and test_i18ncmp is serving as a sign
-> for tests to identify if they are dealing with translatable messages
-> or plumbing/machine-readable messages.
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>
+>> > Split out the debug, path and text miscellaneous helpers into their
+>> > own files. The "test -[efsd]" etc. helpers were not all in one place
+>> > in test-lib-functions.sh, I think moving them into their own file
+>> > makes it easier to follow the code.
+>>
+>> I'd prefer not to see this done.  It would be fine to move them in
+>> different sections but still in the same file to group related
+>> helpers together, but I am having enough trouble when deciding to
+>> look into which between test-lib.sh and test-lib-functions.sh in the
+>> current organization already.  And it will make the situation even
+>> worse if we did this, no?
 >
-> If a totally different approach to test i18n messging part
-> (e.g. Dscho's rot13) appears any time soon, it would be helpful to
-> leave these distinction in, rather than ripping them out, with two
-> caveats.
+> As much as I would love to see a better organization, I agree with Junio
+> that this split would make it more tedious to find the correct function.
 >
->  - If such a change does happen soon enough, then the codebase this
->    huge patch touches would not be all that different by the time
->    when it happens, so reverting this patch should not be too
->    involved, which means my hesitation is not all that warranted.
->
->  - If such a change does not happen for some time, then it would
->    become impractical to revert this patch when it does happen due
->    to changes in the codebase, if we apply it with the intention of
->    "we can easily revert if we need to".  But even if we drop this
->    step, until such a change appears, we surely will gain more calls
->    to test_cmp (and possibly test_i18ncmp) in the codebase, and at
->    that point, we can trust the distinction between test_cmp and
->    test_i18ncmp even less, which means it does not help all that
->    much if we tried to keep test_i18ncmp.
->
-> So, perhaps we should bite the bullet and just take this step.
+> I had a look over the rest of the series and like what I saw, leaving only
+> one or two comments.
 
-I think it either makes sense to take this series as a whole, or not
-take any of it and also revert the already merged 73c01d25fe (tests:
-remove uses of GIT_TEST_GETTEXT_POISON=3Dfalse, 2021-01-20).
+Junio / SZEDER / Johannes: Yeah I agree that that 12/12 sucked in its
+current form.
 
-I.e. if we're going to not remove test_i18ncmp uses then we should leave
-C_LOCALE_OUTPUT & GIT_TEST_GETTEXT_POISON=3Dfalse alone as well (or
-convert them to the test_i18n* forms).
+Having eyeballed test-lib.sh and test-lib-functions.sh as part of this
+though there seems to be a pretty obvious way to split this up which I
+think would increase the readability:
 
-As noted before I'm not invested in the outcome here, I just submitted
-this to not leave the obvious post-cleanup undone.
+ * test-lib.sh: main entry, reading/setting global vars/state,
+   command-line parsing (and other CLI / Makefile interface), loading
+   test-lib-functions.sh, set global prereqs, actual setup for the test
+   about to be run.
 
-My reading of the list discussion/consensus[1] (such as it was) was that
-even if we had this rot13 mode ready we wouldn't think it's worth the
-time investment overall, hence the follow-up patches.
+ * test-lib-functions.sh: the top-level "library" used everywhere,
+   i.e. test_expect_success/test_expect_failure etc, Hopefully we could
+   move the internal functions like test_ok_, test_failure_ etc. from
+   test-lib.sh to test-lib-functions.sh (they need some global variables
+   in test-lib.sh now).
 
-Also, if we have it down the line we're probably better off with these
-patches. The parts that'll revert cleanly can likely be resurrected
-as-is, but conflicts would be a good thing, as that code needs to be
-looked at anyway (it will be re-arranged tests that never used
-GETTEXT_POISON in their current form).
+   Also things part of core test "flow" like test_config,
+   test_when_finished, nongit etc.
 
-We also won't have cargo-culting in the meantime, with new code using
-test_i18ncmp or whatever just because the test above them did.
+ * lib-common.sh: what I was trying to start with in this 12/12,
+   i.e. utility functions common enough that we want them
+   "everywhere". We'd just have test-lib-functions.sh load this.
 
-1. https://lore.kernel.org/git/20210120182759.31102-1-avarab@gmail.com/
+That seems like a much more obvious split & organization to me than the
+mis-match with a bit of everything everyhere we have right now.
