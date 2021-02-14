@@ -2,200 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F010C433E6
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C863C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E1F764E29
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:36:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 014E564DCE
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:52:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbhBNHfv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 02:35:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54602 "EHLO
+        id S229853AbhBNHw2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 02:52:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbhBNHfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 02:35:46 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ADB5C0613D6
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:35:05 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id t15so4806455wrx.13
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:35:05 -0800 (PST)
+        with ESMTP id S229793AbhBNHwJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 02:52:09 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C106C061788
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:28 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id k10so3384866otl.2
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=8QREYnHyswO8lro4ISNCC9EpXlyVwYxnV0U0u8z2BP0=;
-        b=E+cZhc91EC2BgezAbeSzz6Ha27BoBywi06HTChg15U99IPO4vuLF+jizomE7mz1WTm
-         c1p91sJvclMOB6F0uxwsMc5U/QLy0pb89OSA23ZPEsB7XsObWg+88HiRPIgMVNgfhCiD
-         LbJvcTtN7Mt4Zuxr/wMxRaMq+/V6f4ety63Il6hOXDuCo3+cIZzAnjP20CxtG2fgBrXX
-         RNV1rY89b60Ph+G+TaQMmLFjYwSUPM3tuMAfYjtsmK3Hq4TRejuxWKgcNs+JrCAZkGCA
-         wGTVzPAQpA6BUkzXUFHYIOpI265TezPJOhu2jrsYLPsK4iiGbeWcBZH0wLjPKKhc1AlH
-         GUUA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=HM5Vbr8Q4KRYpwZKN9wSNMekgSvcq3m6lyp0YxROkoo=;
+        b=Jx9z/U9QeAR8RxrNxNmAqjnMUrSP2/t2aUMqDJFuUofluMkCvZCpIGoDwTiqkfwuLW
+         pBwBRe7BzQ7nzC/zcqTHHrtYMA2VW3kgGAaCgeDT93Mav2TOOYQZ33NvYBEQLdQ57EAn
+         8x6evabi3jdr9ZDm93j3CiOqFPlvLhOXBJN2Cd8xr0UogfXduF0LG97F6jh86vBtQ9vD
+         MFDc7CCxJT7qbGgqYA4dD9OjgsqPUzDI8rBkz0t0h3kxgp7z9t52O+z1an72twlyN4MG
+         UnS+9YYAmJks2g8FJiJ5HZQgWi9U7G3VIn2b5pk7o8SCnrNJ0HpDRgmlyuGeqdu/hbW5
+         uv9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=8QREYnHyswO8lro4ISNCC9EpXlyVwYxnV0U0u8z2BP0=;
-        b=P1MLoWhoAaghuVc8Od4uXsWGI1ALky13FZ2BhPVASDuJjIxvCxhmlyf2L54uqbi9dU
-         TwB6UTJJSqnq1lgFkjyH6a42TtbSiiYpybPvW72sd2pxN8N9vYJhEr396IIXxz3GRtnA
-         aa8r05bkpQ0feFzPEZ7XOw2afR9XYVfCJVVJkMAu53lYYH/uzBn9abDtyyZGlZ80wxWg
-         U5olAvGy6gI1plmK8XIegybcL5WeM4VUtZpB76SMyU26fsUIqKL9lrQH6w2IQifkVZyi
-         1vi9BmvcGrP1HAFb1rn/ZIWLtmyUr7lJcd4ClKDJw/NrdpJHsk8WGyTAVwvxRBlI504f
-         fPvA==
-X-Gm-Message-State: AOAM530AQZzWsYlOMke4xv1MTeluYIcfToDXnw7gRS38GGInhTHyOX1V
-        lAF3sIOnmEJkqIMZNNdlKMJFOKOSF1U=
-X-Google-Smtp-Source: ABdhPJw5CwwwKjafe4kSlKdQrDfNkDQGRhisazxZujINAXer+dV8B8Zbrx4OcM2QLQ2xGHEO0PX5Hw==
-X-Received: by 2002:a5d:620d:: with SMTP id y13mr12538161wru.88.1613288104341;
-        Sat, 13 Feb 2021 23:35:04 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o129sm8687912wme.21.2021.02.13.23.35.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 23:35:04 -0800 (PST)
-Message-Id: <dd6595b45640ee9894293e8b729ef9a254564a49.1613288101.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.842.v3.git.1613288101.gitgitgadget@gmail.com>
-References: <pull.842.v2.git.1612382628.gitgitgadget@gmail.com>
-        <pull.842.v3.git.1613288101.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 14 Feb 2021 07:35:01 +0000
-Subject: [PATCH v3 2/2] diffcore-rename: filter rename_src list when possible
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=HM5Vbr8Q4KRYpwZKN9wSNMekgSvcq3m6lyp0YxROkoo=;
+        b=dC5EJkxld4CbbryyEoLVmIasf7tuYRHUxo3mtBAGhpTYH6AYl19s5AfRZ896++TIQd
+         pEqY59IrL80Bw2qS6MXJT4ZhLTV0Ep6H1pHecqZS6QNarrRZtWbX3DZ5yIsUnG6vY17S
+         izFuaEeNffHiITh6RyL3OGhHuAnvefuFA916Gc9MEr/72uUMcut6X2Jb6OkLcS/6mi9N
+         ePQ7WD6z2/i8FvrdD8RlUQha9ss2QsKR5SScsT9ckhZjWtP1YKGyiivI1zYCRYaMcgAa
+         qRfqXy5Sj2QCIuCWifaA6DAzXEaxx4UStbL2T86lkrYlzih9+Z9U8+0RmVi63vPQBF+G
+         XBHA==
+X-Gm-Message-State: AOAM530j71bF/ixiJ+WExmI5VHJI38aG69AkDHlVBgCmYOiFxg+ALdOO
+        B/DOE2GAaFoYnmN9l5fEITw8DCpY2uC95tD+9ek=
+X-Google-Smtp-Source: ABdhPJylc9LkoZEsPP73O0RzMaiUvvq93U963w8JKoWWjDgZvRyA37FQEsoqYTR78y0vVq0K8P5EhcsX5lIm1hn2DMg=
+X-Received: by 2002:a9d:21ca:: with SMTP id s68mr7738623otb.164.1613289087754;
+ Sat, 13 Feb 2021 23:51:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Karsten Blees <blees@dcon.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com>
+ <pull.870.v3.git.1612884654078.gitgitgadget@gmail.com> <xmqqeehp2jis.fsf@gitster.c.googlers.com>
+ <CAOLTT8QbutZ2pHZ7Zg7vEJAy=d66YKP12rVW=RSJV+8fH6RRMw@mail.gmail.com> <xmqqk0rf3i07.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqk0rf3i07.fsf@gitster.c.googlers.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sun, 14 Feb 2021 15:53:44 +0800
+Message-ID: <CAOLTT8QmHvfQeOTbw0xwDY=z_GyF2g5bc-C3Do1ONoQ+CqiqgA@mail.gmail.com>
+Subject: Re: [PATCH v3] difftool.c: learn a new way start from specified file
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Ryan Zoeller <rtzoeller@rtzoeller.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8811=E6=97=
+=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=882:17=E5=86=99=E9=81=93=EF=BC=9A
+>
+> =E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@gmail.com> writes:
+>
+> > It has no effect on this new feature. I should put this modification
+> > in an additional commit, right?
+>
+> Or you can just drop it.  It certainly is a distracting change to be
+> part of this topic.
+>
+OK.
+> > Yes, I want to know why being so cautious in git log?If the file name i=
+s
+> > wrong, why can't I make it exit? :)
+>
+> Imagine a history where file1 and file2 are in the initial commit.
+> The second commit adds file3 and modifies file2, and then the third
+> commit modifies file1.  What would happen when you did this?
+>
+>   $ git log -p --rotate-to=3Dfile2
+>
+> For the commit at HEAD, the set of paths shown would be file1 and
+> nothing else (because it is the only path that gets modified).  You
+> cannot start showing from "file2".  Dying (and not showing HEAD~1
+> and HEAD~2) is the last thing you want to do in this situation.  We
+> do not even want to give a warning or an error, as it is totally
+> expected that some commits do not touch a given path---it would be
+> very unusual if a path is touched by every commit ;-).
+>
+Now I understand that in `log -p`, some commit do not have the file, and so=
+me
+commit have the file. The best way to display the commit without the file
+is to keep it as it is, and rotate the commit with the file. And in `diffto=
+ol`
+need to ensure the exist the specified file or give the more matching file
+as the beginning(As you mentioned later).
+> For "difftool --start-at=3Dfile2", the equation is different.  It does
+> not traverse history where each commit may or may not modify file2,
+> and when the user says s/he wants to resume from file2, file2 must
+> be in the set of paths that have changes, or something is wrong (i.e.
+> the user meant file3 but mistyped it as file2).
+>
+> > Awesome idea. In this way, `difftool --rotate-to=3D<file>` can call
+> > `diff --rotate-to=3D<file>` , user can choose the starting file, and th=
+ey can
+> > also see previous files.
+>
+> So "difftool --start-at=3D<file>" can of use "diff --rotate-to=3D<file>"
+> to implement the feature (after all, that is why I wrote it), but
+> the error condition between the two are quite different.  And ...
 
-We have to look at each entry in rename_src a total of rename_dst_nr
-times.  When we're not detecting copies, any exact renames or ignorable
-rename paths will just be skipped over.  While checking that these can
-be skipped over is a relatively cheap check, it's still a waste of time
-to do that check more than once, let alone rename_dst_nr times.  When
-rename_src_nr is a few thousand times bigger than the number of relevant
-sources (such as when cherry-picking a commit that only touched a
-handful of files, but from a side of history that has different names
-for some high level directories), this time can add up.
+> > After that, there was too little work I could do,do i just need to add
+> > the following
+> >  code in `diff_flush_patch_all_file_pairs`?
+>
+>
+> > if (o->rotate_to && q->nr && strcmp(q->queue[0]->one->path, o->rotate_t=
+o) &&
+> > strcmp(q->queue[0]->one->path, o->rotate_to)) {
+> >     error(_("could not find start file name '%s'"), o->rotate_to);
+> >         return;
+> > }
+>
+> ... that is why an unconditional change like this in diff.c is not
+> acceptable, as it would break other codepaths like "git log -p".  If
+> we were to add an error there, it has to be very limited to exclude
+> at least "log -p"---there may be other features that share the code
+> that should not trigger an error for similar reasons.
+>
+> If diffcore-rotate chooses "missing rotate-to file makes it a no-op"
+> as its semantics, and if "difftool --start-at" does not want to see
+> a misspelt filename making it a no-op, then the latter needs to
+> ensure that the name it got from the user is indeed in the set of
+> paths that have changes before running "diff --rotate-to" to
+> implement its "difftool --start-at" feature.
+>
+> The "missing rotate-to file in the diff_queue MUST NOT cause
+> diffcore-rotate to error out" rule is probably unnegitiable, but
+> there are other ways to make it easier to use, though.
+>
+> For example, we could change the rotate-to logic to mean "start at
+> the given path, or if such a path does not exist in the diff_queue,
+> then the first path that sorts after the given path is where we
+> start".  That way, if the diff_queue has paths A B C D E and
+> rotate-to gives C, then we rotate the output to C D E A B.  And if
+> the diff_queue has A B D E and rotate-to gives C, then the output
+> would become D E A B (instead of becoming a no-op).  Then, a mistyped
+> filename may not do what the user wanted to do (after all, that is
+> the definition of MIStyping), but it would do something noticeable
+> by the user, which may be useful enough and at least would let the
+> user notice the mistake.
+>
+In doing this, I think the processing methods of difftool and other diffs
+are unified.I think this kind of processing is actually very easy,
+just need to change
+> if (!strcmp(rotate_to_filename, q->queue[i]->two->path))
+to
+> if (strcmp(rotate_to_filename, q->queue[i]->two->path) <=3D 0)
+Of course, it might be better if there is an algorithm that can achieve
+the highest degree of file name matching.
 
-First make an initial pass over the rename_src array and move all the
-relevant entries to the front, so that we can iterate over just those
-relevant entries.
+Now that `difftool --start-at` and `diff --rotate-to` are unified effects,
+is "start-at" just an alias for "rotate-to"?
+Or do I need to write like this?
+> OPT_STRING(0, "start-with", &options->rotate-to, N_("<path>"),
+>   N_("pass from difftool to diff, has the same effort as `rotate-to`")),
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
-
-                            Before                  After
-    no-renames:       14.119 s ±  0.101 s    13.815 s ±  0.062 s
-    mega-renames:   1802.044 s ±  0.828 s  1799.937 s ±  0.493 s
-    just-one-mega:    51.391 s ±  0.028 s    51.289 s ±  0.019 s
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore-rename.c | 59 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 51 insertions(+), 8 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 8b118628b4ef..6fd0c4a2f485 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -454,6 +454,54 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
- 	return count;
- }
- 
-+static void remove_unneeded_paths_from_src(int detecting_copies)
-+{
-+	int i, new_num_src;
-+
-+	if (detecting_copies)
-+		return; /* nothing to remove */
-+	if (break_idx)
-+		return; /* culling incompatible with break detection */
-+
-+	/*
-+	 * Note on reasons why we cull unneeded sources but not destinations:
-+	 *   1) Pairings are stored in rename_dst (not rename_src), which we
-+	 *      need to keep around.  So, we just can't cull rename_dst even
-+	 *      if we wanted to.  But doing so wouldn't help because...
-+	 *
-+	 *   2) There is a matrix pairwise comparison that follows the
-+	 *      "Performing inexact rename detection" progress message.
-+	 *      Iterating over the destinations is done in the outer loop,
-+	 *      hence we only iterate over each of those once and we can
-+	 *      easily skip the outer loop early if the destination isn't
-+	 *      relevant.  That's only one check per destination path to
-+	 *      skip.
-+	 *
-+	 *      By contrast, the sources are iterated in the inner loop; if
-+	 *      we check whether a source can be skipped, then we'll be
-+	 *      checking it N separate times, once for each destination.
-+	 *      We don't want to have to iterate over known-not-needed
-+	 *      sources N times each, so avoid that by removing the sources
-+	 *      from rename_src here.
-+	 */
-+	for (i = 0, new_num_src = 0; i < rename_src_nr; i++) {
-+		/*
-+		 * renames are stored in rename_dst, so if a rename has
-+		 * already been detected using this source, we can just
-+		 * remove the source knowing rename_dst has its info.
-+		 */
-+		if (rename_src[i].p->one->rename_used)
-+			continue;
-+
-+		if (new_num_src < i)
-+			memcpy(&rename_src[new_num_src], &rename_src[i],
-+			       sizeof(struct diff_rename_src));
-+		new_num_src++;
-+	}
-+
-+	rename_src_nr = new_num_src;
-+}
-+
- void diffcore_rename(struct diff_options *options)
- {
- 	int detect_rename = options->detect_rename;
-@@ -529,14 +577,10 @@ void diffcore_rename(struct diff_options *options)
- 	if (minimum_score == MAX_SCORE)
- 		goto cleanup;
- 
--	/*
--	 * Calculate how many renames are left (but all the source
--	 * files still remain as options for rename/copies!)
--	 */
-+	/* Calculate how many renames are left */
- 	num_destinations = (rename_dst_nr - rename_count);
-+	remove_unneeded_paths_from_src(want_copies);
- 	num_sources = rename_src_nr;
--	if (!want_copies)
--		num_sources -= rename_count;
- 
- 	/* All done? */
- 	if (!num_destinations || !num_sources)
-@@ -578,8 +622,7 @@ void diffcore_rename(struct diff_options *options)
- 			struct diff_filespec *one = rename_src[j].p->one;
- 			struct diff_score this_src;
- 
--			if (one->rename_used && !want_copies)
--				continue;
-+			assert(!one->rename_used || want_copies || break_idx);
- 
- 			if (skip_unmodified &&
- 			    diff_unmodified_pair(rename_src[j].p))
--- 
-gitgitgadget
+> > In addition, Do I need to do the documentation and tests related to
+> > your `diff --rotate-to`?
+>
+> Once we know how we want "diff --rotate-to" to behave exactly, I can
+> help that part further, if you want.  And then you can build on top.
+>
+> But we need to design exactly what the desired semantics would be
+> before any of that.
+>
+> Thanks.
+>
+Thanks.
