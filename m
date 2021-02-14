@@ -8,145 +8,203 @@ X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63712C433E6
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F879C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:13:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 275B064D9D
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:06:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B439564D9D
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbhBNKGb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 05:06:31 -0500
-Received: from mout.web.de ([212.227.15.3]:60953 "EHLO mout.web.de"
+        id S229682AbhBNKNG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 05:13:06 -0500
+Received: from mout.web.de ([212.227.15.14]:60285 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229528AbhBNKG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 05:06:28 -0500
+        id S229575AbhBNKMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 05:12:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1613297074;
-        bh=jSDtz4LpS0GsTbXcowaOOZnTvQCqwRc9ZeGNXZ0JNyA=;
-        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=CgWZ3pwOR+lo4L7x5NpM//OJ/M7FGjDPDmp196+9T3XfNOv4bG77r7YI4ZOY9DtF9
-         ntu4/OIcahd1Y53RaYmc0IlfG3rKU6eEkXuw/ZuHvFzxKpvY5IgWj3/GABXfNDmHkX
-         mS6XlOBaC2dh5AQy4VoYfa6+xC5LNtWNls1xnpVk=
+        s=dbaedf251592; t=1613297458;
+        bh=KLib8yxFqrokA+z41UWccdctz8VbWeLPBXLNvNcINnE=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=RsKYcbtz3c1U8qkWIJempAVG3+t9b2bajPzn39CS6+YlpBF5Mw35r5WhcrYlBP+CA
+         QH23CQwJwqKsVOH3NjZPuWJncVKKb4zSHFkUcAe0ywLRnzmlsGDygsroov2mNgNgJv
+         F7rKvcMDPbaIxXWv4Mxa5nhddqsTEcaP7cf4cYkM=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
- (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MISsx-1lAxYL2lp9-004Ayi; Sun, 14 Feb 2021 11:04:34 +0100
-Subject: [PATCH 1/2] pretty: add %(describe)
+ (mrweb001 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MPowc-1lGA2i0AvS-0051L5; Sun, 14 Feb 2021 11:10:58 +0100
+Subject: [PATCH 2/2] pretty: add merge and exclude options to %(describe)
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
 To:     Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
-Date:   Sun, 14 Feb 2021 11:04:34 +0100
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+ <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
+Message-ID: <b7bd37c4-ab13-0297-da46-716e26de10d6@web.de>
+Date:   Sun, 14 Feb 2021 11:10:57 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
  Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+In-Reply-To: <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:QmgqdnREfec3ihSBz2ZLze7qZi+Ep05Vz/tlIJBXSm/4Z6uPdTd
- gkGGP54zfJpTKa98mRvNXUZY62tF6e8AbUsFSosD7BduASlgJGunY6sLRjg+KFtpSEssOro
- WEkBrRC7yC2O0bbyMbhjIDjhwIPcCYIOrrMEaxtiV2M54bn9PZhBNw0Efw5HFcoVHjNx1gA
- 3mleG0mQ0Ga4EPqwkyfLg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wM3WEKpqHPs=:ZV8hPb7Bq3BWcp44vNKJ/o
- XGM+WT/XWbVMKekixNUv47DePRg+GUvT5PTXxeqlTiA8jZWKOaAWGDdSdSVzTilTxAyRXtVDD
- DcS4r8pOwKygrcZc4XJt4la37lwKUW9F9RrwGG5aDCOSCE7T4dIMOmCHlUuQ+tQpJI8wCbSQc
- WrdiUa/B9xXegwYlTo/BocPGpEJ8No1hX249DU43EJlKEGWuB47xbKvzb1aTrMRTssbOXNWzU
- uG1SCfqUfw7mKgb+UUDmdq6hm/rz/k0e2aCATLUlYdA19vKaeTFtV9mTKDoRHM6SxCWBJg69W
- pxpRqLNrRyuzO2HPyIqCwjxIRkKjDgBITWDbuMpvcvjTaokItumZL0T/G9NSWlcORLsSYwa7Q
- 6DqF8KM1HkHKA9/yU3C05y3ICSd1tj0xXiKZj3+WueX4QuH43MrCWq/2GxkoaGO3j6sO2bFjR
- /aqIt0vKJd86bHaTUVPCZd/T3wnxFrHqiAng05DmUHkEjfNTY9k4O2OTu26GST6LYT0RtAKEb
- oUPutdGex+Wa2HRw+Hp5pWKNDcixQbcxQwMwHGW3rk3ilJraNV+B6UyiIsjA7WVvZ/hru3V/o
- UQdxxFgFWF999gFqvu8GdGYJWp8TWXt0grltZw0zEV7bGulQ9djFXYIEs+9Czsl3NqhPv1nPV
- 4Q0p/OxDRNrZ2guPnra+Z9CAnxyT2fdWPz3/4F3B2zi66YhWLgr0GeplGkHB/4ODsayQ12Ktz
- NzHX1vxhZPHBYuKzlZ+HxUjaQGz4z5+cYG6Wkv4bue+Jjqk6sDt3ikpnICiqZNO5Pkz45Bh5x
- 7OZ23a/8BTOWmBJwWK20ZhxXYHaZ4o9Z7f6qKllzSZp4z3Q1lDOjoH9c7+YFwsDv5dicEg3QA
- O1on0lnYFtVcCDivZPIw==
+X-Provags-ID: V03:K1:jZXS5j8IxL/SRFFcOjF7g5HtslSnAom9AEm6jUhZtNiDLbnnQNS
+ bcYe6lERXlsRn2e3zlQ+kl03ACy2aqbLzdzjB536WZ/fYypAtbIWFOjI9/9nMQsLg8EV3vx
+ TMRy15BtrZ9FIz3EGf6Os8/6lfB0J4q6BedWNzRUH88xapWhtffRuVRTWihT4VJ5SWDO8VT
+ dw/qexYKW6CpW8oA9pAog==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6wBkikSsX6w=:pOqDVs6hUyKg917BGTumnH
+ Qnp08SYsr+PqtaqUfAVU7ANaNBbR/cQ7qEiKv89WeLhHScl7G/4GlHT9FIBZSBvf/U3UxYoLK
+ NoBHgavzSaRUy1LXrjOtG2FklzsvRH9jxmYVpuvJ0PaVPOA/MQagygPo3gRMVVn5Z5kBXFZs1
+ qNGY7ei5CpQ75tL00wiBf/sU6sgJ1zT2/Yr2J8dUWoqmNIK1ffI76VqipDwYCiBukQH/kpPBF
+ bnFixMt7qXItNVCudVW+BnETg2tMAYHrvVQTVK5iTQ+w+DUgPTdOwS56fQiHaj1GfNHaZij4+
+ /+F3WJFvf+ijX94lUL/kpAkyQ0FmTkjlG2JXcDV6HUcBrat2xIdJQ/Aa2jbrTp0UB9pZLeQB/
+ feFdLaK0Y+M4TvEOCiYmPK+pRIQni/TV24DnZMmzqf4sm64OizvotZNNVJqv5RADLl3XYcVp5
+ FDtrXLHjXUjx65hsKPurArONzrdWyl1TZ0hzO53x/6SE80djWJbNSWorkgfLoduw5Ux/6HiHq
+ 0nunKtSNw3UFbrlRzSf0KLnTg0lHn/W96uthaRjFf/ACgyuQ1cGTc408nSPx6SAuM5zZ7QmQk
+ yol6z8mntVRWKBGQwCBk63ddb9oescDA5wEJshZZL2V1pqSBBa2yoIUOn99Oe5VlxVpbERGVL
+ rHT4qadsrdoksT5+I4qRVV9aKIU0iZ0t3fmj0+Q6B13j/OHHZ/nus4evgQYrg/vNJibUqgAfB
+ mA+2rc3BuR4X84VwslDQA08fMBUu/GyLSWCybVo9rFKkUMLdpMbFrwTOsghTZTbWDP6/MuHsB
+ NhS066qo3fzYzaLB+WFPmr7DcpfnGGJ4WeRbWSZWRQq4BJUEotLeb/HN7iIhxlyosPgZuLvGW
+ J0Oz09z3rVsd3ZAKXAgQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a format placeholder for describe output.  Implement it by actually
-calling git describe, which is simple and guarantees correctness.  It's
-intended to be used with $Format:...$ in files with the attribute
-export-subst and git archive.  It can also be used with git log etc.,
-even though that's going to be slow due to the fork for each commit.
+Allow restricting the tags used by the placeholder %(describe) with the
+options match and exclude.  E.g. the following command describes the
+current commit using official version tags, without those for release
+candidates:
 
-Suggested-by: Eli Schwartz <eschwartz@archlinux.org>
+   $ git log -1 --format=3D'%(describe:match=3Dv[0-9]*,exclude=3D*rc*)'
+
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- Documentation/pretty-formats.txt |  2 ++
- pretty.c                         | 17 +++++++++++++++++
- t/t4205-log-pretty-formats.sh    | 10 ++++++++++
- 3 files changed, 29 insertions(+)
+ Documentation/pretty-formats.txt | 13 ++++++++--
+ pretty.c                         | 43 ++++++++++++++++++++++++++++++--
+ t/t4205-log-pretty-formats.sh    | 16 ++++++++++++
+ 3 files changed, 68 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-forma=
 ts.txt
-index 6b59e28d44..bb8c05bc21 100644
+index bb8c05bc21..231010e6ef 100644
 =2D-- a/Documentation/pretty-formats.txt
 +++ b/Documentation/pretty-formats.txt
-@@ -208,6 +208,8 @@ The placeholders are:
+@@ -208,8 +208,17 @@ The placeholders are:
  '%cs':: committer date, short format (`YYYY-MM-DD`)
  '%d':: ref names, like the --decorate option of linkgit:git-log[1]
  '%D':: ref names without the " (", ")" wrapping.
-+'%(describe)':: human-readable name, like linkgit:git-describe[1];
-+		empty string for undescribable commits
+-'%(describe)':: human-readable name, like linkgit:git-describe[1];
+-		empty string for undescribable commits
++'%(describe[:options])':: human-readable name, like
++			  linkgit:git-describe[1]; empty string for
++			  undescribable commits.  The `describe` string
++			  may be followed by a colon and zero or more
++			  comma-separated options.
+++
++** 'match=3D<pattern>': Only consider tags matching the given
++   `glob(7)` pattern, excluding the "refs/tags/" prefix.
++** 'exclude=3D<pattern>': Do not consider tags matching the given
++   `glob(7)` pattern, excluding the "refs/tags/" prefix.
++
  '%S':: ref name given on the command line by which the commit was reached
         (like `git log --source`), only works with `git log`
  '%e':: encoding
 diff --git a/pretty.c b/pretty.c
-index b4ff3f602f..a0c427fb61 100644
+index a0c427fb61..c612d2ac9b 100644
 =2D-- a/pretty.c
 +++ b/pretty.c
-@@ -12,6 +12,7 @@
- #include "reflog-walk.h"
- #include "gpg-interface.h"
- #include "trailer.h"
-+#include "run-command.h"
+@@ -1150,6 +1150,34 @@ static int format_trailer_match_cb(const struct str=
+buf *key, void *ud)
+ 	return 0;
+ }
 
- static char *user_format;
- static struct cmt_fmt_map {
-@@ -1214,6 +1215,22 @@ static size_t format_commit_one(struct strbuf *sb, =
-/* in UTF-8 */
++static size_t parse_describe_args(const char *start, struct strvec *args)
++{
++	const char *options[] =3D { "match", "exclude" };
++	const char *arg =3D start;
++
++	for (;;) {
++		const char *matched =3D NULL;
++		const char *argval;
++		size_t arglen =3D 0;
++		int i;
++
++		for (i =3D 0; i < ARRAY_SIZE(options); i++) {
++			if (match_placeholder_arg_value(arg, options[i], &arg,
++							&argval, &arglen)) {
++				matched =3D options[i];
++				break;
++			}
++		}
++		if (!matched)
++			break;
++
++		if (!arglen)
++			return 0;
++		strvec_pushf(args, "--%s=3D%.*s", matched, (int)arglen, argval);
++	}
++	return arg - start;
++}
++
+ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				const char *placeholder,
+ 				void *context)
+@@ -1215,20 +1243,31 @@ static size_t format_commit_one(struct strbuf *sb,=
+ /* in UTF-8 */
  		return parse_padding_placeholder(placeholder, c);
  	}
 
-+	if (skip_prefix(placeholder, "(describe)", &arg)) {
-+		struct child_process cmd =3D CHILD_PROCESS_INIT;
-+		struct strbuf out =3D STRBUF_INIT;
-+		struct strbuf err =3D STRBUF_INIT;
+-	if (skip_prefix(placeholder, "(describe)", &arg)) {
++	if (skip_prefix(placeholder, "(describe", &arg)) {
+ 		struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 		struct strbuf out =3D STRBUF_INIT;
+ 		struct strbuf err =3D STRBUF_INIT;
+
+ 		cmd.git_cmd =3D 1;
+ 		strvec_push(&cmd.args, "describe");
 +
-+		cmd.git_cmd =3D 1;
-+		strvec_push(&cmd.args, "describe");
-+		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
-+		pipe_command(&cmd, NULL, 0, &out, 0, &err, 0);
-+		strbuf_rtrim(&out);
-+		strbuf_addbuf(sb, &out);
-+		strbuf_release(&out);
-+		strbuf_release(&err);
-+		return arg - placeholder;
-+	}
++		if (*arg =3D=3D ':') {
++			arg++;
++			arg +=3D parse_describe_args(arg, &cmd.args);
++		}
 +
++		if (*arg !=3D ')') {
++			child_process_clear(&cmd);
++			return 0;
++		}
++
+ 		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
+ 		pipe_command(&cmd, NULL, 0, &out, 0, &err, 0);
+ 		strbuf_rtrim(&out);
+ 		strbuf_addbuf(sb, &out);
+ 		strbuf_release(&out);
+ 		strbuf_release(&err);
+-		return arg - placeholder;
++		return arg - placeholder + 1;
+ 	}
+
  	/* these depend on the commit */
- 	if (!commit->object.parsed)
- 		parse_object(the_repository, &commit->object.oid);
 diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 749bc1431a..5a44fa447d 100755
+index 5a44fa447d..7e36706212 100755
 =2D-- a/t/t4205-log-pretty-formats.sh
 +++ b/t/t4205-log-pretty-formats.sh
-@@ -962,4 +962,14 @@ test_expect_success 'log --pretty=3Dreference is colo=
-red appropriately' '
- 	test_cmp expect actual
+@@ -972,4 +972,20 @@ test_expect_success '%(describe) vs git describe' '
+ 	test_must_be_empty err
  '
 
-+test_expect_success '%(describe) vs git describe' '
-+	git log --format=3D"%H" | while read hash
-+	do
-+		echo "$hash $(git describe $hash)"
-+	done >expect &&
-+	git log --format=3D"%H %(describe)" >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_must_be_empty err
++test_expect_success '%(describe:match=3D...) vs git describe --match ...'=
+ '
++	test_when_finished "git tag -d tag-match" &&
++	git tag -a -m tagged tag-match&&
++	git describe --match "*-match" >expect &&
++	git log -1 --format=3D"%(describe:match=3D*-match)" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '%(describe:exclude=3D...) vs git describe --exclude =
+...' '
++	test_when_finished "git tag -d tag-exclude" &&
++	git tag -a -m tagged tag-exclude &&
++	git describe --exclude "*-exclude" >expect &&
++	git log -1 --format=3D"%(describe:exclude=3D*-exclude)" >actual &&
++	test_cmp expect actual
 +'
 +
  test_done
