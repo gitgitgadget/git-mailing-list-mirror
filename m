@@ -2,135 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5BA8C433E0
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 09:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15C14C433DB
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:06:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C9A064E12
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 09:27:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD3C564D9D
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 10:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229713AbhBNJ1s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 04:27:48 -0500
-Received: from hh.christian-wolf.click ([109.90.47.193]:57116 "EHLO
-        hh.wolf-stuttgart.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbhBNJ1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 04:27:43 -0500
-X-Greylist: delayed 505 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Feb 2021 04:27:42 EST
-Received: from cwolf-work.localnet (p5ddd54a9.dip0.t-ipconnect.de [93.221.84.169])
-        by hh.wolf-stuttgart.net (Postfix) with ESMTPSA id A33D7C006B
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 10:18:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=christian-wolf.click;
-        s=202006; t=1613294314;
-        bh=0RdFPpQGJ/HVifsTr8HyBofdHeLPPvf1osGr/Kuyi6w=;
-        h=From:To:Subject:Date:From;
-        b=NiaPuaGNMB07B0az1Z08rpuSJ5Tx01CmkfW96FyumtNbDZhz5KnYeMu0AoQQXoLda
-         35bz7w+wfvPbvRK3xNj56vAx0brGfbJvvZP41syrEWidCT/lHVTr9PqPTtvvVngUMn
-         Ad2uoqNdOV6VyLEzNz0WI0UVSxT5BLNHckp7C728=
-From:   Christian Wolf <account+git@christian-wolf.click>
-To:     git@vger.kernel.org
-Subject: Bug report: git remote prune does not take negative refspecs into account
-Date:   Sun, 14 Feb 2021 10:18:34 +0100
-Message-ID: <1729665.CpSNW4ODmt@cwolf-work>
+        id S229668AbhBNKGH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 05:06:07 -0500
+Received: from mout.web.de ([212.227.15.3]:54101 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229528AbhBNKGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 05:06:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1613297047;
+        bh=fLreOfkZ3QWL6C7XbDyVURKwSWh+rhgoU+z7N20V5dM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ZaCDAvHf/o2LPb73conQV34iIUlPXpZIHn1KAMU33gQze+mgnZ/hqGKp4ewy64U5k
+         c4jN0pJzV3iaXF31mdpbxspJuaO6dscaaTtHP33l9HrpZZu3LANTrvn7Ok2vs4tG3+
+         9nOTdg8+eGqsp5Oz34vppTblslpIL6QWKv7AA6q8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb004 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0LbOuI-1lZoeD2X98-00kzw8; Sun, 14 Feb 2021 11:04:07 +0100
+Subject: Re: gitattributes export-subst and software versioning
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eli Schwartz <eschwartz@archlinux.org>
+Cc:     git@vger.kernel.org
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+ <ac1288b8-5cdf-8e1e-702a-815c5fbc2da3@web.de>
+ <4f65f02c-1d16-aa2c-3e7b-28d807b9ebe9@archlinux.org>
+ <xmqqpn190y8a.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a8171389-4296-8edb-5294-6a77dc1e5fa2@web.de>
+Date:   Sun, 14 Feb 2021 11:04:06 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
+In-Reply-To: <xmqqpn190y8a.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+X-Provags-ID: V03:K1:z6vbG/VqnATPtNDcGSUs6zKeAIQbtoi549jz18LC3tN8EdjtL8Y
+ OWzBlFw467d//AJ6OXf3sP+Yiwd+eUvY89E+uVQdjhd9QWct7gxldJPiVxQyN+xBpAMrxZu
+ UuCZTnv3eQR5ze6zf6UieTxaG8TYKELhtTro+IUiRSGTVDi4ivv7MVgwyhMnBKeTDkDfdBY
+ 8Gx6KVZ/CTi+Wjg3Y3MTg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j8vTPGVKp4E=:8nWCm+EuSvVuPkL96fzOFQ
+ tGZ4Ok57p5L9rSv67OF+0fkUR4z5k7k1EalWNN1onML0RIFw8jwQXqPhX96U0DusSdi8KV+Vi
+ AfIQ6mfg/9ni9isi8CI4r+RR8tYoJ/BHrJRghSPYjwmXCDJ1TthSRiGUAjebpm3mywcmi1C/a
+ xwiPk5BjJMBUpM2M5QszkdkzzQ+JhjN3t/bxeSdznkxJPy+i6Fwm1RV1E9F07bhbwWLUpCcN9
+ 248AqOOrUMLA2dP3PCcxNZ8uVqoMQk0Z4nSa3dKS3XSHz1ghFSH5CAJR4kMOyDI0hAM+ZOtBh
+ 1uH6/n0T+L8m7HRjaUXjh4W7GaKr3HlbTV70pHQFohk87WrkRaIoFBZzkHsYcpy5pyfWJnhNG
+ RWlWecyQjAwREPFbpX9IYxD5pkW1hgd5BrNglogvbyB3CwBEJFTqUCUulgN6RfMwvAoHS1iq1
+ eblxORopA/GU2YFzrE0aZXOg930tOput8f2Jp2pJjeiIL4yNhcP8MM79IaHwtHk7BhmKQiflR
+ SMsH5OVa6z6iGdXXkwgh7c7b5GEu+IsZ5ktdgNmazl5rQUZKFHvfoy6ra3hv2RFqHut9q8Wt7
+ TwvZ9BDN2mhoytnjb6F+3NJEJ6iXARjHrsB+UHIZsLNYV5LIrWMQbSzkhcPnD8fSNxXRrFSy1
+ TeEzptXqhKJ7hb1LISzkmhJgAQ6ZIelp4u8B6hKmK1zor/W9vopUCo56WmYjByNiQ3Bn1/dJZ
+ hoZD3JxMscpraoe6lcJUWsGk98KQ56uQx8I816X6sBq6vfzruCKiSkA6JCuvMT57ruIWmOpA5
+ rDDotgRygKZp8M69bVrCnYZyLF288ApyC48hsVwavLP6M4CytJi2/wX0vnYVRiEEk/Tu/U4Br
+ NGHP+UywFX+6qxqzWnOA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Am 09.02.21 um 21:42 schrieb Junio C Hamano:
+> Eli Schwartz <eschwartz@archlinux.org> writes:
+>
+>>> And replacing the flags with a commit slab doesn't seem to be enough,
+>>> either -- I get good results lots of commits, but for some git log wit=
+h
+>>> the new placeholder would just show some nonsensical output, as it
+>>> seems to get the depth calculation wrong for them somehow.
+>>
+>> You mean git describe <commit> produces wrong results for those?
+>
+> Running "describe" as an external command, like the patch you are
+> responding to does, would not produce any wrong result, but R=C3=A9ne's
+> point is that it would be very involved to turn "describe" into a
+> function that can be called as if it is a library function without
+> disrupting the operation of "log" that is running in the same
+> address space, and the change he tried had some weird bugs to get
+> the computation wrong.
 
-I found an issue with git and wanted to report this. Here is the filled res=
-ult=20
-from `git bugreport` (sorry for the intermixed German, but I think the Engl=
-ish=20
-statements should suffice to understand the issue).
+Yes, indeed.  Let's go with the forking version for now -- it may be
+slow, but it's fast enough, and it's better than nothing.
 
-Vielen Dank f=FCr das Ausf=FCllen eines Git-Fehlerberichts!
-Bitte antworten Sie auf die folgenden Fragen, um uns dabei zu helfen, Ihr
-Problem zu verstehen.
-
-Was haben Sie gemacht, bevor der Fehler auftrat? (Schritte, um Ihr Fehler
-zu reproduzieren)
-
-1. I have configured a remote `upstream` with a refspec like `+refs/heads/
-*:refs/upstream/heads/*`.
-2. I have fetched remote `upstream` fetching two branches `foo` and `bar`.
-3. I add another line to `.git/config` with a negative refspec
-```
-fetch =3D ^refs/heads/bar
-```
-4. I called `git fetch upstream` and `git remote prune upstream`.
-5. Remove the refspec from step 2 in `.git/config` with some arbitrary name=
-s=20
-(e.g. `+refs/heads/baz:refs/upstream/heads/baz`), keep the negative refspec=
- as=20
-it is
-6. Fetch and prune (see step 4)
-7. Undo step 5 and restore the original state as after step 3
-8. Fetch and prune (see step 4)
-
-Was haben Sie erwartet, was passieren soll? (Erwartetes Verhalten)
-Expected behavior:
-
-After the fetch in step 2 both branches are mirrored locally.
-
-After the prune in line 4 the branch `bar` is dropped from the remotely=20
-fetched branches.
-
-After step 6 both both remote branches `foo` and `bar` are no longer visibl=
-e.
-A possible error about unmatching branch `baz`.
-
-After step 8 again a remote branch `foo` is existing.
-
-Was ist stattdessen passiert? (Wirkliches Verhalten)
-Real behavior:
-
-After step 2: As intended
-
-After step 4: Both remote branches are still visible. Nothing is pruned.
-
-After step 6: Both remote branches are gone.
-
-After step 8: Only `foo` is existing/fetched as remote branch.
-
-Was ist der Unterschied zwischen dem, was Sie erwartet haben und was
-wirklich passiert ist?
-The difference of real and ideal behavior:
-
-The difference is that after step 4 the remote branch `bar` is not pruned.
-
-Sonstige Anmerkungen, die Sie hinzuf=FCgen m=F6chten:
-
-The steps 5~8 are there to verify the negative pathspec is working in gener=
-al.
-=46etching freshly takes the negativbe pathspec into account.
-
-So the problem is within the pruning code.
-
-[System Info]
-git Version:
-git version 2.30.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.10-arch1-1 #1 SMP PREEMPT Sat, 23 Jan 2021 23:59:48 +0000=
-=20
-x86_64
-Compiler Info: gnuc: 10.2
-libc Info: glibc: 2.33
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Aktivierte Hooks]
-
-Thank you for looking into this.
-Christian
-
-
+Ren=C3=A9
