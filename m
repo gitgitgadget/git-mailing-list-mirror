@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB595C433DB
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 08:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8D6AC433E0
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 08:01:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9580564E23
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 08:01:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8609564E23
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 08:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbhBNIBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 03:01:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59928 "EHLO
+        id S229782AbhBNIBj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 03:01:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbhBNIAa (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229829AbhBNIAa (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 14 Feb 2021 03:00:30 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 077B1C061793
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:59:11 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id w4so3491206wmi.4
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AF4FC06178C
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:59:10 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id r5so262946wmp.1
         for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d8rKxuBLiSni/HR5WuT2zLq1YB82P0UW4xQ3B2kXB28=;
-        b=Ie1Udvvwpg9cacC2dNBTexcz9MgyWiPMhS5yKkELHFvFGJcUmPOM+ExZOJmA3fQxcN
-         dLKwMfU794GeMPbEavd9pxMQKpeZn/YzqZX8ob/qEZEQ4DSNEvip98JIS6qQHCwIWFPI
-         A9NPsc4Lt7cdHkfkcZvePQdq472pwyk6RTwZvHfvQ5VfH9ntvm+xZK7fNeU7ZuvJJ/KE
-         HZCNmUdS2Kt4pmhdGUjxl7Y3C/6t2tCatXNtdrwzNARiQ3VQQhh9Rd2hOLC5UsemBDsg
-         YR/yg9A/b/b2cyWBS6OZ6TvxjyIzdQxwaEn0PtOz+8OTUcz/M/14Bbjz6udG8jHhwHgM
-         JTrQ==
+        bh=l2ofDQi8CbOpEuxER5ApmN4GoQTgWbuAVaO6UqD+chc=;
+        b=XXQ0EkQkUiN71Fv6R7C02/BqL7s9Kq+SEIM16Ai1yGsYTFXdhjnWYWeppmFNRSny8L
+         de4gq22fZdjcxPrPTqOFmnWAbmHtfJj1Kc4d4T5uQDzEFA/mX9DjW6Qj8it4CEwG58zL
+         MWVA8yJO08DqxagynnDSN+NP2F3+anRLozJMF1u2wPnBFRYaiQDOm6uo2xk+FLd/ld92
+         HuMyzV3u7SFkzN4n3ZwIbopfUB/7bmL36C/kV7pLr5zRk+yJrGYO/LRgbssBwiEC7UgS
+         oSMpOZxB4gS9fXahNQkLnrwoVt+ethdCd/GofiivEXoZrsT2lXHGvwnvxErif4oQ3RDJ
+         PxxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d8rKxuBLiSni/HR5WuT2zLq1YB82P0UW4xQ3B2kXB28=;
-        b=tew+lzBFvOAIKKk4PhCm8tKJYRBRoVtNcVP+61gim2/4NmODm0oZXn/keeUhxHeEnF
-         6wJ3YbFdFVZNTmmogYQkKfsRsQTyrWZWOXMj8FhLR1zsE7UFISdRlEqZLLsYeywARCDD
-         /5PHuk625SsBhmEzuYi6a4rex4y7uwD8XLIK0yuUCRiSIj/zwhE9ekvUqvo5dY44M5yV
-         Mza32zbZv9gkUVonC2HfY1VeZ5ywQl6q3Y8jGtx1nF8rnTEZEukhEM/N+afPdK68RSUV
-         2Y1E7ZvweUe2KeF1sRogW967sTE3osdw5lkYBCGsp9cclrW7AI7f+xM9cQrmocJnQZih
-         OPdA==
-X-Gm-Message-State: AOAM530j3W+XDFcUYv3Cv6r3CO59g9pE2x+69y7MPDYNYlI7ys5WJJ1P
-        sbl6M/jNGUZS7/ZRF8jFVoAmyb3CzUY=
-X-Google-Smtp-Source: ABdhPJxgeoXE4YOlXczZa9oDmAA3hASmPfmpBoYIdBzQhpZz/0JItiD8WQAPoIAb+89zTqJh/1N5MQ==
-X-Received: by 2002:a05:600c:2e48:: with SMTP id q8mr6277589wmf.88.1613289549766;
+        bh=l2ofDQi8CbOpEuxER5ApmN4GoQTgWbuAVaO6UqD+chc=;
+        b=Kk0WlQAsSN4vaJEa8YpetAHwuH4qJVrT5nizqjfghd9lW983dECmsX9gFbvu46x97x
+         Sol7QVQJc3+0+S8wzAewPnDtSmCoA97lXRG9buG0hy83cG5dDz/bT84QnSm6SlyLS8Kn
+         xBMLFFZRx+JDPB/mn7XdeT3JsJT7kZSMYK8/MwNQCMK/Rogpg511EBxNQ9JuoLNmDeSA
+         Z1FmoLeShMG2u4ILhxja4qK6r6/TdQ2YI6H2/+gjDpjHxHls6R3OwQzvBNaae8WSux5h
+         Q4P2z1Kxy3M6k3A08vYNnf5B9y8RNi3qnqWy4t63UMQC/GL1KCva/d+gw+qooscnKdXF
+         HQzw==
+X-Gm-Message-State: AOAM530CaAXglU3+4EgeDGnfOvqklQ9WYJxhCLsmE4dWYsfe4jX5Cick
+        Iq7aiCnWaD5+O26AwWz0yE2RzRn0c+U=
+X-Google-Smtp-Source: ABdhPJyDV1kMvF4FrtGhMoJah1ajC0lJq3dBOFMprwDHq602Z9tXcsNjrwxdthsN3z2rvN6j2+2s+w==
+X-Received: by 2002:a1c:4c03:: with SMTP id z3mr9399293wmf.82.1613289549201;
         Sat, 13 Feb 2021 23:59:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z17sm3659566wrv.9.2021.02.13.23.59.09
+        by smtp.gmail.com with ESMTPSA id m205sm19934190wmf.40.2021.02.13.23.59.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Feb 2021 23:59:09 -0800 (PST)
-Message-Id: <cbd055ab33998962cb7712906cdad5dff3390660.1613289544.git.gitgitgadget@gmail.com>
+        Sat, 13 Feb 2021 23:59:08 -0800 (PST)
+Message-Id: <4983a1c2f908f02bc8a47f883c31652723ffde51.1613289544.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.844.git.1613289544.gitgitgadget@gmail.com>
 References: <pull.844.git.1613289544.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 14 Feb 2021 07:59:01 +0000
-Subject: [PATCH 08/10] diffcore-rename: add a new idx_possible_rename function
+Date:   Sun, 14 Feb 2021 07:59:00 +0000
+Subject: [PATCH 07/10] diffcore-rename: add a dir_rename_guess field to
+ dir_rename_info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,138 +75,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-find_basename_matches() is great when both the remaining set of possible
-rename sources and the remaining set of possible rename destinations
-have exactly one file each with a given basename.  It allows us to match
-up files that have been moved to different directories without changing
-filenames.
-
-When basenames are not unique, though, we want to be able to guess which
-directories the source files have been moved to.  Since this is the job
-of directory rename detection, we employ it.  However, since it is a
-directory rename detection idea, we also limit it to cases where we know
-there could have been a directory rename, i.e. where the source
-directory has been removed.  This has to be signalled by dirs_removed
-being non-NULL and containing an entry for the relevant directory.
-Since merge-ort.c is the only caller that currently does so, this
-optimization is only effective for merge-ort right now.  In the future,
-this condition could be reconsidered or we could modify other callers to
-pass the necessary strset.
-
-Anyway, that's a lot of background so that we can actually describe the
-new function.  Add an idx_possible_rename() function which combines the
-recently added dir_rename_guess and idx_map fields to provide the index
-within rename_dst of a potential match for a given file.
-
-Future commits will add checks after calling this function to compare
-the resulting 'likely rename' candidates to see if the two files meet
-the elevated min_basename_score threshold for marking them as actual
-renames.
+dir_rename_counts has a mapping of a mapping, in particular, it has
+   old_dir => { new_dir => count }
+We want a simple mapping of
+   old_dir => new_dir
+based on which new_dir had the highest count for a given old_dir.
+Introduce dir_rename_guess for this purpose.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 81 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ diffcore-rename.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index d24f104aa81c..1e4a56adde2c 100644
+index db569e4a0b0a..d24f104aa81c 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -374,6 +374,12 @@ struct dir_rename_info {
+@@ -369,6 +369,7 @@ static int find_exact_renames(struct diff_options *options)
+ 
+ struct dir_rename_info {
+ 	struct strintmap idx_map;
++	struct strmap dir_rename_guess;
+ 	struct strmap *dir_rename_count;
  	unsigned setup;
  };
- 
-+static char *get_dirname(const char *filename)
-+{
-+	char *slash = strrchr(filename, '/');
-+	return slash ? xstrndup(filename, slash-filename) : xstrdup("");
-+}
-+
- static void dirname_munge(char *filename)
- {
- 	char *slash = strrchr(filename, '/');
-@@ -651,6 +657,81 @@ static const char *get_basename(const char *filename)
- 	return base ? base + 1 : filename;
+@@ -381,6 +382,24 @@ static void dirname_munge(char *filename)
+ 	*slash = '\0';
  }
  
-+MAYBE_UNUSED
-+static int idx_possible_rename(char *filename, struct dir_rename_info *info)
++static const char *get_highest_rename_path(struct strintmap *counts)
 +{
-+	/*
-+	 * Our comparison of files with the same basename (see
-+	 * find_basename_matches() below), is only helpful when after exact
-+	 * rename detection we have exactly one file with a given basename
-+	 * among the rename sources and also only exactly one file with
-+	 * that basename among the rename destinations.  When we have
-+	 * multiple files with the same basename in either set, we do not
-+	 * know which to compare against.  However, there are some
-+	 * filenames that occur in large numbers (particularly
-+	 * build-related filenames such as 'Makefile', '.gitignore', or
-+	 * 'build.gradle' that potentially exist within every single
-+	 * subdirectory), and for performance we want to be able to quickly
-+	 * find renames for these files too.
-+	 *
-+	 * The reason basename comparisons are a useful heuristic was that it
-+	 * is common for people to move files across directories while keeping
-+	 * their filename the same.  If we had a way of determining or even
-+	 * making a good educated guess about which directory these non-unique
-+	 * basename files had moved the file to, we could check it.
-+	 * Luckily...
-+	 *
-+	 * When an entire directory is in fact renamed, we have two factors
-+	 * helping us out:
-+	 *   (a) the original directory disappeared giving us a hint
-+	 *       about when we can apply an extra heuristic.
-+	 *   (a) we often have several files within that directory and
-+	 *       subdirectories that are renamed without changes
-+	 * So, rules for a heuristic:
-+	 *   (0) If there basename matches are non-unique (the condition under
-+	 *       which this function is called) AND
-+	 *   (1) the directory in which the file was found has disappeared
-+	 *       (i.e. dirs_removed is non-NULL and has a relevant entry) THEN
-+	 *   (2) use exact renames of files within the directory to determine
-+	 *       where the directory is likely to have been renamed to.  IF
-+	 *       there is at least one exact rename from within that
-+	 *       directory, we can proceed.
-+	 *   (3) If there are multiple places the directory could have been
-+	 *       renamed to based on exact renames, ignore all but one of them.
-+	 *       Just use the destination with the most renames going to it.
-+	 *   (4) Check if applying that directory rename to the original file
-+	 *       would result in a destination filename that is in the
-+	 *       potential rename set.  If so, return the index of the
-+	 *       destination file (the index within rename_dst).
-+	 *   (5) Compare the original file and returned destination for
-+	 *       similarity, and if they are sufficiently similar, record the
-+	 *       rename.
-+	 *
-+	 * This function, idx_possible_rename(), is only responsible for (4).
-+	 * The conditions/steps in (1)-(3) are handled via setting up
-+	 * dir_rename_count and dir_rename_guess in
-+	 * initialize_dir_rename_info().  Steps (0) and (5) are handled by
-+	 * the caller of this function.
-+	 */
-+	char *old_dir, *new_dir, *new_path;
-+	int idx;
++	int highest_count = 0;
++	const char *highest_destination_dir = NULL;
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
 +
-+	if (!info->setup)
-+		return -1;
-+
-+	old_dir = get_dirname(filename);
-+	new_dir = strmap_get(&info->dir_rename_guess, old_dir);
-+	free(old_dir);
-+	if (!new_dir)
-+		return -1;
-+
-+	new_path = xstrfmt("%s/%s", new_dir, get_basename(filename));
-+
-+	idx = strintmap_get(&info->idx_map, new_path);
-+	free(new_path);
-+	return idx;
++	strintmap_for_each_entry(counts, &iter, entry) {
++		const char *destination_dir = entry->key;
++		intptr_t count = (intptr_t)entry->value;
++		if (count > highest_count) {
++			highest_count = count;
++			highest_destination_dir = destination_dir;
++		}
++	}
++	return highest_destination_dir;
 +}
 +
- static int find_basename_matches(struct diff_options *options,
- 				 int minimum_score,
- 				 struct dir_rename_info *info,
+ static void increment_count(struct dir_rename_info *info,
+ 			    char *old_dir,
+ 			    char *new_dir)
+@@ -498,6 +517,8 @@ static void initialize_dir_rename_info(struct dir_rename_info *info,
+ 				       struct strset *dirs_removed,
+ 				       struct strmap *dir_rename_count)
+ {
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
+ 	int i;
+ 
+ 	info->setup = 0;
+@@ -511,6 +532,7 @@ static void initialize_dir_rename_info(struct dir_rename_info *info,
+ 		strmap_init(info->dir_rename_count);
+ 	}
+ 	strintmap_init_with_options(&info->idx_map, -1, NULL, 0);
++	strmap_init_with_options(&info->dir_rename_guess, NULL, 0);
+ 
+ 	/*
+ 	 * Loop setting up both info->idx_map, and doing setup of
+@@ -539,6 +561,23 @@ static void initialize_dir_rename_info(struct dir_rename_info *info,
+ 					 rename_dst[i].p->one->path,
+ 					 rename_dst[i].p->two->path);
+ 	}
++
++	/*
++	 * Now we collapse
++	 *    dir_rename_count: old_directory -> {new_directory -> count}
++	 * down to
++	 *    dir_rename_guess: old_directory -> best_new_directory
++	 * where best_new_directory is the one with the highest count.
++	 */
++	strmap_for_each_entry(info->dir_rename_count, &iter, entry) {
++		/* entry->key is source_dir */
++		struct strintmap *counts = entry->value;
++		char *best_newdir;
++
++		best_newdir = xstrdup(get_highest_rename_path(counts));
++		strmap_put(&info->dir_rename_guess, entry->key,
++			   best_newdir);
++	}
+ }
+ 
+ void partial_clear_dir_rename_count(struct strmap *dir_rename_count)
+@@ -566,6 +605,9 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info,
+ 	/* idx_map */
+ 	strintmap_clear(&info->idx_map);
+ 
++	/* dir_rename_guess */
++	strmap_clear(&info->dir_rename_guess, 1);
++
+ 	if (!keep_dir_rename_count) {
+ 		partial_clear_dir_rename_count(info->dir_rename_count);
+ 		strmap_clear(info->dir_rename_count, 1);
 -- 
 gitgitgadget
 
