@@ -2,194 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C863C433DB
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37F1AC433E0
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:53:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 014E564DCE
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:52:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED3F764DCE
+	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 07:53:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbhBNHw2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 02:52:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
+        id S229833AbhBNHxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 02:53:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbhBNHwJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 02:52:09 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C106C061788
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:28 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id k10so3384866otl.2
-        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:28 -0800 (PST)
+        with ESMTP id S229829AbhBNHw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 02:52:26 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1664BC061797
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:56 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id x4so4926122wmi.3
+        for <git@vger.kernel.org>; Sat, 13 Feb 2021 23:51:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HM5Vbr8Q4KRYpwZKN9wSNMekgSvcq3m6lyp0YxROkoo=;
-        b=Jx9z/U9QeAR8RxrNxNmAqjnMUrSP2/t2aUMqDJFuUofluMkCvZCpIGoDwTiqkfwuLW
-         pBwBRe7BzQ7nzC/zcqTHHrtYMA2VW3kgGAaCgeDT93Mav2TOOYQZ33NvYBEQLdQ57EAn
-         8x6evabi3jdr9ZDm93j3CiOqFPlvLhOXBJN2Cd8xr0UogfXduF0LG97F6jh86vBtQ9vD
-         MFDc7CCxJT7qbGgqYA4dD9OjgsqPUzDI8rBkz0t0h3kxgp7z9t52O+z1an72twlyN4MG
-         UnS+9YYAmJks2g8FJiJ5HZQgWi9U7G3VIn2b5pk7o8SCnrNJ0HpDRgmlyuGeqdu/hbW5
-         uv9w==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KxXvouJBmVRVkcaw9WpLCd/7sUcL+ZatT94O7iA8eG4=;
+        b=RhNmyIwFKTGFVZ7yF1nAHsCkwh3JY7EGBFE6DXfDRMfjHt9aoKCerrSvpVxVsWE58k
+         4NNoFBZy6F4DI8rmbTVv2cqmfv3pXX2uJKQCpYaH2ePyGmMO0YYE5A0BgbW9MVD8F+sH
+         ZOP+UsMT+eC3gazVuS/5vTj8PTOwSX0sOvOYKgy3JZqDBdGxKLwbEMgyOFouFdx0ziPQ
+         zNcVPU/4To1/RQSE113EnOAYyxXH/3VqFMM0lyE5B7R/itldIzAeX7utV4Sa6svMlsHj
+         KA/FpxdPfTg7DDjS3INs9i+Wbpk9HR+gg43wUf9mlhYr9MNAKIKGWmqVZSLmSB7aDmqx
+         H6Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HM5Vbr8Q4KRYpwZKN9wSNMekgSvcq3m6lyp0YxROkoo=;
-        b=dC5EJkxld4CbbryyEoLVmIasf7tuYRHUxo3mtBAGhpTYH6AYl19s5AfRZ896++TIQd
-         pEqY59IrL80Bw2qS6MXJT4ZhLTV0Ep6H1pHecqZS6QNarrRZtWbX3DZ5yIsUnG6vY17S
-         izFuaEeNffHiITh6RyL3OGhHuAnvefuFA916Gc9MEr/72uUMcut6X2Jb6OkLcS/6mi9N
-         ePQ7WD6z2/i8FvrdD8RlUQha9ss2QsKR5SScsT9ckhZjWtP1YKGyiivI1zYCRYaMcgAa
-         qRfqXy5Sj2QCIuCWifaA6DAzXEaxx4UStbL2T86lkrYlzih9+Z9U8+0RmVi63vPQBF+G
-         XBHA==
-X-Gm-Message-State: AOAM530j71bF/ixiJ+WExmI5VHJI38aG69AkDHlVBgCmYOiFxg+ALdOO
-        B/DOE2GAaFoYnmN9l5fEITw8DCpY2uC95tD+9ek=
-X-Google-Smtp-Source: ABdhPJylc9LkoZEsPP73O0RzMaiUvvq93U963w8JKoWWjDgZvRyA37FQEsoqYTR78y0vVq0K8P5EhcsX5lIm1hn2DMg=
-X-Received: by 2002:a9d:21ca:: with SMTP id s68mr7738623otb.164.1613289087754;
- Sat, 13 Feb 2021 23:51:27 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KxXvouJBmVRVkcaw9WpLCd/7sUcL+ZatT94O7iA8eG4=;
+        b=Gz88+TLT1QW98QCaOs/ehMDARKrXXaFxs7bN8LD2B1vpmXzL8wkt7MxYxcD8M9xw1s
+         7Pso1ry+Gf8XsgDwa/pAuQ0S/+cGc2yRN1Yjk/Fwg+mv/6YKwbeHsVOHT9mV26Fb0CYe
+         u1pg0i83hdQhvQy/SLDJOLyDnhA7u4o8Alp2d7Dndwbz/eRILYev8weq6Lxhx5dqqnjz
+         T+M6/kv0YNMgxLb7eNrvjWQTNouHGdMR9q4ef4sb1UzeD5mi25oPgADWYwuDaCJPV+2H
+         jPkwwCml2bXcLB5aS5UZHCb6qP6UgkpvqfzQvQZkNdD6XF5LWLv/rHq32OXRfXR01GlP
+         mJQA==
+X-Gm-Message-State: AOAM531TRnBrQRGNpGlHaApGjT4ojBkTBxDn0qAKetUfNqEpOmYx5mRa
+        FN+T3K2sk1EHMIR7JgI0zx8D7hIBkfY=
+X-Google-Smtp-Source: ABdhPJye/wdSyh+wTQxD620+f1pWjOLGKVS7qOavZv0u1AjX3IIy5VPMCeKz1jJlvLGLlHWeQTkbOg==
+X-Received: by 2002:a05:600c:2c50:: with SMTP id r16mr9217705wmg.62.1613289114811;
+        Sat, 13 Feb 2021 23:51:54 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b13sm18586932wrs.35.2021.02.13.23.51.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Feb 2021 23:51:54 -0800 (PST)
+Message-Id: <ece76429dc35ec2f7f61dd79e069cdb86cf98ee7.1613289112.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.843.v5.git.1613289112.gitgitgadget@gmail.com>
+References: <pull.843.v4.git.1613031350.gitgitgadget@gmail.com>
+        <pull.843.v5.git.1613289112.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 14 Feb 2021 07:51:48 +0000
+Subject: [PATCH v5 3/6] diffcore-rename: complete find_basename_matches()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.870.v2.git.1612803744188.gitgitgadget@gmail.com>
- <pull.870.v3.git.1612884654078.gitgitgadget@gmail.com> <xmqqeehp2jis.fsf@gitster.c.googlers.com>
- <CAOLTT8QbutZ2pHZ7Zg7vEJAy=d66YKP12rVW=RSJV+8fH6RRMw@mail.gmail.com> <xmqqk0rf3i07.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqk0rf3i07.fsf@gitster.c.googlers.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 14 Feb 2021 15:53:44 +0800
-Message-ID: <CAOLTT8QmHvfQeOTbw0xwDY=z_GyF2g5bc-C3Do1ONoQ+CqiqgA@mail.gmail.com>
-Subject: Re: [PATCH v3] difftool.c: learn a new way start from specified file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Ryan Zoeller <rtzoeller@rtzoeller.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8811=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=882:17=E5=86=99=E9=81=93=EF=BC=9A
->
-> =E8=83=A1=E5=93=B2=E5=AE=81 <adlternative@gmail.com> writes:
->
-> > It has no effect on this new feature. I should put this modification
-> > in an additional commit, right?
->
-> Or you can just drop it.  It certainly is a distracting change to be
-> part of this topic.
->
-OK.
-> > Yes, I want to know why being so cautious in git log?If the file name i=
-s
-> > wrong, why can't I make it exit? :)
->
-> Imagine a history where file1 and file2 are in the initial commit.
-> The second commit adds file3 and modifies file2, and then the third
-> commit modifies file1.  What would happen when you did this?
->
->   $ git log -p --rotate-to=3Dfile2
->
-> For the commit at HEAD, the set of paths shown would be file1 and
-> nothing else (because it is the only path that gets modified).  You
-> cannot start showing from "file2".  Dying (and not showing HEAD~1
-> and HEAD~2) is the last thing you want to do in this situation.  We
-> do not even want to give a warning or an error, as it is totally
-> expected that some commits do not touch a given path---it would be
-> very unusual if a path is touched by every commit ;-).
->
-Now I understand that in `log -p`, some commit do not have the file, and so=
-me
-commit have the file. The best way to display the commit without the file
-is to keep it as it is, and rotate the commit with the file. And in `diffto=
-ol`
-need to ensure the exist the specified file or give the more matching file
-as the beginning(As you mentioned later).
-> For "difftool --start-at=3Dfile2", the equation is different.  It does
-> not traverse history where each commit may or may not modify file2,
-> and when the user says s/he wants to resume from file2, file2 must
-> be in the set of paths that have changes, or something is wrong (i.e.
-> the user meant file3 but mistyped it as file2).
->
-> > Awesome idea. In this way, `difftool --rotate-to=3D<file>` can call
-> > `diff --rotate-to=3D<file>` , user can choose the starting file, and th=
-ey can
-> > also see previous files.
->
-> So "difftool --start-at=3D<file>" can of use "diff --rotate-to=3D<file>"
-> to implement the feature (after all, that is why I wrote it), but
-> the error condition between the two are quite different.  And ...
+From: Elijah Newren <newren@gmail.com>
 
-> > After that, there was too little work I could do,do i just need to add
-> > the following
-> >  code in `diff_flush_patch_all_file_pairs`?
->
->
-> > if (o->rotate_to && q->nr && strcmp(q->queue[0]->one->path, o->rotate_t=
-o) &&
-> > strcmp(q->queue[0]->one->path, o->rotate_to)) {
-> >     error(_("could not find start file name '%s'"), o->rotate_to);
-> >         return;
-> > }
->
-> ... that is why an unconditional change like this in diff.c is not
-> acceptable, as it would break other codepaths like "git log -p".  If
-> we were to add an error there, it has to be very limited to exclude
-> at least "log -p"---there may be other features that share the code
-> that should not trigger an error for similar reasons.
->
-> If diffcore-rotate chooses "missing rotate-to file makes it a no-op"
-> as its semantics, and if "difftool --start-at" does not want to see
-> a misspelt filename making it a no-op, then the latter needs to
-> ensure that the name it got from the user is indeed in the set of
-> paths that have changes before running "diff --rotate-to" to
-> implement its "difftool --start-at" feature.
->
-> The "missing rotate-to file in the diff_queue MUST NOT cause
-> diffcore-rotate to error out" rule is probably unnegitiable, but
-> there are other ways to make it easier to use, though.
->
-> For example, we could change the rotate-to logic to mean "start at
-> the given path, or if such a path does not exist in the diff_queue,
-> then the first path that sorts after the given path is where we
-> start".  That way, if the diff_queue has paths A B C D E and
-> rotate-to gives C, then we rotate the output to C D E A B.  And if
-> the diff_queue has A B D E and rotate-to gives C, then the output
-> would become D E A B (instead of becoming a no-op).  Then, a mistyped
-> filename may not do what the user wanted to do (after all, that is
-> the definition of MIStyping), but it would do something noticeable
-> by the user, which may be useful enough and at least would let the
-> user notice the mistake.
->
-In doing this, I think the processing methods of difftool and other diffs
-are unified.I think this kind of processing is actually very easy,
-just need to change
-> if (!strcmp(rotate_to_filename, q->queue[i]->two->path))
-to
-> if (strcmp(rotate_to_filename, q->queue[i]->two->path) <=3D 0)
-Of course, it might be better if there is an algorithm that can achieve
-the highest degree of file name matching.
+It is not uncommon in real world repositories for the majority of file
+renames to not change the basename of the file; i.e. most "renames" are
+just a move of files into different directories.  We can make use of
+this to avoid comparing all rename source candidates with all rename
+destination candidates, by first comparing sources to destinations with
+the same basenames.  If two files with the same basename are
+sufficiently similar, we record the rename; if not, we include those
+files in the more exhaustive matrix comparison.
 
-Now that `difftool --start-at` and `diff --rotate-to` are unified effects,
-is "start-at" just an alias for "rotate-to"?
-Or do I need to write like this?
-> OPT_STRING(0, "start-with", &options->rotate-to, N_("<path>"),
->   N_("pass from difftool to diff, has the same effort as `rotate-to`")),
+This means we are adding a set of preliminary additional comparisons,
+but for each file we only compare it with at most one other file.  For
+example, if there was a include/media/device.h that was deleted and a
+src/module/media/device.h that was added, and there are no other
+device.h files in the remaining sets of added and deleted files after
+exact rename detection, then these two files would be compared in the
+preliminary step.
 
-> > In addition, Do I need to do the documentation and tests related to
-> > your `diff --rotate-to`?
->
-> Once we know how we want "diff --rotate-to" to behave exactly, I can
-> help that part further, if you want.  And then you can build on top.
->
-> But we need to design exactly what the desired semantics would be
-> before any of that.
->
-> Thanks.
->
-Thanks.
+This commit does not yet actually employ this new optimization, it
+merely adds a function which can be used for this purpose.  The next
+commit will do the necessary plumbing to make use of it.
+
+Note that this optimization might give us different results than without
+the optimization, because it's possible that despite files with the same
+basename being sufficiently similar to be considered a rename, there's
+an even better match between files without the same basename.  I think
+that is okay for four reasons: (1) it's easy to explain to the users
+what happened if it does ever occur (or even for them to intuitively
+figure out), (2) as the next patch will show it provides such a large
+performance boost that it's worth the tradeoff, and (3) it's somewhat
+unlikely that despite having unique matching basenames that other files
+serve as better matches.  Reason (4) takes a full paragraph to
+explain...
+
+If the previous three reasons aren't enough, consider what rename
+detection already does.  Break detection is not the default, meaning
+that if files have the same _fullname_, then they are considered related
+even if they are 0% similar.  In fact, in such a case, we don't even
+bother comparing the files to see if they are similar let alone
+comparing them to all other files to see what they are most similar to.
+Basically, we override content similarity based on sufficient filename
+similarity.  Without the filename similarity (currently implemented as
+an exact match of filename), we swing the pendulum the opposite
+direction and say that filename similarity is irrelevant and compare a
+full N x M matrix of sources and destinations to find out which have the
+most similar contents.  This optimization just adds another form of
+filename similarity comparison, but augments it with a file content
+similarity check as well.  Basically, if two files have the same
+basename and are sufficiently similar to be considered a rename, mark
+them as such without comparing the two to all other rename candidates.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ diffcore-rename.c | 82 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 79 insertions(+), 3 deletions(-)
+
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index e51f33a2184a..266d4fae48c7 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -383,9 +383,53 @@ MAYBE_UNUSED
+ static int find_basename_matches(struct diff_options *options,
+ 				 int minimum_score)
+ {
+-	int i;
++	/*
++	 * When I checked in early 2020, over 76% of file renames in linux
++	 * just moved files to a different directory but kept the same
++	 * basename.  gcc did that with over 64% of renames, gecko did it
++	 * with over 79%, and WebKit did it with over 89%.
++	 *
++	 * Therefore we can bypass the normal exhaustive NxM matrix
++	 * comparison of similarities between all potential rename sources
++	 * and destinations by instead using file basename as a hint (i.e.
++	 * the portion of the filename after the last '/'), checking for
++	 * similarity between files with the same basename, and if we find
++	 * a pair that are sufficiently similar, record the rename pair and
++	 * exclude those two from the NxM matrix.
++	 *
++	 * This *might* cause us to find a less than optimal pairing (if
++	 * there is another file that we are even more similar to but has a
++	 * different basename).  Given the huge performance advantage
++	 * basename matching provides, and given the frequency with which
++	 * people use the same basename in real world projects, that's a
++	 * trade-off we are willing to accept when doing just rename
++	 * detection.
++	 *
++	 * If someone wants copy detection that implies they are willing to
++	 * spend more cycles to find similarities between files, so it may
++	 * be less likely that this heuristic is wanted.  If someone is
++	 * doing break detection, that means they do not want filename
++	 * similarity to imply any form of content similiarity, and thus
++	 * this heuristic would definitely be incompatible.
++	 */
++
++	int i, renames = 0;
+ 	struct strintmap sources;
+ 	struct strintmap dests;
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
++
++	/*
++	 * The prefeteching stuff wants to know if it can skip prefetching
++	 * blobs that are unmodified...and will then do a little extra work
++	 * to verify that the oids are indeed different before prefetching.
++	 * Unmodified blobs are only relevant when doing copy detection;
++	 * when limiting to rename detection, diffcore_rename[_extended]()
++	 * will never be called with unmodified source paths fed to us, so
++	 * the extra work necessary to check if rename_src entries are
++	 * unmodified would be a small waste.
++	 */
++	int skip_unmodified = 0;
+ 
+ 	/*
+ 	 * Create maps of basename -> fullname(s) for remaining sources and
+@@ -422,12 +466,44 @@ static int find_basename_matches(struct diff_options *options,
+ 			strintmap_set(&dests, base, i);
+ 	}
+ 
+-	/* TODO: Make use of basenames source and destination basenames */
++	/* Now look for basename matchups and do similarity estimation */
++	strintmap_for_each_entry(&sources, &iter, entry) {
++		const char *base = entry->key;
++		intptr_t src_index = (intptr_t)entry->value;
++		intptr_t dst_index;
++		if (src_index == -1)
++			continue;
++
++		if (0 <= (dst_index = strintmap_get(&dests, base))) {
++			struct diff_filespec *one, *two;
++			int score;
++
++			/* Estimate the similarity */
++			one = rename_src[src_index].p->one;
++			two = rename_dst[dst_index].p->two;
++			score = estimate_similarity(options->repo, one, two,
++						    minimum_score, skip_unmodified);
++
++			/* If sufficiently similar, record as rename pair */
++			if (score < minimum_score)
++				continue;
++			record_rename_pair(dst_index, src_index, score);
++			renames++;
++
++			/*
++			 * Found a rename so don't need text anymore; if we
++			 * didn't find a rename, the filespec_blob would get
++			 * re-used when doing the matrix of comparisons.
++			 */
++			diff_free_filespec_blob(one);
++			diff_free_filespec_blob(two);
++		}
++	}
+ 
+ 	strintmap_clear(&sources);
+ 	strintmap_clear(&dests);
+ 
+-	return 0;
++	return renames;
+ }
+ 
+ #define NUM_CANDIDATE_PER_DST 4
+-- 
+gitgitgadget
+
