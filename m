@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE3AFC4332D
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DCF3C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 90F8C64DBA
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 595F764DDA
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230028AbhBOAxu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 19:53:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49126 "EHLO
+        id S230064AbhBOAyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 19:54:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbhBOAxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 19:53:44 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15284C061788
+        with ESMTP id S229994AbhBOAyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 19:54:23 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC423C06178A
         for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:04 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id n6so7142402wrv.8
+Received: by mail-wr1-x435.google.com with SMTP id n4so4180468wrx.1
         for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JpqKQgUz+R8bu/kg2ACsnMlKo+TGhbyZUUp5SPLltGU=;
-        b=u6gRISTLHjkcXsYJEprLXHt5QTEk/a6LoxFYO6EsPWtg9k4NBi5PMDYPa1OH1OCxKn
-         JDKOiqcpa/ECOWDht3YqAUPCER/AL9mGuKUwEE3kDLvBRMBdgZYO6eTCRWvC315xJgUk
-         UDoZUut2Wo0Z9oUWZ7uIVlwQ0Aedc8uOPBcAmAJ0Rj+ZEjtCca/vs8GnJWX6TJMXbuFM
-         Dpn7SECvBrNEPsS5O+MOkDlEbeBiyslSRhBL2VZJDXg/Lyyp4dUcuwvVnDifoRPpB1Aa
-         zD7gYCcq2Gsr4dOI5I21TBp83R74yLKA7s+1/9t+wLE/91OOJIyLrOdhueK/+y9zyikA
-         Nf0Q==
+        bh=RktGh6O14WVHOsBLAiLaHGbHF4JZjmy3JWuFrO7AtmI=;
+        b=sB4IccALMUSpQ068/Mk1BTT9A8zjkYaBSHVlOwZ1ZhPb+ikStTrxd1/8fxNixOEWwn
+         D03DAywFiZnU37p2oS+U2GUEVfXZYakdiACMcMtkTjiWk1swe9T0PQj8qDlRXgu9Rq6k
+         KG+j5q2WnsnLzhAVM7swxTuDNrQRSeBFX25KB5d8v6j1n/Pw2rq2bPZ43sj9sx2u50Nl
+         pkfZBiu9yiGQr+yBC4bShKuY72nQkynDY9css4HUFwTXDZGWoWuxDNmj+dgQHUGi+Hwh
+         ftD+wWisjaErZMH054UUziNJQnMunGrLvNhhXNpzCyS4rQXkSUMgPY3h314XsrMBRlpo
+         5iAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JpqKQgUz+R8bu/kg2ACsnMlKo+TGhbyZUUp5SPLltGU=;
-        b=FoRf0u8CIc51Vf3AGUT0TCJt9qrguZoZQML55SNgOGlpNwp1oL3CnVoglrlrAY9Y7K
-         nfLM3lGDnHaEtHGkM9z2gz+hY8sXZoDM4z9zXBeywkJdBMQqtb8nFAD9qPjzEmx0Bj1l
-         5nH8ImmRchv/Sh8E8Cvm3DbXJvHineszYS2vO92VHw3WxMA5APJrPkD7vNNvng9jZq5f
-         1gadaJeR/HlVgDl9KZ2ufbXmSqVliaPc/shyBkUJ0ahCITRvZWJcGeRYP90YW+i5VkYv
-         T769zhuZt9//wNf+5tcpeC59DYs5lFhUmiWPR35hC4RwA9cQenCnjbdA3dFb03z9xgu8
-         ohJA==
-X-Gm-Message-State: AOAM531rd7EH5mqsVNAuAZo7baSMc7uV7Dv85H5KmCK3FAkjo3IxUvmQ
-        OMvy06Maw0ODjyWwo4g91p9Skk+fYbIzlw==
-X-Google-Smtp-Source: ABdhPJz4ic8H1jXDjH8AXcRSN2+ywe3IEjdlp5zUDEBO9Bf0AH15I/8p6A4gQx7qRDpTaTwmbpHzMg==
-X-Received: by 2002:a5d:40cd:: with SMTP id b13mr12936094wrq.3.1613350382605;
-        Sun, 14 Feb 2021 16:53:02 -0800 (PST)
+        bh=RktGh6O14WVHOsBLAiLaHGbHF4JZjmy3JWuFrO7AtmI=;
+        b=mYeGdp0y5EZmjUT5JkuiiuWg2rycxhIy0TNi4Gs+OHyVISXDv+Tf3EBLn9G26+srr+
+         A+nq+EQBI4K//CrTD25qYCsPP5S8ih8UvlZyRc5vwcULYV+yhLhZvnVjF/0xZbvhyYsS
+         b2JtCKLVklUNgTTVOxNS5Dk78JE9ZPEDwqvVv2j9UP9y6pECVRYFy3TIOv+Mtaxu34Ly
+         3nnMgurEW/BrjQet4gh3yOLfdPXsSZH5r/Df6DAF/JIGnMboKPX6YykZ7mVWmevqC4K2
+         mS4ergpCX2pydH0wtCOJ24FaP/ie4cvViVcOEvDiu5YhFDGUKWov7hHHpdOi77JA8F40
+         RbeA==
+X-Gm-Message-State: AOAM530+HSjz8kvZm0ohYkxNVMYRQTdWfEHyZOPxMWHG9r3Z3gC1epK2
+        HpYAUGzW6rNV/q6kMEzP4Ash3lMjYmQwzQ==
+X-Google-Smtp-Source: ABdhPJzisdXvR6Y1qos0Q/56nBUjx4aVVaLj9VOnnFYmlGcXYe9IeX7/7hguk+aBr9/01qGY6xVW7w==
+X-Received: by 2002:adf:f285:: with SMTP id k5mr16254813wro.285.1613350383381;
+        Sun, 14 Feb 2021 16:53:03 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.01
+        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Feb 2021 16:53:02 -0800 (PST)
+        Sun, 14 Feb 2021 16:53:03 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Adam Spiers <git@adamspiers.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/20] userdiff tests: explicitly test "default" pattern
-Date:   Mon, 15 Feb 2021 01:52:20 +0100
-Message-Id: <20210215005236.11313-5-avarab@gmail.com>
+Subject: [PATCH 05/20] userdiff tests: list builtin drivers via test-tool
+Date:   Mon, 15 Feb 2021 01:52:21 +0100
+Message-Id: <20210215005236.11313-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87tuqebj6m.fsf@evledraar.gmail.com>
 References: <87tuqebj6m.fsf@evledraar.gmail.com>
@@ -79,25 +79,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 122aa6f9c0 (diff: introduce diff.<driver>.binary, 2008-10-05)
-the internals of the userdiff.c code have understood a "default" name,
-which is invoked as userdiff_find_by_name("default") and present in
-the "builtin_drivers" struct. Let's test for this special case.
+Change the userdiff test to list the builtin drivers via the
+test-tool, using the new for_each_userdiff_driver() API function.
+
+This gets rid of the need to modify this part of the test every time a
+new pattern is added, see 2ff6c34612 (userdiff: support Bash,
+2020-10-22) and 09dad9256a (userdiff: support Markdown, 2020-05-02)
+for two recent examples.
+
+I only need the "list-builtin-drivers "argument here, but let's add
+"list-custom-drivers" and "list-drivers" too, just because it's easy.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018-diff-funcname.sh | 1 +
- 1 file changed, 1 insertion(+)
+ Makefile                 |  1 +
+ t/helper/test-tool.c     |  1 +
+ t/helper/test-tool.h     |  1 +
+ t/helper/test-userdiff.c | 32 ++++++++++++++++++++++++++++++++
+ t/t4018-diff-funcname.sh | 29 +++++------------------------
+ 5 files changed, 40 insertions(+), 24 deletions(-)
+ create mode 100644 t/helper/test-userdiff.c
 
+diff --git a/Makefile b/Makefile
+index 5a239cac20..710a0deaed 100644
+--- a/Makefile
++++ b/Makefile
+@@ -741,6 +741,7 @@ TEST_BUILTINS_OBJS += test-submodule-nested-repo-config.o
+ TEST_BUILTINS_OBJS += test-subprocess.o
+ TEST_BUILTINS_OBJS += test-trace2.o
+ TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
++TEST_BUILTINS_OBJS += test-userdiff.o
+ TEST_BUILTINS_OBJS += test-wildmatch.o
+ TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+ TEST_BUILTINS_OBJS += test-write-cache.o
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index f97cd9f48a..dcb05ca6e5 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -71,6 +71,7 @@ static struct test_cmd cmds[] = {
+ 	{ "submodule-nested-repo-config", cmd__submodule_nested_repo_config },
+ 	{ "subprocess", cmd__subprocess },
+ 	{ "trace2", cmd__trace2 },
++	{ "userdiff", cmd__userdiff },
+ 	{ "urlmatch-normalization", cmd__urlmatch_normalization },
+ 	{ "xml-encode", cmd__xml_encode },
+ 	{ "wildmatch", cmd__wildmatch },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 28072c0ad5..589f2e8ac6 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -61,6 +61,7 @@ int cmd__submodule_config(int argc, const char **argv);
+ int cmd__submodule_nested_repo_config(int argc, const char **argv);
+ int cmd__subprocess(int argc, const char **argv);
+ int cmd__trace2(int argc, const char **argv);
++int cmd__userdiff(int argc, const char **argv);
+ int cmd__urlmatch_normalization(int argc, const char **argv);
+ int cmd__xml_encode(int argc, const char **argv);
+ int cmd__wildmatch(int argc, const char **argv);
+diff --git a/t/helper/test-userdiff.c b/t/helper/test-userdiff.c
+new file mode 100644
+index 0000000000..80de456287
+--- /dev/null
++++ b/t/helper/test-userdiff.c
+@@ -0,0 +1,32 @@
++#include "test-tool.h"
++#include "cache.h"
++#include "userdiff.h"
++
++static int userdiff_list_builtin_drivers_cb(struct userdiff_driver *driver,
++					    enum userdiff_driver_type type,
++					    void *priv)
++{
++	puts(driver->name);
++	return 0;
++}
++
++static int list_what(enum userdiff_driver_type type)
++{
++	return for_each_userdiff_driver(userdiff_list_builtin_drivers_cb, type,
++					NULL);
++}
++
++int cmd__userdiff(int argc, const char **argv)
++{
++	if (argc != 2)
++		return 1;
++
++	if (!strcmp(argv[1], "list-drivers"))
++		return list_what(USERDIFF_DRIVER_TYPE_UNSPECIFIED);
++	else if (!strcmp(argv[1], "list-builtin-drivers"))
++		return list_what(USERDIFF_DRIVER_TYPE_BUILTIN);
++	else if (!strcmp(argv[1], "list-custom-drivers"))
++		return list_what(USERDIFF_DRIVER_TYPE_CUSTOM);
++	else
++		return error("unknown argument %s", argv[1]);
++}
 diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 9675bc17db..cefe329aea 100755
+index cefe329aea..11ac648451 100755
 --- a/t/t4018-diff-funcname.sh
 +++ b/t/t4018-diff-funcname.sh
-@@ -49,6 +49,7 @@ diffpatterns="
- 	ruby
- 	rust
- 	tex
-+	default
+@@ -8,6 +8,10 @@ test_description='Test custom diff function name patterns'
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
++	test-tool userdiff list-builtin-drivers >builtin-drivers &&
++	test_file_not_empty builtin-drivers &&
++	builtin_drivers=$(cat builtin-drivers) &&
++
+ 	# a non-trivial custom pattern
+ 	git config diff.custom1.funcname "!static
+ !String
+@@ -26,30 +30,7 @@ test_expect_success 'setup' '
+ '
+ 
+ diffpatterns="
+-	ada
+-	bash
+-	bibtex
+-	cpp
+-	csharp
+-	css
+-	dts
+-	elixir
+-	fortran
+-	fountain
+-	golang
+-	html
+-	java
+-	markdown
+-	matlab
+-	objc
+-	pascal
+-	perl
+-	php
+-	python
+-	ruby
+-	rust
+-	tex
+-	default
++	$builtin_drivers
  	custom1
  	custom2
  	custom3
