@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 862FEC433E0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 328D9C433E9
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:25:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56DAC64DEE
+	by mail.kernel.org (Postfix) with ESMTP id 025C664DFF
 	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230188AbhBOSZG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 13:25:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
+        id S230196AbhBOSZH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 13:25:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbhBOSZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 13:25:04 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F6D5C061756
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:24:24 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id c3so6568890qkj.11
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:24:24 -0800 (PST)
+        with ESMTP id S230183AbhBOSZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 13:25:06 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D5BC0613D6
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:24:25 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id v206so7233935qkb.3
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=On446vB1kX6OsrXY54dxIWGnHu3mD+ojsVWIevhWbRQ=;
-        b=nQFIUyQtGYlXyv/5/Px7ofwS8SaCuqHehcL8umP0i2FEBiuEIKLerV7W7RKpk9aNsK
-         CwF6ZSFlwgmGW58gillHYmy4ZQ87ZS8/SUTPcbvGZWWFGlLJWuuXke8QifncC0eQjKt8
-         2md9FT7UPpdL1Z+Y6AJCRj3N7lCAuzUJRXansFCkqt7w5q6wf8dIxCBKSWQoPqlhC9GX
-         wbArY2dElJ3PimiMjLITeC35ATO4aSE2tGcq2B/XB3s0ux/eVP7jbglHib1FbPN6oJ4J
-         e5Sb3rUSymEKSheRIA9/JEKX+mn8DO6QCve8DLN4Fg2pbLcLwpnssUCvhMbGWpUpZET5
-         LBYA==
+        bh=JVV7qM3fU1nF9mfuasDDO2vc9sskcC4PjPUd+EVxGjg=;
+        b=lo50VovLSqQNJahbl53Q8CUmNE1kkghMaPOJ3aQH3zrxWqF19oubxYiN9iqPRpE9Pz
+         3aXcUZB55LsbIUo9IwvBnVGk6EIZGg4Dk9PJYZ+7FCNZBZHJQ2Yk0KvAVTIw3z0eLOBk
+         QAJGxwX7quWv6p+2Oj5uiU0CBqm7tIkWURQc8kIU14YIcyeUiMa67aokgMY9lYRswSf4
+         crnFGrUVKeFxudad8+y56XZtjIZFh8OskyD24K01ljmmiV8RC2o+pyJj1oyhfgCH0/vZ
+         ynCf7wLShT1PObxeF1lNWTKcRDon66PU6WR+qHPMLFLoqZGeC9HRbBLy108JF3gh9rBp
+         IE9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=On446vB1kX6OsrXY54dxIWGnHu3mD+ojsVWIevhWbRQ=;
-        b=WcrfBLLjMbU3iyT+7nM0LMoIWaM2FbbHHqajxVwcijE0Tgz3s/U0lgZQ1/E4rvrggk
-         ZtNPBpbbFYCqN0miML/qwCrgozIrgmYhUqPAErBuMULYUNgBxfYvdhYJlgWOjJe/NQ4R
-         gildkDBsfQ2pobT3acuaun9ZY8xhjfU5stOfQ98DO4BM8Vq0JmQ8H2DY/E0ZdPtv8oIk
-         SqHlw3OAFLhCq/ZVSsfk+CtF7hHc2X5djKguZ/uxqC8HYLcG4vQwjYR5PF9J3xqNYFOZ
-         J6G+6TkzfIugPWZ3vb7vyKPyGcrphHmLWrBZdWzS3o2Bnc1+xu+ccykP13Pahjq611dG
-         28Bw==
-X-Gm-Message-State: AOAM5305wQ+v3pinyL3WOzK57jYqmECxKWCeHM+jwjEoL3JIh+mLG4/8
-        rZb1LQVxhdnW5jVCFIZhW1rFJVsz59ZLFA==
-X-Google-Smtp-Source: ABdhPJzeUM4e6pUiZnOqgfoVCGMak7r0B7zZ/0SIJdsNDVmFWQ7L6yCLDq8xpD2W44Bqy2hIaBQ/uQ==
-X-Received: by 2002:a37:61cd:: with SMTP id v196mr8647509qkb.341.1613413463065;
-        Mon, 15 Feb 2021 10:24:23 -0800 (PST)
+        bh=JVV7qM3fU1nF9mfuasDDO2vc9sskcC4PjPUd+EVxGjg=;
+        b=G96vGPhkIX/AOpTP+086+dBPV9FKwCIdyMd5HsqXE+EDbaKkGDsQv43v14Xe9BB/wx
+         smod87bWETCgTF6cZrkFIl+B3pbKyBV72AcQwZqWAATPOVmemt+GKjUxw9i33CTGZS+V
+         SKfQBiDQM6Z2KZ/WFT32SvF1G17o3F6bgTtxkMfwGbw8//J8QcbBrhCStSdsXb/iwIsR
+         4m7NtxYKXIifF5cvz6HzlOTAgnjbnUNIUpuv0DPHfeKdzn/OJpwbqS6S9W7drJeafFeQ
+         7Szb00LEhKyaGWR02J/h1lnQ3hx8BITvfi3jnShDeDuIF7Fl2PNJo0uqrruwugM//18l
+         QZ5g==
+X-Gm-Message-State: AOAM533N1GCaR/EyxRhySDW+c9yvzUQuK2pJDc9V/T5eSpWlMFrjIPeO
+        rkwBlJMNyA57BO1wn2AObb8Y7x6JqdosMw==
+X-Google-Smtp-Source: ABdhPJydKT0Nd0+InAdzU5iAk6idFw+Ak5LCa59VXG44Jw63Syo5EcfXGGNbyJzPkOQTWVau6I1eIA==
+X-Received: by 2002:a37:d247:: with SMTP id f68mr5569695qkj.187.1613413464772;
+        Mon, 15 Feb 2021 10:24:24 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id o5sm12305716qkh.59.2021.02.15.10.24.21
+        by smtp.gmail.com with ESMTPSA id o5sm12305716qkh.59.2021.02.15.10.24.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 10:24:22 -0800 (PST)
+        Mon, 15 Feb 2021 10:24:24 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com
-Subject: [PATCH v2 1/2] write_entry(): fix misuses of `path` in error messages
-Date:   Mon, 15 Feb 2021 15:24:12 -0300
-Message-Id: <bdda5f99d031abad65c296a61b3713f60d22ef16.1613411136.git.matheus.bernardino@usp.br>
+Subject: [PATCH v2 2/2] checkout-index: omit entries with no tempname from --temp output
+Date:   Mon, 15 Feb 2021 15:24:13 -0300
+Message-Id: <6ece1947c1781ee24a3a72f89a1cba39a5ebec37.1613411136.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <cover.1613411136.git.matheus.bernardino@usp.br>
 References: <cover.1613411136.git.matheus.bernardino@usp.br>
@@ -70,93 +70,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The variables `path` and `ce->name`, at write_entry(), usually have the
-same contents, but that's not the case when using a checkout prefix or
-writing to a tempfile. (In fact, `path` will be either empty or dirty
-when writing to a tempfile.) Therefore, these variables cannot be used
-interchangeably. In this sense, fix wrong uses of `path` in error
-messages where it should really be `ce->name`, and add some regression
-tests. (Note: there doesn't seem to be any misuse in the other way
-around.)
+With --temp (or --stage=all, which implies --temp), checkout-index
+writes a list to stdout associating temporary file names to the entries'
+names. But if it fails to write an entry, and the failure happens before
+even assigning a temporary filename to that entry, we get an odd output
+line. This can be seen when trying to check out a symlink whose blob is
+missing:
+
+$ missing_blob=$(git hash-object --stdin </dev/null)
+$ git update-index --add --cacheinfo 120000,$missing_blob,foo
+$ git checkout-index --temp foo
+error: unable to read sha1 file of foo (e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
+        foo
+
+The 'TAB foo' line is not much useful and it might break scripts that
+expect the 'tempname TAB foo' output. So let's omit such entries from
+the stdout list (but leaving the error message on stderr).
+
+We could also consider omitting _all_ failed entries from the output
+list, but that's probably not a good idea as the associated tempfiles
+may have been created even when checkout failed, so scripts may want to
+use the output list for cleanup.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- entry.c                         |  8 ++++----
- t/t2006-checkout-index-basic.sh | 23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ builtin/checkout-index.c | 35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index a0532f1f00..7b9f43716f 100644
---- a/entry.c
-+++ b/entry.c
-@@ -282,7 +282,7 @@ static int write_entry(struct cache_entry *ce,
- 		new_blob = read_blob_entry(ce, &size);
- 		if (!new_blob)
- 			return error("unable to read sha1 file of %s (%s)",
--				     path, oid_to_hex(&ce->oid));
-+				     ce->name, oid_to_hex(&ce->oid));
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index 4bbfc92dce..023e49e271 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -23,22 +23,35 @@ static struct checkout state = CHECKOUT_INIT;
+ static void write_tempfile_record(const char *name, const char *prefix)
+ {
+ 	int i;
++	int have_tempname = 0;
  
- 		/*
- 		 * We can't make a real symlink; write out a regular file entry
-@@ -309,7 +309,7 @@ static int write_entry(struct cache_entry *ce,
- 			new_blob = read_blob_entry(ce, &size);
- 			if (!new_blob)
- 				return error("unable to read sha1 file of %s (%s)",
--					     path, oid_to_hex(&ce->oid));
-+					     ce->name, oid_to_hex(&ce->oid));
+ 	if (CHECKOUT_ALL == checkout_stage) {
+-		for (i = 1; i < 4; i++) {
+-			if (i > 1)
+-				putchar(' ');
+-			if (topath[i][0])
+-				fputs(topath[i], stdout);
+-			else
+-				putchar('.');
++		for (i = 1; i < 4; i++)
++			if (topath[i][0]) {
++				have_tempname = 1;
++				break;
++			}
++
++		if (have_tempname) {
++			for (i = 1; i < 4; i++) {
++				if (i > 1)
++					putchar(' ');
++				if (topath[i][0])
++					fputs(topath[i], stdout);
++				else
++					putchar('.');
++			}
  		}
+-	} else
++	} else if (topath[checkout_stage][0]) {
++		have_tempname = 1;
+ 		fputs(topath[checkout_stage], stdout);
++	}
  
- 		/*
-@@ -354,7 +354,7 @@ static int write_entry(struct cache_entry *ce,
+-	putchar('\t');
+-	write_name_quoted_relative(name, prefix, stdout,
+-				   nul_term_line ? '\0' : '\n');
++	if (have_tempname) {
++		putchar('\t');
++		write_name_quoted_relative(name, prefix, stdout,
++					   nul_term_line ? '\0' : '\n');
++	}
  
- 	case S_IFGITLINK:
- 		if (to_tempfile)
--			return error("cannot create temporary submodule %s", path);
-+			return error("cannot create temporary submodule %s", ce->name);
- 		if (mkdir(path, 0777) < 0)
- 			return error("cannot create submodule directory %s", path);
- 		sub = submodule_from_ce(ce);
-@@ -365,7 +365,7 @@ static int write_entry(struct cache_entry *ce,
- 		break;
- 
- 	default:
--		return error("unknown file mode for %s in index", path);
-+		return error("unknown file mode for %s in index", ce->name);
- 	}
- 
- finish:
-diff --git a/t/t2006-checkout-index-basic.sh b/t/t2006-checkout-index-basic.sh
-index 8e181dbf01..d0d7c3f71c 100755
---- a/t/t2006-checkout-index-basic.sh
-+++ b/t/t2006-checkout-index-basic.sh
-@@ -32,4 +32,27 @@ test_expect_success 'checkout-index reports errors (stdin)' '
- 	test_i18ngrep not.in.the.cache stderr
- '
- 
-+test_expect_success 'checkout-index --temp correctly reports error on missing blobs' '
-+	test_when_finished git reset --hard &&
-+	missing_blob=$(git hash-object --stdin </dev/null) &&
-+	cat >objs <<-EOF &&
-+	100644 $missing_blob	file
-+	120000 $missing_blob	symlink
-+	EOF
-+	git update-index --index-info <objs &&
-+
-+	test_must_fail git checkout-index --temp symlink file 2>stderr &&
-+	test_i18ngrep "unable to read sha1 file of file ($missing_blob)" stderr &&
-+	test_i18ngrep "unable to read sha1 file of symlink ($missing_blob)" stderr
-+'
-+
-+test_expect_success 'checkout-index --temp correctly reports error for submodules' '
-+	git init sub &&
-+	test_commit -C sub file &&
-+	git submodule add ./sub &&
-+	git commit -m sub &&
-+	test_must_fail git checkout-index --temp sub 2>stderr &&
-+	test_i18ngrep "cannot create temporary submodule sub" stderr
-+'
-+
- test_done
+ 	for (i = 0; i < 4; i++) {
+ 		topath[i][0] = 0;
 -- 
 2.29.2
 
