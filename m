@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 190D7C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 051A4C433E6
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:55:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1ED764DBA
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA03D64E27
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:55:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230197AbhBOAyv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 19:54:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49290 "EHLO
+        id S230204AbhBOAzB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 19:55:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbhBOAy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230127AbhBOAy0 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 14 Feb 2021 19:54:26 -0500
 Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F366C0617AA
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A26C0617AB
         for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:11 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id t15so7106731wrx.13
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:10 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id v7so7116762wrr.12
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7iKluFb5SRGhJLywSaY/QGqQZ/w9hMtFJ5UPGRP+ZL8=;
-        b=StlfIBaS3ONf2hT+Wz1edYrgYBBxaFnf12yULeEpMtE9gE/5tvJUrqLzNZxX0UaMRH
-         EF8/XgbTBqIQxqti2qG1j5o4OVBOy1lVQuULJEw1C/KgvncTuEZw39F4ZPGZFehc2dYC
-         Fd+dADFRNftG6Z7I+qC5uFkOTWaWRCNnrOj79uhW/+qzuTHdbev87TjpJZqpxC+sy2l4
-         F/srnXeKZI/nKb/SuCJc5nxLyQqJXJl6BjirYCW1Z7EumJkMiP3KDn/eQMkuBpVhjYR7
-         nzsaO6VZszQNPHlbRrDETrhNEUuwd1UEJON9G7DnPmtqdX3GhCMkdg6vp2VmE3KnVV7F
-         WBbQ==
+        bh=URUjqn2Bo9nhQNOwRK+sq96L5AapwHMwmkjYXG54kvM=;
+        b=j9VWUazW7vUtM0fbP8edM/nQLUD3w9Nv8/JE4zN8uBV+RNrJPwwwLVa4MotPyF/bNV
+         Zo0dBGpIy0JX4l8Qkz7fjAt84Wf3TKYET0lhsZxC9p1UyQ3ufwgTR2YtLsWXmhhFkmc2
+         ed+Z1cL1IA9Mofod0d5iYYt2cMdK96gNVu6KwU1JXUpL51fOMdQVo3c3YfpoOmBrjnBE
+         qdBV/Tl8a0PJOucYbDTulgHh4EltwA93dzhKaO57VWJYt7hAOEXUD/vQDvt0jQg0W8+O
+         JxrCS7HY7v/soKyxHs0dpIimcQUVhRoie15RZxUECOn88o/05qE45g4zXFauRMX9R4cf
+         Kfrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7iKluFb5SRGhJLywSaY/QGqQZ/w9hMtFJ5UPGRP+ZL8=;
-        b=ACCjp1y5vHqgNyV/5o90PTswINi1Ua2JxdQca8YD42BZICx+ETYnGS1S0SCJrFyDgT
-         MM1RODwKxCiLQxk8jjSyJYTVhbQrWjOsABZEvPcQjBAjXMCZs0JFCf+pfY4irM+obtal
-         xyv17nDBLDe8DQAdqOaKsjIiYcuyiO8TK/u9XgTWbuVuhlSWbZWID8b8/q+gDE5HR6GR
-         qXy8kcElAG8wwR3Dts7FdCfBRl/hiLwfX8pHFCnrH7NTMnL6ABogr34S+8EgkvJ8oMtO
-         L8BByskQ/z6luriyk2yrIRJJ6lbrcuASGHa6GqEKJu4uMuZGP0T3jPnnlc5L3L7mnl/4
-         dw9w==
-X-Gm-Message-State: AOAM532ln/tyeFK5uskmdh38SvXzZiUPZqhdrsVj2DvWjK26KAKXn3Mx
-        +CUYINs26jN6gusimr22zPJTEpBi/qdtQg==
-X-Google-Smtp-Source: ABdhPJwl7Mbkr4AP7BxOxtX4Zb62BVbi/mb+Iov4IKQAFlIVw3o3YL7hd+3gkMCbLZ/coGwVtp6ULQ==
-X-Received: by 2002:a05:6000:1788:: with SMTP id e8mr16322539wrg.171.1613350389553;
-        Sun, 14 Feb 2021 16:53:09 -0800 (PST)
+        bh=URUjqn2Bo9nhQNOwRK+sq96L5AapwHMwmkjYXG54kvM=;
+        b=f7oFT5N6KPZfG/aKDw5dJEJ7FrrFjReaiArAsCU3EB78JBfOfqoHii3tHJ5UyHqSrC
+         PQofQQXmHPcCMCu6NOMbllbyIhGkRa3abLkAKoMCn+XG4ndlsMY4V7h4Dd4eKL6FITc+
+         9G4yIohtXZ8kmSXmtPesf4LZ5rbtVNRFxuE1zc7DOvIFMEz2ohgXhEaUA9US+JOP36p5
+         84jWZrzzUY7p3OYVfG0mJrpgu8YSGfOUhW7KLIIuuffBODRVYpwSFhPReD0794Sv2tHQ
+         iZqAB/47VZO20Mfh9WPbOHkl5KjkX98domr/3mHQbfFy8lGjHOx6vtF5B0cWYHiH0tBH
+         tw9w==
+X-Gm-Message-State: AOAM532pHPHSNHc205pRLaFzz2ZOkl6AgQuwfNXnIIOYCtb6OVgirBNt
+        JHUpPEI3/Aj97MCSYIylSb+C9lqrp59JkA==
+X-Google-Smtp-Source: ABdhPJyQz6C1IpYuR/m6X+tIq0VBGp/pUxbdoYrO8DWROmdJLkA+ypUqS9eX5F0wx8onmPhUEaF/qQ==
+X-Received: by 2002:a5d:6a89:: with SMTP id s9mr16229317wru.407.1613350390298;
+        Sun, 14 Feb 2021 16:53:10 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.08
+        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 14 Feb 2021 16:53:09 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Adam Spiers <git@adamspiers.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/20] userdiff tests + docs: document & test "diff.<driver>.x?funcname"
-Date:   Mon, 15 Feb 2021 01:52:29 +0100
-Message-Id: <20210215005236.11313-14-avarab@gmail.com>
+Subject: [PATCH 14/20] gitattributes doc: reword discussion of built-in userdiff patterns
+Date:   Mon, 15 Feb 2021 01:52:30 +0100
+Message-Id: <20210215005236.11313-15-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87tuqebj6m.fsf@evledraar.gmail.com>
 References: <87tuqebj6m.fsf@evledraar.gmail.com>
@@ -79,105 +79,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the missing documentation for "diff.<driver>.funcname" and test
-for how it and "diff.<driver>.xfuncname" interact.
-
-Between the introduction of the "diff.<driver>.xfuncname" form in
-45d9414fa5 (diff.*.xfuncname which uses "extended" regex's for hunk
-header selection, 2008-09-18) and when this documentation was written
-in 90b94c26f7 (Documentation: Add diff.<driver>.* to config,
-2011-04-07) we forgot to document the existence of
-"diff.<driver>.funcname".
-
-Let's make a mention of it here, we could also partially revert the
-former commit and discuss the more verbose form in gitattributes(5),
-but let's stop short of that. It makes sense to guide users towards
-ERE over BRE whenever possible.
+Reword the discussion of the built-in userdiff patterns to make it
+more natural to precede it with a discussion about the semantics of
+pattern matching, instead of assuming that it follows right after the
+"diff.tex.xfuncname" example which now immediately precedes it. This
+will make a follow-up commit smaller.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config/diff.txt | 12 +++++++++++
- t/t4018/custom.sh             | 40 +++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+)
+ Documentation/gitattributes.txt | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 2d3331f55c..5fce8021de 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -153,10 +153,22 @@ diff.<driver>.command::
- 	The custom diff driver command.  See linkgit:gitattributes[5]
- 	for details.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e84e104f93..90992e2136 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -794,11 +794,17 @@ backslashes; the pattern above picks a line that begins with a
+ backslash, and zero or more occurrences of `sub` followed by
+ `section` followed by open brace, to the end of line.
  
-+diff.<driver>.funcname::
- diff.<driver>.xfuncname::
- 	The regular expression that the diff driver should use to
- 	recognize the hunk header.  A built-in pattern may also be used.
- 	See linkgit:gitattributes[5] for details.
-++
-+When provided as `diff.<driver>.funcname` the regular expression is
-+interpreted as a basic regular expression, with
-+`diff.<driver>.xfuncname` it's interpreted as an extended regular
-+expression.
-++
+-There are a few built-in patterns to make this easier, and `tex`
+-is one of them, so you do not have to write the above in your
+-configuration file (you still need to enable this with the
+-attribute mechanism, via `.gitattributes`).  The following built in
+-patterns are available:
++There are built-in patterns shipped as part of git itself. A more
++advanced version of the `tex` pattern discussed above is one of them.
 +
-+The `*.funcname` and `*.xfuncname` variables behave as if though they
-+were one configuration variable for the purposes of what value
-+eventually gets used. Setting `*.funcname` will override an earlier
-+`*.xfuncname` and vice-versa.
++For built-in patterns you do not need the "diff.tex.xfuncname"
++discussed above in your configuration file, but if present it'll
++override the built-in pattern.
++
++You still need to enable built-in patterns with the the attribute
++mechanism, via `.gitattributes`).
++
++The following built in patterns are available:
  
- diff.<driver>.binary::
- 	Set this option to true to make the diff driver treat files as
-diff --git a/t/t4018/custom.sh b/t/t4018/custom.sh
-index 20abb38451..b68d96a8af 100755
---- a/t/t4018/custom.sh
-+++ b/t/t4018/custom.sh
-@@ -78,6 +78,46 @@ public class Beer
- }
- EOF_TEST
+ - `ada` suitable for source code in the Ada language.
  
-+test_expect_success 'custom; setup config precedence' '
-+	git config diff.custom.funcname "foo" &&
-+	git config diff.custom.xfuncname "bar"
-+'
-+
-+test_diff_funcname 'custom: config precedence' \
-+	8<<\EOF_HUNK 9<<\EOF_TEST
-+bar
-+EOF_HUNK
-+foo
-+bar
-+
-+ChangeMe
-+
-+baz
-+EOF_TEST
-+
-+test_expect_success 'custom: teardown' '
-+	test_unconfig diff.custom.funcname &&
-+	test_unconfig diff.custom.xfuncname
-+'
-+
-+test_expect_success 'custom; setup config precedence' '
-+	git config diff.custom.xfuncname "bar" &&
-+	git config diff.custom.funcname "foo"
-+
-+'
-+
-+test_diff_funcname 'custom: config precedence' \
-+	8<<\EOF_HUNK 9<<\EOF_TEST
-+foo
-+EOF_HUNK
-+foo
-+bar
-+
-+ChangeMe
-+
-+baz
-+EOF_TEST
-+
- test_expect_success 'custom: teardown' '
- 	test_unconfig diff.custom.funcname &&
- 	test_unconfig diff.custom.xfuncname
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
