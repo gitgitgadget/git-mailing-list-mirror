@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D538DC433E6
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A68FC433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB83D64E13
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB31260202
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231241AbhBOSnX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 13:43:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
+        id S230426AbhBOSnz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 13:43:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230423AbhBOSmY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 13:42:24 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A06C0613D6
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:44 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id n10so10258659wmq.0
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:44 -0800 (PST)
+        with ESMTP id S230433AbhBOSm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 13:42:26 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D57B0C061788
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:45 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id l17so7020703wmq.2
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F9IBskYvuRMaNYBuJ9lxjAVzqx3mm5wwkHChR5jOkS4=;
-        b=FFrSc9wmFr6pG98INpE3AwNR9ICm6hVSrU9nrrELsGsp56sdH4q3I30xmX4lpr62Cc
-         yh35fuNVRUWOnNyUapFr5iG3vIgI4sR+a0Dw0BQ38R5sZZV1dNnJNDjoeC8mKyckixc0
-         0QHN13+UsDxKn+shjPmNquavfJaKhElBpXfZG0MT3Ig58YnT5BteePjZW/nSI0AvuWld
-         JwNnJhih/UURq5EfizTsBOJIrXB2BW/3uJKB7BR2Vi9PhnLCeSS2Q1tYdxJ1PBFyQwXD
-         eOzaPRc9RvEZPVbqZxr/HNyi0PI2myb57EDUatwmbEU3Si8x8tXc/uVryT30XJuKQMlU
-         1koQ==
+        bh=OhmRgVhh+2U3JbAOPK2kv2BKguDIUQsYRGPfRdh/z28=;
+        b=IPi498Kb+PLKuWvxH7OJHGgI8Wu8cYw3OBIfFPsALmnNoMWpn5jZX8EW/n+lAEDsqv
+         myt2PF8f2AhmaJlKF/9LGkn7WGH70A/rCbztb+XvYbjz6V7exSThmj05C6q9BUGUAqLn
+         FA+rtnx0ZsY6szOfVz9EzEP4W1w2BG+2ArB364vQoWeNbHspFG/1r/VJyk+oi2qz4LHG
+         nI02kMg4ZORcxi2LXH1Ibvr/GCm966BivHiIeRbJ4rQjxLCr8LCmDVkRxGgqs8Sind/l
+         6Q6Ww5zM2e2Tl4UpN4PNRNDQtsaIeOrk1lHDoR5CghHPBqyOavjHJl2TU6ifqdBuwQ8J
+         FlEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F9IBskYvuRMaNYBuJ9lxjAVzqx3mm5wwkHChR5jOkS4=;
-        b=MLcsgiUJq+WFpbAgtw04bWCdC5wkF8eg3KayEs2xqkNcOdeT43AUSrO6AfWdaqommn
-         EFTQG2zaB/11jcyHJjLSrfmGPoST1T8dxHy10+3rAgstX/GyjrW5dV4m7qpyMZpwU9XT
-         MRrd+VWIsUGx0SoEGAlxjWmIDI9uBqZgrw1heuQKvvguZn3BTocuXP+QxjdIphEMdpwH
-         r6xuvJb18GoSYgLZhHt+052qkB6puG3KupyRPKzgMG24UTe/i8z2LM5/PZNkH9SD645w
-         1IkdkiEn0qy1Pm9BQ6WO+JqhdP6M3lr7JNPWyPdAWh/hYO/G9sKnQ3mWwLDBEBIetszw
-         b/3A==
-X-Gm-Message-State: AOAM530s/tNBHyY1X8n7QO70Gh/hO7jSXNXAcJ4ett5v3mY+fVvHxio1
-        LRQv09L2Vu9TMT6XqUDTjhyYI0av8wf2DA==
-X-Google-Smtp-Source: ABdhPJzEHD+F60P1MaHE6Ii7GNlDILzhi0uW1RCZH8zcmytiyUCZZH1jNpFkRlAHJWTHbgVMyTz5hw==
-X-Received: by 2002:a7b:c256:: with SMTP id b22mr194246wmj.108.1613414502578;
-        Mon, 15 Feb 2021 10:41:42 -0800 (PST)
+        bh=OhmRgVhh+2U3JbAOPK2kv2BKguDIUQsYRGPfRdh/z28=;
+        b=cLk5a0YYDDmHpf4ic+Ohp7p+np0hy8UxcO/zASCZkdWC+Oyv29SV9hv1rhUPHPkGAz
+         RcZUvfD9GE+80Urh3uhl8Iew0EGkfTX4fgxW4DHPDdmaGcQfTigdiCg2Qs2wRTilitQf
+         kSuU6WLaAfGZH8H8VdL6t9MEK+TRSt67XjuLiGcJZk4XttHdzvFEDNMxL6DyC5HbGXJh
+         3fwAq1ufM4QNdi8tIviQG6WJP1fRA76knIEeN6qOATeUehqGCckm3PE2bPYGbgZ5uT3z
+         y3kyRo24zD70KGfR+mZbN8o+fV10VfLtOVvPo95wOdNXloWQTKc0kb2ZO8gC25XrL+kz
+         BlkQ==
+X-Gm-Message-State: AOAM530HGA9ZTPp+VT/6DuHTjCrght7c8ACShZjtsCVStqGGppOsVVqB
+        ebcRVimqm/OEFtu1rDzkUVhR+VO0ORSzmw==
+X-Google-Smtp-Source: ABdhPJwW1ZWhNLAfSJVP64IVU8s6QmDk/mkNNc7pitsIWOzv6t68yDxS5BuZR+O1dthZuX0lSeXPiw==
+X-Received: by 2002:a1c:2d87:: with SMTP id t129mr163751wmt.121.1613414504343;
+        Mon, 15 Feb 2021 10:41:44 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.41
+        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 10:41:42 -0800 (PST)
+        Mon, 15 Feb 2021 10:41:43 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         peff@peff.net,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/5] commit-graph: remove redundant handling of -h
-Date:   Mon, 15 Feb 2021 19:41:15 +0100
-Message-Id: <20210215184118.11306-3-avarab@gmail.com>
+Subject: [PATCH 4/5] commit-graph: refactor dispatch loop for style
+Date:   Mon, 15 Feb 2021 19:41:17 +0100
+Message-Id: <20210215184118.11306-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87r1lhb6z7.fsf@evledraar.gmail.com>
 References: <87r1lhb6z7.fsf@evledraar.gmail.com>
@@ -78,51 +78,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we don't handle the -h option here like most parse_options() users
-we'll fall through and it'll do the right thing for us.
-
-I think this code added in 4ce58ee38d (commit-graph: create
-git-commit-graph builtin, 2018-04-02) was always redundant,
-parse_options() did this at the time, and the commit-graph code never
-used PARSE_OPT_NO_INTERNAL_HELP.
+I think it's more readable to have one if/elsif/else chain here than
+the code this replaces.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c  | 4 ----
- t/t5318-commit-graph.sh | 5 +++++
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ builtin/commit-graph.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index c3fa4fde3e..baead04a03 100644
+index a7718b2025..66fbdb7cb1 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -319,10 +319,6 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
+@@ -334,13 +334,11 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
  
--	if (argc == 2 && !strcmp(argv[1], "-h"))
--		usage_with_options(builtin_commit_graph_usage,
--				   builtin_commit_graph_options);
+ 	save_commit_buffer = 0;
+ 
+-	if (argc > 0) {
+-		if (!strcmp(argv[0], "verify"))
+-			return graph_verify(argc, argv);
+-		if (!strcmp(argv[0], "write"))
+-			return graph_write(argc, argv);
+-	}
 -
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_commit_graph_options,
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 2ed0c1544d..567e68bd93 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -5,6 +5,11 @@ test_description='commit graph'
- 
- GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
- 
-+test_expect_success 'usage' '
-+	test_expect_code 129 git commit-graph -h 2>err &&
-+	! grep error: err
-+'
-+
- test_expect_success 'setup full repo' '
- 	mkdir full &&
- 	cd "$TRASH_DIRECTORY/full" &&
+-	usage_with_options(builtin_commit_graph_usage,
+-			   builtin_commit_graph_options);
++	if (argc && !strcmp(argv[0], "verify"))
++		return graph_verify(argc, argv);
++	else if (argc && !strcmp(argv[0], "write"))
++		return graph_write(argc, argv);
++	else
++		usage_with_options(builtin_commit_graph_usage,
++				   builtin_commit_graph_options);
+ }
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
