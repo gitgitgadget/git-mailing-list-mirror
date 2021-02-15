@@ -2,129 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 825A4C43331
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC8F5C43217
 	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 16:05:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 621A164E05
+	by mail.kernel.org (Postfix) with ESMTP id C6B5B64E05
 	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 16:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232743AbhBOQDD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 11:03:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42288 "EHLO
+        id S232762AbhBOQDS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 11:03:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbhBOPr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 10:47:57 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7570FC0611C3
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:04 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id x4so9744275wmi.3
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:04 -0800 (PST)
+        with ESMTP id S231969AbhBOPty (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 10:49:54 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562F5C061797
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:49:06 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id t62so6734248qke.7
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nPNOqMz4S+pE9Qli5ol4JODkRcz2ECFn+OB6PQTdy2M=;
-        b=DVbu/i74bEgzKQkVmc4xxuvHw1pFel4+EgGh5c6R/li82XuS3ntJb/lMeKfWnwacD5
-         xSA/R2R0y4tKPddi03ASWJ7Ng8dsythIrwBK1At2SLbqZX9h47vwOw747tNLA8l0hvcY
-         mGz12mZ/o0fyn+2xhQhBA2o550OCbMEeG/8zRC+cVuzxx5zqyH9lonW5fHjn8a0wGM+S
-         QFQowZsWDgE36ylQITwW9fsZGuB+14SPHSzMfYHPYKF2OmwRJmuDbUwkvB+9EyUZrrJD
-         MI8fq9ttrId6wUl8uWYEKKDy/EUbEb2nTNCvdty9ri92RsWwoqTZ1y4hbws3/U87Q0wR
-         p5sg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=srLViGemGIwi4WlzQQU6QXHOPrqnd7pXMMEeffijWmM=;
+        b=WKfi6FrXywzKznqlQqZOeR0F6FjEfzMyaBRxj1BeYEB0xaNyFuKLgv/cd8QNqwniZQ
+         yacXULvk8BghiPXc2R8zQ8BU7nWajVeDoWatBJxAsjVkPIM1gfFQgrCiokKIxdS8KqBN
+         9OgqRrXMj66cvSMinaDSTJJykvjxKNNYihMOzBxaJmx/1q820moqJ/Nkfu+x18UA+t4H
+         aNKLLrYkwFj6l6ea6GrViuLTZs8l+0uyadEMoeoLb39trzImGs0aT+//1tgaTf43WV4V
+         dPpj3xRtGVnX8qi9GBXUfii8hL+LdHlrjN4l3ZJCheZPtS8GHEzc69nnwqlNkpO2jHNX
+         33JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nPNOqMz4S+pE9Qli5ol4JODkRcz2ECFn+OB6PQTdy2M=;
-        b=Te6LZh9ZWkE5C7afniAPU2bJHmXLPDVZ91ka0vZdJ5nKlXcvwmKD5yyduwZ6l4k2TH
-         KSFxUk1iQiuKCvHrXbAoE0h5OLyoMZa6Nieno1BEDiXzNE1A7OxTB7+RxBkgKfZH6+sm
-         3mzwfOr7RsAwYkLMPPORKTtDQtUUJb0efGQnrvHiw/WuA9xCMBE4NNbGLb0DQczyJEGf
-         aoqRE2fLWY/DFIctuCOPVQQREyEUEZHY0JvGRMprkCC29f8JLazN5ho+3N3hX/cdWAC6
-         jDh8kIJE9KZXjrdBegXGBZ/HdNgl5Is2DGCcTll4gIUZaN7VE+AB1Szos4RKdvPqim0x
-         fhGA==
-X-Gm-Message-State: AOAM532PzYYcdiFl+NQJEhpG3cQlG1oeXdigUgW1cOljtLV6XIMoztw+
-        TQKPzBUwxgNtvEnEdtKY0FcFO+1LEoObxA==
-X-Google-Smtp-Source: ABdhPJxoHpbwThqumCuqWIkqr7CEX01YfrwvxNMsg1ZDHV42NBeeTMXM+I3mG0t/tIjSZ8pfgYLt2w==
-X-Received: by 2002:a05:600c:2155:: with SMTP id v21mr13943665wml.23.1613403902962;
-        Mon, 15 Feb 2021 07:45:02 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f17sm23562757wrx.57.2021.02.15.07.45.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=srLViGemGIwi4WlzQQU6QXHOPrqnd7pXMMEeffijWmM=;
+        b=fymjkb+6iT4bljDqMM8GmIBn79UxQ9WoE4ys6EKnlCbusEcS4STBH7R2eixwCCZqkU
+         wmnD6e2GJOV53oZGLAyfK/564NekqRdUfF4QXHx8c+2isWU6VWE44pjeb8DKFWWn8iAL
+         h6hgFtyq+/jrCnzkR2ms82Zy9R4FXc83ipW0vIi3HQIVOYmjbvVdDqFi8iJngqy6VpG7
+         ESzQ64bUSgohjOKPoUeChKDUukkecuzw9k07LZx+QrpzwX7DS0GevVPDGvT+NBmCoYZT
+         YD0avFS3onES3pmdNsgAv5amfgUgo/sTOo6GB6UayzcgExx9jVna8/K1Slqs+2FLqqr5
+         8vrg==
+X-Gm-Message-State: AOAM532ouowt/qwTVPYooBjaZpFWv0P6GAuAYBeygpxsg8u1wAAptNj2
+        etS3lUZuaS/i0MowgnhLUhFZMA==
+X-Google-Smtp-Source: ABdhPJxsmWtnyqE0+dE1281yPf1fSY4ztOR7j6cyXhF6CHtn4w6RpPOZ9o97q5HSJlWPKTnm0T/Cgg==
+X-Received: by 2002:a37:488b:: with SMTP id v133mr14280963qka.313.1613404145571;
+        Mon, 15 Feb 2021 07:49:05 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:808e:e46a:5ad1:bdf0])
+        by smtp.gmail.com with ESMTPSA id x7sm11148410qtv.58.2021.02.15.07.49.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 07:45:02 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 20/27] userdiff tests: remove "funcname" from custom3 test
-Date:   Mon, 15 Feb 2021 16:44:20 +0100
-Message-Id: <20210215154427.32693-21-avarab@gmail.com>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
-In-Reply-To: <20210215005236.11313-1-avarab@gmail.com>
-References: <20210215005236.11313-1-avarab@gmail.com>
+        Mon, 15 Feb 2021 07:49:05 -0800 (PST)
+Date:   Mon, 15 Feb 2021 10:49:02 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        peff@peff.net
+Subject: Re: [PATCH 2/9] midx: allow marking a pack as preferred
+Message-ID: <YCqX7hxWWKzmvaUO@nand.local>
+References: <cover.1612998106.git.me@ttaylorr.com>
+ <4a358d57cf6e834cd1756e70bf713d4d104f321e.1612998106.git.me@ttaylorr.com>
+ <20210211193314.GG1015009@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210211193314.GG1015009@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can only have one "funcname" or "xfuncname", any later definition
-overrides the earlier one, so this configuration wasn't doing
-anything.
+On Thu, Feb 11, 2021 at 08:33:14PM +0100, SZEDER Gábor wrote:
+> > +--preferred-pack=<pack>::
+> > +	When using the `write` subcommand, optionally specify the
+> > +	tie-breaking pack used when multiple packs contain the same
+> > +	object. Incompatible with other subcommands, including `repack`,
+>
+> I think this shouldn't be an option of the 'git multi-pack-index'
+> command but an option of its 'write' subcommand.
 
-When this test was originally added in 3632cfc248 (Use compatibility
-regex library for OSX/Darwin, 2008-09-07) we had no such definition of
-two patters for this test. Back then this was setting the
-"diff.java.funcname" configuration variable.
+:-/. I wrote a lengthy response on Friday, but Gmail must have eaten it.
 
-The stage for that second pattern being set got set later. In
-45d9414fa5 (diff.*.xfuncname which uses "extended" regex's for hunk
-header selection, 2008-09-18) the pattern got converted from
-"funcname" to "xfuncname".
+The gist of my response was that the intermingling of sub-commands with
+options from other sub-commands goes deeper than just the documentation,
+since command-line arguments are only parsed once in
+builtin/multi-pack-index.c.
 
-Soon after in b19d288b4d (t4018-diff-funcname: demonstrate end of line
-funcname matching flaw, 2008-10-15) another test immediately preceding
-this one got added, using "diff.java.funcname" for its configuration.
+I explored whether or not it would be worth it to parse the common
+options first, and then have separate options for each of the
+sub-commands (as is done in the commit-graph builtin). But, this is
+tricky, since we accept common options on either side of the sub-command
+(i.e., we'd expect both 'git multi-pack-index --object-dir=... write' to
+behave the same as 'git multi-pack-index write --object-dir=...').
 
-Then f792a0b88e (t4018 (funcname patterns): make configuration easier
-to track, 2011-05-21) came along and codified this whole thing when
-converting the two tests from "git config" to "test_config".
+So you could let the first call to parse_options() parse all of the
+arguments, but then specialized arguments (e.g., 'repack --batch-size')
+would cause the parse-options API to barf because the first call to
+parse_options() doesn't recognize '--batch-size'.
 
-Since this was never the intent of the test let's just remove this,
-the rationale in f792a0b88e for having some test for the clobbering
-behavior makes sense, but I'll do that in another follow-up test, not
-as a hard to read side-effect of this one.
+I think the easiest way to do it would be to pass
+PARSE_OPT_STOP_AT_NON_OPTION, and then let the subsequent calls to
+parse_options() pass an array of option structs that also includes the
+common options so they can be parsed on either side of the sub-command.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t4018/custom.sh | 1 -
- 1 file changed, 1 deletion(-)
+Obviously this leads to a lot of rather unfortunate duplication. So,
+I'm content to leave it all as-is, and let the multi-pack-index
+builtin check the disallowed combinations itself (e.g., if you passed
+'--preferred-pack' but aren't in 'write' mode, then we should complain).
 
-diff --git a/t/t4018/custom.sh b/t/t4018/custom.sh
-index 30df13d8b2..886de9cddb 100755
---- a/t/t4018/custom.sh
-+++ b/t/t4018/custom.sh
-@@ -51,7 +51,6 @@ public class Beer
- EOF_TEST
- 
- test_expect_success 'custom: setup alternation in pattern' '
--	git config diff.custom.funcname "Beer$" &&
- 	git config diff.custom.xfuncname "^[ 	]*((public|static).*)$"
- '
- 
--- 
-2.30.0.284.gd98b1dd5eaa7
+I can certainly move this piece of documentation into the 'write'
+section, though, which should alleviate your immediate concern.
 
+Thanks,
+Taylor
