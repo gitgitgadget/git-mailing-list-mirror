@@ -2,281 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 690D4C4332B
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 451F1C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:19:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FBEF64DF0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:02:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 190C964DE0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:19:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbhBOVCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 16:02:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53268 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229896AbhBOVCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 16:02:33 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DAEC061788
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:01:51 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id x14so7652176qkm.2
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:01:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=/b52xhIUWI7qN7nCecignICrg1moxxqCSViEAWPuqHk=;
-        b=t2gh6gLFHPFgn8GUNASvZF7aybMgZktktVGMKNxRWUEneKOZRBN512fcFHkPC0IPaK
-         qSv43+H+E3/FJsD6/YLmrl4rblMzckLbeaRAwZr+/tbUYBvreEJlUGxokN8R00H0oRzx
-         ZcJ3kjYtC21gO6+hRGRi8EM7UOQKuPbPSGXbwvgbtTNzOqvrcX043h+/6V/FhBkNaW2N
-         sxLovdWF1K4SOFXUXbBO0IjXGZg4WYNrGZHPqucbevjX1FicSAjLGJCW5aKXDZIb0V6h
-         G0zRV/doQNHTCOkPVMBOu1syMrtgXoHhONCTprz+47xzq/PcUrZp1a8LeEyeqDf7KCC0
-         Tj2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=/b52xhIUWI7qN7nCecignICrg1moxxqCSViEAWPuqHk=;
-        b=kzms+9mMyxBDSiNegA9e+6NIyKdkZCXjdydJW9ifYRHpYdNG778paJysfisRcdSrKu
-         S/FV99ASGHTvU40e3Z6mzNIYwr4whg9iG5/BkRN4T8o/Oc7Pm+Ta1LbCGMxMdZeTDqFC
-         O3aVD0F1MB6A4q679/rsAfRxx2cd8Enkc08Ba1+97YEUBvFDsQmlPqfy21fMd7cMAJWc
-         xlBA6ol/DAk9SAD8Oe1wYHzw5GeixB5basKgPRTYaZNKNudy0WeAnvCDVyTrhu7zyarS
-         Sxdo8W0CwDjoM/u9O3SMDHJDUA3wg2fL9BHtKvFfrN233ChS3uvHHwe/PdCA/fRV7J0U
-         kDaA==
-X-Gm-Message-State: AOAM531S97B0eup3WU+TFmHdl8ecbk3oCLXkldHgEOiILhDTqfh1QAtv
-        n2V4X0OUPVMS3yxlBORY4qhkUCAOG61YrbOf
-X-Google-Smtp-Source: ABdhPJxqQxwQ3rdXIHyl6lD/PjkKzaijOk5zB2YLix7rMDUImqdLFTQoxeBapq2b1nRA+VIqAuKZZQ==
-X-Received: by 2002:a37:b346:: with SMTP id c67mr16682784qkf.212.1613422910901;
-        Mon, 15 Feb 2021 13:01:50 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:808e:e46a:5ad1:bdf0])
-        by smtp.gmail.com with ESMTPSA id t71sm12754191qka.86.2021.02.15.13.01.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 13:01:50 -0800 (PST)
-Date:   Mon, 15 Feb 2021 16:01:49 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, peff@peff.net, dstolee@microsoft.com,
-        szeder.dev@gmail.com, gitster@pobox.com
-Subject: [PATCH v2 4/4] builtin/multi-pack-index.c: split sub-commands
-Message-ID: <16f33e41388ed431f70e09ef68717bd30fbee67f.1613422804.git.me@ttaylorr.com>
-References: <87r1lhb6z7.fsf@evledraar.gmail.com>
- <cover.1613422804.git.me@ttaylorr.com>
+        id S229702AbhBOVTy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 16:19:54 -0500
+Received: from mout.web.de ([212.227.15.3]:60401 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229469AbhBOVTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 16:19:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1613423868;
+        bh=MmIYPNgEDz5wd1CaiwrgXPeuB8p8oXMj/yZkZ870/Q8=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Xl5BnzLqWnNAEyZSDVifmtzHeZxpQejoFhe4ROSUMy4Vp2/vnK8vJhTzF6VkFlLwL
+         Rum8cpyTZPASpnX9wz1l24W/3bYlt65R//9RypSb7XkNDabvYlZ+x7aTNLxIugc4o7
+         rzQPUrRmFyk+FKlTkBMR3OblVWivO3pfUNsp7GC0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0Lc8aj-1ldMII44e5-00jdKc; Mon, 15 Feb 2021 22:17:48 +0100
+Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Jeff King <peff@peff.net>
+References: <20210215154427.32693-1-avarab@gmail.com>
+ <20210215155020.2804-2-avarab@gmail.com>
+ <d02c99b8-ae26-9804-480c-eae880f4a6cb@web.de>
+ <87im6tb0ca.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
+Message-ID: <6ccba73c-ea51-7842-8cc3-d96fd71c0efc@web.de>
+Date:   Mon, 15 Feb 2021 22:17:47 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
+In-Reply-To: <87im6tb0ca.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1613422804.git.me@ttaylorr.com>
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:PQDcBUaxfkGPWQqywUcrCirBmOj0GJm7S9F3gHQczZbGbDmrpY7
+ LfHC3zEUM91XHG4Sx6GD4N9A1/FLrqSGok8Hw4ozD2iF/yeuRsgIMuTu6J7TzRzjfnnGrGL
+ dRYYUzne27uHLdBwpHL5MdYYJTqIZAJUVvUlkQcOiNO+bowNhVDFd4i1BqiWb0EB1GXHLfI
+ HP9HpYdJoxSUsfWZ3Ue7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:W2svZG6ABMc=:HhavitN1nLk/V5n5fRFC9x
+ Gu7eA5b9FaowcLxHmmYUvPWQNQ4VT/dSzArm8W5DUwRGRy7pFGWd43uj6LTUKH+s29tdFu86w
+ sGv4qfPS389FXYFGLdCucoO8A0DHK46XWn69FrhrHk4Uktx12Q7asOmvGUBRTi/EQUznOawR3
+ hsJ3Jo7gTfCP5H/9sonQafNDLEpKraqnSup6vfvBBe1nAHoMiI9b3zHz/RtL7j9to1IUQ0qH3
+ nJ5Ei8/4MpOmkfRgiv7srI/bYnGCHdC7L50wWHykKsHLfCGFGkOAITURJHuljV94j0dp98QmA
+ pv66bCmTI/kUd+xvEETKn62ZYEl2YbMsIH7biVs30rbPHQvmrBg43dovbyc/Tul3Y1KIAIpmC
+ rh3MSlLPWq5wdYRaQXJjBqBVuznZro53j/J8cBvpxmhJwgll1srkzjeOlyeGXFyIbEg7TD9rT
+ ZYeqmI5XWhYIGQP2fLgLf/AGaMigzYZxuMcEQbUM0lkUBsSYqcAGOqPSc7nROVrNohn6c8IYj
+ f8zVQlak0dqLqLF/89BfbBe3p1mnSfkuprtCFdyW7A0bgq9oIWnX8ZE9raL+CIF2CeFogO38o
+ LS4mRitc/Fp4r7Yl4bcMzgSELOSnunXURpDqzzP+6/1PMw3BBvc7wMR38TjFYcEn6s1WCk2Ru
+ aKe/v+2wYM0c3lurpLohZ/I1jDJ4VBvKMMeSGI2EvjPgglHcy4PxVtgvwp+oGTJiyAybEx/14
+ JOQnPd+vG41Jaq+VPLWxdJ1WryvidVlOF3A/jUFNiKT0LJvVbNAiZFZ/JIu5iOdqDiCMLZVNY
+ rYY0siZJ1X/IEXhlLbBHSUdFJ1PVeqdLnnmNRe0/97CJ74AuNBrzLz0nB2WUL2x6WStm+cmFG
+ r7KKJ/rW+ck0Yl3KZM9w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Handle sub-commands of the 'git multi-pack-index' builtin (e.g.,
-"write", "repack", etc.) separately from one another. This allows
-sub-commands with unique options, without forcing cmd_multi_pack_index()
-to reject invalid combinations itself.
+Am 15.02.21 um 20:24 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Mon, Feb 15 2021, Ren=C3=A9 Scharfe. wrote:
+>
+>> Your reasoning applies to patches generated without -W as well.  If the
+>> precontext contains a function line then the @@ line should not contain
+>> a function comment.  However, e.g. with this:
+>>
+>> -- snip --
+>> cat >a <<EOF
+>> func a
+>>
+>> func b
+>> 1
+>> 2
+>> 3
+>> EOF
+>> sed 's/3/three/' <a >b
+>> diff -up a b
+>> -- snap --
+>>
+>> ... I get this:
+>>
+>> --- a	2021-02-15 18:30:21.000000000 +0100
+>> +++ b	2021-02-15 18:30:21.000000000 +0100
+>> @@ -3,4 +3,4 @@ func a
+>>  func b
+>>  1
+>>  2
+>> -3
+>> +three
+>>
+>> So diff(1) shows the previous function line.  git diff does the same.
+>>
+>> The behaviour of diff(1) and git diff does make sense to me: It's easy
+>> to implement and the only downside is that it produces extra output in
+>> some cases.
+>>
+>> I can understand that users would rather have a tidy diff without
+>> distractions, though.  So I like the output change you propose.
+>
+> Does GNU diff have something like git's -W, both "diff -U 0 -F func a b"
+> and "diff -U 0 -p a b" don't extend the context window as we do.
 
-This comes at the cost of some duplication and boilerplate. Luckily, the
-duplication is reduced to a minimum, since common options are shared
-among sub-commands due to a suggestion by Ævar. (Sub-commands do have to
-retain the common options, too, since this builtin accepts common
-options on either side of the sub-command).
+Exactly my point: GNU diff doesn't have something like -W, but still can
+show an unchanged function at the @@ line, because it searches upwards
+starting just above the first shown line, and the name of the actually
+changed function might be in one of the shown lines.
 
-Roughly speaking, cmd_multi_pack_index() parses options (including
-common ones), and stops at the first non-option, which is the
-sub-command. It then dispatches to the appropriate sub-command, which
-parses the remaining options (also including common options).
+> I don't think the patch I'm submitting here would make sense for GNU
+> diff, since there it just shows the context without being guaranteed to
+> show the full set of lines leading up to it under -W, but with Git diff
+> we do that, so I think it makes sense to omit the context.
 
-Unknown options are kept by the sub-commands in order to detect their
-presence (and complain that too many arguments were given).
+Given the goal to show the name of the changed function it *would* make
+sense to start searching at the first changed line instead.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/multi-pack-index.c | 131 ++++++++++++++++++++++++++++++-------
- 1 file changed, 106 insertions(+), 25 deletions(-)
+>> However, I'm not sure it would be a good idea to clear @@ lines of hunk=
+s
+>> generated without -W that have function lines in their precontext, even
+>> though it would be a logical thing to do.
+>
+> Yes, I don't think that's a good idea either. I think it only makes
+> sense under -W where the user explicitly asks "show me the function this
+> change was in", and we're (before this patch) showing different context
+> on the basis of emergent behavior.
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index eea498e026..caf0248a98 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -5,17 +5,33 @@
- #include "midx.h"
- #include "trace2.h"
- 
-+static char const * const builtin_multi_pack_index_write_usage[] = {
- #define BUILTIN_MIDX_WRITE_USAGE \
- 	N_("git multi-pack-index [<options>] write")
-+	BUILTIN_MIDX_WRITE_USAGE,
-+	NULL
-+};
- 
-+static char const * const builtin_multi_pack_index_verify_usage[] = {
- #define BUILTIN_MIDX_VERIFY_USAGE \
- 	N_("git multi-pack-index [<options>] verify")
-+	BUILTIN_MIDX_VERIFY_USAGE,
-+	NULL
-+};
- 
-+static char const * const builtin_multi_pack_index_expire_usage[] = {
- #define BUILTIN_MIDX_EXPIRE_USAGE \
- 	N_("git multi-pack-index [<options>] expire")
-+	BUILTIN_MIDX_EXPIRE_USAGE,
-+	NULL
-+};
- 
-+static char const * const builtin_multi_pack_index_repack_usage[] = {
- #define BUILTIN_MIDX_REPACK_USAGE \
- 	N_("git multi-pack-index [<options>] repack [--batch-size=<size>]")
-+	BUILTIN_MIDX_REPACK_USAGE,
-+	NULL
-+};
- 
- static char const * const builtin_multi_pack_index_usage[] = {
- 	BUILTIN_MIDX_WRITE_USAGE,
-@@ -31,25 +47,99 @@ static struct opts_multi_pack_index {
- 	unsigned flags;
- } opts;
- 
--int cmd_multi_pack_index(int argc, const char **argv,
--			 const char *prefix)
-+static struct option common_opts[] = {
-+	OPT_FILENAME(0, "object-dir", &opts.object_dir,
-+	  N_("object directory containing set of packfile and pack-index pairs")),
-+	OPT_BIT(0, "progress", &opts.flags, N_("force progress reporting"), MIDX_PROGRESS),
-+	OPT_END(),
-+};
-+
-+static struct option *add_common_options(struct option *prev)
- {
--	static struct option builtin_multi_pack_index_options[] = {
--		OPT_FILENAME(0, "object-dir", &opts.object_dir,
--		  N_("object directory containing set of packfile and pack-index pairs")),
--		OPT_BIT(0, "progress", &opts.flags, N_("force progress reporting"), MIDX_PROGRESS),
-+	struct option *with_common = parse_options_concat(common_opts, prev);
-+	free(prev);
-+	return with_common;
-+}
-+
-+static int cmd_multi_pack_index_write(int argc, const char **argv)
-+{
-+	struct option *options = common_opts;
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     options, builtin_multi_pack_index_write_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_multi_pack_index_write_usage,
-+				   options);
-+
-+	return write_midx_file(opts.object_dir, opts.flags);
-+}
-+
-+static int cmd_multi_pack_index_verify(int argc, const char **argv)
-+{
-+	struct option *options = common_opts;
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     options, builtin_multi_pack_index_verify_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_multi_pack_index_verify_usage,
-+				   options);
-+
-+	return verify_midx_file(the_repository, opts.object_dir, opts.flags);
-+}
-+
-+static int cmd_multi_pack_index_expire(int argc, const char **argv)
-+{
-+	struct option *options = common_opts;
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     options, builtin_multi_pack_index_expire_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_multi_pack_index_expire_usage,
-+				   options);
-+
-+	return expire_midx_packs(the_repository, opts.object_dir, opts.flags);
-+}
-+
-+static int cmd_multi_pack_index_repack(int argc, const char **argv)
-+{
-+	struct option *options;
-+	static struct option builtin_multi_pack_index_repack_options[] = {
- 		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
- 		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
- 		OPT_END(),
- 	};
- 
-+	options = parse_options_dup(builtin_multi_pack_index_repack_options);
-+	options = add_common_options(options);
-+
-+	argc = parse_options(argc, argv, NULL,
-+			     options,
-+			     builtin_multi_pack_index_repack_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	if (argc)
-+		usage_with_options(builtin_multi_pack_index_repack_usage,
-+				   options);
-+
-+	return midx_repack(the_repository, opts.object_dir,
-+			   (size_t)opts.batch_size, opts.flags);
-+}
-+
-+int cmd_multi_pack_index(int argc, const char **argv,
-+			 const char *prefix)
-+{
-+	struct option *builtin_multi_pack_index_options = common_opts;
-+
- 	git_config(git_default_config, NULL);
- 
- 	if (isatty(2))
- 		opts.flags |= MIDX_PROGRESS;
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_multi_pack_index_options,
--			     builtin_multi_pack_index_usage, 0);
-+			     builtin_multi_pack_index_usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
-@@ -58,25 +148,16 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 		usage_with_options(builtin_multi_pack_index_usage,
- 				   builtin_multi_pack_index_options);
- 
--	if (argc > 1) {
--		die(_("too many arguments"));
--		return 1;
--	}
--
- 	trace2_cmd_mode(argv[0]);
- 
- 	if (!strcmp(argv[0], "repack"))
--		return midx_repack(the_repository, opts.object_dir,
--			(size_t)opts.batch_size, opts.flags);
--	if (opts.batch_size)
--		die(_("--batch-size option is only for 'repack' subcommand"));
--
--	if (!strcmp(argv[0], "write"))
--		return write_midx_file(opts.object_dir, opts.flags);
--	if (!strcmp(argv[0], "verify"))
--		return verify_midx_file(the_repository, opts.object_dir, opts.flags);
--	if (!strcmp(argv[0], "expire"))
--		return expire_midx_packs(the_repository, opts.object_dir, opts.flags);
--
--	die(_("unrecognized subcommand: %s"), argv[0]);
-+		return cmd_multi_pack_index_repack(argc, argv);
-+	else if (!strcmp(argv[0], "write"))
-+		return cmd_multi_pack_index_write(argc, argv);
-+	else if (!strcmp(argv[0], "verify"))
-+		return cmd_multi_pack_index_verify(argc, argv);
-+	else if (!strcmp(argv[0], "expire"))
-+		return cmd_multi_pack_index_expire(argc, argv);
-+	else
-+		die(_("unrecognized subcommand: %s"), argv[0]);
- }
--- 
-2.30.0.667.g81c0cbc6fd
+Right, -W never needs diff(1)'s -p, while the case is less clear for
+diffs generated without -W.
+
+Ren=C3=A9
