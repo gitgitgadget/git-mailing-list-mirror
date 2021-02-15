@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0774EC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 825A4C43331
 	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 16:05:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D43F664DE0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 16:05:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 621A164E05
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 16:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232714AbhBOQCu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 11:02:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42272 "EHLO
+        id S232743AbhBOQDD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 11:03:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231833AbhBOPry (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 10:47:54 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB34DC061226
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:00 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l12so9497395wry.2
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:00 -0800 (PST)
+        with ESMTP id S230501AbhBOPr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 10:47:57 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7570FC0611C3
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:04 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id x4so9744275wmi.3
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hSgVcZNYNkSHm+EwazDbLczuIlHYxp+++JQ4nahIM6k=;
-        b=Ee+ia+NsH9QaGSxfGnBRaGGyZj+aqhEC7q4uUd7ARmL3Illm5irAgc2xsh8r6mjBa0
-         e458+Lemx8GsSoOinXQZ5+YqFBnL38C6JfWbU47EchjgUopusA0uSdlAqXB4s7PMTe5b
-         AoNelHEJyNeAwR/qEPXgOTT1IAXIiuzLdpiarXHFti+BzqpLEkdmSU17ERIj9E+S12wC
-         9juYNXce2cLvIZ08Jyz2k3ZzYBdwjkjksD6mk+iDvRw0BpyBkqKCbciJnT4TWpc0JwB3
-         xn0L5aI6MAGFf54jj6QLS9QEy7xMxBceESLbKZfjsO+Eao6Uhw2dC16puj0FEmBH4+hq
-         ZJYQ==
+        bh=nPNOqMz4S+pE9Qli5ol4JODkRcz2ECFn+OB6PQTdy2M=;
+        b=DVbu/i74bEgzKQkVmc4xxuvHw1pFel4+EgGh5c6R/li82XuS3ntJb/lMeKfWnwacD5
+         xSA/R2R0y4tKPddi03ASWJ7Ng8dsythIrwBK1At2SLbqZX9h47vwOw747tNLA8l0hvcY
+         mGz12mZ/o0fyn+2xhQhBA2o550OCbMEeG/8zRC+cVuzxx5zqyH9lonW5fHjn8a0wGM+S
+         QFQowZsWDgE36ylQITwW9fsZGuB+14SPHSzMfYHPYKF2OmwRJmuDbUwkvB+9EyUZrrJD
+         MI8fq9ttrId6wUl8uWYEKKDy/EUbEb2nTNCvdty9ri92RsWwoqTZ1y4hbws3/U87Q0wR
+         p5sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hSgVcZNYNkSHm+EwazDbLczuIlHYxp+++JQ4nahIM6k=;
-        b=By5yPaXfNqnEdQ36Utbvq19rfSUvGqCqsL9yvRXANdVR5epHMXZ2o27zu8tL1tuoIv
-         9qIoLlsmQOl7VkC5ZtQHZDsh2LBXIdbN9L8tOQd3EsuXYjOwDlywvIfE1OQ3XPm0asC+
-         bm9vzypMHNbVSiYhUTBOwPNcSaH6V1MYs+RO+slsezfakqzIPZBn1pAJPl5YM98s9Nth
-         H0/6wUhn4tCDt4IbCprKeyHqrkixspFOTEeSdey/AOoQy2DSgnU2lL4k7Nm98TM4Lg1w
-         sfPFUKlu8iCT72ywMjz6ODuEQ1iJtPbCKGZfowcrYsme1I9WcHTolQpjQz0692rYNYAh
-         GHOg==
-X-Gm-Message-State: AOAM533Tu15uZWk/a/J7aqYNWkdZjZXF8Mi+lEY0SWq+z9rspM61NO2F
-        RU9vWdNBhT2FvIzlj3GXIvTukcPkq7dLOQ==
-X-Google-Smtp-Source: ABdhPJwtl9m24ZKcENjQXMOGkQPGGi2tuDAeeZmQRArS+zcb672Cccb/ggODWVairtYi4e6nEVXndQ==
-X-Received: by 2002:adf:fc86:: with SMTP id g6mr19201317wrr.20.1613403899453;
-        Mon, 15 Feb 2021 07:44:59 -0800 (PST)
+        bh=nPNOqMz4S+pE9Qli5ol4JODkRcz2ECFn+OB6PQTdy2M=;
+        b=Te6LZh9ZWkE5C7afniAPU2bJHmXLPDVZ91ka0vZdJ5nKlXcvwmKD5yyduwZ6l4k2TH
+         KSFxUk1iQiuKCvHrXbAoE0h5OLyoMZa6Nieno1BEDiXzNE1A7OxTB7+RxBkgKfZH6+sm
+         3mzwfOr7RsAwYkLMPPORKTtDQtUUJb0efGQnrvHiw/WuA9xCMBE4NNbGLb0DQczyJEGf
+         aoqRE2fLWY/DFIctuCOPVQQREyEUEZHY0JvGRMprkCC29f8JLazN5ho+3N3hX/cdWAC6
+         jDh8kIJE9KZXjrdBegXGBZ/HdNgl5Is2DGCcTll4gIUZaN7VE+AB1Szos4RKdvPqim0x
+         fhGA==
+X-Gm-Message-State: AOAM532PzYYcdiFl+NQJEhpG3cQlG1oeXdigUgW1cOljtLV6XIMoztw+
+        TQKPzBUwxgNtvEnEdtKY0FcFO+1LEoObxA==
+X-Google-Smtp-Source: ABdhPJxoHpbwThqumCuqWIkqr7CEX01YfrwvxNMsg1ZDHV42NBeeTMXM+I3mG0t/tIjSZ8pfgYLt2w==
+X-Received: by 2002:a05:600c:2155:: with SMTP id v21mr13943665wml.23.1613403902962;
+        Mon, 15 Feb 2021 07:45:02 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f17sm23562757wrx.57.2021.02.15.07.44.58
+        by smtp.gmail.com with ESMTPSA id f17sm23562757wrx.57.2021.02.15.07.45.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 07:44:59 -0800 (PST)
+        Mon, 15 Feb 2021 07:45:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 16/27] userdiff tests: do not do compile tests on "custom" pattern
-Date:   Mon, 15 Feb 2021 16:44:16 +0100
-Message-Id: <20210215154427.32693-17-avarab@gmail.com>
+Subject: [PATCH v2 20/27] userdiff tests: remove "funcname" from custom3 test
+Date:   Mon, 15 Feb 2021 16:44:20 +0100
+Message-Id: <20210215154427.32693-21-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215005236.11313-1-avarab@gmail.com>
 References: <20210215005236.11313-1-avarab@gmail.com>
@@ -81,52 +81,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since f1b75fbaf1 (t4018: convert custom pattern test to the new
-infrastructure, 2014-03-21) we have been doing the basic sanity check
-of whether patterns in userdiff.c compile on the "custom" patterns.
+We can only have one "funcname" or "xfuncname", any later definition
+overrides the earlier one, so this configuration wasn't doing
+anything.
 
-That we were doing this was an emergent effect of that change and an
-earlier refactoring in bfa7d01413 (t4018: an infrastructure to test
-hunk headers, 2014-03-21).
+When this test was originally added in 3632cfc248 (Use compatibility
+regex library for OSX/Darwin, 2008-09-07) we had no such definition of
+two patters for this test. Back then this was setting the
+"diff.java.funcname" configuration variable.
 
-This was never intended by the test added in
-e3bf5e43fd (t4018-diff-funcname: test syntax of builtin xfuncname
-patterns, 2008-09-22), nor is there any point in doing this. We'll
-error out in the custom.sh test itself if those patterns don't
-compile.
+The stage for that second pattern being set got set later. In
+45d9414fa5 (diff.*.xfuncname which uses "extended" regex's for hunk
+header selection, 2008-09-18) the pattern got converted from
+"funcname" to "xfuncname".
+
+Soon after in b19d288b4d (t4018-diff-funcname: demonstrate end of line
+funcname matching flaw, 2008-10-15) another test immediately preceding
+this one got added, using "diff.java.funcname" for its configuration.
+
+Then f792a0b88e (t4018 (funcname patterns): make configuration easier
+to track, 2011-05-21) came along and codified this whole thing when
+converting the two tests from "git config" to "test_config".
+
+Since this was never the intent of the test let's just remove this,
+the rationale in f792a0b88e for having some test for the clobbering
+behavior makes sense, but I'll do that in another follow-up test, not
+as a hard to read side-effect of this one.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018-diff-funcname.sh | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ t/t4018/custom.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index d80a2ad4a4..3ba9d657b1 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -16,12 +16,7 @@ test_expect_success 'setup' '
- 	echo B >B.java
+diff --git a/t/t4018/custom.sh b/t/t4018/custom.sh
+index 30df13d8b2..886de9cddb 100755
+--- a/t/t4018/custom.sh
++++ b/t/t4018/custom.sh
+@@ -51,7 +51,6 @@ public class Beer
+ EOF_TEST
+ 
+ test_expect_success 'custom: setup alternation in pattern' '
+-	git config diff.custom.funcname "Beer$" &&
+ 	git config diff.custom.xfuncname "^[ 	]*((public|static).*)$"
  '
  
--diffpatterns="
--	$builtin_drivers
--	custom
--"
--
--for p in $diffpatterns
-+for p in $builtin_drivers
- do
- 	test_expect_success "builtin $p pattern compiles" '
- 		echo "*.java diff=$p" >.gitattributes &&
-@@ -74,7 +69,7 @@ test_diff_funcname () {
- 	'
- }
- 
--for what in $diffpatterns
-+for what in $builtin_drivers custom
- do
- 	test="$TEST_DIRECTORY/t4018/$what.sh"
- 	if ! test -e "$test"
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
