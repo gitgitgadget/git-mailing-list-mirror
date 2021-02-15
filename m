@@ -2,143 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 451F1C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FDEAC433DB
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:40:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 190C964DE0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:19:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E40264E02
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbhBOVTy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 16:19:54 -0500
-Received: from mout.web.de ([212.227.15.3]:60401 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229469AbhBOVTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 16:19:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1613423868;
-        bh=MmIYPNgEDz5wd1CaiwrgXPeuB8p8oXMj/yZkZ870/Q8=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Xl5BnzLqWnNAEyZSDVifmtzHeZxpQejoFhe4ROSUMy4Vp2/vnK8vJhTzF6VkFlLwL
-         Rum8cpyTZPASpnX9wz1l24W/3bYlt65R//9RypSb7XkNDabvYlZ+x7aTNLxIugc4o7
-         rzQPUrRmFyk+FKlTkBMR3OblVWivO3pfUNsp7GC0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0Lc8aj-1ldMII44e5-00jdKc; Mon, 15 Feb 2021 22:17:48 +0100
-Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Jeff King <peff@peff.net>
-References: <20210215154427.32693-1-avarab@gmail.com>
- <20210215155020.2804-2-avarab@gmail.com>
- <d02c99b8-ae26-9804-480c-eae880f4a6cb@web.de>
- <87im6tb0ca.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Message-ID: <6ccba73c-ea51-7842-8cc3-d96fd71c0efc@web.de>
-Date:   Mon, 15 Feb 2021 22:17:47 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
+        id S229652AbhBOVkA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 16:40:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33180 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229520AbhBOVkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 16:40:00 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD8DC061574
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:39:19 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id n13so6959772ejx.12
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=8V3H/Pmnpw0vjjXoM+GW3/r8qCCCpnrzeTAc1/eaBQs=;
+        b=QUdV9iVkIdrLcpM3g8kxe6o10eUh2xDcB0bCpoUboREAfuoIaCIzT22+vV9D+kN4Nx
+         Buvne7kgNemAg17O2tByog0p6g3xUId8mP/2ulGlbRhM1qUV0ckhwlM8Vt+n8IFKptSR
+         ECfW+4meAbx3bFkCZRXfmbH97UYUl09mnyINCiKryre0PxJkur7uUj6MxD6WRhvfvDiY
+         Ywafe7BnJqJnSDu/sLqAI5BuAtEB6t9QNoL/t0+HBwv3KsZYk35zWF0/mfB7F9+rUohb
+         NF4D+HTcrRfk9Kl8u/vqE7M3Dnck4OtqVhvIeoS4s3LKeE5o2v7WJ8U3OoORh6eklbuf
+         Xzbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=8V3H/Pmnpw0vjjXoM+GW3/r8qCCCpnrzeTAc1/eaBQs=;
+        b=sEju6v70DnAsUsZ6q4YSpsCEU2a45l2FtWmo712NtBi5r9W9LI2ieFDytyD0tHR0co
+         CyK+NTk9tAHKgs0x2V4ZjFHJM5oeDd9cgZnHeBrGmCZJ50yk7oQ9/CMwX1zvrsMP+8q5
+         6Xx0eEwb+BMbxEL89uuj1+QrafuMTy+NBt8jmiMVCTFexfO94V5SkvIwhRrhKx7UMqXx
+         s8h7iipGQ/BN5qusfD3Qc4QmwsQ6ICwNlJ25JaJXfSQiD4HWvVQ/UKNpvClYOKzeg03/
+         4Sehmkesc2iC+3k7qbLxXuEHeBHnh7FkMbw/C1T6HoG878SSNmZ3tygnOa9PB7TwmeM7
+         K1XA==
+X-Gm-Message-State: AOAM530O0Tsfv63TSZJHIJKgk7WJIuNJRpFgEuXdCpxIfA2W0SdYwLgZ
+        tG2H+QggZtLDBAc5x07D7tk=
+X-Google-Smtp-Source: ABdhPJxC6aX/jkZ9+nU3oiEHozLHKjCRIKt5sZm3jaykdQMJ0GJtUhqyuLMCLPe7wuJLKIskwm6igQ==
+X-Received: by 2002:a17:906:17c3:: with SMTP id u3mr17255235eje.304.1613425158271;
+        Mon, 15 Feb 2021 13:39:18 -0800 (PST)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id g3sm11742224edk.75.2021.02.15.13.39.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Feb 2021 13:39:17 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        szeder.dev@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v2 2/4] builtin/multi-pack-index.c: don't handle
+ 'progress' separately
+References: <87r1lhb6z7.fsf@evledraar.gmail.com>
+ <cover.1613422804.git.me@ttaylorr.com>
+ <abcc7fb7312b349562fe6d13e2250496e107c9ed.1613422804.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <abcc7fb7312b349562fe6d13e2250496e107c9ed.1613422804.git.me@ttaylorr.com>
+Date:   Mon, 15 Feb 2021 22:39:16 +0100
+Message-ID: <87a6s5au4b.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87im6tb0ca.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PQDcBUaxfkGPWQqywUcrCirBmOj0GJm7S9F3gHQczZbGbDmrpY7
- LfHC3zEUM91XHG4Sx6GD4N9A1/FLrqSGok8Hw4ozD2iF/yeuRsgIMuTu6J7TzRzjfnnGrGL
- dRYYUzne27uHLdBwpHL5MdYYJTqIZAJUVvUlkQcOiNO+bowNhVDFd4i1BqiWb0EB1GXHLfI
- HP9HpYdJoxSUsfWZ3Ue7g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:W2svZG6ABMc=:HhavitN1nLk/V5n5fRFC9x
- Gu7eA5b9FaowcLxHmmYUvPWQNQ4VT/dSzArm8W5DUwRGRy7pFGWd43uj6LTUKH+s29tdFu86w
- sGv4qfPS389FXYFGLdCucoO8A0DHK46XWn69FrhrHk4Uktx12Q7asOmvGUBRTi/EQUznOawR3
- hsJ3Jo7gTfCP5H/9sonQafNDLEpKraqnSup6vfvBBe1nAHoMiI9b3zHz/RtL7j9to1IUQ0qH3
- nJ5Ei8/4MpOmkfRgiv7srI/bYnGCHdC7L50wWHykKsHLfCGFGkOAITURJHuljV94j0dp98QmA
- pv66bCmTI/kUd+xvEETKn62ZYEl2YbMsIH7biVs30rbPHQvmrBg43dovbyc/Tul3Y1KIAIpmC
- rh3MSlLPWq5wdYRaQXJjBqBVuznZro53j/J8cBvpxmhJwgll1srkzjeOlyeGXFyIbEg7TD9rT
- ZYeqmI5XWhYIGQP2fLgLf/AGaMigzYZxuMcEQbUM0lkUBsSYqcAGOqPSc7nROVrNohn6c8IYj
- f8zVQlak0dqLqLF/89BfbBe3p1mnSfkuprtCFdyW7A0bgq9oIWnX8ZE9raL+CIF2CeFogO38o
- LS4mRitc/Fp4r7Yl4bcMzgSELOSnunXURpDqzzP+6/1PMw3BBvc7wMR38TjFYcEn6s1WCk2Ru
- aKe/v+2wYM0c3lurpLohZ/I1jDJ4VBvKMMeSGI2EvjPgglHcy4PxVtgvwp+oGTJiyAybEx/14
- JOQnPd+vG41Jaq+VPLWxdJ1WryvidVlOF3A/jUFNiKT0LJvVbNAiZFZ/JIu5iOdqDiCMLZVNY
- rYY0siZJ1X/IEXhlLbBHSUdFJ1PVeqdLnnmNRe0/97CJ74AuNBrzLz0nB2WUL2x6WStm+cmFG
- r7KKJ/rW+ck0Yl3KZM9w==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.02.21 um 20:24 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Mon, Feb 15 2021, Ren=C3=A9 Scharfe. wrote:
->
->> Your reasoning applies to patches generated without -W as well.  If the
->> precontext contains a function line then the @@ line should not contain
->> a function comment.  However, e.g. with this:
->>
->> -- snip --
->> cat >a <<EOF
->> func a
->>
->> func b
->> 1
->> 2
->> 3
->> EOF
->> sed 's/3/three/' <a >b
->> diff -up a b
->> -- snap --
->>
->> ... I get this:
->>
->> --- a	2021-02-15 18:30:21.000000000 +0100
->> +++ b	2021-02-15 18:30:21.000000000 +0100
->> @@ -3,4 +3,4 @@ func a
->>  func b
->>  1
->>  2
->> -3
->> +three
->>
->> So diff(1) shows the previous function line.  git diff does the same.
->>
->> The behaviour of diff(1) and git diff does make sense to me: It's easy
->> to implement and the only downside is that it produces extra output in
->> some cases.
->>
->> I can understand that users would rather have a tidy diff without
->> distractions, though.  So I like the output change you propose.
->
-> Does GNU diff have something like git's -W, both "diff -U 0 -F func a b"
-> and "diff -U 0 -p a b" don't extend the context window as we do.
 
-Exactly my point: GNU diff doesn't have something like -W, but still can
-show an unchanged function at the @@ line, because it searches upwards
-starting just above the first shown line, and the name of the actually
-changed function might be in one of the shown lines.
+On Mon, Feb 15 2021, Taylor Blau wrote:
 
-> I don't think the patch I'm submitting here would make sense for GNU
-> diff, since there it just shows the context without being guaranteed to
-> show the full set of lines leading up to it under -W, but with Git diff
-> we do that, so I think it makes sense to omit the context.
+> @@ -31,15 +30,14 @@ int cmd_multi_pack_index(int argc, const char **argv,
+>  
+>  	git_config(git_default_config, NULL);
+>  
+> -	opts.progress = isatty(2);
+> +	if (isatty(2))
+> +		opts.flags |= MIDX_PROGRESS;
+>  	argc = parse_options(argc, argv, prefix,
+>  			     builtin_multi_pack_index_options,
+>  			     builtin_multi_pack_index_usage, 0);
+>  
+>  	if (!opts.object_dir)
+>  		opts.object_dir = get_object_directory();
+> -	if (opts.progress)
+> -		opts.flags |= MIDX_PROGRESS;
 
-Given the goal to show the name of the changed function it *would* make
-sense to start searching at the first changed line instead.
 
->> However, I'm not sure it would be a good idea to clear @@ lines of hunk=
-s
->> generated without -W that have function lines in their precontext, even
->> though it would be a logical thing to do.
->
-> Yes, I don't think that's a good idea either. I think it only makes
-> sense under -W where the user explicitly asks "show me the function this
-> change was in", and we're (before this patch) showing different context
-> on the basis of emergent behavior.
+Funnily enough we could also just do:
 
-Right, -W never needs diff(1)'s -p, while the case is less clear for
-diffs generated without -W.
+    opts.flags = isatty(2);
 
-Ren=C3=A9
+Since there's a grand total of one flag it knows about, and
+MIDX_PROGRESS is defined as 1.
+
+Not the problem of this series really, just a nit: In efbc3aee08d (midx:
+add MIDX_PROGRESS flag, 2019-10-21) we added this flag, and around the
+same time the similar commit-graph code got refactored to have an enum
+of flags in 5af80394521 (commit-graph: collapse parameters into flags,
+2019-06-12).
+
+I prefer the commit-graph way of having a clean boundary between the two
+a bit more, and then just setting a flag based on an OPT_BOOL...
