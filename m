@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FD37C433DB
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49719C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2CF964E05
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E1C260202
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231342AbhBOSng (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 13:43:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51536 "EHLO
+        id S230225AbhBOSos (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 13:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230431AbhBOSmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 13:42:25 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12137C061786
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:45 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id o10so4678200wmc.1
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:44 -0800 (PST)
+        with ESMTP id S231290AbhBOSnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 13:43:35 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95008C06178A
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:46 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id v1so10151854wrd.6
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=x9AiFw8miDGnjxIVOobuKc943zd2SsqJUqGjL4CbUds=;
-        b=uZFyvBumXmgHbtqeXyvyZ1s7ULhUTVAZyJg5vR47yVwJ4fVSlncITb3ZZfgN4swxpv
-         aiJgpecvjLJAx6f4h7/SVI91eWr2gLlErp/rQOM0I8cKjKCSm/J1HeTs5l0462zit1ip
-         pYHO2MasQ/uGqhuzdp2JT55JZUQSULLsSt4IXuMBnR+5IinWXkPuahEK5aL5Wp4Z6xhN
-         JoTEl95mTaQm+tZFYZu87ufOVSYsSypE10BB8QVQ01HIujku6pBRUcDmTumDYohCWoJL
-         JJfMBWZR7Y5KKqZgB9jEXkPHbrm4hr6FlxLzvIn8hsTRGaHe6V7Q1wDxI30BgPFJCkPF
-         6bPw==
+        bh=Wgn004G3xcRSnJBx6EUVAXcvT7DfGNah5ap9esCamJE=;
+        b=eaYwQ0o2nQyTjLD0oy1tgpI+75Kwbw4z/uS5fF9tVQ9Nmnwq9hUHxxOthYscQreXzV
+         KkNneDQLQwthG81LC25MYVVkqimTVAPJZa2c7o9IqPTt5KXAqT8XSZWsGCcF3/bdiKUB
+         UsDKI1uaVGh2ZUgYi3bgFEQak2v8zieHgBTNNEBuhmVvQ5XGL94fgdf5+aMsD0X+mlX7
+         UG8L0Zl9mqnU5xhELW9yHtp0bBdKc9lcoxV7P1SNNrSMrLOsNh1lntI/Cz2N0Own0QYd
+         ZK0bYJQFiMaRFLw6lgWHSAkMvk1fUgqhJtc8TFdSPWExGon1OFY3+HOmnxa9uVWHISBb
+         yfYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=x9AiFw8miDGnjxIVOobuKc943zd2SsqJUqGjL4CbUds=;
-        b=AMEhBU1eFSEu08CuevDl1W6utYQaAvrEoEIhlTx/K1c63xZZxrX5QGyBFkDTuokdTm
-         /IAHJFy05kEu8LW4XjkfcEg2DftC4Vx/TIY74YmxaGGlHzDJKaVhd8mbTI45NaO990Vu
-         fq+WOpklnjyG2+4XVujLZom5JuC/6lpyDE2f+CoVOvr9h608+enjhf7YrL0kFSehxuEk
-         MCpysqvsFayqK+b0yf17R2PWXkbYYIdkctcfWHjCYiQ+murSBEj1Rx4buIUl3/NltnIg
-         jhxOgJtMN0sN4aq0IIGk/k/aVj319LcNIcR/0nYYYM2CJCqy8JySi16HCYdN1bXO5DZV
-         u7yw==
-X-Gm-Message-State: AOAM5333P/5rP8Ibv4zmxPOx5YyyuL4PxMK72sZGzXPQhYcTKS5FEnH6
-        iRqPWLSSZ7CPEt0XmMnl2Y4kT9KAavf21Q==
-X-Google-Smtp-Source: ABdhPJxOziTnrTunui2cRfroE6wslUy5swukQR8Dkdh1NzOFPf21Qz9++MJt7EP+4X0elYWq28Nsfw==
-X-Received: by 2002:a1c:f31a:: with SMTP id q26mr158461wmq.119.1613414503490;
-        Mon, 15 Feb 2021 10:41:43 -0800 (PST)
+        bh=Wgn004G3xcRSnJBx6EUVAXcvT7DfGNah5ap9esCamJE=;
+        b=jqvr62rCUm1E0GJvK5RPif+7NunD8jymTUr2RTYTgcwEmFjq8OxaTbr7tmhKI0AuKJ
+         bj5HB02ME0E5Ncao87qJ2cUQr/q9RcxkopH+C9RXWVzH7apR9xLNxmE0nijtyFOi5QjW
+         GO7pO+tQ9izSnCWgqbMq/5N+phHL9bhzS3IlKGUifCzRbikp1JDOykx5YyekTlEeK3aT
+         3R6Rpt/Uc2wPIOyq37SJh19a/e6Ie5AbdYOy3jZ/ImQ59hPXO/UbWkkTiaijhusVX6pu
+         t0LTCFKkC/j2KWsDnLiEUSsYvdXKLq8YcR2Mv9Sw9U6M6Am5gmH59ZOHEB6CHyypvAX1
+         VsSw==
+X-Gm-Message-State: AOAM530viMVuJwKmnpg+MPPhPT8QyN9mvnPNPRlW9VrhG+6MsIIeb+fq
+        NpaZGW3XZALexlG3eYyVdoZMcAjVBrZNwg==
+X-Google-Smtp-Source: ABdhPJx4uj8CXKiKS338AEnfhHArjGPPBy9SqmstKn9TxE8sYeP37mmQHB/EEIP4Rm20B21/wMKT/w==
+X-Received: by 2002:adf:f2c1:: with SMTP id d1mr20329461wrp.345.1613414505087;
+        Mon, 15 Feb 2021 10:41:45 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.42
+        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 10:41:42 -0800 (PST)
+        Mon, 15 Feb 2021 10:41:44 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         peff@peff.net,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] commit-graph: use parse_options_concat()
-Date:   Mon, 15 Feb 2021 19:41:16 +0100
-Message-Id: <20210215184118.11306-4-avarab@gmail.com>
+Subject: [PATCH 5/5] commit-graph: show usage on "commit-graph [write|verify] garbage"
+Date:   Mon, 15 Feb 2021 19:41:18 +0100
+Message-Id: <20210215184118.11306-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87r1lhb6z7.fsf@evledraar.gmail.com>
 References: <87r1lhb6z7.fsf@evledraar.gmail.com>
@@ -78,127 +78,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make use of the parse_options_concat() so we don't need to copy/paste
-common options like --object-dir. This is inspired by a similar change
-to "checkout" in 2087182272
-(checkout: split options[] array in three pieces, 2019-03-29).
+Change the parse_options() invocation in the commit-graph code to make
+sense. We're calling it twice, once for common options parsing, and
+then for the sub-commands.
 
-A minor behavior change here is that now we're going to list both
---object-dir and --progress first, before we'd list --progress along
-with other options.
+But we never checked if we had something leftover in argc in "write"
+or "verify", as a result we'd silently accept garbage in these
+subcommands. Let's not do that.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 43 ++++++++++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ builtin/commit-graph.c  | 10 ++++++++--
+ t/t5318-commit-graph.sh |  4 +++-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index baead04a03..a7718b2025 100644
+index 66fbdb7cb1..cb57771026 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -44,6 +44,21 @@ static struct opts_commit_graph {
- 	int enable_changed_paths;
- } opts;
- 
-+static struct option *add_common_options(struct option *prevopts)
-+{
-+	struct option options[] = {
-+		OPT_STRING(0, "object-dir", &opts.obj_dir,
-+			   N_("dir"),
-+			   N_("the object directory to store the graph")),
-+		OPT_BOOL(0, "progress", &opts.progress,
-+			 N_("force progress reporting")),
-+		OPT_END()
-+	};
-+	struct option *newopts = parse_options_concat(options, prevopts);
-+	free(prevopts);
-+	return newopts;
-+}
-+
- static struct object_directory *find_odb(struct repository *r,
- 					 const char *obj_dir)
- {
-@@ -75,22 +90,20 @@ static int graph_verify(int argc, const char **argv)
- 	int fd;
- 	struct stat st;
- 	int flags = 0;
--
-+	struct option *options = NULL;
- 	static struct option builtin_commit_graph_verify_options[] = {
--		OPT_STRING(0, "object-dir", &opts.obj_dir,
--			   N_("dir"),
--			   N_("the object directory to store the graph")),
- 		OPT_BOOL(0, "shallow", &opts.shallow,
- 			 N_("if the commit-graph is split, only verify the tip file")),
--		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_END(),
- 	};
-+	options = parse_options_dup(builtin_commit_graph_verify_options);
-+	options = add_common_options(options);
- 
- 	trace2_cmd_mode("verify");
- 
+@@ -104,7 +104,10 @@ static int graph_verify(int argc, const char **argv)
  	opts.progress = isatty(2);
  	argc = parse_options(argc, argv, NULL,
--			     builtin_commit_graph_verify_options,
-+			     options,
- 			     builtin_commit_graph_verify_usage, 0);
+ 			     options,
+-			     builtin_commit_graph_verify_usage, 0);
++			     builtin_commit_graph_verify_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
++	if (argc)
++		usage_with_options(builtin_commit_graph_verify_usage, options);
  
  	if (!opts.obj_dir)
-@@ -205,11 +218,8 @@ static int graph_write(int argc, const char **argv)
- 	int result = 0;
- 	enum commit_graph_write_flags flags = 0;
- 	struct progress *progress = NULL;
--
-+	struct option *options = NULL;
- 	static struct option builtin_commit_graph_write_options[] = {
--		OPT_STRING(0, "object-dir", &opts.obj_dir,
--			N_("dir"),
--			N_("the object directory to store the graph")),
- 		OPT_BOOL(0, "reachable", &opts.reachable,
- 			N_("start walk at all refs")),
- 		OPT_BOOL(0, "stdin-packs", &opts.stdin_packs,
-@@ -220,7 +230,6 @@ static int graph_write(int argc, const char **argv)
- 			N_("include all commits already in the commit-graph file")),
- 		OPT_BOOL(0, "changed-paths", &opts.enable_changed_paths,
- 			N_("enable computation for changed paths")),
--		OPT_BOOL(0, "progress", &opts.progress, N_("force progress reporting")),
- 		OPT_CALLBACK_F(0, "split", &write_opts.split_flags, NULL,
- 			N_("allow writing an incremental commit-graph file"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
-@@ -236,6 +245,8 @@ static int graph_write(int argc, const char **argv)
- 			0, write_option_max_new_filters),
- 		OPT_END(),
- 	};
-+	options = parse_options_dup(builtin_commit_graph_write_options);
-+	options = add_common_options(options);
- 
- 	opts.progress = isatty(2);
- 	opts.enable_changed_paths = -1;
-@@ -249,7 +260,7 @@ static int graph_write(int argc, const char **argv)
- 	git_config(git_commit_graph_write_config, &opts);
+ 		opts.obj_dir = get_object_directory();
+@@ -261,7 +264,10 @@ static int graph_write(int argc, const char **argv)
  
  	argc = parse_options(argc, argv, NULL,
--			     builtin_commit_graph_write_options,
-+			     options,
- 			     builtin_commit_graph_write_usage, 0);
+ 			     options,
+-			     builtin_commit_graph_write_usage, 0);
++			     builtin_commit_graph_write_usage,
++			     PARSE_OPT_KEEP_UNKNOWN);
++	if (argc)
++		usage_with_options(builtin_commit_graph_write_usage, options);
  
  	if (opts.reachable + opts.stdin_packs + opts.stdin_commits > 1)
-@@ -312,12 +323,8 @@ static int graph_write(int argc, const char **argv)
+ 		die(_("use at most one of --reachable, --stdin-commits, or --stdin-packs"));
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 567e68bd93..3f1c6dbc8f 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -7,7 +7,9 @@ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
  
- int cmd_commit_graph(int argc, const char **argv, const char *prefix)
- {
--	static struct option builtin_commit_graph_options[] = {
--		OPT_STRING(0, "object-dir", &opts.obj_dir,
--			N_("dir"),
--			N_("the object directory to store the graph")),
--		OPT_END(),
--	};
-+	struct option *no_options = parse_options_dup(NULL);
-+	struct option *builtin_commit_graph_options = add_common_options(no_options);
+ test_expect_success 'usage' '
+ 	test_expect_code 129 git commit-graph -h 2>err &&
+-	! grep error: err
++	! grep error: err &&
++	test_expect_code 129 git commit-graph write blah &&
++	test_expect_code 129 git commit-graph write verify
+ '
  
- 	git_config(git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix,
+ test_expect_success 'setup full repo' '
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
