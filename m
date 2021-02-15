@@ -7,44 +7,43 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE87C433E6
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 03:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFEAC433DB
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 03:38:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 62FA064E52
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 03:27:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1B28264E07
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 03:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbhBOD1K convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 14 Feb 2021 22:27:10 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:39099 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbhBOD1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 22:27:07 -0500
-Received: by mail-ej1-f53.google.com with SMTP id u18so6816690ejf.6
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 19:26:51 -0800 (PST)
+        id S229839AbhBODho convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 14 Feb 2021 22:37:44 -0500
+Received: from mail-ej1-f46.google.com ([209.85.218.46]:38278 "EHLO
+        mail-ej1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229760AbhBODhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 22:37:43 -0500
+Received: by mail-ej1-f46.google.com with SMTP id bl23so8937444ejb.5
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 19:37:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2g3cdbiHUldny6WLq+78wuwVOmU2JynIoB61OeA1w3k=;
-        b=ehMeojxGb8jCHv1PSWhbp3XEhzfLotrLI7S/V4N50J86xqRCPT09B1vjIV+LSBajLQ
-         ytGZsSazTkjF/sN5gal+gur+WPhNCi3J8emgKxg1AaPXDFpnJs8EoQuEuBpgUJ9QZtPj
-         SKCTvcZ6oh2T7ZQ/fPA5W5Kgvnfvv4XlOajv4oPNHzOW9XSMsI2H9nAJGBxNSFfJqlhR
-         mpCopPZODJCVe0Y+76CtBYELsl7E+rsBXZ4KCoK/jgVLde6HWj1Oi2GFxG5euJleBaOB
-         epRwB1d+eGmp16ctArBx6b1J/6o1QqKNcoET3BUQjeBpZCrcmRPGBzOt/+rIeTYGXYdu
-         w+3A==
-X-Gm-Message-State: AOAM531d9KiVahmLOlLV/ann31y+jtoli9Ajus0snxwtjeRZjxz7TwGT
-        fGgMoegTXUspt5zWtlf3hgemMa9cnfihR4iEd+U=
-X-Google-Smtp-Source: ABdhPJz2UUpOJ3XuDbixrZyLcqv9zFrXUpIkb5OYa6alcwlXTp49HIWoAo3AhdHE4uOxEd0QPcskERq2qhD+OsDRiRI=
-X-Received: by 2002:a17:906:a1c2:: with SMTP id bx2mr14021399ejb.138.1613359585724;
- Sun, 14 Feb 2021 19:26:25 -0800 (PST)
+        bh=4qtzsyBugpIQEpv51nfAzzx47GM6TdMF1ReIY9hmXGg=;
+        b=tT3fPk+INy3ZynBk4oRMeBkcvGXVjfCHYhp/B13aMHjU2osA3IpmSKJDIRZxhMBDrE
+         9X2K3PYit5ncnaR+RncFNDthL0ap+JsRfnJQ8ll0KNl6+U92EPm4XPC+/dHTpwVhlPjo
+         xP0LTCDN7yr7ITV/l9unCHsoYTIRpePeqVtcIJAgnA5Q2n3cp7h2xnRRS8Ga28KnAcEq
+         yPXeZLLz8ahqoXnmIo0hwrNc+//9iMUydP4cjRxGQxeEDSSCbHZClFZcZm3gLovVUScl
+         acHdf1lvUZkkAg/thfS29V1HdLsG8/x3dze38x3YSWmIhNQe0LB3QFbc4zlNDiUATzBe
+         tLnA==
+X-Gm-Message-State: AOAM531LvY0vsEMuunT8Oyp3ITV2d1lURWMJGeavRwQW90SNJOFYNpSj
+        +Zq5I0YGbYQBary0iECQQLrsENjjtOo9+4UqojoagOuYBcY=
+X-Google-Smtp-Source: ABdhPJw7Xp9eSQrGDOPy2JUQKsQKAmeJmheHyCYwL36bcmj6o/dYmRfrm6IEeiG5DztqHH3LhairMZpwJK3Qo8AYMTc=
+X-Received: by 2002:a17:907:1191:: with SMTP id uz17mr13720455ejb.371.1613360221048;
+ Sun, 14 Feb 2021 19:37:01 -0800 (PST)
 MIME-Version: 1.0
-References: <87tuqebj6m.fsf@evledraar.gmail.com> <20210215005236.11313-15-avarab@gmail.com>
-In-Reply-To: <20210215005236.11313-15-avarab@gmail.com>
+References: <87tuqebj6m.fsf@evledraar.gmail.com> <20210215005236.11313-16-avarab@gmail.com>
+In-Reply-To: <20210215005236.11313-16-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 14 Feb 2021 22:26:14 -0500
-Message-ID: <CAPig+cThGFFzNFxVo-Vdoq2HzonndrvHPjbCUznuBbMGvvLuAQ@mail.gmail.com>
-Subject: Re: [PATCH 14/20] gitattributes doc: reword discussion of built-in
- userdiff patterns
+Date:   Sun, 14 Feb 2021 22:36:50 -0500
+Message-ID: <CAPig+cTUAWoDMf-SYhBZiptccX8hSAsT+oODxSwH5jxws+_p4g@mail.gmail.com>
+Subject: Re: [PATCH 15/20] gitattributes doc: document multi-line userdiff patterns
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
@@ -59,44 +58,41 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Feb 14, 2021 at 7:56 PM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Reword the discussion of the built-in userdiff patterns to make it
-> more natural to precede it with a discussion about the semantics of
-> pattern matching, instead of assuming that it follows right after the
-> "diff.tex.xfuncname" example which now immediately precedes it. This
-> will make a follow-up commit smaller.
->
+> Document the multi-line userdiff patterns and how their matching and
+> the negation syntax works.
+> [...]
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
 > diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> @@ -794,11 +794,17 @@ backslashes; the pattern above picks a line that begins with a
-> -There are a few built-in patterns to make this easier, and `tex`
-> -is one of them, so you do not have to write the above in your
-> -configuration file (you still need to enable this with the
-> -attribute mechanism, via `.gitattributes`).  The following built in
-> -patterns are available:
-> +There are built-in patterns shipped as part of git itself. A more
-> +advanced version of the `tex` pattern discussed above is one of them.
-> +
-> +For built-in patterns you do not need the "diff.tex.xfuncname"
-> +discussed above in your configuration file, but if present it'll
-> +override the built-in pattern.
+> @@ -794,6 +794,23 @@ backslashes; the pattern above picks a line that begins with a
+> +Multiple patterns can be supplied by seperating them with
 
-The literal "diff.tex.xfuncname" now feels disconnected from what is
-being said, especially as it is preceded by a reference to generic
-"built-in patterns". Perhaps it would make sense to generalize it a
-bit to `diff.<lang>.xfuncname`. For instance:
+s/seperating/separating/
 
-    For built-in patterns, you do not need `diff.<lang>.xfuncname`
-    in your configuration file as discussed above, but if present,
-    it will override a built-in pattern.
+> +newlines. They will be matched one at a time and are compiled as
+> +separate patterns, and thus the first capture in each such pattern is
+> +`$1`, see further discussion of captures below.
 
-> +You still need to enable built-in patterns with the the attribute
-> +mechanism, via `.gitattributes`).
+I found the wording "separating them with newlines" ambiguous. I
+couldn't figure out if that meant that there must be a blank line
+between patterns. Would it be more accurate to say merely that the
+patterns must be listed one per line?
 
-s/the the/the/
+> +Patterns that begin with "!" are negated (to match a literal "!" at
+> +the start of a line use e.g. "[!]"). A matching negated pattern will
+> +cause the matching line to be skipped. Use it to blacklist otherwise
+> +matching non-negated patterns. The last pattern must not be negated,
+> +we'll error out if that's the case.
 
-Although you're simply re-using the existing text, it also now feels
-disconnected. Perhaps:
+The parenthesized comment makes it difficult to follow the discussion.
+Moving the comment to the end of the paragraph would make it easier to
+grok:
 
-    Nevertheless, you need to enable built-in patterns via
-    `.gitattributes` for the pattern to take effect.
+    Patterns that begin with "!" are negated. A matching...
+    ...error out if that's the case. To match a literal "!" at
+    the start of a line, use "[!]".
+
+I think, also, you want s/matching line/matched line/.
+
+Chris's comma-splice comment also seems applicable for the last
+sentence in this paragraph.
