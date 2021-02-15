@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 051A4C433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31D72C433E9
 	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:55:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA03D64E27
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:55:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AC3264E75
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230204AbhBOAzB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 19:55:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49292 "EHLO
+        id S230224AbhBOAzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 19:55:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230127AbhBOAy0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Feb 2021 19:54:26 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A26C0617AB
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:11 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id v7so7116762wrr.12
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:11 -0800 (PST)
+        with ESMTP id S230160AbhBOAyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 19:54:39 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43FC9C06121D
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:14 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id l17so4719798wmq.2
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=URUjqn2Bo9nhQNOwRK+sq96L5AapwHMwmkjYXG54kvM=;
-        b=j9VWUazW7vUtM0fbP8edM/nQLUD3w9Nv8/JE4zN8uBV+RNrJPwwwLVa4MotPyF/bNV
-         Zo0dBGpIy0JX4l8Qkz7fjAt84Wf3TKYET0lhsZxC9p1UyQ3ufwgTR2YtLsWXmhhFkmc2
-         ed+Z1cL1IA9Mofod0d5iYYt2cMdK96gNVu6KwU1JXUpL51fOMdQVo3c3YfpoOmBrjnBE
-         qdBV/Tl8a0PJOucYbDTulgHh4EltwA93dzhKaO57VWJYt7hAOEXUD/vQDvt0jQg0W8+O
-         JxrCS7HY7v/soKyxHs0dpIimcQUVhRoie15RZxUECOn88o/05qE45g4zXFauRMX9R4cf
-         Kfrg==
+        bh=l9v+px97V4yYRgKRXikUPIuux0GOzihLG6GbhTTTYuA=;
+        b=BYv6PQOnxJteAjct/d9wDoHbtYknmr35cRfkAodDZFpB7Qdb+H0wJESksHWwVOVWmC
+         /CibA5rv6A+up4i+pBXgjVzod1avSezRqY8zR4JGqXUE3e0fvTbm9BaZvebCUqmd9eoY
+         hpJIwhexM94XiItdlQdTZtKeFK888K6xLVl0JY2EdBxv54SRbXuufKfa8TVMIUhcqZZf
+         8Ex3zk2pGz19qMPD9LVnbRAZnfJH/09rHmqPwK803dAAiRerW0CZQ3y9oqABN9d9IOe8
+         lBSPJuytDyD2cQxHbqKZKIwb3fz3Itc0+u27ZcKAk1V8ZZUmEfCk/Ukc2j6X0wEIhZZb
+         S75w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=URUjqn2Bo9nhQNOwRK+sq96L5AapwHMwmkjYXG54kvM=;
-        b=f7oFT5N6KPZfG/aKDw5dJEJ7FrrFjReaiArAsCU3EB78JBfOfqoHii3tHJ5UyHqSrC
-         PQofQQXmHPcCMCu6NOMbllbyIhGkRa3abLkAKoMCn+XG4ndlsMY4V7h4Dd4eKL6FITc+
-         9G4yIohtXZ8kmSXmtPesf4LZ5rbtVNRFxuE1zc7DOvIFMEz2ohgXhEaUA9US+JOP36p5
-         84jWZrzzUY7p3OYVfG0mJrpgu8YSGfOUhW7KLIIuuffBODRVYpwSFhPReD0794Sv2tHQ
-         iZqAB/47VZO20Mfh9WPbOHkl5KjkX98domr/3mHQbfFy8lGjHOx6vtF5B0cWYHiH0tBH
-         tw9w==
-X-Gm-Message-State: AOAM532pHPHSNHc205pRLaFzz2ZOkl6AgQuwfNXnIIOYCtb6OVgirBNt
-        JHUpPEI3/Aj97MCSYIylSb+C9lqrp59JkA==
-X-Google-Smtp-Source: ABdhPJyQz6C1IpYuR/m6X+tIq0VBGp/pUxbdoYrO8DWROmdJLkA+ypUqS9eX5F0wx8onmPhUEaF/qQ==
-X-Received: by 2002:a5d:6a89:: with SMTP id s9mr16229317wru.407.1613350390298;
-        Sun, 14 Feb 2021 16:53:10 -0800 (PST)
+        bh=l9v+px97V4yYRgKRXikUPIuux0GOzihLG6GbhTTTYuA=;
+        b=FCuQ345pJVFv7/cegqdhRwzPMcP52DMdkt9zz6XUaR+m9EhG2f09Q54aUg5njjioPX
+         fH1GKEVJUJo8VAWYf2d/6P4KEVahPSPaD6cDYoa7XgECGVpWgaegndiDuBNAt1/0Eo64
+         5r4KakhsoPHogNGc6TE/vuHyzZrz0hDe1Rz4uWmxSZnWZC4ntoRCwydTV6GTfl6xAHx/
+         TU0Mt2KHm+HisPcVKuTpiIoUNHWUWrLnTqy/KqOmjXjFjSwfnskg3aWMaOJiG3z8HoXz
+         VxpRFYigInPYgMoIqJk8k/T4vPfcT0Y7nOoZ8bB02W9THuWzEnzh1zMOWUgr5Z1qe3kg
+         1mzA==
+X-Gm-Message-State: AOAM532o81qd1OxkpdEPf1K7w9NQ/xDJf9LqVSS96UKUwFkQBj9P6lGD
+        Zm5RW5Zu6lupbyOTW7JzVOqiUHZks91Q0Q==
+X-Google-Smtp-Source: ABdhPJyZfKyLB5fnlkmd2AyQ7TPvXu+oGUp5ffEowSMv13mekXUS0OhsuYyCt0PQ94z8/X80Ksp/ag==
+X-Received: by 2002:a7b:c20c:: with SMTP id x12mr3385243wmi.174.1613350392807;
+        Sun, 14 Feb 2021 16:53:12 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.09
+        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.53.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Feb 2021 16:53:09 -0800 (PST)
+        Sun, 14 Feb 2021 16:53:12 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Adam Spiers <git@adamspiers.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/20] gitattributes doc: reword discussion of built-in userdiff patterns
-Date:   Mon, 15 Feb 2021 01:52:30 +0100
-Message-Id: <20210215005236.11313-15-avarab@gmail.com>
+Subject: [PATCH 17/20] userdiff tests: factor out test_diff_funcname() logic
+Date:   Mon, 15 Feb 2021 01:52:33 +0100
+Message-Id: <20210215005236.11313-18-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87tuqebj6m.fsf@evledraar.gmail.com>
 References: <87tuqebj6m.fsf@evledraar.gmail.com>
@@ -79,44 +79,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reword the discussion of the built-in userdiff patterns to make it
-more natural to precede it with a discussion about the semantics of
-pattern matching, instead of assuming that it follows right after the
-"diff.tex.xfuncname" example which now immediately precedes it. This
-will make a follow-up commit smaller.
+Factor out logic in test_diff_funcname() into two helper functions,
+these will be useful in a follow-up commit where we'll do this munging
+in more than one place.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/gitattributes.txt | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ t/t4018-diff-funcname.sh | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index e84e104f93..90992e2136 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -794,11 +794,17 @@ backslashes; the pattern above picks a line that begins with a
- backslash, and zero or more occurrences of `sub` followed by
- `section` followed by open brace, to the end of line.
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 3e4c07e42b..7a830ec57f 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -47,6 +47,17 @@ test_expect_success 'last regexp must not be negated' '
+ 	test_i18ngrep ": Last expression must not be negated:" msg
+ '
  
--There are a few built-in patterns to make this easier, and `tex`
--is one of them, so you do not have to write the above in your
--configuration file (you still need to enable this with the
--attribute mechanism, via `.gitattributes`).  The following built in
--patterns are available:
-+There are built-in patterns shipped as part of git itself. A more
-+advanced version of the `tex` pattern discussed above is one of them.
++do_change_me () {
++	file=$1
++	sed -e "s/ChangeMe/IWasChanged/" <"$file" >tmp &&
++	mv tmp "$file"
++}
 +
-+For built-in patterns you do not need the "diff.tex.xfuncname"
-+discussed above in your configuration file, but if present it'll
-+override the built-in pattern.
++last_diff_context_line () {
++	file=$1
++	sed -n -e "s/^.*@@\( \|$\)//p" <$file
++}
 +
-+You still need to enable built-in patterns with the the attribute
-+mechanism, via `.gitattributes`).
-+
-+The following built in patterns are available:
+ test_diff_funcname () {
+ 	desc=$1
+ 	cat <&8 >arg.header &&
+@@ -57,13 +68,12 @@ test_diff_funcname () {
+ 		cp arg.test "$what" &&
+ 		cp arg.header expected &&
+ 		git add "$what" &&
+-		sed -e "s/ChangeMe/IWasChanged/" <"$what" >tmp &&
+-		mv tmp "$what"
++		do_change_me "$what"
+ 	' &&
  
- - `ada` suitable for source code in the Ada language.
- 
+ 	test_expect_success "$desc" '
+ 		git diff -U1 "$what" >diff &&
+-		sed -n -e "s/^.*@@\( \|$\)//p" <diff >actual &&
++		last_diff_context_line diff >actual &&
+ 		test_cmp expected actual
+ 	'
+ }
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
