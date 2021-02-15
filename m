@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68862C433E6
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 15:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62F60C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 15:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3871264DEC
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 15:47:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 267C464DDA
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 15:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbhBOPrU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 10:47:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
+        id S231754AbhBOPrX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 10:47:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231199AbhBOPp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231137AbhBOPp3 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 15 Feb 2021 10:45:29 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC5DEC061797
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:44:48 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id o15so6573459wmq.5
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:44:48 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE4C1C061794
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:44:47 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id a132so171450wmc.0
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 07:44:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cd/CBUBPlCvzF+wJ5Lvk1J3llf30X2BLyNz99QdKeJs=;
-        b=pNG1OgrVKYGhf2tL4EVwigQjV/e86CIyOAmf00gGRc7ZTG6kUvc7yBH24q6fAtNRuX
-         vs4h8bV4QGfQhstbgQ9Q4aUYFJ3/EWqsMK11M6r/LiGVg4i2r49wY/vo3oI2sr4R2kl3
-         5H1ryn0RXSQ5Yjz80+8+J0/mevtVmbWZ1II6fkwMXYbCPq9Cx7dUHS1yBAKAsLyLXVzQ
-         wdizG37ILVri7XfuedqvHfVCkuIkIPk0sVe3BSVvmKdvm3JLcyyBtLoCcOuK64sXJHUE
-         /D1W954fYeAHWVwAoBec8mXs4cr4HTDq6LzPohv3raSIKc8a3sdaSBnHZVF7nw14YHbp
-         7fpg==
+        bh=DOUQxhcdhCaGf/O5jFWwCNwL+C49UskrpGE3NVYUJM4=;
+        b=fTxSb4NsmkIljgPOHw4cy7YkqD4edGCs0o1bmj+dbAuYghpV64JgDLTC0Wc0HN4FHz
+         /K3TYHOuefIAAB4Fp70F53UaKGSW/LcqTZZwHUgoS9icJxLQ2fNZnwPGI+zMe5nZQ5ha
+         2Vhr90Z00iuBjrtb8HU4WSOyQSvlVnbS1JheuQuunqkJ42V6a6UYK30aaHEsYkKYm5s+
+         MLaYNsl0Ns+Zxn2O5maVLGWERnObP4wopAoeptY8bFa6yj9n7wclrXnJOzH/u9IOb9DC
+         Q9mhk1P3oUtss2uredhtAi/RMmF++llkIFVgNOE320M/Iwy+FMlK7LzLeuGSHTHMj8r4
+         3Jkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cd/CBUBPlCvzF+wJ5Lvk1J3llf30X2BLyNz99QdKeJs=;
-        b=YM1fRK9rwIJ2ZPuo3UJk11fCi8R2PmSWEAQJhy+A1exPsw8xs9xxxwVKRYWU17zO6V
-         5r74hByYEoj07ZrHkWh8OGwTaZ4JjkkhnOWl4kt/EVzgzCy+r5igkpSR0hWo79wVNfJy
-         P22V/p2074E+u9EEF6G3/s+sezKqaFfbdey/lFOV54pJCKOx4Pm7LLFb8MHVyQSFVGoP
-         fMjY2AE51Yd/Ryc/BrpLe/lEq3XJ0JDP0QeVwDTUmQZkb7ZQEFBLreZuh59r5neGVfV2
-         Y2pKjx0C18ICQmkZnERVu6rrGXIH1wMCowd4y30Qea7cI29YBiwtJy/c+r2s9d5/LtTt
-         0vzQ==
-X-Gm-Message-State: AOAM5335zbL1Ij6xpyOmXcGfbXmsQNWLpCpbcOGOeHGGh0I9SzxPoW1E
-        LhIMo5p0RgpMBcpxBWSJdSWvD1seTYjo5A==
-X-Google-Smtp-Source: ABdhPJzD63Y5JWLuli7Hr+4UIB+Oa806r7TU2agThSt9NkXu3wdjFliC1iQcsfP76q8uYWGd5SHsqg==
-X-Received: by 2002:a05:600c:4c95:: with SMTP id g21mr14876471wmp.144.1613403887207;
-        Mon, 15 Feb 2021 07:44:47 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f17sm23562757wrx.57.2021.02.15.07.44.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=DOUQxhcdhCaGf/O5jFWwCNwL+C49UskrpGE3NVYUJM4=;
+        b=LHbs5Q8+T0pnjI60wcU3PWmZT7LgP8xVoPEsC7MfJ0aWuIEqbSK9I+XMGtZ2MJYp3N
+         Z5/Hl9CpFhu5PLJeUCcTQvsRrH2BWvNyjIuYVxt/fepfximtKc0f4m6z87dZg3IUiA1a
+         SRWB7dIcUU48vJ+tuGBKaftrsygIZuZe/apkfqZTqrpJv8e9DUH5K8leZXcNS8ckxNCj
+         plyoTB9kLEufxbt/K2m/NrS6nrvbFWTdh2YNxL6bSZrpeQC2TJqc2v09z0Nf+qtsMrqE
+         nfnlYEQ466waHcvgyvApgl52dK8hS/FjqMLyE53Y2TfuDbb5JZ+lyq0kInOz978lB4To
+         fbiA==
+X-Gm-Message-State: AOAM530E5j049PoMn8AM8if+wKCvCFUo8H1mq8cP+j6r5tCiUDigJHvn
+        /ChSmp4ecTOUUOijPvWhUijf/6PFhrQ4QA==
+X-Google-Smtp-Source: ABdhPJw093lpKK0d930jvMx+DM277GcEpnjbkEmEnlFm8yG3cmuGL/2OuRcC5Xdnn/GFPKY8dExL4g==
+X-Received: by 2002:a05:600c:33a7:: with SMTP id o39mr14915510wmp.10.1613403886148;
         Mon, 15 Feb 2021 07:44:46 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id f17sm23562757wrx.57.2021.02.15.07.44.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Feb 2021 07:44:45 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/27] userdiff style: re-order drivers in alphabetical order
-Date:   Mon, 15 Feb 2021 16:44:02 +0100
-Message-Id: <20210215154427.32693-3-avarab@gmail.com>
+Subject: [PATCH v2 01/27] userdiff: refactor away the parse_bool() function
+Date:   Mon, 15 Feb 2021 16:44:01 +0100
+Message-Id: <20210215154427.32693-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215005236.11313-1-avarab@gmail.com>
 References: <20210215005236.11313-1-avarab@gmail.com>
@@ -81,119 +81,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Address some old code smell and move around the built-in userdiff
-drivers so they're both in alphabetical order, and now in the same
-order they appear in the gitattributes(5) documentation.
+Since 6680a0874f (drop odd return value semantics from
+userdiff_config, 2012-02-07) we have not cared about the return values
+of parse_tristate() or git_config_bool() v.s. falling through in
+userdiff_config(), so let's do so in those cases to make the code
+easier to read.
 
-The two started drifting in be58e70dba (diff: unify external diff and
-funcname parsing code, 2008-10-05), and then even further in
-80c49c3de2 (color-words: make regex configurable via attributes,
-2009-01-17) when the "cpp" pattern was added.
-
-There are no functional changes here, and as --color-moved will show
-only moved existing lines.
+Having a wrapper function for git_config_bool() dates back to
+d9bae1a178 (diff: cache textconv output, 2010-04-01) and
+122aa6f9c0 (diff: introduce diff.<driver>.binary, 2008-10-05), both of
+which predated the change in 6680a0874f which made their return values
+redundant.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- userdiff.c | 76 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 38 insertions(+), 38 deletions(-)
+ userdiff.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/userdiff.c b/userdiff.c
-index c147bcbb17..c92cbcc054 100644
+index 3f81a2261c..c147bcbb17 100644
 --- a/userdiff.c
 +++ b/userdiff.c
-@@ -44,6 +44,44 @@ PATTERNS("bash",
- 	 /* -- */
- 	 /* Characters not in the default $IFS value */
- 	 "[^ \t]+"),
-+PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
-+	 "[={}\"]|[^={}\" \t]+"),
-+PATTERNS("cpp",
-+	 /* Jump targets or access declarations */
-+	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])\n"
-+	 /* functions/methods, variables, and compounds at top level */
-+	 "^((::[[:space:]]*)?[A-Za-z_].*)$",
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
-+PATTERNS("csharp",
-+	 /* Keywords */
-+	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
-+	 /* Methods and constructors */
-+	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-+	 /* Properties */
-+	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
-+	 /* Type definitions */
-+	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
-+	 /* Namespace */
-+	 "^[ \t]*(namespace[ \t]+.*)$",
-+	 /* -- */
-+	 "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-+IPATTERN("css",
-+	 "![:;][[:space:]]*$\n"
-+	 "^[:[@.#]?[_a-z0-9].*$",
-+	 /* -- */
-+	 /*
-+	  * This regex comes from W3C CSS specs. Should theoretically also
-+	  * allow ISO 10646 characters U+00A0 and higher,
-+	  * but they are not handled in this regex.
-+	  */
-+	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
-+	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
-+),
- PATTERNS("dts",
- 	 "!;\n"
- 	 "!=\n"
-@@ -191,46 +229,8 @@ PATTERNS("rust",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[0-9][0-9_a-fA-Fiosuxz]*(\\.([0-9]*[eE][+-]?)?[0-9_fF]*)?"
- 	 "|[-+*\\/<>%&^|=!:]=|<<=?|>>=?|&&|\\|\\||->|=>|\\.{2}=|\\.{3}|::"),
--PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
--	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
- 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
--PATTERNS("cpp",
--	 /* Jump targets or access declarations */
--	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:[[:space:]]*($|/[/*])\n"
--	 /* functions/methods, variables, and compounds at top level */
--	 "^((::[[:space:]]*)?[A-Za-z_].*)$",
--	 /* -- */
--	 "[a-zA-Z_][a-zA-Z0-9_]*"
--	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lLuU]*"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
--PATTERNS("csharp",
--	 /* Keywords */
--	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
--	 /* Methods and constructors */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
--	 /* Properties */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
--	 /* Type definitions */
--	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct)[ \t]+.*)$\n"
--	 /* Namespace */
--	 "^[ \t]*(namespace[ \t]+.*)$",
--	 /* -- */
--	 "[a-zA-Z_][a-zA-Z0-9_]*"
--	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
--IPATTERN("css",
--	 "![:;][[:space:]]*$\n"
--	 "^[:[@.#]?[_a-z0-9].*$",
--	 /* -- */
--	 /*
--	  * This regex comes from W3C CSS specs. Should theoretically also
--	  * allow ISO 10646 characters U+00A0 and higher,
--	  * but they are not handled in this regex.
--	  */
--	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
--	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
--),
- { "default", NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
+@@ -275,19 +275,12 @@ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+ 	return 0;
+ }
+ 
+-static int parse_tristate(int *b, const char *k, const char *v)
++static void parse_tristate(int *b, const char *k, const char *v)
+ {
+ 	if (v && !strcasecmp(v, "auto"))
+ 		*b = -1;
+ 	else
+ 		*b = git_config_bool(k, v);
+-	return 0;
+-}
+-
+-static int parse_bool(int *b, const char *k, const char *v)
+-{
+-	*b = git_config_bool(k, v);
+-	return 0;
+ }
+ 
+ int userdiff_config(const char *k, const char *v)
+@@ -312,16 +305,17 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, 0);
+ 	if (!strcmp(type, "xfuncname"))
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+-	if (!strcmp(type, "binary"))
+-		return parse_tristate(&drv->binary, k, v);
+ 	if (!strcmp(type, "command"))
+ 		return git_config_string(&drv->external, k, v);
+ 	if (!strcmp(type, "textconv"))
+ 		return git_config_string(&drv->textconv, k, v);
+-	if (!strcmp(type, "cachetextconv"))
+-		return parse_bool(&drv->textconv_want_cache, k, v);
+ 	if (!strcmp(type, "wordregex"))
+ 		return git_config_string(&drv->word_regex, k, v);
++	/* Don't care about the parse errors for these, fallthrough */
++	if (!strcmp(type, "cachetextconv"))
++		drv->textconv_want_cache = git_config_bool(k, v);
++	if (!strcmp(type, "binary"))
++		parse_tristate(&drv->binary, k, v);
+ 
+ 	return 0;
+ }
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
