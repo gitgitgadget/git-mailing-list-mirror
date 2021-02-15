@@ -2,129 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FFC6C433DB
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 21:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63710C433DB
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5085764E2C
-	for <git@archiver.kernel.org>; Sun, 14 Feb 2021 21:52:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23C2364E27
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 00:54:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230077AbhBNVv5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 14 Feb 2021 16:51:57 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48548 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229916AbhBNVvz (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 14 Feb 2021 16:51:55 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7B3C260B15
-        for <git@vger.kernel.org>; Sun, 14 Feb 2021 21:50:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1613339442;
-        bh=1oGKtmau4M9P2EmdMCft8opRTkRtX6Rmihe+4s4biCk=;
-        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=FfhpusRZC0AnU+YNDKAX5ilWsjBF9ZZTNTfcFTleewzr6gxDRPCq+YTzMLAt9F9jc
-         0+piNfk/oARmCBwEW1LmDcdDF4f2WYiCywohgap/AzXJX6EDJcBOEiceDkPlAIGyAZ
-         vSEDLqU+e7J1jzXr1XOPNKpkCdBCNYIH1Tu/Jci4TuMvPWvIJB0KDGzw2jywTIgl9K
-         P4UcAhBua+Yivn3Wpf3FruoqN86wdh0z/V8kMkRpIzzER1IkrUCnV0jNOnwbw263Su
-         eU+EUsgEEU1xe64qKLhm0tawwSJ2UUB2JpvRjctyL4J2Q6PbWGAAgAw3/7g/zcU0E1
-         4iOXcCFAfgYbvTHejCFDmKn9BO5xsj7wPIgmclFFjV6Ib/YEkSUO/QY/mP7SaJS5X7
-         6GntApBL3o2K3MWLIpGS7umnY803n+CEaroZxrpBXsJGjb86xySAMSJ5F6zKmilAOH
-         wu4Iq5g6MrXT00HyfSMLCM0M2Q0bFb2lkH6lHWf7KnOcsifvs3+
-Date:   Sun, 14 Feb 2021 21:50:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S230002AbhBOAxo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 14 Feb 2021 19:53:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229958AbhBOAxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Feb 2021 19:53:42 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FE2C061756
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:01 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id v1so7162022wrd.6
+        for <git@vger.kernel.org>; Sun, 14 Feb 2021 16:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DOUQxhcdhCaGf/O5jFWwCNwL+C49UskrpGE3NVYUJM4=;
+        b=TfPlVrI7SgB+setL66teG2U1Iumz99Kbmh3o1+yP2YiZsMTE4bhR8lHMZ/sxKaiarw
+         rVZpWddP+TSZCK6oO4c6l9Guh1SoNQta2lM+5pIlxusXq8jBLWimMZcmrjMkx7pYIgYM
+         08en4pT6mbomgxW5anOxKezKj55J3bUteabQrS7xaHVvV6cwjuJ2SH8AmQWGqORN88W6
+         JfmwLeKVct7dCC9ZR/R1rvqspHQb/TTSKqtaO5jy0WJMGVlD2DWM7JfbLHAC0FmSueL7
+         wSjMH5D4OquW7uUAgUCyHk3vgc1ngT8PeDwfiXNeVL2/eGlfdjVRw+VDaCNxBIS4V5CF
+         dfzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DOUQxhcdhCaGf/O5jFWwCNwL+C49UskrpGE3NVYUJM4=;
+        b=n0gdHcrDFfGelylWobFjof9CHTUn439F4cBpmeDm/1z0ycbQ5aJZK1NJGpEWjbsKcz
+         Xc0uuif0S7peqemXZ86iO7i68UMV/TaeZ9x/MSzs1IiLlLqV/mywBNO4VhqswxmIiv6w
+         5Q0HVHWpBN7P73JMkXE1Xbi4jCECwSHeG4ipx2vbZqTCbgZtLS7TYaKVZUrVF9LAvxW/
+         E2AttNhe1sDSqQmbRnlVEgT6CnDuCvSkBl0fpXJfLjwBMGcthbFNp+49hJEd/7z2jW3p
+         a8Fvji5rdyQHRFcxth1nXbUiF1N8CuxO/nbx+wDsxSM518jCyM4QHTh+XDas0qjYYxwq
+         jk7A==
+X-Gm-Message-State: AOAM532SE6QthIaOClSOZlGheuR/0Bu6On3qmlIL8seQCRs41OZTzCQk
+        J9zvKMDLRjmcCGIxmORPVQNH4LFY8nsrog==
+X-Google-Smtp-Source: ABdhPJzCDHmdsWP1diRzxTP2XLJpAQsSosQAA+6+e+FqDpNYXE5sUt5uTnRctbwRSFIum6C14eJ1Kg==
+X-Received: by 2002:adf:e809:: with SMTP id o9mr16175042wrm.137.1613350380004;
+        Sun, 14 Feb 2021 16:53:00 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id 3sm5209832wmi.2.2021.02.14.16.52.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Feb 2021 16:52:59 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Subject: Submodules and SHA-256/SHA-1 interoperability
-Message-ID: <YCmbKrTsJhgPHYLc@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 01/20] userdiff: refactor away the parse_bool() function
+Date:   Mon, 15 Feb 2021 01:52:17 +0100
+Message-Id: <20210215005236.11313-2-avarab@gmail.com>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
+In-Reply-To: <87tuqebj6m.fsf@evledraar.gmail.com>
+References: <87tuqebj6m.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="bV/rUc5OSP/ZMmnc"
-Content-Disposition: inline
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since 6680a0874f (drop odd return value semantics from
+userdiff_config, 2012-02-07) we have not cared about the return values
+of parse_tristate() or git_config_bool() v.s. falling through in
+userdiff_config(), so let's do so in those cases to make the code
+easier to read.
 
---bV/rUc5OSP/ZMmnc
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Having a wrapper function for git_config_bool() dates back to
+d9bae1a178 (diff: cache textconv output, 2010-04-01) and
+122aa6f9c0 (diff: introduce diff.<driver>.binary, 2008-10-05), both of
+which predated the change in 6680a0874f which made their return values
+redundant.
 
-I'm currently working on the next step of the SHA-256 transition code,
-which is SHA-256/SHA-1 interoperability.  Essentially, when we write a
-loose object into the store, or when we index a pack, we take one form
-of the object, usually the SHA-256 form, and rewrite it so that it is in
-its SHA-1 form, and then hash it to determine its SHA-1 name.  We then
-write this correspondence either into the loose object index (for loose
-objects) or a v3 index (for packs).
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ userdiff.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-Blobs are simply hashed with both algorithms, but trees, commits, and
-tags need to be rewritten to use the SHA-1 names of the objects they
-refer to.  For most situations, we already have this data, since it will
-exist in the loose object index, in some pack index, or elsewhere in the
-pack we're indexing.
+diff --git a/userdiff.c b/userdiff.c
+index 3f81a2261c..c147bcbb17 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -275,19 +275,12 @@ static int parse_funcname(struct userdiff_funcname *f, const char *k,
+ 	return 0;
+ }
+ 
+-static int parse_tristate(int *b, const char *k, const char *v)
++static void parse_tristate(int *b, const char *k, const char *v)
+ {
+ 	if (v && !strcasecmp(v, "auto"))
+ 		*b = -1;
+ 	else
+ 		*b = git_config_bool(k, v);
+-	return 0;
+-}
+-
+-static int parse_bool(int *b, const char *k, const char *v)
+-{
+-	*b = git_config_bool(k, v);
+-	return 0;
+ }
+ 
+ int userdiff_config(const char *k, const char *v)
+@@ -312,16 +305,17 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_funcname(&drv->funcname, k, v, 0);
+ 	if (!strcmp(type, "xfuncname"))
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
+-	if (!strcmp(type, "binary"))
+-		return parse_tristate(&drv->binary, k, v);
+ 	if (!strcmp(type, "command"))
+ 		return git_config_string(&drv->external, k, v);
+ 	if (!strcmp(type, "textconv"))
+ 		return git_config_string(&drv->textconv, k, v);
+-	if (!strcmp(type, "cachetextconv"))
+-		return parse_bool(&drv->textconv_want_cache, k, v);
+ 	if (!strcmp(type, "wordregex"))
+ 		return git_config_string(&drv->word_regex, k, v);
++	/* Don't care about the parse errors for these, fallthrough */
++	if (!strcmp(type, "cachetextconv"))
++		drv->textconv_want_cache = git_config_bool(k, v);
++	if (!strcmp(type, "binary"))
++		parse_tristate(&drv->binary, k, v);
+ 
+ 	return 0;
+ }
+-- 
+2.30.0.284.gd98b1dd5eaa7
 
-However, for submodules, we have a problem.  By definition, the object
-exists in a different repository.  If we have the submodule locally on
-the system, then this works fine, but if we're performing a fetch or
-clone and the submodule is not present, then we cannot rewrite the tree
-or anything that refers to it, directly or indirectly.
-
-So there are some possible courses of action:
-
-* Disallow compatibility algorithms when using submodules.  This is
-  simple, but inconvenient.
-* Force users to always clone submodules and fetch them before fetching
-  the main repository.  This is also relatively simple, but
-  inconvenient.
-* Have the remote server keep a list of correspondences and send them in
-  a protocol extension.
-* Just skip rewriting objects until the data is filled in later and
-  admit the data will be incomplete.  This means that pushing to or
-  pulling from a repository using a incompatible algorithm will be
-  impossible.
-* Something else I haven't thought of.
-
-The third option is where I'm leaning, but it has some potential
-downsides.  First, the server must support both hash algorithms and have
-this data.  Second, it essentially requires all submodule updates to be
-pushed from a compatible client.  Third, we need to trust that the
-server hasn't tampered with the data, which should be possible by doing
-an fsck on both forms (I think).  Fourth, we need to store this
-somewhere, and the only place we have right now is the loose object
-index, which would potentially grow to inefficient sizes.
-
-We could potentially change this to be slightly different by asking the
-submodule server for a list of correspondences instead via a new
-protocol extension, but it has the same downsides except for the second
-one, and additionally means that we'd need to make multiple connections.
-
-So I'm seeking some ideas on which approach we want to use here before
-I start sinking a lot of work into this.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---bV/rUc5OSP/ZMmnc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYCmbKQAKCRB8DEliiIei
-gVXWAP9vzaMovZwKtYLLrJB+ClL+pernsH+P2QZzOS6l8lm/rQD+LrTccUEbhfXU
-UlrACNzDVh7PjrNBRkfvj8GA+ye5/Q4=
-=OvQV
------END PGP SIGNATURE-----
-
---bV/rUc5OSP/ZMmnc--
