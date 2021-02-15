@@ -2,181 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 849BAC433DB
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 130D7C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:56:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EA0864DF4
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:55:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1EEC64DEB
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 21:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229780AbhBOVzP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 16:55:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36422 "EHLO
+        id S229862AbhBOVzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 16:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbhBOVzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 16:55:14 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5F2C061574
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:54:33 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id y26so13533895eju.13
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:54:33 -0800 (PST)
+        with ESMTP id S229668AbhBOVzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 16:55:44 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2711DC061786
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:55:04 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id o12so7302932ote.12
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 13:55:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=Or/HzNpPBXTo+QDv09NfSfTqDLatYFGglKzJLappj8Y=;
-        b=n7T2OQzLIi/UL+vGnBJpGF5fOew7Mpm8QFbKTxBawvoUd57h1SEVotVioWIFBS9sgd
-         WZN6qTloB6xlGjh66yGD+ebBpsPdUGwxZ1Gd2GY1q0ijqt5CMp+18hr+pCTqCdybzQXg
-         uQ+KPXpo904RlEEkjIsme3T3Rtt+QenTTxtO+8nRZG0pZWyYlPhzrSIAOLhxzxcad7TQ
-         T0OMBNJzzhAdqaVolBjblcp56pS/U9o2H/nouoQ4z7QbYH3UY/5IGS2033zI/zwHUXKj
-         5481dbfuwJws9mDxl42EWo3ryx7HnWoqRwmXBy216Cn6PPUuRKn65pmWesaZljVX+04q
-         X80g==
+        d=mabulous-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sHF4dwljwmrUUoRD8niQW9hBVAo4a6TUIBxUuOD7pns=;
+        b=hzfsR0VzFrYg9zpQzFFVSjvEeSmllNClpR3CFMxE83fn1AmJhgZpH0h/E8AVnWZ1z5
+         kjNy8C9CXIb4Ye25lP0IdPsjiDRUD8dldgq3eCzs6pJtoil5a3NiZKC6iiuzFW3TA/oG
+         EcepSD3NVYG4fOpaAScNIXJ6c9qk3ZOjYYPuQr8QXo9r7J5w3xRt6LICoYV3w0klDr73
+         UMuK4AQHM90qKFPf+twbRiwLrhf2IJhakwm0s+zNlDe0cQPvLnRKEpMamUyK8bnSzazA
+         QGBfCoW9V8++pBJ6iUJ5ZcApXiavMlKF8SQHFkIbAmEHW73PLqLyAK3Ymp/CUT6ZZ2vQ
+         xqIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=Or/HzNpPBXTo+QDv09NfSfTqDLatYFGglKzJLappj8Y=;
-        b=I0XoCMSgO+UDEx940igW9/AyGqh16ZOBvG2ReUG1hVSgGS/fH0tjufv8qNcZTbupml
-         GNMNumFibSXM3hrSiSp3PILHQTiodZKl5RujzMX45QH21IL6gaDXVMQ45wmmeUhJdg+h
-         FOmeJ5Yi2ufrDVqTnV5Tiqdy8Vfw2mKCIe5nI8E77GNWTlETDGNuqNuC5WXSJs3fSvwg
-         sangqOS8SX40e+tW2ymd09g0KIhV0FsSEPbcnUkIb2XJqNcAOw2lkY4mZVMNirGkK2fT
-         Q9WyDfnq3FBd96o+/zsmr81tbizsTClx+HMM99Llw/ztAlyhOsUkBum2ClYT32rZbaH0
-         tXgw==
-X-Gm-Message-State: AOAM533YYsmS34Wa324ChB0E+Q3mOA59HBTJ48yZujeq8crOkpRfhBk1
-        A3vf9gFuFaBfO/XXi7wkIWw=
-X-Google-Smtp-Source: ABdhPJxAPgjIJke435Bu/2TbNxcJpdXGDZ1WeOKBhlbm6/9SBbCcXEdIaRcNFa4mIS38ITGUQjGGlw==
-X-Received: by 2002:a17:906:b0d8:: with SMTP id bk24mr3338268ejb.252.1613426072285;
-        Mon, 15 Feb 2021 13:54:32 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id b11sm11658247eja.115.2021.02.15.13.54.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 13:54:31 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        szeder.dev@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 4/4] builtin/multi-pack-index.c: split sub-commands
-References: <87r1lhb6z7.fsf@evledraar.gmail.com>
- <cover.1613422804.git.me@ttaylorr.com>
- <16f33e41388ed431f70e09ef68717bd30fbee67f.1613422804.git.me@ttaylorr.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <16f33e41388ed431f70e09ef68717bd30fbee67f.1613422804.git.me@ttaylorr.com>
-Date:   Mon, 15 Feb 2021 22:54:31 +0100
-Message-ID: <877dn9atew.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sHF4dwljwmrUUoRD8niQW9hBVAo4a6TUIBxUuOD7pns=;
+        b=M/Ryr5Ktiv4b/+onyI1OV1GYGZz6G8TJDzbWoVQkrzLM8zJyy5jLcJv+XS4xvMYVu/
+         WqPYfQqN5vnXoT6L7mKmg1IZkU13NcALeUDBMN4J4auMRGtsUMvwDDqLgHN5HaUigzf4
+         35hffXwjwqmNHgt09WU3cYTCc3f42K7wgSiaoD5mye1Uwg7OEieV8bFc85mk6EbW26zd
+         f1RSURfYO1eTk2lSkIRiwjivkY2bQH07P1uAJVr8pdVn4jSvLxu3fMFVvOS8izGAM0KT
+         qMsDAkVoLTHZ8kRs1BHSGzZJcwK+JEjx0gDS1u/DaR+TjHugWQniOHvPbjzB+Em6wYCT
+         ub7A==
+X-Gm-Message-State: AOAM5329QuwMS9yrJi4u+adkVzi+qeY0x2En5/pShEO1nzTEW/yAOc/u
+        rb9HK3tDqDkssi8iGxWK5iixi0P7FlaVnRJma2rXjixco/jTyPv4
+X-Google-Smtp-Source: ABdhPJxAsc2yWXxpU39r3+4q0W8G/cw8VdCIhlwNmOmhWoTXuqJGLoRfnvWOCuqEb/zKgaAoWW7rq5lVcgGQNlm+TFY=
+X-Received: by 2002:a05:6830:236b:: with SMTP id r11mr13272775oth.370.1613426103371;
+ Mon, 15 Feb 2021 13:55:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>
+Date:   Mon, 15 Feb 2021 22:54:52 +0100
+Message-ID: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
+Subject: Bug Report: Multi-line trailers containing empty lines break parsing
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-On Mon, Feb 15 2021, Taylor Blau wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
->  	trace2_cmd_mode(argv[0]);
+    create a file containing multiline trailer:
 
-Not a new issue, but curious that in the commit-graph.c code we'll first
-validate, but here write garbage into the trace2_cmd_mode() before
-potentially dying.
+    $ echo "Test" > test.txt
+    $ git interpret-trailers --where end --if-exists addIfDifferent
+--trailer "SingleLineTrailer: This is a single line trailer"
+--in-place test.txt
+    $ git interpret-trailers --where end --if-exists addIfDifferent
+--trailer "MultiLineTrailer: This is"$'\n a folded multi-line\n
+trailer' --in-place test.txt
 
->  
->  	if (!strcmp(argv[0], "repack"))
-> -		return midx_repack(the_repository, opts.object_dir,
-> -			(size_t)opts.batch_size, opts.flags);
-> -	if (opts.batch_size)
-> -		die(_("--batch-size option is only for 'repack' subcommand"));
-> -
-> -	if (!strcmp(argv[0], "write"))
-> -		return write_midx_file(opts.object_dir, opts.flags);
-> -	if (!strcmp(argv[0], "verify"))
-> -		return verify_midx_file(the_repository, opts.object_dir, opts.flags);
-> -	if (!strcmp(argv[0], "expire"))
-> -		return expire_midx_packs(the_repository, opts.object_dir, opts.flags);
-> -
-> -	die(_("unrecognized subcommand: %s"), argv[0]);
-> +		return cmd_multi_pack_index_repack(argc, argv);
-> +	else if (!strcmp(argv[0], "write"))
-> +		return cmd_multi_pack_index_write(argc, argv);
-> +	else if (!strcmp(argv[0], "verify"))
-> +		return cmd_multi_pack_index_verify(argc, argv);
-> +	else if (!strcmp(argv[0], "expire"))
-> +		return cmd_multi_pack_index_expire(argc, argv);
-> +	else
-> +		die(_("unrecognized subcommand: %s"), argv[0]);
+    parse trailers:
 
-I realize this is the existing behavior, but let's just make this die()
-be the usage_with_options() we emit above in this case?
+    $ git interpret-trailers --parse test.txt
+    SingleLineTrailer: This is a single line trailer
+    MultiLineTrailer: This is a folded multi-line trailer
 
-So maybe this on top?
+    (so far, all is as expected)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index caf0248a98..6f9223d538 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -65,6 +65,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv)
- {
- 	struct option *options = common_opts;
- 
-+	trace2_cmd_mode(argv[0]);
-+
- 	argc = parse_options(argc, argv, NULL,
- 			     options, builtin_multi_pack_index_write_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
-@@ -79,6 +81,8 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv)
- {
- 	struct option *options = common_opts;
- 
-+	trace2_cmd_mode(argv[0]);
-+
- 	argc = parse_options(argc, argv, NULL,
- 			     options, builtin_multi_pack_index_verify_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
-@@ -93,6 +97,8 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv)
- {
- 	struct option *options = common_opts;
- 
-+	trace2_cmd_mode(argv[0]);
-+
- 	argc = parse_options(argc, argv, NULL,
- 			     options, builtin_multi_pack_index_expire_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
-@@ -112,6 +118,8 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv)
- 		OPT_END(),
- 	};
- 
-+	trace2_cmd_mode(argv[0]);
-+
- 	options = parse_options_dup(builtin_multi_pack_index_repack_options);
- 	options = add_common_options(options);
- 
-@@ -144,20 +152,15 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	if (!opts.object_dir)
- 		opts.object_dir = get_object_directory();
- 
--	if (argc == 0)
--		usage_with_options(builtin_multi_pack_index_usage,
--				   builtin_multi_pack_index_options);
--
--	trace2_cmd_mode(argv[0]);
--
--	if (!strcmp(argv[0], "repack"))
-+	if (argc && !strcmp(argv[0], "repack"))
- 		return cmd_multi_pack_index_repack(argc, argv);
--	else if (!strcmp(argv[0], "write"))
-+	else if (argc && !strcmp(argv[0], "write"))
- 		return cmd_multi_pack_index_write(argc, argv);
--	else if (!strcmp(argv[0], "verify"))
-+	else if (argc && !strcmp(argv[0], "verify"))
- 		return cmd_multi_pack_index_verify(argc, argv);
--	else if (!strcmp(argv[0], "expire"))
-+	else if (argc && !strcmp(argv[0], "expire"))
- 		return cmd_multi_pack_index_expire(argc, argv);
- 	else
--		die(_("unrecognized subcommand: %s"), argv[0]);
-+		usage_with_options(builtin_multi_pack_index_usage,
-+				   builtin_multi_pack_index_options);
- }
+    now, adding multiline trailer containing empty line:
 
+    $ git interpret-trailers --where end --if-exists addIfDifferent
+--trailer "MultiLineTrailer: This is"$'\n a folded multi-line\n
+trailer which\n \n contains an\n empty line' --in-place test.txt
+
+    parse trailers again:
+
+    $ git interpret-trailers --parse test.txt
+
+What did you expect to happen? (Expected behavior)
+
+I would expect the following output:
+
+    $ git interpret-trailers --parse test.txt
+    SingleLineTrailer: This is a single line trailer
+    MultiLineTrailer: This is a folded multi-line trailer
+    MultiLineTrailer: This is a folded multi-line trailer which
+contains an empty line
+
+What happened instead? (Actual behavior)
+
+    no output is generated, but exit code is nevertheless 0:
+
+    $ git interpret-trailers --parse test.txt
+    $ echo $?
+    0
+
+What's different between what you expected and what actually happened?
+
+    I would expect either to get an output or the call to exit non-zero
+
+Anything else you want to add:
+
+    According to my interpretation of the documentation of git
+intepret-trailers, empty lines should be supported if properly folded,
+in the same way as for example the PGP signature added to the commit
+header contains a (properly folded) empty line
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.30.0.windows.2
+cpu: x86_64
+built from commit: f8cbc844b81bf6b9e72178bbe891a86c8bf5e9e7
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Windows 10.0 18363
+compiler info: gnuc: 10.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+
+
+[Enabled Hooks]
+post-commit
