@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEFB6C433DB
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D538DC433E6
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B716E64E05
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB83D64E13
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbhBOSnS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 13:43:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51526 "EHLO
+        id S231241AbhBOSnX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 13:43:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbhBOSmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 13:42:23 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E33CC061756
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:43 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id o24so10207936wmh.5
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:43 -0800 (PST)
+        with ESMTP id S230423AbhBOSmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 13:42:24 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A06C0613D6
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:44 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id n10so10258659wmq.0
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:41:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oRCZ9LjHpNXwaAnK7I3Kark9db4GMPEf4le7QOKY7Do=;
-        b=VCNfScE9T4C9iAfg+KXUJa+QyDOFHhgBacUghKqYvDRZ9BjSQnaQIkU8XaZbWfB47g
-         gqA+ivn6+5AifsIDoOIywrEmuq+RZtfZWO1Y2CXRh3T6vnLZrBOpJVCLjc/vFoZGICTg
-         RDgAhAlMXfkqc/Csjs75uMiS+o/xTwQdDhBx3I4TZIcc3Dkh/vnrax+WRPJqcJkBdL8o
-         HmtD67gHFT+Kk9RD4otvs7hlemW4CW/HobTmhuV4anklGudmvDW/SEFzZXvrkJ7oom5Z
-         u7T36vQF+OVq0HD1iHeGlbJOxmpIzVyV3vIQpTEBnRy8fZ/8w71g7v717HU2SsLWWadG
-         Zc5A==
+        bh=F9IBskYvuRMaNYBuJ9lxjAVzqx3mm5wwkHChR5jOkS4=;
+        b=FFrSc9wmFr6pG98INpE3AwNR9ICm6hVSrU9nrrELsGsp56sdH4q3I30xmX4lpr62Cc
+         yh35fuNVRUWOnNyUapFr5iG3vIgI4sR+a0Dw0BQ38R5sZZV1dNnJNDjoeC8mKyckixc0
+         0QHN13+UsDxKn+shjPmNquavfJaKhElBpXfZG0MT3Ig58YnT5BteePjZW/nSI0AvuWld
+         JwNnJhih/UURq5EfizTsBOJIrXB2BW/3uJKB7BR2Vi9PhnLCeSS2Q1tYdxJ1PBFyQwXD
+         eOzaPRc9RvEZPVbqZxr/HNyi0PI2myb57EDUatwmbEU3Si8x8tXc/uVryT30XJuKQMlU
+         1koQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oRCZ9LjHpNXwaAnK7I3Kark9db4GMPEf4le7QOKY7Do=;
-        b=uV1XDMsRdAWmqLTP8g9Q5IEROjtoaezxTeQTuOJc4gBk84jdBuVoxb42GvpYvENYis
-         AXGNEKtlqYrPweoIP12OwMQmU2DAhKs/VZzXiqg5W7WstNz/X1jdAY5fgdQ0c9nbLWB9
-         cPMDBvZD2ZpaY61Uin933b1umOdhShb+nzBVcy0xE62djO8i6qRHeLtPfbNldshHTb/9
-         RFOx+ozZ4G3Kjh6TMfAEify9ZPj94mr8wPLNdML7s0CVbiUI4QOaCbU6WMob7f3nGdQW
-         1Zw0Bh+4WzJYeu7BenP8PJnDU9d0W8Kc/mlnhi7J/wxLmO1/OejEWwfOzVKQCcvEO3o2
-         LUMw==
-X-Gm-Message-State: AOAM533MxRVsWJEr8wE0+EPzatGhmM6JGk+50nEVWsoitxem57jtKn0X
-        aKrvX1Lwvsz5evaUvp7pGOnLxV2MEDfyPA==
-X-Google-Smtp-Source: ABdhPJyHoooRzC+Zh5I5sxlb3Y1IhXLktIrHacfYs6m+ILKsywPlflGwr22TzmG86xrSG5Xp5drb4Q==
-X-Received: by 2002:a05:600c:2056:: with SMTP id p22mr218238wmg.12.1613414501828;
-        Mon, 15 Feb 2021 10:41:41 -0800 (PST)
+        bh=F9IBskYvuRMaNYBuJ9lxjAVzqx3mm5wwkHChR5jOkS4=;
+        b=MLcsgiUJq+WFpbAgtw04bWCdC5wkF8eg3KayEs2xqkNcOdeT43AUSrO6AfWdaqommn
+         EFTQG2zaB/11jcyHJjLSrfmGPoST1T8dxHy10+3rAgstX/GyjrW5dV4m7qpyMZpwU9XT
+         MRrd+VWIsUGx0SoEGAlxjWmIDI9uBqZgrw1heuQKvvguZn3BTocuXP+QxjdIphEMdpwH
+         r6xuvJb18GoSYgLZhHt+052qkB6puG3KupyRPKzgMG24UTe/i8z2LM5/PZNkH9SD645w
+         1IkdkiEn0qy1Pm9BQ6WO+JqhdP6M3lr7JNPWyPdAWh/hYO/G9sKnQ3mWwLDBEBIetszw
+         b/3A==
+X-Gm-Message-State: AOAM530s/tNBHyY1X8n7QO70Gh/hO7jSXNXAcJ4ett5v3mY+fVvHxio1
+        LRQv09L2Vu9TMT6XqUDTjhyYI0av8wf2DA==
+X-Google-Smtp-Source: ABdhPJzEHD+F60P1MaHE6Ii7GNlDILzhi0uW1RCZH8zcmytiyUCZZH1jNpFkRlAHJWTHbgVMyTz5hw==
+X-Received: by 2002:a7b:c256:: with SMTP id b22mr194246wmj.108.1613414502578;
+        Mon, 15 Feb 2021 10:41:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.40
+        by smtp.gmail.com with ESMTPSA id v12sm11258979wrv.69.2021.02.15.10.41.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 10:41:41 -0800 (PST)
+        Mon, 15 Feb 2021 10:41:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         peff@peff.net,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/5] commit-graph: define common usage with a macro
-Date:   Mon, 15 Feb 2021 19:41:14 +0100
-Message-Id: <20210215184118.11306-2-avarab@gmail.com>
+Subject: [PATCH 2/5] commit-graph: remove redundant handling of -h
+Date:   Mon, 15 Feb 2021 19:41:15 +0100
+Message-Id: <20210215184118.11306-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <87r1lhb6z7.fsf@evledraar.gmail.com>
 References: <87r1lhb6z7.fsf@evledraar.gmail.com>
@@ -78,62 +78,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Share the usage message between these three variables by using a
-macro. Before this new options needed to copy/paste the usage
-information, see e.g. 809e0327f5 (builtin/commit-graph.c: introduce
-'--max-new-filters=<n>', 2020-09-18).
+If we don't handle the -h option here like most parse_options() users
+we'll fall through and it'll do the right thing for us.
+
+I think this code added in 4ce58ee38d (commit-graph: create
+git-commit-graph builtin, 2018-04-02) was always redundant,
+parse_options() did this at the time, and the commit-graph code never
+used PARSE_OPT_NO_INTERNAL_HELP.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ builtin/commit-graph.c  | 4 ----
+ t/t5318-commit-graph.sh | 5 +++++
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index cd86315221..c3fa4fde3e 100644
+index c3fa4fde3e..baead04a03 100644
 --- a/builtin/commit-graph.c
 +++ b/builtin/commit-graph.c
-@@ -9,26 +9,27 @@
- #include "progress.h"
- #include "tag.h"
+@@ -319,10 +319,6 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
  
--static char const * const builtin_commit_graph_usage[] = {
--	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
--	N_("git commit-graph write [--object-dir <objdir>] [--append] "
--	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
--	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
--	   "<split options>"),
-+static const char * builtin_commit_graph_verify_usage[] = {
-+#define BUILTIN_COMMIT_GRAPH_VERIFY_USAGE \
-+	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]")
-+	BUILTIN_COMMIT_GRAPH_VERIFY_USAGE,
- 	NULL
- };
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_commit_graph_usage,
+-				   builtin_commit_graph_options);
+-
+ 	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_commit_graph_options,
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 2ed0c1544d..567e68bd93 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -5,6 +5,11 @@ test_description='commit graph'
  
--static const char * const builtin_commit_graph_verify_usage[] = {
--	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]"),
-+static const char * builtin_commit_graph_write_usage[] = {
-+#define BUILTIN_COMMIT_GRAPH_WRITE_USAGE \
-+	N_("git commit-graph write [--object-dir <objdir>] [--append] " \
-+	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] " \
-+	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] " \
-+	   "<split options>")
-+	BUILTIN_COMMIT_GRAPH_WRITE_USAGE,
- 	NULL
- };
+ GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS=0
  
--static const char * const builtin_commit_graph_write_usage[] = {
--	N_("git commit-graph write [--object-dir <objdir>] [--append] "
--	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] "
--	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] "
--	   "<split options>"),
--	NULL
-+static char const * const builtin_commit_graph_usage[] = {
-+	BUILTIN_COMMIT_GRAPH_VERIFY_USAGE,
-+	BUILTIN_COMMIT_GRAPH_WRITE_USAGE,
-+	NULL,
- };
- 
- static struct opts_commit_graph {
++test_expect_success 'usage' '
++	test_expect_code 129 git commit-graph -h 2>err &&
++	! grep error: err
++'
++
+ test_expect_success 'setup full repo' '
+ 	mkdir full &&
+ 	cd "$TRASH_DIRECTORY/full" &&
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
