@@ -2,139 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11144C433E6
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FCC5C433E0
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:50:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D670164E2B
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:49:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EAD464E2B
+	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 18:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbhBOStd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 13:49:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229925AbhBOSt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 13:49:28 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92506C061574
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:48:47 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id g5so9410951ejt.2
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 10:48:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ljdhb8C73ML1u6zjvdZjGnmK6XJ8ZwSzULeoP2S7Oa8=;
-        b=NW/31S1ijiZIc9mzfK51JCcwrUgGRTmFB6ExnoaGWYdpanFS5s1tJuCC2vFzXa3+VY
-         5XncuZAvZqb6S5MT9KLSrscBe5PlcgeSDlzekIOQtp5zpaMIe5QG+VEsSX7R0D8k0Mms
-         k+Dzi975UtuwMfhyQzkm7RHxnGLjVGzZi9LRSYYoQEww2KdlKZckZaH4W4HYG5go28LZ
-         Dkhx310uH3VcBMo5+MZSYMJtgeQXq7n/yTRmONaksAEIUCcUvXH/KaUtuDSbqnbkohO7
-         pywKX4UDQXMCidoUr8mMT55qOhwD1dIwDHhWkLj3NFXGOZislKxfgkB92ccmtZpEFMYw
-         hPrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Ljdhb8C73ML1u6zjvdZjGnmK6XJ8ZwSzULeoP2S7Oa8=;
-        b=Ff3qyBxbKdFb/vYrhxelzpQAqTsLE58FA3nbo11tOZSBb9DfonmgY99tUcMuKx06VE
-         QzsPydI9qLUn2+BKam1Yu2YemXI8pN5pweHZ1Kctbfzv0WiSfQjNXY2ZsQLRKJj09DV0
-         1gzM0WxCn41CMKliy2ya8KAjS+XkRMcdj6yQrBvKSQn2+awBp1iBm8KtZeBmkFVpC52z
-         bEE3hO2L86PT6+C1xlL/y9lGaXcfU5xeCY1ZyXH+7k8dM3oTNnQrr/2QP5ompAQAaHrt
-         tL5AtWjxZUyRThYrz1LemREyLtFcwnulFnrPRJbYOV2ZF5djR80ebJy85uDTFgI6YVsk
-         XQJw==
-X-Gm-Message-State: AOAM53338zmXuVD2LwKc6B4+hNxE2GQuR1WN/pgQ/n0n6hwoIvGt8kjT
-        lnd1qabcixp6a3GdAcDW+xs=
-X-Google-Smtp-Source: ABdhPJyQrrtO6tw3sg0WmBJsY2BFfCLWEIyfUDfOeQxeamvDE+/yrR72RZiBsnUQL3lqX1tfZ1tmzQ==
-X-Received: by 2002:a17:906:c00c:: with SMTP id e12mr16942328ejz.103.1613414926280;
-        Mon, 15 Feb 2021 10:48:46 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id ks13sm4055897ejb.69.2021.02.15.10.48.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 10:48:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 09/27] userdiff tests: match full hunk headers
-References: <20210215005236.11313-1-avarab@gmail.com>
- <20210215154427.32693-10-avarab@gmail.com>
- <4bd7bb84-3b75-258e-b488-f66dff6ba6b5@kdbg.org>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <4bd7bb84-3b75-258e-b488-f66dff6ba6b5@kdbg.org>
-Date:   Mon, 15 Feb 2021 19:48:44 +0100
-Message-ID: <87o8glb20j.fsf@evledraar.gmail.com>
+        id S230131AbhBOSt7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 13:49:59 -0500
+Received: from mout.web.de ([212.227.15.3]:54069 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229925AbhBOSt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 13:49:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1613414869;
+        bh=ff6TVf02NJialGqXPnH5lhQIXyFzieNgJIUzJhcbmOA=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=OJNM/82S4LmwK7Sl3iMevZBPy+siXxZITnWf7nh4k1tSZOuQPwviUpB7pC1R3ryUj
+         VBF1cWv91hH7TvOUqy9ekj1K+GmNSnQPllYIXagxwzDGguZiyhbE7lO2f6Ai8/Rh2E
+         axbaArL4KgOBgcZXV6T+qkzKinUOwbwl1SSm4w1Q=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1M3V6E-1lBAwg3woM-000xyl; Mon, 15 Feb 2021 19:47:48 +0100
+Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Jeff King <peff@peff.net>
+References: <20210215154427.32693-1-avarab@gmail.com>
+ <20210215155020.2804-2-avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
+Message-ID: <d02c99b8-ae26-9804-480c-eae880f4a6cb@web.de>
+Date:   Mon, 15 Feb 2021 19:47:48 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
+In-Reply-To: <20210215155020.2804-2-avarab@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:l8wgbjLcu0kJ112IM1WQAib6jty3Hzz3h8aCXc9i4F6enb56H9W
+ LnzMBqf2O7aVyjtl5Kpg5fZT2yiblV+xy1DHjVgK9m8IriT3LL/A5CP8e73/FkG4hDnx4aA
+ 8+35nQP2SB6qNsbZ4kj3q66Hton/jAhgjxm0oarDdLJ6gTbuR9OFt2c2OLMxNlFbWkOUjxJ
+ cnjjV0dJeZ085SKs1wT1g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:y6NVRzwFZDo=:7h6gnOC3V44M1lkWLBf8Ru
+ 95J2uIqJ/Dzm+o/7d3Xd/16jrlvrCLv53i1yQwRP9VVCYiytw3iennC6vn7NfC3v9ZYMo06Gk
+ BRVz16l1WTXpAyWj9HW9Nmqsr1qoptm2UXOwSqzSDVsvpBSt8Rl6H7gkhnPoMhF7UHZt3MTNK
+ LWKIWL9HhBnpw7VHxJt6lld5Kr99zjMEZGu4UqO13i6B7vOKl3WEhRSonDZqKDTWHbRJQBsWN
+ M3eWo1MdI9YrjfGSgSCFlYf7ACxSiO6pTOAinHHLOxdXeioiC7TonKjMhUDmX+hRCfDnvLVSS
+ /yk1bhsrtrUWTPR/OqxNZSlwCpYtPvUK77rYRIns7KnFM7ZXaeN7Uz2CjlG7c9bl1Tdwctxt5
+ eYc3fH4OPbIeiFPSw+aArZv8oIw8qB2/+PdyDqNK+S034juEkbq4EWkVTMdaJ+fP6m7BBBwJZ
+ AuTDUmHOrJlvHvatU8QiDZTN7yF2yRXu1smdDnakFZLn6MNneAGe426vcmEP/UTqMzPfvJUdO
+ cMyeyxqOWyqI2RbDhVG0vzwZq4dw4/FJnIQz7+kcNC6s25bT1ndJtWPCf78AhMrpENlrpgLvH
+ qPrT9c+tJjCogqmX/K5kFFW9tCBIRYRwq1MM44TxzH4+3jtY1Kvwi5ztozoP169LtnXGfNZg5
+ VTlol+kFu4aYkqvyJegMNFoFAS6KirjygxDHVdqlVQW9CmwExuQ1rnzrzk5IwIcOSXoXKltDA
+ KUW+Pxnjg15HIgiQIV1W4Any43g/3C445AT5vLlcgp/okQv26Byk9sW7L3GvTWdTRZziIm1gi
+ vYYYCX563vWg0NR+xkwsJuzbYo0kpoJkG2+XRPSgjFDOO/IJC4lGPNB+ViLs+H+H2jCINn2L/
+ 8vdPLL9btud6U4pPEZ9Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Feb 15 2021, Johannes Sixt wrote:
-
-> Am 15.02.21 um 16:44 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> Fix a regression in the test framework for userdiff added in
->> bfa7d01413 (t4018: an infrastructure to test hunk headers,
->> 2014-03-21).
->> The testing infrastructure added in that change went overboard with
->> simplifying the tests, to the point where we lost test coverage.
->> Before that we'd been able to test the full context line, or ever
->> since the feature was originally added in f258475a6e (Per-path
->> attribute based hunk header selection., 2007-07-06).
->> After bfa7d01413 all we cared about was whether "RIGHT" appeared on
->> the line. We thus lost the information about whether or not "RIGHT"
->> was extracted from the line for the hunk header, or the line appeared
->> in full (or other subset of the line).
->> Let's bring back coverage for that by adding corresponding *.ctx
->> files, this has the added advantage that we're doing a "test_cmp", so
->> when we have failures it's just a non-zero exit code from "grep",
->> we'll actually have something meaningful in the "-v" output.
->> As we'll see in a follow-up commit this is an intermediate step
->> towards even better test coverage. I'm structuring these tests in such
->> a way as to benefit from the diff.colorMove detection.
->> The "sed -n -e" here was originally a single 's/^.*@@\( \|$\)//p'
->> pattern, but the '\( \|$\)' part had portability issues on OSX and
->> AIX.
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>   t/t4018-diff-funcname.sh                      |  7 +++---
->>   t/t4018/README                                | 22 +++++++++----------
->>   t/t4018/README.ctx                            |  1 +
->>   t/t4018/bash-arithmetic-function.ctx          |  1 +
->>   t/t4018/bash-bashism-style-compact.ctx        |  1 +
->>   [...and so on...]
+Am 15.02.21 um 16:50 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Fix what I believe to be a long-standing bug in how "-W" interacts
+> with displaying the hunk context on the @@ line: It should not be
+> displayed at all under -W.
 >
-> This is what I meant by "without burdening test writers with lots of
-> subtleties".
+> The long-standing semantics of how -W works and interacts with -U<n>
+> are rather easy to reason about:
 >
-> I'm not a friend of this change :-(
+>  * -W extends the context line up to the start of the function. With
+>     userdiff this means the language-aware regex rules in userdiff.c,
+>     or user-supplied rules.
 >
-> I think you are going overboard with required test precision. To have
-> useful tests for userdiff patterns that demonstrate its features,=20
-> authors should write *many* tests. The right balance should be on the
-> coverage of userdiff pattern features, not on the subtle details of
-> each and everyone of it. Requiring that many additional context files
-> makes it *really hard* to comply.
+>  * -U<n>, which defaults to -U3 shows at least <n> lines of context,
+>     if that's greater than what we'd extend the context to under -W
+>     then -U<n> wins.
+>
+>  * When showing the hunk context we look up from the first line we
+>    show of the diff, and find whatever looks like useful context above
+>    that line.
+>
+> Thus in e.g. the xdiff/xemit.c change being made in this commit we'll
+> correctly show "xdl_emit_diff()" in the hunk context under default
+> diff settings.
+>
+> But if we viewed it with the -W option we'd show "is_empty_rec()",
+> because we'd first find the "xdl_emit_diff()" context line, extend the
+> diff to that, and then would go look for context to show again.
+>
+> I don't think this behavior makes any sense, our context in this case
+> is what we're guaranteed to show as part of the diff itself.
+>
+> The user already asked us to find that context line and show it, we
+> don't need to then start showing the context above that line, which
+> they didn't ask for.
 
-I agree that this change sucks when viewed in isolation. I think it has
-value as part of the larger series, since (as noted in the commit
-message) the point here is to allow the reviewer to see the the test
-content & semantics aren't different.
+Hmm, that's subtle.
 
-I suppose I could do some version of squashing this and 12/27, but then
-I'd be introducing the full testing of the context line at the same
-time.
+Your reasoning applies to patches generated without -W as well.  If the
+precontext contains a function line then the @@ line should not contain
+a function comment.  However, e.g. with this:
 
-By doing it this way I split the change in test semantics from the test
-structure change itself in 12/27.
+=2D- snip --
+cat >a <<EOF
+func a
+
+func b
+1
+2
+3
+EOF
+sed 's/3/three/' <a >b
+diff -up a b
+=2D- snap --
+
+... I get this:
+
+=2D-- a	2021-02-15 18:30:21.000000000 +0100
++++ b	2021-02-15 18:30:21.000000000 +0100
+@@ -3,4 +3,4 @@ func a
+ func b
+ 1
+ 2
+-3
++three
+
+So diff(1) shows the previous function line.  git diff does the same.
+
+The behaviour of diff(1) and git diff does make sense to me: It's easy
+to implement and the only downside is that it produces extra output in
+some cases.
+
+I can understand that users would rather have a tidy diff without
+distractions, though.  So I like the output change you propose.
+
+However, I'm not sure it would be a good idea to clear @@ lines of hunks
+generated without -W that have function lines in their precontext, even
+though it would be a logical thing to do.
+
+> This new behavior does give us the edge case that if we e.g. view the
+> diff here with "-U150 -W" we'd previously extend the context to the
+> middle of the "is_func_rec()" function, and show that function in the
+> hunk context. Now we'll show nothing.
+
+Well, the 150 lines of context are still shown (as they should be), but
+the @@ line contains no function name anymore.
+
+> I think that change also makes sense. We're showing a change in the
+> "xdl_emit_diff()" function. That's our context for the change. It
+> doesn't make sense with -W to start fishing around for other
+> context.
+
+It does make sense in the context of the diff(1) -p implementation, but
+your change is consistent with the description of that option: "Show
+which C function each change is in."
+
+> Arguably in that case we could save away the context we found in the
+> "XDL_EMIT_FUNCCONTEXT" in "xdl_emit_diff()" and show that if we end up
+> extending the diff past the function, either because of a high -U<n>
+> value, or because our change was right at the start.
+>
+> I wouldn't really mind if we did that, perhaps it would be a useful
+> marker with high -U<n> values to remind the user of what they're
+> looking at, but I also don't see the usefulness in practice, so let's
+> punt that for now.
+
+It could be confusing for someone who expects the old behaviour, leaving
+it empty makes more sense to me.
+
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  Documentation/diff-options.txt | 4 ++++
+>  t/t4015-diff-whitespace.sh     | 2 +-
+>  t/t4018-diff-funcname.sh       | 7 +++++++
+>  xdiff/xemit.c                  | 4 +++-
+>  4 files changed, 15 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options=
+.txt
+> index e5733ccb2d..8ca59effa7 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -759,6 +759,10 @@ endif::git-format-patch[]
+>  	The function names are determined in the same way as
+>  	`git diff` works out patch hunk headers (see 'Defining a
+>  	custom hunk-header' in linkgit:gitattributes[5]).
+> ++
+> +When showing the whole function for context the "@@" context line
+> +itself will always be empty, since the context that would otherwise be
+> +shown there will be the first line of the hunk being shown.
+>
+>  ifndef::git-format-patch[]
+>  ifndef::git-log[]
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index 8c574221b2..0ffc845cdd 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -2133,7 +2133,7 @@ test_expect_success 'combine --ignore-blank-lines =
+with --function-context 2' '
+>  		--ignore-blank-lines --function-context a b >actual.raw &&
+>  	sed -n "/@@/,\$p" <actual.raw >actual &&
+>  	cat <<-\EOF >expect &&
+> -	@@ -5,11 +6,9 @@ c
+> +	@@ -5,11 +6,9 @@
+>  	 function
+>  	 1
+>  	 2
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index 80f35c5e16..f3374abd98 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -91,6 +91,13 @@ test_diff_funcname () {
+>  		fi
+>  	' &&
+>
+> +	test_expect_success "$desc -W" '
+> +		git diff -U0 -W "$what" >W-U0-diff &&
+> +		echo >W-U0-expected &&
+> +		last_diff_context_line W-U0-diff >W-U0-actual &&
+> +		test_cmp W-U0-expected W-U0-actual
+> +	' &&
+> +
+>  	test_expect_success "$desc (accumulated)" '
+>  		git diff -U1 "$what".acc >diff &&
+>  		last_diff_context_line diff >actual.lines &&
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index 9d7d6c5087..02b5dbcc70 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -274,7 +274,9 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xd=
+emitcb_t *ecb,
+>  		 */
+>
+>  		if (xecfg->flags & XDL_EMIT_FUNCNAMES) {
+> -			get_func_line(xe, xecfg, &func_line,
+> +			get_func_line(xe, xecfg,
+> +				      xecfg->flags & XDL_EMIT_FUNCCONTEXT
+> +				      ? NULL : &func_line,
+
+Why still search?  It would be better to turn off XDL_EMIT_FUNCNAMES if
+XDL_EMIT_FUNCCONTEXT is enabled -- a one-character change in diff.c.
+
+>  				      s1 - 1, funclineprev);
+>  			funclineprev =3D s1 - 1;
+>  		}
+>
