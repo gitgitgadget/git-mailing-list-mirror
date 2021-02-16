@@ -2,90 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 167AAC433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83889C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 08:28:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7EA264DFF
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:26:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3168864E10
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 08:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbhBPH0v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 02:26:51 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:56592 "EHLO localhost"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229713AbhBPH0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 02:26:51 -0500
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by localhost (Postfix) with ESMTP id 518E91C52D;
-        Tue, 16 Feb 2021 08:26:29 +0100 (CET)
-Subject: Re: [PATCH 2/2] diff: test and document -W interaction with -U<n>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Jeff King <peff@peff.net>
-References: <20210215154427.32693-1-avarab@gmail.com>
- <20210215155020.2804-3-avarab@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <e8cd8834-0d98-9b2f-51f5-ae4f9296b9d2@kdbg.org>
-Date:   Tue, 16 Feb 2021 08:26:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+        id S229635AbhBPI1y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 03:27:54 -0500
+Received: from relay7-d.mail.gandi.net ([217.70.183.200]:57015 "EHLO
+        relay7-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229782AbhBPI1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 03:27:37 -0500
+X-Originating-IP: 94.46.225.161
+Received: from kronos (unknown [94.46.225.161])
+        (Authenticated sender: public@protesilaos.com)
+        by relay7-d.mail.gandi.net (Postfix) with ESMTPSA id 6D6FC20004;
+        Tue, 16 Feb 2021 08:26:33 +0000 (UTC)
+From:   Protesilaos Stavrou <info@protesilaos.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Adam Spiers <git@adamspiers.org>,
+        git list <git@vger.kernel.org>
+Subject: Re: [PATCH] userdiff: add support for Emacs Lisp
+References: <20210213192447.6114-1-git@adamspiers.org>
+        <87wnvbbf2y.fsf@evledraar.gmail.com>
+        <aab77ef2-c619-ed87-6c3b-9a1b5ec36f41@kdbg.org>
+        <87tuqebj6m.fsf@evledraar.gmail.com>
+Date:   Tue, 16 Feb 2021 10:26:31 +0200
+In-Reply-To: <87tuqebj6m.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 14 Feb 2021 19:25:37 +0100")
+Message-ID: <87lfbo5sg8.fsf@protesilaos.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210215155020.2804-3-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.02.21 um 16:50 schrieb Ævar Arnfjörð Bjarmason:
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->   Documentation/diff-options.txt | 8 ++++++++
->   t/t4018-diff-funcname.sh       | 5 +++++
->   2 files changed, 13 insertions(+)
-> 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 8ca59effa7..3c19c78616 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -88,6 +88,11 @@ endif::git-log[]
->   --unified=<n>::
->   	Generate diffs with <n> lines of context instead of
->   	the usual three.
-> ++
-> +Under `-W` generates diffs with at least <n> lines of context, if the
-> +number is lower than the context `-U<n>` would extend the diff to then
-> +`-U<n>` takes precedence.
-> +
-
-How about (not as separate paragraph):
-
-When combined with `--function-context`, this specifies the minimum of 
-context lines.
-
->   ifndef::git-format-patch[]
->   	Implies `--patch`.
->   endif::git-format-patch[]
-> @@ -763,6 +768,9 @@ endif::git-format-patch[]
->   When showing the whole function for context the "@@" context line
->   itself will always be empty, since the context that would otherwise be
->   shown there will be the first line of the hunk being shown.
-> ++
-> +See the documentation for `-U<n>` above for how the two options
-> +interact.
-
-How about
-
-Use `-U<n>` to specify a minimum of context (default three lines).
-
-so that readers do not have to search.
-
--- Hannes
+T24gMjAyMS0wMi0xNCwgMTk6MjUgKzAxMDAsIMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIDxh
+dmFyYWJAZ21haWwuY29tPiB3cm90ZToNCg0KPiBPbiBTdW4sIEZlYiAxNCAyMDIxLCBKb2hhbm5l
+cyBTaXh0IHdyb3RlOg0KPg0KPj4gQW0gMTQuMDIuMjEgdW0gMDI6NDEgc2NocmllYiDDhnZhciBB
+cm5masO2csOwIEJqYXJtYXNvbjoNCj4+PiBKdXN0IGEgY3Vyc29yeSAiZ2l0IGxvZyAtcCAtLSBs
+aXNwIiBpbiBlbWFjcy5naXQgd2l0aCB5b3VyIHBhdGNoIHNob3dzDQo+Pj4gZS5nLiBsaXNwL3Ro
+aW5nYXRwdC5lbCB3aGVyZSBmb3JtcyBpbiBhICJkZWZ1biIgYXJlbid0IGluZGVudGVkIChiZWZv
+cmUNCj4+PiBpdCBzZWxlY3RzIHRoZSAiZGVmdW4iLCBhZnRlciB3aXRoIHlvdXJzIGl0J3MgYSAi
+cHV0IiBpbiB0aGUgbWlkZGxlIG9mDQo+Pj4gdGhlIGZ1bmN0aW9uKS4NCj4+DQo+PiBOb3RlIHRo
+YXQgbmVnYXRpdmUgbWF0Y2hlcyBjYW4gYmUgc3BlY2lmaWVkLiBXZSB1c2UgdGhlIGZlYXR1cmUg
+aW4gdGhlDQo+PiBjcHAgY2FzZSB0byBleGNsdWRlIHB1YmxpYzovcHJvdGVjdGVkOi9wcml2YXRl
+OiBhbmQgbGFiZWw6IHRoYXQgaGFwcGVuIA0KPj4gdG8gYmUgbm90IGluZGVudGVkLiBQZXJoYXBz
+IHRoYXQgY2FuIGJlIHVzZWZ1bCBoZXJlPw0KPj4NCj4+IE9oLCBhbmQgQlRXLCB3aGF0IHRoZSBw
+YXR0ZXJucyB0cmVhdCBhcyAiZnVuY3Rpb24iIG11c3Qgbm90IG1hdGNoIHdoYXQNCj4+IHRoZSBs
+YW5ndWFnZSB0cmVhdHMgYXMgZnVuY3Rpb24uIFRoZSBwdXJwb3NlIG9mIHRoZSBodW5rIGhlYWRl
+ciBpcyB0byANCj4+IHNwb3QgYSBwbGFjZSBpbiB0aGUgc291cmNlIGZpbGUgZWFzaWx5LiBTbywg
+aXQgZG9lcyBub3QgaHVydCBpZg0KPj4gZXZhbC1hbmQtY29tcGlsZSBmb3JtcyBhcmUgY2FwdHVy
+ZWQgKGFzIHdhcyBtZW50aW9uZWQgaW4gdGhlIGxpbmtlZCANCj4+IHRocmVhZCkgaWYgZGVzaXJl
+ZC4NCj4NCj4gUmlnaHQsIHNvIGhhdmluZyBsb3RzIG9mIHRlc3QtY2FzZSBpcyBoZWxwZnVsLCBl
+LmcuIGZvciBlbGlzcCBtYXliZSB5b3UNCj4gaGF2ZSBhIHRvcC1sZXZlbCBkZWZ1biwgbWF5YmUg
+bm90LCBtYXliZSB0aGUgdG9wLWxldmVsIGlzIGEgIihwcm9nbiIgc28NCj4geW91J2QgbGlrZSBh
+IHNlY29uZC1sZXZlbCBtb3JlIG1lYW5pbmdmdWwgY29udGV4dCwgb3IgbWF5YmUgbm90Li4uDQo+
+DQo+IE9idmlvdXNseSB0aGVzZSB1c2VyZGlmZiBwYXR0ZXJucyBhcmVuJ3QgYSBnZW5lcmFsIHBh
+cnNlciBhbmQgd2lsbA0KPiBhbHdheXMgYmUgaGl0LWFuZC1taXNzLCBpdCdzIGp1c3QgdXNlZnVs
+IHRvIGF0IGxlYXN0IGV5ZWJhbGwgdGhlbQ0KPiBhZ2FpbnN0IGluLXRoZS13aWxkIHRlc3QgZGF0
+YSB0byBjaGVjayB0aGVpciBzYW5pdHkgJiBhZGQgc29tZSB0ZXN0cy4NCg0KT3VyIGludGVudCB3
+aXRoIHRoaXMgcGF0Y2ggaXMgdG8gcmVseSBvbiBhIGhldXJpc3RpYyB0aGF0IHdvcmtzIGZvciBt
+b3N0DQpjYXNlcy4gIFRoZXJlIHdpbGwgYWx3YXlzIGJlIHNvbWUgY2FzZSB0aGF0IGlzIG5vdCBj
+b3ZlcmVkLiAgVGhpcyBwb2ludA0Kd2FzIG1hZGUgZXhwbGljaXQgaW4gdGhlIHJlbGV2YW50IGVt
+YWNzLWRldmVsIHRocmVhZC4NCg0KPiBNeSBjdXJzb3J5IGdsYW5jZSBhdCB0aGUgZW1hY3MuZ2l0
+IHZlcnNpb24gdi5zLiB3aGF0J3MgYmVpbmcgc3VibWl0dGVkDQo+IGhlcmUgaXMgdGhhdCB0aGlz
+IG9uZSBkb2VzIGEgd29yc2Ugam9iIGluICp2ZXJ5IGNvbW1vbiogY2FzZXMuDQo+DQo+Pj4gWW91
+cnMgYWxzbyBjaGFuZ2VzIGl0IGZyb20gZS5nLjoNCj4+PiAgICAgIEBAIC02MSw3ICs2MSw3IEBA
+IGZvcndhcmQtdGhpbmcNCj4+PiB0bzoNCj4+PiAgICAgIEBAIC02MSw3ICs2MSw3IEBAIChkZWZ1
+biBmb3J3YXJkLXRoaW5nICh0aGluZyAmb3B0aW9uYWwgbikNCj4+PiBJcyB0aGlzIHJlYWxseSBk
+ZXNpcmVkIGluIGVsaXNwPw0KDQpJIHRoaW5rIHRoaXMgaXMgYSBtYXR0ZXIgb2YgcGVyc3BlY3Rp
+dmUgYW5kIGluZGVlZCBhIHZhbGlkIHJlYXNvbiBmb3INCmRvaW5nIHRoaXMgaW4gZW1hY3MuZ2l0
+IGZpcnN0Lg0KDQpGb3IgbXkgcGFydCwgSSBmaW5kIHRoZSB2ZXJib3NlIHN0eWxlIG1vcmUgaW5m
+b3JtYXRpdmUsIGVzcGVjaWFsbHkgd2hlbg0KaXQgY2FwdHVyZXMgdGhlIHByZXZpb3VzIGZvcm0g
+aW5zdGVhZCBvZiB0aGUgb25lIGRpcmVjdGx5IGFyb3VuZCB0aGUNCmRpZmZlZCBsaW5lcy4NCg0K
+UGVyaGFwcyBvbmUgY291bGQgYWRkIHRvIHRoYXQgRW1hY3MnIGFiaWxpdHkgdG8gdXNlIHRoZSBz
+YW1lIG5hbWUgZm9yDQpkaWZmZXJlbnQgdGhpbmdzLCBlLmcuIGEgZnVuY3Rpb24gYW5kIGEgdmFy
+aWFibGUsIHdoZXJlIHZlcmJvc2l0eSBvZg0KdGhpcyBzb3J0IGNhbiBoZWxwIHdpdGggZGlzYW1i
+aWd1YXRpb24uICBHcmFudGVkLCB3ZSBzaG91bGQgbm90IHJlYWxseQ0Kb24gc3VjaCBhIGhlYWRp
+bmcgc3R5bGUgdG8gYWlkIHVzIGluIHRoYXQgdGFzaywgdGhvdWdoIGl0IG1heSBiZQ0Kc29tZXRo
+aW5nIHRvIGNvbnNpZGVyLg0KDQo+PiBJdCdzIGNvbW1vbiBwcmFjdGljZSB0byBleHRyYWN0IHRo
+ZSBlbnRpcmUgbGluZSAoc2FucyBpbmRlbnRhdGlvbiBpZg0KPj4gYXBwbGljYWJsZSksIG5vdCBq
+dXN0IHRoZSBmdW5jdGlvbiBuYW1lLiBXaHkgd291bGQgc29tZWJvZHkgd2FudCB0aGUgDQo+PiBs
+YXR0ZXI/IEl0IGRvZXNuJ3QgY2FycnkgYXMgbXVjaCBpbmZvcm1hdGlvbiBhcyBjb3VsZCBiZSBw
+b3NzaWJsZS4NCj4NCj4gQmVjYXVzZSBJJ20gZmFtaWxpYXIgd2l0aCB0aGUgY29kZWJhc2UgSSdt
+IGVkaXRpbmcgYW5kIEkganVzdCBuZWVkIHRvDQo+IGtub3cgdGhhdCB0aGUgZGlmZiBJJ20gdmll
+d2luZyBpcyBvbiB0aGUgIm1haW4iIGZ1bmN0aW9uLCBub3QgdGhhdCBpdCdzDQo+ICJtYWluKCki
+LCAiaW50IG1haW4oaW50IGFyZ3YsIGNoYXIgKiphcmd2KSIsICJpbnQgbWFpbihjb25zdCBpbnQg
+YXJndiwNCj4gY29uc3QgY2hhciAqYXJndltdKSIsIG9yIHRvIGVpdGhlciBoYXZlIGEgIiB7IiBv
+ciBub3QgYXQgdGhlIGVuZA0KPiBkZXBlbmRpbmcgb24gdGhlIHByb2plY3QncyBjb2Rpbmcgc3R5
+bGUuDQoNCk9mdGVudGltZXMgd2UgcHJvZHVjZS9yZWFkIHBhdGNoZXMgZm9yIHByb2plY3RzIHRo
+YXQgd2UgYXJlIG5vdA0KbmVjZXNzYXJpbHkgYWNxdWFpbnRlZCB3aXRoLiAgVGhpcyBpbmNsdWRl
+cyBlbWFjcy5naXQgYW5kIHRoZSBtdWx0aXR1ZGUNCm9mIEVsaXNwIHBhY2thZ2VzIGluIHRoYXQg
+bWlsaWV1LiAgQW4gZXh0cmEgZWxlbWVudCBvZiBjb250ZXh0dWFsaXR5IGNhbg0KZG8gdXMgZ29v
+ZC4NCg0KSXQgaXMgdHJ1ZSB0aGF0IGZhbWlsaWFyaXR5IHdpdGggdGhlIGNvZGUgYmFzZSB3aWxs
+IGFsd2F5cyBiZW5lZml0IGZyb20NCnN1Y2NpbmN0IGhlYWRpbmdzLCB0aG91Z2ggSSBmZWVsIHRo
+YXQgd2hlbmV2ZXIgd2UgYXJlIGluIGRvdWJ0IHdlIHNob3VsZA0KZXJyIG9uIHRoZSBzaWRlIG9m
+IGNhdXRpb246IHdoaWNoIG1lYW5zIHRoYXQgd2UgbXVzdCBub3QgaW50cm9kdWNlIHN1Y2gNCmFu
+IGFzc3VtcHRpb24gdG8gdGhlIHdvcmtpbmdzIG9mIHRoaXMgcGllY2Ugb2YgZnVuY3Rpb25hbGl0
+eS4NCg0KPiBJIGtub3cgb3VyIG93biB1c2VyZGlmZiBidWlsdGluIHBhdHRlcm5zIGRvbid0IGRv
+IHRoaXMsIGJ1dCBpdCB3b3VsZCBiZQ0KPiB2ZXJ5IHVzZWZ1bCB0byByZXRyb2ZpdCB0aGlzIGNh
+cGFiaWxpdHkgLyBtYXliZSBtYWtlIGl0IGEgY29uZmlndXJhYmxlDQo+IGZlYXR1cmUsIGkuZS4g
+aGF2ZSB0aGVtIGNhcHR1cmUgdGhlIG1lYW5pbmdmdWwgcGFydCBvZiB0aGUgbGluZSwgYW5kIHlv
+dQ0KPiBjb3VsZCBlaXRoZXIgcHJpbnQgaXQgYWxsLCBvciBqdXN0IHRoYXQgcGFydC4NCg0KSXQg
+d291bGQgYmUgbmljZSB0byBoYXZlIGFuIG9wdGlvbiB0aGF0IHRvZ2dsZXMgdmVyYm9zaXR5LiAg
+VGhvdWdoIEkNCmd1ZXNzIHRoaXMgbGllcyBvdXRzaWRlIHRoZSBzY29wZSBvZiB0aGUgcGF0Y2gg
+aW4gcXVlc3Rpb24uDQoNCkluIGNvbmNsdXNpb24sIEkgdGhpbmsgd2Ugc2hvdWxkIGRlY2lkZSBv
+biB0aGUgbmV4dCBzdGVwIGZvcndhcmQ6IGlmIHlvdQ0KdGhpbmsgdGhpcyBzaG91bGQgYmUgYXBw
+bGllZCB0byBlbWFjcy5naXQgYmVmb3JlIG1ha2luZyBpdHMgd2F5IHRvIGdpdA0KaXRzZWxmLCB0
+aGVuIHdlIGNhbiBtb3ZlIHRoZSBkaXNjdXNzaW9uIHRoZXJlLg0KDQpUaGFua3MgZm9yIHlvdXIg
+dGltZSBhbmQgZWZmb3J0cyENClByb3Rlc2lsYW9zIG9yICJQcm90Ig0KDQotLSANClByb3Rlc2ls
+YW9zIFN0YXZyb3UNCnByb3Rlc2lsYW9zLmNvbQ0K
