@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40A9FC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F21BC43381
 	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 12:05:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E530564E00
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 12:05:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1764264DDA
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 12:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230000AbhBPMFF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 07:05:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48412 "EHLO
+        id S230206AbhBPMFM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 07:05:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbhBPMCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 07:02:07 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B33C061356
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:28 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id v15so12588315wrx.4
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:28 -0800 (PST)
+        with ESMTP id S230417AbhBPMCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 07:02:19 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A70BDC061222
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:33 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id l17so8932430wmq.2
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JRVXdrboUjE/EsVbannzrSaGrJr2YVWjENyy6LHMI5w=;
-        b=aBgUtUIM6JKLTc4ZbCfJ1sZJ1wtWBvk5pxSGa13W2J3W4st4mG58y+kyXBMT/0nnD6
-         OUyfl6QlLDDEGwxIaGyQNT385iEvFiU/93CGMAQ+iHYnlGQ778h38QsiPPWEz2/gtu46
-         Ok+bLkCz1AH0Py7Mob5HUwrfoS9UHKkK+SQuqreOXWhnP4gUrdeGO//34vl4ZK/1OG2A
-         vjg+VxaNo2SgyzCZiTk2AfO7sYoR6Vcegs1Xt9Ru0XMfH/5X/H3ugJJei6DG0c/ZHKCu
-         kWGgMyPOeP8n8EAYCLOvbqOgEdNyALDHzq2lzUACuUlvpBSlBoXMb3EYz6/52WDPwRXw
-         ucGQ==
+        bh=Uh1usR7siGRw6cGOZsOPuaQw+7hf8fEOHWPH+QU3ADE=;
+        b=Tt9Dy5WlM+OIwHLNufMxRViGtqt0buhP40A9209IVvBo/q2RKX2lKorE+nJgMQILeS
+         AOoiprwjJKs+TCc0zisLMeeuKWCle3NMfqynpXpEkE1wu6Cv/mtW4BB46svXuBtPIBvX
+         pcroq8U7bNEEUM/ctLI/1BZAotVY9tWwHSwAjltprr/shQPnepSjsUP1hD5md/X4R8P4
+         g8X8mxEmlsIuMPz6pBvxoWceHMORX70+EkSwN8b40HiX9Vuidyeb0epyJxbZH6xwMoFa
+         XbJzfnwVNgsVIAcyG6Jp0byaxVHL5JdO4PzCjB+qJmfFKfRMDN0CR69eIxHx1J3bv8zg
+         qpyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JRVXdrboUjE/EsVbannzrSaGrJr2YVWjENyy6LHMI5w=;
-        b=UNFeEB5v6CMv+99ZLggAb3Urjwh8twz9Y53i5bjXKT2eJarEp/r9Gs927fECuF+4pb
-         71Nbi8vBwUnRME9OkPHdrSSLyAAXl0y+Qk+iZSsfe3R+XdgY2EI7s1e8b7q40JAE17sU
-         vU+jALqhVTnhaZM+uO/UdEQpjJsya51yVqoUdkqWFBCZpl4jNYFayVKk0aQSRCc6AkXZ
-         zw2GO10jD0B/5+16zipr5KVWWJcywwGUGB53JygZhTejwlK8jGzyx+pWA/W+pNhiIi0P
-         dM8Bni5Bva/ANR0E7xIpyDeKrc5FoVO2k9EJ3rS2OARvczydvb0Xalnm7SlJ+i8PF97u
-         T4LA==
-X-Gm-Message-State: AOAM533gS4szX2t9pye+SlOz/v0drBwNluhFyBFRNW/nY/89A90buNwt
-        Husg3hlTyJtJj2i7oQemFgsxMR/G3wA9zg==
-X-Google-Smtp-Source: ABdhPJyZJo54yYiV+YswS2hw0td6+ZfjIlab1tM+iHyaNz7w1bC/BwjZw0IwPI04ZhMtC+LrDWK1WA==
-X-Received: by 2002:a5d:47a8:: with SMTP id 8mr22797147wrb.180.1613476706802;
-        Tue, 16 Feb 2021 03:58:26 -0800 (PST)
+        bh=Uh1usR7siGRw6cGOZsOPuaQw+7hf8fEOHWPH+QU3ADE=;
+        b=FQldof6dJbJirzgHhOCDCAXT6ZXk40ghxS06SMDFlw3nfsfyvP6QJ3PMi/xujCJPrG
+         oKvUWtHhbJlTBzEqyExPkeD9vm4CFBjGqbgyGjES2UcfKstNJGqHKf4f7PB+mpdRZI3A
+         6qQCoXSc1GDroUZOWmnSUwBLVjVuLHPVdSJYCvABQ/2487DrzFXRMkcXujlLeAtZkwaF
+         F7b/ksNWL5gzf1rF0nrw/FfoptBrFu9T5LCKYhAKKq10+OsbfmNqSDBWnsP9OMVKS0WX
+         6rf1pmWFq4XUTQ3EgUqvkYP8DBYxs9BP9altg6p5fdMRAgcFAW7zQSCT0yZpA+2Z/U92
+         squA==
+X-Gm-Message-State: AOAM530XJrz0Lq/l/TDhZi2ybtssohsHtyacAfLz95vE+YrQgOu7JMF3
+        pZS8pejW+/wqjB1CbG8PxlrSWYMSBG6t8g==
+X-Google-Smtp-Source: ABdhPJyf3nqsbNNDXGfm0ELCI+/duDvtCHtsKwlsZ03t2fqJaAY8i4cfLYGkgRhb/gJxbYww2LW3DA==
+X-Received: by 2002:a1c:7217:: with SMTP id n23mr2989892wmc.183.1613476712103;
+        Tue, 16 Feb 2021 03:58:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b2sm27968246wrv.73.2021.02.16.03.58.25
+        by smtp.gmail.com with ESMTPSA id b2sm27968246wrv.73.2021.02.16.03.58.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Feb 2021 03:58:26 -0800 (PST)
+        Tue, 16 Feb 2021 03:58:31 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 16/22] pickaxe -S: support content with NULs under --pickaxe-regex
-Date:   Tue, 16 Feb 2021 12:57:55 +0100
-Message-Id: <20210216115801.4773-17-avarab@gmail.com>
+Subject: [PATCH v2 22/22] pickaxe -G: don't special-case create/delete
+Date:   Tue, 16 Feb 2021 12:58:01 +0100
+Message-Id: <20210216115801.4773-23-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
 References: <20210203032811.14979-1-avarab@gmail.com>
@@ -78,59 +78,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a bug in the matching routine powering -S<rx> --pickaxe-regex so
-that we won't abort early on content that has NULs in it.
+Instead of special-casing creations and deletions let's just generate
+a diff for them.
 
-We've had a hard requirement on REG_STARTEND since 2f8952250a8 (regex:
-add regexec_buf() that can work on a non NUL-terminated string,
-2016-09-21), but this sanity check dates back to d01d8c67828 (Support
-for pickaxe matching regular expressions, 2006-03-29).
+This logic of not running a diff under -G if we don't have both sides
+dates back to the original implementation of -S in
+52e9578985f ([PATCH] Introducing software archaeologist's tool
+"pickaxe"., 2005-05-21).
 
-It wasn't needed anymore, and as the now-passing test shows, actively
-getting in our way.
+In the case of -S we were not working with the xdiff interface and
+needed to do this, but when -G was implemented in f506b8e8b5f (git
+log/diff: add -G<regexp> that greps in the patch text, 2010-08-23)
+this logic was diligently copied over.
+
+But as the performance test added earlier in this series shows, this
+does not make much of a difference. With:
+
+    time GIT_TEST_LONG= GIT_PERF_REPEAT_COUNT=10 GIT_PERF_MAKE_OPTS='-j8 CFLAGS=-O3' ./run origin/next HEAD~ HEAD -- p4209-pickaxe.sh
+
+With the HEAD~ commit being the preceding "pickaxe -G: terminate early
+on matching lines" we get these results. Note that it's only the -G
+codepaths that are relevant to this change:
+
+    Test                                                                      origin/next       HEAD~                   HEAD
+    -----------------------------------------------------------------------------------------------------------------------------------------
+    4209.1: git log -S'int main' <limit-rev>..                                0.35(0.32+0.03)   0.35(0.33+0.02) +0.0%   0.35(0.30+0.05) +0.0%
+    4209.2: git log -S'æ' <limit-rev>..                                       0.46(0.42+0.04)   0.46(0.41+0.05) +0.0%   0.46(0.42+0.04) +0.0%
+    4209.3: git log --pickaxe-regex -S'(int|void|null)' <limit-rev>..         0.65(0.62+0.02)   0.64(0.61+0.02) -1.5%   0.64(0.60+0.04) -1.5%
+    4209.4: git log --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..          0.52(0.45+0.06)   0.52(0.50+0.01) +0.0%   0.54(0.47+0.04) +3.8%
+    4209.5: git log --pickaxe-regex -S'[àáâãäåæñøùúûüýþ]' <limit-rev>..       0.39(0.34+0.05)   0.39(0.34+0.04) +0.0%   0.39(0.36+0.03) +0.0%
+    4209.6: git log -G'(int|void|null)' <limit-rev>..                         0.60(0.55+0.04)   0.58(0.54+0.03) -3.3%   0.58(0.49+0.08) -3.3%
+    4209.7: git log -G'if *\([^ ]+ & ' <limit-rev>..                          0.61(0.52+0.06)   0.59(0.53+0.05) -3.3%   0.59(0.54+0.05) -3.3%
+    4209.8: git log -G'[àáâãäåæñøùúûüýþ]' <limit-rev>..                       0.61(0.51+0.07)   0.58(0.54+0.04) -4.9%   0.57(0.51+0.06) -6.6%
+    4209.9: git log -i -S'int main' <limit-rev>..                             0.36(0.31+0.04)   0.36(0.34+0.02) +0.0%   0.35(0.32+0.03) -2.8%
+    4209.10: git log -i -S'æ' <limit-rev>..                                   0.36(0.33+0.03)   0.39(0.34+0.01) +8.3%   0.36(0.32+0.03) +0.0%
+    4209.11: git log -i --pickaxe-regex -S'(int|void|null)' <limit-rev>..     0.83(0.77+0.05)   0.82(0.77+0.05) -1.2%   0.80(0.75+0.04) -3.6%
+    4209.12: git log -i --pickaxe-regex -S'if *\([^ ]+ & ' <limit-rev>..      0.67(0.61+0.03)   0.64(0.61+0.03) -4.5%   0.63(0.61+0.02) -6.0%
+    4209.13: git log -i --pickaxe-regex -S'[àáâãäåæñøùúûüýþ]' <limit-rev>..   0.40(0.37+0.02)   0.40(0.37+0.03) +0.0%   0.40(0.36+0.04) +0.0%
+    4209.14: git log -i -G'(int|void|null)' <limit-rev>..                     0.58(0.51+0.07)   0.59(0.52+0.06) +1.7%   0.58(0.52+0.05) +0.0%
+    4209.15: git log -i -G'if *\([^ ]+ & ' <limit-rev>..                      0.60(0.54+0.05)   0.60(0.54+0.06) +0.0%   0.60(0.56+0.03) +0.0%
+    4209.16: git log -i -G'[àáâãäåæñøùúûüýþ]' <limit-rev>..                   0.58(0.51+0.06)   0.57(0.52+0.05) -1.7%   0.60(0.48+0.09) +3.4%
+
+This small simplification really doesn't buy us much now, but I've got
+plans to both convert the pickaxe code to using a PCREv2 backend[1]
+and to implement additional pickaxe modes to do custom searches
+through the diff[2]. Always having the diff available under -G is
+going to help to simplify both of those changes.
+
+1. https://lore.kernel.org/git/20210203032811.14979-22-avarab@gmail.com/
+2. https://lore.kernel.org/git/20190424152215.16251-3-avarab@gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- diffcore-pickaxe.c     | 4 ++--
- t/t4209-log-pickaxe.sh | 8 ++++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ diffcore-pickaxe.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index dd1b5c72332..0bf50a2f595 100644
+index f11b38b7121..94d3890e669 100644
 --- a/diffcore-pickaxe.c
 +++ b/diffcore-pickaxe.c
-@@ -78,12 +78,12 @@ static unsigned int contains(mmfile_t *mf, regex_t *regexp, kwset_t kws)
- 		regmatch_t regmatch;
- 		int flags = 0;
+@@ -40,19 +40,11 @@ static int diff_grep(mmfile_t *one, mmfile_t *two,
+ 		     struct diff_options *o,
+ 		     regex_t *regexp, kwset_t kws)
+ {
+-	regmatch_t regmatch;
+ 	struct diffgrep_cb ecbdata;
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
+ 	int ret;
  
--		while (sz && *data &&
-+		while (sz &&
- 		       !regexec_buf(regexp, data, sz, 1, &regmatch, flags)) {
- 			flags |= REG_NOTBOL;
- 			data += regmatch.rm_eo;
- 			sz -= regmatch.rm_eo;
--			if (sz && *data && regmatch.rm_so == regmatch.rm_eo) {
-+			if (sz && regmatch.rm_so == regmatch.rm_eo) {
- 				data++;
- 				sz--;
- 			}
-diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-index 4b65b89e7a5..6ea1f02d142 100755
---- a/t/t4209-log-pickaxe.sh
-+++ b/t/t4209-log-pickaxe.sh
-@@ -201,4 +201,12 @@ test_expect_success 'log -S looks into binary files' '
- 	test_cmp log full-log
- '
+-	if (!one)
+-		return !regexec_buf(regexp, two->ptr, two->size,
+-				    1, &regmatch, 0);
+-	if (!two)
+-		return !regexec_buf(regexp, one->ptr, one->size,
+-				    1, &regmatch, 0);
+-
+ 	/*
+ 	 * We have both sides; need to run textual diff and see if
+ 	 * the pattern appears on added/deleted lines.
+@@ -173,9 +165,7 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
+ 	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
+ 	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
  
-+test_expect_success 'log -S --pickaxe-regex looks into binary files' '
-+	git -C GS-bin-txt log --pickaxe-regex -Sa >log &&
-+	test_cmp log full-log &&
-+
-+	git -C GS-bin-txt log --pickaxe-regex -S[a] >log &&
-+	test_cmp log full-log
-+'
-+
- test_done
+-	ret = fn(DIFF_FILE_VALID(p->one) ? &mf1 : NULL,
+-		 DIFF_FILE_VALID(p->two) ? &mf2 : NULL,
+-		 o, regexp, kws);
++	ret = fn(&mf1, &mf2, o, regexp, kws);
+ 
+ 	if (textconv_one)
+ 		free(mf1.ptr);
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
