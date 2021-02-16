@@ -2,95 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD83C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D47A3C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:52:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3CE8E61490
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:15:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E41764E04
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230501AbhBPRPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 12:15:36 -0500
-Received: from mout.web.de ([212.227.15.14]:52325 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229913AbhBPRPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 12:15:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1613495615;
-        bh=QuzvlFgE7MqQJwSZ0mNmwsxTtn+Unu0HLaSroeTN14g=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=D6W2RSWFjRcHjYdV+RLi13oQMLO+jugTfgUU3nXi+yncL8aJ6DpKTBbrfkli0HXAg
-         ueHxeP7LxKINp7TZl3guk7hbkXrALLMa8jI2fqDu1erwPBx1Odvx/8X1gMJ9vR40ar
-         FcYjdfqB3Frbyl4N6u5UD0nYgpwTZI9ZrlB1I794=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([91.47.159.90]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MHp7t-1lAfnm0yjt-003foT; Tue, 16 Feb 2021 18:13:35 +0100
-Subject: Re: [PATCH 1/2] pretty: add %(describe)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
- <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
- <87pn109nhr.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Message-ID: <66720982-04d6-3096-9ea2-ea5bc3fcd121@web.de>
-Date:   Tue, 16 Feb 2021 18:13:34 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
+        id S231148AbhBPRwQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 12:52:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60563 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231229AbhBPRvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 12:51:49 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80A471169A3;
+        Tue, 16 Feb 2021 12:51:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Z9f4isrRlnLj
+        lLlk3Fuso5Y/qlY=; b=KcXLZKmdL+aOmZwn7I7fGx01U6uDeV10XSeR4DrXE8VU
+        r7SuNYVl7au++xSsWFYMP733ECSHk1qOebwMmG2sxgUjyPT81xvZE0VIXVpiohmu
+        s0FjfOZa+OQCwbMxj+GCci3OY8t4QbeaLxLe0XbB87GUFlLz4NU6WyK40OYI9PM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jjeu7s
+        NsxA8Riwfa2bQLJ8QMbpzYBj9Aa4pa/mHvdMfaXqVDAtvQJdDNGy32dbRMbHFwM9
+        PUxk+/tCEia4rSu06OacQZz+IJKp7EHmDke1S0helsiENWufRvmSrrXNQH5CnfHX
+        McJVuVvLB8UrYNNcuK0eBpkJLHlDNQc8HfZsU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78FFF1169A2;
+        Tue, 16 Feb 2021 12:51:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C5C6A1169A1;
+        Tue, 16 Feb 2021 12:51:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
+References: <20210215154427.32693-1-avarab@gmail.com>
+        <20210215155020.2804-2-avarab@gmail.com>
+        <xmqq7dn8u7dz.fsf@gitster.c.googlers.com>
+        <10e6cd64-8c1c-20ea-154e-89fad6664a5e@kdbg.org>
+Date:   Tue, 16 Feb 2021 09:51:00 -0800
+In-Reply-To: <10e6cd64-8c1c-20ea-154e-89fad6664a5e@kdbg.org> (Johannes Sixt's
+        message of "Tue, 16 Feb 2021 08:20:29 +0100")
+Message-ID: <xmqq4kibsxyz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <87pn109nhr.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 891A2B86-707F-11EB-823A-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5ru8lU6nau+Yx1taECdA6tCGdBlaQASKEWY+MXlm8ki3FH+C8S8
- 1sRmmpKFKKyaGeV05VQDfwtN+zIJb7C1GLsI9SMmDJ7MjKnh2i1jzQoJqE91O4vhUYDYWuv
- FrO43/dNXtgdqWEbjVneBPFFkqOOnu1uaje00Mspf1ZArqY3opYJZK5tveLu+YDI2CzWNPe
- UT4nOc9y2dVodOS1ee9Jw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:y8piitVkw38=:g6BqBS1Jx91u17vmk6i6LS
- P1KRXb09iLdHh1sBAehfz9eWvVArstFB432s6qM/fr7qEqTImX4x2swB8lm65qS4WRHssl5i6
- s6NffEgqO4baWJNhvnQM7TBfFpROXQaCr/+4KNtdW3xB4cCa8o9Cjj4ASHW91te6G54G8A+Qj
- 0YPRKsQyJXrgFogaaH+wOd0+mQ/1mJ8jJzKGxfzIL3cZjJHguPuWB/jTi6VbWT5bWlWni2ZuH
- YkGJMsvcgg9JYPfCvIllfPJrL3t1u3ghfm5CUNqnKRSyKn55BvZ02Uz/mpBgbeDsXEaIWVkD2
- 2dSIMUuItNqY4VZDn8HNCiNuvkae9H2lCImxQhRI+B/25sm4vZYzwQ2FHxY+ELw6QIP6hHau1
- r2nC//1P4jOqvuhg4HxaIOtMjBmy9ZXNEW44tDZPYB0y85TFAVdDa9bYm/zZj/UBK8zvXosAp
- LYVrLYLxgQdBdvOLRHkMcXTo8IYxu8fig9LmJCxKl8nJIVNgqzYc5do2Tgx0TRu9SlRAgV/vr
- mMqcN+VWyQuaLPzrMQcVcwZZ5NCI+GSWPA9+xLHZGv7KDTx/6lPYK/WDPpNCYw0SEZEYLZtD8
- hMXpNswdrMRkQZXb1p52XXGSJsm5z5SaP6mqcutYDSHv95rfv+KX20Mizn6tIA+pMekkuraBC
- rkwBnXV/lxOnxzOBACp8gZE2Oq3bNlYNi6Bv909rtF3JQp5FuNfglNQEu5wch78gwxTo0bEhy
- 6XDeECAITdnuReOiyykOOcqvb4N+nzzwLQ0+4YR6qyLqWIZra8IUxCjRiWjrsnOZZxahPm9bb
- GMpuNVUA0KXQvXj2Jx68WSWcI0xKxgYSbo5RPugBxK2SqwkHRQTmbAOKjOL587fz5Sz7Gopz0
- +7t+gPPtWrnfIAbG4xpA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.02.21 um 14:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Sun, Feb 14 2021, Ren=C3=A9 Scharfe wrote:
->
->> Add a format placeholder for describe output.  Implement it by actually
->> calling git describe, which is simple and guarantees correctness.  It's
->> intended to be used with $Format:...$ in files with the attribute
->> export-subst and git archive.
->
-> Does it really guarantee correctness though? In "builtin/describe.c" we
-> first walk over the refs and use that to format all N items we're asked
-> about.
->
-> Under "git log" this is presumably in a race where refs added/deleted
-> during the run of "git log" will change the describe output to be
-> inconsistent with earlier lines.
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Right, didn't think of that aspect.  So we'd better warn about the
-raciness in the documentation.
+> Am 16.02.21 um 02:30 schrieb Junio C Hamano:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>> This new behavior does give us the edge case that if we e.g. view the
+>>> diff here with "-U150 -W" we'd previously extend the context to the
+>>> middle of the "is_func_rec()" function, and show that function in the
+>>> hunk context. Now we'll show nothing.
+>> To me, that sounds like a grave regression.  Why lose the
+>> information?
+>> This may be coming from the difference between us, i.e. I read a lot
+>> more patches written by other people than my own changes written for
+>> my next commit, so every bit of hint helps, and the name of the
+>> function I am seeing its latter half in the precontext is sometimes
+>> a useful thing to see.
+>
+> I totally agree with your assessment. I wouldn't even have removed the
+> hunk header in the case of "-W wins", either, but that is a case that
+> I can live with when others think it makes sense.
 
-We could improve that by keeping a single describe process around and
-feeding it object names through a pipe as we go.  The results would
-still become outdated after a ref is added or removed, but they'd be
-consistent.  This would be faster as well.
+Ditto.
 
-Ren=C3=A9
+The information on @@ ... @@ line may look misleading especially to
+those who are not used to reading patches in the "-W wins" case.  It
+is otherwise not hurting anybody and it loses information to remove
+it, but it is not as grave as in the "-U<n> wins" case, so I do not
+mind losing it, if it helps them.
+
+
