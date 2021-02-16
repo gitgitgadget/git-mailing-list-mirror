@@ -2,123 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E83C433E6
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B77C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:26:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA55C64E63
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:13:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A78064D73
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230299AbhBPSNv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 13:13:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43206 "EHLO
+        id S230055AbhBPS0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 13:26:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbhBPSNi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 13:13:38 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82BA0C061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:12:58 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id z6so6664164pfq.0
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:12:58 -0800 (PST)
+        with ESMTP id S229572AbhBPS0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 13:26:15 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D441C06174A
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:25:35 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id e9so5109004qvy.3
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:25:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=/7mHOgQeft/oD5vpDKi4+Xn3W2VN7JhVUavaEoMUzJs=;
-        b=Tw5Rb+zB5a+7LgYZEaBXU3d1njxjzuvVltaZzgtXp6GMvWSY/qdse0gBA3IhN6lDjC
-         BmR49TkeKahFLoLcC4C6xu2/fdUri9It8GFKPLrBrUoc0B2nCNLQkkHZjZlPCUjgju1L
-         L6ORSte+hc286vOFzvpB2E8o4rNasHUx1MC25tQLmipuXG1sPg45DQfytLNkMMNYGttQ
-         zrkLRio4SvU42DU8ebRyWfj/LRn7HRj3wKO6bcC8RgZZ2JlnxdS/EW+p1B4yxFX1R4hF
-         ywObbu1LeNMt1XCrnlVntWDFxQufxPZ63Yg91OHUyD9tgq/CUFfyQPVom5Dhu2J2zXzX
-         HAOQ==
+        d=github.com; s=google;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=g4D0tgArwtSRv+ImsnoRdhUOgw1mNfabFigH5DhGPvQ=;
+        b=MUX0TvDJVM5W2SdAg9JzGQuRrGcEIl0qKX8jIW636HpoX/YjWzWmefO8PxHa7bwZwZ
+         wVQTdNuFlizZPxYaneNiKfOJiXxpuus342Z1W/Gd9+vYh3RroRye6KPk4/T3f4szzidD
+         8MIJRhDaKG22CG77OtTfdBu7Q9WckQq2gTGy+utEJsiFlcIw6KEpvrdb9/4Q4jU32vDx
+         q43hQdDOpih0ZaD+evJtamdmuPea1EABTdZzvG+IeoGLW9S/0LDz2DV38ic2mjlbv+fA
+         vDrHI/0/uUGP3k7nyTR2TgK9bwEOENMPJo8cNLwk5uv2W5U6gU+EWTtkCAHx0Fs+A9hr
+         934Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=/7mHOgQeft/oD5vpDKi4+Xn3W2VN7JhVUavaEoMUzJs=;
-        b=ZdH9vyxdBMYWCSq5fHGCPKtSbcgjtHQ1DbF5YP1qUhqeVn5wEcu6C5BAHiT7eXybb7
-         RB57tqm41PLe4B98Pjw3oZiWqnFC0K6ijz4jFoKoOUIfVM3EJOS+aRcrgSjTDvM6TKwV
-         7t9430+aK9/VYFm4djRgtXix/xle7jZ3zm/K13kJKPPT0jitxmmDgoGuYyXeiGQqYO8T
-         RDc3ZmO3d4d8lSKriGq2mS6znMpZ9yxmXeCw/P9jZE89YOFZX5AAth04CPiR3xI+UcCe
-         B+wI9ngcAo2kCEx8HP2fwcrP0MR+uIPaVHeIOdfhA9PX62J48emHVtiBvfYi7s8MyNa5
-         iQsQ==
-X-Gm-Message-State: AOAM532L0M0/vM++dYVpGPpCzeTVlEQZI+GaUZGA3SS4EqJbxWrXp67K
-        GqlI1WP2+0yzWdkq0Hy+OCc=
-X-Google-Smtp-Source: ABdhPJygNuJOeJ94qDk1yv8XTihACI4sLvaCy6oysJiA2/9o2n9fKWzXhYbeXD56pgtKk/0ThEuOZw==
-X-Received: by 2002:a63:560a:: with SMTP id k10mr20439309pgb.132.1613499177973;
-        Tue, 16 Feb 2021 10:12:57 -0800 (PST)
-Received: from [192.168.206.101] ([106.195.44.107])
-        by smtp.gmail.com with ESMTPSA id z12sm3441728pjz.16.2021.02.16.10.12.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Feb 2021 10:12:57 -0800 (PST)
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Git in GSoC 2021 ?
-Message-ID: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
-Date:   Tue, 16 Feb 2021 23:42:51 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=g4D0tgArwtSRv+ImsnoRdhUOgw1mNfabFigH5DhGPvQ=;
+        b=JS5QIJ0xODS6WyVORZRw60IMLrQNX+BWhdfhiols0JPtOtkgHIhQqVoLQCD8Zzxy41
+         QsFSobd1nMbYArmh9FSjpoUhnBhX32grDqiLXPQqKvDjnO6DB+EGvMLRSk+f5dOtDeX9
+         lBBLmtWgMNy9O9kTOZoPdSe/RWNg1Vxqj1CXh9sP17fIDxUkVXBws2w79DJJWYrwprw5
+         lairzuWEBzZf5v56cyHsdvjeZ8aqET1G2sru/woMZQ+SQGD1GjvX0F9Tubukq7eBeFd4
+         HMdzoPmPLrJFh8qqvxQQee+fmHapUJSVAIKTFbtnpwwycA3UgS5O9ZGhlp9NSyLW2uxB
+         wc7Q==
+X-Gm-Message-State: AOAM533cuYu9THhobhuMajMtPUSkCeisSpfiDD/gFepqTE3lyaWXsSgy
+        ZwC2EshoXhHt23iTF/BYIen1vA==
+X-Google-Smtp-Source: ABdhPJwSroLjQz5Sl9SQHFIrI3m67v9IQyVmPSDRazOl7hXTWOGjUX/4bzYMbff4gSVHEy7nqLpO3A==
+X-Received: by 2002:a05:6214:2b:: with SMTP id b11mr21128436qvr.3.1613499934529;
+        Tue, 16 Feb 2021 10:25:34 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:c1ff:146e:b5:8cba])
+        by smtp.gmail.com with ESMTPSA id c143sm8168711qkg.83.2021.02.16.10.25.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 10:25:33 -0800 (PST)
+From:   Taylor Blau <ttaylorr@github.com>
+X-Google-Original-From: Taylor Blau <me@ttaylorr.com>
+Date:   Tue, 16 Feb 2021 13:25:32 -0500
+To:     janek <27jf@protonmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Short status ignores --show-stash option
+Message-ID: <YCwOA/CcPEA/he1X@nand.local>
+References: <5ofQpdi3EmG_V-LqPrL6ZttzenOKG9xQ9MCdQ1OK7b_NcFZX0hqqmwr8mr2KByFwRa8ljzX4vj-_34Q6aPcXdZ8_qDahZfFSyJKj5cfyAjc=@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <5ofQpdi3EmG_V-LqPrL6ZttzenOKG9xQ9MCdQ1OK7b_NcFZX0hqqmwr8mr2KByFwRa8ljzX4vj-_34Q6aPcXdZ8_qDahZfFSyJKj5cfyAjc=@protonmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Mon, Feb 15, 2021 at 08:02:24PM +0000, janek wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> git status --short --show-stash --branch
+>
+> What did you expect to happen? (Expected behavior)
+> The status shows info about the stash, e.g. next to the branch infos
+>
+> What happened instead? (Actual behavior)
+> --show-stash is ignored when using short format
 
-Excuse my curiosity. I'm not sure if there has been discussion about
-Git's participation in GSoC 2021 but my search in the archives
-didn't get me anything. The deadline for Org application seems
-to be around the corner (this Friday, Feb 19th at 1900 UTC).
+Hmm. It's certainly possible to do something like:
 
-So, I was curious to know if we've already applied to participate
-in GSoC 2021 (or) if we're planning to participate?
+diff --git a/wt-status.c b/wt-status.c
+index 0c8287a023..397d36544d 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2013,6 +2013,9 @@ static void wt_shortstatus_print(struct wt_status *s)
 
-In case we're participating we'll need ideas that fit the new
-structure of GSoC 2021. Concise entry about the new structure
-from Rev News 68 [1]:
+        for_each_string_list_item(it, &s->ignored)
+                wt_shortstatus_other(it, s, "!!");
++
++       if (s->show_stash)
++               wt_longstatus_print_stash_summary(s);
+ }
 
-  Google Summer of Code 2021 has been announced with significant
-  changes compared to previous editions. Notably coding hours and
-  period will be reduced from 350 hours and 12 weeks to 175 hours
-  and 10 weeks; there would be 2 evaluations (instead of 3).
-  Additionally, eligibility requirements will be relaxed, among
-  others allowing people participating in a variety of different
-  licensed academic programs, not just students of accredited
-  university programs.
+ static void wt_porcelain_print(struct wt_status *s)
 
-See the related blog [2] for detailed information.
+and that would cause 'git status' to do what you expect:
 
-Speaking of GSoC, unlike last year I'll not be able to actively
-co-mentor this year due to certain circumstances in my family.
-I'll be able to help passively, though.
+    $ git.compile status --short --branch --show-stash
+    ## tb/empty-trailer-continuation
+     M wt-status.c
+     Your stash currently has 16 entries
 
-Also, one thing about project ideas. Shourya Shukla who worked
-last year on the builtin conversion of `git submodule` 
-(currently stalled [3]) has told me privately that he isn't
-interested in continuing the port further. So, finishing the
-port of `git submodule` could be a nice project for GSoC 2021.
-I believe it would fit the new GSoC structure but I might be wrong.
+But it may not be the right thing to do, since that explicitly breaks
+the --porcelain format. We may want something like this in addition to
+the above:
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 739110c5a7..ef855896a2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1414,6 +1414,12 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+            s.show_untracked_files == SHOW_NO_UNTRACKED_FILES)
+                die(_("Unsupported combination of ignored and untracked-files arguments"));
 
-[[ References ]]
++       if (status_format == STATUS_FORMAT_PORCELAIN ||
++           status_format == STATUS_FORMAT_PORCELAIN_V2) {
++               if (s.show_stash)
++                       die(_("--porcelain is incompatible with --show-stash"));
++       }
++
+        parse_pathspec(&s.pathspec, 0,
+                       PATHSPEC_PREFER_FULL,
+                       prefix, argv);
 
-[1]: https://git.github.io/rev_news/2020/10/30/edition-68/
-
-[2]: https://opensource.googleblog.com/2020/10/google-summer-of-code-2021-is-bringing.html
-
-[3]: https://public-inbox.org/git/20201214231939.644175-1-periperidip@gmail.com/
-
--- 
-Sivaraam
+Thanks,
+Taylor
