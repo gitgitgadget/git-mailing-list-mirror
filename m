@@ -2,102 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16279C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 19:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC39C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:13:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C995D64E85
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 19:47:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 126DD64EAD
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:13:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbhBPTrx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 14:47:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbhBPTrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 14:47:51 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 704BBC061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 11:47:11 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id t62so10580875qke.7
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 11:47:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=YcwTQ8aOq4b8JQrRWu9Vbk2IWGJ/WUa1mq/r3sJ6KoQ=;
-        b=PDAORnJqN90xC7LBmWSL7Tv4sdjnSRsT/Kjs8MVbqHguMcl0mAMgS/g4Z6GbAcRhdH
-         o4+F4mC3XiBoTb7lSmWDd6kj1C2LHUq1ACBR4Pl3z+SStC2T3ofrHd2vgWF8Urj1dmyo
-         OF3YGPUfj3c71UJgJyQHeIro7P5f9GxT48zwr9I2zi3jwnwYjxQrZVY1QoxPoOGxQMJg
-         dTCYgYDaf+Q1n6wLCjSxS6kvzwFwGk9Qvc6FDTTuJzvGcTnDCj/9sIQ5JaLLb2PW+6Fx
-         +p2WduFVWb6ugpy7WIVtXa3fUo1xfHfouTbn+/lUu8UDxnAMnaaBwns5ks6WiRmZoT2z
-         ukEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=YcwTQ8aOq4b8JQrRWu9Vbk2IWGJ/WUa1mq/r3sJ6KoQ=;
-        b=IsGsd3z0fmgRPRTNeC1LzFJ+CJO8qnoYyWsv+YTUMKQDaYMtBd4t/fys+heTlQqDJn
-         yrkXwv7Wyn330nQ33gHMZ4b+p3iQfUXA9d/Gx8kD7yRR0l5hTFsqIgbCOalkmtZpTFBI
-         hGzf24v3/eOEIn96WtTlkxKjEODoXZPvywsYbUNoBMiqwXqWCaMe/jg/PbWfOBwbmIyj
-         QsiNIJ9YNTO9GbhRS9KNWXLTVcfFYx2YYT/MBxBkIgIL2rwi/Hzoqp69V1qtjgnIfVnY
-         +FxjAMejceOwcBgEcEp2D/4pBoMF0wt6Yhx1KmhRCKb/Rgq5V0gwHhAVDMuebonVQ/BG
-         C1nQ==
-X-Gm-Message-State: AOAM53339Ok+ZPPY2zL938FaCj3Tt34R7vz0vZnTvt8SukfsH+Kdz4m7
-        4mcAnCikjzgRf5d9BMtYwwy/oA==
-X-Google-Smtp-Source: ABdhPJwwbNjBbH+gWdTl/C3bBxS9+RL3dakfACSTvxX4BpEutrcXxvFvYnGSC7qTEKIq2sESevqiAQ==
-X-Received: by 2002:a37:de11:: with SMTP id h17mr12824581qkj.351.1613504830615;
-        Tue, 16 Feb 2021 11:47:10 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:c1ff:146e:b5:8cba])
-        by smtp.gmail.com with ESMTPSA id o185sm4670828qkb.76.2021.02.16.11.47.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Feb 2021 11:47:10 -0800 (PST)
-Date:   Tue, 16 Feb 2021 14:47:08 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@vger.kernel.org,
-        Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Bug Report: Multi-line trailers containing empty lines break
- parsing
-Message-ID: <YCwhPG6RaAhU9ljg@nand.local>
-References: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
- <xmqqczx0sq1o.fsf@gitster.c.googlers.com>
- <YCwJ8tORQg2Air4r@nand.local>
- <xmqqmtw3pzu3.fsf@gitster.c.googlers.com>
+        id S230010AbhBPUN3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 15:13:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34878 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229767AbhBPUN1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 15:13:27 -0500
+Received: (qmail 14711 invoked by uid 109); 16 Feb 2021 20:12:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Feb 2021 20:12:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28926 invoked by uid 111); 16 Feb 2021 20:12:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 16 Feb 2021 15:12:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 16 Feb 2021 15:12:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] t/perf: handle worktrees as test repos
+Message-ID: <YCwnPVFsYDa0SNmG@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmtw3pzu3.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 16, 2021 at 11:39:00AM -0800, Junio C Hamano wrote:
-> A few comments (not pointing out bugs, but just sharing
-> observations).
->
->  - if the line before "trailer: single" were not an empty line but a
->    line with a single SP on it (which is is_blank_line()), would the
->    new logic get confused?
+The perf suite gets confused when test_perf_default_repo is pointed at a
+worktree (which includes when it is run from within a worktree at all,
+since the default is to use the current repository).
 
-Oof. That breaks the new test, but it makes me worried about whether
-this can be parsed without ambiguity. I think not, but here I'd defer to
-Christian or Jonathan Tan.
+Here's an example:
 
->  - if the second "multi:" trailer did not have the funny blank line
->    before "_two", the expected output would still be "multi:"
->    followed by "one two three", iow, the line after the second
->    "multi: one" is a total no-op?  If we added many more " \n" lines
->    there, they are all absorbed and ignored?  It somehow feels wrong
+  $ git worktree add ~/foo
+  Preparing worktree (new branch 'foo')
+  HEAD is now at 328c109303 The eighth batch
+  $ cd ~/foo
+  $ make
+  [...build output...]
+  $ cd t/perf
+  $ ./p0000-perf-lib-sanity.sh -v -i
+  [...]
+  perf 1 - test_perf_default_repo works:
+  running:
+  	foo=$(git rev-parse HEAD) &&
+  	test_export foo
 
-That's definitely the outcome of this patch, but I agree it feels wrong.
-I'm not sure that we define the behavior that strictly in
-git-interpret-trailers(1), so we have some wiggle room, I guess.
+  fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions, like this:
+  'git <command> [<revision>...] -- [<file>...]'
 
-Thanks,
-Taylor
+The problem is that we didn't copy all of the necessary files from the
+source repository (in this case we got HEAD, but we have no refs!). We
+discover the git-dir with "rev-parse --git-dir", but this points to the
+worktree's partial repository in .../.git/worktrees/foo.
+
+That partial repository has a "commondir" file which points to the main
+repository, where the actual refs are stored, but we don't copy it. This
+is the correct thing to do, though! If we did copy it, then our scratch
+test repo would be pointing back to the original main repo, and any ref
+updates we made in the tests would impact that original repo.
+
+Instead, we need to either:
+
+  1. Make a scratch copy of the original main repo (in addition to the
+     worktree repo), and point the scratch worktree repo's commondir at
+     it. This preserves the original relationship, but it's doubtful any
+     script really cares (if they are testing worktree performance,
+     they'd probably make their own worktrees). And it's trickier to get
+     right.
+
+  2. Collapse the main and worktree repos into a single scratch repo.
+     This can be done by copying everything from both, preferring any
+     files from the worktree repo.
+
+This patch does the second one. With this applied, the example above
+results in p0000 running successfully.
+
+Reported-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Having written that, it occurs to me that an even simpler solution is to
+just always use the commondir as the source of the scratch repo. It does
+not produce the same outcome, but the point is generally just to find a
+suitable starting point for a repository. Grabbing the main repo instead
+of one of its worktrees is probably OK for most tests.
+
+ t/perf/perf-lib.sh | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index e385c6896f..1226be4005 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -70,27 +70,40 @@ test_perf_do_repo_symlink_config_ () {
+ 	test_have_prereq SYMLINKS || git config core.symlinks false
+ }
+ 
++test_perf_copy_repo_contents () {
++	for stuff in "$1"/*
++	do
++		case "$stuff" in
++		*/objects|*/hooks|*/config|*/commondir)
++			;;
++		*)
++			cp -R "$stuff" "$repo/.git/" || exit 1
++			;;
++		esac
++	done
++}
++
+ test_perf_create_repo_from () {
+ 	test "$#" = 2 ||
+ 	BUG "not 2 parameters to test-create-repo"
+ 	repo="$1"
+ 	source="$2"
+ 	source_git="$("$MODERN_GIT" -C "$source" rev-parse --git-dir)"
+ 	objects_dir="$("$MODERN_GIT" -C "$source" rev-parse --git-path objects)"
++	common_dir="$("$MODERN_GIT" -C "$source" rev-parse --git-common-dir)"
+ 	mkdir -p "$repo/.git"
+ 	(
+ 		cd "$source" &&
+ 		{ cp -Rl "$objects_dir" "$repo/.git/" 2>/dev/null ||
+ 			cp -R "$objects_dir" "$repo/.git/"; } &&
+-		for stuff in "$source_git"/*; do
+-			case "$stuff" in
+-				*/objects|*/hooks|*/config|*/commondir)
+-					;;
+-				*)
+-					cp -R "$stuff" "$repo/.git/" || exit 1
+-					;;
+-			esac
+-		done
++
++		# common_dir must come first here, since we want source_git to
++		# take precedence and overwrite any overlapping files
++		test_perf_copy_repo_contents "$common_dir"
++		if test "$source_git" != "$common_dir"
++		then
++			test_perf_copy_repo_contents "$source_git"
++		fi
+ 	) &&
+ 	(
+ 		cd "$repo" &&
+-- 
+2.30.1.989.g5e01c2f281
