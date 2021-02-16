@@ -2,233 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51793C433DB
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0762C433E0
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:35:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A32E64DF0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:15:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF53764DDA
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:35:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230239AbhBPLOp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 06:14:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38148 "EHLO
+        id S229907AbhBPLfL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 06:35:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230233AbhBPLO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 06:14:29 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD9EC061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:13:47 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id i23so9613529ejg.10
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:13:47 -0800 (PST)
+        with ESMTP id S229742AbhBPLeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 06:34:08 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C514C061574
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:33:19 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id q186so6915708oig.12
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:33:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=dQ3jGZ1fAGqyafxINj+eTu6SHfiJ7zE6Si5KfTA2efM=;
-        b=K76gHLizWnIggWTYmaMojDK0d1VBZpq4UY98DWl8O9jTb7MdD8xT+xuX8EU7dXFZCf
-         FPlwjV/cuIPz5f1Bchwp28Ly0Xh3I8drH5OKL9tjB11p6iknECRKTG4vQBvIIhOCAjIj
-         Sm/jD7BkFiiYDyVIeEWv90sKLD9C2o7z1zxvWeInrfNcHO4kbhy65kDashkrC5cc1pIP
-         0k6kfWH05MaFwnKUwNdeY8Iz/e0jJT0WSuUU24niyITruhoc7KZgEQywyBIPowpyukLZ
-         Emk6bue77b/7+FwNLtcLWEB/RnI41s86wB9iljqHMcrFLllmFctiqM4odONRfsfHphCe
-         EgVA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=Th++PKlNW2TJ0pZZMhWWFRbP9+h4HtdRuZKLKpy7J9I=;
+        b=Vdgy9Otd2IibjiTiVdiZbVBN6GCdVJ3mhlihzJ6PW+liKKNOj35SQjnlsa5X16M1Z7
+         xiGEcsRVq7tdyA/r0IouEMK5MmgZ/hP1JAdPRDurO8anJWhvwL1+AB0pzvgOkcxJT4qI
+         yPYVm0ppPOV94jjj/NyDuCGLCzESPPnApwWV+qp48ny8YcmFXJNiV8Il1szwrVJj8Lya
+         ukKs9HBU34seXjcZHvLhvSCgqaJv3kFeiQNbb14Mn2UdAaD4bYSoLSjXdB04HZ1BUuyK
+         xBU1Kdyh+1H4vO78+rZ34Y8gonHKtyiBSfYAxcrT8vBq3klzf9DTuyfOCx/4fSVbzQN1
+         lL9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=dQ3jGZ1fAGqyafxINj+eTu6SHfiJ7zE6Si5KfTA2efM=;
-        b=JaFpQR0OD/eauNKsnFPaiY3vyFvQsqpXGa0JtdhcCzqFkhjcYUI0ROpenJfV5odN2Q
-         L4FbA/1XoZVP8ViaNm91JFEk7XYqS7qcJ7/rAKl49PfaAVJQ6Qxxbpl7G0U2b1fe+GaR
-         TeswverD9iINB7RhRzuaAeMS48ofNv9U+TaXcBTeem3d4vuVOqn7utsKoAbzSK5WpE5W
-         fSIxw5SaQrUf0iy96mr+9d/YOR6MnJbEEjGI34bGyVZKR2HzQphGmlNz/WkMC8YnaQqg
-         J8I0szIhADPr3fbeFg4d2h1K8RuWElTKkv5cexIzUZsYY7Jj2vV2NSruJneFrz4bW/YO
-         O4jg==
-X-Gm-Message-State: AOAM5323wS0MRyn2lKEL/2SFpm0nH9cjqukeW1xW2Llf+KqBuMPEZaTv
-        YN6jeEeMMNlHL7woCnaGky9l4a2xqwAIrA==
-X-Google-Smtp-Source: ABdhPJykkT7rAQK1x42xeJ360Rql06z5NNXSbXb4AO5YXxg3vniL7IFIDTxcoWBjhFkB+OO4VoVGig==
-X-Received: by 2002:a17:906:1a0c:: with SMTP id i12mr19371237ejf.276.1613474026238;
-        Tue, 16 Feb 2021 03:13:46 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id g3sm13845102edk.75.2021.02.16.03.13.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Feb 2021 03:13:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Protesilaos Stavrou <info@protesilaos.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Adam Spiers <git@adamspiers.org>,
-        "git list" <git@vger.kernel.org>
-Subject: Re: [PATCH] userdiff: add support for Emacs Lisp
-References: <20210213192447.6114-1-git@adamspiers.org>
-        <87wnvbbf2y.fsf@evledraar.gmail.com>
-        <aab77ef2-c619-ed87-6c3b-9a1b5ec36f41@kdbg.org>
-        <87tuqebj6m.fsf@evledraar.gmail.com> <87lfbo5sg8.fsf@protesilaos.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <87lfbo5sg8.fsf@protesilaos.com>
-Date:   Tue, 16 Feb 2021 12:13:45 +0100
-Message-ID: <87v9as9seu.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Th++PKlNW2TJ0pZZMhWWFRbP9+h4HtdRuZKLKpy7J9I=;
+        b=hHVRwB/CCzDG/8+Rx8ezLbOMaq4IFRzFjguQLNepNjpG43v76pgPR9r1z3hSFFnnKr
+         IvmWG1btPStpeUfjhU9ow47mv5DiiHOq5SnSMOprCQ5hAAwAFa6fIDGVkxGu+lkPh3l3
+         7z3MU/sLAstek498/MJbs7nJ5JFY1i1BOo179XU/6dH0mCyDA0j96vdJcZAjBTdjEq4S
+         SKKlQC97ZzgIfbD/WTU14QKdS82mUX1LRoNYCd3BX80OwYkiw0SSscmAA6ALemMyBS1F
+         tbynvMNV19lV3QTth19DfHlDFaKPns+QZPF+ySukBiVlqYxlYcGylZu1K5SriqFF+ghD
+         QcdQ==
+X-Gm-Message-State: AOAM532wb2bBYLSlvsoEifGIMwt9ZOEP5pE6PnLN5+jhhcjVxWVDX4M2
+        aLD5o9yygp/12Lrh0DOiV/I=
+X-Google-Smtp-Source: ABdhPJzrpKq+IUMsuqM/bCl1pyFyHCpMDC72qmKXs3bFnZqCHQdgTZWl6lcQnQ9K/RhSss9RCmNbIw==
+X-Received: by 2002:aca:c786:: with SMTP id x128mr2248575oif.120.1613475198509;
+        Tue, 16 Feb 2021 03:33:18 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:bccc:aed3:3481:8d68? ([2600:1700:e72:80a0:bccc:aed3:3481:8d68])
+        by smtp.gmail.com with UTF8SMTPSA id y13sm1273345oih.31.2021.02.16.03.33.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Feb 2021 03:33:17 -0800 (PST)
+Message-ID: <8ac1dcc5-c21c-4c93-b762-1cc0a27bbeae@gmail.com>
+Date:   Tue, 16 Feb 2021 06:33:16 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
+ Thunderbird/86.0
+Subject: Re: [PATCH 1/5] commit-graph: define common usage with a macro
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        dstolee@microsoft.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        peff@peff.net
+References: <87r1lhb6z7.fsf@evledraar.gmail.com>
+ <20210215184118.11306-2-avarab@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20210215184118.11306-2-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2/15/2021 1:41 PM, Ævar Arnfjörð Bjarmason wrote:
+> +static const char * builtin_commit_graph_verify_usage[] = {
+> +#define BUILTIN_COMMIT_GRAPH_VERIFY_USAGE \
+> +	N_("git commit-graph verify [--object-dir <objdir>] [--shallow] [--[no-]progress]")
+> +	BUILTIN_COMMIT_GRAPH_VERIFY_USAGE,
+>  	NULL
+>  };
+>  
+> +static const char * builtin_commit_graph_write_usage[] = {
+> +#define BUILTIN_COMMIT_GRAPH_WRITE_USAGE \
+> +	N_("git commit-graph write [--object-dir <objdir>] [--append] " \
+> +	   "[--split[=<strategy>]] [--reachable|--stdin-packs|--stdin-commits] " \
+> +	   "[--changed-paths] [--[no-]max-new-filters <n>] [--[no-]progress] " \
+> +	   "<split options>")
+> +	BUILTIN_COMMIT_GRAPH_WRITE_USAGE,
+>  	NULL
+>  };
 
-On Tue, Feb 16 2021, Protesilaos Stavrou wrote:
+This seemed very unnatural to me, but it all makes sense in the end:
 
-> On 2021-02-14, 19:25 +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
-b@gmail.com> wrote:
->
->> On Sun, Feb 14 2021, Johannes Sixt wrote:
->>
->>> Am 14.02.21 um 02:41 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>>> Just a cursory "git log -p -- lisp" in emacs.git with your patch shows
->>>> e.g. lisp/thingatpt.el where forms in a "defun" aren't indented (before
->>>> it selects the "defun", after with yours it's a "put" in the middle of
->>>> the function).
->>>
->>> Note that negative matches can be specified. We use the feature in the
->>> cpp case to exclude public:/protected:/private: and label: that happen=
-=20
->>> to be not indented. Perhaps that can be useful here?
->>>
->>> Oh, and BTW, what the patterns treat as "function" must not match what
->>> the language treats as function. The purpose of the hunk header is to=20
->>> spot a place in the source file easily. So, it does not hurt if
->>> eval-and-compile forms are captured (as was mentioned in the linked=20
->>> thread) if desired.
->>
->> Right, so having lots of test-case is helpful, e.g. for elisp maybe you
->> have a top-level defun, maybe not, maybe the top-level is a "(progn" so
->> you'd like a second-level more meaningful context, or maybe not...
->>
->> Obviously these userdiff patterns aren't a general parser and will
->> always be hit-and-miss, it's just useful to at least eyeball them
->> against in-the-wild test data to check their sanity & add some tests.
->
-> Our intent with this patch is to rely on a heuristic that works for most
-> cases.  There will always be some case that is not covered.  This point
-> was made explicit in the relevant emacs-devel thread.
+> +static char const * const builtin_commit_graph_usage[] = {
+> +	BUILTIN_COMMIT_GRAPH_VERIFY_USAGE,
+> +	BUILTIN_COMMIT_GRAPH_WRITE_USAGE,
+> +	NULL,
+>  };
 
-Yes these heuristics will always be bad in some cases. I'm just
-encouraging you to find some of the more common cases, make test-cases
-out of them, to say "this is what I want".
+Clever!
 
-The most common difference I've seen is that by finding comments it
-means for changes like this:
-=20=20=20=20
-    (def foo ()
-         "..."
-         (some-code)
-    ;; comments inside functions are often not indented
-       (blah))
-=20=20=20=20
-    (def bar ()
-         "..."
-         CHANGE_ME)
-
-Before we'd find "foo" as the context, now we find ";; comments inside
-functions are often not indented".
-
-There's other cases where that comment rule does the right
-thing. E.g. finding the description of the file at the top, but we could
-also capture that with:
-
-    ^(;;; [^.]+\.el ---.*)'
-
-Then you'd get things like:
-
-    ;;; button.el --- clickable buttons
-
-Without overmatching any and all comments. Or maybe it isn't
-overmatching and is better in the common case. I don't know.
-
-Another example is now we'll match "(progn", sometimes that's "right",
-sometimes "wrong". Perhaps even in cases where that's "right" the common
-"(progn" pattern doesn't provide much/any extra information, and we'd be
-better to skip past it with a negative rule to the next "(def" ?
-
-I'm typing this in mu4e, but I wouldn't call myself deeply familiar with
-Elisp. My reading of the linked thread / blog posts it links to is that
-some other people came up with more narrow matching rules, presumably
-because they found some of these cases.
-
-So all I'm suggesting is maybe pro-actively find those cases & loop
-those people in.
-
->> My cursory glance at the emacs.git version v.s. what's being submitted
->> here is that this one does a worse job in *very common* cases.
->>
->>>> Yours also changes it from e.g.:
->>>>      @@ -61,7 +61,7 @@ forward-thing
->>>> to:
->>>>      @@ -61,7 +61,7 @@ (defun forward-thing (thing &optional n)
->>>> Is this really desired in elisp?
->
-> I think this is a matter of perspective and indeed a valid reason for
-> doing this in emacs.git first.
->
-> For my part, I find the verbose style more informative, especially when
-> it captures the previous form instead of the one directly around the
-> diffed lines.
->
-> Perhaps one could add to that Emacs' ability to use the same name for
-> different things, e.g. a function and a variable, where verbosity of
-> this sort can help with disambiguation.  Granted, we should not really
-> on such a heading style to aid us in that task, though it may be
-> something to consider.
-
-I'm not saying it needs to be done in emacs.git first, just maybe
-coordinate with people who wrote/use that rule.
-
-I think matching the whole line makes sense (sans leading whitespace),
-we do it for the rest of the git.git rules.
-
->>> It's common practice to extract the entire line (sans indentation if
->>> applicable), not just the function name. Why would somebody want the=20
->>> latter? It doesn't carry as much information as could be possible.
->>
->> Because I'm familiar with the codebase I'm editing and I just need to
->> know that the diff I'm viewing is on the "main" function, not that it's
->> "main()", "int main(int argv, char **argv)", "int main(const int argv,
->> const char *argv[])", or to either have a " {" or not at the end
->> depending on the project's coding style.
->
-> Oftentimes we produce/read patches for projects that we are not
-> necessarily acquainted with.  This includes emacs.git and the multitude
-> of Elisp packages in that milieu.  An extra element of contextuality can
-> do us good.
->
-> It is true that familiarity with the code base will always benefit from
-> succinct headings, though I feel that whenever we are in doubt we should
-> err on the side of caution: which means that we must not introduce such
-> an assumption to the workings of this piece of functionality.
->
->> I know our own userdiff builtin patterns don't do this, but it would be
->> very useful to retrofit this capability / maybe make it a configurable
->> feature, i.e. have them capture the meaningful part of the line, and you
->> could either print it all, or just that part.
->
-> It would be nice to have an option that toggles verbosity.  Though I
-> guess this lies outside the scope of the patch in question.
-
-Yes I agree that this is completely outside the scope of adding elisp
-support to userdiff.
-
-I was just replying generally to Johaness on the topic of why someone
-would want a pattern to match $1 over $0, as most of our git.git
-patterns do (or if it's $1, it's the whole line anyway, sans leading
-whitespace).
-
-> In conclusion, I think we should decide on the next step forward: if you
-> think this should be applied to emacs.git before making its way to git
-> itself, then we can move the discussion there.
-
-I think just applying a version to this to git.git is fine, and it
-should not wait for whatever 20-some patches test mechanism rewrite I
-started. I can rebase on top of this.
-
-B.t.w. emacs.git also has a rule for *.texi, perhaps you'd be interested
-in hacking that up too? :)
+Thanks,
+-Stolee
