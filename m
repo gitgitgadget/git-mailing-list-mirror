@@ -2,139 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF01EC433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 22:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB58C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 22:24:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F35364E76
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 22:15:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F9B264E79
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 22:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbhBPWPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 17:15:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38456 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229826AbhBPWPC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 17:15:02 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 786DAC061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 14:14:22 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id a9so4150958plh.8
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 14:14:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:mail-followup-to:references:mime-version:in-reply-to:date
-         :message-id:subject:to:cc;
-        bh=8uD3GBptMntvSXlmss3bBobNzVT/e6XtdP1b/9QitKs=;
-        b=qbosQMtqF8/qZiHDo3yoGTKkV6VcTiySs3OduwD4RseBaYqlonfBeadogrz2CYO3xi
-         XFW1AfY7H1ujN3PNTIfWdfbvAsnPzwbTWJ3DlxDBIr3OcrglajKXsltpvOSgufaiTjVW
-         CDiOOVjxBIxtoaLC8s/GS1uUplv9DBD267PUufUe2GQsI2whvKR9NLlSlpPOXtlZgacO
-         7QEW9G2ZEnIZKhINPGuTQpCGVPuAJ0IE8ZdougpxSm7SDy18HNuiH+mL8Hcpwk+PLk27
-         +TQoAD9fIp3qvEE9KdQE4fMZIdGCjuXjDK0suaZJ0cDpA2phILcn8FHN7/sdpcU6DRhK
-         EnvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mail-followup-to:references:mime-version
-         :in-reply-to:date:message-id:subject:to:cc;
-        bh=8uD3GBptMntvSXlmss3bBobNzVT/e6XtdP1b/9QitKs=;
-        b=Ahjyg+dkGlbwExTc2ceJs8LnmJl1pyDOJ0eVBWtMAiOfS80cPWaIqwzmhgrwPDZ4mp
-         Q7zR3JK/tJa+Li0HUZkEJflKX9xMrUzYfDOZN3ny7x42AdrNiz2IIl9xsOqoah+oS5l6
-         aKVGXeZsb0MJjjt2dXozHnWeAF3yZJIV0+cV+6LFaNXN6O60SuOA/+fbBwtT6e3bstyd
-         r0o1mNROO0ERZ8vKIbhj9GVCUd+MTBTghrksk/pb1sbKDVXpftwF7XMwiksDrexsgjuS
-         VcFoLUJ4ic1IBXLcaYMREimK//jK7rqJAIey6JbkWmmUu3nJdeVYus5ZD4fPszf+fBZM
-         TfHA==
-X-Gm-Message-State: AOAM531CdrZIk76ktJ9eisHO3WqLYq41VDzZuS+pCUVUFqvvugrTAM8n
-        EKVRnbZWJ+X/WF8V84r0m9fI9+F7lK9EI41IUqg=
-X-Google-Smtp-Source: ABdhPJw5SIa0ROzboepWFcKB1yzf4E5RM4XfgRUjXldsYbCWNZccOmg8D4yEKpdC1Do3vY89ugOS8BE8INF+V8i3G9A=
-X-Received: by 2002:a17:90b:a58:: with SMTP id gw24mr6199083pjb.143.1613513662012;
- Tue, 16 Feb 2021 14:14:22 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 16 Feb 2021 14:14:20 -0800
-From:   =?UTF-8?B?SmFuIOKAnEtoYXJkaXjigJ0gU3RhbsSbaw==?= 
-        <khardix@gmail.com>
-Mail-Followup-To: =?UTF-8?B?SmFuIOKAnEtoYXJkaXjigJ0gU3RhbsSbaw==?= <khardix@gmail.com>, 
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <CAG+K25Pk0+sOAYuWS2OF7CXLXJLjGMKyBB_SOLpoO5RFiktN5g@mail.gmail.com>
- <xmqqo8gksqr4.fsf@gitster.c.googlers.com> <CAG+K25NbifB9k9ugU5ZjLAOKxLyfEZcphfZXNS9_Whi6gZcBLA@mail.gmail.com>
- <xmqq7dn7rgi4.fsf@gitster.c.googlers.com>
+        id S230245AbhBPWYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 17:24:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58714 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229655AbhBPWYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 17:24:15 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 62D879E881;
+        Tue, 16 Feb 2021 17:23:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=eZnOpxCT3PAO
+        QSv6iVSnB1088d0=; b=s9mVDvLBkRtQTxOwlcXbuoVbxet49Dfdmir//zRsdLQU
+        HeLbNykFhWubxivcnUCzBXOA/TT9WVgNB6TSUy6g5pL1zXEvZ2HB5/EJ2cjR8W6Y
+        ytTLTI8Z/H0YCx/pdZs76qJLFFcianlhjhGYb20GrRPWGK7Wg+3GfGpa/+Shxaw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WcrMdR
+        nFMxLvl99jDU3Z3XR/OtJQlUsDT1hXmv5OJQ9/yEaq+Xr3oGXJ+9DMQUoTCm2RJY
+        iRjiJ3nFY/URcJ+TYJc03Vp8ftF8cj0lC1aQhudth7YyhclZjnK3UYxbSgLaghoN
+        L3pZH+3kr7MWz+EGb/0anQm+Zy6mADOY1w0PE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53A559E880;
+        Tue, 16 Feb 2021 17:23:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 928619E87C;
+        Tue, 16 Feb 2021 17:23:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2 00/22] pickaxe: test and refactoring for follow-up
+ changes
+References: <20210203032811.14979-1-avarab@gmail.com>
+        <20210216115801.4773-1-avarab@gmail.com>
+Date:   Tue, 16 Feb 2021 14:23:30 -0800
+In-Reply-To: <20210216115801.4773-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 16 Feb 2021 12:57:39 +0100")
+Message-ID: <xmqq8s7nps7x.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq7dn7rgi4.fsf@gitster.c.googlers.com>
-Date:   Tue, 16 Feb 2021 14:14:20 -0800
-Message-ID: <CAG+K25NC3H7L5TpxmR_kCvmqR8GPdCEdTt740F34ON4TWoPCpg@mail.gmail.com>
-Subject: Re: git-send-email: smtpserver in $HOME
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000aa39a505bb7b6cc7"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 99BDF91A-70A5-11EB-985A-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000aa39a505bb7b6cc7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On 2021-02-16, Junio C Hamano wrote:
-> Jan =E2=80=9CKhardix=E2=80=9D Stan=C4=9Bk  <khardix@gmail.com> writes:
-> > This introduces a special case just for handling $smtp_server=E2=80=A6
+> This is a smaller v2 of the series to remove the kwset backend and
+> make pickaxe use PCRE v2[1].
 >
-> Yes, and that was very much deliberate, as I think
+> That's not being done here yet. These are mostly small
+> refactoring/test fixes. The most significant work is a new xdiff
+> interface at the end of the series.
 >
-> 	git send-email --smtp-server=3D~/bin/my-phoney-sendmail
->
-> won't be affected by %config_path_settings.  $smtp_ssl_cert_path has
-> the same problem already, and I didn't want to make things worse (I
-> think %config_path_settings is a mistake---it is fine to have a list
-> of variables that can use ~tilde expansion, but I do not see why it
-> makes sense to allow the ~tilde expansion when the value came from
-> configureation files, and not from the command line).
+> It's based on next where some preparatory work already landed[2].
 
-Well, unless I'm missing something, shouldn't the tilde above be
-expanded by the shell before actually being passed as argument?
+Do you really mean <20210204210556.25242-1-avarab@gmail.com>?
 
-$ echo simulate --smtp-server=3D~/bin/my-phoney-sendmail
-simulate --smtp-server=3D/home/khardix/bin/my-phoney-sendmail
+  grep/pcre2: drop needless assignment + assert() on opt->pcre2
+  grep/pcre2: drop needless assignment to NULL
+  grep/pcre2: correct reference to grep_init() in comment
+  grep/pcre2: prepare to add debugging to pcre2_malloc()
+  grep/pcre2: add GREP_PCRE2_DEBUG_MALLOC debug mode
+  grep/pcre2: use compile-time PCREv2 version test
+  grep/pcre2: use pcre2_maketables_free() function
+  grep/pcre2: actually make pcre2 use custom allocator
+  grep/pcre2: move back to thread-only PCREv2 structures
+  grep/pcre2: move definitions of pcre2_{malloc,free}
 
-I assumed that only the config values are handled specially
-because only they need that =E2=80=93 the CLI is handled by shell in advanc=
-e.
-Never played with $smtp_ssl_cert_path though,
-so if there are known problems, just ignore me
-=E2=80=93 or better, point me to the relevant issue/discussion,
-if you can be bothered :) Thanks.
+I do not think we have that many patches whose title begin with
+grep/pcre2 in 'next'.
 
-> > My concern was that if there is a SMTP server actually named
-> > i.e. `~someone.example.org`, this change would break that.
->
-> Can tilde appear in a valid DNS name?  I doubt it.
+In any case, I'd rather not to see things done directly on 'next';
+targetting a selected few topics merged on top of 'master' would
+not be bad, though.
 
-So I actually did my homework and skimmed through the relevant RFCs
-(RFC952 and RFC1123); as it turns out, no, it cannot
-=E2=80=93 only ASCII alphanumerics, '-' and '.' are valid characters.
---
-Jan Stan=C4=9Bk =E2=80=93 Khardix
+Thanks.
 
---000000000000aa39a505bb7b6cc7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 376949fc523b33c1_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSXpCQUFCQ2dBZEZpRUVZdjczM3Vsa24w
-UVpmdWczS1hMeUEzc2tPMjBGQW1Bc1E3c0FDZ2tRS1hMeUEzc2sKTzIzaFlBLzlGaDlBQkZOSHln
-V2dFTVU3enR3UWpRaStEUnJWV0RBbWV3MjNBL0VSVFZOb3puaklOT1Iyclp1Kwo2alBPakVSUEZZ
-SkV4MFF5bHF1SFZoOTdZZ0U4R3VGVURWWGVuWDNFTkVtK0dSanZMaVFLRFBGRlRaQkg1MHJMCllv
-TmluZGRwNCtSSEcwbXM4VktCN3pwL2Y1VjlJZHgyK3ZrMCtrcnk4WkxHYTlJb0hua3FXTHVvNS9r
-ZXJodkIKa01rdHBnZHhZUU9PUHNLN1RucjBjdWppMXBaMDBnSk9MYXE1L0JSbXF6RVliYzJIazlN
-NFRNUGttOE5QZVRkNQp4MzZFQWkyTnRKcDdMbGIwMDJYTGJId2VoN3ZWWnFSQW9lTWlEcXZlSG9U
-OHRwUEcxelFwWmRTS2lJZVg0RHJiCjZVTHhybFpBSVZXWUt4T2MwQjZFeEZWVDRiUUxrTkY3QThs
-RzBHVW1hcGhEWndFV1puUlEvRWN0QWt3UzVUOG0KTUcwL1pxTEtsdmpHWU81aGU4RENHdHgzSlVi
-NWw2Tk9iczh4S3N1L3d3OHRYN3grcTR3TnFOOGlxWHBhMGgreAovOGszZVpRamFtVmppMmtrakk4
-V1lKY2k1U2pYcW5IZkpSaWdaQ0U4T0tuRy9KWFlvaG96ZG1BMTd1b1lIeGk3CnRMa0lOV05XYzR2
-VEdqNCtyYzlVbGQwcEdCd2cxcDRvWENFTUxUNnkya1NoaEZOVkVIQmY4bFJlQ0VyNDd4UjMKQjQr
-VmpIWnZhYkZXQlN2YTUrWll5bjl4b3AwNHhFS21zLzlNWWFrUkNZUk1yTmZsK2JTUzFBd0JNOFdJ
-WWhTTgpVaHlOaWZMd0Y2MkU5cHJjdlpDb3NONWRuL25GTHUvbW5HYU5WTWxlOC8xT1VwQzlGcEU9
-Cj1LVVNvCi0tLS0tRU5EIFBHUCBTSUdOQVRVUkUtLS0tLQo=
---000000000000aa39a505bb7b6cc7--
