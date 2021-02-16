@@ -2,167 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63FABC433E6
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ED99C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:21:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 256CF64DDA
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:13:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE6EF64DDA
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 07:21:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbhBPHNM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 02:13:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbhBPHM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 02:12:57 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6274FC0613D6
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 23:12:17 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id t29so5582410pfg.11
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 23:12:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4xHkRdQK9hus34IfJrurywHDuA3WyE3C32AHtBBmu+Y=;
-        b=EIOXrcdXNXFUUypjUuvt0YS97T0ZUQUhibrDs8uoHv3CQKM5Lu+FeOwjxs1sE6MIEZ
-         3cB1hP1cuWNmJNfpvAP5Is9vdejfFmigEKVuQgKLUR+BIazw+JTprKiuYxC7yxmO9d1U
-         Ic+DUnVDjEFuwAP4JvSbPiQ9T34Cfr6JMxIzT/eRr06ze3IMnTPtioFKQRBqPYSE5MqA
-         J1wQTcPcT5So8y8JJ0uZ6mQdGx26YqidIsdfnb6Nv2zjpg7XZUZPfHC7V2OFf9sR4Vd9
-         y0SfbIJs1zQUi60x14vxR6r/rE2ZomNPaHkOE/3M+Kyqnk9aNcrJKgGAsmjStxbsrv45
-         5lQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4xHkRdQK9hus34IfJrurywHDuA3WyE3C32AHtBBmu+Y=;
-        b=G+64oJqHKUsbzrcMWuuYPuoZY8LscF/5zNR0PmI6IrcRIV979k1ICE95ADyQkTK51T
-         n/07lrHblXWb7IRh195rgFUbC0qrkLqGMsC3s6OdOabAQ3dpw6ip8h58xo/Rn9h7nzGS
-         VmTfv1MA4fI2xNig0H2Swx/1+ZXJgD4oEPcuc7g8nPMFgDVMTEpdPwzhZjAgZloqWLI3
-         KVCUsJswYpRcagv2eCY/qULa4xP5km4iazNrA0xDHakS7Qt32xJxUPtsWNiUBU/viNVi
-         YMwZBxOU8yY1wWSs/I+MCGNJn+6Z8N1VqofyQ1uMb45zQNHmOLo7Ck5hbQkHrqkIgM74
-         d0Vg==
-X-Gm-Message-State: AOAM532HNSzvlE9dbWt5WF+YK0YEHf18Qf7gnDHn6kV/FVgeeD/1XkLB
-        23xaPFMyIzxje47kePxIBCFZQEAO1Zk=
-X-Google-Smtp-Source: ABdhPJx3WTYLTt/mJyjKo/nVqn7eG0S71I0d3E0XoGGXUEB3LySdC+re4tqIdDgb7G7Bvv5eiJvlQg==
-X-Received: by 2002:aa7:8110:0:b029:1d6:241b:d83e with SMTP id b16-20020aa781100000b02901d6241bd83emr18648083pfi.23.1613459536735;
-        Mon, 15 Feb 2021 23:12:16 -0800 (PST)
-Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id d133sm20025278pfd.6.2021.02.15.23.12.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 23:12:16 -0800 (PST)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v3 2/2] stash show: learn stash.showIncludeUntracked
-Date:   Mon, 15 Feb 2021 23:11:57 -0800
-Message-Id: <d19d07ec27d094175621eb400f74717c596c609d.1613459475.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.30.0.478.g8a0d178c01
-In-Reply-To: <cover.1613459474.git.liu.denton@gmail.com>
-References: <cover.1612855690.git.liu.denton@gmail.com> <cover.1613459474.git.liu.denton@gmail.com>
+        id S229635AbhBPHVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 02:21:00 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:56572 "EHLO localhost"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229782AbhBPHU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 02:20:58 -0500
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by localhost (Postfix) with ESMTP id 6139C1C529;
+        Tue, 16 Feb 2021 08:20:29 +0100 (CET)
+Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Jeff King <peff@peff.net>
+References: <20210215154427.32693-1-avarab@gmail.com>
+ <20210215155020.2804-2-avarab@gmail.com>
+ <xmqq7dn8u7dz.fsf@gitster.c.googlers.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <10e6cd64-8c1c-20ea-154e-89fad6664a5e@kdbg.org>
+Date:   Tue, 16 Feb 2021 08:20:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq7dn8u7dz.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous commit teaches `git stash show --include-untracked`. It
-may be desirable for a user to be able to always enable the
---include-untracked behavior. Teach the stash.showIncludeUntracked
-config option which allows users to do this in a similar manner to
-stash.showPatch.
+Am 16.02.21 um 02:30 schrieb Junio C Hamano:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>> This new behavior does give us the edge case that if we e.g. view the
+>> diff here with "-U150 -W" we'd previously extend the context to the
+>> middle of the "is_func_rec()" function, and show that function in the
+>> hunk context. Now we'll show nothing.
+> 
+> To me, that sounds like a grave regression.  Why lose the
+> information?
+> 
+> This may be coming from the difference between us, i.e. I read a lot
+> more patches written by other people than my own changes written for
+> my next commit, so every bit of hint helps, and the name of the
+> function I am seeing its latter half in the precontext is sometimes
+> a useful thing to see.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/config/stash.txt     | 5 +++++
- Documentation/git-stash.txt        | 4 ++--
- builtin/stash.c                    | 8 ++++++++
- t/t3905-stash-include-untracked.sh | 2 ++
- 4 files changed, 17 insertions(+), 2 deletions(-)
+I totally agree with your assessment. I wouldn't even have removed the 
+hunk header in the case of "-W wins", either, but that is a case that I 
+can live with when others think it makes sense.
 
-diff --git a/Documentation/config/stash.txt b/Documentation/config/stash.txt
-index 00eb35434e..413f907cba 100644
---- a/Documentation/config/stash.txt
-+++ b/Documentation/config/stash.txt
-@@ -5,6 +5,11 @@ stash.useBuiltin::
- 	is always used. Setting this will emit a warning, to alert any
- 	remaining users that setting this now does nothing.
- 
-+stash.showIncludeUntracked::
-+	If this is set to true, the `git stash show` command without an
-+	option will show the untracked files of a stash entry.  Defaults to
-+	false. See description of 'show' command in linkgit:git-stash[1].
-+
- stash.showPatch::
- 	If this is set to true, the `git stash show` command without an
- 	option will show the stash entry in patch form.  Defaults to false.
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 8eeb60feb1..a8c8c32f1e 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -91,8 +91,8 @@ show [-u|--include-untracked|--only-untracked] [<diff-options>] [<stash>]::
- 	By default, the command shows the diffstat, but it will accept any
- 	format known to 'git diff' (e.g., `git stash show -p stash@{1}`
- 	to view the second most recent entry in patch form).
--	You can use stash.showStat and/or stash.showPatch config variables
--	to change the default behavior.
-+	You can use stash.showIncludeUntracked, stash.showStat, and
-+	stash.showPatch config variables to change the default behavior.
- 
- pop [--index] [-q|--quiet] [<stash>]::
- 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 417ed2b4a1..c788a3e236 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -768,6 +768,7 @@ static int list_stash(int argc, const char **argv, const char *prefix)
- 
- static int show_stat = 1;
- static int show_patch;
-+static int show_include_untracked;
- static int use_legacy_stash;
- 
- static int git_stash_config(const char *var, const char *value, void *cb)
-@@ -780,6 +781,10 @@ static int git_stash_config(const char *var, const char *value, void *cb)
- 		show_patch = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "stash.showincludeuntracked")) {
-+		show_include_untracked = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "stash.usebuiltin")) {
- 		use_legacy_stash = !git_config_bool(var, value);
- 		return 0;
-@@ -868,6 +873,9 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 		if (show_patch)
- 			rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
- 
-+		if (show_include_untracked)
-+			show_untracked = UNTRACKED_INCLUDE;
-+
- 		if (!show_stat && !show_patch) {
- 			free_stash_info(&info);
- 			return 0;
-diff --git a/t/t3905-stash-include-untracked.sh b/t/t3905-stash-include-untracked.sh
-index 978bc97baf..8bcd4c5ca8 100755
---- a/t/t3905-stash-include-untracked.sh
-+++ b/t/t3905-stash-include-untracked.sh
-@@ -318,6 +318,8 @@ test_expect_success 'stash show --include-untracked shows untracked files' '
- 	test_cmp expect actual &&
- 	git stash show --only-untracked --include-untracked >actual &&
- 	test_cmp expect actual &&
-+	git -c stash.showIncludeUntracked=true stash show >actual &&
-+	test_cmp expect actual &&
- 
- 	cat >expect <<-EOF &&
- 	diff --git a/tracked b/tracked
--- 
-2.30.0.478.g8a0d178c01
-
+-- Hannes
