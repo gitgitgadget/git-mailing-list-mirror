@@ -2,120 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_05,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22608C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF78C433E6
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:39:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEEFF64E2B
+	by mail.kernel.org (Postfix) with ESMTP id DC69B64E28
 	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbhBPSjG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 13:39:06 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50326 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbhBPSjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 13:39:05 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5365FA6206;
-        Tue, 16 Feb 2021 13:38:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9u/iyr8UZVQ3Q8En1Taxi6L0ssI=; b=qImSQD
-        Mtn5ikhKdZbWMjuyCCz+uoUVC6KWo0fZRbCCy6oKM/oXEBdIkr96LYuEJ2VcoXER
-        tK12BvqqJLkFR5U8gVP8pzC4yIsCPTzgH9PcPKpyFMJ7kDmeDloM06MNpZeFE74H
-        PTq3dTAb1UpqaS99KCAUCEjudsK7MA/l4b+I4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UOeK/QKWaxBKR8S1AjeERGWcFPMw6gqT
-        4Kud5hO9FmHhOxh6GATkytRxUPZOR/3oa3PpEwkTnC389RUaZhVuqaLmvzc1aLsI
-        QuOJ+5GYJ1Gobtedgkw4inYB3i+8D9UlS3nSRVJIjqCvkTrPi3jeiQlYvt9GkEAY
-        /ZHXuOwXIQA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AED7A6205;
-        Tue, 16 Feb 2021 13:38:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.243.138.161])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BFD92A6204;
-        Tue, 16 Feb 2021 13:38:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S230213AbhBPSi6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 13:38:58 -0500
+Received: from forward101p.mail.yandex.net ([77.88.28.101]:48927 "EHLO
+        forward101p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229572AbhBPSi5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 16 Feb 2021 13:38:57 -0500
+X-Greylist: delayed 472 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Feb 2021 13:38:56 EST
+Received: from forward103q.mail.yandex.net (forward103q.mail.yandex.net [IPv6:2a02:6b8:c0e:50:0:640:b21c:d009])
+        by forward101p.mail.yandex.net (Yandex) with ESMTP id 73E433282375
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 21:30:22 +0300 (MSK)
+Received: from vla1-0c91d72e5963.qloud-c.yandex.net (vla1-0c91d72e5963.qloud-c.yandex.net [IPv6:2a02:6b8:c0d:3a21:0:640:c91:d72e])
+        by forward103q.mail.yandex.net (Yandex) with ESMTP id 6F7E661E0002
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 21:30:22 +0300 (MSK)
+Received: from vla3-23c3b031fed5.qloud-c.yandex.net (vla3-23c3b031fed5.qloud-c.yandex.net [2a02:6b8:c15:2582:0:640:23c3:b031])
+        by vla1-0c91d72e5963.qloud-c.yandex.net (mxback/Yandex) with ESMTP id WXFHTETCA1-UMIGMnvr;
+        Tue, 16 Feb 2021 21:30:22 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narod.ru; s=mail; t=1613500222;
+        bh=L2eLlA+sXLST4YIePSJfvbDUt0Vwy4VztTZc0K1D1fQ=;
+        h=Subject:From:To:Message-ID:Date;
+        b=obc3UJ0vDIJXpYBkkR/r5oh9Mm8CHZWKoxumIy7usylPrNrvcYngcGbfEp0EKgY3a
+         LzG1wN/2bOS0V1A5KqAffIFN1c9YuX5SIMaV6INZi0sIFKpsotMY20s+o2Fi6vu7PU
+         dkte3X11Yd25jhivllBm2fYzX/HlpTQiH827J5YM=
+Authentication-Results: vla1-0c91d72e5963.qloud-c.yandex.net; dkim=pass header.i=@narod.ru
+Received: by vla3-23c3b031fed5.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA id fD7owEbG0R-ULKeEgj6;
+        Tue, 16 Feb 2021 21:30:22 +0300
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client certificate not present)
 To:     git@vger.kernel.org
-Cc:     Seth House <seth@eseth.com>
-Subject: Re: [PATCH 1/1] mergetools/vimdiff: add vimdiff1 merge tool variant
-References: <20210214022840.849312-1-seth@eseth.com>
-        <20210214022840.849312-2-seth@eseth.com>
-Date:   Tue, 16 Feb 2021 10:38:22 -0800
-In-Reply-To: <20210214022840.849312-2-seth@eseth.com> (Seth House's message of
-        "Sat, 13 Feb 2021 19:28:40 -0700")
-Message-ID: <xmqqk0r7rh7l.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+From:   Victor Porton <porton@narod.ru>
+Subject: Bug? I can't manually merge changes with difftool
+Message-ID: <b46fd946-42ad-2c33-0294-415949b9085e@narod.ru>
+Date:   Tue, 16 Feb 2021 20:30:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 25DC0272-7086-11EB-9DBC-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Seth House <seth@eseth.com> writes:
+When I run
 
-> This adds yet another vimdiff/gvimdiff variant and presents conflicts as
-> a two-way diff between 'LOCAL' and 'REMOTE'. 'MERGED' is not opened
-> which deviates from the norm so usage text is echoed as a Vim message on
-> startup that instructs the user with how to proceed and how to abort.
->
-> Vimdiff is well-suited to two-way diffs so this is an option for a more
-> simple, more streamlined conflict resolution. For example: it is
-> difficult to communicate differences across more than two files using
-> only syntax highlighting; default vimdiff commands to get and put
-> changes between buffers do not need the user to manually specify
-> a source or destination buffer when only using two buffers.
->
-> Like other merge tools that directly compare 'LOCAL' with 'REMOTE', this
-> tool will benefit when paired with the new `mergetool.hideResolved`
-> setting.
->
-> Signed-off-by: Seth House <seth@eseth.com>
-> ---
->  mergetools/vimdiff | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
+git difftool main HEAD
 
-Any vimdiff$n + "git mergetool" users care to comment?  Thanks.
+and manually merge changes in started meld or kdiff3 and then save the
+resulting file, it is saved somewhere in /tmp not in the workdir.
+Workdir is not modified after I close meld or kdiff3.
 
-> diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-> index abc8ce4ec4..96f6209a04 100644
-> --- a/mergetools/vimdiff
-> +++ b/mergetools/vimdiff
-> @@ -15,6 +15,17 @@ merge_cmd () {
->  				"$LOCAL" "$MERGED" "$REMOTE"
->  		fi
->  		;;
-> +	*vimdiff1)
-> +		"$merge_tool_path" -f -d \
-> +			-c 'echon "Resolve conflicts leftward then save. Use :cq to abort."' \
-> +			"$LOCAL" "$REMOTE"
-> +		ret="$?"
-> +		if test "$ret" -eq 0
-> +		then
-> +			cp -- "$LOCAL" "$MERGED"
-> +		fi
-> +		return "$ret"
-> +		;;
->  	*vimdiff2)
->  		"$merge_tool_path" -f -d -c 'wincmd l' \
->  			"$LOCAL" "$MERGED" "$REMOTE"
-> @@ -52,7 +63,7 @@ exit_code_trustable () {
->  
->  list_tool_variants () {
->  	for prefix in '' g n; do
-> -		for suffix in '' 2 3; do
-> +		for suffix in '' 1 2 3; do
->  			echo "${prefix}vimdiff${suffix}"
->  		done
->  	done
+I need to store changes in workdir.
+
+Is it a bug of Git 2.27.0.
+
