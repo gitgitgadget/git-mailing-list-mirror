@@ -2,173 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2920C433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9EB4C433E6
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:08:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63AB864E10
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 17:55:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9134564E28
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231342AbhBPRzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 12:55:37 -0500
-Received: from out01.mta.xmission.com ([166.70.13.231]:34744 "EHLO
-        out01.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231284AbhBPRz2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 12:55:28 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1lC4Yg-00Ga97-Nb; Tue, 16 Feb 2021 10:54:46 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1lC4Yf-002L1k-Eb; Tue, 16 Feb 2021 10:54:46 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 403FA500764;
-        Tue, 16 Feb 2021 10:54:45 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 003m2sMSW5ZB; Tue, 16 Feb 2021 10:54:45 -0700 (MST)
-Received: from ellen.lan (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id CE4EC5007BC;
-        Tue, 16 Feb 2021 10:54:44 -0700 (MST)
-Date:   Tue, 16 Feb 2021 10:54:41 -0700
-From:   Seth House <seth@eseth.com>
-To:     Knapperig knaapie <isaacvanson@kpnmail.nl>
-Cc:     git@vger.kernel.org
-Message-ID: <YCwG4SkN4unSANjX@ellen.lan>
-References: <66eb4eba-ed94-b467-336b-dbe6f398d8af@kpnmail.nl>
+        id S229994AbhBPSIk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 13:08:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230210AbhBPSIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 13:08:32 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A77C06174A
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:07:51 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id t62so10266577qke.7
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:07:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=exmbbUTMAn11JKY8y4yzfVgaHllBSmyX/1M0bEMcOMU=;
+        b=EObMDy9aiwgqSrQaCcWk78e+Nu4PReSGXf9a2pXY4t9IKacCuLImyVJLYSzP1bIXx3
+         Guq1ngtKFLX8oAt4V3H+ZHpetC8kDiJw2lbXbcxMuK/0IJKJDbi0S4XIJulqsVmin0DI
+         mx+4X8XpevmvYXPe5wOUYMZSD2qB2RxVHzQQpvyh/echj27IBjL7I5eQBqqBY5dDnpnl
+         iWRVOfCNRDCZN3t749nzVUp+2vGRKI+6pEXUhDxOH8JN9sEoNN7tss1cLDAmxUE56loa
+         aVW9ecxVk6OaGgv1jxz4dCG0hTB/nH7Y4sPxM6frfyD1Jh3j2/H9HyaiblYlrE0J/zwT
+         NL2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=exmbbUTMAn11JKY8y4yzfVgaHllBSmyX/1M0bEMcOMU=;
+        b=hgH4yf2zD1Szg5jwFwyZ7/Xc0QnkRabgTJYft39zAHNNCjgPxVv7/msfHaL40ineKw
+         H7XfIvENDW0B/oGZdISoehNJLrZP5jbBp/71V9E4tdTVF4vnQD9G13/bmIRspjPTnZ87
+         G6NrJ3b2fthSJkQjTNXbPFzHU5ID7CrIBJMFYWHxPmeJx7O9oA7mRf0F0YzZOVnCyulL
+         FBL27pjGaZLNZbDnKkR+eB+lATHlUTJaaw1f/+zUOsqFJ6+6IQ929vr3bUaqRNfySrLX
+         RG2slo3RUof9put0eij1JAmO3zF9qOKLKPnFcCFylpYm7STadiaO3k1Fs8Ak8wxQ93jI
+         7Q3Q==
+X-Gm-Message-State: AOAM530CxGEkvRXoSx2MDr3x2M0nGbORYIOKmQC5RA7e8eywwoxp8nrx
+        iEOktedBNsJoqpOLin11xzUkEQ==
+X-Google-Smtp-Source: ABdhPJw3M4kpQwpmZz74cjHR9FH6PMtwI+uf0CcE8hsemWXdz4tZsxLRYJT3SI/MT/WUQc14kIZXFQ==
+X-Received: by 2002:a37:52d7:: with SMTP id g206mr20468720qkb.343.1613498871061;
+        Tue, 16 Feb 2021 10:07:51 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:c1ff:146e:b5:8cba])
+        by smtp.gmail.com with ESMTPSA id o194sm14819014qke.101.2021.02.16.10.07.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 10:07:50 -0800 (PST)
+Date:   Tue, 16 Feb 2021 13:07:46 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Bug Report: Multi-line trailers containing empty lines break
+ parsing
+Message-ID: <YCwJ8tORQg2Air4r@nand.local>
+References: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
+ <xmqqczx0sq1o.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <66eb4eba-ed94-b467-336b-dbe6f398d8af@kpnmail.nl>
-X-XM-SPF: eid=1lC4Yf-002L1k-Eb;;;mid=<YCwG4SkN4unSANjX@ellen.lan>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: the git add command
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+In-Reply-To: <xmqqczx0sq1o.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 16, 2021 at 04:21:44PM +0100, Knapperig knaapie wrote:
-> A screenshot of the problem occurring on the command line is attached.
-> Holler if you need more info.
+On Mon, Feb 15, 2021 at 06:29:55PM -0800, Junio C Hamano wrote:
+> Matthias Buehlmann <Matthias.Buehlmann@mabulous.com> writes:
+>
+> > Thank you for filling out a Git bug report!
+> > Please answer the following questions to help us understand your issue.
+>
+> Thanks; let's ping our resident trailers expert ;-)
 
-Hello. Everything in this screenshot looks working as intended to me.
-I'll walk through line-by-line to explain what is happening.
+I'm not Christian, but hopefully I'm an OK substitute :).
 
-1.  `git commit -m 'tests weg uit admin file'`
+I originally thought that this was an ambiguous test, since you could
+reasonably say the trailers begin after the blank line in the second
+"MultiLineTrailer" block. In that case, neither of the following lines
+look like a trailer, so 'git interpret-trailers' could reasonably print
+nothing.
 
-    The `admin.py` file was modified but not yet staged which is why Git
-    reported "no changes added to commit" and no commit was created.
+But I was being tricked, since I looked at "test.txt" in my editor,
+which automatically replaces blank lines (zero or more space characters
+ending in a newline) with a single newline. In fact, this isn't
+ambiguous at all, since the blank lines are continuations (they are a
+single space character and then a newline):
 
-2.  `git add`
+		00000090  65 64 20 6d 75 6c 74 69  2d 6c 69 6e 65 0a 20 74  |ed multi-line. t|
+		000000a0  72 61 69 6c 65 72 20 77  68 69 63 68 0a 20 0a 20  |railer which. . |
 
-    This command requires an argument which is why Git reported "Nothing
-    specified, nothing added".
+(see the repeated '0a 20' space + newline pair after "which").
 
-3.  `git add ookleuk/admin.py`
+I think that this is a legitimate bug in 'interpret-trailers' that it
+doesn't know to continue multi-line trailers that have empty lines in
+them.
 
-    This succesfully staged the file for commit.
+I thought that this might have dated back to 022349c3b0 (trailer: avoid
+unnecessary splitting on lines, 2016-11-02), but checking out that
+commit's first parent shows the bug (albeit without --parse, which
+didn't exist then).
 
-4.  `git push`
+Anyway, I'm pretty sure the problem is that
+trailer.c:find_trailer_start() doesn't disambiguate between a blank line
+and one that contains only space characters.
 
-    The admin file has been staged but a commit for it has not yet been
-    created which is why Git reported "Everything up-to-date".
+This patch might do the trick:
 
-5.  `git commit -m 'tests weg uit admin file'`
+--- 8< ---
 
-    This successfully created a commit containing the admin file.
+Subject: [PATCH] trailer.c: handle empty continuation lines
 
-6.  `git push .`
+In a multi-line trailer, it is possible to have a continuation line
+which contains at least one space character, terminating in a newline.
 
-    The first argument to the push command is the name of a remote to
-    push to.
+In this case, the trailer should continue across the blank continuation
+line, but 'trailer.c:find_trailer_start()' handles this case
+incorrectly.
 
-    This can also be a file path which in this case is the path to the
-    local repository that you're currently working in which is why Git
-    reports "Everything up-to-date".
+When it encounters a blank line, find_trailer_start() assumes that the
+trailers must begin on the line following the one it's looking at. But
+this isn't the case if the line is a non-empty continuation, in which
+the line may be part of a trailer.
 
-    Without any arguments it'll use the default behavior [1] (the
-    current branch is pushed to the corresponding upstream branch). Or
-    it's also common to specify name of a remote (e.g., "origin"). One
-    of these would be a good choice for this workflow.
+Fix this by only considering a blank line which has exactly zero space
+characters before the LF as delimiting the start of trailers.
 
-    [1] https://www.git-scm.com/docs/git-push#_description
+Reported-by: Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t7513-interpret-trailers.sh | 23 +++++++++++++++++++++++
+ trailer.c                     |  2 +-
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-7.  `git add .`
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 6602790b5f..af602ff329 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -1476,4 +1476,27 @@ test_expect_success 'suppress --- handling' '
+ 	test_cmp expected actual
+ '
 
-    Nothing was staged since there were no modified files.
-
-8.  `git push .`
-
-    Same as above: pushing changes from the local repository to the same
-    local repository. `git push` without arguments would do the trick.
-
-9.  `git status`
-
-    This reports there is one commit that is ready to push -- the commit
-    from #5. It also looks like the file was modified again after that
-    commit was created.
-
-10. `git add admin.py`
-
-    This did not work because `git add` is looking for a file named
-    `admin.py` in the current directory. It would work with the full
-    path like in #3, or it would work if the current directory was the
-    `ookleuk` directory but from the shell prompt and the `git status`
-    output from the previous step it looks like the current directory is
-    `vinkmoi` and not `ookleuk`.
-
-11. `git add .`
-
-    This successfully staged the new changes to the admin file but
-    a commit has not yet been created.
-
-12. `git push`
-
-    This successfully pushed the commit created in #5.
-
-    The commits that were pushed can be viewed in GitHub [2] or on the
-    CLI with `git log --oneline 5a0c6bb...966fde2`. If `git status` were
-    run after this it would report your branch is up-to-date with
-    origin/master and there is one file currently staged for commit.
-
-    [2] https://github.com/Ivsvinkmoi/Django_project/compare/5a0c6bb...966fde2
-
-Based on that screenshot, I'd suggest reading about staging vs.
-committing and pushing and remotes. Also to pay close attention to which
-arguments are given to which commands and what directory each command is
-run from.
-
-The Git website has excellent written and video tutorials [3] that cover
-those topics and the Google Groups mailing list [4] is a good resource
-to discuss Git usage and questions with other people that are also
-learning Git.
-
-[3] https://www.git-scm.com/doc
-[4] https://www.git-scm.com/community
-    https://groups.google.com/g/git-users
-
-You said:
-
-> I want to be sure I'll be able to only upload
-> specific files in the future.
-
-Which is a great workflow and definitely possible! Stick with it and
-you'll get there. If your Git experience is anything like mine: it's
-a long road to learning it at first but the time investment will be more
-than worthwhile in the long run.
-
-Cheers.
++test_expect_success 'handling of empty continuations lines' '
++	tr _ " " >input <<-\EOF &&
++	subject
++
++	body
++
++	trailer: single
++	multi: one
++	_two
++	multi: one
++	_
++	_two
++	_three
++	EOF
++	cat >expect <<-\EOF &&
++	trailer: single
++	multi: one two
++	multi: one two three
++	EOF
++	git interpret-trailers --parse <input >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/trailer.c b/trailer.c
+index 249ed618ed..7ca7200aec 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -846,7 +846,7 @@ static size_t find_trailer_start(const char *buf, size_t len)
+ 			possible_continuation_lines = 0;
+ 			continue;
+ 		}
+-		if (is_blank_line(bol)) {
++		if (is_blank_line(bol) && *bol == '\n') {
+ 			if (only_spaces)
+ 				continue;
+ 			non_trailer_lines += possible_continuation_lines;
+--
+2.30.0.667.g81c0cbc6fd
 
