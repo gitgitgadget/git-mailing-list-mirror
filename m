@@ -2,93 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F98AC433E0
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59E5EC433E9
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:59:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4163864DDA
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:53:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C43D64DA5
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 11:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230427AbhBPLxN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 06:53:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45982 "EHLO
+        id S230377AbhBPL7G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 06:59:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230310AbhBPLu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 06:50:56 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93B28C061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:50:15 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id h17so7022322oih.5
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:50:15 -0800 (PST)
+        with ESMTP id S230260AbhBPL6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 06:58:55 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD8BEC06174A
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:14 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id x4so14211329wmi.3
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 03:58:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=xdnOqUCJWy5iz3D8U7VBhdUpTq4ACSp2uMiVULCgaKw=;
-        b=edCSkvGxk7qXlEweL54geuFOu2Fmrn2e6t8xjbuDIXXaDHctuny4Y2+cM18Y5yatW/
-         ZnyHsllyPk+B+7r8X/txQd4TUTlgee9KjY8CjLJzIs/7Zw3nk+sXFPWDuqFcdd19X4/q
-         GGr6MHr9ysybHrV9aoa5vNH9JU53G0xXzsUy+OGLSfOYVyZUKL9p1QyKLHXKINk8HDUw
-         wSuC5XaDOW8fZ6wsstFv2UToS13z498piyHfy+elh0/Xz1oRwn9ScH6wG3tSoMrGwts3
-         aJEKQADKzVlubQZ7Rp/RurYzjG7EvciQsJj00IDfSniDaFdWMPmXIzcIHhSvsejpv3FQ
-         W6Lg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=fKSziKNbHq0l5DqWPKPhb3VhTIyc9Vmnkia4FZLYHT4=;
+        b=j9FxYDyzkUhpRF4+DldxHItZfA3C/OJWwgQeu4pxx40t7rn2nKDb9TAclTF1odOSMi
+         YB+kDJI5leb1kV63AB8LcYlPWtniCwOyAhZqJzKjr3mvdBglSIIyC9JYMO2pWe0gP6HN
+         FzPDRRD9NyGEJJVwMv0QNtQha8qyX9b7ZPep3LOh2zktklzROedzh1zsjNkATwt3srnr
+         HqHCU40tehbbGj3Pk7JozpciL8hAfwOTUdsJeY0iXl7ZVjCHAiXylDSftbdIctkOBEG9
+         UTyZdFXb1aQAE5kkPgDXcL3+0lBgzAi+zwf8oJ8Ls7sTffg8/4EfQtqNUJJUyXaxPlq8
+         kpbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=xdnOqUCJWy5iz3D8U7VBhdUpTq4ACSp2uMiVULCgaKw=;
-        b=Lcxq/rqxD1y4GW5oRsRYV5bzMh9ZjKtvtk7B6WBy7YKdpXMvET4MHlGFllWOp4ioiS
-         CdNjTFkgjej/J1aeC6C5qShAoLGoR3rKFQBXtES//KsDRJqv/wBttIngIFr1SB835u2u
-         eCHc2MCqnF2WJhpLZwAbnAA+26HoyOGLH4kzuJDbDgrQqLjeuOsoAAhJIXsUaGmP8xrt
-         7Wf/xQo8Ijpia6OMRYHclTyJ/f+OZs112ANU7TbABy+ig0yhw8HgKgXXRqRagq/j8YrH
-         jYU1ZrbHxG++oJFX2iou7K/5tQOSekRupCwKKu1pskSimOSII0zJVwis9MTpx3K5mLMI
-         ndSg==
-X-Gm-Message-State: AOAM532GCN3VVXqJDhMc8+VkGXKkmH1yaDfCgFULjDJ56DmZ09j1Msna
-        nLKdG11TdpdyV9DeJ4dbs+8=
-X-Google-Smtp-Source: ABdhPJwi13i2uobn1Fa2Fc8k7/RRbiAL8JjjREtTgoFi+WRWsYxxEWPEH7sjxrkpy9oUwxbkLIf+Fw==
-X-Received: by 2002:a05:6808:1290:: with SMTP id a16mr2303206oiw.161.1613476215025;
-        Tue, 16 Feb 2021 03:50:15 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:bccc:aed3:3481:8d68? ([2600:1700:e72:80a0:bccc:aed3:3481:8d68])
-        by smtp.gmail.com with UTF8SMTPSA id 4sm3835otp.4.2021.02.16.03.50.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Feb 2021 03:50:14 -0800 (PST)
-Message-ID: <29d29633-ccbb-e534-24bc-c8b16c7df38d@gmail.com>
-Date:   Tue, 16 Feb 2021 06:50:13 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=fKSziKNbHq0l5DqWPKPhb3VhTIyc9Vmnkia4FZLYHT4=;
+        b=JXccvbEPtOYhO56clDa78REdG6hj39qlhAcn3YekV6ftrpjvcS3W8JoLYdtvqBAd+E
+         V/ny5aQ8rumf26KJS+6geDkY58stlGYbhbOWzgetHtJcHooQi5wjXqHhuSlbkzBDQb5i
+         L2mU1/OBCDEoJfbcZqyEADvU2Wtnh3r0WoXucM0cOY85ATk1gy0lijqUFRAfHggj37dW
+         qo4Uk6uiwOAglGyvLIbUIubgN+I/eofjoGifVRtxDJRnrsD3n/WXYVFRnw63MZRUUV7w
+         pXZkwEqc+7R+D/UoqyDtxFF/hO1fczYW1xVD9mmfFwuI7yERwOqW/WTR5VUcJVDP8VCc
+         LD3g==
+X-Gm-Message-State: AOAM5339xq7bsRc/TomEGuwKnHogGAwTiKfSU8bc0AKOPgtoB6Og5HF0
+        jfLUyrFTu/qBqk52KAQSoIKzqB00+gzCzg==
+X-Google-Smtp-Source: ABdhPJzuZHv41yzTXhTUUJCz++arTWrq+1ldu/eVE4ZtQuMO0x51dVyJCMDoZHxC6DYSxxR87JpOTA==
+X-Received: by 2002:a1c:f30a:: with SMTP id q10mr1887588wmq.159.1613476693140;
+        Tue, 16 Feb 2021 03:58:13 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b2sm27968246wrv.73.2021.02.16.03.58.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 03:58:12 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 00/22] pickaxe: test and refactoring for follow-up changes
+Date:   Tue, 16 Feb 2021 12:57:39 +0100
+Message-Id: <20210216115801.4773-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
+In-Reply-To: <20210203032811.14979-1-avarab@gmail.com>
+References: <20210203032811.14979-1-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH v2 0/4] midx: split out sub-commands
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     avarab@gmail.com, peff@peff.net, dstolee@microsoft.com,
-        szeder.dev@gmail.com, gitster@pobox.com
-References: <87r1lhb6z7.fsf@evledraar.gmail.com>
- <cover.1613422804.git.me@ttaylorr.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <cover.1613422804.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/15/2021 4:01 PM, Taylor Blau wrote:
-> Here's a few patches that we could add to the beginning of this series,
-> or queue up separately.
-> 
-> I think that these are all fairly straightforward, but it would be good
-> to have Ævar take a look and make sure I'm not doing anything wrong
-> here.
-> 
-> I'll plan to send a v2 of the reverse index series in a few days with
-> these four new patches at the beginning.
+This is a smaller v2 of the series to remove the kwset backend and
+make pickaxe use PCRE v2[1].
 
-Thanks, both, for cleaning up a mess I made as a new contributor. These
-patches have been enlightening and definitely move the code into a
-cleaner and more extensible direction. Thanks!
+That's not being done here yet. These are mostly small
+refactoring/test fixes. The most significant work is a new xdiff
+interface at the end of the series.
 
--Stolee
+It's based on next where some preparatory work already landed[2].
+
+The endless loop bug in v1 pointed out by René Scharfe[3] is gone. We
+should still have a test for that, I didn't have time to do more on
+that, and figured this was already getting large enough.
+
+I'll do some more improvements of test coverage in a follow-up
+series. I'm aware of various blind spots in pickaxe test coverage, but
+none of it should hide a bug in this refactoring from us.
+
+It's things like how we deal with REG_NEWLINE, "^" matches etc., but
+all the matching logic for that stays the same in this series.
+
+1. https://lore.kernel.org/git/20210203032811.14979-1-avarab@gmail.com/
+2. https://lore.kernel.org/git/20210204210556.25242-1-avarab@gmail.com/
+3. https://lore.kernel.org/git/4ef09db7-34f2-2fb5-b9e9-be69c7102787@web.de/
+
+Ævar Arnfjörð Bjarmason (22):
+  grep/pcre2 tests: reword comments referring to kwset
+  test-lib-functions: document and test test_commit --no-tag
+  test-lib-functions: reword "test_commit --append" docs
+  test-lib functions: add --printf option to test_commit
+  pickaxe tests: refactor to use test_commit --append --printf
+  pickaxe tests: add test for diffgrep_consume() internals
+  pickaxe tests: add test for "log -S" not being a regex
+  pickaxe tests: test for -G, -S and --find-object incompatibility
+  pickaxe: die when -G and --pickaxe-regex are combined
+  pickaxe: die when --find-object and --pickaxe-all are combined
+  diff.h: move pickaxe fields together again
+  pickaxe/style: consolidate declarations and assignments
+  perf: add performance test for pickaxe
+  pickaxe: refactor function selection in diffcore-pickaxe()
+  pickaxe: assert that we must have a needle under -G or -S
+  pickaxe -S: support content with NULs under --pickaxe-regex
+  pickaxe: rename variables in has_changes() for brevity
+  pickaxe -S: slightly optimize contains()
+  xdiff-interface: allow early return from xdiff_emit_{line,hunk}_fn
+  xdiff-interface: support early exit in xdiff_outf()
+  pickaxe -G: terminate early on matching lines
+  pickaxe -G: don't special-case create/delete
+
+ combine-diff.c                 |   9 ++-
+ diff.c                         |  45 +++++++++------
+ diff.h                         |   7 ++-
+ diffcore-pickaxe.c             |  99 ++++++++++++++++++--------------
+ range-diff.c                   |   8 ++-
+ t/perf/p4209-pickaxe.sh        |  70 +++++++++++++++++++++++
+ t/t0000-basic.sh               |  19 +++++++
+ t/t1307-config-blob.sh         |   4 +-
+ t/t2030-unresolve-info.sh      |   3 +-
+ t/t4006-diff-mode.sh           |   6 +-
+ t/t4030-diff-textconv.sh       |   8 +--
+ t/t4209-log-pickaxe.sh         | 100 +++++++++++++++++++++++++++------
+ t/t5520-pull.sh                |  10 +---
+ t/t7816-grep-binary-pattern.sh |   4 +-
+ t/test-lib-functions.sh        |  23 ++++++--
+ xdiff-interface.c              |  26 ++++++---
+ xdiff-interface.h              |  36 +++++++++---
+ 17 files changed, 349 insertions(+), 128 deletions(-)
+ create mode 100755 t/perf/p4209-pickaxe.sh
+
+-- 
+2.30.0.284.gd98b1dd5eaa7
+
