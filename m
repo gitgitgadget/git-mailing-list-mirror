@@ -2,117 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD06C433E0
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 23:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F782C433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 00:39:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26D5664DD4
-	for <git@archiver.kernel.org>; Mon, 15 Feb 2021 23:52:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4385564DF0
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 00:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbhBOXuF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 18:50:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60804 "EHLO
+        id S229670AbhBPAjO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 19:39:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229662AbhBOXuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 18:50:01 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37FBC061574
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 15:49:20 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id 81so7984061qkf.4
-        for <git@vger.kernel.org>; Mon, 15 Feb 2021 15:49:20 -0800 (PST)
+        with ESMTP id S229497AbhBPAjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 19:39:14 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA3CDC061574
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 16:38:33 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id b14so8039270eju.7
+        for <git@vger.kernel.org>; Mon, 15 Feb 2021 16:38:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=FWSHhcszUN79xUObmYHDADOkt4TDQs2jn23uDh5+Dwk=;
-        b=ODpb11Ju71FNYTI1tkjosPEqnF8Ep7A3oNUfLsFlrP1XR3BO4MD2fRzksIMatp3W9K
-         3hJ0JWzSUgx4vlzdb9jBJ7JrvRmKoLmu0FWHoHWb3ctXrecamtkJwo45Q2zJ+ER+bBwA
-         zEqRY2NQqsI7ZQG1A2QrJivbjomzkKdke5LpiFvhag5OBcFVZU3dX/qQ4ULmw4dOEic9
-         ZHgIGRptNTB6rRRnDcT6OcmO2DQPlUJtL7/wfC0BI/HGcvpkeOi1Aqyh3RQ8pE/dF0Rz
-         0nYyqHAaNmVhHcDtMpj7t8NN3aKqchS844ZO5wAT05lMpJymUOsz4llU0rtvQclo99tn
-         +Rpw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=w2k8lSUCRTG2I4mZxWXzEE6ZDNbN1cZ59brxziIpF/g=;
+        b=DojmQLy6+NfG1Y2cQ774k1oUiA4HuyOh62z/+ok5+9XcHiBM+WXH1m5E1g0aUpfFGb
+         DdPQ31JMbcus7fnt4OHBA7GLRkoQCbhZcWEBD6ReAvvELNr5hrGejx70LNAnW7QXx13u
+         4YGyeFu7HJTYJawSkTKKgGkWlF2fH7ycnZymHWlK+ln8fCFGuZ8kp/rEhhCHeNrAPaPg
+         jltv/g/+eLSovoBmbxfkZXQonYYqVl2r1OOEV00V00YRT8zqbWcvogByJa7InPfnt9Vx
+         r8QydHHWdvgnGyF1zUThB+TmyAKUinbX874vYvVKhAfKr0JTE7qlFrtqNEW+OkEro0Ay
+         ScRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=FWSHhcszUN79xUObmYHDADOkt4TDQs2jn23uDh5+Dwk=;
-        b=rxORqfRf/Zn1/NsOUBVk3r7z4VkxBZy7JcwVo8cDOUuWHaQjLjQWj+FVzzDDQ+ZMVQ
-         lbO6y0QTZWwECxxJK9ET1DAFFXpYnpjqDYxP8sJ2O8hYOT0G5Pc8357mzM49TeYT+4Jx
-         wd4/Uotth7biSiRXL827+7UOJVuES4p20cJxS0WuY+BodAu7YN5klj8bQz1nbYObX+4v
-         dUL1NCISQVrNCGaZTpol1UvKRyC/eiKZ2xXsW8RTYMCgVsZqHj7/YEQIFGvbKKD8Gg3b
-         3u/23r7qrMWI/OZJAu/ad5VxO+159vcTOmsNLbwndAAGuyoVHyxsKzCOGTBwfBfjG/xk
-         pFZg==
-X-Gm-Message-State: AOAM532c/JHk0JpG8fFr+xMiCMpu42ncJpxuJdhTN/F621Ri+geArDpI
-        ik2qll3yHrq/4OsBXoSc3ljFGw==
-X-Google-Smtp-Source: ABdhPJwNF6To5tnShhtPTWZrg4iBCn/6FQpTP6TZcwKP5xrOxGZG3sq2AeDEJ9cqtuLUZO9MtaxnHw==
-X-Received: by 2002:a37:6116:: with SMTP id v22mr17548870qkb.38.1613432960128;
-        Mon, 15 Feb 2021 15:49:20 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:c1ff:146e:b5:8cba])
-        by smtp.gmail.com with ESMTPSA id m5sm10859868qtu.41.2021.02.15.15.49.18
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=w2k8lSUCRTG2I4mZxWXzEE6ZDNbN1cZ59brxziIpF/g=;
+        b=sByd6GnFcyxvbegGMPKRT/IGIm7FF5Dsp5LWcVNuKQtRXW9bgnswQDtG040ipQ/UY4
+         UR1S89Sfvw4ioYCtSKJ74GvpX0B3nWE6WZpqg7M/9OTctC+G4q10RB82PewG6p22AbdL
+         grYTTx2GSZah0ILeILP2lDCya9h1XR4yc5sEVe8gclTeXPcr3THZSh1kdd3VsBRgWmra
+         8Xso13/phO776aI0zpA26XAi6r0km+ogqU9lYl7Cy6UMrTVAwXQaS4OHVKe7pdir/A+I
+         n9whhIwbp5CVlMMpNQtPrbES7nEe8CAKQWyD0ch0jJxqCPuRmy2D/LqwbsN4YTNmUXsf
+         1GYw==
+X-Gm-Message-State: AOAM530Q3F4aSQ8IeMbephl5sYM9E7V9A6XJTmkTmJsAEE27smn1J2IG
+        pke+FqMmLxSM+U5F2F9Ont90HiBd+Rdayw==
+X-Google-Smtp-Source: ABdhPJwaQI5s1boiInDgOEnS/U7GLabkCjxZszOvEK4CWF9jGlFXKmP6SYQ18GhCb6PlW6WwwyDu6A==
+X-Received: by 2002:a17:906:fcd6:: with SMTP id qx22mr12697357ejb.533.1613435912483;
+        Mon, 15 Feb 2021 16:38:32 -0800 (PST)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id f13sm11789108ejf.42.2021.02.15.16.38.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Feb 2021 15:49:19 -0800 (PST)
-Date:   Mon, 15 Feb 2021 18:49:17 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        dstolee@microsoft.com, szeder.dev@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 4/4] builtin/multi-pack-index.c: split sub-commands
-Message-ID: <YCsIfbgaA+NwHZOS@nand.local>
-References: <87r1lhb6z7.fsf@evledraar.gmail.com>
- <cover.1613422804.git.me@ttaylorr.com>
- <16f33e41388ed431f70e09ef68717bd30fbee67f.1613422804.git.me@ttaylorr.com>
- <877dn9atew.fsf@evledraar.gmail.com>
- <YCr3DY5gawPC+G38@nand.local>
- <874kidapv7.fsf@evledraar.gmail.com>
+        Mon, 15 Feb 2021 16:38:31 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Blake Burkhart <bburky@bburky.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] fsck: make symlinked .gitignore and .gitattributes
+ a warning
+References: <YCsBA002yv8XpppM@coredump.intra.peff.net>
+ <YCsBRUQkrAm8l2gz@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <YCsBRUQkrAm8l2gz@coredump.intra.peff.net>
+Date:   Tue, 16 Feb 2021 01:38:30 +0100
+Message-ID: <87y2foaltl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874kidapv7.fsf@evledraar.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 16, 2021 at 12:11:08AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > I split this into two patches: one to move the trace2_cmd_mode() calls
-> > around, and another to replace the final 'die()' with the usage text.
->
-> Thanks for picking it up.
 
-Of course. This has been quite a fun digression :-).
+On Tue, Feb 16 2021, Jeff King wrote:
 
-> > Like I said in my review of your patches to the commit-graph builtin
-> > here:
-> >
-> >     https://lore.kernel.org/git/YCrDGhIq7kU57p1s@nand.local/
-> >
-> > I don't find the 'if (argc && ...)' style more readable, so the second
-> > patch looks like this instead:
->
-> *Nod* FWIW (and this is getting way to nit-y) I don't disagree with you
-> about the "argc &&" being not very readable,
->
-> I just lean more on the side of getting rid of duplicate branches,
-> you'll still need the if (!argc) usage(...) case above without that
-> pattern, or some replacement for it.
->
-> But we can have our cake (not re-check argc all the time) and eat it too
-> (not copy/paste usage_with_options()). Isn't it beautiful?
+> While there are some minor security implications to having these files
+> be symlinks, this is out-weighed by the inconvenience of blocking
+> historical commits in some projects that might include them.
 
-Heh; I'm not sure that I'd call adding a goto "beautiful", but I
-actually do find this one more readable. I dunno, honestly, I'm happy to
-squash it in to the last commit on top, but honestly I don't really care
-strongly one way or another ;).
+Digging up the relevant thread that's the projects noted at
+https://lore.kernel.org/git/20201027033518.GH2645313@google.com/ ?
 
-> > Is it OK if I use your Signed-off-by on both of those two new patches?
->
-> Yes please, should have included it to begin with.
+I cloned the openmrn.git repository noted there, and checkout dies with:
 
-Thanks, and no worries.
+    error: invalid path 'applications/clinic_app/targets/linux.x86/.gitignore'
+    fatal: Could not reset index file to revision 'HEAD'.
 
-Thanks,
-Taylor
+I'm running a recent-ish snapshot of next at d98b1dd5eaa7, so with your
+verify_path() change in current "seen".
+
+So this series changes nothing about the checkout, just the fsck check?
+
+I see there's your
+https://lore.kernel.org/git/20201027075853.GH3005508@coredump.intra.peff.net/#t
+to improve the !!symlink() codepath in apply.c
+
+Still, it seems like a rather jarring gap in implementation to just warn
+about this in fsck for the benefit of e.g. server operations, but then
+hard die on the current client.
+
+There seems to be no way around that hard die, and both repos in that
+report are ones that are just symlinking .gitignore to a
+../somedir/.gitignore deep in their own tree.
+
+So aren't we both making the fsck check too loose and the client too
+strict? Would anyone care if this was an error on fsck if we did the "is
+outside repo?" check?
