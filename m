@@ -2,191 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9EB4C433E6
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E83C433E6
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:13:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9134564E28
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:08:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA55C64E63
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 18:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbhBPSIk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 13:08:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42106 "EHLO
+        id S230299AbhBPSNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 13:13:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230210AbhBPSIc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 13:08:32 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A77C06174A
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:07:51 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id t62so10266577qke.7
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:07:51 -0800 (PST)
+        with ESMTP id S230264AbhBPSNi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 13:13:38 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82BA0C061574
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:12:58 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id z6so6664164pfq.0
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 10:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=exmbbUTMAn11JKY8y4yzfVgaHllBSmyX/1M0bEMcOMU=;
-        b=EObMDy9aiwgqSrQaCcWk78e+Nu4PReSGXf9a2pXY4t9IKacCuLImyVJLYSzP1bIXx3
-         Guq1ngtKFLX8oAt4V3H+ZHpetC8kDiJw2lbXbcxMuK/0IJKJDbi0S4XIJulqsVmin0DI
-         mx+4X8XpevmvYXPe5wOUYMZSD2qB2RxVHzQQpvyh/echj27IBjL7I5eQBqqBY5dDnpnl
-         iWRVOfCNRDCZN3t749nzVUp+2vGRKI+6pEXUhDxOH8JN9sEoNN7tss1cLDAmxUE56loa
-         aVW9ecxVk6OaGgv1jxz4dCG0hTB/nH7Y4sPxM6frfyD1Jh3j2/H9HyaiblYlrE0J/zwT
-         NL2w==
+        d=gmail.com; s=20161025;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=/7mHOgQeft/oD5vpDKi4+Xn3W2VN7JhVUavaEoMUzJs=;
+        b=Tw5Rb+zB5a+7LgYZEaBXU3d1njxjzuvVltaZzgtXp6GMvWSY/qdse0gBA3IhN6lDjC
+         BmR49TkeKahFLoLcC4C6xu2/fdUri9It8GFKPLrBrUoc0B2nCNLQkkHZjZlPCUjgju1L
+         L6ORSte+hc286vOFzvpB2E8o4rNasHUx1MC25tQLmipuXG1sPg45DQfytLNkMMNYGttQ
+         zrkLRio4SvU42DU8ebRyWfj/LRn7HRj3wKO6bcC8RgZZ2JlnxdS/EW+p1B4yxFX1R4hF
+         ywObbu1LeNMt1XCrnlVntWDFxQufxPZ63Yg91OHUyD9tgq/CUFfyQPVom5Dhu2J2zXzX
+         HAOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=exmbbUTMAn11JKY8y4yzfVgaHllBSmyX/1M0bEMcOMU=;
-        b=hgH4yf2zD1Szg5jwFwyZ7/Xc0QnkRabgTJYft39zAHNNCjgPxVv7/msfHaL40ineKw
-         H7XfIvENDW0B/oGZdISoehNJLrZP5jbBp/71V9E4tdTVF4vnQD9G13/bmIRspjPTnZ87
-         G6NrJ3b2fthSJkQjTNXbPFzHU5ID7CrIBJMFYWHxPmeJx7O9oA7mRf0F0YzZOVnCyulL
-         FBL27pjGaZLNZbDnKkR+eB+lATHlUTJaaw1f/+zUOsqFJ6+6IQ929vr3bUaqRNfySrLX
-         RG2slo3RUof9put0eij1JAmO3zF9qOKLKPnFcCFylpYm7STadiaO3k1Fs8Ak8wxQ93jI
-         7Q3Q==
-X-Gm-Message-State: AOAM530CxGEkvRXoSx2MDr3x2M0nGbORYIOKmQC5RA7e8eywwoxp8nrx
-        iEOktedBNsJoqpOLin11xzUkEQ==
-X-Google-Smtp-Source: ABdhPJw3M4kpQwpmZz74cjHR9FH6PMtwI+uf0CcE8hsemWXdz4tZsxLRYJT3SI/MT/WUQc14kIZXFQ==
-X-Received: by 2002:a37:52d7:: with SMTP id g206mr20468720qkb.343.1613498871061;
-        Tue, 16 Feb 2021 10:07:51 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:c1ff:146e:b5:8cba])
-        by smtp.gmail.com with ESMTPSA id o194sm14819014qke.101.2021.02.16.10.07.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Feb 2021 10:07:50 -0800 (PST)
-Date:   Tue, 16 Feb 2021 13:07:46 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Bug Report: Multi-line trailers containing empty lines break
- parsing
-Message-ID: <YCwJ8tORQg2Air4r@nand.local>
-References: <CALz+XyW+XU++58eEYm5=jxTckK-VuuPoA-ecj4QCZw1o44JFUQ@mail.gmail.com>
- <xmqqczx0sq1o.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=/7mHOgQeft/oD5vpDKi4+Xn3W2VN7JhVUavaEoMUzJs=;
+        b=ZdH9vyxdBMYWCSq5fHGCPKtSbcgjtHQ1DbF5YP1qUhqeVn5wEcu6C5BAHiT7eXybb7
+         RB57tqm41PLe4B98Pjw3oZiWqnFC0K6ijz4jFoKoOUIfVM3EJOS+aRcrgSjTDvM6TKwV
+         7t9430+aK9/VYFm4djRgtXix/xle7jZ3zm/K13kJKPPT0jitxmmDgoGuYyXeiGQqYO8T
+         RDc3ZmO3d4d8lSKriGq2mS6znMpZ9yxmXeCw/P9jZE89YOFZX5AAth04CPiR3xI+UcCe
+         B+wI9ngcAo2kCEx8HP2fwcrP0MR+uIPaVHeIOdfhA9PX62J48emHVtiBvfYi7s8MyNa5
+         iQsQ==
+X-Gm-Message-State: AOAM532L0M0/vM++dYVpGPpCzeTVlEQZI+GaUZGA3SS4EqJbxWrXp67K
+        GqlI1WP2+0yzWdkq0Hy+OCc=
+X-Google-Smtp-Source: ABdhPJygNuJOeJ94qDk1yv8XTihACI4sLvaCy6oysJiA2/9o2n9fKWzXhYbeXD56pgtKk/0ThEuOZw==
+X-Received: by 2002:a63:560a:: with SMTP id k10mr20439309pgb.132.1613499177973;
+        Tue, 16 Feb 2021 10:12:57 -0800 (PST)
+Received: from [192.168.206.101] ([106.195.44.107])
+        by smtp.gmail.com with ESMTPSA id z12sm3441728pjz.16.2021.02.16.10.12.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Feb 2021 10:12:57 -0800 (PST)
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Git in GSoC 2021 ?
+Message-ID: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
+Date:   Tue, 16 Feb 2021 23:42:51 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqczx0sq1o.fsf@gitster.c.googlers.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 15, 2021 at 06:29:55PM -0800, Junio C Hamano wrote:
-> Matthias Buehlmann <Matthias.Buehlmann@mabulous.com> writes:
->
-> > Thank you for filling out a Git bug report!
-> > Please answer the following questions to help us understand your issue.
->
-> Thanks; let's ping our resident trailers expert ;-)
+Hi all,
 
-I'm not Christian, but hopefully I'm an OK substitute :).
+Excuse my curiosity. I'm not sure if there has been discussion about
+Git's participation in GSoC 2021 but my search in the archives
+didn't get me anything. The deadline for Org application seems
+to be around the corner (this Friday, Feb 19th at 1900 UTC).
 
-I originally thought that this was an ambiguous test, since you could
-reasonably say the trailers begin after the blank line in the second
-"MultiLineTrailer" block. In that case, neither of the following lines
-look like a trailer, so 'git interpret-trailers' could reasonably print
-nothing.
+So, I was curious to know if we've already applied to participate
+in GSoC 2021 (or) if we're planning to participate?
 
-But I was being tricked, since I looked at "test.txt" in my editor,
-which automatically replaces blank lines (zero or more space characters
-ending in a newline) with a single newline. In fact, this isn't
-ambiguous at all, since the blank lines are continuations (they are a
-single space character and then a newline):
+In case we're participating we'll need ideas that fit the new
+structure of GSoC 2021. Concise entry about the new structure
+from Rev News 68 [1]:
 
-		00000090  65 64 20 6d 75 6c 74 69  2d 6c 69 6e 65 0a 20 74  |ed multi-line. t|
-		000000a0  72 61 69 6c 65 72 20 77  68 69 63 68 0a 20 0a 20  |railer which. . |
+  Google Summer of Code 2021 has been announced with significant
+  changes compared to previous editions. Notably coding hours and
+  period will be reduced from 350 hours and 12 weeks to 175 hours
+  and 10 weeks; there would be 2 evaluations (instead of 3).
+  Additionally, eligibility requirements will be relaxed, among
+  others allowing people participating in a variety of different
+  licensed academic programs, not just students of accredited
+  university programs.
 
-(see the repeated '0a 20' space + newline pair after "which").
+See the related blog [2] for detailed information.
 
-I think that this is a legitimate bug in 'interpret-trailers' that it
-doesn't know to continue multi-line trailers that have empty lines in
-them.
+Speaking of GSoC, unlike last year I'll not be able to actively
+co-mentor this year due to certain circumstances in my family.
+I'll be able to help passively, though.
 
-I thought that this might have dated back to 022349c3b0 (trailer: avoid
-unnecessary splitting on lines, 2016-11-02), but checking out that
-commit's first parent shows the bug (albeit without --parse, which
-didn't exist then).
+Also, one thing about project ideas. Shourya Shukla who worked
+last year on the builtin conversion of `git submodule` 
+(currently stalled [3]) has told me privately that he isn't
+interested in continuing the port further. So, finishing the
+port of `git submodule` could be a nice project for GSoC 2021.
+I believe it would fit the new GSoC structure but I might be wrong.
 
-Anyway, I'm pretty sure the problem is that
-trailer.c:find_trailer_start() doesn't disambiguate between a blank line
-and one that contains only space characters.
 
-This patch might do the trick:
+[[ References ]]
 
---- 8< ---
+[1]: https://git.github.io/rev_news/2020/10/30/edition-68/
 
-Subject: [PATCH] trailer.c: handle empty continuation lines
+[2]: https://opensource.googleblog.com/2020/10/google-summer-of-code-2021-is-bringing.html
 
-In a multi-line trailer, it is possible to have a continuation line
-which contains at least one space character, terminating in a newline.
+[3]: https://public-inbox.org/git/20201214231939.644175-1-periperidip@gmail.com/
 
-In this case, the trailer should continue across the blank continuation
-line, but 'trailer.c:find_trailer_start()' handles this case
-incorrectly.
-
-When it encounters a blank line, find_trailer_start() assumes that the
-trailers must begin on the line following the one it's looking at. But
-this isn't the case if the line is a non-empty continuation, in which
-the line may be part of a trailer.
-
-Fix this by only considering a blank line which has exactly zero space
-characters before the LF as delimiting the start of trailers.
-
-Reported-by: Matthias Buehlmann <Matthias.Buehlmann@mabulous.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t7513-interpret-trailers.sh | 23 +++++++++++++++++++++++
- trailer.c                     |  2 +-
- 2 files changed, 24 insertions(+), 1 deletion(-)
-
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 6602790b5f..af602ff329 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1476,4 +1476,27 @@ test_expect_success 'suppress --- handling' '
- 	test_cmp expected actual
- '
-
-+test_expect_success 'handling of empty continuations lines' '
-+	tr _ " " >input <<-\EOF &&
-+	subject
-+
-+	body
-+
-+	trailer: single
-+	multi: one
-+	_two
-+	multi: one
-+	_
-+	_two
-+	_three
-+	EOF
-+	cat >expect <<-\EOF &&
-+	trailer: single
-+	multi: one two
-+	multi: one two three
-+	EOF
-+	git interpret-trailers --parse <input >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/trailer.c b/trailer.c
-index 249ed618ed..7ca7200aec 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -846,7 +846,7 @@ static size_t find_trailer_start(const char *buf, size_t len)
- 			possible_continuation_lines = 0;
- 			continue;
- 		}
--		if (is_blank_line(bol)) {
-+		if (is_blank_line(bol) && *bol == '\n') {
- 			if (only_spaces)
- 				continue;
- 			non_trailer_lines += possible_continuation_lines;
---
-2.30.0.667.g81c0cbc6fd
-
+-- 
+Sivaraam
