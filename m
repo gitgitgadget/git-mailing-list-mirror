@@ -2,113 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED333C433DB
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 01:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C41EAC433DB
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 01:31:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE7BA64DBA
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 01:16:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78D8564DEC
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 01:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbhBPBQn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 15 Feb 2021 20:16:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33420 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229708AbhBPBQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Feb 2021 20:16:41 -0500
-Received: (qmail 9929 invoked by uid 109); 16 Feb 2021 01:16:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 16 Feb 2021 01:16:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18227 invoked by uid 111); 16 Feb 2021 01:16:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 15 Feb 2021 20:16:00 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 15 Feb 2021 20:16:00 -0500
-From:   Jeff King <peff@peff.net>
+        id S229721AbhBPBat (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 15 Feb 2021 20:30:49 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61029 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229670AbhBPBat (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Feb 2021 20:30:49 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E56A7110B4B;
+        Mon, 15 Feb 2021 20:30:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=DkWHx86IHYBX
+        LdI9HXyUQc+WF4k=; b=CsyeBTvGpqs/PGOaBBB0mIlHbWCsB6eraaVSY+raz+cm
+        OZuX09yIQaSQBbwQEF0IFQtityk57iOGgb2U2s7l4+sG3gEH4zgBH6hq/ZmR+mdX
+        Y7aw6tsYX2Sf824qBOnpuQPFwICCOWnWLVtFE6xHzKigRnkTPXUJoD/oOk12iag=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=QkzoEG
+        SGDpzTeEieAZ9I6DWXBLlAnkka/l6iUiU3423yBffUnZ/Ji+cYfEWOoZKoV1Sd4Q
+        +lIt3NIsrs81QLcrqBFN4AmvNmh4uMD62o6Y98P1D3BS9YStqc60H4gTDOe2s200
+        3Vn0fB5SYyeB7eJQwRSPYLNTYlCkRZ2ch/ik8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DDA45110B4A;
+        Mon, 15 Feb 2021 20:30:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D5EC8110B42;
+        Mon, 15 Feb 2021 20:30:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Blake Burkhart <bburky@bburky.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] fsck: make symlinked .gitignore and .gitattributes a
- warning
-Message-ID: <YCsc0OePtrotjeg5@coredump.intra.peff.net>
-References: <YCsBA002yv8XpppM@coredump.intra.peff.net>
- <YCsBRUQkrAm8l2gz@coredump.intra.peff.net>
- <87y2foaltl.fsf@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] diff: do not display hunk context under -W
+References: <20210215154427.32693-1-avarab@gmail.com>
+        <20210215155020.2804-2-avarab@gmail.com>
+Date:   Mon, 15 Feb 2021 17:30:00 -0800
+In-Reply-To: <20210215155020.2804-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 15 Feb 2021 16:50:19 +0100")
+Message-ID: <xmqq7dn8u7dz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y2foaltl.fsf@evledraar.gmail.com>
+X-Pobox-Relay-ID: 7DD87748-6FF6-11EB-99C0-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 16, 2021 at 01:38:30AM +0100, Ævar Arnfjörð Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> On Tue, Feb 16 2021, Jeff King wrote:
-> 
-> > While there are some minor security implications to having these files
-> > be symlinks, this is out-weighed by the inconvenience of blocking
-> > historical commits in some projects that might include them.
-> 
-> Digging up the relevant thread that's the projects noted at
-> https://lore.kernel.org/git/20201027033518.GH2645313@google.com/ ?
-> 
-> I cloned the openmrn.git repository noted there, and checkout dies with:
-> 
->     error: invalid path 'applications/clinic_app/targets/linux.x86/.gitignore'
->     fatal: Could not reset index file to revision 'HEAD'.
-> 
-> I'm running a recent-ish snapshot of next at d98b1dd5eaa7, so with your
-> verify_path() change in current "seen".
-> 
-> So this series changes nothing about the checkout, just the fsck check?
+> The long-standing semantics of how -W works and interacts with -U<n>
+> are rather easy to reason about:
+>
+>  * -W extends the context line up to the start of the function. With
+>     userdiff this means the language-aware regex rules in userdiff.c,
+>     or user-supplied rules.
 
-Right.
+OK.
 
-> I see there's your
-> https://lore.kernel.org/git/20201027075853.GH3005508@coredump.intra.peff.net/#t
-> to improve the !!symlink() codepath in apply.c
+>  * -U<n>, which defaults to -U3 shows at least <n> lines of context,
+>     if that's greater than what we'd extend the context to under -W
+>     then -U<n> wins.
 
-That's a somewhat orthogonal approach, that tries to look at out-of-tree
-symlinks (rather than banning all symlinks for these files).
+Sorry, but I cannot quite guess what you mean here.  Do you mean:
 
-I think it's worth banning them all, though; they don't actually work
-as you'd expect (i.e., whenever we read them in-repo the symlinks do
-nothing).
+    We first go back <n> lines due to -U<n>.  If we have not found a
+    function header line that comes before the first changed line
+    within that <n> lines, we keep going back to satisfy -W (i.e. -W
+    "wins" if "-U<n>" is small).  On the other hand, after going
+    back <n> lines, if we have already seen a function header before
+    the first changed line within these <n> lines, there is no need
+    to go back further to satisfy -W (i.e. -U<n> "wins" and makes -W
+    irrelevant).
 
-> Still, it seems like a rather jarring gap in implementation to just warn
-> about this in fsck for the benefit of e.g. server operations, but then
-> hard die on the current client.
+If that is the case, I think I understand it.
 
-It's not for the benefits of servers. It's because the solution for them
-is to stop symlinking, which fixes clone/checkout of new commits. But
-they'll still have those old trees hanging around in their history. If
-everybody rejects them, then it becomes difficult to push/fetch at all.
+>  * When showing the hunk context we look up from the first line we
+>    show of the diff, and find whatever looks like useful context above
+>    that line.
 
-That said, they'd probably want to checkout those old commits, too. So
-we probably do need a config override, even if it's a broad one ("trust
-me, this repo is OK, just allow symlinks for these special files").
+Yes.
 
-> There seems to be no way around that hard die, and both repos in that
-> report are ones that are just symlinking .gitignore to a
-> ../somedir/.gitignore deep in their own tree.
-> 
-> So aren't we both making the fsck check too loose and the client too
-> strict? Would anyone care if this was an error on fsck if we did the "is
-> outside repo?" check?
+> Thus in e.g. the xdiff/xemit.c change being made in this commit we'll
+> correctly show "xdl_emit_diff()" in the hunk context under default
+> diff settings.
+>
+> But if we viewed it with the -W option we'd show "is_empty_rec()",
+> because we'd first find the "xdl_emit_diff()" context line, extend the
+> diff to that, and then would go look for context to show again.
 
-An outside-the-repo check would probably be less invasive, but:
+Makes sense.  As long as we apply this when "-W wins", i.e we extend
+the precontext so that the hunk begins on the line that match the
+function header pattern, there isn't much point in showing only the
+name of the function that comes before this hunk.
 
-  - it still allows broken setups
+On the other hand, if "-U<n> won", i.e. the first precontext line
+that is shown in the hunk is _before_ the line -W chose to extend
+the hunk to (in this case, where xdl_emit_diff begins) because -U<n>
+gave a large enough number, I do want to see the name of the fuction
+I am looking at the tail of in the precontext on the hunk header
+line.  E.g. "git diff -W -U120 xdiff/xemit.c" on this patch should
+show is_empty_rec() as the hunk header.
 
-  - it's significantly more complex. I know that the implementation I
-    showed errs on the side of complaining in at least some cases
-    (because it doesn't know if intermediate paths are themselves
-    symlinks). But I'd worry there are also cases where it covers too
-    little, nullifying the protection.
+> This new behavior does give us the edge case that if we e.g. view the
+> diff here with "-U150 -W" we'd previously extend the context to the
+> middle of the "is_func_rec()" function, and show that function in the
+> hunk context. Now we'll show nothing.
 
--Peff
+To me, that sounds like a grave regression.  Why lose the
+information?
+
+This may be coming from the difference between us, i.e. I read a lot
+more patches written by other people than my own changes written for
+my next commit, so every bit of hint helps, and the name of the
+function I am seeing its latter half in the precontext is sometimes
+a useful thing to see.
