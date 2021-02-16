@@ -2,117 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B191C433DB
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D521EC433E0
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:50:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3835F64EAF
-	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:37:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FACE64E85
+	for <git@archiver.kernel.org>; Tue, 16 Feb 2021 20:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229908AbhBPUgs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 15:36:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45674 "EHLO
+        id S230120AbhBPUuD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 15:50:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbhBPUgr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 15:36:47 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9CB9C061574
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 12:36:06 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id e4so10142952ote.5
-        for <git@vger.kernel.org>; Tue, 16 Feb 2021 12:36:06 -0800 (PST)
+        with ESMTP id S230064AbhBPUuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 15:50:01 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB102C06174A
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 12:49:19 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id g20so6171646plo.2
+        for <git@vger.kernel.org>; Tue, 16 Feb 2021 12:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=WdMmksA6Z0KTKpay7MwLl2cOWKdsksHBevZ24orlVro=;
-        b=Bm9I74fjBDfd/+7nE7XNR5lUC6O6qGkN0Kjfg2P11vlsjsx7EJRYfz0QscMs2RaLqx
-         sPLaF9RIEF18aB1ptPyLy/qn/7oCDC/sWgXq55ty6mEcVPeBsB/H3XmHYrMRg5ocXKSL
-         ierdUXP6fIB0FyiKJeKgBYLML41zYdnZu3tZ1AMnfuDAzT7e0om+DLX4T4crdXl0uWPE
-         INiGEcNH1IkaKLEALcc3vHgw7RzGp3VVKqLjfE1FbO1UiEbo/CJIackP8MT3ZMDZ5ko6
-         hxbCbhdBwTQmS2uhcK7LAg9ghSFs9OCt9MhBs+/9fWuz6QcXFmXAwkTWDeRnEz0QuxU0
-         bixQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=K01qWHutrd2OuJn3c2smPLvfy1aANDC7U+MoP38hzvQ=;
+        b=f9b0PloLey3sjw0o1zmZhAe/mY//b1du4ubxmH76jNbWzRC6/QhdDheL614U4qgVyU
+         ZJoheqA8fRYB3Q+xano/sZdwJNwsQR8yU0K46GVsZCbP9FIUPJfR2cojYj+nyDdp64TC
+         xB1HnQWOinnQw2IeEdxFuk8nX2gsZk1Aj9omtjn/qJ09KHFZYRTVgUx3RKrXXCdWRVs9
+         vpxJEUlDWkOQy+V1YYolOlfYDinoCatv5vw9vaFX8UzdsGKHpsM9DiuXIsU0GH4k1cts
+         WGh0exAv5krcw20aQWQPWDxRg6BLShb5UJeCmgSqwLHPtY8X51p4tWV/G5W+1haA3wNV
+         0Pqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WdMmksA6Z0KTKpay7MwLl2cOWKdsksHBevZ24orlVro=;
-        b=nhr5qv21YrrFTLqntPpzl49h1C0dGf/3ghpZEYQ+PBugxt7fIyZSQqUkOLb+eoFXA3
-         f1HJwiuRpSHyPvZgVu6PkJo2gz/8j9lLVG+pM8nNu8dsXDf7sCdUA4HcC4w0cbPe6pPs
-         sI+xK8IHEYpibiwnReOKxXBXCGaRJNpM55ytbYn5W40U+8TZFTLthvSGniYoSx4NYLbw
-         lit5fe1bWFOWncRmvuirFN3VsaMl5Kg/4PwtvuFK//ogG/9sOlzqqEtYPDFCQPcY9I+M
-         t/X5sEggDJnC0YUhv6FJ0RLkOn8OhvHryqjybFvhM5yHz6biVIhg8HoEsmHHIgzceVEP
-         9oyQ==
-X-Gm-Message-State: AOAM5331UjS4iMAp7V+gAnF+IAyPTb5RI1V8nGUvETODxR5EyAXv1mou
-        x5uP6XaCvTUSQIhr5teu07I=
-X-Google-Smtp-Source: ABdhPJzPGW9cEVZ6vkR5hqRh2tzfl/t6ZSM2xsyhVX8UnEkkDDpFvDiA1dfgHHNkizUGvAGmOpxxLg==
-X-Received: by 2002:a9d:6650:: with SMTP id q16mr14731785otm.57.1613507766284;
-        Tue, 16 Feb 2021 12:36:06 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:bccc:aed3:3481:8d68? ([2600:1700:e72:80a0:bccc:aed3:3481:8d68])
-        by smtp.gmail.com with UTF8SMTPSA id o83sm4129158ooo.37.2021.02.16.12.36.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Feb 2021 12:36:05 -0800 (PST)
-Message-ID: <22378ce3-6845-1cd9-996a-8bdc3a8b65d7@gmail.com>
-Date:   Tue, 16 Feb 2021 15:36:04 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=K01qWHutrd2OuJn3c2smPLvfy1aANDC7U+MoP38hzvQ=;
+        b=pgZnFyuEfNvnfEi8U/z7qW3awpSr7A8rhX3y64GqdXaBii82G624TGL3gMltIfHbTQ
+         rjrdLZFNZEVnI7PbilwXywFwjlXhB+p6pupe9feCcfm1vRwt+HNFj50U7HnOWpc64uod
+         sTRJQGbSpEX3tSheY1Fb2yh0zIZA99c1thfehQhjpmtk1/WK7EeGK6xAuuJo8/GZkhON
+         7dE3kXfRSgWAuXSCDlbw0ujgU0n6HJR04tGt80mwDuYGA8I1Syh9zvwBjpfQmBh4UXSl
+         7KMPmNZQLmfhSQC3eut2c1FqgBFyDMRMDCgW053936/g/aGCQeV4pcPIigtbapCN9ZlM
+         8gaA==
+X-Gm-Message-State: AOAM532nRoT9nEpCzwR7n9kEKJ/BNqn6bv5rVFprsh+ZorHE3dEZaLV6
+        6OCbFUxB9F+BPZ92o7FeuOFmdw==
+X-Google-Smtp-Source: ABdhPJwQ/TXzUS9ETXN9nHX6lKW3bvnuz8Yagr+JIHXuUdAt28RJIm9VsMRyeTHJGTA7JvCpeiwYZw==
+X-Received: by 2002:a17:90a:bb18:: with SMTP id u24mr412397pjr.67.1613508559034;
+        Tue, 16 Feb 2021 12:49:19 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:708a:4111:699b:757])
+        by smtp.gmail.com with ESMTPSA id v3sm21843428pff.217.2021.02.16.12.49.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Feb 2021 12:49:18 -0800 (PST)
+Date:   Tue, 16 Feb 2021 12:49:13 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/4] http-fetch: allow custom index-pack args
+Message-ID: <YCwvycbylJ9O4qx8@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <20210115234300.350442-1-jonathantanmy@google.com>
+ <cover.1611455251.git.jonathantanmy@google.com>
+ <3032117ee747e72f6208eab7f960737d25f8a82a.1611455251.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH] t/perf: handle worktrees as test repos
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>
-References: <YCwnPVFsYDa0SNmG@coredump.intra.peff.net>
- <YCwoOMo7obrNOGYX@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YCwoOMo7obrNOGYX@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3032117ee747e72f6208eab7f960737d25f8a82a.1611455251.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/16/2021 3:16 PM, Jeff King wrote:
-> On Tue, Feb 16, 2021 at 03:12:45PM -0500, Jeff King wrote:
+On 2021.01.23 18:34, Jonathan Tan wrote:
+> This is the next step in teaching fetch-pack to pass its index-pack
+> arguments when processing packfiles referenced by URIs.
 > 
->> Having written that, it occurs to me that an even simpler solution is to
->> just always use the commondir as the source of the scratch repo. It does
->> not produce the same outcome, but the point is generally just to find a
->> suitable starting point for a repository. Grabbing the main repo instead
->> of one of its worktrees is probably OK for most tests.
+> The "--keep" in fetch-pack.c will be replaced with a full message in a
+> subsequent commit.
 > 
-> The patch there is delightfully simple:
-
-I do like this simplicity.
- 
-> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-> index e385c6896f..7018256cd4 100644
-> --- a/t/perf/perf-lib.sh
-> +++ b/t/perf/perf-lib.sh
-> @@ -75,7 +75,7 @@ test_perf_create_repo_from () {
->  	BUG "not 2 parameters to test-create-repo"
->  	repo="$1"
->  	source="$2"
-> -	source_git="$("$MODERN_GIT" -C "$source" rev-parse --git-dir)"
-> +	source_git="$("$MODERN_GIT" -C "$source" rev-parse --git-common-dir)"
->  	objects_dir="$("$MODERN_GIT" -C "$source" rev-parse --git-path objects)"
->  	mkdir -p "$repo/.git"
->  	(
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  Documentation/git-http-fetch.txt |  9 ++++++--
+>  fetch-pack.c                     |  1 +
+>  http-fetch.c                     | 35 +++++++++++++++++++++++++++-----
+>  t/t5550-http-fetch-dumb.sh       |  3 ++-
+>  4 files changed, 40 insertions(+), 8 deletions(-)
 > 
-> but I do wonder if somebody would find it confusing.
+> diff --git a/Documentation/git-http-fetch.txt b/Documentation/git-http-fetch.txt
+> index 4deb4893f5..aa171088e8 100644
+> --- a/Documentation/git-http-fetch.txt
+> +++ b/Documentation/git-http-fetch.txt
+> @@ -41,11 +41,16 @@ commit-id::
+>  		<commit-id>['\t'<filename-as-in--w>]
+>  
+>  --packfile=<hash>::
+> -	Instead of a commit id on the command line (which is not expected in
+> +	For internal use only. Instead of a commit id on the command line (which is not expected in
+>  	this case), 'git http-fetch' fetches the packfile directly at the given
+>  	URL and uses index-pack to generate corresponding .idx and .keep files.
+>  	The hash is used to determine the name of the temporary file and is
+> -	arbitrary. The output of index-pack is printed to stdout.
+> +	arbitrary. The output of index-pack is printed to stdout. Requires
+> +	--index-pack-args.
+> +
+> +--index-pack-args=<args>::
+> +	For internal use only. The command to run on the contents of the
+> +	downloaded pack. Arguments are URL-encoded separated by spaces.
 
-It would be confusing, especially if one let the "main" worktree
-languish far behind another worktree. Rather, one case that applies
-mostly to me and my team is when we work on git-for-windows/git or
-microsoft/git in a worktree off of git/git. I think it would be
-appropriate to use either, as the differences at HEAD are not so
-significant to matter. But, any deviation from the HEAD of the
-current worktree might be confusing when trying to reproduce some
-surprising behavior.
+I'm a bit skeptical of using URL encoding to work around embedded
+spaces. I believe in Emily's config-based hooks series, she wrote an
+argument parser to pull repeated arguments into a strvec, could you do
+something like that here?
 
-Thanks,
--Stolee
+I'm sympathetic to the idea that since this is an internal-only flag, we
+can be a bit weird with the argument format, though.
+
+>  --recover::
+>  	Verify that everything reachable from target is fetched.  Used after
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 876f90c759..274ae602f7 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -1645,6 +1645,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+>  		strvec_pushf(&cmd.args, "--packfile=%.*s",
+>  			     (int) the_hash_algo->hexsz,
+>  			     packfile_uris.items[i].string);
+> +		strvec_push(&cmd.args, "--index-pack-args=index-pack --stdin --keep");
+>  		strvec_push(&cmd.args, uri);
+>  		cmd.git_cmd = 1;
+>  		cmd.no_stdin = 1;
+> diff --git a/http-fetch.c b/http-fetch.c
+> index 2d1d9d054f..12feb84e71 100644
+> --- a/http-fetch.c
+> +++ b/http-fetch.c
+> @@ -3,6 +3,7 @@
+>  #include "exec-cmd.h"
+>  #include "http.h"
+>  #include "walker.h"
+> +#include "strvec.h"
+>  
+>  static const char http_fetch_usage[] = "git http-fetch "
+>  "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin | --packfile=hash | commit-id] url";
+> @@ -43,11 +44,9 @@ static int fetch_using_walker(const char *raw_url, int get_verbosely,
+>  	return rc;
+>  }
+>  
+> -static const char *index_pack_args[] =
+> -	{"index-pack", "--stdin", "--keep", NULL};
+> -
+>  static void fetch_single_packfile(struct object_id *packfile_hash,
+> -				  const char *url) {
+> +				  const char *url,
+> +				  const char **index_pack_args) {
+>  	struct http_pack_request *preq;
+>  	struct slot_results results;
+>  	int ret;
+> @@ -90,6 +89,7 @@ int cmd_main(int argc, const char **argv)
+>  	int packfile = 0;
+>  	int nongit;
+>  	struct object_id packfile_hash;
+> +	const char *index_pack_args = NULL;
+>  
+>  	setup_git_directory_gently(&nongit);
+>  
+> @@ -116,6 +116,8 @@ int cmd_main(int argc, const char **argv)
+>  			packfile = 1;
+>  			if (parse_oid_hex(p, &packfile_hash, &end) || *end)
+>  				die(_("argument to --packfile must be a valid hash (got '%s')"), p);
+> +		} else if (skip_prefix(argv[arg], "--index-pack-args=", &p)) {
+> +			index_pack_args = p;
+>  		}
+>  		arg++;
+>  	}
+> @@ -128,10 +130,33 @@ int cmd_main(int argc, const char **argv)
+>  	git_config(git_default_config, NULL);
+>  
+>  	if (packfile) {
+> -		fetch_single_packfile(&packfile_hash, argv[arg]);
+> +		struct strvec encoded = STRVEC_INIT;
+> +		char **raw;
+> +		int i;
+> +
+> +		if (!index_pack_args)
+> +			die(_("--packfile requires --index-pack-args"));
+> +
+> +		strvec_split(&encoded, index_pack_args);
+> +
+> +		CALLOC_ARRAY(raw, encoded.nr + 1);
+> +		for (i = 0; i < encoded.nr; i++)
+> +			raw[i] = url_percent_decode(encoded.v[i]);
+> +
+> +		fetch_single_packfile(&packfile_hash, argv[arg],
+> +				      (const char **) raw);
+> +
+> +		for (i = 0; i < encoded.nr; i++)
+> +			free(raw[i]);
+> +		free(raw);
+> +		strvec_clear(&encoded);
+> +
+>  		return 0;
+>  	}
+>  
+> +	if (index_pack_args)
+> +		die(_("--index-pack-args can only be used with --packfile"));
+> +
+>  	if (commits_on_stdin) {
+>  		commits = walker_targets_stdin(&commit_id, &write_ref);
+>  	} else {
+> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+> index 483578b2d7..af90e7efed 100755
+> --- a/t/t5550-http-fetch-dumb.sh
+> +++ b/t/t5550-http-fetch-dumb.sh
+> @@ -224,7 +224,8 @@ test_expect_success 'http-fetch --packfile' '
+>  
+>  	git init packfileclient &&
+>  	p=$(cd "$HTTPD_DOCUMENT_ROOT_PATH"/repo_pack.git && ls objects/pack/pack-*.pack) &&
+> -	git -C packfileclient http-fetch --packfile=$ARBITRARY "$HTTPD_URL"/dumb/repo_pack.git/$p >out &&
+> +	git -C packfileclient http-fetch --packfile=$ARBITRARY \
+> +		--index-pack-args="index-pack --stdin --keep" "$HTTPD_URL"/dumb/repo_pack.git/$p >out &&
+>  
+>  	grep "^keep.[0-9a-f]\{16,\}$" out &&
+>  	cut -c6- out >packhash &&
+> -- 
+> 2.30.0.280.ga3ce27912f-goog
+> 
