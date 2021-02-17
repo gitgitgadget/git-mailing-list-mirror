@@ -2,75 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0434FC433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BB69C433E6
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:26:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7F3E64E63
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:11:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54FBB64E76
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234071AbhBQUL7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 15:11:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37258 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231630AbhBQUL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 15:11:58 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A98C061574
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 12:11:18 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id l7so12558310pgj.4
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 12:11:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=3eU5xlmIM7UiR5howJn5myjlp3i3u31asKeFaqTxHDs=;
-        b=Bnp6l/hs+doWF1evL25P4xVVguVLzCwQkCUmpEotuKPyhj9s2R1gfuDuHIxBnWdhqg
-         MJJX45EwZHQSTq5955gy+PZOUXbGOrFXs2VnmRH/GaDWrsBco0D+nP1gT7b3gbkeObX8
-         vlzBhjbhWeFT4aQrSHgzu6GOPaY/qr/mBKvLDlgbnMyyH9059dv4kIWL+2FokzraHah9
-         9sznDslavnqGIanmKXn6LwqkZ6eiy56/OJuz64uKtvJ13NDYfjulhOJGF6B1vj9UH9J9
-         Us+we+YZnm/ChtftHyQrqzDycWgfOGnB7I3QrkBBHLXwLB1LOHMYyXooYDqYL5fH4rhY
-         6BXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=3eU5xlmIM7UiR5howJn5myjlp3i3u31asKeFaqTxHDs=;
-        b=OKLI6UPM+2izV+4ars2/ZC4s1ZYOQ8wo0W4E/z1pdVWpS2XI/bTxJNwZaY/AKH6PqU
-         KFhZ+36IrTSFLd5ZJJOmLA4QkebS1lassGLwobqcIREJ7Wt1ye54a3ULEoKEgH2PRWZH
-         SdMEewHUThg41AsU6bYFhdJgN7FRQHzRldtgVpOmW0uAfukaviSAOSjQI2To1ld+ycpS
-         iMm0+Oh4jn+IwOxFz2ZMS8vidadsp2XO+OhgIYHY95tgV+ks5u+axOeWjC6JyvNCbYh4
-         Iand8Erh7Upugg71a9M5KLctw8EWPcsdbyk9eQyHk9ZntD1YG4LOUHDZXqnSg3N/6S+Z
-         hhiw==
-X-Gm-Message-State: AOAM5314Xa3zr8HgToMNutMlIjAnPE83K4gbVK5dRM/w1e04YcwI298o
-        SWzYz3XbVoRlSuiBtMvQEPCr27brsLuzXYMPjdKN
-X-Google-Smtp-Source: ABdhPJzbSKnb3JBWkj8mLnOJcEdWxQE2ZX9994pBcUQuFug+KkQJogLLLEwp25feaY0vcH0A879Ab7V2s6CKtUS29Evz
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:4203:: with SMTP id
- o3mr447202pjg.1.1613592677436; Wed, 17 Feb 2021 12:11:17 -0800 (PST)
-Date:   Wed, 17 Feb 2021 12:11:15 -0800
-In-Reply-To: <8735xua40w.fsf@evledraar.gmail.com>
-Message-Id: <20210217201115.879491-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <8735xua40w.fsf@evledraar.gmail.com>
-X-Mailer: git-send-email 2.30.0.478.g8a0d178c01-goog
-Subject: Re: [PATCH 4/4] fetch-pack: print and use dangling .gitmodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S234892AbhBQU0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 15:26:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36422 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235001AbhBQUZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 15:25:58 -0500
+Received: (qmail 20071 invoked by uid 109); 17 Feb 2021 20:25:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Feb 2021 20:25:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8869 invoked by uid 111); 17 Feb 2021 20:25:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Feb 2021 15:25:17 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 17 Feb 2021 15:25:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH v2 7/8] packfile: add kept-pack cache for
+ find_kept_pack_entry()
+Message-ID: <YC17rflmxAAdBBCd@coredump.intra.peff.net>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <cover.1612411123.git.me@ttaylorr.com>
+ <f1c07324f62cf4d087c41165cefed98f554cfd78.1612411124.git.me@ttaylorr.com>
+ <YC1OJDFXPnxGMHPK@coredump.intra.peff.net>
+ <YC10eZkpqtzLlJUP@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YC10eZkpqtzLlJUP@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> What's the need for STRICT here & can't the former use the existing
-> fsck_options in index-pack.c? With this on top we pass all tests:
+On Wed, Feb 17, 2021 at 02:54:33PM -0500, Taylor Blau wrote:
 
-[snip code]
+> > OK, so we keep a single cache based on the flags, and then if somebody
+> > ever asks for different flags, we throw it away. That's probably OK for
+> > our purposes, since we wouldn't expect multiple callers within a single
+> > process.
+> > [...some alternatives]
+> 
+> All interesting ideas. In this patch (and by the end of the series)
+> callers that use the kept pack cache never ask for the cache with a
+> different set of flags. IOW, there isn't a situation where a caller
+> would populate the in-core kept pack cache, and then suddenly ask for
+> both in-core and on-disk packs to be kept.
+> 
+> So all of this code is defensive in case that were to change, and
+> suddenly we'd be returning subtly wrong results. I could imagine that
+> being kind of a nasty bug to track down, so detecting and invalidating
+> the cache would make it a non-issue.
 
-Good point - I'll do that.
+Yeah, I agree that the current crop of callers does not care. And I am
+glad we are not leaving a booby-trap for later programmers with respect
+to correctness (by virtue of the invalidation function). But it does
+feel like we are leaving one for performance, which they very well might
+not realize the cache is doing worse-than-nothing.
+
+Would just doing:
+
+  if (cache.packs && cache.flags != flags)
+	BUG("kept-pack-cache cannot handle multiple queries in a single process");
+
+be a better solution? That is not helping anyone towards a world where
+we gracefully handle back-and-forth queries. But it makes it abundantly
+clear when such a thing would become necessary.
+
+> > Is there any reason not to just embed the kept_pack_cache struct inside
+> > the object_store? It's one less pointer to deal with. I wonder if this
+> > is a holdover from an attempt to have multiple caches.
+> >
+> > (I also think it would be reasonable if we wanted to hide the definition
+> > of the cache struct from callers, but we don't seem do to that).
+> 
+> Not a holdover, just designed to avoid adding too many extra fields to
+> the object-store. I don't feel strongly, but I do think hiding the
+> definition is a good idea, so I'll inline it.
+
+This response confuses me a bit. Hiding the definition from callers
+would mean _keeping_ it as a pointer, but putting the definition into
+packfile.c, where nobody outside that file could see it (at least that
+is what I meant by hiding).
+
+But inlining it to me implies embedding the struct (not a pointer to it)
+in "struct object_store", defining the struct at the point we define the
+struct field which uses it.
+
+I am fine with either, to be clear. I'm just confused which you are
+proposing to do. :)
+
+-Peff
