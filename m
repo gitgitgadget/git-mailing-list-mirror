@@ -2,134 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F6F4C433DB
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 11:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3998C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 11:16:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 628E864E24
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 11:08:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B04B564E24
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 11:16:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbhBQLIl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 06:08:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33556 "EHLO
+        id S231474AbhBQLPp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 06:15:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231341AbhBQLI2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 06:08:28 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626D5C061788
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 03:07:42 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id g20so7247540plo.2
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 03:07:42 -0800 (PST)
+        with ESMTP id S231337AbhBQLPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 06:15:23 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1B31C061574
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 03:14:43 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id t29so8184128pfg.11
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 03:14:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Hbab1jeLN7HlZdJbwuM/DkNUm6uw0cvzUnf26IZYGIU=;
-        b=Gk7GLemtz4/181b3fQLT/50J8f3EhMApWn9YAQHbw8jfAt9QPpJuBRRM/z2J1w+kVw
-         fW92VfSjtDWS1mUTUSrxPabOQj3rR6SV8Fcr765SEPncsRm90RiIQpg5GPcce/fP4Xhv
-         4YUuc7vV3hxSZ5uNpd9mXcMvB+G3rF5YhL2/H9C0kOe0SM83WuKyE3KY63nDky3MKA4c
-         C1d5PGWEIZvirAo4ER6VH7QQXoseee8Rq/pYkniKnv7/AAz1vMYEno5WwaFCaH2IhfOk
-         G7Pcbjkm8QgYwpsG8bAtt+tRhVr9icJqo0n4P/KxqRucrvDN1eyLf8gvi6a5Xxg4bidT
-         VmZw==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ej+kG/JZO1YgTWQ/j7oofkAspnng+sh2ALDZj6yDyKw=;
+        b=sjwVm0znNZ+zJOoiE2R6qAXf9puqIlUWML8T+8iEt31lovh8lPEP36vUTcLg6VHdDs
+         h1Czi2JfKq/ffrmUkYLfQg6ZOgvNDPCw9oTzU44Oz5wft3SmpzzsETbq8CHeCpsL6NrW
+         DOF0JzBYMDxp9RXvm0jphCof3mOtDHD0Un+xYXsgl0z/PwdeIfkTW+hBnmFRstffYBJH
+         zgp1zIs6Ms6KDZKeaLR2XCGwHxPT672nLTE/B9xWgaUJzSh/OfiHrYDETnwU//yEZVLc
+         mIDiBNPSku9VxYvrYO+gKpl3vEIibkKt2cCLHe0b5ZKiiozqiXPUaGCwK3jdtIIRfGRL
+         O/RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Hbab1jeLN7HlZdJbwuM/DkNUm6uw0cvzUnf26IZYGIU=;
-        b=DeeLO/dB02H1wQn1RsWvmckeTJDfIny4/2Tm+WeF4cCs3AvEPbQwR1qAQ5nUqG8dIS
-         MRQvsiBThSGA/rSeyFp6MkMoRLd05gmeh+xNBKskHD0Nay9SKSOLB3x+eKuMRP4hqZyv
-         SLNFuNiMYpR1VcHlqMNmp2DhI8sUIrNcrTKDevJviGJ0K+nRINjwWcfPq5W4avvr8H2A
-         ZPSDKVO2Epfwt2Xilav/QI5AwBX+E2tsDWE1jQpOqFTus9+tEsiykHFZ1khJYDXBTb0p
-         OjATd/lOg9g8DL0QCC5htyIU5+uSTW2LPTwQ+VVGvwRa69qxyRWpWP4PWgUbzzLADS3b
-         uRww==
-X-Gm-Message-State: AOAM533jvILaAmhAdpoeBxlvKoTxJ37LbdAjytkH5RDw6RfxE94FFLhZ
-        lutSb1nqmqnqGgT9Vpv9aBg=
-X-Google-Smtp-Source: ABdhPJy8YflGC9ZPhjkXxjjXb0kPz91V85AfKA5gRZIYGGzyY3blSab0Yx4LF7eeQOCt1mT0IKIRBg==
-X-Received: by 2002:a17:90b:3692:: with SMTP id mj18mr8597255pjb.83.1613560061961;
-        Wed, 17 Feb 2021 03:07:41 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ej+kG/JZO1YgTWQ/j7oofkAspnng+sh2ALDZj6yDyKw=;
+        b=DxL8fNtcZ0Ke5TswFA05lUIEhQ+MVIH23rooEjWYIa4On9yHzl6ehViWu51a28xb3u
+         hjvdqn1bKlJ74qcE8yq6sOwPjdg9iT+5p2jLarGmthMdbVgQP//mkamqws6S0cKSQZCc
+         rwy+1nKzDQWb4wzinm5vGbAqKpHzChddJx/LqShVlYqIEiAUhZgLWZNzDsAMHz1JK8bs
+         8IbSNxYzdqhYws4acTWhyzuKa7PhCkUCFcAZRPt3IxW9tPOB2FUspJF7cfl2TBCysFWZ
+         chIBJdxUhZ1LhNShQMzaEgORTVJpNWRHT/idp7opuaJ913d9H+xE2oKGAp6LbKr0g7kq
+         N7OA==
+X-Gm-Message-State: AOAM532hRfuf4nsVv5y4y8f9fHp1EuBlS1AiAW7a6Wb7Yz8jDmzCctHp
+        ph8BTUZGGZd+lspUqXh/fRU=
+X-Google-Smtp-Source: ABdhPJwK1dymEKk+PS2xTDn/ftjdrEgCa+hvlKEz2TfRNV+PXkcXKFhh6f6hg+f/7zeIpPT59QeUGQ==
+X-Received: by 2002:aa7:86d8:0:b029:1b5:1121:729a with SMTP id h24-20020aa786d80000b02901b51121729amr23957322pfo.57.1613560483389;
+        Wed, 17 Feb 2021 03:14:43 -0800 (PST)
 Received: from generichostname ([2601:647:4201:c540::414c])
-        by smtp.gmail.com with ESMTPSA id u3sm2222928pfm.144.2021.02.17.03.07.40
+        by smtp.gmail.com with ESMTPSA id lw17sm1720446pjb.11.2021.02.17.03.14.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 03:07:41 -0800 (PST)
-Date:   Wed, 17 Feb 2021 03:07:39 -0800
+        Wed, 17 Feb 2021 03:14:42 -0800 (PST)
+Date:   Wed, 17 Feb 2021 03:14:40 -0800
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Joey Salazar <jgsal@protonmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [OUTREACHY][PATCH v1] doc: fix naming of response-end-pkt
-Message-ID: <YCz4+xPVyL+hTZzR@generichostname>
-References: <5qGT6uzPLUGN2DXCMTzhixEhKHwaT6hODaOHQ485sfCROycrTDPx6P2Nd5dOy4J-gnhb_lKpxW4jJqhut-4gmoeIyuhpqbA5fXCeHoKHrK8=@protonmail.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        David Aguilar <davvid@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Ryan Zoeller <rtzoeller@rtzoeller.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v5 0/2] difftool.c: learn a new way start at specified
+ file
+Message-ID: <YCz6oDZCAODPS8sY@generichostname>
+References: <pull.870.v4.git.1613308167239.gitgitgadget@gmail.com>
+ <pull.870.v5.git.1613480198.gitgitgadget@gmail.com>
+ <xmqqblcjrgvc.fsf@gitster.c.googlers.com>
+ <CAOLTT8T=R-M1eK9thSuzHNOJ8wkaTX3yYsLEgpqmHiEYWgM1XA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5qGT6uzPLUGN2DXCMTzhixEhKHwaT6hODaOHQ485sfCROycrTDPx6P2Nd5dOy4J-gnhb_lKpxW4jJqhut-4gmoeIyuhpqbA5fXCeHoKHrK8=@protonmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOLTT8T=R-M1eK9thSuzHNOJ8wkaTX3yYsLEgpqmHiEYWgM1XA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Joey,
+Hi ZheNing,
 
-On Tue, Feb 16, 2021 at 09:21:50PM +0000, Joey Salazar wrote:
-> Git Protocol version 2[1] defines 0002 as a Message Packet that indicates
-> the end of a response for stateless connections.
-> 
-> Change the naming of the 0002 Packet to 'Response end' to match the
-> parsing introduced in Wireshark's MR !1922 for consistency.
+On Wed, Feb 17, 2021 at 12:12:10PM +0800, ZheNing Hu wrote:
+> Oh, I am sorry.
+> Then I only need to squash the two commit, right?
 
-Thanks for catching this, this is an obvious error on my part. In fact,
-I'd go as far as saying that in the commit where this was defined,
-b0df0c16 (stateless-connect: send response end packet, 2020-05-19), I
-erroneously called it a "Message Packet" when I meant to type "Response
-End Packet", which you are now correcting.
+I've never used GGG before but I suspect that in your GitHub PR, you
+need to set the PR base to 'master' instead of 'jc/diffcore-rotate'.
 
-> [1] kernel.org/pub/software/scm/git/docs/technical/protocol-v2.html
-> [2] gitlab.com/wireshark/wireshark/-/merge_requests/1922
-> 
-> Signed-off-by: Joey Salazar <jgsal@protonmail.com>
-> ---
->  Documentation/technical/protocol-v2.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> index e597b74da39..6c55d566d8b 100644
-> --- a/Documentation/technical/protocol-v2.txt
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -33,8 +33,8 @@ In protocol v2 these special packets will have the following semantics:
-> 
->    * '0000' Flush Packet (flush-pkt) - indicates the end of a message
->    * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
-> -  * '0002' Message Packet (response-end-pkt) - indicates the end of a response
-> -    for stateless connections
-> +  * '0002' Response end Packet (response_end-pkt) - indicates the end of a
-> +    response for stateless connections
+CCing the creator of GGG, please correct me if I'm wrong.
 
-A couple of aesthetic details: I see that these changes are based on MR
-!1922 so if you decide to take these suggestions, you'll probably need
-to apply them there too.
+-Denton
 
-	1. It'd probably read better as "Response End Packet" (with the
-	   "e" capitalised)
-
-	2. The mix of underscore and hyphen in response_end-pkt is a
-	   little odd, although I see that you've done it to make it
-	   match the surrounding code[3].
-
-I think that I'd prefer if 1. is taken and 2. can be ignored. But with
-or without those changes, consider this patch
-
-	Acked-by: Denton Liu <liu.denton@gmail.com>
-
-Thanks,
-Denton
-
-[3]: https://gitlab.com/wireshark/wireshark/-/merge_requests/1922#note_502316230
-
->  Initial Client Request
->  ----------------------
-> --
-> 2.29.0.rc2
-> 
+> Junio C Hamano <gitster@pobox.com> 于2021年2月17日周三 上午2:45写道：
+> >
+> > "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > Junio C Hamano (1):
+> > >   diff: --{rotate,skip}-to=<path>
+> >
+> > That's not part of your series (didn't I ask you not to include it)?
+> >
+> > > ZheNing Hu (1):
+> > >   difftool.c: learn a new way start at specified file
+> >
+> > Will see what I find, but I may not be able to get to it today.
+> >
+> > Thanks.
