@@ -2,160 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4187C433DB
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 23:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34467C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 23:44:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A64864E68
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 23:41:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEF6B64E63
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 23:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231996AbhBQXk5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 18:40:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64760 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232968AbhBQXkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 18:40:52 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23754A947B;
-        Wed, 17 Feb 2021 18:40:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=w/PQ+67+bVrJ
-        rsa04ge29T5lLsE=; b=gnOuv8Q1fdb1W3wM9jHWfjZAJIHH1PkaEDcH59DlcdzQ
-        V1gTmMFjN019HsbEQN19FYmQEdPyroMCoUQvEIwB09zGrmCtq19FE9uLocrORqVn
-        F0Zj7uJhgrLcWgqs2Xx6UJaQPTEBkT3Si/QkBNovJYM2uRxfDmdLTGU0I+Jcubk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OiTVrY
-        Xo+wKWEP/IK8bYbo0Rc2QqNZYAcKnbLJHuLxnBiLeJv4ENw0B7naxEtKYm6ODoiL
-        pfVPJqyM5hZr+DOHKm/qQwBBQZOLROZmVg/wvNPgVDeKjnofToNzsdRP2l2zw4PS
-        kG+f69JLbHyaL+4gwOYFKtFpwRivCTWniuo0I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19021A9479;
-        Wed, 17 Feb 2021 18:40:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0CC38A9478;
-        Wed, 17 Feb 2021 18:40:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 02/14] fsck.h: use use "enum object_type" instead of "int"
-References: <87blcja2ha.fsf@evledraar.gmail.com>
-        <20210217194246.25342-3-avarab@gmail.com>
-Date:   Wed, 17 Feb 2021 15:40:08 -0800
-In-Reply-To: <20210217194246.25342-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 17 Feb 2021 20:42:34 +0100")
-Message-ID: <xmqqczwyi7qf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232841AbhBQXo6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 18:44:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232191AbhBQXo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 18:44:57 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8B2FC061574
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 15:44:16 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id b14so507702qkk.0
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 15:44:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lQq2khjwWHhNGf0F8ZuTf4QpHMihBDR70xyqAPP90X8=;
+        b=BPQwmHwzCxrsvSo7Q+785KAo2lpKIKaTzMgR7CT1agxE3hE43xIlc+/2Lpoqun9+pA
+         NQj9uItr2wVwGsb7uILxH19tkTsGWX+8KoNCi6HvtPvb9Wvn7PMH3aRJNQYbxN1pldwX
+         ptVl2CocXp/qJF/v+rSmi4qTZQrw7R5za1tzXyKdE4kUlzJ8QFyDBs+aPrMXsK7gaIPt
+         l3pPE9aIL1gR4vGjE+eUHZU714KIJw5R7bPAyo0sIa2Nzc+E4sOIa/nov2yIk2TlX754
+         9MvADfNrcV3ilbdfkLPyKhDuxHS0uPEwYBko4pmGIYJdBzWSEqH81M11MwT0oS+OLlA4
+         61bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lQq2khjwWHhNGf0F8ZuTf4QpHMihBDR70xyqAPP90X8=;
+        b=ZcPOUH7s6K2oA+uBGFhy7YDSqSsA+hLi1Ww2AV5wj5E0hyu9orV+eQ3SF8mbZTu4QZ
+         xPX/TChIPj4t2QthkMixjp1SqHWsEf+vS5gP+jWes32VbhetUe7+XF1gLIj3/mp392pm
+         viw2kDccYNUOCp0sv0SL645U+vBezprNxf7uIehlHhpYlMlbAgzJFHwzHpb5ORMXdQdf
+         SniQFd+1Ea6KJ0CVmYF2bDdnxWS9xVDJy+dM8E28SLRdEZR0JB9coWzh6HFxRSYla4cU
+         3pOMUNp9vyNTp5C53OA7+j6SDUHgjaa7Ij3F1wm+WA43cUguZI51sGkxNODizf5Kxq96
+         JGZg==
+X-Gm-Message-State: AOAM533zLCPfNnnRVF5fDVlWGF4mxL9R7Y0WPbi7F4CL4+68DdoZwKeZ
+        Z53kBeE6VIYkvDodqyyS6GgPhVt65Ewz1XBu
+X-Google-Smtp-Source: ABdhPJxrjQ9wfPQLu62Y2SGVTga3mxzpuSKDZQBSmDAQCli8Xp7hSDrH6hiMm0WlUKuuoNroLLjCmg==
+X-Received: by 2002:a37:456:: with SMTP id 83mr1703932qke.462.1613605456128;
+        Wed, 17 Feb 2021 15:44:16 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:1f29:6ff9:b466:8c60])
+        by smtp.gmail.com with ESMTPSA id d75sm2877951qke.23.2021.02.17.15.44.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Feb 2021 15:44:15 -0800 (PST)
+Date:   Wed, 17 Feb 2021 18:44:13 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Kyle Meyer <kyle@kyleam.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/2] rev-list --disk-usage example docs
+Message-ID: <YC2qTedr8agOpQxy@nand.local>
+References: <YBHlGPBSJC++CnPy@coredump.intra.peff.net>
+ <YCJpbPIlSpCAKSBF@coredump.intra.peff.net>
+ <xmqqh7mkycno.fsf@gitster.c.googlers.com>
+ <YCOu70m5SKU7L4CS@coredump.intra.peff.net>
+ <xmqq1rdn51gz.fsf@gitster.c.googlers.com>
+ <YCREYmBsnv2wgvXZ@coredump.intra.peff.net>
+ <YCRpBCNJ2yNTbc2i@nand.local>
+ <YCUOSmnsJ4LLPFgK@coredump.intra.peff.net>
+ <875z2ydd4l.fsf@evledraar.gmail.com>
+ <YC2nOxPP3SAY2g1I@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 787748C2-7179-11EB-B46C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YC2nOxPP3SAY2g1I@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Wed, Feb 17, 2021 at 06:31:07PM -0500, Jeff King wrote:
+> It's already big and scary enough that I prefer starting an EXAMPLES
+> section. :)
 
-> Subject: Re: [PATCH 02/14] fsck.h: use use "enum object_type" instead o=
-f "int"
+The patches you sent below are great. I think that it's easy to nitpick
+and say "oh, you should have added this or that example, too", but I
+think you gave a great set of starting examples.
 
-use use.
+I'd be happy to see this merged so that others can add more examples on
+top.
 
-> Change the fsck_walk_func to use an "enum object_type" instead of an
-> "int" type. The types are compatible, and ever since this was added in
-> 355885d5315 (add generic, type aware object chain walker, 2008-02-25)
-> we've used entries from object_type (OBJ_BLOB etc.).
->
-> So this doesn't really change anything as far as the generated code is
-> concerned, it just gives the compiler more information and makes this
-> easier to read.
+> By the way, there's one other finishing touch we might consider:
+> enabling --use-bitmap-index automatically when bitmaps are present, for
+> requests that produce the identical answer (so _not_ a regular
+> traversal, because the output order and presence of pathnames are
+> different there). I'd prefer to do that as a separate series, though,
+> since there are multiple arguments that might benefit (like --count).
 
-Yup, as long as we won't trick the compiler into complaining "ah,
-but you are not covering OBJ_OFS_DELTA or OBJ_BAD values in your
-switch statement", I think a change like this is a good thing.
+This would be really neat. I look forward to it.
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  builtin/fsck.c           | 3 ++-
->  builtin/index-pack.c     | 3 ++-
->  builtin/unpack-objects.c | 3 ++-
->  fsck.h                   | 3 ++-
->  4 files changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 821e7798c70..68f0329e69e 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -197,7 +197,8 @@ static int traverse_reachable(void)
->  	return !!result;
->  }
-> =20
-> -static int mark_used(struct object *obj, int type, void *data, struct =
-fsck_options *options)
-> +static int mark_used(struct object *obj, enum object_type object_type,
-> +		     void *data, struct fsck_options *options)
->  {
->  	if (!obj)
->  		return 1;
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 54f74c48741..2f291a14d4a 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -212,7 +212,8 @@ static void cleanup_thread(void)
->  	free(thread_data);
->  }
-> =20
-> -static int mark_link(struct object *obj, int type, void *data, struct =
-fsck_options *options)
-> +static int mark_link(struct object *obj, enum object_type type,
-> +		     void *data, struct fsck_options *options)
->  {
->  	if (!obj)
->  		return -1;
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index dd4a75e030d..ca54fd16688 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -187,7 +187,8 @@ static void write_cached_object(struct object *obj,=
- struct obj_buffer *obj_buf)
->   * that have reachability requirements and calls this function.
->   * Verify its reachability and validity recursively and write it out.
->   */
-> -static int check_object(struct object *obj, int type, void *data, stru=
-ct fsck_options *options)
-> +static int check_object(struct object *obj, enum object_type type,
-> +			void *data, struct fsck_options *options)
->  {
->  	struct obj_buffer *obj_buf;
-> =20
-> diff --git a/fsck.h b/fsck.h
-> index df0b64a2163..0c75789d219 100644
-> --- a/fsck.h
-> +++ b/fsck.h
-> @@ -23,7 +23,8 @@ int is_valid_msg_type(const char *msg_id, const char =
-*msg_type);
->   *     <0	error signaled and abort
->   *     >0	error signaled and do not abort
->   */
-> -typedef int (*fsck_walk_func)(struct object *obj, int type, void *data=
-, struct fsck_options *options);
-> +typedef int (*fsck_walk_func)(struct object *obj, enum object_type obj=
-ect_type,
-> +			      void *data, struct fsck_options *options);
-> =20
->  /* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
->  typedef int (*fsck_error)(struct fsck_options *o,
+Thanks,
+Taylor
