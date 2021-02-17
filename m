@@ -2,108 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A00E0C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C10C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76FE764E79
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCC3E64E79
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232435AbhBQVDX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 16:03:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48242 "EHLO
+        id S232770AbhBQVD0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 16:03:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhBQVDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 16:03:19 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9CF4C061574
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:38 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id o21so10646956qtr.3
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:38 -0800 (PST)
+        with ESMTP id S229808AbhBQVDU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 16:03:20 -0500
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE593C061756
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:40 -0800 (PST)
+Received: by mail-qk1-x736.google.com with SMTP id x14so58094qkm.2
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sl5Gt+s6CFqxZOdWncTO27zlrWEJu6nIv7nXrXW4fDo=;
-        b=SaZZHjoDDl9OWqsOGkql3U/G2VU4VV+FiC6/uALWzEeay3zcSnUrRsqINPw166r777
-         fr5cIjkVV2ZG4ZXF1flIm0RAVceztGb1O7XRCc6W587SD0r4FQa6ii59MApg+jgl4mCk
-         NOFRownJmn5Ma8pjzP+pLWURgA2mVHJ8bXrODXSTd9TgkCPhnMpNCYE4fDixbmCkjGmt
-         a+k02tuj+J3HJoxqGibON8jhGvdW15QTMeGSvnqh6a/+vLoiVSkO3o8nlyjwghQaIJIk
-         jPL5hxceb2RwOF+VXGjA46+utRbHGITsv/KffnmTYr8haOpjFRbiQOmFfmKJEa4zdUjf
-         msoQ==
+        bh=XlKzLEa7xdFWXMBcMcWaeCRbNT3v20gR1UMHkOSLheI=;
+        b=DPCOb/cc/DuG3SSMzJFZm7FdhbIlwgfOixBuX24EnEm7MZMJOz4s4GTmFMB65qbndm
+         czuxboRn9AyDHZCvLHlVJxQbrCwAHGQJOvfdlTF/QOSGf9oTgbpm5G5DJEBGzXjZL0JX
+         +P/q4rtlVfXp8Mo6q5N6nO38d8+KkJ6bxYy51lo/WVYQFr9IEi6mfbz0uEbuq/hOEVby
+         PY83FkpfLmpkBAdUctpvdkzHAcACRewp7z6KeEqxXKunmR2YogQNn9ipZ4Nmu6Qjd1Nc
+         t5lFp9Moc3wIyCYO6itM9DIFLSbbhe07+XuUh4M8okbx9aOokNC0Hu3ISFHLB+IHLhbh
+         fOmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sl5Gt+s6CFqxZOdWncTO27zlrWEJu6nIv7nXrXW4fDo=;
-        b=ZIGiDCjkfw8d5/B0g3EsQKG8ZtlTXxEtgrS7/Qsvs1Xbozgd84V9+5FESLW58gUdv2
-         PfCJDx9u6dVPH76ICRRSIkn5BBNHT001xSN1v63NKsW8Cix92U7sJjD/PNUyqnux0gXb
-         hT7+TBZVL0u7t2GXB5NyiBGWTLeDGCK2RE63rN7xUXBXLqb3rC6aX3YzmU3dFsiRX2cG
-         CfobhyWo/Cz8tdETSUkbLAbKNrARgDHnZE3UuVzAC4LTK9KqMassvtDXhka8BCnEtcLn
-         yg8R07Kl38G9whIeiiTJ3WBCVCeiWmj+vaKuxjObG0Tv37owkRq5RrdlPESM7WNXHU5Z
-         Jzpg==
-X-Gm-Message-State: AOAM531E8Kb69778X96xviJ4PqSI1j463hokSFAhX01732O1YR8u1LNj
-        xhicuydPu/TvyqB1OnzxemPNhrd1fSe0sw==
-X-Google-Smtp-Source: ABdhPJzLo5IM+Qxl2B7KioLaaJgcTPuUcNAjxhO0EKfR/NtwER7WjENkrZJUCKMo2NiQKrU5FHiGDw==
-X-Received: by 2002:ac8:5a82:: with SMTP id c2mr1237184qtc.90.1613595757601;
-        Wed, 17 Feb 2021 13:02:37 -0800 (PST)
+        bh=XlKzLEa7xdFWXMBcMcWaeCRbNT3v20gR1UMHkOSLheI=;
+        b=kHyYOWiE974AP+2CcyBZKRw9dE61nVUz5vu8XnlixoSEKCCLMp538F7JOb5B1BGxcZ
+         V3fCQ5ej/+40B4ousqc41QVaKpO0z+ujFo2eWRuy93hzVylPYZjG7+dQ5m5R5R0nQvSG
+         wOmhfd+4gVdulexY2dl/6Mwkvf/0BOBa4D1nXKKRdd0/tZjYgSYGgieRaXmLil4MGl8/
+         PFF6AEcLB7Bi9bws4cklR8j7u31xD7OHP+syPIP8c2V9ElUzJ/9iGLDQN0JYIedjtll+
+         NFLxdgQcJu7jr9yryjQMyYE6+H4ZeHuObiGgrX7HivP/hpY6iVeVzI0dpttV7H9s0FSj
+         kzrQ==
+X-Gm-Message-State: AOAM532nrc2r4LG3iJBmjYVNyc0zhTOYo3b6u2PNwXAxGfZ0/x1Vdsge
+        kSsn0xjnSu51DqU3nD6E+/cig4XCrC9M/A==
+X-Google-Smtp-Source: ABdhPJxIEK/x90QVW6H1HBBknqwYuH91ZM/pPxzup6UAtSzbtDx1wGLi1WcWAnZ7oIgzvHSLj2IKIQ==
+X-Received: by 2002:a05:620a:1354:: with SMTP id c20mr1161741qkl.104.1613595759604;
+        Wed, 17 Feb 2021 13:02:39 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id o194sm2438459qke.101.2021.02.17.13.02.35
+        by smtp.gmail.com with ESMTPSA id o194sm2438459qke.101.2021.02.17.13.02.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 13:02:36 -0800 (PST)
+        Wed, 17 Feb 2021 13:02:39 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, stolee@gmail.com
-Subject: [RFC PATCH 0/7] add/rm: honor sparse checkout and warn on sparse paths
-Date:   Wed, 17 Feb 2021 18:02:23 -0300
-Message-Id: <cover.1613593946.git.matheus.bernardino@usp.br>
+Subject: [RFC PATCH 1/7] add --chmod: don't update index when --dry-run is used
+Date:   Wed, 17 Feb 2021 18:02:24 -0300
+Message-Id: <2256132f9de01cc06a001aa8c44e29dc5a218441.1613593946.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.29.2
-In-Reply-To: <c17158e3b105d7c0679515446c5fd7b8d5fc8435.1605535068.git.matheus.bernardino@usp.br>
-References: <c17158e3b105d7c0679515446c5fd7b8d5fc8435.1605535068.git.matheus.bernardino@usp.br>
+In-Reply-To: <cover.1613593946.git.matheus.bernardino@usp.br>
+References: <cover.1613593946.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is based on the discussion at [1]. It makes `rm` honor sparse
-checkouts and adds a warning to both `rm` and `add`, for the case where
-a pathspec _only_ matches skip-worktree entries. The first two patches
-are somewhat unrelated fixes, but they are used by the later patches.
+`git add --chmod` applies the mode changes even when `--dry-run` is
+used. Fix that and add some tests for this option combination.
 
-[1]: https://lore.kernel.org/git/CABPp-BHwNoVnooqDFPAsZxBT9aR5Dwk5D9sDRCvYSb8akxAJgA@mail.gmail.com/
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ builtin/add.c  |  7 ++++---
+ t/t3700-add.sh | 20 ++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-Matheus Tavares (7):
-  add --chmod: don't update index when --dry-run is used
-  add: include magic part of pathspec on --refresh error
-  t3705: add tests for `git add` in sparse checkouts
-  add: make --chmod and --renormalize honor sparse checkouts
-  pathspec: allow to ignore SKIP_WORKTREE entries on index matching
-  add: warn when pathspec only matches SKIP_WORKTREE entries
-  rm: honor sparse checkout patterns
-
- Documentation/config/advice.txt  |   4 +
- Documentation/git-rm.txt         |   4 +-
- advice.c                         |  19 +++++
- advice.h                         |   4 +
- builtin/add.c                    |  72 ++++++++++++++----
- builtin/check-ignore.c           |   2 +-
- builtin/rm.c                     |  35 ++++++---
- pathspec.c                       |  25 ++++++-
- pathspec.h                       |  13 +++-
- read-cache.c                     |   3 +-
- t/t3600-rm.sh                    |  54 ++++++++++++++
- t/t3700-add.sh                   |  26 +++++++
- t/t3705-add-sparse-checkout.sh   | 122 +++++++++++++++++++++++++++++++
- t/t7011-skip-worktree-reading.sh |   5 --
- t/t7012-skip-worktree-writing.sh |  19 -----
- 15 files changed, 349 insertions(+), 58 deletions(-)
- create mode 100755 t/t3705-add-sparse-checkout.sh
-
+diff --git a/builtin/add.c b/builtin/add.c
+index a825887c50..f757de45ea 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -38,7 +38,7 @@ struct update_callback_data {
+ 	int add_errors;
+ };
+ 
+-static void chmod_pathspec(struct pathspec *pathspec, char flip)
++static void chmod_pathspec(struct pathspec *pathspec, char flip, int show_only)
+ {
+ 	int i;
+ 
+@@ -48,7 +48,8 @@ static void chmod_pathspec(struct pathspec *pathspec, char flip)
+ 		if (pathspec && !ce_path_match(&the_index, ce, pathspec, NULL))
+ 			continue;
+ 
+-		if (chmod_cache_entry(ce, flip) < 0)
++		if ((show_only && !S_ISREG(ce->ce_mode)) ||
++		    (!show_only && chmod_cache_entry(ce, flip) < 0))
+ 			fprintf(stderr, "cannot chmod %cx '%s'\n", flip, ce->name);
+ 	}
+ }
+@@ -609,7 +610,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		exit_status |= add_files(&dir, flags);
+ 
+ 	if (chmod_arg && pathspec.nr)
+-		chmod_pathspec(&pathspec, chmod_arg[0]);
++		chmod_pathspec(&pathspec, chmod_arg[0], show_only);
+ 	unplug_bulk_checkin();
+ 
+ finish:
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index b7d4ba608c..fc81f2ef00 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -386,6 +386,26 @@ test_expect_success POSIXPERM 'git add --chmod=[+-]x does not change the working
+ 	! test -x foo4
+ '
+ 
++test_expect_success 'git add --chmod honors --dry-run' '
++	git reset --hard &&
++	echo foo >foo4 &&
++	git add foo4 &&
++	git add --chmod=+x --dry-run foo4 &&
++	test_mode_in_index 100644 foo4
++'
++
++test_expect_success 'git add --chmod --dry-run reports error for non regular files' '
++	git reset --hard &&
++	test_ln_s_add foo foo4 &&
++	git add --chmod=+x --dry-run foo4 2>stderr &&
++	grep "cannot chmod +x .foo4." stderr
++'
++
++test_expect_success 'git add --chmod --dry-run reports error for unmatched pathspec' '
++	test_must_fail git add --chmod=+x --dry-run nonexistent 2>stderr &&
++	test_i18ngrep "pathspec .nonexistent. did not match any files" stderr
++'
++
+ test_expect_success 'no file status change if no pathspec is given' '
+ 	>foo5 &&
+ 	>foo6 &&
 -- 
 2.29.2
 
