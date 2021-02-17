@@ -2,115 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C36C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B311C433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:18:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFD6D64DFF
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:13:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20DF064E4B
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234830AbhBQSNZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 13:13:25 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55652 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233429AbhBQSNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 13:13:05 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE04D11F99A;
-        Wed, 17 Feb 2021 13:12:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WzuyBxTRdYjQ
-        mwrwDztiQLMUP90=; b=b9A3AqnILaXaxtEEzFyGe6dFGPlenaa8B5BoHKI81cWC
-        nZh0iH3spfUXQbHb+2b4NIX8DNcTWbi0WhT2O/uzXZ89tS9rJGGlBrD0mmeX+ON9
-        iuXb4ALr4ubSwND+BlwbY2VebCkcim0k1UWS5rsu5+DKgINK3Af1vy3Ntizbqig=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OzEvva
-        1evgSk9Z7AYGWdn8sjCsoT82LHgKB+aB1rgXjIuL7A4COPJJXVttAoW3syoE5Rsw
-        j6EwpzE0i85bWt/d9gywXrXPJTK9xm4nYgkxhjgGpF4vnftVU+HnzH5w/3UfMpej
-        n7s5J6LaLPe1G1dw7+TcHv9RkOqExhgaqP2+A=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E690811F999;
-        Wed, 17 Feb 2021 13:12:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3E98B11F998;
-        Wed, 17 Feb 2021 13:12:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] pretty: add %(describe)
-References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
-        <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
-        <87k0r7a4sr.fsf@evledraar.gmail.com>
-Date:   Wed, 17 Feb 2021 10:12:17 -0800
-In-Reply-To: <87k0r7a4sr.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 17 Feb 2021 01:58:28 +0100")
-Message-ID: <xmqqwnv6lg1q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S234861AbhBQSSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 13:18:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36016 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233242AbhBQSR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 13:17:58 -0500
+Received: (qmail 19369 invoked by uid 109); 17 Feb 2021 18:17:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Feb 2021 18:17:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6806 invoked by uid 111); 17 Feb 2021 18:17:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Feb 2021 13:17:16 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 17 Feb 2021 13:17:16 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH v2 8/8] builtin/repack.c: add '--geometric' option
+Message-ID: <YC1drGrIEg0C7Zo5@coredump.intra.peff.net>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <cover.1612411123.git.me@ttaylorr.com>
+ <d5561585c2221a9635eb0fc7a65298ee8a2b6348.1612411124.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AC550FF4-714B-11EB-B1CF-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <d5561585c2221a9635eb0fc7a65298ee8a2b6348.1612411124.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Wed, Feb 03, 2021 at 10:59:25PM -0500, Taylor Blau wrote:
 
-> On Sun, Feb 14 2021, Ren=C3=A9 Scharfe wrote:
->
->> +'%(describe)':: human-readable name, like linkgit:git-describe[1];
->> +		empty string for undescribable commits
->
-> In the case of undescribable we've got the subcommand exiting non-zero
-> and we ignore it. The right thing in this case given how the rest of
-> format arguments work, but maybe something to explicitly test for?
->>
->> +	if (skip_prefix(placeholder, "(describe)", &arg)) {
->> +		struct child_process cmd =3D CHILD_PROCESS_INIT;
->> +		struct strbuf out =3D STRBUF_INIT;
->> +		struct strbuf err =3D STRBUF_INIT;
->> +
->> +		cmd.git_cmd =3D 1;
->> +		strvec_push(&cmd.args, "describe");
->> +		strvec_push(&cmd.args, oid_to_hex(&commit->object.oid));
->> +		pipe_command(&cmd, NULL, 0, &out, 0, &err, 0);
->> +		strbuf_rtrim(&out);
->> +		strbuf_addbuf(sb, &out);
->> +		strbuf_release(&out);
->> +		strbuf_release(&err);
->> +		return arg - placeholder;
->> +	}
->
-> There's another edge case in this: if you do "%(describe)%(describe)"
-> it'll be run twice for the rev, 3 times if you add another "%(describe)=
-"
-> etc. I don't know if pretty.c has an easy way to cache/avoid that.
+> Often it is useful to both:
+> 
+>   - have relatively few packfiles in a repository, and
+> 
+>   - avoid having so few packfiles in a repository that we repack its
+>     entire contents regularly
+> 
+> This patch implements a '--geometric=<n>' option in 'git repack'. This
+> allows the caller to specify that they would like each pack to be at
+> least a factor times as large as the previous largest pack (by object
+> count).
+> 
+> Concretely, say that a repository has 'n' packfiles, labeled P1, P2,
+> ..., up to Pn. Each packfile has an object count equal to 'objects(Pn)'.
+> With a geometric factor of 'r', it should be that:
+> 
+>   objects(Pi) > r*objects(P(i-1))
+> 
+> for all i in [1, n], where the packs are sorted by
+> 
+>   objects(P1) <= objects(P2) <= ... <= objects(Pn).
 
-Just like for-each-ref that has the "atom" system to lazily parse
-and cache a computed result so that multiple invocations of the same
-placeholder will have to prepare a string only once, the pretty side
-has the "format_commit_context" structure that can be used to cache
-values that are expensive to compute in case it is used more than
-once, so we could use it.
+Just devil's advocating for a moment.
 
-I however suspect that we may already be leaking some cacheed values
-in the current code.  For example, there is "signature_check"
-instance that is used to handle %G and we do use it to call
-check_signature(), but a call to signature_check_clear() to release
-resources is nowhere to be seen as far as I can tell.
+I think in this kind of geometric roll-up strategy, you want to imagine
+that you are rolling up recent pushes but leaving untouched a good
+"base" pack that you previously created.
 
+And that will usually be true if you are doing the rollup based on
+number of objects (or size, etc). But it won't always be (e.g., for some
+reason somebody makes a very large push relative to the current
+repository size). What happens when this assumption is violated?
 
+In some ways, it is a good thing to drift away from this "base pack"
+view of the world. If we're trying to amortize the per-object work done,
+then we are better off rolling up the small things into the large,
+regardless of where they came from.
 
+But the base pack may also have other properties we want to retain. Two
+I can think of:
 
+  - it may have a .bitmap that we'll be throwing away, without
+    generating a new one. I know that your end-game involves writing a
+    midx with bitmaps that covers all of the packs, so this would become
+    a non-issue in that strategy.
+
+  - it may have been more carefully packed (e.g., with a larger window
+    size, using "-f", etc) than the packs we got from pushes. We do
+    _mostly_ retain the deltas when we roll up the packs, so it probably
+    only has a small impact in practice (I'd expect in a few cases we'd
+    throw away deltas because a pushed pack contains a duplicate of its
+    base object that we added via --fix-thin).
+
+So I suspect it's probably OK in practice. These cases would happen
+rarely, and the impact would not be all that big. The bitmap thing I'd
+worry the most about. As part of a larger strategy involving a midx it
+is taken care of, but people using just this new feature may not realize
+that. The bitmaps of course are "just" an optimization, but it's hard to
+say how dire things are when they don't exist. For many situations,
+probably not very dire. But I know that on our servers, when repos lack
+bitmaps, people notice the performance degradation.
+
+On the other hand, by definition this happens in a case where there are
+more objects that have just been pushed (and are therefore not
+bitmapped) than existed already. So you _already_ have a performance
+problem either way until you get bitmap coverage of those new objects.
+
+> --- a/Documentation/git-repack.txt
+> +++ b/Documentation/git-repack.txt
+> @@ -165,6 +165,17 @@ depth is 4095.
+>  	Pass the `--delta-islands` option to `git-pack-objects`, see
+>  	linkgit:git-pack-objects[1].
+>  
+> +-g=<factor>::
+> +--geometric=<factor>::
+> +	Arrange resulting pack structure so that each successive pack
+> +	contains at least `<factor>` times the number of objects as the
+> +	next-largest pack.
+> ++
+> +`git repack` ensures this by determining a "cut" of packfiles that need to be
+> +repacked into one in order to ensure a geometric progression. It picks the
+> +smallest set of packfiles such that as many of the larger packfiles (by count of
+> +objects contained in that pack) may be left intact.
+
+I think we might need to make clear in the documentation how this
+differs from other repacks, in that it is not considering reachability
+at all. I like the term "roll up" to describe what is happening, but we
+probably need to define that term clearly, as well.
+
+Especially important, I think, is that we talk about what's happening
+with loose objects, which are part of the rollup here. And IMHO we
+should make clear that for now we include them all, without
+consideration of their reachability, but that this may change in the
+future.
+
+Likewise, are there any options that are incompatible with "-g"? I have
+to imagine that "--write-bitmap-index" would not work very well. I don't
+know that we need to enumerate them all, but I'm wondering if a blanket
+"this may not play well with other options" warning may be advisable.
+
+> +static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+> [...]
+
+I'll admit I didn't carefully think about the math of the progression
+here. IMHO the exact split is the least interesting part of this whole
+series (compared to the general idea of "rolling up some packs" versus a
+whole repack). Between the comments and the tests, I'll assume it's
+generally behaving as advertised. (I of course did look for any obvious
+coding errors, but didn't see any).
+
+-Peff
