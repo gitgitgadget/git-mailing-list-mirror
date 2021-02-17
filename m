@@ -2,135 +2,263 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 178CAC433DB
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45666C433E6
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFC3860C3D
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 18:57:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F28566186A
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231764AbhBQS5R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 13:57:17 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62466 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229796AbhBQS5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 13:57:14 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34141B0009;
-        Wed, 17 Feb 2021 13:56:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=wT3n3VMzyH4w
-        m24Cx+T4wU6Qdz4=; b=tg8MwSlGLyV/kw4cwL7w/y13kkyBOdFp1o8QeEz0mUiK
-        SCP/HUW+Z4f50RfEJeGqlwg4i/uBaKXzdxajI0n6L0hec1hWaYo9LXJvnjEHErHT
-        kFx7pUkbDrH5n4CbCSX84iMSxaMuHcxayZVeH72secBKR3WF4RvzlB3a5rYahUI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=CVYTU6
-        7ISt2dSedA1cZ9SMGuht5JNgChL829Irf/MlhD6Q05IpyH4PaMlXPV3TAYboxpGW
-        +60FQqQw6cqVXH0+kwdHHZ/27s+z/aWu9egCdPMETrihwrzGcCutZ4Toi8jWs2nm
-        djYp1JTGFS57jnpyMnazyFIZIKIgrg3Ozc8Z8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A2B4B0008;
-        Wed, 17 Feb 2021 13:56:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A965B0006;
-        Wed, 17 Feb 2021 13:56:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Ryan Zoeller <rtzoeller@rtzoeller.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 0/2] difftool.c: learn a new way start at specified file
-References: <pull.870.v4.git.1613308167239.gitgitgadget@gmail.com>
-        <pull.870.v5.git.1613480198.gitgitgadget@gmail.com>
-        <xmqqblcjrgvc.fsf@gitster.c.googlers.com>
-        <CAOLTT8T=R-M1eK9thSuzHNOJ8wkaTX3yYsLEgpqmHiEYWgM1XA@mail.gmail.com>
-        <YCz6oDZCAODPS8sY@generichostname>
-        <CAOLTT8Ri+XbSg_=KaLOCmNX4Nrii1ssN9_FFbnmm7ew4vYN5nA@mail.gmail.com>
-Date:   Wed, 17 Feb 2021 10:56:29 -0800
-In-Reply-To: <CAOLTT8Ri+XbSg_=KaLOCmNX4Nrii1ssN9_FFbnmm7ew4vYN5nA@mail.gmail.com>
-        (ZheNing Hu's message of "Wed, 17 Feb 2021 19:40:23 +0800")
-Message-ID: <xmqqo8gile02.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231752AbhBQS7x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 13:59:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229752AbhBQS7w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 13:59:52 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73918C061574
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 10:59:12 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id f17so13854682qkl.5
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 10:59:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wtk00yXwZPHmUDUjDyOFmloeMjNRDxDbnNtONsrVgqs=;
+        b=PiVwGq2KZ2LCn5Y52/+S5NwIXN9rTunPLG/ELXoI7lYurhpJcE9E/b8BVMP0atACkt
+         R8VigXKrGwOccpjtmgbCOuhbM48f2BqmDfDKmp7aNRkXojFxOE1ZOeRi7S2dMBX7+SwN
+         H5b69N2D/3C8BEtfJ/G8qe75kuHsI+fcRYjk7rVqfPSEwAasVZwn90WDLZapTGvNsQ8H
+         wYWmbqv86TgkPzdaseY87W4KaRc87+GkSmnpwRqvkFsJ/rpwJlNBId8zvGLLjRpuU2Bg
+         ktoQodAR5QQ5Jw4JcWvD2jEn6lYzCyYBBX2ftcFdIFUH+J+DF082eQ/parjVAfvBQnda
+         u+cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wtk00yXwZPHmUDUjDyOFmloeMjNRDxDbnNtONsrVgqs=;
+        b=Rx9xERRBpv78saWNXZrNJKiAOUvwe0CG1l4ewINJu6+jG8jb3DNh5oxj49XYrQ+wd5
+         Mu8dqoj5cNN5Rx/VJTaDayUsIS2Hp7Epp+MjbZpRbDvxDleVXr+BYOiKlOfD/MAZBDES
+         JgWmFi0aAn2PwgOk1W42gh+4mZou5yrS62fnhsVaTfEmGmmDMuvfWVxZViGl/VPYlaEh
+         4BiecNqCp3xpVSYPcXMfGXx3lWP7OCHCwwZ8Z+9RqrdhA3VZeZSfhonHsm85aDeaZqPh
+         +kzMRXPJ1DOCKOL5NA1qSbkDoOViribOvox2kZ69QsPLPg8RuFe6mST4r6vDtK1GeLaL
+         8Qag==
+X-Gm-Message-State: AOAM5330SFY/yHaEW5g9J4s/SXnf9UmqdJm4oxI7QhqJkKfYxSC3KSnY
+        0vaM+Z4gsMW1uJ3DnViVuEqOXA==
+X-Google-Smtp-Source: ABdhPJzQduIrRdgrzYHsigybA3HJgHJi794d0tfdm+q7x11AfiYUgLs65wEmWodQVrRZGV9l9OY69A==
+X-Received: by 2002:a05:620a:88f:: with SMTP id b15mr604912qka.445.1613588351618;
+        Wed, 17 Feb 2021 10:59:11 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:aeda:db8b:7233:8f54])
+        by smtp.gmail.com with ESMTPSA id n5sm1796257qtd.5.2021.02.17.10.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Feb 2021 10:59:11 -0800 (PST)
+Date:   Wed, 17 Feb 2021 13:59:08 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH v2 3/8] builtin/pack-objects.c: add '--stdin-packs' option
+Message-ID: <YC1nfH356wfmAKE2@nand.local>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <cover.1612411123.git.me@ttaylorr.com>
+ <c96b1bf99582beefb96c3774b13a4f5a12fc61cc.1612411124.git.me@ttaylorr.com>
+ <YCxZcz5JGtxObOF3@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D8AE244A-7151-11EB-BFE6-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YCxZcz5JGtxObOF3@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
+On Tue, Feb 16, 2021 at 06:46:59PM -0500, Jeff King wrote:
+> Do we use this partial traversal to impact the write order at all? That
+> would be a nice-to-have, but I suspect that just concatenating the packs
+> (presumably by descending mtime) ends up with a similar result.
 
-> Denton Liu <liu.denton@gmail.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8817=E6=
-=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=887:14=E5=86=99=E9=81=93=EF=BC=9A
->>
->> Hi ZheNing,
->>
->> On Wed, Feb 17, 2021 at 12:12:10PM +0800, ZheNing Hu wrote:
->> > Oh, I am sorry.
->> > Then I only need to squash the two commit, right?
->>
->> I've never used GGG before but I suspect that in your GitHub PR, you
->> need to set the PR base to 'master' instead of 'jc/diffcore-rotate'.
->>
->> CCing the creator of GGG, please correct me if I'm wrong.
->>
->> -Denton
+We don't; the objects are written in pack order. In the version of the
+patch you reviewed, the order of packs was determined by their hash (due
+to the string_list_sort()), but the version I just prepared re-sorts by
+mtime.
 
-> Hi Denton Liu,
-> You mean I should cherry-pick Junio's patch to my topic branch, right?
+It's kind of gross, since we need to use QSORT directly on the
+string_list internals in order to have access to the ->util field of the
+string_list_items (string_list_sort() only lets you compare strings
+directly for obvious reasons).
 
-Thanks, Denton, for helping.
+I added a comment describing this hack.
 
-ZheNing, the end result we want to see on the list is just a single
-patch, your 2/2 alone, that says "this patch depends on the
-diffcore-rotate topic" _under_ its "---" three-dash lines (where
-"meta" comments on the patch to explain how it fits the rest of the
-world, etc.).  As a single patch "topic", there won't be even 1/1
-marking, i.e. something like:
+> > +--stdin-packs::
+> > +	Read the basenames of packfiles from the standard input, instead
+> > +	of object names or revision arguments. The resulting pack
+> > +	contains all objects listed in the included packs (those not
+> > +	beginning with `^`), excluding any objects listed in the
+> > +	excluded packs (beginning with `^`).
+> > ++
+> > +Incompatible with `--revs`, or options that imply `--revs` (such as
+> > +`--all`), with the exception of `--unpacked`, which is compatible.
+>
+> I know you say "basename" here, but I wonder if it is worth giving an
+> example (`pack-1234abcd.pack`) to make it clear in what form we expect
+> it. Or possibly something in the `EXAMPLES` section.
 
-    Subject: [PATCH v6] difftool.c: learn a new way start at specified fi=
-le
-    From: ZheNing Hu <adlternative@gmail.com>
+Good idea, thanks.
 
-    `git difftool` only allow us to ...
-    ...
-    Teach the command an option '--skip-to=3D<path>' to allow the
-    user to say that diffs for earlier paths are not interesting
-    (because they were already seen in an earlier session) and
-    start this session with the named path.
+> > --- a/builtin/pack-objects.c
+> > +++ b/builtin/pack-objects.c
+> > @@ -2979,6 +2979,164 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+> >  	return git_default_config(k, v, cb);
+> >  }
+> >
+> > +static int stdin_packs_found_nr;
+> > +static int stdin_packs_hints_nr;
+>
+> I scratched my head at these until I looked further in the code. They're
+> the counters for the trace output. Might be worth a brief comment above
+> them. (I do approve of adding this kind of trace debugging info; I'm
+> pretty accustomed to using gdb or adding one-off debug statements, but
+> we really could do a better job in general of making these kinds of
+> internals visible to mere mortal admins).
 
-    Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-    ---
+Good call.
 
-     * An earlier round tried to implement the skipping all in the
-       GIT_EXTERNAL_DIFF, but this round takes advantage of the new
-       "diff --skip-to=3D<path>" feature implemented by gitster
-       (therefore, the patch depends on that topic).
+> > +static int add_object_entry_from_pack(const struct object_id *oid,
+> > +				      struct packed_git *p,
+> > +				      uint32_t pos,
+> > +				      void *_data)
+> > +{
+> > +	struct rev_info *revs = _data;
+> > +	struct object_info oi = OBJECT_INFO_INIT;
+> > +	off_t ofs;
+> > +	enum object_type type;
+> > +
+> > +	display_progress(progress_state, ++nr_seen);
+> > +
+> > +	ofs = nth_packed_object_offset(p, pos);
+> > +
+> > +	oi.typep = &type;
+> > +	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
+> > +		die(_("could not get type of object %s in pack %s"),
+> > +		    oid_to_hex(oid), p->pack_name);
+>
+> Calling out for other reviewers: the oi.typep field will be filled in
+> the with _real_ type of the object, even if it's a delta. This is as
+> opposed to the return value of packed_object_info(), which may be
+> OFS_DELTA or REF_DELTA.
+>
+> And that real type is what we want here:
+>
+> > +	else if (type == OBJ_COMMIT) {
+> > +		/*
+> > +		 * commits in included packs are used as starting points for the
+> > +		 * subsequent revision walk
+> > +		 */
+> > +		add_pending_oid(revs, NULL, oid, 0);
+> > +	}
+>
+> And later when we call create_object_entry().
 
-     Documentation/git-difftool.txt | 10 ++++++++++
-     t/t7800-difftool.sh            | 30 ++++++++++++++++++++++++++++++
-     2 files changed, 40 insertions(+)
+:-). Yes indeed. As I'm sure that you will recall, the pack-objects
+code _does not_ behave well when you give it the packed type of an
+object (which is not entirely unexpected, since the pack-objects code
+only operates on the true type, so passing the packed type--as I did
+when originally writing this patch--is a bug).
 
-    ... patch here ...
+> I wondered whether it would be worth adding other objects we might find,
+> like trees, in order to increase our traversal. But that doesn't make
+> any sense. The whole point is to find the paths, which come from
+> traversing from the root trees. And we can only find the root trees by
+> starting at commits. Adding any random tree we found would defeat the
+> purpose (most of them are sub-trees and would give us a useless partial
+> path).
 
+Right.
 
-I do not know how to achieve that end result with GGG and I do not
-know if GGG allows its users to do so easily, though.
+> Should we avoid adding the commit as a tip for walking if it won't end
+> up in the resulting pack? I.e., should we check these:
+>
+> > +	if (have_duplicate_entry(oid, 0))
+> > +		return 0;
+> > +
+> > +	if (!want_object_in_pack(oid, 0, &p, &ofs))
+> > +		return 0;
+>
+> ...first? I guess it probably doesn't matter too much since we'd
+> truncate the traversal as soon as we saw it was in a kept pack anyway.
 
-Thanks.
+I agree it doesn't make a difference, but I think placing the extra
+guards first makes it easier to read (since the reader doesn't have to
+consider how the subsequent traversal would treat it).
+
+> > +static void show_commit_pack_hint(struct commit *commit, void *_data)
+> > +{
+> > +}
+>
+> Nothing to do here, since commits don't have a name field. Makes sense.
+
+Yeah. I added a comment to say the same thing, just for extra clarity.
+
+>
+> > +static void show_object_pack_hint(struct object *object, const char *name,
+> > +				  void *_data)
+> > +{
+> > +	struct object_entry *oe = packlist_find(&to_pack, &object->oid);
+> > +	if (!oe)
+> > +		return;
+> > +
+> > +	/*
+> > +	 * Our 'to_pack' list was constructed by iterating all objects packed in
+> > +	 * included packs, and so doesn't have a non-zero hash field that you
+> > +	 * would typically pick up during a reachability traversal.
+> > +	 *
+> > +	 * Make a best-effort attempt to fill in the ->hash and ->no_try_delta
+> > +	 * here using a now in order to perhaps improve the delta selection
+> > +	 * process.
+> > +	 */
+> > +	oe->hash = pack_name_hash(name);
+> > +	oe->no_try_delta = name && no_try_delta(name);
+> > +
+> > +	stdin_packs_hints_nr++;
+> > +}
+>
+> But for actual objects, we do fill in the hash. I wonder if it's
+> possible for oe->hash to have been already filled. I don't think it
+> really matters, though. Any value we get is equally valid, so
+> overwriting is OK in that case.
+
+Right.
+
+> > +	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_found",
+> > +			   stdin_packs_found_nr);
+>
+> I wonder if it makes sense to report the actual set of packs via trace
+> (obviously not as an int, but as a list). That's less helpful for
+> debugging pack-objects, if you just fed it the input anyway, but if you
+> were debugging "git repack --geometric" it might be useful to see which
+> packs it thought were which (though arguably that would be a useful
+> trace in builtin/repack.c instead).
+
+I could see an argument in both ways. I'd rather pass for now until we
+have a clearer need for it.
+
+> [passing --unpacked to the namehash traversal]
+>
+> I'm OK to consider that an implementation detail for now, though. We can
+> change it later without impacting the interface.
+
+Agreed.
+
+> > +		if (rev_list_unpacked)
+> > +			add_unreachable_loose_objects();
+>
+> Despite the name, that function is adding both reachable and unreachable
+> ones. So it is doing what you want. It might be worth renaming, but it's
+> not too big a deal since it's local to this file.
+
+Yeah, I tend to err on the side of "it's fine as-is" since this isn't
+exposed outside of pack-objects internals. If you feel strongly I'm
+happy to change it, but I suspect you don't.
+
+Thanks,
+Taylor
