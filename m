@@ -7,77 +7,83 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF454C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 01:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3494CC433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 02:04:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67AEB64E02
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 01:54:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2E5464E76
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 02:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbhBQByz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 16 Feb 2021 20:54:55 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54386 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbhBQByy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Feb 2021 20:54:54 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6DA2011C4BE;
-        Tue, 16 Feb 2021 20:54:13 -0500 (EST)
+        id S230235AbhBQCDv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 16 Feb 2021 21:03:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51410 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230221AbhBQCDv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Feb 2021 21:03:51 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D9645A017E;
+        Tue, 16 Feb 2021 21:03:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LLHcCoXS6LvWkpmO7tvj8spMJX8=; b=HBGK15
-        yeCGjfZ0TSRq3X2a6MuZGfJa6v/Lg2pcNeY0rXjGztMVIQyur0+zTmNyjUrbP8fD
-        L5bPT15hyKTG8QwZKC/YLRFsomsbEbci9cHkb8CLNTDrJ8vROjTEsc3Iot0TEa67
-        UPJnAtoPwJl6/nRcWdHndb8fO2ocgMnDkxiiE=
+        :content-type; s=sasl; bh=EX60CRpL22H+W9Cd1JELhVyk1WM=; b=FgLYwi
+        ehzw8IcbXZdot9lDdYep0u3tHozDqSmthXqva9HmUHMUg4eQdAmOkJahIoWCtP7O
+        TD6X4+YGaWBgVd7lz8puxr9HzuPYZ52Vv+mYXelDMKTaVtou/AezHAyHy/B4Crk+
+        yncVdFk+EPaJ7ORdgysQ05ZB6Yo9e1Wfbe8Qk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HIiXbYsF6ep7s5ybFGQN+vzQMYBrAnPw
-        HHZs0VtDJ9/2fgkW+Mtz4bRHOwEVRG4vnRazMaus/mK7T6NtyGa3/h9gp2a+0UX5
-        RnPNh0/qViTh2RN6g5bMIG8yA3J8dcuuueGqUr6NHunrA6HoJ04taSexavg4+/qT
-        2ci64+xTK64=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 564CA11C4BD;
-        Tue, 16 Feb 2021 20:54:13 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=aq2ylaG4L+sHEyRUAgY6y5xEn8CQqEQt
+        2Z0m5RF/lHDfkVSrtz9hXQV4GPhtTiPTMHa7Q0HdCfdl07pPwVs5EKa/HvK8iSSS
+        5gEgFe7wUGtI3WwdPP+zaD3IN8E1UV6MU3TZC9S91tC+1GisVUJwGWiPb8jVfhYD
+        PfHJjWuYJ9Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1A38A017D;
+        Tue, 16 Feb 2021 21:03:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 902DF11C4BC;
-        Tue, 16 Feb 2021 20:54:10 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 621D6A0175;
+        Tue, 16 Feb 2021 21:03:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 00/11] FSMonitor Preliminary Commits
-References: <pull.860.git.1612216941.gitgitgadget@gmail.com>
-        <pull.860.v2.git.1612366490.gitgitgadget@gmail.com>
-        <42714a3b-cccc-d61b-1dc1-5f2f8fcaa0dd@jeffhostetler.com>
-Date:   Tue, 16 Feb 2021 17:54:08 -0800
-In-Reply-To: <42714a3b-cccc-d61b-1dc1-5f2f8fcaa0dd@jeffhostetler.com> (Jeff
-        Hostetler's message of "Tue, 16 Feb 2021 14:00:05 -0500")
-Message-ID: <xmqqmtw3mpbz.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 09/27] userdiff tests: match full hunk headers
+References: <20210215005236.11313-1-avarab@gmail.com>
+        <20210215154427.32693-10-avarab@gmail.com>
+        <4bd7bb84-3b75-258e-b488-f66dff6ba6b5@kdbg.org>
+        <xmqqsg5vrhha.fsf@gitster.c.googlers.com>
+Date:   Tue, 16 Feb 2021 18:03:06 -0800
+In-Reply-To: <xmqqsg5vrhha.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 16 Feb 2021 10:32:33 -0800")
+Message-ID: <xmqqim6rmox1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 072A28DA-70C3-11EB-BEB6-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 47218E46-70C4-11EB-87B9-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 2/3/21 10:34 AM, Jeff Hostetler via GitGitGadget wrote:
->> Here is version 2 of this series.
->
-> I didn't see this series in the "what's cooking" emails and
-> was wondering if there was something that I still needed to
-> attend to.
+> +		sed -ne "s/^@@[^@]*@@//p" actual |
+> +		if test -n "$HEAD"
+> +		then
+> +			grep -F "$HEAD"
 
-I think it fell through the cracks.  It seems that Taylor gave a
-reviewed-by for the whole set in v2 but as a reply to the cover
-letter of the original series, and no messages in v2 saw any
-comments.
+I think this should also use "-x" (match the whole line) if it is
+portable enough; the option should be available in POSIX.1 but we
+haven't used it anywhere in our test suite.
 
-I just picked them up and queued.  Thanks for pinging.
-
+> +		else
+> +			grep "^.*RIGHT"
+> +		fi
+> +	'
+>  done
