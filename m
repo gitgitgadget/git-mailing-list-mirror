@@ -2,88 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6B8AC433E6
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06B0CC433E0
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:44:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D18364E6C
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:23:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C54B964E76
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:44:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233105AbhBQVXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 16:23:12 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65507 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233747AbhBQVXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 16:23:00 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 935F2A81E2;
-        Wed, 17 Feb 2021 16:22:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=UdQgRnbR5tZY
-        z8YMW4527YGrhJk=; b=cupnAXNgHM0QQKCl/aZk+OfeM/NB8k9/eBKLqdw1EK2d
-        kAmXdHVZNBfmn6irruucJZqgPflCitFRpAh0+y6KWqJMzFTYAwVd33s3SPuI6BYz
-        yDi/4IGuf6psOIe81A0W1ByuxjNkpBhZPmMKBx+t5WbBUdVrHU1R/fR0JxysFBA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=CE+xfc
-        SHexhPz3v6+Myzm4Am6/aTyw/dKiJY3S1C5nWMeQB72W/zh15CMKrjSAS6QYjGb5
-        AhGaIxRvE/15ia7Ewbe/zmAtkZEhZhvH5PtXoAYXQtrTOWOCYLSaYB387sphARDg
-        CNWv6IEN8WOrNyNDrHEti1cSZmevHEDgVgfck=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8B3E0A81E1;
-        Wed, 17 Feb 2021 16:22:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18714A81E0;
-        Wed, 17 Feb 2021 16:22:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/3] fix some doc rendering issues since v2.30.0
-References: <cover.1613590761.git.martin.agren@gmail.com>
-Date:   Wed, 17 Feb 2021 13:22:10 -0800
-In-Reply-To: <cover.1613590761.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-        message of "Wed, 17 Feb 2021 20:56:03 +0100")
-Message-ID: <xmqqeehejsot.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231462AbhBQVoN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 16:44:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36542 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231286AbhBQVoL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 16:44:11 -0500
+Received: (qmail 20373 invoked by uid 109); 17 Feb 2021 21:43:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Feb 2021 21:43:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9551 invoked by uid 111); 17 Feb 2021 21:43:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Feb 2021 16:43:28 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 17 Feb 2021 16:43:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH v2 7/8] packfile: add kept-pack cache for
+ find_kept_pack_entry()
+Message-ID: <YC2N///TCMK65XNr@coredump.intra.peff.net>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <cover.1612411123.git.me@ttaylorr.com>
+ <f1c07324f62cf4d087c41165cefed98f554cfd78.1612411124.git.me@ttaylorr.com>
+ <YC1OJDFXPnxGMHPK@coredump.intra.peff.net>
+ <YC10eZkpqtzLlJUP@nand.local>
+ <YC17rflmxAAdBBCd@coredump.intra.peff.net>
+ <YC18vmTYKo/lEaB7@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3267FDB2-7166-11EB-9E43-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <YC18vmTYKo/lEaB7@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+On Wed, Feb 17, 2021 at 03:29:50PM -0500, Taylor Blau wrote:
 
-> These three patches fix some rendering issues I came across in the
-> output of
->
->   ./doc-diff v2.30.0 master
->
-> The original topics are so/log-diff-merge, ps/config-env-pairs and
-> ab/mailmap.
->
-> Martin =C3=85gren (3):
->   rev-list-options.txt: fix rendering of bonus paragraph
->   git.txt: fix monospace rendering
->   gitmailmap.txt: fix rendering of e-mail addresses
->
->  Documentation/git.txt              | 2 +-
->  Documentation/gitmailmap.txt       | 8 ++++----
->  Documentation/rev-list-options.txt | 6 +++---
->  3 files changed, 8 insertions(+), 8 deletions(-)
+> On Wed, Feb 17, 2021 at 03:25:17PM -0500, Jeff King wrote:
+> > Would just doing:
+> >
+> >   if (cache.packs && cache.flags != flags)
+> > 	BUG("kept-pack-cache cannot handle multiple queries in a single process");
+> >
+> > be a better solution? That is not helping anyone towards a world where
+> > we gracefully handle back-and-forth queries. But it makes it abundantly
+> > clear when such a thing would become necessary.
+> 
+> I dunno. I can certainly see its merits, but I have to imagine that
+> anybody who cares enough about the performance will be able to find our
+> conversation here. Assuming that's the case, I would rather have the
+> kept-pack cache handle multiple queries before BUG()-ing.
 
-All of them look "obviously correct".  Thanks.
+OK. I am on the fence, and you are the author, so I'm happy to go with
+your preference.
+
+I'm not quite as optimistic that somebody would find this conversation,
+if only because they have to know to look for it. I could easily see
+somebody adding a find_kept_in_pack() without thinking too hard about
+it. OTOH, I find it quite unlikely that anybody would use a different
+set of flags within the same process, so it would probably Just Work for
+them regardless. :)
+
+> > This response confuses me a bit. Hiding the definition from callers
+> > would mean _keeping_ it as a pointer, but putting the definition into
+> > packfile.c, where nobody outside that file could see it (at least that
+> > is what I meant by hiding).
+> >
+> > But inlining it to me implies embedding the struct (not a pointer to it)
+> > in "struct object_store", defining the struct at the point we define the
+> > struct field which uses it.
+> >
+> > I am fine with either, to be clear. I'm just confused which you are
+> > proposing to do. :)
+> 
+> Probably because I changed my mind in the middle of writing it ;). I'm
+> proposing embedding the definition of the struct into the definition of
+> object_store, and then operating on its fields (from within packfile.c).
+
+OK, that sounds great to me (and arguably produces more efficient code,
+since we avoid a pointer dereference, though I doubt it matters in
+practice). Thanks for clarifying.
+
+-Peff
