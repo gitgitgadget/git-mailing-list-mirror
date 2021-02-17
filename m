@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6314C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB350C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE66864E79
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B433364E6C
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 21:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234427AbhBQVDb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 16:03:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
+        id S234684AbhBQVDj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 16:03:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhBQVDW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 16:03:22 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9275CC0613D6
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:42 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id m144so1828qke.10
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:42 -0800 (PST)
+        with ESMTP id S232521AbhBQVDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 16:03:25 -0500
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7522BC061786
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:45 -0800 (PST)
+Received: by mail-qt1-x82e.google.com with SMTP id c1so10671631qtc.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 13:02:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BRAlg9W+JJ1LhRAgwzyAQsmT2K2M8iAlrnhIQ/u/Ysg=;
-        b=DPHUKTypQ1GP1zs+NNzYXupdLBUBwJKDwi5HiDr2mJtGWADYxleXN1+7CNxxrBkIg8
-         6nxw+Gfe/BgpNzA8n1i6JOctkn1eSZR2y0zyJ1dzJDQZ9oXjVgPhoxOm4zzEnT/xE/R+
-         RBgw9Y9vqJ7qwMkYwObrZwvGp+RHMkqeJEktgrrZ1Mh75HFcZnPsDO9CoJDppvUU+8P/
-         N6mDXp8kT6+r6SwAhAXo5Q6vJZRSYC/dYaCmvIYVeXY8h17YXhl7KJfmUy0SK3atsSRN
-         D9U2gjH+a8y0ZIr7KsY1hA6Iv0H9eUOjRIll9y6ybAx+/yGyLXr2o37WyoicO57c2fX+
-         nKUQ==
+        bh=K+OJz8Iv5iYp8p/t2dzMNItfqnDP61/r9KGhG/p85xQ=;
+        b=D1Fne5lraj1+ZrCMUMNEaFAMbh15qdn+0s00cAxtM5vGKxpurq/+3Ozgo915I1nHjX
+         4pixQh+qkXRmjn3RA4nW6tsaOH8A6lBZATW225MEnR3iGoeO2e+Bw6bxpCa5InnRoYMM
+         cOrS2Xtw4m3Bd4a8zEzgYtv/SXyzzs5XfS5e+5yrPPe3UbfRYDkhOVPz1eeC6PVgHH0W
+         pe01RVdyX2OGU3M6+HjYP8mxeYONH/qNMfzEjHBXTvjIuDp3OnpoIt6leJdanRblfU3O
+         FcXD0CtXVplfiUYvgxvpdpCUaj6Yk5xZmBRDGR4Zr8fRE7Imk85szuBfGi4bpuW/s0Xt
+         kcqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BRAlg9W+JJ1LhRAgwzyAQsmT2K2M8iAlrnhIQ/u/Ysg=;
-        b=ECnf75z2yChXb5nTcdArmKj8rSPbNo35XmwFeBCQoJc8h+ns0tiYxUxsktU2e6BReW
-         Y0F5xy+yuBIQRbROKr/QaRv02/r3QMBtp0wp/N/ZxCB8DAT+srH73W1qIAy5J3raEGnB
-         kFMQ4hAuOkBd//lrNY5VY4RTavBYtP3FV1QTLakFgRHUS0Z8lbADahne5KOb1A9oMWaL
-         nqLU7NzBIiAwmjfRuY/CO5sO7k0DXLZ54/b6Zais1mwB8hY51hs45IFiMNdd5BWfUHuP
-         NacLTteXLUvTIZtJlrwJImUb6ZYctyo7u5cxI1q0gGEtNsAXHhYRBM3K7/SHXeKY6ia9
-         JJmg==
-X-Gm-Message-State: AOAM532RM1NqoXz1aBAu4MgOe+l0ryer10P10A43I/eaNqC25nXURoxp
-        Cl8xuxE13n/fNTrzMBTNfPvlThiAt0aByQ==
-X-Google-Smtp-Source: ABdhPJxSaVu1I8DXdI7dwLxe34NlF2N7eju5VJvWx9/NzSilk9cr44sykW2U77hy1Yj28iX4N4qvXg==
-X-Received: by 2002:a37:434c:: with SMTP id q73mr1208687qka.170.1613595761461;
-        Wed, 17 Feb 2021 13:02:41 -0800 (PST)
+        bh=K+OJz8Iv5iYp8p/t2dzMNItfqnDP61/r9KGhG/p85xQ=;
+        b=L069neHz54J3Eqd8DCXDwNgU/wM3t4CYs88jZ24Z+b2KQRX3wl5TuIGzqgvmAjebsk
+         HxfZdLh7tmOh9V7ALjYnONOpol6MqNLqIBLeDSGPWfybwlYC2lpE3JiCIspPvFV9V3SW
+         JgEBI3boo+6jbFTzaI25fFOjem0h2yeQSA+sqVriyymq5KDk4yCtxysBWwy3rQhonWfd
+         bYjZ1YPEfzG6wW9oAukesZwtIE9pstXjCAZk3ckNAN7KFHUDH/czi3K23GcOpbBnqVqR
+         EXBV6V0JNoIW3TfOSL9ZX1wX8LHADZjqOrwwhkIu4emv2S3XezbWQSa60bEGxi2HkBFd
+         5QoA==
+X-Gm-Message-State: AOAM533jRhWPMVqhLOsc26RgJ1FKRDXTD2O1KXx913dWg2KOSe8gu95g
+        OH/FiEGp+cbpdukyE1li9gwJDqZiXYdRLg==
+X-Google-Smtp-Source: ABdhPJxPx43F0RU2rUKUv0QUl1U3b8Y9evBdjJRZond3zeaRb/zA147qRaGQvTQt0dNBP/kFlGe5sQ==
+X-Received: by 2002:ac8:110d:: with SMTP id c13mr1116980qtj.361.1613595763317;
+        Wed, 17 Feb 2021 13:02:43 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id o194sm2438459qke.101.2021.02.17.13.02.39
+        by smtp.gmail.com with ESMTPSA id o194sm2438459qke.101.2021.02.17.13.02.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 13:02:41 -0800 (PST)
+        Wed, 17 Feb 2021 13:02:42 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, stolee@gmail.com
-Subject: [RFC PATCH 2/7] add: include magic part of pathspec on --refresh error
-Date:   Wed, 17 Feb 2021 18:02:25 -0300
-Message-Id: <970b7156c2697e65778ec85751733a3adc53c1be.1613593946.git.matheus.bernardino@usp.br>
+Subject: [RFC PATCH 3/7] t3705: add tests for `git add` in sparse checkouts
+Date:   Wed, 17 Feb 2021 18:02:26 -0300
+Message-Id: <6e30f133e234ff1d3a29f36423cd3fdca58d8095.1613593946.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <cover.1613593946.git.matheus.bernardino@usp.br>
 References: <cover.1613593946.git.matheus.bernardino@usp.br>
@@ -70,47 +70,156 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git add --refresh <pathspec>` doesn't find any matches for the
-given pathspec, it prints an error message using the `match` field of
-the `struct pathspec_item`. However, this field doesn't contain the
-magic part of the pathspec. Instead, let's use the `original` field.
+We already have a couple tests for `add` with SKIP_WORKTREE entries in
+t7012, but these only cover the most basic scenarios. As we will be
+changing how `add` deals with sparse paths in the subsequent commits,
+let's move these two tests to their own file and add more test cases
+for different `add` options and situations. This also demonstrates two
+options that don't currently respect SKIP_WORKTREE entries: `--chmod`
+and `--renormalize`.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/add.c  | 2 +-
- t/t3700-add.sh | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ t/t3705-add-sparse-checkout.sh   | 92 ++++++++++++++++++++++++++++++++
+ t/t7012-skip-worktree-writing.sh | 19 -------
+ 2 files changed, 92 insertions(+), 19 deletions(-)
+ create mode 100755 t/t3705-add-sparse-checkout.sh
 
-diff --git a/builtin/add.c b/builtin/add.c
-index f757de45ea..8c96c23778 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -180,7 +180,7 @@ static void refresh(int verbose, const struct pathspec *pathspec)
- 	for (i = 0; i < pathspec->nr; i++) {
- 		if (!seen[i])
- 			die(_("pathspec '%s' did not match any files"),
--			    pathspec->items[i].match);
-+			    pathspec->items[i].original);
- 	}
- 	free(seen);
+diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
+new file mode 100755
+index 0000000000..5530e796b5
+--- /dev/null
++++ b/t/t3705-add-sparse-checkout.sh
+@@ -0,0 +1,92 @@
++#!/bin/sh
++
++test_description='git add in sparse checked out working trees'
++
++. ./test-lib.sh
++
++SPARSE_ENTRY_BLOB=""
++
++# Optionally take a string for the entry's contents
++setup_sparse_entry()
++{
++	if test -f sparse_entry
++	then
++		rm sparse_entry
++	fi &&
++	git update-index --force-remove sparse_entry &&
++
++	if test "$#" -eq 1
++	then
++		printf "$1" >sparse_entry
++	else
++		printf "" >sparse_entry
++	fi &&
++	git add sparse_entry &&
++	git update-index --skip-worktree sparse_entry &&
++	SPARSE_ENTRY_BLOB=$(git rev-parse :sparse_entry)
++}
++
++test_sparse_entry_unchanged() {
++	echo "100644 $SPARSE_ENTRY_BLOB 0	sparse_entry" >expected &&
++	git ls-files --stage sparse_entry >actual &&
++	test_cmp expected actual
++}
++
++test_expect_success "git add does not remove SKIP_WORKTREE entries" '
++	setup_sparse_entry &&
++	rm sparse_entry &&
++	git add sparse_entry &&
++	test_sparse_entry_unchanged
++'
++
++test_expect_success "git add -A does not remove SKIP_WORKTREE entries" '
++	setup_sparse_entry &&
++	rm sparse_entry &&
++	git add -A &&
++	test_sparse_entry_unchanged
++'
++
++for opt in "" -f -u --ignore-removal
++do
++	if test -n "$opt"
++	then
++		opt=" $opt"
++	fi
++
++	test_expect_success "git add$opt does not update SKIP_WORKTREE entries" '
++		setup_sparse_entry &&
++		echo modified >sparse_entry &&
++		git add $opt sparse_entry &&
++		test_sparse_entry_unchanged
++	'
++done
++
++test_expect_success 'git add --refresh does not update SKIP_WORKTREE entries' '
++	setup_sparse_entry &&
++	test-tool chmtime -60 sparse_entry &&
++	git add --refresh sparse_entry &&
++
++	# We must unset the SKIP_WORKTREE bit, otherwise
++	# git diff-files would skip examining the file
++	git update-index --no-skip-worktree sparse_entry &&
++
++	echo sparse_entry >expected &&
++	git diff-files --name-only sparse_entry >actual &&
++	test_cmp actual expected
++'
++
++test_expect_failure 'git add --chmod does not update SKIP_WORKTREE entries' '
++	setup_sparse_entry &&
++	git add --chmod=+x sparse_entry &&
++	test_sparse_entry_unchanged
++'
++
++test_expect_failure 'git add --renormalize does not update SKIP_WORKTREE entries' '
++	test_config core.autocrlf false &&
++	setup_sparse_entry "LINEONE\r\nLINETWO\r\n" &&
++	echo "sparse_entry text=auto" >.gitattributes &&
++	git add --renormalize sparse_entry &&
++	test_sparse_entry_unchanged
++'
++
++test_done
+diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
+index e5c6a038fb..217207c1ce 100755
+--- a/t/t7012-skip-worktree-writing.sh
++++ b/t/t7012-skip-worktree-writing.sh
+@@ -60,13 +60,6 @@ setup_absent() {
+ 	git update-index --skip-worktree 1
  }
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index fc81f2ef00..fe72204066 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -196,6 +196,12 @@ test_expect_success 'git add --refresh with pathspec' '
- 	grep baz actual
+ 
+-test_absent() {
+-	echo "100644 $EMPTY_BLOB 0	1" > expected &&
+-	git ls-files --stage 1 > result &&
+-	test_cmp expected result &&
+-	test ! -f 1
+-}
+-
+ setup_dirty() {
+ 	git update-index --force-remove 1 &&
+ 	echo dirty > 1 &&
+@@ -100,18 +93,6 @@ test_expect_success 'index setup' '
+ 	test_cmp expected result
  '
  
-+test_expect_success 'git add --refresh correctly reports no match error' "
-+	echo \"fatal: pathspec ':(icase)nonexistent' did not match any files\" >expect &&
-+	test_must_fail git add --refresh ':(icase)nonexistent' 2>actual &&
-+	test_i18ncmp expect actual
-+"
-+
- test_expect_success POSIXPERM,SANITY 'git add should fail atomically upon an unreadable file' '
- 	git reset --hard &&
- 	date >foo1 &&
+-test_expect_success 'git-add ignores worktree content' '
+-	setup_absent &&
+-	git add 1 &&
+-	test_absent
+-'
+-
+-test_expect_success 'git-add ignores worktree content' '
+-	setup_dirty &&
+-	git add 1 &&
+-	test_dirty
+-'
+-
+ test_expect_success 'git-rm fails if worktree is dirty' '
+ 	setup_dirty &&
+ 	test_must_fail git rm 1 &&
 -- 
 2.29.2
 
