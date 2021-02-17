@@ -2,137 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95DBCC433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 14:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A95CDC433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 16:06:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EE7B64E02
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 14:56:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A6EC64DFF
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 16:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233471AbhBQO42 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 09:56:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54020 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233524AbhBQO4U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 09:56:20 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0826CC061756
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 06:55:41 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id n1so6480399edv.2
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 06:55:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jq/qpPwjlSepz6Po34xcn2QXiL6QutnqCYaichxQLaM=;
-        b=HQz2wm+49OyAjNjh+f5SbiadQyaWEF+B6w7tcbAEghA4FEGwZUrJygiDNxFxnSgeyA
-         +jBfNVyiksvEH2TtbPjT+OCPzb8NH16vSp6jpGyw1SX2CdRWWJnyefm1nCLu0dgPEdGv
-         cb3KxuHLhroiOPCVW5HPz7D0+WV3k3hs5H+s7bRuWJf06bcJ0bRAQ8VdW/j4J7w/X0eW
-         BuNB8caT+FcDjf6kGoCSwVqz3rQfMJWutH8MV7vomUP3Xy/P/1OT0ZLTfP27hnPqZaEC
-         6uoMbBtE/vdMsQI4l82uHYtLxg9p9GNh+CInO7up8/qGe1hCinixb5pqJ4XQTVi2t1im
-         Xukg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jq/qpPwjlSepz6Po34xcn2QXiL6QutnqCYaichxQLaM=;
-        b=eZrXlvEDJfc4Jr0xz24QEfAqThNa3OEP7KqzjJUkpfiqn68gOoeeWf6v21hv809X2v
-         4Np39XVuGHN90rtr0+E1xTYlOYRSsVVdAQf0wgTz1R0F/kPhcf8qZK0bLIXc8gI1K2vl
-         ydhqz47iPebEVYUnE7Je1O23Po+h7cd+RvD8vlPzbUs0QyWK3aiKVRsfqznRoUoIRUMP
-         zzzlqBVFlHA/ZzcCUcfJqoanEka4sSyp6PFPYKAGyI+V818nJuPt9SosoKIDRf1FiTAn
-         pd896OuzA2Vp3pmLS6Rb7bGoTVveJjd+mYx4+Qd39SfTmWncms+o/N+6DRZWlo4qH53L
-         kzuA==
-X-Gm-Message-State: AOAM532f/lX8YADDUlaxSLFItgTcgUva3968rBUURnEW+dnaZBP2MwkE
-        G1KF1ssVxP/avFbFA6Jgz63Qv60nwv+/1+Gi
-X-Google-Smtp-Source: ABdhPJwbaMTUIpFxCAW2XtZZZDAeWmkcblJrZKvIjhL9mbMS2w/E8gcsaMWorDxTuxMNFF7x5gxeyA==
-X-Received: by 2002:a05:6402:12d6:: with SMTP id k22mr26539462edx.368.1613573739400;
-        Wed, 17 Feb 2021 06:55:39 -0800 (PST)
-Received: from localhost.localdomain ([79.140.115.26])
-        by smtp.gmail.com with ESMTPSA id t19sm1133092ejc.62.2021.02.17.06.55.38
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 Feb 2021 06:55:38 -0800 (PST)
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH v2 1/1] blame: remove unnecessary use of get_commit_info()
-Date:   Wed, 17 Feb 2021 15:54:43 +0100
-Message-Id: <20210217145443.36764-2-rafaeloliveira.cs@gmail.com>
-X-Mailer: git-send-email 2.30.1.850.g2d41e9e789
-In-Reply-To: <20210217145443.36764-1-rafaeloliveira.cs@gmail.com>
-References: <20210216163151.76307-1-rafaeloliveira.cs@gmail.com>
- <20210217145443.36764-1-rafaeloliveira.cs@gmail.com>
+        id S233929AbhBQQGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 11:06:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35772 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233568AbhBQQGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 11:06:04 -0500
+Received: (qmail 18835 invoked by uid 109); 17 Feb 2021 16:05:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Feb 2021 16:05:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5426 invoked by uid 111); 17 Feb 2021 16:05:22 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Feb 2021 11:05:22 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 17 Feb 2021 11:05:22 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+Subject: Re: [PATCH v2 6/8] builtin/pack-objects.c: rewrite honor-pack-keep
+ logic
+Message-ID: <YC0+wlRksoqm0xLO@coredump.intra.peff.net>
+References: <cover.1611098616.git.me@ttaylorr.com>
+ <cover.1612411123.git.me@ttaylorr.com>
+ <c3868c7df92484f0527ce500ad1156275be334e8.1612411124.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <c3868c7df92484f0527ce500ad1156275be334e8.1612411124.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git blame --color-by-age`, the determine_line_heat() is called to
-select how to color the output based on the commit's author date.  It
-uses the get_commit_info() to parse the information into a `commit_info`
-structure, however, this is actually unnecessary because the
-determine_line_heat() caller also does the same.
+On Wed, Feb 03, 2021 at 10:59:17PM -0500, Taylor Blau wrote:
 
-Instead, let's change the determine_line_heat() to take a `commit_info`
-structure and remove the internal call to get_commit_info() thus
-cleaning up and optimizing the code path.
+> @@ -1209,22 +1210,73 @@ static int want_found_object(int exclude, struct packed_git *p)
+>  	 * Otherwise, we signal "-1" at the end to tell the caller that we do
+>  	 * not know either way, and it needs to check more packs.
+>  	 */
+> -	if (!ignore_packed_keep_on_disk &&
+> -	    !ignore_packed_keep_in_core &&
+> -	    (!local || !have_non_local_packs))
+> +
+> +	/*
+> +	 * Handle .keep first, as we have a fast(er) path there.
+> +	 */
+> +	if (ignore_packed_keep_on_disk || ignore_packed_keep_in_core) {
+> +		/*
+> +		 * Set the flags for the kept-pack cache to be the ones we want
+> +		 * to ignore.
+> +		 *
+> +		 * That is, if we are ignoring objects in on-disk keep packs,
+> +		 * then we want to search through the on-disk keep and ignore
+> +		 * the in-core ones.
+> +		 */
+> +		unsigned flags = 0;
+> +		if (ignore_packed_keep_on_disk)
+> +			flags |= ON_DISK_KEEP_PACKS;
+> +		if (ignore_packed_keep_in_core)
+> +			flags |= IN_CORE_KEEP_PACKS;
+> +
+> +		if (ignore_packed_keep_on_disk && p->pack_keep)
+> +			return 0;
+> +		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
+> +			return 0;
+> +		if (has_object_kept_pack(oid, flags))
+> +			return 0;
+> +	}
+> +
+> +	/*
+> +	 * At this point we know definitively that either we don't care about
+> +	 * keep-packs, or the object is not in one. Keep checking other
+> +	 * conditions...
+> +	 */
+> +
+> +	if (!local || !have_non_local_packs)
+>  		return 1;
+> -
+>  	if (local && !p->pack_local)
+>  		return 0;
+> -	if (p->pack_local &&
+> -	    ((ignore_packed_keep_on_disk && p->pack_keep) ||
+> -	     (ignore_packed_keep_in_core && p->pack_keep_in_core)))
+> -		return 0;
+>  
+>  	/* we don't know yet; keep looking for more packs */
+>  	return -1;
 
-Enabling Git's trace2 API in order to record the execution time for
-every call to determine_line_heat() function:
+I know I wrote this patch, but just looking it over again with a
+critical eye: it looks like more re-ordering could avoid work in some
+cases.
 
-   + trace2_region_enter("blame", "determine_line_heat", the_repository);
-     determine_line_heat(ent, &default_color);
-   + trace2_region_enter("blame", "determine_line_heat", the_repository);
+In particular, has_object_kept_pack() is a potentially expensive call.
+But if "(local && !p->pack_local)" is true, then we could cheaply exit
+the function with "0", regardless of what the keep requirement says.
 
-Then, running `git blame` for "kernel/fork.c" in linux.git and summing
-all the execution time for every call (around 1.3k calls) resulted in
-2.6x faster execution (best out 3):
+That's not a case that I think anybody cares that deeply about (and it
+certainly is not covered by t/perf). But I think it does regress in this
+patch. Prior to the patch, we'd check that condition before returning
+-1, and it was the caller who would then continue to search through all
+the kept packs. Now we do it preemptively.
 
-   git built from 328c109303 (The eighth batch, 2021-02-12) = 42ms
-   git built from 328c109303 + this change                  = 16ms
+I think just bumping that:
 
-Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
----
- builtin/blame.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+  if (local && !p->pack_local)
+	return 0;
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index b66e938022..641523ff9a 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -425,13 +425,11 @@ static void setup_default_color_by_age(void)
- 	parse_color_fields("blue,12 month ago,white,1 month ago,red");
- }
- 
--static void determine_line_heat(struct blame_entry *ent, const char **dest_color)
-+static void determine_line_heat(struct commit_info *ci, const char **dest_color)
- {
- 	int i = 0;
--	struct commit_info ci;
--	get_commit_info(ent->suspect->commit, &ci, 1);
- 
--	while (i < colorfield_nr && ci.author_time > colorfield[i].hop)
-+	while (i < colorfield_nr && ci->author_time > colorfield[i].hop)
- 		i++;
- 
- 	*dest_color = colorfield[i].col;
-@@ -453,7 +451,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 	cp = blame_nth_line(sb, ent->lno);
- 
- 	if (opt & OUTPUT_SHOW_AGE_WITH_COLOR) {
--		determine_line_heat(ent, &default_color);
-+		determine_line_heat(&ci, &default_color);
- 		color = default_color;
- 		reset = GIT_COLOR_RESET;
- 	}
--- 
-2.30.1.850.g2d41e9e789
+above the new code would fix it. Or to lay out the logic more fully, the
+order of checks should be:
 
+  - does _this_ pack we found the object in disqualify it. If so, we can
+    cheaply return 0. And that applies to both keep and local rules.
+
+  - otherwise, check all packs via has_object_kept_pack(), which is
+    cheaper than continuing to iterate through all packs by returning
+    -1.
+
+  - once we know definitively about keep-packs, then check any shortcuts
+    related to local packs (like !have_non_local_packs)
+
+  - and then if no shortcuts, we return -1
+
+I think that might be easier to express by rewriting the patch. :)
+
+-Peff
