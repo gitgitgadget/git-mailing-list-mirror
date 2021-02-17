@@ -2,120 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80AB6C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34524C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:58:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F08464E6F
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:33:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04B9264E79
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 20:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235044AbhBQUcM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 15:32:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234436AbhBQUae (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 15:30:34 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DF56C061756
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 12:29:53 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id b24so10525128qtp.13
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 12:29:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G/UBYfw74zjoT4BR2k2ae4WOTJRrnFp7PPOZy+U2xCY=;
-        b=OzdqlmYTUDynAyT2It3kwQzKqAAVdDGvNYImh4Dc/t/DnqFBpOBK4hCMCZiYDPzagb
-         QCJXetOvfZf7JG3dd9f2Aev3UyxlFWcRiujhbHzIJSUvPlr87uCPrdGgpZmsF8+hGZSU
-         vHhw8fP93MODTMQAptjOqpNye2jR1BUIcSCeYXEvMRLEjCcHo2SSyz8LL2tHLKVdMcPq
-         hphTgIb4SKEpGvYJFLBOyK760+tPHkbiCgK066PtbpbShB8S94aHtKySCc/G1ipTV4ZE
-         qII0hziX8+PQrhztXpG9Ogk/cS7FB7rOvrzNXoAYCyrYlbNJvMP2b25pkPHlm1fZ+EBv
-         VBxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G/UBYfw74zjoT4BR2k2ae4WOTJRrnFp7PPOZy+U2xCY=;
-        b=cSWZe1I6/01pPI/JjtiETxKvHHrokis4WHr3kh54UUgWf/I9CxIykkiRcQ4l5Y3nGb
-         au0ERb68VyU0E4lKj9U8pBb7bhqwgf+0OFeWIXAf9LOhmIDq5bj9kemWZOdLYpnNjLR0
-         nW0dcGLeDv7G19QdbUSQj0uKwzbL7xN3Ug92XsbclFzw5LV6ljbiqoie1IhcOVVUQVnK
-         Z7o7HGXCNeQto4lMfwxCC4kY5+watJWtoC5PPkJOjmjvXAtIJ8vZLUXL/9JY10vyYno1
-         nz0vAvfi6c1d44/USylKN+ZMIZ+mifEEsyYgnWDfdWH1MDyaw+rKwN9FKX7WZZDaofAo
-         tSPQ==
-X-Gm-Message-State: AOAM530Trd/L+MecZ31abNYPcbtJGNj6H1MSKuFXMzDxvwOsFnzPGKQg
-        iBxOd+Du4zl1P0QIN5rmaG3frg==
-X-Google-Smtp-Source: ABdhPJypn7LRX2tml6uCpAta0p781oUOCQaoHx5/fpk3SVYztEp4XstYTm/pDk/d/MjFeUzfh+y/qg==
-X-Received: by 2002:ac8:110e:: with SMTP id c14mr1079572qtj.78.1613593792696;
-        Wed, 17 Feb 2021 12:29:52 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:aeda:db8b:7233:8f54])
-        by smtp.gmail.com with ESMTPSA id i5sm1933269qtw.3.2021.02.17.12.29.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 12:29:52 -0800 (PST)
-Date:   Wed, 17 Feb 2021 15:29:50 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH v2 7/8] packfile: add kept-pack cache for
- find_kept_pack_entry()
-Message-ID: <YC18vmTYKo/lEaB7@nand.local>
-References: <cover.1611098616.git.me@ttaylorr.com>
- <cover.1612411123.git.me@ttaylorr.com>
- <f1c07324f62cf4d087c41165cefed98f554cfd78.1612411124.git.me@ttaylorr.com>
- <YC1OJDFXPnxGMHPK@coredump.intra.peff.net>
- <YC10eZkpqtzLlJUP@nand.local>
- <YC17rflmxAAdBBCd@coredump.intra.peff.net>
+        id S233207AbhBQU5z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 15:57:55 -0500
+Received: from forward500o.mail.yandex.net ([37.140.190.195]:35263 "EHLO
+        forward500o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231766AbhBQU5y (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 Feb 2021 15:57:54 -0500
+X-Greylist: delayed 501 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Feb 2021 15:57:53 EST
+Received: from myt5-30ca2e5366d2.qloud-c.yandex.net (myt5-30ca2e5366d2.qloud-c.yandex.net [IPv6:2a02:6b8:c12:fa5:0:640:30ca:2e53])
+        by forward500o.mail.yandex.net (Yandex) with ESMTP id AE343600F2;
+        Wed, 17 Feb 2021 23:48:45 +0300 (MSK)
+Received: from mail.yandex.ru (mail.yandex.ru [81.200.17.53])
+        by myt5-30ca2e5366d2.qloud-c.yandex.net (mxback/Yandex) with HTTP id hmjQ550IgKo1-mjISrIO1;
+        Wed, 17 Feb 2021 23:48:45 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1613594925;
+        bh=Spd91CVbCglq6YdN9ZXkBgGjQbvnOJ+2ssMT3HzvzgI=;
+        h=References:Date:Message-Id:Subject:In-Reply-To:To:From;
+        b=YqueniqrU+XEf1ZKKEh+THxNxvEikNiMe1jojg3/FDNlaAU46FBXN0ojSRfRGkNnG
+         MIg6uHll8qLHg5yy/6zdVNOUID0izTm+buCLEJMOXNHhzqD7Nc3c3zMqCm0kML9KX5
+         ib3M+uUstOxbG8wW9Hsb+zELwTHSPJ4F1Zp6no3E=
+Authentication-Results: myt5-30ca2e5366d2.qloud-c.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by myt5-b646bde4b8f3.qloud-c.yandex.net with HTTP;
+        Wed, 17 Feb 2021 23:48:44 +0300
+From:   Konstantin Tokarev <annulen@yandex.ru>
+To:     Knapperig knaapie <isaacvanson@kpnmail.nl>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <66eb4eba-ed94-b467-336b-dbe6f398d8af@kpnmail.nl>
+References: <66eb4eba-ed94-b467-336b-dbe6f398d8af@kpnmail.nl>
+Subject: Re: the git add command
 MIME-Version: 1.0
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Wed, 17 Feb 2021 23:48:44 +0300
+Message-Id: <277141613594706@mail.yandex.ru>
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YC17rflmxAAdBBCd@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 17, 2021 at 03:25:17PM -0500, Jeff King wrote:
-> Would just doing:
->
->   if (cache.packs && cache.flags != flags)
-> 	BUG("kept-pack-cache cannot handle multiple queries in a single process");
->
-> be a better solution? That is not helping anyone towards a world where
-> we gracefully handle back-and-forth queries. But it makes it abundantly
-> clear when such a thing would become necessary.
 
-I dunno. I can certainly see its merits, but I have to imagine that
-anybody who cares enough about the performance will be able to find our
-conversation here. Assuming that's the case, I would rather have the
-kept-pack cache handle multiple queries before BUG()-ing.
 
-> > > Is there any reason not to just embed the kept_pack_cache struct inside
-> > > the object_store? It's one less pointer to deal with. I wonder if this
-> > > is a holdover from an attempt to have multiple caches.
-> > >
-> > > (I also think it would be reasonable if we wanted to hide the definition
-> > > of the cache struct from callers, but we don't seem do to that).
-> >
-> > Not a holdover, just designed to avoid adding too many extra fields to
-> > the object-store. I don't feel strongly, but I do think hiding the
-> > definition is a good idea, so I'll inline it.
+16.02.2021, 19:08, "Knapperig knaapie" <isaacvanson@kpnmail.nl>:
+> Hello there,
 >
-> This response confuses me a bit. Hiding the definition from callers
-> would mean _keeping_ it as a pointer, but putting the definition into
-> packfile.c, where nobody outside that file could see it (at least that
-> is what I meant by hiding).
->
-> But inlining it to me implies embedding the struct (not a pointer to it)
-> in "struct object_store", defining the struct at the point we define the
-> struct field which uses it.
->
-> I am fine with either, to be clear. I'm just confused which you are
-> proposing to do. :)
+> I recently made a change to a project, and for adding a file I changed
+> to the staging area I used the command 'git add ookleuk/admin.py'. At
+> this point I was logged into the parent directory of 'ookleuk' on the
+> command line. However, when I used the push command, I got the response
+> 'everything up to date'. For now it isn't a problem, because when I used
+> the command 'git add .' everything worked fine and the files in the
+> repository got updated, but honestly, I want to be sure I'll be able to
+> only upload specific files in the future.
 
-Probably because I changed my mind in the middle of writing it ;). I'm
-proposing embedding the definition of the struct into the definition of
-object_store, and then operating on its fields (from within packfile.c).
+In this case you should better use git gui to add files. It allows not only to add
+individual files quickly, but also add specific part of changes in a file, e.g. omit
+leftover debug lines or changes related to another topic. Corresponding
+command line tools like git add -p or git add -i are quite tedious to use.
 
-Thanks,
-Taylor
+>
+> A screenshot of the problem occurring on the command line is attached.
+> Holler if you need more info.
+>
+> Greetings, Isaac
+
+
+-- 
+Regards,
+Konstantin
