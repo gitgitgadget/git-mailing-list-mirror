@@ -1,94 +1,77 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A7DAC433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB69BC433DB
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:37:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 446E464E45
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:30:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BD2564E2E
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 19:37:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233112AbhBQT3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 14:29:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36184 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232973AbhBQT3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 14:29:47 -0500
-Received: (qmail 19734 invoked by uid 109); 17 Feb 2021 19:29:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 17 Feb 2021 19:29:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7714 invoked by uid 111); 17 Feb 2021 19:29:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 17 Feb 2021 14:29:05 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 17 Feb 2021 14:29:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH v2 6/8] builtin/pack-objects.c: rewrite honor-pack-keep
- logic
-Message-ID: <YC1ugXFk32xHY4k0@coredump.intra.peff.net>
-References: <cover.1611098616.git.me@ttaylorr.com>
- <cover.1612411123.git.me@ttaylorr.com>
- <c3868c7df92484f0527ce500ad1156275be334e8.1612411124.git.me@ttaylorr.com>
- <YC0+wlRksoqm0xLO@coredump.intra.peff.net>
- <YC1tLzivHqnoV6U7@nand.local>
+        id S232373AbhBQThI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 14:37:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232006AbhBQThH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 14:37:07 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D48B4C061574
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 11:36:26 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id y199so16209149oia.4
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 11:36:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=+n58ZG4I8SuKVaZd8WGHEfa7EqKJxaMkAfEpDEF6qho=;
+        b=SO5+u9A8HAsz8aheowgwJAG2fHZqEQCjgMXG8umtWsbMozlAINqtDafrDiEKQz+WQn
+         sv1jwbYhYA1aF76OHEi5FMcw8hUG+DtD0i/xhHtG2dU7cYg0ro6M+Od0v/jWEQQzFnGu
+         5V+r67wbqsbCc/Ls6BGUCDf8nHPPveojTHBqJasgSSoH1z/3WMC5vrnMfiIUcEqepwtG
+         UcxpIOUt+d8qd7f1bsTDZjSfxPaqzk3NE8B/G6veeQp5BX/3b5ZSNRXIGdl70/MlOZfE
+         I9RL3tQbL34atG81kKO8/ga+27joyG+BspibtiGJqB8hvEAwsCCZ/nbg6t9mNA/5jEWJ
+         1TIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=+n58ZG4I8SuKVaZd8WGHEfa7EqKJxaMkAfEpDEF6qho=;
+        b=bpR2YSO8qMgtIS5YzWTxXsstYb0AkiVMfgi3Y/NLlgxpKp7NeVm8vpUyQgm2+CdxxZ
+         pHtWCkTUfrZXxutif43aw//IQWCVu/UsrjqCA91ODDqbmIszZcZm77C84+Rp4JHhL8Ag
+         4cEc9RF6I0YC1u0FQLeX0H54PkstTeMlY+7Y0lkkk2D+k7tWujpDYwW+pae3WmQpJK+h
+         0mGM5dsNsckhNBqg09EGXKe1SVvYwfprH9ukJVXKS7NK5PhL8upN/U0JeOAG4ceDT/w5
+         Key2qjYl2hA/I9J2zRUnLgjfd7WEIMMgAqTKv3CvhZAZYaGDmrl2Sdie4KkNm8OvBSrz
+         Tr1Q==
+X-Gm-Message-State: AOAM533t+0PmJ0N0ygKSlUfXVGzoZy/IZ9I45jCE7Yls0syq+/04NqvJ
+        EbFMmiJHBy3pd6ut0b/L1dhL6SRwTBENclRF789zr1hUbk4SbA==
+X-Google-Smtp-Source: ABdhPJyndEym7Ms+nxAl95vnBluxBR5VFslOGXMIXSAh8YOdvtHx5LxVzIGidpRwUH1xw8RVUC1AgbbMdwRtHdZQ3m8=
+X-Received: by 2002:a05:6808:8c1:: with SMTP id k1mr303769oij.48.1613590586201;
+ Wed, 17 Feb 2021 11:36:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YC1tLzivHqnoV6U7@nand.local>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Thu, 18 Feb 2021 01:06:15 +0530
+Message-ID: <CAPSFM5eW6iMMyrsj3WV+z5L0oC_SSniKPQ9n8qCh6S9+X73_eg@mail.gmail.com>
+Subject: [Outreachy] Project blog - 9
+To:     git <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 17, 2021 at 02:23:27PM -0500, Taylor Blau wrote:
+Hi everyone!
 
-> On Wed, Feb 17, 2021 at 11:05:22AM -0500, Jeff King wrote:
-> > I think just bumping that:
-> >
-> >   if (local && !p->pack_local)
-> > 	return 0;
-> 
-> > above the new code would fix it. Or to lay out the logic more fully, the
-> > order of checks should be:
-> 
-> >   - does _this_ pack we found the object in disqualify it. If so, we can
-> >     cheaply return 0. And that applies to both keep and local rules.
-> >
-> >   - otherwise, check all packs via has_object_kept_pack(), which is
-> >     cheaper than continuing to iterate through all packs by returning
-> >     -1.
-> >
-> >   - once we know definitively about keep-packs, then check any shortcuts
-> >     related to local packs (like !have_non_local_packs)
-> >
-> >   - and then if no shortcuts, we return -1
-> 
-> I don't understand what you're suggesting. Is the (local &&
-> !p->pack_local) a disqualifying condition? Reading the comment, I think
-> it is, and so we could do something like:
+Here is the next blog regarding updates on the project:
+https://charvi-077.github.io/week10-progress/
 
-That's exactly what I'm suggesting. If we have a non-local pack and were
-given --local, then we can shortcut immediately without caring about
-kept packs: we know that we do not want the object.
+Till now we have completed the implementation of the new feature of
+"amend!" commit, it's patches are under review and started working on
+the new feature of "drop!" commit to be used with interactive rebase.
 
-> [...]
-> But your "check any shortcuts related to local packs" makes me think
-> that we should leave the code as-is.
+I appreciate any suggestions or feedback.
 
-No, the "shortcuts" there is the opposite:
-
-  if (!local || !have_non_local_packs)
-	return 1;
-
-If either of those is true, we can say "definitely include" but only
-with respect to the --local requirement. So we _can't_ bump that up, but
-must check it only after we've definitively resolved the keep-pack
-requirement.
-
--Peff
+Thanks and Regards,
+Charvi
