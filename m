@@ -2,75 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 158B4C433E0
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 17:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C887C433E0
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 17:51:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D7F7664E42
-	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 17:23:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E62306024A
+	for <git@archiver.kernel.org>; Wed, 17 Feb 2021 17:51:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234397AbhBQRXI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 12:23:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57534 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234394AbhBQRWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 12:22:53 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5AD8C061574
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 09:22:12 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id j19so22821187lfr.12
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 09:22:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Ryw6fMkzih/5ohfUp+piokOLJBRcOR0sTqvuOdzt0oc=;
-        b=ouOIVLf5Z9Xq+u7Arb6NM+Q0uo/cpCqr1LuycmJV54scb0mvUNr1gzEl6iNJXtUjjs
-         GalszDaosHIaw3nPW1WHULOl6ggQLaLS0Ux+DKWNgq6cUuip5WTYUVzrosSaR+sKg7IT
-         7VoFIpVxLh/yk5cbDlaAKeFWWJq5gXYNg4Z1j0/9u9qZbcubXC9831YoyCiYYQXLIijW
-         xR+XKHi0h1b/ryP/DAKg3wuT6m95lBo3SSH3c65Ov4tO1Oe/qiVCXElewp+LiIgv273u
-         rxStISzD3zfiuL3++OqV2Uo7hEweflOsht6qDQ828P/P9z5lVh2KMgzsSZSEBdldzh5L
-         Ymvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Ryw6fMkzih/5ohfUp+piokOLJBRcOR0sTqvuOdzt0oc=;
-        b=djTtX0ZrIiWx8Z+IF4pg/orsl61rdabdD2nOhhJUjtZYtqB6gPDsIpdKf/IN0q3zqg
-         vRhNeRSMM8E+Yb9V7C6lfXoeHX2zlb/rxy/AuKKL44iRVsB3plhsCCHoL8YcdPu+eDQY
-         j0ZLg8zoeDN6ELVPU8OurwWuaovqdi+e/bNrX6tqmTRGXuhc8TbgbKQW5zCUzDi0Jp47
-         qjg1tJWGuqoKO28GLtry8v7wZiZP+EbI8VWK0wv67rVs/IgAy3j/ah1TVtOEtLs/uEV4
-         v3AxuIA8cMZ8uhG+Kh5GX8yUD/ko7JmPkqnKe9pUV/c8ghyE4RefohwOZX/dG0IgIRMe
-         9LHg==
-X-Gm-Message-State: AOAM530DMVaBdi2HPgAlbkKaUXTwFKO964FtqByrzs4/w0Pxmd8R6sQ7
-        7PNdH0hJBzeMhsKvidBbbfQ3pg2fHkZ7FvIuksHi7VdoP1lrsz24
-X-Google-Smtp-Source: ABdhPJwl0f2a0IJ1OrIq+qb8CmMbaN0eFGWOMv9JegkkHsKEMXrNnWTkRqTqpMpjhur8aU+nBBMQTsgKCNRvp0fBYzY=
-X-Received: by 2002:a05:6512:32a2:: with SMTP id q2mr16421803lfe.237.1613582530825;
- Wed, 17 Feb 2021 09:22:10 -0800 (PST)
+        id S232728AbhBQRvW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 12:51:22 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62984 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231933AbhBQRvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 12:51:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9DE1D121E6F;
+        Wed, 17 Feb 2021 12:50:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KzT/WUuZJN5lYVuceOGZ/1OjFXg=; b=JIjoG0
+        43RFJazyA4+apQQ/j8Monq5ZbqR3IPhvorgHD1qfkSrbDtIZxeahje8YaKnkR//5
+        pYbX7Doheijgt3eRSoqrDa02KZeVq9XiLS+iUIAFoKRZoaxPIZUBURFIOqnkhkTr
+        Ozdek5KFB97iS15b5YUdVhfQ//ONxIO8K4RLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kQYhTrcz8rdQLb1VpNeylMdwURBzoyUG
+        ohUAalXnlHuXQgO919i9SCNj1kLprUmg8n2pCckb57z0JPHYYWEQ+T40FBci257d
+        jPJ/Nmw5WpauJcNEKIntVnT7c+CrSTE+JEZTBrk4/Qe2BiswfGeYduo+WlbINXyu
+        90ZyPUawDeU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 96120121E6D;
+        Wed, 17 Feb 2021 12:50:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E1781121E6A;
+        Wed, 17 Feb 2021 12:50:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 1/2] stash show: teach --include-untracked and
+ --only-untracked
+References: <cover.1612855690.git.liu.denton@gmail.com>
+        <cover.1613459474.git.liu.denton@gmail.com>
+        <85b81f2f06bd1b40ee2de220cc84dd74b425daf3.1613459475.git.liu.denton@gmail.com>
+        <xmqqczwzpxsz.fsf@gitster.c.googlers.com>
+        <YCz7gOlXDTTd5urZ@generichostname>
+Date:   Wed, 17 Feb 2021 09:50:31 -0800
+In-Reply-To: <YCz7gOlXDTTd5urZ@generichostname> (Denton Liu's message of "Wed,
+        17 Feb 2021 03:18:24 -0800")
+Message-ID: <xmqq4kiamvmg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-From:   Alireza <rezaxm@gmail.com>
-Date:   Wed, 17 Feb 2021 20:51:45 +0330
-Message-ID: <CAD9n_qiN+qXqR79z_4d+_8_mxa9eTFB42sTUT8CTF8=oQArQaA@mail.gmail.com>
-Subject: Considering merge --dry-run to foresee conflicts ahead of time
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A24B74A6-7148-11EB-A3E1-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a half baked alias for this and it proved to be extremely
-useful even in this state.
+Denton Liu <liu.denton@gmail.com> writes:
 
-```
-check = "!f() { BRANCH=${1:-HEAD}; BASE=${2:-origin/master}; git
-merge-tree $(git merge-base $BRANCH $BASE) $BRANCH $BASE | sed -n
-\"/+<<<<<<< .our/,/+>>>>>>> .their/p\"; }; f"
-```
+> Hi Junio,
+>
+> On Tue, Feb 16, 2021 at 12:22:52PM -0800, Junio C Hamano wrote:
+>>  builtin/stash.c | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>> 
+>> diff --git c/builtin/stash.c w/builtin/stash.c
+>> index c788a3e236..7e0204bd8a 100644
+>> --- c/builtin/stash.c
+>> +++ w/builtin/stash.c
+>> @@ -807,10 +807,11 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
+>>  		init_tree_desc(&tree_desc[i], tree[i]->buffer, tree[i]->size);
+>>  	}
+>>  
+>> +	/* mimic "git read-tree W U" without "-m" */
+>>  	unpack_tree_opt.head_idx = -1;
+>>  	unpack_tree_opt.src_index = &the_index;
+>>  	unpack_tree_opt.dst_index = &the_index;
+>> -	unpack_tree_opt.fn = twoway_merge;
+>> +	unpack_tree_opt.fn = NULL;
+>
+> Perhaps it would be even more clear if we just removed this line
+> entirely, otherwise it may give future readers a false impression that
+> .fn is significant in any way.
 
-Of course with large conflicts it gets less useful. Getting only file
-names from the patch isn't straightforward either.
+Assignment of something concrete like "twoway_merge" to .fn when it
+is a no-op was misleading, but between NULL or uninitialized, both
+state clear that it is not used, so I am OK with either.
 
-So my question is what are the downsides to introducing a `merge
---dry-run` option and what would it look like?
+> Aside from that, both of your SQUASH??? commits look good to me. Thanks
+> for tying up the loose ends.
+
+We may want to write a custom unpack_trees() callback for this, and
+use it here to catch "this third tree claims to be untracked, but
+why does it have an entry that overlaps and/or D/F-conflicts with
+the entry from the working tree side?" that you talked about in the
+log message, but I think it is better to leave it for future [*], as
+the feature should already be usable in its current shape.
+
+Thanks.
+
+
+[Footnote]
+
+ * Yes, I didn't say "we can leave it", but said "it is better to
+   leave it"; as long as we do not declare victory too early and end
+   up shipping a half-baked unusable mess, I think it is better to
+   wrap a topic early and plan to make it nicer in a future
+   follow-up.
+
+   To encourage such future refinements, however, you may add a
+   NEEDSWORK comment in the code as a reminder for our future
+   selves.
