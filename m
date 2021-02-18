@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B476FC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 18:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B2EBC433E6
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 18:54:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6140861606
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 18:54:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EE8C61606
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 18:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231169AbhBRSxv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 13:53:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45638 "EHLO
+        id S231649AbhBRSyL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 13:54:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233148AbhBRSuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 13:50:46 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94E20C06178B
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 10:50:05 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id s16so1734539plr.9
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 10:50:05 -0800 (PST)
+        with ESMTP id S233263AbhBRSur (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 13:50:47 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7229C061793
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 10:50:07 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id c11so1895645pfp.10
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 10:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ndEX1tawrNEAGbhOUO3DEcfPOOoZbcddnMpKT+aM3ms=;
-        b=mNr7gUOD1a7g91sTF7wat8xmtyD33sMloAji6xO0upz6MghIPiu1zY1CdYVYVsTlIJ
-         1nLbxH8MzPoDYfkRsJVlleNElhrJ6KLIsA26siJllfjVPkrzYMKALw/lNJOS4X+58Una
-         wDkTvzVRbPWd6R4hrHsXCbfo598iRZg1zKrzuUBwEI2e2KkOa51AL27joNTiytrpWOBh
-         QxUOrnRodlgqvSR/WjfZYHJ/qK6LSL5oDGS3akxEI2buifBKh8wn8FMsrxeh6cBVjZaD
-         R2H+Ghv5549vb2+TGTr35zauJaYQukOmV/1o1O8bcktwKsRQgRFyKLyvPbIbFG/+lGyV
-         x4aw==
+        bh=wFOIqFnsaInbwRiLJH0779WMimDaB29eU43fsNIx9wQ=;
+        b=hT1gbqL6H7QjyNw8CDtrC7hxwOnDMCasNnW/8psYnNosrG78IVJrVYwVj4XXVSfZWy
+         hbLSCUKH9VcdZCG/VA8+3tCBOvYiTnZSMa6ipGFGBSGBrsc38+RkB5/BwsLFmKhml9AZ
+         OGBVfQadLoaExNjSutQFoi1tRSQGynxtnRlEJTVB4sDl5cSnm6q3nwfDq5Y6xgBaO+hR
+         8jJDCzL7s0kycrwCJHeSYP9BS1gjzZfOTdyKy00Y9bW30mc0pGg4RXIDqvw0ONqrRVbE
+         yrmYJF/PqqjcEBJJ69dcn9XkLfYSiWbyjsH4Fpjl8Lw3gkadi4AwMoLtEkBEbHLME2cN
+         4YLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ndEX1tawrNEAGbhOUO3DEcfPOOoZbcddnMpKT+aM3ms=;
-        b=ezLay3XO1tJ66qHuPiWwfbDHXI1h+5yho4xb4h+Lm9bWWTa4UA8N53gsgm+ydYtZeq
-         R+pHgwXtWCID80qH2smVayf54YMBqISluKu0tlk0M+2O/5Z3TWGmApLGGdyMlwv3wuhU
-         Z40hPN3GibxZluz8GIBugCEoxBt36HnKWbWuHxyF2vt43xxPdjNQyVPms4uWfWJ0t5j5
-         MQ/C06EOT1VtrRS2YESSpqYcs9AKWrSG09Jn5UYE4UGx8H5HwnRnDk+Db6TudjojJdDR
-         yeR/KavRw+N4rWn47+qSsNc7xx6tT0IFvGjyI0NjtdIFqZLxmJlELO9tuZeicBaIS5mH
-         eqVQ==
-X-Gm-Message-State: AOAM532wtCpIy/ApCkUszsErIvl6c3PfFk9PRE3PyQ3kgRMKHdiJSDWq
-        NhKxCGY2gxj04ukDhd+IeR7y6hUQ17I=
-X-Google-Smtp-Source: ABdhPJxtvHtBHXPg2syyPBG4EiF6fFlrniP1b6pJDfaDw6Qnahu8Wk04VYPfHi63N4jDfEaBU8Js8Q==
-X-Received: by 2002:a17:90b:1bcf:: with SMTP id oa15mr5235240pjb.78.1613674204946;
-        Thu, 18 Feb 2021 10:50:04 -0800 (PST)
+        bh=wFOIqFnsaInbwRiLJH0779WMimDaB29eU43fsNIx9wQ=;
+        b=hMZ+Nw2BrrTjuX97ZXMAnxk12iY8AlkA3R94sSWawqsR2wUnY5CDOV96OVbz8OxPnQ
+         jZa/nfGg70XRKhrri9Bqw/6k0eDTkIIqDCwl/GHvx0Az4UAUben7noT8J8m/a1J7AsKL
+         ic3XIAmdnEpYJXEufYqRC/LvhQY3vDfJtH8smGzgtMke74Z9J1M3HxfbUoZT8i1j4o9t
+         ML//L9oc9EwJHek+VdyAc8/ICy8kZqbvqhar+BMMb463PgnGrmQnTyQj9WilUMkzrQxd
+         d6MjE7JVsee7QXBqBdIqlht6IK/j05BOOYlSum8earYuxsHijp18cowNgXmh/quTHuhK
+         ydCA==
+X-Gm-Message-State: AOAM532zfstCLwrr7spdW8c+WX/xKu3ldWdlishUoTzbtI73CeY+MY/a
+        hcI8ZLK00V8o2qf3eKD0ZApy5/Q/UH0=
+X-Google-Smtp-Source: ABdhPJwjfDl0zV3LWO1JaZhhDTSQJ/Ccff5Gg6ueodWnGoOtaOMdQQ3Y125nmch47L0C1TEMpG4Xzw==
+X-Received: by 2002:a62:aa06:0:b029:1ec:ec68:474a with SMTP id e6-20020a62aa060000b02901ecec68474amr5564992pff.40.1613674207298;
+        Thu, 18 Feb 2021 10:50:07 -0800 (PST)
 Received: from localhost.localdomain ([122.176.159.190])
-        by smtp.gmail.com with ESMTPSA id s22sm6790879pfe.133.2021.02.18.10.50.02
+        by smtp.gmail.com with ESMTPSA id s22sm6790879pfe.133.2021.02.18.10.50.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 10:50:04 -0800 (PST)
+        Thu, 18 Feb 2021 10:50:07 -0800 (PST)
 From:   Shourya Shukla <periperidip@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         levraiphilippeblain@gmail.com,
-        Shourya Shukla <periperidip@gmail.com>,
-        Javier Mora <javier.moradesambricio@rtx.com>
-Subject: [PATCH 1/2] rm: changes in the '.gitmodules' are staged after using '--cached'
-Date:   Fri, 19 Feb 2021 00:19:30 +0530
-Message-Id: <20210218184931.83613-2-periperidip@gmail.com>
+        Shourya Shukla <periperidip@gmail.com>
+Subject: [PATCH 2/2] t3600: amend test 46 to check for '.gitmodules' modification
+Date:   Fri, 19 Feb 2021 00:19:31 +0530
+Message-Id: <20210218184931.83613-3-periperidip@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20210218184931.83613-1-periperidip@gmail.com>
 References: <20210218184931.83613-1-periperidip@gmail.com>
@@ -74,100 +73,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Earlier, on doing a 'git rm --cached <submodule>' did not modify the
-'.gitmodules' entry of the submodule in question hence the file was not
-staged. Change this behaviour to remove the entry of the submodule from
-the '.gitmodules', something which might be more expected of the
-command.
+Following commit e5a439dc71 (rm: changes in the '.gitmodules' are
+staged after using '--cached', 2021-02-18), amend test 46 of the script
+to ensure that the test also checks for '.gitmodules' modification after
+a 'git rm --cached <submodule>' i.e., the entry of the submodule in
+question is removed from the file.
 
-Reported-by: Javier Mora <javier.moradesambricio@rtx.com>
 Signed-off-by: Shourya Shukla <periperidip@gmail.com>
 ---
- builtin/rm.c | 48 +++++++++++++++++++++++++++---------------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ t/t3600-rm.sh | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 4858631e0f..0b74f50bfe 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -254,7 +254,7 @@ static struct option builtin_rm_options[] = {
- int cmd_rm(int argc, const char **argv, const char *prefix)
- {
- 	struct lock_file lock_file = LOCK_INIT;
--	int i;
-+	int i, removed = 0, gitmodules_modified = 0;
- 	struct pathspec pathspec;
- 	char *seen;
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 7547f11a5c..45aff97b90 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -309,6 +309,7 @@ cat >expect.modified_untracked <<EOF
+ EOF
  
-@@ -365,30 +365,32 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (show_only)
- 		return 0;
+ cat >expect.cached <<EOF
++M  .gitmodules
+ D  submod
+ EOF
  
--	/*
--	 * Then, unless we used "--cached", remove the filenames from
--	 * the workspace. If we fail to remove the first one, we
--	 * abort the "git rm" (but once we've successfully removed
--	 * any file at all, we'll go ahead and commit to it all:
--	 * by then we've already committed ourselves and can't fail
--	 * in the middle)
--	 */
--	if (!index_only) {
--		int removed = 0, gitmodules_modified = 0;
--		struct strbuf buf = STRBUF_INIT;
--		for (i = 0; i < list.nr; i++) {
--			const char *path = list.entry[i].name;
--			if (list.entry[i].is_submodule) {
-+	for (i = 0; i < list.nr; i++) {
-+		const char *path = list.entry[i].name;
-+		if (list.entry[i].is_submodule) {
-+			/*
-+			 * Then, unless we used "--cached", remove the filenames from
-+			 * the workspace. If we fail to remove the first one, we
-+			 * abort the "git rm" (but once we've successfully removed
-+			 * any file at all, we'll go ahead and commit to it all:
-+			 * by then we've already committed ourselves and can't fail
-+			 * in the middle)
-+			 */
-+			if (!index_only) {
-+				struct strbuf buf = STRBUF_INIT;
- 				strbuf_reset(&buf);
- 				strbuf_addstr(&buf, path);
- 				if (remove_dir_recursively(&buf, 0))
- 					die(_("could not remove '%s'"), path);
+@@ -390,16 +391,14 @@ test_expect_success 'rm of a populated submodule with different HEAD fails unles
+ 	test_must_fail git config -f .gitmodules submodule.sub.path
+ '
  
- 				removed = 1;
--				if (!remove_path_from_gitmodules(path))
--					gitmodules_modified = 1;
--				continue;
-+				strbuf_release(&buf);
- 			}
-+			if (!remove_path_from_gitmodules(path))
-+				gitmodules_modified = 1;
-+			continue;
-+		}
-+		if (!index_only) {
- 			if (!remove_path(path)) {
- 				removed = 1;
- 				continue;
-@@ -396,11 +398,15 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			if (!removed)
- 				die_errno("git rm: '%s'", path);
- 		}
--		strbuf_release(&buf);
--		if (gitmodules_modified)
--			stage_updated_gitmodules(&the_index);
- 	}
+-test_expect_success 'rm --cached leaves work tree of populated submodules and .gitmodules alone' '
++test_expect_success 'rm --cached leaves work tree of populated submodules alone' '
+ 	git reset --hard &&
+ 	git submodule update &&
+ 	git rm --cached submod &&
+ 	test_path_is_dir submod &&
+ 	test_path_is_file submod/.git &&
+ 	git status -s -uno >actual &&
+-	test_cmp expect.cached actual &&
+-	git config -f .gitmodules submodule.sub.url &&
+-	git config -f .gitmodules submodule.sub.path
++	test_cmp expect.cached actual
+ '
  
-+	/*
-+	 * Remove the entry of the submodule from the ".gitmodules" irrespective
-+	 * whether "--cached" was passed or not.
-+	 */
-+	if (gitmodules_modified)
-+		stage_updated_gitmodules(&the_index);
-+
- 	if (write_locked_index(&the_index, &lock_file,
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("Unable to write new index file"));
+ test_expect_success 'rm --dry-run does not touch the submodule or .gitmodules' '
 -- 
 2.25.1
 
