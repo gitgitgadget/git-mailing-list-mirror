@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64152C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59E4EC433DB
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:15:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BF0D64E3E
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:15:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AE0C6146D
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230026AbhBRDPY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 22:15:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
+        id S230063AbhBRDPk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 22:15:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229985AbhBRDPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 22:15:07 -0500
+        with ESMTP id S230028AbhBRDPj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 22:15:39 -0500
 Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22797C061786
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:14:27 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id p12so331128qvv.5
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:14:27 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9BE6C06178B
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:14:36 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id 2so345660qvd.0
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=JJ8SFqiTG0pLkrvdhGZMXC2lGDB1NNXKXyVf2UYCxYc=;
-        b=u3+I2dhLojt12ISkB+s/d7WG6fDacdpUoGT8RVvOLUQdXB/G23SIGy/wewj5/jCqWS
-         aqK2SoHlYcjU3EdH+8pM10jeFacITOARItEh8WsfkFlp2f1IAx3o09K8v8VORv0s2pGa
-         sOZdoUVIZ4AgMrlBU+/HMM8saCK7vMZrj0BvK1ZY68UABCJe9kFU0Ka5X6zPznGUtb3a
-         qQ/nyiePltyBGjB64tqW8cYOau2BPsYJ5bOVliUULjAaW75MieygHYn/xj6U6OZyD/kJ
-         sRSG6Wp+4CHGfj1g1bZFttWqrT4nDoU4/mjuVkBZAf/T05aIsW4PgnPnXLbBj2x3M3EA
-         1GmQ==
+        bh=J5a4ml0WAk4pr9Z82hPYk8r78Ylqi8uXBMPpVDXCN4w=;
+        b=Xrd75j6XOgGg+Db1ZaeOtAD9Pks6kNbGgxe3ce6juEogeXbc8jrgITtpnO01t+ASoI
+         RMIdbSYCd7aYRzeXSUmJUEkwan+PX2sXzF/zHxg5tkV5zNoUPQIV3hG2gCev5zkY2apL
+         nY3HkAplRXLTpEHAypX3l3fR+mo961ET1RIsLFrYOmR4oOE4ubJoJtShh1MmfWQqWYf6
+         K1sFbE8PAEhOGnszjAqrJnlr4OV/O0d39qFa6Z7MT6LmXGwoDfLXz0wyw18kazxOlcpa
+         mxuocUpLH/qmM6S1ki1N262iw8sj7MDPbSIGBmwasMG306+HxGmpFmHEoKjM0Us6Lusy
+         lomQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=JJ8SFqiTG0pLkrvdhGZMXC2lGDB1NNXKXyVf2UYCxYc=;
-        b=CMCGMrEeb/Q0OrEa/Y6pG7QjiGcwIqZYlhvhPjzMXTgiRSXufW85Ms45Dpzz2vsxqS
-         tnbkYQR9/VYuX7p41z2OX/KWO8GpN430RO99WbjSyVKRq0aqWZx/irSOkdgwCPYrBRnE
-         KKS8PLgd/YA5SZ0NbzBGY1jNsfBGwfUSE5xRpfvr78fwbwTOMTF9xMOcZvmedyBEmpP6
-         RyDsvbQEaembBU7TJSTNzTmt4jkiYKNtVwl6fd7DLVlfeBQ19xA9f0euTx1eOwVBELOm
-         Al4X3gEzUhNzRcauJ9rI62GI4GJ2f81uVp+MsV9xKZfTWt2mn5lec+jOd/Miz7INV7Yb
-         j3jQ==
-X-Gm-Message-State: AOAM531FMgyu205+e6LxoPYPgNGyHwosn1qFmewK5ed2xcw4fMasW0ky
-        Q5S6WZDB82O95TRDZ+ECpVVkDBcbNnIUxDlK
-X-Google-Smtp-Source: ABdhPJyASfmCN3lB8hMcgYIzv3nmZklT2SkAAdhaM48OoEhRv8cAX5VYY6tvLe6GXK11F30lLwnelA==
-X-Received: by 2002:a05:6214:94a:: with SMTP id dn10mr2200177qvb.28.1613618065023;
-        Wed, 17 Feb 2021 19:14:25 -0800 (PST)
+        bh=J5a4ml0WAk4pr9Z82hPYk8r78Ylqi8uXBMPpVDXCN4w=;
+        b=ntfXSCVy3AxOVnurQMMb9pnRxC1NjznFqZ/1fhXXBbMROG/+zFdOmWT9GhN9lc8WYL
+         OEtka1u57fOP92Sh+WFPXXWJsIpDL8cWVDs+87dzYaIT+2D9ENxhu2ivBXU5Cw0eGAPY
+         OO5ar70yIwgoPmvAT6uwfCvCXwqqpX45mGprx1RLPFKJjGEz49EZd0xpmogFi1Pya1Kc
+         hmQd6D+Q0Ht/Z19n1K4/8Q3bY5Vomnn725mlfZPUeg7f2P3C9YdAK2C6etcDEpuCMLSm
+         /El3RlTdbHm6gPwNT2QCenPyrGQKP4V3AemGMBseflbyI6DHLtgNK7oC60LsSnlYsFqr
+         d1gQ==
+X-Gm-Message-State: AOAM531hGgHmMFoRZZrw5ajET7x6txt+p37B8Mc/FrIE0X8Hr1wpgOLa
+        EEzg+K9kJ3o8aRsa1f4mD2WOPr3T8yq29fj/
+X-Google-Smtp-Source: ABdhPJxw9qA204yl169h2oYBJNR6C5nsWiln2kpOFOjakhVnEwpifdUwPgnWv/YzoI0CuAADSbRfIw==
+X-Received: by 2002:a0c:a241:: with SMTP id f59mr2380008qva.33.1613618075602;
+        Wed, 17 Feb 2021 19:14:35 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:1f29:6ff9:b466:8c60])
-        by smtp.gmail.com with ESMTPSA id d5sm2557770qti.66.2021.02.17.19.14.24
+        by smtp.gmail.com with ESMTPSA id c7sm2573412qtc.82.2021.02.17.19.14.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Feb 2021 19:14:24 -0800 (PST)
-Date:   Wed, 17 Feb 2021 22:14:23 -0500
+        Wed, 17 Feb 2021 19:14:35 -0800 (PST)
+Date:   Wed, 17 Feb 2021 22:14:33 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
-Subject: [PATCH v3 3/8] builtin/pack-objects.c: add '--stdin-packs' option
-Message-ID: <033e4e3f67b96489c3ba1b2ab7977e23fac34189.1613618042.git.me@ttaylorr.com>
+Subject: [PATCH v3 6/8] builtin/pack-objects.c: rewrite honor-pack-keep logic
+Message-ID: <67af143fd1f3bcece0a8b27894cbdcdc5ae60ae8.1613618042.git.me@ttaylorr.com>
 References: <cover.1611098616.git.me@ttaylorr.com>
  <cover.1613618042.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -71,459 +71,230 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In an upcoming commit, 'git repack' will want to create a pack comprised
-of all of the objects in some packs (the included packs) excluding any
-objects in some other packs (the excluded packs).
+From: Jeff King <peff@peff.net>
 
-This caller could iterate those packs themselves and feed the objects it
-finds to 'git pack-objects' directly over stdin, but this approach has a
-few downsides:
+Now that we have find_kept_pack_entry(), we don't have to manually keep
+hunting through every pack to find a possible "kept" duplicate of the
+object. This should be faster, assuming only a portion of your total
+packs are actually kept.
 
-  - It requires every caller that wants to drive 'git pack-objects' in
-    this way to implement pack iteration themselves. This forces the
-    caller to think about details like what order objects are fed to
-    pack-objects, which callers would likely rather not do.
+Note that we have to re-order the logic a bit here; we can deal with the
+disqualifying situations first (e.g., finding the object in a non-local
+pack with --local), then "kept" situation(s), and then just fall back to
+other "--local" conditions.
 
-  - If the set of objects in included packs is large, it requires
-    sending a lot of data over a pipe, which is inefficient.
+Here are the results from p5303 (measurements again taken on the
+kernel):
 
-  - The caller is forced to keep track of the excluded objects, too, and
-    make sure that it doesn't send any objects that appear in both
-    included and excluded packs.
+  Test                                        HEAD^                   HEAD
+  -----------------------------------------------------------------------------------------------
+  5303.5: repack (1)                          57.26(54.59+10.84)      57.34(54.66+10.88) +0.1%
+  5303.6: repack with kept (1)                57.33(54.80+10.51)      57.38(54.83+10.49) +0.1%
+  5303.11: repack (50)                        71.54(88.57+4.84)       71.70(88.99+4.74) +0.2%
+  5303.12: repack with kept (50)              85.12(102.05+4.94)      72.58(89.61+4.78) -14.7%
+  5303.17: repack (1000)                      216.87(490.79+14.57)    217.19(491.72+14.25) +0.1%
+  5303.18: repack with kept (1000)            665.63(938.87+15.76)    246.12(520.07+14.93) -63.0%
 
-But the biggest downside is the lack of a reachability traversal.
-Because the caller passes in a list of objects directly, those objects
-don't get a namehash assigned to them, which can have a negative impact
-on the delta selection process, causing 'git pack-objects' to fail to
-find good deltas even when they exist.
+and the --stdin-packs timings:
 
-The caller could formulate a reachability traversal themselves, but the
-only way to drive 'git pack-objects' in this way is to do a full
-traversal, and then remove objects in the excluded packs after the
-traversal is complete. This can be detrimental to callers who care
-about performance, especially in repositories with many objects.
+  5303.7: repack with --stdin-packs (1)       0.01(0.01+0.00)         0.00(0.00+0.00) -100.0%
+  5303.13: repack with --stdin-packs (50)     3.53(12.07+0.24)        3.43(11.75+0.24) -2.8%
+  5303.19: repack with --stdin-packs (1000)   195.83(371.82+8.10)     130.50(307.15+7.66) -33.4%
 
-Introduce 'git pack-objects --stdin-packs' which remedies these four
-concerns.
+So our repack with an empty .keep pack is roughly as fast as one without
+a .keep pack up to 50 packs. But the --stdin-packs case scales a little
+better, too.
 
-'git pack-objects --stdin-packs' expects a list of pack names on stdin,
-where 'pack-xyz.pack' denotes that pack as included, and
-'^pack-xyz.pack' denotes it as excluded. The resulting pack includes all
-objects that are present in at least one included pack, and aren't
-present in any excluded pack.
+Notably, it is faster than a repack of the same size and a kept pack. It
+looks at fewer objects, of course, but the penalty for looking at many
+packs isn't as costly.
 
-To address the delta selection problem, 'git pack-objects --stdin-packs'
-works as follows. First, it assembles a list of objects that it is going
-to pack, as above. Then, a reachability traversal is started, whose tips
-are any commits mentioned in included packs. Upon visiting an object, we
-find its corresponding object_entry in the to_pack list, and set its
-namehash parameter appropriately.
-
-To avoid the traversal visiting more objects than it needs to, the
-traversal is halted upon encountering an object which can be found in an
-excluded pack (by marking the excluded packs as kept in-core, and
-passing --no-kept-objects=in-core to the revision machinery).
-
-This can cause the traversal to halt early, for example if an object in
-an included pack is an ancestor of ones in excluded packs. But stopping
-early is OK, since filling in the namehash fields of objects in the
-to_pack list is only additive (i.e., having it helps the delta selection
-process, but leaving it blank doesn't impact the correctness of the
-resulting pack).
-
-Even still, it is unlikely that this hurts us much in practice, since
-the 'git repack --geometric' caller (which is introduced in a later
-commit) marks small packs as included, and large ones as excluded.
-During ordinary use, the small packs usually represent pushes after a
-large repack, and so are unlikely to be ancestors of objects that
-already exist in the repository.
-
-(I found it convenient while developing this patch to have 'git
-pack-objects' report the number of objects which were visited and got
-their namehash fields filled in during traversal. This is also included
-in the below patch via trace2 data lines).
-
-Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-pack-objects.txt |  10 ++
- builtin/pack-objects.c             | 198 ++++++++++++++++++++++++++++-
- t/t5300-pack-object.sh             |  97 ++++++++++++++
- 3 files changed, 303 insertions(+), 2 deletions(-)
+ builtin/pack-objects.c | 131 ++++++++++++++++++++++++-----------------
+ 1 file changed, 78 insertions(+), 53 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 54d715ead1..df533c3b19 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -85,6 +85,16 @@ base-name::
- 	reference was included in the resulting packfile.  This
- 	can be useful to send new tags to native Git clients.
- 
-+--stdin-packs::
-+	Read the basenames of packfiles (e.g., `pack-1234abcd.pack`)
-+	from the standard input, instead of object names or revision
-+	arguments. The resulting pack contains all objects listed in the
-+	included packs (those not beginning with `^`), excluding any
-+	objects listed in the excluded packs (beginning with `^`).
-++
-+Incompatible with `--revs`, or options that imply `--revs` (such as
-+`--all`), with the exception of `--unpacked`, which is compatible.
-+
- --window=<n>::
- --depth=<n>::
- 	These two options affect how the objects contained in
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6d62aaf59a..e766a4a43b 100644
+index e766a4a43b..be3ba60bc2 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -2986,6 +2986,186 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 	return git_default_config(k, v, cb);
+@@ -1188,7 +1188,8 @@ static int have_duplicate_entry(const struct object_id *oid,
+ 	return 1;
  }
  
-+/* Counters for trace2 output when in --stdin-packs mode. */
-+static int stdin_packs_found_nr;
-+static int stdin_packs_hints_nr;
-+
-+static int add_object_entry_from_pack(const struct object_id *oid,
-+				      struct packed_git *p,
-+				      uint32_t pos,
-+				      void *_data)
-+{
-+	struct rev_info *revs = _data;
-+	struct object_info oi = OBJECT_INFO_INIT;
-+	off_t ofs;
-+	enum object_type type;
-+
-+	display_progress(progress_state, ++nr_seen);
-+
-+	if (have_duplicate_entry(oid, 0))
-+		return 0;
-+
-+	ofs = nth_packed_object_offset(p, pos);
-+	if (!want_object_in_pack(oid, 0, &p, &ofs))
-+		return 0;
-+
-+	oi.typep = &type;
-+	if (packed_object_info(the_repository, p, ofs, &oi) < 0)
-+		die(_("could not get type of object %s in pack %s"),
-+		    oid_to_hex(oid), p->pack_name);
-+	else if (type == OBJ_COMMIT) {
-+		/*
-+		 * commits in included packs are used as starting points for the
-+		 * subsequent revision walk
-+		 */
-+		add_pending_oid(revs, NULL, oid, 0);
-+	}
-+
-+	stdin_packs_found_nr++;
-+
-+	create_object_entry(oid, type, 0, 0, 0, p, ofs);
-+
-+	return 0;
-+}
-+
-+static void show_commit_pack_hint(struct commit *commit, void *_data)
-+{
-+	/* nothing to do; commits don't have a namehash */
-+}
-+
-+static void show_object_pack_hint(struct object *object, const char *name,
-+				  void *_data)
-+{
-+	struct object_entry *oe = packlist_find(&to_pack, &object->oid);
-+	if (!oe)
-+		return;
-+
-+	/*
-+	 * Our 'to_pack' list was constructed by iterating all objects packed in
-+	 * included packs, and so doesn't have a non-zero hash field that you
-+	 * would typically pick up during a reachability traversal.
-+	 *
-+	 * Make a best-effort attempt to fill in the ->hash and ->no_try_delta
-+	 * here using a now in order to perhaps improve the delta selection
-+	 * process.
-+	 */
-+	oe->hash = pack_name_hash(name);
-+	oe->no_try_delta = name && no_try_delta(name);
-+
-+	stdin_packs_hints_nr++;
-+}
-+
-+static int pack_mtime_cmp(const void *_a, const void *_b)
-+{
-+	struct packed_git *a = ((const struct string_list_item*)_a)->util;
-+	struct packed_git *b = ((const struct string_list_item*)_b)->util;
-+
-+	if (a->mtime < b->mtime)
-+		return -1;
-+	else if (b->mtime < a->mtime)
-+		return 1;
-+	else
-+		return 0;
-+}
-+
-+static void read_packs_list_from_stdin(void)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct string_list include_packs = STRING_LIST_INIT_DUP;
-+	struct string_list exclude_packs = STRING_LIST_INIT_DUP;
-+	struct string_list_item *item = NULL;
-+
-+	struct packed_git *p;
-+	struct rev_info revs;
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	/*
-+	 * Use a revision walk to fill in the namehash of objects in the include
-+	 * packs. To save time, we'll avoid traversing through objects that are
-+	 * in excluded packs.
-+	 *
-+	 * That may cause us to avoid populating all of the namehash fields of
-+	 * all included objects, but our goal is best-effort, since this is only
-+	 * an optimization during delta selection.
-+	 */
-+	revs.no_kept_objects = 1;
-+	revs.keep_pack_cache_flags |= IN_CORE_KEEP_PACKS;
-+	revs.blob_objects = 1;
-+	revs.tree_objects = 1;
-+	revs.tag_objects = 1;
-+
-+	while (strbuf_getline(&buf, stdin) != EOF) {
-+		if (!buf.len)
-+			continue;
-+
-+		if (*buf.buf == '^')
-+			string_list_append(&exclude_packs, buf.buf + 1);
-+		else
-+			string_list_append(&include_packs, buf.buf);
-+
-+		strbuf_reset(&buf);
-+	}
-+
-+	string_list_sort(&include_packs);
-+	string_list_sort(&exclude_packs);
-+
-+	for (p = get_all_packs(the_repository); p; p = p->next) {
-+		const char *pack_name = pack_basename(p);
-+
-+		item = string_list_lookup(&include_packs, pack_name);
-+		if (!item)
-+			item = string_list_lookup(&exclude_packs, pack_name);
-+
-+		if (item)
-+			item->util = p;
-+	}
-+
-+	/*
-+	 * First handle all of the excluded packs, marking them as kept in-core
-+	 * so that later calls to add_object_entry() discards any objects that
-+	 * are also found in excluded packs.
-+	 */
-+	for_each_string_list_item(item, &exclude_packs) {
-+		struct packed_git *p = item->util;
-+		if (!p)
-+			die(_("could not find pack '%s'"), item->string);
-+		p->pack_keep_in_core = 1;
-+	}
-+
-+	/*
-+	 * Order packs by ascending mtime; use QSORT directly to access the
-+	 * string_list_item's ->util pointer, which string_list_sort() does not
-+	 * provide.
-+	 */
-+	QSORT(include_packs.items, include_packs.nr, pack_mtime_cmp);
-+
-+	for_each_string_list_item(item, &include_packs) {
-+		struct packed_git *p = item->util;
-+		if (!p)
-+			die(_("could not find pack '%s'"), item->string);
-+		for_each_object_in_pack(p,
-+					add_object_entry_from_pack,
-+					&revs,
-+					FOR_EACH_OBJECT_PACK_ORDER);
-+	}
-+
-+	if (prepare_revision_walk(&revs))
-+		die(_("revision walk setup failed"));
-+	traverse_commit_list(&revs,
-+			     show_commit_pack_hint,
-+			     show_object_pack_hint,
-+			     NULL);
-+
-+	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_found",
-+			   stdin_packs_found_nr);
-+	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_hints",
-+			   stdin_packs_hints_nr);
-+
-+	strbuf_release(&buf);
-+	string_list_clear(&include_packs, 0);
-+	string_list_clear(&exclude_packs, 0);
-+}
-+
- static void read_object_list_from_stdin(void)
+-static int want_found_object(int exclude, struct packed_git *p)
++static int want_found_object(const struct object_id *oid, int exclude,
++			     struct packed_git *p)
  {
- 	char line[GIT_MAX_HEXSZ + 1 + PATH_MAX + 2];
-@@ -3489,6 +3669,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	struct strvec rp = STRVEC_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
- 	int rev_list_index = 0;
-+	int stdin_packs = 0;
- 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	struct option pack_objects_options[] = {
- 		OPT_SET_INT('q', "quiet", &progress,
-@@ -3539,6 +3720,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT_F(0, "indexed-objects", &rev_list_index,
- 			      N_("include objects referred to by the index"),
- 			      1, PARSE_OPT_NONEG),
-+		OPT_BOOL(0, "stdin-packs", &stdin_packs,
-+			 N_("read packs from stdin")),
- 		OPT_BOOL(0, "stdout", &pack_to_stdout,
- 			 N_("output pack to stdout")),
- 		OPT_BOOL(0, "include-tag", &include_tag,
-@@ -3645,7 +3828,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		use_internal_rev_list = 1;
- 		strvec_push(&rp, "--indexed-objects");
- 	}
--	if (rev_list_unpacked) {
-+	if (rev_list_unpacked && !stdin_packs) {
- 		use_internal_rev_list = 1;
- 		strvec_push(&rp, "--unpacked");
- 	}
-@@ -3690,8 +3873,13 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (filter_options.choice) {
- 		if (!pack_to_stdout)
- 			die(_("cannot use --filter without --stdout"));
-+		if (stdin_packs)
-+			die(_("cannot use --filter with --stdin-packs"));
- 	}
- 
-+	if (stdin_packs && use_internal_rev_list)
-+		die(_("cannot use internal rev list with --stdin-packs"));
-+
- 	/*
- 	 * "soft" reasons not to use bitmaps - for on-disk repack by default we want
+ 	if (exclude)
+ 		return 1;
+@@ -1204,27 +1205,82 @@ static int want_found_object(int exclude, struct packed_git *p)
+ 	 * make sure no copy of this object appears in _any_ pack that makes us
+ 	 * to omit the object, so we need to check all the packs.
  	 *
-@@ -3750,7 +3938,13 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+-	 * We can however first check whether these options can possible matter;
++	 * We can however first check whether these options can possibly matter;
+ 	 * if they do not matter we know we want the object in generated pack.
+ 	 * Otherwise, we signal "-1" at the end to tell the caller that we do
+ 	 * not know either way, and it needs to check more packs.
+ 	 */
+-	if (!ignore_packed_keep_on_disk &&
+-	    !ignore_packed_keep_in_core &&
+-	    (!local || !have_non_local_packs))
+-		return 1;
  
- 	if (progress)
- 		progress_state = start_progress(_("Enumerating objects"), 0);
--	if (!use_internal_rev_list)
-+	if (stdin_packs) {
-+		/* avoids adding objects in excluded packs */
-+		ignore_packed_keep_in_core = 1;
-+		read_packs_list_from_stdin();
-+		if (rev_list_unpacked)
-+			add_unreachable_loose_objects();
-+	} else if (!use_internal_rev_list)
- 		read_object_list_from_stdin();
- 	else {
- 		get_object_list(rp.nr, rp.v);
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 392201cabd..7138a54595 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -532,4 +532,101 @@ test_expect_success 'prefetch objects' '
- 	test_line_count = 1 donelines
- '
++	/*
++	 * Objects in packs borrowed from elsewhere are discarded regardless of
++	 * if they appear in other packs that weren't borrowed.
++	 */
+ 	if (local && !p->pack_local)
+ 		return 0;
+-	if (p->pack_local &&
+-	    ((ignore_packed_keep_on_disk && p->pack_keep) ||
+-	     (ignore_packed_keep_in_core && p->pack_keep_in_core)))
+-		return 0;
++
++	/*
++	 * Then handle .keep first, as we have a fast(er) path there.
++	 */
++	if (ignore_packed_keep_on_disk || ignore_packed_keep_in_core) {
++		/*
++		 * Set the flags for the kept-pack cache to be the ones we want
++		 * to ignore.
++		 *
++		 * That is, if we are ignoring objects in on-disk keep packs,
++		 * then we want to search through the on-disk keep and ignore
++		 * the in-core ones.
++		 */
++		unsigned flags = 0;
++		if (ignore_packed_keep_on_disk)
++			flags |= ON_DISK_KEEP_PACKS;
++		if (ignore_packed_keep_in_core)
++			flags |= IN_CORE_KEEP_PACKS;
++
++		if (ignore_packed_keep_on_disk && p->pack_keep)
++			return 0;
++		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
++			return 0;
++		if (has_object_kept_pack(oid, flags))
++			return 0;
++	}
++
++	/*
++	 * At this point we know definitively that either we don't care about
++	 * keep-packs, or the object is not in one. Keep checking other
++	 * conditions...
++	 */
++	if (!local || !have_non_local_packs)
++		return 1;
  
-+test_expect_success 'setup for --stdin-packs tests' '
-+	git init stdin-packs &&
-+	(
-+		cd stdin-packs &&
+ 	/* we don't know yet; keep looking for more packs */
+ 	return -1;
+ }
+ 
++static int want_object_in_pack_one(struct packed_git *p,
++				   const struct object_id *oid,
++				   int exclude,
++				   struct packed_git **found_pack,
++				   off_t *found_offset)
++{
++	off_t offset;
 +
-+		test_commit A &&
-+		test_commit B &&
-+		test_commit C &&
++	if (p == *found_pack)
++		offset = *found_offset;
++	else
++		offset = find_pack_entry_one(oid->hash, p);
 +
-+		for id in A B C
-+		do
-+			git pack-objects .git/objects/pack/pack-$id \
-+				--incremental --revs <<-EOF
-+			refs/tags/$id
-+			EOF
-+		done &&
++	if (offset) {
++		if (!*found_pack) {
++			if (!is_pack_valid(p))
++				return -1;
++			*found_offset = offset;
++			*found_pack = p;
++		}
++		return want_found_object(oid, exclude, p);
++	}
++	return -1;
++}
 +
-+		ls -la .git/objects/pack
-+	)
-+'
+ /*
+  * Check whether we want the object in the pack (e.g., we do not want
+  * objects found in non-local stores if the "--local" option was used).
+@@ -1252,7 +1308,7 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	 * are present we will determine the answer right now.
+ 	 */
+ 	if (*found_pack) {
+-		want = want_found_object(exclude, *found_pack);
++		want = want_found_object(oid, exclude, *found_pack);
+ 		if (want != -1)
+ 			return want;
+ 	}
+@@ -1260,53 +1316,22 @@ static int want_object_in_pack(const struct object_id *oid,
+ 	for (m = get_multi_pack_index(the_repository); m; m = m->next) {
+ 		struct pack_entry e;
+ 		if (fill_midx_entry(the_repository, oid, &e, m)) {
+-			struct packed_git *p = e.p;
+-			off_t offset;
+-
+-			if (p == *found_pack)
+-				offset = *found_offset;
+-			else
+-				offset = find_pack_entry_one(oid->hash, p);
+-
+-			if (offset) {
+-				if (!*found_pack) {
+-					if (!is_pack_valid(p))
+-						continue;
+-					*found_offset = offset;
+-					*found_pack = p;
+-				}
+-				want = want_found_object(exclude, p);
+-				if (want != -1)
+-					return want;
+-			}
+-		}
+-	}
+-
+-	list_for_each(pos, get_packed_git_mru(the_repository)) {
+-		struct packed_git *p = list_entry(pos, struct packed_git, mru);
+-		off_t offset;
+-
+-		if (p == *found_pack)
+-			offset = *found_offset;
+-		else
+-			offset = find_pack_entry_one(oid->hash, p);
+-
+-		if (offset) {
+-			if (!*found_pack) {
+-				if (!is_pack_valid(p))
+-					continue;
+-				*found_offset = offset;
+-				*found_pack = p;
+-			}
+-			want = want_found_object(exclude, p);
+-			if (!exclude && want > 0)
+-				list_move(&p->mru,
+-					  get_packed_git_mru(the_repository));
++			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset);
+ 			if (want != -1)
+ 				return want;
+ 		}
+ 	}
+ 
++	list_for_each(pos, get_packed_git_mru(the_repository)) {
++		struct packed_git *p = list_entry(pos, struct packed_git, mru);
++		want = want_object_in_pack_one(p, oid, exclude, found_pack, found_offset);
++		if (!exclude && want > 0)
++			list_move(&p->mru,
++				  get_packed_git_mru(the_repository));
++		if (want != -1)
++			return want;
++	}
 +
-+test_expect_success '--stdin-packs with excluded packs' '
-+	(
-+		cd stdin-packs &&
-+
-+		PACK_A="$(basename .git/objects/pack/pack-A-*.pack)" &&
-+		PACK_B="$(basename .git/objects/pack/pack-B-*.pack)" &&
-+		PACK_C="$(basename .git/objects/pack/pack-C-*.pack)" &&
-+
-+		git pack-objects test --stdin-packs <<-EOF &&
-+		$PACK_A
-+		^$PACK_B
-+		$PACK_C
-+		EOF
-+
-+		(
-+			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
-+			git show-index <$(ls .git/objects/pack/pack-C-*.idx)
-+		) >expect.raw &&
-+		git show-index <$(ls test-*.idx) >actual.raw &&
-+
-+		cut -d" " -f2 <expect.raw | sort >expect &&
-+		cut -d" " -f2 <actual.raw | sort >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success '--stdin-packs is incompatible with --filter' '
-+	(
-+		cd stdin-packs &&
-+		test_must_fail git pack-objects --stdin-packs --stdout \
-+			--filter=blob:none </dev/null 2>err &&
-+		test_i18ngrep "cannot use --filter with --stdin-packs" err
-+	)
-+'
-+
-+test_expect_success '--stdin-packs is incompatible with --revs' '
-+	(
-+		cd stdin-packs &&
-+		test_must_fail git pack-objects --stdin-packs --revs out \
-+			</dev/null 2>err &&
-+		test_i18ngrep "cannot use internal rev list with --stdin-packs" err
-+	)
-+'
-+
-+test_expect_success '--stdin-packs with loose objects' '
-+	(
-+		cd stdin-packs &&
-+
-+		PACK_A="$(basename .git/objects/pack/pack-A-*.pack)" &&
-+		PACK_B="$(basename .git/objects/pack/pack-B-*.pack)" &&
-+		PACK_C="$(basename .git/objects/pack/pack-C-*.pack)" &&
-+
-+		test_commit D && # loose
-+
-+		git pack-objects test2 --stdin-packs --unpacked <<-EOF &&
-+		$PACK_A
-+		^$PACK_B
-+		$PACK_C
-+		EOF
-+
-+		(
-+			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
-+			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
-+			git rev-list --objects --no-object-names \
-+				refs/tags/C..refs/tags/D
-+
-+		) >expect.raw &&
-+		ls -la . &&
-+		git show-index <$(ls test2-*.idx) >actual.raw &&
-+
-+		cut -d" " -f2 <expect.raw | sort >expect &&
-+		cut -d" " -f2 <actual.raw | sort >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+ 	if (uri_protocols.nr) {
+ 		struct configured_exclusion *ex =
+ 			oidmap_get(&configured_exclusions, oid);
 -- 
 2.30.0.667.g81c0cbc6fd
 
