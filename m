@@ -2,160 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E79B5C433DB
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 196FAC433E0
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D27964E79
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:32:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B78A764E89
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231230AbhBRTcF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 14:32:05 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58069 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233390AbhBRSwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 13:52:39 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 570DAB08B4;
-        Thu, 18 Feb 2021 13:51:53 -0500 (EST)
+        id S231235AbhBRTcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 14:32:14 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51058 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231970AbhBRTD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:03:26 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D28E91088A1;
+        Thu, 18 Feb 2021 14:02:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=pMiYfczPNuKk
-        N4mGSbGf1xO4I4Y=; b=v5T0+pbY/7RcyHHocUUkD9nGgIMpUnbI6WbFYvIP+ukH
-        CzNxV5mzXz3PMLQD3SSyRdY9NAYm2w6HDXjtcJKoxJfqjBz3l+nAd8TX7IdfZ5N5
-        dDXpGNFj+ZxeCekeqQe47ky2BEPpq8GM3+RIMsUXJYpaunRaN4gPKoa+P2tjWSc=
+        :content-type; s=sasl; bh=MfT411ixhJbi5srsk6pWH27n8w8=; b=LUSgZC
+        M+f/oL8Zb805Meea5jtpUwYsKyVwNtw/+NO2vFuRpbyxTRe2u1ldZTiNpTTTKpH5
+        0gO3ZaqzmhGCoguEdRrZJy+FOP5q/SA1iXTiuAMpuFHVF0zLXk7qv/9Yy+7Z9j/T
+        3aV4ldvM+0t+7uQY8diIHKnL3I5nhe97VhbLg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ryLPQR
-        0pKaFfkMbiRs5wJ0Rwh5pO7qlg2VXREDLsNsxKbRAvU+MHCKXP0ypBO8GyorjlwO
-        3JLseRSaFYu3WzCKIwxJJKUwivuF23m3ERwgb8kKJ+I+lHEcttYAmsnkyHdbbygs
-        1g/hBRfk4NS+/qC02B/Qhar/8cUa6fZiGF6Lk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D485B08B3;
-        Thu, 18 Feb 2021 13:51:53 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=MY2dRxyhZMY+SarWq5ueOuSJWsdI+eqr
+        N4U0nrZQ0gSsjx8U2+51YSkCpeml34ib62cHd4qZwQVIj92YbSWDS+03Lnl+L3QC
+        U3nS0Wzj00ImukAfYwpW8NRUa+nwaUX9j817VaFPlq1aigMbqsY8Da3o6cQUCUY0
+        Icb79igUoLg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CC00C10889F;
+        Thu, 18 Feb 2021 14:02:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C90FAB08B2;
-        Thu, 18 Feb 2021 13:51:52 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 184E810889E;
+        Thu, 18 Feb 2021 14:02:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/3] git.txt: fix monospace rendering
-References: <cover.1613590761.git.martin.agren@gmail.com>
-        <97c686dd7ba1bbd1c0be6f7f61a3a033adf8adb6.1613590761.git.martin.agren@gmail.com>
-Date:   Thu, 18 Feb 2021 10:51:52 -0800
-In-Reply-To: <97c686dd7ba1bbd1c0be6f7f61a3a033adf8adb6.1613590761.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 17 Feb 2021 20:56:05
- +0100")
-Message-ID: <xmqqim6pgqev.fsf@gitster.g>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [RFC PATCH 3/7] t3705: add tests for `git add` in sparse checkouts
+References: <cover.1613593946.git.matheus.bernardino@usp.br>
+        <6e30f133e234ff1d3a29f36423cd3fdca58d8095.1613593946.git.matheus.bernardino@usp.br>
+        <xmqqpn0yi9ii.fsf@gitster.g>
+        <CAHd-oW6b0n7ezA-C8NuUOkHUSfM8TFLmkJtwwSRv7FRtbOWjsA@mail.gmail.com>
+Date:   Thu, 18 Feb 2021 11:02:36 -0800
+In-Reply-To: <CAHd-oW6b0n7ezA-C8NuUOkHUSfM8TFLmkJtwwSRv7FRtbOWjsA@mail.gmail.com>
+        (Matheus Tavares Bernardino's message of "Thu, 18 Feb 2021 00:07:42
+        -0300")
+Message-ID: <xmqqczwxgpwz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5D815804-721A-11EB-A928-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DE1DE300-721B-11EB-97B7-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 
-> When we write `<name>`s with the "s" tucked on to the closing backtick,
-> we end up rendering the backticks literally. Rephrase this sentence
-> slightly to render this as monospace.
+>> > +test_expect_success "git add -A does not remove SKIP_WORKTREE entries" '
+>> > +     setup_sparse_entry &&
+>> > +     rm sparse_entry &&
+>> > +     git add -A &&
+>> > +     test_sparse_entry_unchanged
+>> > +'
+>>
+>> OK.  As there is nothing other than sparse_entry in the working tree
+>> or in the index, the above two should be equivalent.
 >
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  doc-diff:
->  --- a/.../man/man1/git.1
->  +++ b/.../man/man1/git.1
->  @@ -77,8 +77,8 @@ OPTIONS
->              setting the value to an empty string, instead the environm=
-ent
->              variable itself must be set to the empty string. It is an =
-error if
->              the <envvar> does not exist in the environment.  <envvar> =
-may not
->  -           contain an equals sign to avoid ambiguity with `<name>`s w=
-hich
->  -           contain one.
->  +           contain an equals sign to avoid ambiguity with <name> cont=
-aining
->  +           one.
-> =20
->              This is useful for cases where you want to pass transitory
->              configuration options to git, but are doing so on OS=E2=80=
-=99s where other
->  Documentation/git.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git.txt b/Documentation/git.txt
-> index d36e6fd482..3a9c44987f 100644
-> --- a/Documentation/git.txt
-> +++ b/Documentation/git.txt
-> @@ -88,7 +88,7 @@ foo.bar=3D ...`) sets `foo.bar` to the empty string w=
-hich `git config
->  	empty string, instead the environment variable itself must be
->  	set to the empty string.  It is an error if the `<envvar>` does not e=
-xist
->  	in the environment. `<envvar>` may not contain an equals sign
-> -	to avoid ambiguity with `<name>`s which contain one.
-> +	to avoid ambiguity with `<name>` containing one.
->  +
->  This is useful for cases where you want to pass transitory
->  configuration options to git, but are doing so on OS's where
+> I just realized that the "actual" file created by the previous
+> test_sparse_entry_unchanged would also be added to the index here.
+> This doesn't affect the current test or the next ones, but I guess we
+> could use `git add -A sparse_entry` to avoid any future problems.
+> ...
+> Hmm, I think it might be better to test only `add -A sparse_entry`, to
+> avoid adding the "actual" file or others that might be introduced in
+> future changes.
 
-The "two" diffs may indeed be misleading.
+Rewriting 'git add -A' to 'git add -A sparse_entry' may not be wrong
+but it will invite "does -A somehow misbehave without pathspec?" and
+other puzzlements.
 
-The patch only changes one source and the "supporting material" is
-not something that we need to use on the source file---it is only
-showing the change in the output.
+If adding 'actual' or 'expect' do not matter, I think it would be OK
+to just add it, but if it bothers you, we can prepare an .gitignore
+and list them early in the test with a comment that says "we will do
+many 'git add .' and the like and do not want to be affected by what
+the test needs to use to verify the result".
 
-I did appreciate the inclusion of doc-diff myself, but it seems that
-it confused Chris and Patrick.  I doubt that it is an improvement to
-omit doc-diff.  We may want to find a way to make it easier for the
-readers to tell which part is the patch to be applied and which part
-is not in similar changes we discuss on the list in the future, and
-apparently, a one column indentation alone was not quite sufficient
-in this case.  Replacing "doc-diff:" label and patch header lines up
-to the hunk header with a prose to explain what the intended diff is
-may have helped, e.g.
+> Oh, that is a problem... We could use `git ls-files --debug` and
+> directly compare the mtime field. But the ls-files doc says that
+> --debug format may change at any time... Any other idea?
 
-
-...
-slightly to render this as monospace.
-
-Signed-off-by: A U Thor <au@thor.xz>
----
-
- The rendered output changes like the following excerpt from
- doc-diff output.
-
-             ....  <envvar> may not
- -           contain an equals sign to avoid ambiguity with `<name>`s whi=
-ch
- -           contain one.
- +           contain an equals sign to avoid ambiguity with <name> contai=
-ning
- +           one.
-
- You can see that backquotes are gone, even though you unfortunately
- cannot see how <name> is typeset (it is in monospace--trust me ;-).
-
- Documentation/git.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/....=20
-index ....
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ ...
+The option is to help us developers; if somebody wants to change it
+and breaks your tests, they are responsible for rewriting their
+change in such a way to keep your tests working or adjust your tests
+to their new output format.
