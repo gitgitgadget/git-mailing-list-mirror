@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E1F1C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 16:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF24C433DB
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 16:54:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4489A64EAD
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 16:52:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C5A664DFF
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 16:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233501AbhBRQwN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 11:52:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41750 "EHLO
+        id S233915AbhBRQwW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 11:52:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230108AbhBROJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 09:09:57 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BABBC06121C
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 06:07:55 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v1so3124680wrd.6
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 06:07:55 -0800 (PST)
+        with ESMTP id S233631AbhBROKo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 09:10:44 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D10B7C061222
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 06:08:00 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id n10so4085602wmq.0
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 06:08:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=L7txn7xvbO69aI6sRhsV1+Kb5QylibPZGK1hohssVBA=;
-        b=PE/rKbXroSCE4qp2rZ/mBozrWr7zTetWF1l4uT1jAuLgQ6SRkVWzgS4s1x1g7ItOxb
-         9Nj8pC4cM3rF8i9CbX9qjuM60oPd5aj0DWbKbIE3oFCAGpOWzEONzWkSaJXRIgKg4J/l
-         OdDwt/dSLl1zgdEO0XS/JGX6wAOUTieTcBsrHJYRNYtLR4JvLSjLn6Y9xBv9ZJjHVenW
-         ctt0ywzHlHQnlK8wsPQvG97Cy6WhzkFcSy16t4blgLd0rACl1B9N/sLhkCdYiSj6BzDa
-         Ol133xwSU33PWpJTeFSaxo7EcEEq9kN62LmagVrslQa0U0SaOogB101R5HDgtoM4EA2c
-         qvyQ==
+        bh=VY70YxpMWWO9iYCYRFM9nL7VSofDIl8bmBKvouWjznc=;
+        b=UVODMOet7OPq8pKAvMYzThysATmdtHRvt4XwQ22zdU5VsQzHpXV87ZWmJfmwVF7FGZ
+         ENKmMKqGKXqAB1bA8jcbzgIO47VV0dC2wm8a6R8MnVQ8Tx17AciIAdPxnem0pcZ07z6d
+         0AUTbx3jXIJj91qyWy8S1rSDvEl/jVNX5znExak41WatySQNmqSymNCJOYtr1n5lX8uI
+         1DPlpovIcZRuU/cZIiekQNHZ+2AJLfv2xRB5QIM0KQD7il5B67fej+oKzH4UVFU7OYdK
+         7czLvUqwmCr8d+NOE0c8IVS+dyEVDyDWtwSfP1duBnvRGkCvrrqX6SgAZ/uEi8iO2C1U
+         5zlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=L7txn7xvbO69aI6sRhsV1+Kb5QylibPZGK1hohssVBA=;
-        b=Uhy8fZDfvIDvuEwKLhM4FGsAcSkluNT3sXbUNxua3sofTSvdkAWkfoeYLmy+k9NBRs
-         amzSQBZ4CyUMc43ENOgIhV4ob2P+/0rdWJxQx+fPXxrJcDuO2sg1y34NkRufqJYZDriZ
-         hAvWw+86xz6F+fF+7q5U2fVu0Z+AfYJoil2y+71mKzXY7vikh4H87DjCirLffyGwsrA3
-         c/hilDWB+bSpfckFwTtFu7FKJkv6zKdx0vS+kFIEguM7YIvq0PczZrrvn6/co2UmbWBb
-         4M2Yau22yBAjp4MKaB3JfOWqqcOD3ppUpz7kxn8SdedU1D14d22l715Zw+wqhlYBOPDZ
-         AOuQ==
-X-Gm-Message-State: AOAM5320AktSGz2/xne7+MAAJx5Xn+uhzY3t8vlOxR6LhJfqRgbsVEgx
-        E58w5CwgwPD1JJg07XOuWVikqnm+iuw=
-X-Google-Smtp-Source: ABdhPJz09O/DUqAARdUa+HkWuMdOQ6/iNb+CKieWfLoP46dfswqRP4memvTOyIWXISLiApFdyI9scA==
-X-Received: by 2002:a5d:4582:: with SMTP id p2mr4536074wrq.126.1613657274042;
-        Thu, 18 Feb 2021 06:07:54 -0800 (PST)
+        bh=VY70YxpMWWO9iYCYRFM9nL7VSofDIl8bmBKvouWjznc=;
+        b=Fl2Jq0rdu3EYECUAOfHx6XsZOa8RULvyDrKrWKFd6tlJ5iAbbpFIbPxdodwSYGe/a4
+         f5kiZ0kzOcwQ0/Ey4R6o6Wfij3LhgTlY3sosGmjBsGNFrln4/ndbN5Ab4u6vBbdSSQgU
+         dh9YBSaWjvHl5TLAouPfnr3i4dCIbAUPx6AOjSW4kzCFxuzoaCe92k71ZAq8vpeB3g/5
+         Z+fCiMHDGEbs3a09fYvLUANIe3QMVGtUi6g+bYGN2WiFSScHwtjVu+1aNXRWvb5rHA95
+         ZDiUeCOCoQkF9HbzS1+d8W44C+7RMpQSNC8zwqVo3EiB4aGmZvOQELbtDq/WqUwXa6AQ
+         jUqg==
+X-Gm-Message-State: AOAM532eI2b9+JFgJi5DJAv9nI60A7rC3BHLyvd+idgiBLHuyb4IFihY
+        hFKQGZmroQ2KsvzxsIpRDAn+jBKroZw=
+X-Google-Smtp-Source: ABdhPJx4G2a0TuSzWgkxO/FbgV2vq8M2XP0D2kGFwWvHiYxTjkOziy2nCxw/SnXiq0K0x4bUQE1heA==
+X-Received: by 2002:a05:600c:4f46:: with SMTP id m6mr3743457wmq.160.1613657279456;
+        Thu, 18 Feb 2021 06:07:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z2sm7461715wmf.46.2021.02.18.06.07.53
+        by smtp.gmail.com with ESMTPSA id q2sm9041779wrx.79.2021.02.18.06.07.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 06:07:53 -0800 (PST)
-Message-Id: <3e0dbc45ce7ff5f1bda63ae8b8b45343b790417b.1613657259.git.gitgitgadget@gmail.com>
+        Thu, 18 Feb 2021 06:07:59 -0800 (PST)
+Message-Id: <84bf6506dc12163b37f46192b3742c8fb234322f.1613657260.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.848.v4.git.1613657259.gitgitgadget@gmail.com>
 References: <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
         <pull.848.v4.git.1613657259.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 18 Feb 2021 14:07:34 +0000
-Subject: [PATCH v4 12/17] chunk-format: create read chunk API
+Date:   Thu, 18 Feb 2021 14:07:39 +0000
+Subject: [PATCH v4 17/17] chunk-format: add technical docs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,187 +79,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Add the capability to read the table of contents, then pair the chunks
-with necessary logic using read_chunk_fn pointers. Callers will be added
-in future changes, but the typical outline will be:
+The chunk-based file format is now an API in the code, but we should
+also take time to document it as a file format. Specifically, it matches
+the CHUNK LOOKUP sections of the commit-graph and multi-pack-index
+files, but there are some commonalities that should be grouped in this
+document.
 
- 1. initialize a 'struct chunkfile' with init_chunkfile(NULL).
- 2. call read_table_of_contents().
- 3. for each chunk to parse,
-    a. call pair_chunk() to assign a pointer with the chunk position, or
-    b. call read_chunk() to run a callback on the chunk start and size.
- 4. call free_chunkfile() to clear the 'struct chunkfile' data.
-
-We are re-using the anonymous 'struct chunkfile' data, as it is internal
-to the chunk-format API. This gives it essentially two modes: write and
-read. If the same struct instance was used for both reads and writes,
-then there would be failures.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- chunk-format.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++
- chunk-format.h | 47 +++++++++++++++++++++++++++++
- 2 files changed, 127 insertions(+)
+ Documentation/technical/chunk-format.txt      | 116 ++++++++++++++++++
+ .../technical/commit-graph-format.txt         |   3 +
+ Documentation/technical/pack-format.txt       |   3 +
+ 3 files changed, 122 insertions(+)
+ create mode 100644 Documentation/technical/chunk-format.txt
 
-diff --git a/chunk-format.c b/chunk-format.c
-index 6c9b52b70c10..2c1fecf1c3e5 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -11,6 +11,8 @@ struct chunk_info {
- 	uint32_t id;
- 	uint64_t size;
- 	chunk_write_fn write_fn;
+diff --git a/Documentation/technical/chunk-format.txt b/Documentation/technical/chunk-format.txt
+new file mode 100644
+index 000000000000..593614fcedab
+--- /dev/null
++++ b/Documentation/technical/chunk-format.txt
+@@ -0,0 +1,116 @@
++Chunk-based file formats
++========================
 +
-+	const void *start;
- };
++Some file formats in Git use a common concept of "chunks" to describe
++sections of the file. This allows structured access to a large file by
++scanning a small "table of contents" for the remaining data. This common
++format is used by the `commit-graph` and `multi-pack-index` files. See
++link:technical/pack-format.html[the `multi-pack-index` format] and
++link:technical/commit-graph-format.html[the `commit-graph` format] for
++how they use the chunks to describe structured data.
++
++A chunk-based file format begins with some header information custom to
++that format. That header should include enough information to identify
++the file type, format version, and number of chunks in the file. From this
++information, that file can determine the start of the chunk-based region.
++
++The chunk-based region starts with a table of contents describing where
++each chunk starts and ends. This consists of (C+1) rows of 12 bytes each,
++where C is the number of chunks. Consider the following table:
++
++  | Chunk ID (4 bytes) | Chunk Offset (8 bytes) |
++  |--------------------|------------------------|
++  | ID[0]              | OFFSET[0]              |
++  | ...                | ...                    |
++  | ID[C]              | OFFSET[C]              |
++  | 0x0000             | OFFSET[C+1]            |
++
++Each row consists of a 4-byte chunk identifier (ID) and an 8-byte offset.
++Each integer is stored in network-byte order.
++
++The chunk identifier `ID[i]` is a label for the data stored within this
++fill from `OFFSET[i]` (inclusive) to `OFFSET[i+1]` (exclusive). Thus, the
++size of the `i`th chunk is equal to the difference between `OFFSET[i+1]`
++and `OFFSET[i]`. This requires that the chunk data appears contiguously
++in the same order as the table of contents.
++
++The final entry in the table of contents must be four zero bytes. This
++confirms that the table of contents is ending and provides the offset for
++the end of the chunk-based data.
++
++Note: The chunk-based format expects that the file contains _at least_ a
++trailing hash after `OFFSET[C+1]`.
++
++Functions for working with chunk-based file formats are declared in
++`chunk-format.h`. Using these methods provide extra checks that assist
++developers when creating new file formats.
++
++Writing chunk-based file formats
++--------------------------------
++
++To write a chunk-based file format, create a `struct chunkfile` by
++calling `init_chunkfile()` and pass a `struct hashfile` pointer. The
++caller is responsible for opening the `hashfile` and writing header
++information so the file format is identifiable before the chunk-based
++format begins.
++
++Then, call `add_chunk()` for each chunk that is intended for write. This
++populates the `chunkfile` with information about the order and size of
++each chunk to write. Provide a `chunk_write_fn` function pointer to
++perform the write of the chunk data upon request.
++
++Call `write_chunkfile()` to write the table of contents to the `hashfile`
++followed by each of the chunks. This will verify that each chunk wrote
++the expected amount of data so the table of contents is correct.
++
++Finally, call `free_chunkfile()` to clear the `struct chunkfile` data. The
++caller is responsible for finalizing the `hashfile` by writing the trailing
++hash and closing the file.
++
++Reading chunk-based file formats
++--------------------------------
++
++To read a chunk-based file format, the file must be opened as a
++memory-mapped region. The chunk-format API expects that the entire file
++is mapped as a contiguous memory region.
++
++Initialize a `struct chunkfile` pointer with `init_chunkfile(NULL)`.
++
++After reading the header information from the beginning of the file,
++including the chunk count, call `read_table_of_contents()` to populate
++the `struct chunkfile` with the list of chunks, their offsets, and their
++sizes.
++
++Extract the data information for each chunk using `pair_chunk()` or
++`read_chunk()`:
++
++* `pair_chunk()` assigns a given pointer with the location inside the
++  memory-mapped file corresponding to that chunk's offset. If the chunk
++  does not exist, then the pointer is not modified.
++
++* `read_chunk()` takes a `chunk_read_fn` function pointer and calls it
++  with the appropriate initial pointer and size information. The function
++  is not called if the chunk does not exist. Use this method to read chunks
++  if you need to perform immediate parsing or if you need to execute logic
++  based on the size of the chunk.
++
++After calling these methods, call `free_chunkfile()` to clear the
++`struct chunkfile` data. This will not close the memory-mapped region.
++Callers are expected to own that data for the timeframe the pointers into
++the region are needed.
++
++Examples
++--------
++
++These file formats use the chunk-format API, and can be used as examples
++for future formats:
++
++* *commit-graph:* see `write_commit_graph_file()` and `parse_commit_graph()`
++  in `commit-graph.c` for how the chunk-format API is used to write and
++  parse the commit-graph file format documented in
++  link:technical/commit-graph-format.html[the commit-graph file format].
++
++* *multi-pack-index:* see `write_midx_internal()` and `load_multi_pack_index()`
++  in `midx.c` for how the chunk-format API is used to write and
++  parse the multi-pack-index file format documented in
++  link:technical/pack-format.html[the multi-pack-index file format].
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index b6658eff1882..87971c27dd73 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -61,6 +61,9 @@ CHUNK LOOKUP:
+       the length using the next chunk position if necessary.) Each chunk
+       ID appears at most once.
  
- struct chunkfile {
-@@ -88,3 +90,81 @@ int write_chunkfile(struct chunkfile *cf, void *data)
++  The CHUNK LOOKUP matches the table of contents from
++  link:technical/chunk-format.html[the chunk-based file format].
++
+   The remaining data in the body is described one chunk at a time, and
+   these chunks may be given in any order. Chunks are required unless
+   otherwise specified.
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index f96b2e605f34..2fb1e60d29ec 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -301,6 +301,9 @@ CHUNK LOOKUP:
+ 	    (Chunks are provided in file-order, so you can infer the length
+ 	    using the next chunk position if necessary.)
  
- 	return 0;
- }
++	The CHUNK LOOKUP matches the table of contents from
++	link:technical/chunk-format.html[the chunk-based file format].
 +
-+int read_table_of_contents(struct chunkfile *cf,
-+			   const unsigned char *mfile,
-+			   size_t mfile_size,
-+			   uint64_t toc_offset,
-+			   int toc_length)
-+{
-+	uint32_t chunk_id;
-+	const unsigned char *table_of_contents = mfile + toc_offset;
-+
-+	ALLOC_GROW(cf->chunks, toc_length, cf->chunks_alloc);
-+
-+	while (toc_length--) {
-+		uint64_t chunk_offset, next_chunk_offset;
-+
-+		chunk_id = get_be32(table_of_contents);
-+		chunk_offset = get_be64(table_of_contents + 4);
-+
-+		if (!chunk_id) {
-+			error(_("terminating chunk id appears earlier than expected"));
-+			return 1;
-+		}
-+
-+		table_of_contents += CHUNK_TOC_ENTRY_SIZE;
-+		next_chunk_offset = get_be64(table_of_contents + 4);
-+
-+		if (next_chunk_offset < chunk_offset ||
-+		    next_chunk_offset > mfile_size - the_hash_algo->rawsz) {
-+			error(_("improper chunk offset(s) %"PRIx64" and %"PRIx64""),
-+			      chunk_offset, next_chunk_offset);
-+			return -1;
-+		}
-+
-+		cf->chunks[cf->chunks_nr].id = chunk_id;
-+		cf->chunks[cf->chunks_nr].start = mfile + chunk_offset;
-+		cf->chunks[cf->chunks_nr].size = next_chunk_offset - chunk_offset;
-+		cf->chunks_nr++;
-+	}
-+
-+	chunk_id = get_be32(table_of_contents);
-+	if (chunk_id) {
-+		error(_("final chunk has non-zero id %"PRIx32""), chunk_id);
-+		return -1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int pair_chunk_fn(const unsigned char *chunk_start,
-+			 size_t chunk_size,
-+			 void *data)
-+{
-+	const unsigned char **p = data;
-+	*p = chunk_start;
-+	return 0;
-+}
-+
-+int pair_chunk(struct chunkfile *cf,
-+	       uint32_t chunk_id,
-+	       const unsigned char **p)
-+{
-+	return read_chunk(cf, chunk_id, pair_chunk_fn, p);
-+}
-+
-+int read_chunk(struct chunkfile *cf,
-+	       uint32_t chunk_id,
-+	       chunk_read_fn fn,
-+	       void *data)
-+{
-+	int i;
-+
-+	for (i = 0; i < cf->chunks_nr; i++) {
-+		if (cf->chunks[i].id == chunk_id)
-+			return fn(cf->chunks[i].start, cf->chunks[i].size, data);
-+	}
-+
-+	return CHUNK_NOT_FOUND;
-+}
-diff --git a/chunk-format.h b/chunk-format.h
-index ce598b66d9f8..9ccbe0037792 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -8,6 +8,20 @@ struct chunkfile;
- 
- #define CHUNK_TOC_ENTRY_SIZE (sizeof(uint32_t) + sizeof(uint64_t))
- 
-+/*
-+ * Initialize a 'struct chunkfile' for writing _or_ reading a file
-+ * with the chunk format.
-+ *
-+ * If writing a file, supply a non-NULL 'struct hashfile *' that will
-+ * be used to write.
-+ *
-+ * If reading a file, use a NULL 'struct hashfile *' and then call
-+ * read_table_of_contents(). Supply the memory-mapped data to the
-+ * pair_chunk() or read_chunk() methods, as appropriate.
-+ *
-+ * DO NOT MIX THESE MODES. Use different 'struct chunkfile' instances
-+ * for reading and writing.
-+ */
- struct chunkfile *init_chunkfile(struct hashfile *f);
- void free_chunkfile(struct chunkfile *cf);
- int get_num_chunks(struct chunkfile *cf);
-@@ -18,4 +32,37 @@ void add_chunk(struct chunkfile *cf,
- 	       chunk_write_fn fn);
- int write_chunkfile(struct chunkfile *cf, void *data);
- 
-+int read_table_of_contents(struct chunkfile *cf,
-+			   const unsigned char *mfile,
-+			   size_t mfile_size,
-+			   uint64_t toc_offset,
-+			   int toc_length);
-+
-+#define CHUNK_NOT_FOUND (-2)
-+
-+/*
-+ * Find 'chunk_id' in the given chunkfile and assign the
-+ * given pointer to the position in the mmap'd file where
-+ * that chunk begins.
-+ *
-+ * Returns CHUNK_NOT_FOUND if the chunk does not exist.
-+ */
-+int pair_chunk(struct chunkfile *cf,
-+	       uint32_t chunk_id,
-+	       const unsigned char **p);
-+
-+typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
-+			     size_t chunk_size, void *data);
-+/*
-+ * Find 'chunk_id' in the given chunkfile and call the
-+ * given chunk_read_fn method with the information for
-+ * that chunk.
-+ *
-+ * Returns CHUNK_NOT_FOUND if the chunk does not exist.
-+ */
-+int read_chunk(struct chunkfile *cf,
-+	       uint32_t chunk_id,
-+	       chunk_read_fn fn,
-+	       void *data);
-+
- #endif
+ 	The remaining data in the body is described one chunk at a time, and
+ 	these chunks may be given in any order. Chunks are required unless
+ 	otherwise specified.
 -- 
 gitgitgadget
-
