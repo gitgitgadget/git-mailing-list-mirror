@@ -4,93 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 675ECC43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4746C4332D
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1D6AA64E89
+	by mail.kernel.org (Postfix) with ESMTP id 74E4764EB2
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231737AbhBRTcp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 14:32:45 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57609 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233591AbhBRTMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 14:12:03 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CE2A108952;
-        Thu, 18 Feb 2021 14:11:21 -0500 (EST)
+        id S231947AbhBRTcw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 14:32:52 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56147 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234291AbhBRTTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:19:49 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E013899041;
+        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=JBwEAOh252o+
-        CDRpF6zuS24MaPc=; b=DyFLEgZfKJdhWN9D5ji14J2Y/OedAONTITmdjKAbx34w
-        SGpYqC4uVPPclB8n4OKTKaN7UVoEuT+fzrNk6WvyH6Q64yqH2Bc9CLF96cQEO6EG
-        IKuN7c/y6OWgC6ougff4GWld/gBFcCT15E7/8j5L17z1o/fr3d+ixWKBh6vsiQ8=
+        :content-type; s=sasl; bh=b05i4ymVsVd/9MvAWX/4pdBmBWc=; b=SLbLB+
+        7iA4cWYmID8zedbn29PiPjVRXMVvmFOXnj6u5jFmRW1gAmdRxT4tMC1XGkVXuqI8
+        tkOOLND+p8LD7irhQN1VKR035i+DFXOfDgZ3gEQGmNMVBW/Yv/zYYsmc44hT3GYY
+        O/vO75Cp1Q6fbuaBFNGoTeo5wCRX3Do40js+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hW2Wum
-        C5slkrAAGjCE25AxC946nQVU6SZi+BQao+xHxyBY6pm0LL+uv1gsXEOj0B8iUDoB
-        Tq43h0cYX7+FT0nPSHbuiHvg+5IaZff9x8ukADbIHOA7cec6iKIFSPozv0GGDvai
-        SszAf1zU8iWxHNZiV7pczN6W01uPC8NYXZUd8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 74D17108951;
-        Thu, 18 Feb 2021 14:11:21 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=aUQKPBwxosa1uIhIj9bR2l+lUghCdjMc
+        imj5MXC7SwlfSUytXnhLh4n9G9aC7eQALlhW/aehyQ7HZl5VYYNwCYhXkUjlWfP5
+        Y8LtsHRdQepRwGdZ6upIDFrDj5zAKvgKBgVd8AYRaKdgRnW4UlptTfW+a9ymDgHu
+        TJozZ68eoRQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D04A69903F;
+        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 944A010894F;
-        Thu, 18 Feb 2021 14:11:17 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37F779903E;
+        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Ryan Zoeller <rtzoeller@rtzoeller.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v5 0/2] difftool.c: learn a new way start at specified file
-References: <pull.870.v4.git.1613308167239.gitgitgadget@gmail.com>
-        <pull.870.v5.git.1613480198.gitgitgadget@gmail.com>
-        <xmqqblcjrgvc.fsf@gitster.c.googlers.com>
-        <CAOLTT8T=R-M1eK9thSuzHNOJ8wkaTX3yYsLEgpqmHiEYWgM1XA@mail.gmail.com>
-        <YCz6oDZCAODPS8sY@generichostname>
-        <CAOLTT8Ri+XbSg_=KaLOCmNX4Nrii1ssN9_FFbnmm7ew4vYN5nA@mail.gmail.com>
-        <xmqqo8gile02.fsf@gitster.g>
-        <CAOLTT8QNbTeSJfo2O7f5vv6Q9ZVMrkGjRCikc4P7eN7M6aeZdw@mail.gmail.com>
-Date:   Thu, 18 Feb 2021 11:11:15 -0800
-In-Reply-To: <CAOLTT8QNbTeSJfo2O7f5vv6Q9ZVMrkGjRCikc4P7eN7M6aeZdw@mail.gmail.com>
-        (ZheNing Hu's message of "Thu, 18 Feb 2021 23:04:10 +0800")
-Message-ID: <xmqqy2flfay4.fsf@gitster.g>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
+References: <20210217072904.16257-1-charvi077@gmail.com>
+        <20210217073725.16656-1-charvi077@gmail.com>
+        <20210217073725.16656-2-charvi077@gmail.com>
+        <xmqq35xulbj0.fsf@gitster.g>
+        <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
+Date:   Thu, 18 Feb 2021 11:18:59 -0800
+In-Reply-To: <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
+        (Charvi Mendiratta's message of "Thu, 18 Feb 2021 15:43:56 +0530")
+Message-ID: <xmqqpn0xfal8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 13C4FF24-721D-11EB-8F60-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 27840220-721E-11EB-8B3C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> writes:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-> I think my patch is stuck in GGG, and the current version is after I
-> cherry-pick your patch and my patch on the master. Because I don=E2=80=99=
-t
-> know how to based on your patch but not submit your patch. Is there
-> any good way?
+> Hi Junio,
+>
+> On Thu, 18 Feb 2021 at 01:20, Junio C Hamano <gitster@pobox.com> wrote:
+> [...]
+>> The second one, even with s|HEAD|HEAD~3| is even less clear.
+>> Without the "-m", the resulting commit will have the subject that
+>> begins with !amend but the log message body is taken from the given
+>> commit, but with "-m", what happens?  Does a single-liner 'clever
+>> commit message' _replace_ the log message of the named commit,
+>> resulting in an !amend commit that has no message from the original?
+>> Or does 'clever commit message' get _appended_ the log message?
+>>
+>
+> Yes, here it gets _appended_ the log message.  I agree this seems a bit
+> confusing.
 
-I am not capable of doing helpdesk for GGG but I think you can send
-two of them anyway with the title of the first one munged for
-reading humans to tell them not to use or even look at it ;-)
+In what situation would a user use "-m 'appended pieces of text'"
+option, together with "--fixup=amend:<commit>"?  I am wondering if
+we want such a "append to" feature, or is it easier to understand
+for end-users if "-m", "-F", "-C" and "-c" (the common trait of
+these options is that they contribute to the log message text)
+are made incompatible with --fixup=amend:<commit>.
 
-GGG may send both of them out, but the ultimate objective here in
-the exercise is to avoid the unwanted first one to waste people's
-time, so until such a feature is implemented in GGG (or there may
-already be one, but we do not know it), that would serve as a
-workaround.
+> ...Thanks, for pointing this out. Also, in the above method for
+> alnum I think we can initialize an array of alnum[] instead of
+> alphas[]. Or otherwise I was thinking to instead check:
+>            if (!isalnum(*c) && *c == ':')
 
-Thanks.
+Sure a loop is fine, or alnum[] is fine, or just alpha[] is OK, I
+would think.  Do you foresee you'd need --fixup=chomp124:<commit>?
+I somehow doubt it.
