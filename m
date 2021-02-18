@@ -2,147 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF17DC433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 05:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EEC1C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 06:35:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B9E264E4B
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 05:21:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1697364E5F
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 06:35:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229656AbhBRFVm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 00:21:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41820 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbhBRFVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 00:21:41 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86656C061574
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 21:21:01 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id 6so721188ois.9
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 21:21:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8NUgDyh1eaHu65v+fRXnAMTRV5NhXDl07tRAq+zIJpw=;
-        b=oLtzUV4iVr7QPFEfqor4ml/s25PjrmwD8XelTaa8cCGBGhvPEWcDAZYeRd4NJ2wymo
-         HV22405apW+h3v4N+BIdCM6tGT+0ARhc0ftwMtNMDZDxW12/H27JghuoK8Gt58IndB/0
-         6n1Jp2q8mGwdv8d7AYDiU5PasJ95nzmvk4rhkpu/KFEkc+u953d3rMm6QVVnexL/axtT
-         2mfOZ1ymrSkEbSZghFIxa1rWp/dw8M+N//bTM3m3UnDaKdtHmH1sAg+bxuqNeFSw86NL
-         Q+Nb0QKjCesRS/fFFkBy+GV74rSoUrwMJDnt9XgS1B3+EvKXP/yPu+f+ZFRkkewGXBCx
-         VcuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8NUgDyh1eaHu65v+fRXnAMTRV5NhXDl07tRAq+zIJpw=;
-        b=sFTrDKHF5XEF/7DqfGcYwmVAmmuTmeqOwi68MutZOA1xfXiMxqTm5CMbfKZWQIoQo9
-         thFlgi4GBvqbycmvOFlk5OwTwy3cZxDblGEgWj1TeAn+Xv4TwVKVfbkvm2Nr/ZDbc7BH
-         SH4eSKra99GuyOh+5Ew46vXB7auZdHp6p7iURgaG/klKRLcsN2cyNv4XH9ewpAo20VR9
-         leB4na94/uU36hQ8W35/qOkqY5UYMhodVu662Olq0jWOauTjH0XKA8iJQbGv+8cDf2yx
-         GMxG267UqndlZAWYwNFgo+UIWV5qz0CCqnA8Up7HWkF5s02PNcHA4rOp9vQtInnYcJ03
-         SSFg==
-X-Gm-Message-State: AOAM533z7ZXTmpgWq1PRaD6Eb9cP678H3upNKwgUObALGVe9CS34FcBv
-        NYaXD6aLeMsBHzCmhN4ZHn1PugRTzRlDuojaR2c=
-X-Google-Smtp-Source: ABdhPJwcZuqM49D99kR2Wjc/2DQMmT+Rkz+3rXSwGCReu7ATxdBHMv8YLLrLrHUzafOqHcFKm8YHgT1K+tG1JVNrnTM=
-X-Received: by 2002:a05:6808:914:: with SMTP id w20mr436527oih.120.1613625660832;
- Wed, 17 Feb 2021 21:21:00 -0800 (PST)
+        id S230520AbhBRGdk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 01:33:40 -0500
+Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:58345 "EHLO
+        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231233AbhBRG3D (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 Feb 2021 01:29:03 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id BDD15882;
+        Thu, 18 Feb 2021 01:27:46 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Thu, 18 Feb 2021 01:27:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=3oaM4VhPwpCdeUpX2P4v2ug4jHM
+        rfheoVRj0RyE8taE=; b=aEZ50Rqpub9U6edBnv4mMJk2DFkgrAT4wO5Ys3oekm9
+        DgA8b+yxwYgXvq7sxxOOmRMTX9RUK7L1NdvjXceq71DgfxQFw4l9WZrdnENocSfo
+        PsEay/GiaIFCClvV9Ua28oW45isy37A4/Y/3NuQvdKVf9mYBsf8/6Rswcjh1yoUe
+        Gfe5GC/FolGFNYDLOH4caUe5Rmybh7UKVb4HzMYcsWIXIDWm5jXJpvru1uB7+vA4
+        K7mL6ul3v4Cc+RRPc06K/Dom6Ve5BbuTXEFmsPbXsBWbyYYfYRWKAT96IoUM9egZ
+        S6HakXKKylxVXMgoUfSTUdwkGjOoK2ERpOIqHPZlN/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=3oaM4V
+        hPwpCdeUpX2P4v2ug4jHMrfheoVRj0RyE8taE=; b=WFn1zwdoBQowrOmXd7SBax
+        uAomb3jaLJ4LsEmDPTI7WLfW3omoGeIxDhs8CPaYgRek0dej6LKm3nYS6NOJfcY+
+        epD+kkofw8Ez//M/EUdB4BoYgW+Y4ApfeiRQguKmoh4Oll58IHBimSSHZTm0qDpm
+        lEoOtotTOZtfMIGhYUMBhfBwFt5hH3ONd9KsaXdr4fDjyeCQIzrP3NNStlIeLyy1
+        I343c+f1Su8s6PHnRYlX/fomwfEBNiA98eKl9ocvZGFfWoNfrZdCbUfzQz0+Rh6r
+        rfu4t4XW+CprTq7EXrAkl0AJDJDvzocK3kQUJgbEzEbIIYLwPXgI+zAHmYfwSzqg
+        ==
+X-ME-Sender: <xms:4QguYNdKwdMVsy4p5BnFymgpDFtqsmCnyjdWXOu7SfYnNsB-9iDxVA>
+    <xme:4QguYLMjtIoCQgCrtCok8ZcElKFkB8NZ4HgjM-zKEitybPtSQmmwKE7sFXYaPqvjO
+    OtyTgzq608i0btR5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrjeefgdelhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
+    kfhppeejjedrudefrdegrddugeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:4QguYGhdKgGADS_eIzfKUk2KybEiUTjgX7Ko6KyblsbJPwKZLzOr8g>
+    <xmx:4QguYG-huB_SrqI5LC-wPhgbzbs6NsvjAhPEF_CVPPrlpZiHauK3Yw>
+    <xmx:4QguYJs6PrPKQ9jou-TnKz5f0w0btH4jQLY4f5H1pxDp6ukrWOAIZA>
+    <xmx:4gguYKXLciRXiC169pgjtSA5DHd0Uhlx_5OqVSXKsbEJaQ16h3OCUw>
+Received: from vm-mail.pks.im (dynamic-077-013-004-149.77.13.pool.telefonica.de [77.13.4.149])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 171751080059;
+        Thu, 18 Feb 2021 01:27:44 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 41a8d17e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 18 Feb 2021 06:27:40 +0000 (UTC)
+Date:   Thu, 18 Feb 2021 07:27:39 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/3] git.txt: fix monospace rendering
+Message-ID: <YC4I20bQ0jeNLO+M@ncase>
+References: <cover.1613590761.git.martin.agren@gmail.com>
+ <97c686dd7ba1bbd1c0be6f7f61a3a033adf8adb6.1613590761.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-References: <pull.870.v4.git.1613308167239.gitgitgadget@gmail.com>
- <pull.870.v5.git.1613480198.gitgitgadget@gmail.com> <xmqqblcjrgvc.fsf@gitster.c.googlers.com>
- <CAOLTT8T=R-M1eK9thSuzHNOJ8wkaTX3yYsLEgpqmHiEYWgM1XA@mail.gmail.com>
- <YCz6oDZCAODPS8sY@generichostname> <CAOLTT8Ri+XbSg_=KaLOCmNX4Nrii1ssN9_FFbnmm7ew4vYN5nA@mail.gmail.com>
- <xmqqo8gile02.fsf@gitster.g>
-In-Reply-To: <xmqqo8gile02.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 18 Feb 2021 13:20:48 +0800
-Message-ID: <CAOLTT8SkVQV+KFCAqipWmA35wcieM+Y1u45ONmc1ASchf8ub5w@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] difftool.c: learn a new way start at specified file
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        David Aguilar <davvid@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Ryan Zoeller <rtzoeller@rtzoeller.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PXyMZnxnBu7tKhOO"
+Content-Disposition: inline
+In-Reply-To: <97c686dd7ba1bbd1c0be6f7f61a3a033adf8adb6.1613590761.git.martin.agren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio, thank you for your patient explanation.
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8818=E6=97=
-=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=8D=882:56=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> writes:
->
-> > Denton Liu <liu.denton@gmail.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8817=E6=
-=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=887:14=E5=86=99=E9=81=93=EF=BC=9A
-> >>
-> >> Hi ZheNing,
-> >>
-> >> On Wed, Feb 17, 2021 at 12:12:10PM +0800, ZheNing Hu wrote:
-> >> > Oh, I am sorry.
-> >> > Then I only need to squash the two commit, right?
-> >>
-> >> I've never used GGG before but I suspect that in your GitHub PR, you
-> >> need to set the PR base to 'master' instead of 'jc/diffcore-rotate'.
-> >>
-> >> CCing the creator of GGG, please correct me if I'm wrong.
-> >>
-> >> -Denton
->
-> > Hi Denton Liu,
-> > You mean I should cherry-pick Junio's patch to my topic branch, right?
->
-> Thanks, Denton, for helping.
->
-> ZheNing, the end result we want to see on the list is just a single
-> patch, your 2/2 alone, that says "this patch depends on the
-> diffcore-rotate topic" _under_ its "---" three-dash lines (where
-> "meta" comments on the patch to explain how it fits the rest of the
-> world, etc.).  As a single patch "topic", there won't be even 1/1
-> marking, i.e. something like:
->
->     Subject: [PATCH v6] difftool.c: learn a new way start at specified fi=
-le
->     From: ZheNing Hu <adlternative@gmail.com>
->
->     `git difftool` only allow us to ...
->     ...
->     Teach the command an option '--skip-to=3D<path>' to allow the
->     user to say that diffs for earlier paths are not interesting
->     (because they were already seen in an earlier session) and
->     start this session with the named path.
->
-I noticed that "skip-to" is more suitable for users, right?
-(I always thought "rotate-to" would be better)
->     Signed-off-by: ZheNing Hu <adlternative@gmail.com>
->     ---
->
->      * An earlier round tried to implement the skipping all in the
->        GIT_EXTERNAL_DIFF, but this round takes advantage of the new
->        "diff --skip-to=3D<path>" feature implemented by gitster
->        (therefore, the patch depends on that topic).
->
->      Documentation/git-difftool.txt | 10 ++++++++++
->      t/t7800-difftool.sh            | 30 ++++++++++++++++++++++++++++++
->      2 files changed, 40 insertions(+)
->
->     ... patch here ...
->
->
-> I do not know how to achieve that end result with GGG and I do not
-> know if GGG allows its users to do so easily, though.
-I understand what you mean. I think I want GGG to work normally.
- I will try to resubmit your last patch and my new patch cherry-pick to the
- new topic branch. If there are still problems with this, please point out.
->
-> Thanks.
+
+--PXyMZnxnBu7tKhOO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 17, 2021 at 08:56:05PM +0100, Martin =C3=85gren wrote:
+> When we write `<name>`s with the "s" tucked on to the closing backtick,
+> we end up rendering the backticks literally. Rephrase this sentence
+> slightly to render this as monospace.
+>=20
+> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
+> ---
+>  doc-diff:
+>  --- a/.../man/man1/git.1
+>  +++ b/.../man/man1/git.1
+>  @@ -77,8 +77,8 @@ OPTIONS
+>              setting the value to an empty string, instead the environment
+>              variable itself must be set to the empty string. It is an er=
+ror if
+>              the <envvar> does not exist in the environment.  <envvar> ma=
+y not
+>  -           contain an equals sign to avoid ambiguity with `<name>`s whi=
+ch
+>  -           contain one.
+>  +           contain an equals sign to avoid ambiguity with <name> contai=
+ning
+>  +           one.
+
+Over here you're also dropping the backticks, while...
+
+>              This is useful for cases where you want to pass transitory
+>              configuration options to git, but are doing so on OS=E2=80=
+=99s where other
+>  Documentation/git.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index d36e6fd482..3a9c44987f 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -88,7 +88,7 @@ foo.bar=3D ...`) sets `foo.bar` to the empty string whi=
+ch `git config
+>  	empty string, instead the environment variable itself must be
+>  	set to the empty string.  It is an error if the `<envvar>` does not exi=
+st
+>  	in the environment. `<envvar>` may not contain an equals sign
+> -	to avoid ambiguity with `<name>`s which contain one.
+> +	to avoid ambiguity with `<name>` containing one.
+
+=2E.. here you don't. Is this on purpose?
+
+Patrick
+
+>  This is useful for cases where you want to pass transitory
+>  configuration options to git, but are doing so on OS's where
+> --=20
+> 2.30.0.284.gd98b1dd5ea
+>=20
+
+--PXyMZnxnBu7tKhOO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmAuCNoACgkQVbJhu7ck
+PpTxUA/9F1mfP1sflZyEYAxvBtwZ0DLYlB+L2FaGieQAIQ9GP8RFMyfZbNMIBkYo
+m5qNr+XMVgp325nHxQ2cCSqaz7kWsaKtY+ilqNJzZ6JppEMvdANMB4rEFbQQhGDF
+zb7B/DHdSG9RG78iPkdFJLnjMQ4BElcQtoMKvItTQ5xRCjUzRlhY0wgg7kXbeB1D
+5llLT4P9mZTmSs8+xWM0ccv0+C7G+UiaU2ZPy2WHa51yi4XAhaX32ykXnTeV6poJ
+DGq5Rh1ouo9U9ao/DqXCsCouXfBEmGf9t2yZaZK53ietKAcz8C0EPPPKr2BEWSLd
+Hrv0/+4aJyBVwINLdME8YWy5azGk0fYuoI1V9Ek3PKNF79R8k876su4U3wOFrPxr
+VKEABmJ7g/IGf04QMMG7islHoo0Ihr7NqfH9V6nTV/GcPyRrwVOABZ74AWIo9tI5
+XoerpXWWF8+xMR5/+u2NGE5Q2+ctky+j2khLRnthiCSe/dVPs38LoW2DVJQ0bcrz
+zXGxzLWfB1Eg0SwoHR7af6OgNmVv0oTT0jF5zXvBY8ieUd1niod3mU/J8ObWd23j
+9fVvPnE+5KYeD8QKisiVC4pMBIF6apIJazB6so3VxulE76lnfbmql2UDG8vz89X4
+DqXEd7wqXBdkNBEMoUbmdSLia82ED4QzSWWjYEs2VS1gWMA1dVE=
+=L3V8
+-----END PGP SIGNATURE-----
+
+--PXyMZnxnBu7tKhOO--
