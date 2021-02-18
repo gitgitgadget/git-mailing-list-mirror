@@ -7,91 +7,97 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5252C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63001C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:50:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6062364EB3
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:49:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A24B64EB4
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232996AbhBRTss (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 14:48:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63473 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231285AbhBRTcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 14:32:10 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD45BB0D02;
-        Thu, 18 Feb 2021 14:31:26 -0500 (EST)
+        id S230248AbhBRTtR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 14:49:17 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63100 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231855AbhBRTho (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:37:44 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C73A12B002;
+        Thu, 18 Feb 2021 14:37:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=5rBF4/LJPyp1
-        NouF9LUe0TTByN8=; b=sjfuyhfJ9n+nN/QTztidpxl7O7C6g7DOljOMt3PxnK6J
-        18v2yQfZmXfyz2fDT9546F+Hj/xdTynAlOOSfNQdJ2o5579UNymM4+mkzZq8JeN7
-        7LXmIUBXT0DRXPBTDydE16E2ojQE4H0ACCp0vs4CVovJNJ3pvjEOXKqjpfq+2SM=
+        :content-type; s=sasl; bh=YLPXCr7F8VhmvkPPX6ogPutpk7I=; b=Ag9Qsg
+        MPa8Jqeqn1sbMNl7m6MiEWXGjH0QST+oib+RYzf4H/ixttKe+wONntYi88hYR8G9
+        xMVDmiozsh8rtAdKLsQer4VW8sbPmPuDqSQ8K8bD5dc9sbfyanGIjWWv848U6WP/
+        AlQ4HdGbqqmEq9L/UHO20oezVSDWKFAl0WGcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DI/WgI
-        uw3XUeneRuZBfGNKm6iDEJCpcQSWbmd0wYMrQB0FOqweASjh6BzyprZQr/bsyVYH
-        h5V6frXq3Hozy/W+9QGD0FhrXkYahhPF9GeqsLZ9qkDyZIa4eH/1yCo3j0YpMMMd
-        eU2lgm1IVSkKQNDvg5TpdwWqIPedsGe8PR44M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D40A6B0D01;
-        Thu, 18 Feb 2021 14:31:26 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=eSvLQ+NYNuU9EacH705cuOofeV8cAiq4
+        0FwMFLujOMo4zehH6mcg8SvjhLU1jznyj1LM4BdGnKqdlpprUWS+VNiPt6azrY+g
+        xT0KjvSPalu0xdBEkIILMGW4PCW7w/IcBKT91LA8KMab0xM2tPhg+VXNEo1UHZHT
+        XjeFoyjCmX4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55CCC12B001;
+        Thu, 18 Feb 2021 14:37:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 56DE9B0D00;
-        Thu, 18 Feb 2021 14:31:26 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11EF112AFFD;
+        Thu, 18 Feb 2021 14:36:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Subject: Re: What's cooking in git.git (Feb 2021, #03; Wed, 17)
 References: <xmqqr1legm5v.fsf@gitster.g>
-        <CAN0heSqHLzGSZ87GLo8dm854ZOMONCv0c69YFX_=40q5wG66JQ@mail.gmail.com>
-Date:   Thu, 18 Feb 2021 11:31:25 -0800
-In-Reply-To: <CAN0heSqHLzGSZ87GLo8dm854ZOMONCv0c69YFX_=40q5wG66JQ@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 18 Feb 2021 07:44:29
- +0100")
-Message-ID: <xmqqczwxfa0i.fsf@gitster.g>
+        <CAPSFM5efu6MF2RzfDkw8XJ9kF79akEesdA0WFAG3n9fo9N26vQ@mail.gmail.com>
+Date:   Thu, 18 Feb 2021 11:36:57 -0800
+In-Reply-To: <CAPSFM5efu6MF2RzfDkw8XJ9kF79akEesdA0WFAG3n9fo9N26vQ@mail.gmail.com>
+        (Charvi Mendiratta's message of "Thu, 18 Feb 2021 16:14:23 +0530")
+Message-ID: <xmqq8s7lf9ra.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E43D5D7A-721F-11EB-9B89-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: AA8E5EC0-7220-11EB-A375-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-> On Thu, 18 Feb 2021 at 03:13, Junio C Hamano <gitster@pobox.com> wrote:
->> * ma/doc-markup-fix (2021-02-17) 2 commits
->>  - gitmailmap.txt: fix rendering of e-mail addresses
->>  - rev-list-options.txt: fix rendering of bonus paragraph
+> On Thu, 18 Feb 2021 at 07:44, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->>  Docfix.
+>> * cm/rebase-i-fixup-amend-reword (2021-02-17) 6 commits
+>>  - doc/git-commit: add documentation for fixup[amend|reword] options
+>>  - t3437: use --fixup with options to create amend! commit
+>>  - t7500: add tests for --fixup[amend|reword] options
+>>  - commit: add a reword suboption to --fixup
+>>  - commit: add amend suboption to --fixup to create amend! commit
+>>  - sequencer: export subject_length()
+>>  (this branch uses cm/rebase-i and cm/rebase-i-updates.)
 >>
->>  Will merge to 'next'.
+>>  "git commit --fixup" learns to optionally create "amend!" and
+>>  "reword!"  commits, that use the log message in "fixup" commit
+>>  as the message of the resulting commit.
+>>
 >
-> Thanks for picking it up.
+> I would like to put light on the description of the patches. I might have
+> misinterpreted the meaning of  _"reword!" commit_ as written above.
+> But I thought to explain that here both additional suboptions i.e
+> `amend` and `reword`
+> of `--fixup` introduced in the patch series creates "amend!" commit only.
 
-Thanks for contributing.
+Thanks for clarifying.  I did mix up in the description.
 
-> It looks like you didn't pick up the middle(!) one, "git.txt: fix
-> monospace rendering". I thought maybe you queued it somewhere else, but
-> I can't seem to find it anywhere. Chris, and later Patrick, had a
-> question about it, which was maybe why you skipped it. I hope I've
-> resolved that confusion, which was entirely caused by my cramming
-> something too diff-like into the commentary of the patch.
+As the parameter given to the command line option is much more
+end-user facing than which insn it results in the todo list, how
+about explaining the topic like so:
 
-Yeah, I too commented on that one myself just now.  It is a mystery
-how I managed to miss the entire discussion (including the starting
-patch in the middle of a 3-patch series) yesterday.
+    "git commit --fixup=<commit>", which was to tweak the changes
+    made to the contents while keeping the original log message
+    intact, learned "--fixup=(amend|reword):<commit>", that can be
+    used to tweak both the message and the contents, and only the
+    message, respectively.
 
-> Obviously, that patch 2/3 doesn't need to go in the middle -- it can
-> just as well be at the top.
->
-> Martin
