@@ -2,160 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2624C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C58EC43381
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:24:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BECC64E76
+	by mail.kernel.org (Postfix) with ESMTP id 010C564E85
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232735AbhBRMYK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 07:24:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48286 "EHLO
+        id S232763AbhBRMY3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 07:24:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbhBRKQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 05:16:08 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015E3C061786
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:14:08 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id r75so1376310oie.11
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:14:07 -0800 (PST)
+        with ESMTP id S230253AbhBRKTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 05:19:19 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD48C061574
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:18:38 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id m22so5654370lfg.5
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:18:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xjD19c2TutB8fEZyQP3lBM4A/1ysLc1RFTjBK5Nszm0=;
-        b=eA99FDceUOvQZhpSib6afNPKYb1xMYju4iSh7DJg9FIYDswx/yMQJpGkqGX/vckGLV
-         7vXSZCOLqywsWyA7KOI/3BEqmDLVjK6f70Ny/3loaf6W1pNdk4tTVqiEJ3BHtpRP+xq5
-         LQOROesSKtJ3ARkrL2f+BM8EKFDaBpA8dCNv1xHwYDb2cFGLwhQd+VoBDNS7NNO1mSDH
-         Ll2+CXxTqfe4Ur2OlFmze+DQBDKIEaEs5eg600kWM8ENkP+DUc3lmzMfjMoRneilX7S7
-         mBnicJz5Dpa+AXH5A5W/M0aFFaF097Exw13sF/wSWz7b+vBQzwRrrL+i9UvZ61l58QrF
-         keAw==
+         :content-transfer-encoding;
+        bh=q6cmxIVJzosaiOSmakdxX6z8/VSByxE9kkPyeLiko0k=;
+        b=NklAKq5PzUxdcFpZWTQcwyMRhiXzXaJ8A+WWWo6ceZ8XSpe2N9yGkWnF7JhN9AVZ87
+         qUBUEkx9/9PDfkuXqP9Nu6UbAWzZewE3VMIhQuPwIpeB6cPRylKLUVrZJmscfnv/68NP
+         tqcbcO94UQPjqxesIcbH4h07lkG9As4gsZwoHuUC0O1BKFKp/cc05iJdnitZQTCeROjS
+         noYDOqkigcY10I7/H3BGpIOYqph8SzWsyncub0LPPwT5VPoRdDzLn++4G3QCrERkVxMv
+         AtwxvgGV2H33i8xSaeIlqi+LQJf/8sDHYwdk9Xj3Yy3yu+F/vguWg8QjLgWMLEpKe5kT
+         uPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xjD19c2TutB8fEZyQP3lBM4A/1ysLc1RFTjBK5Nszm0=;
-        b=KGQw5C0AUPBMcwRXWPH3dLoyOhntNK7Df+Y+i/iRq9uOOYS90mWA6yGTwVd/YrmnGm
-         z2f50QFu1Y8GTK3DVRVivaslPt4wRu5qXFuNZ8AEwErN7FdtLVAh4X0LvXSA2zFjLHxg
-         qzwz1zU+Wg64oxGMxTkqxe/ihNk8x4EUNBEq+7Vi2gHg93WQ2+oKl9gdRSUZUPMFnurr
-         ft7rMGRT7Bbk6QVKa2u4mJE1LT4Gs69ybvbvuIN04wbRRYnqjMtgpm3y2Dz3RSDoZxNl
-         3ihqlavrXOQ4o6uUhPfQnqY3y1kWLit3veoWFr4yN0YdOrwJlBZrAJpDvSBPqxC1tk8t
-         bd7Q==
-X-Gm-Message-State: AOAM531Dv6LHpQJzmGMgz/4X20mkLp1okxW9kR7MmITuKaOElYPQ47Yr
-        XkehFVqu6+KWg+eNGNXFoNF4jetIHXnWJ4Ksf90=
-X-Google-Smtp-Source: ABdhPJxrGejTCzjCgaWuA5wyclo3WV3cIx2puGqObgBrua5dL4hw3Q7rJYGJhz+FcuVXV/l8aYJ/tcU8ZrFP8Wj/Kb0=
-X-Received: by 2002:a05:6808:8cd:: with SMTP id k13mr2126018oij.98.1613643247453;
- Thu, 18 Feb 2021 02:14:07 -0800 (PST)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=q6cmxIVJzosaiOSmakdxX6z8/VSByxE9kkPyeLiko0k=;
+        b=nS1c/ly6WkQwKGX8+NcYjJLHhUv5K7p9mGNeNr3EzrWNXKNOkhcyxVS5gI73VYcIvs
+         bDUn0AIAChpKCtLUpUWB7CAZMUfgvLZqfYaQ8sd5sDQqEiyGbqpD6iIIGFQPfxG+vgYQ
+         7pg8I8a7+hpYaqVXYE8r4qT0KmNMh0cQYGZ6/PjdY4ow4akBiH2aKeoEGeiOBDiNemL9
+         n+ZkqhvaG9wxOt3gaoHb0JJh7RZK47LRJG/ufMda7BJpCfGFKCbwCaa+xKD2nW8+Q7WO
+         Fi1MolMRUnEVIkW055tzvhUlB0x8Gj9JbT3LVsIux7dB/VpnOzm3RTy3vMcI1GJfmFDT
+         2YFA==
+X-Gm-Message-State: AOAM530VwV+ly5Up/aKAOi7qixM1vYLv/fpMmqY00HsKApofEUkhlwag
+        4ML+DPa6E1NMBpnoqx4FcOuxOHSUstKaYFvjMJs=
+X-Google-Smtp-Source: ABdhPJzESkiqtuU2t9Fe1zc2DRhxaZ//vza2HT8TniKdPr4NLQ+ulYekZ2Opwvh5MVHrPrDyk2x373NNowESIKenOfE=
+X-Received: by 2002:a05:6512:388c:: with SMTP id n12mr2086688lft.357.1613643516812;
+ Thu, 18 Feb 2021 02:18:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20210217072904.16257-1-charvi077@gmail.com> <20210217073725.16656-1-charvi077@gmail.com>
- <20210217073725.16656-2-charvi077@gmail.com> <xmqq35xulbj0.fsf@gitster.g>
-In-Reply-To: <xmqq35xulbj0.fsf@gitster.g>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Thu, 18 Feb 2021 15:43:56 +0530
-Message-ID: <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] commit: add amend suboption to --fixup to create
- amend! commit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <CAG+K25Pk0+sOAYuWS2OF7CXLXJLjGMKyBB_SOLpoO5RFiktN5g@mail.gmail.com>
+ <xmqqo8gksqr4.fsf@gitster.c.googlers.com> <CAG+K25NbifB9k9ugU5ZjLAOKxLyfEZcphfZXNS9_Whi6gZcBLA@mail.gmail.com>
+ <xmqq7dn7rgi4.fsf@gitster.c.googlers.com> <CAG+K25NC3H7L5TpxmR_kCvmqR8GPdCEdTt740F34ON4TWoPCpg@mail.gmail.com>
+In-Reply-To: <CAG+K25NC3H7L5TpxmR_kCvmqR8GPdCEdTt740F34ON4TWoPCpg@mail.gmail.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Thu, 18 Feb 2021 02:18:25 -0800
+Message-ID: <CAPx1Gvf1pXCp9YVQSQ1_-w3-A8qYZD7tsFV80njsXD-+Jap6Xw@mail.gmail.com>
+Subject: Re: git-send-email: smtpserver in $HOME
+To:     =?UTF-8?B?SmFuIOKAnEtoYXJkaXjigJ0gU3RhbsSbaw==?= 
+        <khardix@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Just a small point here:
 
-On Thu, 18 Feb 2021 at 01:20, Junio C Hamano <gitster@pobox.com> wrote:
-[...]
-> The second one, even with s|HEAD|HEAD~3| is even less clear.
-> Without the "-m", the resulting commit will have the subject that
-> begins with !amend but the log message body is taken from the given
-> commit, but with "-m", what happens?  Does a single-liner 'clever
-> commit message' _replace_ the log message of the named commit,
-> resulting in an !amend commit that has no message from the original?
-> Or does 'clever commit message' get _appended_ the log message?
->
+On Tue, Feb 16, 2021 at 2:17 PM Jan =E2=80=9CKhardix=E2=80=9D Stan=C4=9Bk <=
+khardix@gmail.com> wrote:
+> Well, unless I'm missing something, shouldn't the tilde above be
+> expanded by the shell before actually being passed as argument?
 
-Yes, here it gets _appended_ the log message.  I agree this seems a bit
-confusing.
+Maybe.  Some shells do and some don't:
 
-> I think we can just remove the "example" from here and explain the
-> feature well in the end-user facing documentation.
->
+$ echo foo=3D~/foo
+foo=3D~/foo
 
-Okay, I will remove it from here and add it in the documentation.
+bash$ echo foo=3D~/foo
+foo=3D/home/torek/foo
 
-> > +     if (fixup_message) {
-> > +             /*
-> > +              * check if ':' occurs before '^' or '@', otherwise
-> > +              * fixup_message is a commit reference.
-> > +              */
->
-> Isn't it that you only intend to parse:
->
->     --fixup
->     --fixup=amend:<any string that names a commit>
->     --fixup=<any string that names a commit>
->
-> and later extend it to allow keywords other than "amend"?
->
+for instance.
 
-Agree.
+> So I actually did my homework and skimmed through the relevant RFCs
+> (RFC952 and RFC1123); as it turns out, no, it cannot
+> =E2=80=93 only ASCII alphanumerics, '-' and '.' are valid characters.
 
-> I can understand that you are trying to avoid getting fooled by
-> things like
->
->         --fixup='HEAD^{/commit message with a colon : in it}'
->
-> but why special case only ^ and @?  This feels brittle (note that I
-> said "things like", exactly because I do not know if any string that
-> can name a commit must have "@" or "^" appear before ":" if it is to
-> have ":" in anywhere, which is what this code assumes).
->
+Right: tilde and slash are both verboten. (Underscore is too, but
+that one does get used and some programs allow it.)
 
-Okay, I got this...
-
-> Instead, you can find the first colon, check for known keywords (or
-> a string that consists only of alnums to accomodate for future
-> enhancement), and treat any garbage that happens to have a colon
-> without the "keyword" as fixup_commit.  I.e.  something along this
-> line...
->
->                 const char alphas[] = "abcde...xyz";
->                 size_t kwd_len;
->
->                 kwd_len = strspn(fixup_message, alphas);
->                 if (kwd_len && fixup_message[kwd_len] == ':') {
->                         /* found keyword? */
->                         fixup_message[kwd_len] = '\0';
->                         if (!strcmp("amend", fixup_message)) {
->                                 ... do the amend:<commit> thing ...
-> #if in-next-step-when-you-add-support-for-reword
->                         } else if (!strcmp("reword", fixup_message)) {
->                                 ... do the reword:<commit> thing ...
-> #endif
->                         } else {
->                                 die(_("unknown --fixup=%s:<commit>",
->                                         fixup_message));
->                         }
->                 } else {
->                         /* the entire fixup_message is the commit */
->                 }
->
-
-...Thanks, for pointing this out. Also, in the above method for
-alnum I think we can initialize an array of alnum[] instead of
-alphas[]. Or otherwise I was thinking to instead check:
-           if (!isalnum(*c) && *c == ':')
-i.e to check that first non alnum char in fixup_message is ':' and
-returning it's position to extract both fixup_prefix and fixup_commit.
-
-Will look into it and update in the next revision.
+Chris
