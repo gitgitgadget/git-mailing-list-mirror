@@ -7,65 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D28AC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C00C6C4332D
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:37:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D3F7360C3D
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:37:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78F3E60C3D
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:37:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233042AbhBRMfe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 07:35:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
+        id S233060AbhBRMf6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 07:35:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231944AbhBRL6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 06:58:44 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93007C0613D6
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 03:31:44 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id g3so3854759edb.11
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 03:31:44 -0800 (PST)
+        with ESMTP id S232197AbhBRMIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 07:08:22 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61EF5C061756
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 04:07:33 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id j9so4097220edp.1
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 04:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=k/gFqJMTLNEMUQP9G11/bLvujEjMc49eCwiIXxSDbaM=;
-        b=GiBdvJZzdEKCbwHY8H0GEo6QlcKFJQ7B4b3bEPFy5hhqLBJw1rd6vntbccmHLaHiNx
-         jHO8SGanu1jXrSkQkrYjL4tnoxcI6nJsHDeLrUsXjVQaS709zEe5D9hkhLuARUnbU1CP
-         GgRrp8EO8goAOTzhHl7SipNJzH9u6iqqFIu/TpSRp+nrhsG2o9bdNPSMZe+Kh+QtXLZp
-         ZsPnz7QU3Qj9GK1EKanvVhoV9V2lQhuBzlNAhO+rkPdTcLy2c7VLL/tPS+7iFUgQbYkj
-         8yLJotMMl1NkR117R2+dNzAY7lKJXTOPRWiNNkzJ7yNgfsxKlWyIDektHXSQlAqYaBd8
-         5tKw==
+        bh=x0dz7af7+scW6g34vxIDUcXAMYjy7ebV7LArZ6r3I6Y=;
+        b=loPciDonB0nJZmckkSkSe4E50T+JjuRLF2xpZbY4s4bQ/coLrjuFlrPM93HiMvXLYQ
+         +Rcxo9BMz9BpfXbcsPvThtPIGiOSGqneUkpsnl6iSwZbQ8Fhq3yNg7P2epiQoG52gRYq
+         IcYNFck8bhiWoNJRETKe+bRtZTgU3AYda0ElmMRQe/xtJUscfIzCN5sduxsYtNYfeDNu
+         MZ0ElBXvFVBSFtpvX4n5XNWwGURBd2UbIt6n9wS/2YVfMhDO27q5yK9AnbZKIIRsMFtf
+         7grZFxOSKfrQVJi4dDAhds3ZG8iCKV3KXDHuSjtreHcOsDID3PPi/lzUA4pBfShgVRw5
+         n+mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=k/gFqJMTLNEMUQP9G11/bLvujEjMc49eCwiIXxSDbaM=;
-        b=ElvGj3I8n1ElBwOxnNyt/8XAkdRY3KKeRQv4UWJHqLnoNBry9YH39Pl67xh/7Uushy
-         HGwF9sMHYKYRGgp34+9jm5EVkgaKuqmTotpzb8zdhXD/6KonqDehiHzAnZhqWtFm2fSW
-         FfGomxzG+2xytLNj4cy/5IumnwA2XROxT3+My7sqO5aQLQ7Kok7AqKfXJDLR58JG7JFb
-         giKnAeZKI9xQCLoKQJcTx6x/sOxRazq9HUBnnXUnZPO80XsAxBLK8v4hPBWcYViIfCuI
-         BOpNS7lY5k02pjRkfFobjlJ+lB3VyxtUzls5BF1ZdKH5HSbpKzVNHhYn1h2DDF+QnFSo
-         7Npg==
-X-Gm-Message-State: AOAM531pr3YMEYXMkYFFkLQW4cnkWmpzA1CSFQMJvg+JvAtO9DFSO5Iw
-        p08wSoKgKK8jHb6nDp46v18=
-X-Google-Smtp-Source: ABdhPJzckL8iudvscPCx7Ih1PHiN/Bp8P7TOAisWCoIUza/n7eY4WUfrsmPn55HibEHFZE3jVsUS8w==
-X-Received: by 2002:a05:6402:105a:: with SMTP id e26mr3620333edu.60.1613647903120;
-        Thu, 18 Feb 2021 03:31:43 -0800 (PST)
+        bh=x0dz7af7+scW6g34vxIDUcXAMYjy7ebV7LArZ6r3I6Y=;
+        b=PYCBA+Df9OigsJIb8ZL5UqsXpD7LBQlj2j216umAzkaXTqpjh6nuu6Y27G4ICLneYr
+         9hJWqsdCaNhUeeP8oOr5AWzoPueUIilEqyF5rXmoOYYPEfBu/AJJNCCDe8Prh6egiKlF
+         6ZpLeC4WsPfzAxSk9+wyEZHkOuxZT1Lc83tjDjvJilj+dnyb4XeYYU3AVR5KTlrPbrlB
+         u0WIUuXsk/r5Fau2P66uC4DcdekSnFHU5Ftjv9QHPEiArfnZw+uvSQJZ0p6lIkktXKC4
+         KaNDkmLsWlSoKw/uOdzBS4W8wt6RPIjkpVXWhuZS2Pay2e3XipKY5lTuCabLfDelKa9M
+         BoVw==
+X-Gm-Message-State: AOAM530BNRJiIlqYLVgQmEAvXbQmlk7+xeGI1hTTTUkHpRoUV7H1r01e
+        dnslshv+fpu/mHQQ8Fhd5D4xYktUOE3ohA==
+X-Google-Smtp-Source: ABdhPJznOeQksnivfWFhqhh4oI1KevHOHb25APyibVprhtYiJPnz1EgmzmokLC6hxcM8gaSNPa1PVg==
+X-Received: by 2002:a05:6402:4242:: with SMTP id g2mr3857279edb.103.1613650052055;
+        Thu, 18 Feb 2021 04:07:32 -0800 (PST)
 Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id ga5sm2368379ejb.114.2021.02.18.03.31.41
+        by smtp.gmail.com with ESMTPSA id f2sm2612080edm.95.2021.02.18.04.07.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 03:31:41 -0800 (PST)
+        Thu, 18 Feb 2021 04:07:31 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/4] Check .gitmodules when using packfile URIs
-References: <xmqqa6sy26gq.fsf@gitster.c.googlers.com>
- <20210128003536.3874866-1-jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] fetch-pack: print and use dangling .gitmodules
+References: <878s7na1h6.fsf@evledraar.gmail.com>
+ <20210217201006.877438-1-jonathantanmy@google.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210128003536.3874866-1-jonathantanmy@google.com>
-Date:   Thu, 18 Feb 2021 12:31:40 +0100
-Message-ID: <87r1ld8vdv.fsf@evledraar.gmail.com>
+In-reply-to: <20210217201006.877438-1-jonathantanmy@google.com>
+Date:   Thu, 18 Feb 2021 13:07:30 +0100
+Message-ID: <87o8gh8tq5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,69 +72,67 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jan 28 2021, Jonathan Tan wrote:
+On Wed, Feb 17 2021, Jonathan Tan wrote:
 
->> Jonathan Tan <jonathantanmy@google.com> writes:
+>> Sorry for being unclear here. I don't think (honestly I don't remember,
+>> it's been almost a month) that I meant to you should use the skipList.
 >> 
->> > As part of this, index-pack has to output (1) the hash that goes into
->> > the name of the .pack/.idx file and (2) the hashes of all dangling
->> > .gitmodules. I just had (2) come after (1). If anyone has a better idea,
->> > I'm interested.
+>> Looking at that code again we use object_on_skiplist() to do an early
+>> punt in report(), but also fsck_blob(), presumably you never want the
+>> latter, and that early punting wouldn't be needed if your report()
+>> function intercepted the modules blob id for stashing it away / later
+>> reporting / whatever.
 >> 
->> I have this feeling that the "blobs that need to be validated across
->> packs" will *not* be the last enhancement we'd need to make to the
->> output from index-pack to allow richer communication between it and
->> its invoker.  While there is no reason to change how the first line
->> of the output looks like, we'd probably want to make sure that the
->> future versions of Git can easily tell "list of blobs that require
->> further validation" from other additional information.
+>> So yeah, I'm 99% sure now that's not what I meant :)
 >> 
->> I am not comfortable to recommend "ok, then let's add a delimiter
->> line '---\n' if/when we need to have something after the list of
->> blobs and append more stuff in future versions of Git", because we
->> may find need to emit new kinds of info before the list of blobs
->> that needs further validation, for example, in future versions of
->> Git.
+>> What I meant with:
 >> 
->> Having said all that, the internal communication between the
->> index-pack and its caller do not need as much care about
->> compatibility across versions as output visible to end-users, so
->> when a future version of Git needs to send different kinds of
->> information in different order from what you created here, we can do
->> so pretty much freely, I would guess.
+>>     Or if we want to keep the "print <list> | process"[...]
+>> 
+>> Is that we have an existing ad-hoc IPC model for these commands in
+>> passing along the skipList, which is made more complex because sometimes
+>> the initial process reads the file, sometimes it passes it along as-is
+>> to the child.
+>> 
+>> And then there's this patch that passes OIDs too, but through a
+>> different mechanism.
+>> 
+>> I was suggesting that perhaps it made more sense to refactor both so
+>> they could use the same mechanism, because we're potentially passing two
+>> lists of OIDs between the two. Just one goes via line-at-a-time in the
+>> output, the other via a config option on the command-line.
 >
-> Yeah, that's what I thought too - since this is an internal interface,
-> we can evolve them in lockstep. If we're really worried about the Git
-> binaries (on a user's system) getting out of sync, 
+> Thanks for your explanation. I still think that they are quite different
+> - skiplist is a user-written file containing a list of OIDs that will
+> likely never change, whereas my list of dangling .gitmodules is a list
+> of OIDs dynamically generated (and thus, always different) whenever a
+> fetch is done. So I think it's quite reasonable to pass skiplist as a
+> file name, and my list should be passed line-by-line.
 
-I'm thinking in reading "getting out of sync" that you may be missing an
-aspect of the issue here.
+Sure, but I'm not talking about passing it as a tempfile.
 
-We're not talking about some abnormal error in some packaging system,
-but how we'd expect all installations of git to behave if you update
-them with *.rpm, *.deb etc, e.g. when your binaries are in
-/usr/libexec/git-core. I suppose NixOS or something where there's
-hash-based paths may be exempt from this.
+Yes, I suggested that in the third-to-last paragraph of [1] but then
+went on to say that we could also move to some IPC mechanism where you
+spew in the list of dangling .gitmodules, and we also spew in the
+skipList and anything else we want to pass in.
 
-On those systems if you've got a server serving concurrent traffic and
-update the "git" package you could expect failure if any git process
-invoked by another is incompatible during such an upgrade.
+I'm not saying this needs to be part of this series. But let me
+rephrase:
 
-If you browse some of the recent GIT_CONFIG_PARAMETERS discussion this
-was discussed there. I.e. even if GIT_CONFIG_PARAMETERS is internal-only
-we bent over backwards not to change it in such a way as to have process
-A invoking process B and the two not understanding each other because of
-such an upgrade.
+We now have some combination of
+{receive-pack,upload-pack,send-pack,fetch-pack,unpack-objects} that need
+to communicate locally or pass data back & forth, passing data either
+via a CLI option to read a file, packnames/refs on --stdin, or (now) a
+single list of OIDs on stdout.
 
-That's exactly because of this case, where receive-pack may be started
-on version A, someone runs "apt install git" in the background
-concurrently, and now a version A of that program is talking to a
-version B index-pack.
+Let's say we don't just need to pass the .gitmodules OIDs, but also
+e.g. .mailmap OIDs or whatever (due to some future vulnerability).
 
-> we could just make sure that subsequent updates to this protocol are
-> non-backwards-compatible (e.g. have index-pack emit "foo <hash>",
-> where "foo" is a string that describes the new check, so that current
-> fetch-pack will reject "foo" since it is not a hash).
+Would this IPC mechanism deal with that, or would we need to introduce a
+breaking change (Re: my recently send mail about concurrent updates of
+libexec programs)? Can we use soemething like pkt-line to talk back &
+forth in an extensible way?
 
-And then presumably index-pack would die and receive-pack would die on
-the push or whatever, so the push fails for the end user.
+Not needed now, just food for thought...
+
+1. https://lore.kernel.org/git/87czxu7c15.fsf@evledraar.gmail.com/
