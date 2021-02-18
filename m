@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4746C4332D
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3063BC43332
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:34:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74E4764EB2
+	by mail.kernel.org (Postfix) with ESMTP id F291D64E22
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 19:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231947AbhBRTcw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 14:32:52 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56147 "EHLO
+        id S232208AbhBRTdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 14:33:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56466 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234291AbhBRTTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 14:19:49 -0500
+        with ESMTP id S230505AbhBRT1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:27:25 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E013899041;
-        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74CC199277;
+        Thu, 18 Feb 2021 14:26:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=b05i4ymVsVd/9MvAWX/4pdBmBWc=; b=SLbLB+
-        7iA4cWYmID8zedbn29PiPjVRXMVvmFOXnj6u5jFmRW1gAmdRxT4tMC1XGkVXuqI8
-        tkOOLND+p8LD7irhQN1VKR035i+DFXOfDgZ3gEQGmNMVBW/Yv/zYYsmc44hT3GYY
-        O/vO75Cp1Q6fbuaBFNGoTeo5wCRX3Do40js+k=
+        :content-type; s=sasl; bh=hgaXcpD2MoqX7fXghI58ZoXj33I=; b=KfenjL
+        X5/xsMDZfPqNUWXBgegaDqnG1CQLZKqCV82TqDNLqq88XRAM18vZXKjH0B9CesiP
+        lBq6rOwH/mIaFkfeHkMuZ3gc81H/wPi/smE4YH5sy+Df6EoAE+pmyxnXUXtC8BcM
+        9HL6tKJuHbtrVqayoLSkRkQkXxF+Jd0u9mb0U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aUQKPBwxosa1uIhIj9bR2l+lUghCdjMc
-        imj5MXC7SwlfSUytXnhLh4n9G9aC7eQALlhW/aehyQ7HZl5VYYNwCYhXkUjlWfP5
-        Y8LtsHRdQepRwGdZ6upIDFrDj5zAKvgKBgVd8AYRaKdgRnW4UlptTfW+a9ymDgHu
-        TJozZ68eoRQ=
+        :content-type; q=dns; s=sasl; b=M9gcKVtb/80CUL6gDyWSLPfuhcwXQndc
+        8dcC8iCPMeJIkRVd1lpjbk9i4Ll6MJW/QG6cHQO81zarF33r2mKPWpyF3b7lIKS9
+        dS/+SY/G7SwITxmpi3hPdoLCw74nYQoOQ/nLigU+vkF9JD+FRFNFAP/ORHAL/lGv
+        Sj1aBe6CsqQ=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D04A69903F;
-        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C95E99276;
+        Thu, 18 Feb 2021 14:26:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37F779903E;
-        Thu, 18 Feb 2021 14:19:00 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EDA9F99275;
+        Thu, 18 Feb 2021 14:26:41 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Charvi Mendiratta <charvi077@gmail.com>
@@ -52,55 +51,43 @@ Cc:     git <git@vger.kernel.org>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/6] commit: add amend suboption to --fixup to create
- amend! commit
+Subject: Re: [PATCH 4/6] t7500: add tests for --fixup[amend|reword] options
 References: <20210217072904.16257-1-charvi077@gmail.com>
         <20210217073725.16656-1-charvi077@gmail.com>
-        <20210217073725.16656-2-charvi077@gmail.com>
-        <xmqq35xulbj0.fsf@gitster.g>
-        <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
-Date:   Thu, 18 Feb 2021 11:18:59 -0800
-In-Reply-To: <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
-        (Charvi Mendiratta's message of "Thu, 18 Feb 2021 15:43:56 +0530")
-Message-ID: <xmqqpn0xfal8.fsf@gitster.g>
+        <20210217073725.16656-4-charvi077@gmail.com>
+        <xmqqsg5ujwi2.fsf@gitster.g>
+        <CAPSFM5cjJ_b510wx+RtVkyxHk-aFDpOHaFRWqQuMuDf=73nBiA@mail.gmail.com>
+Date:   Thu, 18 Feb 2021 11:26:41 -0800
+In-Reply-To: <CAPSFM5cjJ_b510wx+RtVkyxHk-aFDpOHaFRWqQuMuDf=73nBiA@mail.gmail.com>
+        (Charvi Mendiratta's message of "Thu, 18 Feb 2021 15:45:34 +0530")
+Message-ID: <xmqqh7m9fa8e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 27840220-721E-11EB-8B3C-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 3ABC0E72-721F-11EB-A1B5-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Charvi Mendiratta <charvi077@gmail.com> writes:
 
-> Hi Junio,
->
-> On Thu, 18 Feb 2021 at 01:20, Junio C Hamano <gitster@pobox.com> wrote:
-> [...]
->> The second one, even with s|HEAD|HEAD~3| is even less clear.
->> Without the "-m", the resulting commit will have the subject that
->> begins with !amend but the log message body is taken from the given
->> commit, but with "-m", what happens?  Does a single-liner 'clever
->> commit message' _replace_ the log message of the named commit,
->> resulting in an !amend commit that has no message from the original?
->> Or does 'clever commit message' get _appended_ the log message?
+>> > +test_expect_success '--fixup=reword: -F give error message' '
+>> > +     echo "fatal: Only one of -c/-C/-F/--fixup can be used." >expect &&
+>> > +     test_must_fail git commit --fixup=reword:HEAD~ -F msg  2>actual &&
+>> > +     test_cmp expect actual
+>> > +'
 >>
+>> Why?  If you can use -m msg, you should be able to use -F msgfile,
+>> too, no?
 >
-> Yes, here it gets _appended_ the log message.  I agree this seems a bit
-> confusing.
+> Earlier I was thinking to let the `--fixup=amend:`  use the same options as of
+> current `--fixup=` . But yes I agree that there should be  -F option
+> also with `amend`
+> and `reword`.
 
-In what situation would a user use "-m 'appended pieces of text'"
-option, together with "--fixup=amend:<commit>"?  I am wondering if
-we want such a "append to" feature, or is it easier to understand
-for end-users if "-m", "-F", "-C" and "-c" (the common trait of
-these options is that they contribute to the log message text)
-are made incompatible with --fixup=amend:<commit>.
+Hmph, I was actually imagining the opposite---a context that does
+not want to take -c/-C/-F would not want to take -m, either.
 
-> ...Thanks, for pointing this out. Also, in the above method for
-> alnum I think we can initialize an array of alnum[] instead of
-> alphas[]. Or otherwise I was thinking to instead check:
->            if (!isalnum(*c) && *c == ':')
-
-Sure a loop is fine, or alnum[] is fine, or just alpha[] is OK, I
-would think.  Do you foresee you'd need --fixup=chomp124:<commit>?
-I somehow doubt it.
+Why is -m so special, and a lot more importantly, what would a user
+want to achieve by using "-m more-text" combined with this
+"--fixup=reword:<commit>" or "--fixup=amend:<commit>" feature?
