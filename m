@@ -2,84 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 256BDC433DB
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA87C433DB
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:50:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE8EC6146D
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:20:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14BB66148E
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 03:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbhBRDUx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 22:20:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44364 "EHLO
+        id S230124AbhBRDuA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 22:50:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbhBRDUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Feb 2021 22:20:53 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AB00C061786
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:20:12 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id m22so2457323lfg.5
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:20:12 -0800 (PST)
+        with ESMTP id S229752AbhBRDt7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Feb 2021 22:49:59 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D991FC061756
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:49:18 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id gx20so610124pjb.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 19:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4ik577a4SJRFNNmPJ9hrr5GgO02UEYvP+rsmSIkiF/c=;
-        b=E2q+RRLtE2xBUqizP2WkfPJoZUgkZwy730GX0aeHz1JXfdGnyKc+sIcQH+KiF6aApQ
-         B2SHpvezKfqEVRlk0GN8zVUgr5OeN633CvVMHlSamtRRJebmbygxsdKDCFT7GJZ/NUVU
-         Jz3JfS7LyasN/+DaOxudNEEmpvlUAZnG+fwPKvhbkXBjOIiY/LsmneCcetVZb1F6mWaK
-         uRCcJBu274ZFO0SHmOhib3P2haCBACjCEVQhRyZSoieSXKOptR9fXhIZT8ennmxmozHR
-         QMcDwGuWnyvnXOTdXJMW1zB4UG5GEPg7nA+IkBYXVtQfR5q89K73IHUb01HqHkhyRQJf
-         pnBw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8HDXulfvRrapYIahRlLgTx+GyVQih5EX+5X6BxQnTgU=;
+        b=PP0/lEGqz28q4u8nNWdDBOC/j1dbwVhQA+gLG+1eAw1PjNRbWbcJ3XeELQLD4BAhD2
+         TPlLWp1j0p50j13JD9qffqTV42SAp0vvzWmw+Epxt4/cOSXTyHj+LMLzwETcu7wXRJlD
+         dzm/vz+LaMWvA1cW3CG88ZlyzQW8HzdPBnrpSnDA2gfLf69lqb2iXH4I7HPzGxr0SUIs
+         2iBohQqVSfjzUYAZYfzfxpEhmE+Hz9HwQBoCuYj/5xtqBF4SXHjwBmBXb1bYRW3gi2jK
+         h6njp6s8yYSH9UV5DAl7MVA9DrLNzydvhJDTGT4mJBDzMJZozxFypw7VhsTeGqDBM9Kn
+         pODQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4ik577a4SJRFNNmPJ9hrr5GgO02UEYvP+rsmSIkiF/c=;
-        b=o8kocEu84uFgaFAPLGGTpzhZus1bzlgf3238nlb3pdKKHKPKkfr1BhSK1MvlfcYpzK
-         oj6hF9CZ8oLc50Su/W8k/qLTL30HE0ZhynmF5NcmUJbtVieej5A5DVDRS+1RGcZQ1B+b
-         r1St6ODfH8M6ci04lc3o95Ioy5qrBKIOtenyIpzNoQ0RiTF1U1wZkxw4TM8Qcu9lNDrH
-         k8rerP3Mkea5FRRdS8myZlt7A5HgaY2aHWRYj3hAtXD6mpVUVo7uYgQMp1EHP0bZd4nt
-         M88UKjnCRn73vPza6VU32aQhoJ8hKtWcv2Mxe9BYl71VavwmcY1hRovvysAqHqhAuogd
-         OOgA==
-X-Gm-Message-State: AOAM530/xCgN4s3xza0dYSwCCc5PmXsxWpyOqV7yV/EDKpixZu5nNJ/Q
-        TUNbcaldJZP0ccL46GCu2P/yXxb6Lk3G6PFcabEZtA==
-X-Google-Smtp-Source: ABdhPJz1u3hQOkIvM2Tjz/eTltinR0FbmV1d/V/WCREovX1zjCvEUoWhGPlfNrjptK3uiPOex4yBExlaiB8+PXL4le8=
-X-Received: by 2002:ac2:508f:: with SMTP id f15mr1153047lfm.527.1613618410850;
- Wed, 17 Feb 2021 19:20:10 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8HDXulfvRrapYIahRlLgTx+GyVQih5EX+5X6BxQnTgU=;
+        b=QboRSFsP0h9QYVz6in/9M4x2xcgg6v4oOsd2QGXpjst72+kwuq9qMHe7Wcv2KdjoeR
+         mEhIvQVrpGQ/wx/W0a5A8uBiAuIBXtMZ8sLGDsGZn9fLZI/DIIyJfPlwHsPwfciiuLgL
+         HkZ0eDr645FP1tNqlx9Gpdk0hH7MGWk7e6u6FrQztpZESH4JcIGIME7C+4Et7UD42q01
+         aK0SzuaTjewf4NGnzT5djf3i26US8yQne/9PC2vsFQ9d8j/Zkp1wOCfO0X7vAcB/xejj
+         owk5zHT1MkB60TXU0a5J1XIbGDQ+H+guiWvLRbXEy7tGaCiYyQvbiDtMaawdY3ctvnvj
+         i6DA==
+X-Gm-Message-State: AOAM530rScJSB+yzQk2rL/Jp6MRKKZ3yHiduVogu29GW+lx5YAxO0YY8
+        a97SZDmFEget4KKxqAuXNEc=
+X-Google-Smtp-Source: ABdhPJzKD8ZuZ9qy0s9y066PXg9A+M+54xHqdb7rv0/hugYE2NM80I3dHXspcpA6ZAqvLKI1Yb/V4A==
+X-Received: by 2002:a17:902:6ac5:b029:e3:2709:4c1f with SMTP id i5-20020a1709026ac5b02900e327094c1fmr2475121plt.19.1613620158402;
+        Wed, 17 Feb 2021 19:49:18 -0800 (PST)
+Received: from generichostname ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id n15sm4147780pfd.143.2021.02.17.19.49.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Feb 2021 19:49:17 -0800 (PST)
+Date:   Wed, 17 Feb 2021 19:49:15 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Joey Salazar <jgsal@protonmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [OUTREACHY][PATCH v2] doc: fix naming of response-end-pkt
+Message-ID: <YC3ju7Jg9TyvRF2d@generichostname>
+References: <k1OL_yTjmhqRPUI_3wZNi4FpD0yadrwMKu1CaOXO07YyMBQG5hYoUKFtndt6mlNBKMxyCgm3JGf2YcENx-vRasj1W8keEI6ITVvkaqOi2_Q=@protonmail.com>
 MIME-Version: 1.0
-References: <xmqqr1legm5v.fsf@gitster.g>
-In-Reply-To: <xmqqr1legm5v.fsf@gitster.g>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 18 Feb 2021 00:19:59 -0300
-Message-ID: <CAHd-oW4SxfAdJyDOdgqFsw2biUHHnU9wo78SLQMxs2VTeOar6Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2021, #03; Wed, 17)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <k1OL_yTjmhqRPUI_3wZNi4FpD0yadrwMKu1CaOXO07YyMBQG5hYoUKFtndt6mlNBKMxyCgm3JGf2YcENx-vRasj1W8keEI6ITVvkaqOi2_Q=@protonmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+On Thu, Feb 18, 2021 at 12:11:22AM +0000, Joey Salazar wrote:
+> Git Protocol version 2[1] defines 0002 as a Message Packet that indicates
+> the end of a response for stateless connections.
+> 
+> Change the naming of the 0002 Packet to 'Response End' to match the
+> parsing introduced in Wireshark's MR !1922 for consistency. A subsequent
+> MR in Wireshark will address additional mismatches.
+> 
+> [1] kernel.org/pub/software/scm/git/docs/technical/protocol-v2.html
+> [2] gitlab.com/wireshark/wireshark/-/merge_requests/1922
+> 
+> Signed-off-by: Joey Salazar <jgsal@protonmail.com>
 
-On Wed, Feb 17, 2021 at 11:13 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> * mt/grep-sparse-checkout (2021-02-09) 1 commit
->  - grep: honor sparse-checkout on working tree searches
->
->  "git grep" has been tweaked to be limited to the sparse checkout
->  paths.
->
->  Break out and fast-track bugfix from the remainder of the topic.
->  cf. <CABPp-BFkACtF6LHkFJNt9dTOmwfQbf8ZO=BTrPYwPSmbqc9+hg@mail.gmail.com>
+Reviewed-by: Denton Liu <liu.denton@gmail.com>
 
-Perhaps is this description outdated? I see that you have already
-picked up the bugfix [1] which was broken out from the previous
-version.
-
-[1]: https://lore.kernel.org/git/5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.1612901326.git.matheus.bernardino@usp.br/
+> ---
+>  Documentation/technical/protocol-v2.txt | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index e597b74da39..fc163ca605c 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -33,8 +33,8 @@ In protocol v2 these special packets will have the following semantics:
+> 
+>    * '0000' Flush Packet (flush-pkt) - indicates the end of a message
+>    * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
+> -  * '0002' Message Packet (response-end-pkt) - indicates the end of a response
+> -    for stateless connections
+> +  * '0002' Response End Packet (response-end-pkt) - indicates the end of a
+> +    response for stateless connections
+> 
+>  Initial Client Request
+>  ----------------------
+> --
+> 2.29.0.rc2
+> 
