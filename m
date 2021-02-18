@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CCD7C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57641C4332B
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 00:08:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E10A664E68
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 00:08:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2A51764D9A
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 00:08:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbhBRAIZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 17 Feb 2021 19:08:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59594 "EHLO
+        id S229889AbhBRAIe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 17 Feb 2021 19:08:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbhBRAIR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229800AbhBRAIR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 17 Feb 2021 19:08:17 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEABFC061756
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 16:07:34 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id x16so4228564wmk.3
-        for <git@vger.kernel.org>; Wed, 17 Feb 2021 16:07:34 -0800 (PST)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6958CC0613D6
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 16:07:35 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id n4so694638wrx.1
+        for <git@vger.kernel.org>; Wed, 17 Feb 2021 16:07:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gk4f5Dl5Bn9KLacPnLIkqKgNA90gHQX7iHdNUmNWwEY=;
-        b=efSxndHnjLaESwvVKRZvgGNJp6OP1K1MtVagaMVskWnHe8kvF9JkVsepFAe1ZvgiQH
-         2xBpHKsGmYa8+Iu2nNOFQZian3d0uDKcW/NBban8ocoQ2RFuUuRF739jSzZwu6Qb1keH
-         cNCCBHxjAEqxeDNxaFXk6FzBRTfoOYQaCScsouiivdXm3FUeS7EOrqVnhNGOy4hooBhe
-         I0ry70qgxuxlppFWck5n4s2xdfgCu7MjaaDEGm+qzGGKr5nwSeJRGICrcqBnj79cSBX6
-         mfhTcN6ViuEWWiR5U1lsrqQdFVJvmo53TdKEf11GqikDspPtBy7EBDruEsqLVn1Wuk4T
-         axXw==
+        bh=vM0hoCFB5kfop0PsoYzpMXvLRypIMlpoecOpL+DhD8s=;
+        b=T2g2JV79SASNtQWaBB5gq+ukoUR3jCAYI7bhW0pEz5bU2+R9nZCFJI2v7KuKjEY5lH
+         qPHF8zjN1xK0cCsljrsj+o4Ka9hYE8zJoE1TnITqsD2zlrN06TtlUgpM4fTWCVqolkie
+         T68zBOT9LTeRrwLEMR6T6NsHRck4m+RilZVhkJ7bIJrD8cdhFZ3plVUYEKxVrUPnLpuU
+         8a0hqmzMZqIBOl+n8zJ1/FkiVNLarF15Tm8qK8H8riXJRJAlBBwpnFW/0u5bBLE7jqZg
+         OI6FiMhMpuZ7uZr16DsVEjkapjV8k7v8laNLi3/GOrE5RG65pLqdnEAGh1WlTMKhSGbW
+         Kdiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gk4f5Dl5Bn9KLacPnLIkqKgNA90gHQX7iHdNUmNWwEY=;
-        b=QbL3CzL/evWTB5AU6Dp4qP612aZ891bcoaWS9UBni8NlrLdfuacppaW+UL7QdQQsk1
-         64FMV1DplD/HlkF7EbvQs/MQ+6Mkor3hOb63uAHU4mG5DWMTYprTZiXYrgxzrhrfhwQV
-         vN10DK5XqX87rjWWIij2zfbdyCloXj73Q+FzF5J3Zi+fS7T6tBibpeZgAga/zDkDCquc
-         emeC8mut6WM5T4IxGMI/Fzuhp9tXtM+Gn/ksFIhV1BRCw6gSZkpydv4F8JUCyLpWvpMG
-         E3OgucIOl/YdJoZKCzTh6hS/uJFLXt4Vf3iVBmepff9KZmUaeHBva5phh7AyPPF4M5lX
-         M1wA==
-X-Gm-Message-State: AOAM532udjb6YiRUp+iWQN4I75ojd/2iVoMv8ImkOk7IdQyXEv0e3Vlu
-        KZ4m6uW1JJoG4xCuIG2lSGcPSb0XadgPBA==
-X-Google-Smtp-Source: ABdhPJzuGFQnzai2QLyFpxqRPbs0+XO7VZhS3ZDl1+8BaKCLgwhmpmg2Bqhvp6QDOqLA5L87Pv29Mg==
-X-Received: by 2002:a05:600c:3589:: with SMTP id p9mr1114705wmq.18.1613606853219;
-        Wed, 17 Feb 2021 16:07:33 -0800 (PST)
+        bh=vM0hoCFB5kfop0PsoYzpMXvLRypIMlpoecOpL+DhD8s=;
+        b=LrRMPJmPed83AAmyFRHt4ZP7d2d0dQzbZgeMF1OKoWAh7pEP+tKSIt9FuajhEFysg2
+         WFLee4HxjIbCIuEUotptFh3k5FCZ1i8LycoGMNYdCIwOgcLH+z+bqH9z5uc8ytoZMVpM
+         V+WztxLIxbGjlfMymyVfmSjF9bev+5jujVnoRhiY4qKcPHRXuvbdI1qrkzR3iLSVCxRh
+         1TlVT0jGhswEbALmF55dD+W/R14+iAz/dvYXZbQM+0G5obM6buca76b4bpSYKewK1BQX
+         UKq7oIXpEM7tr/AmnlfVzci/3rJrC95B90ZHg0Q4+VDFpNlKdDWNGDZ8zUvkw3N7+aB8
+         /d9g==
+X-Gm-Message-State: AOAM532dWQQCGL8ImF1GBBZpO184G1tR13PKUbNohrGJXEdkf8htclMP
+        L3MPM/jHeWD2qcWM9FJxn5d7kQgwRX5E6w==
+X-Google-Smtp-Source: ABdhPJz6a6WQ0nu5kg+GiuMpDqWqh/7O20yBoHACQLX2TRzN26wBex3aay5plKHeN6txDxsGThqaJA==
+X-Received: by 2002:a05:6000:1819:: with SMTP id m25mr1572971wrh.342.1613606852457;
+        Wed, 17 Feb 2021 16:07:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r17sm6232795wrx.82.2021.02.17.16.07.32
+        by smtp.gmail.com with ESMTPSA id r17sm6232795wrx.82.2021.02.17.16.07.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 17 Feb 2021 16:07:32 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <carenas@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/10] grep/pcre2: drop needless assignment to NULL
-Date:   Thu, 18 Feb 2021 01:07:20 +0100
-Message-Id: <20210218000728.13995-3-avarab@gmail.com>
+Subject: [PATCH v2 01/10] grep/pcre2: drop needless assignment + assert() on opt->pcre2
+Date:   Thu, 18 Feb 2021 01:07:19 +0100
+Message-Id: <20210218000728.13995-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210204210556.25242-1-avarab@gmail.com>
 References: <20210204210556.25242-1-avarab@gmail.com>
@@ -78,33 +78,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove a redundant assignment of pcre2_compile_context dating back to
-my 94da9193a6e (grep: add support for PCRE v2, 2017-06-01).
+Drop an assignment added in b65abcafc7a (grep: use PCRE v2 for
+optimized fixed-string search, 2019-07-01) and the overly cautious
+assert() I added in 94da9193a6e (grep: add support for PCRE v2,
+2017-06-01).
 
-In create_grep_pat() we xcalloc() the "grep_pat" struct, so there's no
-need to NULL out individual members here.
+There was never a good reason for this, it's just a relic from when I
+initially wrote the PCREv2 support. We're not going to have confusion
+about compile_pcre2_pattern() being called when it shouldn't just
+because we forgot to cargo-cult this opt->pcre2 option.
 
-I think this was probably something left over from an earlier
-development version of mine.
+Furthermore the "struct grep_opt" is (mostly) used for the options the
+user supplied, let's avoid the pattern of needlessly assigning to it.
+
+With my recent removal of the PCREv1 backend in 7599730b7e2 (Remove
+support for v1 of the PCRE library, 2021-01-24) there's even less
+confusion around what we call where in these codepaths, which is one
+more reason to remove this.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 2 --
- 1 file changed, 2 deletions(-)
+ grep.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 816e23f17ef..f27c5de7f56 100644
+index aabfaaa4c32..816e23f17ef 100644
 --- a/grep.c
 +++ b/grep.c
 @@ -373,8 +373,6 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
  	int patinforet;
  	size_t jitsizearg;
  
--	p->pcre2_compile_context = NULL;
+-	assert(opt->pcre2);
 -
+ 	p->pcre2_compile_context = NULL;
+ 
  	/* pcre2_global_context is initialized in append_grep_pattern */
- 	if (opt->ignore_case) {
- 		if (!opt->ignore_locale && has_non_ascii(p->pattern)) {
+@@ -555,7 +553,6 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ #endif
+ 	if (p->fixed || p->is_fixed) {
+ #ifdef USE_LIBPCRE2
+-		opt->pcre2 = 1;
+ 		if (p->is_fixed) {
+ 			compile_pcre2_pattern(p, opt);
+ 		} else {
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
