@@ -2,96 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF271C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26307C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:53:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97A2064EBD
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:35:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC34B64DE9
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbhBRXeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 18:34:50 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50031 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhBRXet (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 18:34:49 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A3E6112C80D;
-        Thu, 18 Feb 2021 18:34:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZS40sZbunbZB
-        1dAzCaMksJFTxAA=; b=VLFZXa7mus6c9Sd/PENR/FXFmMpO7EfY03F0N58vgi8R
-        3CPeTexYFEeHPCYJFNFFcEYR8m/8kGjfb4YaHIfP/Y5Saa9oXa59ljxrXgZaemcp
-        3Hm+ZUnsH9zw40OIHh0KAUPyyRU+5HZ2Ya1uTNUgzWUE3c+h2cZYya9U2RRr/RY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wU5Mjh
-        ONCXueLjjhwzFbWYLbT/R+Cg5MlZGJQpodj7lsHsVbaokw35kyZcecrDUkuDmCFq
-        wmbPPR9dPjr6OS/rEU7vSpGvmY1DCJ0ofS9qF+/yZlgJIJIG6Z6gafVyfy2rmZEE
-        Iv9aSo/RZBX8zso47V7M0cWXuWcstZazWjNvE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CBCC12C80C;
-        Thu, 18 Feb 2021 18:34:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CC3B612C80B;
-        Thu, 18 Feb 2021 18:34:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/4] Check .gitmodules when using packfile URIs
-References: <20210115234300.350442-1-jonathantanmy@google.com>
-        <cover.1611455251.git.jonathantanmy@google.com>
-Date:   Thu, 18 Feb 2021 15:34:03 -0800
-In-Reply-To: <cover.1611455251.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Sat, 23 Jan 2021 18:34:26 -0800")
-Message-ID: <xmqqzh01ar2s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229787AbhBRXxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 18:53:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54040 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229656AbhBRXxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 18:53:21 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28BF3C061574
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 15:52:41 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id p2so6434560edm.12
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 15:52:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wr4x77SqrBBFK0P1KvbV5vi1wjJ4HSmjEts49NHsINQ=;
+        b=AEVmNh/1WCFkHwAOJoWfGG5fdWTCUFvPpbLaKnSDJmJkgEce4NPO/3117nKQJL92/b
+         a9WtOLxoE0SYvrdOVlNueTNLYVBZa8rTvKU725Ht3DOXcHB0XfXcTuX1bbruwkFfGCr5
+         rqpPALXHY0CFGdxq41C4OLtvQB3qUFKlNMGUcVFC6IUYCwDul4apB/aOrSr3p6qBU/nc
+         E+mzGnlOc6UNHAeSOdt2hy3GYrQ1SyMDy+yAOnFOk6YfW8N+sV8hPlYoPyliYrPtnyYw
+         KkHfP+ajFZcku3DqdeJ07dyP2OKYryGXG1TJy5h8TvHL2D8dEBdaXozaPDNrqFmU7MIY
+         Ohwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wr4x77SqrBBFK0P1KvbV5vi1wjJ4HSmjEts49NHsINQ=;
+        b=AHRgy6P4xJHsqmR2vRDqAwZS2S26AWd5qg0gh4nkcPAsuG2QatURP6r2FPLyDZq98R
+         QZIZzLiLrCH7KU1Ifk05pqgp5NqPidrTAedx9ZSzZD0QKEQr097wfFakISH2V4W4ecO6
+         iJqkvRf9FRZDRMmImKQU1c8eBVEUl96cL7a80DUflDkWZ3C6i0gtlrVDJOGyHSYjl9Cy
+         ZMk6mx6Wn/2R+ckvS6K/HOLv6sDBpVv2iBbPfwnRxZOWAH1uSTDvtPW/Ez++a9vAcN2r
+         J40GLgCpuodxpCw6fj3Z1ItVMBZqJIXfhqyq2VYAXyDsZ1nOi/UbklGrsvVnX5UU368c
+         sI6Q==
+X-Gm-Message-State: AOAM531Tlg8M5B3PtcHhW4iqnU+e3Xa4Ay5CQabh4rzJKQz6qZXfNZMc
+        yd9F1t1WsG+0oagBdLa/Vb8v62S5W9nTtNhgnkF1LyfQnNncPA==
+X-Google-Smtp-Source: ABdhPJxn+Tna4VlpTUOkxEuj67WV9RGfZU4beIDWKoaUytfCDDVnu3sbEoN5nEjjhGd0F1nqDUxTEhMpTWUweGEUZ2Y=
+X-Received: by 2002:a05:6402:3121:: with SMTP id dd1mr6483201edb.387.1613692358788;
+ Thu, 18 Feb 2021 15:52:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: C9C52FAA-7241-11EB-8DE1-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
+In-Reply-To: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 19 Feb 2021 00:52:27 +0100
+Message-ID: <CAP8UFD1VaOBWcf3RQTc6OdmkUZCOOOO0mubRoWAvao6uNtNkgQ@mail.gmail.com>
+Subject: Re: Git in GSoC 2021 ?
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi Kaartic and all,
 
-> This patch set resolves the .gitmodules-and-tree-in-separate-packfiles
-> issue I mentioned in [1] by having index-pack print out all dangling
-> .gitmodules (instead of returning with an error code) and then teaching
-> fetch-pack to read those and run its own fsck checks after all
-> index-pack invocations are complete.
+On Tue, Feb 16, 2021 at 7:12 PM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 >
-> As part of this, index-pack has to output (1) the hash that goes into
-> the name of the .pack/.idx file and (2) the hashes of all dangling
-> .gitmodules. I just had (2) come after (1). If anyone has a better idea=
-,
-> I'm interested.
+> Hi all,
 >
-> I also discovered a bug in that different index-pack arguments were use=
-d
-> when processing the inline packfile and when processing the ones
-> referenced by URIs. Patch 1-3 fixes that bug by passing the arguments t=
-o
-> use as a space-separated URL-encoded list. (URL-encoded so that we can
-> have spaces in the arguments.) Again, if anyone has a better idea, I'm
-> interested. It is only in patch 4 that we have the dangling .gitmodules
-> fix.
+> Excuse my curiosity. I'm not sure if there has been discussion about
+> Git's participation in GSoC 2021 but my search in the archives
+> didn't get me anything. The deadline for Org application seems
+> to be around the corner (this Friday, Feb 19th at 1900 UTC).
 
-This seems to have been stalled but I think it would be a better
-approach to use a custom callback for error reporting, suggested by
-=C3=86var, which would be where his fsck API clean-up topic would lead
-to.
+Yeah, sorry for not discussing that before, and thanks for starting
+the discussion.
 
-If it is not ultra-urgent, perhaps you can retract the ones that are
-queued right now, work with =C3=86var to finish the error-callback work
-and rebuild this topic on top of it?  Thanks.
+> So, I was curious to know if we've already applied to participate
+> in GSoC 2021 (or) if we're planning to participate?
+
+I don't think we have applied yet, but I would be ok to apply. I think
+I will do it soon unless people objects.
+
+> In case we're participating we'll need ideas that fit the new
+> structure of GSoC 2021. Concise entry about the new structure
+> from Rev News 68 [1]:
+>
+>   Google Summer of Code 2021 has been announced with significant
+>   changes compared to previous editions. Notably coding hours and
+>   period will be reduced from 350 hours and 12 weeks to 175 hours
+>   and 10 weeks; there would be 2 evaluations (instead of 3).
+>   Additionally, eligibility requirements will be relaxed, among
+>   others allowing people participating in a variety of different
+>   licensed academic programs, not just students of accredited
+>   university programs.
+>
+> See the related blog [2] for detailed information.
+
+I have just created an Idea page with 2 project ideas:
+
+https://git.github.io/SoC-2021-Ideas/
+
+Other ideas are very welcome.
+
+> Speaking of GSoC, unlike last year I'll not be able to actively
+> co-mentor this year due to certain circumstances in my family.
+> I'll be able to help passively, though.
+
+Ok, thanks for helping passively!
+
+> Also, one thing about project ideas. Shourya Shukla who worked
+> last year on the builtin conversion of `git submodule`
+> (currently stalled [3]) has told me privately that he isn't
+> interested in continuing the port further. So, finishing the
+> port of `git submodule` could be a nice project for GSoC 2021.
+> I believe it would fit the new GSoC structure but I might be wrong.
+
+Yeah, I agree. In the ideas list Shourya is mentioned as a possible
+(co-)mentor to a project to finish the builtin conversion of `git
+submodule`, as he told me that he could be ok with co-mentoring on
+this.
+
+Best,
+Christian.
