@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 734C6C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3240C4332D
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:37:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45CBB64EB7
+	by mail.kernel.org (Postfix) with ESMTP id 9415B61606
 	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 12:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232976AbhBRMeM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 07:34:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59550 "EHLO
+        id S233011AbhBRMfC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 07:35:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbhBRLIm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232250AbhBRLIm (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Feb 2021 06:08:42 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1046BC061788
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:58:46 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id u14so2455217wri.3
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:58:45 -0800 (PST)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863B1C061574
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:58:44 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id v1so2442863wrd.6
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 02:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xsJst1qMD7GeBxyJRsPiwKmtvLvpeXj+NznIUApS+u0=;
-        b=B7wgZBBm96TmORdL85bQgkk5pSFp5ccVt8MwBbBgG9YDpc4JAs5JpqeFiMSmy411y6
-         UlRd7c8SVgheEhh62MkUAaGdq9aHz0XidhCJAp+pVmJvPg5NgiErySE1YH8oBAXefSZy
-         41tW4p1Y14fQVq6dYDpdPC2purTs83jyiQE3u9KwfSC1cavxK9waoeQvnGS4J1D8G4vC
-         c2+xyvcecXNp1QmytMdLnReT7nqviMMZQsMPxxTmTonhDP+ctHjLR1APmBRyqz9wrbE9
-         LvEWWimpXJxqb+XNf2k9fEX20/uqtmmMyAvg4Sy9iEWxec52XHhL9oMURCXDjrfirU4N
-         HWfw==
+        bh=pPvLMTrnIy4/LP65MPzkONF17MZ/QjkK6o4etkcYwzE=;
+        b=FZo738IM0q5IKqgzk64cC4uGjfbcXIrvJcG5bx9TafjXtE06xdRn1wptR0BS5JwBxi
+         yUp+vpGOT2q37DN+eLZS0axbyp+1fxz/RQMthlIVPWHad8xh0tjhd+uMCncTmfk4fCrr
+         I1volFxUjIRUIVeMTH7m5j68OzBjLU3wCffCT7rI/sw1n6+zm8IMbq6bg0QKs7DKtV+Q
+         Qywu0stNsP1jaqWpsW3TE4Maz08gij3VEfh6rvjpyhVgqJWEs3ejv41Ppp5EtZXFGtq0
+         rmmuJ8lEnJ2QOc8Vc+kgEnKQKj/jlHK/T3p0DhXQiLjYWL1L9X9uhL3J4KLem9hygcmu
+         lGhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xsJst1qMD7GeBxyJRsPiwKmtvLvpeXj+NznIUApS+u0=;
-        b=AmUznZ6958Ll41H6OG9tC+e8qojm6XUetu0sSbMqULKOF5C1fdSD1R03nnYPZX7Vyo
-         XIcKOYaEizdGQkPfPBE0kMnoJ8YOkvmr0l5kGVT1R/an/bjSM8a6c2aN0S/qLAJB0wMB
-         s1S1Hv3e1FlfGHBppPrBHNoqZB2YZDNW64ZqLMH0e+vGQGWYPaHmu3S142nN2pYFmR1W
-         GRpLHjjF+JfkAS8C1v9zZN7rrbAHjizM+SW7XAaWAdRlZ4tVDT3/IsMFXgXtgtYIINFf
-         0wzL0uAJt8f07fcRQsvixCFpiSqaw0+dOrGoVBY60+M0VnuNiiki1o1KKkL9Klc3VW7D
-         iJHQ==
-X-Gm-Message-State: AOAM5335zkhYXxaQHS15oL2Q/9hM5KOE6bIDdIjbSoH2BYGCTLKWpyRi
-        BOp/EZ3lTlD53kmLbjqlC0C8rxihmfi3rg==
-X-Google-Smtp-Source: ABdhPJyXxdIA/bPDgqOYCEWPpC9yYfKKexF0zoOhDkAOKbfslHkVHLBlu2Dye1RG+qDoeK9Q9nVmFQ==
-X-Received: by 2002:adf:fdd0:: with SMTP id i16mr3729102wrs.215.1613645924471;
-        Thu, 18 Feb 2021 02:58:44 -0800 (PST)
+        bh=pPvLMTrnIy4/LP65MPzkONF17MZ/QjkK6o4etkcYwzE=;
+        b=qb3mBhOwA0Pdnj37EkOR5hdT5K+gD33a7w/B5DbHFyB6w4byUXwDFMtKj7Pgq4PJf6
+         FLyVLg9W82bzMVCy0VdFsMXLiZsLGegkSxK+DB0i69HKg2PEl/D/3nxGIUQwuZmPpIBO
+         UEKsGy2En/cIAlOg1V/TrKdw5BAlhFeBVBuxbT6Jy3KS60cC0Kag44WoAfgQjHqyo6e9
+         +ruodaVVNrBSEX6CO1BedF7lxqPZH5ZvlDp74o9hRUsiu5LaH1zcQK2Ofz5wZ+2+T7kl
+         DBw4eVuCnPw3JHei84rxN3sU6MNw6sHfGCXuPqCSBXR17MTaX1OXw9SszWJl3Lma2MUq
+         JPhg==
+X-Gm-Message-State: AOAM532/1lvtz781x2dySMxiIKZ2OFMD6VxI9KFKqw5Uqlz5jBr1ATmA
+        osudcX/sumclq1NURuHUlUIa8dqBoTh7pQ==
+X-Google-Smtp-Source: ABdhPJw7MYI2XgFeS/AqiJHeGsBgNmoUL6CG1aeFrQI68kQ0YPxljaacQYnu5vP5rJ1llCeqMqoAnQ==
+X-Received: by 2002:a5d:5246:: with SMTP id k6mr3698777wrc.7.1613645922848;
+        Thu, 18 Feb 2021 02:58:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l7sm8604376wrn.11.2021.02.18.02.58.43
+        by smtp.gmail.com with ESMTPSA id l7sm8604376wrn.11.2021.02.18.02.58.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 02:58:43 -0800 (PST)
+        Thu, 18 Feb 2021 02:58:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 02/10] fsck.h: use "enum object_type" instead of "int"
-Date:   Thu, 18 Feb 2021 11:58:32 +0100
-Message-Id: <20210218105840.11989-3-avarab@gmail.com>
+Subject: [PATCH v2 00/10] fsck: API improvements (no conflicts with 'seen')
+Date:   Thu, 18 Feb 2021 11:58:30 +0100
+Message-Id: <20210218105840.11989-1-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210217194246.25342-1-avarab@gmail.com>
 References: <20210217194246.25342-1-avarab@gmail.com>
@@ -77,79 +76,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the fsck_walk_func to use an "enum object_type" instead of an
-"int" type. The types are compatible, and ever since this was added in
-355885d5315 (add generic, type aware object chain walker, 2008-02-25)
-we've used entries from object_type (OBJ_BLOB etc.).
+As suggested in
+https://lore.kernel.org/git/87zh028ctp.fsf@evledraar.gmail.com/ a
+version of this that doesn't conflict with other in-flight topics. I
+can submit the rest later.
 
-So this doesn't really change anything as far as the generated code is
-concerned, it just gives the compiler more information and makes this
-easier to read.
+Ævar Arnfjörð Bjarmason (10):
+  fsck.h: indent arguments to of fsck_set_msg_type
+  fsck.h: use "enum object_type" instead of "int"
+  fsck.c: rename variables in fsck_set_msg_type() for less confusion
+  fsck.c: move definition of msg_id into append_msg_id()
+  fsck.c: rename remaining fsck_msg_id "id" to "msg_id"
+  fsck.h: move FSCK_{FATAL,INFO,ERROR,WARN,IGNORE} into an enum
+  fsck.c: call parse_msg_type() early in fsck_set_msg_type()
+  fsck.c: undefine temporary STR macro after use
+  fsck.c: give "FOREACH_MSG_ID" a more specific name
+  fsck.h: update FSCK_OPTIONS_* for object_name
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/fsck.c           | 3 ++-
- builtin/index-pack.c     | 3 ++-
- builtin/unpack-objects.c | 3 ++-
- fsck.h                   | 3 ++-
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ builtin/fsck.c           |  5 ++--
+ builtin/index-pack.c     |  3 +-
+ builtin/mktag.c          |  3 +-
+ builtin/unpack-objects.c |  3 +-
+ fsck.c                   | 60 ++++++++++++++++++++--------------------
+ fsck.h                   | 26 +++++++++--------
+ 6 files changed, 54 insertions(+), 46 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 821e7798c70..68f0329e69e 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -197,7 +197,8 @@ static int traverse_reachable(void)
- 	return !!result;
- }
- 
--static int mark_used(struct object *obj, int type, void *data, struct fsck_options *options)
-+static int mark_used(struct object *obj, enum object_type object_type,
-+		     void *data, struct fsck_options *options)
- {
- 	if (!obj)
- 		return 1;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 54f74c48741..2f291a14d4a 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -212,7 +212,8 @@ static void cleanup_thread(void)
- 	free(thread_data);
- }
- 
--static int mark_link(struct object *obj, int type, void *data, struct fsck_options *options)
-+static int mark_link(struct object *obj, enum object_type type,
-+		     void *data, struct fsck_options *options)
- {
- 	if (!obj)
- 		return -1;
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index dd4a75e030d..ca54fd16688 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -187,7 +187,8 @@ static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
-  * that have reachability requirements and calls this function.
-  * Verify its reachability and validity recursively and write it out.
-  */
--static int check_object(struct object *obj, int type, void *data, struct fsck_options *options)
-+static int check_object(struct object *obj, enum object_type type,
-+			void *data, struct fsck_options *options)
- {
- 	struct obj_buffer *obj_buf;
- 
-diff --git a/fsck.h b/fsck.h
-index df0b64a2163..0c75789d219 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -23,7 +23,8 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type);
-  *     <0	error signaled and abort
-  *     >0	error signaled and do not abort
-  */
--typedef int (*fsck_walk_func)(struct object *obj, int type, void *data, struct fsck_options *options);
-+typedef int (*fsck_walk_func)(struct object *obj, enum object_type object_type,
-+			      void *data, struct fsck_options *options);
- 
- /* callback for fsck_object, type is FSCK_ERROR or FSCK_WARN */
- typedef int (*fsck_error)(struct fsck_options *o,
+Range-diff:
+ -:  ----------- >  1:  88b347b74ed fsck.h: indent arguments to of fsck_set_msg_type
+ 1:  1a60d65d2ca !  2:  868eac3d4d1 fsck.h: use use "enum object_type" instead of "int"
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    fsck.h: use use "enum object_type" instead of "int"
+    +    fsck.h: use "enum object_type" instead of "int"
+     
+         Change the fsck_walk_func to use an "enum object_type" instead of an
+         "int" type. The types are compatible, and ever since this was added in
+ 2:  24761f269b7 =  3:  f599dc6c8f3 fsck.c: rename variables in fsck_set_msg_type() for less confusion
+ 3:  fb4c66f9305 =  4:  33f3b1942c1 fsck.c: move definition of msg_id into append_msg_id()
+ 4:  a129dbd9964 =  5:  28c9245e418 fsck.c: rename remaining fsck_msg_id "id" to "msg_id"
+ 5:  d9bee41072e =  6:  d25037c6f18 fsck.h: move FSCK_{FATAL,INFO,ERROR,WARN,IGNORE} into an enum
+ 6:  423568026c3 =  7:  66d0f1047cc fsck.c: call parse_msg_type() early in fsck_set_msg_type()
+ 7:  cb43e832738 =  8:  7643a5bf211 fsck.c: undefine temporary STR macro after use
+ 8:  2cd14cb4e2a =  9:  7c64e2267ce fsck.c: give "FOREACH_MSG_ID" a more specific name
+ 9:  1ada154ef23 <  -:  ----------- fsck.[ch]: move FOREACH_FSCK_MSG_ID & fsck_msg_id from *.c to *.h
+10:  c4179445f22 <  -:  ----------- fsck.c: pass along the fsck_msg_id in the fsck_error callback
+11:  c1fc724f0e8 <  -:  ----------- fsck.c: add an fsck_set_msg_type() API that takes enums
+12:  8de91fac068 = 10:  a98a3512629 fsck.h: update FSCK_OPTIONS_* for object_name
+13:  29ff97856ff <  -:  ----------- fsck.c: move gitmodules_{found,done} into fsck_options
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
