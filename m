@@ -6,89 +6,92 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07116C433E0
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF271C433E0
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:35:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74D6964EC4
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:30:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97A2064EBD
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 23:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbhBRXaf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 18:30:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60511 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhBRXaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 18:30:35 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 84A319B273;
-        Thu, 18 Feb 2021 18:29:51 -0500 (EST)
+        id S229652AbhBRXeu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 18:34:50 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50031 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229535AbhBRXet (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 18:34:49 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A3E6112C80D;
+        Thu, 18 Feb 2021 18:34:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NwMCkaXXtMOZJqN0k/qh277fe0A=; b=XJYTQm
-        nEAVBmips1eOE7M/0/BAnQ5VfwFY6kaZqN5U1S1gZS8FSILVCHZmguREivldeLko
-        I2P36AuJnznz5TI1O4E/zRvikix8P4dZu97MY5V3GJc5skK8UfI8n8yVlTFKqQVI
-        jQ9o3i6cjYwnhepvl6Dh4i9YQpGROup7FvLNw=
+        :content-type:content-transfer-encoding; s=sasl; bh=ZS40sZbunbZB
+        1dAzCaMksJFTxAA=; b=VLFZXa7mus6c9Sd/PENR/FXFmMpO7EfY03F0N58vgi8R
+        3CPeTexYFEeHPCYJFNFFcEYR8m/8kGjfb4YaHIfP/Y5Saa9oXa59ljxrXgZaemcp
+        3Hm+ZUnsH9zw40OIHh0KAUPyyRU+5HZ2Ya1uTNUgzWUE3c+h2cZYya9U2RRr/RY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=n9i5ramCLenugPgYL2Gd+SGImXnnMrMG
-        CUZnnykAN9jFQAooKdtGNHRNVO+uIBaewx5FhpRF46Nv7BeD+xK4xlxcRortERRn
-        RxhbFtu1LWZG9hM8duFqohUwVZeHqFinIzmblInNCBnA4aGlr2+5+Zkxh4XdIvDL
-        junvK4wWReE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A51C9B272;
-        Thu, 18 Feb 2021 18:29:51 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wU5Mjh
+        ONCXueLjjhwzFbWYLbT/R+Cg5MlZGJQpodj7lsHsVbaokw35kyZcecrDUkuDmCFq
+        wmbPPR9dPjr6OS/rEU7vSpGvmY1DCJ0ofS9qF+/yZlgJIJIG6Z6gafVyfy2rmZEE
+        Iv9aSo/RZBX8zso47V7M0cWXuWcstZazWjNvE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CBCC12C80C;
+        Thu, 18 Feb 2021 18:34:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07CE09B270;
-        Thu, 18 Feb 2021 18:29:51 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CC3B612C80B;
+        Thu, 18 Feb 2021 18:34:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase: add a config option for --no-fork-point
-References: <20210120044435.53509-1-alexhenrie24@gmail.com>
-        <xmqqturbdxi2.fsf@gitster.c.googlers.com>
-        <CAMMLpeQM7JCP0=TMqf0DxDCVJvkCGDEPSKN6vYTU_xc7+QaA1Q@mail.gmail.com>
-        <xmqqo8hiaptn.fsf@gitster.c.googlers.com>
-        <CAMMLpeQ5ga_e5-YeVuArYBrui+ps7HWzNjWNQgeJK3sEjo2zhA@mail.gmail.com>
-        <YAoSIkCecZU98QD2@generichostname>
-        <CAMMLpeTDNLUz9UVnL3aVK=J7X50Sq8L-OVGaoEsT5AY6EQON-g@mail.gmail.com>
-Date:   Thu, 18 Feb 2021 15:29:50 -0800
-In-Reply-To: <CAMMLpeTDNLUz9UVnL3aVK=J7X50Sq8L-OVGaoEsT5AY6EQON-g@mail.gmail.com>
-        (Alex Henrie's message of "Thu, 21 Jan 2021 16:51:52 -0700")
-Message-ID: <xmqq4ki9c5u9.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/4] Check .gitmodules when using packfile URIs
+References: <20210115234300.350442-1-jonathantanmy@google.com>
+        <cover.1611455251.git.jonathantanmy@google.com>
+Date:   Thu, 18 Feb 2021 15:34:03 -0800
+In-Reply-To: <cover.1611455251.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Sat, 23 Jan 2021 18:34:26 -0800")
+Message-ID: <xmqqzh01ar2s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 327DC1B6-7241-11EB-ADC0-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C9C52FAA-7241-11EB-8DE1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Thu, Jan 21, 2021 at 4:45 PM Denton Liu <liu.denton@gmail.com> wrote:
->>
->> On Thu, Jan 21, 2021 at 04:25:25PM -0700, Alex Henrie wrote:
->> > I didn't see any fork-point tests in the current codebase, but I can
->> > work on adding some. Do you want them in a separate patch (that would
->> > make the most sense to me), or squashed into the rebase.forkPoint
->> > patch?
->>
->> The fork-point tests should be in t3431.
+> This patch set resolves the .gitmodules-and-tree-in-separate-packfiles
+> issue I mentioned in [1] by having index-pack print out all dangling
+> .gitmodules (instead of returning with an error code) and then teaching
+> fetch-pack to read those and run its own fsck checks after all
+> index-pack invocations are complete.
 >
-> Derp! For some reason I thought that t3431 only tested --fork-point
-> with an ambiguous refname and that the other tests were unrelated.
-> Maybe we should make copies of some of those tests that set
-> rebase.forkPoint instead of passing --fork-point or --no-fork-point on
-> the command line.
+> As part of this, index-pack has to output (1) the hash that goes into
+> the name of the .pack/.idx file and (2) the hashes of all dangling
+> .gitmodules. I just had (2) come after (1). If anyone has a better idea=
+,
+> I'm interested.
+>
+> I also discovered a bug in that different index-pack arguments were use=
+d
+> when processing the inline packfile and when processing the ones
+> referenced by URIs. Patch 1-3 fixes that bug by passing the arguments t=
+o
+> use as a space-separated URL-encoded list. (URL-encoded so that we can
+> have spaces in the arguments.) Again, if anyone has a better idea, I'm
+> interested. It is only in patch 4 that we have the dangling .gitmodules
+> fix.
 
-Ping.
+This seems to have been stalled but I think it would be a better
+approach to use a custom callback for error reporting, suggested by
+=C3=86var, which would be where his fsck API clean-up topic would lead
+to.
 
-Any progress on this topic?  It's been almost a month without seeing
-any activity.
-
-Thanks.
+If it is not ultra-urgent, perhaps you can retract the ones that are
+queued right now, work with =C3=86var to finish the error-callback work
+and rebuild this topic on top of it?  Thanks.
