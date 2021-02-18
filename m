@@ -2,168 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-28.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E452C433DB
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 22:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DC80C433DB
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 22:33:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10AAE64EB4
-	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 22:33:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6183B64EB4
+	for <git@archiver.kernel.org>; Thu, 18 Feb 2021 22:33:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229769AbhBRWdK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 17:33:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbhBRWdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 17:33:09 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF1FCC061574
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 14:32:28 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id z6so2387094pfq.0
-        for <git@vger.kernel.org>; Thu, 18 Feb 2021 14:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=bjD7hQ+HDNKwatzs7+Xp7Nri2b5spEUFvJdB7KeHH4o=;
-        b=KulvuomvJkE5eIAA/iTWvc+zD9HMQ+AsNraSu7WjNxNGFra2KN6DiO+wuWqRZ8S4AC
-         bsGDkKd058NLmrOGs7UWbPxttE2nnCMqItqnpNudSGW0AoedjF2BzwlS9THuIsU81vdB
-         4feVTtnGwXUoJGkOPjh4ZnTAIEiZCQcTSXnPyWc02IglSVwdIazT2Dcth8TaNVI5fyoo
-         GNF/M9Qg2iVxxxCy0X8clhry/sCLLZizPBhs+wtJiyi6/Lz7Dw++QLlDl+aCgLohA15W
-         TDDy2sKXJ+E2mO2gFDWJfAJF5tORyxCIOGQjewfIsj5N8i4rgjHkNedAXKYQFMilfMCu
-         gK1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=bjD7hQ+HDNKwatzs7+Xp7Nri2b5spEUFvJdB7KeHH4o=;
-        b=myHCq3FnwsYhsh4JVUJpp6lNfRD0h/E635tG4lwcxwHtQUXY/YT0+lrzus4Jsu6Wyw
-         831ayvl4PpE4w7yFIttZ9fF2lJCeWoJOyI66xnzTRhPXLKmVWIcDhdXYY8ejZh/Yj4IB
-         hhLT3S92yGVHxJi0/9jufcWu97rlf/7iDRLumdXlv3ohgMOwDPXCBFtFvReGp11OKsks
-         B5AGiR5+OiAKkYTcYtlGnCzM2wo7RxrJs8Q4K3/JebD9pE5GZp1+tcMd096ABy9forD7
-         /RvVvw9EadEBDvaJvawhW5WZcL5RCV/etHOt7PmVdGtlD379fhIEbwmRoNtU4eUZWblj
-         sPwg==
-X-Gm-Message-State: AOAM5330N1ApT/qFfwc7A7FiWhOGMcVwQn9Mu5DEDG3ZYLmDiEyJwwpq
-        KbXZ3QGULv7ke9L/NKMAOoKi5g==
-X-Google-Smtp-Source: ABdhPJw2yVIR5qJtJpM0747GV4bZH3HYyulkhhydEfPPowrTaX81IwCbE6kTJ2kl63HCEndS7dsp4w==
-X-Received: by 2002:aa7:9571:0:b029:1e6:5f49:24a0 with SMTP id x17-20020aa795710000b02901e65f4924a0mr6340165pfq.25.1613687548292;
-        Thu, 18 Feb 2021 14:32:28 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:fca0:af9c:8209:f7cc])
-        by smtp.gmail.com with ESMTPSA id t187sm4500539pfb.91.2021.02.18.14.32.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Feb 2021 14:32:27 -0800 (PST)
-Date:   Thu, 18 Feb 2021 14:32:22 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
+        id S229787AbhBRWdY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 17:33:24 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59467 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229577AbhBRWdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 17:33:17 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 132FA10A30E;
+        Thu, 18 Feb 2021 17:32:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=cmjCOElLOhQO
+        xNuG1ExnvdfU/iU=; b=BPAn4OGfcseKA5XTgXVOpRYTCRXczUgPhildrN0X/bat
+        AnLCa0JqYTi0ngIB8VSlhWUfZJIyOZ4t3iN0F+sdbx8K8IUf+3tjGKbHyLstQC/k
+        /8idxcLorVzBhQPov4vk+4TUHTIYy9+f40d4YwOYqO3yCr/ertdw37rtGJxt3cY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uurCWi
+        FIwwOAj7r/SAL3+/FNowwkeZ8QcToNN3yjQBjID0rn37AtT242GW/f7QP31GV8V8
+        ym3P9yJsYQooUmiiJctoM/5lm/nM3rD7iNOqgJ/XUv4Q1i3k9xzXVLNalDypGxjy
+        UBrxyHPOYQaidjeTkru3PYKKdykle9ojiEipo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B40E10A30B;
+        Thu, 18 Feb 2021 17:32:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4FDD310A309;
+        Thu, 18 Feb 2021 17:32:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/17] use config-based hooks (config-based hooks part
- II)
-Message-ID: <YC7q9okiZVEp8Cwx@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20201205014945.1502660-1-emilyshaffer@google.com>
- <20201222000435.1529768-1-emilyshaffer@google.com>
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 10/10] fsck.h: update FSCK_OPTIONS_* for object_name
+References: <20210217194246.25342-1-avarab@gmail.com>
+        <20210218105840.11989-11-avarab@gmail.com>
+Date:   Thu, 18 Feb 2021 14:32:32 -0800
+In-Reply-To: <20210218105840.11989-11-avarab@gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 18 Feb 2021 11:58:40 +0100")
+Message-ID: <xmqqlfblc8hr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 320E5932-7239-11EB-A3F6-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020.12.21 16:04, Emily Shaffer wrote:
-> Since v2:
->  - Renamed 'master' to 'main' in new t5411 (proc-receive) test.
->  - Removed some accidentally included debug strings.
->  - Fixed a nasty bug in the reference-transaction hook conversion where calling
->    'oid_to_hex()' would invalidate references to the output of earlier
->    'oid_to_hex()' runs farther up the callstack. Instead, the hook callsite now
->    uses 'oid_to_hex_r()'.
-> 
-> Another thing I wanted to do in this series but ended up not having time
-> for before the holidays was to figure out a way to consolidate
-> Documentation/githooks.txt and Documentation/git-hook.txt. My personal
-> preference would be to remove githooks.txt's contents, move the "Hooks"
-> header from there into git-hook.txt, and have 'git help githooks'/'git
-> help hooks' redirect to git-hook.txt; I don't have a patch to share here
-> because I ran out of time before vacation :) What do others envision the
-> documentation looking like?
-> 
-> Thanks!
->  - Emily
-> 
-> CI run: https://github.com/nasamuffin/git/actions/runs/436905873
-> 
-> Emily Shaffer (17):
->   commit: use config-based hooks
->   am: convert applypatch hooks to use config
->   merge: use config-based hooks for post-merge hook
->   gc: use hook library for pre-auto-gc hook
->   rebase: teach pre-rebase to use hook.h
->   read-cache: convert post-index-change hook to use config
->   receive-pack: convert push-to-checkout hook to hook.h
->   git-p4: use 'git hook' to run hooks
->   hooks: convert 'post-checkout' hook to hook library
->   hook: convert 'post-rewrite' hook to config
->   transport: convert pre-push hook to use config
->   reference-transaction: look for hooks in config
->   receive-pack: convert 'update' hook to hook.h
->   proc-receive: acquire hook list from hook.h
->   post-update: use hook.h library
->   receive-pack: convert receive hooks to hook.h
->   run-command: stop thinking about hooks
-> 
->  Documentation/githooks.txt                    |  45 +++
->  builtin/am.c                                  |  30 +-
->  builtin/checkout.c                            |  16 +-
->  builtin/clone.c                               |   7 +-
->  builtin/commit.c                              |  11 +-
->  builtin/gc.c                                  |   4 +-
->  builtin/merge.c                               |  14 +-
->  builtin/rebase.c                              |   7 +-
->  builtin/receive-pack.c                        | 326 ++++++++++--------
->  builtin/worktree.c                            |  30 +-
->  commit.c                                      |  20 +-
->  commit.h                                      |   3 +-
->  git-p4.py                                     |  67 +---
->  hook.c                                        |  39 ++-
->  read-cache.c                                  |  12 +-
->  refs.c                                        |  38 +-
->  reset.c                                       |  15 +-
->  run-command.c                                 |  66 ----
->  run-command.h                                 |  24 --
->  sequencer.c                                   |  83 ++---
->  t/t1416-ref-transaction-hooks.sh              |  12 +-
->  t/t5411/test-0015-too-many-hooks-error.sh     |  47 +++
->  ...3-pre-commit-and-pre-merge-commit-hooks.sh |  17 +-
->  transport.c                                   |  55 +--
->  24 files changed, 493 insertions(+), 495 deletions(-)
->  create mode 100644 t/t5411/test-0015-too-many-hooks-error.sh
-> 
-> -- 
-> 2.28.0.rc0.142.g3c755180ce-goog
-> 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-My only complaints on the previous version of this series have now been
-resolved, so LGTM.
+> Add the object_name member to the initialization macro. This was
+> omitted in 7b35efd734e (fsck_walk(): optionally name objects on the
+> go, 2016-07-17) when the field was added.
 
-Reviewed-by: Josh Steadmon <steadmon@google.com>
+This is more of a Meh to me.  If this were to change us to
+designated initializers and omit NULL and 0 initialization, it would
+be more interesting.
+
+Thanks.
+
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  fsck.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/fsck.h b/fsck.h
+> index c77e8ddf10b..5d44ff1c8e3 100644
+> --- a/fsck.h
+> +++ b/fsck.h
+> @@ -47,8 +47,8 @@ struct fsck_options {
+>  	kh_oid_map_t *object_names;
+>  };
+> =20
+> -#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OID=
+SET_INIT }
+> -#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDS=
+ET_INIT }
+> +#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OID=
+SET_INIT, NULL }
+> +#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDS=
+ET_INIT, NULL }
+> =20
+>  /* descend in all linked child objects
+>   * the return value is:
