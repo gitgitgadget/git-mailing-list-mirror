@@ -2,203 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F4F6C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 00:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 979CFC433DB
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 00:43:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE42964EE7
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 00:35:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63FD560202
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 00:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbhBSAff (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 18 Feb 2021 19:35:35 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51324 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbhBSAfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Feb 2021 19:35:34 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 32C5D9BA2C;
-        Thu, 18 Feb 2021 19:34:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KkJExLMF31tq+t42MY9qf+FRyng=; b=LyhnwB
-        Aqto8TvjD3tQHicVIXOViwjcevdwf83+2nMwXha9/9ROA9fTs53Yuf1dfmNdhRkJ
-        3fcVmhiRjY0+tWUlEjzDVUo5/XdGQunKl8+xzi1eWXwk6NrPXhg+ZRKk1tsAQumE
-        w1NCUfTus/Kno2V4C1EV48esR5hhhCddD7X1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XPjSwrdurBbjAJM94WxjscqI/W6t6ve9
-        7L+nfVyDDlXopK2AdRoibrsZtmeXcG0ba8GOokoQ28C5QgAl9LXsAE9GYH1cf/3Q
-        Fkl4NpCWAjM4TiynRLFiEgwvZps7FpOx5WejBI5q6wHwcxWsOcaIKB5pWamjUwWo
-        7V/imyDCXDY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 292829BA28;
-        Thu, 18 Feb 2021 19:34:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB9629BA25;
-        Thu, 18 Feb 2021 19:34:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, newren@gmail.com, stolee@gmail.com
-Subject: Re: [RFC PATCH 6/7] add: warn when pathspec only matches
- SKIP_WORKTREE entries
-References: <cover.1613593946.git.matheus.bernardino@usp.br>
-        <8f1bc014ae8a34c0bc43d1a2b8c0ebdbe7e47e02.1613593946.git.matheus.bernardino@usp.br>
-Date:   Thu, 18 Feb 2021 16:34:46 -0800
-In-Reply-To: <8f1bc014ae8a34c0bc43d1a2b8c0ebdbe7e47e02.1613593946.git.matheus.bernardino@usp.br>
-        (Matheus Tavares's message of "Wed, 17 Feb 2021 18:02:29 -0300")
-Message-ID: <xmqqo8ggc2u1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 45170630-724A-11EB-9680-D152C8D8090B-77302942!pb-smtp1.pobox.com
+        id S229691AbhBSAn0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 18 Feb 2021 19:43:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229468AbhBSAnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Feb 2021 19:43:25 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F9C9C061574
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 16:42:45 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id k16so2286097plk.20
+        for <git@vger.kernel.org>; Thu, 18 Feb 2021 16:42:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=J5bCZZ+mGDWQpg/yNmTq/SLTsTTUPHX9GuEdvRT8yo8=;
+        b=JmBWpKRe1VPcbqjVejr6hsJbqttOO0eSb8AnWWOTz2zi5IIXvYsjBuJ3mOpsrHS+RW
+         HscVGz36x++GkuHdImu0NHq7b+27jKEWGG9cQ8uCPOtQrRehoDZowQqfyGOkzRi/5ig7
+         ADzATv0JVOZjf3VlTDaWWXtEVAF4s6n2tKVG9lfqYhsq6u9d5Psb88zxTh6EeecLAfL/
+         cpIBRmW6fOSCHV6Zepfhm7PF25NR6N0eI1MdFMr5Jum1CB0W56oAOJ9GJo8OvOfgw2yl
+         nF7lYwMQwrLluBlo+x0I5xoyv1Js7jPqy0jhT5SBVpYSYAiha2ebPHpFLZFFcTqtrsob
+         w40Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=J5bCZZ+mGDWQpg/yNmTq/SLTsTTUPHX9GuEdvRT8yo8=;
+        b=dGWvy+PFlmxoo8hpqXB2bYR3qqfhMEun7Rf0VZXk67J3JNOXKgSuFvm78XpsozTrBL
+         TYOC27QJi4l6ek3Hd9t4cNWznsNlp+NE4WIqiuxMivdTkmQhTt4MxzheMfZYR73YI1jJ
+         pxSTzZoQt/XEV0qvTGVEASCNJ19LbcA7kEOofqmbryF/hNac0F4MVzn74hoxR8e7SY17
+         SxDF9bvOcDyus1rnZjrBCkAs6akRLYhbBsZ+syS+acTHMZBhH6ZDiYgxSeZY96gf0USM
+         qqTl6tAk+txB8BW0lgAAAwzxGKpgUnXNoUPcwqhwJoNEI0/yotcz7YV2rmeNHm0JjD2P
+         kKPw==
+X-Gm-Message-State: AOAM533b2kyy1pmGGqEtRVGG8mA1Me0hZq+A97YUfPWHQvNOZxBFePQF
+        ZDbwBvNFqtokHhYTDyOWPR8apE2QEsGxkH2DLoan
+X-Google-Smtp-Source: ABdhPJx8RFRDbbBEIIxqGtE5ZbYpvIpec3OloFpinB1I0OfKy5MFjM3JrzDPYG7lNrIIW4y4SuReVQy52JYEDC3oOIZu
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:ed94:b029:de:8844:a650 with
+ SMTP id e20-20020a170902ed94b02900de8844a650mr6426874plj.56.1613695364731;
+ Thu, 18 Feb 2021 16:42:44 -0800 (PST)
+Date:   Thu, 18 Feb 2021 16:42:42 -0800
+In-Reply-To: <xmqqy2fldsy4.fsf@gitster.g>
+Message-Id: <20210219004242.1179999-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqy2fldsy4.fsf@gitster.g>
+X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
+Subject: Re: [RFC PATCH] push: perform negotiation before sending packfile
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matheus Tavares <matheus.bernardino@usp.br> writes:
+> For a real implementation, I think we'd want to do the negotiation
+> inside the conversation between send-pack and receive-pack, so that
+> what is agreed to be common between two parties will not shift in
+> the middle (in the same spirit that upload-pack grabs all the
+> relevant refs first, advertises them, negotiates what is common and
+> creates a pack, all using the same worldview of where the tips of
+> refs are throughout the process, even if some refs change in the
+> meantime).
 
-> `git add` already refrains from updating SKIP_WORKTREE entries, but it
-> silently succeeds when a pathspec only matches these entries. Instead,
-> let's warn the user and display a hint on how to update these entries.
+Upload-pack does that for protocol v0 ssh:// and git:// but not
+http(s)://, and does not do that for protocol v2, I believe.
 
-"Silently succeeds" reads as if it succeeds to update, but that is
-not what you meant.
-
-I guess the warning is justified and is desirable because an attempt
-to add an ignored path would result in a similar hint, e.g.
-
-    $ echo '*~' >.gitignore
-    $ git add x~
-    hint: use -f if you really want to...
-    $ git add .
-
-It is curious why the latter does not warn (even when there is
-nothing yet to be added that is not ignored), but that is what we
-have now.  If we are modeling the new behaviour for sparse entries
-after the ignored files, we should do the same, I think.
-
-> A warning message was chosen over erroring out right away to reproduce
-> the same behavior `add` already exhibits with ignored files. This also
-> allow users to continue their workflow without having to invoke `add`
-> again with only the matching pathspecs, as the matched files will have
-> already been added.
-
-Makes sense.
-
-> Note: refresh_index() was changed to only mark matches with
-> no-SKIP-WORKTREE entries in the `seen` output parameter. This is exactly
-> the behavior we want for `add`, and only `add` calls this function with
-> a non-NULL `seen` pointer. So the change brings no side effect on
-> other callers.
-
-And possible new callers that wants to learn from seen[] output
-would want the same semantics, presumably?
-
-> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-> index f7b0ea782e..f66d369bf4 100755
-> --- a/t/t3705-add-sparse-checkout.sh
-> +++ b/t/t3705-add-sparse-checkout.sh
-> @@ -32,10 +32,22 @@ test_sparse_entry_unchanged() {
->  	test_cmp expected actual
->  }
->  
-> +cat >sparse_entry_error <<-EOF
-> +The following pathspecs only matched index entries outside the current
-> +sparse checkout:
-> +sparse_entry
-> +EOF
-> +
-> +cat >error_and_hint sparse_entry_error - <<-EOF
-> +hint: Disable or modify the sparsity rules if you intend to update such entries.
-> +hint: Disable this message with "git config advice.updateSparsePath false"
-> +EOF
-> +
->  test_expect_success "git add does not remove SKIP_WORKTREE entries" '
->  	setup_sparse_entry &&
->  	rm sparse_entry &&
-> -	git add sparse_entry &&
-> +	test_must_fail git add sparse_entry 2>stderr &&
-> +	test_i18ncmp error_and_hint stderr &&
-
-OK, this demonstrates what exactly you meant by "silently succeed".
-We are not expecting side effects that are any different from before
-(i.e. sparse_entry is not removed from the index), but the command
-is taught to error out and hint, which makes sense.
-
->  	test_sparse_entry_unchanged
->  '
->  
-> @@ -56,7 +68,8 @@ do
->  	test_expect_success "git add$opt does not update SKIP_WORKTREE entries" '
->  		setup_sparse_entry &&
->  		echo modified >sparse_entry &&
-> -		git add $opt sparse_entry &&
-> +		test_must_fail git add $opt sparse_entry 2>stderr &&
-> +		test_i18ncmp error_and_hint stderr &&
->  		test_sparse_entry_unchanged
->  	'
->  done
-> @@ -64,7 +77,8 @@ done
->  test_expect_success 'git add --refresh does not update SKIP_WORKTREE entries' '
->  	setup_sparse_entry &&
->  	test-tool chmtime -60 sparse_entry &&
-> -	git add --refresh sparse_entry &&
-> +	test_must_fail git add --refresh sparse_entry 2>stderr &&
-> +	test_i18ncmp error_and_hint stderr &&
->  
->  	# We must unset the SKIP_WORKTREE bit, otherwise
->  	# git diff-files would skip examining the file
-> @@ -77,7 +91,8 @@ test_expect_success 'git add --refresh does not update SKIP_WORKTREE entries' '
->  
->  test_expect_success 'git add --chmod does not update SKIP_WORKTREE entries' '
->  	setup_sparse_entry &&
-> -	git add --chmod=+x sparse_entry &&
-> +	test_must_fail git add --chmod=+x sparse_entry 2>stderr &&
-> +	test_i18ncmp error_and_hint stderr &&
->  	test_sparse_entry_unchanged
->  '
->  
-> @@ -85,8 +100,23 @@ test_expect_success 'git add --renormalize does not update SKIP_WORKTREE entries
->  	test_config core.autocrlf false &&
->  	setup_sparse_entry "LINEONE\r\nLINETWO\r\n" &&
->  	echo "sparse_entry text=auto" >.gitattributes &&
-> -	git add --renormalize sparse_entry &&
-> +	test_must_fail git add --renormalize sparse_entry 2>stderr &&
-> +	test_i18ncmp error_and_hint stderr &&
->  	test_sparse_entry_unchanged
->  '
->  
-> +test_expect_success 'do not advice about sparse entries when they do not match the pathspec' '
-> +	setup_sparse_entry &&
-> +	test_must_fail git add nonexistent sp 2>stderr &&
-> +	test_i18ngrep "fatal: pathspec .nonexistent. did not match any files" stderr &&
-> +	test_i18ngrep ! "The following pathspecs only matched index entries" stderr
-
-This is because both of the two pathspec elements given do not match
-the sparse entries?  It is curious how the command behaves when
-given a pathspec that is broader, e.g. "." (aka "everything under
-the sun").  We could do "add --dry-run" for the test if we do not
-want to set up .gitignore appropriately and do not want to smudge
-the index with stderr, expect, actual etc.
-
-> +'
-> +
-> +test_expect_success 'add obeys advice.updateSparsePath' '
-> +	setup_sparse_entry &&
-> +	test_must_fail git -c advice.updateSparsePath=false add sparse_entry 2>stderr &&
-> +	test_i18ncmp sparse_entry_error stderr
-> +
-> +'
-
-OK.
-
-Thanks.
+If we were to do that, I don't think it would work for the transports
+that have are stateless (e.g. HTTP). Also, this seems like it would
+involve a significant reworking of how the server serves (receive-pack
+would need to know to communicate just like upload-pack does temporarily
+before proceeding with its usual behavior, and the client would need to
+learn this new way - as opposed to the idea in this patch to do it
+separately and reuse the already existing fetch and push mechanisms). I
+think the greater complexity is not worth it for something that won't
+work in HTTP, but I'm open to other opinions.
