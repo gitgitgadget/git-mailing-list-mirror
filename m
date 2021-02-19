@@ -2,255 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D52C433E6
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4994C433DB
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:42:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 386E464EC0
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:35:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A83564EB8
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbhBSMe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 07:34:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46908 "EHLO
+        id S230308AbhBSMm4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 07:42:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229804AbhBSMez (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 07:34:55 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D05F7C06178A
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:34:14 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id v62so7485116wmg.4
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:34:14 -0800 (PST)
+        with ESMTP id S230461AbhBSMmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 07:42:50 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7003C061574
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:42:09 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id q186so5640077oig.12
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:42:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xAt7oYKkKU6imCln9jYSjKatAsxBNkwtMhyYSMZ8sPw=;
-        b=DNEqXPxEC35HV9J/wJm43VMruTyuXpNAEtHItblLaI1iWxxXXNzXnyEJbvcMCgMOxF
-         lK4/iqdPGzSUn0BL8xs9FgWJln4r4DnLCDj5Y2hMtHYWSrPc9vKiEjx8yLWVQXhdenDW
-         ynVCK2GnJ3u41iOYBcRbipW6XUnzTQECKf4s38iv8LfkUfGpOyQidXHnTYG/+6tK8e6z
-         JIef2wmpc/yNS9xznUDywA62k+KseM6X7ZOlw195H4oxFLNoJnRAr3n1713dtFYhYBas
-         qek6LAFCZ7s15btOAaRRoNs7LegGHu/BgQjVuafADIn/PSVBKC9cllpI+ulIin9EwrFI
-         m0lw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=jhO0owUNaTNUtBotioFRXGplXibDi7UE5M2eYTf0yoc=;
+        b=RXPWQe+R6c3KGE6ubVaX16HdUQLEzpLTr6IixJ+cDX3iqsiaOLahurbBSIyFhz8e82
+         ODHeOjxbHo0dHslYoW/SGxJKl/9DvNNWMn4f0Vmt+UTJ/ZSwYJyIO6KLqgu0Ng22ofZJ
+         FvVzMCdsWlJ/6aJfThd/7xebBtJJPlkR9MAU7aGCcGsLlkpGisIe68zg1+f1aHuCV1mu
+         ETiz4AkP4n36TvALT/ZK138Dq5wuboh3B+UBuDV7c4m9H15EXtd2bWe42Vo1//AjYVW0
+         2Fs9mf2UaQAVJMyalN/6dDHaiuRrtq1piv0I3CH1vSaCKXd9gOcISVA2kSsPM+g1Of8g
+         wOSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xAt7oYKkKU6imCln9jYSjKatAsxBNkwtMhyYSMZ8sPw=;
-        b=cpV6SJZ0enwNWyjiTD8vL9KoURXRLPeCdiHBROSnOqJNSFhIdIM+0FfKJSTO+aYTXB
-         VlzRElhb36iWhxCFNiEganFQBabL7n5aaa309kSpw8xPc6NGOvrOwQtcW4ZcblF72zx/
-         3Pxu7v4u1hI35R3A56VqgF0SOxGOlSR5NCs4soQJpIryxA19ltmvEKxL+M4Rwl3uia4O
-         yZNYqaKnJvEytHVwsYy6tHT18QN3opOjlo2t3CPaayLtQTC/vW2H/sQJB77JdX7nI0fI
-         5McKl1MKH2kBYpe6LKzZUeNVLYRl19vXVxlZ+0KW7RvsrzksWw4rZqfnQxGfKno6QpZG
-         237Q==
-X-Gm-Message-State: AOAM532N3DbXlzoobm1indNAT2L7+RKsq6B5FGrbh/lnL8fAupE/VliS
-        8DGpusQabLlyXcgIkVwBw4fC/9OmdOY=
-X-Google-Smtp-Source: ABdhPJzk+no6XVTkFJZSWkONeU1BLwzXFafKYtfpFNQ8YN8NSrZzbYEGvtwD5dEGiiPbR1kzxJ8HpQ==
-X-Received: by 2002:a1c:20c3:: with SMTP id g186mr8018617wmg.59.1613738053455;
-        Fri, 19 Feb 2021 04:34:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm13439105wre.78.2021.02.19.04.34.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Feb 2021 04:34:13 -0800 (PST)
-Message-Id: <c2c08989ce60ef6892eb1c206483834d750a70c6.1613738051.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.852.v3.git.1613738051.gitgitgadget@gmail.com>
-References: <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
-        <pull.852.v3.git.1613738051.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Feb 2021 12:34:07 +0000
-Subject: [PATCH v3 2/5] commit-reach: use one walk in remove_redundant()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jhO0owUNaTNUtBotioFRXGplXibDi7UE5M2eYTf0yoc=;
+        b=DEkklNVWgoXMGCb00wN6kYeCkDyylImxaKCHISAW2eYd7n/U/4mH78douFV9mHTqDf
+         yYhNKVfxIR08WLtxJb7G0jWb93eICTxyrFratE+YEEcJLfVWbLaBwbZu8hugJAXGufA5
+         weiBEi7y/+ZnIxFHxT/TdRmX4spfVPmKt58evKrsArDtHm0MNvaWuSLUzqahnEurBzTc
+         B4YGOND55q5EadrqiisdbSlsqEJ9f0/GhdDx19cbpnDxGahg2R3VfqCv/260TTj4oS5W
+         7cZ/SfiMFEK4H9G2DIptzP7XB7r5uAjdl4o60dHm4RPv3vBpzkjIylxszyyD5du43qgB
+         oCVw==
+X-Gm-Message-State: AOAM532GU06YWkDZ7SyK2HlpKzKvjgZmmIVLJs2KnsQqe0RTs51JZn1T
+        V/TpmMI+t6LZh+2WCznnmb8=
+X-Google-Smtp-Source: ABdhPJxaqQDbHcBRzc+EHPx1EjNoCFdzqAGnt81Hg9iBGIFBKAyq7Z2TSJ+Xl8GD7zupQw+iumG9Sg==
+X-Received: by 2002:aca:3354:: with SMTP id z81mr6106639oiz.2.1613738528948;
+        Fri, 19 Feb 2021 04:42:08 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:8d41:9e8a:93a7:91b5? ([2600:1700:e72:80a0:8d41:9e8a:93a7:91b5])
+        by smtp.gmail.com with UTF8SMTPSA id l4sm1597533ooq.33.2021.02.19.04.42.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Feb 2021 04:42:08 -0800 (PST)
+Message-ID: <e16a548f-8070-e4be-b0b1-f36a259d0df1@gmail.com>
+Date:   Fri, 19 Feb 2021 07:42:07 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, me@ttaylorr.com,
-        peff@peff.net, gitster@pobox.com,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
+ Thunderbird/86.0
+Subject: Re: [PATCH v4 17/17] chunk-format: add technical docs
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, l.s.r@web.de,
+        szeder.dev@gmail.com, Chris Torek <chris.torek@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <dstolee@microsoft.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+References: <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+ <pull.848.v4.git.1613657259.gitgitgadget@gmail.com>
+ <84bf6506dc12163b37f46192b3742c8fb234322f.1613657260.git.gitgitgadget@gmail.com>
+ <xmqqft1tdp4o.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqft1tdp4o.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 2/18/2021 4:47 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +Chunk-based file formats
+>> +========================
+>> +
+>> +Some file formats in Git use a common concept of "chunks" to describe
+>> +sections of the file. This allows structured access to a large file by
+>> +scanning a small "table of contents" for the remaining data. This common
+>> +format is used by the `commit-graph` and `multi-pack-index` files. See
+>> +link:technical/pack-format.html[the `multi-pack-index` format] and
+>> +link:technical/commit-graph-format.html[the `commit-graph` format] for
+>> +how they use the chunks to describe structured data.
+> 
+> I've read the doc added here to the end; well written and easy to
+> understand.
+> 
+> I wonder how/if well reftable files fit in the scheme, or if it
+> doesn't, should the chunk file format API be updated to accomodate
+> it (or the other way around)?
 
-The current implementation of remove_redundant() uses several calls to
-paint_down_to_common() to determine that commits are independent of each
-other. This leads to quadratic behavior when many inputs are passed to
-commands such as 'git merge-base'.
+I'm not sure that reftable can work with this format, especially with
+its design to do most updates as append-only (IIUC). And to change the
+format to work with the chunk format would violate the compatibility
+with the JGit version. I would be interested if something like the
+packed-refs file could use a minor update, but only if there is a
+realistic benefit to using chunks over the current format.
 
-For example, in the Linux kernel repository, I tested the performance
-by passing all tags:
+The files that are on my radar for adopting a new file format using the
+chunk-format API are:
 
- git merge-base --independent $(git for-each-ref refs/tags --format="$(refname)")
+* reachability bitmaps: using a similar approach to the commit-graph,
+  we could avoid parsing the entire file before checking if a specific
+  commit has a bitmap. (Requires a commit lookup chunk, a bitmap data
+  chunk, and an offset chunk to connect them.)
 
-(Note: I had to delete the tags v2.6.11-tree and v2.6.11 as they do
-not point to commits.)
+* index v5: I'm trying to collect a bunch of information about how to
+  update the index for better compression, and the chunk-based approach
+  can provide some fixed-width columns that can vary in length depending
+  on the required data (presenting the interesting behavior from v2 and v3,
+  along with possible approaches previously presented as a potential v5).
+  The paths could be presented as a chunk, giving the interesting options
+  between v2/3 and v4 (prefix compression). I haven't even started the
+  actual work here, but I've been thinking about it a lot. I'll have time
+  next month to start prototyping.
 
-Here is the performance improvement introduced by this change:
+Are there other interesting files that could use a new version here?
+What other pain points are known to experts in the area?
 
- Before: 16.4s
-  After:  1.1s
+>> +Extract the data information for each chunk using `pair_chunk()` or
+>> +`read_chunk()`:
+>> +
+>> +* `pair_chunk()` assigns a given pointer with the location inside the
+>> +  memory-mapped file corresponding to that chunk's offset. If the chunk
+>> +  does not exist, then the pointer is not modified.
+> 
+> I think it is worth adding:
+> 
+>     The caller is expected to know where the returned chunk ends by
+>     some out-of-band means, as this function only gives the offset
+>     but not the size, unlike the read_chunk() function.
 
-This performance improvement requires the commit-graph file to be
-present. We keep the old algorithm around as remove_redundant_no_gen()
-and use it when generation_numbers_enabled() is false. This is similar
-to other algorithms within commit-reach.c. The new algorithm is
-implemented in remove_redundant_with_gen().
+True. I suppose that could be more explicit, although it can be gleaned
+from the omission of any size information.
 
-The basic approach is to do one commit walk instead of many. First, scan
-all commits in the list and mark their _parents_ with the STALE flag.
-This flag will indicate commits that are reachable from one of the
-inputs, except not including themselves. Then, walk commits until
-covering all commits up to the minimum generation number pushing the
-STALE flag throughout.
-
-At the end, we need to clear the STALE bit from all of the commits
-we walked. We move the non-stale commits in 'array' to the beginning of
-the list, and this might overwrite stale commits. However, we store an
-array of commits that started the walk, and use clear_commit_marks() on
-each of those starting commits. That method will walk the reachable
-commits with the STALE bit and clear them all. This makes the algorithm
-safe for re-entry or for other uses of those commits after this walk.
-
-This logic is covered by tests in t6600-test-reach.sh, so the behavior
-does not change. This is tested both in the case with a commit-graph and
-without.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-reach.c | 104 +++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 96 insertions(+), 8 deletions(-)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index 9af51fe7e078..7a3a1eb1a26e 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -156,15 +156,9 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
- 	return ret;
- }
- 
--static int remove_redundant(struct repository *r, struct commit **array, int cnt)
-+static int remove_redundant_no_gen(struct repository *r,
-+				   struct commit **array, int cnt)
- {
--	/*
--	 * Some commit in the array may be an ancestor of
--	 * another commit.  Move the independent commits to the
--	 * beginning of 'array' and return their number. Callers
--	 * should not rely upon the contents of 'array' after
--	 * that number.
--	 */
- 	struct commit **work;
- 	unsigned char *redundant;
- 	int *filled_index;
-@@ -216,6 +210,100 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
- 	return filled;
- }
- 
-+static int remove_redundant_with_gen(struct repository *r,
-+				     struct commit **array, int cnt)
-+{
-+	int i, count_non_stale = 0;
-+	timestamp_t min_generation = GENERATION_NUMBER_INFINITY;
-+	struct commit **walk_start;
-+	size_t walk_start_nr = 0, walk_start_alloc = cnt;
-+	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
-+
-+	ALLOC_ARRAY(walk_start, walk_start_alloc);
-+
-+	/* Mark all parents of the input as STALE */
-+	for (i = 0; i < cnt; i++) {
-+		struct commit_list *parents;
-+		timestamp_t generation;
-+
-+		repo_parse_commit(r, array[i]);
-+		parents = array[i]->parents;
-+
-+		while (parents) {
-+			repo_parse_commit(r, parents->item);
-+			if (!(parents->item->object.flags & STALE)) {
-+				parents->item->object.flags |= STALE;
-+				ALLOC_GROW(walk_start, walk_start_nr + 1, walk_start_alloc);
-+				walk_start[walk_start_nr++] = parents->item;
-+				prio_queue_put(&queue, parents->item);
-+			}
-+			parents = parents->next;
-+		}
-+
-+		generation = commit_graph_generation(array[i]);
-+
-+		if (generation < min_generation)
-+			min_generation = generation;
-+	}
-+
-+	/* push the STALE bits up to min generation */
-+	while (queue.nr) {
-+		struct commit_list *parents;
-+		struct commit *c = prio_queue_get(&queue);
-+
-+		repo_parse_commit(r, c);
-+
-+		if (commit_graph_generation(c) < min_generation)
-+			continue;
-+
-+		parents = c->parents;
-+		while (parents) {
-+			if (!(parents->item->object.flags & STALE)) {
-+				parents->item->object.flags |= STALE;
-+				prio_queue_put(&queue, parents->item);
-+			}
-+			parents = parents->next;
-+		}
-+	}
-+
-+	/* rearrange array */
-+	for (i = count_non_stale = 0; i < cnt; i++) {
-+		if (!(array[i]->object.flags & STALE))
-+			array[count_non_stale++] = array[i];
-+	}
-+
-+	/* clear marks */
-+	clear_commit_marks_many(walk_start_nr, walk_start, STALE);
-+	free(walk_start);
-+
-+	return count_non_stale;
-+}
-+
-+static int remove_redundant(struct repository *r, struct commit **array, int cnt)
-+{
-+	/*
-+	 * Some commit in the array may be an ancestor of
-+	 * another commit.  Move the independent commits to the
-+	 * beginning of 'array' and return their number. Callers
-+	 * should not rely upon the contents of 'array' after
-+	 * that number.
-+	 */
-+	if (generation_numbers_enabled(r)) {
-+		int i;
-+
-+		/*
-+		 * If we have a single commit with finite generation
-+		 * number, then the _with_gen algorithm is preferred.
-+		 */
-+		for (i = 0; i < cnt; i++) {
-+			if (commit_graph_generation(array[i]) < GENERATION_NUMBER_INFINITY)
-+				return remove_redundant_with_gen(r, array, cnt);
-+		}
-+	}
-+
-+	return remove_redundant_no_gen(r, array, cnt);
-+}
-+
- static struct commit_list *get_merge_bases_many_0(struct repository *r,
- 						  struct commit *one,
- 						  int n,
--- 
-gitgitgadget
-
+Thanks,
+-Stolee
