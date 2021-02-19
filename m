@@ -2,98 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9184C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 725DFC433DB
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 19:13:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 942F064DA8
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:27:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36B9664E43
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 19:13:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229985AbhBSS1l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 13:27:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37948 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbhBSS1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 13:27:35 -0500
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35DF3C061574
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:26:55 -0800 (PST)
-Received: by mail-oo1-xc32.google.com with SMTP id y21so1452896oou.13
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:26:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rIxwvWo1JWjjEDsjyPoDlmL1UfUl+vIr+24bTpa2eoM=;
-        b=GVSyjz5mph4ogAzaWnvTuFEymQ52/Lz1JtvORh1eGEiMSgMR3kIe+gMEjhuohVRvO3
-         VH8jVDH6FNZaI4TGMCVcY1xfXTX/ARmgQIUrV2NXTLENvFL7NrgKGjXjGutxAWb/Bjnf
-         MfLu1dWM6OmG6dumzu2Qtd82M0jt+W49i20Q0WFmBacg8Mhf+fmXBTfo38r2XtPi2YzB
-         mcJ1ULLGyMNm5/zYWKdO8c5Nf2aiofN7qO1SM5QPAJbIbR6KK8lx73TJBkA31AtEtBaW
-         jdYghSsPQfL71sMPkOOGYU1RPYfFhYubqEZnbzko8n5PSUg2GyUBPASO0wJ1gfnbpTwr
-         49fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rIxwvWo1JWjjEDsjyPoDlmL1UfUl+vIr+24bTpa2eoM=;
-        b=BF90SNhIEs/8SSznyhm5TF3ljM+rdgmYE14XSd04G63STkUoETa/z2oT2s3a5iZJlm
-         E/SUks13RNYVEib1KaXQQq6HJ5tEVHsqQquIuGLD0YFq33ExKs+Bx00NlbvJAlFsohJb
-         8yqsudnjomqiV2+LWS1lALljEg51ppK96STfHzSzEhHUry9nc2lQNzC3TnBKFLc+5v5M
-         veGbFWa9da77t76q4+5FEVQTMQWxygwpNNjrRylA4OEi2F1BgrHoOc6v9ebIc4SvMDS6
-         V5uj2SwZJnQaj1n5IkBwHm+g6xlxGpLdXCX8iIIILgUm4B3t+pbElMfvRwSLaEdy6cDC
-         tMsw==
-X-Gm-Message-State: AOAM5315KP+pjTNxmp0sOPS2dZnldqNUvWiTB4MbTXDzmiE+u6pdmZUX
-        A395lTvr8UNcudAMbNiRmbnxlKe0/fQEN+UCIYE=
-X-Google-Smtp-Source: ABdhPJz5gYQw2e0FGZ/SK2Myjz3l0VXDY7yACKBjjnYCDo0Bx+NfcfEg/AvM4VKdbHdHRg3ATuEBTCUC478UUQDt9FY=
-X-Received: by 2002:a4a:424c:: with SMTP id i12mr8021335ooj.85.1613759214316;
- Fri, 19 Feb 2021 10:26:54 -0800 (PST)
+        id S229828AbhBSTN1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 14:13:27 -0500
+Received: from siwi.pair.com ([209.68.5.199]:15933 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229755AbhBSTNZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 14:13:25 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id BC0F93F40F3;
+        Fri, 19 Feb 2021 14:12:43 -0500 (EST)
+Received: from MININT-MG8E6GJ.fareast.corp.microsoft.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 8ECFE3F40F1;
+        Fri, 19 Feb 2021 14:12:43 -0500 (EST)
+Subject: Re: [PATCH] read-cache: make the index write buffer size 128K
+To:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@ntdev.microsoft.com>
+References: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <f52df30b-4ab0-fd6f-17f8-70daed81df39@jeffhostetler.com>
+Date:   Fri, 19 Feb 2021 14:12:42 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
- <CAP8UFD1VaOBWcf3RQTc6OdmkUZCOOOO0mubRoWAvao6uNtNkgQ@mail.gmail.com>
- <CA+CkUQ97+Afr9TUtKnb4LE1tK8z=UfSkJY2JYb5RJKTMJXQ-Bg@mail.gmail.com> <CAOLTT8RAuS5-PgTj4YdvakFV8uA1mfKa-gxBOxnWPcL5Sv0VHg@mail.gmail.com>
-In-Reply-To: <CAOLTT8RAuS5-PgTj4YdvakFV8uA1mfKa-gxBOxnWPcL5Sv0VHg@mail.gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Fri, 19 Feb 2021 23:56:43 +0530
-Message-ID: <CA+CkUQ9nK3KyrXTTQifs1eFM-mWiR39Yt_FAbxwfjoiN5CghLg@mail.gmail.com>
-Subject: Re: Git in GSoC 2021 ?
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Shourya Shukla <shouryashukla.oo@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Fri, Feb 19, 2021 at 10:39 PM ZheNing Hu <adlternative@gmail.com> wrote:
->
-> Hi,Hariom verma,
-> I am very glad that you can serve as a possible mentor for GSOC this year!
 
-Yeah, possible co-mentor. Thanks :)
+On 2/17/21 9:48 PM, Neeraj K. Singh via GitGitGadget wrote:
+> From: Neeraj Singh <neerajsi@ntdev.microsoft.com>
+> 
+> Writing an index 8K at a time invokes the OS filesystem and caching code
+> very frequently, introducing noticeable overhead while writing large
+> indexes. When experimenting with different write buffer sizes on Windows
+> writing the Windows OS repo index (260MB), most of the benefit came by
+> bumping the index write buffer size to 64K. I picked 128K to ensure that
+> we're past the knee of the curve.
+> 
+> With this change, the time under do_write_index for an index with 3M
+> files goes from ~1.02s to ~0.72s.
 
-> I am very interested in this "Use ref-filter formats in `git cat-file`".
-> Where should I start learning? :)
+[...]
 
-That's great. Maybe you can start by learning:
-- What is cat-file?
-- How cat-file works?
-- What is ref-filter?
-- How ref-filter works?
-- What logic previous students came up with to unify these?
-- How much work has been done?
+>   
+> -#define WRITE_BUFFER_SIZE 8192
+> +#define WRITE_BUFFER_SIZE (128 * 1024)
+>   static unsigned char write_buffer[WRITE_BUFFER_SIZE];
+>   static unsigned long write_buffer_len;
 
-Note: here at Git, we usually prefer inline replies. So, please avoid
-top posting.
+[...]
 
-Regards,
-Hariom.
+Very nice.
+
+I can confirm that this gives nice gains on Windows.  (I'm using
+the Office repo which has a 188MB index file (2.1M files at HEAD).
+Running "git status" shows a gain of about 200ms.
+
+We get a smaller gain on Mac of about 50ms (again, using the Office
+repo).
+
+So, you may add my sign-off or ACK to this.
+     Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+
+
+
+FWIW, You might take a look at `t/perf/p0007-write-cache.sh`
+Update it as follows:
+
+```
+diff --git a/t/perf/p0007-write-cache.sh b/t/perf/p0007-write-cache.sh
+index 09595264f0..337280ff1c 100755
+--- a/t/perf/p0007-write-cache.sh
++++ b/t/perf/p0007-write-cache.sh
+@@ -4,7 +4,8 @@ test_description="Tests performance of writing the index"
+
+  . ./perf-lib.sh
+
+-test_perf_default_repo
++test_perf_large_repo
+
+  test_expect_success "setup repo" '
+         if git rev-parse --verify refs/heads/p0006-ballast^{commit}
+```
+
+
+Then you can run it like this:
+
+     $ cd t/perf
+     $ GIT_PERF_LARGE_REPO=/path/to/your/enlistment ./p0007-write-cache
+
+Then you can run it with the small and then with the large buffer and
+get times for essentially just the index write in isolation.
+
+Hope this helps,
+Jeff
