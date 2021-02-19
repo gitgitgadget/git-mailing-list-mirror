@@ -2,114 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04138C433DB
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 22:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE613C433E0
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 22:37:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CBF7E64E12
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 22:27:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D26564E38
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 22:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229767AbhBSW1U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 17:27:20 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52046 "EHLO
+        id S229620AbhBSWhZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 17:37:25 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52056 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229515AbhBSW1S (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Feb 2021 17:27:18 -0500
+        by vger.kernel.org with ESMTP id S229515AbhBSWhZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Feb 2021 17:37:25 -0500
 Received: from camp.crustytoothpaste.net (unknown [97.105.19.220])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 300BA60DF4;
-        Fri, 19 Feb 2021 22:26:07 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B5FD160DF4;
+        Fri, 19 Feb 2021 22:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1613773567;
-        bh=QMNmo4fCtFApVhmq6OSF+BhBaZ3ssTsA3A6+iRAh+Q8=;
+        s=default; t=1613774173;
+        bh=6SMTA/PaKC07SlZmJVe5xMPLvpOVf97OPlurCiCfFdw=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=GPfUMZZy74V9ZFgCYWOzF64kKTVEdLGnZLtDSJ/cRLSYIm2Jc7hMw78RbB9epmIDP
-         60W93dPPaR5I8MS20Sj1f+FDcSQftWppF1Bb7Uf90uqyG+EG72aG2RWRwzI9G+8XTu
-         AKyjjcG+22HFHFiPpaq1BBRsJ+2aK2haeAzNec17oTLs8QFytFU92y4bIiF+RMidys
-         0xB78ky+qgyW6eiDibvrJQtD6bql10JuxenS8dNm2yE3f4IkFwOsbcNDuP5FoXRN1j
-         I+siX37QL2jys7F7A6wjadbzUTGSp/PPm0rqRT00uXXhcP75NxqUhgkJ2CHoVd3X1h
-         ciKZ9RRzCD0P5ezx8wze3hTdqB/VFjflJg/Q6K51rC3hS+vMmiKPrVw57FJuzzZ1cJ
-         UXWywq1Oa7SB8a9W11gGIbkFqdacR8VRGyTy4KYHRzNvAXo1yU5MXSi+lIQWVW9+QV
-         ExzRAavVmDdUFNS9o8b8cV7JwrL2Pt+ijlApqp+aD0mGLKN2Rx4
-Date:   Fri, 19 Feb 2021 22:26:02 +0000
+        b=tu70BNcFgNpRlvx0AkSncYShaUefs+0zynKesIkXonkitSxuAgKzDI9+QQNuaNdaQ
+         uRZhEYmKqB5dFlBS4zSU8C+ilareqyT5gDpZ7W3LrlzyH7oNXXtVAWAW6P8xUzcLfX
+         pq0XE5pt9NAckOgPhMTAfjMSmrbrJi7naaMl+mwrhD02ZmhfmR+FxwYHpmQVD4iYFt
+         z03naM4niXCzsCTF08+j9vVyPMULU1o2iqEPIpXYkNcI2qDdWq8Wxx6Ql1AJUw4oWJ
+         U7js0bvC/H4n+LVCHDI4UYzAvUGTyZK/QZbF62PzJqcMmTbgqo+qwdLrjULcHLxdX0
+         +9NjGXTrzGOcqu7s6KgtlJWaA/YKIxmu2EeRGAsMG3/t7xUQ++bn9UOwWXd/AfYOnI
+         +XKPLfA0lhRHCyzhDJB7AsnWanARjL0NdJL6yT5CstirfE0OIqk4vleFtubOmhwYR0
+         SNVG/Mz/D93hobKbZB3iMwN8fxWxxIEGqfkFINLyV3Nc8J4sJz2
+Date:   Fri, 19 Feb 2021 22:36:10 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Alireza <rezaxm@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: Considering merge --dry-run to foresee conflicts ahead of time
-Message-ID: <YDA6+vm6GPQL3Jec@camp.crustytoothpaste.net>
+To:     Andrej Shadura via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Andrej Shadura <andrew.shadura@collabora.co.uk>
+Subject: Re: [PATCH 0/2] Add --no-filters option to git-add
+Message-ID: <YDA9WjWOjkqlsALc@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alireza <rezaxm@gmail.com>, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>
-References: <CAD9n_qiN+qXqR79z_4d+_8_mxa9eTFB42sTUT8CTF8=oQArQaA@mail.gmail.com>
+        Andrej Shadura via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Andrej Shadura <andrew.shadura@collabora.co.uk>
+References: <pull.880.git.1613758333.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="NwYR9fwuCJsduCkF"
+        protocol="application/pgp-signature"; boundary="mlB1r3e00IglsYfs"
 Content-Disposition: inline
-In-Reply-To: <CAD9n_qiN+qXqR79z_4d+_8_mxa9eTFB42sTUT8CTF8=oQArQaA@mail.gmail.com>
+In-Reply-To: <pull.880.git.1613758333.gitgitgadget@gmail.com>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---NwYR9fwuCJsduCkF
+--mlB1r3e00IglsYfs
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-02-17 at 17:21:45, Alireza wrote:
-> I have a half baked alias for this and it proved to be extremely
-> useful even in this state.
+On 2021-02-19 at 18:12:11, Andrej Shadura via GitGitGadget wrote:
+> It is possible for a user to disable attribute-based filtering when
+> committing by doing one of the following:
 >=20
-> ```
-> check =3D "!f() { BRANCH=3D${1:-HEAD}; BASE=3D${2:-origin/master}; git
-> merge-tree $(git merge-base $BRANCH $BASE) $BRANCH $BASE | sed -n
-> \"/+<<<<<<< .our/,/+>>>>>>> .their/p\"; }; f"
-> ```
+>  * Create .git/info/attributes unapplying all possible transforming
+>    attributes.
+>  * Use git hash-object and git update-index to stage files manually.
 >=20
-> Of course with large conflicts it gets less useful. Getting only file
-> names from the patch isn't straightforward either.
+> Doing the former requires keeping an up-to-date list of all attributes wh=
+ich
+> can transform files when committing or checking out. Doing the latter is
+> difficult, error-prone and slow when done from scripts.
 >=20
-> So my question is what are the downsides to introducing a `merge
-> --dry-run` option and what would it look like?
+> Instead, similarly to git hash-object, --no-filter can be added to git add
+> to enable temporarily disabling filtering in an easy to use way.
+>=20
+> These patches:
+>=20
+>  * Add new flag ADD_CACHE_RAW to add_to_index()
+>  * Add new flag HASH_RAW to index_fd()
+>  * Make git hash-object use the new HASH_RAW flag for consistency
+>  * Add tests for the new git-add option.
 
-There aren't really any, but the current implementation of the merge
-code makes it non-trivial, since it writes directly into the working
-tree.  The new merge-ort code that Elijah Newren (CC'd) is working on
-should at least support writing conflicts only into the index, and if
-you didn't want to dirty the existing index, you could create a
-temporary one with GIT_INDEX_FILE and write to that.  It may also
-support a dry-run mode natively, but I'm not following it closely enough
-to say.  Hopefully Elijah can say a little bit more about things.
+I'm interested in your use cases here.  While I agree that this is an
+interesting feature, it also means that practically, a user who checks
+out a file that's added this way may find that git status marks it as
+perpetually modified until a properly cleaned version is committed.
+Moreover, even "git reset --hard" won't fix this situation.
 
-In the mean time, since this is a frequently requested feature, I have a
-Rust-based tool called git test-merge[0] that runs a test merge between
-two arbitrary trees and determines whether it succeeds or fails.  It
-uses libgit2 under the hood.
+We see this problem extremely frequently with Git LFS where people
+change the .gitattributes file but don't run "git add --renormalize ."
+and then end up with this problem.  However, it's not limited to Git LFS
+in particular; anything that uses filters, working tree encodings, or
+end of line attributes can be affected.
 
-[0] https://github.com/bk2204/scutiger
+So I think that while this might be a useful escape hatch for users, I
+definitely want to see a compelling rationale for it and a big warning
+in the documentation and an update to the relevant entry in the Git FAQ
+before we accept such a patch.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---NwYR9fwuCJsduCkF
+--mlB1r3e00IglsYfs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.27 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDA6+QAKCRB8DEliiIei
-gQm0AP96FD3sGhgVtsHOZsC/6KGWb5gSwfgzrG8ALhwyyH9cdAEAlLdLw/S5+Xuy
-RjnI16TlO3wgJ/mC0mIBs2mCwB0o8gA=
-=/Ljo
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDA9WQAKCRB8DEliiIei
+gQWfAQCEXan4woKj6lQaIFHmMUzJEPPH1xzZ9VNO9bVUOk6WDgD/bJ7cLSmmbWsZ
+VhZ+eDzSWGBdSG+SONPydienLaar/AI=
+=D9QW
 -----END PGP SIGNATURE-----
 
---NwYR9fwuCJsduCkF--
+--mlB1r3e00IglsYfs--
