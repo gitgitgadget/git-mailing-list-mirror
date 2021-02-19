@@ -2,92 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9EB0C433E0
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44DFDC433DB
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:35:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 91F3061606
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:18:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 129A064EBD
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 12:35:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbhBSMSd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 07:18:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43322 "EHLO
+        id S230184AbhBSMe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 07:34:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbhBSMSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 07:18:30 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E39D6C06178C
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:17:34 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id 12so2831319oij.6
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:17:34 -0800 (PST)
+        with ESMTP id S229720AbhBSMey (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 07:34:54 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126DCC061788
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:34:14 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id l17so6930289wmq.2
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 04:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=no/l+xdKbS7/Qy61GWcr2Mz2EiFJDP+GfRwv32OQ114=;
-        b=sNOpXyyQpMbidHXcZNwORFdI0HotYZ26Af8keZVYLWT4xnUhY6hboTkaqWXSA0KRTd
-         jqzh0zNg7/cbT6mH6boJY5U8T0pHP9PGvxb3qOnMCJ5nLzLy3rUPaqEY1EPCzN6hS/fY
-         o/Vbuzo5OYc0vz6QX8pZwAxBGph3+eqoraBp2SFxunspjbM5aZCVluM+FLn3fPHwGsP4
-         rf1I9FvmivOsEF5eNITyVUmB+ZmDIMkTjyguaSShzPRBbYuIRqWdnhcoV3P+dTySKWaj
-         r/2LgrLrZQGt6VAGCITRMy3bJQb8FDZLB47BStr3fysLHdRVv12XvEzXt8lovW7uZPeA
-         gYJQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NUP8hAaHIZ4GEw7Bpetf6PthcaIyZ9T5XakdU0bHZE0=;
+        b=sJuHkWjuffDEijiq5W4FdX0SpwD1+UyNp/em8m2CcG0OEpRSGFUJ/9rRtnMLOS/C+P
+         FtL7v/MkUHI9QX/Yw9SIB4VMf5cgw/w50sgmoLkBLGi9j6iZ5yHHWpWHK3OoZMVNtqlu
+         dlesdberQf63jDA6XTGBlGicdIS2ZIU0OlIOL7tNGSw5oQfT7IctESfMjZgZDQsoPqAD
+         TsnxoghxSgIH3bEWL1YQiiJill50vu9hwHM6LGG4tCYzqvZGx1wf+RmpMvXh35E64guR
+         MIPvJrVl79dT2hmtyOdnLxS5rQt2n+lLMv2vTbxjc0A9OgtGvu/c3V7+LbqyZZ1VhHJy
+         SYcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=no/l+xdKbS7/Qy61GWcr2Mz2EiFJDP+GfRwv32OQ114=;
-        b=cBX3g7HcYP0r2a4SmGmVjfTO718fJXiqZNHQ3x8gQyyO7aa2wq5h/gZJ4j2E3KvKQO
-         kc3VSz95gF0bzuAEVYgovOou0KKKoq9fTyqe60T89goVHWb63D9S5aJH65L4mV4PTD/I
-         IQTnyTy2fOSxDgonH0FP++8M0XKRu/bpKQ5XtmMOPCgoeYe6kn+rol/e1w4Mgmd7kfbV
-         lm6wRE/sIKZR0HNPCsLhvPBrNC6tCeNXl3YsUE0+7P0kEOgtcEiQ7mjSdivWm9qRNT6A
-         gaHtW2E50FEJpwzmULyP2ltSw5951Tf9jjKOh8oP+4TxbC3OG/QToft7wuNX2NCMvO1X
-         BC8w==
-X-Gm-Message-State: AOAM533JIuJbMigI679xme4Z+d1sYkVpXfMEp32hvm4NW13AnD2As1bB
-        QH+5szfBeo1C7Ctd40Y8dUI=
-X-Google-Smtp-Source: ABdhPJxn54UN2Ysv/NJSdRAzWqmqJMuzK57alXrX8YEw2uD6K4oKi102sJjaPk3ZPRITcZkdpV3J/A==
-X-Received: by 2002:a05:6808:258:: with SMTP id m24mr6364911oie.132.1613737054306;
-        Fri, 19 Feb 2021 04:17:34 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:8d41:9e8a:93a7:91b5? ([2600:1700:e72:80a0:8d41:9e8a:93a7:91b5])
-        by smtp.gmail.com with UTF8SMTPSA id l18sm680256otr.62.2021.02.19.04.17.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Feb 2021 04:17:33 -0800 (PST)
-Message-ID: <4ca2931f-3e3c-12d5-e12a-6c63699a98d7@gmail.com>
-Date:   Fri, 19 Feb 2021 07:17:32 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH v2 0/5] Speed up remove_redundant()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        me@ttaylorr.com, peff@peff.net,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.852.git.1611851095.gitgitgadget@gmail.com>
- <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
- <7a1a8990-59e7-d538-d382-446fdc270810@gmail.com> <xmqq8s7lc61j.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq8s7lc61j.fsf@gitster.g>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NUP8hAaHIZ4GEw7Bpetf6PthcaIyZ9T5XakdU0bHZE0=;
+        b=lRAqqizXrzkJXBRLSOynriBTgyh6CniZygjQ4U4/UO4vVaKz52u0CddW9i1Mae6AKA
+         1bkwsHtW5f8HnJPz2RtyH2z0zRuV9kg36FhsPb7y5BYI/CerCBNAl2SDlVNDAfu07FgS
+         s+9Ywhs6P19GXX8bPZiy9TxUyOeHV/ldBWJ4wpuwGCtSmxtGeJLiQDtafyy12MVWRDKi
+         esermqHpWlDS/DUXcnOFDUMpIV3fQBzNeui4V7CYBcuTpsNhK6V1pTGHNJWqjgDaJmmi
+         TVVCRTaiDLMw4GEUPBggwJr5dVSF59pV6A1odGoSTwxThAl4wt65Ap1Ug/MCEzpi8opv
+         ojzg==
+X-Gm-Message-State: AOAM532Am5dcfZJy1/OQHMQpoVh3KjE+EJRbFwJM7UAFSswTuCdNmrXM
+        1OvFIL5UyfvQBcDDG5cM8eYEh3Wh3RU=
+X-Google-Smtp-Source: ABdhPJy6RWcIjrc7wJAWxKVHFvQX3kmUDcMpC00dF343qW1mFyzJJiZ92EZgi+tP4HweRpFInHb2Gw==
+X-Received: by 2002:a05:600c:3550:: with SMTP id i16mr7011864wmq.170.1613738052785;
+        Fri, 19 Feb 2021 04:34:12 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f7sm13439065wre.78.2021.02.19.04.34.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Feb 2021 04:34:12 -0800 (PST)
+Message-Id: <649f6799e6bfa0662ed5a4debf915053598fe142.1613738051.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.852.v3.git.1613738051.gitgitgadget@gmail.com>
+References: <pull.852.v2.git.1612183647.gitgitgadget@gmail.com>
+        <pull.852.v3.git.1613738051.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 19 Feb 2021 12:34:06 +0000
+Subject: [PATCH v3 1/5] commit-reach: reduce requirements for
+ remove_redundant()
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>, me@ttaylorr.com,
+        peff@peff.net, gitster@pobox.com,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/18/2021 6:25 PM, Junio C Hamano wrote:
-> This topic seems to have been forgotten?  Is the only thing missing
-> is an updated 2/5 or is there anything more that is needed?
- 
-I had forgotten about the comments on patch 2/5, sorry. That explains
-why it hasn't merged yet...
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I'll get right on it.
+Remove a comment at the beggining of remove_redundant() that mentions a
+reordering of the input array to have the initial segment be the
+independent commits and the final segment be the redundant commits.
+While this behavior is followed in remove_redundant(), no callers rely
+on that behavior.
 
-Thanks,
--Stolee
+Remove the final loop that copies this final segment and update the
+comment to match the new behavior.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-reach.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/commit-reach.c b/commit-reach.c
+index e38771ca5a1f..9af51fe7e078 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -160,9 +160,10 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
+ {
+ 	/*
+ 	 * Some commit in the array may be an ancestor of
+-	 * another commit.  Move such commit to the end of
+-	 * the array, and return the number of commits that
+-	 * are independent from each other.
++	 * another commit.  Move the independent commits to the
++	 * beginning of 'array' and return their number. Callers
++	 * should not rely upon the contents of 'array' after
++	 * that number.
+ 	 */
+ 	struct commit **work;
+ 	unsigned char *redundant;
+@@ -209,9 +210,6 @@ static int remove_redundant(struct repository *r, struct commit **array, int cnt
+ 	for (i = filled = 0; i < cnt; i++)
+ 		if (!redundant[i])
+ 			array[filled++] = work[i];
+-	for (j = filled, i = 0; i < cnt; i++)
+-		if (redundant[i])
+-			array[j++] = work[i];
+ 	free(work);
+ 	free(redundant);
+ 	free(filled_index);
+-- 
+gitgitgadget
+
