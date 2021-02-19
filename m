@@ -2,104 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BC02C433DB
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 20:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5405BC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 21:26:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4565464EB8
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 20:24:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F38E664E77
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 21:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbhBSUY1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 15:24:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34564 "EHLO
+        id S229734AbhBSV0E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 16:26:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhBSUY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 15:24:26 -0500
+        with ESMTP id S229553AbhBSV0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 16:26:02 -0500
 Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54E91C061574
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 12:23:46 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id o7so5625924pgl.1
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 12:23:46 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66875C061574
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 13:25:22 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id j1so2509052pgh.4
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 13:25:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=f+KBaEp6MOBeQ7/9NSBMSJwX0qcjhNm5Nor4dMTaN4A=;
-        b=mbs+CIcC8KJNZBMPzdU7BP7CfZurOyJyKLqnLbzmcjmVAd8cJHFtwFt8rUBHCKcjNi
-         7TbDN/1wMxW2nJekewJksKGDTiOV+CV4LjvwJHTbDXgPmCIQqbFsBKuC6G1zvmzBBiO8
-         UWyfpjrQFj7wYKgmjDamGHXFUwftqfdmGMjqj7utXuLGLIl6K7dbIII/m691yIpGihvK
-         T1nLbsEOOEsjJJdUiR9OnNjbDFiVjChvPL2BDUV9SRlT+SUK6M/hk0Sg2ZYiozVeJxCI
-         8449+7CngZsVA/9XAS65CIIqwRTjYKtNezVTALX3FnHWHaOuJWyLDObxNh+XE0qLBdXC
-         KT+w==
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=F4a88zCrECouAM6F84Qn2/MZVOo/braPBAgigbji+ow=;
+        b=RNqd42fB5yHoeHIZYdsiHuZ7g6Q65eMIailrkmJH4VTcqjg0xSvExk2ZcIYPz3HYth
+         q737wGat1AG22wqwusvTT6SmBD/SCLVAMLuDmVtVgSePsaT/q+MROqlONtQas92Q5A33
+         ky7uMgSr8SmRnpMMqA1Kua+fIDrXXU/trA5t7HlvHriek38ZBSspnLwrCchPh7PDxFZ8
+         vSOG5F38QvOGJQyHKTZ7sVQZP1U1WjVp3bQObar4AluAW0OELUKrSXPfqiN6KDd7rFmd
+         KUCXiCMkhxUGiXyTiHfluE4Vtqg8e4eD8lQwaiT6GKRPWKi8wN0rGjytv6ROkic+hBlw
+         WB5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f+KBaEp6MOBeQ7/9NSBMSJwX0qcjhNm5Nor4dMTaN4A=;
-        b=cLb8C1tjEH6KoYVWIObXrueN3FMOKrFKNVrSYIgKDByZV6d5UN9LPXamEnsn1J87N0
-         GtJlygOhJ6k8C6WEfUkMxLLfAmTopJeU5FSVYa+ZRPNnvwwnG7X1vjOEnX8MBJP80Chc
-         /wNgztzF7LZ9CFaWOMwoBl5beCPa86a0nImBRTqZ1bRQiD0RPBi8TYMsvwYHNULHTliR
-         uJDoi4WiO8OeLhFc/sJY7OgiwHiMaColZ6XVsvkT4vuXQUehYkvT6GaxeHT7pw/GBAtf
-         957erRKVOXdZ8j9iR+oC/0ywwgbJdeO6wQJv7ZpktLGdfl7yCY9gZpwFgU2+u6REw936
-         LQjQ==
-X-Gm-Message-State: AOAM5321Crr2exjgxXzxJRbL9F3LoQsx/PObgfaw3rtgE8G+dNWSShd8
-        IkJiVhV2wtf4eJnMJQbwT9/Wlg==
-X-Google-Smtp-Source: ABdhPJzVOyEnZzYmq6LN1mtACrJAC+WftVClhoSau67BPBFTTOnfn1OlGkIwDkqs1FadXIhzGrKjwA==
-X-Received: by 2002:a63:db08:: with SMTP id e8mr10068234pgg.261.1613766225596;
-        Fri, 19 Feb 2021 12:23:45 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:5fa:7ec3:7e:6710])
-        by smtp.gmail.com with ESMTPSA id w83sm10362758pfc.220.2021.02.19.12.23.44
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=F4a88zCrECouAM6F84Qn2/MZVOo/braPBAgigbji+ow=;
+        b=dEF0oo4wtMwTzhEc6QWRqLljugx27/jKnBmZStad9huFNmbKYAJM0Rik5FHOUhgFwX
+         KJiZ96MgiS97aYs58dEhsKxxvUyKr+nmNMmPjxMXeynEk865ZYQogOlt23OPVJSKsH3i
+         hQDd+69g7FzFqHgfl5wTIIpFhbl9dBTdBC7SFa2lHreAZKlQt3I+IdkgQ/hNcWfucjYg
+         QaGS+rNh+qh71EGVb+LM13M1K/ccbjCWhQgTwjnnYsrkb2TlRH300one+/2d8KTNRp3g
+         fk9wPOWl2KQ2KaxaCEVQlunvWor9G+YSpdVXtIaa/7wlN9X0NyGxzUm/jCIsYlvLxjPC
+         GDOw==
+X-Gm-Message-State: AOAM532Rxd9dL9ODF3FRbk22/+srRTY0gJ1v7BPZR2SIKkdNKhMpUxQy
+        Db/YsSd47Yr4rxdpDXh6y2M=
+X-Google-Smtp-Source: ABdhPJzHIpDSBbQGKnIx4rNw7Tj1zb7vHKdstTABlVmHL4doFqTiHPRIBbttGC0/UrArZp2oD76dsg==
+X-Received: by 2002:a62:3805:0:b029:1ec:f57c:8189 with SMTP id f5-20020a6238050000b02901ecf57c8189mr11117153pfa.37.1613769921898;
+        Fri, 19 Feb 2021 13:25:21 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:e5a1:6f53:fb5:29c2])
+        by smtp.gmail.com with ESMTPSA id o5sm6341527pjq.57.2021.02.19.13.25.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Feb 2021 12:23:44 -0800 (PST)
-Date:   Fri, 19 Feb 2021 12:23:39 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7 11/17] run-command: allow stdin for
- run_processes_parallel
-Message-ID: <YDAeSwOx4MkCda9H@google.com>
-References: <20201222000220.1491091-12-emilyshaffer@google.com>
- <20210201053808.1309469-1-jonathantanmy@google.com>
+        Fri, 19 Feb 2021 13:25:21 -0800 (PST)
+Date:   Fri, 19 Feb 2021 13:25:18 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 4/4] tests: remove most uses of test_i18ncmp
+Message-ID: <YDAsvpIzgsIhh+5X@google.com>
+References: <20210120182759.31102-1-avarab@gmail.com>
+ <20210211015353.28680-5-avarab@gmail.com>
+ <xmqqa6say0h8.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210201053808.1309469-1-jonathantanmy@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqa6say0h8.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 31, 2021 at 09:38:08PM -0800, Jonathan Tan wrote:
-> 
-> > diff --git a/run-command.c b/run-command.c
-> > index ea4d0fb4b1..80c8c97bc1 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -1683,6 +1683,9 @@ static int pp_start_one(struct parallel_processes *pp)
-> >  	if (i == pp->max_processes)
-> >  		BUG("bookkeeping is hard");
-> >  
-> > +	/* disallow by default, but allow users to set up stdin if they wish */
-> > +	pp->children[i].process.no_stdin = 1;
-> > +
-> 
-> This makes sense. May be worth a more detailed comment, e.g.:
-> 
->   By default, do not inherit stdin from the parent process. (If not, all
->   children would share it!) Users may overwrite this by having the
->   get_next_task function assign 0 to no_stdin and an appropriate integer
->   to in.
+Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-Thanks, took it slightly modified:
+>> As a follow-up to d162b25f956 (tests: remove support for
+>> GIT_TEST_GETTEXT_POISON, 2021-01-20) remove most uses of test_i18ncmp
+>> via a simple s/test_i18ncmp/test_cmp/g search-replacement.
+>
+> I am a bit hesitant to take this step, primarily because the
+> distinction between test_cmp and test_i18ncmp is serving as a sign
+> for tests to identify if they are dealing with translatable messages
+> or plumbing/machine-readable messages.
 
- /*
-  * By default, do not inherit stdin from the parent process - otherwise,
-  * all children would share stdin! Users may overwrite this to provide
-  * something to the child's stdin by having their 'get_next_task'
-  * callback assign 0 to .no_stdin and an appropriate integer to .in.
-  */
+I agree: in particular, I would value the ability to run tests with,
+say, LANG=fr_CH.UTF-8 and catch localization-specific issues that way.
+Removing the test_i18ncmp helper removes that ability.
 
- - Emily
+That said:
+
+[...]
+> So, perhaps we should bite the bullet and just take this step.
+
+If we don't have a convenient way to keep "testing the testsuite"
+(i.e., some kind of CI run that uses a locale other than C), then I
+agree that explicitly removing the test_i18ncmp / test_cmp distinction
+is better than letting it bitrot.
+
+Thanks,
+Jonathan
