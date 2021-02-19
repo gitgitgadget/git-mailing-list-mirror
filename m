@@ -4,154 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6880C433E9
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CA2BC433E0
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:12:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFD7C64E86
-	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F268C64E5F
+	for <git@archiver.kernel.org>; Fri, 19 Feb 2021 18:12:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229874AbhBSSNA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 13:13:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34812 "EHLO
+        id S229862AbhBSSM6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 13:12:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbhBSSM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 13:12:57 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72055C061786
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:12:17 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id n8so9716967wrm.10
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:12:17 -0800 (PST)
+        with ESMTP id S229810AbhBSSM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 13:12:56 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26E7C061574
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:12:15 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id w4so7807579wmi.4
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 10:12:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=L9BsEPnnPaHIIbUCSH5AnhJBMxeA7zelzow7i45op94=;
-        b=hebLGQAQei41319H9+y1a+dxIh2cmonxIeCTQrc98lnfx4S2e7J0JhDjqi8mwN6+et
-         8roEttpMWblVZJg8DbM95dIM+BHG75tkEsZUaWvncvKp7geGXDLeQFar75hH5QyI3VqT
-         5BkZguhd4Nj4kfodi62VZ+Xpuk5Y07TSdF3Xqv0Hyl/uDIwnNKC0xS1Bv74KeV20HiQu
-         wXqvCgXU48h7U+DjIgZW+tbuDDe5wO2EUweEMHnb369gmQycJQ2ItZPwjZgbjlzZvM8U
-         fRJIY7kFvH1bQTGmUpbVE0PUS7uWIb/FDPc/UJuKxkHeHeyP+n5VQ75Uc8l5bE+8FPvB
-         ydhA==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=LXyYxiOGXHXdl4XUnbf5OQkbxWDf5gmms8FQsM1sM1c=;
+        b=BfFQ1LWmhECjuT3pEPbKx9ApNlYkfuQPgrbmfbwZejUlQUHjKJdk7JuUuxrHtwbpfS
+         q2bKLWKbQA3UEtPGu0XqQE/2O9NooJ2Xb+eSIO/sGsEjj6OZ5evwZQ4CbMbFbXjFK9UD
+         Psm0DG1vX166vAqR13+16X4GYIiU+hSBLnobmMHDf82haoYn4cVXVLVMKiSxAJOcAvOu
+         EZyV1yuIOpVA3fix9qnFh1nRGvxyFCGyrJzX8yOLoUq46EqMi8VfwUiPr9dpawfPo+8B
+         eoOPzeUxl2uV1xWOZl3LETjSeLIRGmINWKGSq12CJ6yk2mKmXovVzThWm3VGxTZ9I63U
+         6Log==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=L9BsEPnnPaHIIbUCSH5AnhJBMxeA7zelzow7i45op94=;
-        b=tQ6J1MdSjei+Pjr17xdBLWshP6NvZtEZ+FQxlICNpol8JgCQB274kY84h413SGysWP
-         IjSOJPEytci/iDFIJJPBcwICpLpr9lNRfQvOq2I/BGAk1BjEOOoiLXPXTzXJ+2hbW823
-         i7lCAbc4GH9013SAuAaQMrS4tCZJxgMplqjgKmpllLl4JYUleg8v4sWQ4bX3Qq1P90DW
-         94TusIpkiHbEgS1SYsyJeQyomljCWnJqav4d2GMF8COFGD0T0HIGDuHEaDt880cPWcXZ
-         UH9U7cU7zI61dap/chCJgwgvYiZ9D1xxaKiW3DCP/I6DVgDI3XWxYK4JqxvKLyQNndmW
-         dluA==
-X-Gm-Message-State: AOAM533fQtgypGkZE6LqXvWibhRHBOhz8bOLHQtU6gkuREpdH3XF7UE1
-        bnsmnDg+BPR/r5U8IYUDa0DB4xyZ8Vw=
-X-Google-Smtp-Source: ABdhPJylhFRi/2zGhhOqkSRfPGM2JMgD4kCLNFcGSjplzg/1O/H9jHb8CKTFhPhZncPJJiGNU2iCyw==
-X-Received: by 2002:adf:9c89:: with SMTP id d9mr4163537wre.229.1613758336231;
-        Fri, 19 Feb 2021 10:12:16 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=LXyYxiOGXHXdl4XUnbf5OQkbxWDf5gmms8FQsM1sM1c=;
+        b=jgiSZ9wZEozqQe/8ok9bp92xmSvxJaaxNPlCEEomkgrr2eq5ZIzVD29kuX4xUA/HFG
+         Jg7vRepZx/gNEvkKzXbsL7QAB0cjgE9KeL+MpwSfTBmXSNC5z3WgnnHvFQHT6AdDqRz/
+         0uzlJsnrs8/4u/OUsqfYebHeQLqFU3bx9awTmOAe7xo0Hkqs7hL2GFoC4EjRQzokmqr0
+         RKwJ1Oo6FTYqLR7WtzNI/dibht5HOBMgsY/nSw83V9+Q6SPuKAlUW/6lFsABxsXpBj7t
+         s2xGgufJ8IePTxnvpdWR9MnecdlvURsYXyjq/qnzMEdEiOtDd/bAhAg1WYdBqDWo1YvG
+         e8kw==
+X-Gm-Message-State: AOAM5308ixIMqXbJkSkwKzogQR6VZXU0h4SPn7y91+ItnHWwpVx8K2yW
+        hF2mOiryw+WV77eSOYjRWxcB3O3SXhU=
+X-Google-Smtp-Source: ABdhPJwKS2ELP7nFBqpwIK2BwHzbShixWkCUX3yJbe40ejr3qP1B08/JTvHM25xnzV8e1F6hVHBHrA==
+X-Received: by 2002:a7b:c3c7:: with SMTP id t7mr9500328wmj.170.1613758334772;
+        Fri, 19 Feb 2021 10:12:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c6sm13831264wrt.26.2021.02.19.10.12.15
+        by smtp.gmail.com with ESMTPSA id s23sm12997577wmc.29.2021.02.19.10.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Feb 2021 10:12:15 -0800 (PST)
-Message-Id: <0e113e958b3514d2579eb46c1005fd7b26e0a077.1613758333.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.880.git.1613758333.gitgitgadget@gmail.com>
-References: <pull.880.git.1613758333.gitgitgadget@gmail.com>
+        Fri, 19 Feb 2021 10:12:14 -0800 (PST)
+Message-Id: <pull.880.git.1613758333.gitgitgadget@gmail.com>
 From:   "Andrej Shadura via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 19 Feb 2021 18:12:13 +0000
-Subject: [PATCH 2/2] hash-object: use the new HASH_RAW flag instead of setting
- path to NULL
+Date:   Fri, 19 Feb 2021 18:12:11 +0000
+Subject: [PATCH 0/2] Add --no-filters option to git-add
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Fcc:    Sent
 To:     git@vger.kernel.org
-Cc:     Andrej Shadura <andrew.shadura@collabora.co.uk>,
-        Andrej Shadura <andrew.shadura@collabora.co.uk>
+Cc:     Andrej Shadura <andrew.shadura@collabora.co.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrej Shadura <andrew.shadura@collabora.co.uk>
+It is possible for a user to disable attribute-based filtering when
+committing by doing one of the following:
 
-While setting path to NULL works and flips the condition in the right
-branch inside index_mem(), doing so isn’t obvious for the reader of
-the code. Since index_mem() now has an additional flag to disable
-filtering, use that instead.
+ * Create .git/info/attributes unapplying all possible transforming
+   attributes.
+ * Use git hash-object and git update-index to stage files manually.
 
-Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
----
- builtin/hash-object.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+Doing the former requires keeping an up-to-date list of all attributes which
+can transform files when committing or checking out. Doing the latter is
+difficult, error-prone and slow when done from scripts.
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 640ef4ded595..8e0543b12bc5 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -59,8 +59,7 @@ static void hash_object(const char *path, const char *type, const char *vpath,
- 	hash_fd(fd, type, vpath, flags, literally);
- }
- 
--static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
--			     int literally)
-+static void hash_stdin_paths(const char *type, unsigned flags, int literally)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -72,8 +71,7 @@ static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		hash_object(buf.buf, type, no_filters ? NULL : buf.buf, flags,
--			    literally);
-+		hash_object(buf.buf, type, buf.buf, flags, literally);
- 	}
- 	strbuf_release(&buf);
- 	strbuf_release(&unquoted);
-@@ -89,7 +87,6 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	const char *type = blob_type;
- 	int hashstdin = 0;
- 	int stdin_paths = 0;
--	int no_filters = 0;
- 	int literally = 0;
- 	int nongit = 0;
- 	unsigned flags = HASH_FORMAT_CHECK;
-@@ -100,7 +97,8 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 			HASH_WRITE_OBJECT),
- 		OPT_COUNTUP( 0 , "stdin", &hashstdin, N_("read the object from stdin")),
- 		OPT_BOOL( 0 , "stdin-paths", &stdin_paths, N_("read file names from stdin")),
--		OPT_BOOL( 0 , "no-filters", &no_filters, N_("store file as is without filters")),
-+		OPT_BIT(0 , "no-filters", &flags, N_("store file as is without filters"),
-+			HASH_RAW),
- 		OPT_BOOL( 0, "literally", &literally, N_("just hash any random garbage to create corrupt objects for debugging Git")),
- 		OPT_STRING( 0 , "path", &vpath, N_("file"), N_("process file as it were from this path")),
- 		OPT_END()
-@@ -132,7 +130,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	else {
- 		if (hashstdin > 1)
- 			errstr = "Multiple --stdin arguments are not supported";
--		if (vpath && no_filters)
-+		if (vpath && (flags & HASH_RAW))
- 			errstr = "Can't use --path with --no-filters";
- 	}
- 
-@@ -150,13 +148,12 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 
- 		if (prefix)
- 			arg = to_free = prefix_filename(prefix, arg);
--		hash_object(arg, type, no_filters ? NULL : vpath ? vpath : arg,
--			    flags, literally);
-+		hash_object(arg, type, vpath ? vpath : arg, flags, literally);
- 		free(to_free);
- 	}
- 
- 	if (stdin_paths)
--		hash_stdin_paths(type, no_filters, flags, literally);
-+		hash_stdin_paths(type, flags, literally);
- 
- 	return 0;
- }
+Instead, similarly to git hash-object, --no-filter can be added to git add
+to enable temporarily disabling filtering in an easy to use way.
+
+These patches:
+
+ * Add new flag ADD_CACHE_RAW to add_to_index()
+ * Add new flag HASH_RAW to index_fd()
+ * Make git hash-object use the new HASH_RAW flag for consistency
+ * Add tests for the new git-add option.
+
+Andrej Shadura (2):
+  add: add option --no-filters to disable attribute-based filtering
+  hash-object: use the new HASH_RAW flag instead of setting path to NULL
+
+ Documentation/git-add.txt |  7 +++++-
+ builtin/add.c             |  3 +++
+ builtin/hash-object.c     | 17 ++++++---------
+ cache.h                   |  2 ++
+ object-file.c             |  2 +-
+ read-cache.c              |  3 +++
+ t/t2205-add-no-filters.sh | 46 +++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 68 insertions(+), 12 deletions(-)
+ create mode 100755 t/t2205-add-no-filters.sh
+
+
+base-commit: 2283e0e9af55689215afa39c03beb2315ce18e83
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-880%2Fandrewshadura%2Fgit-add-no-filters-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-880/andrewshadura/git-add-no-filters-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/880
 -- 
 gitgitgadget
