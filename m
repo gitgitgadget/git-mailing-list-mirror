@@ -2,158 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85E36C433E6
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 17:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F0FFC433DB
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 19:08:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F76664E5F
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 17:08:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 463736023B
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 19:08:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbhBTRIk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Feb 2021 12:08:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44814 "EHLO
+        id S229868AbhBTTIP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Feb 2021 14:08:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbhBTRIa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Feb 2021 12:08:30 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD853C06178A
-        for <git@vger.kernel.org>; Sat, 20 Feb 2021 09:07:49 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id f7so13115858wrt.12
-        for <git@vger.kernel.org>; Sat, 20 Feb 2021 09:07:49 -0800 (PST)
+        with ESMTP id S229796AbhBTTIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Feb 2021 14:08:15 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3EE8C061786
+        for <git@vger.kernel.org>; Sat, 20 Feb 2021 11:07:34 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id lu16so22164419ejb.9
+        for <git@vger.kernel.org>; Sat, 20 Feb 2021 11:07:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=HdRZS4Xcca9nkeyMrzU/2QBlHALHw6j/z6aRutsVlYY=;
-        b=swmKSPAnlTiNqFZrfAavbRhmbxGXze8glDLh7rvGHezY+SLVKtsPbh+s0a2Dv+oyIs
-         1JAbjhEUrp1aRCq0aY6TFyAGS5I6DkhaaiUt7emRbNWNF0TgVLRMaRrY46sbu1oqcEJC
-         pSCGmz9weg0CYm7iW014natyUlwZrmpOmKLkEs2zTwxwV3+i+XlnkMx4NlrAaF+z4dse
-         7J0tIe3ny68s2NmTnEsWfKwLfBGL8W9kuBYkFtQ8APEPlzaq/ZpAv9pGASZ4gUZxikX7
-         RsK+OwfBikVijO8tLOCkLYGDdUAM1tBflFUziqMBq3Ge1HojJc6NyoHMIgRCqalqfcH5
-         bUkQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LCZrNbmpJfJxQK4Gkp5HcoGb3wxk5VaDq4vYfAX/Z1s=;
+        b=F52OYrgOrYsksOTCbM8DbUVXORPNYzYyXzeX8lnQC17ikOPCchIxm1dD5cA1cOV4Vv
+         7EXh+MPN/ymoVE87C/0RSPkYin5HZY2wVB1SwjCMZbSnJ0SBawXP+2uqBoKMm4ywC08x
+         IGrTPu1xnLNAG65JEeTjAOkx8uRBNbETOlYvyEvx0LKxCzP/B/9qnAx14PuS7i8rWdvC
+         8lkV3JC6ISIJ1Va0Za2sEmg0FnYslZc3aRNI77UC9myYJfhg8uUZUGhSKyyBAXQ/g1Y7
+         LOJbg20Q7oPmxVyv+1wUlWX1myzvClfmeuwm/Tovf5t1TiMTyWm6kV4TpyzychVR+C9i
+         8OMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=HdRZS4Xcca9nkeyMrzU/2QBlHALHw6j/z6aRutsVlYY=;
-        b=bHTHWPGzbst3YtX2SIohlEBCnAGlsiek38/xwBnuTAO4JdIMDr+fxNE7djUEm723Pa
-         Cj+O0rZtYEYjJR2DZ3NnWLvQacUa3AwVpojzS1MD0JQLB4nbALuPWn1r6id3vyeDxNJN
-         JUqaMF7asnHjC+LAWhg0DdRjaxIEsIiLOeZh31MJ+rqkrJJEJpuHg1Bg4JnFxbYZ5Odl
-         Qy2aalVLfvg0AKM9ARhwzMFExygEFJqRMGFfx8gVJOed2OWjwceAmmK2LUq3YmAb27uO
-         7A4rqT0EO68goxT3tNuqg6at3yCvE9bAIRYPdHi9V73rLUymv+M1Svg+zD+sTW3dtAV7
-         YqkA==
-X-Gm-Message-State: AOAM533HIBcJyQLmfKeQx4AIs+xoLtbXSa953vGKUG+MQYTpcYvzCMKP
-        2nSWLGUysgNTAxuJ2NZzg+S9Earmfsc=
-X-Google-Smtp-Source: ABdhPJzBkWGtLaNtnrmobatIZ+jdUlfxZ5WQ29PyYIG2aV+nGM90T8E3cfwe8LqOml2LMPN8DPytPQ==
-X-Received: by 2002:a5d:6b45:: with SMTP id x5mr13812204wrw.415.1613840867814;
-        Sat, 20 Feb 2021 09:07:47 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1sm19216742wrx.77.2021.02.20.09.07.47
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LCZrNbmpJfJxQK4Gkp5HcoGb3wxk5VaDq4vYfAX/Z1s=;
+        b=VYJxLTcmOyAmrkDpBvVm340dkBOhF6LTPV8YS7gm/tgSBW81zMlsnqivFvN24qomP4
+         Uwec6EJ78z0iDpIRpZ1/OY/V8dGCn81O7p3CnUCaOt53gphkF7xO+7NCVpfCIobYO+6c
+         8ywts/7iEaqD6A6+CEF+pPh+XvaQeOOiI1EDqZxrH0fpoGF5p62e1Ac9P+hneja/ylGq
+         JUtLIkjXKWyrLqoYUnXPrioqCXjEag6ZmDYN52zMdZUejD0fjtrpAWdRXR5DbR7CPSy9
+         vgikR3jBEfHk/GGfIhqeYVxqfblG6xMK8G0Gxhr/iiymjsbOdnMJF4qO+FkPwqk+Nk4x
+         1YwA==
+X-Gm-Message-State: AOAM531yOrlgMcKwEIfueB9Qtf2m7CAnIPJjXmXSqYgAXoYA1HR+pa5b
+        zTjbIn2EkpPex+945yqHBH0GJjW4zSw=
+X-Google-Smtp-Source: ABdhPJwPoT88I2nTnyhEYdT3xS/9bPBE7DSAV93PwlkwkzDE7FDYkEI7oxyH1edks7RHt+05DICk8g==
+X-Received: by 2002:a17:907:4cf:: with SMTP id vz15mr3612976ejb.39.1613848053073;
+        Sat, 20 Feb 2021 11:07:33 -0800 (PST)
+Received: from szeder.dev (94-21-146-126.pool.digikabel.hu. [94.21.146.126])
+        by smtp.gmail.com with ESMTPSA id w9sm3535551ejb.22.2021.02.20.11.07.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Feb 2021 09:07:47 -0800 (PST)
-Message-Id: <810d4005fe8f018e7e8e179cbd005cc203b06441.1613840865.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.880.v2.git.1613840865.gitgitgadget@gmail.com>
-References: <pull.880.git.1613758333.gitgitgadget@gmail.com>
-        <pull.880.v2.git.1613840865.gitgitgadget@gmail.com>
-From:   "Andrej Shadura via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 20 Feb 2021 17:07:45 +0000
-Subject: [PATCH v2 2/2] hash-object: use the new HASH_RAW flag instead of
- setting path to NULL
+        Sat, 20 Feb 2021 11:07:32 -0800 (PST)
+Date:   Sat, 20 Feb 2021 20:07:28 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Divyansh Garg <divyansh.gargsg@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC] fatal error: curl/curl.h: No such file or directory
+Message-ID: <20210220190728.GA3590451@szeder.dev>
+References: <CAB=huCZLwkBv-Fd4iUqbDwNuNfeFBfjPfKRzYUGShc727KJJzg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Andrej Shadura <andrew.shadura@collabora.co.uk>,
-        Andrej Shadura <andrew.shadura@collabora.co.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAB=huCZLwkBv-Fd4iUqbDwNuNfeFBfjPfKRzYUGShc727KJJzg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrej Shadura <andrew.shadura@collabora.co.uk>
+On Sat, Feb 20, 2021 at 07:27:32PM +0530, Divyansh Garg wrote:
+> Hello,
+> I am trying to build the source code on my system (Ubuntu 20.04).
+> After cloning the repo, when I proceed with the command: make, I get
+> the following error.
+> I tried installing curl and searched the internet but couldn't get a fix.
+> Please advise, how can I solve this problem.
+> 
+> divyansh:~/gsoc/git$ make
+> make: curl-config: Command not found
+>     * new prefix flags
+>     CC attr.o
+>     CC config.o
+>     CC exec-cmd.o
+>     CC gettext.o
+>     AR libgit.a
+>     LINK git-daemon
+>     LINK git-http-backend
+>     LINK git-imap-send
+>     LINK git-sh-i18n--envsubst
+>     LINK git-shell
+>     CC http.o
+> In file included from http.c:2:
+> http.h:6:10: fatal error: curl/curl.h: No such file or directory
+>     6 | #include <curl/curl.h>
+>       |          ^~~~~~~~~~~~~
+> compilation terminated.
+> make: *** [Makefile:2422: http.o] Error 1
 
-While setting path to NULL works and flips the condition in the right
-branch inside index_mem(), doing so isn’t obvious for the reader of
-the code. Since index_mem() now has an additional flag to disable
-filtering, use that instead.
+As Torsten said you have to install not only a couple of libraries but
+also the related '-dev' package containing includes and static
+libraries.
 
-Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
----
- builtin/hash-object.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+In our CI jobs using Ubuntu we install the following packages by
+default (see 'ci/install-dependencies.sh'):
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 640ef4ded595..6f261a1f00e3 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -59,8 +59,7 @@ static void hash_object(const char *path, const char *type, const char *vpath,
- 	hash_fd(fd, type, vpath, flags, literally);
- }
- 
--static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
--			     int literally)
-+static void hash_stdin_paths(const char *type, unsigned flags, int literally)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -72,8 +71,7 @@ static void hash_stdin_paths(const char *type, int no_filters, unsigned flags,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		hash_object(buf.buf, type, no_filters ? NULL : buf.buf, flags,
--			    literally);
-+		hash_object(buf.buf, type, buf.buf, flags, literally);
- 	}
- 	strbuf_release(&buf);
- 	strbuf_release(&unquoted);
-@@ -89,7 +87,6 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	const char *type = blob_type;
- 	int hashstdin = 0;
- 	int stdin_paths = 0;
--	int no_filters = 0;
- 	int literally = 0;
- 	int nongit = 0;
- 	unsigned flags = HASH_FORMAT_CHECK;
-@@ -100,7 +97,8 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 			HASH_WRITE_OBJECT),
- 		OPT_COUNTUP( 0 , "stdin", &hashstdin, N_("read the object from stdin")),
- 		OPT_BOOL( 0 , "stdin-paths", &stdin_paths, N_("read file names from stdin")),
--		OPT_BOOL( 0 , "no-filters", &no_filters, N_("store file as is without filters")),
-+		OPT_BIT(0, "no-filters", &flags, N_("store file as is without filters"),
-+			HASH_RAW),
- 		OPT_BOOL( 0, "literally", &literally, N_("just hash any random garbage to create corrupt objects for debugging Git")),
- 		OPT_STRING( 0 , "path", &vpath, N_("file"), N_("process file as it were from this path")),
- 		OPT_END()
-@@ -132,7 +130,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 	else {
- 		if (hashstdin > 1)
- 			errstr = "Multiple --stdin arguments are not supported";
--		if (vpath && no_filters)
-+		if (vpath && (flags & HASH_RAW))
- 			errstr = "Can't use --path with --no-filters";
- 	}
- 
-@@ -150,13 +148,12 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
- 
- 		if (prefix)
- 			arg = to_free = prefix_filename(prefix, arg);
--		hash_object(arg, type, no_filters ? NULL : vpath ? vpath : arg,
--			    flags, literally);
-+		hash_object(arg, type, vpath ? vpath : arg, flags, literally);
- 		free(to_free);
- 	}
- 
- 	if (stdin_paths)
--		hash_stdin_paths(type, no_filters, flags, literally);
-+		hash_stdin_paths(type, flags, literally);
- 
- 	return 0;
- }
--- 
-gitgitgadget
+UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+ tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+ libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
+
