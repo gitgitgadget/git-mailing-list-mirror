@@ -2,129 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7055BC433E0
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 00:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA455C433DB
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 02:45:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3BFA464ECA
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 00:00:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F3AF64EE0
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 02:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbhBTAAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 19 Feb 2021 19:00:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52298 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229891AbhBTAAY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Feb 2021 19:00:24 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A64F3C061574
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 15:59:44 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id o10so6667655ote.13
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 15:59:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=QfcQe9PfNfr9ujeyTVMSQCNYCUSE7AWEvjKqHO6W03c=;
-        b=l8mJI6WffAi61QO8oeZwv2d6Tkv/jtuOEJlECUbF+GNSI5S8danL6b7tUouegT4Fpw
-         JHASDmjLFV8wusYmCx5a2gMARSiGxLB0uXZoCBQuNWx4VLtf4FdQ9Qo/LhW/BErXeS+p
-         Ch7eolYn770qRaEu/HomWyU+zk9T2/azQsD8Sacvda2kCauNcg3Kk6WOVZHxdyNPY/BH
-         Ya56jhkFU144C3LKbI+ClskpOteLuthYCVxDJ/t7RjRKUbouKkSGAQJoRxgVKAxKKnVG
-         tLyNlHoMqtkLEFa2C9vWGfR9xGu006ukP6WIW+Nbbn32fqkzyPi5ITDsl9uwoeer4Z5j
-         B4Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=QfcQe9PfNfr9ujeyTVMSQCNYCUSE7AWEvjKqHO6W03c=;
-        b=dsS2kKcSJnf3P22SbdrymcbpA1F4LgJXmXD3772C2StHNfgB2JPb1lJ5NlsSt1KX5O
-         v+7YoUa4p32d9fNkqxzoH0kvghUDdCvhCHshGrssweMMLzMYcBinyBAL3DiI0WnwZg1M
-         WEkfEG1ZbopUYZDTnOVnRDDxZkPqeLpBWtOgwvRv0Tj1Dzzw5/k1Ocz9QZO9W8YOZZSQ
-         zpjgeC+Lk39Gyr5SL4mk8c42LPM1z92uvGNtSxLmRbGTlZ63qSapyyWnbPDiNvOpiXzP
-         mEeEWQYW+zlj/8kfrwVgiEYPQx1g09k9wHig+1Nz1F7zeLjwtc0AdkARZkM1Lo6jtpKc
-         zPwA==
-X-Gm-Message-State: AOAM5326D2bi+X+UEcZtdDmier10MHBrA5aUTcYQQCZtYjMA1VOjs0m8
-        Kr4XfdHyD4pNUGRXntmREGr3havYLshcDCKSKSkrJIao1xLvUQ==
-X-Google-Smtp-Source: ABdhPJxQSd62/QfkjL1My/DF0OncbKfvYDZPWF91aaH/0UO2KqwG/KygYp+9xfj83XpACxPXl9KvUMiSlmsq6Gj0t5k=
-X-Received: by 2002:a05:6830:93:: with SMTP id a19mr8744048oto.345.1613779184100;
- Fri, 19 Feb 2021 15:59:44 -0800 (PST)
+        id S229903AbhBTCoz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 19 Feb 2021 21:44:55 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59726 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229745AbhBTCox (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Feb 2021 21:44:53 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D8451106F7B;
+        Fri, 19 Feb 2021 21:44:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=J
+        b5KARhB0t0OIlF0wom8sPXWEGM=; b=fqD/5wpVIgJLWCBHOjmNQ8YtGqAf38t0t
+        55MhRC3kfji2pGy0JazmOGHxwhx7A/EHBjfshjBV2BfWfT89XdnAZ4xUuda2ROXQ
+        ygDSoV/W6KMsU8+YQME4TGwh8ps9yVr9XtPDw6A8m9s4nSXYcDHRHfb4IZGAUEQG
+        xIx1uBMdiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=snd
+        dCk1kSU7Vy/t3W8DvK9CpoVl3rcBQqxrA2kd3MaY/Te+L7Ti+XA9I1zZqvtZwboL
+        YdWDNnR+qSdtOND9ZUQxFjAvheZMqJUkm1jn/CXT2lzHZ6dh9bE9x9qxU1Y2ceT/
+        UOz8CrqHNKsA2YWgobdOdYz3IvYGl9/1sue86pic=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CFE73106F7A;
+        Fri, 19 Feb 2021 21:44:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.243.138.161])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 26C5B106F79;
+        Fri, 19 Feb 2021 21:44:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] Documentation: typofix --column description
+Date:   Fri, 19 Feb 2021 18:44:05 -0800
+Message-ID: <xmqqczwvbgqy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <CAD9n_qiN+qXqR79z_4d+_8_mxa9eTFB42sTUT8CTF8=oQArQaA@mail.gmail.com>
- <YDA6+vm6GPQL3Jec@camp.crustytoothpaste.net>
-In-Reply-To: <YDA6+vm6GPQL3Jec@camp.crustytoothpaste.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 19 Feb 2021 15:59:33 -0800
-Message-ID: <CABPp-BH4F5zHmrX9C=CsnAKhcDr=KS1Rco4EXR-RSOfEnbFjQQ@mail.gmail.com>
-Subject: Re: Considering merge --dry-run to foresee conflicts ahead of time
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alireza <rezaxm@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 807F3338-7325-11EB-9736-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 19, 2021 at 2:26 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2021-02-17 at 17:21:45, Alireza wrote:
-> > I have a half baked alias for this and it proved to be extremely
-> > useful even in this state.
-> >
-> > ```
-> > check = "!f() { BRANCH=${1:-HEAD}; BASE=${2:-origin/master}; git
-> > merge-tree $(git merge-base $BRANCH $BASE) $BRANCH $BASE | sed -n
-> > \"/+<<<<<<< .our/,/+>>>>>>> .their/p\"; }; f"
-> > ```
-> >
-> > Of course with large conflicts it gets less useful. Getting only file
-> > names from the patch isn't straightforward either.
-> >
-> > So my question is what are the downsides to introducing a `merge
-> > --dry-run` option and what would it look like?
->
-> There aren't really any, but the current implementation of the merge
-> code makes it non-trivial, since it writes directly into the working
-> tree.  The new merge-ort code that Elijah Newren (CC'd) is working on
-> should at least support writing conflicts only into the index, and if
-> you didn't want to dirty the existing index, you could create a
-> temporary one with GIT_INDEX_FILE and write to that.  It may also
-> support a dry-run mode natively, but I'm not following it closely enough
-> to say.  Hopefully Elijah can say a little bit more about things.
->
-> In the mean time, since this is a frequently requested feature, I have a
-> Rust-based tool called git test-merge[0] that runs a test merge between
-> two arbitrary trees and determines whether it succeeds or fails.  It
-> uses libgit2 under the hood.
+f4ed0af6 (Merge branch 'nd/columns', 2012-05-03) brought in three
+cut-and-pasted copies of malformatted descriptions.  Let's fix them
+all the same way by marking the configuration variable names up as
+monospace just like the command line option `--column` is typeset.
 
-I don't have that exact feature implemented, but I've got something
-that could easily be reused to provide this functionality.  In my
-remerge-diff branch, I've got a --remerge-diff option for log (and
-show), that for any merge commit will redo the merge in-memory (not
-touching the working copy or index), and then show the diff between
-that result (possibly including conflict markers) and what was
-actually recorded in the merge.  If the merge was clean and the user
-didn't amend any changes into the merge commit, then the diff will be
-empty.  If the user moved around files, added changes, or just ripped
-out conflict markers, then you see all that in the diff.
+While we are at it, correct a missing space after the full stop that
+ends the sentence.
 
-One could use the same logic to make a merge --dry-run option that
-would show the diff between the commit before merging and the
-auto-merged state.  It probably wouldn't even be all that much code;
-may half a day's worth of work.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-branch.txt | 2 +-
+ Documentation/git-status.txt | 2 +-
+ Documentation/git-tag.txt    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-But, it does rely on getting merge-ort reviewed and merged.  We're 6
-months into that process so far.  I was hoping we'd finish it before
-git-2.32 is released (note that git-2.31 isn't released yet either),
-but right now git-2.33 is looking more probable.  See
-https://lore.kernel.org/git/pull.844.git.1613289544.gitgitgadget@gmail.com/
-and https://github.com/gitgitgadget/git/pulls?q=is%3Apr+author%3Anewren+Optimization+batch
-if you'd like to help review and/or test the portions that are ready
-for review.  (Or try the 'ort' or 'remerge-diff' branches of
-https://github.com/newren/git if you want to try out the full set of
-changes, including bits that haven't been nicely broken up in
-preparation for upstream review.)
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index adaa1782a8..5b4b2135a1 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -153,7 +153,7 @@ OPTIONS
+ --column[=<options>]::
+ --no-column::
+ 	Display branch listing in columns. See configuration variable
+-	column.branch for option syntax.`--column` and `--no-column`
++	`column.branch` for option syntax. `--column` and `--no-column`
+ 	without options are equivalent to 'always' and 'never' respectively.
+ +
+ This option is only applicable in non-verbose mode.
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index c0764e850a..83f38e3198 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -130,7 +130,7 @@ ignored, then the directory is not shown, but all contents are shown.
+ --column[=<options>]::
+ --no-column::
+ 	Display untracked files in columns. See configuration variable
+-	column.status for option syntax.`--column` and `--no-column`
++	`column.status` for option syntax. `--column` and `--no-column`
+ 	without options are equivalent to 'always' and 'never'
+ 	respectively.
+ 
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 56656d1be6..31a97a1b6c 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -134,7 +134,7 @@ options for details.
+ --column[=<options>]::
+ --no-column::
+ 	Display tag listing in columns. See configuration variable
+-	column.tag for option syntax.`--column` and `--no-column`
++	`column.tag` for option syntax. `--column` and `--no-column`
+ 	without options are equivalent to 'always' and 'never' respectively.
+ +
+ This option is only applicable when listing tags without annotation lines.
+-- 
+2.30.1-786-ga4cbb14bdd
+
