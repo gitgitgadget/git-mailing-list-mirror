@@ -2,132 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A03FC433DB
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 14:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0FE3C433E0
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 14:13:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C18816023C
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 14:11:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B1BC64EDB
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 14:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbhBTOLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Feb 2021 09:11:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52506 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229525AbhBTOLf (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Feb 2021 09:11:35 -0500
-Received: from camp.crustytoothpaste.net (unknown [97.105.19.220])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 779B160DF4;
-        Sat, 20 Feb 2021 14:10:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1613830253;
-        bh=3kflKeo58yvDC+BYLKZSWM44ly4gLLYBrrOcHIfN7Y4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=l9QNLDXWWFOWI14PmX6nxiyC3wdgx4YjXm7dYvWB+OpHEARoUqqyIUXeg5h/3sD8e
-         cQQN4l9vkgFrQaMWSxLcU2Jg3m07sCql35y5SAN5f+ek1pGuHYyh6ed+Bgcdx0c41N
-         Z3juMFM5/JAgQoBjT1T+E17ClPdq0Nzc8mEDQwY7P39IDWkMnNq9D2PP1/2RnMNzyU
-         ilqnwu0ILATYiGE9ShcdRk544/QsH6KWfAzDz9glRdFQvAFas90zNZabRL7ZJB8KTV
-         xuKo666JhqF1q5qfzutjfwRQOMe1s4iipGve313HYlgcGkfW2PvMhc3gNjcdY9Y7g7
-         nKcH5akRQDjztOUl5qIw0t+HF0fofrVl5fO549U0PwjDQnMUQf+OfDMMNGOICWyMs/
-         bBAOBz1uW7oBCVmuNrgMNnMPDoD9tDJPFWMs+0tcRRQGnZxMUpLzjjiKJNym4SOhR9
-         rXhKes0I/ndzdKtyexIGmgTBnc8e8hi5+XM6IF0ZGwGYI7Fn3ad
-Date:   Sat, 20 Feb 2021 14:10:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Andrej Shadura <andrew.shadura@collabora.co.uk>
-Cc:     Andrej Shadura via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add --no-filters option to git-add
-Message-ID: <YDEYaVibMFo1OJZs@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Andrej Shadura <andrew.shadura@collabora.co.uk>,
-        Andrej Shadura via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.880.git.1613758333.gitgitgadget@gmail.com>
- <YDA9WjWOjkqlsALc@camp.crustytoothpaste.net>
- <a58d8057-9847-ba57-1bf5-5d27c235d210@collabora.co.uk>
- <c660bf7b-cd59-43d4-a374-11997f0b15d1@collabora.co.uk>
+        id S229657AbhBTOMz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Feb 2021 09:12:55 -0500
+Received: from mout.web.de ([212.227.17.12]:60773 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229525AbhBTOMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Feb 2021 09:12:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1613830263;
+        bh=S7oeOWYdcCC1txcqlbzjGSXvHSEo6jQcCkPV6ihJ3bw=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=sT7xIczyqRR3Vcy6qZhdsnoPmnaVFH2QqpO+RkgCJxBN+cL8+EiMP7om6bLQT8cN2
+         LJA9/Ub1K5sGc8czCNPRa/QCNpFoT1TIs9A8BIUethRm8KCSzdg/Ly7Zv+I6iwpYGM
+         e7MPdMdwvx4xaM4cFaJK8Qfnsxyn/++rSfPLdYOc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M5OUd-1m3csq1m0d-00zYbt; Sat, 20
+ Feb 2021 15:11:03 +0100
+Date:   Sat, 20 Feb 2021 15:11:03 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Divyansh Garg <divyansh.gargsg@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC] fatal error: curl/curl.h: No such file or directory
+Message-ID: <20210220141102.t43mb4gxwzseides@tb-raspi4>
+References: <CAB=huCZLwkBv-Fd4iUqbDwNuNfeFBfjPfKRzYUGShc727KJJzg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xDkcWKnjSnipxv0a"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c660bf7b-cd59-43d4-a374-11997f0b15d1@collabora.co.uk>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+In-Reply-To: <CAB=huCZLwkBv-Fd4iUqbDwNuNfeFBfjPfKRzYUGShc727KJJzg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:e0AxJHa7M331LZKYV7ofI7NnAVGlkb/qHrwc+yyH55vQo8OQ8wz
+ t7Spxbjk35WXVXoJvTY09QiUOEVSO82cjrhz55KL89QpTIVgJknviu+zQGRZlicMQLBoO9z
+ GUfNFUTTq7JyZgO5hKlzmTQHLj7dOyF54VJizt8cc+il/GT6qZ8ZmC9w7sSLrNBXRVJ3Uti
+ 0PdQVtEFjNcF9a6j037MA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Vj4lZiEFaUk=:jkmGLduiejl3beaNXrGHHi
+ B8GZHGM9xxe+iUFNZ4o4ov60a69ZtEKStepJFSX++EBaAd1VaDs7lpledMTm4YXIxCyJBNp3P
+ njnttnFcfDQEw7PM0jwJqxxWM1SBhKZ6NyUTJNj4FvFTQBjVY0YIIzc1WLQm12cnAv4lAn8e1
+ UfXG8l7XaWI3R/2OjlCOih2l1nszNYx1BX8YIpVWZ/UnRvu/5frCbvqE0KBDPfemm6qqaFQZm
+ ohjhTW6mLSnlanzsoMSacSXyqYFqFoQT+ytqgKq8GmX63mv77DBzTgcwfmK+3Ev8AWDw/fDCI
+ JFa8aps1Sb/zDo01yhW5gz7U/j/ioV3oaE5rn+aR4tkkDAdpkji1UunV13mA8m7dTVrN3myBz
+ XY2V1DoMko/6yX0+4AKggIfR/axV3bpMm2TMXFeyng5ixBbHsbmFISjn/tKdb+Oi9yonQ7Fp7
+ 3Yi2QcaZnT43msDlSsRr5SdV2reDvfG6nfVwcUMbdoO1nLQ/9KkHAipROj+KH7aEuMIEZDUua
+ x1ZqQjpy77Rjvquj/TovRUUb6UOmZd7Lc/imlYGnsWln+7A2rKGyZFs5dyyt2lqSlgUpKN8Wh
+ hD7fIHlCPKZtzeV1/ucb3+9IaLMyCcv++HvrGAJfrJOzn4Ic3AtWuaHzNWwo48YSEGK8Q8fac
+ toaLGzIEasBEQQSb1RrJgoyOzAaTfx3wDTzyjzUUbyfrdObUKKyPFHHtfssN6MIdvxxKSHJyd
+ QE0HRmUXcnN4M/m3QKQG/e4AfJ9s9lAvLDS1dTgksprbwKbVZ8UranukFTdL43X0yjtedhrDQ
+ 1K5yXgV2GvvRUOF+gvhmGlBD3ghl3sKrM6/l+ztgwTdWVTtvycTp6PFcrYmmeUjt3dI6Pia8L
+ lyk5La/Z2R7uhIo/WfeA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Feb 20, 2021 at 07:27:32PM +0530, Divyansh Garg wrote:
+> Hello,
+> I am trying to build the source code on my system (Ubuntu 20.04).
+> After cloning the repo, when I proceed with the command: make, I get
+> the following error.
+> I tried installing curl and searched the internet but couldn't get a fix.
+> Please advise, how can I solve this problem.
 
---xDkcWKnjSnipxv0a
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Welcome to the Git community.
+You need to install the development package of some packages,
+which come with header files (and not only the libs).
 
-On 2021-02-20 at 09:30:58, Andrej Shadura wrote:
-> On 20/02/2021 09:06, Andrej Shadura wrote:
-> > On 19/02/2021 23:36, brian m. carlson wrote:
-> >> So I think that while this might be a useful escape hatch for users, I
-> >> definitely want to see a compelling rationale for it and a big warning
-> >> in the documentation and an update to the relevant entry in the Git FAQ
-> >> before we accept such a patch.
->=20
-> Here=E2=80=99s my proposal for the updated manpage description of the opt=
-ion:
->=20
-> --no-filters::
->=20
-> Add the contents as is, ignoring any input filter that would have been
-> chosen by the attributes mechanism, including the end-of-line
-> conversion. Note that this option is not intended for interactive use,
-> since files added this way will always show up as modified if Git were
-> to apply transformations to them, making the situation potentially very
-> confusing.
->=20
-> And here the FAQ entry extended:
->=20
-> It is also possible for perpetually modified files to occur on any
-> platform if a smudge or clean filter is in use on your system but a file
-> was previously committed without running the smudge or clean filter.  To
-> fix this, run the following on an otherwise clean working tree:
-> +
-> ----
-> $ git add --renormalize .
-> ----
-> +
-> Another situation where perpetually modified may appear on any platform
-> is when a file has been committed without running any filters (including
-> the end-of-line conversion), but the `.gitattributes` file states that
-> this file requires a conversion.  In this case, you can either
-> renormalize the files if this happened by mistake, or modify
-> `.gitattributes` or `$GIT_DIR/info/attributes` as described above to
-> exempt the file from the conversion if this was intentional.
->=20
-> (I will send an updated patch set when we agree on the wording.)
+Being a lazy person, I collected all possible package names in a setupscript,
+looking similar to this:
+  APTGET="sudo apt-get install"
+ type curl-config || $APTGET libcurl4-openssl-dev || $APTGET libcurl-devel
+ test -r /usr/include/expat.h || $APTGET libexpat1-dev || $APTGET expat-devel || $APTGET libexpat-devel
+ test -r /usr/include/ssl.h || test -r /usr/include/openssl/ssl.h || $APTGET openssl-devel || $APTGET  libssl-dev
+ test -r /usr/include/zlib.h || $APTGET zlib1g-dev
+ type msgfmt || $APTGET gettext
 
-This seems fine.  Thanks for being open to addressing my concerns, and I
-agree that your use case seems like a good one and that this is a
-valuable feature.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+In other words,
+sudo apt-get install libcurl-devel
+could help.
+And you probably need to install more dev/devel packages, unfortunatly different Linux distros
+use different names for (from a user point of view) the same thing.
+So I can't tell you out of my head, what Ubuntu needs, but there is hopefully a start point.
 
---xDkcWKnjSnipxv0a
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDEYaQAKCRB8DEliiIei
-gQ53AQDgt1oqqpObMS1fXEV0/STiGNwq4BgjrypSotm6JNxfdgD/fgOOriBP594p
-3qlW2JGSxRydS8QcwuhwGExP+xK3CQQ=
-=szv1
------END PGP SIGNATURE-----
-
---xDkcWKnjSnipxv0a--
+[snip]
