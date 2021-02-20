@@ -2,214 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D7DC433DB
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 05:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4832C433E0
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 06:12:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F2FC64EB3
-	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 05:12:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96FA264EE0
+	for <git@archiver.kernel.org>; Sat, 20 Feb 2021 06:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229645AbhBTFLV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 20 Feb 2021 00:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33772 "EHLO
+        id S229658AbhBTGMs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 20 Feb 2021 01:12:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbhBTFLS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Feb 2021 00:11:18 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB6DC061574
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 21:10:38 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id cx11so2799456pjb.4
-        for <git@vger.kernel.org>; Fri, 19 Feb 2021 21:10:38 -0800 (PST)
+        with ESMTP id S229593AbhBTGMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Feb 2021 01:12:47 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16AF2C061574
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 22:12:07 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id d7so7192773otq.6
+        for <git@vger.kernel.org>; Fri, 19 Feb 2021 22:12:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K6w3jxqOiSRECDInCw3KVO0V2eKJ6fFkGnULp4iBdUE=;
-        b=tQuOzLAPRllOuGf75xUnkm8pE6uAO5Pj7wnADUMl0bbKjzk2wnS7cZCqGThb185pAI
-         2lNTfXIb9gx00vkfA8Nd/14OXjJESUgWrkYgeZkWiDEVGYN42aM6LSf/3ixKc2jfNoc+
-         u6ApRwpsJWRhCkvmfeb3Cc+KNphH/2na4noDKtzjooEgnB7RenRGYMSpcVlQJ0iBNnpo
-         oCAOCNcUWBx1PEKT5eJCSWIRr9uovnms8xwNm4KHp/V0CBsArKON7YNoZTTHxrl9cI1h
-         OV6ygXy6gM+/7e7JVpaPyhU8l7B3UQnUuvxMM9me1qJcd0yGA4ovtDiVAe9o7cNFw6ez
-         LAQQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=AgzN7bewzv5UjtWUjrTtZjZa1QntE9qU+kZUEG4sPVc=;
+        b=LlRPFqEhBgc4OVXKQVHxcyXlWVOYXw6wfd+flrV+aIBgXtnGEToIH7phD1xvLv1hX5
+         VwP7cq7XOflg1uJuZQO7cIQ4yZu+Gk05Xbb7Mti363hVoY73tQBajBmQamhEgZTlqtyL
+         2lnmaRRNITq+FNsTwxk17hWLizbJ7x299Z/Zp/kVD2AUlXvZYLhlNtPY7uUcPlTV3WSe
+         YxgH/G+KIT5s1fJMqCc5gHHQY2UEm1+b7tQQN58P/mgXnrRnSny/v86Zu/SUrlYEOzAA
+         UXni3x1OnlP2RZeXfU+0epXqcyQO8roiZETZDdvTUfrcxIKRHIC0QBw+qm+5kPcvTXs0
+         voNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K6w3jxqOiSRECDInCw3KVO0V2eKJ6fFkGnULp4iBdUE=;
-        b=NZ1/V1bjPw5G88tt+lNWv6+yvVMmIlUz+/8Lan2aq132Pb/o8ylsidG4TrHlAXvnap
-         Y9bijmm/jcRy4gMn/3nilzoQxUOOgk2fYbdIB/YKUVuLWlaCarpl17sm7fopanQDGqgh
-         k/wEOXqqf470er8hZaE6BmHRIwKMkmKx7UvguHUCyM3Sgx+/BqBupP696QqXd0JEPhuj
-         ZM/ft2qpppkOnfVxFXOkTuHaRCHV+1lzwZPsfEh7H04UMbc99IoFDnu/ZiC68+AeZJDG
-         fosohPyzF4tGud6ccgjM5nFK5ApUxZxUgwpp+d0nA/Y+Lb1JWxI4P33UbTX+k2ZULbW6
-         0Nfg==
-X-Gm-Message-State: AOAM533tYPA+8RDElZIabG20PmWK5Woc3D8Er6SauPCBPeZ2JqmOeIF7
-        X4zowjGwOEirmfGg+jXtBy5+jmuZv0+TYg==
-X-Google-Smtp-Source: ABdhPJyiSwuIU2oo15RMh4Wu7IDq9jrn1t6JhHlqbtGnCO+ieYnCTAYBaLv0CKGuVRfH06udZc9eeQ==
-X-Received: by 2002:a17:90a:ad85:: with SMTP id s5mr6546723pjq.207.1613797837309;
-        Fri, 19 Feb 2021 21:10:37 -0800 (PST)
-Received: from xavier.hsd1.ut.comcast.net ([2601:681:5900:961c:3398:e348:1cc1:ced7])
-        by smtp.gmail.com with ESMTPSA id c17sm9910947pjq.17.2021.02.19.21.10.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Feb 2021 21:10:36 -0800 (PST)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, gitster@pobox.com, liu.denton@gmail.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v2] rebase: add a config option for --no-fork-point
-Date:   Fri, 19 Feb 2021 22:10:25 -0700
-Message-Id: <20210220051025.4672-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.30.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AgzN7bewzv5UjtWUjrTtZjZa1QntE9qU+kZUEG4sPVc=;
+        b=QhjPwD3h4JpuhLPBlnQPY89f1zKs2yso4bef7sOWRhv9lbQ2lBV01IxfQ36j4gOb1l
+         pA56Zzwgq3hGS5TOsDG2ARlLlgGbk0RWc3YM1NJ70BewjGw16glOpwEpOmAp4Jl+ZoTp
+         3VNcp8xPEVEVSfOoAIZ0fatCPGk9yCM4/x5aILjMQwwuW+l5l1g7Sz0iqeR338y71DDe
+         WLywWNl2GZIpcri7QVtdtisIZ369qHVkzFWbIZclX7TkbFP08XcgoA3Zz7Ohp7ErgkEQ
+         fZygYUUsNfPjpcnAn5e75FTSwolMB8WgZJJs0nOF/I8z2o4WHFcPyovjfa1A1l5hft4U
+         XAtA==
+X-Gm-Message-State: AOAM531OrRFWLMZvc9wna4VSNwtG81GsHXl+pN8VWurIXwp8unfu1pzc
+        yb8YVbGr11icM1bdP8aMe1MCN2mWxqImasophhc=
+X-Google-Smtp-Source: ABdhPJzUsJvGK6Wk0oeslhx8mz4a/O0TzaYu+iDvGGF30T3UFBilA2/+w9AhI0vNWgvrFqPXWBngA241/vFnTbjLQCQ=
+X-Received: by 2002:a9d:21ca:: with SMTP id s68mr9749434otb.164.1613801526457;
+ Fri, 19 Feb 2021 22:12:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20352639-deaa-0e3f-c99e-9bde937d67f9@gmail.com>
+ <CAP8UFD1VaOBWcf3RQTc6OdmkUZCOOOO0mubRoWAvao6uNtNkgQ@mail.gmail.com>
+ <CA+CkUQ97+Afr9TUtKnb4LE1tK8z=UfSkJY2JYb5RJKTMJXQ-Bg@mail.gmail.com>
+ <CAOLTT8RAuS5-PgTj4YdvakFV8uA1mfKa-gxBOxnWPcL5Sv0VHg@mail.gmail.com> <CA+CkUQ9nK3KyrXTTQifs1eFM-mWiR39Yt_FAbxwfjoiN5CghLg@mail.gmail.com>
+In-Reply-To: <CA+CkUQ9nK3KyrXTTQifs1eFM-mWiR39Yt_FAbxwfjoiN5CghLg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 20 Feb 2021 14:11:54 +0800
+Message-ID: <CAOLTT8Szxt3GkcSTogpjy6UApY5mbmdR3Nm6RNraMCM-H7M89g@mail.gmail.com>
+Subject: Re: Git in GSoC 2021 ?
+To:     Hariom verma <hariom18599@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some users (myself included) would prefer to have this feature off by
-default because it can silently drop commits.
+Hariom verma <hariom18599@gmail.com> =E4=BA=8E2021=E5=B9=B42=E6=9C=8820=E6=
+=97=A5=E5=91=A8=E5=85=AD =E4=B8=8A=E5=8D=882:26=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Hi,
+>
+> On Fri, Feb 19, 2021 at 10:39 PM ZheNing Hu <adlternative@gmail.com> wrot=
+e:
+> >
+> > Hi,Hariom verma,
+> > I am very glad that you can serve as a possible mentor for GSOC this ye=
+ar!
+>
+> Yeah, possible co-mentor. Thanks :)
+>
+> > I am very interested in this "Use ref-filter formats in `git cat-file`"=
+.
+> > Where should I start learning? :)
+>
+> That's great. Maybe you can start by learning:
+> - What is cat-file?
+> - How cat-file works?
+> - What is ref-filter?
+> - How ref-filter works?
+> - What logic previous students came up with to unify these?
+> - How much work has been done?
+>
+Thank you for your guidance, I will try to see the relevant code
+implementation and documentation.
+> Note: here at Git, we usually prefer inline replies. So, please avoid
+> top posting.
+>
+OK, I'll be more standardized in the future.
+> Regards,
+> Hariom.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/config/rebase.txt |  3 +++
- builtin/rebase.c                | 20 +++++++++++++-------
- t/t3431-rebase-fork-point.sh    | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index 7f7a07d22f..8531a4b3f7 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -68,3 +68,6 @@ rebase.rescheduleFailedExec::
- 	Automatically reschedule `exec` commands that failed. This only makes
- 	sense in interactive mode (or when an `--exec` option was provided).
- 	This is the same as specifying the `--reschedule-failed-exec` option.
-+
-+rebase.forkPoint:
-+	If set to false set `--no-fork-point` option by default.
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 840dbd7eb7..de400f9a19 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -102,6 +102,7 @@ struct rebase_options {
- 	int reschedule_failed_exec;
- 	int use_legacy_rebase;
- 	int reapply_cherry_picks;
-+	int fork_point;
- };
- 
- #define REBASE_OPTIONS_INIT {			  	\
-@@ -111,7 +112,8 @@ struct rebase_options {
- 		.default_backend = "merge",	  	\
- 		.flags = REBASE_NO_QUIET, 		\
- 		.git_am_opts = STRVEC_INIT,		\
--		.git_format_patch_opt = STRBUF_INIT	\
-+		.git_format_patch_opt = STRBUF_INIT,	\
-+		.fork_point = -1,			\
- 	}
- 
- static struct replay_opts get_replay_opts(const struct rebase_options *opts)
-@@ -1095,6 +1097,11 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.forkpoint")) {
-+		opts->fork_point = git_config_bool(var, value) ? -1 : 0;
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "rebase.usebuiltin")) {
- 		opts->use_legacy_rebase = !git_config_bool(var, value);
- 		return 0;
-@@ -1306,7 +1313,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	const char *gpg_sign = NULL;
- 	struct string_list exec = STRING_LIST_INIT_NODUP;
- 	const char *rebase_merges = NULL;
--	int fork_point = -1;
- 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
- 	struct object_id squash_onto;
- 	char *squash_onto_name = NULL;
-@@ -1406,7 +1412,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
- 			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
--		OPT_BOOL(0, "fork-point", &fork_point,
-+		OPT_BOOL(0, "fork-point", &options.fork_point,
- 			 N_("use 'merge-base --fork-point' to refine upstream")),
- 		OPT_STRING('s', "strategy", &options.strategy,
- 			   N_("strategy"), N_("use the given merge strategy")),
-@@ -1494,7 +1500,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("cannot combine '--keep-base' with '--root'"));
- 	}
- 
--	if (options.root && fork_point > 0)
-+	if (options.root && options.fork_point > 0)
- 		die(_("cannot combine '--root' with '--fork-point'"));
- 
- 	if (action != ACTION_NONE && !in_progress)
-@@ -1840,8 +1846,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 								    NULL);
- 			if (!options.upstream_name)
- 				error_on_missing_default_upstream();
--			if (fork_point < 0)
--				fork_point = 1;
-+			if (options.fork_point < 0)
-+				options.fork_point = 1;
- 		} else {
- 			options.upstream_name = argv[0];
- 			argc--;
-@@ -1945,7 +1951,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
- 
--	if (fork_point > 0) {
-+	if (options.fork_point > 0) {
- 		struct commit *head =
- 			lookup_commit_reference(the_repository,
- 						&options.orig_head);
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index 2dab893c75..ad1d9e1b90 100755
---- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -77,4 +77,35 @@ test_expect_success 'git rebase --fork-point with ambigous refname' '
- 	test_must_fail git rebase --fork-point --onto D one
- '
- 
-+test_expect_success '--fork-point and --root both given' '
-+	test_must_fail git rebase --fork-point --root 2>err &&
-+	test_i18ngrep "cannot combine" err
-+'
-+
-+test_expect_success 'rebase.forkPoint set to false' '
-+	test_config rebase.forkPoint false &&
-+	test_rebase "G F C E D B A"
-+'
-+
-+test_expect_success 'rebase.forkPoint set to false and then to true' '
-+	test_config_global rebase.forkPoint false &&
-+	test_config rebase.forkPoint true &&
-+	test_rebase "G F E D B A"
-+'
-+
-+test_expect_success 'rebase.forkPoint set to false and command line says --fork-point' '
-+	test_config rebase.forkPoint false &&
-+	test_rebase "G F E D B A" --fork-point
-+'
-+
-+test_expect_success 'rebase.forkPoint set to true and command line says --no-fork-point' '
-+	test_config rebase.forkPoint true &&
-+	test_rebase "G F C E D B A" --no-fork-point
-+'
-+
-+test_expect_success 'rebase.forkPoint true and --root given' '
-+	test_config rebase.forkPoint true &&
-+	git rebase --root
-+'
-+
- test_done
--- 
-2.30.1
-
+--
+ZheNing Hu
