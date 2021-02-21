@@ -2,108 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B0CC433E0
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 12:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF2AC433DB
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 13:24:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1094764F04
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 12:52:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3324960295
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 13:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbhBUMwJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Feb 2021 07:52:09 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64865 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhBUMwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Feb 2021 07:52:08 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC6C0A91A3;
-        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=PwdM9WHa5dMFIg+mzG7zDVSRNT8=; b=U9N4DxGZoc3ByFG59G/r
-        AmZnxyXT8fpELts0k3PhV2M79Lt07fe7E1qakeyeJnppL2Q0lFEQYPuA9W+D7ip1
-        Xpk3umQv3mxsxwVy2NYiDizIvANjryl6djICTGL0MDwwBrmE/U/hC4jF6aOWR/Mo
-        3zIBGS5qlLuFOyyAtwnkLAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=N2cml/oiWz7JFkBVJcke8CH+vYwvAw06WS0q9kVjJbl+yR
-        AsOry4V2zwDlj0XE0loM8sVQn03iIcuh0krbUkW0g7IIcwuOV0iKXerp9zKfHjXS
-        0rJYXfrBDPwiV55hvp5tFjROGWZ8VXa4y6w1qStE867PGWo7hmi77p0XtZGhg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5313A91A2;
-        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 536EFA91A1;
-        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Neeraj Singh <nksingh85@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH] read-cache: make the index write buffer size 128K
-References: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
-        <f52df30b-4ab0-fd6f-17f8-70daed81df39@jeffhostetler.com>
-        <xmqqv9ana05b.fsf@gitster.g>
-        <CANQDOdeEd=JjWL4gb5CWHL_HkvJMnFumW74ew4DXJahh4BKvfQ@mail.gmail.com>
-Date:   Sun, 21 Feb 2021 04:51:24 -0800
-Message-ID: <xmqqo8gd8tyr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229879AbhBUNYn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Feb 2021 08:24:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229588AbhBUNYm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Feb 2021 08:24:42 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8DE1C061574
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 05:24:01 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id h98so11381092wrh.11
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 05:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/1jTpePSU1qj5xOJXQFqX06rXNu7EEsBKvJskSdADnc=;
+        b=LBePNMX4X0mjWhb3h7ag8WoSJP0P5i+bTc/34CT27iy66yjLy4Lx3TnlY+t8GV+1S/
+         pJnuCTalixeQ6SUcg4r5FiAk8FPVTp48SHkX4+R6oijCDmaakd9byBNm6vlfD5H4hzaD
+         8g3tDRLMhkXpiimSe1T+onnzpaJwAyyp0tv5Xfgi6yeOsAf7ecIhI5B60vdyDKLOz/G6
+         Y5ROMo07qOVvSVMQE7FRfJa47bixHGzlt2GZODe0NIIjoS7JtQ9E2Vbhbzl3pGZ4D5zJ
+         G6ujDPINUX/jHeIdaH+ed9UOD3sPtb+beaYKMzRpgIrnnOFen8560Lg6Emwii2xMg1aY
+         HfGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/1jTpePSU1qj5xOJXQFqX06rXNu7EEsBKvJskSdADnc=;
+        b=JoAECzL3oOqusZCTjiq1fUK8zg3aHr+dmcV+T0dZ1fL8oBKbqtpxnt5vZ+KD4+6+m9
+         e365kxvACPbkpG2fsW+fgtoywTRrxJ4qneyGnLeHxwsfOZF4Hpz4rvC2vZt4+15muDxA
+         XEmYQC5QYlRcgfXJ9R67XvFvWl/aIuUoVFRL/uUZvTxgVys8Ache+xgiX8FxD33FHOVl
+         kvNfJr9thjTGVNsUBr2joQ34e55+AZbp41Rd1HmPMwFc+cK/gUAS5gwl7TYCkOLgp+5N
+         lU3VCj6090ttxFnWwJqBpondDGjklyknU+sLOdQ7Gx7SRBC0bthBfeZtfwnHFviuccZq
+         UEYg==
+X-Gm-Message-State: AOAM531L7kPhTZhcxLzyGAEgj0hZuiD031eZtY6tQHSW9hizapGqa2xE
+        A8IexAzODeMuPEkusZFAPgbSMFWrxQQ=
+X-Google-Smtp-Source: ABdhPJzpx1oIPnRKI0sQXo4G+VAgz07ouutJhXaATHJtSjsBmR+46yfDdj4ZaMJNfNPnxQZCq7larA==
+X-Received: by 2002:a5d:4c49:: with SMTP id n9mr4370891wrt.168.1613913839249;
+        Sun, 21 Feb 2021 05:23:59 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z14sm24863379wrt.89.2021.02.21.05.23.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Feb 2021 05:23:58 -0800 (PST)
+Message-Id: <pull.872.v2.git.1613913838248.gitgitgadget@gmail.com>
+In-Reply-To: <pull.872.git.1612897624121.gitgitgadget@gmail.com>
+References: <pull.872.git.1612897624121.gitgitgadget@gmail.com>
+From:   "Christian Walther via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 21 Feb 2021 13:23:57 +0000
+Subject: [PATCH v2] doc: mention bigFileThreshold for packing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 81C294D2-7443-11EB-8365-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Christian Walther <cwalther@gmx.ch>,
+        Christian Walther <cwalther@gmx.ch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Neeraj Singh <nksingh85@gmail.com> writes:
+From: Christian Walther <cwalther@gmx.ch>
 
->> >>   -#define WRITE_BUFFER_SIZE 8192
->> >> +#define WRITE_BUFFER_SIZE (128 * 1024)
->> >>   static unsigned char write_buffer[WRITE_BUFFER_SIZE];
->> >>   static unsigned long write_buffer_len;
->> >
->> > [...]
->> >
->> > Very nice.
->>
->> I wonder if we gain more by going say 4M buffer size or even larger?
->>
->> Is this something we can make the system auto-tune itself?  This is
->> not about reading but writing, so we already have enough information
->> to estimate how much we would need to write out.
->>
->> Thanks.
->>
->
-> Hi Junio,
-> At some point the cost of the memcpy into the filesystem cache begins to
-> dominate the cost of the system call, so increasing the buffer size
-> has diminishing returns.
+Knowing about the core.bigFileThreshold configuration variable is
+helpful when examining pack file size differences between repositories.
+Add a reference to it to the manpages a user is likely to read in this
+situation.
 
-Yes, I know that kind of "general principle".  
+Capitalize CONFIGURATION for consistency with other pages having such a
+section.
 
-If I recall correctly, we used to pass too large a buffer to a
-single write(2) system call (I do not know if it was for the
-index---I suspect it was for some other data), and found out that it
-made response to ^C take too long, and tuned the buffer size down.
+Signed-off-by: Christian Walther <cwalther@gmx.ch>
+---
+    doc: mention bigFileThreshold for packing
+    
+    I recently spent a lot of time trying to figure out why git repack would
+    create huge packs on some clones of my repository and small ones on
+    others, until I found out about the existence of the
+    core.bigFileThreshold configuration variable, which happened to be set
+    on some and not on others. It would have saved me a lot of time if that
+    variable had been mentioned in the relevant manpages that I was reading,
+    git-repack and git-pack-objects. So this patch adds that.
+    
+    Changes in v2:
+    
+     * Move additions to the CONFIGURATION section at the bottom.
+     * Reword a little after realizing that there are more configuration
+       variables affecting packing.
+     * Capitalize CONFIGURATION for consistency with other pages having such
+       a section.
 
-I was asking where the sweet spot for this codepath would be, and if
-we can take a measurement to make a better decision than "8k feels
-too small and 128k turns out to be better than 8k".  It does not
-tell us if 128k would always do better than 64k or 256k, for
-example.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-872%2Fcwalther%2Fdeltadoc-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-872/cwalther/deltadoc-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/872
 
-I suspect that the sweet spot would be dependent on many parameters
-(not just the operating system, but also relative speed among
-memory, "disk", and cpu, and also the size of the index) and if we
-can devise a way to auto-tune it so that we do not have to worry
-about it.
+Range-diff vs v1:
 
-Thanks.
+ 1:  20b9a56d94b7 < -:  ------------ doc: mention bigFileThreshold for packing
+ -:  ------------ > 1:  027d1038fbb1 doc: mention bigFileThreshold for packing
+
+
+ Documentation/git-pack-objects.txt | 11 +++++++++++
+ Documentation/git-repack.txt       |  9 ++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 54d715ead137..f85cb7ea934c 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -400,6 +400,17 @@ Note that we pick a single island for each regex to go into, using "last
+ one wins" ordering (which allows repo-specific config to take precedence
+ over user-wide config, and so forth).
+ 
++
++CONFIGURATION
++-------------
++
++Various configuration variables affect packing, see
++linkgit:git-config[1] (search for "pack" and "delta").
++
++Notably, delta compression is not used on objects larger than the
++`core.bigFileThreshold` configuration variable and on files with the
++attribute `delta` set to false.
++
+ SEE ALSO
+ --------
+ linkgit:git-rev-list[1]
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 92f146d27dc3..fbd4b4ae0677 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -165,9 +165,12 @@ depth is 4095.
+ 	Pass the `--delta-islands` option to `git-pack-objects`, see
+ 	linkgit:git-pack-objects[1].
+ 
+-Configuration
++CONFIGURATION
+ -------------
+ 
++Various configuration variables affect packing, see
++linkgit:git-config[1] (search for "pack" and "delta").
++
+ By default, the command passes `--delta-base-offset` option to
+ 'git pack-objects'; this typically results in slightly smaller packs,
+ but the generated packs are incompatible with versions of Git older than
+@@ -178,6 +181,10 @@ need to set the configuration variable `repack.UseDeltaBaseOffset` to
+ is unaffected by this option as the conversion is performed on the fly
+ as needed in that case.
+ 
++Delta compression is not used on objects larger than the
++`core.bigFileThreshold` configuration variable and on files with the
++attribute `delta` set to false.
++
+ SEE ALSO
+ --------
+ linkgit:git-pack-objects[1]
+
+base-commit: 2283e0e9af55689215afa39c03beb2315ce18e83
+-- 
+gitgitgadget
