@@ -2,118 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA20C433E0
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 10:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B0CC433E0
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 12:52:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2191764EDE
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 10:13:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1094764F04
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 12:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbhBUKNN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Feb 2021 05:13:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhBUKNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Feb 2021 05:13:12 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA4FAC061574
-        for <git@vger.kernel.org>; Sun, 21 Feb 2021 02:12:31 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id m1so11696250wml.2
-        for <git@vger.kernel.org>; Sun, 21 Feb 2021 02:12:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=zPzW/8vDMH3+mbsC9sZkNaXdcFFOc371tRtqqauuZ04=;
-        b=s4ANZxy4Nf7ScwX5ARcXU2K/SeUuJFs0JUMt9e/D32tKrEOTTPX1EJlXuSz76IC0fI
-         36zrd3e4SV5vnlsGFtM41TO6WCiilQdu/JlydWac6l19OjCdJQ4U1P1Q6LnbvzAcHq8w
-         VRJXoEFdlC7QcaH7++RqRPpxafL7TuDHzAzoKj4jAGzmioFD8uQkYKTxHUyzZPKJsm9g
-         aBn01Wt0a8aTTFb5pNn0Cd5w63G0m9NdPKkHJHTVwsyM6lro467MNug0IlQipvKpaf2n
-         6EDnctIVlRz13DA/Bm8YWlt+f4es+t8wxN+3R82KJPtoXsj10QJi0HUTiXBkcnJ7y8t6
-         DBQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zPzW/8vDMH3+mbsC9sZkNaXdcFFOc371tRtqqauuZ04=;
-        b=mJFq1MO+RslscFUgGCf6Y68QiJFkLgALA9fuqkQTrHdGtTGa3kuAmSNoFn3NrFkouG
-         VdedC4IiHngjz8pqPTPhueA0d2HFBqUyiHEdBPb5muk7mz/gacGVB7g+AMSKmtftRBJc
-         V5imJ3U6pmGDV/x1L2+SIDTxK4ZNx/FfN9Fnr6l/s9DCjoBvQM72vUwUEhmGK0CZf4Yq
-         ubbix3NkfWeHkzJGYx2IsRDTijCGujlvJuLorWZH6w6EW/upIKsklQ5KxMhWnyveWr5W
-         UjKGcL3sTaQzYTRjNvQXiKcIl2Wlnq2DUj9guqE4lhCSn8M9+SlH6/FxpLTqFbIWL+YQ
-         bYhQ==
-X-Gm-Message-State: AOAM532uRbnvfM5y1fCgFuKwBZxGEOJ1qUVqOaPlf9FcXxjIcWerAG+n
-        0ojsEtC2e2hoYEZEdkrvcq3s9ONcdnzkA6H5WFLCZq3f8g==
-X-Google-Smtp-Source: ABdhPJyhGKs9Vfi06s0/jYpwpoIcF5T0+QdyJag5+NXRlDp0j+Fc2oso3Y3ODeXtxSzl0taK420iKB4WW3jHMp0aGb0=
-X-Received: by 2002:a1c:23d6:: with SMTP id j205mr10287282wmj.95.1613902350130;
- Sun, 21 Feb 2021 02:12:30 -0800 (PST)
+        id S229844AbhBUMwJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Feb 2021 07:52:09 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64865 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229588AbhBUMwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Feb 2021 07:52:08 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC6C0A91A3;
+        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=PwdM9WHa5dMFIg+mzG7zDVSRNT8=; b=U9N4DxGZoc3ByFG59G/r
+        AmZnxyXT8fpELts0k3PhV2M79Lt07fe7E1qakeyeJnppL2Q0lFEQYPuA9W+D7ip1
+        Xpk3umQv3mxsxwVy2NYiDizIvANjryl6djICTGL0MDwwBrmE/U/hC4jF6aOWR/Mo
+        3zIBGS5qlLuFOyyAtwnkLAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=N2cml/oiWz7JFkBVJcke8CH+vYwvAw06WS0q9kVjJbl+yR
+        AsOry4V2zwDlj0XE0loM8sVQn03iIcuh0krbUkW0g7IIcwuOV0iKXerp9zKfHjXS
+        0rJYXfrBDPwiV55hvp5tFjROGWZ8VXa4y6w1qStE867PGWo7hmi77p0XtZGhg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C5313A91A2;
+        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 536EFA91A1;
+        Sun, 21 Feb 2021 07:51:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH] read-cache: make the index write buffer size 128K
+References: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
+        <f52df30b-4ab0-fd6f-17f8-70daed81df39@jeffhostetler.com>
+        <xmqqv9ana05b.fsf@gitster.g>
+        <CANQDOdeEd=JjWL4gb5CWHL_HkvJMnFumW74ew4DXJahh4BKvfQ@mail.gmail.com>
+Date:   Sun, 21 Feb 2021 04:51:24 -0800
+Message-ID: <xmqqo8gd8tyr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-From:   Stef Bon <stefbon@gmail.com>
-Date:   Sun, 21 Feb 2021 11:12:19 +0100
-Message-ID: <CANXojcx0TOP9SSr1NgXCddQ3PWze-wBLZA5SRO3YhczqO68u0Q@mail.gmail.com>
-Subject: FUSE fs for git.
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 81C294D2-7443-11EB-8365-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Neeraj Singh <nksingh85@gmail.com> writes:
 
-I'm working on a network fs mount service for Linux (I call it Open
-Secure Network Services, short OSNS) which mounts sftp access on hosts
-found in the network (using Avahi) and provides a browseable map to
-the user like:
+>> >>   -#define WRITE_BUFFER_SIZE 8192
+>> >> +#define WRITE_BUFFER_SIZE (128 * 1024)
+>> >>   static unsigned char write_buffer[WRITE_BUFFER_SIZE];
+>> >>   static unsigned long write_buffer_len;
+>> >
+>> > [...]
+>> >
+>> > Very nice.
+>>
+>> I wonder if we gain more by going say 4M buffer size or even larger?
+>>
+>> Is this something we can make the system auto-tune itself?  This is
+>> not about reading but writing, so we already have enough information
+>> to estimate how much we would need to write out.
+>>
+>> Thanks.
+>>
+>
+> Hi Junio,
+> At some point the cost of the memcpy into the filesystem cache begins to
+> dominate the cost of the system call, so increasing the buffer size
+> has diminishing returns.
 
-sbon@ws-001 OSNS]$ ls -al /run/network/sbon/fs/Open\ Secure\
-Network/bononline.nl/alarm/public
-total 3
-drwxrwx--- 5 nobody users 4096 Feb 21 05:05  .
-drwxr-xr-x 5 root   root  4096 Feb 21 05:04  ..
--rw-r--r-- 1 sbon   users    0 Aug 15  2018  1234
-drwxr-xr-x 2 nobody users 4096 Jan 24 04:52  backup
--rw-r--r-- 1 nobody users   21 Feb 21  2017  .bash_logout
--rw-r--r-- 1 nobody users   57 Feb 21  2017  .bash_profile
--rw-r--r-- 1 nobody users  141 Feb 21  2017  .bashrc
-drwxr-xr-x 2 nobody users 4096 May 27  2017  Projects
--rw-r--r-- 1 nobody users    4 Jul  1  2017  test
--rw-r--r-- 1 sbon   users   24 Aug  6  2017  test1
--rw-r--r-- 1 sbon   users    4 Aug 10  2017  test2
--rw------- 1 sbon   users    0 Aug 15  2018 'Text File'
--rw------- 1 sbon   users    0 Aug 15  2018 'Text File (1)'
--rw------- 1 sbon   users    0 Aug 15  2018 'Text File (2)'
+Yes, I know that kind of "general principle".  
 
-See: https://github.com/stefbon/OSNS
+If I recall correctly, we used to pass too large a buffer to a
+single write(2) system call (I do not know if it was for the
+index---I suspect it was for some other data), and found out that it
+made response to ^C take too long, and tuned the buffer size down.
 
-It supports SFTP (over SSH) versions 3 (used by Openssh) to 6 (latest draft).
-Other things I want to add is:
-- own sftp client (osns_sftp_subsystem)
-- backup on server of user defined directories and files (osns_backup_subsystem)
-- next to SFTP also support SMB using libsmb2 by R. Sahlberg for
-integration in Windows Networks
-- fsnotify support in SFTP and in userland using a specific user agent
-like osns_client_user (maybe also in SMB) (support in SFTP means an
-extension)
-- textchat and/or videochat (osns_chat_subsystem)
-- forward connection to server over SSH using a simple api to talk to
-osns_client for databases, and something like nx (emulation of
-desktop)
-- an own server osns_server
-- support for use in large environments and roaming users (-> CA, ldap etc)
+I was asking where the sweet spot for this codepath would be, and if
+we can take a measurement to make a better decision than "8k feels
+too small and 128k turns out to be better than 8k".  It does not
+tell us if 128k would always do better than 64k or 256k, for
+example.
 
-Now I'm looking it's possible and usefull to add a git fuse fs. The
-thing I ask is:
+I suspect that the sweet spot would be dependent on many parameters
+(not just the operating system, but also relative speed among
+memory, "disk", and cpu, and also the size of the index) and if we
+can devise a way to auto-tune it so that we do not have to worry
+about it.
 
-- is there an api I can use (lowlevel and/or highlevel or whatever is
-available)?
-
-- is it usefull, in other words is there a serious benefit of a git
-filesystem: does it add something?
-
-Any other suggestion is appreciated,
-
-Stef Bon
-the Netherlands
+Thanks.
