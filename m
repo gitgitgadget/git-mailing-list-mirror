@@ -2,173 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF2AC433DB
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 13:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C116C433E0
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 19:26:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3324960295
-	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 13:24:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7E5C64DD3
+	for <git@archiver.kernel.org>; Sun, 21 Feb 2021 19:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229879AbhBUNYn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Feb 2021 08:24:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48752 "EHLO
+        id S231258AbhBUT0G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 21 Feb 2021 14:26:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhBUNYm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Feb 2021 08:24:42 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8DE1C061574
-        for <git@vger.kernel.org>; Sun, 21 Feb 2021 05:24:01 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id h98so11381092wrh.11
-        for <git@vger.kernel.org>; Sun, 21 Feb 2021 05:24:01 -0800 (PST)
+        with ESMTP id S230088AbhBUT0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Feb 2021 14:26:04 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 982E1C061786
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 11:25:23 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id v22so19189151edx.13
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 11:25:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/1jTpePSU1qj5xOJXQFqX06rXNu7EEsBKvJskSdADnc=;
-        b=LBePNMX4X0mjWhb3h7ag8WoSJP0P5i+bTc/34CT27iy66yjLy4Lx3TnlY+t8GV+1S/
-         pJnuCTalixeQ6SUcg4r5FiAk8FPVTp48SHkX4+R6oijCDmaakd9byBNm6vlfD5H4hzaD
-         8g3tDRLMhkXpiimSe1T+onnzpaJwAyyp0tv5Xfgi6yeOsAf7ecIhI5B60vdyDKLOz/G6
-         Y5ROMo07qOVvSVMQE7FRfJa47bixHGzlt2GZODe0NIIjoS7JtQ9E2Vbhbzl3pGZ4D5zJ
-         G6ujDPINUX/jHeIdaH+ed9UOD3sPtb+beaYKMzRpgIrnnOFen8560Lg6Emwii2xMg1aY
-         HfGg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3y5v+yKRLwcDj8tWztSFDeD42xQOR51di7LkQYl2NRc=;
+        b=coiaVY0q2bU7V1nz/n6Dn2lq5oAu9ZMrM0f9xcINqdJTifMix/LPFJqKWlB/bF/tqi
+         SMvY+D1bw0k+NJcc9+WygXQgvzPOSTGjJzp1+oFo9n3LEXdhFYIA/PcqBf4EFVu6ZZYu
+         +ICkFAbnYJ06kBt/rGRg9MfNjRYgiP+gVe4jWL16lpru6CeE2mC3etN3gVeb/y3IQ7sF
+         j7l2CitNIMWmaWstcDKLDQ0suOsy+MHVOSK/6y4Voj7EHSA4/e520I5sTrFUrPVgIYYl
+         v3L87tiFn7gnpVrb7VvYX4kotV1+rfjevMk2nuru4j0LkOjnuWw1OUak1sULVlwBPrVX
+         tvSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/1jTpePSU1qj5xOJXQFqX06rXNu7EEsBKvJskSdADnc=;
-        b=JoAECzL3oOqusZCTjiq1fUK8zg3aHr+dmcV+T0dZ1fL8oBKbqtpxnt5vZ+KD4+6+m9
-         e365kxvACPbkpG2fsW+fgtoywTRrxJ4qneyGnLeHxwsfOZF4Hpz4rvC2vZt4+15muDxA
-         XEmYQC5QYlRcgfXJ9R67XvFvWl/aIuUoVFRL/uUZvTxgVys8Ache+xgiX8FxD33FHOVl
-         kvNfJr9thjTGVNsUBr2joQ34e55+AZbp41Rd1HmPMwFc+cK/gUAS5gwl7TYCkOLgp+5N
-         lU3VCj6090ttxFnWwJqBpondDGjklyknU+sLOdQ7Gx7SRBC0bthBfeZtfwnHFviuccZq
-         UEYg==
-X-Gm-Message-State: AOAM531L7kPhTZhcxLzyGAEgj0hZuiD031eZtY6tQHSW9hizapGqa2xE
-        A8IexAzODeMuPEkusZFAPgbSMFWrxQQ=
-X-Google-Smtp-Source: ABdhPJzpx1oIPnRKI0sQXo4G+VAgz07ouutJhXaATHJtSjsBmR+46yfDdj4ZaMJNfNPnxQZCq7larA==
-X-Received: by 2002:a5d:4c49:: with SMTP id n9mr4370891wrt.168.1613913839249;
-        Sun, 21 Feb 2021 05:23:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z14sm24863379wrt.89.2021.02.21.05.23.58
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3y5v+yKRLwcDj8tWztSFDeD42xQOR51di7LkQYl2NRc=;
+        b=Ht5a+WVU3zS+oI09WjMZjAXLZqgVJyiYNCzuAQS7KdXFZJlNOn+A44bYWE/7A0p3RX
+         t6JwjAQHZdDLXjflS9hPG9m0Cm1ae8V/dpW4jNL6MsfhXax0tOdGdJ1Yhh7BYmggje3S
+         Arpu5XTUilmgX2svP3skntdJfBAZMdGb32IDzXi9+4/ZyNWa/Vmf4gK5n8C60EhY2YHo
+         QOZ4G9q/7XYN+rbeHuxRJmUiQ+lYhpZOVdBzHsI1c5atjc4NwO6wkI+IIdHqbB45M9qV
+         kJBBN0HO63ps2k4DHmaD6VbT/4+oxTKzg1b7UAiMaPLebKnDZqBZxuTyQAtV0iTEpUCx
+         nacQ==
+X-Gm-Message-State: AOAM531PSxmTGNyBkhlEHCnV1wsB/6WOCQRIqdbyT18V4zHU1dkhL9cG
+        lNFzQMCOLpu3OmmeEajD3OHWu8bwPjY=
+X-Google-Smtp-Source: ABdhPJzTM15oU4NE4yDkw9FJU0pfD1AO9IylE4chMAyMSD2aklu3NIh2HtoZhVY7HQCborQYZcE9qQ==
+X-Received: by 2002:a05:6402:22a8:: with SMTP id cx8mr19939403edb.376.1613935522402;
+        Sun, 21 Feb 2021 11:25:22 -0800 (PST)
+Received: from localhost.localdomain (94-21-146-126.pool.digikabel.hu. [94.21.146.126])
+        by smtp.gmail.com with ESMTPSA id hd9sm7982026ejc.30.2021.02.21.11.25.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Feb 2021 05:23:58 -0800 (PST)
-Message-Id: <pull.872.v2.git.1613913838248.gitgitgadget@gmail.com>
-In-Reply-To: <pull.872.git.1612897624121.gitgitgadget@gmail.com>
-References: <pull.872.git.1612897624121.gitgitgadget@gmail.com>
-From:   "Christian Walther via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 21 Feb 2021 13:23:57 +0000
-Subject: [PATCH v2] doc: mention bigFileThreshold for packing
-Fcc:    Sent
+        Sun, 21 Feb 2021 11:25:22 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Denton Liu <liu.denton@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 2/2] test-lib-functions: use BUG() in 'test_must_fail'
+Date:   Sun, 21 Feb 2021 20:25:12 +0100
+Message-Id: <20210221192512.3096291-2-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.30.1.940.gce394404de
+In-Reply-To: <20210221192512.3096291-1-szeder.dev@gmail.com>
+References: <20210221192512.3096291-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Walther <cwalther@gmx.ch>,
-        Christian Walther <cwalther@gmx.ch>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Walther <cwalther@gmx.ch>
+In many test helper functions we verify that they were invoked with
+sensible parameters, and call BUG() to abort the test script when the
+parameters are buggy.  6a67c75948 (test-lib-functions: restrict
+test_must_fail usage, 2020-07-07) added such a parameter verification
+to 'test_must_fail', but it didn't report the error with BUG(), like
+we usually do.
 
-Knowing about the core.bigFileThreshold configuration variable is
-helpful when examining pack file size differences between repositories.
-Add a reference to it to the manpages a user is likely to read in this
-situation.
+As discussed in detail in the previous patch, BUG() didn't really work
+in 'test_must_fail' back then, but it resolved those issues, so let's
+use BUG() in this case as well.
 
-Capitalize CONFIGURATION for consistency with other pages having such a
-section.
+The two tests checking that 'test_must_fail' recognizes invalid
+parameters need some updates:
 
-Signed-off-by: Christian Walther <cwalther@gmx.ch>
+  - BUG() calls 'exit 1' to abort the test script, but we don't want
+    that to happen while testing 'test_must_fail' itself, so in those
+    tests we must invoke that function in a subshell.
+  - These tests check that 'test_must_fail' failed with the
+    appropriate error message, but BUG() sends its error message to a
+    different file descriptor, so update the redirection accordingly.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
-    doc: mention bigFileThreshold for packing
-    
-    I recently spent a lot of time trying to figure out why git repack would
-    create huge packs on some clones of my repository and small ones on
-    others, until I found out about the existence of the
-    core.bigFileThreshold configuration variable, which happened to be set
-    on some and not on others. It would have saved me a lot of time if that
-    variable had been mentioned in the relevant manpages that I was reading,
-    git-repack and git-pack-objects. So this patch adds that.
-    
-    Changes in v2:
-    
-     * Move additions to the CONFIGURATION section at the bottom.
-     * Reword a little after realizing that there are more configuration
-       variables affecting packing.
-     * Capitalize CONFIGURATION for consistency with other pages having such
-       a section.
+ t/t0000-basic.sh        | 4 ++--
+ t/test-lib-functions.sh | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-872%2Fcwalther%2Fdeltadoc-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-872/cwalther/deltadoc-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/872
-
-Range-diff vs v1:
-
- 1:  20b9a56d94b7 < -:  ------------ doc: mention bigFileThreshold for packing
- -:  ------------ > 1:  027d1038fbb1 doc: mention bigFileThreshold for packing
-
-
- Documentation/git-pack-objects.txt | 11 +++++++++++
- Documentation/git-repack.txt       |  9 ++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index 54d715ead137..f85cb7ea934c 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -400,6 +400,17 @@ Note that we pick a single island for each regex to go into, using "last
- one wins" ordering (which allows repo-specific config to take precedence
- over user-wide config, and so forth).
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index a6e570d674..b9d5c6c404 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -1315,12 +1315,12 @@ test_expect_success 'test_must_fail on a failing git command with env' '
+ '
  
-+
-+CONFIGURATION
-+-------------
-+
-+Various configuration variables affect packing, see
-+linkgit:git-config[1] (search for "pack" and "delta").
-+
-+Notably, delta compression is not used on objects larger than the
-+`core.bigFileThreshold` configuration variable and on files with the
-+attribute `delta` set to false.
-+
- SEE ALSO
- --------
- linkgit:git-rev-list[1]
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index 92f146d27dc3..fbd4b4ae0677 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -165,9 +165,12 @@ depth is 4095.
- 	Pass the `--delta-islands` option to `git-pack-objects`, see
- 	linkgit:git-pack-objects[1].
+ test_expect_success 'test_must_fail rejects a non-git command' '
+-	! test_must_fail grep ^$ notafile 2>err &&
++	! ( test_must_fail grep ^$ notafile ) 7>err &&
+ 	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
+ '
  
--Configuration
-+CONFIGURATION
- -------------
+ test_expect_success 'test_must_fail rejects a non-git command with env' '
+-	! test_must_fail env var1=a var2=b grep ^$ notafile 2>err &&
++	! ( test_must_fail env var1=a var2=b grep ^$ notafile ) 7>err &&
+ 	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
+ '
  
-+Various configuration variables affect packing, see
-+linkgit:git-config[1] (search for "pack" and "delta").
-+
- By default, the command passes `--delta-base-offset` option to
- 'git pack-objects'; this typically results in slightly smaller packs,
- but the generated packs are incompatible with versions of Git older than
-@@ -178,6 +181,10 @@ need to set the configuration variable `repack.UseDeltaBaseOffset` to
- is unaffected by this option as the conversion is performed on the fly
- as needed in that case.
- 
-+Delta compression is not used on objects larger than the
-+`core.bigFileThreshold` configuration variable and on files with the
-+attribute `delta` set to false.
-+
- SEE ALSO
- --------
- linkgit:git-pack-objects[1]
-
-base-commit: 2283e0e9af55689215afa39c03beb2315ce18e83
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index a40c1c5d83..cdbc59e4f0 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -910,8 +910,7 @@ test_must_fail () {
+ 	esac
+ 	if ! test_must_fail_acceptable "$@"
+ 	then
+-		echo >&6 "test_must_fail: only 'git' is allowed: $*"
+-		return 1
++		BUG "test_must_fail: only 'git' is allowed: $*"
+ 	fi
+ 	"$@" 2>&6
+ 	exit_code=$?
 -- 
-gitgitgadget
+2.30.1.940.gce394404de
+
