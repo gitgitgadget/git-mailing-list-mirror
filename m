@@ -7,87 +7,88 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F174C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A2BC433E0
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:32:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 418B264E3F
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:26:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC7F364DFD
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:32:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230423AbhBVX0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 18:26:05 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64512 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230062AbhBVX0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 18:26:05 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D05F6B5DDF;
-        Mon, 22 Feb 2021 18:25:22 -0500 (EST)
+        id S231414AbhBVXcp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 18:32:45 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54322 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230057AbhBVXck (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 18:32:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F76D120DCA;
+        Mon, 22 Feb 2021 18:31:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Zri9MQ22S8RQ4Wrw/BWO8PIxfHI=; b=e1jXwL
-        +R3vktLIMI7DOIKFnMbRhicsfco/f3yy7vleikQTZJYRuRvUJZgS2EmLdvniwS/r
-        IsY7bhtgnXkcOS69X2z52WG1Qeubk3lNeUi/oP2OAS2josGpIqGDyi8GP60QYx4z
-        TXHHIiKuk8NHQKwkUpGvA5qROyoZ6mdkUzxSA=
+        :content-type; s=sasl; bh=DlBw30jTAzz25qdQrsoj1x89rkk=; b=eBusLx
+        ER1a8ec/m5r1DsXtmvTpZlZoODh2iG55CLVtl1l6INQgTZM0l1B4TNCyvYnBpo4j
+        1YcExFKb8gd9v27giL6FqpjBMr7E03yAwSnK+1vVWlAmmuZFIu2U/q0qYxOdWa4a
+        D59D7DbytZu92EIy1M0ZhFYBpSNukhrCBiWJs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j9WtJQjRnNk74pYUadTh2N9e/A2uTxCc
-        2q2cVI6EQEw6JYksqBLnr+Ny+rlUwYpy2Yus2gEBu7909i+AmeQBzayyq2evmcUE
-        iqX/IZGGD0RFYwJYR5+NqndQ9RrVzaeWPy5NwdLJPiQPJdHV0cMA7mK4Q53u9o19
-        gWs2glwUQac=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C73D3B5DDE;
-        Mon, 22 Feb 2021 18:25:22 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=iP5ceIwF/O/h+5OQkhqpBWYFhvRQXKF1
+        R3kFjvX0VNQxACKL8eiT6nhH1eC2v9S5ygyJ15nkpt8S2h/nVFSE2ptMdYrmFS7s
+        apCvXKQbiZ1q5SUNi21kxRblgL4UegeYuo23/LPOpiNA0oLxUdN1PHeobeLUz+QG
+        jgrLj0Z20RU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48CCA120DC9;
+        Mon, 22 Feb 2021 18:31:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 48728B5DDD;
-        Mon, 22 Feb 2021 18:25:22 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95AD2120DC8;
+        Mon, 22 Feb 2021 18:31:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Wang Yugui <wangyugui@e16-tech.com>, git@vger.kernel.org
-Subject: Re: git format-patch lost the last part when branch merge
+Subject: Re: [PATCH] docs/format-patch: mention handling of merges
 References: <20210222211621.0C5D.409509F4@e16-tech.com>
         <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
-Date:   Mon, 22 Feb 2021 15:25:21 -0800
-In-Reply-To: <YDQ27qbbblPfLCpU@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 22 Feb 2021 17:57:50 -0500")
-Message-ID: <xmqqzgzv65y6.fsf@gitster.g>
+        <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net>
+Date:   Mon, 22 Feb 2021 15:31:53 -0800
+In-Reply-To: <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 22 Feb 2021 18:08:16 -0500")
+Message-ID: <xmqqv9aj65na.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3BF78980-7565-11EB-8D5E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 266610FE-7566-11EB-92D1-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> This is expected. Format-patch omits merge commits entirely, as they
-> can't be formatted as a simple diff that can be applied.
+> Subject: [PATCH] docs/format-patch: mention handling of merges
 >
-> There are lots of ways to look at the diff of a merge. By default, `git
-> show` will show a combined diff, which omits hunks where one side was
-> taken verbatim, but otherwise shows what each side did.
->
-> The diff shown in the link above is a diff against the first-parent
-> (which you can also get locally with `git show --first-parent 582cd91`).
-> One _could_ apply that diff onto the first parent to achieve the same
-> tree as the merge plus all of the commits that got merged in. But it
-> wouldn't make any sense to apply that (aside from conflict resolution,
-> it would be redundant with all of the commits that format-patch just
-> output!).
+> Format-patch doesn't have a way to format merges in a way that can be
+> applied by git-am (or any other tool), and so it just omits them.
+> However, this may be a surprising implication for users who are not well
+> versed in how the tool works. Let's add a note to the documentation
+> making this more clear.
+> ...
+> +CAVEATS
+> +-------
+> +
+> +Note that `format-patch` cannot represent commits with more than one
+> +parent (i.e., merges) and will silently omit them entirely from its
+> +output, even if they are part of the requested range.
 
-Yes, a first-parent diff is something you could call "a simple diff
-that can be applied to represent a merge", and it is consistent with
-the expectations of those who are used to do a squash (pseudo-)merge.
 
-I agree with you that it does not make sense to apply such a patch
-as a patch, of course.  In addition to be redundant, it would be an
-equivalent of doing a squash (psuedo-)merge, and loses the "up to
-this point the side branch has been merged, so future merges won't
-have to look beyond this point in the past" (sort of going back to
-the prehistoric subversion days that did not keep track of which
-changes have been merged).
+I think "cannot represent" is a little bit misleading, unless we
+expect the readers already know what we are trying to say (in which
+case there is no point in documenting this).  Perhaps something like
+this might clarify a bit, though.
+
+    Note that `format-patch` omits merge commits from the output,
+    because it is impossible to turn a merge commit into a simple
+    "patch" in such a way that allows receiving end to reproduce the
+    same merge commit.
+
