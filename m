@@ -2,111 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BD83C433E6
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2BFCC433E0
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:32:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F22C464E25
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:29:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A0F2464E25
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230297AbhBVT3E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 14:29:04 -0500
-Received: from mx.kolabnow.com ([95.128.36.40]:29136 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233204AbhBVT03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 14:26:29 -0500
-X-Greylist: delayed 597 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Feb 2021 14:26:27 EST
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTP id CF656403FC;
-        Mon, 22 Feb 2021 20:14:26 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:content-language:content-type
-        :content-type:in-reply-to:mime-version:date:date:message-id:from
-        :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1614021265; x=1615835666; bh=sSSVXOhHv3oDrRfxyoh
-        w+sOU60r7NJPvbfxa8ke0Z1M=; b=VHeHuSQZjr3DvKwiolIoPWGoVDO6GWazpKB
-        ckrDf0c3kKuhENxNrIVbIyVOwaP74pdGhrQhYTpic0vCJ3B42Fvyc4oIfCtW5LSO
-        IdBOkp325eqyJLwsxXowQHY9C7OKUA0m/RAVPslZHqVdFmZOwrnGTsWnZxNcQ6ng
-        F7XHlP5rPeId4Ta4SIUVvL7waDQjt5spnubCQdsSXA8HvbZTLggvYhDwKjBQ+0hx
-        LwwmCiEyuAcux1GFWhQN5jjulJYrMmpFcx/ExoqdxAM7CksFKF87qOJ7R13lLvfd
-        6I7GGXHFvte+yGXvgBvEjaL3XxMhsR1ch7GlrkYu/96t+nC1pphLUXWbiMY91a9a
-        /kEtzQNdfxkJ4UCmZCMFLSsa7fsQvvSidrK7FCD4X5bx5ca492JFcQUw+m1fYuq6
-        Yn433s2V3lqYHUUMaTQeBtJZ8J2bK0l/njV11Ytk26BOCCxBxj4w0oO5FPOkZnO5
-        4fB/vHYbyj1qeav0ln1tO4q2HOFrr5Oh0HB7ZHUF5l857eL1fDGILX1QYbBLT9Ff
-        CgngvY/kdG6DXNM+LGV9jncyL07pc/kn/ypbJlfYvipLzHA5+V7UeuGIvnsaKfAb
-        RPqx5NkTUytjwSPgXQP4RsrL/53hFLyjkhP3Nc/eTw9ZuzVnc9x9JONdn1GnGPqv
-        SjXjoNIk=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out003.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id vQLrQ6-Tg6eq; Mon, 22 Feb 2021 20:14:25 +0100 (CET)
-Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
-        by ext-mx-out003.mykolab.com (Postfix) with ESMTPS id BA12C40475;
-        Mon, 22 Feb 2021 20:14:24 +0100 (CET)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx001.mykolab.com (Postfix) with ESMTPS id B1328166A;
-        Mon, 22 Feb 2021 20:14:18 +0100 (CET)
-Subject: Re: [PATCH] commit-graph: avoid leaking topo_levels slab in
- write_commit_graph()
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Andrzej Hunt <ajrhunt@google.com>
-References: <pull.881.git.1613765590412.gitgitgadget@gmail.com>
- <xmqqa6rz9zrx.fsf@gitster.g> <6ef5487b-905d-8f34-a53c-d1138f5528d9@gmail.com>
-From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <dfc713c2-c5f6-6c7f-230b-810da0e39ebf@ahunt.org>
-Date:   Mon, 22 Feb 2021 20:14:15 +0100
+        id S233311AbhBVTcM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 14:32:12 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52478 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233295AbhBVTae (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 14:30:34 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 151BD11F0EA;
+        Mon, 22 Feb 2021 14:29:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=agnorrQrygak2lAdQAdnIEHbfvw=; b=FGQya6
+        cMaL/xw0ZE+nHo8lA3g6BsazspTfz3SdKnoH6pcpay2p8CZ9oAc2UDhC0Ys/Dc3Z
+        1CIFloFeRsp8mYJ4odpKIB7F40Be1HLazWrpX0A5zh9lYMCiCvdRsWaDAUmu4tkk
+        WQoJTSNjBO9PP8YAOOk/m4NtPO70r/1YqR5dU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gXCgd99BJPKRtpfg3Prm7OzIY79aYpkM
+        V7k65AbdidMNF1D6dqVeg9Tg4P4kCrsph7FZZaf+5Skpu30WtqXl5c88DQy8l5Cl
+        cQeUcVHblN6kHDGEBbc8KFL18Epg6KIEzZpDoRRH4TknwdmcN/aRv3rCnDejGc4M
+        IDCchdbUToc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0CA2E11F0E9;
+        Mon, 22 Feb 2021 14:29:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BC88B11F0E7;
+        Mon, 22 Feb 2021 14:29:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shourya Shukla <periperidip@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        levraiphilippeblain@gmail.com,
+        Javier Mora <javier.moradesambricio@rtx.com>
+Subject: Re: [PATCH v2 1/1] rm: stage submodule removal from '.gitmodules'
+ when using '--cached'
+References: <20210218184931.83613-1-periperidip@gmail.com>
+        <20210222172623.69313-1-periperidip@gmail.com>
+        <20210222172623.69313-2-periperidip@gmail.com>
+Date:   Mon, 22 Feb 2021 11:29:46 -0800
+In-Reply-To: <20210222172623.69313-2-periperidip@gmail.com> (Shourya Shukla's
+        message of "Mon, 22 Feb 2021 22:56:23 +0530")
+Message-ID: <xmqqo8gb7vf9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <6ef5487b-905d-8f34-a53c-d1138f5528d9@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5321D0FA-7544-11EB-ABF5-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/02/2021 15:15, Derrick Stolee wrote:
-> This change looks like a sane change to me. It definitely fixes a leak.
-> The leak "wasn't hurting anybody" because write_commit_graph() is only
-> called at most once per process, and the process closes itself out
-> shortly after. Still, it's good to have good memory hygiene here.
+Shourya Shukla <periperidip@gmail.com> writes:
 
-Good to know - thank you! As I become more familiar with git, I'm 
-beginning to realise that most leaks are unlikely to be much importance 
-(even though I personally err on the side of fixing any and all issues).
+> +	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
+> +					      GITMODULES_FILE, sect.buf, NULL) < 0) {
 
+Also, is it really sufficient to pass GITMODULES_INDEX as the first
+argument to this function to tweak what is in the index?
 
-One thing I forgot to mention: in this specific case the leak was 
-causing a build failure when trying to build git's fuzzers within 
-oss-fuzz locally*. Specifically the following command would fail (see 
-also fuzz failure reproduction instructions which describe the setup [1]).
+git_config_copy_or_rename_section_in_file() which is the
+implementation of that helper seems to always want to work with a
+file that is on disk, by making unconditional calls to
+hold_lock_file_for_update(), fopen(), fstat(), chmod(), etc.
 
-  $ python infra/helper.py build_fuzzers --sanitizer address git
+So I suspect that there are much more work needed.  
 
-As far as I can tell the issue is that: a copy of git built with ASAN is 
-used to produce the fuzzing corpus as part of the git-specific build 
-script [2] - the leak warning causes the script to fail. (It's possible 
-to argue that the build script should disable ASAN's leak checking when 
-running git, via detect_leaks=0 to reduce the risk of such breakage - I 
-may try to suggest such a change to oss-fuzz.)
+It seems to me that the config editing API is one of the older and
+hackier parts of the system and requires quite a lot of work to
+teach it to work with anything but a on-disk file.  In the longer
+term, it may be a good thing to clean it up, but I suspect that it
+is way too much work for too little benefit to do so as a part of
+this topic, so an easier way out for now would be to:
 
-ATB,
-   Andrzej
+ - write out the .gitmodules in the index to a temporary file (learn
+   how to correctly call entry.c::checkout_entry() by studying how
+   builtin/checkout-index.c::checkout_file() calls it, especially to
+   a temporary file with the --temp option).
 
+ - use git_config_rename_section_in_file() on that temporary file to
+   remove the section about the submodule.
 
-* Given that oss-fuzz is building via docker, I would intuitively 
-suspect that the same issue occurs in automation - I'm not sure how to 
-verify this myself.
+ - read that temporary file back into memory and write it out as a
+   blob object by calling sha1-file.c::write_object_file().
 
-[1] 
-https://google.github.io/oss-fuzz/advanced-topics/reproducing/#building-using-docker
-[2] 
-https://github.com/google/oss-fuzz/blob/1b0115eefd70491376cf3cb6f88e49632c78ee18/projects/git/build.sh#L37
+ - add that back to the index as .gitmodules (studying how
+   builtin/update-index.c::add_cacheinfo() calls add_cache_entry()
+   would be a good way to learn how to do this).
+
+The working tree side can stay as is, but as I said in the earlier
+message, I think you need to update the .gitmodules in the working
+tree and .gitmodules in the index separately (and without doing any
+equivalent of "git add .gitmodules").
+
