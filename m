@@ -2,93 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-18.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32A2BC433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 510F3C433DB
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:39:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC7F364DFD
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:32:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15F9B64DA5
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:39:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231414AbhBVXcp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 18:32:45 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54322 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230057AbhBVXck (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 18:32:40 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F76D120DCA;
-        Mon, 22 Feb 2021 18:31:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DlBw30jTAzz25qdQrsoj1x89rkk=; b=eBusLx
-        ER1a8ec/m5r1DsXtmvTpZlZoODh2iG55CLVtl1l6INQgTZM0l1B4TNCyvYnBpo4j
-        1YcExFKb8gd9v27giL6FqpjBMr7E03yAwSnK+1vVWlAmmuZFIu2U/q0qYxOdWa4a
-        D59D7DbytZu92EIy1M0ZhFYBpSNukhrCBiWJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iP5ceIwF/O/h+5OQkhqpBWYFhvRQXKF1
-        R3kFjvX0VNQxACKL8eiT6nhH1eC2v9S5ygyJ15nkpt8S2h/nVFSE2ptMdYrmFS7s
-        apCvXKQbiZ1q5SUNi21kxRblgL4UegeYuo23/LPOpiNA0oLxUdN1PHeobeLUz+QG
-        jgrLj0Z20RU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 48CCA120DC9;
-        Mon, 22 Feb 2021 18:31:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 95AD2120DC8;
-        Mon, 22 Feb 2021 18:31:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Wang Yugui <wangyugui@e16-tech.com>, git@vger.kernel.org
-Subject: Re: [PATCH] docs/format-patch: mention handling of merges
-References: <20210222211621.0C5D.409509F4@e16-tech.com>
-        <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
-        <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net>
-Date:   Mon, 22 Feb 2021 15:31:53 -0800
-In-Reply-To: <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 22 Feb 2021 18:08:16 -0500")
-Message-ID: <xmqqv9aj65na.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230288AbhBVXjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 18:39:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229996AbhBVXjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 18:39:08 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C90C061574
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 15:38:28 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id b15so635491pjb.0
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 15:38:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BOUYXphyAq3eJHIv8q1yW7gsnR514AlgRaFNvic2ZWg=;
+        b=EkwwSKt19rCv8XS3x+DARUl+K1/4kopG+hupcS05cqQIa0Pttm1fWyiNYIdnRjv+Yr
+         lkCcNFMYmr++Xj5nYKv9A8ZdsH2itfyO0VAJPi1a84HattN80Y10zdX3cogdoa9upTaY
+         FovcLrTFa2fzUyRsPf1aZotq+5PgTSTvDSweQcPv8esiY+0muXJVhVYtvgLVYhK/JBfn
+         6mjkGdX041CcZOl/BDjhMLSz7uQ+FtoLDlZp4ICey3uqnHBL/8Jc6RWoWC/9CzCYh5uN
+         0pzl6rR8wdwMabRSER8mHNNNfAw+57EZWj2phuDGvqYwZZ4K9CZy2N3hLCJtq73sseiz
+         iLsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BOUYXphyAq3eJHIv8q1yW7gsnR514AlgRaFNvic2ZWg=;
+        b=Y7yWgoKwpKgwE4ZKhd6MwBuvtD2mNom/ROzsZpBhjBruD1ORvw7HBmwGV0Q06jwSlV
+         3BrwjgSmxg+Q3Tf5gUYBSrSrhqmL2EMhSjZL1ACMJ0zsR7wJyijOy8VII5MO4JbhLic/
+         6gVBYKr7oLZAT5pd3KIUs0p1rk8F1AZzmZx+E232FEPEnkmdz9SmqlDRIdyHSOnC6YN2
+         efYwRCRSCMLixt7EWpiKyRVXzwXWB6Bwb1ulnfoAxzEZFk4X60dy7j4wERDuOduHH0iW
+         qpeGsqAFP32pSEwyGjUsRm7vx98Uq6Jk/rMDljRsLbVv9JsvGt8tymapjpFrmgt/QKIE
+         qb0Q==
+X-Gm-Message-State: AOAM531HGM3ExCxtB/f4SW/XywNfVSPeo5pcwdagTyNNgH9T6h4faKGn
+        7q67GftK5kn6pHN/y0/OAywxgEd+iQq/2Q==
+X-Google-Smtp-Source: ABdhPJwDTEKzggxfKhv76wtkmXe9QlG6ea91CHXa+7fa0We1FfDwJBOR/eqekfzhNUuBYQsXFtNUrw==
+X-Received: by 2002:a17:902:8c91:b029:e3:d52:9402 with SMTP id t17-20020a1709028c91b02900e30d529402mr24301306plo.21.1614037106388;
+        Mon, 22 Feb 2021 15:38:26 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:398c:f3d9:88c:7d6a])
+        by smtp.gmail.com with ESMTPSA id f18sm561043pjq.53.2021.02.22.15.38.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 15:38:25 -0800 (PST)
+Date:   Mon, 22 Feb 2021 15:38:21 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v7 14/17] run-command: add stdin callback for
+ parallelization
+Message-ID: <YDRAbcqtWRpVn703@google.com>
+References: <20201222000220.1491091-15-emilyshaffer@google.com>
+ <20210201065153.1322296-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 266610FE-7566-11EB-92D1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210201065153.1322296-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sun, Jan 31, 2021 at 10:51:53PM -0800, Jonathan Tan wrote:
+> 
+> > If a user of the run_processes_parallel() API wants to pipe a large
+> > amount of information to stdin of each parallel command, that
+> > information could exceed the buffer of the pipe allocated for that
+> > process's stdin.  Generally this is solved by repeatedly writing to
+> > child_process.in between calls to start_command() and finish_command();
+> > run_processes_parallel() did not provide users an opportunity to access
+> > child_process at that time.
+> 
+> [snip]
+> 
+> > diff --git a/run-command.h b/run-command.h
+> > index 6472b38bde..e058c0e2c8 100644
+> > --- a/run-command.h
+> > +++ b/run-command.h
+> > @@ -436,6 +436,20 @@ typedef int (*start_failure_fn)(struct strbuf *out,
+> >  				void *pp_cb,
+> >  				void *pp_task_cb);
+> >  
+> > +/**
+> > + * This callback is called repeatedly on every child process who requests
+> > + * start_command() to create a pipe by setting child_process.in < 0.
+> > + *
+> > + * pp_cb is the callback cookie as passed into run_processes_parallel, and
+> > + * pp_task_cb is the callback cookie as passed into get_next_task_fn.
+> > + * The contents of 'send' will be read into the pipe and passed to the pipe.
+> > + *
+> > + * Return nonzero to close the pipe.
+> > + */
+> > +typedef int (*feed_pipe_fn)(struct strbuf *pipe,
+> > +			    void *pp_cb,
+> > +			    void *pp_task_cb);
+> > +
+> 
+> As you mention above in the commit message, I think the clearest API to
+> support what we need is to just have a callback (that has access to
+> child_process) that is executed between process start and finish.
+> 
+> As it is, I think this callback is too specific in that it takes a
+> struct strbuf. I think that this struct strbuf will just end up being
+> unnecessary copying much of the time, when the user could have just
+> written to the fd directly.
 
-> Subject: [PATCH] docs/format-patch: mention handling of merges
->
-> Format-patch doesn't have a way to format merges in a way that can be
-> applied by git-am (or any other tool), and so it just omits them.
-> However, this may be a surprising implication for users who are not well
-> versed in how the tool works. Let's add a note to the documentation
-> making this more clear.
-> ...
-> +CAVEATS
-> +-------
-> +
-> +Note that `format-patch` cannot represent commits with more than one
-> +parent (i.e., merges) and will silently omit them entirely from its
-> +output, even if they are part of the requested range.
+Since the rest of the run_processes_parallel() API passes strings around
+with strbufs, I'd prefer to leave it as-is to match the general API
+expectations and style.
 
-
-I think "cannot represent" is a little bit misleading, unless we
-expect the readers already know what we are trying to say (in which
-case there is no point in documenting this).  Perhaps something like
-this might clarify a bit, though.
-
-    Note that `format-patch` omits merge commits from the output,
-    because it is impossible to turn a merge commit into a simple
-    "patch" in such a way that allows receiving end to reproduce the
-    same merge commit.
-
+ - Emily
