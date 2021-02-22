@@ -2,223 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0E97C433E6
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7136C433E9
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:14:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 741FC60232
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:00:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A188064F6E
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232186AbhBVTAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 14:00:01 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53742 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232131AbhBVS7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 13:59:43 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BD07B11ED25;
-        Mon, 22 Feb 2021 13:58:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XghZHb3LB/xwELPYDobWHq31FZg=; b=HH6vup
-        /MeWEVEBjvDrF0a5Hn8hYd76aN32Y0a5TsWAbgU4T2LMxWNpZtEHJAUiy6XLuDX1
-        wDJhwvbOcWrbJWVAzgnweMfXpouS4aFMhGZg/QlInl04S33ZI3BWeT//LNXav2jt
-        iSU9nGBTpLKnLmYQR9CsCvs2jslT+noTdAHIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GESZlxI0gPFENoDQ69TZ2i9YcM3AX34r
-        LktNNomoQNJHk1aesDTT5hk2xqYyFJX/fa+1eX6C9lxYP785zGp/gssA4gKigTXq
-        WXvNvYl0K+GzMvBj5/g6tVYDoFqfd/VXoUFWl57SA9yvPPJEhu3lm51lXsbcPqwo
-        pZPLtuNEjUs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B401411ED24;
-        Mon, 22 Feb 2021 13:58:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 094DD11ED23;
-        Mon, 22 Feb 2021 13:58:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shourya Shukla <periperidip@gmail.com>
-Cc:     christian.couder@gmail.com, git@vger.kernel.org,
-        levraiphilippeblain@gmail.com,
-        Javier Mora <javier.moradesambricio@rtx.com>
-Subject: Re: [PATCH v2 1/1] rm: stage submodule removal from '.gitmodules'
- when using '--cached'
-References: <20210218184931.83613-1-periperidip@gmail.com>
-        <20210222172623.69313-1-periperidip@gmail.com>
-        <20210222172623.69313-2-periperidip@gmail.com>
-Date:   Mon, 22 Feb 2021 10:58:51 -0800
-In-Reply-To: <20210222172623.69313-2-periperidip@gmail.com> (Shourya Shukla's
-        message of "Mon, 22 Feb 2021 22:56:23 +0530")
-Message-ID: <xmqqv9ak6iac.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232891AbhBVTOV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 14:14:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40596 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232709AbhBVTLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 14:11:51 -0500
+Received: (qmail 21430 invoked by uid 109); 22 Feb 2021 19:11:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Feb 2021 19:11:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15903 invoked by uid 111); 22 Feb 2021 19:11:02 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Feb 2021 14:11:02 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 22 Feb 2021 14:11:02 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH 2/2] test-lib-functions: use BUG() in 'test_must_fail'
+Message-ID: <YDQBxqTbuYgq1xV8@coredump.intra.peff.net>
+References: <20210221192512.3096291-1-szeder.dev@gmail.com>
+ <20210221192512.3096291-2-szeder.dev@gmail.com>
+ <YDLXf+OoJabrJTWu@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 01A00778-7540-11EB-87EF-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YDLXf+OoJabrJTWu@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <periperidip@gmail.com> writes:
+On Sun, Feb 21, 2021 at 04:58:23PM -0500, Jeff King wrote:
 
-> Currently, using 'git rm --cached <submodule>' removes the submodule
-> <submodule> from the index and leaves the submodule working tree
-> intact in the superproject working tree, but does not stage any
-> changes to the '.gitmodules' file, in contrast to 'git rm <submodule>',
-> which removes both the submodule and its configuration in '.gitmodules'
-> from the worktree and index.
->
-> Fix this inconsistency by also staging the removal of the entry of the
-> submodule from the '.gitmodules' file, leaving the worktree copy intact,
+> This is a bit intimate with the magic 7 descriptor. I think it would be
+> cleaner to trigger the bug in a sub-test. We do have helpers for that,
+> like:
+> [...]
+> This is modeled after other similar tests. I find the use of
+> check_sub_test_lib_test_err here a bit verbose, but I think we could
+> also easily do:
+> 
+>   grep "bug in the test.*only .git. is allowed" bug-fail-nongit/err
 
-The "also" above felt a bit puzzling, as we would be removing the
-entry only from the indexed copy without touching the working tree
-(by the way, I try to be precise in terminology between worktree and
-working tree, and please follow suit.  A working tree is what you
-have in a non-bare repository that let's you "less" "gcc" etc. on
-the files checked out.  A worktree refers to the mechanism that lets
-you have separate working tree by borrowing from a repository, or
-refers to an instance of a working tree plus .git file created by
-the mechanism.  You mean "working tree" in the above sentence), but
-it refers to "remove the submodules directory and also entry", so it
-is OK.
+In case it helps, here is a patch which can go on top of yours that
+implements my suggestion using the (IMHO) more readable grep.
 
-> diff --git a/builtin/rm.c b/builtin/rm.c
-> index 4858631e0f..5854ef0996 100644
-> --- a/builtin/rm.c
-> +++ b/builtin/rm.c
-> @@ -254,7 +254,7 @@ static struct option builtin_rm_options[] = {
->  int cmd_rm(int argc, const char **argv, const char *prefix)
->  {
->  	struct lock_file lock_file = LOCK_INIT;
-> -	int i;
-> +	int i, removed = 0;
->  	struct pathspec pathspec;
->  	char *seen;
->  
-> @@ -365,30 +365,33 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->  	if (show_only)
->  		return 0;
->  
+It also adds "test_done" to the sub-test snippets, which my earlier
+patch did not include. That's not strictly necessary (we should error
+out before we even get there), but it makes the test more robust (we are
+sure that the BUG is what caused us to exit non-zero, not the missing
+test_done).
+
+> Note that there are some other cases which could likewise be converted
+> (the one for test_bool_env, which I noticed when grepping for "7>" when
+> investigating the first patch).
+
+That looks like the only other one, and I think is likewise worth
+converting (which is in the patch below).
+
+I thought it first it was also a problem that test_bool_env does not use
+BUG to catch invalid values. But I think it is trying to make its
+message a bit less confusing when the user is the one who provided us
+with the invalid value, such as setting GIT_TEST_GIT_DAEMON=nonsense. We
+do still exit the test script immediately, though, which is the right
+thing.
+
+It does use BUG to complain when test_bool_env didn't get two
+parameters, but we don't bother to test it. We could.
+
+-- >8 --
+Subject: [PATCH] t0000: put bug/error checks into a sub-test
+
+When checking whether test_bool_env and test_must_fail correctly trigger
+errors or bugs, we run them in a subshell (to avoid their "exit" calls
+impacting the greater script) with descriptor 7 redirected (to catch
+their direct-to-user output). Let's instead run them using our sub-test
+helpers. That gives us a more accurate view of what a calling user sees,
+and avoids knowing details like the magic of descriptor 7.
+
+Note that I didn't use check_sub_test_lib_test_err here. We don't really
+care what (if anything) is printed on stdout, as long as we see our
+expected error on stderr. Plus using grep makes it easier to formulate
+the expected text (e.g., using "." instead of tricky quoting).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This does end up with more lines, and certainly more processes, than the
+original. I do think the conceptual cleanliness is worth it, though.
+
+ t/t0000-basic.sh | 50 ++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 14 deletions(-)
+
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index b9d5c6c404..e5c06d055b 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -981,20 +981,32 @@ test_expect_success 'test_bool_env' '
+ 
+ 		envvar=false &&
+ 		! test_bool_env envvar true &&
+-		! test_bool_env envvar false &&
++		! test_bool_env envvar false
++	)
++'
+ 
++test_expect_success 'test_bool_env invalid value' '
++	run_sub_test_lib_test_err invalid-bool-value "invalid value" <<-\EOF &&
++	test_expect_success "invalid bool" "
+ 		envvar=invalid &&
+-		# When encountering an invalid bool value, test_bool_env
+-		# prints its error message to the original stderr of the
+-		# test script, hence the redirection of fd 7, and aborts
+-		# with "exit 1", hence the subshell.
+-		! ( test_bool_env envvar true ) 7>err &&
+-		grep "error: test_bool_env requires bool values" err &&
++		export envvar &&
++		test_bool_env envvar true
++	"
++	test_done
++	EOF
++	grep "error: test_bool_env requires bool values" invalid-bool-value/err
++'
+ 
++test_expect_success 'test_bool_env invalid default' '
++	run_sub_test_lib_test_err invalid-bool-default "invalid default" <<-\EOF &&
++	test_expect_success "invalid bool" "
+ 		envvar=true &&
+-		! ( test_bool_env envvar invalid ) 7>err &&
+-		grep "error: test_bool_env requires bool values" err
+-	)
++		export envvar &&
++		test_bool_env envvar default
++	"
++	test_done
++	EOF
++	grep "error: test_bool_env requires bool values" invalid-bool-default/err
+ '
+ 
+ ################################################################
+@@ -1315,13 +1327,23 @@ test_expect_success 'test_must_fail on a failing git command with env' '
+ '
+ 
+ test_expect_success 'test_must_fail rejects a non-git command' '
+-	! ( test_must_fail grep ^$ notafile ) 7>err &&
+-	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
++	run_sub_test_lib_test_err bug-fail-nongit "fail nongit" <<-\EOF &&
++	test_expect_success "non-git command" "
++		test_must_fail grep ^$ notafile
++	"
++	test_done
++	EOF
++	grep "bug.*test_must_fail: only .git. is allowed" bug-fail-nongit/err
+ '
+ 
+ test_expect_success 'test_must_fail rejects a non-git command with env' '
+-	! ( test_must_fail env var1=a var2=b grep ^$ notafile ) 7>err &&
+-	grep -F "test_must_fail: only '"'"'git'"'"' is allowed" err
++	run_sub_test_lib_test_err bug-fail-env "fail nongit with env" <<-\EOF &&
++	test_expect_success "non-git command with env" "
++		test_must_fail env var1=a var2=b grep ^$ notafile
++	"
++	test_done
++	EOF
++	grep "bug.*test_must_fail: only .git. is allowed" bug-fail-env/err
+ '
+ 
+ test_done
+-- 
+2.30.1.1033.gd525307ce1
 
 
-> +	for (i = 0; i < list.nr; i++) {
-> +		const char *path = list.entry[i].name;
-> +		if (list.entry[i].is_submodule) {
-> +			/*
-> +			 * Then, unless we used "--cached", remove the filenames from
-> +			 * the workspace. If we fail to remove the first one, we
-> +			 * abort the "git rm" (but once we've successfully removed
-> +			 * any file at all, we'll go ahead and commit to it all:
-> +			 * by then we've already committed ourselves and can't fail
-> +			 * in the middle)
-> +			 */
-> +			if (!index_only) {
-> +				struct strbuf buf = STRBUF_INIT;
->  				strbuf_reset(&buf);
->  				strbuf_addstr(&buf, path);
->  				if (remove_dir_recursively(&buf, 0))
->  					die(_("could not remove '%s'"), path);
->  
->  				removed = 1;
-> +				strbuf_release(&buf);
-
-OK, so this part now only deals with the submodule directory.
-
->  			}
-> +			if (!remove_path_from_gitmodules(path, index_only))
-> +				stage_updated_gitmodules(&the_index);
-
-And the entry for it in .gitmodules is handled by the helper,
-whether --cached or not.
-
-This somehow feels wrong for the index_only case; doesn't the helper
-take contents from the .gitmodules in the working tree and add it to
-the index?
-
-Unless you touched stage_updated_gitmodules() not to do that in the
-index_only case, that is.
-
-> +			continue;
-
-And that is all for what is done to a submodule.
-
-Makes sense so far.
-
-> +		}
-> +		if (!index_only) {
->  			if (!remove_path(path)) {
->  				removed = 1;
->  				continue;
-> @@ -396,9 +399,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->  			if (!removed)
->  				die_errno("git rm: '%s'", path);
->  		}
-> -		strbuf_release(&buf);
-> -		if (gitmodules_modified)
-> -			stage_updated_gitmodules(&the_index);
-
-OK, because this should have been done where we called
-remove_path_from_gitmodules().
-
->  	}
->  
->  	if (write_locked_index(&the_index, &lock_file,
-> diff --git a/submodule.c b/submodule.c
-> index 9767ba9893..6ce8c8d0d8 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -131,7 +131,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
->   * path is configured. Return 0 only if a .gitmodules file was found, a section
->   * with the correct path=<path> setting was found and we could remove it.
->   */
-> -int remove_path_from_gitmodules(const char *path)
-> +int remove_path_from_gitmodules(const char *path, int index_only)
->  {
->  	struct strbuf sect = STRBUF_INIT;
->  	const struct submodule *submodule;
-> @@ -149,7 +149,8 @@ int remove_path_from_gitmodules(const char *path)
->  	}
->  	strbuf_addstr(&sect, "submodule.");
->  	strbuf_addstr(&sect, submodule->name);
-> -	if (git_config_rename_section_in_file(GITMODULES_FILE, sect.buf, NULL) < 0) {
-> +	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
-> +					      GITMODULES_FILE, sect.buf, NULL) < 0) {
->  		/* Maybe the user already did that, don't error out here */
->  		warning(_("Could not remove .gitmodules entry for %s"), path);
->  		strbuf_release(&sect);
-
-When !index_only, do we have any guarantee that .gitmodules in the
-working tree and .gitmodules in the index are in sync?  I somehow
-doubt it.  
-
-I would have expected that the updated remove_path_from_gitmodules()
-would look more like:
-
- - only if !index_only, nuke the section for the submodule in
-   .gitmodules in the working tree.
-
- - nuke the section for the submodule in .gitmodules in the
-   index.
-
-IOW, there would be two git_config_rename_section_in_file() calls to
-remove the section in !index_only case.
-
-Doing so would also mean that you should not have the caller call
-stage_updated_gitmodules() at all, even in !index_only case.
-Imagine if the .gitmodules file in the working tree had local
-changes (e.g. registered a few more submodules, or updated the url
-field of a few submodules) that are not yet added to the index when
-"git rm" removed a submodule.  The user does not want them to be in
-the index yet and "git rm" should not add these unrelated local
-changes to the index.
-
-Thanks.
