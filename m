@@ -2,75 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57499C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5226DC433DB
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:04:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 150BC64E02
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:03:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10B6064E32
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232963AbhBVUDH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 15:03:07 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50870 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbhBVUDG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 15:03:06 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6114A103AF1;
-        Mon, 22 Feb 2021 15:02:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cvieZ/h1Ndpdo49ovSXqB7UJ1zQ=; b=tSzuSv
-        lFD0sq7RBD8kAZdIRM6uO+y6jQbs5C2UCKNlR0lQriv4RqnKece34wpL7mQS22xs
-        WMOgCQCUvKCREDsEBnn99BjP+8UfF068+mKZbmlsnuXp2n/plSEapeXWzM9Kjqk5
-        MO3VfxbU+FYiNA2Gs9GXdDlTgk3Wzr//ROveI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ofeS2uRvo/0I5oIZLakOwYeU6YU1RHNv
-        0xBoWULnHQ5pTTauY03bfxP3pd9NhH9owmSSqUQIpFGgLEe6spjL+PMwofrBSLmL
-        cpyj8JYpA7L2mw6OVYk8dDOfmP7IbKQXuOBuYCcpW731lQtX+KvZfO6BbLOmMmk7
-        w7XfyT2MPVE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A68D103AF0;
-        Mon, 22 Feb 2021 15:02:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C617103AE7;
-        Mon, 22 Feb 2021 15:02:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH 2/2] test-lib-functions: use BUG() in 'test_must_fail'
-References: <20210221192512.3096291-1-szeder.dev@gmail.com>
-        <20210221192512.3096291-2-szeder.dev@gmail.com>
-        <YDLXf+OoJabrJTWu@coredump.intra.peff.net>
-        <YDQBxqTbuYgq1xV8@coredump.intra.peff.net>
-        <YDQDX/zdGTI1HmJ9@coredump.intra.peff.net>
-Date:   Mon, 22 Feb 2021 12:02:20 -0800
-In-Reply-To: <YDQDX/zdGTI1HmJ9@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 22 Feb 2021 14:17:51 -0500")
-Message-ID: <xmqqk0qz7twz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S233028AbhBVUEA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 15:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46496 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232829AbhBVUDy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 15:03:54 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FCCC06174A
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 12:03:03 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id q77so14655584iod.2
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 12:03:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=LY6LpAtx9eJsiCkx7plx1TyzmTMUQtqtRrvCe751Ruk=;
+        b=KUUakYeopxMLI5j7L3i8QM8NdKiSI3k6KaL7muoosjb5xsRFzQ3UpVpv4mpdJPFT7N
+         JhHDPay+F7fwSPdIzGO4vGYOSzGoWMfcV+C+altRMoDLGiJXaR7HLcZ6AcpPwqzCgsBp
+         bbMJz5Mk55jJAhYeIeCuaNC18zeiwBFKMUNrpICOMniYRW6aPGi5hJK1nidzRFJk6Vzp
+         7IiNZro5XJgX+Iy2EoqSNk3kb2/wOzDYj7sjW/xOQOuihy53Gw1eWaJGNG1/HhwYas42
+         4tdhEQQq8/z5/3pYVfoujuobCWqN/epkS/WJVo4cuXTic5+WTWs8hmC8fOS+DOOBy85F
+         88YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=LY6LpAtx9eJsiCkx7plx1TyzmTMUQtqtRrvCe751Ruk=;
+        b=kiREiXuY0GyzBwqbXkDgPiMq7xEcXA2q4Exh0Fxhg6hF/ZSuxfu4kyJ2+3L0Onfk5I
+         6rO6IIHhgy3r9FNOPc9kiLQIbirntdvSBxDd8qO0Bg7M+BomRt6iX/6roZFx88W4MQbe
+         iD6h7N7m15JPfK+8VWBeEM9zekBLq8rYCfZy34ByTKi4FDl9QSN36/W3sItvfzv6k4F6
+         mTtXVNEbJoYhMDtYequXuZA78ttL4V3kV6gxj7x6MTQZ1iPU7Z4w365DSaAL3K27cAcf
+         ce1mO8Bl9tvbpNnN/ZvmmQ5w0wZ1sOlN6NIanUbfKn4nji41HUqi6CdAW1NaY9QjoT/V
+         rGvg==
+X-Gm-Message-State: AOAM533xv0shAN8FanXJATHkuSeDukpeRnZ8nf3Q+0sTlVIuc+v32j5Z
+        ifV413ERRYI5yOWDQB+Rhpvhlrz6399+2jvipVDbQESiMisUEA==
+X-Google-Smtp-Source: ABdhPJzHPA9ttjmmlQV6R9qjjKPNBgh339J5jfzpvvXM7vEX5zBGSDhtAB9miDoZtJAhUuuFs8qXW3ZX0VSJsIcU/yA=
+X-Received: by 2002:a05:6602:200e:: with SMTP id y14mr11245919iod.94.1614024183271;
+ Mon, 22 Feb 2021 12:03:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E03F0738-7548-11EB-A560-D609E328BF65-77302942!pb-smtp21.pobox.com
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Mon, 22 Feb 2021 12:02:54 -0800
+Message-ID: <CA+dzEB=Ts=OdoYey+f-t+oLXAAv=f5hEJNpzb0G=LTpGPs+faw@mail.gmail.com>
+Subject: git since 2.27.0 shows unfetchable object name for `git describe` for
+ reannotated tags
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+This does seem intentional given the commit message for
+ff165f00c1065d94c0bcab8708364e6dc5655f5d
 
-> ... Let's also automatically a test_done at the
-> end, ...
+https://github.com/git/git/commit/ff165f00c1065d94c0bcab8708364e6dc5655f5d
 
-s/a test_done/add &/ probably.
+However this is causing an issue when using `git describe --tags
+--abbrev=0` where I expect the command to print out either the old tag
+name or the new tag name, however it prints out neither:
 
+https://github.com/pre-commit-ci/issues/issues/45
+
+Is there a command that I can use to print out the old result (which
+worked correctly) instead of the new, broken result?
+
+Anthony
