@@ -2,243 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD15C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAFB6C433E0
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:36:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 41CC564EEC
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:27:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8972064E77
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:36:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbhBVR11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 12:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40716 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230129AbhBVR10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 12:27:26 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D7AC06174A
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 09:26:46 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id o63so10634496pgo.6
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 09:26:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=maf97Lo+OhJ1y8p31jT6Hk4GnYvAuhkf+1ZvCGXLtLc=;
-        b=kN/PRS2dj65QjjZ4hxeLn1v1Pyzc3eOeYf3f+HPESTA34lsI4GUvTZIfdKMjfHZIp6
-         ONmeu6Ao/KFnu3rJxl7JqCtOph5RpaS5oiRlkkzF2NNMLpJQytbX3UK/0tau8yMpXc+h
-         bksE/18MrZNQWvRd4NTiWAKlXVyf40kiI+V1Y1zBzn8X8nTH0ZkeQHvTbgKHgCY6FX9C
-         QftMZ5FboZ5n96LnomGkJI7GZ1fjsoWT+cUCsuwcmG3uxKZ4Tg/VEgPUseLf1+YRu2yu
-         EZBHlc3c9P0R3Q3t9FnN61Hx59FTSo5Q44TeRlPSzAaFluMhKFbCgOAgE56PdDm9iDLC
-         l7xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=maf97Lo+OhJ1y8p31jT6Hk4GnYvAuhkf+1ZvCGXLtLc=;
-        b=K6WPKEIj6qT6C8enZFAFOwpoBjOyxeVa8EXdhjgeeZFN3XP709TKaY1mMp2DcvGIcu
-         N5RPb84/A+ZF1Og3rWNRQ/Du+zLyXrSzmfFA+qT8JxVY4qKXltYFrUPJOXed5OBEC1yt
-         S3CNWuZG2alK1Tc0KRr+jpX/94ByuNP4zqPaXwRYCOdNi9epsR2LYoLpWBLNjFdni5wF
-         kEKy83ElZ+E5zcJuPqCFDKpbiAWJGLFR3Ehs6RUvTdHEZgTt5vmRG/h8A7svEjCEOZtk
-         IT7PAPnBqYsv8MS+HrYCMf098ftIQ3KC2BlvqS6b/vYdQq9S/f395w2Zv42plZhauXZ0
-         Ulzg==
-X-Gm-Message-State: AOAM5335kLa85nJC687TYXW8WJ9WqvzvgV4lGRHSvTNQgb8A1cnou/+F
-        ilT18JMTuv92xvZWjaK21lE=
-X-Google-Smtp-Source: ABdhPJzn+Nt/3x221h8wvE58TabxVoA3UzcVU3+BQzCw+c22omF0Ym+sP8PxQWhKVqu6Mfp/g0vxvg==
-X-Received: by 2002:a63:5d59:: with SMTP id o25mr20203437pgm.322.1614014805963;
-        Mon, 22 Feb 2021 09:26:45 -0800 (PST)
-Received: from localhost.localdomain ([122.161.0.245])
-        by smtp.gmail.com with ESMTPSA id x80sm4737437pfc.71.2021.02.22.09.26.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Feb 2021 09:26:45 -0800 (PST)
-From:   Shourya Shukla <periperidip@gmail.com>
-To:     periperidip@gmail.com
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        levraiphilippeblain@gmail.com,
-        Javier Mora <javier.moradesambricio@rtx.com>
-Subject: [PATCH v2 1/1] rm: stage submodule removal from '.gitmodules' when using '--cached'
-Date:   Mon, 22 Feb 2021 22:56:23 +0530
-Message-Id: <20210222172623.69313-2-periperidip@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210222172623.69313-1-periperidip@gmail.com>
-References: <20210218184931.83613-1-periperidip@gmail.com>
- <20210222172623.69313-1-periperidip@gmail.com>
+        id S231270AbhBVRg3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 12:36:29 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56388 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231130AbhBVRg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 12:36:27 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 75A8F11E19A;
+        Mon, 22 Feb 2021 12:35:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eNz6cETm7eEZtWThBZ/7+ZIwmqw=; b=W+4XPI
+        WlWLEGU67fsJl7nDkjPfDFmO7dnIfUKcmsHFXGnL6cOWAQK7l937RHwxa1tDJdGA
+        cHfWhOzbzxyt0RACNQspx7dnIfd+KNnsTZ1u6xQBPRXNe+NQsX9U6r6mDk5RpwUX
+        X5lSCKY5GOIjqKFJ0ZtIM41tQdD2Oc7/P/fLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CrTgpjdLPtCf8zjvFID1J7vY9bIuG5SW
+        F4KUjUihv9ahBga/DGLBdx/usJdaOcsZgUrmjpFFX1HLaocvjjbNS0GdbKU69v+z
+        UfontHWQUoJL9De45nMbKVGreaeVGM/6TNxf7PTXcpMQYH/WFERcstM+CU3eRUTA
+        uMplwGFP1NA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D4BD11E199;
+        Mon, 22 Feb 2021 12:35:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B590A11E198;
+        Mon, 22 Feb 2021 12:35:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
+References: <20210217072904.16257-1-charvi077@gmail.com>
+        <20210217073725.16656-1-charvi077@gmail.com>
+        <20210217073725.16656-2-charvi077@gmail.com>
+        <xmqq35xulbj0.fsf@gitster.g>
+        <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
+        <xmqqpn0xfal8.fsf@gitster.g>
+        <CAPSFM5eJNUdzy0CA1GNjNkqL_a7ivM8qydxvHf3208nznkG9KQ@mail.gmail.com>
+        <xmqq4ki7bf9y.fsf@gitster.g>
+        <CAPSFM5cRq9OfxypwTAsv3OFpTPM88e4_agTmFEGbaVyLi6Qbig@mail.gmail.com>
+        <xmqqtuq599zj.fsf@gitster.g>
+        <CAPSFM5dZ=CR21eqE7Y-4AssD9h0ddnUYpy4PSzWVaf8kzsLv_g@mail.gmail.com>
+Date:   Mon, 22 Feb 2021 09:35:41 -0800
+In-Reply-To: <CAPSFM5dZ=CR21eqE7Y-4AssD9h0ddnUYpy4PSzWVaf8kzsLv_g@mail.gmail.com>
+        (Charvi Mendiratta's message of "Sun, 21 Feb 2021 14:50:05 +0530")
+Message-ID: <xmqqft1o80pe.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 632D73E2-7534-11EB-A298-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, using 'git rm --cached <submodule>' removes the submodule
-<submodule> from the index and leaves the submodule working tree
-intact in the superproject working tree, but does not stage any
-changes to the '.gitmodules' file, in contrast to 'git rm <submodule>',
-which removes both the submodule and its configuration in '.gitmodules'
-from the worktree and index.
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
-Fix this inconsistency by also staging the removal of the entry of the
-submodule from the '.gitmodules' file, leaving the worktree copy intact,
-a behaviour which is more in line with what might be expected when
-using '--cached'.
+>>  So, if it is more work to make the code notice when
+>> these options are given in useless combinations and stop with an
+>> error message
+>
+> Sorry I didn't get this and would like to once confirm here that, are
+> you pointing to output an error message when the `-m`/`-F` option is
+> passed with `git --fixup=amend/reword` ? Because I think we can do
+> this also. Otherwise ....
 
-Achieve this by modifying the function 'remove_path_from_gitmodules()'
-to also take in the parameter 'index_only' denoting the presence of
-the '--cached' option. If present, remove the submodule entry from the
-copy of the '.gitmodules' in the index otherwise, do the same for the
-working tree copy.
+If we were to make -m/-F incompatible with these new features, then
+sure, we'd notice the combination, show an error message and abort.
 
-While at it, also change the test 46 of the test script 't3600-rm.sh' to
-incorporate for the above changes.
+>>than just accepting and doing useless thing, I am OK
+>> if we left them as they are.
+>
+> ....If we allow both `m` and `F` to work with `git commit
+> --fixup=amend/reword` with the same working as it is doing now i.e to
+> use `m` to write new commit message, upon `--autosquash`, If it is
+> okay? then I also agree to update the documentation more precisely and
+> include the uses when passed with `m` /`F`(not yet added) option.
 
-Reported-by: Javier Mora <javier.moradesambricio@rtx.com>
-Helped-by: Phillipe Blain <levraiphilippeblain@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Shourya Shukla <periperidip@gmail.com>
----
- builtin/rm.c  | 42 +++++++++++++++++++++---------------------
- submodule.c   |  5 +++--
- submodule.h   |  2 +-
- t/t3600-rm.sh |  6 ++----
- 4 files changed, 27 insertions(+), 28 deletions(-)
+What would that more precise documentation would say, though?  
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 4858631e0f..5854ef0996 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -254,7 +254,7 @@ static struct option builtin_rm_options[] = {
- int cmd_rm(int argc, const char **argv, const char *prefix)
- {
- 	struct lock_file lock_file = LOCK_INIT;
--	int i;
-+	int i, removed = 0;
- 	struct pathspec pathspec;
- 	char *seen;
- 
-@@ -365,30 +365,33 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (show_only)
- 		return 0;
- 
--	/*
--	 * Then, unless we used "--cached", remove the filenames from
--	 * the workspace. If we fail to remove the first one, we
--	 * abort the "git rm" (but once we've successfully removed
--	 * any file at all, we'll go ahead and commit to it all:
--	 * by then we've already committed ourselves and can't fail
--	 * in the middle)
--	 */
--	if (!index_only) {
--		int removed = 0, gitmodules_modified = 0;
--		struct strbuf buf = STRBUF_INIT;
--		for (i = 0; i < list.nr; i++) {
--			const char *path = list.entry[i].name;
--			if (list.entry[i].is_submodule) {
-+	for (i = 0; i < list.nr; i++) {
-+		const char *path = list.entry[i].name;
-+		if (list.entry[i].is_submodule) {
-+			/*
-+			 * Then, unless we used "--cached", remove the filenames from
-+			 * the workspace. If we fail to remove the first one, we
-+			 * abort the "git rm" (but once we've successfully removed
-+			 * any file at all, we'll go ahead and commit to it all:
-+			 * by then we've already committed ourselves and can't fail
-+			 * in the middle)
-+			 */
-+			if (!index_only) {
-+				struct strbuf buf = STRBUF_INIT;
- 				strbuf_reset(&buf);
- 				strbuf_addstr(&buf, path);
- 				if (remove_dir_recursively(&buf, 0))
- 					die(_("could not remove '%s'"), path);
- 
- 				removed = 1;
--				if (!remove_path_from_gitmodules(path))
--					gitmodules_modified = 1;
--				continue;
-+				strbuf_release(&buf);
- 			}
-+			if (!remove_path_from_gitmodules(path, index_only))
-+				stage_updated_gitmodules(&the_index);
-+
-+			continue;
-+		}
-+		if (!index_only) {
- 			if (!remove_path(path)) {
- 				removed = 1;
- 				continue;
-@@ -396,9 +399,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			if (!removed)
- 				die_errno("git rm: '%s'", path);
- 		}
--		strbuf_release(&buf);
--		if (gitmodules_modified)
--			stage_updated_gitmodules(&the_index);
- 	}
- 
- 	if (write_locked_index(&the_index, &lock_file,
-diff --git a/submodule.c b/submodule.c
-index 9767ba9893..6ce8c8d0d8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -131,7 +131,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
-  * path is configured. Return 0 only if a .gitmodules file was found, a section
-  * with the correct path=<path> setting was found and we could remove it.
-  */
--int remove_path_from_gitmodules(const char *path)
-+int remove_path_from_gitmodules(const char *path, int index_only)
- {
- 	struct strbuf sect = STRBUF_INIT;
- 	const struct submodule *submodule;
-@@ -149,7 +149,8 @@ int remove_path_from_gitmodules(const char *path)
- 	}
- 	strbuf_addstr(&sect, "submodule.");
- 	strbuf_addstr(&sect, submodule->name);
--	if (git_config_rename_section_in_file(GITMODULES_FILE, sect.buf, NULL) < 0) {
-+	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
-+					      GITMODULES_FILE, sect.buf, NULL) < 0) {
- 		/* Maybe the user already did that, don't error out here */
- 		warning(_("Could not remove .gitmodules entry for %s"), path);
- 		strbuf_release(&sect);
-diff --git a/submodule.h b/submodule.h
-index 4ac6e31cf1..4d8707d911 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -43,7 +43,7 @@ int is_gitmodules_unmerged(const struct index_state *istate);
- int is_writing_gitmodules_ok(void);
- int is_staging_gitmodules_ok(struct index_state *istate);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
--int remove_path_from_gitmodules(const char *path);
-+int remove_path_from_gitmodules(const char *path, int index_only);
- void stage_updated_gitmodules(struct index_state *istate);
- void set_diffopt_flags_from_submodule_config(struct diff_options *,
- 					     const char *path);
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 7547f11a5c..c0ca4be5a1 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -390,16 +390,14 @@ test_expect_success 'rm of a populated submodule with different HEAD fails unles
- 	test_must_fail git config -f .gitmodules submodule.sub.path
- '
- 
--test_expect_success 'rm --cached leaves work tree of populated submodules and .gitmodules alone' '
-+test_expect_success 'rm --cached leaves work tree of populated submodules alone' '
- 	git reset --hard &&
- 	git submodule update &&
- 	git rm --cached submod &&
- 	test_path_is_dir submod &&
- 	test_path_is_file submod/.git &&
- 	git status -s -uno >actual &&
--	test_cmp expect.cached actual &&
--	git config -f .gitmodules submodule.sub.url &&
--	git config -f .gitmodules submodule.sub.path
-+	test_cmp expect.cached actual
- '
- 
- test_expect_success 'rm --dry-run does not touch the submodule or .gitmodules' '
--- 
-2.25.1
+"'-m message' gets appended to the message taken from the original
+commit"?  Saying that alone, without explaining why doing such an
+appending is useful, would puzzle users and makes them ask "but why
+such a useless feature exist?" and that was why I was trying to
+figure out what it is useful for with you, which I think we have
+failed to do so far.
 
+My preference at this point is to error out the combination that we
+cannot figure out how it could be useful at this moment, so that
+users who find how it would be useful to come to us and present a
+hopefully good case for using -m <msg> with --fixup=amend:<commit>.
+I am assuming that allowing the combination at that point is easy,
+and the user request will give us a good use case we can use in the
+documentation to explain for what purpose a user may want to use -m
+<msg> to append a short string at the end.  The end users' use case
+we see at that point might even suggest that it would be more useful
+to prepend (as opposed to append) the message we get from -m <msg>
+to the original log message, and such a change will not be possible
+if we just choose to append without thinking through the use case we
+intend to support and release "we do not know what good it would do
+to append with -m <msg>, but that is what the code happens to do now"
+version to the users, as people will depend on the behaviour of any
+released versions.
