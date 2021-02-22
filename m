@@ -2,121 +2,223 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B43E1C433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 18:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0E97C433E6
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:00:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BB9C64E20
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 18:58:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 741FC60232
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 19:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231941AbhBVS6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 13:58:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232073AbhBVS6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 13:58:05 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD44C061574
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 10:57:24 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id l16so4040404oti.12
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 10:57:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lu/JqL+QcCWkQ3q9QtsGPOZZuuV98LjSgepEHG6VD0I=;
-        b=eOhL4g9jKM96s7/g/F2MbAzONvK0pKxH+PaofzuVyF1J4oPzwqbip0oyBo9ui26x1K
-         mVm0ugiwKGaBcT08u2UmewVjA6Zvbi6nivz7n1HERaSfzCM80UAWCnp+qjCTrNFVWcnI
-         BkcqX+T2lIb8NoP57qHYNTf77SwFxJeMXr1Bkr6R3CrTLAAcezHydi4d/kkCi6AQcOOb
-         YVMI2wSkSp3cIE1vdPwVMz/PIi1ehkPfdqAUDRtmfGCkf7tEV7qsH3Xb1WSNsG946Rqs
-         hsBvNUaLwAy3h4MCGivjwMQOpl3U4lNUTWcZLk8Nzblwm4Z150+RBoHaZknoG97S4nvF
-         r9GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lu/JqL+QcCWkQ3q9QtsGPOZZuuV98LjSgepEHG6VD0I=;
-        b=M9ZJabPmNSh5iMZ2S3hOxkXCZdso0EyQ/c2O1qKasiy8A+auYYhcqqjuM8DzuuGXD5
-         sy7NaJsKj+rQCmIG5HWurdT5mAhU1iXr3GDylsqvU+gLGiUI3XRLCUFXm55DXGSecPNy
-         cX2dTob3pfx5L83dooSa5v0tvHqWgbuxcCSd6MM+rmQ6ihkd7oFD8yKYqDwN0zXJb6mP
-         zr5pDpvylArV/TZEyZoL7NPacfHWWrciarVbnckZqBmMOZWoulaA/S2s/gcpVqVIueq0
-         Yb5ATPEg/DLw+l8xGS/kda0MIpgbrxYrNr9g60GKiFo22bxp760WB+T7qXPsXmwMe+tQ
-         iThQ==
-X-Gm-Message-State: AOAM531NeVo+IsF8eUBHN4chU7aG5quq9WDmjfpkwWRaY4ykSvEMPckq
-        ROaMSbf4yNsRGcF+fGsQbgKVpuMHp2TWLH/7Nbq+YjpZyKM=
-X-Google-Smtp-Source: ABdhPJytC+0cJVyfAb7RMmIajK9uql39VPZu5Y3Xgs7/t4V/TDzWsoZNaMypZOkFW6WvTP2S4SKwsbkAXhAAcXnIf44=
-X-Received: by 2002:a9d:7459:: with SMTP id p25mr6170070otk.316.1614020243390;
- Mon, 22 Feb 2021 10:57:23 -0800 (PST)
+        id S232186AbhBVTAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 14:00:01 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53742 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232131AbhBVS7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 13:59:43 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BD07B11ED25;
+        Mon, 22 Feb 2021 13:58:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XghZHb3LB/xwELPYDobWHq31FZg=; b=HH6vup
+        /MeWEVEBjvDrF0a5Hn8hYd76aN32Y0a5TsWAbgU4T2LMxWNpZtEHJAUiy6XLuDX1
+        wDJhwvbOcWrbJWVAzgnweMfXpouS4aFMhGZg/QlInl04S33ZI3BWeT//LNXav2jt
+        iSU9nGBTpLKnLmYQR9CsCvs2jslT+noTdAHIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GESZlxI0gPFENoDQ69TZ2i9YcM3AX34r
+        LktNNomoQNJHk1aesDTT5hk2xqYyFJX/fa+1eX6C9lxYP785zGp/gssA4gKigTXq
+        WXvNvYl0K+GzMvBj5/g6tVYDoFqfd/VXoUFWl57SA9yvPPJEhu3lm51lXsbcPqwo
+        pZPLtuNEjUs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B401411ED24;
+        Mon, 22 Feb 2021 13:58:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 094DD11ED23;
+        Mon, 22 Feb 2021 13:58:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shourya Shukla <periperidip@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        levraiphilippeblain@gmail.com,
+        Javier Mora <javier.moradesambricio@rtx.com>
+Subject: Re: [PATCH v2 1/1] rm: stage submodule removal from '.gitmodules'
+ when using '--cached'
+References: <20210218184931.83613-1-periperidip@gmail.com>
+        <20210222172623.69313-1-periperidip@gmail.com>
+        <20210222172623.69313-2-periperidip@gmail.com>
+Date:   Mon, 22 Feb 2021 10:58:51 -0800
+In-Reply-To: <20210222172623.69313-2-periperidip@gmail.com> (Shourya Shukla's
+        message of "Mon, 22 Feb 2021 22:56:23 +0530")
+Message-ID: <xmqqv9ak6iac.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <c17158e3b105d7c0679515446c5fd7b8d5fc8435.1605535068.git.matheus.bernardino@usp.br>
- <cover.1613593946.git.matheus.bernardino@usp.br>
-In-Reply-To: <cover.1613593946.git.matheus.bernardino@usp.br>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 22 Feb 2021 10:57:12 -0800
-Message-ID: <CABPp-BH2LLxu-HV7hURwRN5j2Cd3P5Xdb+CLip=XApkUHFQj6A@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/7] add/rm: honor sparse checkout and warn on sparse paths
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 01A00778-7540-11EB-87EF-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Shourya Shukla <periperidip@gmail.com> writes:
 
-Sorry for the delay in getting back to you.
-
-On Wed, Feb 17, 2021 at 1:02 PM Matheus Tavares
-<matheus.bernardino@usp.br> wrote:
+> Currently, using 'git rm --cached <submodule>' removes the submodule
+> <submodule> from the index and leaves the submodule working tree
+> intact in the superproject working tree, but does not stage any
+> changes to the '.gitmodules' file, in contrast to 'git rm <submodule>',
+> which removes both the submodule and its configuration in '.gitmodules'
+> from the worktree and index.
 >
-> This is based on the discussion at [1]. It makes `rm` honor sparse
-> checkouts and adds a warning to both `rm` and `add`, for the case where
-> a pathspec _only_ matches skip-worktree entries. The first two patches
-> are somewhat unrelated fixes, but they are used by the later patches.
->
-> [1]: https://lore.kernel.org/git/CABPp-BHwNoVnooqDFPAsZxBT9aR5Dwk5D9sDRCvYSb8akxAJgA@mail.gmail.com/
+> Fix this inconsistency by also staging the removal of the entry of the
+> submodule from the '.gitmodules' file, leaving the worktree copy intact,
 
-I thought you said you wouldn't have time to look at git-add.  Are
-there other commands you don't have time to look at?  I've got a few
-suggestions...  :-)
+The "also" above felt a bit puzzling, as we would be removing the
+entry only from the indexed copy without touching the working tree
+(by the way, I try to be precise in terminology between worktree and
+working tree, and please follow suit.  A working tree is what you
+have in a non-bare repository that let's you "less" "gcc" etc. on
+the files checked out.  A worktree refers to the mechanism that lets
+you have separate working tree by borrowing from a repository, or
+refers to an instance of a working tree plus .git file created by
+the mechanism.  You mean "working tree" in the above sentence), but
+it refers to "remove the submodules directory and also entry", so it
+is OK.
 
-Thanks so much for working on this; much appreciated.  I've looked
-over the patch series, and am obviously a fan of the general thrust.
-I didn't spot anything additional to point out; Junio already looked
-over it pretty closely it appears.  I did add a comment answering one
-of his questions, but that's it.
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 4858631e0f..5854ef0996 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -254,7 +254,7 @@ static struct option builtin_rm_options[] = {
+>  int cmd_rm(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct lock_file lock_file = LOCK_INIT;
+> -	int i;
+> +	int i, removed = 0;
+>  	struct pathspec pathspec;
+>  	char *seen;
+>  
+> @@ -365,30 +365,33 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+>  	if (show_only)
+>  		return 0;
+>  
 
-> Matheus Tavares (7):
->   add --chmod: don't update index when --dry-run is used
->   add: include magic part of pathspec on --refresh error
->   t3705: add tests for `git add` in sparse checkouts
->   add: make --chmod and --renormalize honor sparse checkouts
->   pathspec: allow to ignore SKIP_WORKTREE entries on index matching
->   add: warn when pathspec only matches SKIP_WORKTREE entries
->   rm: honor sparse checkout patterns
->
->  Documentation/config/advice.txt  |   4 +
->  Documentation/git-rm.txt         |   4 +-
->  advice.c                         |  19 +++++
->  advice.h                         |   4 +
->  builtin/add.c                    |  72 ++++++++++++++----
->  builtin/check-ignore.c           |   2 +-
->  builtin/rm.c                     |  35 ++++++---
->  pathspec.c                       |  25 ++++++-
->  pathspec.h                       |  13 +++-
->  read-cache.c                     |   3 +-
->  t/t3600-rm.sh                    |  54 ++++++++++++++
->  t/t3700-add.sh                   |  26 +++++++
->  t/t3705-add-sparse-checkout.sh   | 122 +++++++++++++++++++++++++++++++
->  t/t7011-skip-worktree-reading.sh |   5 --
->  t/t7012-skip-worktree-writing.sh |  19 -----
->  15 files changed, 349 insertions(+), 58 deletions(-)
->  create mode 100755 t/t3705-add-sparse-checkout.sh
->
-> --
-> 2.29.2
+
+> +	for (i = 0; i < list.nr; i++) {
+> +		const char *path = list.entry[i].name;
+> +		if (list.entry[i].is_submodule) {
+> +			/*
+> +			 * Then, unless we used "--cached", remove the filenames from
+> +			 * the workspace. If we fail to remove the first one, we
+> +			 * abort the "git rm" (but once we've successfully removed
+> +			 * any file at all, we'll go ahead and commit to it all:
+> +			 * by then we've already committed ourselves and can't fail
+> +			 * in the middle)
+> +			 */
+> +			if (!index_only) {
+> +				struct strbuf buf = STRBUF_INIT;
+>  				strbuf_reset(&buf);
+>  				strbuf_addstr(&buf, path);
+>  				if (remove_dir_recursively(&buf, 0))
+>  					die(_("could not remove '%s'"), path);
+>  
+>  				removed = 1;
+> +				strbuf_release(&buf);
+
+OK, so this part now only deals with the submodule directory.
+
+>  			}
+> +			if (!remove_path_from_gitmodules(path, index_only))
+> +				stage_updated_gitmodules(&the_index);
+
+And the entry for it in .gitmodules is handled by the helper,
+whether --cached or not.
+
+This somehow feels wrong for the index_only case; doesn't the helper
+take contents from the .gitmodules in the working tree and add it to
+the index?
+
+Unless you touched stage_updated_gitmodules() not to do that in the
+index_only case, that is.
+
+> +			continue;
+
+And that is all for what is done to a submodule.
+
+Makes sense so far.
+
+> +		}
+> +		if (!index_only) {
+>  			if (!remove_path(path)) {
+>  				removed = 1;
+>  				continue;
+> @@ -396,9 +399,6 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+>  			if (!removed)
+>  				die_errno("git rm: '%s'", path);
+>  		}
+> -		strbuf_release(&buf);
+> -		if (gitmodules_modified)
+> -			stage_updated_gitmodules(&the_index);
+
+OK, because this should have been done where we called
+remove_path_from_gitmodules().
+
+>  	}
+>  
+>  	if (write_locked_index(&the_index, &lock_file,
+> diff --git a/submodule.c b/submodule.c
+> index 9767ba9893..6ce8c8d0d8 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -131,7 +131,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+>   * path is configured. Return 0 only if a .gitmodules file was found, a section
+>   * with the correct path=<path> setting was found and we could remove it.
+>   */
+> -int remove_path_from_gitmodules(const char *path)
+> +int remove_path_from_gitmodules(const char *path, int index_only)
+>  {
+>  	struct strbuf sect = STRBUF_INIT;
+>  	const struct submodule *submodule;
+> @@ -149,7 +149,8 @@ int remove_path_from_gitmodules(const char *path)
+>  	}
+>  	strbuf_addstr(&sect, "submodule.");
+>  	strbuf_addstr(&sect, submodule->name);
+> -	if (git_config_rename_section_in_file(GITMODULES_FILE, sect.buf, NULL) < 0) {
+> +	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
+> +					      GITMODULES_FILE, sect.buf, NULL) < 0) {
+>  		/* Maybe the user already did that, don't error out here */
+>  		warning(_("Could not remove .gitmodules entry for %s"), path);
+>  		strbuf_release(&sect);
+
+When !index_only, do we have any guarantee that .gitmodules in the
+working tree and .gitmodules in the index are in sync?  I somehow
+doubt it.  
+
+I would have expected that the updated remove_path_from_gitmodules()
+would look more like:
+
+ - only if !index_only, nuke the section for the submodule in
+   .gitmodules in the working tree.
+
+ - nuke the section for the submodule in .gitmodules in the
+   index.
+
+IOW, there would be two git_config_rename_section_in_file() calls to
+remove the section in !index_only case.
+
+Doing so would also mean that you should not have the caller call
+stage_updated_gitmodules() at all, even in !index_only case.
+Imagine if the .gitmodules file in the working tree had local
+changes (e.g. registered a few more submodules, or updated the url
+field of a few submodules) that are not yet added to the index when
+"git rm" removed a submodule.  The user does not want them to be in
+the index yet and "git rm" should not add these unrelated local
+changes to the index.
+
+Thanks.
