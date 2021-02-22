@@ -2,85 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B521BC433E0
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C36C1C433DB
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:27:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 780DA64E21
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:21:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82C7764EEC
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 17:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230257AbhBVRVT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 12:21:19 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58438 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbhBVRVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 12:21:19 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B9BE711E016;
-        Mon, 22 Feb 2021 12:20:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Aqm+4w5fXGRUUv7Hsc9NM/+v4HE=; b=EVr2AS
-        JOYEGStV4cDE4YSM30yAUCNdSnFN8kHf6fxnxsNh+rBkN9yF7d/5YrOZRtFgW1ZV
-        33XZUZsRMtzbTOoO3WnBj0UBA5dOhhvIJOaRP/fZ+zWyKl52CiORVYtWwt7TxXx7
-        qdUB1qNk4dtIyBFZDeS2ltdmjQZoRz04wfsKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KeyZMwSg5vl+R2J55Izy7Qj6vGbb8nRO
-        IQ4E2Y+Guy+QYJ5RRWmGoYaxU8r2qKC0uoKQ68FIAfaeSth7JQ41aC8oSL5o1IFi
-        x2k/3NDrWlQh6czW7Lvj1bDj++x+FQA3eKuAjBezIB2uvJ4cMeaOZfL//0Lpj4nZ
-        um9/4tXf3d4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B388F11E015;
-        Mon, 22 Feb 2021 12:20:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 067B411E012;
-        Mon, 22 Feb 2021 12:20:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wang Yugui <wangyugui@e16-tech.com>
-Cc:     git@vger.kernel.org
-Subject: Re: noeol when redirect git log output to a file
-References: <20210222231406.CE72.409509F4@e16-tech.com>
-Date:   Mon, 22 Feb 2021 09:20:32 -0800
-In-Reply-To: <20210222231406.CE72.409509F4@e16-tech.com> (Wang Yugui's message
-        of "Mon, 22 Feb 2021 23:14:07 +0800")
-Message-ID: <xmqqk0r081en.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230213AbhBVR1Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 12:27:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230129AbhBVR1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 12:27:23 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF17AC061574
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 09:26:42 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id t29so6987972pfg.11
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 09:26:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+MItqV3DSLdybRymUZEmL8sGPtlXTaQ2quEcjfubN7c=;
+        b=RT6vMIVzv9U2n2pxZUl5f7zbqG3ybkH+FNdNaLxwzmqu9i2uF5jF5uV0OVFDE+7il3
+         IBWj/h3cUVRrhLHqjY3Z3UPFN4S2o4fOLdzLGl6H9i0MBXNFSm+7EDeDRPdnhR46ENMB
+         TEomsA/dGSKdJdGVo3tiOx0iubRkJVCk64Wledle15gGfwcmi7vBF1c0qXV9YIWLA50L
+         9wHct/Qax+czk8ZDBV3SGaHGlhx914v8m77movMN9RXPyjWgpKxstJeqH0Le2rRtb3Nm
+         t3yOuY/pASOu3ZJxdquxCRE8F269kCnkdAwr+tfsVYEOurX58mIvs7WWG7EkWBLMR1vt
+         LAjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+MItqV3DSLdybRymUZEmL8sGPtlXTaQ2quEcjfubN7c=;
+        b=Lwa6+guxSDYjzhmfQYCCVdieu5UxWUx9U7LnXJVjm+auP8MRFWvu/znDgu4SLkbfHL
+         Qz6ivGl7y0MKZWTJKujlmhR5I6Heini39Pb5ycz6TKRg4TqSgCrybRpavkNw44jT0qtg
+         hwc7YMWYNX9dG+XUrXQCpvH3TikriZzUEOg+BV7eFYKpTWXMNACiYP63G41B9jeQBOOm
+         iBxNESxM8unN2zdZfYllicfF++LDZw68aKkkldfZQ1F0JrPbv6pyIQcHb+jC2d0EibCE
+         5Dlm8fS+yn/1litE+D2I8CytYaleVu3EISKR1qIlzyOaz5x9OUivDPdnmhhFrpJx9UOv
+         8NCQ==
+X-Gm-Message-State: AOAM530NdGGTf7RRE1d9u1I2/iALyJ/GnBRmYqpiWzRSm5EGUk4xU9JS
+        G4WH4tKY4EfP0rfWG41NNfc=
+X-Google-Smtp-Source: ABdhPJwWb2/2tAFGBPQDvmIyve1DenShdONzm8UbH4/S0ZKCGvCJCIn1IcCkOzbUiIR9h213ZWa60Q==
+X-Received: by 2002:a62:fc45:0:b029:1ed:bdd2:a07d with SMTP id e66-20020a62fc450000b02901edbdd2a07dmr2487396pfh.0.1614014802554;
+        Mon, 22 Feb 2021 09:26:42 -0800 (PST)
+Received: from localhost.localdomain ([122.161.0.245])
+        by smtp.gmail.com with ESMTPSA id x80sm4737437pfc.71.2021.02.22.09.26.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 09:26:42 -0800 (PST)
+From:   Shourya Shukla <periperidip@gmail.com>
+To:     periperidip@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        levraiphilippeblain@gmail.com
+Subject: [PATCH v2 0/1] rm: stage submodule removal from '.gitmodules'
+Date:   Mon, 22 Feb 2021 22:56:22 +0530
+Message-Id: <20210222172623.69313-1-periperidip@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20210218184931.83613-1-periperidip@gmail.com>
+References: <20210218184931.83613-1-periperidip@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 458A1D6A-7532-11EB-BECE-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wang Yugui <wangyugui@e16-tech.com> writes:
+Hello all,
 
-> [root@T640 ~]# git log '--pretty=format:%h: %an: %s' -- hw/ >a.txt
+This is the v2 of the patch with the same title. After suggestions from
+Phillipe and Junio, I have improved the commit messages, squashed the
+two commits and did the following:
 
-This is an expected behaviour.
+	1. Change the definition and declaration of
+	   'remove_path_from_gitmodules()' to account in for the
+	   'index_only' variable denoting the presence of '--cached'
+	   option in the 'git rm' command. In case of the variable being
+	   1, remove the submodule entry from the index copy of the
+	   '.gitmodules' else do the same for the working tree copy.
 
-Notice that the format string given above does not end in LF by
-itself (its final placeholder is the subject string without LF at
-the end).  LF you'd see in the output all come from the "log"
-machinery and not from the format string.  When the machinery adds
-LFs, there are "separator" and "terminator" behaviour, the former of
-which adds a separating LF between each item, while the latter adds
-a terminating LF after each item.
+	2. Remove the 'gitmodules_modified' variable and instead call
+	   'stage_updated_gitmodules()' just after the
+	   'remove_path_from_gitmodules()' call.
 
-"--pretty=format" is defined to use a separator semantics that is
-suited to show multi-line items, each of which ends in LF on its own
-(think of --pretty=format:"by %an%n%b").  Using terminator behaviour
-you'd get an useless extra LF at the end for such a format, and
-separator behaviour lets you avoid it.
+	3. Account for the above changes in 't3600' and make changes in
+	   the same.
 
-"git log --help" and find "tformat", to learn more.  --format=<fmt>,
-instead of --pretty=format:<fmt>, may also help.
+I am facing some problem with point (2) in the sense that what Junio
+suggested in his mail:
+https://lore.kernel.org/git/xmqqblchdoej.fsf@gitster.g/
+
+-----8<-----
+ - Since the previous point will maintain the correct contents in
+   the index in all cases, get rid of gitmodules_modified and calls
+   to stage_updated_gitmodules().  The call to write_locked_index()
+   at the end will take care of the actual writing out of the index.
+----->8-----
+
+I am not able to get rid of the 'stage_updated_gitmodules()' call
+without failing tests in t3600 (t3600.4 is the first one to fail). What
+am I doing wrong here?
+
+Comments and reviews are appreciated. Thank you Phillipe and Junio for
+the constructive feedback on the v1!
+
+Regards,
+Shourya Shukla
+
+Shourya Shukla (1):
+  rm: stage submodule removal from '.gitmodules' when using '--cached'
+
+ builtin/rm.c  | 42 +++++++++++++++++++++---------------------
+ submodule.c   |  5 +++--
+ submodule.h   |  2 +-
+ t/t3600-rm.sh |  6 ++----
+ 4 files changed, 27 insertions(+), 28 deletions(-)
+
+-- 
+2.25.1
+
