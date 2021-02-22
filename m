@@ -2,86 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81282C433DB
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 03:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA8CC433DB
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 05:08:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3DF1E64EDB
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 03:10:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B22FB64E61
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 05:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231806AbhBVDKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 21 Feb 2021 22:10:10 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:39386 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231706AbhBVDKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Feb 2021 22:10:09 -0500
-Received: by mail-ed1-f46.google.com with SMTP id h10so19998172edl.6
-        for <git@vger.kernel.org>; Sun, 21 Feb 2021 19:09:53 -0800 (PST)
+        id S230248AbhBVFIC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 00:08:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51738 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230255AbhBVFHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 00:07:52 -0500
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 211F7C06178A
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 21:07:12 -0800 (PST)
+Received: by mail-qv1-xf33.google.com with SMTP id s3so3067197qvn.7
+        for <git@vger.kernel.org>; Sun, 21 Feb 2021 21:07:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sgO0xPbwjegkktK14Gr8SUusAtSVD1E0JSz2+p5sf+A=;
+        b=PlQRj8uldM1w12JHhn9Vys6e1rergrmhprRcWoldlUS/B5drOlPyaX7gxrT6NWStjd
+         gD5C7BJyUQoKwtAzmazbRVAH26q5mlg+NProYrioboavBAept0a4OTRwNDpIKwy5QEXL
+         gY09UWZtnTmo84HaBL9lmsvwHpJNY8fFL1XP36mPPVJs0xg3DOM2ZofqIZrY++mTA5Sd
+         PAFI+WdQxVG4kAyez/oJIyNSjdJjcCkreYY58oNSWx9rxRzarTogCDhBcFt7Ji2YtFl2
+         myb6CImMHETPgxE7yYeAcogEaQvR/CJwtnE6On4m/F64Ga8V0Nb6W1gWeEvrbjUZpk/G
+         IDiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4gVP9N6yuwizFMR6JDDQN13kwmMh8A1LFjG3NGaKE+A=;
-        b=LTYeHVZlow7nU9+dkPOHZ/FLO+zGJDVWUBejGHm7c+qw1LOnigPZDVQGNyDXRlbm7t
-         Vrue6GIsn9BnzAQZbWTWq3w9kpaMnHv3uZ4FTldLeLQxhsq9IQL96QbHQEp1ZPfcTNaF
-         NhA0AietiJPHfs3VGNJxKQEyv+P5CZUusL74EqegbjlGP5NrHtUVvio9bBP9Ybi3ZMsT
-         l6BsCU8dV6tFSaSS+I1t6aQpUu9huiD0/uw63nVdMTeLuUqhUAqP0KJO6p+faRvyg9eQ
-         GEM79jh3yGA/zHtSY0uTHwsdpyfqysupjsFcctgzmBG+YHXN9ItmB/mil/eQ6K0HeDbY
-         ZZFw==
-X-Gm-Message-State: AOAM531t0lnnmT+1CkIct7LVPxkQ62H93W6YgFgZsYxRxKz5MgxGxcnJ
-        93PapAweJz+J9/bo+zCp2GcRLbgBzbEGC9BD6os=
-X-Google-Smtp-Source: ABdhPJxTtfFHYJYRWtdc7DaDjovjtS0t0VwVphL1pLFjJGZ7to4YIyAytxkr6BtkGxNRXNPG3HGF769gCZ3xLqA6ZGc=
-X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr20076011edt.221.1613963367734;
- Sun, 21 Feb 2021 19:09:27 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sgO0xPbwjegkktK14Gr8SUusAtSVD1E0JSz2+p5sf+A=;
+        b=aVyfI76MJ5NBxVFHDr11lFpymQ8aX3qbGKdcTzYPEiUgiaoL9mhQEY+6cZzjp/8kNh
+         XLS4rRKkLSuLSrXnua5XD8tPM99NuEqKq9x0kK0tVJrVBZKrK/bBBOiROTj8fhtAEyEv
+         bDUIp4xQhZLHhzSfVkPywUYZhQBDen23Nwj0QjyGE2pWmk3rA0T7bL7L7/3HldSgODsn
+         9iXOaVb7vMWmECPKk5gyJoxsoEMxirP2zkhIV/YczPuAsN99MXF3rH6u2eboXhmZsv0g
+         e11rYbCWO2g11WU+uf+tB8WKQMEumfavlULFjQXuM/nSjwO6/5P2FgKe5A4qFYbaN9EU
+         /o3Q==
+X-Gm-Message-State: AOAM530CxWB0Ipn/1NAOgty9J0rIazjp/7BR/INILhZNp5v5MUbCIapa
+        dxFvXD4xj7JCGsI21rOWZqdgOeyomuXdOKQ4fIstSceu
+X-Google-Smtp-Source: ABdhPJyhBCd5/jiPzFSfchHgx4n7oaduEFow0C/SLOuTsmcy2+cBJBbY2NUk88YyZUc9YvcRjmO2UAke7nHJMssUEcM=
+X-Received: by 2002:a05:6214:c65:: with SMTP id t5mr19485299qvj.19.1613970431131;
+ Sun, 21 Feb 2021 21:07:11 -0800 (PST)
 MIME-Version: 1.0
-References: <d57023d9f13d178dc95d7a74751923b80d1a5939.1607522429.git.gitgitgadget@gmail.com>
- <20210222004112.99268-1-stefanbeller@gmail.com> <CAPig+cT9ZUqkOZWZS3+gEd3soh-xyfxu2yvQ_gY-LMgVV-rAiw@mail.gmail.com>
-In-Reply-To: <CAPig+cT9ZUqkOZWZS3+gEd3soh-xyfxu2yvQ_gY-LMgVV-rAiw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 21 Feb 2021 22:09:16 -0500
-Message-ID: <CAPig+cT9FDZ78mTmuvaOyzhc+JKV3U8DRBfFRezWr2bsW4gmGA@mail.gmail.com>
-Subject: Re: [PATCH] refs: introduce API function to write invalid null ref
-To:     Stefan Beller <stefanbeller@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Han-Wen Nienhuys <hanwen@google.com>, hanwenn@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Josh Steadmon <steadmon@google.com>
+From:   Adam Sharafeddine <adam.shrfdn@gmail.com>
+Date:   Mon, 22 Feb 2021 07:07:00 +0200
+Message-ID: <CAAxrY9yjTKV8-K0AmO4fBmtDrSB4KkN_xKOMmtSb-dvixJNaEQ@mail.gmail.com>
+Subject: Wrong configuration variable mentioned in git-push documentation
+ (examples section)
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 21, 2021 at 8:20 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> The reason I ask is that the bit of code in
-> builtin/worktree.c:add_worktree() which this patch targets is itself a
-> hack to work around the shortcoming in which is_git_directory() won't
-> consider the newly-created worktree as being legitimate if it doesn't
-> have a well-formed HEAD ref. [...]
+Hello
 
-By the way, the only reason the hack of creating a temporary HEAD
-(containing arbitrary OID) is needed is that add_worktree() shells out
-to invoke one of git-update-ref or git-symbolic-ref. It is that
-shell-out to invoke a Git command which triggers the necessity of
-pacifying is_git_directory()...
+In the file Documentation/git-push.txt under the EXAMPLES section,
+specifically under
+`git push origin`::, remote.origin.merge configuration variable is
+said to configure the
+upstream branch for the origin remote, when in fact it should be
+branch.<name>.merge,
+where <name> is the name of the local branch at which HEAD is
+currently pointing to.
 
-> On the other hand, I could see this as acceptable if "invalid" is
-> removed from the function name and if it accepts an OID to write
-> rather than unconditionally writing a zero-ID. In that case, it would
-> become a generally useful function without the bad smells associated
-> with the too-special-purpose write_invalid_head_ref().
+Here's en excerpt:
 
-... so, a much cleaner fix would be to stop shelling out to set up
-HEAD in the newly-created worktree, and instead call C API to perform
-those functions (update-ref and symbolic-ref) directly. If that C API
-does not yet exist, then it should be added.
+> `git push origin`::
+>         Without additional configuration, pushes the current branch to
+>         the configured upstream (`remote.origin.merge` configuration
+>         variable) if it has the same name as the current branch, and
+>         errors out without pushing otherwise.
+
+
+I'm still learning Git so I thought I would share this with you (I got
+confused reading
+the examples). Maybe I'll learn something new or/and correct the
+aforementioned error.
+
+Regards
+
+--
+Adam
