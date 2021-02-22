@@ -2,91 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16F1CC433DB
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5891C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 00:00:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAB6F64E00
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 23:41:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B460264E41
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 00:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230481AbhBVXlH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 18:41:07 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40866 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229996AbhBVXlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 18:41:07 -0500
-Received: (qmail 22233 invoked by uid 109); 22 Feb 2021 23:40:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Feb 2021 23:40:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19239 invoked by uid 111); 22 Feb 2021 23:40:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Feb 2021 18:40:25 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 22 Feb 2021 18:40:25 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wang Yugui <wangyugui@e16-tech.com>, git@vger.kernel.org
-Subject: Re: [PATCH] docs/format-patch: mention handling of merges
-Message-ID: <YDRA6RJdnFne2EBw@coredump.intra.peff.net>
-References: <20210222211621.0C5D.409509F4@e16-tech.com>
- <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
- <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net>
- <xmqqv9aj65na.fsf@gitster.g>
+        id S231710AbhBWAAD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 19:00:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59636 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231228AbhBVX75 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 18:59:57 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 382BBBDB5B;
+        Mon, 22 Feb 2021 18:59:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ANE0Ywz8TlGl0Q/lUT7+9COdZqY=; b=Zl9Sdq
+        3or82i3FKckJLNGNdqr1tCh+4PO5ola2hYSOmO3HGSc/fmEUinV+pC9Ff7lwsg9e
+        g0bSjahLeNXIPmMTlNKsQB1LRbpi+VWkpc6MQCNDh8wdGRpReZqW15w0Ld14JeQK
+        zFCH4zgW9PxOX40dAJLnP5jWGpHW3L22GvGBA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=WO/k+J8dukTMXoNCxsMmlZcau3lQfpoT
+        v78c+cLf7z7pcRhSqF2u/fhzxjzXOl/D1ne60aLweFAs4HHYMMf+041sIPBQ1vCk
+        EEJ75vQ/4qDvPDgZh6+wzuTrDLepTH0pCr0AhrgPk7uQ1oja981FY+nwoSZggmaO
+        y3mfFQED+Wo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FDA3BDB5A;
+        Mon, 22 Feb 2021 18:59:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B19BBBDB59;
+        Mon, 22 Feb 2021 18:59:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Stefan Monnier <monnier@iro.umontreal.ca>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: New orphan worktree?
+References: <jwvwnwqrqwd.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+        <CABPp-BE1QXA0ohB9D-tqKpzDTok0BMsGQjotmcqMxfs9AL5noA@mail.gmail.com>
+        <CAPig+cRzXd+zd+xVisaW+HToSaGzAE28acGmxwRxNU4bczHXbw@mail.gmail.com>
+        <87wnv688u4.fsf@evledraar.gmail.com>
+        <CAPig+cQ9oqMWjBkyRt-SQFuyfAGkMu1J-U6ZCCJqeL0a_3ynkw@mail.gmail.com>
+        <87ft1o8mi0.fsf@evledraar.gmail.com>
+        <CAPig+cSkL+5otKUWwm=CLaRR+j71wW61U7LWtmuUHO+7bZaY_g@mail.gmail.com>
+Date:   Mon, 22 Feb 2021 15:59:14 -0800
+In-Reply-To: <CAPig+cSkL+5otKUWwm=CLaRR+j71wW61U7LWtmuUHO+7bZaY_g@mail.gmail.com>
+        (Eric Sunshine's message of "Mon, 22 Feb 2021 18:06:32 -0500")
+Message-ID: <xmqqmtvv64dp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv9aj65na.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: F763BC76-7569-11EB-B395-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 22, 2021 at 03:31:53PM -0800, Junio C Hamano wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Subject: [PATCH] docs/format-patch: mention handling of merges
-> >
-> > Format-patch doesn't have a way to format merges in a way that can be
-> > applied by git-am (or any other tool), and so it just omits them.
-> > However, this may be a surprising implication for users who are not well
-> > versed in how the tool works. Let's add a note to the documentation
-> > making this more clear.
-> > ...
-> > +CAVEATS
-> > +-------
-> > +
-> > +Note that `format-patch` cannot represent commits with more than one
-> > +parent (i.e., merges) and will silently omit them entirely from its
-> > +output, even if they are part of the requested range.
-> 
-> 
-> I think "cannot represent" is a little bit misleading, unless we
-> expect the readers already know what we are trying to say (in which
-> case there is no point in documenting this).  Perhaps something like
-> this might clarify a bit, though.
-> 
->     Note that `format-patch` omits merge commits from the output,
->     because it is impossible to turn a merge commit into a simple
->     "patch" in such a way that allows receiving end to reproduce the
->     same merge commit.
+> When I was pondering the issue before writing my original response,
+> two thoughts came to mind. (1) "git worktree add --force --orphan
+> <branch>" would be one way to make your case work; (2) given how
+> infrequently --orphan is used, we just punt and require people to
+> first use "git branch -D <branch>" if necessary (which has been the
+> status-quo for git-branch and git-switch).
 
-That seems worse to me, because "it is impossible" implies that this
-can never be changed. But I don't think that's true. We might one day
-output something useful for merges.
-
-I think one could argue that any merge information (including conflict
-resolution) works against the root notion of format-patch, which is a
-set of changes that can be applied on a range of basesa. But even that I
-would be hesitant to commit to (since --base exists now). And certainly
-it's more subtlety than I'd want to get in to for this note. :)
-
-I almost softened it to "cannot yet represent". Does that read better to
-your (or worse)? Likewise, I considered adding a note at the end along
-the lines of "this may change in the future", though I suspect we'd only
-do so in combination with a command-line option.
-
--Peff
+FWIW, as I personally view that branch -d/-D, checkout -b/-B, and
+switch -c/-C were all mistakes (they should have been -d, -b and -c
+with and without --force, respectively), I find the combination of
+"--force --orphan" a reasonable way forward.
