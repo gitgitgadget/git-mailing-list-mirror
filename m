@@ -2,77 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5226DC433DB
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D944BC433E0
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10B6064E32
-	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:04:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A37E60C3D
+	for <git@archiver.kernel.org>; Mon, 22 Feb 2021 20:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233028AbhBVUEA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 15:04:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46496 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232829AbhBVUDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 15:03:54 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FCCC06174A
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 12:03:03 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id q77so14655584iod.2
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 12:03:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=LY6LpAtx9eJsiCkx7plx1TyzmTMUQtqtRrvCe751Ruk=;
-        b=KUUakYeopxMLI5j7L3i8QM8NdKiSI3k6KaL7muoosjb5xsRFzQ3UpVpv4mpdJPFT7N
-         JhHDPay+F7fwSPdIzGO4vGYOSzGoWMfcV+C+altRMoDLGiJXaR7HLcZ6AcpPwqzCgsBp
-         bbMJz5Mk55jJAhYeIeCuaNC18zeiwBFKMUNrpICOMniYRW6aPGi5hJK1nidzRFJk6Vzp
-         7IiNZro5XJgX+Iy2EoqSNk3kb2/wOzDYj7sjW/xOQOuihy53Gw1eWaJGNG1/HhwYas42
-         4tdhEQQq8/z5/3pYVfoujuobCWqN/epkS/WJVo4cuXTic5+WTWs8hmC8fOS+DOOBy85F
-         88YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=LY6LpAtx9eJsiCkx7plx1TyzmTMUQtqtRrvCe751Ruk=;
-        b=kiREiXuY0GyzBwqbXkDgPiMq7xEcXA2q4Exh0Fxhg6hF/ZSuxfu4kyJ2+3L0Onfk5I
-         6rO6IIHhgy3r9FNOPc9kiLQIbirntdvSBxDd8qO0Bg7M+BomRt6iX/6roZFx88W4MQbe
-         iD6h7N7m15JPfK+8VWBeEM9zekBLq8rYCfZy34ByTKi4FDl9QSN36/W3sItvfzv6k4F6
-         mTtXVNEbJoYhMDtYequXuZA78ttL4V3kV6gxj7x6MTQZ1iPU7Z4w365DSaAL3K27cAcf
-         ce1mO8Bl9tvbpNnN/ZvmmQ5w0wZ1sOlN6NIanUbfKn4nji41HUqi6CdAW1NaY9QjoT/V
-         rGvg==
-X-Gm-Message-State: AOAM533xv0shAN8FanXJATHkuSeDukpeRnZ8nf3Q+0sTlVIuc+v32j5Z
-        ifV413ERRYI5yOWDQB+Rhpvhlrz6399+2jvipVDbQESiMisUEA==
-X-Google-Smtp-Source: ABdhPJzHPA9ttjmmlQV6R9qjjKPNBgh339J5jfzpvvXM7vEX5zBGSDhtAB9miDoZtJAhUuuFs8qXW3ZX0VSJsIcU/yA=
-X-Received: by 2002:a05:6602:200e:: with SMTP id y14mr11245919iod.94.1614024183271;
- Mon, 22 Feb 2021 12:03:03 -0800 (PST)
+        id S231367AbhBVUMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 15:12:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61477 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231249AbhBVUMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 15:12:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 322E9BC54B;
+        Mon, 22 Feb 2021 15:12:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=rul1HK4jYrll
+        HRA8JuEIVKEKP4E=; b=rS758YypAPeY/mcOWDtguI+HaExTTmMdPFXRrrdqI5RH
+        rx+IKfouu+SToevY4tEiN1f5FZVsHCRqbV7upNG5gvPsroshEGMvJ/JmZtRGq7Te
+        GJyVr3v1/jcCyAQRLvvaOXGRDOnottR2ACWalMgt9ivJI9jA+Eb8FmI62uCidjU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bFTk9+
+        c9lHk1a8//lfMTXATXcJOKanVBTOZR360sfVvv1GYdmkt9Z7iBNyDD7rySejqlNK
+        6veOrp7AjrAMwYOuXDRf3yLRTe8dR6k6lQhwXda/sAp7QCc51YrEy3Yg+ys74ULd
+        0UTCK0DwPNI6hTbuAFOyqwg8tk7Q7dVkWGBt0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 298B1BC54A;
+        Mon, 22 Feb 2021 15:12:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89B3BBC548;
+        Mon, 22 Feb 2021 15:12:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+Subject: Re: [PATCH v2 0/4] Check .gitmodules when using packfile URIs
+References: <20210115234300.350442-1-jonathantanmy@google.com>
+        <cover.1614021092.git.jonathantanmy@google.com>
+Date:   Mon, 22 Feb 2021 12:12:08 -0800
+In-Reply-To: <cover.1614021092.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 22 Feb 2021 11:20:05 -0800")
+Message-ID: <xmqqft1n7tgn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Mon, 22 Feb 2021 12:02:54 -0800
-Message-ID: <CA+dzEB=Ts=OdoYey+f-t+oLXAAv=f5hEJNpzb0G=LTpGPs+faw@mail.gmail.com>
-Subject: git since 2.27.0 shows unfetchable object name for `git describe` for
- reannotated tags
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3E28B046-754A-11EB-8E19-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This does seem intentional given the commit message for
-ff165f00c1065d94c0bcab8708364e6dc5655f5d
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-https://github.com/git/git/commit/ff165f00c1065d94c0bcab8708364e6dc5655f5d
+> Here's v2. I think I've addressed all the review comments, including
+> passing the index-pack args as separate arguments (to avoid the
+> necessity to somehow encode in order to get rid of spaces), and by usin=
+g
+> a custom error function instead of a specific option in fsck.
+>
+> This applies on master. I mentioned earlier [1] that I was planning to
+> implement this on =C3=86var's fsck API improvements, but after looking =
+at the
+> latest v2, I see that it omits patch 11 from v1 (which is the one I
+> need), so what I've done is to use a string check in the meantime.
+>
+> [1] https://lore.kernel.org/git/20210219004612.1181920-1-jonathantanmy@=
+google.com/
 
-However this is causing an issue when using `git describe --tags
---abbrev=0` where I expect the command to print out either the old tag
-name or the new tag name, however it prints out neither:
+I only looked at the difference between this round and what is in
+'seen', but everything looked reasonable to me (including the code
+that is near NEEDSWORK comment, and what the comment said).
 
-https://github.com/pre-commit-ci/issues/issues/45
-
-Is there a command that I can use to print out the old result (which
-worked correctly) instead of the new, broken result?
-
-Anthony
+Will queue.  Thanks.
