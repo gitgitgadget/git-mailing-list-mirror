@@ -2,119 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB570C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 08:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E6BC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 11:06:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A513A64E05
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 08:29:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B56764E32
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 11:06:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232198AbhBWI3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 03:29:32 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59684 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbhBWI3a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 03:29:30 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C5DEA123CAF;
-        Tue, 23 Feb 2021 03:28:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yaY8A4EvskNsMsZHnFDd/f0KH5A=; b=m4ITId
-        ANKOGjr8Y1Z+sP6iALnh980JW4SiSDmRUug72djDSiKhDpJ0GZsRhuBVW66NBrS9
-        6x9+ueEGRtUhbE9NjyXHGsUqk5Bq8rY1WFaWQjItCcjr0WLUl67Vk2vioZ1Cr0gR
-        9MD6RHU8aixMLzeccxXiK5xvb9+H7f1/GVFdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HeVuWxr40E4v4QPEgQVwbchxynDF9pLN
-        CboLCOrgfboRJu7ea7X2y5uCMRXBjAH6VH2OKmveUOpgV5E2Vg7zmu8FKk2LxhDg
-        UBgM1+Nph22HBdHhto220NdxjYKvnhhLtV9hGKR28jNY/Qe2jihWBXIsoUjgF0jW
-        TQTQhH+2Sxc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BE00B123CAE;
-        Tue, 23 Feb 2021 03:28:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0FE63123CAC;
-        Tue, 23 Feb 2021 03:28:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] replace "parameters" by "arguments" in error messages
-References: <40b2fedc-fdde-1fc0-ef98-86d8ea638193@kdbg.org>
-Date:   Tue, 23 Feb 2021 00:28:43 -0800
-In-Reply-To: <40b2fedc-fdde-1fc0-ef98-86d8ea638193@kdbg.org> (Johannes Sixt's
-        message of "Tue, 23 Feb 2021 08:38:52 +0100")
-Message-ID: <xmqqk0qz4284.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232210AbhBWLGy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 06:06:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41978 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231826AbhBWLGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 06:06:51 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 628E9C061574
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 03:06:11 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id j9so25444693edp.1
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 03:06:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=xbk84pdb4uGBnoE7vjTEadmxia9YEpYNL9Smj3qa2nU=;
+        b=YW1vVHDNZPygTndOoqbzxmwZuoqLHeA0oQOhmC47sYTOoHvm7u1boY1XUrd0GvBBLx
+         Sm+xMGcUt1KzL6nTShDlvGVqqdxVek7YnUVORQdWm8svN6aUhUX3KxXNLtNp56THx3cf
+         N/o9yEoYHfu4XLFDA9p1kgbC10ZX00W4PNCSQArEL74HSZ4eoY6IsA8CMs7W0pUi0uaW
+         cPzQDkqjoL2tbUBOoEB4xbx5Eef3In/YWpFSvnRhU/XiPs4WjFPKBWRDTofBpw73gh1X
+         lGzEB2v79jZI/wGLCQgnYPSbM9A79mnW34Q2hrjCwhvY02bDydMDhtANkIWH0kCncrGv
+         462w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=xbk84pdb4uGBnoE7vjTEadmxia9YEpYNL9Smj3qa2nU=;
+        b=Capkn817Qu54iBIsX9xNDY8FPPwO7v0OM/hEqzFoISGVM49n2afaNt0pBlX4l4sBqC
+         IDKDoRiyUNDYwfGJ4YutDH3zDYiFL4BGhyTWeB5yC/FhTJXM7tl01JJIFO1uDplvGOjY
+         TvJ+GqmzI4V4m8vCZA43ecxVn1LMGZrFqUw4sXaJM3ZoIcF9a+ORQTaIqrRHHE5VHi7Y
+         4yL6dJjzJxaKaVuh/PTQZfqk6YWcAzcdoJ7tBhMkuSfW7y6pLnQblvOFBBTc+SYXIQmF
+         COHm27GCnnCb7axu4bM8Nqr5Oj005B1DooIdTHB8U+ZRBi1XciXNHC0sW5JlzmZbbgyO
+         opWQ==
+X-Gm-Message-State: AOAM533oFz3BTS/zWE7Rz/HfkvTRU6nbG1KQCqdADYx5GqM2E8VKFeG5
+        JK43nPHfc0Vrzv7H1Mjy6DE=
+X-Google-Smtp-Source: ABdhPJwBkRujnGMvskQnQDNtDhEW5x/FTnm/nQhbdLP9VfimHwIZs+EzcGgFYwj2ZEgO+2iLNJ45OQ==
+X-Received: by 2002:aa7:c2cd:: with SMTP id m13mr26739896edp.176.1614078370043;
+        Tue, 23 Feb 2021 03:06:10 -0800 (PST)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id qn24sm12341517ejb.104.2021.02.23.03.06.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Feb 2021 03:06:09 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Stefan Monnier <monnier@iro.umontreal.ca>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: New orphan worktree?
+References: <jwvwnwqrqwd.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+        <CABPp-BE1QXA0ohB9D-tqKpzDTok0BMsGQjotmcqMxfs9AL5noA@mail.gmail.com>
+        <CAPig+cRzXd+zd+xVisaW+HToSaGzAE28acGmxwRxNU4bczHXbw@mail.gmail.com>
+        <87wnv688u4.fsf@evledraar.gmail.com>
+        <CAPig+cQ9oqMWjBkyRt-SQFuyfAGkMu1J-U6ZCCJqeL0a_3ynkw@mail.gmail.com>
+        <87ft1o8mi0.fsf@evledraar.gmail.com>
+        <CAPig+cSkL+5otKUWwm=CLaRR+j71wW61U7LWtmuUHO+7bZaY_g@mail.gmail.com>
+        <87czwr8wou.fsf@evledraar.gmail.com>
+        <CAPig+cQxYtw5z_bRQbS6MLgHQM2OTs5oRfpvKSOwZo8GcuwpTg@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <CAPig+cQxYtw5z_bRQbS6MLgHQM2OTs5oRfpvKSOwZo8GcuwpTg@mail.gmail.com>
+Date:   Tue, 23 Feb 2021 12:06:08 +0100
+Message-ID: <87a6rv82n3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24BA5832-75B1-11EB-AFE9-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
 
-> When an error message informs the user about an incorrect command
-> invocation, it should refer to "arguments", not "parameters".
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Recently, I was greated by an accidental `git tag` invocation:
->
->  $ git tag one two three
->  fatal: too many params
->
->  This is bad in two regards: (1) There's a techie-speak abbreviation
->  in a user-visible text, (2) and it is wrong terminology to refer to
->  "parameters" when "arguments" would be correct.
->
->  Then I looked at every single occurrence of "parameter" in Documentation/
->  and half-way through the rest and wanted to  correct all incorrect uses,
->  but things are by far not as clear-cut as I hoped.
->
->  So, I stopped here and fixed the one pain point that triggered the voyage,
->  which I hope is not too controversal.
->
->  bisect.c                    |  2 +-
->  builtin/notes.c             | 20 ++++++++++----------
->  builtin/stash.c             |  2 +-
->  builtin/tag.c               |  2 +-
->  t/t3301-notes.sh            |  6 +++---
->  t/t6030-bisect-porcelain.sh |  4 ++--
->  6 files changed, 18 insertions(+), 18 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index 75ea0eb57f..ae48d19acf 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -1064,7 +1064,7 @@ enum bisect_error bisect_next
->    	if (!all) {
->  		fprintf(stderr, _("No testable commit found.\n"
-> -			"Maybe you started with bad path parameters?\n"));
-> +			"Maybe you started with bad path arguments?\n"));
->    		return BISECT_NO_TESTABLE_COMMIT;
->  	}
-> diff --git a/builtin/notes.c b/builtin/notes.c
+On Tue, Feb 23 2021, Eric Sunshine wrote:
 
-The above hunk is curious for a few reasons.
+> On Mon, Feb 22, 2021 at 7:17 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> On Tue, Feb 23 2021, Eric Sunshine wrote:
+>> > I'm not sure I follow. In git-switch, --orphan does not imply -c even
+>> > though --orphan also creates a new branch (thus seems to work similar
+>> > to -c); it is nevertheless mutually-exclusive with -c and -C. The same
+>> > goes for --orphan in git-branch.
+>>
+>> I think we're on the same page with regards to what I meant. I.e. I
+>> don't see how it makes sense to conflate the type of branch we want
+>> (orphan or not orphan) with whether we want to clobber that branch or
+>> not (switch -c or -C, or worktree -b or -B)
+>
+> I see where you're coming from in viewing --orphan as a modifier of
+> branch creation rather than as a branch-creation option itself.
+> However, as far as UI is concerned, that ship sailed a long time ago,
+> I suppose.
 
- - The hunk header claims that both the preimage and the postimage
-   are 7 lines long, but they only have 5 (2 precontext, 1 change
-   and 2 postcontext) lines.
+Not really, I think we can have a new-style of it and just say:
 
- - There are spaces before tab on a few context lines that do not
-   exist in the patch target.
+    It is also possible to provide `--orphan <branch-name>`, but
+    supplying it as an option to `-[cC]` as `-[cC] <branch-name>
+    --orphan` is preferred these days.
 
-Ahh, format=flawed, that is.
+Whether we should is another matter, see below...
 
-    Content-Type: text/plain; charset=utf-8; format=flowed
+>> > As far as combining --orphan and -C (or -c), I'm not sure how we would
+>> > arrange that using the existing parse_options() mechanism. It seems
+>> > too magical and has potential for weird corner cases.
+>>
+>> Isn't it just having --orphan be an OPTION_STRING with
+>> PARSE_OPT_LASTARG_DEFAULT. I.e. to support:
+>>
+>>     git switch -b branch --orphan
+>>     git switch -B branch --orphan
+>>     git switch --orphan branch
+>>
+>> And:
+>>
+>>     git worktree add -b branch --orphan
+>>     git worktree add -B branch --orphan
+>>
+>> I didn't test it, just skimmed the code.
+>
+> I haven't dived into this stuff in a long time, but I'm having trouble
+> convincing myself that it would work out as intended. If I'm reading
+> PARSE_OPT_LASTARG_DEFAULT correctly, `git switch -b <branch> --orphan`
+> would not be the same as `git switch --orphan -b <branch>`
+
+Yeah, I think so. But I think for an option like that it would be more
+obvious. I.e. we could say:
+
+    If "-b" or "-B" is provided a subsequent "--orphan" is a boolean.
+
+We don't support the combination of the two now, so we could just
+mandate that the order matters.
+
+Anyway...
+
+> , and I don't think it would work at all for git-worktree-add which
+> has additional <path> and <commitish> arguments (i.e. `git worktree
+> add -b <branch> --orphan <path> [<commitish>]`).
+
+...we can parse these options, whether it's easy or trivial with
+parse-options.c is something I'd like to leave aside for now.
+
+Right now I'm not intending to re-roll this patch, but maybe someone
+else (or even me) will get to it sometime. I think it's more useful
+if/when that happens to get people's take on whether this makes sense as
+UI, not whether it's trivial with the current parse_options() API.
+
+I think it's fairly easy to tease this behavior out of
+parse_options(). Worse case we can do a pre-loop over argv and see if
+both "--orphan" and "-b"/"-B" occur. if so parse it with "--orphan" as a
+BOOL, otherwise STRING.
+
+> Anyhow, as I responded elsewhere to Junio, my present leaning is
+> toward -b, -B, --orphan all being mutually-exclusive branch-creation
+> options, each taking a <branch> argument -- just like they are in
+> git-checkout and git-switch (-c/-C, in this case) -- and allowing
+> --force to overwrite an existing branch (in which case, -B can be
+> viewed as shorthand for `--force -b`).
+
+See https://lore.kernel.org/git/7vpqzlrmo4.fsf@alter.siamese.dyndns.org/
+for past Junio arguing with his future self :)
+
+I.e. the reason we had -B in the first place is because --force means
+something else. We'd need "--force-ref-deletion
+--force-work-tree-clobbering" or whatever, or "--force --force".
+
+I like this lower/upper case convention. It started with "branch -D" in
+ba65af9c1f6 (git-branch -d <branch>: delete unused branch., 2005-09-14),
+but in checkout the --orphan option pre-dates -B. See 9db5ebf4022 (git
+checkout: create unparented branch by --orphan, 2010-03-21) and
+02ac98374ee (builtin/checkout: learn -B, 2010-06-24).
+
+I don't think we're going to change how "branch -D" and "switch -C" work
+at this point, so making things consistent with it makes sense.
+
+>> > Since git-worktree doesn't yet support --orphan, we certainly have
+>> > more leeway and could go with your proposal of having --orphan be
+>> > boolean and always requiring it to be used in conjunction with -b/-B.
+>> > However, I'm quite hesitant to take that approach since it breaks with
+>> > existing precedent in git-branch and git-switch, in which case
+>> > --orphan takes its own argument (<branch>) and is mutually-exclusive
+>> > with -b/-B/-c/-C.
+>>
+>> In git-branch? Isn't it only git [checkout|switch] that takes --orphan?
+>
+> Um, yes, I meant git-checkout everywhere I wrote git-branch. Sorry for
+> the confusion.
+
+*nod*
+
+>> I think not having a -B or -C equivalent at all would be preferrable to
+>> having a --force special-case just to work around the lack of it for
+>> --orphan.
+>
+> I'm having trouble wrapping my brain around this statement.
+
+I mean I'd rather not have an --orphan mode that works like -B (as
+opposed to -b) at all instead of having one that's "--orphan
+--force-ref-deletion" or whatever.
+
+It's an obscure enough thing that I don't think anyone *really* cares. I
+just wanted to find out if it not being a boolean was intentional, or a
+historical accident we would consider fixing if there was further work
+on it.
