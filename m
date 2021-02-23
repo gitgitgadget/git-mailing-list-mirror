@@ -4,160 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D67CC433DB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 23:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74565C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5860D64EC1
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 23:58:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4014364EC9
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231843AbhBWX5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 18:57:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
+        id S234170AbhBWX7G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 18:59:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233902AbhBWXuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 18:50:44 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51908C06178C
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:49:47 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id f33so419605otf.11
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:49:47 -0800 (PST)
+        with ESMTP id S233609AbhBWXro (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 18:47:44 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62EBEC0617AB
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:16 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id v15so130749wrx.4
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Dh3BQjelFm0GD/VgFiKRzX3MIpHTStfwtpp5F0s8rp8=;
-        b=f/+GaB5k+/ivtOvQkq6xe651Oro34+OnSJSua0SpUTnBsXZZlwlyo0IH+6cP80E+T6
-         bCOj/JoD7xgC2hQMPFpRwRf+jU3fF6/rsnEtq/iOcm/RDQ6lIzRnv1DJDiOP0hgYgiiz
-         UwOJxxy4v5NFe6ZhbclhvDVLOuIQIsHgnIXD6C3RBXtoNXqHId9kNdCc+vg+gmHnlyf1
-         u0wX4rvqTHSKyabpLHEnSnHH+V+swV5UEickCuZ8SDICGS+OkVLGE4SuF05Yx/l99YIr
-         LafQ2Xp/T9RYgGJD1j4jPBNFH7dMs+1ui+nN+Q4+xO1bKGi2TNf89MxGxkVOnFuq05mJ
-         cHCw==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=l/z2OvLd3svp846r/v6fGN490jMZ+a4VTznQAsWEl60=;
+        b=kFF9C2j5ITKsKvA6ZZOcbgQb+VYSUuG9zQzn3BQBxb+pWSjBmf0Y/FWpNRpILahEBc
+         fMJdG4kOCdAIV3ts+8sImmnTOSDEF6TPEqknMHUd7BP4q2Lh6TRayC5mH3318m3zwIAz
+         UJqYJQZJ5P6MB7D/7YsLQWqGEzyWUuJeEDr29M7r2G8xif8Vk57NZvAk9UgYUCu9/shP
+         YIOaCAPjnurTMEfJFRozKvm+SaU3J1MNAGe15AU6VE71aJ3mekornicZRUOFzC14M/7M
+         tCsyRIt4j1MbY11Vkl5WZMEgYNgFJwAl1p+bwaQkIHyhS8PUkaATyy7t3741XcSs4iRd
+         Wc5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Dh3BQjelFm0GD/VgFiKRzX3MIpHTStfwtpp5F0s8rp8=;
-        b=UOYNj+AhpJdzhw0KVxw4PeQti97GizK+wJe+Vi6qR3zbGOuhDKymIT2gMnRv2rQbOI
-         EUZcQA9VEw06Zj9bW/8TxNCnbIzBU28xp/FjHCaZo1c6jTtE5orAXKZ2rEE6wsBwGhMN
-         LqIIDV2uuhrOgm4C6iDVCSzD7e20s3owfwum0XD0ZQM7SNZYqhkyeZVTriaV4UZBGOF4
-         taIwGfwp06IWRbyAxydUWl7e8P4+RFDDdOkjKvkxHgEiUpc94Uo7CW006fGyBb6+zMKj
-         ldjE+Zznnb+r3y2IfFzhFfjx5pbMwhWooCi+XWOHTKqd/IDIw1JV/td/MNnC7RDmHOVY
-         +EYQ==
-X-Gm-Message-State: AOAM531k7ZvC3D0fuBdwXqXV5/f8feCa+7f8bIefeKb2FwtI9TortAAV
-        M94dC60TE4RzSqzV/q/oKB2O6VGeqM3KfWgVllM=
-X-Google-Smtp-Source: ABdhPJzFm09mpw/AMxW8CEIaL9IWnOqPXc1OaF6woPP4MpfRMHB4NcNmlpCTyaIfn4YJEA5hr4XGOjVtxqwrAlSeHfI=
-X-Received: by 2002:a05:6830:100c:: with SMTP id a12mr7107828otp.345.1614124186636;
- Tue, 23 Feb 2021 15:49:46 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=l/z2OvLd3svp846r/v6fGN490jMZ+a4VTznQAsWEl60=;
+        b=ntfigzS2y4JHK52nlJw8iLWhwR2pPAnN6mKyxMbrccGmtD3Sj0lEPXB8klIDnGmPUe
+         SEO3CgjDIbCySX9kaf4efdswcDPBsWn5vhQnOrm0p5y7ZqlFs5hrTbmlxqb3QgjLZk7w
+         VVljJQ/My8eyGYOnwCG1zVWoWgQskvnEtI53qwlCzp8xW+xY97eReIgduFMhsm/+Qv4N
+         d9tRT64bWESDdbxLjyS18HGgQbB54PaXFC8+t/5ccZAblCsrKzrGediAPYIM0ptjVaU2
+         YzE3oaZam/RAzW6bkMwvcQgd8hBXUxg4WJt0qCkyolFXeCRtvI+EDrYaP5x0YoCXA07P
+         LjRQ==
+X-Gm-Message-State: AOAM530d4cnWmFMBm0wvNgSRV79EVurmbKm8T1Lvu0x2rBV8ckeK2vf/
+        hIpB5Fpd6r94otBBNogZAquQJz2ULIQ=
+X-Google-Smtp-Source: ABdhPJzoXCD6kKA7p0MMq8EqHfkyMqoTXve7HxkOwmWBDrVAyXpgJCF0taIQvEKBItOuE8xxQEfnXQ==
+X-Received: by 2002:a05:6000:1542:: with SMTP id 2mr29045767wry.356.1614123855212;
+        Tue, 23 Feb 2021 15:44:15 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v10sm366749wrq.22.2021.02.23.15.44.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Feb 2021 15:44:14 -0800 (PST)
+Message-Id: <805c101cfd849db3a5defb30775c7abbfec99f68.1614123848.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
+References: <pull.844.git.1613289544.gitgitgadget@gmail.com>
+        <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Feb 2021 23:44:07 +0000
+Subject: [PATCH v2 10/10] diffcore-rename: use directory rename guided
+ basename comparisons
 MIME-Version: 1.0
-References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
-In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Feb 2021 15:49:35 -0800
-Message-ID: <CABPp-BEf5F_BT69_V0vOq9CdcNEce6qR5nk+2XZsdS5EeLV0_g@mail.gmail.com>
-Subject: Re: [PATCH 00/20] Sparse Index: Design, Format, Tests
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 23, 2021 at 12:14 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Here is the first full patch series submission coming out of the
-> sparse-index RFC [1].
+From: Elijah Newren <newren@gmail.com>
 
-Wahoo!  I'll be reading these over the next few days.
+Hook the work from the last several patches together so that when
+basenames in the sets of possible remaining rename sources or
+destinations aren't unique, we can guess which directory source files
+were renamed into.  When that guess gives us a pairing of files, and
+those files are sufficiently similar, we record the two files as a
+rename and remove them from the large matrix of comparisons for inexact
+rename detection.
 
-> [1]
-> https://lore.kernel.org/git/pull.847.git.1611596533.gitgitgadget@gmail.com/
->
-> I won't waste too much space here, because PATCH 1 includes a sizeable
-> design document that describes the feature, the reasoning behind it, and my
-> plan for getting this implemented widely throughout the codebase.
->
-> There are some new things here that were not in the RFC:
->
->  * Design doc and format updates. (Patch 1)
->  * Performance test script. (Patches 2 and 20)
->
-> Notably missing in this series from the RFC:
->
->  * The mega-patch inserting ensure_full_index() throughout the codebase.
->    That will be a follow-up series to this one.
->  * The integrations with git status and git add to demonstrate the improved
->    performance. Those will also appear in their own series later.
->
-> I plan to keep my latest work in this area in my 'sparse-index/wip' branch
-> [2]. It includes all of the work from the RFC right now, updated with the
-> work from this series.
->
-> [2] https://github.com/derrickstolee/git/tree/sparse-index/wip
->
-> Thanks, -Stolee
->
-> Derrick Stolee (20):
->   sparse-index: design doc and format update
->   t/perf: add performance test for sparse operations
->   t1092: clean up script quoting
->   sparse-index: add guard to ensure full index
->   sparse-index: implement ensure_full_index()
->   t1092: compare sparse-checkout to sparse-index
->   test-read-cache: print cache entries with --table
->   test-tool: don't force full index
->   unpack-trees: ensure full index
->   sparse-checkout: hold pattern list in index
->   sparse-index: convert from full to sparse
->   submodule: sparse-index should not collapse links
->   unpack-trees: allow sparse directories
->   sparse-index: check index conversion happens
->   sparse-index: create extension for compatibility
->   sparse-checkout: toggle sparse index from builtin
->   sparse-checkout: disable sparse-index
->   cache-tree: integrate with sparse directory entries
->   sparse-index: loose integration with cache_tree_verify()
->   p2000: add sparse-index repos
->
->  Documentation/config/extensions.txt      |   7 +
->  Documentation/git-sparse-checkout.txt    |  14 ++
->  Documentation/technical/index-format.txt |   7 +
->  Documentation/technical/sparse-index.txt | 167 +++++++++++++
->  Makefile                                 |   1 +
->  builtin/sparse-checkout.c                |  44 +++-
->  cache-tree.c                             |  40 ++++
->  cache.h                                  |  12 +-
->  read-cache.c                             |  35 ++-
->  repo-settings.c                          |  15 ++
->  repository.c                             |  11 +-
->  repository.h                             |   3 +
->  setup.c                                  |   3 +
->  sparse-index.c                           | 290 +++++++++++++++++++++++
->  sparse-index.h                           |  11 +
->  t/README                                 |   3 +
->  t/helper/test-read-cache.c               |  61 ++++-
->  t/perf/p2000-sparse-operations.sh        | 104 ++++++++
->  t/t1091-sparse-checkout-builtin.sh       |  13 +
->  t/t1092-sparse-checkout-compatibility.sh | 136 +++++++++--
->  unpack-trees.c                           |  16 +-
->  21 files changed, 953 insertions(+), 40 deletions(-)
->  create mode 100644 Documentation/technical/sparse-index.txt
->  create mode 100644 sparse-index.c
->  create mode 100644 sparse-index.h
->  create mode 100755 t/perf/p2000-sparse-operations.sh
->
->
-> base-commit: 966e671106b2fd38301e7c344c754fd118d0bb07
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-883%2Fderrickstolee%2Fsparse-index%2Fformat-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-883/derrickstolee/sparse-index/format-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/883
-> --
-> gitgitgadget
+For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
+performance work; instrument with trace2_region_* calls", 2020-10-28),
+this change improves the performance as follows:
+
+                            Before                  After
+    no-renames:       12.775 s ±  0.062 s    12.596 s ±  0.061 s
+    mega-renames:    188.754 s ±  0.284 s   130.465 s ±  0.259 s
+    just-one-mega:     5.599 s ±  0.019 s     3.958 s ±  0.010 s
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/gitdiffcore.txt |  2 +-
+ diffcore-rename.c             | 32 +++++++++++++++++++++++---------
+ 2 files changed, 24 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+index 80fcf9542441..8673a5c5b2f2 100644
+--- a/Documentation/gitdiffcore.txt
++++ b/Documentation/gitdiffcore.txt
+@@ -186,7 +186,7 @@ mark a file pair as a rename and stop considering other candidates for
+ better matches.  At most, one comparison is done per file in this
+ preliminary pass; so if there are several remaining ext.txt files
+ throughout the directory hierarchy after exact rename detection, this
+-preliminary step will be skipped for those files.
++preliminary step may be skipped for those files.
+ 
+ Note.  When the "-C" option is used with `--find-copies-harder`
+ option, 'git diff-{asterisk}' commands feed unmodified filepairs to
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 5de4497e04fa..70a484b9b63e 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -667,7 +667,6 @@ static const char *get_basename(const char *filename)
+ 	return base ? base + 1 : filename;
+ }
+ 
+-MAYBE_UNUSED
+ static int idx_possible_rename(char *filename, struct dir_rename_info *info)
+ {
+ 	/*
+@@ -780,8 +779,6 @@ static int find_basename_matches(struct diff_options *options,
+ 	int i, renames = 0;
+ 	struct strintmap sources;
+ 	struct strintmap dests;
+-	struct hashmap_iter iter;
+-	struct strmap_entry *entry;
+ 
+ 	/*
+ 	 * The prefeteching stuff wants to know if it can skip prefetching
+@@ -831,17 +828,34 @@ static int find_basename_matches(struct diff_options *options,
+ 	}
+ 
+ 	/* Now look for basename matchups and do similarity estimation */
+-	strintmap_for_each_entry(&sources, &iter, entry) {
+-		const char *base = entry->key;
+-		intptr_t src_index = (intptr_t)entry->value;
++	for (i = 0; i < rename_src_nr; ++i) {
++		char *filename = rename_src[i].p->one->path;
++		const char *base = NULL;
++		intptr_t src_index;
+ 		intptr_t dst_index;
+-		if (src_index == -1)
+-			continue;
+ 
+-		if (0 <= (dst_index = strintmap_get(&dests, base))) {
++		/* Is this basename unique among remaining sources? */
++		base = get_basename(filename);
++		src_index = strintmap_get(&sources, base);
++		assert(src_index == -1 || src_index == i);
++
++		if (strintmap_contains(&dests, base)) {
+ 			struct diff_filespec *one, *two;
+ 			int score;
+ 
++			/* Find a matching destination, if possible */
++			dst_index = strintmap_get(&dests, base);
++			if (src_index == -1 || dst_index == -1) {
++				src_index = i;
++				dst_index = idx_possible_rename(filename, info);
++			}
++			if (dst_index == -1)
++				continue;
++
++			/* Ignore this dest if already used in a rename */
++			if (rename_dst[dst_index].is_rename)
++				continue; /* already used previously */
++
+ 			/* Estimate the similarity */
+ 			one = rename_src[src_index].p->one;
+ 			two = rename_dst[dst_index].p->two;
+-- 
+gitgitgadget
