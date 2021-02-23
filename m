@@ -2,87 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21041C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 926FEC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D139564EC3
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:54:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D68A64ECB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233117AbhBWVyE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 16:54:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42380 "EHLO cloud.peff.net"
+        id S231837AbhBWV55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 16:57:57 -0500
+Received: from z11.mailgun.us ([104.130.96.11]:28506 "EHLO z11.mailgun.us"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232012AbhBWVyE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 16:54:04 -0500
-Received: (qmail 27647 invoked by uid 109); 23 Feb 2021 21:53:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Feb 2021 21:53:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5230 invoked by uid 111); 23 Feb 2021 21:53:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Feb 2021 16:53:21 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 23 Feb 2021 16:53:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        id S230268AbhBWV54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 16:57:56 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1614117455; h=Content-Type: Content-Transfer-Encoding:
+ MIME-Version: References: In-Reply-To: Message-ID: Date: Subject: Cc:
+ To: From: Sender; bh=MZPUoxroQq7eJhiJ2RrPXOj3q7dsPTiOm8HiFzns5Tw=; b=WQHZb1+CdZsoubMHeUly7AD3ZKkDVyBZKYfBjzGl/RNafDsJRV0YFXHaJxxP/pbs613bzgSD
+ eKGMgbZAQVCK4PEf0pIQf0GZ4TQV+lsyrvKO20ToAeOpTz3x9JAmg7lkftSLV+Pll1fJU5wN
+ B1E73jlxgidSMpyjEEuqCT+uo/c=
+X-Mailgun-Sending-Ip: 104.130.96.11
+X-Mailgun-Sid: WyJjNzk3NCIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 60357a474511108a812bd4cf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 23 Feb 2021 21:57:27
+ GMT
+Sender: mfick=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 198ADC43463; Tue, 23 Feb 2021 21:57:27 +0000 (UTC)
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mfick)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4C527C433ED;
+        Tue, 23 Feb 2021 21:57:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4C527C433ED
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mfick@codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         git@vger.kernel.org, dstolee@microsoft.com
-Subject: Re: [PATCH v4 0/8] repack: support repacking into a geometric
- sequence
-Message-ID: <YDV5UX6n2nZb9Tn2@coredump.intra.peff.net>
-References: <cover.1611098616.git.me@ttaylorr.com>
- <1724378.IzK8VI2DXP@mfick-lnx>
- <YDViUPT4JhGJLjji@coredump.intra.peff.net>
- <8347289.KuArlTWdtP@mfick-lnx>
+Subject: Re: [PATCH v4 0/8] repack: support repacking into a geometric sequence
+Date:   Tue, 23 Feb 2021 14:57:25 -0700
+Message-ID: <2190798.zr6bNypoxz@mfick-lnx>
+User-Agent: KMail/5.2.3 (Linux/4.4.0-154-generic; KDE/5.36.0; x86_64; ; )
+In-Reply-To: <YDVgPtkaTb9zNq0/@nand.local>
+References: <cover.1611098616.git.me@ttaylorr.com> <1724378.IzK8VI2DXP@mfick-lnx> <YDVgPtkaTb9zNq0/@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8347289.KuArlTWdtP@mfick-lnx>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 23, 2021 at 02:41:09PM -0700, Martin Fick wrote:
-
-> > > Would it make sense to somehow detect all new packs since the last rollup
-> > > and always include them in the rollup no matter what their size? That is
-> > > one thing that my git-exproll script did. One of the main reasons to do
-> > > this was because newer packs tended to look big (I was using bytes to
-> > > determine size), and newer packs were often bigger on disk compared to
-> > > other packs with similar objects in them (I think you suggested this was
-> > > due to the thickening of packs on receipt). Maybe roll up all packs with
-> > > a timestamp "new enough", no matter how big they are?
-> > 
-> > That works against the "geometric" part of the strategy, which is trying
-> > to roll up in a sequence that is amortized-linear. I.e., we are not
-> > always rolling up everything outside of the base pack, but trying to
-> > roll up little into medium, and then eventually medium into large. If
-> > you roll up things that are "too big", then you end up rewriting the
-> > bytes more often, and your amount of work becomes super-linear.
+On Tuesday, February 23, 2021 3:06:22 PM MST Taylor Blau wrote:
+> On Tue, Feb 23, 2021 at 12:54:56PM -0700, Martin Fick wrote:
+> > Would it make sense to somehow detect all new packs since the last rollup
+> > and always include them in the rollup no matter what their size? That is
+> > one thing that my git-exproll script did.
 > 
-> I'm not sure I follow, it would seem to me that it would stay linear, and be 
-> at most rewriting each new packfile once more than previously? Are you 
-> envisioning more work than that?
+> I'm certainly not opposed, and this could certainly be done in an
+> additive way (i.e., after this series). I think the current approach has
+> nice properties, but I could also see "roll-up all packs that have
+> mtimes after xyz timestamp" being useful.
 
-Maybe I don't understand what you're proposing.
+Just to be clear, I meant to combine the two approaches. And yes, my 
+suggestion would likely make more sense as an additive switch later on.
+ 
+> It would even be possible to reuse a lot of the geometric repack
+> machinery. Having a separate path to arrange packs by their mtimes and
+> determine the "split" at pack whose mtime is nearest the provided one
+> would do exactly what you want.
 
-The idea of the geometric repack is that by sorting by size and then
-finding a "cutoff" within the size array, we can make sure that we roll
-up a sufficiently small number of bytes in each roll-up that it ends up
-linear in the size of the repo in the long run. But if we roll up
-without regard to size, then our worst case is that the biggest pack is
-the newest (imagine a repo with 10 small pushes and then one gigantic
-one). So we roll that up with some small packs, doing effectively
-O(size_of_repo) work. And then in the next roll up we do it again, and
-so on. So we end up with O(size_of_repo * nr_rollups) total work. Which
-is no better than having just done a full repack at each rollup.
+I was thinking to keep all of your geometric repack machinery and only looking 
+for the split point starting at the right most pack which is newer than the 
+provided mtime, and then possibly enhancing the approach with a clever way to 
+use the mtime of the last consolidation (maybe by touching a pack/.geometric 
+file?).
 
-Now I don't think we'd see that worst case in practice that much. And
-depending on your definition of "new enough", you might keep nr_rollups
-pretty small.
+> (As a side-note, reading the original threads about your git-exproll was
+> quite humbling, since it turns out all of the problems I thought were
+> hard had already been discussed eight years ago!)
 
--Peff
+Thanks, but I think you have likely done a much better job than what I did. 
+Your approach of using object counts is likely much better as it should be 
+stable, using byte counts is not. You are also solving only one problem at a 
+time, that's probably better than my hodge-podge of at least 3 different 
+problems. And the most important part of your approach as I understand it, is 
+that it actually saves CPU time whereas my approach only saved IO.
+
+Cheers,
+
+-Martin
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
+
