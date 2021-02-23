@@ -2,289 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11A7EC433DB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E837EC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:16:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4C8B64E7A
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:14:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C395E64E83
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 21:16:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233629AbhBWVOJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 16:14:09 -0500
-Received: from [93.83.142.38] ([93.83.142.38]:58152 "EHLO localhost"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S234636AbhBWVL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 16:11:56 -0500
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by localhost (Postfix) with ESMTP id B59E027B16;
-        Tue, 23 Feb 2021 22:11:32 +0100 (CET)
-Subject: [PATCH] replace "parameters" by "arguments" in error messages
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <40b2fedc-fdde-1fc0-ef98-86d8ea638193@kdbg.org>
- <xmqqk0qz4284.fsf@gitster.g>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <71cdd5a6-d71b-154a-30da-13a6a66779af@kdbg.org>
-Date:   Tue, 23 Feb 2021 22:11:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+        id S233412AbhBWVPt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 16:15:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233465AbhBWVNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 16:13:50 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E193FC061222
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 13:12:29 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id j24so6689251pfi.2
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 13:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=meter.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=gyMY96TpKUcuwcQ7Ze4tbe44BsEB2DQ9dYRKDFeqp7w=;
+        b=zAafKQ5xQgYFXyIf+eW9CPZll/DbYawDDSieGWfI0n9niT5IgdjZv10xEEcMTdMKdK
+         w+pSRDvbSYdCYTh4NiEMa58+lk+yAf0LFUhA19yiPlDA8vLtc4hEU1bdlPKES2sGr84O
+         g8VWZpZfKZ6b1WX9B6+9K5805a3JMyWe/8kXs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=gyMY96TpKUcuwcQ7Ze4tbe44BsEB2DQ9dYRKDFeqp7w=;
+        b=g1GhsB6/M88IbaVG3IyWz0rGVSAcMjrjXmjyRw6+h3u5og0YQjeVe61maSCzck2vpL
+         fJQMtEdzvgDpHPbqzLJ1Li4TwbsDl09GJ6QyVnySamVO1cpZvoLs1RNDs5Xq2011bCav
+         90dT7bUsyNGgrLgxN33U6BMAlsvdO/ntAQEmNthEKeXz8P9QEMBej1lo2FY32qWOJtHG
+         lrfxwtQ7TMi+0j/3OsmVckxqMmFC2a1+Y9ZqGdsY7kZtMVMwnqK2GkKe9+owmnLAO4X/
+         04juB+V3odicyedX/FZn/W8NuYq7bCDUCbifNrIVqrS1326DXUOWB5MGmMurF5jN9OEk
+         PsRw==
+X-Gm-Message-State: AOAM532158Ig7BGn8F/e+P73ffr/jf4oqBJEUy3ZWDF1hWlfx44/3b0d
+        z5J4GoPl6RT532s6J1SA4UznI4J15G+tPWfH3zpbkeCWheO5uayq
+X-Google-Smtp-Source: ABdhPJwqxQXlhl/KNCc+hbMkUE/a8ELnEwBT0ACPxk2Jg9dlVlfQmlXg2GTgDZvNprY2PSERqm8OfwEW25aIyfECpZ0=
+X-Received: by 2002:a63:fd0a:: with SMTP id d10mr143355pgh.345.1614114748962;
+ Tue, 23 Feb 2021 13:12:28 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk0qz4284.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   Kevin Burke <kevin@meter.com>
+Date:   Tue, 23 Feb 2021 13:12:18 -0800
+Message-ID: <CAAJ6v9AruZ3HfqB1x6CKBM=JgFj8bNwjQFUO4rzv2s=yeXfcDw@mail.gmail.com>
+Subject: Crash when using libcurl with new hyper + rustls backend
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.02.21 um 09:28 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->> When an error message informs the user about an incorrect command
->> invocation, it should refer to "arguments", not "parameters".
->>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ---
->>  Recently, I was greated by an accidental `git tag` invocation:
->>
->>  $ git tag one two three
->>  fatal: too many params
->>
->>  This is bad in two regards: (1) There's a techie-speak abbreviation
->>  in a user-visible text, (2) and it is wrong terminology to refer to
->>  "parameters" when "arguments" would be correct.
->>
->>  Then I looked at every single occurrence of "parameter" in Documentation/
->>  and half-way through the rest and wanted to  correct all incorrect uses,
->>  but things are by far not as clear-cut as I hoped.
->>
->>  So, I stopped here and fixed the one pain point that triggered the voyage,
->>  which I hope is not too controversal.
->>
->>  bisect.c                    |  2 +-
->>  builtin/notes.c             | 20 ++++++++++----------
->>  builtin/stash.c             |  2 +-
->>  builtin/tag.c               |  2 +-
->>  t/t3301-notes.sh            |  6 +++---
->>  t/t6030-bisect-porcelain.sh |  4 ++--
->>  6 files changed, 18 insertions(+), 18 deletions(-)
->>
->> diff --git a/bisect.c b/bisect.c
->> index 75ea0eb57f..ae48d19acf 100644
->> --- a/bisect.c
->> +++ b/bisect.c
->> @@ -1064,7 +1064,7 @@ enum bisect_error bisect_next
->>    	if (!all) {
->>  		fprintf(stderr, _("No testable commit found.\n"
->> -			"Maybe you started with bad path parameters?\n"));
->> +			"Maybe you started with bad path arguments?\n"));
->>    		return BISECT_NO_TESTABLE_COMMIT;
->>  	}
->> diff --git a/builtin/notes.c b/builtin/notes.c
-> 
-> The above hunk is curious for a few reasons.
-> 
->  - The hunk header claims that both the preimage and the postimage
->    are 7 lines long, but they only have 5 (2 precontext, 1 change
->    and 2 postcontext) lines.
-> 
->  - There are spaces before tab on a few context lines that do not
->    exist in the patch target.
-> 
-> Ahh, format=flawed, that is.
-> 
->     Content-Type: text/plain; charset=utf-8; format=flowed
-> 
+Hi,
+Curl added a new TLS backend that is written in Rust recently. If you
+are using Mac, you can install it by running "brew install --HEAD
+meterup/safe/curl", or view the specific compilation flags I passed to
+curl, here: https://github.com/meterup/homebrew-safe/blob/main/Formula/curl.rb
 
-Sorry for that. Modern Thunderbird requires a new add-on to force
-non-flowed messages, and that works as expected only when TB is
-configured "correctly". I've missed this subtle point. Here's the
-patch again unmodified, hopefully non-flowed.
+If you are on Linux, you can use these instructions to build libcurl
+with rustls: https://github.com/abetterinternet/crustls/wiki/Building-curl-with-crustls-and-Hyper
 
----- 8< ----
-Subject: [PATCH] replace "parameters" by "arguments" in error messages
+When I compile Git using this curl, I get a segfault when running "git
+fetch https://go.googlesource.com/tools"
 
-When an error message informs the user about an incorrect command
-invocation, it should refer to "arguments", not "parameters".
+* thread #1, queue = 'com.apple.main-thread', stop reason =
+EXC_BAD_ACCESS (code=1, address=0x8)
+  * frame #0: 0x00000001000e2b58 git-remote-https`strbuf_grow + 16
+    frame #1: 0x00000001000e3020 git-remote-https`strbuf_add + 27
+    frame #2: 0x00000001000076d5 git-remote-https`fwrite_buffer + 27
+    frame #3: 0x00000001002ebfba libcurl.4.dylib`Curl_hyper_stream + 594
+    frame #4: 0x000000010032fdf8 libcurl.4.dylib`Curl_readwrite + 203
+    frame #5: 0x0000000100319a80 libcurl.4.dylib`multi_runsingle + 2113
+    frame #6: 0x00000001003191c6 libcurl.4.dylib`curl_multi_perform + 113
+    frame #7: 0x00000001000094cb git-remote-https`step_active_slots + 25
+    frame #8: 0x0000000100009532 git-remote-https`run_active_slot + 67
+    frame #9: 0x00000001000097fd git-remote-https`run_one_slot + 41
+    frame #10: 0x000000010000bb06 git-remote-https`http_request + 1630
+    frame #11: 0x00000001000099b7 git-remote-https`http_request_reauth + 34
+    frame #12: 0x0000000100006131 git-remote-https`discover_refs + 625
+    frame #13: 0x00000001000053fc git-remote-https`cmd_main + 4484
+    frame #14: 0x000000010000ce55 git-remote-https`main + 130
+    frame #15: 0x00007fff699fbcc9 libdyld.dylib`start + 1
+    frame #16: 0x00007fff699fbcc9 libdyld.dylib`start + 1
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- bisect.c                    |  2 +-
- builtin/notes.c             | 20 ++++++++++----------
- builtin/stash.c             |  2 +-
- builtin/tag.c               |  2 +-
- t/t3301-notes.sh            |  6 +++---
- t/t6030-bisect-porcelain.sh |  4 ++--
- 6 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 75ea0eb57f..ae48d19acf 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -1064,7 +1064,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 
- 	if (!all) {
- 		fprintf(stderr, _("No testable commit found.\n"
--			"Maybe you started with bad path parameters?\n"));
-+			"Maybe you started with bad path arguments?\n"));
- 
- 		return BISECT_NO_TESTABLE_COMMIT;
- 	}
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 2987c08a2e..08b8914d29 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -373,7 +373,7 @@ static int list(int argc, const char **argv, const char *prefix)
- 				     git_notes_list_usage, 0);
- 
- 	if (1 < argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_list_usage, options);
- 	}
- 
-@@ -428,7 +428,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_KEEP_ARGV0);
- 
- 	if (2 < argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_add_usage, options);
- 	}
- 
-@@ -506,7 +506,7 @@ static int copy(int argc, const char **argv, const char *prefix)
- 
- 	if (from_stdin || rewrite_cmd) {
- 		if (argc) {
--			error(_("too many parameters"));
-+			error(_("too many arguments"));
- 			usage_with_options(git_notes_copy_usage, options);
- 		} else {
- 			return notes_copy_from_stdin(force, rewrite_cmd);
-@@ -514,11 +514,11 @@ static int copy(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (argc < 1) {
--		error(_("too few parameters"));
-+		error(_("too few arguments"));
- 		usage_with_options(git_notes_copy_usage, options);
- 	}
- 	if (2 < argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_copy_usage, options);
- 	}
- 
-@@ -595,7 +595,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_KEEP_ARGV0);
- 
- 	if (2 < argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(usage, options);
- 	}
- 
-@@ -662,7 +662,7 @@ static int show(int argc, const char **argv, const char *prefix)
- 			     0);
- 
- 	if (1 < argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_show_usage, options);
- 	}
- 
-@@ -812,7 +812,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		error(_("must specify a notes ref to merge"));
- 		usage_with_options(git_notes_merge_usage, options);
- 	} else if (!do_merge && argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_merge_usage, options);
- 	}
- 
-@@ -960,7 +960,7 @@ static int prune(int argc, const char **argv, const char *prefix)
- 			     0);
- 
- 	if (argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_prune_usage, options);
- 	}
- 
-@@ -982,7 +982,7 @@ static int get_ref(int argc, const char **argv, const char *prefix)
- 			     git_notes_get_ref_usage, 0);
- 
- 	if (argc) {
--		error(_("too many parameters"));
-+		error(_("too many arguments"));
- 		usage_with_options(git_notes_get_ref_usage, options);
- 	}
- 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 9bc85f91cd..60813d70d3 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -222,7 +222,7 @@ static int clear_stash(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 
- 	if (argc)
--		return error(_("git stash clear with parameters is "
-+		return error(_("git stash clear with arguments is "
- 			       "unimplemented"));
- 
- 	return do_clear_stash();
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e8b85eefd8..482d1b7d28 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -564,7 +564,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 
- 	object_ref = argc == 2 ? argv[1] : "HEAD";
- 	if (argc > 2)
--		die(_("too many params"));
-+		die(_("too many arguments"));
- 
- 	if (get_oid(object_ref, &object))
- 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 4af881f0ba..d742be8840 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1293,11 +1293,11 @@ test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
- 	grep "replacement note 3" actual
- '
- 
--test_expect_success 'git notes copy diagnoses too many or too few parameters' '
-+test_expect_success 'git notes copy diagnoses too many or too few arguments' '
- 	test_must_fail git notes copy 2>error &&
--	test_i18ngrep "too few parameters" error &&
-+	test_i18ngrep "too few arguments" error &&
- 	test_must_fail git notes copy one two three 2>error &&
--	test_i18ngrep "too many parameters" error
-+	test_i18ngrep "too many arguments" error
- '
- 
- test_expect_success 'git notes get-ref expands refs/heads/main to refs/notes/refs/heads/main' '
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 7bcde054d7..43608abcb7 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -578,9 +578,9 @@ test_expect_success 'skipping away from skipped commit' '
- 	test "$para3" = "$PARA_HASH3"
- '
- 
--test_expect_success 'erroring out when using bad path parameters' '
-+test_expect_success 'erroring out when using bad path arguments' '
- 	test_must_fail git bisect start $PARA_HASH7 $HASH1 -- foobar 2> error.txt &&
--	test_i18ngrep "bad path parameters" error.txt
-+	test_i18ngrep "bad path arguments" error.txt
- '
- 
- test_expect_success 'test bisection on bare repo - --no-checkout specified' '
--- 
-2.30.0.455.ge51aa30bde
+I had previously reported this issue to curl here, which includes a
+number of useful pieces of information including the contents of each
+register at the time of the crash.
+https://github.com/curl/curl/issues/6619
 
+The latest comment on that issue suggests git may not be setting curl
+flags appropriately, which is why I am raising an issue here. I'm not
+great at C programming and have not been able to sort out what's going
+on myself, unfortunately.
+
+Here's some more information about my git installation:
+
+[System Info]
+git version:
+git version 2.30.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Jan 12 22:13:05
+PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64
+compiler info: clang: 12.0.0 (clang-1200.0.32.28)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /usr/local/bin/zsh
+
+Hope this helps,
+Kevin
