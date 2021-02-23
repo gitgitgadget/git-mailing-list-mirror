@@ -2,123 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F522C433DB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA241C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:40:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C236C64E4D
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:05:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A757A64DAF
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231284AbhBWGFy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 01:05:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
+        id S230458AbhBWGkB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 01:40:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230223AbhBWGFx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 01:05:53 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B866C061574
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:05:13 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id e45so5235252ote.9
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:05:13 -0800 (PST)
+        with ESMTP id S230105AbhBWGjz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 01:39:55 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6106CC061574
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:39:15 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id u26so2215931pfn.6
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:39:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lmi0l7XMKBa6YJNFv2I7jCP4PN52CzDD4RkcZbyIu3o=;
-        b=ehSBkA6LSclwLRq5EHq34PnIriOILGiY9iOJLECHBAExT8qPgG8CEGHYIdGk2N5c83
-         4d0pJq8P3SKqaYjHgW/B+PAwBbQlDmC6HjJRr4a6EsDmvB+TifKvf2md9pCxL3+QOwcC
-         nBw+8yWyCQ/sEz+X0qduHJdEO7AqRHZ8bbe9giebvCYlMRK9OVIGN4RVLBRgixueDwSZ
-         1gITeTw/BzBDCxSyevKD7iNMLhP21DhN3CTPvrwwPumZdDJCoV/UcYqjRQKVdVqP73Wa
-         CtmSPPyR/Dx5zX0xUK6J6AY8qfgWDihmZScpo2YHFsZ1zJ382X5ykQ2R0IkutpR1CU1G
-         09Sg==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7XJA+ZQQcBc0NzPXomRUH+0310tMa7x0RVoPmzuZxy8=;
+        b=MnmMfwQLQk27KSEvQVnv5Cd/3KkAxf6ul+6/8SJIGRYNLmgrxz907sfbgh9plDPhmi
+         rE7bx4nKjRSTAovy7PxI9SvAWuQIZK2jlGy8PoBvv4eTYQfGaVj7pktbFQCkStFXtLyZ
+         r8xKoK9bcuMCQtDG5vnqXPcioqr74HdEWPW/6Q6bOI7rk9RqtgPE0XY13wxMcG05CJBj
+         mouOQhvt2y1YGG+sl1rTY9ell1Ne8wctLrSnrvLHr09MWyTF83IJmWgOP3B6w9i4uitv
+         vf3IK5BmbkMSF22nkkVTGKQasYUs9ifH7Pat8Rh6j24JVTZyne5d3LJ/emOnmGfqWsk3
+         NL3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lmi0l7XMKBa6YJNFv2I7jCP4PN52CzDD4RkcZbyIu3o=;
-        b=Y108sckJr4EWXLPRBhB0So05Ne3i8z/3ZQq5JeNaYDpcMhykN40VNjIyQi8J1jil41
-         Kpa6TnndLjKjjUCUvdound/reab2hp5G7wvMGsgr14142HrkdTXPHNICuQdDRzP4njOC
-         oEpQf1hc6WH4OOSyvuY/pcmAlC08I1U7hsOedYEz0HdFcO2YU+M5ga4jPpjxx3vXspWE
-         KmuHo0D8GSEtTP6r0th2hNEjUX8liSpaxNZUlf6CrtU7gg0F76imCMBWWAPYPEcCxxI1
-         Gw6xvCTXK0tJuJaHAwY8JT/D8U2CNn3apQ5XjMGfnp94rhkO6rUDpqmyt/q/xFiINSuq
-         PPoA==
-X-Gm-Message-State: AOAM533Jg+KGRKGR6g66CbBjZUotFeB62pmvYdUhX208kXbjYTBmiVpC
-        1DJuhB4nh8LyAMEygK9hWuc7BRcDx9osJn5zo00=
-X-Google-Smtp-Source: ABdhPJy0GHUIkLOOiWOVnT6iFTlnKAU0c8jxUYB4r5PFF3f3CSnIywvLObX8ah0D1YadDmE7waKT57OjPOXU5Svig6g=
-X-Received: by 2002:a05:6830:1d43:: with SMTP id p3mr15681790oth.184.1614060312339;
- Mon, 22 Feb 2021 22:05:12 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7XJA+ZQQcBc0NzPXomRUH+0310tMa7x0RVoPmzuZxy8=;
+        b=el92BV1SS2n3Wje9GQHr5+xlbaX9l1VbCyCqUZpvIROnHOSW8g8+D+PZbNle5WIpLV
+         9tMHpXcPPqPkjdwY9cpNQwH6Zhl+3adXcqg+COg4qqQTUQR4Ne/kBVQKrz6BhudYvsZt
+         CfMejOD6623J1BegiJJIhEYk9jZKx8cksEbXSUcgfVdcQCxgfkxz2DIuVMp+xHQ4hp3N
+         IUGFiPgyTX9aGScuUELcGvcfDpSSokgA+LyILrdxa57Yk7T0N/8d478zbR+NFe95RXBh
+         cWds2LTP3az7kF75kE9Dz0pF7dtrqQY+J+Qc2n7mm/0FPoQtSQFl0K1TGkqWxepbN0Pv
+         LAxQ==
+X-Gm-Message-State: AOAM532X1+uZtmLs+tTLLVXH1wo88zx0YA75LtWx8imcvjpFeNEa+Hlh
+        EGhhv2YqFYPCn+l1EC7XMxPJVG6RgQg=
+X-Google-Smtp-Source: ABdhPJwzxP/GRpCci9H9/ci3tglxWGZBF1UkB54AZjz22Bx8r+pCrYeNj0/FDmpWW2tlx23PTstOQQ==
+X-Received: by 2002:a63:4708:: with SMTP id u8mr11331620pga.102.1614062354633;
+        Mon, 22 Feb 2021 22:39:14 -0800 (PST)
+Received: from archbookpro.hsd1.ca.comcast.net ([2601:647:4201:c540::414c])
+        by smtp.gmail.com with ESMTPSA id j1sm21355055pfr.78.2021.02.22.22.39.13
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Feb 2021 22:39:13 -0800 (PST)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/3] docs: misc cleanup
+Date:   Mon, 22 Feb 2021 22:39:05 -0800
+Message-Id: <cover.1614062288.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.30.0.478.g8a0d178c01
 MIME-Version: 1.0
-References: <20210217072904.16257-1-charvi077@gmail.com> <20210217073725.16656-1-charvi077@gmail.com>
- <20210217073725.16656-2-charvi077@gmail.com> <xmqq35xulbj0.fsf@gitster.g>
- <CAPSFM5ddkALLCU+k+Th=pvKHEaarr_45DSn=N5DCJu1o7_5-Eg@mail.gmail.com>
- <xmqqpn0xfal8.fsf@gitster.g> <CAPSFM5eJNUdzy0CA1GNjNkqL_a7ivM8qydxvHf3208nznkG9KQ@mail.gmail.com>
- <xmqq4ki7bf9y.fsf@gitster.g> <CAPSFM5cRq9OfxypwTAsv3OFpTPM88e4_agTmFEGbaVyLi6Qbig@mail.gmail.com>
- <xmqqtuq599zj.fsf@gitster.g> <CAPSFM5dZ=CR21eqE7Y-4AssD9h0ddnUYpy4PSzWVaf8kzsLv_g@mail.gmail.com>
- <xmqqft1o80pe.fsf@gitster.g>
-In-Reply-To: <xmqqft1o80pe.fsf@gitster.g>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Tue, 23 Feb 2021 11:35:00 +0530
-Message-ID: <CAPSFM5fnxZ+WF9Df-naibeauNq1-e9=E=oh86xb9JOeeuHp3Jg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] commit: add amend suboption to --fixup to create
- amend! commit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 22 Feb 2021 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
-[...]
-> If we were to make -m/-F incompatible with these new features, then
-> sure, we'd notice the combination, show an error message and abort.
->
-> >>than just accepting and doing useless thing, I am OK
-> >> if we left them as they are.
-> >
-> > ....If we allow both `m` and `F` to work with `git commit
-> > --fixup=amend/reword` with the same working as it is doing now i.e to
-> > use `m` to write new commit message, upon `--autosquash`, If it is
-> > okay? then I also agree to update the documentation more precisely and
-> > include the uses when passed with `m` /`F`(not yet added) option.
->
-> What would that more precise documentation would say, though?
->
-> "'-m message' gets appended to the message taken from the original
-> commit"?  Saying that alone, without explaining why doing such an
-> appending is useful, would puzzle users and makes them ask "but why
-> such a useless feature exist?" and that was why I was trying to
-> figure out what it is useful for with you, which I think we have
-> failed to do so far.
->
-> My preference at this point is to error out the combination that we
-> cannot figure out how it could be useful at this moment, so that
-> users who find how it would be useful to come to us and present a
-> hopefully good case for using -m <msg> with --fixup=amend:<commit>.
-> I am assuming that allowing the combination at that point is easy,
-> and the user request will give us a good use case we can use in the
-> documentation to explain for what purpose a user may want to use -m
-> <msg> to append a short string at the end.  The end users' use case
-> we see at that point might even suggest that it would be more useful
-> to prepend (as opposed to append) the message we get from -m <msg>
-> to the original log message, and such a change will not be possible
-> if we just choose to append without thinking through the use case we
-> intend to support and release "we do not know what good it would do
-> to append with -m <msg>, but that is what the code happens to do now"
-> version to the users, as people will depend on the behaviour of any
-> released versions.
+Just a couple of documentation fixes that I noticed in passing today.
+Nothing too controversial.
 
-Okay, I admit prepending the msg can be another way. Thanks a lot for
-clarifying in detail, I completely agree with it and will error out
-the combination for now.
+This branch is based on 'maint'.
 
-Thanks and Regards,
-Charvi
+Denton Liu (3):
+  i18n.txt: camel case and monospace "i18n.commitEncoding"
+  git-cat-file.txt: monospace args and placeholders
+  git-cat-file.txt: remove references to "sha1"
+
+ Documentation/git-cat-file.txt | 52 +++++++++++++++++-----------------
+ Documentation/i18n.txt         |  2 +-
+ 2 files changed, 27 insertions(+), 27 deletions(-)
+
+-- 
+2.30.0.478.g8a0d178c01
+
