@@ -5,63 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A6EC433DB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 277D0C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B027E64D99
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00F5D64D99
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234193AbhBWUPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S234199AbhBWUPU (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 23 Feb 2021 15:15:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47064 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233482AbhBWUPP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 15:15:15 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2297C06178B
+        with ESMTP id S234171AbhBWUPQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 15:15:16 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D6AC06178C
         for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id x16so3628228wmk.3
+Received: by mail-wm1-x32e.google.com with SMTP id l13so3576360wmg.5
         for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NVPCR6yPnG+zSxv1JkAaAXu15R9XfnzPKEj5XxAvU5k=;
-        b=U1HqW+TeWxls+DF/XejDO7/mR1AqDa+VCHJqDluM0YDZaHnRQKoHGUzVjJs09M6tGQ
-         Ld93L2yzeayJaOyWgXZBAnvErOyZroa+k03D2qUe7O/NFbPIrY8XygYQq9EHI9axM+m7
-         kqaZeqQtDMpRFSqQLuWEshmj1LdPobOz4MpkZ4hy0MTlerF6p/9CSMPvUrqDIJ/FvQdW
-         B5kMVc3/9NQzLxUc8VDtDuLvNBum5VgIHMAc/FCOl8uLwElTFl3mIAQL7/NVw3osOeGI
-         xOrg/rdTVt9EyOrSM8pcwEZhW2wLfNxiBYxMalHvo+oqxAx1UEBiQnGvzBNGWd46TDha
-         U5SQ==
+        bh=ygaDs5wlP7UHuBKjOsrDT3aRtt2dHHpJXltd1v63C3s=;
+        b=blmjSDKpbiI3PDnGVGXIJ3iWctN8KwdwcG++9QFf7+Wvr4j+dzb/BhzGz62T4YQ7iF
+         ltuSc7Ng2PICltdNU2Ecxawza0BbkXMMRH2dnCN2dXCrO+VXgaoWHiEEf26YEy9Z6V/+
+         D7P+Ps9c/IOL+WAQIytDMBj1F2Dm1PaoCh2gt2MN094rlioSCmou0nu2XESk16ijE8hi
+         C5ub7/7d1IrsU59644bVhe6gvpq4pbe5jY+V+Y3gk+oYRo2QtEYyjAOvKOZJVJBjpPl1
+         WvGJGgCR2aPXBT0vg4izcWSx9jsxx9UuRMAMI+UyIObPlAlQRdKxP29FINoH1OHl6bii
+         CHIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NVPCR6yPnG+zSxv1JkAaAXu15R9XfnzPKEj5XxAvU5k=;
-        b=pfyqj1YyyV0lcScbZ1Krec4Hrl+kYRkQszOHDtSRrjjGkcHt9um/G41hDz99Oa6Sf9
-         5PpmgMAwAkF0B47OR0BAKddxx96CCUWU8Ncc1K540ZAXdZjOyZM3f8d6aIh2lYPyFixv
-         KybYVOLHjqD+Ec5WLYwQHIC8pQgSxnkS5GBxMnVLozKcz2kLrKxl7SRhYxNPs92ixqzs
-         i0tqWInzBuR3qf11LN1zOov70D1VGvYjeNFxGxr6bwsu/NH05M+UgsPqhKl1RB5zRYtG
-         hQjjR0TEiOiPLL7TPYQ/euHT/FViKxlO51esEwS9ev5Yg7iOLquPWr9GAnbLHOhJZylg
-         aWgQ==
-X-Gm-Message-State: AOAM533P3IfN+mUzME+lNN9wjMoY2ofCcT1HVN8EAjKOdFGCQV/EZqIn
-        50afSlveI3piyfLMqRultzH8DJeExf4=
-X-Google-Smtp-Source: ABdhPJwbbX4OTGgvcF3xYoMJtFziMLfaBCoX6ytaUbSzIUenDC4NCh1xlJpM+xTS0lCpvPboVOuFFQ==
-X-Received: by 2002:a1c:2311:: with SMTP id j17mr453393wmj.38.1614111272483;
-        Tue, 23 Feb 2021 12:14:32 -0800 (PST)
+        bh=ygaDs5wlP7UHuBKjOsrDT3aRtt2dHHpJXltd1v63C3s=;
+        b=ZyrCxqpnZMvyqqDPjPy29vi/tv7bu32K7XcSr06DKMYqeCjnuCeYNnneiLnWjIHmH5
+         eoy7cxesYRQi9etsS+QiWamc3hZTazubyy0kLIh8zrZe8Ycv4+XAXuG2cVIrUdMKFEYW
+         HJQ5Dhdd1GyWE3TXgm6kUXfYL49KNn4zqoa3AsGzmYdQ2LvKXTmLIC0/yF5safyIEZfD
+         9mvS8UPasBoWxEu4iwZMG5qazFZrqGwT50Ji1ah8C7MO3ZlngmJhngAsg+Pd/Df/AGM0
+         ggZXHljg9v3Gi1UNdXsG1KCfvm7VvP21yTigCTpv8igYoDgPYnJsCB2J7oAlzJzVxtBv
+         abbg==
+X-Gm-Message-State: AOAM530DqgxZqlhcl94iWfs2DwTfFeoJVo0OIrnrWfdhtFZAiI0ilNyz
+        GPhTcquzAjjmZh8OKvOnuXmWVte+qxg=
+X-Google-Smtp-Source: ABdhPJyknZZVHQ7axHSbM39/v+DuHqL4wGt13e6CMz59aMYLDD84FUQzFxtVi5DyXVuDOFAR1O9wKg==
+X-Received: by 2002:a7b:c1c4:: with SMTP id a4mr399253wmj.123.1614111273575;
+        Tue, 23 Feb 2021 12:14:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a6sm3893892wmj.23.2021.02.23.12.14.32
+        by smtp.gmail.com with ESMTPSA id y5sm16995533wrh.38.2021.02.23.12.14.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Feb 2021 12:14:32 -0800 (PST)
-Message-Id: <a8c6322a3dbe1130dd2026b600a896e86d54a95d.1614111270.git.gitgitgadget@gmail.com>
+        Tue, 23 Feb 2021 12:14:33 -0800 (PST)
+Message-Id: <01da4c48a1fa94188faf45ab1e23b98ecb4164d5.1614111270.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Feb 2021 20:14:11 +0000
-Subject: [PATCH 02/20] t/perf: add performance test for sparse operations
+Date:   Tue, 23 Feb 2021 20:14:13 +0000
+Subject: [PATCH 04/20] sparse-index: add guard to ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,140 +76,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Create a test script that takes the default performance test (the Git
-codebase) and multiplies it by 256 using four layers of duplicated
-trees of width four. This results in nearly one million blob entries in
-the index. Then, we can clone this repository with sparse-checkout
-patterns that demonstrate four copies of the initial repository. Each
-clone will use a different index format or mode so peformance can be
-tested across the different options.
+Upcoming changes will introduce modifications to the index format that
+allow sparse directories. It will be useful to have a mechanism for
+converting those sparse index files into full indexes by walking the
+tree at those sparse directories. Name this method ensure_full_index()
+as it will guarantee that the index is fully expanded.
 
-Note that the initial repo is stripped of submodules before doing the
-copies. This preserves the expected data shape of the sparse index,
-because directories containing submodules are not collapsed to a sparse
-directory entry.
+This method is not implemented yet, and instead we focus on the
+scaffolding to declare it and call it at the appropriate time.
 
-Run a few Git commands on these clones, especially those that use the
-index (status, add, commit).
+Add a 'command_requires_full_index' member to struct repo_settings. This
+will be an indicator that we need the index in full mode to do certain
+index operations. This starts as being true for every command, then we
+will set it to false as some commands integrate with sparse indexes.
 
-Here are the results on my Linux machine:
-
-Test
---------------------------------------------------------------
-2000.2: git status (full-index-v3)             0.37(0.30+0.09)
-2000.3: git status (full-index-v4)             0.39(0.32+0.10)
-2000.4: git add -A (full-index-v3)             1.42(1.06+0.20)
-2000.5: git add -A (full-index-v4)             1.26(0.98+0.16)
-2000.6: git add . (full-index-v3)              1.40(1.04+0.18)
-2000.7: git add . (full-index-v4)              1.26(0.98+0.17)
-2000.8: git commit -a -m A (full-index-v3)     1.42(1.11+0.16)
-2000.9: git commit -a -m A (full-index-v4)     1.33(1.08+0.16)
-
-It is perhaps noteworthy that there is an improvement when using index
-version 4. This is because the v3 index uses 108 MiB while the v4
-index uses 80 MiB. Since the repeated portions of the directories are
-very short (f3/f1/f2, for example) this ratio is less pronounced than in
-similarly-sized real repositories.
+If 'command_requires_full_index' is true, then we will immediately
+expand a sparse index to a full one upon reading from disk. This
+suffices for now, but we will want to add more callers to
+ensure_full_index() later.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/perf/p2000-sparse-operations.sh | 87 +++++++++++++++++++++++++++++++
- 1 file changed, 87 insertions(+)
- create mode 100755 t/perf/p2000-sparse-operations.sh
+ Makefile        |  1 +
+ repo-settings.c |  8 ++++++++
+ repository.c    | 11 ++++++++++-
+ repository.h    |  2 ++
+ sparse-index.c  |  8 ++++++++
+ sparse-index.h  |  7 +++++++
+ 6 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 sparse-index.c
+ create mode 100644 sparse-index.h
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-new file mode 100755
-index 000000000000..52597683376e
+diff --git a/Makefile b/Makefile
+index 5a239cac20e3..3bf61699238d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -980,6 +980,7 @@ LIB_OBJS += setup.o
+ LIB_OBJS += shallow.o
+ LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
++LIB_OBJS += sparse-index.o
+ LIB_OBJS += split-index.o
+ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += strbuf.o
+diff --git a/repo-settings.c b/repo-settings.c
+index f7fff0f5ab83..d63569e4041e 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -77,4 +77,12 @@ void prepare_repo_settings(struct repository *r)
+ 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
+ 
+ 	UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_DEFAULT);
++
++	/*
++	 * This setting guards all index reads to require a full index
++	 * over a sparse index. After suitable guards are placed in the
++	 * codebase around uses of the index, this setting will be
++	 * removed.
++	 */
++	r->settings.command_requires_full_index = 1;
+ }
+diff --git a/repository.c b/repository.c
+index c98298acd017..a8acae002f71 100644
+--- a/repository.c
++++ b/repository.c
+@@ -10,6 +10,7 @@
+ #include "object.h"
+ #include "lockfile.h"
+ #include "submodule-config.h"
++#include "sparse-index.h"
+ 
+ /* The main repository */
+ static struct repository the_repo;
+@@ -261,6 +262,8 @@ void repo_clear(struct repository *repo)
+ 
+ int repo_read_index(struct repository *repo)
+ {
++	int res;
++
+ 	if (!repo->index)
+ 		repo->index = xcalloc(1, sizeof(*repo->index));
+ 
+@@ -270,7 +273,13 @@ int repo_read_index(struct repository *repo)
+ 	else if (repo->index->repo != repo)
+ 		BUG("repo's index should point back at itself");
+ 
+-	return read_index_from(repo->index, repo->index_file, repo->gitdir);
++	res = read_index_from(repo->index, repo->index_file, repo->gitdir);
++
++	prepare_repo_settings(repo);
++	if (repo->settings.command_requires_full_index)
++		ensure_full_index(repo->index);
++
++	return res;
+ }
+ 
+ int repo_hold_locked_index(struct repository *repo,
+diff --git a/repository.h b/repository.h
+index b385ca3c94b6..e06a23015697 100644
+--- a/repository.h
++++ b/repository.h
+@@ -41,6 +41,8 @@ struct repo_settings {
+ 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
+ 
+ 	int core_multi_pack_index;
++
++	unsigned command_requires_full_index:1;
+ };
+ 
+ struct repository {
+diff --git a/sparse-index.c b/sparse-index.c
+new file mode 100644
+index 000000000000..82183ead563b
 --- /dev/null
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -0,0 +1,87 @@
-+#!/bin/sh
++++ b/sparse-index.c
+@@ -0,0 +1,8 @@
++#include "cache.h"
++#include "repository.h"
++#include "sparse-index.h"
 +
-+test_description="test performance of Git operations using the index"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+SPARSE_CONE=f2/f4/f1
-+
-+test_expect_success 'setup repo and indexes' '
-+	git reset --hard HEAD &&
-+	# Remove submodules from the example repo, because our
-+	# duplication of the entire repo creates an unlikly data shape.
-+	git config --file .gitmodules --get-regexp "submodule.*.path" >modules &&
-+	rm -f .gitmodules &&
-+	git add .gitmodules &&
-+	for module in $(awk "{print \$2}" modules)
-+	do
-+		git rm $module || return 1
-+	done &&
-+	git add . &&
-+	git commit -m "remove submodules" &&
-+
-+	echo bogus >a &&
-+	cp a b &&
-+	git add a b &&
-+	git commit -m "level 0" &&
-+	BLOB=$(git rev-parse HEAD:a) &&
-+	OLD_COMMIT=$(git rev-parse HEAD) &&
-+	OLD_TREE=$(git rev-parse HEAD^{tree}) &&
-+
-+	for i in $(test_seq 1 4)
-+	do
-+		cat >in <<-EOF &&
-+			100755 blob $BLOB	a
-+			040000 tree $OLD_TREE	f1
-+			040000 tree $OLD_TREE	f2
-+			040000 tree $OLD_TREE	f3
-+			040000 tree $OLD_TREE	f4
-+		EOF
-+		NEW_TREE=$(git mktree <in) &&
-+		NEW_COMMIT=$(git commit-tree $NEW_TREE -p $OLD_COMMIT -m "level $i") &&
-+		OLD_TREE=$NEW_TREE &&
-+		OLD_COMMIT=$NEW_COMMIT || return 1
-+	done &&
-+
-+	git sparse-checkout init --cone &&
-+	git branch -f wide $OLD_COMMIT &&
-+	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v3 &&
-+	(
-+		cd full-index-v3 &&
-+		git sparse-checkout init --cone &&
-+		git sparse-checkout set $SPARSE_CONE &&
-+		git config index.version 3 &&
-+		git update-index --index-version=3
-+	) &&
-+	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v4 &&
-+	(
-+		cd full-index-v4 &&
-+		git sparse-checkout init --cone &&
-+		git sparse-checkout set $SPARSE_CONE &&
-+		git config index.version 4 &&
-+		git update-index --index-version=4
-+	)
-+'
-+
-+test_perf_on_all () {
-+	command="$@"
-+	for repo in full-index-v3 full-index-v4
-+	do
-+		test_perf "$command ($repo)" "
-+			(
-+				cd $repo &&
-+				echo >>$SPARSE_CONE/a &&
-+				$command
-+			)
-+		"
-+	done
++void ensure_full_index(struct index_state *istate)
++{
++	/* intentionally left blank */
 +}
+diff --git a/sparse-index.h b/sparse-index.h
+new file mode 100644
+index 000000000000..09a20d036c46
+--- /dev/null
++++ b/sparse-index.h
+@@ -0,0 +1,7 @@
++#ifndef SPARSE_INDEX_H__
++#define SPARSE_INDEX_H__
 +
-+test_perf_on_all git status
-+test_perf_on_all git add -A
-+test_perf_on_all git add .
-+test_perf_on_all git commit -a -m A
++struct index_state;
++void ensure_full_index(struct index_state *istate);
 +
-+test_done
++#endif
 -- 
 gitgitgadget
 
