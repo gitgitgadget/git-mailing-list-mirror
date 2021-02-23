@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 277D0C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D389DC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 00F5D64D99
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7D0C64DF2
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234199AbhBWUPU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 15:15:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47070 "EHLO
+        id S234209AbhBWUPW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 15:15:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234171AbhBWUPQ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234179AbhBWUPQ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Feb 2021 15:15:16 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D6AC06178C
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id l13so3576360wmg.5
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E938C061793
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:35 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d11so4495998wrj.7
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ygaDs5wlP7UHuBKjOsrDT3aRtt2dHHpJXltd1v63C3s=;
-        b=blmjSDKpbiI3PDnGVGXIJ3iWctN8KwdwcG++9QFf7+Wvr4j+dzb/BhzGz62T4YQ7iF
-         ltuSc7Ng2PICltdNU2Ecxawza0BbkXMMRH2dnCN2dXCrO+VXgaoWHiEEf26YEy9Z6V/+
-         D7P+Ps9c/IOL+WAQIytDMBj1F2Dm1PaoCh2gt2MN094rlioSCmou0nu2XESk16ijE8hi
-         C5ub7/7d1IrsU59644bVhe6gvpq4pbe5jY+V+Y3gk+oYRo2QtEYyjAOvKOZJVJBjpPl1
-         WvGJGgCR2aPXBT0vg4izcWSx9jsxx9UuRMAMI+UyIObPlAlQRdKxP29FINoH1OHl6bii
-         CHIQ==
+        bh=Ci4y4YWSW1vJ2rkZPyHzHL7blfaXgDlSy/YXzS6MrKY=;
+        b=KNvQd/o1NF0KROkeBUHcJkgvJm2SuvXLsowZhy+miZ29H6CVISIk4kqsp/Jwo+wixg
+         /Y+tWU2VCcmgqbzF88RmaeuHzPyjYVUjwo3e9+CxSkxsaDWhcGyFUBmb9fOQahNeaJKh
+         kdxj2hsnensUrR4uctNiVt7A7MWkGXkZeS3wB7Br+e/Yy62NA5wypgTfDlVCLi8kChnT
+         fAcqwXEDjPf+yLgiHMP2Dz6XpE6EEWGWislXbeArfq1c5rUQ6DaJATtwgiSUSBqiIPzL
+         cHDMH6DJ8g1675CkkMNDG9FlzLpFhJgt+KE6srP9p3wVUzPCZa83zeE/6TgQgd9N+V8q
+         FGww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ygaDs5wlP7UHuBKjOsrDT3aRtt2dHHpJXltd1v63C3s=;
-        b=ZyrCxqpnZMvyqqDPjPy29vi/tv7bu32K7XcSr06DKMYqeCjnuCeYNnneiLnWjIHmH5
-         eoy7cxesYRQi9etsS+QiWamc3hZTazubyy0kLIh8zrZe8Ycv4+XAXuG2cVIrUdMKFEYW
-         HJQ5Dhdd1GyWE3TXgm6kUXfYL49KNn4zqoa3AsGzmYdQ2LvKXTmLIC0/yF5safyIEZfD
-         9mvS8UPasBoWxEu4iwZMG5qazFZrqGwT50Ji1ah8C7MO3ZlngmJhngAsg+Pd/Df/AGM0
-         ggZXHljg9v3Gi1UNdXsG1KCfvm7VvP21yTigCTpv8igYoDgPYnJsCB2J7oAlzJzVxtBv
-         abbg==
-X-Gm-Message-State: AOAM530DqgxZqlhcl94iWfs2DwTfFeoJVo0OIrnrWfdhtFZAiI0ilNyz
-        GPhTcquzAjjmZh8OKvOnuXmWVte+qxg=
-X-Google-Smtp-Source: ABdhPJyknZZVHQ7axHSbM39/v+DuHqL4wGt13e6CMz59aMYLDD84FUQzFxtVi5DyXVuDOFAR1O9wKg==
-X-Received: by 2002:a7b:c1c4:: with SMTP id a4mr399253wmj.123.1614111273575;
-        Tue, 23 Feb 2021 12:14:33 -0800 (PST)
+        bh=Ci4y4YWSW1vJ2rkZPyHzHL7blfaXgDlSy/YXzS6MrKY=;
+        b=groyCFzZBmlJObVBE38+crNo0RiZNsyhJybp9AQhGdxVpvideWBN656DbepC32MM73
+         PrniyqNwkjs6UDagWqu5YnCAtYkVruFBao5kPcnDRd+YZg1Xeu3ZqftgvzKYCNlre2O6
+         OHVht4jOafXWbiRpyfracutgA8JtnS+Y28FFOBmJO+yu/Cx8qT1xE/ZFumCasZ8KQzaD
+         U0VIQJTYGqG9f64scmD7DNHWc4uKc3xUfLOfNUXlRiYC94wJ0p2YqKv3WKg5kO1rc3z8
+         vTi0sjOsRIA4qKh1YqyTWz2V27JBoyvsWeSQYW69BNm7hV1AGw33mNFExwoxSd94Gh9L
+         8+RQ==
+X-Gm-Message-State: AOAM530Hdw5qgkabFUV878SLMBVs4KR+9SIEh2YEt34IQ/2COOg0DRYK
+        58fcHwvfpVguecqBXtjjYtVLZMxrbgk=
+X-Google-Smtp-Source: ABdhPJyyI7edW1WNxHpo+kPQVpDqIMfzoOXC/BsPDBdWja2dPQjGDntdsi8FcnkkLwApUB9Nhi1vzw==
+X-Received: by 2002:a5d:6b45:: with SMTP id x5mr27205212wrw.415.1614111274198;
+        Tue, 23 Feb 2021 12:14:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y5sm16995533wrh.38.2021.02.23.12.14.33
+        by smtp.gmail.com with ESMTPSA id n186sm3720037wmn.22.2021.02.23.12.14.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 Feb 2021 12:14:33 -0800 (PST)
-Message-Id: <01da4c48a1fa94188faf45ab1e23b98ecb4164d5.1614111270.git.gitgitgadget@gmail.com>
+Message-Id: <2b83989fbcd3d464a3172eeb7cfea2e06e4f3785.1614111270.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Feb 2021 20:14:13 +0000
-Subject: [PATCH 04/20] sparse-index: add guard to ensure full index
+Date:   Tue, 23 Feb 2021 20:14:14 +0000
+Subject: [PATCH 05/20] sparse-index: implement ensure_full_index()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,142 +76,203 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Upcoming changes will introduce modifications to the index format that
-allow sparse directories. It will be useful to have a mechanism for
-converting those sparse index files into full indexes by walking the
-tree at those sparse directories. Name this method ensure_full_index()
-as it will guarantee that the index is fully expanded.
+We will mark an in-memory index_state as having sparse directory entries
+with the sparse_index bit. These currently cannot exist, but we will add
+a mechanism for collapsing a full index to a sparse one in a later
+change. That will happen at write time, so we must first allow parsing
+the format before writing it.
 
-This method is not implemented yet, and instead we focus on the
-scaffolding to declare it and call it at the appropriate time.
+Commands or methods that require a full index in order to operate can
+call ensure_full_index() to expand that index in-memory. This requires
+parsing trees using that index's repository.
 
-Add a 'command_requires_full_index' member to struct repo_settings. This
-will be an indicator that we need the index in full mode to do certain
-index operations. This starts as being true for every command, then we
-will set it to false as some commands integrate with sparse indexes.
+Sparse directory entries have a specific 'ce_mode' value. The macro
+S_ISSPARSEDIR(ce->ce_mode) can check if a cache_entry 'ce' has this type.
+This ce_mode is not possible with the existing index formats, so we don't
+also verify all properties of a sparse-directory entry, which are:
 
-If 'command_requires_full_index' is true, then we will immediately
-expand a sparse index to a full one upon reading from disk. This
-suffices for now, but we will want to add more callers to
-ensure_full_index() later.
+ 1. ce->ce_mode == 0040000
+ 2. ce->flags & CE_SKIP_WORKTREE is true
+ 3. ce->name[ce->namelen - 1] == '/' (ends in dir separator)
+ 4. ce->oid references a tree object.
+
+These are all semi-enforced in ensure_full_index() to some extent. Any
+deviation will cause a warning at minimum or a failure in the worst
+case.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Makefile        |  1 +
- repo-settings.c |  8 ++++++++
- repository.c    | 11 ++++++++++-
- repository.h    |  2 ++
- sparse-index.c  |  8 ++++++++
- sparse-index.h  |  7 +++++++
- 6 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 sparse-index.c
- create mode 100644 sparse-index.h
+ cache.h        |  7 +++-
+ read-cache.c   |  9 +++++
+ sparse-index.c | 95 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 109 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 5a239cac20e3..3bf61699238d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -980,6 +980,7 @@ LIB_OBJS += setup.o
- LIB_OBJS += shallow.o
- LIB_OBJS += sideband.o
- LIB_OBJS += sigchain.o
-+LIB_OBJS += sparse-index.o
- LIB_OBJS += split-index.o
- LIB_OBJS += stable-qsort.o
- LIB_OBJS += strbuf.o
-diff --git a/repo-settings.c b/repo-settings.c
-index f7fff0f5ab83..d63569e4041e 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -77,4 +77,12 @@ void prepare_repo_settings(struct repository *r)
- 		UPDATE_DEFAULT_BOOL(r->settings.core_untracked_cache, UNTRACKED_CACHE_KEEP);
+diff --git a/cache.h b/cache.h
+index d92814961405..1336c8d7435e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -204,6 +204,8 @@ struct cache_entry {
+ #error "CE_EXTENDED_FLAGS out of range"
+ #endif
  
- 	UPDATE_DEFAULT_BOOL(r->settings.fetch_negotiation_algorithm, FETCH_NEGOTIATION_DEFAULT);
++#define S_ISSPARSEDIR(m) ((m) == S_IFDIR)
 +
-+	/*
-+	 * This setting guards all index reads to require a full index
-+	 * over a sparse index. After suitable guards are placed in the
-+	 * codebase around uses of the index, this setting will be
-+	 * removed.
-+	 */
-+	r->settings.command_requires_full_index = 1;
- }
-diff --git a/repository.c b/repository.c
-index c98298acd017..a8acae002f71 100644
---- a/repository.c
-+++ b/repository.c
-@@ -10,6 +10,7 @@
- #include "object.h"
- #include "lockfile.h"
- #include "submodule-config.h"
-+#include "sparse-index.h"
+ /* Forward structure decls */
+ struct pathspec;
+ struct child_process;
+@@ -319,7 +321,8 @@ struct index_state {
+ 		 drop_cache_tree : 1,
+ 		 updated_workdir : 1,
+ 		 updated_skipworktree : 1,
+-		 fsmonitor_has_run_once : 1;
++		 fsmonitor_has_run_once : 1,
++		 sparse_index : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
+ 	struct object_id oid;
+@@ -722,6 +725,8 @@ int read_index_from(struct index_state *, const char *path,
+ 		    const char *gitdir);
+ int is_index_unborn(struct index_state *);
  
- /* The main repository */
- static struct repository the_repo;
-@@ -261,6 +262,8 @@ void repo_clear(struct repository *repo)
- 
- int repo_read_index(struct repository *repo)
- {
-+	int res;
-+
- 	if (!repo->index)
- 		repo->index = xcalloc(1, sizeof(*repo->index));
- 
-@@ -270,7 +273,13 @@ int repo_read_index(struct repository *repo)
- 	else if (repo->index->repo != repo)
- 		BUG("repo's index should point back at itself");
- 
--	return read_index_from(repo->index, repo->index_file, repo->gitdir);
-+	res = read_index_from(repo->index, repo->index_file, repo->gitdir);
-+
-+	prepare_repo_settings(repo);
-+	if (repo->settings.command_requires_full_index)
-+		ensure_full_index(repo->index);
-+
-+	return res;
- }
- 
- int repo_hold_locked_index(struct repository *repo,
-diff --git a/repository.h b/repository.h
-index b385ca3c94b6..e06a23015697 100644
---- a/repository.h
-+++ b/repository.h
-@@ -41,6 +41,8 @@ struct repo_settings {
- 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
- 
- 	int core_multi_pack_index;
-+
-+	unsigned command_requires_full_index:1;
- };
- 
- struct repository {
-diff --git a/sparse-index.c b/sparse-index.c
-new file mode 100644
-index 000000000000..82183ead563b
---- /dev/null
-+++ b/sparse-index.c
-@@ -0,0 +1,8 @@
-+#include "cache.h"
-+#include "repository.h"
-+#include "sparse-index.h"
-+
-+void ensure_full_index(struct index_state *istate)
-+{
-+	/* intentionally left blank */
-+}
-diff --git a/sparse-index.h b/sparse-index.h
-new file mode 100644
-index 000000000000..09a20d036c46
---- /dev/null
-+++ b/sparse-index.h
-@@ -0,0 +1,7 @@
-+#ifndef SPARSE_INDEX_H__
-+#define SPARSE_INDEX_H__
-+
-+struct index_state;
 +void ensure_full_index(struct index_state *istate);
 +
-+#endif
+ /* For use with `write_locked_index()`. */
+ #define COMMIT_LOCK		(1 << 0)
+ #define SKIP_IF_UNCHANGED	(1 << 1)
+diff --git a/read-cache.c b/read-cache.c
+index 29144cf879e7..97dbf2434f30 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -101,6 +101,9 @@ static const char *alternate_index_output;
+ 
+ static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
+ {
++	if (S_ISSPARSEDIR(ce->ce_mode))
++		istate->sparse_index = 1;
++
+ 	istate->cache[nr] = ce;
+ 	add_name_hash(istate, ce);
+ }
+@@ -2255,6 +2258,12 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	trace2_data_intmax("index", the_repository, "read/cache_nr",
+ 			   istate->cache_nr);
+ 
++	if (!istate->repo)
++		istate->repo = the_repository;
++	prepare_repo_settings(istate->repo);
++	if (istate->repo->settings.command_requires_full_index)
++		ensure_full_index(istate);
++
+ 	return istate->cache_nr;
+ 
+ unmap:
+diff --git a/sparse-index.c b/sparse-index.c
+index 82183ead563b..316cb949b74b 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -1,8 +1,101 @@
+ #include "cache.h"
+ #include "repository.h"
+ #include "sparse-index.h"
++#include "tree.h"
++#include "pathspec.h"
++#include "trace2.h"
++
++static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
++{
++	ALLOC_GROW(istate->cache, nr + 1, istate->cache_alloc);
++
++	istate->cache[nr] = ce;
++	add_name_hash(istate, ce);
++}
++
++static int add_path_to_index(const struct object_id *oid,
++				struct strbuf *base, const char *path,
++				unsigned int mode, int stage, void *context)
++{
++	struct index_state *istate = (struct index_state *)context;
++	struct cache_entry *ce;
++	size_t len = base->len;
++
++	if (S_ISDIR(mode))
++		return READ_TREE_RECURSIVE;
++
++	strbuf_addstr(base, path);
++
++	ce = make_cache_entry(istate, mode, oid, base->buf, 0, 0);
++	ce->ce_flags |= CE_SKIP_WORKTREE;
++	set_index_entry(istate, istate->cache_nr++, ce);
++
++	strbuf_setlen(base, len);
++	return 0;
++}
+ 
+ void ensure_full_index(struct index_state *istate)
+ {
+-	/* intentionally left blank */
++	int i;
++	struct index_state *full;
++
++	if (!istate || !istate->sparse_index)
++		return;
++
++	if (!istate->repo)
++		istate->repo = the_repository;
++
++	trace2_region_enter("index", "ensure_full_index", istate->repo);
++
++	/* initialize basics of new index */
++	full = xcalloc(1, sizeof(struct index_state));
++	memcpy(full, istate, sizeof(struct index_state));
++
++	/* then change the necessary things */
++	full->sparse_index = 0;
++	full->cache_alloc = (3 * istate->cache_alloc) / 2;
++	full->cache_nr = 0;
++	ALLOC_ARRAY(full->cache, full->cache_alloc);
++
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++		struct tree *tree;
++		struct pathspec ps;
++
++		if (!S_ISSPARSEDIR(ce->ce_mode)) {
++			set_index_entry(full, full->cache_nr++, ce);
++			continue;
++		}
++		if (!(ce->ce_flags & CE_SKIP_WORKTREE))
++			warning(_("index entry is a directory, but not sparse (%08x)"),
++				ce->ce_flags);
++
++		/* recursively walk into cd->name */
++		tree = lookup_tree(istate->repo, &ce->oid);
++
++		memset(&ps, 0, sizeof(ps));
++		ps.recursive = 1;
++		ps.has_wildcard = 1;
++		ps.max_depth = -1;
++
++		read_tree_recursive(istate->repo, tree,
++				    ce->name, strlen(ce->name),
++				    0, &ps,
++				    add_path_to_index, full);
++
++		/* free directory entries. full entries are re-used */
++		discard_cache_entry(ce);
++	}
++
++	/* Copy back into original index. */
++	memcpy(&istate->name_hash, &full->name_hash, sizeof(full->name_hash));
++	istate->sparse_index = 0;
++	free(istate->cache);
++	istate->cache = full->cache;
++	istate->cache_nr = full->cache_nr;
++	istate->cache_alloc = full->cache_alloc;
++
++	free(full);
++
++	trace2_region_leave("index", "ensure_full_index", istate->repo);
+ }
 -- 
 gitgitgadget
 
