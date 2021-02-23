@@ -2,149 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ABC4C433E6
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47656C433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:25:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 58DE064EBB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:18:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1764A64E83
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233512AbhBWUSP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 15:18:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47354 "EHLO
+        id S233330AbhBWUZq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 15:25:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232313AbhBWUQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 15:16:29 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3DEC061222
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:43 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id c7so7109654wru.8
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:43 -0800 (PST)
+        with ESMTP id S233183AbhBWUZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 15:25:41 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53904C061574
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:25:01 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id q9so4571374qvo.8
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:25:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=5pUTXKGQuSdTT7ILEy7EmDD3wWlGK1ztMU7gpypslrM=;
-        b=PSiGGkHr6jOgQguqVsr2GgYm01+2XBkyZXKJeOnv0nDrI5JZu0qukRzfVsdqVXiUCE
-         W+CwMgYZCSg9J6DF++2aR9Tn/ZbIQAiNJ2ajkKzkHjUAwewjuwpEOE5z6148xUDtwXlz
-         vyDfx90wL9xVYnIw7r0NhIwTGu6wAHICNnn4a079lkps7JfCbItUbqH0RdrB2P9Vxq+A
-         SDWQBaH7zKBRkupP0tAPGCNoP8Rrkh7nYIMi3K5k+hMB2FnDB2KwqKPZyFOpvFqxPgS5
-         +e9heEsXotl2HNtcQirpun4yC2pVe2q4RypWDotzTPeGdY9rnjYzGkSYXXavS9K3tzBH
-         nhwg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=LBxsbaWlNhlEggMFtaePm9bjPIAEZi+9G/mVX2v8iZw=;
+        b=hauWzJTgfrYVfOC2d7ZwbA19HbkJxrqlwUA3dKVQAuWlj0OJJ0yluOS+Nupk09QYuI
+         MeEuxQtjfLvbB10hYwAQdOaG7DQVgnvaOpgmF8IgGQXkw6fqq4KxTGOeNRvjwCiwDVsn
+         13tVBYDccLu3bn1iyNQQcfNMjPF8LN7Y695LY3aZQP+rhW2EzAzISkbNmYFpjkduqf0C
+         Pwai2tkK0O8XJfDjACP8C3g7PH9iEoBZOsJU5jYecsHlwaHmiOoByTV0LRPIcKTnJw7i
+         /F/IotJaisn0QnCiZVQS77xeKET2/OycjIBRhk+m57kTMF+OCRF5B9KBiXiBBz61ACB0
+         4bZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5pUTXKGQuSdTT7ILEy7EmDD3wWlGK1ztMU7gpypslrM=;
-        b=aQdA3VJSNI4afCRPrGYs0NmSV6gG7Ib3zWTNBMGDzuFXpsVokaPrxUg8sW5JqQrDPt
-         v9AIbVluAxY4pw7+CNWxbaKl6KE9PvGUGrF0+Sz7wEEuyxDJMvrHJO2ze3qKIa3YxRaM
-         053LFkqIARqEC4DMFhIfzwgamzNts+PX32bLkPqBP9jUgETVDxyCheMmPM9HKai6fdh1
-         FN2SsIrP1wY3aBghWqmDfu3wo3bn5xHq8QE4bUy/3N6QXycZ7haL8EY/DDZ+Zl/IOEzb
-         FtNuk7QLfcJzfB6GdBFeXOgM7sVLZU/YYh9fCYWqm3kKevmEy/oTpchRhKLuqsu5jLXK
-         qsGA==
-X-Gm-Message-State: AOAM530AuMfnC3KCJny8BVwkwQogqyUYkL+UhTnbLHZw21M8C5GZjIG4
-        sPCKkS2GEJVRQlIJSLTeaBYdfmtdghw=
-X-Google-Smtp-Source: ABdhPJzJ5tLcu869lQTb+coCfYIBs2c2aq0hkEMWWyQvYEYlKnCVJbel7nGqXtHZ132zwQmWU138yQ==
-X-Received: by 2002:a5d:4848:: with SMTP id n8mr11501033wrs.241.1614111282492;
-        Tue, 23 Feb 2021 12:14:42 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d29sm27203649wra.51.2021.02.23.12.14.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Feb 2021 12:14:42 -0800 (PST)
-Message-Id: <2be4981fe6987db02b7694b099b1026f2a6defba.1614111270.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
-References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Feb 2021 20:14:28 +0000
-Subject: [PATCH 19/20] sparse-index: loose integration with
- cache_tree_verify()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
-        jrnieder@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=LBxsbaWlNhlEggMFtaePm9bjPIAEZi+9G/mVX2v8iZw=;
+        b=Jnt+JO1TgQIKIa0ophq4TOK0Inz1LpGiy2Le71j5CLTyZ99axUYSo7oYU+4XOJ5vjB
+         cvgdp536TLT/Vo1gBg8KSiz+Pq53gYmQcfB7eQguNkKnaCqVNeMhLG03NMRprRYfZQuW
+         2evhfUbMFNkmoVkOBSPm+n8wnZiz44fSRK2wrnNDnZBCmo5oPiLOFC33/4chjPxg+qiY
+         PVNZ3AWVFJsk0AWkyqndVdZuTnw1+vUMKYqBmuoNrq6QiT86ZDq2aPRTbWde32XZ5JYA
+         Q89NQjQDy47dfmqJqUFlTByP/L8uMComxw4cXigw2fdJt7HWG3UoY4aRfs/3Pwo5lOaK
+         HTVw==
+X-Gm-Message-State: AOAM533Gzz2o8CSHnQMzJ7VSjJB7+n1QXPF8HFJ0brjzWHUFzOvnWoaX
+        6iPe8YHu9c9XHtBPuxK0TkZdNw9TZxw=
+X-Google-Smtp-Source: ABdhPJxPn9mH5MosK85t16oqg126O4Ub3tKJQgnrb3mbJtd3YGPySE25PtAkcZ7aIkFZNVRT50cUlw==
+X-Received: by 2002:a05:6214:a88:: with SMTP id ev8mr26722360qvb.38.1614111900584;
+        Tue, 23 Feb 2021 12:25:00 -0800 (PST)
+Received: from [192.168.103.12] (cpe00fc8d50b7d3-cm00fc8d50b7d0.cpe.net.fido.ca. [72.141.221.184])
+        by smtp.gmail.com with ESMTPSA id y190sm15578781qkb.133.2021.02.23.12.24.59
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Feb 2021 12:25:00 -0800 (PST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Re: [PATCH v2] doc: `--date` in `git-commit` accepts approxidates
+From:   Utku <ugultopu@gmail.com>
+In-Reply-To: <xmqqpn0q1stv.fsf@gitster.g>
+Date:   Tue, 23 Feb 2021 15:24:58 -0500
+Cc:     Jeff King <peff@peff.net>,
+        Utku Gultopu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <E2F9E8D8-0862-433D-BD20-BA3139BEC0C3@gmail.com>
+References: <pull.969.git.git.1614101746491.gitgitgadget@gmail.com>
+ <pull.969.v2.git.git.1614106322760.gitgitgadget@gmail.com>
+ <YDVSICgBwPLtDNu4@coredump.intra.peff.net> <xmqqpn0q1stv.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
-
-The cache_tree_verify() method is run when GIT_TEST_CHECK_CACHE_TREE
-is enabled, which it is by default in the test suite. The logic must
-be adjusted for the presence of these directory entries.
-
-For now, leave the test as a simple check for whether the directory
-entry is sparse. Do not go any further until needed.
-
-This allows us to re-enable GIT_TEST_CHECK_CACHE_TREE in
-t1092-sparse-checkout-compatibility.sh. Further,
-p2000-sparse-operations.sh uses the test suite and hence this is enabled
-for all tests. We need to integrate with it before we run our
-performance tests with a sparse-index.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- cache-tree.c                             | 19 +++++++++++++++++++
- t/t1092-sparse-checkout-compatibility.sh |  1 -
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 950a9615db8f..11bf1fcae6e1 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -808,6 +808,19 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
- 
-+static void verify_one_sparse(struct repository *r,
-+			      struct index_state *istate,
-+			      struct cache_tree *it,
-+			      struct strbuf *path,
-+			      int pos)
-+{
-+	struct cache_entry *ce = istate->cache[pos];
-+
-+	if (!S_ISSPARSEDIR(ce->ce_mode))
-+		BUG("directory '%s' is present in index, but not sparse",
-+		    path->buf);
-+}
-+
- static void verify_one(struct repository *r,
- 		       struct index_state *istate,
- 		       struct cache_tree *it,
-@@ -830,6 +843,12 @@ static void verify_one(struct repository *r,
- 
- 	if (path->len) {
- 		pos = index_name_pos(istate, path->buf, path->len);
-+
-+		if (pos >= 0) {
-+			verify_one_sparse(r, istate, it, path, pos);
-+			return;
-+		}
-+
- 		pos = -pos - 1;
- 	} else {
- 		pos = 0;
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9c2bc4d25f66..c2624176c2e0 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2,7 +2,6 @@
- 
- test_description='compare full workdir to sparse workdir'
- 
--GIT_TEST_CHECK_CACHE_TREE=0
- GIT_TEST_SPLIT_INDEX=0
- GIT_TEST_SPARSE_INDEX=
- 
--- 
-gitgitgadget
-
+In this case, maybe Jeff can submit a patch, since I wouldn't be adding
+anything to what he suggested.
