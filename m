@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74565C433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4405BC433E0
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4014364EC9
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E73C64E7C
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 00:00:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234170AbhBWX7G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 18:59:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36212 "EHLO
+        id S234188AbhBXAAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 19:00:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233609AbhBWXro (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232008AbhBWXro (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Feb 2021 18:47:44 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62EBEC0617AB
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:16 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id v15so130749wrx.4
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:16 -0800 (PST)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D482CC0617AA
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:15 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id v15so130739wrx.4
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 15:44:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=l/z2OvLd3svp846r/v6fGN490jMZ+a4VTznQAsWEl60=;
-        b=kFF9C2j5ITKsKvA6ZZOcbgQb+VYSUuG9zQzn3BQBxb+pWSjBmf0Y/FWpNRpILahEBc
-         fMJdG4kOCdAIV3ts+8sImmnTOSDEF6TPEqknMHUd7BP4q2Lh6TRayC5mH3318m3zwIAz
-         UJqYJQZJ5P6MB7D/7YsLQWqGEzyWUuJeEDr29M7r2G8xif8Vk57NZvAk9UgYUCu9/shP
-         YIOaCAPjnurTMEfJFRozKvm+SaU3J1MNAGe15AU6VE71aJ3mekornicZRUOFzC14M/7M
-         tCsyRIt4j1MbY11Vkl5WZMEgYNgFJwAl1p+bwaQkIHyhS8PUkaATyy7t3741XcSs4iRd
-         Wc5A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Paoo+pQzJ8Xi5K9u8+x+UaLgBVJk1KVJ1L2MCTL/81Y=;
+        b=MDRcqMAglAmWFssoaNKL2Jkp80c8z5aSWE6VpwQEqhXfMR+Fx2xU9UOnpRdoUXJfhP
+         Xw1HQYsfuLaACFIfGUPlXa95joS5FNAbPsRznE2otZFvBGapepL5ZzNs6LjXCJviJJGb
+         CX06wLwItSFgyUBBA5MsJ3KO8h2Ozv0M0pHXZgakPcWOKvPqzUduJm/CQJgwo80z9WRL
+         XGNE45TUWC9kgoljeN3wuiw1dZCLo9UwkxZV6ziVUJWWSOUy6nOaRM2+htbNMhfnQLLM
+         NLX4oS6lsFJhYOKLWjfquBRU+NjerCgfqZsC2sS+Kb+JAiq9zuXZ/hQM3rNY2lyH/c3V
+         4TCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=l/z2OvLd3svp846r/v6fGN490jMZ+a4VTznQAsWEl60=;
-        b=ntfigzS2y4JHK52nlJw8iLWhwR2pPAnN6mKyxMbrccGmtD3Sj0lEPXB8klIDnGmPUe
-         SEO3CgjDIbCySX9kaf4efdswcDPBsWn5vhQnOrm0p5y7ZqlFs5hrTbmlxqb3QgjLZk7w
-         VVljJQ/My8eyGYOnwCG1zVWoWgQskvnEtI53qwlCzp8xW+xY97eReIgduFMhsm/+Qv4N
-         d9tRT64bWESDdbxLjyS18HGgQbB54PaXFC8+t/5ccZAblCsrKzrGediAPYIM0ptjVaU2
-         YzE3oaZam/RAzW6bkMwvcQgd8hBXUxg4WJt0qCkyolFXeCRtvI+EDrYaP5x0YoCXA07P
-         LjRQ==
-X-Gm-Message-State: AOAM530d4cnWmFMBm0wvNgSRV79EVurmbKm8T1Lvu0x2rBV8ckeK2vf/
-        hIpB5Fpd6r94otBBNogZAquQJz2ULIQ=
-X-Google-Smtp-Source: ABdhPJzoXCD6kKA7p0MMq8EqHfkyMqoTXve7HxkOwmWBDrVAyXpgJCF0taIQvEKBItOuE8xxQEfnXQ==
-X-Received: by 2002:a05:6000:1542:: with SMTP id 2mr29045767wry.356.1614123855212;
-        Tue, 23 Feb 2021 15:44:15 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Paoo+pQzJ8Xi5K9u8+x+UaLgBVJk1KVJ1L2MCTL/81Y=;
+        b=dmuQW3c6TS/ex0MLlBMD5T+HRCyZcKJh0fENqqqAtrpdZusJCFCgxKE2AWfZlZ5unx
+         OFzlf1dciQwriWxtRljnO16tvymSfODhvgkpGYtMxWJvY8Y0z32s43k8dKN1CbOOLUpn
+         d7uavhcYUPj6e4PqFFdH1NxhDhaZL9pSN3H2jL8diT+SOxlY18mU+SN0r9wM5eAyz5D1
+         Eqf4e9ZKWRa/43b2OD5a5UrU0a1fgG/uDIy90VEg5Pa60UYmLROqx9QrwnyjLu4mjgUo
+         9mSfIy6uj7TEIbY/IcEakxT1tZ+FBFi7rA6HdmIwTwtydq8gn3DEPIh/L45Qt45yITTZ
+         v9nw==
+X-Gm-Message-State: AOAM531oPGpCp+A3HVIe4I2bypDThs9ZNByB/okRVsOjzm0Y7OaYdV8I
+        wMi+9rhoQL8uSE4O0UDtVVXRJe9EJ9M=
+X-Google-Smtp-Source: ABdhPJwEV/CYS0SaBqBBPOg/u1dXQDnDWYSzZEW9qENLgybP32LFEyIW5RhuP47kqM9x0qgt81CUvA==
+X-Received: by 2002:adf:c14a:: with SMTP id w10mr3123648wre.282.1614123854623;
+        Tue, 23 Feb 2021 15:44:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v10sm366749wrq.22.2021.02.23.15.44.14
+        by smtp.gmail.com with ESMTPSA id d20sm395437wrc.12.2021.02.23.15.44.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 Feb 2021 15:44:14 -0800 (PST)
-Message-Id: <805c101cfd849db3a5defb30775c7abbfec99f68.1614123848.git.gitgitgadget@gmail.com>
+Message-Id: <4e095ea7c4390cb47828bbba50af876249983870.1614123848.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
 References: <pull.844.git.1613289544.gitgitgadget@gmail.com>
         <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Feb 2021 23:44:07 +0000
-Subject: [PATCH v2 10/10] diffcore-rename: use directory rename guided
- basename comparisons
-MIME-Version: 1.0
+Date:   Tue, 23 Feb 2021 23:44:06 +0000
+Subject: [PATCH v2 09/10] diffcore-rename: limit dir_rename_counts computation
+ to relevant dirs
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
@@ -76,103 +76,56 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Hook the work from the last several patches together so that when
-basenames in the sets of possible remaining rename sources or
-destinations aren't unique, we can guess which directory source files
-were renamed into.  When that guess gives us a pairing of files, and
-those files are sufficiently similar, we record the two files as a
-rename and remove them from the large matrix of comparisons for inexact
-rename detection.
+We are using dir_rename_counts to count the number of other directories
+that files within a directory moved to.  We only need this information
+for directories that disappeared, though, so we can return early from
+update_dir_rename_counts() for other paths.
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
-
-                            Before                  After
-    no-renames:       12.775 s ±  0.062 s    12.596 s ±  0.061 s
-    mega-renames:    188.754 s ±  0.284 s   130.465 s ±  0.259 s
-    just-one-mega:     5.599 s ±  0.019 s     3.958 s ±  0.010 s
+While dirs_removed provides the relevant information for us right now,
+we introduce a new info->relevant_source_dirs parameter because future
+optimizations will want to change how things are called somewhat.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/gitdiffcore.txt |  2 +-
- diffcore-rename.c             | 32 +++++++++++++++++++++++---------
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ diffcore-rename.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-index 80fcf9542441..8673a5c5b2f2 100644
---- a/Documentation/gitdiffcore.txt
-+++ b/Documentation/gitdiffcore.txt
-@@ -186,7 +186,7 @@ mark a file pair as a rename and stop considering other candidates for
- better matches.  At most, one comparison is done per file in this
- preliminary pass; so if there are several remaining ext.txt files
- throughout the directory hierarchy after exact rename detection, this
--preliminary step will be skipped for those files.
-+preliminary step may be skipped for those files.
- 
- Note.  When the "-C" option is used with `--find-copies-harder`
- option, 'git diff-{asterisk}' commands feed unmodified filepairs to
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 5de4497e04fa..70a484b9b63e 100644
+index 1e4a56adde2c..5de4497e04fa 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -667,7 +667,6 @@ static const char *get_basename(const char *filename)
- 	return base ? base + 1 : filename;
- }
+@@ -371,6 +371,7 @@ struct dir_rename_info {
+ 	struct strintmap idx_map;
+ 	struct strmap dir_rename_guess;
+ 	struct strmap *dir_rename_count;
++	struct strset *relevant_source_dirs;
+ 	unsigned setup;
+ };
  
--MAYBE_UNUSED
- static int idx_possible_rename(char *filename, struct dir_rename_info *info)
- {
+@@ -460,7 +461,13 @@ static void update_dir_rename_counts(struct dir_rename_info *info,
+ 		return;
+ 
+ 	while (1) {
++		/* Get old_dir, skip if its directory isn't relevant. */
+ 		dirname_munge(old_dir);
++		if (info->relevant_source_dirs &&
++		    !strset_contains(info->relevant_source_dirs, old_dir))
++			break;
++
++		/* Get new_dir */
+ 		dirname_munge(new_dir);
+ 
+ 		/*
+@@ -540,6 +547,9 @@ static void initialize_dir_rename_info(struct dir_rename_info *info,
+ 	strintmap_init_with_options(&info->idx_map, -1, NULL, 0);
+ 	strmap_init_with_options(&info->dir_rename_guess, NULL, 0);
+ 
++	/* Setup info->relevant_source_dirs */
++	info->relevant_source_dirs = dirs_removed;
++
  	/*
-@@ -780,8 +779,6 @@ static int find_basename_matches(struct diff_options *options,
- 	int i, renames = 0;
- 	struct strintmap sources;
- 	struct strintmap dests;
--	struct hashmap_iter iter;
--	struct strmap_entry *entry;
- 
- 	/*
- 	 * The prefeteching stuff wants to know if it can skip prefetching
-@@ -831,17 +828,34 @@ static int find_basename_matches(struct diff_options *options,
- 	}
- 
- 	/* Now look for basename matchups and do similarity estimation */
--	strintmap_for_each_entry(&sources, &iter, entry) {
--		const char *base = entry->key;
--		intptr_t src_index = (intptr_t)entry->value;
-+	for (i = 0; i < rename_src_nr; ++i) {
-+		char *filename = rename_src[i].p->one->path;
-+		const char *base = NULL;
-+		intptr_t src_index;
- 		intptr_t dst_index;
--		if (src_index == -1)
--			continue;
- 
--		if (0 <= (dst_index = strintmap_get(&dests, base))) {
-+		/* Is this basename unique among remaining sources? */
-+		base = get_basename(filename);
-+		src_index = strintmap_get(&sources, base);
-+		assert(src_index == -1 || src_index == i);
-+
-+		if (strintmap_contains(&dests, base)) {
- 			struct diff_filespec *one, *two;
- 			int score;
- 
-+			/* Find a matching destination, if possible */
-+			dst_index = strintmap_get(&dests, base);
-+			if (src_index == -1 || dst_index == -1) {
-+				src_index = i;
-+				dst_index = idx_possible_rename(filename, info);
-+			}
-+			if (dst_index == -1)
-+				continue;
-+
-+			/* Ignore this dest if already used in a rename */
-+			if (rename_dst[dst_index].is_rename)
-+				continue; /* already used previously */
-+
- 			/* Estimate the similarity */
- 			one = rename_src[src_index].p->one;
- 			two = rename_dst[dst_index].p->two;
+ 	 * Loop setting up both info->idx_map, and doing setup of
+ 	 * info->dir_rename_count.
 -- 
 gitgitgadget
+
