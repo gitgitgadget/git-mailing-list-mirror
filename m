@@ -2,83 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8265C433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 01:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A40DC433E0
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 02:02:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B418A64D5D
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 01:49:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C629764DE9
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 02:02:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbhBWBtL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 22 Feb 2021 20:49:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40992 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230318AbhBWBtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Feb 2021 20:49:10 -0500
-Received: (qmail 22676 invoked by uid 109); 23 Feb 2021 01:48:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Feb 2021 01:48:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21289 invoked by uid 111); 23 Feb 2021 01:48:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Feb 2021 20:48:29 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 22 Feb 2021 20:48:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Wang Yugui <wangyugui@e16-tech.com>, git@vger.kernel.org
-Subject: Re: [PATCH] docs/format-patch: mention handling of merges
-Message-ID: <YDRe7AAOnHPmAhp4@coredump.intra.peff.net>
-References: <20210222211621.0C5D.409509F4@e16-tech.com>
- <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
- <YDQ5YIeXGiR5nvLH@coredump.intra.peff.net>
- <xmqqv9aj65na.fsf@gitster.g>
- <YDRA6RJdnFne2EBw@coredump.intra.peff.net>
- <xmqqblcb60fz.fsf@gitster.g>
+        id S231236AbhBWCCU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 22 Feb 2021 21:02:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231190AbhBWCCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Feb 2021 21:02:16 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D956C06174A
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 18:01:36 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id l30so5316408wrb.12
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 18:01:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=dQLYC/oOygnlcSu9mWRkApHAialolgMyk+ESOoiBzeQ=;
+        b=SWCTNRniWjlbx1P3TgPRxs7rmDBch5r6mrPEf135EA0oP9MmFtCVhD1bSLfGXR9mjH
+         W4mkNXVYpY6KKpoy+3AFXVpsZkz/ZzafklZMfX2+f9GKiDHwxUrgNDlxLzkTp/4mPub9
+         6d6US3HWWNViBAX6CnAvn85i4uiFJnI6LIdMMaDYRsfQomGX7sI4Rmnx3n5EBG+WYd2z
+         xk9/S/mQJzk1XbNLPgZi/tTRklcfgvy9emqTAR4aMTcVtiBdDvzWCKIAn0hAVDyAY3Gh
+         Yd7dz3fxqF2da+65At/NhMAHYHp7KEydxjOeT43Cs439VGLYQtr9BOjY4yGY25Jw9iPZ
+         PmAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=dQLYC/oOygnlcSu9mWRkApHAialolgMyk+ESOoiBzeQ=;
+        b=gYRwy4pRnd295YK5YIl6HQ1cW9y+LaPfeCtugatkbHQTZLRnDidIABZP7/lJQEuxGz
+         LIefJMJUx1Z5HVEoDPE6KdHIRT5mjaenk5OFc+rUyeATB6RaZkiMgqhE+2bzbh6HlyEF
+         OZqruPQM2xELbx/r3cVMf3RkVWfyjO2E+E/659ESHS79AGodouDlnTLtZEx4aalCVcC+
+         U0bwC89cbBLTO3MnCRMvqtnVq9kK4f6nqIK7sRfHzFrpHRkx4xRtcWYoa4UCINzzzqzB
+         cIkEpFY7VB6Sw93ZC3xv/2orz0ndEXJgqQ4kQTOQ16blBfS4OvY6NJKIH2IsjBNO+qNP
+         /SMw==
+X-Gm-Message-State: AOAM530gOWgyz+sOTtrJQcEwnVMKUXIox/nbWXl4oMr7q6cN3Gpixifw
+        Ei7zpTLdY1a7cDx/QPwo+GKKiSnjxsk6HWSDQ1u5/ODTzPA=
+X-Google-Smtp-Source: ABdhPJyUjXB9FAXfMhwFZ30IBekSTGzHdKOOWxv1Ycu2HS+IaWQpF/ZXPBtgUYugtcRbR3PhawNhRr0KRJl0WxBIeSA=
+X-Received: by 2002:a5d:60c8:: with SMTP id x8mr21835722wrt.227.1614045695166;
+ Mon, 22 Feb 2021 18:01:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqblcb60fz.fsf@gitster.g>
+From:   Clement Moyroud <clement.moyroud@gmail.com>
+Date:   Mon, 22 Feb 2021 18:01:24 -0800
+Message-ID: <CABXAcUzRhkeQhVtwtx-NBR0hbkoo=aCTwN464Dsj8680GPMDxw@mail.gmail.com>
+Subject: 'git maintenance' won't work on bare repos
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 22, 2021 at 05:24:16PM -0800, Junio C Hamano wrote:
+Hello,
 
-> > I think one could argue that any merge information (including conflict
-> > resolution) works against the root notion of format-patch, which is a
-> > set of changes that can be applied on a range of basesa.
-> 
-> That's true and it was the primary motive for omiting merges.
-> 
-> > But even that I
-> > would be hesitant to commit to (since --base exists now).
-> 
-> I am not quite sure what --base has to throw into the equation.  The
-> information --base gives is often useful when I want to learn where
-> the patches were taken from, but that does not restrict where the
-> patches are actually applied to in any meaningful way (iow, "on a
-> range of bases" part is not affected).
+Because we have a fairly large repository, our developers rely on
+worktrees created off a bare mirror clone. I'd like to enable
+maintenance, and since the worktrees are rather short-lived instances,
+we cannot point 'git maintenance' to it.
+So the proper solution is to do it from the bare clone itself.
+However, 'git maintenance register' silently fails (with an 0 exit
+code). There are two tell-tale signs:
+1. 'git config --global --get maintenance.repo' returns '.'
+2. There are no Crontab entries inserted.
 
-What I meant is that without "--base", telling somebody "here is the
-merge you should replay on top of these other patches" is virtually
-meaningless. You cannot know what the merge base would be! So you might
-be merging in other random crap, and you might or might not see the same
-conflicts.
+Running 'git maintenance register' from a worktree created off the
+bare clone works as expected.
 
-But in a world with --base, I can imagine some people recreating whole
-sequences of the history graph by using "--base" along with some (to be
-invented) format for representing a merge via email. That mode would
-certainly not be the default, but at least at that point it is
-conceivably useful. Sort of like a bundle, but more human-readable (it
-would also need committer info to recreate the commit ids perfectly, of
-course).
+To reproduce:
+git init --bare test-me
+git -C test-me maintenance register
+git config --global --get maintenance.repo
 
-All of which meant only to argue that "it is not possible or not useful
-to represent a merge in an email" is something that could change in the
-future. :)
+The workaround, for now, is to run this from a worktree, then use 'git
+config' to reset to the corresponding bare clone location.
 
--Peff
+Thanks,
+
+Cl=C3=A9ment
