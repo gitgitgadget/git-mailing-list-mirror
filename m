@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FAA1C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A6EC433DB
 	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE57564E22
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B027E64D99
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 20:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234189AbhBWUPT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 15:15:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47062 "EHLO
+        id S234193AbhBWUPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 15:15:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233478AbhBWUPP (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233482AbhBWUPP (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 23 Feb 2021 15:15:15 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA04C06178A
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2297C06178B
         for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id v1so23848499wrd.6
+Received: by mail-wm1-x32b.google.com with SMTP id x16so3628228wmk.3
         for <git@vger.kernel.org>; Tue, 23 Feb 2021 12:14:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Sr8T60pvjyaHGo05oWI6Lye8k/6nZgW5k/6ArV7rGJ8=;
-        b=X+WVmnQ72yidjc12yefFuwRavCyQnpJFf8HKjn2TvkYFRXN60V/sWlYcWvMcLrvR+J
-         zxNP3sGnvRzx8xaXCX3CpmJPI21EuknXyQ10bSgINg0l3bcjC0BQr2t/hTeEdZa0rqu1
-         pqCAIHxCuCPbO4ENqj/3WjFH8ITiOHaSvw6d6UEXj0Q3L4R9n5lKx52wvXbSz1MfPr/R
-         zValdRxrByAt7/D3BxGkASP+OEZlm1lgUy8l60WWHbWuAE+AHG6qTNBIMGukK1F9grVQ
-         KgPFpWoj6LxaHiPz5ApdSH2eehiJRpJYsQBeIgPmKznU6VvhyvHtXo/WPhpwOxSVhnzN
-         aR6Q==
+        bh=NVPCR6yPnG+zSxv1JkAaAXu15R9XfnzPKEj5XxAvU5k=;
+        b=U1HqW+TeWxls+DF/XejDO7/mR1AqDa+VCHJqDluM0YDZaHnRQKoHGUzVjJs09M6tGQ
+         Ld93L2yzeayJaOyWgXZBAnvErOyZroa+k03D2qUe7O/NFbPIrY8XygYQq9EHI9axM+m7
+         kqaZeqQtDMpRFSqQLuWEshmj1LdPobOz4MpkZ4hy0MTlerF6p/9CSMPvUrqDIJ/FvQdW
+         B5kMVc3/9NQzLxUc8VDtDuLvNBum5VgIHMAc/FCOl8uLwElTFl3mIAQL7/NVw3osOeGI
+         xOrg/rdTVt9EyOrSM8pcwEZhW2wLfNxiBYxMalHvo+oqxAx1UEBiQnGvzBNGWd46TDha
+         U5SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Sr8T60pvjyaHGo05oWI6Lye8k/6nZgW5k/6ArV7rGJ8=;
-        b=aIwHqbYR2pc3j5HjEMN4V9t92h5jBj5RY+B90lej18t3UnIoK/jNHHFPu5ng0yD3Qd
-         ldv+7+TjCx9jOWqxQfLNqC0BJXedM7Wq5SXK+2ISJrJjpA+a4aUgeRzd7r83WyB9cEYW
-         bOvsF1+repthS2haiP9V4z4K137I51zwadzOSCv173NuwbqEzu9YNI4YkE5UOVDLxatV
-         qEN+vnSYcAwP99acXHv4iMo/I8/jpFlko56A179yo97uyCSgAQLTao5Soq3nu9hK2Cll
-         jR4I4tZA+AMwith1y/QhucjTfGjerOTe11wXKM2ssCOmQU4jBeSuE/7Ys+66UK5efcOZ
-         qjWA==
-X-Gm-Message-State: AOAM5321358PV5o8S493hErBFRfnwJXazPBRpX0evGln25+l/+mBMtYB
-        HmMyK+SMPfdH6fbMj/GcpOLzAdNUw6o=
-X-Google-Smtp-Source: ABdhPJyb0+30sI7moX6UGZs5lv3ehn3q1DTv0kHc7DRgb8ug/s9jVyxJ+Bzld0hr/abyaNBK6d0N0A==
-X-Received: by 2002:adf:dd52:: with SMTP id u18mr9284537wrm.175.1614111273004;
-        Tue, 23 Feb 2021 12:14:33 -0800 (PST)
+        bh=NVPCR6yPnG+zSxv1JkAaAXu15R9XfnzPKEj5XxAvU5k=;
+        b=pfyqj1YyyV0lcScbZ1Krec4Hrl+kYRkQszOHDtSRrjjGkcHt9um/G41hDz99Oa6Sf9
+         5PpmgMAwAkF0B47OR0BAKddxx96CCUWU8Ncc1K540ZAXdZjOyZM3f8d6aIh2lYPyFixv
+         KybYVOLHjqD+Ec5WLYwQHIC8pQgSxnkS5GBxMnVLozKcz2kLrKxl7SRhYxNPs92ixqzs
+         i0tqWInzBuR3qf11LN1zOov70D1VGvYjeNFxGxr6bwsu/NH05M+UgsPqhKl1RB5zRYtG
+         hQjjR0TEiOiPLL7TPYQ/euHT/FViKxlO51esEwS9ev5Yg7iOLquPWr9GAnbLHOhJZylg
+         aWgQ==
+X-Gm-Message-State: AOAM533P3IfN+mUzME+lNN9wjMoY2ofCcT1HVN8EAjKOdFGCQV/EZqIn
+        50afSlveI3piyfLMqRultzH8DJeExf4=
+X-Google-Smtp-Source: ABdhPJwbbX4OTGgvcF3xYoMJtFziMLfaBCoX6ytaUbSzIUenDC4NCh1xlJpM+xTS0lCpvPboVOuFFQ==
+X-Received: by 2002:a1c:2311:: with SMTP id j17mr453393wmj.38.1614111272483;
+        Tue, 23 Feb 2021 12:14:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m24sm3911013wmc.18.2021.02.23.12.14.32
+        by smtp.gmail.com with ESMTPSA id a6sm3893892wmj.23.2021.02.23.12.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 Feb 2021 12:14:32 -0800 (PST)
-Message-Id: <6e783c88821e3b86f6ce976e5673dc1df8992c8f.1614111270.git.gitgitgadget@gmail.com>
+Message-Id: <a8c6322a3dbe1130dd2026b600a896e86d54a95d.1614111270.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 23 Feb 2021 20:14:12 +0000
-Subject: [PATCH 03/20] t1092: clean up script quoting
+Date:   Tue, 23 Feb 2021 20:14:11 +0000
+Subject: [PATCH 02/20] t/perf: add performance test for sparse operations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,107 +76,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This test was introduced in 19a0acc83e4 (t1092: test interesting
-sparse-checkout scenarios, 2021-01-23), but these issues with quoting
-were not noticed until starting this follow-up series. The old mechanism
-would drop quoting such as in
+Create a test script that takes the default performance test (the Git
+codebase) and multiplies it by 256 using four layers of duplicated
+trees of width four. This results in nearly one million blob entries in
+the index. Then, we can clone this repository with sparse-checkout
+patterns that demonstrate four copies of the initial repository. Each
+clone will use a different index format or mode so peformance can be
+tested across the different options.
 
-   test_all_match git commit -m "touch README.md"
+Note that the initial repo is stripped of submodules before doing the
+copies. This preserves the expected data shape of the sparse index,
+because directories containing submodules are not collapsed to a sparse
+directory entry.
 
-The above happened to work because README.md is a file in the
-repository, so 'git commit -m touch REAMDE.md' would succeed by
-accident.
+Run a few Git commands on these clones, especially those that use the
+index (status, add, commit).
 
-Other cases included quoting for no good reason, so clean that up now.
+Here are the results on my Linux machine:
+
+Test
+--------------------------------------------------------------
+2000.2: git status (full-index-v3)             0.37(0.30+0.09)
+2000.3: git status (full-index-v4)             0.39(0.32+0.10)
+2000.4: git add -A (full-index-v3)             1.42(1.06+0.20)
+2000.5: git add -A (full-index-v4)             1.26(0.98+0.16)
+2000.6: git add . (full-index-v3)              1.40(1.04+0.18)
+2000.7: git add . (full-index-v4)              1.26(0.98+0.17)
+2000.8: git commit -a -m A (full-index-v3)     1.42(1.11+0.16)
+2000.9: git commit -a -m A (full-index-v4)     1.33(1.08+0.16)
+
+It is perhaps noteworthy that there is an improvement when using index
+version 4. This is because the v3 index uses 108 MiB while the v4
+index uses 80 MiB. Since the repeated portions of the directories are
+very short (f3/f1/f2, for example) this ratio is less pronounced than in
+similarly-sized real repositories.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/perf/p2000-sparse-operations.sh | 87 +++++++++++++++++++++++++++++++
+ 1 file changed, 87 insertions(+)
+ create mode 100755 t/perf/p2000-sparse-operations.sh
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 8cd3e5a8d227..3725d3997e70 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -96,20 +96,20 @@ init_repos () {
- run_on_sparse () {
- 	(
- 		cd sparse-checkout &&
--		$* >../sparse-checkout-out 2>../sparse-checkout-err
-+		"$@" >../sparse-checkout-out 2>../sparse-checkout-err
- 	)
- }
- 
- run_on_all () {
- 	(
- 		cd full-checkout &&
--		$* >../full-checkout-out 2>../full-checkout-err
-+		"$@" >../full-checkout-out 2>../full-checkout-err
- 	) &&
--	run_on_sparse $*
-+	run_on_sparse "$@"
- }
- 
- test_all_match () {
--	run_on_all $* &&
-+	run_on_all "$@" &&
- 	test_cmp full-checkout-out sparse-checkout-out &&
- 	test_cmp full-checkout-err sparse-checkout-err
- }
-@@ -119,7 +119,7 @@ test_expect_success 'status with options' '
- 	test_all_match git status --porcelain=v2 &&
- 	test_all_match git status --porcelain=v2 -z -u &&
- 	test_all_match git status --porcelain=v2 -uno &&
--	run_on_all "touch README.md" &&
-+	run_on_all touch README.md &&
- 	test_all_match git status --porcelain=v2 &&
- 	test_all_match git status --porcelain=v2 -z -u &&
- 	test_all_match git status --porcelain=v2 -uno &&
-@@ -135,7 +135,7 @@ test_expect_success 'add, commit, checkout' '
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>$1
- 	EOF
--	run_on_all "../edit-contents README.md" &&
-+	run_on_all ../edit-contents README.md &&
- 
- 	test_all_match git add README.md &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -144,7 +144,7 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout HEAD~1 &&
- 	test_all_match git checkout - &&
- 
--	run_on_all "../edit-contents README.md" &&
-+	run_on_all ../edit-contents README.md &&
- 
- 	test_all_match git add -A &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -153,7 +153,7 @@ test_expect_success 'add, commit, checkout' '
- 	test_all_match git checkout HEAD~1 &&
- 	test_all_match git checkout - &&
- 
--	run_on_all "../edit-contents deep/newfile" &&
-+	run_on_all ../edit-contents deep/newfile &&
- 
- 	test_all_match git status --porcelain=v2 -uno &&
- 	test_all_match git status --porcelain=v2 &&
-@@ -186,7 +186,7 @@ test_expect_success 'diff --staged' '
- 	write_script edit-contents <<-\EOF &&
- 	echo text >>README.md
- 	EOF
--	run_on_all "../edit-contents" &&
-+	run_on_all ../edit-contents &&
- 
- 	test_all_match git diff &&
- 	test_all_match git diff --staged &&
-@@ -280,7 +280,7 @@ test_expect_success 'clean' '
- 	echo bogus >>.gitignore &&
- 	run_on_all cp ../.gitignore . &&
- 	test_all_match git add .gitignore &&
--	test_all_match git commit -m ignore-bogus-files &&
-+	test_all_match git commit -m "ignore bogus files" &&
- 
- 	run_on_sparse mkdir folder1 &&
- 	run_on_all touch folder1/bogus &&
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+new file mode 100755
+index 000000000000..52597683376e
+--- /dev/null
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -0,0 +1,87 @@
++#!/bin/sh
++
++test_description="test performance of Git operations using the index"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++SPARSE_CONE=f2/f4/f1
++
++test_expect_success 'setup repo and indexes' '
++	git reset --hard HEAD &&
++	# Remove submodules from the example repo, because our
++	# duplication of the entire repo creates an unlikly data shape.
++	git config --file .gitmodules --get-regexp "submodule.*.path" >modules &&
++	rm -f .gitmodules &&
++	git add .gitmodules &&
++	for module in $(awk "{print \$2}" modules)
++	do
++		git rm $module || return 1
++	done &&
++	git add . &&
++	git commit -m "remove submodules" &&
++
++	echo bogus >a &&
++	cp a b &&
++	git add a b &&
++	git commit -m "level 0" &&
++	BLOB=$(git rev-parse HEAD:a) &&
++	OLD_COMMIT=$(git rev-parse HEAD) &&
++	OLD_TREE=$(git rev-parse HEAD^{tree}) &&
++
++	for i in $(test_seq 1 4)
++	do
++		cat >in <<-EOF &&
++			100755 blob $BLOB	a
++			040000 tree $OLD_TREE	f1
++			040000 tree $OLD_TREE	f2
++			040000 tree $OLD_TREE	f3
++			040000 tree $OLD_TREE	f4
++		EOF
++		NEW_TREE=$(git mktree <in) &&
++		NEW_COMMIT=$(git commit-tree $NEW_TREE -p $OLD_COMMIT -m "level $i") &&
++		OLD_TREE=$NEW_TREE &&
++		OLD_COMMIT=$NEW_COMMIT || return 1
++	done &&
++
++	git sparse-checkout init --cone &&
++	git branch -f wide $OLD_COMMIT &&
++	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v3 &&
++	(
++		cd full-index-v3 &&
++		git sparse-checkout init --cone &&
++		git sparse-checkout set $SPARSE_CONE &&
++		git config index.version 3 &&
++		git update-index --index-version=3
++	) &&
++	git -c core.sparseCheckoutCone=true clone --branch=wide --sparse . full-index-v4 &&
++	(
++		cd full-index-v4 &&
++		git sparse-checkout init --cone &&
++		git sparse-checkout set $SPARSE_CONE &&
++		git config index.version 4 &&
++		git update-index --index-version=4
++	)
++'
++
++test_perf_on_all () {
++	command="$@"
++	for repo in full-index-v3 full-index-v4
++	do
++		test_perf "$command ($repo)" "
++			(
++				cd $repo &&
++				echo >>$SPARSE_CONE/a &&
++				$command
++			)
++		"
++	done
++}
++
++test_perf_on_all git status
++test_perf_on_all git add -A
++test_perf_on_all git add .
++test_perf_on_all git commit -a -m A
++
++test_done
 -- 
 gitgitgadget
 
