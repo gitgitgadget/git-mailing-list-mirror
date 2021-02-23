@@ -2,144 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDADC433E6
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 12:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EFC4C433E9
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 13:12:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C235E60233
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 12:26:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7615464E57
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 13:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232453AbhBWM0n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 07:26:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
+        id S232755AbhBWNM0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 08:12:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232489AbhBWM0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 07:26:39 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94330C06174A
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 04:25:59 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id a2so6100011qtw.12
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 04:25:59 -0800 (PST)
+        with ESMTP id S232753AbhBWNMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 08:12:23 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BE8DC06178A
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 05:11:43 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id do6so34495789ejc.3
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 05:11:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=DsQc3NNkT6L3zAHqQaqCiCHjXhnTWX41y2rsyLzRjQA=;
-        b=G3fQLOogbcBbE5EbpbkGp7srsMqNm4Gdm+aUtGUENsUCRTzSRCclhmJQHP8hpt70qI
-         1O/tDBgapXeq7gbYyM6dBA3ok3BMwhGT5cOSIAx72W+IcaYKpNscL+lGrdMzSc+4VTy4
-         A1ZuMs/+s9kpmNdWNvXKvjpMTmYEk5kk2mFPCcHjyWYE4pksyKlpoTF/9iN/ibyJDsIN
-         wiiob9J90y4sBT+/XKjrUpBEYcCRtJUxC3v9b9fo8sFKLK6Y2hdPTY44rPR2jxUVpWrm
-         0JKq+BpLEkjBCwVfwN4I4xYdmA6UhvI5js89byffpe+MOWDtxfdAr9TIZflX6tWKtWoi
-         rC7g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WOLp2A8KsySBbDkBTZKHBy22L0rh8+tvhlOBUd3ayqQ=;
+        b=LY+RJw0GqCau0WB9nH6u0aLgBIArYHq4gWhEJzKBy5rV+f66ao6e47N6dr4mH5ALng
+         3y3RQVHNsu+hpmcGncasynxM4dgecIwggmVdMxylFPWSe4Nzk9WS9fO3CQud4kevHUPv
+         IpeUHqNKXqahu7ZploQVHdGisPwAHvJsp577ABKF0xvOKtP1d2CPf8mJKNggxa7BUDjP
+         jaL7IMUZ5zc4m/YPtAbk0/jlZOEnoOX0WeHSXMGBi/d+FD8DOX7KbMd6sTJXV7w50c3W
+         r9/ZCJI1Cy2FbZu+L+BelWmuCEyr8tVCHU/IzydRd2Uz6JgIIoF6CIS7F6r7ZHRYB3LG
+         pMLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=DsQc3NNkT6L3zAHqQaqCiCHjXhnTWX41y2rsyLzRjQA=;
-        b=CoD5s5tScN0fE7uQJFy8yG1gHuEFGIcEYPOlccEdHYZzNZ9PLsG9ITlqNteGOQ5fey
-         23rRjP/yX4hQqdGDZr7EVu4GvCvDjnEbO4DnVlOW6T+j79Shq5bW94DhH8Jtj45VQpcc
-         irU1qbXVQvsigMflGbbZAT20Z4sXA4M5K/dDuCD6cQ2FXGH6lyu93C38PvDuHSV5Q0/t
-         WdzF45yPLX5bq2+KwARMB7lhGHB92m/tcastrhAweXuszeNOQ1Nv+sVY571sYUTiz3q1
-         HqT5/WENuz5/u3isBst7hXQD4OMZLsHXQq2BdqBsLyJwDgfQovGcxCsEOKfbnipTe8tl
-         5LdA==
-X-Gm-Message-State: AOAM533IjVIVMOKenOUdwCrxkdjX0jDDVsbCFCTZ8n24EAHng432+4Gd
-        86eA1ozl9gulw5fNC5QdcM0=
-X-Google-Smtp-Source: ABdhPJxh5+3DOSvhgwb8fl1Ma8CXfYD99gsRSS8Abh5OZIvdPzENirRzoUCTml58rWI6xdizK4dc/w==
-X-Received: by 2002:ac8:5c44:: with SMTP id j4mr24341741qtj.124.1614083158578;
-        Tue, 23 Feb 2021 04:25:58 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:6088:7f39:fed7:63ad? ([2600:1700:e72:80a0:6088:7f39:fed7:63ad])
-        by smtp.gmail.com with UTF8SMTPSA id c7sm13130373qtm.60.2021.02.23.04.25.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Feb 2021 04:25:58 -0800 (PST)
-Message-ID: <5653230a-20c2-321f-7ea0-93ce59858532@gmail.com>
-Date:   Tue, 23 Feb 2021 07:25:57 -0500
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WOLp2A8KsySBbDkBTZKHBy22L0rh8+tvhlOBUd3ayqQ=;
+        b=dKl1U0ly4trII6GxBsewZBVXjRFGNoQZ3q4gBuPx4ft3E5njINYCUzzz+onAsRl/Nc
+         FWn0CTYuhpvt4u1UW7jp5E1DTlfl2j6VvA0hX4PJUJ7cZ4Lybh/axJ5MhsnDPo2bCcO+
+         C2yCRCb/cQQjzbGv5hMKlyL8nXw5XhClBuYCdWeO3P94/AaQ6eyoZynCHcJko0jrzkaH
+         BCJg/bPR/nlWOU6QDi+SzISMrnvCmbYkYM+BSA+Kl+RoL0OtKAwuptO+UfrtypxfgECl
+         8RJvBTIspRyxJMssPA8Rs1jFXqMN9CFB2jQISLAMmoHoge2H2I/jIChj7iZCwnh5blan
+         Oa3A==
+X-Gm-Message-State: AOAM5320v0aNAFBc02DfUgou77p7+zMuGZu5rKXqTuYIEiPMGsOf14o3
+        bkMzUnUfRvDFg2blTO/RHrw=
+X-Google-Smtp-Source: ABdhPJynIG3JDxibrIAXIJtB+dvzcxEaBTTQyryfh3uw9TDO4zR9C+vdMLCX+anpQr2hFleHNabIbQ==
+X-Received: by 2002:a17:906:4088:: with SMTP id u8mr8099809ejj.208.1614085902225;
+        Tue, 23 Feb 2021 05:11:42 -0800 (PST)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id v12sm4029840edx.90.2021.02.23.05.11.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Feb 2021 05:11:41 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        "Eric Sunshine" <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 09/27] userdiff tests: match full hunk headers
+References: <20210215005236.11313-1-avarab@gmail.com>
+ <20210215154427.32693-10-avarab@gmail.com>
+ <4bd7bb84-3b75-258e-b488-f66dff6ba6b5@kdbg.org>
+ <xmqqsg5vrhha.fsf@gitster.c.googlers.com>
+ <1b2cb670-b49b-b478-7f69-6d4c356c8118@kdbg.org>
+ <87h7mba3h3.fsf@evledraar.gmail.com> <xmqqk0r6ldrn.fsf@gitster.g>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <xmqqk0r6ldrn.fsf@gitster.g>
+Date:   Tue, 23 Feb 2021 14:11:40 +0100
+Message-ID: <877dmz7wtv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
- Thunderbird/86.0
-Subject: Re: [PATCH] maintenance: fix incorrect `maintenance.repo` path with
- bare repository
-Content-Language: en-US
-To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Cc:     Clement Moyroud <clement.moyroud@gmail.com>
-References: <20210223073107.40675-1-sunshine@sunshineco.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20210223073107.40675-1-sunshine@sunshineco.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2021 2:31 AM, Eric Sunshine wrote:
-> The periodic maintenance tasks configured by `git maintenance start`
-> invoke `git for-each-repo` to run `git maintenance run` on each path
-> specified by the multi-value global configuration variable
-> `maintenance.repo`. Because `git for-each-repo` will likely be run
-> outside of the repositories which require periodic maintenance, it is
-> mandatory that the repository paths specified by `maintenance.repo` are
-> absolute.
-> 
-> Unfortunately, however, `git maintenance register` does nothing to
-> ensure that the paths it assigns to `maintenance.repo` are indeed
-> absolute, and may in fact -- especially in the case of a bare repository
-> -- assign a relative path to `maintenance.repo` instead. Fix this
-> problem by converting all paths to absolute before assigning them to
-> `maintenance.repo`.
-> 
-> While at it, also fix `git maintenance unregister` to convert paths to
-> absolute, as well, in order to ensure that it can correctly remove from
-> `maintenance.repo` a path assigned via `git maintenance register`.
 
-Thanks for the report and the fix!
+On Wed, Feb 17 2021, Junio C Hamano wrote:
 
-> +static char *get_maintpath(void)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	const char *p = the_repository->worktree ?
-> +		the_repository->worktree : the_repository->gitdir;
-> +
-> +	strbuf_realpath(&sb, p, 1);
-> +	return strbuf_detach(&sb, NULL);
-> +}
-> +
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>>> +		sed -ne "s/^@@[^@]*@@//p" actual |
+>>>> +		if test -n "$HEAD"
+>>>> +		then
+>>>> +			grep -F "$HEAD"
+>>>> +		else
+>>>> +			grep "^.*RIGHT"
+>>>> +		fi
+>>>> +	'
+>>>>   done
+>>>>     test_done
+>>>
+>>>> diff --git c/t/t4018/bash-arithmetic-function w/t/t4018/bash-arithmeti=
+c-function
+>>>> index c0b276cb50..935f18d96d 100644
+>>>> --- c/t/t4018/bash-arithmetic-function
+>>>> +++ w/t/t4018/bash-arithmetic-function
+>>>> @@ -2,3 +2,6 @@ RIGHT() ((
+>>>>         ChangeMe =3D "$x" + "$y"
+>>>>   ))
+>>>> +
+>>>> +
+>>>> +# HEADER |right()|
+>>>>=20
+>>>
+>>> Clever! Opt-in for those who desire precise tests.
+>>
+>> Tests aren't only for testing a subjective "good enough" in the
+>> estimation of the author of the code in question, but also for others
+>> who later touch the same area and want to avoid regressions.
+>>
+>> Which is why I think it's an anti-pattern to use "grep SOME-SUBSTR" in
+>> lieu of test_cmp if we can easily do the latter.
+>
+> Sounds good.  It shouldn't be too hard to satisfy both camps,
+> i.e. the quoted demonstrates one way to allow test writers to
+> give expectation in-place in the single test file, and replacing
+> how it uses "grep" to check the output with test_cmp or whatever
+> wouldn't make the resulting tests too hard to write and maintain.
 
-This looks right.
+It doesn't satisfy both camps, because I'd like to convert all these
+tests to test_cmp because for a subsequent refactoring of userdiff.c by
+me or others I don't know in advance what might break, so I'd like to
+assert the exact current behavior.
 
->  static int maintenance_register(void)
->  {
-> +	int rc;
->  	char *config_value;
->  	struct child_process config_set = CHILD_PROCESS_INIT;
->  	struct child_process config_get = CHILD_PROCESS_INIT;
-> +	char *maintpath = get_maintpath();
+Whereas your patch provides a way to opt-in individual tests to a
+test_cmp-alike, but leaves the rest at grepping for the "RIGHT"
+substring. Failures in the tests who aren't opted-in will be hidden.
 
-I'm sorry that this diff looks more complicated than seems necessary,
-but your creation of the "done:" label is important for cleaning up
-the string. Thanks.
+It also means that subsequent changes to the behavior in the form of
+submitted patches won't be as self-documenting, e.g. I've wondered if we
+could introduce a case to balance parens in this code (sometimes C
+function declarations stretch across lines), and there's e.g. the
+arbitrary limit of 80 bytes on the line (which to be fair, we don't
+curretly have tests for).
 
-> +test_expect_success 'register and unregister bare repo' '
-> +	test_when_finished "git config --global --unset-all maintenance.repo || :" &&
-> +	test_might_fail git config --global --unset-all maintenance.repo &&
-> +	git init --bare barerepo &&
-> +	(
-> +		cd barerepo &&
-> +		git maintenance register &&
-> +		git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+Anyway, as noted in [1] I don't see how this custom format of grepping
+stuff out of plain-text files is simpler, particularly when its behavior
+would start to rely on other things like "# HEADER |right()|" whose
+behavior is a function of what we grep/sed when/where in the logic
+driving the tests.
 
-I'm concerned about this test passing on Windows, but if the CI build is happy,
-then I'm happy.
+But if you & Johannes S. disagree with that I don't really say a way
+forward with this series. I think e.g. squashing 09/27 into the rest
+would make things simpler/less verbose, but the end-state would still be
+matching the full hunk line, and if that's not something that's wanted
+in any shape or form as a default...
 
-> +		git maintenance unregister &&
-> +		test_must_fail git config --global --get-all maintenance.repo
-> +	)
-> +'
-
-Thanks!
-
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+1. https://lore.kernel.org/git/87h7mba3h3.fsf@evledraar.gmail.com/
