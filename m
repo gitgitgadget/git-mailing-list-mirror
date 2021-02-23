@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5880AC433DB
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEB2C433E0
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:49:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 072CE60C41
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:45:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 056C064E2E
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 06:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231259AbhBWGpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 01:45:54 -0500
-Received: from mail-ej1-f51.google.com ([209.85.218.51]:35597 "EHLO
-        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231268AbhBWGpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 01:45:52 -0500
-Received: by mail-ej1-f51.google.com with SMTP id g5so32926103ejt.2
-        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:45:36 -0800 (PST)
+        id S231451AbhBWGto (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 01:49:44 -0500
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:40039 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229886AbhBWGtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 01:49:42 -0500
+Received: by mail-ej1-f54.google.com with SMTP id u20so32190274ejb.7
+        for <git@vger.kernel.org>; Mon, 22 Feb 2021 22:49:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UelZhRoWv4e1I4sN6XDmoUUwwNWeeRgXI4dHkUbhVuw=;
-        b=UltQnyBN/q7HT1TlN+L2x7POS9duMYLjvE31FzptLO/W3+aW8QdpvnNRPzwSxk9UEn
-         KfZd/mhzTICsZCfWPUURn1+UytL6LmdFHDfafxEdSrUwHb4JBMqFIQJ9waT4hhnvQv63
-         9dQvcWecW1nm60xWFxatT171G6gFjtd0UiKtz0VnKbCWVLVwwBH7fUT9J2t7/4y0qjhx
-         lX3Z7NjgPxVJlqC4moJOIf6RDS28oy8b0X7NDgKVqLsUHv8XQN2NH1Oxa59HwFw4te5x
-         ZIUHu8b25zY6Bv/l43ZpIqXucddABO+DoM+Q+VuMGxTB5yiEMKIKwias0J/4dvx5dtuL
-         uajA==
-X-Gm-Message-State: AOAM532B008DU5IgfN0Zu16I33VTn4lEq+Ag+5NkQJEFcces3JwMMTZW
-        a5NEf51WOk1HQEjjSioXM3Ffh2ds9kZr6F9l7f45hxoG
-X-Google-Smtp-Source: ABdhPJy/1KpLzONfbkhAavsGp6X5XOYcGk70LNl7NEMKiHc5yh9MYknhgPNMeIKU82UBTaWcHB3GogC0GK8mttE02tc=
-X-Received: by 2002:a17:906:3105:: with SMTP id 5mr24699011ejx.168.1614062710586;
- Mon, 22 Feb 2021 22:45:10 -0800 (PST)
+        bh=jB/zphZZpmghKexQgRtljqCpmfTF97oFoU+TLvgPM3w=;
+        b=GSOLN/UWVmkDZQ2owJ3Ne713h9g2HaCp6i8Uf/4orix3GELptC7k96Pn8TSofPT0cu
+         ePmBRgXUH8GNQp4XM0LYo4yZsJ3tf3RRqNtn/4PXmNMqMXjI4Iak8FkSciSxHM8z+o5b
+         IHg3h2CniBc/TAFxXueqJR/uZzp44kRN6p4vc+slCzOe4h+PVUOZ7Kvti2vWPRSWysMI
+         kWmA0iqz9R6pB14pMf5tUApOljT762ZrA/6DrF0eAa2o/0g88WSsHQwuU+plxYeJBXLp
+         ZxPhIo9bUTHvRFKjO1/c6WOqt9KM3YEeyoRaJZtRL8WuQcaIznJklhO6wTPveQaVIduP
+         +WoA==
+X-Gm-Message-State: AOAM532HPQIj829K74RxX65ZtvjhNl+kb4ReugQHlt+Nsqxaw6JYxrXm
+        m9uXkXrGbTtuiw42CqpqBhjC+TxhdrtE7Ua1JGk=
+X-Google-Smtp-Source: ABdhPJyUd7V8jSIz760jHvEpTLXR4mqQRjMgovuFRcIKxGZu4TZaml0eQgOWGbTkTYX2XWMkw5XQd4rWP/vIVQV4jOE=
+X-Received: by 2002:a17:906:1fc7:: with SMTP id e7mr16670886ejt.202.1614062940851;
+ Mon, 22 Feb 2021 22:49:00 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1614062288.git.liu.denton@gmail.com> <1ab7ca7fc0928b40c47b53d97695ae911ba93c39.1614062288.git.liu.denton@gmail.com>
-In-Reply-To: <1ab7ca7fc0928b40c47b53d97695ae911ba93c39.1614062288.git.liu.denton@gmail.com>
+References: <cover.1614062288.git.liu.denton@gmail.com> <a24cbbe955f45072ffa88ca16f84e2443720a38f.1614062288.git.liu.denton@gmail.com>
+In-Reply-To: <a24cbbe955f45072ffa88ca16f84e2443720a38f.1614062288.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 23 Feb 2021 01:44:59 -0500
-Message-ID: <CAPig+cSgmNZ0woVyP5i9Oy0Rwh8v_7NPu9_LJzCwTV-1mK1vWg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] git-cat-file.txt: monospace args and placeholders
+Date:   Tue, 23 Feb 2021 01:48:50 -0500
+Message-ID: <CAPig+cSy3M4Lp6ej5ca47GzAAOPz2Q9p6cSZWsLs9STu-KauSA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] git-cat-file.txt: remove references to "sha1"
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -52,18 +52,32 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Feb 23, 2021 at 1:41 AM Denton Liu <liu.denton@gmail.com> wrote:
-> In modern documentation, args and placeholders are monospaced. Format
-> all remaining args and placeholders as monospace.
+> As part of the hash-transition, git can operate on more than just SHA-1
+> repositories. Replace "sha1"-specific documentation with hash-agnostic
+> terminology.
 >
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
 > diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-> @@ -115,7 +115,7 @@ OPTIONS
->  --allow-unknown-type::
-> -       Allow -s or -t to query broken/corrupt objects of unknown type.
-> +       Allow `-s` or `-t` to query broken/corrupt objects of unknown type.
->
->  --follow-symlinks::
->         With --batch or --batch-check, follow symlinks inside the
+> @@ -200,7 +200,7 @@ object, with placeholders of the form `%(atom)` expanded, followed by a
+>  `objectname`::
+> -       The 40-hex object name of the object.
+> +       The full hex representation of the object.
 
-Missed these? `--batch`, `--batch-check`
+I find this new terminology confusing and ambiguous. To me, this seems
+to be saying that it is a hex representation of the entire object
+rather than a hex representation of the hash of the object. Perhaps
+say either "hex representation of the hash of the object" or "hex
+representation of the object ID"?
+
+> @@ -215,8 +215,8 @@ newline. The available atoms are:
+>  `deltabase`::
+>         If the object is stored as a delta on-disk, this expands to the
+> -       40-hex sha1 of the delta base object. Otherwise, expands to the
+> -       null sha1 (40 zeroes). See `CAVEATS` below.
+> +       full hex representation of the delta base object. Otherwise, expands to the
+> +       null OID (all zeroes). See `CAVEATS` below.
+
+Same issue. "hex representation of the delta base object" sounds
+misleading. Should probably mention "hash of the" in there somewhere
+or something.
