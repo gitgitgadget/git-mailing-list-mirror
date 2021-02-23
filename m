@@ -2,114 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6273BC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 16:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC1AC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 16:58:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F27D61606
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 16:52:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3891B64E2E
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 16:58:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232866AbhBWQwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 11:52:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59692 "EHLO
+        id S233443AbhBWQ6R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 11:58:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbhBWQwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 11:52:06 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B423EC061574
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 08:51:24 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id k16so10333948plk.20
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 08:51:24 -0800 (PST)
+        with ESMTP id S233632AbhBWQ6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 11:58:07 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2B5C061574
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 08:57:26 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id v21so3088375wml.4
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 08:57:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=sNidQv+oZlXi/mkLEef+JCwGZVblVeV54JKul6RSWik=;
-        b=pl2IIvZnwwX9uaaW4kwue7ZHGZDRjWft0a2cnkT8qiosL2fUErUE67URkVO3YMZsyd
-         RYrLF8aBitrqJmb+6Ya1edjTTEQB/QKcLRYyaDpLyl7iQv+xa9JP+S6BmVm/lcGRa1/u
-         zMmGRtPA3kdLCx+T2H6zF68MPwC357Vo1Rgs1EP0f3Fl1V4+SzzHQySf0PWcKmS+yHVp
-         7y2opMPBPEpeLp7U6t0CKARbgqaAyS6jDxNrIm9aUfZFoB3mDS4I2puAInI0K4w0x1CM
-         z1wIPIAwA7vkjRkuqh2UlixvoSY9hT3jeHkx37DiHyAjQ62njl5DeJFz95dRkLyT1QWR
-         W/zw==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=uKkrXF4yaz37QyNB3FCv6EdYV3X3mvQ/nWuLY3/kyEs=;
+        b=tD30fbm+AeXZnJP9vhjsjqQgoYpbS7SgelCSr0A1UasrBINFcxhkOdTdbuUffocELp
+         mYISbFdxnN/dmZ9B8cTLZ/euTPHHqe87YftdYWryjCmtRJBJCsSJSjEePG/0FXpcotg0
+         EBEfOK1HKzHDPeYEfdXG9RpLONTNcCorobGbcahu7A1/VXf13EBXPK3U1KQ/H2UZV3Fr
+         /9bHHGSDVjXUSnV38h/q1CwHcZbA68ZcH3j+yGWReMRszZhWi7TpQnv2wBjU6iABXxll
+         8C9GjVgTWIjxlFN7iwvg29GMrBL0LUgfq6+NIyZkFftDiySM3qfXTz9PzmO9NDqsGS76
+         INNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=sNidQv+oZlXi/mkLEef+JCwGZVblVeV54JKul6RSWik=;
-        b=JCBp+04RQRdz3sWHytTPC1Ilzt0m70lJWV2hAPvPQhEviKtv6V4VgQ807XQW+9saPD
-         PRRLovEYcXkdFR8wp3EzGt8UhCaftRw6kQ80bVsD6pvRkjeSmSBBzKiuxAWzq/kmB2T1
-         me8/pYja0Xp4DinivJ/BXHIWP45bVtm8XkT2cXf3wb4GLM7QHHLMmJykABWO7NXmszdC
-         LFumtnkpptyHTRNWkAJomx89al+QjUCacQX6oRnZsUDLvTbS0cJx2lthNj8iJNWR9jjS
-         GptdLXYhLe7G9mVKxavcSDLzzcgn4+BOFNHvVd24+ZvDVAKtXiiB35V2hgVJ5BLeLIlt
-         6JCQ==
-X-Gm-Message-State: AOAM533qbofqO4O+aTOIYBYtbsK7tWFl4dlL05H01PWucR0I8X40+B0e
-        LoZ1Yeo1LafR5xwCYisMdhwEwV7gI3pFGUt8wcto
-X-Google-Smtp-Source: ABdhPJxjN0Ag7Iy5yeoWzlDKtx4V4zNmR8KmSgJEZxFHRL9svUXKz94Krq/+o05qTrpdpVXv/0iImDsnRQBlGLrCV9fJ
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:16cd:b029:1c9:6f5b:3d8c
- with SMTP id l13-20020a056a0016cdb02901c96f5b3d8cmr27597750pfc.1.1614099083714;
- Tue, 23 Feb 2021 08:51:23 -0800 (PST)
-Date:   Tue, 23 Feb 2021 08:51:20 -0800
-In-Reply-To: <874ki29b53.fsf@evledraar.gmail.com>
-Message-Id: <20210223165120.1561659-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <874ki29b53.fsf@evledraar.gmail.com>
-X-Mailer: git-send-email 2.30.0.617.g56c4b15f3c-goog
-Subject: Re: [PATCH v2 2/4] http-fetch: allow custom index-pack args
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     avarab@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=uKkrXF4yaz37QyNB3FCv6EdYV3X3mvQ/nWuLY3/kyEs=;
+        b=F7r0VQjsIPcm+NchaBkOojla7ftHrhv31bqQm35Sd/Q8xV2nbU251XuISHPd9wr9L1
+         CYvGog6Y44qdJSA0cTEyx7TMOZCkGH9mMU4ecCi7QkQ37D6v9YSDvYCvLXKOHOiMJRB0
+         USoq+9S55aqxM2Ifp3rJKCIQt9dl/lJcdZlsR+ADFSordKEMN5EWz34h8+JNpR0/0MNS
+         yWb3bEa8G0OyYwXWFF+83Lb686/xMufE2WF8unuuxbvd5ahifM1DEa/U7hPDriydqDHo
+         cXz0q4lPpo1fKUMVgfEKd5NmqxMQ9d6tNVUqE2W+HaME3o/ZBW1836UA/FGNKEAnw9FK
+         gSFg==
+X-Gm-Message-State: AOAM532yoQrX8A0YULHqkpPDH2eImf+uQxH+iYKDAtN2GtsMJWK3j7Jf
+        yOYtcXM/fE164VIK4ZvoQIcjRMuvhAA=
+X-Google-Smtp-Source: ABdhPJwprOpAMxhu8NH+dkCItB1dYms2VAud///G6wLo/8WjwcHr0jLrkgXSU8/zInJTI6Ma7IVbKA==
+X-Received: by 2002:a1c:29c4:: with SMTP id p187mr26062060wmp.8.1614099444979;
+        Tue, 23 Feb 2021 08:57:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y1sm32684743wrr.41.2021.02.23.08.57.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Feb 2021 08:57:24 -0800 (PST)
+Message-Id: <pull.951.v2.git.git.1614099444126.gitgitgadget@gmail.com>
+In-Reply-To: <pull.951.git.git.1611589125365.gitgitgadget@gmail.com>
+References: <pull.951.git.git.1611589125365.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 23 Feb 2021 16:57:23 +0000
+Subject: [PATCH v2] doc/reftable: document how to handle windows
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > diff --git a/Documentation/git-http-fetch.txt b/Documentation/git-http-fetch.txt
-> > index 4deb4893f5..9fa17b60e4 100644
-> > --- a/Documentation/git-http-fetch.txt
-> > +++ b/Documentation/git-http-fetch.txt
-> > @@ -41,11 +41,17 @@ commit-id::
-> >  		<commit-id>['\t'<filename-as-in--w>]
-> >  
-> >  --packfile=<hash>::
-> > -	Instead of a commit id on the command line (which is not expected in
-> > +	For internal use only. Instead of a commit id on the command
-> > +	line (which is not expected in
-> >  	this case), 'git http-fetch' fetches the packfile directly at the given
-> >  	URL and uses index-pack to generate corresponding .idx and .keep files.
-> >  	The hash is used to determine the name of the temporary file and is
-> > -	arbitrary. The output of index-pack is printed to stdout.
-> > +	arbitrary. The output of index-pack is printed to stdout. Requires
-> > +	--index-pack-args.
-> > +
-> > +--index-pack-args=<args>::
-> > +	For internal use only. The command to run on the contents of the
-> > +	downloaded pack. Arguments are URL-encoded separated by spaces.
-> >  
-> >  --recover::
-> >  	Verify that everything reachable from target is fetched.  Used after
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index 876f90c759..aeac010b0b 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -1645,6 +1645,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
-> >  		strvec_pushf(&cmd.args, "--packfile=%.*s",
-> >  			     (int) the_hash_algo->hexsz,
-> >  			     packfile_uris.items[i].string);
-> > +		strvec_push(&cmd.args, "--index-pack-arg=index-pack");
-> > +		strvec_push(&cmd.args, "--index-pack-arg=--stdin");
-> > +		strvec_push(&cmd.args, "--index-pack-arg=--keep");
-> 
-> The docs say --*-args, but the code checks --*arg, that seems like a
-> mistake that should be fixed to make the code/tests use the plural form,
-> no?
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-Thanks for catching that. Originally it was plural since this single
-argument would give multiple arguments to index-pack, but now each
-argument gives only a single argument, so "arg" is correct. I'll update
-it in the next version.
+On Windows we can't delete or overwrite files opened by other processes. Here we
+sketch how to handle this situation.
+
+We propose to use a random element in the filename. It's possible to design an
+alternate solution based on counters, but that would assign semantics to the
+filenames that complicates implementation.
+
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+    doc/reftable: document how to handle windows
+    
+    On Windows we can't delete or overwrite files opened by other processes.
+    Here we sketch how to handle this situation.
+    
+    Signed-off-by: Han-Wen Nienhuys hanwen@google.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-951%2Fhanwen%2Fwindows-doc-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-951/hanwen/windows-doc-v2
+Pull-Request: https://github.com/git/git/pull/951
+
+Range-diff vs v1:
+
+ 1:  a952bc478f86 ! 1:  e3854f2cc106 doc/reftable: document how to handle windows
+     @@ Commit message
+          On Windows we can't delete or overwrite files opened by other processes. Here we
+          sketch how to handle this situation.
+      
+     +    We propose to use a random element in the filename. It's possible to design an
+     +    alternate solution based on counters, but that would assign semantics to the
+     +    filenames that complicates implementation.
+     +
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+       ## Documentation/technical/reftable.txt ##
+     -@@ Documentation/technical/reftable.txt: A collection of reftable files are stored in the `$GIT_DIR/reftable/`
+     - directory:
+     +@@ Documentation/technical/reftable.txt: A repository must set its `$GIT_DIR/config` to configure reftable:
+     + Layout
+     + ^^^^^^
+       
+     - ....
+     +-A collection of reftable files are stored in the `$GIT_DIR/reftable/`
+     +-directory:
+     +-
+     +-....
+      -00000001-00000001.log
+      -00000002-00000002.ref
+      -00000003-00000003.ref
+     -+00000001-00000001-RANDOM1.log
+     -+00000002-00000002-RANDOM2.ref
+     -+00000003-00000003-RANDOM3.ref
+     - ....
+     - 
+     - where reftable files are named by a unique name such as produced by the
+     +-....
+     +-
+     +-where reftable files are named by a unique name such as produced by the
+      -function `${min_update_index}-${max_update_index}.ref`.
+     -+function `${min_update_index}-${max_update_index}-${random}.ref`.
+     ++A collection of reftable files are stored in the `$GIT_DIR/reftable/` directory.
+     ++Their names should have a random element, such that each filename is globally
+     ++unique; this helps avoid spurious failures on Windows, where open files cannot
+     ++be removed or overwritten. It suggested to use
+     ++`${min_update_index}-${max_update_index}-${random}.ref` as a naming convention.
+       
+       Log-only files use the `.log` extension, while ref-only and mixed ref
+       and log files use `.ref`. extension.
+     @@ Documentation/technical/reftable.txt: current files, one per line, in order, fro
+       ....
+       
+       Readers must read `$GIT_DIR/reftable/tables.list` to determine which
+     -@@ Documentation/technical/reftable.txt: Reftable files not listed in `tables.list` may be new (and about to be
+     - added to the stack by the active writer), or ancient and ready to be
+     - pruned.
+     - 
+     -+The random suffix added to table filenames ensures that we never attempt to
+     -+overwrite an existing table, which is necessary for this scheme to work on
+     -+Windows
+     -+
+     - Backward compatibility
+     - ^^^^^^^^^^^^^^^^^^^^^^
+     - 
+      @@ Documentation/technical/reftable.txt: new reftable and atomically appending it to the stack:
+       3.  Select `update_index` to be most recent file's
+       `max_update_index + 1`.
+
+
+ Documentation/technical/reftable.txt | 42 +++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
+index 8095ab2590c8..3ef169af27d8 100644
+--- a/Documentation/technical/reftable.txt
++++ b/Documentation/technical/reftable.txt
+@@ -872,17 +872,11 @@ A repository must set its `$GIT_DIR/config` to configure reftable:
+ Layout
+ ^^^^^^
+ 
+-A collection of reftable files are stored in the `$GIT_DIR/reftable/`
+-directory:
+-
+-....
+-00000001-00000001.log
+-00000002-00000002.ref
+-00000003-00000003.ref
+-....
+-
+-where reftable files are named by a unique name such as produced by the
+-function `${min_update_index}-${max_update_index}.ref`.
++A collection of reftable files are stored in the `$GIT_DIR/reftable/` directory.
++Their names should have a random element, such that each filename is globally
++unique; this helps avoid spurious failures on Windows, where open files cannot
++be removed or overwritten. It suggested to use
++`${min_update_index}-${max_update_index}-${random}.ref` as a naming convention.
+ 
+ Log-only files use the `.log` extension, while ref-only and mixed ref
+ and log files use `.ref`. extension.
+@@ -893,9 +887,9 @@ current files, one per line, in order, from oldest (base) to newest
+ 
+ ....
+ $ cat .git/reftable/tables.list
+-00000001-00000001.log
+-00000002-00000002.ref
+-00000003-00000003.ref
++00000001-00000001-RANDOM1.log
++00000002-00000002-RANDOM2.ref
++00000003-00000003-RANDOM3.ref
+ ....
+ 
+ Readers must read `$GIT_DIR/reftable/tables.list` to determine which
+@@ -940,7 +934,7 @@ new reftable and atomically appending it to the stack:
+ 3.  Select `update_index` to be most recent file's
+ `max_update_index + 1`.
+ 4.  Prepare temp reftable `tmp_XXXXXX`, including log entries.
+-5.  Rename `tmp_XXXXXX` to `${update_index}-${update_index}.ref`.
++5.  Rename `tmp_XXXXXX` to `${update_index}-${update_index}-${random}.ref`.
+ 6.  Copy `tables.list` to `tables.list.lock`, appending file from (5).
+ 7.  Rename `tables.list.lock` to `tables.list`.
+ 
+@@ -993,7 +987,7 @@ prevents other processes from trying to compact these files.
+ should always be the case, assuming that other processes are adhering to
+ the locking protocol.
+ 7.  Rename `${min_update_index}-${max_update_index}_XXXXXX` to
+-`${min_update_index}-${max_update_index}.ref`.
++`${min_update_index}-${max_update_index}-${random}.ref`.
+ 8.  Write the new stack to `tables.list.lock`, replacing `B` and `C`
+ with the file from (4).
+ 9.  Rename `tables.list.lock` to `tables.list`.
+@@ -1005,6 +999,22 @@ This strategy permits compactions to proceed independently of updates.
+ Each reftable (compacted or not) is uniquely identified by its name, so
+ open reftables can be cached by their name.
+ 
++Windows
++^^^^^^^
++
++On windows, and other systems that do not allow deleting or renaming to open
++files, compaction may succeed, but other readers may prevent obsolete tables
++from being deleted.
++
++On these platforms, the following strategy can be followed: on closing a
++reftable stack, reload `tables.list`, and delete any tables no longer mentioned
++in `tables.list`.
++
++Irregular program exit may still leave about unused files. In this case, a
++cleanup operation can read `tables.list`, note its modification timestamp, and
++delete any unreferenced `*.ref` files that are older.
++
++
+ Alternatives considered
+ ~~~~~~~~~~~~~~~~~~~~~~~
+ 
+
+base-commit: 66e871b6647ffea61a77a0f82c7ef3415f1ee79c
+-- 
+gitgitgadget
