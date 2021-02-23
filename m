@@ -2,80 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A406FC433E0
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 19:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1FEEC433DB
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 19:22:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 752DB64EC9
-	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 19:18:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 94B8B64DF3
+	for <git@archiver.kernel.org>; Tue, 23 Feb 2021 19:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233670AbhBWTRq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 14:17:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34668 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232155AbhBWTRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 14:17:40 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00CB8C06178B
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 11:16:59 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id 204so12391740qke.11
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 11:16:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=iOVIgDOkxf/W0Gyoi14wYshIoZ65cU+tT42XKlCtkD0=;
-        b=fFPk9UM7vT7hbiijIpLlDzqkUPKIKAhbW5N6epGNiJieg9YHu1IasCQ8WeRo5ILu3s
-         gsXTPnbYEUrw21zKc5PWdMiuSC9ISrqnKENOeDprq/JVtsS+DRZ5CSbpRTWOia6+Fat+
-         6k1jWgqOUBFDl4DpjKyz+BuG/nqzKXaoG72NtXMO8scn/z9ZABqB/lK39B7jBWSIPh2o
-         Fr+MrkKJdUxRovGgIdMyNuAjpg+pc9sApq8dQVPGzR5KeZG7/UZKSJ2LDmROhyumUHIl
-         mT8UCPSM4z0OXpxc3XUy0P5Qoe2lfUPpkcTSXY0PBwJCWetEi/Niwuv/vs7a67rWdwAS
-         rnBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=iOVIgDOkxf/W0Gyoi14wYshIoZ65cU+tT42XKlCtkD0=;
-        b=tVn8VI9W6sPgqQnIv53Y1K1gtZlrXsK8MNpHxR9H8oRWWEdV1z3zRlnML8r3JYleZH
-         ec1IblXntQTa806iPekn3CC6APnBgJ5k4psQC0RSflZM/EMBVAjB07h6zfTqHc4HMESX
-         eASt4Qjeb22JYeLqdlfblAO1F/YT7eZnzW0fnAYjYmSQ+0O1d29MHud0Z0XbRPgGXLVi
-         8oChrJm5L6JcO4caqXwVvtIDiHFFyO2PV3cHmXhl1ESJdYaGU0pe98rEyv0keW75oKuH
-         sl8fx0OjDsGYgPEspWm8zhjikM+m+ydDWaDqpOxbqmlMzaV0lJQNbo7y6/jEBqmYfRdy
-         JzeQ==
-X-Gm-Message-State: AOAM533tklCWXVBPUTT+TgvyzkSlzM7mOhREE2fH+HFU9jeCvpjExJeJ
-        E/6pFoDH9w6sOoKFO50WDC0=
-X-Google-Smtp-Source: ABdhPJwWiU4U8BxcxzpDlr3lyh91nub6rGdBWRLkfAQs32A1d/TcaIKbfe35TF06Hpodpbkk1WzRsw==
-X-Received: by 2002:a37:688f:: with SMTP id d137mr2036241qkc.246.1614107819199;
-        Tue, 23 Feb 2021 11:16:59 -0800 (PST)
-Received: from [192.168.103.12] (cpe00fc8d50b7d3-cm00fc8d50b7d0.cpe.net.fido.ca. [72.141.221.184])
-        by smtp.gmail.com with ESMTPSA id a9sm6999335qtx.96.2021.02.23.11.16.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Feb 2021 11:16:58 -0800 (PST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: [PATCH v2] doc: `--date` in `git-commit` accepts approxidates
-From:   Utku <ugultopu@gmail.com>
-In-Reply-To: <CAEeqB6kqZTft9NWtOvm3hk9bicBL7GU_WYuAGdMG1MHYMgNAxg@mail.gmail.com>
-Date:   Tue, 23 Feb 2021 14:16:57 -0500
-Cc:     Utku Gultopu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <92F10D2F-839A-440E-AECD-99D383409785@gmail.com>
-References: <pull.969.git.git.1614101746491.gitgitgadget@gmail.com>
- <pull.969.v2.git.git.1614106322760.gitgitgadget@gmail.com>
- <YDVSICgBwPLtDNu4@coredump.intra.peff.net>
- <CAEeqB6kqZTft9NWtOvm3hk9bicBL7GU_WYuAGdMG1MHYMgNAxg@mail.gmail.com>
+        id S232334AbhBWTVp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 14:21:45 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55051 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233978AbhBWTUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 14:20:15 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D3EB995099;
+        Tue, 23 Feb 2021 14:19:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9TbWsH6YEy43jgsBSmiBbWqrgbE=; b=aKqUez
+        XUzXqC/MOOb7r2e0m4XhzClpZmG35T9+lO3QKigWJAEa8Rq6gNT/qxVypaaQS+TE
+        /ZYlK884LFLzxXXxZ6O5HiWGKgpO8oUPIJkzEUAmvLlctULia8I2j5oCww/7YagJ
+        b4OkmbsiCwe/WbSme7EemQ72vAobXMyd4o9nQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kIHZ5exyBdwzywbtOCRZpiRsLtVVqiEw
+        58bgt6SBnvXQHxkBZ9oX2X8vle+BUakTXKsKxiIeY6ejqd4hk+R1O0lTsS+075mG
+        KQaNCUNigeahPEuQHIdK2smDnf1PGRENC/mIbIQzpj7dat/7Nk+tFCl8K/O7RPcn
+        ZQU65TjaWEs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4F7895098;
+        Tue, 23 Feb 2021 14:19:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA0B195097;
+        Tue, 23 Feb 2021 14:19:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] Makefile: build "$(FUZZ_OBJS)" in CI, not under
+ "all"
+References: <20210201111715.10200-1-avarab@gmail.com>
+        <20210223114132.24345-7-avarab@gmail.com>
+        <YDVJZnmTiBYZ4iPM@coredump.intra.peff.net>
+Date:   Tue, 23 Feb 2021 11:19:25 -0800
+In-Reply-To: <YDVJZnmTiBYZ4iPM@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 23 Feb 2021 13:28:54 -0500")
+Message-ID: <xmqq35xm383m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0ACC0780-760C-11EB-9DD9-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I thought it is good to refer the reader to _somewhere_ for
-completeness, since those two examples do not cover all cases. Since
-there is no documentation for it, I referred the reader to the code.
+Jeff King <peff@peff.net> writes:
+
+> If you do a refactor, you are still on the hook for breaking the fuzz
+> objects because CI will fail (and you have to investigate it, and fix it
+> for CI to remain a useful tool). But instead of finding out about the
+> problem quickly as you're working, instead you push up what you think is
+> a finished result, and then from minutes to hours later you get a
+> notification telling you that oops, you missed a spot. I find that the
+> shorter the error-fix-compile cycle is, the less time I waste waiting or
+> context-switching.
+
+Thanks for writing this down so clearly.
