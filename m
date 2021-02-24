@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E603C433E6
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D89AEC433E0
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4396564F07
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A15E764EDD
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234496AbhBXTx4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:53:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40420 "EHLO
+        id S235158AbhBXTyC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 14:54:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234761AbhBXTxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 14:53:18 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 731A2C0617A7
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:02 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id v1so3037046wrd.6
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:02 -0800 (PST)
+        with ESMTP id S234839AbhBXTxV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 14:53:21 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD8CC0617A9
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:03 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id k66so2910872wmf.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YOfhct70mj0/lRM5+pXeLT20kW9w8bK9KR3a20Tq3vc=;
-        b=L6waIUu5LRNsF9mv8LFQXIXbZ3j8dgJmGatdDOYPJeKOxWkKNDuN9WOC0vA26jN5Eu
-         4Msuy5n0+/QWuIOcQPsX7tntUFJC3R/SxstKNqOPvgLAxOt2Xyn6QNstUD20G6qM8pNP
-         8mVG+npzwV5vZX69OG3ZZzxkEiZV1cDjMyYTuPbcxCwJrrGrxT0dwZ+5kMbLeQMv5Nxj
-         x5VtuA8FFQPcOkfR+4Y7hiFh+pibreSI8tV0ywi1MRYn3iqK2tZhNYO1OFuJ3od10n+z
-         6X5MH2tWxhK0qa8sWAXCVpA8/uAaCM20n2/WzH0PHTmT55+c5IqUI1O6K1ahTWPNVk97
-         CphQ==
+        bh=bnTVyCm1E81e8pQqNWVBhz318SyFao3a8UZxmQjUzAg=;
+        b=TEf6yZ6vEsZIdhHk8QUPuN4kFTJ+ZagK+bjOjv/4FmhTCtd7exixtSCrAVJXWfCgp4
+         5YtXCEEw8cVCrT7tUKk5WD7s1Iw/yW/c0mLQQwxOtr6ddbfSVW4ulHmXKASs5jFcV7mK
+         hVlurwuKrzUUtIgWhvLz2zx8K6stx18xyPDaQjRBnWUcQ1Y7c4udS5M4TjM1ze8t4xui
+         QVrk1Kft9YpuAL8s2jvRpA+DwIj/Ff8Bcnp478LWYqfnDQutjMpM2WrDOLOyDhrsBj5i
+         +gmF6jI4gJxXwgwJZ++7CvdPrBo9l94vJuLYhQ7983oVKugaqh69G6hL95C7JIwBNlZ7
+         b6lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YOfhct70mj0/lRM5+pXeLT20kW9w8bK9KR3a20Tq3vc=;
-        b=EiY8tcC2he+BnsScdDbULA1kSK4jewWklO8A0aTcjJKUIFQjJl2jBMCLLO2VgmAPfN
-         hy3bFG+PIaoBC54s3OgGqkA+Bk8tqtyaVAh0ijijwe7ZzPFLdgIbMx9qAbW06OKzUXEy
-         Oo/UGWAaPBVfyAGIbSuRTmgrhpW6pPxwfHNkZoPI7njV5xl5nLcpuikLAu9bTxiFBwNv
-         woKa47heLG9aeoBVoPQ7bVm4PUYfI2EnnenmCJwA/EKvm3fWAybOvvn56tXBDCe8z2wL
-         7gf7wJ+Yhn9C+IrOYW4OMnK0qcZAks7nYvGecxoQTZRn8kSFyRRFakx3chGZ1L1CrNAF
-         A1/w==
-X-Gm-Message-State: AOAM531hBrUNfq5cRaiy/Gs9YO/0s4yzKukMaPHin+Br2YfUz37crzN8
-        AdbZRwV2990fkAwS+kGoy7Oc3yw6v8tHDw==
-X-Google-Smtp-Source: ABdhPJwA01WzQA3fdxlc4ACJn1q5xgmzkN2WMNV6MEmn/pSKwbR1cKOVPoymbWovoSqxBXVYFF0ugg==
-X-Received: by 2002:a05:6000:1101:: with SMTP id z1mr33844626wrw.110.1614196320943;
-        Wed, 24 Feb 2021 11:52:00 -0800 (PST)
+        bh=bnTVyCm1E81e8pQqNWVBhz318SyFao3a8UZxmQjUzAg=;
+        b=ZA1O9HiK3IL8Kq/m0ItsDyjZbi1ZbxD4E4Y9zKnI7azbY0r4yjBk8oSgm51aJk8wuG
+         l24xFUhKdVN3/6w46Vu+IOJvwQur6YduJUUtc1oRLWfhYBnjHkt13zgKDl5eFg17uOQu
+         fkqBlm19DNWw0o4np7HVEJGlGf78q3b7vFbQD1ybx1WF8sjWWyJvdkb/F9X95D5TFATn
+         qKu2nmMnicF9aucvR9zACeNy53lxSRbWHGEs70whbQ9qgksi8xnI7WpjdfJIvrF0DFRO
+         lscqKzNNOgFsMC4nUlinfP2BbGUen2ZV34G9PVqkE4igJxomd0Ms7X94bKXGWO3HiALd
+         1axQ==
+X-Gm-Message-State: AOAM530zA7k8Rn2p1XN/LJpmzI7BuYHLOQlxukyqS0+XTaAMZxUdQkYP
+        AyI4Yo9kRQhXTCyKOZNBtEufz2G2QN66lQ==
+X-Google-Smtp-Source: ABdhPJxIbA+HUL4DQjyQCFV8vbh/AFGToM8SvHFl2h3Fwm2PefY9OGq8FuK8Hcsdt4p9eN2I/nGuUA==
+X-Received: by 2002:a05:600c:4fd0:: with SMTP id o16mr5213075wmq.77.1614196322419;
+        Wed, 24 Feb 2021 11:52:02 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.00
+        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 11:52:00 -0800 (PST)
+        Wed, 24 Feb 2021 11:52:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 10/35] blame tests: simplify userdiff driver test
-Date:   Wed, 24 Feb 2021 20:51:04 +0100
-Message-Id: <20210224195129.4004-11-avarab@gmail.com>
+Subject: [PATCH v3 12/35] userdiff tests: change setup loop to individual test setup
+Date:   Wed, 24 Feb 2021 20:51:06 +0100
+Message-Id: <20210224195129.4004-13-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215154427.32693-1-avarab@gmail.com>
 References: <20210215154427.32693-1-avarab@gmail.com>
@@ -81,78 +81,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify the test added in 9466e3809d (blame: enable funcname blaming
-with userdiff driver, 2020-11-01) to use the --author support recently
-added in 999cfc4f45 (test-lib functions: add --author support to
-test_commit, 2021-01-12).
+Change the recently amended setup loop in "setup hunk header tests" to
+instead set up the test data as we test each individual hunk header
+test.
 
-We also did not need the full fortran-external-function content. Let's
-cut it down to just the important parts, and further modify it to
-demonstrate that the fortran-specific userdiff function is in effect
-by adding "DO NOT MATCH ..." and "AS THE ..." lines surrounding the
-"RIGHT" one. This is to check that we're using the userdiff "fortran"
-driver, as opposed to the default driver.
-
-The test also left behind a .gitattributes files, let's clean it up
-with "test_when_finished".
+This means we can get rid of the "|| return 1" case and the previous
+for-loop, and won't spend time on setting up all the data only to
+e.g. fail on the 1st test when running under "-i".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/annotate-tests.sh | 36 +++++++++++++++---------------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+ t/t4018-diff-funcname.sh | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 04a2c58594c..d3b299e75cb 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -479,32 +479,26 @@ test_expect_success 'blame -L ^:RE (absolute: end-of-file)' '
- 	check_count -f hello.c -L$n -L^:ma.. F 4 G 1 H 1
- '
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 15dcbe735ca..2365f0e361e 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -72,24 +72,23 @@ test_expect_success 'setup hunk header tests' '
  
--test_expect_success 'setup -L :funcname with userdiff driver' '
--	echo "fortran-* diff=fortran" >.gitattributes &&
--	fortran_file=fortran-external-function &&
--	cat >$fortran_file <<-\EOF &&
-+test_expect_success 'blame -L :funcname with userdiff driver' '
-+	cat >file.template <<-\EOF &&
-+	DO NOT MATCH THIS LINE
- 	function RIGHT(a, b) result(c)
-+	AS THE DEFAULT DRIVER WOULD
+ 	cp -R "$TEST_DIRECTORY"/t4018 . &&
+ 	git init t4018 &&
+-	git -C t4018 add . &&
++	git -C t4018 add .
++'
  
- 	integer, intent(in) :: ChangeMe
--	integer, intent(in) :: b
--	integer, intent(out) :: c
--
--	c = a+b
--
--	end function RIGHT
- 	EOF
--	git add "$fortran_file" &&
--	GIT_AUTHOR_NAME="A" GIT_AUTHOR_EMAIL="A@test.git" \
--	git commit -m "add fortran file" &&
--	sed -e "s/ChangeMe/IWasChanged/" <"$fortran_file" >"$fortran_file".tmp &&
--	mv "$fortran_file".tmp "$fortran_file" &&
--	git add "$fortran_file" &&
--	GIT_AUTHOR_NAME="B" GIT_AUTHOR_EMAIL="B@test.git" \
--	git commit -m "change fortran file"
+-	for i in $(git -C t4018 ls-files)
+-	do
+-		grep -v "^t4018" "t4018/$i" >"t4018/$i.content" &&
+-		sed -n -e "s/^t4018 header: //p" <"t4018/$i" >"t4018/$i.header" &&
+-		cp "t4018/$i.content" "$i" &&
++# check each individual file
++for i in $(git -C t4018 ls-files)
++do
++	test_expect_success "setup hunk header: $i" "
++		grep -v '^t4018' \"t4018/$i\" >\"t4018/$i.content\" &&
++		sed -n -e 's/^t4018 header: //p' <\"t4018/$i\" >\"t4018/$i.header\" &&
++		cp \"t4018/$i.content\" \"$i\" &&
+ 
+ 		# add test file to the index
+-		git add "$i" &&
++		git add \"$i\" &&
+ 		# place modified file in the worktree
+-		sed -e "s/ChangeMe/IWasChanged/" <"t4018/$i.content" >"$i" || return 1
+-	done
 -'
++		sed -e 's/ChangeMe/IWasChanged/' <\"t4018/$i.content\" >\"$i\"
++	"
  
--test_expect_success 'blame -L :funcname with userdiff driver' '
--	check_count -f fortran-external-function -L:RIGHT A 7 B 1
-+	fortran_file=file.f03 &&
-+	test_when_finished "rm .gitattributes" &&
-+	echo "$fortran_file diff=fortran" >.gitattributes &&
-+
-+	test_commit --author "A <A@test.git>" \
-+		"add" "$fortran_file" \
-+		"$(cat file.template)" &&
-+	test_commit --author "B <B@test.git>" \
-+		"change" "$fortran_file" \
-+		"$(cat file.template | sed -e s/ChangeMe/IWasChanged/)" &&
-+	check_count -f "$fortran_file" -L:RIGHT A 3 B 1
- '
- 
- test_expect_success 'setup incremental' '
+-# check each individual file
+-for i in $(git ls-files)
+-do
+ 	test_expect_success "hunk header: $i" "
+ 		git diff -U1 $i >diff &&
+ 		sed -n -e 's/^.*@@$//p' -e 's/^.*@@ //p' <diff >ctx &&
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
