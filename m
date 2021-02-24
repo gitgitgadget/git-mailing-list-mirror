@@ -2,123 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 928FAC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 04:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E89DFC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 04:44:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3300664E79
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 04:29:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4B1364E85
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 04:44:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232095AbhBXEZW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 23 Feb 2021 23:25:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230441AbhBXEZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 23:25:16 -0500
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84D7C061574
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 20:24:35 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id x23so214109oop.1
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 20:24:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VRk/HQgxJn0TG4LvE2FRm4XOdJYB+WbHP51hubmxymM=;
-        b=XJm6kH0WFjOYBIB/4tnrAuITqbABsr9H5K+DUZzXRj+2QvmupDyDJvzRUKhjpc6Oct
-         otTCBX7Y2kAJ/6HbNu2FSdhT+LhoXME5a/FwI3Z8se3j1oeYCluibv+arWFKDdaaMTWU
-         R/wMbwvCdQcwHciSSTCQ3NvilKaDPsoqdrMOBUcxeL0NuGtob5w0F/TpHGdj+tpMtFLu
-         yGjlBWz7TEGK9EsnZL/Sc4PJ0Sw3W/9Ou7+P+qOlPhz7aHjIXJ4+Oy+MTT7hqaBBf+zu
-         sGaGHmjk7MKOR77JTp64dxKFSJcjnpowqbgHtJO2yD9iRBftisBqvBVK06AYKoMYvSLa
-         /ZXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VRk/HQgxJn0TG4LvE2FRm4XOdJYB+WbHP51hubmxymM=;
-        b=TuimNRBf9EcbmoNMxUPoSPMJlM7r2wU484RPC6W09V3PunSrYtNx1IIiV/x3YXc6BC
-         C4fDWCIgXdoKfnjp75a3qbCJl41Vy9NMTNFRYIz5p9lOIu+y3Z/UViQDXJCwjZf5T87l
-         n2JLyZiICkhAY6e/SMicT2KxaCj6Y50n9hGaD/VETJLfxNq4tTvmlk8NRGNjUOexUCy9
-         6oRklMXyAAuCgu+uyBg12FFFoe4KGkcmopapxfVXFG+31qsUCjb7mTA1QQaqWcvAJtyP
-         mPNowgzFp37xojX87GhwYBzpMz0NAXQZlv9Qdg+1kar7uT8qEmNAkJZLMjvB3ExiYlgi
-         IiHw==
-X-Gm-Message-State: AOAM530T4W03PeUpQHJo/jMrQCwx2sJMoQEwX+G+8AQd8rKqz4usQ28X
-        GoQigMa8CBj8M1K08ApUw/EIMBWKdDLdSzIv8cpRpLeWVrQ=
-X-Google-Smtp-Source: ABdhPJxiwodGV1JNuoR3qLo/gY1V+SaznM4dAnFNcwZW0QssKeFVIACPppc3o5KKlw/R8PGLiPl2opKJx7xiuoOUa5U=
-X-Received: by 2002:a4a:9d0e:: with SMTP id w14mr22147687ooj.7.1614140675131;
- Tue, 23 Feb 2021 20:24:35 -0800 (PST)
+        id S233001AbhBXEn7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 23 Feb 2021 23:43:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42658 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230380AbhBXEn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 23:43:57 -0500
+Received: (qmail 28948 invoked by uid 109); 24 Feb 2021 04:43:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Feb 2021 04:43:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8783 invoked by uid 111); 24 Feb 2021 04:43:16 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 23 Feb 2021 23:43:16 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 23 Feb 2021 23:43:15 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Aleksey Kliger <alklig@microsoft.com>
+Subject: [PATCH] wrapper: add workaround for open() returning EINTR
+Message-ID: <YDXZY8XFRayiM1If@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <20210222211621.0C5D.409509F4@e16-tech.com> <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
-In-Reply-To: <YDQ27qbbblPfLCpU@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Feb 2021 20:24:24 -0800
-Message-ID: <CABPp-BFa3CnOHMg4t99xMHWif8kMZJFcmHtLSNxZgAPaw1Cd=Q@mail.gmail.com>
-Subject: Re: git format-patch lost the last part when branch merge
-To:     Jeff King <peff@peff.net>
-Cc:     Wang Yugui <wangyugui@e16-tech.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 22, 2021 at 3:03 PM Jeff King <peff@peff.net> wrote:
-[...snip...]
->
-> There are lots of ways to look at the diff of a merge. By default, `git
-> show` will show a combined diff, which omits hunks where one side was
-> taken verbatim, but otherwise shows what each side did.
->
-> The diff shown in the link above is a diff against the first-parent
-> (which you can also get locally with `git show --first-parent 582cd91`).
-> One _could_ apply that diff onto the first parent to achieve the same
-> tree as the merge plus all of the commits that got merged in. But it
-> wouldn't make any sense to apply that (aside from conflict resolution,
-> it would be redundant with all of the commits that format-patch just
-> output!).
->
-> You could imagine ways for format-patch to represent the conflict
-> resolution done in a merge, but it's not quite trivial, and nobody has
-> done it yet.
+On some platforms, open() reportedly returns EINTR when opening regular
+files and we receive a signal (usually SIGALRM from our progress meter).
+This shouldn't happen, as open() should be a restartable syscall, and we
+specify SA_RESTART when setting up the alarm handler. So it may actually
+be a kernel or libc bug for this to happen. But it has been reported on
+at least one version of Linux (on a network filesystem):
 
-Are you referring to something like this (in the git.git repository)?
+  https://lore.kernel.org/git/c8061cce-71e4-17bd-a56a-a5fed93804da@neanderfunk.de/
 
-$ git show --oneline --remerge-diff 42342b3ee6
-42342b3ee6 Merge branch 'ab/mailmap'
-diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-index 1bce961e07..6fb18a34b0 100755
---- a/t/t4203-mailmap.sh
-+++ b/t/t4203-mailmap.sh
-@@ -257,16 +257,8 @@ test_expect_success 'No mailmap files, but configured' '
+as well as on macOS starting with Big Sur even on a regular filesystem.
 
- test_expect_success 'setup mailmap blob tests' '
-        git checkout -b map &&
--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 60ecad090d (Merge branch 'ps/fetch-atomic')
-        test_when_finished "git checkout main" &&
--       cat >just-bugs <<- EOF &&
--|||||||||||||||||||||||||||||||| 72c4083ddf
--       test_when_finished "git checkout master" &&
--       cat >just-bugs <<- EOF &&
--================================
--       test_when_finished "git checkout master" &&
-        cat >just-bugs <<-\EOF &&
-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 4e168333a8 (shortlog: remove
-unused(?) "repo-abbrev" feature)
-        Blob Guy <bugs@company.xx>
-        EOF
-        cat >both <<-EOF &&
+We can work around it by retrying open() calls that get EINTR, just as
+we do for read(), etc. Since we don't ever _want_ to interrupt an open()
+call, we can get away with just redefining open, rather than insisting
+all callsites use xopen().
 
+We actually do have an xopen() wrapper already (and it even does this
+retry, though there's no indication of it being an observed problem back
+then; it seems simply to have been lifted from xread(), etc). But it is
+used hardly anywhere, and isn't suitable for general use because it will
+die() on error. In theory we could combine the two, but it's awkward to
+do so because of the variable-args interface of open().
 
-I agree that representing the conflict done in a merge is more
-difficult than it sounds, but if you mean what I think you mean then I
-disagree with the "nobody has done it yet" half of your statement.
-:-)
+The workaround here is enabled all the time, without a Makefile knob,
+since it's a complete noop if open() never returns EINTR. I did push it
+into its own compat/ source file, though, since it has to #undef our
+macro redirection. Putting it in a file with other code risks confusion
+if more code is added after that #undef.
 
-That said, I haven't attempted to tie this into format-patch in any
-way, and have absolutely no plans to.  (And --remerge-diff hasn't been
-submitted upstream, because it depends on ort, and that still needs
-reviews...)
+Reported-by: Aleksey Kliger <alklig@microsoft.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was reported to me off-list. Aleksey was kind enough to test the
+patch on a system that was reliably showing the problem during the
+checkout phase of git-clone (which naturally has both a progress meter
+and is calling open() on a ton of files).
+
+I do still think the OS is doing the wrong thing here. But even if I'm
+right, it's probably prudent to work around it.
+
+ git-compat-util.h |  4 ++++
+ wrapper.c         | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 838246289c..2be022c422 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -788,6 +788,10 @@ int git_vsnprintf(char *str, size_t maxsize,
+ 		  const char *format, va_list ap);
+ #endif
+ 
++#undef open
++#define open git_open_with_retry
++int git_open_with_retry(const char *path, int flag, ...);
++
+ #ifdef __GLIBC_PREREQ
+ #if __GLIBC_PREREQ(2, 1)
+ #define HAVE_STRCHRNUL
+diff --git a/wrapper.c b/wrapper.c
+index bcda41e374..130f441064 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -678,3 +678,32 @@ int is_empty_or_missing_file(const char *filename)
+ 
+ 	return !st.st_size;
+ }
++
++/*
++ * Do not add other callers of open() after this. Our redefinition
++ * below will ensure the compiler catches any.
++ */
++#undef open
++int git_open_with_retry(const char *path, int flags, ...)
++{
++	mode_t mode = 0;
++	int ret;
++
++	/*
++	 * Also O_TMPFILE would take a mode, but it isn't defined everywhere.
++	 * And anyway, we don't use it in our code base.
++	 */
++	if (flags & O_CREAT) {
++		va_list ap;
++		va_start(ap, flags);
++		mode = va_arg(ap, int);
++		va_end(ap);
++	}
++
++	do {
++		ret = open(path, flags, mode);
++	} while (ret < 0 && errno == EINTR);
++
++	return ret;
++}
++#define open do_not_allow_use_of_bare_open
+-- 
+2.30.1.1095.g03347429ea
