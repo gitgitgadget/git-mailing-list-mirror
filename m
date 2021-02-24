@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43130C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EA70C433E0
 	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0107164EDD
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2330664F03
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235136AbhBXTxg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:53:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40412 "EHLO
+        id S233615AbhBXTxv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 14:53:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234738AbhBXTxS (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234751AbhBXTxS (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Feb 2021 14:53:18 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A0CC061794
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:00 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id o16so2907297wmh.0
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:00 -0800 (PST)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B9CC061797
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:01 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id r3so3028542wro.9
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MMD3EnHs+oRiCx+TJvrhvnoiXbDXhjgwygZfIRyT3xk=;
-        b=XOh1v/O2rTgJQ9l7VjFhKUWS2kJ3UgSBb8j8qXN6bhIoJ/frKxYUSJhhCLr32uCdEE
-         SzthB4M3ETKadZRJI+x9qwPy59XPYWTVJfyLPU4fShI0Eb9NOhXk713XBUnYzdAnz4k4
-         VS8S9bZD0KJWnpwfvVtEBduY8qXMJWsQphVaQ8N2XTm8JgNAgVjNWxMpBRcF67dGj1ol
-         fjDbr2oEmDzWCxoIRSNE0ny4XJvaYI6WA4jDW/YjsXOLXRQn0LASixqAN4Hb0wDqW8po
-         GPGvAM3xpUw29604oBmevRhU8cmu50ttsA/SaCVqvpeQcHzWK/J+hhOaFSXmhg2d6J79
-         Cquw==
+        bh=SXtGFsgRGxvA9gGTTtAzLV/ceeBxBqYANef/qRpivO8=;
+        b=cLPVh9k+RzdiYTpcBXhDMUXOovBWH67UY40wMRdrjNxb70siJUz+awzoWnN4Zos/ki
+         Clx/CHmRDltGXfHCpFLbMkN5S4H1Dh6TMlC0IS8w4usk9U9ptTDwno3KSSVy6/cfzMIs
+         +JrYdrBZtKSh3samgs1D7Nc10U4BJcBIjyftO7pMDSOwiYkl3eHslO6x3xZ43GQMc+D5
+         LKFPIMjgF/VXMNowtaD1AOEL/fKsTI7sJze8oFHv+BEVfKPimZEnbfx5xRW33a0vFGEG
+         2kRk+1et4LrF3rYIbVHIylOov5asZgHLJ4rkVjB1srUjnAfFEvcIVvUGaadwi+dxn2+D
+         9SBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MMD3EnHs+oRiCx+TJvrhvnoiXbDXhjgwygZfIRyT3xk=;
-        b=La7dcgFSE/+qaTMEURJ1JYB2r7OZbp1aUnYKlztEliNuKXY+OwMYF+iUTHl6PUf7GC
-         ljsQvLza26ZBb0sAk4RJ1cSUDtXpjaEZuUupFYXxdwBCYwsOgso2qD7LIG5JsBiHgBUI
-         9egqmDBVVDQHXJTkh7MV+lKt59cHThzpNKN21lFbQZXuzjXAvM6Zxq1t/X4vVFxBDsCl
-         ezi4fqP5a88r4J+lneuqrAAcD41CtpTTObI0P2YLk2/CW/+pwu5Uz0OKIt9+nMfnWqbD
-         vsW78GP7JUEhbDCZSQHIn5VAF74pNsHHn3A7Nz8jfoFZkNp8a728Xks+ch94XovYvvJ0
-         aFzA==
-X-Gm-Message-State: AOAM531l1TRGWRCgViX6xK3y9EcgAErHpcxPx7mzmWyavD0aujnAu+uw
-        5gbf74AjWjtVdkfVdrB3t7Yq1VLXaNdQHw==
-X-Google-Smtp-Source: ABdhPJzxkN+SNOluiDU3qtENvq4HBxLOUqJ2DuY2XCXMWhzB6JuVEZUzEDz6rwN8OTKMoX5tBL4bgQ==
-X-Received: by 2002:a1c:7c17:: with SMTP id x23mr5207964wmc.95.1614196319327;
-        Wed, 24 Feb 2021 11:51:59 -0800 (PST)
+        bh=SXtGFsgRGxvA9gGTTtAzLV/ceeBxBqYANef/qRpivO8=;
+        b=C/T9+gqiJ6Oi6DeTfDDt4UiFNPHWTNjQp9pCc2tqG91KCr1llFT38CQrF+42QaqyE/
+         syT0+ZPed5Gf60R03V5lSRrcnC+3DgQWJFKBP3yXShk+RITwSMqQyqNH4pBk88j+nA4g
+         Ij17YRvMdpz+vTLYbwn5MMLt5eqeujqeAB9qKrlhJcxVwqoeY77FueEsN/O2blrjw5pR
+         jq9m1s7WDjNO3JNKKRG/UE0xW8zyW2YzQGSeHQHJBdYtRhLApu7iqisVuIeDNO2xJyBQ
+         Mjtp6YvKLK6jYMmcgOZsMkfDvba6F3DSKKFRyBHQpdvBUnN8FJw/3GCrIt8N1+f4PVqE
+         VPCQ==
+X-Gm-Message-State: AOAM532IRdB+TTtfJs/AlzQqRhz+cybz3SSkb9usfY1rtj5uruYu1gmr
+        inPkaRFrduEgf8sOecyrrI2eOEyP+FDXbQ==
+X-Google-Smtp-Source: ABdhPJxx7fbXgAc+yWweROPtaCTl8+Hhp6JcNCZCDFN9A0tW6AFpLy+cNxlrpQK+bkrAWQbaHb6X6A==
+X-Received: by 2002:adf:a2d3:: with SMTP id t19mr26148052wra.299.1614196320144;
+        Wed, 24 Feb 2021 11:52:00 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.51.58
+        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.51.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 11:51:58 -0800 (PST)
+        Wed, 24 Feb 2021 11:51:59 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 08/35] userdiff: remove support for "broken" tests
-Date:   Wed, 24 Feb 2021 20:51:02 +0100
-Message-Id: <20210224195129.4004-9-avarab@gmail.com>
+Subject: [PATCH v3 09/35] blame tests: don't rely on t/t4018/ directory
+Date:   Wed, 24 Feb 2021 20:51:03 +0100
+Message-Id: <20210224195129.4004-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215154427.32693-1-avarab@gmail.com>
 References: <20210215154427.32693-1-avarab@gmail.com>
@@ -81,50 +81,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There have been no "broken" tests since 75c3b6b2e8 (userdiff: improve
-Fortran xfuncname regex, 2020-08-12). Let's remove the test support
-for them, this is in preparation for a more general refactoring of the
-tests.
+Refactor a test added in 9466e3809d (blame: enable funcname blaming
+with userdiff driver, 2020-11-01) so that the blame tests don't rely
+on stealing the contents of "t/t4018/fortran-external-function".
+
+I'm about to change that file in a subsequent commit. Just moving the
+relevant test file here inline is the easiest solution, and I think
+also the most readable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018-diff-funcname.sh | 8 +-------
- t/t4018/README           | 3 ---
- 2 files changed, 1 insertion(+), 10 deletions(-)
+ t/annotate-tests.sh | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 5bd82e09ab3..9aec9f8e6de 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -86,13 +86,7 @@ test_expect_success 'setup hunk header tests' '
- # check each individual file
- for i in $(git ls-files)
- do
--	if grep broken "$i" >/dev/null 2>&1
--	then
--		result=failure
--	else
--		result=success
--	fi
--	test_expect_$result "hunk header: $i" "
-+	test_expect_success "hunk header: $i" "
- 		git diff -U1 $i >actual &&
- 		grep '@@ .* @@.*RIGHT' actual
- 	"
-diff --git a/t/t4018/README b/t/t4018/README
-index 283e01cca1a..2d25b2b4fc9 100644
---- a/t/t4018/README
-+++ b/t/t4018/README
-@@ -7,9 +7,6 @@ at least two lines from the line that must appear in the hunk header.
- The text that must appear in the hunk header must contain the word
- "right", but in all upper-case, like in the title above.
- 
--To mark a test case that highlights a malfunction, insert the word
--BROKEN in all lower-case somewhere in the file.
--
- This text is a bit twisted and out of order, but it is itself a
- test case for the default hunk header pattern. Know what you are doing
- if you change it.
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index 29ce89090d8..04a2c58594c 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -482,12 +482,22 @@ test_expect_success 'blame -L ^:RE (absolute: end-of-file)' '
+ test_expect_success 'setup -L :funcname with userdiff driver' '
+ 	echo "fortran-* diff=fortran" >.gitattributes &&
+ 	fortran_file=fortran-external-function &&
+-	orig_file="$TEST_DIRECTORY/t4018/$fortran_file" &&
+-	cp "$orig_file" . &&
++	cat >$fortran_file <<-\EOF &&
++	function RIGHT(a, b) result(c)
++
++	integer, intent(in) :: ChangeMe
++	integer, intent(in) :: b
++	integer, intent(out) :: c
++
++	c = a+b
++
++	end function RIGHT
++	EOF
+ 	git add "$fortran_file" &&
+ 	GIT_AUTHOR_NAME="A" GIT_AUTHOR_EMAIL="A@test.git" \
+ 	git commit -m "add fortran file" &&
+-	sed -e "s/ChangeMe/IWasChanged/" <"$orig_file" >"$fortran_file" &&
++	sed -e "s/ChangeMe/IWasChanged/" <"$fortran_file" >"$fortran_file".tmp &&
++	mv "$fortran_file".tmp "$fortran_file" &&
+ 	git add "$fortran_file" &&
+ 	GIT_AUTHOR_NAME="B" GIT_AUTHOR_EMAIL="B@test.git" \
+ 	git commit -m "change fortran file"
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
