@@ -7,73 +7,81 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF6A1C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC4BBC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:39:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8FB5964E20
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:34:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98A4964ECF
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234644AbhBXTeq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:34:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36412 "EHLO
+        id S229598AbhBXTjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 14:39:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233313AbhBXTef (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 14:34:35 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05B70C061574
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:33:55 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id u12so1797328pjr.2
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:33:55 -0800 (PST)
+        with ESMTP id S233743AbhBXTjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 14:39:48 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F00FC061574
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:39:08 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id e6so2168533pgk.5
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MzRWAN5Z7bAKVVbjJsnGHQ9VXjGhh+goqSNyV8MtBJY=;
-        b=K4V1r7BNb/SnZcVlDCZ4xcTWfImUFdswKq3gc8d1Sj/3AZevA6JNOv3uf5F13uRkeP
-         ebHrsJd0MJEUmut8dTa1xJM1qnddQvev/Y0TtxDVNXg6L4yqCRTWB5PIQmMUBhDYuUty
-         bXYnZDwHdr97gr50fKVgOkcTh1898PEitlvyDYChwJu0hXqm/ES3EOvlGfluygiONrO0
-         K5pnN78hFN8msJl9o0oQdfi0WCLeVeagJmwK6UXdUOHwUbPhE9bpdOh0/fFJ+uKF5mlW
-         6OX55/xKOxbgqIqvP47P2pUaQVTyFRdaXZ7XWmVvCgZkqSkybDYWxJSrz67nA7WApSri
-         eWrw==
+         :cc:content-transfer-encoding;
+        bh=ZnrRgHeItSpvvTixWHqqq2zMr/ZTbIAjrZVl/CTG3nw=;
+        b=hRnYesk1eU5oHnc58CJw7zCOrUE1ryCBlzATwW2Xgo8sLHbMnBlUZGzMEaYyY3N0tr
+         kOX2gpJs6PPVL2Dkm/oTdYvyEmM8ZfmbXQX3H/3wwyT+QxMLNSrnlQJY+2z8lr93NAcq
+         9Z1TP4K0sP/trWku7wSAflk3gvC+K/8/BbftcnEQv7BatIYzVUa/4/v511VV3EpBxRKs
+         uvReQE9+YNqxoLxpxvfSWH/VvvHAAiNw12hed1JKpc/Pw74YBDvB1Vo1DM4npQgdTYo3
+         uvfs+lo4TAw+fGnu0SWfBWBs64fa0gix0kcW4848yb323x5AGBaluXEXKeICzeGPLOi2
+         6/8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MzRWAN5Z7bAKVVbjJsnGHQ9VXjGhh+goqSNyV8MtBJY=;
-        b=MevgFJxFq3iAfQpkFyq7IBlCJ0okqPzx43rKN7C72+pN78ub9175EBA5Pjro25ZUcl
-         Iq3tmq6by4bIVJuxs3aYYMEkaDlA7SLkWJf0FdQp6JkTEthK2DSHDqsxsSECGCXm/o9d
-         cghQAW54QufT2e+gvGoErZvj5e4aYWSFg1/pa4jiI0lMjq5QqvcAbOVqP7Ms7A8KpZ/6
-         kNklTSr4xsGTRQ2PAZP/YyaLxJqjEq7RGWBOtObnnS1Wdo1/UW6CPwa/01RpDxB9xK5v
-         h0/igzTff2OyLfrV0aTlpBhugBR0B7fdUp6rOlyjkvF8IRb8oVDMe86FDr9k2ime0L8U
-         w34Q==
-X-Gm-Message-State: AOAM532cT3g9lSpabUnQVJk1VdhH6adDBhy4xZlffKLFYxy49A5x8Nln
-        /OzZJkXp7kEh9LPRTJtrKINxxmCqQcIC6KVvuRZbx/a2N0U=
-X-Google-Smtp-Source: ABdhPJw+i/TEBLbBnEC5l1Axr+9Xsj+vsWc3zEpkuQ6Mh4sRUnEylUn/HFDUc0X3XXzeD0GazpSf/tPsDuA6yFpftqQ=
-X-Received: by 2002:a17:90b:34c:: with SMTP id fh12mr5871982pjb.137.1614195234606;
- Wed, 24 Feb 2021 11:33:54 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZnrRgHeItSpvvTixWHqqq2zMr/ZTbIAjrZVl/CTG3nw=;
+        b=K6HARjsVOvqR4nvm27JZ0E35iUW8pvd22Z8fw9QA4zBQ1s+I+raw340yjrdK6Db8TT
+         lAJILXqBX13OtltcpU5f5UDlAW9O5SeqBAf0uBRDiS6Vy7XxjEbMU9Igpw1dlSjECsCr
+         7DZpcwtLIvdCzk57wp5maL2WqviyVT7bFVp0vn/gzjn74yPRjrLO0pprOUhNM8JgI5Kf
+         LLKtl7UhsuqLsKtea3jL1gxqqLDLLdhYd7FU4uU4OchG67AAwwIo9Y4Zx3XkA6blF4ut
+         IbPEDkO+cwKy8A/LAdhKpV5Iz4r7TR+wYurkyIux84I8mLcMYO77zkkgb4Y+QUZ24svv
+         6kSQ==
+X-Gm-Message-State: AOAM531D/UB+YFJEXiNuudQAEg0mXY7eXg68WNoH04RwOjm7iMD6P7we
+        t5HXbctF6QuhmgeQrXtz8FRWt1sjtm4FdAc+8zGfce+JxxY=
+X-Google-Smtp-Source: ABdhPJysDPGp4Y3UH86r8ngR0+1aTdskeGJB1uXdRy/0hCgSNTBjDUuLQNBFVMULPhwJtci/58MIf26CRcp5j53wV3g=
+X-Received: by 2002:a63:786:: with SMTP id 128mr29835816pgh.408.1614195547714;
+ Wed, 24 Feb 2021 11:39:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20210223071840.44267-1-alexhenrie24@gmail.com>
-In-Reply-To: <20210223071840.44267-1-alexhenrie24@gmail.com>
+References: <20210223071840.44267-1-alexhenrie24@gmail.com> <CAN0heSqmAgt_hg0-kQpTK2LcuYPV9T9=1bowbuZ7Qah1q0EAtA@mail.gmail.com>
+In-Reply-To: <CAN0heSqmAgt_hg0-kQpTK2LcuYPV9T9=1bowbuZ7Qah1q0EAtA@mail.gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 24 Feb 2021 20:33:43 +0100
-Message-ID: <CAN0heSqmAgt_hg0-kQpTK2LcuYPV9T9=1bowbuZ7Qah1q0EAtA@mail.gmail.com>
+Date:   Wed, 24 Feb 2021 20:38:56 +0100
+Message-ID: <CAN0heSp9ApYCr8RK5xF=_q2WJgE1RjUpZ3dexQuOwQFi8NLS9Q@mail.gmail.com>
 Subject: Re: [PATCH v3] rebase: add a config option for --no-fork-point
 To:     Alex Henrie <alexhenrie24@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Denton Liu <liu.denton@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 23 Feb 2021 at 08:24, Alex Henrie <alexhenrie24@gmail.com> wrote:
-> +rebase.forkPoint:
-> +       If set to false set `--no-fork-point` option by default.
+On Wed, 24 Feb 2021 at 20:33, Martin =C3=85gren <martin.agren@gmail.com> wr=
+ote:
 
-This should be a double-colon at end of the line, not just a single
-colon, in order to make it a "description list separator". When it's
-just ":", it ends up being rendered literally, which isn't horrible, to
-be sure, but which doesn't match this item's neighbours.
+> just ":", it ends up being rendered literally, which isn't horrible, to
+
+Hmm, I sort of take that back. In git-config.1, it looks not-too-bad,
+but in git-rebase.1, this item runs into the next one (sequence.editor)
+and messes with it, like so:
+
+  rebase.forkPoint: If set to false set --no-fork-point option by
+  default. sequence.editor:: Text editor used by git rebase -i for
+  editing the rebase instruction file. The value is meant to be
+  interpreted by the shell when it is used. It can be overridden by the
+  GIT_SEQUENCE_EDITOR environment variable. When not configured the
+  default commit message editor is used instead.
 
 Martin
