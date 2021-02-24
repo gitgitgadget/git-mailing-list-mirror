@@ -1,32 +1,31 @@
 Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.4 required=3.0 tests=BAYES_20,DKIM_ADSP_CUSTOM_MED,
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,URI_HEX autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1461C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 03:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65ECAC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 03:41:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7265164E6F
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 03:39:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 225AA64E6F
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 03:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233161AbhBXDjf convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 23 Feb 2021 22:39:35 -0500
-Received: from n2.nabble.com ([162.253.133.85]:51372 "EHLO n2.nabble.com"
+        id S233162AbhBXDlJ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 23 Feb 2021 22:41:09 -0500
+Received: from n2.nabble.com ([162.253.133.85]:52579 "EHLO n2.nabble.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229967AbhBXDjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Feb 2021 22:39:35 -0500
-X-Greylist: delayed 387 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 Feb 2021 22:39:35 EST
+        id S232936AbhBXDlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Feb 2021 22:41:08 -0500
 Received: from n2.nabble.com (localhost [127.0.0.1])
-        by n2.nabble.com (Postfix) with ESMTP id 4705212489269
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 20:32:27 -0700 (MST)
-Date:   Tue, 23 Feb 2021 20:32:27 -0700 (MST)
+        by n2.nabble.com (Postfix) with ESMTP id E1365124894AB
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 20:40:27 -0700 (MST)
+Date:   Tue, 23 Feb 2021 20:40:27 -0700 (MST)
 From:   davidleo10002 <davidleo10002@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <1614137547244-0.post@n2.nabble.com>
+Message-ID: <1614138027879-0.post@n2.nabble.com>
 Subject: About techy websites & Solutions
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
