@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92200C433E6
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB2FC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:59:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B02364F0D
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:58:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 89CB164F09
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235147AbhBXT6m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:58:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40712 "EHLO
+        id S235285AbhBXT6z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 14:58:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235278AbhBXTyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 14:54:35 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B7CC061A28
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:21 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id n4so3060590wrx.1
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:21 -0800 (PST)
+        with ESMTP id S235286AbhBXTyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 14:54:38 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA814C061A2B
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:23 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id e10so2825630wro.12
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qx7MgCeeFbGnardhIUUvIZHDrxcn4oD0CO88xRoqRvQ=;
-        b=bVqYvkYdTIj83no1BE61TKxpFECKCbwxryQQZscUORu0IvPcbj11GK5M2lYBQXHpXe
-         Ofxw40Gh3qiJsKAipA2DwQsB0s63JhQ7AwXBXDJq/M25gUfMuUJW3Qun6OrfIhDlSBk9
-         a/7q6CAHJJ6QDPsyoSY4fXZx0nAJtoWxBq7uGBi/VQusa0o1MYEXUO6iN8IyilWlVVRh
-         QrN6PnOqvQy72XiWVlZZLS0n3UzNdeEssX50jJNqaNyLsBehcrD+yXqPLTOWlO1RME7D
-         +W90A97Ed4l7qFfM6ieDTmKZBEpc9BSZ0y9X16GVXXtndMR9qYJFZYOW9Z8YdH4HwEJV
-         yTDw==
+        bh=cVsRH/pRLpHiEheWqNzoRFeT+Q+1ia2kdJrwOg41Bk8=;
+        b=h+CE7cOTETQ+WfSpQcHCbB0fpEgfHKTZ6RfMD6i69BkVI81gLZdzZzMgsOsjJEB4Md
+         hCd2+NVpqN6cqzLZzUfDArQ3BdEHJI6WieOTU0ab5l0yH9UKOZruAYoewIGyLv98oldn
+         2pwMXRiAWjmV8Xzg3HP3fu9lTNwRDD2ibyWzdFIk4xu2BvxzROkGs3Iod6EFutGTSfAW
+         +liYte+NKATXYSNEfD7pn3oFrMwoxazYNaAD+1egSRz8j6j4rt3yVB3kYvqxH9yJ3KH/
+         a2QYI/6+LPPKQiFc/XITYSYw+k55ZtwJU+My5z/oyUivL6PvuWTGjYw3vySZV3YxM28X
+         In8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qx7MgCeeFbGnardhIUUvIZHDrxcn4oD0CO88xRoqRvQ=;
-        b=RNvwR2PC7MRVVldKux8ZSJht6IeHljLpjaDOAsQfChzCr6z7rApRyArhH7ibuJsdAC
-         j68hC/tEvLImoP1XrXsE3lMo4KLarEJAA4hloY143FrWZCED1vkaH5uKHL4Pxo+vsiC1
-         InD6lPSRV/VQ+e1jWAGJWSUKgk29WRNFwpBdu4p300Z9Cx5EXi7aRX1MF225YY4PCYpr
-         5qJq7HXhaORPfIyw4sfTBIFL0gev7Zzsoa9a32fp2fRsoJYAk3jpHZAjRvPC/EkJAuNF
-         zyrc110d2KKouW0G/LUJ4i/epRp4KEH6DLuOP16+duORcd9lsdOq1hT0W6R33TWt6kvM
-         6BGQ==
-X-Gm-Message-State: AOAM5316QdO6Jd14wMfxPmlF+CZPedjg1O+os+tg9l1vRUsihOKBxqK2
-        vsr5WFzK+C16BLDozz6xjCRYtvf6+SRV1g==
-X-Google-Smtp-Source: ABdhPJyZD9mQp2QdTvXY1k6QcfEE4PnIK03NmsoTFnzjzmaA7ArZOOHJWyqyShFvOOOf8sZhRQxIUQ==
-X-Received: by 2002:a5d:4050:: with SMTP id w16mr9968157wrp.21.1614196339817;
-        Wed, 24 Feb 2021 11:52:19 -0800 (PST)
+        bh=cVsRH/pRLpHiEheWqNzoRFeT+Q+1ia2kdJrwOg41Bk8=;
+        b=ltUDbWO/7j25IfUClzE0SoF3AVsi5Deuh7gvrZpP/li0IBE7Y9r2Zl/Q4Xg/Iy9kS5
+         zuHVMVBWgEpoZOYw/wJf5Pzi0E0MfXXnepE2w1KoyZbYoX0g5j7aIdHwnDUeTSJYjG68
+         tFJJ5gfP1zojKGUMJy2G3Ithfs0taBy4dwGclNGk02WevLzXcqqLDRUd/fAcrUDSRU7d
+         F+GSOOg1YKlq5UBV2mr2fSmX7bWOfuMad/bHHbkbFAFE5yjPN5tiOVmNTOewLtXBavAd
+         GCh0mkCtppY5MvZwt27RDiETUFgVYIcTSBTLDs6t0mIZ1v/sW/3Hdmd7T18OH5uqO01G
+         cDpw==
+X-Gm-Message-State: AOAM532VnK3j0XjK5wGue/GOdF2sdJ7Uc1iuzdA1BtXdNvB0hEuRMY1C
+        tLeMoB1sITHzXcpUknPpe9Wu9RgxHTcWDA==
+X-Google-Smtp-Source: ABdhPJwUkiWr0apyqT0xjqchxbqu4TNufwn87rFd6+bcmAsBV94XFmjxIa/QpXN/rTJNBdjIYLtTJg==
+X-Received: by 2002:adf:bc01:: with SMTP id s1mr3418163wrg.240.1614196342398;
+        Wed, 24 Feb 2021 11:52:22 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.19
+        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 11:52:19 -0800 (PST)
+        Wed, 24 Feb 2021 11:52:21 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 32/35] userdiff golang: add a rule to match "package"
-Date:   Wed, 24 Feb 2021 20:51:26 +0100
-Message-Id: <20210224195129.4004-33-avarab@gmail.com>
+Subject: [PATCH v3 35/35] userdiff tests: add basic test for ruby
+Date:   Wed, 24 Feb 2021 20:51:29 +0100
+Message-Id: <20210224195129.4004-36-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215154427.32693-1-avarab@gmail.com>
 References: <20210215154427.32693-1-avarab@gmail.com>
@@ -81,91 +81,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the "golang" built-in pattern to match "package" lines, as
-they weren't matched before changing e.g. the imports would commonly
-result in an empty hunk header, now we'll instead show the package
-name.
+Add a test for the Ruby pattern added way back in ad8c1d9260 (diff:
+add ruby funcname pattern, 2008-07-31).
 
-I used https://blog.golang.org/package-names as a guide here, but
-e.g. "foo_bar" is still valid syntax, so let's let it pass but veer on
-the side of not having false positives.
+The "One/Two" picking demonstrates existing behavior, and a general
+case where we may not do what the user expects since we're not aware
+of the indentation level.
+
+The code is modified from the Ruby code we have in-tree at
+Documentation/asciidoctor-extensions.rb.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018/golang | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- userdiff.c     |  2 ++
- 2 files changed, 51 insertions(+)
+ t/t4018-diff-funcname.sh |  1 -
+ t/t4018/ruby.sh          | 58 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 1 deletion(-)
+ create mode 100755 t/t4018/ruby.sh
 
-diff --git a/t/t4018/golang b/t/t4018/golang
-index 252b6049da4..38f254cd269 100644
---- a/t/t4018/golang
-+++ b/t/t4018/golang
-@@ -1,3 +1,52 @@
-+t4018 description: package
-+t4018 header: package main
-+package main
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index b0c2782d067..7793d7652d5 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -23,7 +23,6 @@ test_expect_success 'setup' '
+ 	html
+ 	objc
+ 	pascal
+-	ruby
+ 	tex
+ 	EOF
+ 
+diff --git a/t/t4018/ruby.sh b/t/t4018/ruby.sh
+new file mode 100755
+index 00000000000..ef8a154421a
+--- /dev/null
++++ b/t/t4018/ruby.sh
+@@ -0,0 +1,58 @@
++#!/bin/sh
++#
++# See ../t4018-diff-funcname.sh's test_diff_funcname()
++#
 +
-+import "fmt"
-+// ChangeMe
++test_diff_funcname 'ruby: "def" over "class/module"' \
++	8<<\EOF_HUNK 9<<\EOF_TEST
++def process(parent)
++EOF_HUNK
++require 'asciidoctor'
 +
-+t4018 description: package regex is selective -- ALLCAPS
-+t4018 header: package main
-+package ALLCAPS
++module Git
++  module Documentation
++    class SomeClass
++      use_some
 +
-+import "fmt"
-+// ChangeMe
++      def process(parent)
++        puts("hello")
++	puts(ChangeMe)
++      end
++    end
++  end
++end
++EOF_TEST
 +
-+t4018 description: package regex is selective -- CamelCase
-+t4018 header: package main
-+package CamelCase
++test_diff_funcname 'ruby: "class" over "class/module"' \
++	8<<\EOF_HUNK 9<<\EOF_TEST
++class Two
++EOF_HUNK
++module Git
++  module Documentation
++    class One
++    end
 +
-+import "fmt"
-+// ChangeMe
++    class Two
++      # Spacing for -U1
++      ChangeMe
++    end
++  end
++end
++EOF_TEST
 +
-+t4018 description: package regex is selective -- 123
-+t4018 header: package main
-+package 123
++test_diff_funcname 'ruby: picks first "class/module/def" before changed context' \
++	'-U1' \
++	8<<\EOF_HUNK 9<<\EOF_TEST
++class One
++EOF_HUNK
++module Git
++  module Documentation
++    class One
++    end
 +
-+import "fmt"
-+// ChangeMe
-+
-+t4018 description: package regex is not overly selective -- x509
-+t4018 header: package x509
-+package x509
-+
-+import "fmt"
-+// ChangeMe
-+
-+t4018 description: package regex is not overly selective -- underbars
-+t4018 header: package not_conventional
-+package not_conventional
-+
-+import "fmt"
-+// ChangeMe
-+
-+t4018 description: package regex is not overly selective -- camelCase
-+t4018 header: package camelCase
-+package camelCase
-+
-+import "fmt"
-+// ChangeMe
-+
- t4018 description: complex function
- t4018 header: func (t *Test) RIGHT(a Type) (Type, error) {
- type Test struct {
-diff --git a/userdiff.c b/userdiff.c
-index 704af241e44..bbbbfa33e0a 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -128,6 +128,8 @@ IPATTERN("fountain",
- 	 /* -- */
- 	 "[^ \t-]+"),
- PATTERNS("golang",
-+	 /* Packages */
-+	 "^(package[ \t][a-z][A-Za-z0-9_]+)[ \t]*\n"
- 	 /* Functions */
- 	 "^(func[ \t].*)\n"
- 	 /* Structs and interfaces */
++    class Two
++      ChangeMe
++    end
++  end
++end
++EOF_TEST
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
