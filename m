@@ -2,92 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45C73C433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A71C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:39:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F84F60202
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:27:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9EA1F64E6C
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235306AbhBXU1o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 15:27:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64857 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234346AbhBXU1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 15:27:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C797F95F41;
-        Wed, 24 Feb 2021 15:26:53 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; s=sasl; bh=r8Mj2h52tJJTeoxhAR6EhTYFa
-        0I=; b=ALCBwtk8IJHUm0Y5/atb4n4m9bUhwQ3b7z8M2v8QXp7b83Tpkbm3+SPbs
-        1erDgIjF4bEfVh/MyxJelkrc4kUYZY0Lm5UL5IXpxDx/so0jyYSo2EHpkLXRZhY5
-        CJ8Vfmwb5FRAomXl1ZkxSqboJuwXLzzGAX01Zkpitp0NUboTk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:in-reply-to:references:mime-version
-        :content-transfer-encoding; q=dns; s=sasl; b=K9l2X8fZ+vqZFn6biGu
-        1afxCZ9hvpEUaZZn+ZmBqA8a/RDQaakvKCg6rHtkt/dBHrHYQWgzcbCRiVpVPRU7
-        6BDaNwbjNBSKqul6U60Y1NuuKLF5JmKLD2dtdhwjnruEiNXfhYinDaKJk1KEy5s0
-        kz5XY2X0hB8htKuaC4I4s12g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD9F595F40;
-        Wed, 24 Feb 2021 15:26:53 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5163295F3E;
-        Wed, 24 Feb 2021 15:26:53 -0500 (EST)
-        (envelope-from gitster@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH v3 3/3] index-format doc: camelCase core.excludesFile
-Date:   Wed, 24 Feb 2021 12:26:41 -0800
-Message-Id: <20210224202641.913770-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.30.1-826-g07a034c5ea
-In-Reply-To: <20210224202641.913770-1-gitster@pobox.com>
-References: <xmqqlfbe1sim.fsf@gitster.g>
- <20210224202641.913770-1-gitster@pobox.com>
+        id S235826AbhBXUjK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 15:39:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50244 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234883AbhBXUjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 15:39:09 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBC7C061788
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:38:28 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id f1so5117667lfu.3
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:38:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RG2/AbEW4x+0paH2PxIiEjhrJv1/9fpLg6nvxLfx+Gc=;
+        b=jeswGzaSYxqnIK+zWqLFQaBJG17fC9Vbx0BGpqN3loAI0JmzbkryRmQUIh8qnuqXA4
+         mGCKT5dIGhRYfE9YInr3b0bshTawxSBNeqvhvKUbNiGt1DGreUdpFj9bMhfT5Z/9ruv5
+         kEKXrSZcNuMZmPmTu9Ds+2MhYfDji5+acF5gpv/i+QhX10Sbcxo59zAOVZWEiTAOP60D
+         14hqPscBIum82zqEJ16LEkZbogH/wNkCTHOAqWe2Eamr1oPp5xr41uzURaZvvXwZmIzz
+         uVCO1UBMcNmbK21JsFg4jzw9aVXyng87C2UbzreR8YuaddhxdoxCGT1gq8G8q1QhmQm4
+         PDUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RG2/AbEW4x+0paH2PxIiEjhrJv1/9fpLg6nvxLfx+Gc=;
+        b=UsOMw8CfIyStlorolc4fN3ydXfr+TpPLQtctv+xjYe2n2G7k1efwnsK0VrrvfZk83G
+         y+sZOLAphdxH9QSQ/wur2p3+FqxkNpJM3Wi+hrUFX916RH3+5lGwMIENsuGkj/z/Izia
+         Xoebs6wxBXWlb74lm/hVH0RkjAXjaZ1BKL3XXJV0DVhz+jHgtzAPtQYOE//UFfYPJJWm
+         73ll9VQNn8eRh6afoaSmWubaCxkg3D1te6KQWIUc4FstHckyg/QJU8FfznYcw5b64j0N
+         XNw2BVvYHJ9kE36WQwcPJxgKcyy/BxSdXdCX0xIdS/O2kzoKU45EbeUI5RLYmrr4pTIN
+         BQNg==
+X-Gm-Message-State: AOAM530DaZoKNdn88bzgLMQStHHQauMsoqKJ8VIyAdsBBw/Ej8Ryoug9
+        8tHvB4AeOWh+ojPJmzCBp+EopP1JIAfJPUxx918=
+X-Google-Smtp-Source: ABdhPJyKbZW8U3RK05J7juKSVT9gp3o+50BHNoNSD04ZIAHAswL/r2ut0xvNt9sUrgGplHyt5ETdBQxfbEb6fW4M5MI=
+X-Received: by 2002:a19:6a10:: with SMTP id u16mr19019379lfu.221.1614199107402;
+ Wed, 24 Feb 2021 12:38:27 -0800 (PST)
 MIME-Version: 1.0
-X-Pobox-Relay-ID: A1C0368E-76DE-11EB-92B8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <20210223071840.44267-1-alexhenrie24@gmail.com>
+ <CAN0heSqmAgt_hg0-kQpTK2LcuYPV9T9=1bowbuZ7Qah1q0EAtA@mail.gmail.com> <xmqqo8g9z1p2.fsf@gitster.g>
+In-Reply-To: <xmqqo8g9z1p2.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 24 Feb 2021 13:38:15 -0700
+Message-ID: <CAMMLpeT2uocoWQMoNYoVWa2-scSohwbvz-CFN3zupD7jEBEFew@mail.gmail.com>
+Subject: Re: [PATCH v3] rebase: add a config option for --no-fork-point
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Denton Liu <liu.denton@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/index-format.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Wed, Feb 24, 2021 at 12:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> > On Tue, 23 Feb 2021 at 08:24, Alex Henrie <alexhenrie24@gmail.com> wrot=
+e:
+> >> +rebase.forkPoint:
+> >> +       If set to false set `--no-fork-point` option by default.
+> >
+> > This should be a double-colon at end of the line, not just a single
+> > colon, in order to make it a "description list separator". When it's
+> > just ":", it ends up being rendered literally, which isn't horrible, to
+> > be sure, but which doesn't match this item's neighbours.
+> >
+> > Martin
+>
+> Thanks for your sharp eyes; will amend locally before merging it to
+> 'next'.
 
-diff --git a/Documentation/technical/index-format.txt b/Documentation/tec=
-hnical/index-format.txt
-index 69edf46c03..8af608055f 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -251,14 +251,14 @@ Git index format
-   - Stat data of $GIT_DIR/info/exclude. See "Index entry" section from
-     ctime field until "file size".
-=20
--  - Stat data of core.excludesfile
-+  - Stat data of core.excludesFile
-=20
-   - 32-bit dir_flags (see struct dir_struct)
-=20
-   - Hash of $GIT_DIR/info/exclude. A null hash means the file
-     does not exist.
-=20
--  - Hash of core.excludesfile. A null hash means the file does
-+  - Hash of core.excludesFile. A null hash means the file does
-     not exist.
-=20
-   - NUL-terminated string of per-dir exclude file name. This usually
---=20
-2.30.1-826-g07a034c5ea
+Agreed, thank you!
 
+-Alex
