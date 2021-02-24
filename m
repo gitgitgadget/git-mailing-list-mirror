@@ -2,133 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BC46C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 17:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31423C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 17:53:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBCDD64F0C
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 17:51:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F23DE64E83
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 17:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234131AbhBXRv1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 12:51:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42518 "EHLO
+        id S233455AbhBXRx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 12:53:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234161AbhBXRvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 12:51:23 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABB17C0617AA
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 09:50:17 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id l132so1773128qke.7
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 09:50:17 -0800 (PST)
+        with ESMTP id S231561AbhBXRw6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 12:52:58 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D09FC06174A
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 09:52:18 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id x124so3032832qkc.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 09:52:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=ptljn3dI3It7PUs5XPBoG9WdS/stnUZ+L6tOeon3kaI=;
-        b=VawzUFyBMLL1vVraYMvpuN29ovuoLFgcIZBe3rOHcCz2aqG/fBQlJlXlMgNZt/ic8S
-         IVfib0rf4KSyWItGkMIxHrLnq5Zh60o2Xf68AMyYXXTnXBpILvnMjuXDibClNlZzPOEv
-         xoirbKkz3mV8Bxdc0eMqUZbeR4IePhOPccAmnY99SomdHcK7lQYyxepq1pe+AI0K23+/
-         HRnmcLWxP++/SNtmIkqWuMEHjk+I57pplDC5sJVCRMCb6XnWka3VFhMOK0Tdw6Ix+M6M
-         nBR1P7m0k7EAGxALIi3whQCg1ufI6ZueD+3StcC9zpVBu53Pe1U9ohy96FU0Hr9emCbX
-         dTTA==
+        bh=+ehMkEyVmfVjKTS0gEMkmKJzU0ND4CR4n46+fiG3ar4=;
+        b=Ha6i2sfbjptjsPv2M2RzU7e5Hqh8yovR1C/6H/TVsb3nfQEu0QAMS9Jk9yxnaS6GD+
+         Y7XKh/5eAN15Py1AJ5nuywhxtD8ld30qr5e2TLsODDm6Cw2I1gTrEaEbCd8HpyGgGtk7
+         hA7rlWcEAFBqw4szUdCYj/E0igYdU5fIPJfHwbkmOZ9ic8TFGA1UU21amd9VL35NRLBq
+         cXBgbMO2UC7bqRtSMWI4tehWimdbgPMtQhd8AxidroFxGPs55UWJzpqUd4UrQHzsiXR1
+         YXNtCJkDG9hsl5i77753/GJXz0V8aunA9ul+nVwoJRSp88GkgRjdOiNJhsVejZIXHSLD
+         ilew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=ptljn3dI3It7PUs5XPBoG9WdS/stnUZ+L6tOeon3kaI=;
-        b=pUP/b11M3poD+njKviL3OVSyUzFg9Y8q4fWh4e62XdyBIhNSquSJ+i45CRo3R474GR
-         oHhUr6fO2+zIBn7O2EJza7QyP37m1uxe/hzjswtb9C/ZMdLEB94mAupTS8AO98PmbLyR
-         jmmaNOxzvNfcoRDJSO8igYuSC5aKeisqHBvHH91RD+AD3v1GLbeULkhUC6TZZxvsXsSC
-         PQdiV8eHhua+f+njN92lHn8Wklhs+cfB23yofPfirqxUG07CtR10TOXPt7B/amzgs/JH
-         Zb8+p5yTJdELm0Rjc8HMcye2AVIOFfXkwv7T6/qke7v55yv7Y6ye6D2Rv1qh+kOdarPo
-         plbg==
-X-Gm-Message-State: AOAM5306CDzJXvmgmTAbgFkjXXIqJxkfnXE1ji04wIFNWF8YVedvLHBK
-        DIpoZL/imIIkJ3WSG2zAmIg0c9khJk+KNw==
-X-Google-Smtp-Source: ABdhPJwM2BiQItM05NGONTlGYAE+sxqUxODw96gqDOT4kLqiCITtZ9qqDiZDSkoxs0wvBzhgUi55Lw==
-X-Received: by 2002:a05:620a:294a:: with SMTP id n10mr19679884qkp.496.1614189016785;
-        Wed, 24 Feb 2021 09:50:16 -0800 (PST)
+        bh=+ehMkEyVmfVjKTS0gEMkmKJzU0ND4CR4n46+fiG3ar4=;
+        b=jL80pVwDZleqcVi5opbeghGpj0eMlJJguK3b10Pz/EzSMj9qsd9lQbGxQZIbBWDZZP
+         0iN59sgdOFLRkM94Ur5zmm3wY9Tk7d29O/+mDonCk9BMu02aPOwg7xyN1+VXyb9Gr/i0
+         CrxfF9J1LnXFaqv5M7wACKzynAsXfMYU9Nwp/0ceC9VFRp59cTRUsoSBFtyT1TDLleYc
+         ELJCzFq/R4153oOtZYBj8Y/URzk09v3MBFAejwZLR+gXwSLVlTPBIVVH8CaJn/kYw/uI
+         JHZ1ULAkst87eRoMO5y1/EGS0yfYAmQOlZ5Kta3NkKcHE2rVX4ETQBPbuobdoh1fMenu
+         c5CQ==
+X-Gm-Message-State: AOAM533NvvSrsbLDrcGBcVqy2KY9v6oZz6teyWtMmIEtrVlErOFRNrPy
+        71zI59Yz66NPhKCnnXNjIOc=
+X-Google-Smtp-Source: ABdhPJwytr/ZxGs6ktqlWBVqnkUBudvwDJadhtHFdWepBF4ohF+p/yYELsIyZfccinLCprnvmCiDMQ==
+X-Received: by 2002:a37:9a84:: with SMTP id c126mr31528746qke.399.1614189137580;
+        Wed, 24 Feb 2021 09:52:17 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:d50a:c289:effe:68e4? ([2600:1700:e72:80a0:d50a:c289:effe:68e4])
-        by smtp.gmail.com with UTF8SMTPSA id c63sm2092282qkf.8.2021.02.24.09.50.15
+        by smtp.gmail.com with UTF8SMTPSA id x6sm1970009qkj.118.2021.02.24.09.52.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Feb 2021 09:50:16 -0800 (PST)
-Message-ID: <22419bc6-d35a-7537-d388-d51c24138f5f@gmail.com>
-Date:   Wed, 24 Feb 2021 12:50:15 -0500
+        Wed, 24 Feb 2021 09:52:16 -0800 (PST)
+Message-ID: <bb2ca73b-f60b-0030-2b28-753da48bf7a5@gmail.com>
+Date:   Wed, 24 Feb 2021 12:52:16 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101
  Thunderbird/86.0
-Subject: Re: [PATCH v2 00/10] Optimization batch 8: use file basenames even
- more
+Subject: Re: [PATCH v4 03/17] commit-graph: use chunk-format write API
 Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.844.git.1613289544.gitgitgadget@gmail.com>
- <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
+        Chris Torek <chris.torek@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.848.v3.git.1612535452.gitgitgadget@gmail.com>
+ <pull.848.v4.git.1613657259.gitgitgadget@gmail.com>
+ <ddebf2389880e14a332e354f7b1dbc86a3964985.1613657259.git.gitgitgadget@gmail.com>
+ <20210224165242.GB3590451@szeder.dev> <YDaI9pVzW5wkK1aT@nand.local>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <pull.844.v2.git.1614123848.gitgitgadget@gmail.com>
+In-Reply-To: <YDaI9pVzW5wkK1aT@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2021 6:43 PM, Elijah Newren via GitGitGadget wrote:
-> This series depends on en/diffcore-rename (a concatenation of what I was
-> calling ort-perf-batch-6 and ort-perf-batch-7).
-> 
-> There are no changes since v1; it's just a resend a week and a half later to
-> bump it so it isn't lost.
+On 2/24/2021 12:12 PM, Taylor Blau wrote:
+> On Wed, Feb 24, 2021 at 05:52:42PM +0100, SZEDER Gábor wrote:
+>> On Thu, Feb 18, 2021 at 02:07:25PM +0000, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <dstolee@microsoft.com>
+>>>
+>>> The commit-graph write logic is ready to make use of the chunk-format
+>>> write API. Each chunk write method is already in the correct prototype.
+>>> We only need to use the 'struct chunkfile' pointer and the correct API
+>>> calls.
+>>
+>> This patch series messes up the "Writing out commit graph" progress
+>> display, and starting at this commit I get:
 
-Thank you for re-sending. I intended to review it before but got redirected
-and forgot to pick it up again.
+Thanks for the report and identifying the exact place that caused the
+mistake.
+ 
+> I can confirm. It looks like we never dropped the 'num_chunks' variable,
+> which should have happened in this patch.
 
-> === Results ===
-> 
-> For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-> performance work; instrument with trace2_region_* calls", 2020-10-28), the
-> changes in just this series improves the performance as follows:
-> 
->                      Before Series           After Series
-> no-renames:       12.775 s ±  0.062 s    12.596 s ±  0.061 s
-> mega-renames:    188.754 s ±  0.284 s   130.465 s ±  0.259 s
-> just-one-mega:     5.599 s ±  0.019 s     3.958 s ±  0.010 s
-> 
-> 
-> As a reminder, before any merge-ort/diffcore-rename performance work, the
-> performance results we started with (as noted in the same commit message)
-> were:
-> 
-> no-renames-am:      6.940 s ±  0.485 s
-> no-renames:        18.912 s ±  0.174 s
-> mega-renames:    5964.031 s ± 10.459 s
-> just-one-mega:    149.583 s ±  0.751 s
+Yes, makes sense. Hard to see that 'num_chunks' wasn't used because it
+_was_ being used, just not as intended.
 
-These are good results.
+> @@ -1887,11 +1886,11 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+>  		strbuf_addf(&progress_title,
+>  			    Q_("Writing out commit graph in %d pass",
+>  			       "Writing out commit graph in %d passes",
+> -			       num_chunks),
+> -			    num_chunks);
+> +			       get_num_chunks(cf)),
+> +			    get_num_chunks(cf));
+>  		ctx->progress = start_delayed_progress(
+>  			progress_title.buf,
+> -			num_chunks * ctx->commits.nr);
+> +			get_num_chunks(cf) * ctx->commits.nr);
 
-I reviewed the patches and believe they do the optimizations claimed. I
-only found some nits for comments and whitespace things.
+This is obviously correct. Thanks for the quick patch!
 
-You are very careful to create the necessary pieces and connect them
-from the bottom-up. However, this leads to one big "now everything is
-done" commit with performance improvements. It seems that there are
-some smaller performance improvements that could be measured if the
-logic was instead built from the top-down with stubs for the complicated
-logic.
-
-For example, the final patch links the rename logic with a call to
-idx_possible_rename(). But, that could just as well always return -1
-and the implementation would be correct. Then, it would be good to see
-if the performance changes with that non-functional update. It would
-also help me read the series in patch order and understand the context
-of the methods a bit better before seeing their implementation.
-
-This is _not_ a recommendation that you rewrite the series. Just food
-for thought as we continue with similar enhancements in the future.
-
-Thanks,
 -Stolee
