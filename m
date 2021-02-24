@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0439DC433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99C18C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:55:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B371764EF5
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:55:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FC1E64F06
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235332AbhBXTzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:55:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40432 "EHLO
+        id S235166AbhBXTzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 14:55:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235165AbhBXTxh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S235172AbhBXTxh (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Feb 2021 14:53:37 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15921C0611C3
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:17 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id p3so2804629wmc.2
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:17 -0800 (PST)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBE5FC0617AB
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:04 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id v15so3049472wrx.4
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Pw0jiAt1I2gW1fsZvZD72j6GVu7NokPW1exD1z5oArU=;
-        b=r4isYiN95m0o5h/fy1hfzobYAFEjAPUN0nareo/1kmA80dIRLc75qWm71WiO3bNaja
-         9Rh9LXie4IuAQaJZp2kAESJB/GLeZKd9t7R5Xcuj25Zc4aqf9ka+KpioXvkfC7KmTUCc
-         uUWHfMIohxFD2Jg5zE1ISkkwtuG4kVPrxsuNvjBdTM4/qaOua8znn06pRX2Z64/O9I1c
-         4QTB6cI0rPzMIzN7bUYRHLByKOlh8NVAXy67ROlGiPcz2QIkAb+wcE1n/NUCBc8fhcDM
-         Ndreay21D0xq/yaTvK8P4zop/LXvFZVnQwYT46ctAHOVCpRe5Bl7n663VjqSNoc6C9Aq
-         O2Vg==
+        bh=YZ9RBdohkPzJ0/hq4JRsvjAEH5e3qtgkKeHPFQHDpV8=;
+        b=ARw411qHtIoagoqjo/LoFfJki0cTR7rTMPCRADZMAzg8veJBOJWhdghKjQXVdKqZAG
+         7zF5kad2qy2x1ODFMFnhLTPSBGEXYipcjhGYHeSdVrVPwPBnJwwStjm0asKWNL9Nj/qp
+         0ZxTa9+iqR1J3mr+O0d6E4t+OAfgsRmXfRffC8QpDBloNPBp4rSkd8LtMWB8trOIuBFQ
+         aJe2HzAo03NY3giTm125T8JfQ8MlXV8C2S2aSK6RxaxQSF8W1hxjes2lF6mIvG7OYxmq
+         YSMc7IgiIWfxBOtBRlg7Ii8xCyEpOvAyem1TD1sWQ39JQKAcNBk4+wWPeh/U9VtsHxy3
+         YdYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pw0jiAt1I2gW1fsZvZD72j6GVu7NokPW1exD1z5oArU=;
-        b=gJ9Md8UCxg/cXwkRwe1msnJkOcnhYxPF2x7A6KOsTh7NTGsdDnC6UjsDqpF+mVdXcp
-         A91d3WqifN+jC66e+Hqg9mqDGqJgGd/+SvLHEmKAVlFvEZ8WC94FOA9USLah9yAnTwN+
-         Yz5KDITtV25S8ZHfMk6cONTmFxwYkCqwkvxr3FsNEjm/wujIoiqBhVC/15XrA2kEpnPK
-         RrRT9B1+yRqV1Xd7MA0AAo4RbYv2dKTNqsh877Kyy94Zfjpn/KI+gYp2cXEGP7+o+LzP
-         2+2OxKJJfsj7t6JPxfM3pN/miE+Hl1Yp9CLlrwH7kNopG7xEGME/MZNHUDnvsR/a2I/n
-         raMg==
-X-Gm-Message-State: AOAM532x7r4S+aWCNakfBipIvyxhar6+uL8tx96GuELZH6l2rL0Xsa4y
-        Uu+jD6I2wZFcJl4nmyRb1PtoGkgDTVd2Mg==
-X-Google-Smtp-Source: ABdhPJxv+rgZ9LLe9oXPjPaUGoQo/hy2aBR3IZTgdF8JBdC+3K5TUUEzKJ/koEN88rKvxnfNJ8mnow==
-X-Received: by 2002:a1c:107:: with SMTP id 7mr5157273wmb.28.1614196335595;
-        Wed, 24 Feb 2021 11:52:15 -0800 (PST)
+        bh=YZ9RBdohkPzJ0/hq4JRsvjAEH5e3qtgkKeHPFQHDpV8=;
+        b=DT/5ZfCg/waltcp2v2Vfh5x1rvRpXB4lRg3kKs6N5k6mgZZjiXoyIIkJ5fn8wV2lys
+         J37M0oG2RD90ufjIC1wPBCAxoIE1r3q+ECESzAx0HRIbuoFacz+COkIxKQYIdLh85Cz/
+         Toi+LCNPUjS3rUmYFr3IkqNMxv6EmHrRbVZCu3zICa6cOZkOn7LAjnKfkL2IZy5h197q
+         wM9mcIcRzxTmUmeYzGynj+9fmMzM1eyeDupmYGDcMnZ7BjSPMuUuuu/2kCZfyamdwaWd
+         tMDLsq58XR85vYhRxlhReGcfVYpAh4QBXKNRfsmHrQfbXRVSmbEPbrb7Sz6QEYjS+5QG
+         oCTw==
+X-Gm-Message-State: AOAM531xqJ95HMNzKNwIf4tfF27prtPoBZavuW+oCVQtt9iW5nGlw9wJ
+        2Dw9747NKW9k2lu4djpnh+FxVNCcN5rCUw==
+X-Google-Smtp-Source: ABdhPJxpI5ZXN+q+0hV2Zy2dQvafYoLjY2fSGVNxLwRkaXdNKcgbjkw4AfUMv3HDKjRxk1OHbm1cKQ==
+X-Received: by 2002:adf:bc01:: with SMTP id s1mr3417154wrg.240.1614196323390;
+        Wed, 24 Feb 2021 11:52:03 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.14
+        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 11:52:15 -0800 (PST)
+        Wed, 24 Feb 2021 11:52:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -68,9 +68,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         Chris Torek <chris.torek@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 27/35] userdiff tests: remove "funcname" from custom3 test
-Date:   Wed, 24 Feb 2021 20:51:21 +0100
-Message-Id: <20210224195129.4004-28-avarab@gmail.com>
+Subject: [PATCH v3 13/35] userdiff tests: factor out test_diff_funcname() logic
+Date:   Wed, 24 Feb 2021 20:51:07 +0100
+Message-Id: <20210224195129.4004-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
 In-Reply-To: <20210215154427.32693-1-avarab@gmail.com>
 References: <20210215154427.32693-1-avarab@gmail.com>
@@ -81,50 +81,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can only have one "funcname" or "xfuncname", any later definition
-overrides the earlier one, so this configuration wasn't doing
-anything.
-
-When this test was originally added in 3632cfc248 (Use compatibility
-regex library for OSX/Darwin, 2008-09-07) we had no such definition of
-two patters for this test. Back then this was setting the
-"diff.java.funcname" configuration variable.
-
-The stage for that second pattern being set got set later. In
-45d9414fa5 (diff.*.xfuncname which uses "extended" regex's for hunk
-header selection, 2008-09-18) the pattern got converted from
-"funcname" to "xfuncname".
-
-Soon after in b19d288b4d (t4018-diff-funcname: demonstrate end of line
-funcname matching flaw, 2008-10-15) another test immediately preceding
-this one got added, using "diff.java.funcname" for its configuration.
-
-Then f792a0b88e (t4018 (funcname patterns): make configuration easier
-to track, 2011-05-21) came along and codified this whole thing when
-converting the two tests from "git config" to "test_config".
-
-Since this was never the intent of the test let's just remove this,
-the rationale in f792a0b88e for having some test for the clobbering
-behavior makes sense, but I'll do that in another follow-up test, not
-as a hard to read side-effect of this one.
+Factor out logic in test_diff_funcname() into two helper functions,
+these will be useful in a follow-up commit where we'll do this munging
+in more than one place.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4018/custom.sh | 1 -
- 1 file changed, 1 deletion(-)
+ t/t4018-diff-funcname.sh | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4018/custom.sh b/t/t4018/custom.sh
-index 97f310c02fb..58187c2293b 100755
---- a/t/t4018/custom.sh
-+++ b/t/t4018/custom.sh
-@@ -52,7 +52,6 @@ public class Beer
- EOF_TEST
- 
- test_expect_success 'custom: setup alternation in pattern' '
--	git config diff.custom.funcname "Beer$" &&
- 	git config diff.custom.xfuncname "^[ 	]*((public|static).*)$"
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 2365f0e361e..8a8a7a99c88 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -75,6 +75,17 @@ test_expect_success 'setup hunk header tests' '
+ 	git -C t4018 add .
  '
  
++do_change_me () {
++	file=$1
++	sed -e "s/ChangeMe/IWasChanged/" <"$file" >tmp &&
++	mv tmp "$file"
++}
++
++last_diff_context_line () {
++	file=$1
++	sed -n -e "s/^.*@@$//p" -e "s/^.*@@ //p" <$file
++}
++
+ # check each individual file
+ for i in $(git -C t4018 ls-files)
+ do
+@@ -85,13 +96,12 @@ do
+ 
+ 		# add test file to the index
+ 		git add \"$i\" &&
+-		# place modified file in the worktree
+-		sed -e 's/ChangeMe/IWasChanged/' <\"t4018/$i.content\" >\"$i\"
++		do_change_me \"$i\"
+ 	"
+ 
+ 	test_expect_success "hunk header: $i" "
+ 		git diff -U1 $i >diff &&
+-		sed -n -e 's/^.*@@$//p' -e 's/^.*@@ //p' <diff >ctx &&
++		last_diff_context_line diff >ctx &&
+ 		test_cmp t4018/$i.header ctx
+ 	"
+ done
 -- 
 2.30.0.284.gd98b1dd5eaa7
 
