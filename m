@@ -2,413 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,LONGWORDS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F0D7C433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 10:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA1C5C433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 11:15:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C46E864EBB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 10:59:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95B7C64E90
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 11:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233606AbhBXK7Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 05:59:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
+        id S234438AbhBXLPc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 06:15:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232678AbhBXK7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 05:59:20 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794F2C061574
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 02:58:39 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id k66so1433157wmf.1
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 02:58:39 -0800 (PST)
+        with ESMTP id S235013AbhBXLNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 06:13:12 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003E1C06178B
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 03:12:31 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a22so2342519ejv.9
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 03:12:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=BqNFbZoQ6/48JkIxaDQ9c0OTNG7J+VZ1ab+FllzBz70=;
-        b=GODmB+lOGfqmi1f/Wk2P0d3hHzr1phj2qKh18oHx0v7yZwEfqSj43x05P4YdVFNPOf
-         9uJKNBu8KUz8A0bZKtAwcTiKKnTGXBSPbf8LPK0CsTACmH1K1R/2h8TgFShFNZ1WLp98
-         BKUDn3inNBl1vM+JMH2Ja+iyNY9DWw4ZgH7Wpn4jyslJ8ZM+EMe53F0ts8Puz6UbVzP4
-         qWKo0uurGSQyu5oHKY8HKTS3wU3T45VQj2l3czLOJELXBN/eOMIyqa3+V68mA5B1rsRI
-         vbhSYQcvLhXJt+nB/00VaH2yV2IMI6qSwIN/jHXbY6HMQtAszdb+19P51OdKY58h6Yfk
-         CrCg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=emejd1/2XlVOdcEADImIG+DGxG8XtOkVoR51sL/yQ4w=;
+        b=IYF5awoCrTDmjvitGU1TbumTkDH65Ht3EVGHNmX8Ic/+wVPop6X+6IHBvcRRxXJgh9
+         CmCCGS8pdtx+2Yn/WPakTaLzAyORvvSY4K5OLBlkdJCxQT7sV4AA/I+cvXtvNIsHlLnb
+         RxN52iw467HcK6Q5vY9dPi4kfircWB3coFZNg5z3bEwMEdz19H+C+KHKu3TRE/BEg5Fy
+         G89NBvbtQYRbEoPOO010iSivnSnxwSHz7myfOd8VmChK2i7skEZ+wQJDxSlYQjxTzyvt
+         FSQuiLVP5MuX/C36+0LWDEwDGV2A2DgXuGtkpb8pcAZqRGk7SywzdaSQRan4qb09oVs+
+         g5Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BqNFbZoQ6/48JkIxaDQ9c0OTNG7J+VZ1ab+FllzBz70=;
-        b=CNQ3AEQOsYXMyc6sErlzdHcB1c+Ds0EjdK/xEV/aUm8i4uAzC8G9dog6ogaG8oslQj
-         Cp3OWJK5hzR9m5OizGB0e16ixhyh7Zj7WNvUuosyzoEuJP8Uj6puAHlVp2xO8uAgDnjQ
-         Kbz5dpOfeFPtlzEKyzRJswJWltX+oVdDSEitfbotgRggCSce/zK1qaZxTpVDKptIgYis
-         d+eooF4LjEuGdA+9EzYWHW94VKbfoR/SDm9ioVGFMOmxb/+aaDUNseU7m7zFLII61uLA
-         0q95eevYntzQU2I1EGqdzzPRewFniZzRsZcz6BKEeTrt1lID81iLbd9aJ59dIqcNbVmL
-         0a0Q==
-X-Gm-Message-State: AOAM533r1X7TCMcb1MpM/uO62Gz/EyHpct5jVxZ7cMpMNEtbAB84cloo
-        905mvVq48R/RdE4XjrY3qbsIhvyXju0=
-X-Google-Smtp-Source: ABdhPJzNdd5Hi8Wf57stQqyQ3Ka6lFzON2xv6XhFUXAI0bnWrhQ2dUbc657z3hSGbH4XbaT3+2A4nw==
-X-Received: by 2002:a05:600c:d7:: with SMTP id u23mr3081588wmm.127.1614164318152;
-        Wed, 24 Feb 2021 02:58:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r17sm2806263wrx.82.2021.02.24.02.58.37
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=emejd1/2XlVOdcEADImIG+DGxG8XtOkVoR51sL/yQ4w=;
+        b=t3UnPfAMuHU7dIgd3WjHWj2YhvEARO9nzsX19NZJhjUXf47/4fsLMXwKCl2Yraljii
+         fZT3W6wn1JwteLNRaxHGIbTXwcwLvLAkcPdOBecSvBZ6qghSAmgEL2jkz+2s6CcJXHDe
+         MatT5TuEtdQN/63PgJecbSLlNdSSfJ56bN0hqVmVnDdPbCq0EHEFBgzJ4xcGVHyFQ9Sm
+         PGoQABQqtQ/urlKqzn0633NbN3+msoEOIcCxHK7MNAyzW8khs+ouOdR9VbNQOq6hQrvu
+         tk3Dk5rn+Z/w6Orq6/nZ0vANPM/JE5TYLHwNHrQPmiZVVQifAYASIV78u0qduGtGg8of
+         0nuQ==
+X-Gm-Message-State: AOAM53162k615H4FabNfB64V3vi+Q/E3KDFFTevakNjnoWZqmo9FJ5iu
+        LW+ZN3pL115gHK1t/OOoaKF2k5i48fPpHQ==
+X-Google-Smtp-Source: ABdhPJz5CecVGYLFW1D+cexOUlX5jQXoQ+/jYTPKExAAMB9cNNC9OYGlHZMnPc7CXpWcRfznVcjx2w==
+X-Received: by 2002:a17:906:7742:: with SMTP id o2mr18662429ejn.46.1614165150584;
+        Wed, 24 Feb 2021 03:12:30 -0800 (PST)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id n19sm1152322ejb.51.2021.02.24.03.12.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 02:58:37 -0800 (PST)
-Message-Id: <pull.866.v4.git.1614164317030.gitgitgadget@gmail.com>
-In-Reply-To: <pull.866.v3.git.1613663704128.gitgitgadget@gmail.com>
-References: <pull.866.v3.git.1613663704128.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 24 Feb 2021 10:58:36 +0000
-Subject: [PATCH v4] gitk: tag add right click options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 24 Feb 2021 03:12:29 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 09/27] userdiff tests: match full hunk headers
+References: <20210215005236.11313-1-avarab@gmail.com>
+        <20210215154427.32693-10-avarab@gmail.com>
+        <4bd7bb84-3b75-258e-b488-f66dff6ba6b5@kdbg.org>
+        <xmqqsg5vrhha.fsf@gitster.c.googlers.com>
+        <1b2cb670-b49b-b478-7f69-6d4c356c8118@kdbg.org>
+        <87h7mba3h3.fsf@evledraar.gmail.com> <xmqqk0r6ldrn.fsf@gitster.g>
+        <877dmz7wtv.fsf@evledraar.gmail.com>
+        <1c5f8cb8-2d99-4279-ba61-4f7720ece277@kdbg.org>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <1c5f8cb8-2d99-4279-ba61-4f7720ece277@kdbg.org>
+Date:   Wed, 24 Feb 2021 12:12:27 +0100
+Message-ID: <87y2fd7m90.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Anders Kaseorg <andersk@MIT.EDU>,
-        Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
 
-In gitk, we can right-click on the icon of the branch,
-and a directory will pop up to provide us with functions
-such as "Checkout this branch", "Rename this branch"...,
-but we found that the right-click tag icon does not have
-such a function , So I learned how to write the branch icon,
-and added the following functions "Rename this tag",
-"Remove this tag", "Copy tag name" to right-click the tag icon.
+On Tue, Feb 23 2021, Johannes Sixt wrote:
 
-This function temporarily only supports those labels independently
-displayed tag(s), and cannot work on label aggregated display
-"tag..." or "n tags...".
+> Am 23.02.21 um 14:11 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> On Wed, Feb 17 2021, Junio C Hamano wrote:
+>>> Sounds good.  It shouldn't be too hard to satisfy both camps,
+>>> i.e. the quoted demonstrates one way to allow test writers to
+>>> give expectation in-place in the single test file, and replacing
+>>> how it uses "grep" to check the output with test_cmp or whatever
+>>> wouldn't make the resulting tests too hard to write and maintain.
+>>=20
+>> It doesn't satisfy both camps, because I'd like to convert all these
+>> tests to test_cmp because for a subsequent refactoring of userdiff.c by
+>> me or others I don't know in advance what might break, so I'd like to
+>> assert the exact current behavior.
+>>=20
+>> Whereas your patch provides a way to opt-in individual tests to a
+>> test_cmp-alike, but leaves the rest at grepping for the "RIGHT"
+>> substring. Failures in the tests who aren't opted-in will be hidden.
+>>=20
+>> It also means that subsequent changes to the behavior in the form of
+>> submitted patches won't be as self-documenting, e.g. I've wondered if we
+>> could introduce a case to balance parens in this code (sometimes C
+>> function declarations stretch across lines), and there's e.g. the
+>> arbitrary limit of 80 bytes on the line (which to be fair, we don't
+>> curretly have tests for).
+>>=20
+>> Anyway, as noted in [1] I don't see how this custom format of grepping
+>> stuff out of plain-text files is simpler, particularly when its behavior
+>> would start to rely on other things like "# HEADER |right()|" whose
+>> behavior is a function of what we grep/sed when/where in the logic
+>> driving the tests.
+>>=20
+>> But if you & Johannes S. disagree with that I don't really say a way
+>> forward with this series. I think e.g. squashing 09/27 into the rest
+>> would make things simpler/less verbose, but the end-state would still be
+>> matching the full hunk line, and if that's not something that's wanted
+>> in any shape or form as a default...
+>>=20
+>> 1. https://lore.kernel.org/git/87h7mba3h3.fsf@evledraar.gmail.com/
+>
+> I could live with a version of Junio's suggestion that is not opt-in,
+> i.e., the checks are mandatory and exact. The important point is that
+> there is only one file per test case; that would still count as
+> "sufficiently simple" in my book.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    gitk: tag add right click options
-    
-    This patch want to fix: https://github.com/gitgitgadget/git/issues/855
-    
-    We can provide for right-clicking the tag icon in gitk Rename this tag",
-    "Remove this tag", "Copy tag name" function.
-    
-    For convenience, only the tags on the branch with the number of tags <=3
-    are processed temporarily.
-    
-    Thanks!
+So something where the tests in 14-15,17,19/27 would need to go back to
+having the config that's part of the test driven by setup in
+t/t4018-diff-funcname.sh, and the contents of a test file being e.g. (to
+take the test from 25/27):
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-866%2Fadlternative%2Fgitk_tag_new_opt-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-866/adlternative/gitk_tag_new_opt-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/866
+    # HEADER |package main|
+    package main
 
-Range-diff vs v3:
+    import "fmt"
+    // ChangeMe
 
- 1:  52ca9bcfa52f ! 1:  c8b0dfa6628e gitk: tag add right click options
-     @@ Commit message
-          In gitk, we can right-click on the icon of the branch,
-          and a directory will pop up to provide us with functions
-          such as "Checkout this branch", "Rename this branch"...,
-     -    but we found that the right-click tag icon does not have such
-     -    a function , So I learned how to write the branch icon, and
-     -    added the following functions "Rename this tag","Remove this tag",
-     -    "Copy tag name" to right-click the tag icon. This function is
-     -    temporarily supported work on the branch with <=3 tags.
-     +    but we found that the right-click tag icon does not have
-     +    such a function , So I learned how to write the branch icon,
-     +    and added the following functions "Rename this tag",
-     +    "Remove this tag", "Copy tag name" to right-click the tag icon.
-     +
-     +    This function temporarily only supports those labels independently
-     +    displayed tag(s), and cannot work on label aggregated display
-     +    "tag..." or "n tags...".
-      
-          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-      
-     @@ gitk-git/gitk: proc drawtags {id x xt y1} {
-           if {[info exists idtags($id)]} {
-               set marks $idtags($id)
-               set ntags [llength $marks]
-     +-        if {$ntags > $maxtags ||
-     +-            [totalwidth $marks mainfont $extra] > $maxwidth} {
-      +        set ntags_copy $ntags
-     -         if {$ntags > $maxtags ||
-     -             [totalwidth $marks mainfont $extra] > $maxwidth} {
-     ++        set out_of_bounds [expr {[totalwidth $marks mainfont $extra] > $maxwidth}]
-     ++        if {$ntags > $maxtags || $out_of_bounds} {
-                   # show just a single "n tags..." tag
-     +             set singletag 1
-     +             if {$ntags == 1} {
-      @@ gitk-git/gitk: proc drawtags {id x xt y1} {
-                          -font $font -tags [list tag.$id text]]
-               if {$ntags >= 0} {
-                   $canv bind $t <1> $tagclick
-     -+            if {$ntags_copy < $maxtags} {
-     ++            if {$ntags_copy <= $maxtags && !$out_of_bounds} {
-      +              $canv bind $t $ctxbut [list tagmenu %X %Y $id $tag_quoted]
-      +            }
-               } elseif {$nheads >= 0} {
-
-
- gitk-git/gitk | 164 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 161 insertions(+), 3 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 23d9dd1fe0d0..7f0edf4a108d 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1874,6 +1874,20 @@ proc removehead {id name} {
-     unset headids($name)
- }
- 
-+proc removetag {id name} {
-+    global tagids idtags
-+
-+    if {$idtags($id) eq $name} {
-+        unset idtags($id)
-+    } else {
-+        set i [lsearch -exact $idtags($id) $name]
-+        if {$i >= 0} {
-+            set idtags($id) [lreplace $idtags($id) $i $i]
-+        }
-+    }
-+    unset tagids($name)
-+}
-+
- proc ttk_toplevel {w args} {
-     global use_ttk
-     eval [linsert $args 0 ::toplevel $w]
-@@ -2077,6 +2091,7 @@ proc makewindow {} {
-     global filesepbgcolor filesepfgcolor
-     global mergecolors foundbgcolor currentsearchhitbgcolor
-     global headctxmenu progresscanv progressitem progresscoords statusw
-+    global tagctxmenu
-     global fprogitem fprogcoord lastprogupdate progupdatepending
-     global rprogitem rprogcoord rownumsel numcommits
-     global have_tk85 use_ttk NS
-@@ -2679,12 +2694,20 @@ proc makewindow {} {
-     set headctxmenu .headctxmenu
-     makemenu $headctxmenu {
-         {mc "Check out this branch" command cobranch}
--        {mc "Rename this branch" command mvbranch}
-+        {mc "Rename this branch..." command mvbranch}
-         {mc "Remove this branch" command rmbranch}
-         {mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
-     }
-     $headctxmenu configure -tearoff 0
- 
-+    set tagctxmenu .tagctxmenu
-+    makemenu $tagctxmenu {
-+        {mc "Rename this tag..." command mvtag}
-+        {mc "Remove this tag..." command rmtag}
-+        {mc "Copy tag name" command {clipboard clear; clipboard append $tagmenutag}}
-+    }
-+    $tagctxmenu configure -tearoff 0
-+
-     global flist_menu
-     set flist_menu .flistctxmenu
-     makemenu $flist_menu {
-@@ -6581,6 +6604,7 @@ proc drawtags {id x xt y1} {
- 
-     set marks {}
-     set ntags 0
-+    set ntags_copy 0
-     set nheads 0
-     set singletag 0
-     set maxtags 3
-@@ -6592,8 +6616,9 @@ proc drawtags {id x xt y1} {
-     if {[info exists idtags($id)]} {
-         set marks $idtags($id)
-         set ntags [llength $marks]
--        if {$ntags > $maxtags ||
--            [totalwidth $marks mainfont $extra] > $maxwidth} {
-+        set ntags_copy $ntags
-+        set out_of_bounds [expr {[totalwidth $marks mainfont $extra] > $maxwidth}]
-+        if {$ntags > $maxtags || $out_of_bounds} {
-             # show just a single "n tags..." tag
-             set singletag 1
-             if {$ntags == 1} {
-@@ -6678,6 +6703,9 @@ proc drawtags {id x xt y1} {
-                    -font $font -tags [list tag.$id text]]
-         if {$ntags >= 0} {
-             $canv bind $t <1> $tagclick
-+            if {$ntags_copy <= $maxtags && !$out_of_bounds} {
-+              $canv bind $t $ctxbut [list tagmenu %X %Y $id $tag_quoted]
-+            }
-         } elseif {$nheads >= 0} {
-             $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
-         }
-@@ -9531,6 +9559,57 @@ proc mkbranch {} {
-     branchdia $top val ui
- }
- 
-+proc mvtag {} {
-+    global NS
-+    global tagmenuid tagmenutag
-+
-+    set top .tagdialog
-+
-+    set val(name) $tagmenutag
-+    set val(id) $tagmenuid
-+    set val(command) [list mvtaggo $top $tagmenutag]
-+
-+    set ui(title) [mc "Rename tag %s" $tagmenutag]
-+    set ui(accept) [mc "Rename"]
-+
-+    tagdia $top val ui
-+}
-+
-+proc tagdia {top valvar uivar} {
-+    global NS commitinfo
-+    upvar $valvar val $uivar ui
-+
-+    catch {destroy $top}
-+    ttk_toplevel $top
-+    make_transient $top .
-+    ${NS}::label $top.title -text $ui(title)
-+    grid $top.title - -pady 10
-+    ${NS}::label $top.id -text [mc "ID:"]
-+    ${NS}::entry $top.sha1 -width 40
-+    $top.sha1 insert 0 $val(id)
-+    $top.sha1 conf -state readonly
-+    grid $top.id $top.sha1 -sticky w
-+    ${NS}::entry $top.head -width 60
-+    $top.head insert 0 [lindex $commitinfo($val(id)) 0]
-+    $top.head conf -state readonly
-+    grid x $top.head -sticky ew
-+    grid columnconfigure $top 1 -weight 1
-+    ${NS}::label $top.nlab -text [mc "Name:"]
-+    ${NS}::entry $top.name -width 40
-+    $top.name insert 0 $val(name)
-+    grid $top.nlab $top.name -sticky w
-+    ${NS}::frame $top.buts
-+    ${NS}::button $top.buts.go -text $ui(accept) -command $val(command)
-+    ${NS}::button $top.buts.can -text [mc "Cancel"] -command "catch {destroy $top}"
-+    bind $top <Key-Return> $val(command)
-+    bind $top <Key-Escape> "catch {destroy $top}"
-+    grid $top.buts.go $top.buts.can
-+    grid columnconfigure $top.buts 0 -weight 1 -uniform a
-+    grid columnconfigure $top.buts 1 -weight 1 -uniform a
-+    grid $top.buts - -pady 10 -sticky ew
-+    focus $top.name
-+}
-+
- proc mvbranch {} {
-     global NS
-     global headmenuid headmenuhead
-@@ -9582,6 +9661,44 @@ proc branchdia {top valvar uivar} {
-     focus $top.name
- }
- 
-+proc mvtaggo {top prevname} {
-+    global tagids idtags idheads mainhead mainheadid
-+
-+    set name [$top.name get]
-+    set id [$top.sha1 get]
-+    if {$name eq $prevname} {
-+          catch {destroy $top}
-+          return
-+    }
-+    if {$name eq {}} {
-+      error_popup [mc "Please specify a new name for the tag"] $top
-+      return
-+    }
-+    catch {destroy $top}
-+    nowbusy renametag
-+    update
-+    if {[catch {
-+        # NOTE: for an annotated tag, the new tag points to the old tag object
-+        # where the old primary tag name is still recorded inside. Acceptable.
-+        eval exec "git tag $name $prevname"
-+        eval exec "git tag -d $prevname"
-+        } err]} {
-+        notbusy renametag
-+        error_popup $err
-+    } else {
-+        notbusy renametag
-+        removetag $id $prevname
-+        removedtag $id $tag
-+        set tagids($name) $id
-+        lappend idtags($id) $name
-+        addedtag $id
-+        redrawtags $id
-+        dispneartags 0
-+        run refill_reflist
-+    }
-+
-+}
-+
- proc mkbrgo {top} {
-     global headids idheads
- 
-@@ -9915,6 +10032,17 @@ proc headmenu {x y id head} {
-     tk_popup $headctxmenu $x $y
- }
- 
-+# context menu for a tag
-+proc tagmenu {x y id tag} {
-+    global tagmenuid tagmenutag tagctxmenu mainhead
-+
-+    stopfinding
-+    set tagmenuid $id
-+    set tagmenutag $tag
-+
-+    tk_popup $tagctxmenu $x $y
-+}
-+
- proc cobranch {} {
-     global headmenuid headmenuhead headids
-     global showlocalchanges
-@@ -10019,6 +10147,28 @@ proc rmbranch {} {
-     run refill_reflist
- }
- 
-+proc rmtag {} {
-+    global tagmenuid tagmenutag
-+    global idtags
-+
-+    set tag $tagmenutag
-+    set id $tagmenuid
-+    if {![confirm_popup [mc "Really delete tag %s?" $tag]]} return
-+    nowbusy rmtag
-+    update
-+    if {[catch {exec git tag -d $tag} err]} {
-+        notbusy rmtag
-+        error_popup $err
-+        return
-+    }
-+    removetag $id $tag
-+    removedtag $id $tag
-+    redrawtags $id
-+    notbusy rmtag
-+    dispneartags 0
-+    run refill_reflist
-+}
-+
- # Display a list of tags and heads
- proc showrefs {} {
-     global showrefstop bgcolor fgcolor selectbgcolor NS
-@@ -11228,6 +11378,14 @@ proc addedtag {id} {
-     unset -nocomplain cached_atags
- }
- 
-+proc removedtag {id tag} {
-+    global cached_dtags cached_atags cached_tagcontent
-+
-+    unset -nocomplain cached_tagcontent
-+    unset -nocomplain cached_dtags
-+    unset -nocomplain cached_atags
-+}
-+
- proc addedhead {hid head} {
-     global arcnos arcout cached_dheads
- 
-
-base-commit: e6362826a0409539642a5738db61827e5978e2e4
--- 
-gitgitgadget
+?
