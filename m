@@ -8,57 +8,58 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D20C433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 05:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7101C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 05:24:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB9E564E0F
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 05:16:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A248564D9A
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 05:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233720AbhBXFQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 00:16:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50002 "EHLO
+        id S232177AbhBXFYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 00:24:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232276AbhBXFQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 00:16:43 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA16C061574
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 21:16:02 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id l3so1257533oii.2
-        for <git@vger.kernel.org>; Tue, 23 Feb 2021 21:16:02 -0800 (PST)
+        with ESMTP id S229841AbhBXFYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 00:24:14 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30748C061574
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 21:23:34 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id z126so1246169oiz.6
+        for <git@vger.kernel.org>; Tue, 23 Feb 2021 21:23:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NX6XZorb6hR4oQyvylg3naojXPaCXJ07DdO1lzyfSJ8=;
-        b=JwOdUx2goz2mKA7uReEUNxVwDMnwfvJ20cJiCLWOzMMkq9nhh484uqBjEmVQASR7Ly
-         3BBXcaSZsTJ3Kjb2uiXD/XeFHqQqDUevAKEPC79rTI5ENk9gnCW9oilwc6ImZ+NpeeLO
-         RNmbPE9FWNKb62gnwAUJXvpthlmoxkKLcbvSjSS6ig7dGVubl3WMG8o6uJPtlAupJQZV
-         oJeRnu96aCHoxxpKKP9no1WgNzWupu6dKf18I6OXKyEdTVIKXE8K+tFX4AGL7jtJCMKM
-         G+H5ois4K0Gv/w4UkxMIehIXIXCfUVEGZ6hQJLJn1jSRQoRGHArbR8NxJzck2SbcBJDZ
-         QRoA==
+        bh=O+wTatz45+AzDcH96OtTu08qiLzHgBHsecgW2YZNbNg=;
+        b=DorSrSi5JLFU3mmBBjr1XZiWJaCTD0FtGRoF10idOFpTH2E6bc2jhbE/8qLZhayzsH
+         daxM7RgVHC/CANeT/UDXdiuKkF13bLN2QdMTn/UZYGMuK3g2b7uANZ4YLzXws9o7mYTn
+         SJvfNYEf02f0pS+6rhxg+wWTYscPap9rvbtg59u8we0m6A2AFpRZC8NpKCJ6zNUScbeY
+         byeEtrkOuMTTMCNCAf0UIWoLJaE5pAfkaq2u5tc20U2UPYuB4DZxb2b7vbVydQSHL24m
+         2vitnm3WhECB6kQOQnLYcKG3+lqeelIH7xqjrdrjhAQ1pQESQh8VpDQ588fMm9Rdqyfu
+         YNGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NX6XZorb6hR4oQyvylg3naojXPaCXJ07DdO1lzyfSJ8=;
-        b=nOkUMyH34R7pcD9LZC6drDnVCB2/XydMygz/4G+jKHFo0zexW16VcuGPEazPb49IZ9
-         nE3hw5ejpw/JzGePohxrCP3pcal6qp1bG6eUvg9Lo6bd4xYxtTN+ETwFAIe2IBx0QBCm
-         11RIhe7iUpU+dF09Y+MTi/X2VdkCfkTTkCdAekL8ogYpvbXgHhtNL2UpaD2toqFQIGhA
-         msjdK2kkEq1v+tGpSSn1vYRyeHIsrBdmikJDNVw1YaeReZxVBxVarjvz3EnqpCL3xtsO
-         GEUCNYww3pT/SPg3XnVPDO6Fo7iTsreWtBzlut/mDExp4LLmsiw9gLjQPk0e+EYoTP41
-         u/7Q==
-X-Gm-Message-State: AOAM530444+IKrF02TaqgLRuzhvT9wZOWuAf3ZKUlyfEyHza9P6dzBcI
-        yo/gUskRQ3EKqffxJxiJljffSj1NPYKLeO1iBXE=
-X-Google-Smtp-Source: ABdhPJzDH4h0lFeN02LTYioPJWgPKLflUanU29fSVX0oXAQjAL7GymTPlwqW9+AyginUwIe00AyaG442BXkojrT8ciw=
-X-Received: by 2002:aca:b407:: with SMTP id d7mr1529488oif.167.1614143761140;
- Tue, 23 Feb 2021 21:16:01 -0800 (PST)
+        bh=O+wTatz45+AzDcH96OtTu08qiLzHgBHsecgW2YZNbNg=;
+        b=XGxx9bsjzc+IrEVZGRrf4J6rDbgcngagAL/ysrsFulAkkQim3yNN2Z39pUF4doS5Zw
+         vxuHEPjjLs6Z5aLqNEycw96Irseh79S1ivtrt5fBK22M1uUMqX0K2oRJmhI9B3s08smo
+         deDwwoyOn5kldnwXLUy/tm88aDpoDydHQJ3lbU3h8DpQ+7rn4o/747DM01/FqNTYb6ev
+         vC1YO05lfcKbA02c0MReh/sG0ASWb7IDiCsCcInQo93Rb5P4PBrrT1fDDHoD3XZ80yz+
+         YboVDQn/ghoDcZoCvzpvdo1uYyteOWFaxhXf+F/iVolgFiHbJq+lG0gCOFmrxQELrOdW
+         nSsA==
+X-Gm-Message-State: AOAM532e5LCq0f+OZnI1Wxs2/CgMjU4eWeCVsdeYI1Hwcq2JGoWrPmKe
+        d7qGk7C1aVID4Jn4vrTiTMWdI8Yl9Nz6/A+LB9/IOatr0M0=
+X-Google-Smtp-Source: ABdhPJx1zBGIdBUiFOiTqUzKGSEDq8SGfFVvd4/SxaqMYVun3cunsEd77FWD3luzb0pmYhOjYlhs4dbIO4bT5F9nds8=
+X-Received: by 2002:aca:b407:: with SMTP id d7mr1543942oif.167.1614144213594;
+ Tue, 23 Feb 2021 21:23:33 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1614138107.git.matheus.bernardino@usp.br> <72b87870181d8bf72ce7bf86b5fae2e485fef9c0.1614138107.git.matheus.bernardino@usp.br>
-In-Reply-To: <72b87870181d8bf72ce7bf86b5fae2e485fef9c0.1614138107.git.matheus.bernardino@usp.br>
+References: <cover.1614138107.git.matheus.bernardino@usp.br> <a8a8af22a03f73c572c3d45d9e7dbb0503451fa2.1614138107.git.matheus.bernardino@usp.br>
+In-Reply-To: <a8a8af22a03f73c572c3d45d9e7dbb0503451fa2.1614138107.git.matheus.bernardino@usp.br>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 23 Feb 2021 21:15:50 -0800
-Message-ID: <CABPp-BH=wzpm1aQfQqZDBDw0+QABEURvX43+4==MyFX05DoKCA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] t3705: add tests for `git add` in sparse checkouts
+Date:   Tue, 23 Feb 2021 21:23:22 -0800
+Message-ID: <CABPp-BGDDuEdiTYpM-KZJm=ZHuKpOmVHV6pCXuY6H1nmVCaMdQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] pathspec: allow to ignore SKIP_WORKTREE entries on
+ index matching
 To:     Matheus Tavares <matheus.bernardino@usp.br>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -71,169 +72,126 @@ X-Mailing-List: git@vger.kernel.org
 On Tue, Feb 23, 2021 at 8:05 PM Matheus Tavares
 <matheus.bernardino@usp.br> wrote:
 >
-> We already have a couple tests for `add` with SKIP_WORKTREE entries in
-> t7012, but these only cover the most basic scenarios. As we will be
-> changing how `add` deals with sparse paths in the subsequent commits,
-> let's move these two tests to their own file and add more test cases
-> for different `add` options and situations. This also demonstrates two
-> options that don't currently respect SKIP_WORKTREE entries: `--chmod`
-> and `--renormalize`.
+> Add the 'ignore_skip_worktree' boolean parameter to both
+> add_pathspec_matches_against_index() and
+> find_pathspecs_matching_against_index(). When true, these functions will
+> not try to match the given pathspec with SKIP_WORKTREE entries. This
+> will be used in a future patch to make `git add` display a hint
+> when the pathspec matches only sparse paths.
 >
 > Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 > ---
->  t/t3705-add-sparse-checkout.sh   | 96 ++++++++++++++++++++++++++++++++
->  t/t7012-skip-worktree-writing.sh | 19 -------
->  2 files changed, 96 insertions(+), 19 deletions(-)
->  create mode 100755 t/t3705-add-sparse-checkout.sh
+>  builtin/add.c          |  4 ++--
+>  builtin/check-ignore.c |  2 +-
+>  pathspec.c             | 10 +++++++---
+>  pathspec.h             |  5 +++--
+>  4 files changed, 13 insertions(+), 8 deletions(-)
 >
-> diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-> new file mode 100755
-> index 0000000000..9bb5dc2389
-> --- /dev/null
-> +++ b/t/t3705-add-sparse-checkout.sh
-> @@ -0,0 +1,96 @@
-> +#!/bin/sh
-> +
-> +test_description='git add in sparse checked out working trees'
-> +
-> +. ./test-lib.sh
-> +
-> +SPARSE_ENTRY_BLOB=""
-> +
-> +# Optionally take a printf format string to write to the sparse_entry file
-> +setup_sparse_entry () {
-> +       rm -f sparse_entry &&
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 5fec21a792..e15b25a623 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -177,7 +177,7 @@ static char *prune_directory(struct dir_struct *dir, struct pathspec *pathspec,
+>                         *dst++ = entry;
+>         }
+>         dir->nr = dst - dir->entries;
+> -       add_pathspec_matches_against_index(pathspec, &the_index, seen);
+> +       add_pathspec_matches_against_index(pathspec, &the_index, seen, 0);
 
-I think this is unnecessary.
+One thing to consider here is something Stolee has suggested to me
+multiple times -- introducing an enum with self-documenting values.
+For example:
 
-> +       git update-index --force-remove sparse_entry &&
+enum ignore_skip_worktree_values {
+  HEED_SKIP_WORKTREE = 0,
+  IGNORE_SKIP_WORKTREE = 1
+};
 
-It might be worth adding a comment above this line that it is
-necessary when sparse_entry starts out in the SKIP_WORKTREE state,
-otherwise the subsequent git add below will ignore it.
+This would allow all the function callers to pass HEED_SKIP_WORKTREE
+instead of a bare 0, and allows code readers to avoid looking up
+function signatures to find the meaning behind the 0.  It's a minor
+point, though.
 
-> +
-> +       if test $# -eq 1
-> +       then
-> +               printf "$1" >sparse_entry
-> +       else
-> +               >sparse_entry
-> +       fi &&
-> +       git add sparse_entry &&
-> +       git update-index --skip-worktree sparse_entry &&
-> +       SPARSE_ENTRY_BLOB=$(git rev-parse :sparse_entry)
-> +}
-> +
-> +test_sparse_entry_unchanged () {
-> +       echo "100644 $SPARSE_ENTRY_BLOB 0       sparse_entry" >expected &&
-> +       git ls-files --stage sparse_entry >actual &&
-> +       test_cmp expected actual
-> +}
-> +
-> +setup_gitignore () {
-> +       test_when_finished rm -f .gitignore &&
-> +       cat >.gitignore <<-EOF
-> +       *
-> +       !/sparse_entry
-> +       EOF
-> +}
-> +
-> +test_expect_success 'git add does not remove sparse entries' '
-> +       setup_sparse_entry &&
-> +       rm sparse_entry &&
-> +       git add sparse_entry &&
-> +       test_sparse_entry_unchanged
-> +'
-> +
-> +test_expect_success 'git add -A does not remove sparse entries' '
-> +       setup_sparse_entry &&
-> +       rm sparse_entry &&
-> +       setup_gitignore &&
-> +       git add -A &&
-> +       test_sparse_entry_unchanged
-> +'
-> +
-> +test_expect_success 'git add . does not remove sparse entries' '
-> +       setup_sparse_entry &&
-> +       rm sparse_entry &&
-> +       setup_gitignore &&
-> +       git add . &&
-> +       test_sparse_entry_unchanged
-> +'
-> +
-> +for opt in "" -f -u --ignore-removal --dry-run
-> +do
-> +       test_expect_success "git add${opt:+ $opt} does not update sparse entries" '
-> +               setup_sparse_entry &&
-> +               echo modified >sparse_entry &&
-> +               git add $opt sparse_entry &&
-> +               test_sparse_entry_unchanged
-> +       '
-> +done
-> +
-> +test_expect_success 'git add --refresh does not update sparse entries' '
-> +       setup_sparse_entry &&
-> +       git ls-files --debug sparse_entry | grep mtime >before &&
-> +       test-tool chmtime -60 sparse_entry &&
-> +       git add --refresh sparse_entry &&
-> +       git ls-files --debug sparse_entry | grep mtime >after &&
-> +       test_cmp before after
-> +'
-> +
-> +test_expect_failure 'git add --chmod does not update sparse entries' '
-> +       setup_sparse_entry &&
-> +       git add --chmod=+x sparse_entry &&
-> +       test_sparse_entry_unchanged &&
-> +       ! test -x sparse_entry
-> +'
-> +
-> +test_expect_failure 'git add --renormalize does not update sparse entries' '
-> +       test_config core.autocrlf false &&
-> +       setup_sparse_entry "LINEONE\r\nLINETWO\r\n" &&
-> +       echo "sparse_entry text=auto" >.gitattributes &&
-> +       git add --renormalize sparse_entry &&
-> +       test_sparse_entry_unchanged
-> +'
-> +
-> +test_done
-> diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
-> index e5c6a038fb..217207c1ce 100755
-> --- a/t/t7012-skip-worktree-writing.sh
-> +++ b/t/t7012-skip-worktree-writing.sh
-> @@ -60,13 +60,6 @@ setup_absent() {
->         git update-index --skip-worktree 1
+>         return seen;
 >  }
 >
-> -test_absent() {
-> -       echo "100644 $EMPTY_BLOB 0      1" > expected &&
-> -       git ls-files --stage 1 > result &&
-> -       test_cmp expected result &&
-> -       test ! -f 1
-> -}
-> -
->  setup_dirty() {
->         git update-index --force-remove 1 &&
->         echo dirty > 1 &&
-> @@ -100,18 +93,6 @@ test_expect_success 'index setup' '
->         test_cmp expected result
->  '
+> @@ -578,7 +578,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+>                 int i;
 >
-> -test_expect_success 'git-add ignores worktree content' '
-> -       setup_absent &&
-> -       git add 1 &&
-> -       test_absent
-> -'
-> -
-> -test_expect_success 'git-add ignores worktree content' '
-> -       setup_dirty &&
-> -       git add 1 &&
-> -       test_dirty
-> -'
-> -
->  test_expect_success 'git-rm fails if worktree is dirty' '
->         setup_dirty &&
->         test_must_fail git rm 1 &&
+>                 if (!seen)
+> -                       seen = find_pathspecs_matching_against_index(&pathspec, &the_index);
+> +                       seen = find_pathspecs_matching_against_index(&pathspec, &the_index, 0);
+>
+>                 /*
+>                  * file_exists() assumes exact match
+> diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+> index 3c652748d5..235b7fc905 100644
+> --- a/builtin/check-ignore.c
+> +++ b/builtin/check-ignore.c
+> @@ -100,7 +100,7 @@ static int check_ignore(struct dir_struct *dir,
+>          * should not be ignored, in order to be consistent with
+>          * 'git status', 'git add' etc.
+>          */
+> -       seen = find_pathspecs_matching_against_index(&pathspec, &the_index);
+> +       seen = find_pathspecs_matching_against_index(&pathspec, &the_index, 0);
+>         for (i = 0; i < pathspec.nr; i++) {
+>                 full_path = pathspec.items[i].match;
+>                 pattern = NULL;
+> diff --git a/pathspec.c b/pathspec.c
+> index 7a229d8d22..e5e6b7458d 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -21,7 +21,7 @@
+>   */
+>  void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                                         const struct index_state *istate,
+> -                                       char *seen)
+> +                                       char *seen, int ignore_skip_worktree)
+>  {
+>         int num_unmatched = 0, i;
+>
+> @@ -38,6 +38,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                 return;
+>         for (i = 0; i < istate->cache_nr; i++) {
+>                 const struct cache_entry *ce = istate->cache[i];
+> +               if (ignore_skip_worktree && ce_skip_worktree(ce))
+> +                       continue;
+>                 ce_path_match(istate, ce, pathspec, seen);
+>         }
+>  }
+> @@ -51,10 +53,12 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>   * given pathspecs achieves against all items in the index.
+>   */
+>  char *find_pathspecs_matching_against_index(const struct pathspec *pathspec,
+> -                                           const struct index_state *istate)
+> +                                           const struct index_state *istate,
+> +                                           int ignore_skip_worktree)
+>  {
+>         char *seen = xcalloc(pathspec->nr, 1);
+> -       add_pathspec_matches_against_index(pathspec, istate, seen);
+> +       add_pathspec_matches_against_index(pathspec, istate, seen,
+> +                                          ignore_skip_worktree);
+>         return seen;
+>  }
+>
+> diff --git a/pathspec.h b/pathspec.h
+> index 454ce364fa..8202882ecd 100644
+> --- a/pathspec.h
+> +++ b/pathspec.h
+> @@ -151,9 +151,10 @@ static inline int ps_strcmp(const struct pathspec_item *item,
+>
+>  void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+>                                         const struct index_state *istate,
+> -                                       char *seen);
+> +                                       char *seen, int ignore_skip_worktree);
+>  char *find_pathspecs_matching_against_index(const struct pathspec *pathspec,
+> -                                           const struct index_state *istate);
+> +                                           const struct index_state *istate,
+> +                                           int ignore_skip_worktree);
+>  int match_pathspec_attrs(const struct index_state *istate,
+>                          const char *name, int namelen,
+>                          const struct pathspec_item *item);
 > --
 > 2.30.1
 
-The rest looks good.
+Looks good.
