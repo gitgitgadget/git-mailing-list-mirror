@@ -7,87 +7,143 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8A71C433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9DDC433DB
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:57:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EA1F64E6C
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:39:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB72164E7A
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:57:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235826AbhBXUjK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 15:39:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50244 "EHLO
+        id S235830AbhBXU5l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 15:57:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234883AbhBXUjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 15:39:09 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBC7C061788
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:38:28 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id f1so5117667lfu.3
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:38:28 -0800 (PST)
+        with ESMTP id S232290AbhBXU5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 15:57:39 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE16C06174A
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:56:59 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id a17so4711536lfb.1
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 12:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RG2/AbEW4x+0paH2PxIiEjhrJv1/9fpLg6nvxLfx+Gc=;
-        b=jeswGzaSYxqnIK+zWqLFQaBJG17fC9Vbx0BGpqN3loAI0JmzbkryRmQUIh8qnuqXA4
-         mGCKT5dIGhRYfE9YInr3b0bshTawxSBNeqvhvKUbNiGt1DGreUdpFj9bMhfT5Z/9ruv5
-         kEKXrSZcNuMZmPmTu9Ds+2MhYfDji5+acF5gpv/i+QhX10Sbcxo59zAOVZWEiTAOP60D
-         14hqPscBIum82zqEJ16LEkZbogH/wNkCTHOAqWe2Eamr1oPp5xr41uzURaZvvXwZmIzz
-         uVCO1UBMcNmbK21JsFg4jzw9aVXyng87C2UbzreR8YuaddhxdoxCGT1gq8G8q1QhmQm4
-         PDUw==
+         :cc;
+        bh=3W7P35LmzeiACyaMDwhzSSLIsbJYwP4avf5slqLmOQU=;
+        b=HPcUt6v3AVL9zkXmOuibNPyjUsc8WThzFio5JLDrCc+fBychxH4z7M8mGR2kXJN/fG
+         iHkAEdC4gZg+Lcp0S1f9Dj57Xi7bUkLoz8UvvgV6LPqZ6NdKq/yGKOXLVkgWLbvIw++e
+         xi5Ne4UuGtrzztFFEE8G0FYD+WjbZzKjDCY/vutyxYG5D8ybmS4os+mlIExAz2aZMzfv
+         ui6nLv9gGVvbpIUUJL//FjEdSYrX+5rjiCiho8cnCyTCfmi/mY1Jsn6JbepZPFLd2eBb
+         dmhPos7hua61eZq9acLz50UtdkVueeLybS29Z1HrhuXxumZvXNNCy1oj0HnmJlVw+Mu2
+         QZ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RG2/AbEW4x+0paH2PxIiEjhrJv1/9fpLg6nvxLfx+Gc=;
-        b=UsOMw8CfIyStlorolc4fN3ydXfr+TpPLQtctv+xjYe2n2G7k1efwnsK0VrrvfZk83G
-         y+sZOLAphdxH9QSQ/wur2p3+FqxkNpJM3Wi+hrUFX916RH3+5lGwMIENsuGkj/z/Izia
-         Xoebs6wxBXWlb74lm/hVH0RkjAXjaZ1BKL3XXJV0DVhz+jHgtzAPtQYOE//UFfYPJJWm
-         73ll9VQNn8eRh6afoaSmWubaCxkg3D1te6KQWIUc4FstHckyg/QJU8FfznYcw5b64j0N
-         XNw2BVvYHJ9kE36WQwcPJxgKcyy/BxSdXdCX0xIdS/O2kzoKU45EbeUI5RLYmrr4pTIN
-         BQNg==
-X-Gm-Message-State: AOAM530DaZoKNdn88bzgLMQStHHQauMsoqKJ8VIyAdsBBw/Ej8Ryoug9
-        8tHvB4AeOWh+ojPJmzCBp+EopP1JIAfJPUxx918=
-X-Google-Smtp-Source: ABdhPJyKbZW8U3RK05J7juKSVT9gp3o+50BHNoNSD04ZIAHAswL/r2ut0xvNt9sUrgGplHyt5ETdBQxfbEb6fW4M5MI=
-X-Received: by 2002:a19:6a10:: with SMTP id u16mr19019379lfu.221.1614199107402;
- Wed, 24 Feb 2021 12:38:27 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=3W7P35LmzeiACyaMDwhzSSLIsbJYwP4avf5slqLmOQU=;
+        b=OZ7m6DixgGKDX6RFeXrIusIc9SrnHNPagMkBEY8taXVNWJrET2VvFERNYcXV9sA0KH
+         RDHpL68OYqgwyew748+Rg8Q5o83nL/oIFxMSD+zco8/T+X/QZlZbvCd6oiZ/1sBXV2NA
+         RNoBf4150ZSo4v+OvJO/q3Fjptql8sAhdNg2EGQclaOWB8pvG+LojVY/bDHH8vvDZcqn
+         6hjc+bxVxpEOzU3hfGzQ/pHd+BYCZBOfv7MQoZHVoLyvVjMCrxubI3u0BmNiQo5hEatN
+         U6cM2Y0jhlMWj5+6c67bPRffF7kg7kLdKg7G1SKRDi5klTnljqtKphwsKFLeYW9L2/o8
+         8UGQ==
+X-Gm-Message-State: AOAM530srMEdJGGaEoZqj8i6i28bBwNIEjJcvGLBrUZlUE9/UFRKC4nm
+        48kuWF0pJ95FZthdJpyU0Zp6bZJGy7f5A1hfgOI=
+X-Google-Smtp-Source: ABdhPJy50JX2ET1neJEMC/ogZ1KfppT4jOit6fIkf0BBHl+xL/dYOlovJtF/AbfrGhJPDVxVkADhp0BQp087OV0hoCY=
+X-Received: by 2002:a19:6b04:: with SMTP id d4mr20790493lfa.638.1614200217642;
+ Wed, 24 Feb 2021 12:56:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20210223071840.44267-1-alexhenrie24@gmail.com>
- <CAN0heSqmAgt_hg0-kQpTK2LcuYPV9T9=1bowbuZ7Qah1q0EAtA@mail.gmail.com> <xmqqo8g9z1p2.fsf@gitster.g>
-In-Reply-To: <xmqqo8g9z1p2.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Wed, 24 Feb 2021 13:38:15 -0700
-Message-ID: <CAMMLpeT2uocoWQMoNYoVWa2-scSohwbvz-CFN3zupD7jEBEFew@mail.gmail.com>
-Subject: Re: [PATCH v3] rebase: add a config option for --no-fork-point
+References: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
+ <f52df30b-4ab0-fd6f-17f8-70daed81df39@jeffhostetler.com> <xmqqv9ana05b.fsf@gitster.g>
+ <CANQDOdeEd=JjWL4gb5CWHL_HkvJMnFumW74ew4DXJahh4BKvfQ@mail.gmail.com> <xmqqo8gd8tyr.fsf@gitster.g>
+In-Reply-To: <xmqqo8gd8tyr.fsf@gitster.g>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Wed, 24 Feb 2021 12:56:46 -0800
+Message-ID: <CANQDOdfJApBOEm2gPMwtz9T0ETPoDk107mF7LYRGCmjFLi3Jxg@mail.gmail.com>
+Subject: Re: [PATCH] read-cache: make the index write buffer size 128K
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 24, 2021 at 12:49 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Sun, Feb 21, 2021 at 4:51 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
+> Neeraj Singh <nksingh85@gmail.com> writes:
 >
-> > On Tue, 23 Feb 2021 at 08:24, Alex Henrie <alexhenrie24@gmail.com> wrot=
-e:
-> >> +rebase.forkPoint:
-> >> +       If set to false set `--no-fork-point` option by default.
+> >> >>   -#define WRITE_BUFFER_SIZE 8192
+> >> >> +#define WRITE_BUFFER_SIZE (128 * 1024)
+> >> >>   static unsigned char write_buffer[WRITE_BUFFER_SIZE];
+> >> >>   static unsigned long write_buffer_len;
+> >> >
+> >> > [...]
+> >> >
+> >> > Very nice.
+> >>
+> >> I wonder if we gain more by going say 4M buffer size or even larger?
+> >>
+> >> Is this something we can make the system auto-tune itself?  This is
+> >> not about reading but writing, so we already have enough information
+> >> to estimate how much we would need to write out.
+> >>
+> >> Thanks.
+> >>
 > >
-> > This should be a double-colon at end of the line, not just a single
-> > colon, in order to make it a "description list separator". When it's
-> > just ":", it ends up being rendered literally, which isn't horrible, to
-> > be sure, but which doesn't match this item's neighbours.
-> >
-> > Martin
+> > Hi Junio,
+> > At some point the cost of the memcpy into the filesystem cache begins to
+> > dominate the cost of the system call, so increasing the buffer size
+> > has diminishing returns.
 >
-> Thanks for your sharp eyes; will amend locally before merging it to
-> 'next'.
+> Yes, I know that kind of "general principle".
+>
+> If I recall correctly, we used to pass too large a buffer to a
+> single write(2) system call (I do not know if it was for the
+> index---I suspect it was for some other data), and found out that it
+> made response to ^C take too long, and tuned the buffer size down.
+>
+> I was asking where the sweet spot for this codepath would be, and if
+> we can take a measurement to make a better decision than "8k feels
+> too small and 128k turns out to be better than 8k".  It does not
+> tell us if 128k would always do better than 64k or 256k, for
+> example.
+>
+> I suspect that the sweet spot would be dependent on many parameters
+> (not just the operating system, but also relative speed among
+> memory, "disk", and cpu, and also the size of the index) and if we
+> can devise a way to auto-tune it so that we do not have to worry
+> about it.
+>
+> Thanks.
 
-Agreed, thank you!
+I think the main concern on a reasonably-configured machine is the speed
+of memcpy and the cost of the code to get to that memcpy (syscall, file system
+free space allocator, page allocator, mapping from file offset to cache page).
+Disk shouldn't matter, since we write the file with OS buffering and
+buffer flushing
+will happen asynchronously some time after the git command completes.
 
--Alex
+If we think about doing the fastest possible memcpy, I think we want to aim for
+maximizing the use of the CPU cache.  A write buffer that's too big would result
+in most of the data being flushed to DRAM between when git writes it and the
+OS reads it.  L1 caches are typically ~32K and L2 caches are on the
+order of 256K.
+We probably don't want to exceed the size of the L2 cache, and we
+should actually
+leave some room for OS code and data, so 128K is a good number from
+that perspective.
+
+I collected data from an experiment with different buffer sizes on Windows on my
+3.6Ghz Xeon W-2133 machine:
+https://docs.google.com/spreadsheets/d/1Bu6pjp53NPDK6AKQI_cry-hgxEqlicv27dptoXZYnwc/edit?usp=sharing
+
+The timing is pretty much in the noise after we pass 32K.  So I think
+8K is too small, but
+given the flatness of the curve we can feel good about any value above
+32K from a performance
+perspective.  I still think 128K is a decent number that won't likely
+need to be changed for
+some time.
+
+Thanks,
+-Neeraj
