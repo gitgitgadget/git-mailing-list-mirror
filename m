@@ -2,145 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A7AAC433DB
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F09C433E9
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:10:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D0BB64F07
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 19:59:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F57964F2C
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 20:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234883AbhBXT6R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 14:58:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235216AbhBXTyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 14:54:06 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1747C0611BE
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:19 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id b3so3044023wrj.5
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 11:52:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=K/fsd2VG4GOQiR+Nooo9Lnum3PSHeDE72mO1dzh5WAE=;
-        b=mtJ4q0zOegNKcL96OV9E6rBCkxlcflMy3iNDUB3CBkqvEEpgp/pmBeV2ywgQHNpiXO
-         8DUtnFMFmL1BYu7Jau0/0k3Ycn1NwHL5JkD3LrJeZXN09A6RCwYRg40KRbUktICZqxIL
-         MpsIpq6526EW1e6HMw5EPR9CEedvk6wvTDlBFkP1xJD6RzYKa9n5ZQlp2WSkAZxq4Ghz
-         Fb1hvMqXWYshTtFFWzqW9TkJzT6BTPnzGhn5/jxBJBqovGKSQhs3khpKA2d+UFrm6TpH
-         6sZx6nuhDYw1o7p5mrxhGdtwWlMcJNkWU23Kjne2vvhtJDil5zqytC8ufE4ohaTNMkFb
-         B3bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=K/fsd2VG4GOQiR+Nooo9Lnum3PSHeDE72mO1dzh5WAE=;
-        b=V6ji4+E+0KDxMXWTVbtoAB3T6adMdBRTrqr1/AYanE6f+Cod75b1F5yeqG+61k1v84
-         QA6n4PVJUOQ9gwpBChyGnPLCG5viJbrx2XfSM7jAdYayIrbEKKgpvrQBIpamTmwpTa4u
-         XgS+T2Zs0bArZS3GOOU3IgadIjtPQJAsGg3Kz0ykX/C2s9qNJp78yVelshpPpDOvTbG+
-         tjuaRwBduIfIwvLYFHOx/Iwa6tLKfjHEb6fsaMa5UN8M7N4I/Qul9TRhe2FAhaQVNcW0
-         uHg0Y+2bXWF41KqDWTQg5EecBm1depem1T0zVLcx20r0tDnt+nZ52sQk8kP5MI+yZCZu
-         4eAg==
-X-Gm-Message-State: AOAM5324Kew+pX1wFJy2mSXkDSJxdqGwgR5mhOzAPMbnK3Q9dnzFIdHx
-        f4Y5wIynyJdElayXHlT1U00sNRZFVjGKZA==
-X-Google-Smtp-Source: ABdhPJxS/tpkq8wU9XY16GWIr9cZiAHHMOcAMg660O9gSeJYbGZVRlZnxJ3/3ia57cJuUwJbmUDaVw==
-X-Received: by 2002:adf:d239:: with SMTP id k25mr34532472wrh.308.1614196338106;
-        Wed, 24 Feb 2021 11:52:18 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id y2sm4786072wrp.39.2021.02.24.11.52.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 11:52:17 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 30/35] userdiff golang: simplify and correct matching regex
-Date:   Wed, 24 Feb 2021 20:51:24 +0100
-Message-Id: <20210224195129.4004-31-avarab@gmail.com>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
-In-Reply-To: <20210215154427.32693-1-avarab@gmail.com>
-References: <20210215154427.32693-1-avarab@gmail.com>
+        id S235395AbhBXUKA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 15:10:00 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63296 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235287AbhBXUJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 15:09:32 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E7DF6A7AFC;
+        Wed, 24 Feb 2021 15:08:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EFFXKNaOjZREXI1cRdzgkVkG834=; b=g4l8Ny
+        Yiobm/HIA3coN6AiWwdeeJLDXx2OyIuCQZY2UVH8+ZyAlxFStD5JBpK/YZdHEE7H
+        2nrlopnw05AeKIGdAUrwSqR3sp9qJTrn4mFlQckhwG7+qWl7WlQ8JN2KWfpllXGW
+        MM/j5bEXS+6LGP1N7VS3MPvT045jj/kDPJeNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ek2+GPfyACN4V/Oa8pJfJqPIfcvO2rmd
+        Tr3rebxe9xdFqoWtthZ95fSAO92Uc3QyKZJkaqtfxTVOX/yMcJPLyTq5hjenFUSn
+        EJ/aRYOciFjzk3XPFnSLVPYb2qC8YvYRVsxktIQsPzPoamz5i+AdswY5qyp9VYVv
+        i7acruDrg/I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0D16A7AFA;
+        Wed, 24 Feb 2021 15:08:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 732A3A7AF9;
+        Wed, 24 Feb 2021 15:08:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] dir: fix malloc of root untracked_cache_dir
+References: <pull.884.git.1614177117508.gitgitgadget@gmail.com>
+Date:   Wed, 24 Feb 2021 12:08:42 -0800
+In-Reply-To: <pull.884.git.1614177117508.gitgitgadget@gmail.com> (Jeff
+        Hostetler via GitGitGadget's message of "Wed, 24 Feb 2021 14:31:57
+        +0000")
+Message-ID: <xmqqk0qxz0s5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1824EBD8-76DC-11EB-AEF3-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Simplify the regex for the golang driver added in
-1dbf0c0ad6c (userdiff: add built-in pattern for golang, 2018-03-01) to
-remove redundant constructs.
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-There's no point in having a regex like this:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Use FLEX_ALLOC_STR() to allocate the `struct untracked_cache_dir`
+> for the root directory.  Get rid of unsafe code that might fail to
+> initialize the `name` field (if FLEX_ARRAY is not 1).  This will
+> make it clear that we intend to have a structure with an empty
+> string following it.
+>
+> A problem was observed on Windows where the length of the memset() was
+> too short, so the first byte of the name field was not zeroed.  This
+> resulted in the name field having garbage from a previous use of that
+> area of memory.
+>
+> The record for the root directory was then written to the untracked-cache
+> extension in the index.  This garbage would then be visible to future
+> commands when they reloaded the untracked-cache extension.
+>
+> Since the directory record for the root directory had garbage in the
+> `name` field, the `t/helper/test-tool dump-untracked-cache` tool
+> printed this garbage as the path prefix (rather than '/') for each
+> directory in the untracked cache as it recursed.
+>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>     dir: fix malloc of root untracked_cache_dir
 
-    .*(foo)?
+Nicely spotted.
 
-When we can just write:
+The problematic code was introduced in 2015, a year before these
+FLEX_ALLOC_*() helpers were introduced.  The result is of course
+correct and much easier to read, as the necessary "ask for a region
+of calloc'ed memory with an additional byte for terminating NUL
+beyond strlen()" is hidden in the helper.
 
-    .*
+Will queue; thanks.
 
-In the "func" case, since the "(foo?)" match isn't mandatory it won't
-matter for the end result, and in this case we're not using the
-capture pattern. Not that it would matter since it's followed by a
-greedy .*, so we'd only get the empty string.
-
-In the "type" case we would stop at the "{", since it was not preceded
-by a ".*". This was a bug, if we have a comment or something else on
-that line we should include it.
-
-I'm also changing the "func[ \t]*.*" rule to "func[ \t].*" while I'm
-at it. We should always get whitespace after "func", so this narrows
-down our match. Let's do the same in the new "type" rule.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t4018/golang | 2 +-
- userdiff.c     | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/t/t4018/golang b/t/t4018/golang
-index 70bf0d936bb..72a35d66008 100644
---- a/t/t4018/golang
-+++ b/t/t4018/golang
-@@ -46,7 +46,7 @@ type RIGHT struct {
- }
- 
- t4018 description: struct with comment after {
--t4018 header: type some struct {
-+t4018 header: type some struct { // comment
- type some struct { // comment
- 	a Type
- 	b ChangeMe
-diff --git a/userdiff.c b/userdiff.c
-index 55f4f769bd3..698eca5ad35 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -129,9 +129,9 @@ IPATTERN("fountain",
- 	 "[^ \t-]+"),
- PATTERNS("golang",
- 	 /* Functions */
--	 "^[ \t]*(func[ \t]*.*(\\{[ \t]*)?)\n"
-+	 "^[ \t]*(func[ \t].*)\n"
- 	 /* Structs and interfaces */
--	 "^[ \t]*(type[ \t].*(struct|interface)[ \t]*(\\{[ \t]*)?)",
-+	 "^[ \t]*(type[ \t].*(struct|interface)[ \t].*)",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.eE]+i?|0[xX]?[0-9a-fA-F]+i?"
--- 
-2.30.0.284.gd98b1dd5eaa7
-
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-884%2Fjeffhostetler%2Funtracked-cache-corruption-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-884/jeffhostetler/untracked-cache-corruption-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/884
+>
+>  dir.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index d153a63bbd14..fd8aa7c40faa 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2730,11 +2730,8 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>  		return NULL;
+>  	}
+>  
+> -	if (!dir->untracked->root) {
+> -		const int len = sizeof(*dir->untracked->root);
+> -		dir->untracked->root = xmalloc(len);
+> -		memset(dir->untracked->root, 0, len);
+> -	}
+> +	if (!dir->untracked->root)
+> +		FLEX_ALLOC_STR(dir->untracked->root, name, "");
+>  
+>  	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
+>  	root = dir->untracked->root;
+>
+> base-commit: 966e671106b2fd38301e7c344c754fd118d0bb07
