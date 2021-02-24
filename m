@@ -2,70 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82F2FC433E0
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 23:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00365C433E0
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 23:44:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4EE3E64F08
-	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 23:24:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CB0C64F13
+	for <git@archiver.kernel.org>; Wed, 24 Feb 2021 23:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236221AbhBXXXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 18:23:52 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:46614 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236275AbhBXXXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 18:23:48 -0500
-Received: by mail-ed1-f46.google.com with SMTP id v22so4593792edx.13
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 15:23:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=obrowNyOnQZ88cIWVP/a1IWhXQ38TnT88liKxMmIeC4=;
-        b=k5Pbk5hsHJ9ZRpO25mk/8arPSFEwlPFSwghunX9CHt5OYYoeJXGCobLTCOs1hPaEQS
-         j/QuKRBLPahWiy0T9Ldyc9IVwRciWW46Fu+rLa3fYCEuSeIU9auj2kG1gt4yRLLi8Sr7
-         KyWpZM742/V3M9Ht3MejoCaC3dW1M77ZX89jefGyg7/YUYWjM3G5HSil28Po49f/X+j1
-         w1u4P96gCmXIjpnloq9trWPmZ3ZoQTcKzcVDSI+XLikVKBLk/vfZP0W0o85Nsy3HJlN0
-         pt1cADi/l1NzNrnmXbZNfrnOwfSRtFIvfj90U4e7jqDOTTNOlRRixPQmMJZtUjqLJq9g
-         OGpA==
-X-Gm-Message-State: AOAM533LMPXnQrQzLCaixPQ5m9Mlr8VuGbxRHAoIueUYBJxLR6b8HYAu
-        gVSrvUxsR19Y/bCTKAQE/G2C66VuraSHK/1r9h/APg4w
-X-Google-Smtp-Source: ABdhPJxKbxw3J9OHnyjsBcqo+AkX8j29OjHDxhTP4MJ3Kxdl0SMbsB0Yt15T12wP2adp2NcOuAcjLo27xHVl1zBgx2U=
-X-Received: by 2002:aa7:cb0d:: with SMTP id s13mr185733edt.221.1614208987364;
- Wed, 24 Feb 2021 15:23:07 -0800 (PST)
+        id S232938AbhBXXoZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 18:44:25 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62583 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229708AbhBXXoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 18:44:23 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ED19977E5;
+        Wed, 24 Feb 2021 18:43:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+yzP6+5rPdktiBmtJE4dIbTiv7M=; b=sol1vN
+        Rn3iBNIqNT7pcL5s4iBzMGQtzzGPyXvLwK1iB3fwPO4OLgwSTn3dixwTVUQ5RYHC
+        0eR4FF6sRoFI9iMh03pDd8eKOfarAPdIBPwADAeyllaGw2pyjJrc91DDvP1/92rl
+        fJYhvyqbQaVSc9bHNXyopRTPZlT6BM4p3AoHM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tgRW9irUqwB82Z13mDVFbtzUwfgI/lZ+
+        SmG9CQXo368Vy9LJ4fzqPJ3u6BlwGaMaUq/TRXOzEkBAFp4i4C05HkB8tZ0iN19j
+        cZvbnZJQlBeQv8VA1ydfnIbw9cbZk4OqP4+VMN61oF/CiuXc1U91CeU113Fgvf65
+        iTNdjgKXnxU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D852977E2;
+        Wed, 24 Feb 2021 18:43:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 78A6F977E1;
+        Wed, 24 Feb 2021 18:43:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
+Subject: Re: [PATCH v4 8/8] builtin/repack.c: add '--geometric' option
+References: <cover.1611098616.git.me@ttaylorr.com>
+        <cover.1614047097.git.me@ttaylorr.com>
+        <51f57d5da23244ebde27ad6c14cbf4b63da3317d.1614047097.git.me@ttaylorr.com>
+        <xmqqv9ahxddp.fsf@gitster.g>
+Date:   Wed, 24 Feb 2021 15:43:34 -0800
+In-Reply-To: <xmqqv9ahxddp.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        24 Feb 2021 15:19:30 -0800")
+Message-ID: <xmqqo8g9xc9l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <AM0PR02MB4081D3C17C53DB5CD9021C5E9C9F9@AM0PR02MB4081.eurprd02.prod.outlook.com>
- <YDYteUnxQZuPIAML@camp.crustytoothpaste.net> <CABPp-BEKJrRkhb2W0SWpjCawG4ZVs8oVuhQ5SJ+7zT331ybhSA@mail.gmail.com>
-In-Reply-To: <CABPp-BEKJrRkhb2W0SWpjCawG4ZVs8oVuhQ5SJ+7zT331ybhSA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 24 Feb 2021 18:22:56 -0500
-Message-ID: <CAPig+cQO6q_caD_KGc4ahSRKDBst+Y30haTbReK3GSwsUfMt6A@mail.gmail.com>
-Subject: Re: Ort-merge: What does "ort" mean?
-To:     Elijah Newren <newren@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Kerry, Richard" <richard.kerry@atos.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C644766-76FA-11EB-A128-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 24, 2021 at 2:23 PM Elijah Newren <newren@gmail.com> wrote:
-> It actually has meaning beyond being a joke, though:
->
->  * Note: git's parser allows the space between '-s' and its argument to be
->  * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
->  * "cale", "peedy", or "ins" instead of "ort"?)
->  */
->
-> However, I learned my lesson -- Eric is way better at coming up with
-> names than me[1] so if I need more names in the future, I'll ping him.
-> :-)
+Junio C Hamano <gitster@pobox.com> writes:
 
-"Extended LInear Jump AHead" is still my favorite because it sounds
-cool. However, I wouldn't sneeze at "UNiversally Systematic Heuristic
-Iterative Newtonian Elliptic", which is probably a more apt
-description of what you implemented, but I digress.
+> Let me try to follow aloud to see if I got this right.
+>
+> If we start from 1+1+1+2+4+32+... (similarly to the example given to
+> explain 2 above, but with more larger packs---but the assumption
+> here is that everything larger than 32 is already in good
+> progression), depending on how many loose objects we have, the
+> result of packing 1+1+1+2+4+loose might not necessarily be 9 but 100
+> (collecting too many loose objects), and the set of packs would be
+> 32+... (from before the "repack -g") plus a 100-object pack, not
+> 9+32+... as the above explanation for 2 suggested.  Starting from
+> that state, re-running "repack -g" again would then have to repack
+> the packs existed before the first repack (i.e. 32+...) into one.
+> In other words, the second "git repack -g" in back-to-back "git
+> repack -g && git repack -g" may necessarily be a no-op.
+
+"... may not necessarily be a no-op" is what I should have typed here.
+
+> Is that what you meant by non-idempotent?
+
+And I think it makes sense for the repack to be non-idempotent.
+Once we have packs in good progression, it is the only way to make
+progress by keep rolling loose objects up into the smallest pack
+until it grows larger than the geometry factor allows it to be
+relative to the next smallest pack.
+
