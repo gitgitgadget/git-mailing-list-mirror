@@ -2,126 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEF3BC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34A9EC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:48:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D54664ECF
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:42:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4CB164ECF
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234044AbhBYCmR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 21:42:17 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57196 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229722AbhBYCmQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Feb 2021 21:42:16 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S236773AbhBYCsJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 21:48:09 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56139 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234487AbhBYCsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 21:48:07 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 10B7611A865;
+        Wed, 24 Feb 2021 21:47:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=jTu+i+fF80J3
+        rMbTsqblPn3P8ug=; b=TJgDNPjnyeCuevx9MkBT5cKHygLs6DPMU5PpkZv81x7f
+        ECF0rChE1IOEnJg33kuVJuNKW3xv/+fMWBDZ91MHsK20SXMG8Y07PB1aS0qQY+Hy
+        +DWFo2VivTmAot8sljGElg42panup2xyMfECDWxTOOxzhyIKM7bZdAPlNu82fp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UkKB2l
+        ElJE39BQ3bI/jIwmCIxAeJP98kxhYTuVzNZ38DnXPM1N2I4BKe8wklnLCZ+H8B+S
+        kNXzWEG+uoN2ltKOtw+bvMjdoglfZD46ru+1SSzikmHD4/8cItUUXUatcFWGbVmf
+        EAzn4NcmUS6alIkGNYX16ibCeTCSlvDMzcaBU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DB17C11A864;
+        Wed, 24 Feb 2021 21:47:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3E18A60DF4;
-        Thu, 25 Feb 2021 02:41:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1614220865;
-        bh=d4aymB1rOQ6JiBMwn/HkHUpqnuakD2S6gVdUey97TS4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=adiyJkTiV2LXUkc4RNoaaX674ttV511vFX3YXtZD20EdcM6FLfbqN1nO1lZJS7o0h
-         UzeUsrNxpWB04w/zHNmjT2Tves+27TXIU27jJCoarhLFH2H/fANWU4QDHfPyBk5H0a
-         WflLoX1ZfrFlX2R08hW8xT0qUQTA1bmwuGRPLnEJohcZyAubfTTQXF66x/c7IluYVo
-         JJooCln5QU2WBms7oi007oTeRU+bMtGsVA2fWqQfBSYqIQfXYL+02RFUyVXJ42UOfS
-         DvTEtYKG3ofzMYeFvZTENyXJaTaJUrYXs/xtNHpi9R1ON5XtHamivpy9VzhwTQMnA/
-         kSxBsHyFSTXlkxk8MZXPjaJ+KJ8xN8nroHUohaISj38zzlqYZTLxwRVxipTg5GEriD
-         i9d+RVhjIuKpYnbj/Y3c+QbIoTjieqKLDtyFzXQn+vUC6+4PBN55wVgODGV5WpbGhp
-         /dfGT/mO2kJFYHQJWz8mJl+wuO7qkkGca1OnoCU30XHZ/efB6E2
-Date:   Thu, 25 Feb 2021 02:40:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Getting an actuallt useful merge base?
-Message-ID: <YDcOOwBOR4rO3sGr@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        git@vger.kernel.org
-References: <20210224175834.GT6564@kitsune.suse.cz>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0823811A863;
+        Wed, 24 Feb 2021 21:47:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v3 11/35] userdiff tests: match full hunk headers
+References: <20210215154427.32693-1-avarab@gmail.com>
+        <20210224195129.4004-12-avarab@gmail.com>
+Date:   Wed, 24 Feb 2021 18:47:18 -0800
+In-Reply-To: <20210224195129.4004-12-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 24 Feb 2021 20:51:05 +0100")
+Message-ID: <xmqqeeh4yibt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uRQCTl9f/KvXewMg"
-Content-Disposition: inline
-In-Reply-To: <20210224175834.GT6564@kitsune.suse.cz>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C786BE3A-7713-11EB-A468-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
---uRQCTl9f/KvXewMg
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index 9aec9f8e6de..15dcbe735ca 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -70,16 +70,20 @@ test_expect_success 'setup hunk header tests' '
+>  		echo "$i-* diff=3D$i"
+>  	done > .gitattributes &&
+> =20
+> -	# add all test files to the index
+> -	(
+> -		cd "$TEST_DIRECTORY"/t4018 &&
+> -		git --git-dir=3D"$TRASH_DIRECTORY/.git" add .
+> -	) &&
+> -
+> -	# place modified files in the worktree
+> -	for i in $(git ls-files)
+> +	cp -R "$TEST_DIRECTORY"/t4018 . &&
 
-On 2021-02-24 at 17:58:34, Michal Such=C3=A1nek wrote:
-> Hello,
->=20
-> I find the results of git merge-base A B quite useless.
->=20
-> Suppose you have a repository with file sets
->=20
-> S and T
->=20
-> where S are sources which are developed in mainline and number of stable
-> versions, and feature branches, and T are build tools (such as autoconf
-> tests or whatever) that are largely independent of the source version.
->=20
-> Because of the independence of T from S T are developed in a separate
-> branch t which is merged into all branches developing S as needed.
->=20
-> Fixes to S may affect more than one version, and depending on the
-> situation it might be useful to apply fixes to S to mutiple
-> stable/feature branche at once. For that one would need a merge base of
-> the branches in question.
->=20
-> However, merge-base almost always give a commit on branch t which is the
-> merge base of files in set T and does not contain files in set S at all.
-> In other words it is merge base only for files from set T and not set S.
-> Can I get merge base that is merge base for all files that have common
-> history between two branches?
+Is this because otherwise we'll mix leftover cruft in the source
+directory?  I guess this is OK as it is just once per t4018 test
+run.
 
-The merge base is determined by the history.  In your case, I imagine
-you have a history like this:
+> +	git init t4018 &&
+> +	git -C t4018 add . &&
+> +
+> +	for i in $(git -C t4018 ls-files)
+>  	do
+> -		sed -e "s/ChangeMe/IWasChanged/" <"$TEST_DIRECTORY/t4018/$i" >"$i" |=
+| return 1
+> +		grep -v "^t4018" "t4018/$i" >"t4018/$i.content" &&
+> +		sed -n -e "s/^t4018 header: //p" <"t4018/$i" >"t4018/$i.header" &&
 
- A -- B -- C -- D -- E -- F -- G (S)
-        _/        _/        _/
- H -- I -- J -- K -- L -- M -- N (T)
+For now this would do, but I am assuming that the "t4018" prefix
+(which by the way is a way to make it harder to renumber these
+tests) was invented so that we can add more magic than just
+"header:" in the futhre (either in this series or later).  I am not
+sure if we want to run one invocation of "sed" for each new magic we
+invent---perhaps the plan is that we'd keep the framework simple for
+now (while we have only one "magic") and then revamp it when we gain
+the second one, in which case I am perfectly fine with it.
 
-Here, the merge base of N and G is M, and the merge base of F and M is
-K.  Those are the most recent common ancestors, which are typically
-chosen as the merge base.
+> +		cp "t4018/$i.content" "$i" &&
+> +
+> +		# add test file to the index
+> +		git add "$i" &&
+> +		# place modified file in the worktree
+> +		sed -e "s/ChangeMe/IWasChanged/" <"t4018/$i.content" >"$i" || return=
+ 1
 
-In your case, you probably want to cherry-pick a commit, or maybe rebase
-a small set of commits onto another set.  That would probably work
-better than trying to merge.  It's possible that there's something about
-this case that I'm missing where it wouldn't work properly, but it's
-definitely the approach I would try.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+OK.
 
---uRQCTl9f/KvXewMg
-Content-Type: application/pgp-signature; name="signature.asc"
+>  	done
+>  '
+> =20
+> @@ -87,8 +91,9 @@ test_expect_success 'setup hunk header tests' '
+>  for i in $(git ls-files)
+>  do
+>  	test_expect_success "hunk header: $i" "
+> -		git diff -U1 $i >actual &&
+> -		grep '@@ .* @@.*RIGHT' actual
+> +		git diff -U1 $i >diff &&
+> +		sed -n -e 's/^.*@@$//p' -e 's/^.*@@ //p' <diff >ctx &&
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
+The original was already loose but this makes it even looser.  Can
+we tighten the pattern to strip the line number information from the
+hunk header to something more like like this, please?
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDcOOwAKCRB8DEliiIei
-gZk8AQDyP3t0s+Om+54FuuUHQJ9YgSvD5wnQWGX9wg1wj/8d3AEA+VPmt4/61d01
-V+VphAniT6UhPrvOKRku5A435U0DkQo=
-=UYIF
------END PGP SIGNATURE-----
+	/^@@[-+0-9, ]*@@/
 
---uRQCTl9f/KvXewMg--
+Thanks.
