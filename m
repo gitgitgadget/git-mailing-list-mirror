@@ -2,251 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D457EC433DB
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 16:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7164BC433DB
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 17:58:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8021864EFA
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 16:18:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24C6364F2B
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 17:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233132AbhBYQSS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 11:18:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48242 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233136AbhBYQQk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Feb 2021 11:16:40 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4073C061786
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 08:15:55 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id f12so2011516wrx.8
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 08:15:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=DN49Mv/tFlf7TTPAkvmpN1B56wgBJjIu0MVoDHa0YYI=;
-        b=DL/RysohMvdTJVyP9bjpNvFl+8JeVemyXazt+PFRI61S6zo4NhEul6eLh3N7rJfWoW
-         XhWN16bdjSH+0NpBigCad/w2IArehaHw19f/UuJGUMftj7ZgYGZZX1+bqxPw/dW/v/+4
-         018PPK9R5kVWxiTshfD6WMPsp6O3TIfImKhsOWf4OoowmU2hf7XnefAzJULbObv01wUa
-         9kf8X6s3mcuQ8zrEFa8ysfxvh2Pq/e/nzk0AhUiRlGXALlYjZCV3t3HHGLbPsCCZkjZa
-         CXv/xoEb/AnFndRyBYkHUjGkgsVFTPUS4HiNb50UBQ5cWAxRDwuhC49XLoKYpCNrWO/u
-         X2gw==
+        id S231950AbhBYR6S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 12:58:18 -0500
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:46642 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233451AbhBYR5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 12:57:41 -0500
+Received: by mail-ej1-f50.google.com with SMTP id r17so10295553ejy.13
+        for <git@vger.kernel.org>; Thu, 25 Feb 2021 09:57:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=DN49Mv/tFlf7TTPAkvmpN1B56wgBJjIu0MVoDHa0YYI=;
-        b=OxRMxN63m2680g+oHfdp9OolRyGfd3atxrh5Y7YuqnaEfywRZ02CGKun6Nyjy+JU+E
-         l/OGMAgCC7x4B0e8GxlykKBcYlIcXXR/5sWa7ROzWK3wTF0cZz8++JdU6iOSAfF+nZZs
-         mJdlTC+9Q9B7hoMFYFG8XZOO9IpuzId+8hxuTonuB64cgJMbcijFJ8kl8q99ptySU+55
-         oDcmiODx3SghXKk4WH29Oj+oD+xLHGhkA+XGqnATJ24xrvI/bQr2P4p/hWeTcpCbYXP1
-         BIVn8t+HuD2NfasRtMFWrR3hPSrEIGjc8+1UVZQlYz2bj3NFeaRRdEuWwdLl1nUY7Pd3
-         g9ew==
-X-Gm-Message-State: AOAM533OWo4Wrvqqzk0MZHjeCyK16I2ABvS84PPG+abBeKnrXcUIyvUZ
-        4OrAdiVEF7cwXM/J6N/LOPa2j3+TtVc=
-X-Google-Smtp-Source: ABdhPJzl2d03RiEZspSWOcBBKVSVbykoV+kgIG87hJbMGZkc0iSKgLec5L7BiOMf9syXhKcsGgrZHg==
-X-Received: by 2002:a5d:4749:: with SMTP id o9mr4294795wrs.225.1614269754540;
-        Thu, 25 Feb 2021 08:15:54 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s23sm7829525wmc.35.2021.02.25.08.15.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 08:15:54 -0800 (PST)
-Message-Id: <pull.885.git.1614269753194.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Feb 2021 16:15:52 +0000
-Subject: [PATCH] format-patch: allow a non-integral version numbers
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BRstrEK86XjIgGFJvT0VTFNesMxugNe2REdGn2Q/kpI=;
+        b=l48odXjVCtgS3eC0GQ1LrzyLeRantN0COBsnb0/e9vkTxLYnCJSBmQaqIXAQlCXY+Y
+         idzLJ8ezHkjU3X+QaaG1LMN1z5Jvcqxfc5EzHERcWOREikrvnnGVyV352HrxHNqtrjH7
+         auIQqkWB0gF7JffcE+wwwAL4pgpZFfdRRXTdXq+cAmamrP8rFngMJlcCDwWsO34fBUif
+         tI713M9NMD7f0V6stvbP5ewZVkal0VfBY/RDbGVDYlmLnajT1L2ymGvB0/GHmhT+qwj6
+         nMyEX3zPLu79HXZRBz/iyxkaa9pNFYxEuUskdAEjNX7RoyJq1z8lY3S2BWBmowH4gWYn
+         M4EQ==
+X-Gm-Message-State: AOAM5316tddfTR1K5oH/Ikvf37YiTABDz8yMg7QEv4u62SAv6py+ha+f
+        OAbzsie6mRL6I3qeiUiH1WJ9T6JkdoCYgQbKfoDTAfhHW9g=
+X-Google-Smtp-Source: ABdhPJzz+B1QhxWXjtkavoQRBgK+lIOvaE0boLtWIYQghAFqBdGreovlXGlueJEq0GVnLJlZEExYbbI+bc/wxwRjQwM=
+X-Received: by 2002:a17:906:3105:: with SMTP id 5mr3828217ejx.168.1614275819454;
+ Thu, 25 Feb 2021 09:56:59 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+References: <pull.885.git.1614269753194.gitgitgadget@gmail.com>
+In-Reply-To: <pull.885.git.1614269753194.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 25 Feb 2021 12:56:48 -0500
+Message-ID: <CAPig+cQcyJJnuOq9wtJjgEi7OgO39wBf+hHkVxaQ4z-RehvgNA@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: allow a non-integral version numbers
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
         ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On Thu, Feb 25, 2021 at 11:19 AM ZheNing Hu via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Usually we can only use `format-patch -v<n>` to generate integral
+> version numbers patches, but if we can provide `format-patch` with
+> non-integer versions numbers of patches, this may help us to send patches
+> such as "v1.1" versions sometimes.
 
-Usually we can only use `format-patch -v<n>` to generate integral
-version numbers patches, but if we can provide `format-patch` with
-non-integer versions numbers of patches, this may help us to send patches
-such as "v1.1" versions sometimes.
+On the Git project itself, fractional or non-numeric re-roll "numbers"
+are not necessarily encouraged[1], so this feature may not be
+particularly useful here, though perhaps some other project might
+benefit from it(?). Usually, you would want to justify why the change
+is desirable. Denton did give a bit of justification in his
+proposal[2] for this feature, so perhaps update this commit message by
+copying some of what he wrote as justification.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    [GSOC] format-patch: allow a non-integral version numbers
-    
-     * format-patch previously only integer version number -v<n>, now trying
-       to provide a non-integer version.
-    
-    this want to fix #882 Thanks.
+[1]: I think I've only seen Denton send fractional re-rolls; other
+people sometimes send a periodic "fixup!" patch, but both approaches
+place extra burden on the project maintainer than merely re-rolling
+the entire series with a new integer re-roll count.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-885%2Fadlternative%2Fformat_patch_non_intergral-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-885/adlternative/format_patch_non_intergral-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/885
+[2]: https://github.com/gitgitgadget/git/issues/882
 
- Documentation/git-format-patch.txt |  6 +++---
- builtin/log.c                      | 20 ++++++++++----------
- log-tree.c                         |  4 ++--
- revision.h                         |  2 +-
- t/t4014-format-patch.sh            |  8 ++++----
- 5 files changed, 20 insertions(+), 20 deletions(-)
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> @@ -215,12 +215,12 @@ populated with placeholder text.
+>  -v <n>::
+>  --reroll-count=<n>::
+> -       Mark the series as the <n>-th iteration of the topic. The
+> +       Mark the series as the specified version of the topic. The
+>         output filenames have `v<n>` prepended to them, and the
+>         subject prefix ("PATCH" by default, but configurable via the
+>         `--subject-prefix` option) has ` v<n>` appended to it.  E.g.
+> -       `--reroll-count=4` may produce `v4-0001-add-makefile.patch`
+> -       file that has "Subject: [PATCH v4 1/20] Add makefile" in it.
+> +       `--reroll-count 4.4` may produce `v4.4-0001-add-makefile.patch`
+> +       file that has "Subject: [PATCH v4.4 1/20] Add makefile" in it.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 3e49bf221087..0cc39dbf573c 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -215,12 +215,12 @@ populated with placeholder text.
- 
- -v <n>::
- --reroll-count=<n>::
--	Mark the series as the <n>-th iteration of the topic. The
-+	Mark the series as the specified version of the topic. The
- 	output filenames have `v<n>` prepended to them, and the
- 	subject prefix ("PATCH" by default, but configurable via the
- 	`--subject-prefix` option) has ` v<n>` appended to it.  E.g.
--	`--reroll-count=4` may produce `v4-0001-add-makefile.patch`
--	file that has "Subject: [PATCH v4 1/20] Add makefile" in it.
-+	`--reroll-count 4.4` may produce `v4.4-0001-add-makefile.patch`
-+	file that has "Subject: [PATCH v4.4 1/20] Add makefile" in it.
- 
- --to=<email>::
- 	Add a `To:` header to the email headers. This is in addition
-diff --git a/builtin/log.c b/builtin/log.c
-index f67b67d80ed1..72af140b812e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1662,13 +1662,13 @@ static void print_bases(struct base_tree_info *bases, FILE *file)
- 	oidclr(&bases->base_commit);
- }
- 
--static const char *diff_title(struct strbuf *sb, int reroll_count,
-+static const char *diff_title(struct strbuf *sb, const char *reroll_count,
- 		       const char *generic, const char *rerolled)
- {
--	if (reroll_count <= 0)
-+	if (!reroll_count)
- 		strbuf_addstr(sb, generic);
- 	else /* RFC may be v0, so allow -v1 to diff against v0 */
--		strbuf_addf(sb, rerolled, reroll_count - 1);
-+		strbuf_addf(sb, rerolled, "last version");
- 	return sb->buf;
- }
- 
-@@ -1717,7 +1717,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf buf = STRBUF_INIT;
- 	int use_patch_format = 0;
- 	int quiet = 0;
--	int reroll_count = -1;
-+	const char *reroll_count = NULL;
- 	char *cover_from_description_arg = NULL;
- 	char *branch_name = NULL;
- 	char *base_commit = NULL;
-@@ -1751,8 +1751,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("use <sfx> instead of '.patch'")),
- 		OPT_INTEGER(0, "start-number", &start_number,
- 			    N_("start numbering patches at <n> instead of 1")),
--		OPT_INTEGER('v', "reroll-count", &reroll_count,
--			    N_("mark the series as Nth re-roll")),
-+		OPT_STRING('v', "reroll-count", &reroll_count, N_("reroll-count"),
-+			    N_("mark the series as specified version re-roll")),
- 		OPT_INTEGER(0, "filename-max-length", &fmt_patch_name_max,
- 			    N_("max length of output filename")),
- 		OPT_CALLBACK_F(0, "rfc", &rev, NULL,
-@@ -1862,9 +1862,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (cover_from_description_arg)
- 		cover_from_description_mode = parse_cover_from_description(cover_from_description_arg);
- 
--	if (0 < reroll_count) {
-+	if (reroll_count) {
- 		struct strbuf sprefix = STRBUF_INIT;
--		strbuf_addf(&sprefix, "%s v%d",
-+		strbuf_addf(&sprefix, "%s v%s",
- 			    rev.subject_prefix, reroll_count);
- 		rev.reroll_count = reroll_count;
- 		rev.subject_prefix = strbuf_detach(&sprefix, NULL);
-@@ -2080,7 +2080,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		rev.idiff_oid2 = get_commit_tree_oid(list[0]);
- 		rev.idiff_title = diff_title(&idiff_title, reroll_count,
- 					     _("Interdiff:"),
--					     _("Interdiff against v%d:"));
-+					     _("Interdiff against %s:"));
- 	}
- 
- 	if (creation_factor < 0)
-@@ -2099,7 +2099,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		rev.creation_factor = creation_factor;
- 		rev.rdiff_title = diff_title(&rdiff_title, reroll_count,
- 					     _("Range-diff:"),
--					     _("Range-diff against v%d:"));
-+					     _("Range-diff against %s:"));
- 	}
- 
- 	if (!signature) {
-diff --git a/log-tree.c b/log-tree.c
-index 4531cebfab38..5f2e08ebcaab 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -369,8 +369,8 @@ void fmt_output_subject(struct strbuf *filename,
- 	int start_len = filename->len;
- 	int max_len = start_len + info->patch_name_max - (strlen(suffix) + 1);
- 
--	if (0 < info->reroll_count)
--		strbuf_addf(filename, "v%d-", info->reroll_count);
-+	if (info->reroll_count)
-+		strbuf_addf(filename, "v%s-", info->reroll_count);
- 	strbuf_addf(filename, "%04d-%s", nr, subject);
- 
- 	if (max_len < filename->len)
-diff --git a/revision.h b/revision.h
-index e6be3c845e66..097d08354c61 100644
---- a/revision.h
-+++ b/revision.h
-@@ -235,7 +235,7 @@ struct rev_info {
- 	const char	*mime_boundary;
- 	const char	*patch_suffix;
- 	int		numbered_files;
--	int		reroll_count;
-+	const char	*reroll_count;
- 	char		*message_id;
- 	struct ident_split from_ident;
- 	struct string_list *ref_message_ids;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 66630c8413d5..b911e08f0810 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -372,10 +372,10 @@ test_expect_success 'filename limit applies only to basename' '
- 
- test_expect_success 'reroll count' '
- 	rm -fr patches &&
--	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
--	! grep -v "^patches/v4-000[0-3]-" list &&
-+	git format-patch -o patches --cover-letter --reroll-count 4.4 main..side >list &&
-+	! grep -v "^patches/v4.4-000[0-3]-" list &&
- 	sed -n -e "/^Subject: /p" $(cat list) >subjects &&
--	! grep -v "^Subject: \[PATCH v4 [0-3]/3\] " subjects
-+	! grep -v "^Subject: \[PATCH v4.4 [0-3]/3\] " subjects
- '
- 
- test_expect_success 'reroll count (-v)' '
-@@ -2252,7 +2252,7 @@ test_expect_success 'interdiff: cover-letter' '
- 
- test_expect_success 'interdiff: reroll-count' '
- 	git format-patch --cover-letter --interdiff=boop~2 -v2 -1 boop &&
--	test_i18ngrep "^Interdiff ..* v1:$" v2-0000-cover-letter.patch
-+	test_i18ngrep "^Interdiff ..* last version:$" v2-0000-cover-letter.patch
- '
- 
- test_expect_success 'interdiff: solo-patch' '
+I'm not sure we want to encourage the use of fractional re-roll counts
+by using it in an example like this. It would probably be better to
+leave the example as-is. If you really want people to know that
+fractional re-roll counts are supported, perhaps add separate sentence
+saying that they are.
 
-base-commit: 966e671106b2fd38301e7c344c754fd118d0bb07
--- 
-gitgitgadget
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -1662,13 +1662,13 @@ static void print_bases(struct base_tree_info *bases, FILE *file)
+> -static const char *diff_title(struct strbuf *sb, int reroll_count,
+> +static const char *diff_title(struct strbuf *sb, const char *reroll_count,
+>                        const char *generic, const char *rerolled)
+>  {
+> -       if (reroll_count <= 0)
+> +       if (!reroll_count)
+>                 strbuf_addstr(sb, generic);
+>         else /* RFC may be v0, so allow -v1 to diff against v0 */
+> -               strbuf_addf(sb, rerolled, reroll_count - 1);
+> +               strbuf_addf(sb, rerolled, "last version");
+>         return sb->buf;
+>  }
+
+There are a couple problems here (at least). First, the string "last
+version" should be localizable, `_("last version")`. Second, in
+Denton's proposal[2], he suggested using the string "last version"
+_only_ if the re-roll count is not an integer. What you have here
+applies "last version" unconditionally when -v is used so that the
+outcome is _always_ "Range-diff since last version". If that's what
+you intend to do, there's no reason to do any sort of interpolation
+using the template "Range-diff since %". What Denton had in mind was
+this (using pseudo-code):
+
+    if re-roll count not specified:
+        message = "Range-diff"
+    else if re-roll count is integer:
+        message = "Range-diff since v%d", re-roll
+    else:
+        message = "Range-diff since v%s", re-roll
+
+However, there isn't a good reason to favor "Range-diff since last
+version" over the simpler generic message "Range-diff". So, the above
+should be collapsed to:
+
+    if re-roll count is specified and integer:
+        message = "Range-diff since v%d", re-roll
+    else:
+        message = "Range-diff"
+
+> @@ -2080,7 +2080,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> -                                            _("Interdiff against v%d:"));
+> +                                            _("Interdiff against %s:"));
+> @@ -2099,7 +2099,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> -                                            _("Range-diff against v%d:"));
+> +                                            _("Range-diff against %s:"));
+
+If you follow my recommendation above using the simplified
+conditional, then you don't need to drop the "v" since you won't be
+saying "last version".
