@@ -2,396 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,LONGWORDS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C81AFC433DB
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 04:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 698DDC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 04:48:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 879C764ECE
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 04:39:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 279D564EC8
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 04:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232031AbhBYEjb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 23:39:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231284AbhBYEj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 23:39:26 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB577C061574
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 20:38:45 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id f12so116217wrx.8
-        for <git@vger.kernel.org>; Wed, 24 Feb 2021 20:38:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=eUMNisr5A558PWnEAXf0aOGNUADI+kd2G7A8I/oza3Q=;
-        b=WHNhbGRgyiovzwk3ai2N+JcyXIpRE6a/2ZMm/VU8pJrjCZsahs817dMPgUJxp+9mFo
-         06G/PsvCLmuHT+9XjUmxUEapSZHzemetAmddYTbM0hal9x72ZlKGwctyn2QkDbCrqcut
-         wXN32QRa+TSndD6ViZfgbBE8PiyjBHtDZ4EBOARwXlAzDQ7otCXOEjtk9rSWnkSBYf9a
-         CRcYuQbL5667p4W+6he798Xle5nIlQGipsG6p04+t93k6ZNgE/nfqIwLG0/gkV4WTfMc
-         LC7WT47QvAwMyy9a/RbnOaQKZEiIdjCAloBw9Y1zctKQ3PPCermyUe3sJQT2tkbVayTS
-         YkMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eUMNisr5A558PWnEAXf0aOGNUADI+kd2G7A8I/oza3Q=;
-        b=nlvHL8IOwdLDyZqypPXYyRqT+jYpS7Lj8wUwrbNiWBLbM80z1W3hCrwmV8RE7FHA2h
-         GorT51ZNSRjA82esgKO0C2fhxXW+5e8ZNb2lFUjo++Y/xxpQNxSk4BGk3IptiR+84Laz
-         8JuaizhJbL3S2cB5bdI42pF7dtCVRsgc6C1U7AQJ9MTv1rNs/Z1W4yFJ+9uP02RseZql
-         RTbYBeCHcdNM9Jr0xj/CaUh18cXG71FnGd0HuVSoGuXvg2VgXoMxQNL5H7Wt5rTOtSnt
-         k/aDbnjipYQkK2hClzjPKEuaNRLe2850FbEjckC0HuDhWs5CUedLmvEf9DkT669cLSRf
-         3Kmg==
-X-Gm-Message-State: AOAM5331r71UwXYARHyR45vMLUSbRHy0D7ZSVyl8DQ4S3TBZMMrfuONT
-        q3bAIZKGUvdLEc7pGl4nmcUCwuyER80=
-X-Google-Smtp-Source: ABdhPJyG7olhhc0Xx7PzHxadFXO+C67FSIxSzBquDJ/ZIYb2QZMWLkGqL8em3XDjWmvgOrFRS9IrYQ==
-X-Received: by 2002:a5d:58c9:: with SMTP id o9mr1265032wrf.181.1614227924574;
-        Wed, 24 Feb 2021 20:38:44 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 7sm6603735wmi.27.2021.02.24.20.38.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Feb 2021 20:38:44 -0800 (PST)
-Message-Id: <pull.866.v5.git.1614227923637.gitgitgadget@gmail.com>
-In-Reply-To: <pull.866.v4.git.1614164317030.gitgitgadget@gmail.com>
-References: <pull.866.v4.git.1614164317030.gitgitgadget@gmail.com>
-From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 25 Feb 2021 04:38:43 +0000
-Subject: [PATCH v5] gitk: add right-click context menu for tags
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@samba.org>,
-        Anders Kaseorg <andersk@MIT.EDU>,
-        Junio C Hamano <gitster@pobox.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        id S234175AbhBYEr5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 23:47:57 -0500
+Received: from mimir.eigenstate.org ([206.124.132.107]:43590 "EHLO
+        mimir.eigenstate.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235096AbhBYEro (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 23:47:44 -0500
+X-Greylist: delayed 404 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Feb 2021 23:47:44 EST
+Received: from oneeye (pool-108-41-92-79.nycmny.fios.verizon.net [108.41.92.79])
+        by mimir.eigenstate.org (OpenSMTPD) with ESMTPSA id 77f4bc9d (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO);
+        Wed, 24 Feb 2021 20:40:09 -0800 (PST)
+Date:   Wed, 24 Feb 2021 20:40:07 -0800
+From:   Ori Bernstein <ori@eigenstate.org>
+To:     Stef Bon <stefbon@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: FUSE fs for git.
+Message-Id: <20210224204007.4937ee80121aa1ed553a2d91@eigenstate.org>
+In-Reply-To: <CANXojcx0TOP9SSr1NgXCddQ3PWze-wBLZA5SRO3YhczqO68u0Q@mail.gmail.com>
+References: <CANXojcx0TOP9SSr1NgXCddQ3PWze-wBLZA5SRO3YhczqO68u0Q@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; amd64-portbld-freebsd12.1)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+On Sun, 21 Feb 2021 11:12:19 +0100, Stef Bon <stefbon@gmail.com> wrote:
+<snip>
+> Now I'm looking it's possible and usefull to add a git fuse fs. The
+> thing I ask is:
+> 
+> - is there an api I can use (lowlevel and/or highlevel or whatever is
+> available)?
 
-Adds a context menu for tag icons with commands similar to what
-exits for branches: "Rename this tag", "Remove this tag",
-"Copy tag name".
+Not provided as part of git, as far as I'm aware,
+but there are other options.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
-    gitk: add right-click context menu for tags
-    
-    This patch want to fix: https://github.com/gitgitgadget/git/issues/855
-    
-    We can provide for right-clicking the tag icon in gitk Rename this tag",
-    "Remove this tag", "Copy tag name" function.
-    
-    For convenience, only the tags on the branch with the number of tags <=3
-    are processed temporarily.
-    
-    Thanks!
+You can probably look at what cgit does to abuse
+git internals as an API:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-866%2Fadlternative%2Fgitk_tag_new_opt-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-866/adlternative/gitk_tag_new_opt-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/866
+	https://git.zx2c4.com/cgit/tree/cgit.h
 
-Range-diff vs v4:
+It may also make sense to lift code from game
+of trees:
 
- 1:  c8b0dfa6628e ! 1:  e7cdb01c1b0f gitk: tag add right click options
-     @@ Metadata
-      Author: ZheNing Hu <adlternative@gmail.com>
-      
-       ## Commit message ##
-     -    gitk: tag add right click options
-     +    gitk: add right-click context menu for tags
-      
-     -    In gitk, we can right-click on the icon of the branch,
-     -    and a directory will pop up to provide us with functions
-     -    such as "Checkout this branch", "Rename this branch"...,
-     -    but we found that the right-click tag icon does not have
-     -    such a function , So I learned how to write the branch icon,
-     -    and added the following functions "Rename this tag",
-     -    "Remove this tag", "Copy tag name" to right-click the tag icon.
-     -
-     -    This function temporarily only supports those labels independently
-     -    displayed tag(s), and cannot work on label aggregated display
-     -    "tag..." or "n tags...".
-     +    Adds a context menu for tag icons with commands similar to what
-     +    exits for branches: "Rename this tag", "Remove this tag",
-     +    "Copy tag name".
-      
-          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-      
-     @@ gitk-git/gitk: proc branchdia {top valvar uivar} {
-      +    } else {
-      +        notbusy renametag
-      +        removetag $id $prevname
-     -+        removedtag $id $tag
-     ++        removedtag $id $prevname
-      +        set tagids($name) $id
-      +        lappend idtags($id) $name
-      +        addedtag $id
+	http://gameoftrees.org/
 
+There's also libgit2:
 
- gitk-git/gitk | 164 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 161 insertions(+), 3 deletions(-)
+	https://libgit2.org/
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 23d9dd1fe0d0..a91491ef8088 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -1874,6 +1874,20 @@ proc removehead {id name} {
-     unset headids($name)
- }
- 
-+proc removetag {id name} {
-+    global tagids idtags
-+
-+    if {$idtags($id) eq $name} {
-+        unset idtags($id)
-+    } else {
-+        set i [lsearch -exact $idtags($id) $name]
-+        if {$i >= 0} {
-+            set idtags($id) [lreplace $idtags($id) $i $i]
-+        }
-+    }
-+    unset tagids($name)
-+}
-+
- proc ttk_toplevel {w args} {
-     global use_ttk
-     eval [linsert $args 0 ::toplevel $w]
-@@ -2077,6 +2091,7 @@ proc makewindow {} {
-     global filesepbgcolor filesepfgcolor
-     global mergecolors foundbgcolor currentsearchhitbgcolor
-     global headctxmenu progresscanv progressitem progresscoords statusw
-+    global tagctxmenu
-     global fprogitem fprogcoord lastprogupdate progupdatepending
-     global rprogitem rprogcoord rownumsel numcommits
-     global have_tk85 use_ttk NS
-@@ -2679,12 +2694,20 @@ proc makewindow {} {
-     set headctxmenu .headctxmenu
-     makemenu $headctxmenu {
-         {mc "Check out this branch" command cobranch}
--        {mc "Rename this branch" command mvbranch}
-+        {mc "Rename this branch..." command mvbranch}
-         {mc "Remove this branch" command rmbranch}
-         {mc "Copy branch name" command {clipboard clear; clipboard append $headmenuhead}}
-     }
-     $headctxmenu configure -tearoff 0
- 
-+    set tagctxmenu .tagctxmenu
-+    makemenu $tagctxmenu {
-+        {mc "Rename this tag..." command mvtag}
-+        {mc "Remove this tag..." command rmtag}
-+        {mc "Copy tag name" command {clipboard clear; clipboard append $tagmenutag}}
-+    }
-+    $tagctxmenu configure -tearoff 0
-+
-     global flist_menu
-     set flist_menu .flistctxmenu
-     makemenu $flist_menu {
-@@ -6581,6 +6604,7 @@ proc drawtags {id x xt y1} {
- 
-     set marks {}
-     set ntags 0
-+    set ntags_copy 0
-     set nheads 0
-     set singletag 0
-     set maxtags 3
-@@ -6592,8 +6616,9 @@ proc drawtags {id x xt y1} {
-     if {[info exists idtags($id)]} {
-         set marks $idtags($id)
-         set ntags [llength $marks]
--        if {$ntags > $maxtags ||
--            [totalwidth $marks mainfont $extra] > $maxwidth} {
-+        set ntags_copy $ntags
-+        set out_of_bounds [expr {[totalwidth $marks mainfont $extra] > $maxwidth}]
-+        if {$ntags > $maxtags || $out_of_bounds} {
-             # show just a single "n tags..." tag
-             set singletag 1
-             if {$ntags == 1} {
-@@ -6678,6 +6703,9 @@ proc drawtags {id x xt y1} {
-                    -font $font -tags [list tag.$id text]]
-         if {$ntags >= 0} {
-             $canv bind $t <1> $tagclick
-+            if {$ntags_copy <= $maxtags && !$out_of_bounds} {
-+              $canv bind $t $ctxbut [list tagmenu %X %Y $id $tag_quoted]
-+            }
-         } elseif {$nheads >= 0} {
-             $canv bind $t $ctxbut [list headmenu %X %Y $id $tag_quoted]
-         }
-@@ -9531,6 +9559,57 @@ proc mkbranch {} {
-     branchdia $top val ui
- }
- 
-+proc mvtag {} {
-+    global NS
-+    global tagmenuid tagmenutag
-+
-+    set top .tagdialog
-+
-+    set val(name) $tagmenutag
-+    set val(id) $tagmenuid
-+    set val(command) [list mvtaggo $top $tagmenutag]
-+
-+    set ui(title) [mc "Rename tag %s" $tagmenutag]
-+    set ui(accept) [mc "Rename"]
-+
-+    tagdia $top val ui
-+}
-+
-+proc tagdia {top valvar uivar} {
-+    global NS commitinfo
-+    upvar $valvar val $uivar ui
-+
-+    catch {destroy $top}
-+    ttk_toplevel $top
-+    make_transient $top .
-+    ${NS}::label $top.title -text $ui(title)
-+    grid $top.title - -pady 10
-+    ${NS}::label $top.id -text [mc "ID:"]
-+    ${NS}::entry $top.sha1 -width 40
-+    $top.sha1 insert 0 $val(id)
-+    $top.sha1 conf -state readonly
-+    grid $top.id $top.sha1 -sticky w
-+    ${NS}::entry $top.head -width 60
-+    $top.head insert 0 [lindex $commitinfo($val(id)) 0]
-+    $top.head conf -state readonly
-+    grid x $top.head -sticky ew
-+    grid columnconfigure $top 1 -weight 1
-+    ${NS}::label $top.nlab -text [mc "Name:"]
-+    ${NS}::entry $top.name -width 40
-+    $top.name insert 0 $val(name)
-+    grid $top.nlab $top.name -sticky w
-+    ${NS}::frame $top.buts
-+    ${NS}::button $top.buts.go -text $ui(accept) -command $val(command)
-+    ${NS}::button $top.buts.can -text [mc "Cancel"] -command "catch {destroy $top}"
-+    bind $top <Key-Return> $val(command)
-+    bind $top <Key-Escape> "catch {destroy $top}"
-+    grid $top.buts.go $top.buts.can
-+    grid columnconfigure $top.buts 0 -weight 1 -uniform a
-+    grid columnconfigure $top.buts 1 -weight 1 -uniform a
-+    grid $top.buts - -pady 10 -sticky ew
-+    focus $top.name
-+}
-+
- proc mvbranch {} {
-     global NS
-     global headmenuid headmenuhead
-@@ -9582,6 +9661,44 @@ proc branchdia {top valvar uivar} {
-     focus $top.name
- }
- 
-+proc mvtaggo {top prevname} {
-+    global tagids idtags idheads mainhead mainheadid
-+
-+    set name [$top.name get]
-+    set id [$top.sha1 get]
-+    if {$name eq $prevname} {
-+          catch {destroy $top}
-+          return
-+    }
-+    if {$name eq {}} {
-+      error_popup [mc "Please specify a new name for the tag"] $top
-+      return
-+    }
-+    catch {destroy $top}
-+    nowbusy renametag
-+    update
-+    if {[catch {
-+        # NOTE: for an annotated tag, the new tag points to the old tag object
-+        # where the old primary tag name is still recorded inside. Acceptable.
-+        eval exec "git tag $name $prevname"
-+        eval exec "git tag -d $prevname"
-+        } err]} {
-+        notbusy renametag
-+        error_popup $err
-+    } else {
-+        notbusy renametag
-+        removetag $id $prevname
-+        removedtag $id $prevname
-+        set tagids($name) $id
-+        lappend idtags($id) $name
-+        addedtag $id
-+        redrawtags $id
-+        dispneartags 0
-+        run refill_reflist
-+    }
-+
-+}
-+
- proc mkbrgo {top} {
-     global headids idheads
- 
-@@ -9915,6 +10032,17 @@ proc headmenu {x y id head} {
-     tk_popup $headctxmenu $x $y
- }
- 
-+# context menu for a tag
-+proc tagmenu {x y id tag} {
-+    global tagmenuid tagmenutag tagctxmenu mainhead
-+
-+    stopfinding
-+    set tagmenuid $id
-+    set tagmenutag $tag
-+
-+    tk_popup $tagctxmenu $x $y
-+}
-+
- proc cobranch {} {
-     global headmenuid headmenuhead headids
-     global showlocalchanges
-@@ -10019,6 +10147,28 @@ proc rmbranch {} {
-     run refill_reflist
- }
- 
-+proc rmtag {} {
-+    global tagmenuid tagmenutag
-+    global idtags
-+
-+    set tag $tagmenutag
-+    set id $tagmenuid
-+    if {![confirm_popup [mc "Really delete tag %s?" $tag]]} return
-+    nowbusy rmtag
-+    update
-+    if {[catch {exec git tag -d $tag} err]} {
-+        notbusy rmtag
-+        error_popup $err
-+        return
-+    }
-+    removetag $id $tag
-+    removedtag $id $tag
-+    redrawtags $id
-+    notbusy rmtag
-+    dispneartags 0
-+    run refill_reflist
-+}
-+
- # Display a list of tags and heads
- proc showrefs {} {
-     global showrefstop bgcolor fgcolor selectbgcolor NS
-@@ -11228,6 +11378,14 @@ proc addedtag {id} {
-     unset -nocomplain cached_atags
- }
- 
-+proc removedtag {id tag} {
-+    global cached_dtags cached_atags cached_tagcontent
-+
-+    unset -nocomplain cached_tagcontent
-+    unset -nocomplain cached_dtags
-+    unset -nocomplain cached_atags
-+}
-+
- proc addedhead {hid head} {
-     global arcnos arcout cached_dheads
- 
+> - is it usefull, in other words is there a serious benefit of a git
+> filesystem: does it add something?
 
-base-commit: e6362826a0409539642a5738db61827e5978e2e4
+That seems like a question you'd have to ask yourself.
+What would you do with it?
+
+For me: I've got a 9p based git file system as part of
+my implementation of git[1].  It's convenient for scripts
+on top of git, avoiding scratch files or pipeline wrangling.
+But on Unix, git already has much of that implemented.
+
+I also tend to open files from old commits or other branches
+to peek at how some code evolved.
+
+[1] http://shithub.us/ori/git9/HEAD/info.html
+
 -- 
-gitgitgadget
+    Ori Bernstein
