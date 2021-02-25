@@ -2,63 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E5DC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DF3C433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:18:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A06E064E90
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:17:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 676AE64ECF
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234561AbhBYDRc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 22:17:32 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63967 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234022AbhBYDRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 22:17:30 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AD10AAD20;
-        Wed, 24 Feb 2021 22:16:47 -0500 (EST)
+        id S234022AbhBYDSg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 22:18:36 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55793 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232723AbhBYDSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 22:18:34 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A558511ABBF;
+        Wed, 24 Feb 2021 22:17:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9kyzNvTUnm/g
-        FdaQ8v386ng0sFo=; b=ohJXrEpFDusWFykYF7pG3wj18BhioqAWAV0PgAAM0Zks
-        7vhI/1tZHl5GQ3ktb7g/DPpisjV5lfE2MmaLT/hJmuIVXg8K7/QAwDwdqEUjiLwL
-        43+aTQcFFcvA8V/7pmmUCwnOqPxN3bRmqqyPg+5sDrdPYoK3JAVo1DwsjkWz9Yc=
+        :content-type:content-transfer-encoding; s=sasl; bh=ZEL7VgFLayw9
+        6ydWwqlT57Q5mIs=; b=gIOWwIhi8KCLFTqfAXOPCQXn7duHTi5komnZq+RCxZCl
+        2G/R0uWaWkShNaCETw3WVNtgLtJSQ2ip8EemSKVHfebSYj4ypAfJrTHjroAF3zYm
+        1YAw66AURpaxPmHlqh06jSVK4H1PEw6TsjLSByemeiM1YHvu2fkUr8HvqzuXz6Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=erTx7g
-        6Zh2gamjAC9mfG79Xz9xYmE3HwZNOa3J3YAfHq+g3ghASBdg9JgMkMJ34i5tqGDO
-        MozFpUojfPrYT88TDFeE3+fhs7Y+4rN2OTK9dEtAiMIpQSIPtNyw2FBpXhLB3ISv
-        U+ZeVsF0Mf9kXBPCJY3K2PvPRadwyoOSo/hSU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11543AAD1F;
-        Wed, 24 Feb 2021 22:16:47 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kEX0+X
+        D0lEPJm895t968UPzoyo8J5jgQlKQIBGZvAIh0cBsQgLpqPPywCMfUA3bqL1mwO1
+        qGxffjINeXz7kBGJ9qmhWDBjxKyH/ZEFFliGDHkvw0Q0ndvIXTAi8wOcQ6bptnk7
+        jf8v+PLcA/tYabrM9LxHpJ2yNNf7DTJCMEXJE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E42611ABBE;
+        Wed, 24 Feb 2021 22:17:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 897C3AAD1E;
-        Wed, 24 Feb 2021 22:16:46 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA42511ABBD;
+        Wed, 24 Feb 2021 22:17:50 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 1/2] remote: add camel-cased *.tagOpt key, like clone
+Subject: Re: [PATCH 2/2] remote: write camel-cased *.pushRemote on rename
 References: <20210225012117.17331-1-avarab@gmail.com>
-Date:   Wed, 24 Feb 2021 19:16:45 -0800
-In-Reply-To: <20210225012117.17331-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+        <20210225012117.17331-2-avarab@gmail.com>
+Date:   Wed, 24 Feb 2021 19:17:49 -0800
+In-Reply-To: <20210225012117.17331-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
  =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 25 Feb 2021 02:21:16 +0100")
-Message-ID: <xmqqwnuwx2ea.fsf@gitster.g>
+        Bjarmason"'s message of "Thu, 25 Feb 2021 02:21:17 +0100")
+Message-ID: <xmqqsg5kx2ci.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E47547BA-7717-11EB-B058-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0AD70B1E-7718-11EB-BB47-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,56 +67,64 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> It's easy enough to add a test for this, so let's do that. We can't
-> use "git config -l" there, because it'll normalize the keys to their
-> lower-cased form.
+> When a remote is renamed don't change the canonical "*.pushRemote"
+> form to "*.pushremote". Fixes and tests for a minor bug in
+> 923d4a5ca4f (remote rename/remove: handle branch.<name>.pushRemote
+> config values, 2020-01-27). See the preceding commit for why this does
+> & doesn't matter.
+>
+> While we're at it let's also test that we handle the "*.pushDefault"
+> key correctly. The code to handle that was added in
+> b3fd6cbf294 (remote rename/remove: gently handle remote.pushDefault
+> config, 2020-02-01) and does the right thing, but nothing tested that
+> we wrote out the canonical camel-cased form.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  builtin/remote.c  | 2 +-
+>  t/t5505-remote.sh | 2 ++
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index f286ae97538..717b662d455 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -746,7 +746,7 @@ static int mv(int argc, const char **argv)
+>  		}
+>  		if (info->push_remote_name && !strcmp(info->push_remote_name, rename=
+.old_name)) {
+>  			strbuf_reset(&buf);
+> -			strbuf_addf(&buf, "branch.%s.pushremote", item->string);
+> +			strbuf_addf(&buf, "branch.%s.pushRemote", item->string);
+>  			git_config_set(buf.buf, rename.new_name);
+>  		}
+>  	}
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 2a7b5cd00a0..34fc3fa421f 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -757,6 +757,7 @@ test_expect_success 'rename a remote' '
+>  		cd four &&
+>  		git config branch.main.pushRemote origin &&
+>  		git remote rename origin upstream &&
+> +		grep "pushRemote" .git/config &&
+>  		test -z "$(git for-each-ref refs/remotes/origin)" &&
+>  		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" =3D "refs/remo=
+tes/upstream/main" &&
+>  		test "$(git rev-parse upstream/main)" =3D "$(git rev-parse main)" &&
+> @@ -773,6 +774,7 @@ test_expect_success 'rename a remote renames repo r=
+emote.pushDefault' '
+>  		cd four.1 &&
+>  		git config remote.pushDefault origin &&
+>  		git remote rename origin upstream &&
+> +		grep pushDefault .git/config &&
+>  		test "$(git config --local remote.pushDefault)" =3D "upstream"
+>  	)
+>  '
 
-I wondered if we want "git config -l --preserve-case" or something
-like that, but an extra grep for "tagOpt" would be sufficient in a
-simple test like these that are unlikely to have unrelated tagOpt
-defined in the file.  More importantly, I am starting to doubt if
-this should even be tested.
+Again, good find, but I am not sure if we want the test to be so
+strict.  Besides, quoting one and not quoting the other in the same
+patch looks the test is also being inconsistent ;-).
 
-If there were existing "section.varname" variable definition and we
-ask
-
-	git_config_set("section.varName", "newvalue");
-
-we may end up with "[section] varname =3D newvalue", and that is
-perfectly OK, I would think, because the first and the last
-component of the configuration variable names are defined to be case
-insensitive, and here may be "[Section] varname =3D oldvalue" in the
-configuration file before we try to set it, and the implementation
-is free to replace "oldvalue" with "newvalue", instead of first
-removing "[Section] varname =3D oldvalue" and then adding a new
-"[section] varName =3D newvalue" (after all, there may be variables
-other than "varname" in the section, and the existing "[Section]"
-header may need to be kept for the remaining variables while we futz
-with the varname or varName).
-
-Which means that while we do want to spell the names in our source
-code correctly (i.e. "tagOpt", not "tagopt") when we tell which
-variable we want to get modified to the git_config_set() function,
-we should not care how exactly git_config_set() chooses to spell the
-variable in the resulting configuration file, no?
-
-So, ...
-
-> diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
-> index 6a6af7449ca..3126cfd7e9d 100755
-> --- a/t/t5612-clone-refspec.sh
-> +++ b/t/t5612-clone-refspec.sh
-> @@ -97,6 +97,7 @@ test_expect_success 'by default no tags will be kept =
-updated' '
->  test_expect_success 'clone with --no-tags' '
->  	(
->  		cd dir_all_no_tags &&
-> +		grep tagOpt .git/config &&
->  		git fetch &&
->  		git for-each-ref refs/tags >../actual
-
-...as long as "git config remote.origin.tagopt" yields what we
-expect, we should be OK, I would think.  Insisting that the variable
-name is kept by git_config_set() API may be expecting too much.
-
->  	) &&
+Thanks.
