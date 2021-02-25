@@ -2,158 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFBCDC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B82EC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:07:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 780F964EBA
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:51:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2384864EBA
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235131AbhBYFvC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 00:51:02 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:56831 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231274AbhBYFvB (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Feb 2021 00:51:01 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 84DC75C00C2;
-        Thu, 25 Feb 2021 00:50:15 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 25 Feb 2021 00:50:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:mime-version:content-type; s=fm3;
-         bh=+84GoLOLOYFQd3fGvgG/IxZA0VWdWUO7BjFdrQjlpAQ=; b=j57VxdPMGnZY
-        MLwIgLX2PPojmd+9ElrKc93OZWftWewjbPoJojYGr7fxfaWMPxMR6lBL1ESU+XPE
-        6dPEQhtwBp2gTOviU0QeqOUWUIYpKIR1RBr3npcWt3QvNDfBtThtzx0AAkMlV+W+
-        OIDRqr/Xpz8yt+wVoWtr+I5JjiOAp5o+PnlVixGm7r061t3TZjMOOcTDlsTXo0bh
-        xIfafI/NJ80Zu9t5lZL+znwsPRYHenR4fUMnC/G+0plHcfMeDLfI75P1KAnPuYPQ
-        AZcuO/Qmj1H0rsssAI/XsUBfUn7SBmaFcP5Q8t3SeXk5OE1HSmPs0u4A5J0UgsuG
-        62e+nroblw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:message-id
-        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm2; bh=+84GoLOLOYFQd3fGvgG/IxZA0VWdW
-        UO7BjFdrQjlpAQ=; b=VW2b/BkUeSKcHKiDsSbFW0+m0L9Xa+Wg0KiGNrfSP4r8H
-        hAV3MrF4wCiX5FYaTVEBYCIigSp1CUrx408COs0KPBpvZ0cbxi9Xw0TeuyW2Ow4B
-        a2ZCi61pSJwXzYHPE9oFgo0Twmd8P4cX5MDXUksMQR92NaOyYPHpdyjMVFof4bxB
-        0O1zVNSImfgGCyrMaRFa6yWbTN5yZdTlW3yh4xLC+UojVEOWXdfXW3nvmJIgrJj1
-        azLqaPdKmbnjm7MfNMVCm6hLVckMUCI6IjxSQVsJQJ7NaU+mF2YjnxwaDJZmi46E
-        fK8PkrkhMiAuBmyXHbv+ay51e/t4w/y4DKXHJFLdg==
-X-ME-Sender: <xms:lzo3YMn2s7PQkQIlGMrX-eAUVdwJSTNB7uZXlEQ9QMClB7IZIlQNBA>
-    <xme:lzo3YL3Fmkrl26wgHHGqClF2upktxefFaRQrVXSKQL48dauMCNW9hTWquurLciEfi
-    grfp6TTVLDU-zRwKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrkeekgdekjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepje
-    eifedvueelfffgjeduffdvgefhiefgjefgvddvfeduvefffeevfffhgfekieffnecukfhp
-    peejjedrudekfedrvdefrdelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:lzo3YKpXKvlk_PvtOu9iBBQPa1IXP5VL13XLIuDifCniqZDQ3wLYKQ>
-    <xmx:lzo3YIl7ZaP20QIWfCtHHasyTxTgT57tcptam89D-zK4wB2hL-XQ_Q>
-    <xmx:lzo3YK1zwqtyOWshQcvQQCoqXWz-lWfbyXcQ0AtwxLWoFRubM7JlXg>
-    <xmx:lzo3YP8O8yTT6salNSa3SkZq9H0Ey4RuPJ46VUfHZCdNfSqWSgGglw>
-Received: from vm-mail.pks.im (x4db71709.dyn.telefonica.de [77.183.23.9])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 7EC6B240057;
-        Thu, 25 Feb 2021 00:50:14 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a153fba2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 25 Feb 2021 05:50:13 +0000 (UTC)
-Date:   Thu, 25 Feb 2021 06:50:12 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yaron Wittenstein <yaron.wittenstein@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] githooks.txt: Clarify documentation on reference-transaction
- hook
-Message-ID: <c30d41de55b8991a09e1d550e853f582b5394dee.1614232040.git.ps@pks.im>
+        id S235577AbhBYGGO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 01:06:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58020 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235513AbhBYGEA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 01:04:00 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 811BCC061793
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 22:01:48 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id q20so2895487pfu.8
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 22:01:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0+6Ud/XiTDS6Hmd6DPovjwUCQOHrZgYMZZXUMw8HPsQ=;
+        b=vIzc92/os2gzwSKfh7DxsmKFaO+xNr/EcB/22aw3ts/x+uj73tFFqj7bayv2AfSWuz
+         1QGLskUgWE+PYJyQFBL3MMTWuuON+cpSfSr7NSnXKs5kcqWgEWAv82iN8egCr6plt3a7
+         dFtK/FOq1Q92cxC0ED3OL7ivU0RVZLMojCBwQEJb8tI8orRr0c59HbcKR8UVoosE0OWD
+         up/STZvk3k0wmvJsJZaZOvpTmN0OaAHozA78V2Y5ZU3V93pNHwUGmWmVfIlEZqFRzMqk
+         92xeSEhlkua8qAcUsRJpzTTkZawWQiAPUE3TF4yQtthzpIJzvRBG9/e+pWRFNfUiLCCf
+         XHQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0+6Ud/XiTDS6Hmd6DPovjwUCQOHrZgYMZZXUMw8HPsQ=;
+        b=euIpfQ52BmiQkreoG0sKyfSdzqOiZkYXp3xb2LxddsD/Q3C+YX/g8EuCJXBDsgvOdh
+         0W2d1wzaUviZsKZh+vwKCYk7BM0njH5iCTLaKTZJAuCX7eCZietElCN5TeN7HB2/0yBJ
+         YG84+KO5KSD4ta9WMz4czu9menxYHEX+DQshzn4u9JdHAJK0WS24atNiSFk8xsa7PnKA
+         5wCoX29InHCnHFbfI8dFNUdgea5psxjYK7bctKgCa/Vhi5tvEkvZw1R9HbP4W5IgSNXz
+         EOv2TeAelpRfB0uZKidsD5im4fimCsziZs8zGzCQ9bWE3xrY9qJVDhfCI0uO9fvadnd1
+         3sxg==
+X-Gm-Message-State: AOAM533+u8SDlq4J2W2KAkl3QX4QyN80Eg1RskWLWrIv/lC5lEIRfMrA
+        ylKjZGrRZcXUoG+2fVddfX/jgOH4nKI8pMvJbCg=
+X-Google-Smtp-Source: ABdhPJzYtRhhHsNfNNkYNbq//UdBLSksvZBHRdHHh5Xmc/m0ifBhdnDXb/mFNB+tjtPr+yEuqhyY+wwkhYNZm6+uvWQ=
+X-Received: by 2002:a62:7c15:0:b029:1ed:9e29:5998 with SMTP id
+ x21-20020a627c150000b02901ed9e295998mr1738870pfc.22.1614232908015; Wed, 24
+ Feb 2021 22:01:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0Vsysje//cUo7yg0"
-Content-Disposition: inline
+References: <CAGgn8PdU1GE_CZdGUpJWKzygd0O+Yn2BnAFGmPfKAxFpoVoqUA@mail.gmail.com>
+ <YDROhhrM5qJti1ir@coredump.intra.peff.net> <YDVo0kGYODP0JjqT@coredump.intra.peff.net>
+ <CAGgn8PcPtLNtZTmMqKKTmH3KOezkr-jY7aTEDA-0dvYWuzid9A@mail.gmail.com>
+ <YDa/EupbrNa62r+D@coredump.intra.peff.net> <YDc3dinQ37FY8fhD@ncase>
+In-Reply-To: <YDc3dinQ37FY8fhD@ncase>
+From:   Yaron Wittenstein <yaron.wittenstein@gmail.com>
+Date:   Thu, 25 Feb 2021 08:01:11 +0200
+Message-ID: <CAGgn8PfdGBuB29Gxba6OmhSagjqwH2DNUv9XyJnXUhcKpJZBsA@mail.gmail.com>
+Subject: Re: [QUESTION] Tracking HEAD changes?
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for the clarification!
 
---0Vsysje//cUo7yg0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Is there any plan to support such a case in the future?
 
-The reference-transaction hook doesn't clearly document its scope and
-what values it receives as input. Document it to make it less surprising
-and clearly delimit its (current) scope.
+Also, I've observed that the "post-index-change" hook is being
+triggered before calling the "reference-transaction" hook (with the
+"prepared" state).
+It seems not intuitive to me since the index and working dirs are
+being updated before approving the transaction.
+(the HEAD still points to an "old" reference while the
+"post-index-change" hook is executing).
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+Thank you,
+   Yaron
 
-I've been postponing doing this simple doc update for far too long, but
-here it finally is. It simply clarifies its current workings and
-limitations without changing anything. This is not supposed to be a "We
-don't want it to ever cover symrefs", but rather to avoid confusion.
-
-Patrick
-
- Documentation/githooks.txt | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 1f3b57d04d..b01de04702 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -473,7 +473,8 @@ reference-transaction
-=20
- This hook is invoked by any Git command that performs reference
- updates. It executes whenever a reference transaction is prepared,
--committed or aborted and may thus get called multiple times.
-+committed or aborted and may thus get called multiple times. The hook
-+does not cover symbolic references.
-=20
- The hook takes exactly one argument, which is the current state the
- given reference transaction is in:
-@@ -492,6 +493,13 @@ receives on standard input a line of the format:
-=20
-   <old-value> SP <new-value> SP <ref-name> LF
-=20
-+where `<old-value>` is the old object name passed into the reference
-+transaction, `<new-value>` is the new object name to be stored in the
-+ref and `<ref-name>` is the full name of the ref. When force updating
-+the reference regardless of its current value or when the reference is
-+to be created anew, `<old-value>` is 40 `0`. To distinguish these cases,
-+you can inspect the current value of `<ref-name>` via `git rev-parse`.
-+
- The exit status of the hook is ignored for any state except for the
- "prepared" state. In the "prepared" state, a non-zero exit status will
- cause the transaction to be aborted. The hook will not be called with
---=20
-2.30.1
-
-
---0Vsysje//cUo7yg0
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA3OpMACgkQVbJhu7ck
-PpR7IQ/9E/ORs0GLiUiY5gT1EYi4nJ7/fStIzUM0yJZL2oLDMx7GHjPCSeAUhaZZ
-S/8QuS7Tw4DBQiVVBkhutYuX/IkVnBV6j3+9DEpmOOKVPQP9jNiqy/hUtIYQaxPf
-ETEViEnC1RTDab3PAt+lnSu9pG0FuRMv1EblwM2z7rlYsYe1KafYLIlinDzm2VSi
-TvUBvYIxKSBh1iDOem9VaFcrl2rlehYnQXVnefAD5F1lwVbZlv4T3kLBW1MlNwn+
-SLUuP41fAuqaz7ohyoaQ3WEk9EhQve1Ye5y1TecFvhLSWA2gphCALWlKVqWlHdoZ
-Tl8QKaYhmn46Q1Mc8OM4zQLWp8WhE8YEHezui+7ge0hNYrr+XNzxFi4msBPYfHSJ
-gAnZF2GobPbAxyccleLDoYFB5C1RMTlHbJPcagqyooo35/Re+RhDQa8XvAW3v3LU
-BF3hpfGjgbs+8i11RSPOQZmR4Kk858ei1pJVt/HKb7ZPkuAsFrm4kl857TuRMCNT
-SANrqTqFHjYUPrAYfPTwAbtpTxbuphxU2mS2Bwmyc7gklf446l9CMx0idl7Ug2M8
-1+F+JfguBB9jW98x+TGnImbbbE3sSnPZtgqOjtLz5ink3jYHMvb44OXzzsW8AOHS
-+zlqPesmSUc/Z9hJQv1JdlC4Ss2kiqd4P4Dz+t7Ppq0amY6WtmU=
-=UqDG
------END PGP SIGNATURE-----
-
---0Vsysje//cUo7yg0--
+On Thu, Feb 25, 2021 at 7:37 AM Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Wed, Feb 24, 2021 at 04:03:14PM -0500, Jeff King wrote:
+> > On Wed, Feb 24, 2021 at 10:21:55PM +0200, Yaron Wittenstein wrote:
+> >
+> > > That indeed seems to do the trick.
+> > > I've done a little experiment and saw that when doing git reset the
+> > > hook gets called.
+> > >
+> > > However, when switching branches the hook doesn't execute :(
+> > >
+> > > I don't understand if it's intentional, since when I've moved to a new
+> > > branch HEAD pointed to another commit id.
+> > > The only workaround I see here is using the post-checkout hook in addition.
+> >
+> > Hmm, I would have thought that the branch switch would trigger the hooks
+> > because they're updating HEAD. I wonder if that is a bug (or lack of
+> > feature :) ) in the transaction hooks, or something Patrick did
+> > intentionally.
+> >
+> > -Peff
+>
+> It was done semi-intentionally, or at least with the knowledge that
+> symrefs aren't covered. This is mostly because they're not covered by
+> the reference transaction mechanism itself.
+>
+> But this again reminds me that I still have to update the documentation
+> of the hook to at least make it more explicit what's currently covered
+> and what's not.
+>
+> Patrick
