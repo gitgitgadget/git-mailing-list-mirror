@@ -6,84 +6,106 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDFE4C433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7BEC433DB
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:05:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A698864ED3
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:01:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5296064F17
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232350AbhBYUBw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 15:01:52 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53597 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232081AbhBYUB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Feb 2021 15:01:27 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A3BF311BDE3;
-        Thu, 25 Feb 2021 15:00:45 -0500 (EST)
+        id S233805AbhBYUFq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 15:05:46 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50718 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232761AbhBYUE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 15:04:59 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7ED19FFEF;
+        Thu, 25 Feb 2021 15:03:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=VmQNApKTHS3P
-        /LSnbHN2fddwQkI=; b=G0lLkDlTBVW3i0wpYrDnSoFwd8H/5cgHt5eAO9URDSqR
-        04QQ1hihc08GpoYfi7/A8mOSAfRrlS9Y8XwmFyGntdugGib/eJHY5cya6Qiz6JXj
-        JitGz+421C969egBA2qvI4eF1hObpnAOTGODzIURAzp9jDG52e4EhfHBXxfRVXo=
+        :content-type:content-transfer-encoding; s=sasl; bh=FpKWYJLv4zkX
+        XtWgMmyom7cL28A=; b=lGxfCQMHJ3zNEbTIyxIruMhmvMMysaz7sjCbba1iI25M
+        wxX3Xv8P+cEdaCGY9mdw+WGgsgSQ0YJoyd6XuZHl7bIfiT8QCgUyuo9h8viR9uf1
+        nbpjDNi2oxvmAA0pqIipgdbQysQq/lZ2M+gSL1hhOdqncWoWM1uGpwDzJNHw/9M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MwBfkB
-        FhRm3d2/q3tZOz+i7rg4yFzhmgGy437dn5IRAeO1md8UxtVS3KE5f1f8oTtIqCDp
-        TqYHAbGKxSUlPaU4GP+Qy0b0JpMLkTQz1BePoG77zch0PomG5ykdNDFifFFBJF/a
-        oh0clUFAxRSIeycK1mkUq0KpuYoMx2KKn3ryo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C88F11BDE2;
-        Thu, 25 Feb 2021 15:00:45 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OzhsF6
+        NvNnxDgifRuNnti/GgOkZuqlKfHeJQz5zbkNhppB2J3PmHXLVEwQ73repLwBKQD1
+        F0JbwgCHET6u3yRXVWtUfEWzCGqGAn9A+6dSxR9uwFg7abLVfZFnb71WUv8x8qXm
+        cL9UGFQB9/TRl2hlobGrtSM+Is9PGrynPm9S4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF2979FFEE;
+        Thu, 25 Feb 2021 15:03:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DA94C11BDE1;
-        Thu, 25 Feb 2021 15:00:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5CD079FFED;
+        Thu, 25 Feb 2021 15:03:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH 1/2] remote: add camel-cased *.tagOpt key, like clone
-References: <20210225012117.17331-1-avarab@gmail.com>
-        <xmqqwnuwx2ea.fsf@gitster.g> <87wnuw6iaw.fsf@evledraar.gmail.com>
-Date:   Thu, 25 Feb 2021 12:00:40 -0800
-In-Reply-To: <87wnuw6iaw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 25 Feb 2021 20:47:35 +0100")
-Message-ID: <xmqqzgzrudcn.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Getting an actuallt useful merge base?
+References: <20210224175834.GT6564@kitsune.suse.cz>
+        <YDcOOwBOR4rO3sGr@camp.crustytoothpaste.net>
+        <20210225182924.GY6564@kitsune.suse.cz>
+        <CABPp-BGdFX6V+GNQ6JVnoY3S9cvA0mL+cKSnAhUhArQbGaD6vw@mail.gmail.com>
+Date:   Thu, 25 Feb 2021 12:03:58 -0800
+In-Reply-To: <CABPp-BGdFX6V+GNQ6JVnoY3S9cvA0mL+cKSnAhUhArQbGaD6vw@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 25 Feb 2021 11:52:06 -0800")
+Message-ID: <xmqqv9afud75.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 241CA476-77A4-11EB-BC23-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 9939BDDE-77A4-11EB-9CFE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> I'm not quite sure what to make of this feedback in general. That you'd
-> like the bugfix but we shouldn't bother with a regression test, or that
-> we shouldn't bother with the fix at all?
+>> It's like this
+>>
+>> T
+>> ----o----o----o----o----o----o----o----o----o----o----o----o---(t)---o=
+----o----
+>>      \             \     \                                      \\\
+>>       \             \     \                                      \\\
+>>        \             \     \                                      \\\
+>>         \        o----o----o\=CC=B6---o---(s)---o----o----o----o----o-=
+---o\=CC=B6\=CC=B6-(a)
+>>          \      /            \      /                                \=
+\
+>> S+T  o----o----o----o----o----o----o----o----o----o----o----o----o----=
+o\=CC=B6--(b)
+>>     /                                       /                         =
+  \
+>> ---o----o----o----o----o----o----o----o----o----o----o----o----o----o-=
+---o---(m)
+>>
+>> So (t) is common ancestor for (a) and (b) that merge-base reports but =
+it is
+>> only ancestor for files in set T, and does not have files from set S a=
+t all.
+>> The common ancestor I am insterested in is (s) which is merge base for=
+ both
+>> sets of files.
+>
+> From git-merge-base(1):
+>
+> "When the history involves criss-cross merges, there can be more than
+> one best common ancestor for two commits...When the --all option is
+> not given, it is unspecified which best one is output."
+>
+> Perhaps you want to specify --all to git merge-base, and then perform
+> additional checks on the output to select one yourself?
 
-I like the style update to make the callers use the canonical case
-(even though they do not have to), but the test that inspects the
-cases in the resulting configuration file may be too strict.
-
-> But I don't agree that we should feel free to munge user config files
-> within the bound of valid config syntax when we edit these files for
-> users.
-
-I agree with your sentiment in principle.  I just wanted to make
-sure that future test writers agree with the principle, and also
-that they understand there are cases where end-user input may not
-match the output (e.g. when running "git config Vari.Able value" to
-an existing configuration file that has "[vari] ous =3D true", it may
-be less desirable to add "[Vari] Able =3D value" than to add to the
-existing "[Vari] section a new line "Able =3D value").
-
+Ignore me, as it is likely I am just confused, but if we are merging
+(a) and (b), I do not think (s) could be usable as a merge base; it
+may be an ancestor of (a) but is not an ancestor of (b), no?
 
