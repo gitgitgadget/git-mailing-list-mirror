@@ -2,189 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40FC0C433E6
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 225EFC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:39:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC23264EBD
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:28:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9A2264EC4
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 06:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234135AbhBYG2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 01:28:33 -0500
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:54015 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234029AbhBYG20 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Feb 2021 01:28:26 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 3435F882;
-        Thu, 25 Feb 2021 01:27:33 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 25 Feb 2021 01:27:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=UPjv6G8mG+OnDysGbEA9QdtJ3EP
-        C038+vkob5qWBwJk=; b=UfrqBWocOL69OYWltIsemQ96mFRZscwzdcTU2ShDPBP
-        1AGxiRga+bHdA5Urxy5J9wGA7yaae6XNbBTb6JY9Z3hO2RKvHs77LpTUnQPXOWkp
-        uFwxzwNYIEc9ATIn9KhgIoMQ1JKOKJ0isICvCEx9JASns9vOW7Cj7VEFwOvKln01
-        QY2/cqdvDC527yZBBipQt+i4pHhuKgUr/WZ6LUgkVKjZHfFcrhdxSN2ixJygoQ0q
-        +AaRcvdkzVQsGcU756oFu9YfouGWMwfh8tVly+c83E682EML3L6FoYGod0gCNvk3
-        MNfIF4OKh1Td1G9GOFgWVWbKuv9xc0w1UKJ4qUkdsSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=UPjv6G
-        8mG+OnDysGbEA9QdtJ3EPC038+vkob5qWBwJk=; b=jSXV21EeUUyv3+Wucue+EW
-        OwQePcCLDD1ry05o2o08zT2jpnxvarn/n3+4Ok8W4jpEbdBpKEHHTLufTMtFs1eo
-        nRv9wLHrav5/DbY66w33RQMY7/T1xWQU4CUvPLQMBhE2kuKtko3cR36YF6T/BWqY
-        NIKHRZoe0hzzjKE4eiCs5jtUD7jHSw4/BeXyCFPrG+GgZ2wsJk7voFAfbgWB4Uv8
-        HrIKXuxvKXXKw0L7JpfOW9hiZPc6Ifj1aKfHqsRWjVsv6L+D3L2nTag2S1bJti7f
-        TaOtSETC4x7gtxj+f/OldzxsK3aQx3vjlBemzl8jYVcsTQ52Rrs7wtMR2I1PoJMA
-        ==
-X-ME-Sender: <xms:VEM3YPGI7PvZarWWHIDZDzkNepQ1fCTribwOSeAIv4SmCdM2rjrifg>
-    <xme:VEM3YMXw4ErRczufBeGfc1tn1LrEAiGBn17seAODXNChT3BOwXiL4HxkZAuYJ7yzI
-    cT_uIfoV8QNiv2crg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrkeekgdelgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudekfedrvdefrdelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:VEM3YBLaE707cDvEno-_IixxUpcLBwhBcjQB7Lm1l4Nx1wQQLdIWBg>
-    <xmx:VEM3YNFx20A6Rw5i9tg165dgszE00gPjUqSpA_lbbvJXaVoWjhrY_A>
-    <xmx:VEM3YFUAoSwd9JttSnCwkdZKRhkI-AYcvmJH3pI666StKBxLEPT5cA>
-    <xmx:VEM3YGdn5462UxCx2PaC_luH12JuBeo5yjTyFR4qqjg7FLIXHUd_3g>
-Received: from vm-mail.pks.im (x4db71709.dyn.telefonica.de [77.183.23.9])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A4F33108005C;
-        Thu, 25 Feb 2021 01:27:31 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id a79232f3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 25 Feb 2021 06:27:29 +0000 (UTC)
-Date:   Thu, 25 Feb 2021 07:27:28 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Yaron Wittenstein <yaron.wittenstein@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [QUESTION] Tracking HEAD changes?
-Message-ID: <YDdDUILUUXA1ytva@ncase>
-References: <CAGgn8PdU1GE_CZdGUpJWKzygd0O+Yn2BnAFGmPfKAxFpoVoqUA@mail.gmail.com>
- <YDROhhrM5qJti1ir@coredump.intra.peff.net>
- <YDVo0kGYODP0JjqT@coredump.intra.peff.net>
- <CAGgn8PcPtLNtZTmMqKKTmH3KOezkr-jY7aTEDA-0dvYWuzid9A@mail.gmail.com>
- <YDa/EupbrNa62r+D@coredump.intra.peff.net>
- <YDc3dinQ37FY8fhD@ncase>
- <CAGgn8PfdGBuB29Gxba6OmhSagjqwH2DNUv9XyJnXUhcKpJZBsA@mail.gmail.com>
+        id S233604AbhBYGiy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 01:38:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233443AbhBYGiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 01:38:52 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677C2C061574
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 22:38:12 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id r19so4740596otk.2
+        for <git@vger.kernel.org>; Wed, 24 Feb 2021 22:38:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6l3EoVvYOdha6QUqVM1PpGNv+pb+0Tl0pWzaDKTv4WI=;
+        b=eZEjr4JBmCkVJF4jBHrKVTFtJ0ArxETaX27bA+s+mTRNdBXE5ExJ7eq50CXnKsiZ/1
+         zZaMc0maPncr43QhDX+bmL9Qu53kFEckP/6cCGIwS3KFP8+l4LDN8LCwz8pRSz+mqoju
+         UD5LqJiz6Q7B8MNWS2tJdMnKwuLQIV5HMoFTFUPQkGnBi3pOh3MO07DPXJPmfSWjg97a
+         0kZCV9qBM1OzKwDSJfUdFtcZZTIcBAq0iBNqihcRuVcOBcSwTQaVb1RrRZ7UhmpVKtOO
+         IQpHHWqYHvgWkurrfmNmPsOqM04/9rTsv1KP/GYpOrZAVTOxxqU7fjZYVIaz+AXgWibk
+         aRvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6l3EoVvYOdha6QUqVM1PpGNv+pb+0Tl0pWzaDKTv4WI=;
+        b=KLfxvVShDOa6LVpHBaYbpSBf1LzcdTZiNdQlJ4nLIzn+Y2aJEGRplwBmPtqLNdLP0Z
+         xVrhUV6Bxde4b1vR2r04RGdFmNQ0SfzlspACsnJo9MgovE41BjLqJxoIQ8+bFieXUtYs
+         6WbDeNWccAjR88qTMyWu67FPjSHGxr69YhcnBMaPNTUKRyHc/CU2qOsneT2bKZ+hZhvW
+         JvI/NyocZvMM5LWx0VrmvSyRTUHddD9ivgDLRT0LiP77rvuizYGSU8HELXqdL4mB/g28
+         FehA0PxRAPkMbfOSctdPJzYDVQNH3uBfjMVByl0DgLuhJrAqMJVNCbe0zkXdLaJa9mci
+         SDYQ==
+X-Gm-Message-State: AOAM530Jycg/uitRdKA56CX2jXVfnXfPVZDNsRv7gZDlRoI350g/J+8B
+        D/towET0nhVxWvxgz/eaw/SZ+U+TL5JabOY/J4Q=
+X-Google-Smtp-Source: ABdhPJzOlgAPyCctGeSdlpuXVxkAtp10vfHAan1woaqywi3uVdBAlrXdhAvX569icSP6ZXLZKTFoKXVae6JZ0buoCK8=
+X-Received: by 2002:a9d:7459:: with SMTP id p25mr1112956otk.316.1614235090689;
+ Wed, 24 Feb 2021 22:38:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EpLjqSAA+7Xs1ion"
-Content-Disposition: inline
-In-Reply-To: <CAGgn8PfdGBuB29Gxba6OmhSagjqwH2DNUv9XyJnXUhcKpJZBsA@mail.gmail.com>
+References: <pull.883.git.1614111270.gitgitgadget@gmail.com> <c9910a37579c9a26f7721b60d82060e1766d050c.1614111270.git.gitgitgadget@gmail.com>
+In-Reply-To: <c9910a37579c9a26f7721b60d82060e1766d050c.1614111270.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 24 Feb 2021 22:37:59 -0800
+Message-ID: <CABPp-BFt3nJ0bdY7CVyEYEnv_qDf=6znWQN1g3EHa_pVCwZ5_A@mail.gmail.com>
+Subject: Re: [PATCH 06/20] t1092: compare sparse-checkout to sparse-index
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Feb 23, 2021 at 12:14 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Add a new 'sparse-index' repo alongside the 'full-checkout' and
+> 'sparse-checkout' repos in t1092-sparse-checkout-compatibility.sh. Also
+> add run_on_sparse and test_sparse_match helpers. These helpers will be
+> used when the sparse index is implemented.
+>
+> Add GIT_TEST_SPARSE_INDEX environment variable to enable the
+> sparse-index by default. This will be intended to use across the entire
+> test suite, except that it will only affect cases where the
+> sparse-checkout feature is enabled.
 
---EpLjqSAA+7Xs1ion
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This last sentence was a bit awkward to read.  "will be intended to
+use" -> "is intended to be used"?
 
-On Thu, Feb 25, 2021 at 08:01:11AM +0200, Yaron Wittenstein wrote:
-> Thank you for the clarification!
->=20
-> Is there any plan to support such a case in the future?
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/README                                 |  3 +++
+>  t/t1092-sparse-checkout-compatibility.sh | 24 ++++++++++++++++++++----
+>  2 files changed, 23 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/README b/t/README
+> index 593d4a4e270c..b98bc563aab5 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -439,6 +439,9 @@ and "sha256".
+>  GIT_TEST_WRITE_REV_INDEX=<boolean>, when true enables the
+>  'pack.writeReverseIndex' setting.
+>
+> +GIT_TEST_SPARSE_INDEX=<boolean>, when true enables index writes to use the
+> +sparse-index format by default.
+> +
+>  Naming Tests
+>  ------------
+>
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 3725d3997e70..71d6f9e4c014 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -7,6 +7,7 @@ test_description='compare full workdir to sparse workdir'
+>  test_expect_success 'setup' '
+>         git init initial-repo &&
+>         (
+> +               GIT_TEST_SPARSE_INDEX=0 &&
+>                 cd initial-repo &&
+>                 echo a >a &&
+>                 echo "after deep" >e &&
+> @@ -87,23 +88,32 @@ init_repos () {
+>
+>         cp -r initial-repo sparse-checkout &&
+>         git -C sparse-checkout reset --hard &&
+> -       git -C sparse-checkout sparse-checkout init --cone &&
+> +
+> +       cp -r initial-repo sparse-index &&
+> +       git -C sparse-index reset --hard &&
+>
+>         # initialize sparse-checkout definitions
+> -       git -C sparse-checkout sparse-checkout set deep
+> +       git -C sparse-checkout sparse-checkout init --cone &&
+> +       git -C sparse-checkout sparse-checkout set deep &&
+> +       GIT_TEST_SPARSE_INDEX=1 git -C sparse-index sparse-checkout init --cone &&
+> +       GIT_TEST_SPARSE_INDEX=1 git -C sparse-index sparse-checkout set deep
+>  }
+>
+>  run_on_sparse () {
+>         (
+>                 cd sparse-checkout &&
+> -               "$@" >../sparse-checkout-out 2>../sparse-checkout-err
+> +               GIT_TEST_SPARSE_INDEX=0 "$@" >../sparse-checkout-out 2>../sparse-checkout-err
+> +       ) &&
+> +       (
+> +               cd sparse-index &&
+> +               GIT_TEST_SPARSE_INDEX=1 "$@" >../sparse-index-out 2>../sparse-index-err
+>         )
+>  }
+>
+>  run_on_all () {
+>         (
+>                 cd full-checkout &&
+> -               "$@" >../full-checkout-out 2>../full-checkout-err
+> +               GIT_TEST_SPARSE_INDEX=0 "$@" >../full-checkout-out 2>../full-checkout-err
+>         ) &&
+>         run_on_sparse "$@"
+>  }
+> @@ -114,6 +124,12 @@ test_all_match () {
+>         test_cmp full-checkout-err sparse-checkout-err
+>  }
+>
+> +test_sparse_match () {
+> +       run_on_sparse $* &&
 
-I personally don't have any plans to do so, but I can see usecases where
-it would make sense. So I wouldn't be opposing any such efforts either.
+Should this be
+   run_on_sparse "$@"
+in order to allow arguments with spaces?
 
-> Also, I've observed that the "post-index-change" hook is being
-> triggered before calling the "reference-transaction" hook (with the
-> "prepared" state). It seems not intuitive to me since the index and
-> working dirs are being updated before approving the transaction. (the
-> HEAD still points to an "old" reference while the "post-index-change"
-> hook is executing).
+> +       test_cmp sparse-checkout-out sparse-index-out &&
+> +       test_cmp sparse-checkout-err sparse-index-err
+> +}
+> +
+>  test_expect_success 'status with options' '
+>         init_repos &&
+>         test_all_match git status --porcelain=v2 &&
+> --
+> gitgitgadget
 
-This is something that cannot really be helped though. The
-reference-transaction hook directly hooks into the reference transaction
-mechanism, which is how git updates all references. So we do not really
-have any control over when the hook will get executed: it will simply
-get executed whenever the reference transaction itself gets prepared
-(refs get locked) and committed (written updated refs got moved into
-place).
-
-And that's by design: my objective was to catch _all_ reference updates
-such that one can coordinate across multiple git nodes which all perform
-the same action to assert they're moving from the same state to the same
-state, regardless of whether they're doing a git-push(1), git-merge(1)
-or git-update-ref(1).
-
-So what you're observing is simply mirroring "reality": the order in
-which git does its things here. There can be arbitrarily many
-transactions in a given git command, and the only way this can be
-changed is by changing how the command operating the transcations works.
-
-Patrick
-
-> Thank you,
->    Yaron
->=20
-> On Thu, Feb 25, 2021 at 7:37 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Wed, Feb 24, 2021 at 04:03:14PM -0500, Jeff King wrote:
-> > > On Wed, Feb 24, 2021 at 10:21:55PM +0200, Yaron Wittenstein wrote:
-> > >
-> > > > That indeed seems to do the trick.
-> > > > I've done a little experiment and saw that when doing git reset the
-> > > > hook gets called.
-> > > >
-> > > > However, when switching branches the hook doesn't execute :(
-> > > >
-> > > > I don't understand if it's intentional, since when I've moved to a =
-new
-> > > > branch HEAD pointed to another commit id.
-> > > > The only workaround I see here is using the post-checkout hook in a=
-ddition.
-> > >
-> > > Hmm, I would have thought that the branch switch would trigger the ho=
-oks
-> > > because they're updating HEAD. I wonder if that is a bug (or lack of
-> > > feature :) ) in the transaction hooks, or something Patrick did
-> > > intentionally.
-> > >
-> > > -Peff
-> >
-> > It was done semi-intentionally, or at least with the knowledge that
-> > symrefs aren't covered. This is mostly because they're not covered by
-> > the reference transaction mechanism itself.
-> >
-> > But this again reminds me that I still have to update the documentation
-> > of the hook to at least make it more explicit what's currently covered
-> > and what's not.
-> >
-> > Patrick
-
---EpLjqSAA+7Xs1ion
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA3Q08ACgkQVbJhu7ck
-PpT37A/+KUWNaCLqH5e3bDFzb72BAk8HGgUnf1KYFz1cHZkUBBT1dZsUkxn4mXRi
-+49BrWIhJWU8u71V9/az48/NoQxutjvQ5PELEtb1B4iETvAjoQKEKG38fs1pFe4I
-nF6eA7amtfMU7zWPp9M+D/0lafZVXLKVPXp8YwFM1sUVT0nituYkGaV9xH0p216Y
-2tKyCq6jS4cxh9JP4fqL+0DYStUOqHJZCVD+yN2KH7/vGh5xwARbYgN04bu/SLDo
-BzazmgbxOSFn0/uCrro+td8XfD4nVjwVFyagMsUEkSOxg4hgQBQpgWp/kqPyyGL2
-NzEosK6bAG7h81RILsUXrPTgi5F54po1vtUjbyH3cQQ2cUMB9NKV9cUmOJ4zBW0M
-qPii3ikwHwcMcEWD7E8yCMYKRjCLWNqr7Gw6OCEWyQY9r/D8624b1jCnaRe2Pxx5
-yM4hD9u/NG7Twx+VL8zjvhaVmDtMkKHsbb+RXTB8sMme7fA7mQvi/ci3QMQCkIsD
-BuxO1XY4LZHL7ciQU+JHBDtC+c0ojkYMsVBdxn++cfKM0hlENH1zHvL7WRE3Map9
-DiiXBpOSZmWeDJYqEu2/de9KKu0Oli4OBCvma1m3FqEuMqz3zk1jhi0GPjeuBAty
-Lo9Or+2ZbW6iuASIDJnk+BMMb401ZT8rCAhgbsYz2dkqCXvtnjI=
-=yAgp
------END PGP SIGNATURE-----
-
---EpLjqSAA+7Xs1ion--
+Other than those minor comments, looks good to me.
