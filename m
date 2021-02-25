@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 955D2C433DB
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 10:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C64DC433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 10:23:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43FCF64EC8
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 10:22:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 159B664ECE
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 10:23:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235395AbhBYKWL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 05:22:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
+        id S234459AbhBYKWu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 05:22:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232926AbhBYKS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Feb 2021 05:18:59 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F5FC0611C0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 02:17:03 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id j12so3276903pfj.12
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 02:17:03 -0800 (PST)
+        with ESMTP id S232227AbhBYKTZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 05:19:25 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38C7C061756
+        for <git@vger.kernel.org>; Thu, 25 Feb 2021 02:18:29 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id a24so2923010plm.11
+        for <git@vger.kernel.org>; Thu, 25 Feb 2021 02:18:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hxVQpLeQIoUTjSC6mfswR0n250T0r5hvcHK8KX8PM8g=;
-        b=NBjQ5n5mfmqECwtq1sBhWahrM6NdI6/9RcbelxhdqTWItrou3nOdcIv3cjsN09hbWM
-         PgN7cTkhKBDZ+2IrW46AMhIXWpBClNE6b/JN/3q903n1Dzqcr4B0ACSxNn7VMeP6Yvmn
-         3a4KjCEuEoQiIj3quIFgia0EdC8x4/s+LRD3T5lQEO7KcLr0uj8XnqO1EWeG3wmy77Ee
-         grsyi1t++buY18BkxCtSoC/ksF7gAKrfI9VaRrEC8IGPHQaF3u8lWuPyWSD2z3DRYyn9
-         LdP3PH7nzO2xH2Qw/9v2DdonLcGOIMq0SJJnCVYSS8SP2swNJ2NjeAr5YeKTNnJDEwIX
-         ADyw==
+        bh=g52YFRg1TwM1D4L//bJ2ZX9t9v3zr5UTsVofFE04rLU=;
+        b=qcJgV+MtldUoxCT2nEuDrCjfg48lwhJLberwBtHxxo1aL1WBNDXExnkmvbF7mVHIoo
+         RlTdNvLWfoQ0OxQ6jUu0r5KxBm3xTxw80yTtLhJZnLmSaol7J+jqd5LRlxYaAlvL7ZH/
+         8Q+EiO7H0Ru7w/xavteRyItBw/24gZRvyezJnKjAvF2rI6MfH1CA4ottXCQIphe97i96
+         YyuTaVIlGAedan0uMZdrUoc9JTi5hH7uHTOlC9lEl4lBXifVy462JzXjg8ywoIkV0+b+
+         qoYPp/CMlw1P7gfodbuPGNG83hyYsGeny7hNjdUKYim06Ss/ez/o3v+IeX+8p5q2J6CM
+         Zq5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hxVQpLeQIoUTjSC6mfswR0n250T0r5hvcHK8KX8PM8g=;
-        b=FAEPIbM9NqeF38Wtf2A4n26LebvadGpNoQFGrwYu2IzRysHFCfS6qFmBCgWXLTM2Lj
-         U3SKFMJsVihk4hrFmectPz85o2jOOgC1PMWrOvugfBwKV32/vXPl6caPO9vzAvvPmuGP
-         w4Iq6DjE7wvXY/kh/DXLE99JqjYTuB6RpNbC9HsbY7wWJVt78jhy1seGQA5HbCyHM2cO
-         xn3+jOmAf/DMWxTHqsNguBM4vC0XFJJA+fLkW7gBLXrqAuVVZZy6uR2Ih+sxt8/Brfim
-         qsqZ4n11OtnIQFMfBv/JDfaPXbyc7sFxV1H4aq/1+WWm8y8AONcAMnCd2V3cpy/EhRx1
-         lBDA==
-X-Gm-Message-State: AOAM533MYF9BX/4TixZJR/O7baFYj0ke63KM/fL9Gk57QQhn5A/zMpDb
-        E6bHmbGhA0NDkhGAuEoOqKY3XtNiHkAcaw==
-X-Google-Smtp-Source: ABdhPJw90w+7mClLAJvu0rjpvFjMkqWCWR2+4GB/9rN0ZHEpQqU8jP2zajIMkL5wLv9GrAT6pM+ciQ==
-X-Received: by 2002:a62:8606:0:b029:1ed:55db:22b7 with SMTP id x6-20020a6286060000b02901ed55db22b7mr2536854pfd.75.1614248222457;
-        Thu, 25 Feb 2021 02:17:02 -0800 (PST)
+        bh=g52YFRg1TwM1D4L//bJ2ZX9t9v3zr5UTsVofFE04rLU=;
+        b=jdqtDO7Y/NLr6FlixwLcsOw/3yOX9iX1I4XBohPayyR7stKMABXnOOeqFn7fUt4VTa
+         UyAu2EuR6vLiOr5IZNqBfWwnkZ0+7bS1CUTJaABvFGguk1K1xZRrtQbI3O+K0ZHqjp4g
+         UzMyysv9NLJC0XpjC/baPQyEP8p4qMylmV3UEXqqkc+dGP9fSGYLHeZmE75Z30JBJKhK
+         wuVEJam6J3XUmDHA1Jgd1DBQ644oGH1cPuVk3hv8KdcvoDKB1xzHa/uQPNNqSAW/JMIP
+         KBANDEv9NRkwxUH8zXvXOQ2SNEB+okY+EIgF5lBRfNRRuA5xGPVrfUkf6KcqVFJDfqhV
+         VOxg==
+X-Gm-Message-State: AOAM5329XwgehMinrRpXtFbN01KCyB6cjMEYlttJPlzhXUXSCMICIf2T
+        qqEVWQhocVf/iYDf9qAPfBHR6XoJmAM24Q==
+X-Google-Smtp-Source: ABdhPJyLVx48WBJj/epXHbkUJnr7Uuj3lMKXU73LXtcgVrePgiZyt8qSnkmob9tD+x/CP+Bl5/kk+Q==
+X-Received: by 2002:a17:902:f781:b029:e4:419b:e891 with SMTP id q1-20020a170902f781b02900e4419be891mr2461932pln.10.1614248309015;
+        Thu, 25 Feb 2021 02:18:29 -0800 (PST)
 Received: from localhost.localdomain ([223.233.90.42])
-        by smtp.googlemail.com with ESMTPSA id 67sm5941188pfb.43.2021.02.25.02.16.59
+        by smtp.googlemail.com with ESMTPSA id 67sm5941188pfb.43.2021.02.25.02.18.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 02:17:02 -0800 (PST)
+        Thu, 25 Feb 2021 02:18:28 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         phillip.wood123@gmail.com, Charvi Mendiratta <charvi077@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 4/6] t7500: add tests for --fixup=[amend|reword] options
-Date:   Thu, 25 Feb 2021 15:39:00 +0530
-Message-Id: <20210225100855.25530-5-charvi077@gmail.com>
+Subject: [PATCH v2 6/6] doc/git-commit: add documentation for fixup=[amend|reword] options
+Date:   Thu, 25 Feb 2021 15:39:04 +0530
+Message-Id: <20210225100855.25530-7-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210217072904.16257-1-charvi077@gmail.com>
 References: <20210217072904.16257-1-charvi077@gmail.com>
@@ -76,164 +76,102 @@ X-Mailing-List: git@vger.kernel.org
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- t/t7500-commit-template-squash-signoff.sh | 135 ++++++++++++++++++++++
- 1 file changed, 135 insertions(+)
+ Documentation/git-commit.txt | 39 ++++++++++++++++++++++++++++++------
+ Documentation/git-rebase.txt | 21 ++++++++++---------
+ 2 files changed, 44 insertions(+), 16 deletions(-)
 
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 6d19ece05d..3b3a39fcaf 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -9,6 +9,8 @@ Tests for template, signoff, squash and -F functions.'
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 17150fa7ea..bc50301b1c 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
+-	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
++	   [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>)]
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+@@ -86,11 +86,38 @@ OPTIONS
+ 	Like '-C', but with `-c` the editor is invoked, so that
+ 	the user can further edit the commit message.
  
- . ./test-lib.sh
+---fixup=<commit>::
+-	Construct a commit message for use with `rebase --autosquash`.
+-	The commit message will be the subject line from the specified
+-	commit with a prefix of "fixup! ".  See linkgit:git-rebase[1]
+-	for details.
++--fixup=[(amend|reword):]<commit>::
++	When used without options, lets's say `git commit --fixup=<commit>`,
++	it creates a "fixup!" commit where the commit message will be
++	the subject line from the specified commit with a prefix of
++	"fixup! ". The resulting "fixup!" commit is further used with
++	`git rebase --autosquash` to fixup the content of the specified
++	commit.
+++
++When used with option `amend`, let's say `git commit --fixup=amend:<commit>`,
++it creates a "amend!" commit to fixup both the content and the commit log
++message of the specified commit. The resulting "amend!" commit's commit
++message subject will be the subject line from the specified commit with a
++prefix of "amend! " and the message body will be commit log message of the
++specified commit. It also invokes an editor seeded with the "amend!" commit
++log message to allow to edit further. And it denies to create "amend!" commit
++if it's commit message body is empty unless used with `allow-empty-message`
++option. "amend!" commit when rebased with `--autosquash` will fixup the
++contents and replace the commit message of the specified commit with the
++"amend!" commit's message body.
+++
++When used with alternative option `reword`, let's say
++`git commit --fixup=reword:<commit>`, it works similar to `amend` option, but
++here it creates an empty "amend!" commit, i.e it does not take any staged
++changes and only allows to fixup the commit message of the specified commit.
++It will reword the specified commit when it is rebased with `--autosquash`.
+++
++Unlike `--fixup` without options, `--fixup=[amend/reword]:` is incompatible with
++`-m` commit message option.
+++
++Also, after fixing the commit using `--fixup`, with or without option and rebased
++with `--autosquash`, the authorship of the original commit remains unchanged. See
++linkgit:git-rebase[1] for details.
  
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
- commit_msg_is () {
- 	expect=commit_msg_is.expect
- 	actual=commit_msg_is.actual
-@@ -279,6 +281,139 @@ test_expect_success 'commit --fixup -m"something" -m"extra"' '
+ --squash=<commit>::
+ 	Construct a commit message for use with `rebase --autosquash`.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 8bfa5a9272..ffea76e53b 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -593,16 +593,17 @@ See also INCOMPATIBLE OPTIONS below.
  
- extra"
- '
-+get_commit_msg () {
-+	rev="$1" &&
-+	git log -1 --pretty=format:"%B" "$rev"
-+}
-+
-+test_expect_success 'commit --fixup=amend: creates amend! commit' '
-+	commit_for_rebase_autosquash_setup &&
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	$(get_commit_msg HEAD~)
-+
-+	edited
-+	EOF
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_AMEND="edited" \
-+			git commit --fixup=amend:HEAD~
-+	) &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success '--fixup=reword: does not commit staged changes' '
-+	commit_for_rebase_autosquash_setup &&
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+
-+	$(get_commit_msg HEAD~)
-+
-+	edited
-+	EOF
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_AMEND="edited" \
-+			git commit --fixup=reword:HEAD~
-+	) &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual &&
-+	test_cmp_rev HEAD@{1}^{tree} HEAD^{tree} &&
-+	test_cmp_rev HEAD@{1} HEAD^ &&
-+	test_expect_code 1 git diff --cached --exit-code &&
-+	git cat-file blob :foo >actual &&
-+	test_cmp foo actual
-+'
-+
-+test_expect_success '--fixup=reword: error out with -m option' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "fatal: cannot combine -m with --fixup:reword" >expect &&
-+	test_must_fail git commit --fixup=reword:HEAD~ -m "reword commit message" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--fixup=amend: error out with -m option' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "fatal: cannot combine -m with --fixup:amend" >expect &&
-+	test_must_fail git commit --fixup=amend:HEAD~ -m "amend commit message" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'consecutive amend! commits remove amend! line from commit msg body' '
-+	commit_for_rebase_autosquash_setup &&
-+	cat >expected <<-EOF &&
-+	amend! amend! $(git log -1 --format=%s HEAD~)
-+
-+	$(get_commit_msg HEAD~)
-+
-+	edited 1
-+
-+	edited 2
-+	EOF
-+	echo "reword new commit message" >actual &&
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_AMEND="edited 1" \
-+			git commit --fixup=reword:HEAD~ &&
-+		FAKE_COMMIT_AMEND="edited 2" \
-+			git commit --fixup=reword:HEAD
-+	) &&
-+	get_commit_msg HEAD >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'deny to create amend! commit if its commit msg body is empty' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "Aborting commit due to empty commit message body." >expected &&
-+	(
-+		set_fake_editor &&
-+		test_must_fail env FAKE_COMMIT_MESSAGE="amend! target message subject line" \
-+			git commit --fixup=amend:HEAD~ 2>actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'amend! commit allows empty commit msg body with --allow-empty-message' '
-+	commit_for_rebase_autosquash_setup &&
-+	cat >expected <<-EOF &&
-+	amend! $(git log -1 --format=%s HEAD~)
-+	EOF
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_MESSAGE="amend! target message subject line" \
-+			git commit --fixup=amend:HEAD~ --allow-empty-message &&
-+		get_commit_msg HEAD >actual
-+	) &&
-+	test_cmp expected actual
-+'
-+
-+test_fixup_reword_opt () {
-+	test_expect_success C_LOCALE_OUTPUT "--fixup=reword: incompatible with $1" "
-+		echo 'fatal: cannot combine reword option of --fixup with $1' >expect &&
-+		test_must_fail git commit --fixup=reword:HEAD~ $1 2>actual &&
-+		test_cmp expect actual
-+	"
-+}
-+
-+for opt in --all --include --only --interactive --patch
-+do
-+	test_fixup_reword_opt $opt
-+done
-+
-+test_expect_success '--fixup=reword: give error with pathsec' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "fatal: cannot combine reword option of --fixup with paths" >expect &&
-+	test_must_fail git commit --fixup=reword:HEAD~ -- foo 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--fixup=reword: -F give error message' '
-+	echo "fatal: Only one of -c/-C/-F/--fixup can be used." >expect &&
-+	test_must_fail git commit --fixup=reword:HEAD~ -F msg  2>actual &&
-+	test_cmp expect actual
-+'
- 
- test_expect_success 'commit --squash works with -F' '
- 	commit_for_rebase_autosquash_setup &&
+ --autosquash::
+ --no-autosquash::
+-	When the commit log message begins with "squash! ..." (or
+-	"fixup! ..."), and there is already a commit in the todo list that
+-	matches the same `...`, automatically modify the todo list of rebase
+-	-i so that the commit marked for squashing comes right after the
+-	commit to be modified, and change the action of the moved commit
+-	from `pick` to `squash` (or `fixup`).  A commit matches the `...` if
+-	the commit subject matches, or if the `...` refers to the commit's
+-	hash. As a fall-back, partial matches of the commit subject work,
+-	too.  The recommended way to create fixup/squash commits is by using
+-	the `--fixup`/`--squash` options of linkgit:git-commit[1].
++	When the commit log message begins with "squash! ..." (or "fixup! ..."
++	or "amend! ..."), and there is already a commit in the todo list that
++	matches the same `...`, automatically modify the todo list of
++	`rebase -i`, so that the commit marked for squashing comes right after
++	the commit to be modified, and change the action of the moved commit
++	from `pick` to `squash` (or `fixup` or `fixup -C`) respectively. A commit
++	matches the `...` if the commit subject matches, or if the `...` refers
++	to the commit's hash. As a fall-back, partial matches of the commit
++	subject work, too. The recommended way to create fixup/squash/amend
++	commits is by using the `--fixup=[amend|reword]`/`--squash` options of
++	linkgit:git-commit[1].
+ +
+ If the `--autosquash` option is enabled by default using the
+ configuration variable `rebase.autoSquash`, this option can be
 -- 
 2.29.0.rc1
 
