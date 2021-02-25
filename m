@@ -2,160 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7303EC433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 19:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDFE4C433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:01:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 393F664ED3
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 19:56:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A698864ED3
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 20:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbhBYTz7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 14:55:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233866AbhBYTxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Feb 2021 14:53:46 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E998C06178A
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 11:52:18 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id l133so7313516oib.4
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 11:52:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fPEYnh61FXn/djCYKuZaxQWryBpomDTZULiyphJgUA0=;
-        b=dqXFVZqoAe0l71iyv+sfbuABrM8B1vWyR/yHh5TWR9unD3GhBkDlvS5sCwmUS1sCwG
-         Hh1OPbSYluzTwQglGyYAt8Yqyh3bHo/5IkNzX61Wr24N9OIzk9wufNQBAvQeQXIjWNda
-         52BIk+DObOTAjYnBo5pgNJorwhrDaN7m2Lm4G5HeM7ci1GiALotcAnNhGlSyN9PyNPY2
-         Cpbt6tU8Kz21ozpwL21yStDDk21sPnSfx2rv0CCYHBEvuV9FSWJhL5bMvrZ/SGJcdQS0
-         uhikH3asy/f3UAW6PbBJPVffBO6tPv8MmDvDegJN5SANBwmzNrGD2tELn63tGjMlqQ8w
-         XcDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fPEYnh61FXn/djCYKuZaxQWryBpomDTZULiyphJgUA0=;
-        b=LaC5qzGvfrgJFi/7Cj1H3Uy6Y/BH2X6p/eNvQ58son1oaKoDEJib0m8CqBfhhrWhk0
-         K0ioX2HU96FY9BxxmJ+14OXA3dA0jVhGRdgyFJdyG1hY3G3GOPS3zMzd1c1ffezx2z5p
-         Esr1Rkgkrerp1lR/1oi5AeHqBvv0jXViXb7HTynU11jF9oD7ucO+l4B5380talzKD2Bm
-         fjuInN2+2NXQFyv8vGfGfarqK7xDX+YDf7AHv34rIwW0q3RkzOA5vkUzmGKP9+BreKlc
-         R94jshE8UcUkJZUL0vRqyJcf9I1oL3MTYAxI5gXKt8Uerx3S/KeRi/BteLUzry3i6eX8
-         XtuA==
-X-Gm-Message-State: AOAM5337oRREgML9/qYQomRJBRZtFrPdNEkNCtDps1cAWxtkH7q/JXn5
-        LtMZQg6IgV1ynv3YubjcthBr2Ugpnx8REahoWdQ=
-X-Google-Smtp-Source: ABdhPJz+hSUHigmNgtke71T0sQFnTC1XK3ZBHoxdAa9FOS5y24l07EF77DTjumXrCl1m3ekhrqCvjz/42hylU0jSWZM=
-X-Received: by 2002:aca:4e0f:: with SMTP id c15mr7963oib.39.1614282737427;
- Thu, 25 Feb 2021 11:52:17 -0800 (PST)
+        id S232350AbhBYUBw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 15:01:52 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53597 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232081AbhBYUB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 15:01:27 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A3BF311BDE3;
+        Thu, 25 Feb 2021 15:00:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=VmQNApKTHS3P
+        /LSnbHN2fddwQkI=; b=G0lLkDlTBVW3i0wpYrDnSoFwd8H/5cgHt5eAO9URDSqR
+        04QQ1hihc08GpoYfi7/A8mOSAfRrlS9Y8XwmFyGntdugGib/eJHY5cya6Qiz6JXj
+        JitGz+421C969egBA2qvI4eF1hObpnAOTGODzIURAzp9jDG52e4EhfHBXxfRVXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MwBfkB
+        FhRm3d2/q3tZOz+i7rg4yFzhmgGy437dn5IRAeO1md8UxtVS3KE5f1f8oTtIqCDp
+        TqYHAbGKxSUlPaU4GP+Qy0b0JpMLkTQz1BePoG77zch0PomG5ykdNDFifFFBJF/a
+        oh0clUFAxRSIeycK1mkUq0KpuYoMx2KKn3ryo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C88F11BDE2;
+        Thu, 25 Feb 2021 15:00:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DA94C11BDE1;
+        Thu, 25 Feb 2021 15:00:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 1/2] remote: add camel-cased *.tagOpt key, like clone
+References: <20210225012117.17331-1-avarab@gmail.com>
+        <xmqqwnuwx2ea.fsf@gitster.g> <87wnuw6iaw.fsf@evledraar.gmail.com>
+Date:   Thu, 25 Feb 2021 12:00:40 -0800
+In-Reply-To: <87wnuw6iaw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 25 Feb 2021 20:47:35 +0100")
+Message-ID: <xmqqzgzrudcn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <20210224175834.GT6564@kitsune.suse.cz> <YDcOOwBOR4rO3sGr@camp.crustytoothpaste.net>
- <20210225182924.GY6564@kitsune.suse.cz>
-In-Reply-To: <20210225182924.GY6564@kitsune.suse.cz>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 25 Feb 2021 11:52:06 -0800
-Message-ID: <CABPp-BGdFX6V+GNQ6JVnoY3S9cvA0mL+cKSnAhUhArQbGaD6vw@mail.gmail.com>
-Subject: Re: Getting an actuallt useful merge base?
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 241CA476-77A4-11EB-BC23-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 25, 2021 at 10:34 AM Michal Such=C3=A1nek <msuchanek@suse.de> w=
-rote:
->
-> On Thu, Feb 25, 2021 at 02:40:59AM +0000, brian m. carlson wrote:
-> > On 2021-02-24 at 17:58:34, Michal Such=C3=A1nek wrote:
-> > > Hello,
-> > >
-> > > I find the results of git merge-base A B quite useless.
-> > >
-> > > Suppose you have a repository with file sets
-> > >
-> > > S and T
-> > >
-> > > where S are sources which are developed in mainline and number of sta=
-ble
-> > > versions, and feature branches, and T are build tools (such as autoco=
-nf
-> > > tests or whatever) that are largely independent of the source version=
-.
-> > >
-> > > Because of the independence of T from S T are developed in a separate
-> > > branch t which is merged into all branches developing S as needed.
-> > >
-> > > Fixes to S may affect more than one version, and depending on the
-> > > situation it might be useful to apply fixes to S to mutiple
-> > > stable/feature branche at once. For that one would need a merge base =
-of
-> > > the branches in question.
-> > >
-> > > However, merge-base almost always give a commit on branch t which is =
-the
-> > > merge base of files in set T and does not contain files in set S at a=
-ll.
-> > > In other words it is merge base only for files from set T and not set=
- S.
-> > > Can I get merge base that is merge base for all files that have commo=
-n
-> > > history between two branches?
-> >
-> > The merge base is determined by the history.  In your case, I imagine
-> > you have a history like this:
-> >
-> >  A -- B -- C -- D -- E -- F -- G (S)
-> >         _/        _/        _/
-> >  H -- I -- J -- K -- L -- M -- N (T)
-> >
-> > Here, the merge base of N and G is M, and the merge base of F and M is
-> > K.  Those are the most recent common ancestors, which are typically
-> > chosen as the merge base.
-> >
-> > In your case, you probably want to cherry-pick a commit, or maybe rebas=
-e
-> > a small set of commits onto another set.  That would probably work
-> > better than trying to merge.  It's possible that there's something abou=
-t
-> > this case that I'm missing where it wouldn't work properly, but it's
-> > definitely the approach I would try.
->
-> It's like this
->
-> T
-> ----o----o----o----o----o----o----o----o----o----o----o----o---(t)---o---=
--o----
->      \             \     \                                      \\\
->       \             \     \                                      \\\
->        \             \     \                                      \\\
->         \        o----o----o\=CC=B6---o---(s)---o----o----o----o----o----=
-o\=CC=B6\=CC=B6-(a)
->          \      /            \      /                                \\
-> S+T  o----o----o----o----o----o----o----o----o----o----o----o----o----o\=
-=CC=B6--(b)
->     /                                       /                           \
-> ---o----o----o----o----o----o----o----o----o----o----o----o----o----o----=
-o---(m)
->
-> So (t) is common ancestor for (a) and (b) that merge-base reports but it =
-is
-> only ancestor for files in set T, and does not have files from set S at a=
-ll.
-> The common ancestor I am insterested in is (s) which is merge base for bo=
-th
-> sets of files.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-From git-merge-base(1):
+> I'm not quite sure what to make of this feedback in general. That you'd
+> like the bugfix but we shouldn't bother with a regression test, or that
+> we shouldn't bother with the fix at all?
 
-"When the history involves criss-cross merges, there can be more than
-one best common ancestor for two commits...When the --all option is
-not given, it is unspecified which best one is output."
+I like the style update to make the callers use the canonical case
+(even though they do not have to), but the test that inspects the
+cases in the resulting configuration file may be too strict.
 
-Perhaps you want to specify --all to git merge-base, and then perform
-additional checks on the output to select one yourself?
+> But I don't agree that we should feel free to munge user config files
+> within the bound of valid config syntax when we edit these files for
+> users.
+
+I agree with your sentiment in principle.  I just wanted to make
+sure that future test writers agree with the principle, and also
+that they understand there are cases where end-user input may not
+match the output (e.g. when running "git config Vari.Able value" to
+an existing configuration file that has "[vari] ous =3D true", it may
+be less desirable to add "[Vari] Able =3D value" than to add to the
+existing "[Vari] section a new line "Able =3D value").
+
+
