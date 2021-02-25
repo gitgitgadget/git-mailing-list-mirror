@@ -2,147 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10F36C433DB
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 18:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BD53C433DB
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 18:20:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9BB664F21
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 18:17:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C095664F26
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 18:20:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232969AbhBYSRv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 13:17:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
+        id S232250AbhBYSU0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 13:20:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232770AbhBYSRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Feb 2021 13:17:46 -0500
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8104AC061756
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 10:17:05 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id 2so3250825qvd.0
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 10:17:05 -0800 (PST)
+        with ESMTP id S232197AbhBYSU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 13:20:26 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B31C061574
+        for <git@vger.kernel.org>; Thu, 25 Feb 2021 10:19:45 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id e10so5970008wro.12
+        for <git@vger.kernel.org>; Thu, 25 Feb 2021 10:19:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=44pGx7Fe1pQt8fhf+nxXjaiyqjlCa/w62g8WI8VQHhQ=;
-        b=ldAKI+Ej1hTPOLNoh5TPWDxrwelyiT6rGqnYsZt/3Q9sToy3H/ZYKXFfAQudkq2ydu
-         eK4M36LrAK/cSBqKoc/9MmYJ3d8QomF3n/at1Xhaw+QuJS1w2qcfLdI6TzqA0yM4tN7P
-         oo88SzaNQZ2gg+Tz1kOhbvnaZE8qs7apj3FfuPMWjRDCmLckyHxcnRP7oohyfkZWEZ6C
-         g+KLrXAsWTaIJFf3JaPwIRQ3SqWqyP6vgm4t+28Awp3vZQIKGXsfrEtIoPs6tpA6t184
-         Eh5yjIzdOmRca4tMqUOsNBZ7gKCoFB+78ad2lwqaqU3hq+ojEAn/ZaQNmDyw7uHFL7m+
-         Dkmw==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=bqek08PeoblomyV0u2tR+LpmZMlVSMEJNauYyD9ZC4A=;
+        b=mEMFEmzqGTWOCX7fC4HfIqSsq/yNgOyHKKYmFXg/WWXLqiBZF/qinBwRpBGDmnSlf7
+         nHJ6cQmBo6ixUV+coJz+z+wrxIW9jamYQOikt3So8IlCnF+NQU8FNxtcp241XVvqjiv4
+         6FC5I6k/QtnXe9hSfWbL+gNBmKN8An3WVbBsMX1okl/ppt3xFKqvLgSnB93eOFKeSbg6
+         vigaFedHa6PrYhTD/oRTGJiQs+5dX9DswuXt0r/qtHriGlWIh0ErRE6tDKlKLFE9P26u
+         mlU8tCqP/i9v64c5sMwL+Qwl7NLW2lyJXXDrata72a8WxMTWlBE2bEQRJ0ouVEQzPjB0
+         bNzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=44pGx7Fe1pQt8fhf+nxXjaiyqjlCa/w62g8WI8VQHhQ=;
-        b=BXIxZyJqUX6NHJMlbONU2fnZuRY+tMjVEyC1tbowjBj3GZHH7aAHPZth9SSMi+DLoU
-         NOxkyWPjTLIUFt/KFrf6AHfWURmQ87Inu2E1Qx63anoFrW/NztB/Wo9io7/Igk9UtAak
-         htS+vqMQO/gDKAyAyKzhytV3dPXyVpuObvtxaEQvydZWrWgXczLj07Awm4qPaiV5XwAT
-         Nc2eENwnvqfRO9Q6PmO/s1CcJwTHzjDf+yQZInFlPFQbKy/+yHAj8RoCpoTJifHQ1bre
-         ZmwOFszMXzX0jMNux1nCzDJ4zBLvu3TsWoR3bw7a97vRHGVbLwNRu9G5WsY7QHevoKvh
-         VaVg==
-X-Gm-Message-State: AOAM533iLE6d4smw/njGsL9cwkzGTZNA7GJf0EuvN58CGurUDejjX8qG
-        o9ENOOKIx2l9bukZntJOapRGMWbGUcKphg==
-X-Google-Smtp-Source: ABdhPJxpUBb0DDTL22vMZJ83dk3oPjSoYvaUQzIoNGJs7qVrqmUG5FjBFHcOs+Gu3LOGdKSdcQ6+dg==
-X-Received: by 2002:a0c:b92c:: with SMTP id u44mr3940100qvf.34.1614277023883;
-        Thu, 25 Feb 2021 10:17:03 -0800 (PST)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id r7sm4063291qtd.49.2021.02.25.10.17.02
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bqek08PeoblomyV0u2tR+LpmZMlVSMEJNauYyD9ZC4A=;
+        b=NiE7sBV3zLVg8iSa6mugq1olY+19B1FH1ProW2dSRUep6tYMRJ0gGqhP546gO9X8/q
+         LB48EyYFIbVd/cNDbNR5rYKOzzHL6qL4DPMDe9RrNDYquWmzqsw0dybnk7lzTJ3RGySP
+         NMmrrWOiKRvNdBwNjzRuong6yxxFaFrN76y+K+RbYKnnPLfdnihY8yXztm9vaYzvWVUV
+         NYV42Q+ndSzYEZ4qftadiVhux1ZqyEHeQiUW/nwU8gGLcWsLxTIZpUGc8fOTFUBvFCvd
+         KshRvoWAqie/Tg5eEw9jLHUPGbOt7/PoRXmU7RXvHRL1p2EUvlwMTOnbFXc4Nq6qWD/u
+         +llw==
+X-Gm-Message-State: AOAM530QGOeUwGYj1E8mTQ1e5+2hUQRnlL40/znCUqo7cjfsy3nF4D2q
+        xuwW+4jo9bra8gqzv7h3Inoh7DsIjfY=
+X-Google-Smtp-Source: ABdhPJxDISobZohY7zs+Uh5tDMtkMtNlpVT/B6Inw8Dnj/GE95gQzz0fcQznhfKrJoylyab3tFuV5A==
+X-Received: by 2002:a5d:6a4f:: with SMTP id t15mr4675017wrw.219.1614277184414;
+        Thu, 25 Feb 2021 10:19:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r9sm7734855wmq.26.2021.02.25.10.19.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Feb 2021 10:17:03 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] convert: fail gracefully upon missing clean cmd on required filter
-Date:   Thu, 25 Feb 2021 15:16:56 -0300
-Message-Id: <b33d0dc82f5ff1fac6772e533bbf21eecfae44ed.1614277014.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.30.1
-MIME-Version: 1.0
+        Thu, 25 Feb 2021 10:19:43 -0800 (PST)
+Message-Id: <pull.886.git.1614277183.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 25 Feb 2021 18:19:41 +0000
+Subject: [PATCH 0/2] Specify generation number version by config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, abhishekkumar8222@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The gitattributes documentation mentions that either the clean cmd or
-the smudge cmd can be left unspecified in a filter definition. However,
-when the filter is marked as 'required', the absence of any one of these
-two should be treated as an error. Git already fails under these
-circumstances, but not always in a pleasant way: omitting a clean cmd in
-a required filter triggers an assertion error which leaves the user with
-a quite verbose message:
+This is based on ds/chunked-file-api.
 
-git: convert.c:1462: convert_to_git_filter_fd: Assertion "ca.drv->clean || ca.drv->process" failed.
+Generation number v2 (corrected commit dates) was introduced by
+ak/corrected-commit-date. The new data could be opted-out only using the
+GIT_TEST_COMMIT_GRAPH_NO_GDAT environment variable.
 
-This assertion and the one above it are not really necessary, as the
-apply_filter() call bellow them already performs the same checks. And
-when these conditions are not met, the function returns 0, making the
-caller die() with a much nicer message. (Also note that die()-ing here
-is the right behavior as `would_convert_to_git_filter_fd() == true` is a
-precondition to use convert_to_git_filter_fd(), and the former is only
-true when the filter is required.) So remove both assertions and add two
-regression tests to make sure that git fails nicely when either the
-smudge or clean command is missing on a required filter.
+As this feature gets deployed more widely, servers in particular might want
+more control over when this format is used. Add a config option instead.
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- convert.c             |  3 ---
- t/t0021-conversion.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+Thanks, -Stolee
 
-diff --git a/convert.c b/convert.c
-index ee360c2f07..48fbdac676 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1455,9 +1455,6 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- 	struct conv_attrs ca;
- 	convert_attrs(istate, &ca, path);
- 
--	assert(ca.drv);
--	assert(ca.drv->clean || ca.drv->process);
--
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL, NULL))
- 		die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
- 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index e828ee964c..4f8415d419 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -257,6 +257,30 @@ test_expect_success 'required filter clean failure' '
- 	test_must_fail git add test.fc
- '
- 
-+test_expect_success 'required filter with absent clean field' '
-+	test_config filter.absentclean.smudge cat &&
-+	test_config filter.absentclean.required true &&
-+
-+	echo "*.ac filter=absentclean" >.gitattributes &&
-+
-+	echo test >test.ac &&
-+	test_must_fail git add test.ac 2>stderr &&
-+	test_i18ngrep "fatal: test.ac: clean filter .absentclean. failed" stderr
-+'
-+
-+test_expect_success 'required filter with absent smudge field' '
-+	test_config filter.absentsmudge.clean cat &&
-+	test_config filter.absentsmudge.required true &&
-+
-+	echo "*.as filter=absentsmudge" >.gitattributes &&
-+
-+	echo test >test.as &&
-+	git add test.as &&
-+	rm -f test.as &&
-+	test_must_fail git checkout -- test.as 2>stderr &&
-+	test_i18ngrep "fatal: test.as: smudge filter absentsmudge failed" stderr
-+'
-+
- test_expect_success 'filtering large input to small output should use little memory' '
- 	test_config filter.devnull.clean "cat >/dev/null" &&
- 	test_config filter.devnull.required true &&
+Derrick Stolee (2):
+  commit-graph: create local repository pointer
+  commit-graph: use config to specify generation type
+
+ Documentation/config/commitgraph.txt |  6 ++++++
+ commit-graph.c                       | 31 ++++++++++++++++++----------
+ commit-graph.h                       |  1 -
+ t/README                             |  3 ---
+ t/t5318-commit-graph.sh              |  2 +-
+ t/t5324-split-commit-graph.sh        |  4 ++--
+ t/t6600-test-reach.sh                |  2 +-
+ 7 files changed, 30 insertions(+), 19 deletions(-)
+
+
+base-commit: c4ff24bbb354377a6a7937744fbbef2898243fc7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-886%2Fderrickstolee%2Fcommit-graph-generation-config-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-886/derrickstolee/commit-graph-generation-config-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/886
 -- 
-2.30.1
-
+gitgitgadget
