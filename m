@@ -7,66 +7,58 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BF0AC433E6
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F48C433DB
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:03:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6024664ED6
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 02:58:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49D2E64E90
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 03:03:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236884AbhBYC6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 24 Feb 2021 21:58:24 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59164 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235255AbhBYC6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Feb 2021 21:58:22 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C93EF115841;
-        Wed, 24 Feb 2021 21:57:40 -0500 (EST)
+        id S236948AbhBYDDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 24 Feb 2021 22:03:06 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63711 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236900AbhBYDDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Feb 2021 22:03:04 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D37C398FCF;
+        Wed, 24 Feb 2021 22:02:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BdwGm8oyLzMf
-        PGTzZad2Tjmk18c=; b=JMmLHLbqQD7Bax98EMlmwnFb6HJybaMzE/XVth8pzBx5
-        VEuyL9wQqZHcD0vS56F1WzEB2mOlMsUr++0sepXVKe5t9TjqHNJbOW6b5z7rnXKs
-        ofC8VqkVwLeiv/fCpqIXlwOtYs2Cofci6IGVg3H0eRzTY/H2xP2OU4v1iJCLn54=
+        :content-type:content-transfer-encoding; s=sasl; bh=SpKBj4Hr4p4w
+        /bMCrhLWwZXRW10=; b=DkGwyKt521PEKyjoGCdKSXztj9SapBOGzusf2wV+VryV
+        530nLHp6zGJlC9qUK6wyoBej7Pi+sfBiz9LEQFTDTGDVtvrXbZtZ2Mx3wSFdtxm0
+        W72Vuju1/Nh5nKPObLRzEYsRDqQVYtq2IzFBcHh2wRoL+nkt9sEUZ0QP/OAxv2Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=qRzVFD
-        ivekD8otFN+MY5o7buDsywbJPYxGDe8+116LTLi19SjcJ2mTwisXVuw2osfLalEx
-        2E+TSNRkvsd/iyEJNIMTXmly3/eUWglPM9Yj3TlA0fwNLJy9kX0VY9GZtwotrm3l
-        apu9HyI48ZMC5gcxdQ8X7iMIqqCSRSeRAugtY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C0352115840;
-        Wed, 24 Feb 2021 21:57:40 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L+FMbd
+        YDjTfdF3OebXx+Qm26hfKuKYtA4MEf8SvffzAZtDiDUVKC4Wta5/Td7zGV/Bq2g3
+        J2yCxFNIA2w6XQHKwzs1kB8I+q0Ow3G7x7+9OGVutSfWY9pPlUn9QxioRVxlUqgf
+        2j36pJmmgpdrETuKJbSltI9+KvMNpBiLhAFKM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA9CD98FCE;
+        Wed, 24 Feb 2021 22:02:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0DAC811583F;
-        Wed, 24 Feb 2021 21:57:37 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 581F998FCB;
+        Wed, 24 Feb 2021 22:02:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v3 13/35] userdiff tests: factor out
- test_diff_funcname() logic
-References: <20210215154427.32693-1-avarab@gmail.com>
-        <20210224195129.4004-14-avarab@gmail.com>
-Date:   Wed, 24 Feb 2021 18:57:36 -0800
-In-Reply-To: <20210224195129.4004-14-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 1/2] remote: add camel-cased *.tagOpt key, like clone
+References: <20210225012117.17331-1-avarab@gmail.com>
+Date:   Wed, 24 Feb 2021 19:02:19 -0800
+In-Reply-To: <20210225012117.17331-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
  =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 24 Feb 2021 20:51:07 +0100")
-Message-ID: <xmqq5z2gyhun.fsf@gitster.g>
+        Bjarmason"'s message of "Thu, 25 Feb 2021 02:21:16 +0100")
+Message-ID: <xmqq1rd4yhms.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 37E60446-7715-11EB-952F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E029809C-7715-11EB-B5CF-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,70 +66,85 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Factor out logic in test_diff_funcname() into two helper functions,
-> these will be useful in a follow-up commit where we'll do this munging
-> in more than one place.
+> Change "git remote add" so that it adds a *.tagOpt key, and not the
+> lower-cased *.tagopt on "git remote add --no-tags", just as "git clone
+> --no-tags" would do.
+>
+> This doesn't matter for anything that reads the config. It's just
+> prettier if we write config keys in their documented camelCase form to
+> user-readable config files.
+>
+> When I added support for "clone -no-tags" in 0dab2468ee5 (clone: add a
+> --no-tags option to clone without tags, 2017-04-26) I made it use
+> the *.tagOpt form, but the older "git remote add" added in
+> 111fb858654 (remote add: add a --[no-]tags option, 2010-04-20) has
+> been using *.tagopt all this time.
+>
+> It's easy enough to add a test for this, so let's do that. We can't
+> use "git config -l" there, because it'll normalize the keys to their
+> lower-cased form. Let's add the test for "git clone" too for good
+> measure, not just to the "git remote" codepath we're fixing.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 > ---
->  t/t4018-diff-funcname.sh | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
 >
-> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-> index 2365f0e361e..8a8a7a99c88 100755
-> --- a/t/t4018-diff-funcname.sh
-> +++ b/t/t4018-diff-funcname.sh
-> @@ -75,6 +75,17 @@ test_expect_success 'setup hunk header tests' '
->  	git -C t4018 add .
->  '
+> I also noticed that we write e.g. init.objectformat instead of
+> init.objectFormat, and core.logallrefupdates etc. If anyone's got an
+> even even worse case of OCD there's an interesting #leftoverbits
+> project there of scouring the code for more cases of this sort of
+> thing...
+>
+>  builtin/remote.c         | 2 +-
+>  t/t5505-remote.sh        | 1 +
+>  t/t5612-clone-refspec.sh | 1 +
+>  3 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index d11a5589e49..f286ae97538 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -221,7 +221,7 @@ static int add(int argc, const char **argv)
 > =20
-> +do_change_me () {
-> +	file=3D$1
-> +	sed -e "s/ChangeMe/IWasChanged/" <"$file" >tmp &&
-> +	mv tmp "$file"
-> +}
-> +
-> +last_diff_context_line () {
+>  	if (fetch_tags !=3D TAGS_DEFAULT) {
+>  		strbuf_reset(&buf);
+> -		strbuf_addf(&buf, "remote.%s.tagopt", name);
+> +		strbuf_addf(&buf, "remote.%s.tagOpt", name);
 
-What this helper computes looks more like header line for each and
-every hunk, not just the last one, to me.  Misnamed?
+Good find.
 
-> +	file=3D$1
-> +	sed -n -e "s/^.*@@$//p" -e "s/^.*@@ //p" <$file
+A general rule for a name used to refer to a configuration variable
+the C code ought to be
 
-Style.
+ - if it is used to match what the system gave us, make sure we use
+   all lowercase for the first and the last component and match with
+   strcmp(), not with strcasecmp().
 
- - Redirection operators should be written with space before, but no
-   space after them.  In other words, write 'echo test >"$file"'
-   instead of 'echo test> $file' or 'echo test > $file'.  Note that
-   even though it is not required by POSIX to double-quote the
-   redirection target in a variable (as shown above), our code does so
-   because some versions of bash issue a warning without the quotes.
+ - if it is used to update, make sure we use the canonical spelling,
+   if only for the documentation value.
 
-In any case, I wonder if this kind of clean-up should have been done
-immediately before step 11/35, not after 11/35 started rewriting the
-framework.  Any touch-up done after 11/35 risks smelling like "oops,
-we found a better way to write it after we did the big rewrite".
-
-> +}
-> +
->  # check each individual file
->  for i in $(git -C t4018 ls-files)
->  do
-> @@ -85,13 +96,12 @@ do
-> =20
->  		# add test file to the index
->  		git add \"$i\" &&
-> -		# place modified file in the worktree
-> -		sed -e 's/ChangeMe/IWasChanged/' <\"t4018/$i.content\" >\"$i\"
-> +		do_change_me \"$i\"
->  	"
-> =20
->  	test_expect_success "hunk header: $i" "
->  		git diff -U1 $i >diff &&
-> -		sed -n -e 's/^.*@@$//p' -e 's/^.*@@ //p' <diff >ctx &&
-> +		last_diff_context_line diff >ctx &&
->  		test_cmp t4018/$i.header ctx
->  	"
->  done
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 045398b94e6..2a7b5cd00a0 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -594,6 +594,7 @@ test_expect_success 'add --no-tags' '
+>  		cd add-no-tags &&
+>  		git init &&
+>  		git remote add -f --no-tags origin ../one &&
+> +		grep tagOpt .git/config &&
+>  		git tag -l some-tag >../test/output &&
+>  		git tag -l foobar-tag >../test/output &&
+>  		git config remote.origin.tagopt >>../test/output
+> diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
+> index 6a6af7449ca..3126cfd7e9d 100755
+> --- a/t/t5612-clone-refspec.sh
+> +++ b/t/t5612-clone-refspec.sh
+> @@ -97,6 +97,7 @@ test_expect_success 'by default no tags will be kept =
+updated' '
+>  test_expect_success 'clone with --no-tags' '
+>  	(
+>  		cd dir_all_no_tags &&
+> +		grep tagOpt .git/config &&
+>  		git fetch &&
+>  		git for-each-ref refs/tags >../actual
+>  	) &&
