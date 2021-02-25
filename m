@@ -6,140 +6,97 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3238C433E0
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80304C433E0
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:42:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 33B6164E6C
-	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:39:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1624B64EBA
+	for <git@archiver.kernel.org>; Thu, 25 Feb 2021 05:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233153AbhBYFiO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 25 Feb 2021 00:38:14 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:43591 "EHLO
-        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231786AbhBYFiM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 25 Feb 2021 00:38:12 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 17D7F5C00E5;
-        Thu, 25 Feb 2021 00:37:01 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 25 Feb 2021 00:37:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=v6owwrqUjXXY2EhE/lH/SV6dNCq
-        +CdhyhiSfWw7OlxQ=; b=rPmJRHCxI2VFY93sHvsQKoQG1KVRktFBln1wthgnsZB
-        6KljsFOkjZDv/FsltHJWNomSt34lRtYjvnB0le7tV8dIA1DRlZ3rjZsz+gUh81yV
-        ekWGzXpA7RWHPNjc72Fgqid8SselGV/lJpKOcc/loMBtr9IuZCREFwi+zieL97Fm
-        eTp9Mxc98IpGi0+D1VVVXjIV2JqHOUFxrwOCOGHSRT7d8HtCx/n3R69R+ZU60Dll
-        w6cxKVvOvM6pROjRa6wZ/zcN5HatH9EPm3+mrZlOO4n4I1EYYlFcHe5AFmgK/Vu/
-        XSf0EaChdvqL1A1QjsX70d21dqZYRreGBZXCOJ8FOCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=v6owwr
-        qUjXXY2EhE/lH/SV6dNCq+CdhyhiSfWw7OlxQ=; b=KG92eeJif2tQ0l7rkbakAN
-        O1EecQF6/KlkwpTYKOVizEkU5sROSHJxIML3sHtqecrEehcwxDf5q5oVp9HRNwUP
-        QEe/ggoHnxtkIT6nti7P3ZjUaZDAVQ4HXp2CndLTA9qCIpFC9fGo7s/EA5C1M5v6
-        ydss1Xxn2ObqQJUBKeuuvKxztwHcUVl5Su/bG8JMUR6Tb9ZgCQLHxJYPj+QF17ZE
-        aLtBaALU5ME3dnMRCBCbL1Yxqzvr5mofBXlabTzeu/HdPOIIDJbYdID3ddagcRxX
-        VobFpk/Q9J9FvyYb3OPzcOVC1vPzF7API8GpzVPDKWqtzwpWPjFB3HAvyRclx2xA
-        ==
-X-ME-Sender: <xms:fDc3YOfkF0dJdxj-kFxHjpVKiXkHXPtM_bLk6E0fbzhcRA5TKqVM3A>
-    <xme:fDc3YIMcvlunaPGeABLqWjGzIby-R3j5NEUPHxrlSNbfSIvdN5xSZzOFfv_u8D4uV
-    1O4SvZOxHIeoZniCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrkeekgdekgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudekfedrvdefrdelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:fDc3YPgttLcd_yU4u_H7iTS2yl5deV3QiMgNre-BQJi02c4t3D_c5A>
-    <xmx:fDc3YL_Oh84kbxMMzHiX6WqGePXDyAnmA_uwYXM3cqU6K8BLGbfkpA>
-    <xmx:fDc3YKtl6mmb4oHan8iS9AbnFtwo6ST-BcAK8Csqj99rEB6E5OZELg>
-    <xmx:fTc3YA0S7GvqPTePNvTm5rxqTHzoEflTOK2Hpu9WD0WuIbNBny-_oQ>
-Received: from vm-mail.pks.im (x4db71709.dyn.telefonica.de [77.183.23.9])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 29901108005F;
-        Thu, 25 Feb 2021 00:37:00 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id fb02c8e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 25 Feb 2021 05:36:55 +0000 (UTC)
-Date:   Thu, 25 Feb 2021 06:36:54 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     Yaron Wittenstein <yaron.wittenstein@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [QUESTION] Tracking HEAD changes?
-Message-ID: <YDc3dinQ37FY8fhD@ncase>
-References: <CAGgn8PdU1GE_CZdGUpJWKzygd0O+Yn2BnAFGmPfKAxFpoVoqUA@mail.gmail.com>
- <YDROhhrM5qJti1ir@coredump.intra.peff.net>
- <YDVo0kGYODP0JjqT@coredump.intra.peff.net>
- <CAGgn8PcPtLNtZTmMqKKTmH3KOezkr-jY7aTEDA-0dvYWuzid9A@mail.gmail.com>
- <YDa/EupbrNa62r+D@coredump.intra.peff.net>
+        id S235019AbhBYFmJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 25 Feb 2021 00:42:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58975 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229993AbhBYFmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Feb 2021 00:42:08 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FCB5ABA50;
+        Thu, 25 Feb 2021 00:41:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=SOV2oC5AzNxPUDYlHXlTXWKs6X8=; b=cq2HO5u2fuT8kERA6auO
+        jLq83VABNTWoZ5WKvHNFhDrh7zRAghb2TLmphPYFgnpr4QXMW2KHqINywqOfv8t0
+        PXeOTM9LYdLItT18RZXx4Jf0vdMgL+ggu7tGcjCclWmZO7+G2mWhGdCb4rn6uWg+
+        9eFCzoGijAYnzGQcLwziD9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=nPZPtPYkJ3j9A+ItJZekMbI4ODuBErqWu4EzrVm+cVL1cB
+        5hR82IeQwDEDMDYYpwwW7V/4DYvwgSpqqCdoILccT0Dj2ieDkJ0Otahx1aBMOzq/
+        ggpa6hEaUz5YBtK1GpO4zB04xo+H5f+Bt6Kc6cfgnFVOPzzRo4P6ycFWPqB+g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3622EABA4F;
+        Thu, 25 Feb 2021 00:41:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABDD1ABA4E;
+        Thu, 25 Feb 2021 00:41:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH] read-cache: make the index write buffer size 128K
+References: <pull.877.git.1613616506949.gitgitgadget@gmail.com>
+        <f52df30b-4ab0-fd6f-17f8-70daed81df39@jeffhostetler.com>
+        <xmqqv9ana05b.fsf@gitster.g>
+        <CANQDOdeEd=JjWL4gb5CWHL_HkvJMnFumW74ew4DXJahh4BKvfQ@mail.gmail.com>
+        <xmqqo8gd8tyr.fsf@gitster.g>
+        <CANQDOdfJApBOEm2gPMwtz9T0ETPoDk107mF7LYRGCmjFLi3Jxg@mail.gmail.com>
+Date:   Wed, 24 Feb 2021 21:41:24 -0800
+Message-ID: <xmqqmtvswvp7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="24+QGE2eblW82e6j"
-Content-Disposition: inline
-In-Reply-To: <YDa/EupbrNa62r+D@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 19A1D746-772C-11EB-A135-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Neeraj Singh <nksingh85@gmail.com> writes:
 
---24+QGE2eblW82e6j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> If we think about doing the fastest possible memcpy, I think we want to aim for
+> maximizing the use of the CPU cache.  A write buffer that's too big would result
+> in most of the data being flushed to DRAM between when git writes it and the
+> OS reads it.  L1 caches are typically ~32K and L2 caches are on the
+> order of 256K.
+> We probably don't want to exceed the size of the L2 cache, and we
+> should actually
+> leave some room for OS code and data, so 128K is a good number from
+> that perspective.
+>
+> I collected data from an experiment with different buffer sizes on Windows on my
+> 3.6Ghz Xeon W-2133 machine:
+> https://docs.google.com/spreadsheets/d/1Bu6pjp53NPDK6AKQI_cry-hgxEqlicv27dptoXZYnwc/edit?usp=sharing
+>
+> The timing is pretty much in the noise after we pass 32K.  So I think
+> 8K is too small, but
+> given the flatness of the curve we can feel good about any value above
+> 32K from a performance
+> perspective.  I still think 128K is a decent number that won't likely
+> need to be changed for
+> some time.
 
-On Wed, Feb 24, 2021 at 04:03:14PM -0500, Jeff King wrote:
-> On Wed, Feb 24, 2021 at 10:21:55PM +0200, Yaron Wittenstein wrote:
->=20
-> > That indeed seems to do the trick.
-> > I've done a little experiment and saw that when doing git reset the
-> > hook gets called.
-> >=20
-> > However, when switching branches the hook doesn't execute :(
-> >=20
-> > I don't understand if it's intentional, since when I've moved to a new
-> > branch HEAD pointed to another commit id.
-> > The only workaround I see here is using the post-checkout hook in addit=
-ion.
->=20
-> Hmm, I would have thought that the branch switch would trigger the hooks
-> because they're updating HEAD. I wonder if that is a bug (or lack of
-> feature :) ) in the transaction hooks, or something Patrick did
-> intentionally.
->=20
-> -Peff
+Thanks for a supporting graph.
 
-It was done semi-intentionally, or at least with the knowledge that
-symrefs aren't covered. This is mostly because they're not covered by
-the reference transaction mechanism itself.
+I can very well imagine that it would have been tempting to instead
+say "after we pass 128k" while explaining exactly the same graph,
+and doing so would have given a more coherent argument to support
+the choice of 128k the patch made.  You knew that a "then perhaps we
+can reclaim 96k by sizing the buffer down a bit?" would become a
+reasonable response, but you still chose to be honest, which I kinda
+like ;-)
 
-But this again reminds me that I still have to update the documentation
-of the hook to at least make it more explicit what's currently covered
-and what's not.
 
-Patrick
 
---24+QGE2eblW82e6j
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA3N3UACgkQVbJhu7ck
-PpSRqg//cQAXbJIiK2fSHlWPfxBZuyw9AbCsRYknylExj92B/FZ06XRi8oNZoijy
-DiY3HmHf5BmM1btj8KgnHdxyxhzxOQ/vSdDSGhEDHgr33bfO/VeSIA4aig1IwzbQ
-hRlWxXj43T8upXrGhkY7xffOjbEJa3Ky6o5GWIU9TBwZEyFbW+YT6geE3H3hD6Ra
-xg1ikcprDDhzYUrhmyapeQe7YvkxqGG4lGodiBT0X8V2VVOhXzOIXXATX8Zv70gd
-YY6I06ilBqk0P1RSksRRr2o3WBCbDUOf3wrwf/KTN8Qk/Qb0EMdpGdKQcA5N136S
-c20EwwtiYPCt5xOxserUwEoP4Rb92A8kkaIEkoMjYTpZt8QV7diiRpkdR6mTEUha
-EJbZSKOt31zC9C4qHKw00cFL9zszL2+rTZVZM9mwqEAzNwiQl/oumSR3HNNhSU+T
-Zq15eBrjWF4peRhATROUNopXH7vieV+tF/QVLWV5r8yoZtyTNuPCgvmeLCakAWCZ
-jtHXainV7+j3O9yGQiNWo0ZSBxT0Jchx+llBCCLCwVHwlgdc0sKKWJUrSUIvKh6e
-29x2SoJ2e92Q2RWCTxgHrJie1SP1VDKDKqfRpKKIedvMrGSBB12MZVPyPySR1G6s
-dwp+o/YjFUz9nxayL/iPH34y5+j/K6I9x0TITPSJT3o7syr6YAU=
-=G6lE
------END PGP SIGNATURE-----
-
---24+QGE2eblW82e6j--
