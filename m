@@ -2,87 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58A44C433DB
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 21:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBC4C433E0
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 22:18:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F394D60241
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 21:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 794FD64EC4
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 22:18:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbhBZV3X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Feb 2021 16:29:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56872 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbhBZV3S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Feb 2021 16:29:18 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1009C061574
-        for <git@vger.kernel.org>; Fri, 26 Feb 2021 13:28:37 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id 21so1592961oiq.7
-        for <git@vger.kernel.org>; Fri, 26 Feb 2021 13:28:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e255+HnPKFs1AjDVLc3zUr4iBNiIXAAkNDGPgn3RHTU=;
-        b=dyGTZIbwauYzhmlmJm18heb2ptVYhGoV3DAiaxRoqDE8D6PIXwg+hrgatMAwmOsMwG
-         woJYC0qXznjO2EgXNMN3r2m61e0kZCEAPiukxiFG2R2EXPVpYpX27QGpEcYZTjtP6g7U
-         ASbO2/w0NRoNLprz/xf9xF3n5ARS1UPgVYP/tfnyIKIjdzYUkCBSk/QvkC9FfiQf+mZB
-         KUxtnWNmb8BzOVRFAGlbmF7niAIU3hKhzzMLC8MmeLmcmsfyuMb56fpNFF7FOAKkO2rW
-         XhxE7nPe1kB1CDeNINpQUheWuEKdl2do31xwB24dPywT3WEXG7/20NXQMMtOSeiJU4JZ
-         Y/BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e255+HnPKFs1AjDVLc3zUr4iBNiIXAAkNDGPgn3RHTU=;
-        b=JTg/mMp0UQom+sV+R06k28Oa1R8hv5vLZG4M6AtvqObEJciAT8Kcs+qwKwoLo2dMds
-         k4WP1Tb7lM0lOjYTL58GtH8V0ht9VFl+C6OMHYHOlHD2ccMzQWSa8YgCsP3uFIN08lWc
-         +Sm6dxV0prVnSETP56ECS6dP0jDUhM/lwIBW0wKuCqHQy0P+Q3P/CKo5LNEO2U1dxLVK
-         W/DL9cG3R7/o2X6WtyM2Hng0mGEMyzDDH/PJFJDIc4u5T0NBjLZfGmdzn5oH8bMkYVwk
-         2V5GKTCGccEKY31BZsAxm3Q0TvAcTzQuJu+7w6NEXF5o1iFnQgADguGXY/EBX0akgxJ6
-         SvZw==
-X-Gm-Message-State: AOAM533C+bRjmq/HjRg+um4C9srFrw2JJRPN/j8dHbe8Vz6RmsgIKh17
-        2qwajJWbKC7nQQ9zK0S3uBiSAGKjmwYPSoI+fvA=
-X-Google-Smtp-Source: ABdhPJzIkWXqNEMWr1/++KDBrEPW3PRExd1vyyuAliuNZrio2qEDoT/0tkATsbrqlbpSwQ7387Y75ldLsZiiaJ7fGLs=
-X-Received: by 2002:aca:3181:: with SMTP id x123mr2406803oix.167.1614374917464;
- Fri, 26 Feb 2021 13:28:37 -0800 (PST)
+        id S229823AbhBZWSo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Feb 2021 17:18:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56840 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229550AbhBZWSn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Feb 2021 17:18:43 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3256110B300;
+        Fri, 26 Feb 2021 17:17:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8UTgY5zRMinbzE/eGIMhIqxwBes=; b=hSwtwi
+        oi4W4RoybdT9pVoV095/BdoXkGWUk+ZjoPVqRmvewoYypyNak4oZnZXtGNrkTNbO
+        TfqOhr+6QoARlk5KYZn+ZCzhyOpOoSgX9FXyWDXVbyhSXEBIXRmbZ6ZhLc89PWix
+        z9KIS8DncnQugg1jVjeXi36h9u6cwD8H+TH/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CsZR8OzxAYdj2a4VTjkrE3p/HmiiDiAZ
+        R+vxZAffsenZvGD4imXHJELLcmBGMrk6MgqSuyA6CRzKorYBRwcHo45UzaTLPAeR
+        ddDD143/WCgQftvK/jnkHOwRVlxf3XMP9rehktRmfaW8hBWLsuAFVtqFLRG4sNqz
+        dIQmhNytf64=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B3B710B2FF;
+        Fri, 26 Feb 2021 17:17:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 19C3410B2FE;
+        Fri, 26 Feb 2021 17:17:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Aleksey Kliger <alklig@microsoft.com>
+Subject: Re: [PATCH v2] Makefile: add OPEN_RETURNS_EINTR knob
+References: <YDXZY8XFRayiM1If@coredump.intra.peff.net>
+        <YDXaJHnZ5LgCj9NX@coredump.intra.peff.net>
+        <xmqqzgzuyqli.fsf@gitster.g>
+        <YDaY/M3Rw+6xwZlf@coredump.intra.peff.net>
+        <YDiRywyld/0OTT5U@coredump.intra.peff.net>
+Date:   Fri, 26 Feb 2021 14:17:53 -0800
+In-Reply-To: <YDiRywyld/0OTT5U@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 26 Feb 2021 01:14:35 -0500")
+Message-ID: <xmqq8s7ascby.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.883.git.1614111270.gitgitgadget@gmail.com> <CABPp-BEf5F_BT69_V0vOq9CdcNEce6qR5nk+2XZsdS5EeLV0_g@mail.gmail.com>
-In-Reply-To: <CABPp-BEf5F_BT69_V0vOq9CdcNEce6qR5nk+2XZsdS5EeLV0_g@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 26 Feb 2021 13:28:26 -0800
-Message-ID: <CABPp-BG+gK=Opmjhg-X2GEkvWt9C62hjiESjX=YwDXp=_x1yzg@mail.gmail.com>
-Subject: Re: [PATCH 00/20] Sparse Index: Design, Format, Tests
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 794DB61A-7880-11EB-90FE-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 23, 2021 at 3:49 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Feb 23, 2021 at 12:14 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > Here is the first full patch series submission coming out of the
-> > sparse-index RFC [1].
->
-> Wahoo!  I'll be reading these over the next few days.
+Jeff King <peff@peff.net> writes:
 
-I finally finished the last five patches today, and didn't spot
-anything on those to comment on.
+> However, note that we must not enable this on Windows. It doesn't do
+> anything there, and the macro overrides the existing mingw_open()
+> redirection. I've added a preemptive #undef here in the mingw header
+> (which is processed first) to just quietly disable it (we could also
+> make it an #error, but there is little point in being so aggressive).
+> ...
+> diff --git a/compat/open.c b/compat/open.c
+> new file mode 100644
+> index 0000000000..eb3754a23b
+> --- /dev/null
+> +++ b/compat/open.c
+> @@ -0,0 +1,25 @@
+> +#include "git-compat-util.h"
+> +
+> +#undef open
+> +int git_open_with_retry(const char *path, int flags, ...)
+> +{
+> +	mode_t mode = 0;
+> +	int ret;
+> +
+> +	/*
+> +	 * Also O_TMPFILE would take a mode, but it isn't defined everywhere.
+> +	 * And anyway, we don't use it in our code base.
+> +	 */
 
-Overall, I find the series well constructed, motivated, and explained.
-I've left various comments on individual patches, but they're mostly
-all minor things that should be easy to cleanup and/or just comment
-on.
+That is being extra careful---I like it very much.
+
+> +	if (flags & O_CREAT) {
+> +		va_list ap;
+> +		va_start(ap, flags);
+> +		mode = va_arg(ap, int);
+> +		va_end(ap);
+> +	}
+> +
+> +	do {
+> +		ret = open(path, flags, mode);
+> +	} while (ret < 0 && errno == EINTR);
+> +
+> +	return ret;
+> +}
+
+Thanks.
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 838246289c..551cc9f22f 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -788,6 +788,12 @@ int git_vsnprintf(char *str, size_t maxsize,
+>  		  const char *format, va_list ap);
+>  #endif
+>  
+> +#ifdef OPEN_RETURNS_EINTR
+> +#undef open
+> +#define open git_open_with_retry
+> +int git_open_with_retry(const char *path, int flag, ...);
+> +#endif
+> +
+>  #ifdef __GLIBC_PREREQ
+>  #if __GLIBC_PREREQ(2, 1)
+>  #define HAVE_STRCHRNUL
