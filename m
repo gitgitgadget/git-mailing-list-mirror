@@ -2,82 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95CEEC433DB
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 09:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A61C3C433E0
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 10:38:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 388B464EED
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 09:09:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 549D364EF3
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 10:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229967AbhBZJJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Feb 2021 04:09:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39202 "EHLO
+        id S230452AbhBZKi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Feb 2021 05:38:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229953AbhBZJJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Feb 2021 04:09:17 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9B2AC06174A
-        for <git@vger.kernel.org>; Fri, 26 Feb 2021 01:08:36 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id o1so1761011qta.13
-        for <git@vger.kernel.org>; Fri, 26 Feb 2021 01:08:36 -0800 (PST)
+        with ESMTP id S231131AbhBZKgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Feb 2021 05:36:46 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A100C06174A
+        for <git@vger.kernel.org>; Fri, 26 Feb 2021 02:35:59 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id 40so266548otu.0
+        for <git@vger.kernel.org>; Fri, 26 Feb 2021 02:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ItM1QObM3Ura0qmMBXrxgm2LSN5rvdr2KPWhYDe6jtk=;
-        b=iC4IF2HETT7tvqkswCMQQEjoVkDIlwuHuORb4WkC3bCy2nQxEV//bFi3KWAJiRSUc3
-         IqZHdECpyk4cN5eH/iQczs819m8fn1Q8537rbGxXnrXkvC9BwfckY9GPuDlo4y33ca+5
-         sN7+gyRVgr4UNX9DMvS1g+oV5mOPoTsZhj+2EZzN7imoz+qe/6qpiFdiT/jSxGpj5EOM
-         a2/NBpoiEy8PGsFCK9djQpk7xTGcY4+zP92FZak80t8IgETndP251MaxGP3AJoqJegs0
-         6IwSsV33wl64qtJ7AcndUCkgWMFlrOywaaiBtsRp7AgWnxVInXbKnNPjWMVjTIpPBbIK
-         EK4g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7gGf1wjeKDrTes7QgMyXUo977D+sEPgG+NUCYJH7Gh8=;
+        b=jC/Ov1D+b6S5bXDzxC4/G875/FkrOjYVV/fJQ66iAB1ZO4Wys1tuQr5Z5r+hgkg9HJ
+         8oxZgtVmtvtIwIcQnVla98p/PAOThRRHGrtpPHdnARLfThZcMWxZp7dkkonqpQg8FVgE
+         2DLcnQhjejmDvPZ4cNm2YvATFg8XvmA8gt92kZEikjrhE3udtmaBhGFWoDrEQ2iDn0d/
+         U+mYo0MvSFb0gQEMuCpGUf/q2yadl1Ig8yr8oO9e98bp/T6x/a9BL8zm4nirPtWwIfIv
+         4VRvZtzkG3XouihfPt3CReThED0y4KgcqzJ+l6gD8QBbMKpA0CbNXaa/wFeGALXZ4QyH
+         luJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ItM1QObM3Ura0qmMBXrxgm2LSN5rvdr2KPWhYDe6jtk=;
-        b=m5kAM4xNPRoErB5x2qx3YbAq6b5hqV87spbi6+aA34lZpYY9iJDB94lsU1BvlWEG5M
-         eTyWo93Kg9r4oiBcKYCvDZPbV2yxss+lI9vFdRJ/jt87K0K/Caclak0PRL4uPTgGs5po
-         fQAwEtqL5Yx6gn+f2GbKktjB/GMFuEf9tSBkzdi0us8FxfRB/vhjWgmtQD023kBAnsqO
-         NE9bHj45Mw1mtYGtl8DfB5HoE7DN9cLXdHvVQxVrUd/iyoellGlGIg1HN45Us/nVvBep
-         CiLFbNQJWBiwHASPQBVk5UU7/am15cUxJ9SV52s9QwY07XQPMx5Qq4B+G9ndSDfbZ9SR
-         jAgw==
-X-Gm-Message-State: AOAM532Kik9/9UwN9aAm8Nourm7MlMI66gRRxqN0+Z+cYdsDuFHXJdz7
-        RuZD0m7hKgbK5pmN6hUQSWNat+h0TBHtIcqov8cC1Ax+LPg=
-X-Google-Smtp-Source: ABdhPJypLdr+VZAQYFfXqCfvx9PjVw40MIWM9rCpeWjgHJqEQpE3DuSjr1nypB7urEyGTWGS7QVPLpQjkjLDHgBZklU=
-X-Received: by 2002:a05:622a:54e:: with SMTP id m14mr1820697qtx.128.1614330515568;
- Fri, 26 Feb 2021 01:08:35 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7gGf1wjeKDrTes7QgMyXUo977D+sEPgG+NUCYJH7Gh8=;
+        b=FgmGzzFv5QDP+EgNiWskzkGGmGQ4ZFoifLyvEIJkJC1oUCoyo5/il63gAvQkcsfQGB
+         NUGTQy+gY02ZuKxpNcaY4MNZJhJMQ6nZbd/q5kUoDcLvQGP2+I48x/KQub4IM3gSzcIk
+         ni++Zkio6/9A+hYXeThMSpFSVafSctxtSWUPn3oFIaZg1fYMFRcCDF3wcrxm2A4sIBoQ
+         guBgMZWIr2xkucVnzgk2fHxf2oe/U/NaVhK9PnbjN2ziqyou4eXzk1orp5C1mtNCdOx0
+         B2MrJEUeMvkEqQUinWpeWLpMlFXF6Tlw2T4t1F6gElFjqlUskXDSP9uUO3zK36Fosoga
+         r2Cg==
+X-Gm-Message-State: AOAM531O6pB3LZoGCdUJm0kzwvHCLNPXgkzKH7heWZXkAGUpTj0b4lZP
+        3jeUB48oVHb85MzMD19DgzO44ldUD7OUGCoFpVeR3GeXA74=
+X-Google-Smtp-Source: ABdhPJzwKey7jQXaAr9aWpzLqbNcLo3YysJvPR8Yfixvgk2O/ig3JxjNiTB4FTash8S1u8Cg1GSmvks6kgaI7YlQiPg=
+X-Received: by 2002:a05:6830:1d43:: with SMTP id p3mr1791852oth.184.1614335758954;
+ Fri, 26 Feb 2021 02:35:58 -0800 (PST)
 MIME-Version: 1.0
-From:   Jean-Marie Lemetayer <jeanmarie.lemetayer@gmail.com>
-Date:   Fri, 26 Feb 2021 10:08:24 +0100
-Message-ID: <CAAdc0hwmR7BF53_66LNaceLrkFPDphU-y2sLEGB_1YoR5ErQsg@mail.gmail.com>
-Subject: [RFC] new subcommand: git sync
-To:     git@vger.kernel.org
+References: <20210217072904.16257-1-charvi077@gmail.com> <20210225100855.25530-4-charvi077@gmail.com>
+ <xmqq7dmvubus.fsf@gitster.g>
+In-Reply-To: <xmqq7dmvubus.fsf@gitster.g>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Fri, 26 Feb 2021 16:05:48 +0530
+Message-ID: <CAPSFM5d3M5joEBmAkY_-7hYGyz_e7HVpWmR6EN2U2Hw7V_LEqQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] commit: add a reword suboption to --fixup
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+Hi Junio,
 
-I created a new "git sync" sub-command a few months ago to deal with the pull
-request workflow.
+On Fri, 26 Feb 2021 at 02:03, Junio C Hamano <gitster@pobox.com> wrote:
+>
+[...]
+> > +     if (argc)
+> > +             die(_("cannot combine reword option of --fixup with paths"));
+>
+> It would be easier if the user is told "foo" in the message when
+>
+>     $ git commit --fixup=reword:HEAD~ -- foo
+>
+> (from your tests) is attempted, no?
+>
 
-Its goals are to:
- - keep all configured branches synchronized with the remotes (--set-upstream)
- - do not touch your wip feature branches (which has diverged from upstream)
- - prune the remotes
+Okay, will print the passed argument in the message.
 
-As I use it on a daily basis, to synchronize the remotes and then be able to
-quickly rebase my pull requests. I think it's worth sharing. What do you think?
+>
+> I am not sure this comment is all that helpful to the translaters.
+> If they are not allowed to translate <amend|reword> part, telling
+> them what that part means does not help them very much.
+>
+>         Leave "[(amend|reword):]" as-is, and only translate <commit>.
+>
+> would be more direct without distracting them with useless piece of
+> information, no?
 
-For now it is a simple shell script available here:
-https://github.com/jmlemetayer/one-time-setup/blob/main/git-sync
-
-If you think it's a good idea, I'll propose a series of patches with the new
-sub-command, the manual page and the associated tests.
-
-Best regards,
-Jean-Marie Lemetayer
+Yes, I agree and will correct it.
