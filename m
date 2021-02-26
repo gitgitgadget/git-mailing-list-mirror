@@ -2,105 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9A40C433E0
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 06:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 363B4C433DB
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 06:36:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4467064EDB
-	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 06:28:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D344D64ECE
+	for <git@archiver.kernel.org>; Fri, 26 Feb 2021 06:36:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229849AbhBZG2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Feb 2021 01:28:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33046 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230006AbhBZG2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Feb 2021 01:28:11 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EBF5C061574
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 22:27:31 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id jx13so1927192pjb.1
-        for <git@vger.kernel.org>; Thu, 25 Feb 2021 22:27:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KiwCXYzLcM5l1FGgeKFPzilSttlrFDdVlB3DIhX80FY=;
-        b=IjeUZg932443QCFc5qzKThw0+qbALn7XHD8yFiiGfbhb6pIAwUqCu3ck/lalV9iZx8
-         CA/Uvg45bDHo7fTUx8kTG/ULxO9tMYxgomt4Wg4VqACYZDcOk50uenMStPSnPpNFkwwY
-         duJzBhhKVvFWjjZjOHUL/l4bD/CVeSsFvsyCV+0KXjHmji58pabSMflCu369i3c5NrX7
-         5Tx3A01yY3tXeJZYTr1Q3NxItk6gFMLpUV3p1ap1aQKj6Bxb5o6e+MkS1Po5r8yF8T8y
-         McYYf99U83sirVC5KeYV5pb7MldOyTttTVr+1xEFFHYMoEiM7JZDHyGq3s8z5nuY56Vl
-         ILwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KiwCXYzLcM5l1FGgeKFPzilSttlrFDdVlB3DIhX80FY=;
-        b=TF6wO8KfDnvHv3c2YHmHW5L9uz3Faqywfv3LWcpntzB8TDMcaC42PHOOksM46x8XAv
-         LzMCMgJLxaJ10cYe5jov6ojjuF0r1HGcew3ceLu/4t4MUzVl6r82vhzFGldOHQ3O0l7I
-         JqTmSbmy/RKs0/N2lUfETEH/qXhuJMOXGukutNr5ymWKUjdFyQEpFGe/yh1l4fCgsLUj
-         tpxmKSRau4SMvyijeEjC9dyeGgWnkCZZOSKjNzSp3J7XT6hbWnxl5JW6uZMynwAqFnEU
-         fjfSpX9fSHQ2qLiPP1xqZOaiAdJ6ncVgxbbDF/3/iAvIq2lDmgbVixZBxzFda7EnEK0z
-         kdQw==
-X-Gm-Message-State: AOAM533KsNkayLwkU+kbawaq/zjOXkBq4R+CGGqJzdeilxHSVsHfn11O
-        +4X8xjonXdPSy5gxSEcSOaMHgEjHFy6l2cOFbLUNjBNmJb0=
-X-Google-Smtp-Source: ABdhPJyieuAl9WuwkTyUmwg6g9YlIPY5ZAgQK7Rh0HShayC6QPkzhufrVq4hJqFruUaAjUa5vIy6dq4M/wkKcCWU62E=
-X-Received: by 2002:a17:90b:34c:: with SMTP id fh12mr1843112pjb.137.1614320850754;
- Thu, 25 Feb 2021 22:27:30 -0800 (PST)
+        id S229586AbhBZGgO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Feb 2021 01:36:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45568 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229482AbhBZGgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Feb 2021 01:36:13 -0500
+Received: (qmail 11979 invoked by uid 109); 26 Feb 2021 06:35:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 26 Feb 2021 06:35:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16566 invoked by uid 111); 26 Feb 2021 06:35:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 26 Feb 2021 01:35:31 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 26 Feb 2021 01:35:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Blake Burkhart <bburky@bburky.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 0/6] open in-tree files with O_NOFOLLOW
+Message-ID: <YDiWs6yyv3U9YvC2@coredump.intra.peff.net>
+References: <YCsBA002yv8XpppM@coredump.intra.peff.net>
+ <YCsBRUQkrAm8l2gz@coredump.intra.peff.net>
+ <87y2foaltl.fsf@evledraar.gmail.com>
+ <YCsc0OePtrotjeg5@coredump.intra.peff.net>
+ <YCu/FoLl8p15mwio@coredump.intra.peff.net>
+ <YCvaJg8o882IqNnx@coredump.intra.peff.net>
+ <xmqqh7m0uezk.fsf@gitster.g>
 MIME-Version: 1.0
-References: <b33d0dc82f5ff1fac6772e533bbf21eecfae44ed.1614277014.git.matheus.bernardino@usp.br>
-In-Reply-To: <b33d0dc82f5ff1fac6772e533bbf21eecfae44ed.1614277014.git.matheus.bernardino@usp.br>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 26 Feb 2021 07:27:19 +0100
-Message-ID: <CAN0heSptkHY3A0MHEDwfaMQ0cqhhGwg7hTy70NOsMcp-otROSg@mail.gmail.com>
-Subject: Re: [PATCH] convert: fail gracefully upon missing clean cmd on
- required filter
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Steffen Prohaska <prohaska@zib.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh7m0uezk.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 25 Feb 2021 at 19:18, Matheus Tavares <matheus.bernardino@usp.br> wrote:
-> This assertion and the one above it are not really necessary, as the
-> apply_filter() call bellow them already performs the same checks. And
+On Thu, Feb 25, 2021 at 11:25:19AM -0800, Junio C Hamano wrote:
 
-s/bellow/below/
+> >   [1/6]: add open_nofollow() helper
+> >   [2/6]: attr: convert "macro_ok" into a flags field
+> >   [3/6]: exclude: add flags parameter to add_patterns()
+> >   [4/6]: attr: do not respect symlinks for in-tree .gitattributes
+> >   [5/6]: exclude: do not respect symlinks for in-tree .gitignore
+> >   [6/6]: mailmap: do not respect symlinks for in-tree .mailmap
+> [...]
+> 
+> So, I've read these changes and they all looked quite reasonable.
+>
+> Where do we want to go from here?
+> 
+> Merge it down and forget about the changes in verify_path() and fsck
+> in the jk/symlinked-dotgitx-files topic?  Do we want to also cover
+> the .gitmodules file with the same mechansim?
 
-> when these conditions are not met, the function returns 0, making the
-> caller die() with a much nicer message. (Also note that die()-ing here
+Thanks, I'm glad somebody looked at it. :)
 
-Makes sense. I noticed one thing:
+Having pondered it, this really seems like a less risky approach than
+forbidding symlinks for those paths. It is not impacting what is allowed
+in Git, so nobody's repo will break. And we do not even have to worry
+that our name-matching code is correct, since we are asking the OS to do
+the right thing.
 
-> -       assert(ca.drv);
+The biggest risk to me is that there is some hiccup with Windows: they
+don't have any NOFOLLOW equivalent, and the fallback lstat() is somehow
+slower than a real open(). But that seems unlikely (I could well believe
+that lstat+open is slower for them, but that only matters if you
+actually have a huge number of gitattributes files to open, in which
+case you're probably spending your time reading and parsing them
+anyway).
 
-If ca.drv is NULL ....
+So I'd be happy to proceed with this and throw out
+jk/symlinked-dotgitx-files. We can salvage the fsck checks from there,
+leaving them as warnings, but it's not urgent (they are just
+informational as "btw, this symlink won't work like you think it will").
+So I'd probably do that as a separate series.
 
-> -       assert(ca.drv->clean || ca.drv->process);
-> -
->         if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL, NULL))
+We could also cover .gitmodules, but I'm inclined not to. It's work and
+risk to convert it to this form, for little gain. Nobody seems to have
+been bothered by the symlink restriction. I guess it would take some
+is_ntfs_gitmodules() checks out of the verify_path() code, which could
+have some small performance benefit. But we'd definitely still need to
+identify .gitmodules files in fsck, because we have to check over their
+actual contents.
 
-... the return value will be 0, so this will trigger ...
+So I'd likewise be content to leave that to another series (or never if
+nobody sees an upside to it).
 
->                 die(_("%s: clean filter '%s' failed"), path, ca.drv->name);
-
-... and we'll dereference NULL to grab the name.
-
-It seems like you could leave that first assertion and your new tests
-would still pass. Hitting an assertion is arguably better than wandering
-off into undefined behavior. (What will probably happen is ca.drv->name
-will effectively also be NULL, because it's at the top of the struct.
-Some implementations will format this as "(null)", others will crash.)
-
-As you note, and my reading agrees, you can't really have ca.drv be NULL
-here. So this is like, if and when we grow a bug somewhere and actually
-do have NULL, maybe we would rather hit that "assert" than go
-dereferencing NULL.
-
-Martin
+-Peff
