@@ -2,84 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA087C433DB
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D922DC433DB
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 20:48:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FC8C64E4B
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:23:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9968464E4E
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 20:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230370AbhB0TXF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Feb 2021 14:23:05 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58976 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230351AbhB0TU6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 27 Feb 2021 14:20:58 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S230049AbhB0Ur7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Feb 2021 15:47:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51069 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230010AbhB0Ur6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Feb 2021 15:47:58 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E218312C013;
+        Sat, 27 Feb 2021 15:47:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wlh5j+a76KR7N5yILFJNRqwom2Y=; b=XkTKTE
+        74Ye9PQpfGFOOSuD6KjFaoyDLPzkalLLOVFD7uAIIgi+FvQ2C7+fIDdQXW+mG8gw
+        fIpH89TgUg6eWCfw00Nu6Q+Y+HVlpdnS1Xz43k8h19NZWTONYIx2NkIHfysVg4Hv
+        vNxPoy9VV3TSgGwmy4iwwTRIJ/xubZFYPx3Lo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=azUnAGYdhnjhchBLCskKHZSprBRL+nkz
+        apFmSs0sDcS0+mzJRjPnqdlqip60fCfosm0pcz/3eydxbhRK/O2+GHjQK6MWqAkk
+        BS5oDCraWLPDwp5CfUF8oT0RVKKO58y/M+V5Wicbow5855iUUyfkxmZUEbsEjiOZ
+        d9/dEyQFelU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DB1C012C012;
+        Sat, 27 Feb 2021 15:47:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2DA4E60DF8;
-        Sat, 27 Feb 2021 19:19:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1614453575;
-        bh=DnrvJ7AZdwIF0zB28lpZFqg6f6QOcLye/o2yFnVTHgI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=XT9m6F0pbdfyx+NgRWRvXdDOLLG9WuneYRJYMkv0A+C7Mte5gthUCCcsrKeA5vkLE
-         KyiLjcDgQXBsGAqlJA4IH4A/BHJR2pv6MmnfZGS3+bXwlBB5DkqFhFyQkNwVQvILOM
-         vTCX27dvVkb77y4AeLk8jLuHUXp6202eXkeWtY+oYUp9/rk/bvdh5qf5sxXpCv2sV/
-         tByPBDh41JwAHO+F23R+R2XhDOP6k4osRHXYNYRxXErdIBhLupjiH4Bvfh8QT5nu6A
-         G/mcU6kZJET6HHfRA7Cy7twDNjwgr86JumtbU0ToUYqXch7LuB5g0VxbMQCLNrujEq
-         qWH5afiDOHUOLYNYGmTLM7Nh5NSAqIJk+JQjNNEwh47Y/5wU5jjRjOFCfaH4maSojF
-         /ez3H37cjzXRCWCuUxjRnP/IXPgDwY4cGAKkQMS6z/agg40TrmD0kfdaGau8+nVjxL
-         zAQrZ7aQYTrjf+UeEVyZI8VY4NEFn8C1nqK0bEAH4Wyjkz8iZnw
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/4] docs: note that archives are not stable
-Date:   Sat, 27 Feb 2021 19:18:13 +0000
-Message-Id: <20210227191813.96148-5-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.30.1.721.g45526154a5
-In-Reply-To: <20210227191813.96148-1-sandals@crustytoothpaste.net>
-References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 49E9012C011;
+        Sat, 27 Feb 2021 15:47:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GIT PULL] git-gui pull request
+References: <20210226161001.x3j2pligndqnzlbu@yadavpratyush.com>
+Date:   Sat, 27 Feb 2021 12:47:12 -0800
+In-Reply-To: <20210226161001.x3j2pligndqnzlbu@yadavpratyush.com> (Pratyush
+        Yadav's message of "Fri, 26 Feb 2021 21:40:01 +0530")
+Message-ID: <xmqq5z2ds0fj.fsf@junio-linux.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F82636E4-793C-11EB-89EC-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have in the past told users on the list that git archive does not
-necessarily produce stable archives, but we've never explicitly
-documented this.  Unfortunately, we've had people in the past who have
-relied on the relative stability of our archives to their detriment and
-then had breakage occur.
+Pratyush Yadav <me@yadavpratyush.com> writes:
 
-Let's tell people that we don't guarantee stable archives so that they
-can make good choices about how they structure their tooling and don't
-end up with problems if we need to change archives later.
+> Hi Junio,
+>
+> Please pull the changes in git-gui for v2.31.
+>
+> ---
+> The following changes since commit 
+> 7b0cfe156e1f1fbb77ab35d55d48eef41625944d:
+>
+>   Merge branch 'sh/inactive-background' (2020-12-19 01:02:34 +0530)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/prati0100/git-gui.git 
+>
+> for you to fetch changes up to b1056f60b63f1bc8226d01881bc829e171fc78bf:
+>
+>   Merge branch 'py/commit-comments' (2021-02-22 20:19:53 +0530)
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/git-archive.txt | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks, will do so when I come back to my main development
+environment.
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 9f8172828d..1f126cbdcc 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -30,6 +30,9 @@ extended pax header if the tar format is used; it can be extracted
- using 'git get-tar-commit-id'. In ZIP files it is stored as a file
- comment.
- 
-+The output of 'git archive' is not guaranteed to be stable and may change
-+between versions.
-+
- OPTIONS
- -------
- 
+>
+> ----------------------------------------------------------------
+> Mikhail Klyushin (1):
+>       git-gui: fix typo in russian locale
+>
+> Pratyush Yadav (3):
+>       Merge branch 'mk/russian-translation'
+>       git-gui: remove lines starting with the comment character
+>       Merge branch 'py/commit-comments'
+>
+>  git-gui.sh     |  5 +++++
+>  lib/commit.tcl | 18 ++++++++++++++++--
+>  po/ru.po       |  2 +-
+>  3 files changed, 22 insertions(+), 3 deletions(-)
