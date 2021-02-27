@@ -2,95 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DECF7C433E0
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0132C433E0
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:22:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F73564E46
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:22:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B9C2E64E56
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 19:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbhB0TWD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 27 Feb 2021 14:22:03 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58964 "EHLO
+        id S230361AbhB0TWt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 27 Feb 2021 14:22:49 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58970 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230335AbhB0TU6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 27 Feb 2021 14:20:58 -0500
+        by vger.kernel.org with ESMTP id S230355AbhB0TVA (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 27 Feb 2021 14:21:00 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2659560DF4;
-        Sat, 27 Feb 2021 19:19:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 291E560DF6;
+        Sat, 27 Feb 2021 19:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1614453573;
-        bh=u0hSAMaAawt+ck4OscplryMv2VIafnCmwxyFnjUgbEc=;
-        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=XeNeduAWPEZG1yWwmiNlejGA5fgO7sHVXyKOK2as2xLCkxULw9MQhGZm6jDd7Ab9o
-         UkDo1z1PSjlhjmyiNRKG9sua5pyfVEqVXvRndzGvAuSL0cTdWYGI4ssST4ecDWHFX3
-         zLpANY6n8NbQVHQ0e+tPK8dJCu9SIC9tzdXNgfwxXHhzkVcLv9mMPgNQdCZKXkPeMo
-         xWifXyJU7ZbKGElP/YqlANroJcvUkGUA3KHWFu1a4BZJkFcFYRij0y8Tr4iQZ6hoH5
-         OO6CbNxtY3XGk87ydk6Sv3mJyIS4TkoKk7CyBL7t45MygKXHxO9Bt8ydqrhDqGA//n
-         XAAJhlPcZpWd0vUdh5jp1x2YHFp4R1mXS8HPT6r2wle5DydOSRUv5Fa942gXUWnuwb
-         c+G9yMJ67k+VazPlrzzt19cFL6FcGQAiie1zk4Qw/yNZOYJIvEMIApPdQ0ViWDcold
-         nE+RrKQJD95m47oIEw8s+Bz8NqYLAK90kMtvA/xG9T3Vo0pGZHP
+        s=default; t=1614453574;
+        bh=bJurNQ09ftEn7n+GJ9ZWr+ugrZN+esb6+7mQoM4FRuA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=ldvZVEpSnI5iP0ImKbldbPXITqgd0HYhlTvFRF/0NYwFiIt3ZDMJYTDcGLg11oM72
+         2isf5teGNFMuluVwDUCeH7WEw6HRyeu0PArjbUNO+IJKNNy3yb//I+JJ267A7TZLZe
+         pVnBAMeTCm7+MwYuvVBrMm3dsRfSsunxUBbPfM5nf7+BpEKPbiORS6xoyuZsPzdk6p
+         IgzslyIHTxaDhNXZrD6mPAncIGYIuDMu7ilTh2rs4U3V6kQw51Re31W3wA6Z6CFsgC
+         QmAulG7TM5ncjKoIgpLS5t7N4ezCCV4iAAaPGTLLtlxZV597fYwAEIEClwfWdeQZVQ
+         hjhJOza6HV2bRWXlkJE1yIFDwlldVX3j+tXUf30sWN4zVc2QIHG+KMI3qqII1gIowz
+         6cv990+VF104HwuzfsPPXtjZLKDLUEBD5ztFyzhwLxVsvkQC+8a27+rLdLPdc8Pkvj
+         28GYpte3PUZ7Ev2gB7U9KnFNdKFM/KPeCyfJHZoLgxMWsAFuojQ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Emily Shaffer <emilyshaffer@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 0/4] Documentation updates to FAQ and git-archive
-Date:   Sat, 27 Feb 2021 19:18:09 +0000
-Message-Id: <20210227191813.96148-1-sandals@crustytoothpaste.net>
+Subject: [PATCH 2/4] docs: add line ending configuration article to FAQ
+Date:   Sat, 27 Feb 2021 19:18:11 +0000
+Message-Id: <20210227191813.96148-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.30.1.721.g45526154a5
+In-Reply-To: <20210227191813.96148-1-sandals@crustytoothpaste.net>
+References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series introduces several new FAQ items and an update to the
-git-archive documentation.
+A common source of problems when working across projects is getting line
+endings to work in a consistent way.  Let's explain to users how to
+configure their line endings such that they're automatically converted
+using the .gitattributes file.  Update a reference to an incorrect FAQ
+entry by referring to the previous entry instead of the following one.
 
-The first three patches introduce FAQ entries for questions I've seen
-extremely frequently on Stack Overflow.  Since clearly users are seeing
-these problems, we should update our documentation to address them and
-help users find clear and accurate solutions.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ Documentation/gitfaq.txt | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-I realize that suggesting people share a working tree across systems is
-controversial, but people are doing it, so let's tell them how to do it
-safely.  Users frequently use things like Dropbox, OneDrive, iCloud, and
-similar cloud syncing services to do this and then wonder why things are
-broken or their repository is corrupted.  We tell them that
-POSIX-compliant file systems should be used and give examples of what we
-know does and doesn't work, and we tell them about the security pitfalls
-of untrusted working trees.
-
-The third patch addresses several common situations with HTTP pushes and
-fetches.  The majority of these problems are going to be with TLS MITM
-devices, intercepting and filtering proxies of various sorts, and
-non-default antivirus and firewalls, all of which security experts
-steadfastly recommend against.  We don't do so here (yet), but we do
-explicitly call them out as potential sources of problems and we
-encourage users to report these problems to vendors and network
-administrators so that they can be addressed.
-
-The fourth patch states a fact which we've been explicit about on the
-list but have never documented: that the output of git archive is not
-stable.  I do recall that I sent a patch breaking kernel.org's
-infrastructure in the past due to a change in archive output and I'd
-like to avoid other folks relying on bit-for-bit identical output.
-
-brian m. carlson (4):
-  docs: add a question on syncing repositories to the FAQ
-  docs: add line ending configuration article to FAQ
-  docs: add a FAQ section on push and fetch problems
-  docs: note that archives are not stable
-
- Documentation/git-archive.txt |   3 +
- Documentation/gitfaq.txt      | 176 +++++++++++++++++++++++++++++++++-
- 2 files changed, 178 insertions(+), 1 deletion(-)
-
+diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
+index 042b11e88a..a132f66032 100644
+--- a/Documentation/gitfaq.txt
++++ b/Documentation/gitfaq.txt
+@@ -387,6 +387,41 @@ repository will apply to all users of the repository.
+ See the following entry for information about normalizing line endings as well,
+ and see linkgit:gitattributes[5] for more information about attribute files.
+ 
++[[line-ending-gitattributes]]
++How do I fix my line endings to work well across platforms?::
++	The best way to do this is to ask Git to perform automatic line ending
++	conversion in your repository such that it always stores LF (Unix) line
++	endings in the repository and checks them out to the user's preferred endings.
++	This is done using the `text` attribute in the `.gitattributes` file in the
++	root of your repository.  If you want to use the built-in heuristic to
++	determine text files, you can write this:
+++
++----
++* text=auto
++----
+++
++If you have certain files that must always use specific line endings when
++checked out, such as shell scripts, or PowerShell files, you can specifically
++specify the line endings to be used, and you can also specifically mark some
++files as not wanting line-ending conversion (`-text`):
+++
++----
++*.sh text eol=lf
++*.ps1 text eol=crlf
++*.jpg -text
++----
+++
++When you're done making these changes to the `.gitattributes` file, run `git add
++--renormalize .` and then commit.  This will make sure that the files in the
++repository are properly stored with LF endings.
+++
++Using this approach means that each developer can choose the line endings that
++are best for their environment while keeping the repository consistent, avoiding
++needless changes in the repository based on differing line endings, and allowing
++tools like `git diff` to not display spurious whitespace errors.
+++
++See linkgit:gitattributes[5] for more information about attribute files.
++
+ [[windows-diff-control-m]]
+ I'm on Windows and git diff shows my files as having a `^M` at the end.::
+ 	By default, Git expects files to be stored with Unix line endings.  As such,
+@@ -396,7 +431,7 @@ I'm on Windows and git diff shows my files as having a `^M` at the end.::
+ +
+ You can store the files in the repository with Unix line endings and convert
+ them automatically to your platform's line endings.  To do that, set the
+-configuration option `core.eol` to `native` and see the following entry for
++configuration option `core.eol` to `native` and see the previous entry for
+ information about how to configure files as text or binary.
+ +
+ You can also control this behavior with the `core.whitespace` setting if you
