@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09D2BC433E6
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 00:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CED03C433E0
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 00:32:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DA2AE64E4E
-	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 00:32:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A529E64E4E
+	for <git@archiver.kernel.org>; Sat, 27 Feb 2021 00:32:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230083AbhB0AcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 26 Feb 2021 19:32:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39496 "EHLO
+        id S230112AbhB0AcT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 26 Feb 2021 19:32:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbhB0AcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Feb 2021 19:32:11 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 499ACC06178B
+        with ESMTP id S230040AbhB0AcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Feb 2021 19:32:17 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1355C06178C
         for <git@vger.kernel.org>; Fri, 26 Feb 2021 16:30:55 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id x16so8651973wmk.3
+Received: by mail-wr1-x434.google.com with SMTP id v15so10232615wrx.4
         for <git@vger.kernel.org>; Fri, 26 Feb 2021 16:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=thfVd0tHN5z+Pv8zu46+TgGQ7hsjp/64gQDt7RDlSeQ=;
-        b=l50olkwpGrVg1gDXGo1tn6DRhSubqpjQa779BoFgrnpmoSV8ixgRsVdwSX4xZdYxIw
-         Qrni24EIuT13M6SI6JHrl9WpIdvvzpzAXHfSYt481SzjgiBSaTfIJwVdzlpwLkgUW+4v
-         D4L6CFpR++Vze+e5WBe9pYAUtKUXTQGir3v6AriO49GMJXiJtGiuPpSS8cFJkgF/+Y8p
-         0kNH+XcunXPJaVBqSfmyAkEDi+n3C2F+6erruSyfWzY7xV4nZ321X36ZXav11yVIau3s
-         IJYAUhiZrq8Vvi/gzhy6/5ECtvEi1yg02XbNzr9LB9IJZMgZYYNjHlmsgkFaqfSLvrar
-         3lDA==
+        bh=z1A+8EyXFNW1JMng/HVEyaSUwKmkK6DIAI/dLN1n5Xw=;
+        b=NEwQOS1trb0ULDjthR6is2LQoVgfpor01w8olY/EBCctDFwJiciCTVZgkYe/UKL+8D
+         YZ5n7uE8Goc8WIyBmXlZpi5TcGLqnDM5FjK4xiD4jPbdVjll629Z2uHX2EpOHFLzx6+a
+         YqDqf7xJ8Ej2IkM6wF9k4yu+8RpEwFhURpq547HEBDkWavRlA/Layw+eNvGf0aOSfcRr
+         1GiGfgQa9DTuAvAtIQvQCE/XzRul5ty9zNUlH0WINfj0Ylytgt3Xpp7o7D+bdNV7kEKx
+         T6UuYmZa2+BHwvwj+H3UGW6ovBbu7veQ9ZHfbvEgwdR1vGDUYMOUf9ezW5lzYueL3o1r
+         pQfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=thfVd0tHN5z+Pv8zu46+TgGQ7hsjp/64gQDt7RDlSeQ=;
-        b=aw9BZAGX7VgDTWNJENoJJ/fnoNdyNx/76+B0mZOYzYzxdE5FTBQ5u1hduydDsLN+EZ
-         1o1+J8yDYrb2iw5oZeSp1DD2j9fswJdjjOGe9hR7sirDKrNoi00pnIcCMZzC9fi7PN5P
-         Qhv/4waZUXvWte5izTLvYtQaFROZESo6w6diUXG6/YiX1nE1F3R7tekmofPjytMxiIRp
-         kF07pptMXyCVffmTR9kBjpKARFVxU4cyCpugA60kMTvovSLyRRXGa68YYwI3imgLY4YB
-         wAKoBr2efeqJgF3efGWgNX5eMerI4nZsycH0Jc3cxu8P+PH7bjB48/VelPLKzD9mwXOt
-         8gxA==
-X-Gm-Message-State: AOAM533Df/Cyw5PTMi/uOPMpnEzJQE8x7pb2Ys2M99ghEuBneD7YrJ0x
-        uZNzq1YkhCSglzUAkskl+/1F4AV2f18=
-X-Google-Smtp-Source: ABdhPJydG8mnKELqArRSZcIp2Jp5e31zHhf6VnMUsFGc2YY4vHIaEwISPvuG9+JtUy3bRuGwctowuQ==
-X-Received: by 2002:a1c:7415:: with SMTP id p21mr4881434wmc.124.1614385854075;
+        bh=z1A+8EyXFNW1JMng/HVEyaSUwKmkK6DIAI/dLN1n5Xw=;
+        b=hzYe2Y0fmFeMFyeXqHA/SPSDGuI+4ayhir9ttqa82y3SDZWvVNFWyauYMXsL3dX0UW
+         ziEJgnrcEMFagdKZUBmMQBrUr4BGO8OF4f01OKsfoVMTB0ftJTQJcEJyXOccFvpPgqaO
+         yxdEL2X9wAAiRCUagkNhd6uHo/9J5aSClfcMpesv7zt1Q9fBXZxj78KSfaZNjlxOrg/p
+         wC245igtP0GG7LCMGJ52QyUWm/KFhTZ5TdBzLI2Df/Nij+zoztuTkY4mKdOMQtQt4tWm
+         KxbPTZ8WhyhC145WGzeajRbH1q60hecovcUbZa9erDgt3zBbiEoFV2PLXOA2t3hEanWS
+         RH5A==
+X-Gm-Message-State: AOAM533sAxrAcc7hg56pye1IBFRrPtX8792aXafp/NVD7+okhIMZXVnT
+        cFraftWW23yQ74LLZ229Aa+R/Ec0VmU=
+X-Google-Smtp-Source: ABdhPJzsMGkjSI6DtaAazb4aiPV2VRjacwKf4oR8Nkt74SmNqVUeAOlSi4iKresC8NAd6TcPnMZMBw==
+X-Received: by 2002:adf:ce8a:: with SMTP id r10mr5749299wrn.17.1614385854665;
         Fri, 26 Feb 2021 16:30:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b7sm15719961wrv.6.2021.02.26.16.30.53
+        by smtp.gmail.com with ESMTPSA id g11sm13688979wmk.32.2021.02.26.16.30.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Feb 2021 16:30:53 -0800 (PST)
-Message-Id: <2baf39d82f3ed40925addd778356b143f516f157.1614385849.git.gitgitgadget@gmail.com>
+        Fri, 26 Feb 2021 16:30:54 -0800 (PST)
+Message-Id: <02f1f7c02d32dc37813abf5fcf767cc374b17fd3.1614385849.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.844.v4.git.1614385849.gitgitgadget@gmail.com>
 References: <pull.844.v3.git.1614304699.gitgitgadget@gmail.com>
         <pull.844.v4.git.1614385849.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 27 Feb 2021 00:30:43 +0000
-Subject: [PATCH v4 05/10] diffcore-rename: add function for clearing
- dir_rename_count
+Date:   Sat, 27 Feb 2021 00:30:44 +0000
+Subject: [PATCH v4 06/10] diffcore-rename: move dir_rename_counts into
+ dir_rename_info struct
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,79 +81,111 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-As we adjust the usage of dir_rename_count we want to have a function
-for clearing, or partially clearing it out.  Add a
-partial_clear_dir_rename_count() function for this purpose.
+This continues the migration of the directory rename detection code into
+diffcore-rename, now taking the simple step of combining it with the
+dir_rename_info struct.  Future commits will then make dir_rename_counts
+be computed in stages, and add computation of dir_rename_guess.
 
 Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 12 ++++++++++++
- diffcore.h        |  2 ++
- merge-ort.c       | 12 +++---------
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ diffcore-rename.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 39e23d57e7bc..7dd475ff9a9f 100644
+index 7dd475ff9a9f..a1ccf14001f5 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -528,6 +528,18 @@ static void initialize_dir_rename_info(struct dir_rename_info *info)
- 	}
+@@ -388,7 +388,7 @@ static void dirname_munge(char *filename)
+ 	*slash = '\0';
  }
  
-+void partial_clear_dir_rename_count(struct strmap *dir_rename_count)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+
-+	strmap_for_each_entry(dir_rename_count, &iter, entry) {
-+		struct strintmap *counts = entry->value;
-+		strintmap_clear(counts);
-+	}
-+	strmap_partial_clear(dir_rename_count, 1);
-+}
-+
- static void cleanup_dir_rename_info(struct dir_rename_info *info)
+-static void increment_count(struct strmap *dir_rename_count,
++static void increment_count(struct dir_rename_info *info,
+ 			    char *old_dir,
+ 			    char *new_dir)
  {
- 	if (!info->setup)
-diff --git a/diffcore.h b/diffcore.h
-index db55d3853071..c6ba64abd198 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -161,6 +161,8 @@ struct diff_filepair *diff_queue(struct diff_queue_struct *,
- 				 struct diff_filespec *);
- void diff_q(struct diff_queue_struct *, struct diff_filepair *);
+@@ -396,20 +396,20 @@ static void increment_count(struct strmap *dir_rename_count,
+ 	struct strmap_entry *e;
  
-+void partial_clear_dir_rename_count(struct strmap *dir_rename_count);
-+
- void diffcore_break(struct repository *, int);
- void diffcore_rename(struct diff_options *);
- void diffcore_rename_extended(struct diff_options *options,
-diff --git a/merge-ort.c b/merge-ort.c
-index c4467e073b45..467404cc0a35 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -351,17 +351,11 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 
- 	/* Free memory used by various renames maps */
- 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
--		struct hashmap_iter iter;
--		struct strmap_entry *entry;
--
- 		strset_func(&renames->dirs_removed[i]);
- 
--		strmap_for_each_entry(&renames->dir_rename_count[i],
--				      &iter, entry) {
--			struct strintmap *counts = entry->value;
--			strintmap_clear(counts);
--		}
--		strmap_func(&renames->dir_rename_count[i], 1);
-+		partial_clear_dir_rename_count(&renames->dir_rename_count[i]);
-+		if (!reinitialize)
-+			strmap_clear(&renames->dir_rename_count[i], 1);
- 
- 		strmap_func(&renames->dir_renames[i], 0);
+ 	/* Get the {new_dirs -> counts} mapping using old_dir */
+-	e = strmap_get_entry(dir_rename_count, old_dir);
++	e = strmap_get_entry(info->dir_rename_count, old_dir);
+ 	if (e) {
+ 		counts = e->value;
+ 	} else {
+ 		counts = xmalloc(sizeof(*counts));
+ 		strintmap_init_with_options(counts, 0, NULL, 1);
+-		strmap_put(dir_rename_count, old_dir, counts);
++		strmap_put(info->dir_rename_count, old_dir, counts);
  	}
+ 
+ 	/* Increment the count for new_dir */
+ 	strintmap_incr(counts, new_dir, 1);
+ }
+ 
+-static void update_dir_rename_counts(struct strmap *dir_rename_count,
++static void update_dir_rename_counts(struct dir_rename_info *info,
+ 				     struct strset *dirs_removed,
+ 				     const char *oldname,
+ 				     const char *newname)
+@@ -463,7 +463,7 @@ static void update_dir_rename_counts(struct strmap *dir_rename_count,
+ 		}
+ 
+ 		if (strset_contains(dirs_removed, old_dir))
+-			increment_count(dir_rename_count, old_dir, new_dir);
++			increment_count(info, old_dir, new_dir);
+ 		else
+ 			break;
+ 
+@@ -479,12 +479,15 @@ static void update_dir_rename_counts(struct strmap *dir_rename_count,
+ 	free(new_dir);
+ }
+ 
+-static void compute_dir_rename_counts(struct strmap *dir_rename_count,
+-				      struct strset *dirs_removed)
++static void compute_dir_rename_counts(struct dir_rename_info *info,
++				      struct strset *dirs_removed,
++				      struct strmap *dir_rename_count)
+ {
+ 	int i;
+ 
+-	/* Set up dir_rename_count */
++	info->setup = 1;
++	info->dir_rename_count = dir_rename_count;
++
+ 	for (i = 0; i < rename_dst_nr; ++i) {
+ 		/* File not part of directory rename counts if not a rename */
+ 		if (!rename_dst[i].is_rename)
+@@ -497,7 +500,7 @@ static void compute_dir_rename_counts(struct strmap *dir_rename_count,
+ 		 * the old filename and the new filename and count how many
+ 		 * times that pairing occurs.
+ 		 */
+-		update_dir_rename_counts(dir_rename_count, dirs_removed,
++		update_dir_rename_counts(info, dirs_removed,
+ 					 rename_dst[i].p->one->path,
+ 					 rename_dst[i].p->two->path);
+ 	}
+@@ -551,7 +554,9 @@ static void cleanup_dir_rename_info(struct dir_rename_info *info)
+ 	/* dir_rename_guess */
+ 	strmap_clear(&info->dir_rename_guess, 1);
+ 
+-	/* Nothing to do for dir_rename_count, yet */
++	/* dir_rename_count */
++	partial_clear_dir_rename_count(info->dir_rename_count);
++	strmap_clear(info->dir_rename_count, 1);
+ }
+ 
+ static const char *get_basename(const char *filename)
+@@ -1140,7 +1145,7 @@ void diffcore_rename_extended(struct diff_options *options,
+ 	/*
+ 	 * Now that renames have been computed, compute dir_rename_count */
+ 	if (dirs_removed && dir_rename_count)
+-		compute_dir_rename_counts(dir_rename_count, dirs_removed);
++		compute_dir_rename_counts(&info, dirs_removed, dir_rename_count);
+ 
+ 	/* At this point, we have found some renames and copies and they
+ 	 * are recorded in rename_dst.  The original list is still in *q.
 -- 
 gitgitgadget
 
