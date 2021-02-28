@@ -2,121 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 243E3C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34976C433E6
 	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 11:24:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC2B664E60
+	by mail.kernel.org (Postfix) with ESMTP id 00F7D64E04
 	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 11:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbhB1LYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 06:24:34 -0500
-Received: from mout.web.de ([212.227.15.3]:59757 "EHLO mout.web.de"
+        id S230450AbhB1LYg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 06:24:36 -0500
+Received: from mout.web.de ([212.227.15.14]:33077 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230045AbhB1LYb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 06:24:31 -0500
+        id S230045AbhB1LYg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 06:24:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1614511355;
-        bh=0OlA+GiSZq5stUWg9j+Lba+27ovaybBaFoiQSyUgmZ4=;
+        s=dbaedf251592; t=1614511361;
+        bh=FBJXTKwTeoDJzypnvzSIOEiytzW+YYunp3tDDrIEmxU=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=bpcDutl9Q8girMyE2nzkZ3oWSGxYJdFiDW/P+3O87mr6Hsb3l/SxOjdVKEenuaqrd
-         B+htI/sFLOs87f0JE3IOCM1zyk0wqCBrMIPjkmaPHi4fJQg8e7f1i5w4vpDolbbpAd
-         sRvk4d/bcfO609WSQoocmCwCziDIvz6CKYt7ny6g=
+        b=jWqt6nM+xTYlXGp9UHp0lngNRl23hh5J0D22pzu/SjyI5NEaUMgrGFM57pzb/2Qe5
+         j0L6hr3gxNapF8NSmgOPYhGzdbx8t/qTlQbCZde3P90uvQEQnIJUL5+X0johEu1oH7
+         IiTpMYY6iBeZY0MbFNMUMZ4UmCtp+aZLIraNIs3c=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from Mini-von-Rene.fritz.box ([79.203.24.70]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LgYRZ-1ldEIY1bXh-00o16M; Sun, 28 Feb 2021 12:22:35 +0100
-Subject: Re: [PATCH 1/2] pretty: add %(describe)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+ (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MMp8K-1lYwyL2uIO-00Il3B; Sun, 28 Feb 2021 12:22:41 +0100
+Subject: Re: [PATCH 2/2] pretty: add merge and exclude options to %(describe)
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Eli Schwartz <eschwartz@archlinux.org>, git@vger.kernel.org
 References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
  <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
- <87pn109nhr.fsf@evledraar.gmail.com>
- <xmqqft1vrgxa.fsf@gitster.c.googlers.com>
- <87mtw3a5af.fsf@evledraar.gmail.com>
+ <b7bd37c4-ab13-0297-da46-716e26de10d6@web.de> <xmqqsg5uletz.fsf@gitster.g>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Message-ID: <c65039f2-46d3-bbb4-1aa1-e0ce89f69b64@web.de>
-Date:   Sun, 28 Feb 2021 12:22:34 +0100
+Message-ID: <878d2515-a937-f6d7-9d77-45c38f547893@web.de>
+Date:   Sun, 28 Feb 2021 12:22:40 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
  Gecko/20100101 Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <87mtw3a5af.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqqsg5uletz.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:q9iBvyhenCLJzmrTtR8kcmVSsqxGgC2baIivxcr0LqW4f24PZYG
- 6PlPx3rXu2zheivDm57SzYm96w4TcafJBH6u84vIABkG0I8cNpfAaQdhj0Jzg5ndyRIkZ4K
- p788Vq2bJkt7dGpAbnYi7TqKgZPbjVUVCxtPTyLOnNCmB17hEKB6mYs70JtW3XOjPan9oOe
- G9IsdSgSJ2t1IbEnul5fw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QX8uMk/aq3I=:apxPsXeD7pefFp40UOvioh
- KnjQfy9ZStHfaR5+hQPSfsxSvv13yRFATVtyQ8uTUKPJQ1EmaW7quTRszHjDMsR5DlsmiGGA2
- 3yc/OBriUqA0fwwsKvuej5u8fqQZIKdiIWBZpmaH9lmS8+F8f+IbH41WyFO3TPW6+uoy80Yvn
- F6MwpGjYSua+LT4epjwsvXEbfGGjbbtVs9+aRc80aGxaJTWOKmI9wbJMy4WpZzHn90kI0s7nk
- irI1LV6oHpdP7R1+XaMNGQrHCh/IINwR9bvNX/uMk9t6zsctxuI6LSyuhj4MoCJfurHerZvIy
- w9/6qNPQho4D1M10JqHk1H5/OTqKo43Ho0umAS3YJuRwr2p15wUAwuAfr6mhEcCPjoCfsJzxR
- b3b8c4zNHwJN920k6c8M9qWhTz3BniINuHLHtZNxffGdP+TC3+erlspUrL1/EgUQblD8U0EOH
- PJvldfVz/TWVGg2gA0Km2XZykvsd9A3Q+/kTNFr5i7PAJkgjZHRPQMr0s7ZYkEx4sKf1uszRw
- aNPZrbJUr/Gn+9UPWpiP1xN3XBDBtJ2Yi3XJypGRkLhW5ed55jkBlqpPh3GH4LbGOudCEMhHi
- Dmsp5Oa6QYEw7nU+8TDGET+MfQuzswupb98fXGWvkcw40u+TdcDdVfJOAWV8urogjYRD1Nheo
- wCMPcroo3OZsfuE0RsUTaXth4JUz8Dbqkljr1f5IMchQMolTrxUgEeWKgwMwE8NBr1/DEzkVU
- jb0CKq4/gF2cNYikulmMzAXf9RNo7oXvMsiKkSWnZA/oGKD1BgkkCW51G6rALlsgaluBy8o6C
- llKni+R/iD+bPx1/YxgUrPVLqXusNiCZrKBfaEEg6EuoRg9s+ofJ1Snt067vXXi34NdUN03ib
- 5CV2BkPA1NKWR7tFB6kg==
+X-Provags-ID: V03:K1:o4EGQQG6+Od+SABQGusZ3dsf5LvZTpYNftmuj4veNKqdT/vmAyf
+ G3quUkUg2iSIlkiv0Ota9OM0HwNjNdfr643zd4+0zGNjTqu23JN6DUbViF7jlUibUcwWcrQ
+ xi1KOwoJs3epEb6dMphIWnZ5yRmaIIkOj5YffPPb6evio15h7tCYuVzcnEHik52Usw0dLFW
+ Kpythh350yRSJdPJDmUZw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3W2pnFt2TO4=:0cLUxRvv1TuFeTPBATs59O
+ 4z9c+103Ca2rPq8fr4UWmtb1n44YPSbonhMLTFNxuJKcBhSF/MllP2MmPw4RHn5vHUtju5U0a
+ xusurh5n4MPTvQB3YP6dwcVm9hivcKTB9pnjrgWMKO39f3CYnW8GLMuT4USa6iBpvTpGUbvgB
+ /GuX/0wKroxDt2GeV6vmUe0cnalHcG8d9y7NnHVasgpBXEQ8/2VRKugyZgreuCCRmSTpF96I3
+ q0myYkSjKDOXS2vrN7xrvu3OVwGUvXiWCu52AmVWo0NRfTfa3pCcswcf6W72t4vPpnoIvdHyY
+ UG+Zx530jSEVJlp+2To8hkiueXtwPaK6faD52GJupD6OjxrXWQ8+sgEWv6nQNsvU2+aFMRIej
+ L9CAoc7GyT+q8yYJCzUrBUjQwHWC+7zmNDyIY0Zh3gNJQj66G2iXhgey/F2OAOYY5gXfOEEoy
+ ithcegFa0kRLLNMHC/6S1IFB0RYQ/ILAyt0PRUlBr8nGLEgMc4gNypU52NzqSS8eJ2VgXTuy/
+ N5OyZlGdo6uU8NGJviw9ZHsc7aLoXISnf8AKGpU7hlGxt0AE5dkywk507uzyMkkp3Rl+1Wf3n
+ 5iGUORM+Law8HH8C9IvwN/iMhLVWyM8EPPjMst79WNf84yCxqQDSZoCPClPtatRFZOKY6yzjy
+ c4hVb1xXD8TOVLCc6K8dkegdjglHj5VkN25N09QfFH47aKdSfDk6wZfj9Tq4wmf46LWurarP2
+ nKYHF47zSIfcNfWyHO2bZzgBCSbZC1XF/5TAhRiczF8UdGUz1DVWvFbZnEk8sQDcJXgctMh6r
+ wGxcne/CiOjL76Ve16+ddo502ak0Qj0A84lpKlRoEdbDg38HiBp3O87SRkvsfYPNLTCnjEvpf
+ Ox33Fw1gc6FQmNmGzpQw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.02.21 um 01:47 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Usually something shelling out has going for it is that even if it's
-> slow it's at least known to be bug-free, after all we use the command
-> like that already.
+Am 17.02.21 um 19:38 schrieb Junio C Hamano:
+> I wonder, in addition to "match" and "exclude", if we want to allow
+> "always" as well.
+
+I added "match" because that describe option is used by GIT-VERSION-GEN,
+so I imagine it's generally useful for version names in spec files.  Not
+sure why I misspelled it "merge" in the subject, though. o_O
+
+"exclude" is not in there, but I threw it in anyway, as the example in
+77d21f29ea (describe: teach describe negative pattern matches,
+2017-01-18) made sense to me.  It complements "match" nicely.
+
+I had "always" in proof-of-concept patch because I hadn't decided what
+to do with commits that git describe doesn't find a description for,
+and wanted to check the full output of git log --pretty=3D'%(describe)'.
+For a release tarball of a repo that lacks tags it would be easier to
+use %h instead of %(describe:always) -- or tag the release.
+
+That's why I didn't include "always" in the latest patches, but if it
+turns out to be useful for someone then I wouldn't them adding it.
+
+> Also, looking further into the future, I wonder if we should aim to
+> eventually unify %h and %H as well as %(describe) into one,
+> i.e. various ways to spell a commit object name, given that there is
+> a separate effort underway to unify pretty and for-each-ref format
+> strings.
 >
-> I just wanted to point out this edge case, for "git describe <commits>"
-> we do the ref list once at the beginning so our N list will be
-> consistent within itself.
->
-> Whereas one might expect "git log" to also format such a list, but due
-> to the internal implementation the semantics are different.
+> E.g. %(objectname) is the same as %H, and %(objectname:short) is the
+> same as %h, so this might be %(objectname:describe), or something
+> along the line.
 
-It shouldn't matter for the intended use case (git archive containing a
-spec file with a single "$Format:%(describe)$") and I cannot imagine how
-consistency in the face of tag changes would be useful (what application
-would be OK with consistently outdated output, but break with partly
-outdated descriptions).  But it makes sense to mention it in the docs.
+According to the glossary and object name is:
 
-=2D- >8 --
-Subject: [PATCH] pretty: document multiple %(describe) being inconsistent
+        The unique identifier of an object.  The
+        object name is usually represented by a 40 character
+        hexadecimal string.  Also colloquially called SHA-1.
 
-Each %(describe) placeholder is expanded using a separate git describe
-call.  Their outputs depend on the tags present at the time, so there's
-no consistency guarantee.  Document that fact.
+And that's how I understand it as well.  The object layer with it's
+hashes on one hand and descriptions based on refs and commit relations
+on the other are separate things in my mind.  %(describe) falling back
+to %h when :always is given makes sense to me; %(objectname) "falling
+forward" to show describe output feels like a layering violation.
 
-Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Documentation/pretty-formats.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-forma=
-ts.txt
-index 231010e6ef..45133066e4 100644
-=2D-- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -212,7 +212,9 @@ The placeholders are:
- 			  linkgit:git-describe[1]; empty string for
- 			  undescribable commits.  The `describe` string
- 			  may be followed by a colon and zero or more
--			  comma-separated options.
-+			  comma-separated options.  Descriptions can be
-+			  inconsistent when tags are added or removed at
-+			  the same time.
- +
- ** 'match=3D<pattern>': Only consider tags matching the given
-    `glob(7)` pattern, excluding the "refs/tags/" prefix.
-=2D-
-2.30.1
+Ren=C3=A9
