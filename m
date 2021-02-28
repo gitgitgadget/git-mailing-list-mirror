@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD50C433E0
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07C16C433E0
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB07F64E83
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC69E64E38
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbhB1Tz7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 14:55:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55566 "EHLO
+        id S231548AbhB1T4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 14:56:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231531AbhB1Tz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231534AbhB1Tz5 (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 28 Feb 2021 14:55:57 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78140C06178C
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:40 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id bm21so5471323ejb.4
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:40 -0800 (PST)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE2FC061794
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:41 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id c6so17975212ede.0
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ODtayxdMVi79Vt1iO5w7cyNJZqgk9ZDp8pX6KUeeKAM=;
-        b=PtwppVOGPYDgnnzLsbu/dZt7eZyRYbhwHa4J9L9YYyzzNj6ALDXU/h4Wdt6rD1OEF+
-         QZGuch6L2fn82OinR5RdAe/OOT3tUHvgYNwh7mxhyW0vUm74m4F0Ju76SpF1hd+8v5Mf
-         Rshxzk2naTbCgLJxk3k9R1jkDBKn7GEF+i+dC10hMT4rPHDEAveq7S1D52tWkosJfM/Q
-         SyxTwEKqIvRHk2/Ndh+liR4nFAEwOEhWA3nc7fOLRrw7n+PzaM3AogEyUCqvTkdojmmX
-         w53djqYXxEUVzd7hra5ees+dWQkswPQBof8DOAb98uxzpeR7bIe3sFpVVpo3koKTb6nJ
-         qSug==
+        bh=pHkeNJfkkFOHAcMKOT5k6gihFN2GVPOJDBxsQt8hTlw=;
+        b=RYWYDC67qDNEJTYxSvwiR3xxL100SDgpbQpPkYBhHcUQUWq+MY5pQ5KcwnI5GBFcSG
+         xFE/uB7NyO/VKb7jnKHNmF3EgFrFSxzwAhX1J0DPvzwSl7/lXz4DDyUolGoNgN8Qmusa
+         R8DhQkXCIhq7L4AMICsAIkudT0so78Po+DBWfWxtoMmsrFBsnC3+52g6fjd/o4Xkt/df
+         uyA0omphDOn6tWDXHMMz89QpA86+tdnioTRuzFrsMXMT32Phi5cuNBb4SbBuoIBS6klA
+         cWWlXRZJatha5RJjv1hZ28OiVVIKSDV40Gb21H/ul2PPhiUTW6jPjpv6S0DQeHURy2Cs
+         N9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ODtayxdMVi79Vt1iO5w7cyNJZqgk9ZDp8pX6KUeeKAM=;
-        b=uFHOStIyeYXvC3C/BCaKoB6lCZQVGP+wrm5pXev7TOQH6mS2XrkZRcMRcaORTi8ekO
-         hZNRE2DJiRsbEhS5fmHuz4G2cNNhJ8ib3ZKivwogKMTG/gXjAusm2fnQelV5iDbsz9y+
-         K282cuALN+vlr+NqvQ6o2Q3DzbkPs0dKhXZym6kgK4TTfK4cKmBnXrswK1FdZD/3PKFI
-         kPuGrEovjVX/tlIb4kqn0NVMjtHHFEqYczYqzNrYkyfT9QkUo3M4faMeVEL9ghm8kTCX
-         rvjmurX9OZneej/aEWqJ5MFsCyBlh4GxPXuDY6s4TO/rF0nqO0u13tcYt6SA+tIuUVrH
-         TiSQ==
-X-Gm-Message-State: AOAM5313Ugv5k/JRiEW2KSFf+EH67ENjtc8nwBbe99/Fby1pIClckyuf
-        mvnYXg471L/ccl60ndiLCbFXdFZnsONOdQ==
-X-Google-Smtp-Source: ABdhPJx91RxqHpZq4Ysb4hhdlPzWu/J+xiGZO4Z5FOtnB8yvC84BpaIegRv/fpc+BLYCosZe2m+rSw==
-X-Received: by 2002:a17:906:f88a:: with SMTP id lg10mr12972896ejb.39.1614542078931;
-        Sun, 28 Feb 2021 11:54:38 -0800 (PST)
+        bh=pHkeNJfkkFOHAcMKOT5k6gihFN2GVPOJDBxsQt8hTlw=;
+        b=aFCaYL7ceBrCDaTCiPZpkEd4Nv72s+Y+uNqGXfBVQPl4BsGEVYQj0d8un/F6a3AXVq
+         8/gl3pmfUF28ySalMbrf+har0OInXSFiNERfQ3IbL6C8NbN2y3rwgrnK0p4df8LfosG1
+         I7W6ATdU65GmgWaGnbJyTsruii3drYI9Mr1x2sdGa4kwIO2FD8dLS+UkKTs1N+ysiYs+
+         Q0POjLkVJlgs/fVxB3cFkMq3GiGFZDJSokEtsZYePyeJEZheruejMFuoqTnsxPPlCyr0
+         lC7xlb+Ypx75gHdbQXChfdgWcL7CyoTP8VyE8SMxokPBGr5JnNujZ02NBgAf96jvXMWM
+         D/MA==
+X-Gm-Message-State: AOAM530VEDMi1w6QgJvDrvhWpTL0p47hzRmTwr1lVjgT5zDnqcatPIk0
+        BKV2DK9pLQ+ivzu0JrmK9XDLMTboFdSU2A==
+X-Google-Smtp-Source: ABdhPJyowtZGNanRZ0hd4606hQ+zxe7OyE0ZwA8hAPQHgKw90tZU+Ff8lrtXvR82ZcRHlMGRAw1IcQ==
+X-Received: by 2002:a05:6402:445:: with SMTP id p5mr13511483edw.20.1614542080395;
+        Sun, 28 Feb 2021 11:54:40 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2sm11295554ejl.1.2021.02.28.11.54.38
+        by smtp.gmail.com with ESMTPSA id n2sm11295554ejl.1.2021.02.28.11.54.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 11:54:38 -0800 (PST)
+        Sun, 28 Feb 2021 11:54:39 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 06/10] describe tests: fix nested "test_expect_success" call
-Date:   Sun, 28 Feb 2021 20:54:10 +0100
-Message-Id: <20210228195414.21372-7-avarab@gmail.com>
+Subject: [PATCH 08/10] svn tests: remove legacy re-setup from init-clone test
+Date:   Sun, 28 Feb 2021 20:54:12 +0100
+Message-Id: <20210228195414.21372-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.116.g45ec00aa00
 In-Reply-To: <20200223125102.6697-1-benno@bmevers.de>
 References: <20200223125102.6697-1-benno@bmevers.de>
@@ -77,80 +77,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a nested invocation of "test_expect_success", the
-"check_describe()" function is a wrapper for calling
-test_expect_success, and therefore needs to be called outside the body
-of another "test_expect_success".
+Remove the immediate "rm -rf .git" from the start of this test. This
+was added back in 41337e22f0 (git-svn: add tests for command-line
+usage of init and clone commands, 2007-11-17) when there was a "trash"
+directory shared by all the tests, but ever since abc5d372ec (Enable
+parallel tests, 2008-08-08) we've had per-test trash directories.
 
-The two tests added in 30b1c7ad9d6 (describe: don't abort too early
-when searching tags, 2020-02-26) were not testing for anything due to
-this logic error. Without this fix reverting the C code changes in
-that commit still has all tests passing, with this fix we're actually
-testing the "describe" output. This is because "test_expect_success"
-calls "test_finish_", whose last statement happens to be true.
+So this setup can simply be removed. We could use
+TEST_NO_CREATE_REPO=true, but I don't think it's worth the effort to
+go out of our way to be different. It doesn't matter that we now have
+a redundant .git at the top-level.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t6120-describe.sh | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ t/t9117-git-svn-init-clone.sh | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 8dc76f8e9e..ae801c740b 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -470,7 +470,7 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
- #  o-----o---o----x
- #        A
- #
--test_expect_success 'describe commits with disjoint bases' '
-+test_expect_success 'setup: describe commits with disjoint bases' '
- 	git init disjoint1 &&
- 	(
- 		cd disjoint1 &&
-@@ -483,19 +483,22 @@ test_expect_success 'describe commits with disjoint bases' '
- 		git checkout --orphan branch && rm file &&
- 		echo B > file2 && git add file2 && git commit -m B &&
- 		git tag B -a -m B &&
--		git merge --no-ff --allow-unrelated-histories main -m x &&
--
--		check_describe "A-3-gHASH" HEAD
-+		git merge --no-ff --allow-unrelated-histories main -m x
- 	)
- '
+diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
+index 044f65e916..62de819a44 100755
+--- a/t/t9117-git-svn-init-clone.sh
++++ b/t/t9117-git-svn-init-clone.sh
+@@ -7,12 +7,6 @@ test_description='git svn init/clone tests'
  
-+(
-+	cd disjoint1 &&
-+	check_describe "A-3-gHASH" HEAD
-+)
-+
- #           B
- #   o---o---o------------.
- #                         \
- #                  o---o---x
- #                  A
- #
--test_expect_success 'describe commits with disjoint bases 2' '
-+test_expect_success 'setup: describe commits with disjoint bases 2' '
- 	git init disjoint2 &&
- 	(
- 		cd disjoint2 &&
-@@ -509,10 +512,13 @@ test_expect_success 'describe commits with disjoint bases 2' '
- 		echo o >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:01" git commit -m o &&
- 		echo B >> file2 && git add file2 && GIT_COMMITTER_DATE="2020-01-01 15:02" git commit -m B &&
- 		git tag B -a -m B &&
--		git merge --no-ff --allow-unrelated-histories main -m x &&
--
--		check_describe "B-3-gHASH" HEAD
-+		git merge --no-ff --allow-unrelated-histories main -m x
- 	)
- '
+ . ./lib-git-svn.sh
  
-+(
-+	cd disjoint2 &&
-+	check_describe "B-3-gHASH" HEAD
-+)
-+
- test_done
+-# setup, run inside tmp so we don't have any conflicts with $svnrepo
+-set -e
+-rm -r .git
+-mkdir tmp
+-cd tmp
+-
+ test_expect_success 'setup svnrepo' '
+ 	mkdir project project/trunk project/branches project/tags &&
+ 	echo foo > project/trunk/foo &&
 -- 
 2.31.0.rc0.116.g45ec00aa00
 
