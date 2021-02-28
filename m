@@ -8,177 +8,302 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21445C433DB
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 13:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DE6FC433DB
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 15:42:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF31164E85
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 13:06:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60D0864E4A
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 15:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230124AbhB1NBt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 08:01:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52164 "EHLO
+        id S230298AbhB1Plp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 10:41:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229834AbhB1NBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 08:01:48 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30E52C06174A
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 05:01:07 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a22so23064320ejv.9
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 05:01:07 -0800 (PST)
+        with ESMTP id S229982AbhB1Plo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 10:41:44 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C41C06174A
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 07:41:04 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id r17so23501741ejy.13
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 07:41:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=JfHSjL4KrhTXpq9S/odkz3tWc62+LjaBUJieTiqqiKU=;
-        b=scgf7v6Q/8Jro52uI+t46ZJH5MKu0zpx3kVgXnHuX7vpITlOszO9NmZaknT/sPpoBu
-         NmZLusUPXPHGAhdOpFMyLMGWRKd91jEmTzixUNj5OU6MfGpj5taNxHy0XVMQHVoaJewK
-         Owfd+ZNatVVY9N29oAgTDB/rkV2fH2rpgnXhyuOWm4Ynh048FdnfubnXUXNPmUZ+wSyg
-         tSyJJE07AkcvKZ8CSsnUbpfgp0Gke6qMusdZnmFmCBpzczSgfHT//5IirFmJNfVLE1qe
-         gqQmphzS1bOajob2klwJ75Ux07gSxP+2I9jxWtKxk8NTmdmy1RMRCfSdyiT/00oJ+dsK
-         zDzg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=iHCXzj53H7+ByJOxNoIPU7Q1IEhyjez5rvugSmVkFQ0=;
+        b=b6NsoRyS5r7KokQDZuFCta5vsscUGCABAtEisTomcl58a92HvRwFzZ9sSYSpt0eoye
+         Sza2q5syPh8wzYikBsopmtwDcOUsVFm0wI/DMovzigMZf0ld0S4DCVtTvQ5UEzHW8FK4
+         dTXbJoyrit0EJ9CwdGrXOspLni/Yh22Luw9buC0Ica3HogHNs0if5jAevC15rw1w0ec7
+         qTZwHteDzpKbDU5CMomdBgypAuxfp6/Mn6lKkxPtWpbED5ZYjA07qHonPotwWbSiwRT3
+         RuPLronGSQvaDhNBfTl8yy+0xPuAVEYF0e+Xo1E1PCOf4tAOQkDb1vrpy4sA9PUSUZ4h
+         o1dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=JfHSjL4KrhTXpq9S/odkz3tWc62+LjaBUJieTiqqiKU=;
-        b=av7NRLEwiSII+Xio04WwNzg07mJSEJVRZKJzSYa4AF/sHfXwoZSi3VB/CTVq0RqPKL
-         ezLw7v6QWPeHdT36eOF5/mUzLRWgXyAsuYm8VNnurelBCzB2Ua/zuZfXjfXxVCOq2EBx
-         7UDNm/TXU5CmmzIV6X3La0Fzcsv89VMfAJ1gCT4td7rnyV0y7OgeR+ocEdYgwyqE39gf
-         h7A204IlTdK3wXZye+hQg0YmtdupsBQ2MvSl7HOtB8D2JNmeIf3OhUWvo04dMxRTbvoy
-         FB4RIlFkxMcfWJ6Z5OXXAumViz5GscdjzOphEakNy0z/OwcnpNkMAgl3hYtX9wNwJv1b
-         TmHg==
-X-Gm-Message-State: AOAM531qTz7I9tKBGNg/KvX9plhnlXk+ZJXCmkPxUATlk69UTEbLzo3j
-        LKN/lpJZLgzaOiXEQmI/RWF22NUJuxA=
-X-Google-Smtp-Source: ABdhPJypAzoX+96mYdj49FFLRl0C/M3aeq/NT3tUTlX7hY9D3tynDhZ8H6TqLD+EOXIj6eU1tJE52w==
-X-Received: by 2002:a17:906:a94b:: with SMTP id hh11mr11664516ejb.459.1614517265795;
-        Sun, 28 Feb 2021 05:01:05 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=iHCXzj53H7+ByJOxNoIPU7Q1IEhyjez5rvugSmVkFQ0=;
+        b=V8kkm2t0+P9MrTT/YDMmFkXqjMUKFsMyVcQi3tKE1c4Txv7449aWLnfM6LY3ek9Uta
+         A6DpH+ZuqeaGyGTHBS6R23C8PTX5LEKfGgs/b3W9lVHToMVL4kmfLpk992KeNI2pVlyf
+         vmWB8H6B0xIS9GVNQH12CxSlbCKNjYkJCwLU1qiziHBI05b2AG1a8SDnCU3QGtDar4Yi
+         V38eoAlba9UKTk9346BVymxrFb2a+jHgmCrnOVGXHJtOFX3LMotlhZdy6yaM9H6oaUHu
+         MJ1YPhsMQKQ8hbTz8jprweOEnUXhBcMUDY/E4txCr1T6JVylVHLINbM/kZJJrjDuInU1
+         PxrA==
+X-Gm-Message-State: AOAM532mZVAkkbB7DaSdpvvlEEjSluL8Sfkk3/7lEjcQ+K6jdLj4U3lS
+        S4RXm8ESytFmm3qV4Sq8grI=
+X-Google-Smtp-Source: ABdhPJzB4t4W74Sodpmg/D0s1ss0nWICHK3iy0DVaAfBlBMEQzBVwvLPcWY7JLP9OJZPg1T6FE5HTA==
+X-Received: by 2002:a17:906:1416:: with SMTP id p22mr12081725ejc.302.1614526862697;
+        Sun, 28 Feb 2021 07:41:02 -0800 (PST)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id j14sm9701506eds.78.2021.02.28.05.01.04
+        by smtp.gmail.com with ESMTPSA id g3sm10235655ejz.91.2021.02.28.07.41.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 05:01:05 -0800 (PST)
+        Sun, 28 Feb 2021 07:41:01 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] docs: add a question on syncing repositories to the
- FAQ
-References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
- <20210227191813.96148-2-sandals@crustytoothpaste.net>
+To:     =?utf-8?Q?Ren=C3=A9_Scharfe=2E?= <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Eli Schwartz <eschwartz@archlinux.org>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] pretty: add merge and exclude options to %(describe)
+References: <7418f1d8-78c2-61a7-4f03-62360b986a41@archlinux.org>
+ <5561d11b-08c3-bcf7-5d37-a7d6c6bfb715@web.de>
+ <b7bd37c4-ab13-0297-da46-716e26de10d6@web.de>
+ <YC1hHYeCmC6+heWZ@coredump.intra.peff.net>
+ <b7e1f6c0-6b13-efe4-74b5-ec8249855644@web.de>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210227191813.96148-2-sandals@crustytoothpaste.net>
-Date:   Sun, 28 Feb 2021 14:01:04 +0100
-Message-ID: <87eeh0l52n.fsf@evledraar.gmail.com>
+In-reply-to: <b7e1f6c0-6b13-efe4-74b5-ec8249855644@web.de>
+Date:   Sun, 28 Feb 2021 16:41:00 +0100
+Message-ID: <87blc4kxo3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Feb 27 2021, brian m. carlson wrote:
+On Sun, Feb 28 2021, Ren=C3=A9 Scharfe. wrote:
 
-> It is very common that users want to transport repositories with working
-> trees across machines.  While this is not recommended, many users do it
-> anyway and moreover, do it using cloud syncing services, which often
-> corrupt their data.  The results of such are often seen in tales of woe
-> on common user question fora.
+> Am 17.02.21 um 19:31 schrieb Jeff King:
+>> On Sun, Feb 14, 2021 at 11:10:57AM +0100, Ren=C3=A9 Scharfe. wrote:
+>>
+>>> Allow restricting the tags used by the placeholder %(describe) with the
+>>> options match and exclude.  E.g. the following command describes the
+>>> current commit using official version tags, without those for release
+>>> candidates:
+>>>
+>>>    $ git log -1 --format=3D'%(describe:match=3Dv[0-9]*,exclude=3D*rc*)'
+>>
+>> An interesting side effect of this series is that it allows remote users
+>> asking for archives to fill in this data, too (by using export-subst
+>> placeholders). That includes servers allowing "git archive --remote",
+>> but also services like GitHub that will run git-archive on behalf of
+>> clients.
+>>
+>> I wonder what avenues for mischief this provides. Certainly using extra
+>> CPU to run git-describe.
 >
-> Let's tell users what we recommend they do in this circumstance and how
-> to do it safely.  Warn them about the dangers of untrusted working trees
-> and the downsides of index refreshes, as well as the problems with cloud
-> syncing services.
+> A repository can contain millions of files, each file can contain
+> millions of $Format:...$ sequences and each of them can contain millions
+> of %(describe) placeholders.  Each of them could have different match or
+> exclude args to prevent caching.  Allowing a single request to cause
+> trillions of calls of git describe sounds excessive.  Let's limit this.
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> -- >8 --
+> Subject: [PATCH] archive: expand only a single %(describe) per archive
+>
+> Every %(describe) placeholder in $Format:...$ strings in files with the
+> attribute export-subst is expanded by calling git describe.  This can
+> potentially result in a lot of such calls per archive.  That's OK for
+> local repositories under control of the user of git archive, but could
+> be a problem for hosted repositories.
+>
+> Expand only a single %(describe) placeholder per archive for now to
+> avoid denial-of-service attacks.  We can make this limit configurable
+> later if needed, but let's start out simple.
+>
+> Reported-by: Jeff King <peff@peff.net>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 > ---
->  Documentation/gitfaq.txt | 39 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
+>  Documentation/gitattributes.txt |  3 ++-
+>  archive.c                       | 16 ++++++++++------
+>  archive.h                       |  2 ++
+>  pretty.c                        |  8 ++++++++
+>  pretty.h                        |  5 +++++
+>  t/t5001-archive-attr.sh         | 14 ++++++++++++++
+>  6 files changed, 41 insertions(+), 7 deletions(-)
 >
-> diff --git a/Documentation/gitfaq.txt b/Documentation/gitfaq.txt
-> index afdaeab850..042b11e88a 100644
-> --- a/Documentation/gitfaq.txt
-> +++ b/Documentation/gitfaq.txt
-> @@ -241,6 +241,45 @@ How do I know if I want to do a fetch or a pull?::
->  	ignore the upstream changes.  A pull consists of a fetch followed
->  	immediately by either a merge or rebase.  See linkgit:git-pull[1].
->  
-> +[[syncing-across-computers]]
-> +How do I sync a Git repository across multiple computers, VMs, or operating systems?::
-> +	The best way to sync a repository across computers is by pushing and fetching.
-> +	This uses the native Git mechanisms to transport data efficiently and is the
-> +	easiest and best way to move data across machines.  If the machines aren't
-> +	connected by a network, you can use `git bundle` to create a file with your
-> +	changes and then fetch or pull them from the file on the remote machine.
-> +	Pushing and fetching are also the only secure ways to interact with a
-> +	repository you don't own or trust.
-> ++
-> +However, sometimes people want to sync a repository with a working tree across
-> +machines.  While this isn't recommended, it can be done with `rsync` (usually
-> +over an SSH connection), but only when the repository is completely idle (that
-> +is, no processes, including `git gc`, are modifying it at all).  If `rsync`
-> +isn't available, you can use `tar` to create a tar archive of the repository and
-> +copy it to another machine.  Zip files shouldn't be used due to their poor
-> +support for permissions and symbolic links.
-> ++
-> +You may also use a shared file system between the two machines that is POSIX
-> +compliant, such as SSHFS (SFTP) or NFSv4.  If you are using SFTP for this
-> +purpose, the server should support fsync and POSIX renames (OpenSSH does).  File
-> +systems that don't provide POSIX semantics, such as DAV mounts, shouldn't be
-> +used.
-> ++
-> +Note that you must not work with untrusted working trees, since it's trivial
-> +for an attacker to set configuration options that will cause arbitrary code to
-> +be executed on your machine.  Also, in almost all cases when sharing a working
-> +tree across machines, Git will need to re-read all files the next time you run
-> +`git status` or otherwise refresh the index, which can be slow.  This generally
-> +can't be avoided and is part of the reason why sharing a working tree isn't
-> +recommended.
-> ++
-> +In no circumstances should you share a working tree or bare repository using a
-> +cloud syncing service or store it in a directory managed by such a service.
-> +Such services sync file by file and don't maintain the invariants required for
-> +repository integrity; in addition, they can cause files to be added, removed, or
-> +duplicated unexpectedly.  If you must use one of these services, use it to store
-> +the repository in a tar archive instead.
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribute=
+s.txt
+> index e84e104f93..0a60472bb5 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -1174,7 +1174,8 @@ tag then no replacement will be done.  The placehol=
+ders are the same
+>  as those for the option `--pretty=3Dformat:` of linkgit:git-log[1],
+>  except that they need to be wrapped like this: `$Format:PLACEHOLDERS$`
+>  in the file.  E.g. the string `$Format:%H$` will be replaced by the
+> -commit hash.
+> +commit hash.  However, only one `%(describe)` placeholder is expanded
+> +per archive to avoid denial-of-service attacks.
+>
+>
+>  Packing objects
+> diff --git a/archive.c b/archive.c
+> index 5919d9e505..2dd2236ae0 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -37,13 +37,10 @@ void init_archivers(void)
+>
+>  static void format_subst(const struct commit *commit,
+>  			 const char *src, size_t len,
+> -			 struct strbuf *buf)
+> +			 struct strbuf *buf, struct pretty_print_context *ctx)
+>  {
+>  	char *to_free =3D NULL;
+>  	struct strbuf fmt =3D STRBUF_INIT;
+> -	struct pretty_print_context ctx =3D {0};
+> -	ctx.date_mode.type =3D DATE_NORMAL;
+> -	ctx.abbrev =3D DEFAULT_ABBREV;
+>
+>  	if (src =3D=3D buf->buf)
+>  		to_free =3D strbuf_detach(buf, NULL);
+> @@ -61,7 +58,7 @@ static void format_subst(const struct commit *commit,
+>  		strbuf_add(&fmt, b + 8, c - b - 8);
+>
+>  		strbuf_add(buf, src, b - src);
+> -		format_commit_message(commit, fmt.buf, buf, &ctx);
+> +		format_commit_message(commit, fmt.buf, buf, ctx);
+>  		len -=3D c + 1 - src;
+>  		src  =3D c + 1;
+>  	}
+> @@ -94,7 +91,7 @@ static void *object_file_to_archive(const struct archiv=
+er_args *args,
+>  		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
+>  		convert_to_working_tree(args->repo->index, path, buf.buf, buf.len, &bu=
+f, &meta);
+>  		if (commit)
+> -			format_subst(commit, buf.buf, buf.len, &buf);
+> +			format_subst(commit, buf.buf, buf.len, &buf, args->pretty_ctx);
+>  		buffer =3D strbuf_detach(&buf, &size);
+>  		*sizep =3D size;
+>  	}
+> @@ -633,12 +630,19 @@ int write_archive(int argc, const char **argv, cons=
+t char *prefix,
+>  		  const char *name_hint, int remote)
+>  {
+>  	const struct archiver *ar =3D NULL;
+> +	struct pretty_print_describe_status describe_status =3D {0};
+> +	struct pretty_print_context ctx =3D {0};
+>  	struct archiver_args args;
+>  	int rc;
+>
+>  	git_config_get_bool("uploadarchive.allowunreachable", &remote_allow_unr=
+eachable);
+>  	git_config(git_default_config, NULL);
+>
+> +	describe_status.max_invocations =3D 1;
+> +	ctx.date_mode.type =3D DATE_NORMAL;
+> +	ctx.abbrev =3D DEFAULT_ABBREV;
+> +	ctx.describe_status =3D &describe_status;
+> +	args.pretty_ctx =3D &ctx;
+>  	args.repo =3D repo;
+>  	args.prefix =3D prefix;
+>  	string_list_init(&args.extra_files, 1);
+> diff --git a/archive.h b/archive.h
+> index 33551b7ee1..49fab71aaf 100644
+> --- a/archive.h
+> +++ b/archive.h
+> @@ -5,6 +5,7 @@
+>  #include "pathspec.h"
+>
+>  struct repository;
+> +struct pretty_print_context;
+>
+>  struct archiver_args {
+>  	struct repository *repo;
+> @@ -22,6 +23,7 @@ struct archiver_args {
+>  	unsigned int convert : 1;
+>  	int compression_level;
+>  	struct string_list extra_files;
+> +	struct pretty_print_context *pretty_ctx;
+>  };
+>
+>  /* main api */
+> diff --git a/pretty.c b/pretty.c
+> index c612d2ac9b..032e89cd4e 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1247,6 +1247,14 @@ static size_t format_commit_one(struct strbuf *sb,=
+ /* in UTF-8 */
+>  		struct child_process cmd =3D CHILD_PROCESS_INIT;
+>  		struct strbuf out =3D STRBUF_INIT;
+>  		struct strbuf err =3D STRBUF_INIT;
+> +		struct pretty_print_describe_status *describe_status;
+> +
+> +		describe_status =3D c->pretty_ctx->describe_status;
+> +		if (describe_status) {
+> +			if (!describe_status->max_invocations)
+> +				return 0;
+> +			describe_status->max_invocations--;
+> +		}
+>
+>  		cmd.git_cmd =3D 1;
+>  		strvec_push(&cmd.args, "describe");
+> diff --git a/pretty.h b/pretty.h
+> index 7ce6c0b437..27b15947ff 100644
+> --- a/pretty.h
+> +++ b/pretty.h
+> @@ -23,6 +23,10 @@ enum cmit_fmt {
+>  	CMIT_FMT_UNSPECIFIED
+>  };
+>
+> +struct pretty_print_describe_status {
+> +	unsigned int max_invocations;
+> +};
+> +
+>  struct pretty_print_context {
+>  	/*
+>  	 * Callers should tweak these to change the behavior of pp_* functions.
+> @@ -44,6 +48,7 @@ struct pretty_print_context {
+>  	int color;
+>  	struct ident_split *from_ident;
+>  	unsigned encode_email_headers:1;
+> +	struct pretty_print_describe_status *describe_status;
+>
+>  	/*
+>  	 * Fields below here are manipulated internally by pp_* functions and
+> diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+> index e9aa97117a..1c9ce3956b 100755
+> --- a/t/t5001-archive-attr.sh
+> +++ b/t/t5001-archive-attr.sh
+> @@ -128,4 +128,18 @@ test_expect_success 'export-subst' '
+>  	test_cmp substfile2 archive/substfile2
+>  '
+>
+> +test_expect_success 'export-subst expands %(describe) once' '
+> +	echo "\$Format:%(describe)\$" >substfile3 &&
+> +	echo "\$Format:%(describe)\$" >>substfile3 &&
+> +	echo "\$Format:%(describe)${LF}%(describe)\$" >substfile4 &&
+> +	git add substfile[34] &&
+> +	git commit -m export-subst-describe &&
+> +	git tag -m export-subst-describe export-subst-describe &&
+> +	git archive HEAD >archive-describe.tar &&
+> +	extract_tar_to_dir archive-describe &&
+> +	desc=3D$(git describe) &&
+> +	grep -F "$desc" archive-describe/substfile[34] >substituted &&
+> +	test_line_count =3D 1 substituted
+> +'
+> +
+>  test_done
 
-I think documentation on this topic is needed, but wonder if we couldn't
-make this more understandable by going to the heart of the matter, i.e.:
+This whole thing seems rather backwards as a solution to the "we run it
+N times" problem I mentioned in <87k0r7a4sr.fsf@evledraar.gmail.com>.
 
- * We prefer push/pull/bundle to copy/replicate .git content
+Instead of taking the trouble of putting a limit in the
+pretty_print_context so we don't call it N times for the same commit,
+why not just put the strbuf with the result in that same struct?
 
- * Regardless, a .git directory can be copied across systems just fine
-   if you recursively guarantee snapshot integrity, e.g. it doesn't
-   depend on the endian-ness of the OS, or has anything like symlinks in
-   there made by git itself.
+Then you can have it millions of times, and it won't be any more
+expensive than the other existing %(format) specifiers (actually cheaper
+than most).
 
- * Anything which copies .git data on a concurrently updated repo can
-   lead to corruption, whether that's cp -R, rsync with any combination
-   of flags, some cloud syncing service that expects to present that
-   tree to two computers without guaranteeing POSIX fs semantics between
-   the two etc.
-
- * A common pitfall with such copying of a .git directory is that file
-   deletions are also critical, e.g. rsync without --delete is almost
-   guaranteed to produce a corrupt .git if repeated enough times
-   (e.g. git might prefer stale loose refs over now-packed ones).
-
- * It's OK to copy .git between system that differ in their support of
-   symbolic links, but the work tree may be in an inconsistent state and
-   need some manner of "git reset" to repair it.
-
-And, not sure if this is correct:
-
- * It may be OK to edit a .git directory on a non-POSIX conforming fs
-   (but perhaps validate the result with "git fsck"). But it's not OK to
-   have two writing git processes work on such a repository at the same
-   time. Keep in mind that certain operations and default settings (such
-   as background gc, see `gc.autoDetach` in linkgit:git-config[1]) might
-   result in two processes working on the directory even if you're
-   changing it only in one terminal window at a time.
-
-I.e. to go a bit beyond the docs you have of basically saying "there be
-dragons in non-POSIX" and describe the particular scenarios where it can
-go wrong. Something like the above still leaves the door open to users
-using cloud syncing services, which they can then judge for themselves
-as being OK or not. I'm sure there's some that are far from POSIX
-compliance that are OK in practice if the above warnings are observed.
-
+Or is there some edge case I'm missing here where "git archive" can
+either be fed N commits and we share the context, or we share the
+context across formatting different revisions in some cases?
