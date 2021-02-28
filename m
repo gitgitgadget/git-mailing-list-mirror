@@ -2,77 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6063AC433E0
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABD52C433DB
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:21:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14CA564E74
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:08:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6BA8364E83
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230128AbhB1QI1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 11:08:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35366 "EHLO
+        id S230371AbhB1QVA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 11:21:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbhB1QI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 11:08:26 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F4EC06174A
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:07:45 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id l12so17396318edt.3
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:07:45 -0800 (PST)
+        with ESMTP id S229982AbhB1QU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 11:20:58 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8439BC06174A
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:20:17 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id bm21so4819310ejb.4
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:20:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=jrIA/ufIbZmod1IFeSPKiR3h+ISHgaDKYHb+cMeZL7A=;
-        b=iENdodgY6RO/0nV3IDzPqbU5gUt/D/UY1QCtVvFwYmpuE8LoVVzRrRsbdWVK0JkFW4
-         N6ZL8ft8TEbeOEoFFXwqUNxm/AsdW4FDgB+DjxRxnshiIYyX+hSdJhujiwIxPs3qtEZu
-         ErUl6L62413LVEBbrB23qSNXaUwrgqv2F2QE9WmOhTV/D24IsGf3OJ2oUtDrM8AHw0C/
-         +QTwB4521jAW7NBwX0GZ8TV0uA88+2cEt88RWKeuI57IHqWOg+t8S0TH87QQquBNBois
-         cMYto9anN+FyolK4i6rpeHk5YAti4ZHb7PU0UVpcFt/R5hQMseJ/WI6rLPsngSgu//BO
-         PRkA==
+        bh=+45VgYMfJAb2clzmvgXIKZejKNRr6ux5EFttoJX1frI=;
+        b=h2OnNOO7A7C+9baedqK5gtVzzMuD3uxzevrxrrJX9i/8SNlM1RJQFWDpFI8EM65DTr
+         ZRLGg2lyCq2PfB0cYULFr5TjEN6qdRcfFNJs+7AGscnf6IXwlAHhXCQ0YhJHYAj2m7/j
+         PCjov2t3r+TYQTM01GU2OO8q4AQsKqWbL8YWBop9+bfIiGuzo7JEpeyYpZvx56I4d5jy
+         1/wtKocNCWtRlmzoKZaNo9C/LW4DTBipjZl4Wh7UqHjoQtCFrZzvH9gqbVgbCYsZ+tJw
+         kyGVjoQ5SdNbPYjuCoYhE7eJx25F+b0x31TkG1wQAwNCaj9mUBDR47ZXjI0LxFqTFRcP
+         Dlpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=jrIA/ufIbZmod1IFeSPKiR3h+ISHgaDKYHb+cMeZL7A=;
-        b=mlKhNrX87l4UV9090nYUwWAl4W7sSddgaKVsP3yRN0G1uBR3N3mouAHQQozAGctWxz
-         oNonKVg8YtCOh35N5bKa8YdDi84qe94YvvEJoHMYYBiFprM7s351R8JTBU72YvRZ1/hQ
-         2QvwP9uoY3VP/ECLwnhOzH12OviC5ErKFJSrKJT+dRN652KGlnptVSEp80y7uYJ9PhTJ
-         c9XEb+P2jFj8oFFayCk/2xfoP5uig/JfIB5r9/cDuTXFbW4syaneoh8VQEo/slNfooX6
-         Hsl2LOdhPh7wxPUDr50EAglZwGqpbbeCD0F2OnoH4X3jk/MNAk7ByPwZTJNvaBMuOXAX
-         n2fg==
-X-Gm-Message-State: AOAM533oeTKPGJP09wcwBok1X9zvR1H+TbSvJJIr8BOwbIAUBBC+xcmt
-        YO9RND2ec5qfsUgL8Tyfv7/ZJ/ttCAo=
-X-Google-Smtp-Source: ABdhPJwwJfoiNqOCqgA+b9tVxoV3dBsuPZnUsUtSkXbWsadSG5T8bjryydxGJxvHMglTyACd6sWkDQ==
-X-Received: by 2002:aa7:d686:: with SMTP id d6mr1778994edr.146.1614528464001;
-        Sun, 28 Feb 2021 08:07:44 -0800 (PST)
+        bh=+45VgYMfJAb2clzmvgXIKZejKNRr6ux5EFttoJX1frI=;
+        b=dy/rXkROXFp1FHEHDqdcHLq5vswiEbiO2LLSuLtlgy5F/EOkxEEzcly5nUMs+fU7nC
+         r1oVvw/YtNjgeuU6xnnj4lPxnWSpMgH+98+psF8k3KzHHB9LRj6SoMMu2P9ZU5Ja6c90
+         7++cZff5tQvfHpVC75naYVDDmzKu7iwWhtocfrt6ngU8s6fTtkMPxYARYFQ3TfCk/DCC
+         wMq57MS/SjJL96FVBlkF2bIs+lR8ELBX594iHCN+aHDqZvY1At+QgGhzhE3t71HIVb6c
+         pCUmBVqR2gr7JoZmpyms8LD+PA9+dQnWjSIuO5Q7tsSadVy2oR0sE0odESbHy7Plz/v4
+         OStQ==
+X-Gm-Message-State: AOAM530Jzo0hMXkHwqn1CFy9qwSyY06/20dogl4bLh1aoaLvpXU0atKP
+        d2y0PWegAno8H+OWSwFJTrg=
+X-Google-Smtp-Source: ABdhPJwDy/zFWAoFAyDBQ9zTnk3pchAEQrMcNMGuAi6YiOfkeA0bdgPnM6yI/HxblKBKgRF3az8Mag==
+X-Received: by 2002:a17:906:ecf3:: with SMTP id qt19mr6391454ejb.467.1614529216206;
+        Sun, 28 Feb 2021 08:20:16 -0800 (PST)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id hd39sm10070986ejc.116.2021.02.28.08.07.43
+        by smtp.gmail.com with ESMTPSA id jx22sm8509501ejc.105.2021.02.28.08.20.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 08:07:43 -0800 (PST)
+        Sun, 28 Feb 2021 08:20:15 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Adam Spiers <git@adamspiers.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v3 00/35] 20210215154427.32693-1-avarab@gmail.com
-References: <20210215154427.32693-1-avarab@gmail.com>
- <20210224195129.4004-1-avarab@gmail.com>
- <c2e90134-35bb-24b2-a334-7c6abdd6dc6f@kdbg.org>
- <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] commit-graph: warn about incompatibilities only when
+ trying to write
+References: <pull.888.git.1614351036334.gitgitgadget@gmail.com>
+ <87r1l27rae.fsf@evledraar.gmail.com> <xmqqy2faqwr0.fsf@gitster.g>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
-Date:   Sun, 28 Feb 2021 17:07:42 +0100
-Message-ID: <875z2ckwfl.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqy2faqwr0.fsf@gitster.g>
+Date:   Sun, 28 Feb 2021 17:20:15 +0100
+Message-ID: <8735xgkvuo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -81,77 +76,75 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Feb 28 2021, Johannes Sixt wrote:
+On Fri, Feb 26 2021, Junio C Hamano wrote:
 
-> Am 27.02.21 um 08:47 schrieb Johannes Sixt:
->> Am 24.02.21 um 20:50 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>> Addresses feedback on v2. Since Junio & Johannes expressed a desire to
->>> keep the existing test scheme in t4018/* it's still there, but it's
->>> also possible to add *.sh tests in that directory to use the more
->>> familiar test framework used elsewhere in the test suite.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Fri, Feb 26 2021, Johannes Schindelin via GitGitGadget wrote:
+>>
+>>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >>>
->>> The tests added here make use of it to e.g. supply custom -U<n>
->>> arguments, set config before the tests etc.
+>>> In c85eec7fc37 (commit-graph: when incompatible with graphs, indicate
+>>> why, 2021-02-11), we started warning the user if they tried to write a
+>>> commit-graph in a shallow repository, or one containing replace objects.
 >>>
->>> I also improved that existing test support so you can have N tests in
->>> one file with (mostly) the existing test syntax. See the "userdiff
->>> tests: add a test with multiple tests in a LANG file" patch.
->>=20
->> I've read through all patches and had a comment here and there. I like a
->> lot that we can now put more than one test into a single file.
->>=20
->> However, I do not like the shell script version of tests, because the
->> syntax is so hard to read. Also, it looks to me that they are only
->> needed for a few tests that could just as well be coded as one-off tests
->> outside the framework.
->>=20
->> I've now pulled avar/t4018-diff-hunk-header-regex-tests-3 from your
->> github repo and will check again if I missed some cruicial points.
+>>> However, this patch was a bit overzealous, as Git now _also_ warns when
+>>> merely checking whether there _is_ a usable commit graph, not only when
+>>> writing one.
+>>>
+>>> Let's suppress that warning unless we want to write a commit-graph.
+>>
+>> Ah, so that's what it's for, as I suspected :) Unfortunately...
+>> ...
+>> ...doing this will cause "git gc --auto" to run into persistent
+>> warnings. See a WIP patch-on-top in [1] below...
 >
+> Thanks for an input.
 >
-> I've now looked through the patch series again.
+>> diff --git a/builtin/gc.c b/builtin/gc.c
+>> index 64f2b52d6e2..9109898eacb 100644
+>> --- a/builtin/gc.c
+>> +++ b/builtin/gc.c
+>> @@ -593,7 +593,7 @@ int cmd_gc(int argc, const char **argv, const char *=
+prefix)
+>>  		/*
+>>  		 * Auto-gc should be least intrusive as possible.
+>>  		 */
+>> -		if (!need_to_gc())
+>> +		if (0 && !need_to_gc())
+>>  			return 0;
 >
-> I appreciate that you dug through the history and discovered and fixed a
-> few deficiencies and loose ends. The way to throw all test cases for a
-> language driver into a single file I like a lot, too. The way to specify
-> expected results is manageable (modulo the dependency on the test
-> number, t4018, that Junio mentioned).
+> Leftover debugging cruft?
 
-Yes, maybe just "HEADER:" or something would be better. I was trying to
-come up with something guaranteed not to conflict with the language in
-question. Maybe:
+Yeah, see the "Obviously needs amending" later in my E-Mail.
 
-    =3D> HEADER      =3D=20
-    =3D> description =3D=20
+>> -			if (!quiet)
+>> +			if (flags & COMMIT_GRAPH_WRITE_WARNINGS)
+>>  				warning(_("repository contains replace "
+>>  					  "objects; skipping commit-graph"));
+>
+> I would have expected the code would arrange to make the bit cleared
+> in the "flags" that would be passed around to the next call that
+> inspects the same bit, so that we won't need to see repeated
+> warning()s, but I do not see where it is done.
 
-> But I do not see the need for the framework provided by the new
-> test_diff_funcname. At the end of the series, it is only used by Perl
-> and custom driver tests. (I discount the new ADA and Ruby tests as they
-> can easily migrated to the simple test scheme.) But then the Perl tests
-> do not do anything special, either. The multi-line pattern test is just
-> a nice add-on but not strictly needed. In the end, the Perl test is just
-> as straight-forward as all others.
+Right, we could do that, but I think the path down my "test_line_count =3D
+1" is more useful.
 
-The benefit now is:
+I.e. it's pretty easy to reason about us not calling
+write_commit_graph() twice in the same process, so I don't think such
+flag clearing is needed.
 
- 1. Unlike the new plain-text "all test cases for a language driver" in
-    the same file mechanism you can have test descriptions. The
-    "description" in the golang one is just for show, you won't get
-    anything informative from test-lib.sh when your test fails.
+But the case the user cares about is getting this warning twice when
+they invoke git, but we spawn two processes.
 
- 2. I think having #1 beats not having test descriptions at all, or
-     having to shove a description like the Ruby:
+> I am tempted to say that we should revert c85eec7f (commit-graph:
+> when incompatible with graphs, indicate why, 2021-02-11) for the
+> upcoming release.  That would give us enough time to come up with
+> and cook the solution in 'next' in the meantime.
 
-    "picks first "class/module/def" before changed context"
+That's probably sensible.
 
-    into something that would make all the FS's we have to support
-    happy.
-
- 3. A test in the new perl.sh one sets config. I think in both that case
-    and custom.sh it's more readable to carry such config setting with
-    the test, rather than at a distance in the main setup of t4018-*.sh.
-
-That being said I'd like to improve the syntax a bit, in particular
-instead of having a wrapper for test_expect_success I think it makes
-sense just to have the test call test_expect_success, and then provide a
-couple of helper functions.
+Also, I noticed that we went through this whole saga in the past, see
+25575015ca (repack: silence warnings when auto-enabled bitmaps cannot be
+built, 2019-07-31), including breaking background gc.
