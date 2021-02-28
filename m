@@ -2,131 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C611C433DB
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 10:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE43C433E0
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 11:05:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02C4964E4A
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 10:35:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C881964DBD
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 11:05:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230390AbhB1Kfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 05:35:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49414 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230124AbhB1Kfi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 05:35:38 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07C8C06174A
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 02:34:52 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id mj10so2581397ejb.5
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 02:34:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=hQfoNtPahKi1KIa5x3Y9S5JMq5ks6agjfxynvx7iM+A=;
-        b=W+MZidq2lDk+GtU/SLGIZbPiWlHMG2PcoPkuNCmcTXvwa3c6aFuKpdEfyUH/qh9f2e
-         G5CMLpFQZRdL4wRtJA7Dx2uKpp81Xthmn224hu3/mvuvvQ3pIDtXLIyB9VHjYWCamUys
-         WFiwMWzfc9KgycrDWzF7nKihJkObrFO/JygJMehMyPgW7w29EgcNi6AWiuxW0reN6nEq
-         WPZRMTtoi3V8SaCzMUFTolTLHcS6b8bTmPBsGUxDnlgz6juG0pXio2S4XR+l7WIoiYz1
-         NLObmbOrpjVdajnz3ZPTde6XQdHbaTCHR2txouPUk/ZvzAoDjoQ5P506NqdAbUauQWTG
-         iO6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=hQfoNtPahKi1KIa5x3Y9S5JMq5ks6agjfxynvx7iM+A=;
-        b=mvdwcySDt2m8moJk52zubgURq4Pcsi3UrPo6wnlO2DWhTJDewr6Cw8dHZmF4e7JwQ/
-         stGbxFzCtzEhS74WwjDsEbd/tl3IlKUxPNprOZbXC90cXR7aBfdjSMoSs7nI6EIjeMAp
-         gnmonZpt/H7fCwuHlGRebMc8mGE5RiAXW050pS8eC/4lpRCiQnzIi5lTT0iEVSFTIQc5
-         KGfoNP0EHPhv1AoKt1R+xOFwe65Mj1G1HQxliN6sQTW1JVb+kXCraFqqjF4N0lwNQV/H
-         RCBBUVAwNOW5Xz/lNU22/u1XBzi9iDp5RNvEWX/3T9HibNH9haKJcHVI+asYJgCKhLIu
-         BWmA==
-X-Gm-Message-State: AOAM533zqvQuFyeymoqz6oWyR1J2IBbvw8zZ8XHo41sCb5S2qdfhrTjB
-        ukzw2y4614O3guuHT+5JIsw=
-X-Google-Smtp-Source: ABdhPJzCiX7p3SPh4MpITh8Rw4OgHnHqJ6r71j9hB9oVSqyV2ywI4S5U0u7inbDsTt9dEdNaWYYtbw==
-X-Received: by 2002:a17:906:384e:: with SMTP id w14mr11084187ejc.285.1614508485391;
-        Sun, 28 Feb 2021 02:34:45 -0800 (PST)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id r17sm9358595ejz.109.2021.02.28.02.34.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 02:34:44 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     anatoly techtonik <techtonik@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
-Date:   Sun, 28 Feb 2021 11:34:44 +0100
-Message-ID: <87mtvolbuj.fsf@evledraar.gmail.com>
+        id S230165AbhB1LFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 06:05:20 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:38210 "EHLO localhost"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S230019AbhB1LFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 06:05:19 -0500
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by localhost (Postfix) with ESMTP id 007EC321F5;
+        Sun, 28 Feb 2021 12:04:57 +0100 (CET)
+Subject: Re: [PATCH v3 00/35] 20210215154427.32693-1-avarab@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+References: <20210215154427.32693-1-avarab@gmail.com>
+ <20210224195129.4004-1-avarab@gmail.com>
+ <c2e90134-35bb-24b2-a334-7c6abdd6dc6f@kdbg.org>
+Message-ID: <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
+Date:   Sun, 28 Feb 2021 12:04:57 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <c2e90134-35bb-24b2-a334-7c6abdd6dc6f@kdbg.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sun, Feb 28 2021, anatoly techtonik wrote:
-
-> On Sat, Feb 27, 2021 at 8:49 PM Elijah Newren <newren@gmail.com> wrote:
+Am 27.02.21 um 08:47 schrieb Johannes Sixt:
+> Am 24.02.21 um 20:50 schrieb Ævar Arnfjörð Bjarmason:
+>> Addresses feedback on v2. Since Junio & Johannes expressed a desire to
+>> keep the existing test scheme in t4018/* it's still there, but it's
+>> also possible to add *.sh tests in that directory to use the more
+>> familiar test framework used elsewhere in the test suite.
 >>
->> Your second commit is signed.  Fast-export strips any extended headers
->> on commits, such as GPG signatures, because there's no way to keep
->> them in general.
->
-> Why is it not possible to encode them with base64 and insert into the
-> stream?
+>> The tests added here make use of it to e.g. supply custom -U<n>
+>> arguments, set config before the tests etc.
+>>
+>> I also improved that existing test support so you can have N tests in
+>> one file with (mostly) the existing test syntax. See the "userdiff
+>> tests: add a test with multiple tests in a LANG file" patch.
+> 
+> I've read through all patches and had a comment here and there. I like a
+> lot that we can now put more than one test into a single file.
+> 
+> However, I do not like the shell script version of tests, because the
+> syntax is so hard to read. Also, it looks to me that they are only
+> needed for a few tests that could just as well be coded as one-off tests
+> outside the framework.
+> 
+> I've now pulled avar/t4018-diff-hunk-header-regex-tests-3 from your
+> github repo and will check again if I missed some cruicial points.
 
-I think Elijah means that in the general case people are using fast
-export/import to export/import between different systems or in
-combination with a utility like git-filter-repo.
 
-In those cases users are also changing the content of the repository, so
-the hashes will change, invalidating signatures.
+I've now looked through the patch series again.
 
-But there's also cases where e.g. you don't modify the history, or only
-part of it, and could then preserve these headers. I think there's no
-inherent reason not to do so, just that nobody's cared enough to submit
-patches etc.
+I appreciate that you dug through the history and discovered and fixed a
+few deficiencies and loose ends. The way to throw all test cases for a
+language driver into a single file I like a lot, too. The way to specify
+expected results is manageable (modulo the dependency on the test
+number, t4018, that Junio mentioned).
 
->> There are also other things that will prevent a simple fast-export |
->> fast-import pipeline from preserving your history as-is besides signed
->> commits (most of these are noted in the "Inherited Limitations"
->> section over at
->> https://htmlpreview.github.io/?https://github.com/newren/git-filter-repo/blob/docs/html/git-filter-repo.html):
->
-> Is there any way to check what commits will be altered as a result of
-> `fast-export` and why? Right now I don't see that it is reported.
+But I do not see the need for the framework provided by the new
+test_diff_funcname. At the end of the series, it is only used by Perl
+and custom driver tests. (I discount the new ADA and Ruby tests as they
+can easily migrated to the simple test scheme.) But then the Perl tests
+do not do anything special, either. The multi-line pattern test is just
+a nice add-on but not strictly needed. In the end, the Perl test is just
+as straight-forward as all others.
 
-I don't think so, but not being very familiar with fast export/import I
-don't see why it shouldn't have some option to not munge data like that,
-or to report it, if someone cared enough to track those issues & patch
-it...
+That leaves the custom driver tests. I don't see the need for a new
+framework just for that. It would be sufficient to integrate them in
+main test file t4018-diff-funcname.sh if needed, or leave them in the
+existing framework if possible.
 
->> Hope that at least explains things for you, even if it doesn't give
->> you a workaround or a solution.
->
-> Thanks. That is very helpful to know.
->
-> The reason I am asking is because I tried to merge two repos with
-> `reposurgeon` which operates on `fast-export` data. It is basically
-> merging GitHub wiki into main repo,
->
-> After successfully merging them I still can not send a PR, because
-> it produces a huge amount of changes, because of the stripped info.
-> It can be seen here:
->
-> https://github.com/simons-public/protonfixes/compare/master...techtonik:master
->
-> I tracked this behaviour in `reposurgeon` in this issue
-> https://gitlab.com/esr/reposurgeon/-/issues/344
-
+-- Hannes
