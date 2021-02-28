@@ -2,60 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 518CDC433E6
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 15:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6063AC433E0
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:08:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1BEC964E74
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 15:52:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14CA564E74
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 16:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230516AbhB1Pwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 10:52:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60222 "EHLO
+        id S230128AbhB1QI1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 11:08:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230413AbhB1Pwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 10:52:43 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80EFFC06174A
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 07:52:02 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id mj10so3468713ejb.5
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 07:52:02 -0800 (PST)
+        with ESMTP id S229982AbhB1QI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 11:08:26 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F4EC06174A
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:07:45 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id l12so17396318edt.3
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 08:07:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=qdinP52G+zmhgR5jGVoKz0aOf10p1TKrpX05FmDbNic=;
-        b=G90HiWqaSozsLNdumJtrCspkjhzWaCYeNez6KVaTE1IfHpyobONNBji747RrDoZUWm
-         866R29+yLfkD66whp2M70WBLsYSJ6/BSxMqq62IrFapzFcn8S9uImUoyNU8DfslUQ9n2
-         vDIvPvRaz9yb45Ha30WZfbi6hB5kiZkWvst2G2GOMkAFv4ph+KLd+ROYA7jL+OiJMKp7
-         dR1lJNT4TdlDWk6br+fRg7c6TUmfxIQgoBhJmynaY/RWj2npT8qZDjyuf/tt5EcaCW3e
-         01Xi5LPa8X4vVWuXs4EjgWaGH/31iWu4yOidisAGZzv+Yr5y7vHlgKwqAYSfnljgPM6d
-         bSTg==
+        bh=jrIA/ufIbZmod1IFeSPKiR3h+ISHgaDKYHb+cMeZL7A=;
+        b=iENdodgY6RO/0nV3IDzPqbU5gUt/D/UY1QCtVvFwYmpuE8LoVVzRrRsbdWVK0JkFW4
+         N6ZL8ft8TEbeOEoFFXwqUNxm/AsdW4FDgB+DjxRxnshiIYyX+hSdJhujiwIxPs3qtEZu
+         ErUl6L62413LVEBbrB23qSNXaUwrgqv2F2QE9WmOhTV/D24IsGf3OJ2oUtDrM8AHw0C/
+         +QTwB4521jAW7NBwX0GZ8TV0uA88+2cEt88RWKeuI57IHqWOg+t8S0TH87QQquBNBois
+         cMYto9anN+FyolK4i6rpeHk5YAti4ZHb7PU0UVpcFt/R5hQMseJ/WI6rLPsngSgu//BO
+         PRkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=qdinP52G+zmhgR5jGVoKz0aOf10p1TKrpX05FmDbNic=;
-        b=QiSMyv5oEKOexXuCjJp8jS0Cy+e6K0SQPjNBazYdnPv9yYp0eBTWeYiNeGBCZGklo+
-         mHex7kKy16f4F9X2ofhTf//ST5Dibew7M0HWFUy7rfhr+ha5lTKOU1vpbkD9mq3+xsRv
-         5Q/cTeu8nygLOgLHi8PVf7LvD7oeNyc36zOANPwsZ3TWExJO7hzT6BjEDtMhnclVkDEY
-         3Vbu9X9AfAW9MdCmSvJzIYOtdTPkEGbCtjhYetzYD9EbwkinM8CMlmBm9lZbU8IwtcMW
-         cEQVxUjscURxN1JRRa0eZSsGLMU2ZS/myUWfEg49I+7Bpaab50BZhHQB12lK4NDUP/Gx
-         FlHA==
-X-Gm-Message-State: AOAM5314IjAa7+IcZedGAVRxj0DaPLPsMeRcOk10QY58k0fCOZqZ2L3r
-        UBXMClCiXMlrECDNbI9rA/g=
-X-Google-Smtp-Source: ABdhPJz2ly8YKBKGEKFu8hTr+PLTN/nAYbIIpTPBLk2rxEjKomrqFohFDKX9gysqzYcMSOP3ZuKt3Q==
-X-Received: by 2002:a17:906:4c8b:: with SMTP id q11mr12152523eju.270.1614527521001;
-        Sun, 28 Feb 2021 07:52:01 -0800 (PST)
+        bh=jrIA/ufIbZmod1IFeSPKiR3h+ISHgaDKYHb+cMeZL7A=;
+        b=mlKhNrX87l4UV9090nYUwWAl4W7sSddgaKVsP3yRN0G1uBR3N3mouAHQQozAGctWxz
+         oNonKVg8YtCOh35N5bKa8YdDi84qe94YvvEJoHMYYBiFprM7s351R8JTBU72YvRZ1/hQ
+         2QvwP9uoY3VP/ECLwnhOzH12OviC5ErKFJSrKJT+dRN652KGlnptVSEp80y7uYJ9PhTJ
+         c9XEb+P2jFj8oFFayCk/2xfoP5uig/JfIB5r9/cDuTXFbW4syaneoh8VQEo/slNfooX6
+         Hsl2LOdhPh7wxPUDr50EAglZwGqpbbeCD0F2OnoH4X3jk/MNAk7ByPwZTJNvaBMuOXAX
+         n2fg==
+X-Gm-Message-State: AOAM533oeTKPGJP09wcwBok1X9zvR1H+TbSvJJIr8BOwbIAUBBC+xcmt
+        YO9RND2ec5qfsUgL8Tyfv7/ZJ/ttCAo=
+X-Google-Smtp-Source: ABdhPJwwJfoiNqOCqgA+b9tVxoV3dBsuPZnUsUtSkXbWsadSG5T8bjryydxGJxvHMglTyACd6sWkDQ==
+X-Received: by 2002:aa7:d686:: with SMTP id d6mr1778994edr.146.1614528464001;
+        Sun, 28 Feb 2021 08:07:44 -0800 (PST)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id c17sm9612677edw.32.2021.02.28.07.52.00
+        by smtp.gmail.com with ESMTPSA id hd39sm10070986ejc.116.2021.02.28.08.07.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 07:52:00 -0800 (PST)
+        Sun, 28 Feb 2021 08:07:43 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Johannes Sixt <j6t@kdbg.org>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -65,15 +64,15 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Adam Spiers <git@adamspiers.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v3 20/35] userdiff tests: assert that new built-in
- drivers have tests
+Subject: Re: [PATCH v3 00/35] 20210215154427.32693-1-avarab@gmail.com
 References: <20210215154427.32693-1-avarab@gmail.com>
- <20210224195129.4004-21-avarab@gmail.com>
- <377d555c-6bd0-4206-3f71-d4d51aaca692@kdbg.org>
+ <20210224195129.4004-1-avarab@gmail.com>
+ <c2e90134-35bb-24b2-a334-7c6abdd6dc6f@kdbg.org>
+ <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <377d555c-6bd0-4206-3f71-d4d51aaca692@kdbg.org>
-Date:   Sun, 28 Feb 2021 16:51:59 +0100
-Message-ID: <878s78kx5s.fsf@evledraar.gmail.com>
+In-reply-to: <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
+Date:   Sun, 28 Feb 2021 17:07:42 +0100
+Message-ID: <875z2ckwfl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -84,112 +83,75 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Feb 28 2021, Johannes Sixt wrote:
 
-> Am 24.02.21 um 20:51 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> Add an assertion to the userdiff test framework to check that
->> everything except a narrow whitelist of existing built-in patterns has
->> tests.
+> Am 27.02.21 um 08:47 schrieb Johannes Sixt:
+>> Am 24.02.21 um 20:50 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>> Addresses feedback on v2. Since Junio & Johannes expressed a desire to
+>>> keep the existing test scheme in t4018/* it's still there, but it's
+>>> also possible to add *.sh tests in that directory to use the more
+>>> familiar test framework used elsewhere in the test suite.
+>>>
+>>> The tests added here make use of it to e.g. supply custom -U<n>
+>>> arguments, set config before the tests etc.
+>>>
+>>> I also improved that existing test support so you can have N tests in
+>>> one file with (mostly) the existing test syntax. See the "userdiff
+>>> tests: add a test with multiple tests in a LANG file" patch.
 >>=20
->> Since this test framework was added we've added new patterns without
->> any tests. Let's make it obvious in the future in the diff for such
->> patches that they should have those tests.
+>> I've read through all patches and had a comment here and there. I like a
+>> lot that we can now put more than one test into a single file.
 >>=20
->> For anything with tests we can skip the "does the pattern compile?"
->> test, as the actual tests will check that for us.
+>> However, I do not like the shell script version of tests, because the
+>> syntax is so hard to read. Also, it looks to me that they are only
+>> needed for a few tests that could just as well be coded as one-off tests
+>> outside the framework.
 >>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  t/t4018-diff-funcname.sh | 30 +++++++++++++++++++++++++++++-
->>  1 file changed, 29 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
->> index b80546b4d7f..a3058fda130 100755
->> --- a/t/t4018-diff-funcname.sh
->> +++ b/t/t4018-diff-funcname.sh
->> @@ -15,6 +15,19 @@ test_expect_success 'setup' '
->>  	sort <builtin-drivers >builtin-drivers.sorted &&
->>  	test_cmp builtin-drivers.sorted builtin-drivers &&
->>=20=20
->> +	# Do not add anything to this list. New built-in drivers should have
->> +	# tests
->> +	cat >drivers-no-tests <<-\EOF &&
->> +	ada
->> +	bibtex
->> +	csharp
->> +	html
->> +	objc
->> +	pascal
->> +	ruby
->> +	tex
->> +	EOF
->> +
->>  	# for regexp compilation tests
->>  	echo A >A.java &&
->>  	echo B >B.java
->> @@ -22,7 +35,12 @@ test_expect_success 'setup' '
->>=20=20
->>  for p in $(cat builtin-drivers)
->>  do
->> -	test_expect_success "builtin $p pattern compiles" '
->> +	P=3D$(echo $p | tr 'a-z' 'A-Z')
->> +	if grep -q $p drivers-no-tests
->> +	then
->> +		test_set_prereq NO_TEST_FOR_DRIVER_$P
->> +	fi
->> +	test_expect_success NO_TEST_FOR_DRIVER_$P "builtin $p pattern compiles=
-" '
->>  		echo "*.java diff=3D$p" >.gitattributes &&
->>  		test_expect_code 1 git diff --no-index \
->>  			A.java B.java 2>msg &&
+>> I've now pulled avar/t4018-diff-hunk-header-regex-tests-3 from your
+>> github repo and will check again if I missed some cruicial points.
 >
-> Please drop this hunk. It is extremly distracting to see, e.g.,
 >
-> ok 8 # skip builtin cpp pattern compiles (missing NO_TEST_FOR_DRIVER_CPP)
-> ok 9 - builtin cpp wordRegex pattern compiles
+> I've now looked through the patch series again.
 >
-> It says "NO_TEST_FOR_DRIVER_CPP", but I know we have tests. I have to
-> waste time to check that something not related to "we have tests for the
-> driver" is meant here. It may be just a matter of naming the
-> prerequisite, but I think we do not need this optimization.
+> I appreciate that you dug through the history and discovered and fixed a
+> few deficiencies and loose ends. The way to throw all test cases for a
+> language driver into a single file I like a lot, too. The way to specify
+> expected results is manageable (modulo the dependency on the test
+> number, t4018, that Junio mentioned).
 
-Perhaps some other way to do this is better. I did the prerequisite just
-to avoid indenting that whole part and I figured it was more readable,
-but apparently not on the "more readable".
+Yes, maybe just "HEADER:" or something would be better. I was trying to
+come up with something guaranteed not to conflict with the language in
+question. Maybe:
 
-I do think it makes sense to keep this in some form, i.e. not test the
-compilation if we know we have later tests to compile the regex. It's
-providing self-documenting code to show that once we add tests for the
-few missing drivers we can delete that test entirely.
+    =3D> HEADER      =3D=20
+    =3D> description =3D=20
 
-And if a later change does the same check on the t4034/* files the
---word-diff check can also go.
+> But I do not see the need for the framework provided by the new
+> test_diff_funcname. At the end of the series, it is only used by Perl
+> and custom driver tests. (I discount the new ADA and Ruby tests as they
+> can easily migrated to the simple test scheme.) But then the Perl tests
+> do not do anything special, either. The multi-line pattern test is just
+> a nice add-on but not strictly needed. In the end, the Perl test is just
+> as straight-forward as all others.
 
->> @@ -119,11 +137,17 @@ test_diff_funcname () {
->>  	'
->>  }
->>=20=20
->> +>drivers-had-no-tests
->>  for what in $diffpatterns
->>  do
->>  	test=3D"$TEST_DIRECTORY/t4018/$what.sh"
->>  	if ! test -e "$test"
->>  	then
->> +		git -C t4018 ls-files ':!*.sh' "$what*" >other-tests &&
->> +		if ! test -s other-tests
->> +		then
->> +			echo $what >>drivers-had-no-tests
->> +		fi
->>  		continue
->>  	fi &&
->>=20=20
->> @@ -135,4 +159,8 @@ do
->>  	. "$test"
->>  done
->>=20=20
->> +test_expect_success 'we should not have new built-in drivers without te=
-sts' '
->> +	test_cmp drivers-no-tests drivers-had-no-tests
->> +'
->> +
->>  test_done
->>=20
+The benefit now is:
 
+ 1. Unlike the new plain-text "all test cases for a language driver" in
+    the same file mechanism you can have test descriptions. The
+    "description" in the golang one is just for show, you won't get
+    anything informative from test-lib.sh when your test fails.
+
+ 2. I think having #1 beats not having test descriptions at all, or
+     having to shove a description like the Ruby:
+
+    "picks first "class/module/def" before changed context"
+
+    into something that would make all the FS's we have to support
+    happy.
+
+ 3. A test in the new perl.sh one sets config. I think in both that case
+    and custom.sh it's more readable to carry such config setting with
+    the test, rather than at a distance in the main setup of t4018-*.sh.
+
+That being said I'd like to improve the syntax a bit, in particular
+instead of having a wrapper for test_expect_success I think it makes
+sense just to have the test call test_expect_success, and then provide a
+couple of helper functions.
