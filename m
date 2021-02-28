@@ -2,107 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8ADCC433DB
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 18:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 371CEC433E6
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 18:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CE5464E54
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 18:08:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F41E764E99
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 18:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231397AbhB1SHt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 13:07:49 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59606 "EHLO
+        id S230499AbhB1SVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 13:21:10 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59640 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231295AbhB1SHs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Feb 2021 13:07:48 -0500
+        by vger.kernel.org with ESMTP id S229715AbhB1SVJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Feb 2021 13:21:09 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E305760DF4;
-        Sun, 28 Feb 2021 18:07:06 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 122F560DF2;
+        Sun, 28 Feb 2021 18:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1614535627;
-        bh=aKSuiwuHD9z7hXtCYGjJP41YNFsQp/8b9zk3itblV5I=;
+        s=default; t=1614536393;
+        bh=/7QGYPAm/qbYXHNLmY20PdDInfAEXMbegZDTRWFfbuw=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=dhb9g9c3Sg5x6t+P7HUWPFXoNgpS8+6GpFuycn2KIWCwnWsIZFCRv1sOHmCgqEiIg
-         M9lItjbyY+oSuO+jR11GddGQ+MLt5hKxh2KIbon6p2nLdgc/bV3nQhbSy2Vsm9qmdN
-         aXa6pjJK9tNTfmkXX8EkA/hSOiN1zHJKvj3/sjXr6k37G2cqORCGF/yN+O8OmBcQhz
-         WTu1INwFtOKOsnS+T4Gxs1F4dbLBP1CxmUiz1cbbLE3BSNs2Dp94o29GzmqDfcfG6t
-         6N2x+Mljo/n+VQdRSJCmtTbIchyS5QtkHj2XZBtTovvzRzzvU4FmNXvDCQleA0k4rW
-         1l77L3FWBhQI0HZ6ocF6Jq89r0YobhMOxL1eIMM3lOd3gXKivUjkCm/+vzGgngMVNN
-         Ab7Wz44yD0eqnTb9pqAriRP+h+xJPVtUXCsOrzU1g9Jikj98/eGLuB7C08/oTLW0sg
-         tfot1eSA9W1wiKptJaxP2FunLRNaiPGQGkaVnBcSsCGOr5aiC56
-Date:   Sun, 28 Feb 2021 18:07:01 +0000
+        b=hgoCyBxVCQj4XbexxmBZooEGc3pXOLwPakQ1JDhXBSPUzzmZBZOD5n2PkMqda9+kG
+         V/4P+zZ7N0TOVP/+M4zGKplGSGYgnB3SzTX7AikERkCpyRbWBGOMpfwcVrIC6Vydo0
+         4a0w04oYGfijdmWqxzXlgta+iMFOAFdsQiaNpzhJsIe4Ap8RGVBnLEnEFOTpmdMym3
+         C7rff7ugUKVIChfUKuqAEJgJzQQ9AuFkMhcI2gdcof7/+2SDPN4IaBJuBTq/4haDaq
+         fDsA8kDB3H9bdPkZF2oPaP48olZVTPr07XNt5xLejIJg35pn76zbt0JzdlkZ2Axc5A
+         to029BSRmzI2HJmEPzCDHeiu/1J8eyJtVI7+lmwbQFqAITmaMrOS2MNBpcH4k/y356
+         FqqbKJZd5nfxQU8jgBs4zYFjZbwLnYJACQOiNL4LuIwoxAX45S64jyYXxdIJTP9Ltc
+         vVe7aj48JF3dKUqVY4YtGpUI1CHZeFt4vt3d55MLyUdeNRxTiAM
+Date:   Sun, 28 Feb 2021 18:19:48 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] docs: add a FAQ section on push and fetch problems
-Message-ID: <YDvbxSfulnzY6vGp@camp.crustytoothpaste.net>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Jason Pyeron <jpyeron@pdinc.us>
+Subject: Re: [PATCH 4/4] docs: note that archives are not stable
+Message-ID: <YDvexO2NFM0KZ1Jo@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Jason Pyeron <jpyeron@pdinc.us>
 References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
- <20210227191813.96148-4-sandals@crustytoothpaste.net>
- <87k0qsl65o.fsf@evledraar.gmail.com>
+ <20210227191813.96148-5-sandals@crustytoothpaste.net>
+ <87h7lwl5mv.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gxF74i0FNNSnuwYP"
+        protocol="application/pgp-signature"; boundary="OJ+qv9uZTX8cGaiT"
 Content-Disposition: inline
-In-Reply-To: <87k0qsl65o.fsf@evledraar.gmail.com>
+In-Reply-To: <87h7lwl5mv.fsf@evledraar.gmail.com>
 User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---gxF74i0FNNSnuwYP
+--OJ+qv9uZTX8cGaiT
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2021-02-28 at 12:37:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> I haven't looked in details at the content of the FAQ itself being added
-> here (as far as proposed solutions etc. go), but I wonder if this
-> wouldn't be 10x more useful to users if we cross-linked these errors
-> with the docs, e.g.:
+On 2021-02-28 at 12:48:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Perhaps something like this instead:
 >=20
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 0290b04891..ffb1001703 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -829,7 +829,7 @@ static int run_slot(struct active_request_slot *slot,
->                                 strbuf_addstr(&msg, curl_errorstr);
->                         }
->                 }
-> -               error(_("RPC failed; %s"), msg.buf);
-> +               error(_("RPC failed (see 'git help faq'); %s"), msg.buf);
->                 strbuf_release(&msg);
->         }
+>     The output of 'git archive' is guaranteed to be the same across
+>     versions of git, but the archive itself is not guaranteed to be
+>     bit-for-bit identical.
+>=20
+>     In practice the output of 'git archive' is relatively stable across
+>     git versions, but has changed in the past, and most likely will in
+>     the future.
+>=20
+>     Since the tar format provides multiple ways to encode the same
+>     output (ordering, headers, padding etc.) you should not rely on
+>     output being bit-for-bit identical across versions of git for
+>     e.g. GPG signing a SHA-256 hash of an archive generated with one
+>     version of git, and then expecting to be able to validate that GPG
+>     signature with a freshly generated archive made with same arguments
+>     on another version of git.
 
-Sure, I can send a patch to do that.  That's a great idea.
+I think something like this is good.  I'm a bit nervous about telling
+people that the output is relatively stable because that will likely
+push people in the direction that we don't want to encourage.  I might
+rephrase the first two paragraphs as so:
+
+  The output of 'git archive' is guaranteed to be the same across
+  versions of git, but the archive itself is not guaranteed to be
+  bit-for-bit identical.  The output of 'git archive' has changed
+  in the past, and most likely will in the future.
+
+I'm not very familiar with the zip format, but I assume that it also has
+features that allow equivalent but not bit-for-bit equal archives.
+Looking at Wikipedia leads me to believe that one could indeed create
+different archives just by either writing a Zip64 record or not, and if
+we store the SHA-1 revision ID in a comment, then we would also produce
+a different archive when using an equivalent SHA-256 repo.  And of
+course there's compression, which allows many different but equivalent
+serializations.  So we'd probably need to say the same thing about zip
+files as well.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---gxF74i0FNNSnuwYP
+--OJ+qv9uZTX8cGaiT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.27 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDvbxQAKCRB8DEliiIei
-gcsBAP9TYSgBVnPmo3TijHJSeDnNztNieStQDFwcUssYrzl8BgD7BxbAJM0H3RA0
-KgY447gKhbIxPQ8EZAVbNF8DJxPkgAI=
-=yf6n
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYDvexAAKCRB8DEliiIei
+gbtEAP0YNxSdCQH9OdUQY9PtlD/M0PZPkqjdbdK3KTH70WgigAEA2wO/qVD7gTMc
+I/NO+COsHIXhyLgjb3oKEOsIp5qKZg0=
+=qYle
 -----END PGP SIGNATURE-----
 
---gxF74i0FNNSnuwYP--
+--OJ+qv9uZTX8cGaiT--
