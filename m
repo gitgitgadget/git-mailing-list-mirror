@@ -2,122 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E41C433E0
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51010C433E0
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 20:02:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3486A64E74
-	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 19:56:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C07064E62
+	for <git@archiver.kernel.org>; Sun, 28 Feb 2021 20:02:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231560AbhB1T4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 28 Feb 2021 14:56:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55574 "EHLO
+        id S231418AbhB1UB4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 28 Feb 2021 15:01:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231537AbhB1Tz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Feb 2021 14:55:58 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64A1FC0617A7
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:43 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id b13so8749037edx.1
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 11:54:43 -0800 (PST)
+        with ESMTP id S230420AbhB1UBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Feb 2021 15:01:55 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E757C061786
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 12:01:15 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id b15so9674215pjb.0
+        for <git@vger.kernel.org>; Sun, 28 Feb 2021 12:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6kjEJRnzoURDSPkSV1D6hu2Z2a33+WTPK5d4In75OYs=;
-        b=gX4npLyEh0PaqE2z2/EY15kWsr+XG1HSQp8/JXHKZhb8Mt4jIhbH878OGinkQdg3OG
-         TP3AshSUzgCAPN8nNatCfOTDFje5jRL6+Rwzziv6JA4BeGqYBzYicG0Y4CR2PTmWmJk2
-         k0QQnT5SJZW2MotoUZoUl+nwBwXeCo0YuynEZRtXqJtpZzsacN3fCc9MGY5e77seyjRN
-         cGGG2CdjSYOKw2S0q6H1O3IjbnVNy2Db+iQfpSs1XiN7+cfENXDtt2p3/DBVWaQrapRN
-         XPYlBXVqqefAWK18ShS5PBgTGpvq9XyYvlLcudtG8rfMEfCIlcIOm/XhZgSXzOB3t7pN
-         4e4A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AhwAySjtesc1FQBwe/tDBbtrSd2VxUUFmUaUiD2d5js=;
+        b=SkLsTIEmv7L6zqXUKZ3m66oeh7QB+f/OT+yOXXxd+fELXifeOjwjsdaxtMmw+mG8w5
+         1Qv7V1g/AuzhgB8OfmqP/5fP50L+IvwyndOF+X7suPxnzeYsygutYnya5SUuPq34G5B6
+         7A6ejV80j3DOV3pR8jCOrPdJD5QM3RBwBRU2wuOaX+EFyx8oKzX5AfeftUT0bRK6FwwP
+         SuHYG0CmobqU1CriwPjRdKo7LcNFGxlIOSaU+BfJEpq3XbqLWHbl/SuGMgLrdYtJ/xpK
+         kWlsg2rAAKgkuUVvTiJt7VcUCDVO80Bd9h+SjlgLRe9gDFPhUJoB/gW0VvXucZ5JVn2D
+         ShYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6kjEJRnzoURDSPkSV1D6hu2Z2a33+WTPK5d4In75OYs=;
-        b=Unkjm8gzcwFaAI0g+GTF/40+r2H+NSWJrzw3VLETcm9vFsIn929eV9a14hJ3GpvBUI
-         nc7onLaRlOFQbHBc/mcTCbE27KtAwmc6jBH7ryaUsSUsomJbEZzL6rUI3/jcQ3SQZnE6
-         5wK52rWddXLjG/f5I1AWcqAJXswemcCQdlQJ4lA3HfBU909q5v/8AZqj2+R9RPnzNYPz
-         fIb1XdD84sE/aMpq+GREBkdw/qRVHNTnSRpVcn+695cuyk8sDgdqDBrtnxgyzaF6Pi2L
-         57VWGfglu9NGbH+y8yRvf+HllKinQGn7zX6ukjKGPAjpLlTSlsonv1zEnVJII8ex1/1x
-         uBuA==
-X-Gm-Message-State: AOAM531bIUoDxkoyyo7x7pE4HSicTzGJwmTmtXlqkpXG/iQPqjOTnGlu
-        EscAm2I8jpPARYZKVBq7m1SAskt0+1LTMA==
-X-Google-Smtp-Source: ABdhPJxlgEhhfkEdkGUGHYrtQBkhbVMAfvzdKLZrzrP3Fj8++wFErv/OjRYzhc0kCYL7pfgvK62afA==
-X-Received: by 2002:a05:6402:2707:: with SMTP id y7mr12863640edd.5.1614542081995;
-        Sun, 28 Feb 2021 11:54:41 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n2sm11295554ejl.1.2021.02.28.11.54.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Feb 2021 11:54:41 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        Benno Evers <benno@bmevers.de>, Jean Privat <jean@pryen.org>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 10/10] test-lib: return 1 from test_expect_{success,failure}
-Date:   Sun, 28 Feb 2021 20:54:14 +0100
-Message-Id: <20210228195414.21372-11-avarab@gmail.com>
-X-Mailer: git-send-email 2.31.0.rc0.116.g45ec00aa00
-In-Reply-To: <20200223125102.6697-1-benno@bmevers.de>
-References: <20200223125102.6697-1-benno@bmevers.de>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AhwAySjtesc1FQBwe/tDBbtrSd2VxUUFmUaUiD2d5js=;
+        b=QCuRv8GiccXHU7GMRn8UUi2hHhwTc7pyjrPqj0QrWtNh2SrAVpMs4qFssHam5lRodc
+         gHM0KvZd5SyA0K8izI1dzqNUvXkXQBY5nJ6lQKk+Rz0/cySXFPBiZ42YgjbJaI+yTaka
+         dPxv6yGvkLZ1AbhllB3IvcYPcV5RvF3L449d9m9Co8Z9zUkd5y1C+aW5nFku1ZB2Nb5C
+         H89ZoV6WqJeq7s82FYmjwtYssd/MVtr5bKMleb/QvJ+78FN+277+jSYYW7ADJRTbKTDq
+         ypOAg5ia1N7YwsLSHmZrxU9UMxqcyjWLjC2Kf77Nr0f5Z1taYV7AswGdkCJaApqf+R5m
+         gR/Q==
+X-Gm-Message-State: AOAM5305rqkDUi/JXoy8JxJRmVfvxNkioHQk5q2EKfqElMxoJC+ud6ud
+        ayCtkaBDDvHi2qXvABfXWx5/6WjpS8t0YhekEvg=
+X-Google-Smtp-Source: ABdhPJybtXQMGGDRHpiFtxK9cJ8jZfHatfWb5a9vW/aCTUJ6/fhFmMc4VjIHqhkhTZekJS/K8HPfEQUYOfvooHqHQoo=
+X-Received: by 2002:a17:90b:34c:: with SMTP id fh12mr13545262pjb.137.1614542474453;
+ Sun, 28 Feb 2021 12:01:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <b33d0dc82f5ff1fac6772e533bbf21eecfae44ed.1614277014.git.matheus.bernardino@usp.br>
+ <ead5b3145c0cbf726c2fe06f5c95536373c85265.1614354223.git.matheus.bernardino@usp.br>
+In-Reply-To: <ead5b3145c0cbf726c2fe06f5c95536373c85265.1614354223.git.matheus.bernardino@usp.br>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 28 Feb 2021 21:01:03 +0100
+Message-ID: <CAN0heSpZ4938f+Wd_LOnykCpLbWernXzLJU02LA79axcGCA_-Q@mail.gmail.com>
+Subject: Re: [PATCH v2] convert: fail gracefully upon missing clean cmd on
+ required filter
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>, prohaska@zib.de,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An earlier commit fixed an issue in "check_describe" with
-"test_expect_success" being called within another
-"test_expect_success", causing the test to succeed even if it should
-fail.
+On Fri, 26 Feb 2021 at 17:24, Matheus Tavares <matheus.bernardino@usp.br> wrote:
+> This assertion is not really necessary, as the apply_filter() call below
+> it already performs the same check. And when this condition is not met,
 
-Let's try to guard against this in the test library by returning 1
-from these two functions. This change would have caught the issue I've
-now fixed in the "check_describe" function.
+> -       assert(ca.drv->clean || ca.drv->process);
 
-I could equivalently add this "return 1" to the "test_finish_"
-function itself, but I think doing it here is more readable.
+FWIW, this LGTM.
 
-Because of this change any tests which ran under "set -e" needed to be
-refactored not to use "set -e". Luckily there were only two such
-tests, earlier commits did that refactoring.
+> +       test_i18ngrep "fatal: test.ac: clean filter .absentclean. failed" stderr
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/test-lib-functions.sh | 2 ++
- 1 file changed, 2 insertions(+)
+> +       test_i18ngrep "fatal: test.as: smudge filter absentsmudge failed" stderr
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index c6cdabf53e..3dd68091bb 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -636,6 +636,7 @@ test_expect_failure () {
- 		fi
- 	fi
- 	test_finish_
-+	return 1
- }
- 
- test_expect_success () {
-@@ -656,6 +657,7 @@ test_expect_success () {
- 		fi
- 	fi
- 	test_finish_
-+	return 1
- }
- 
- # test_external runs external test scripts that provide continuous
--- 
-2.31.0.rc0.116.g45ec00aa00
+(Funny how these two error messages differ in quoting. That's obviously
+not anything your patch needs to fix.)
 
+Martin
