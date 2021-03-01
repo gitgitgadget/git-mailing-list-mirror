@@ -7,74 +7,74 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C5E9C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66C35C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:22:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 56CDE64E31
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:22:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4080464E31
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233890AbhCAMWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 07:22:00 -0500
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:43071 "EHLO
+        id S233917AbhCAMWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 07:22:01 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:59719 "EHLO
         wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234226AbhCAMVn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 07:21:43 -0500
+        by vger.kernel.org with ESMTP id S232943AbhCAMVs (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 07:21:48 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id B32EB9E9;
-        Mon,  1 Mar 2021 07:20:37 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id 597329E0;
+        Mon,  1 Mar 2021 07:20:42 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 01 Mar 2021 07:20:37 -0500
+  by compute1.internal (MEProxy); Mon, 01 Mar 2021 07:20:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=y7RmNu1d50ZRYBgivBIE9DBHaMX
-        B5XxatWykHv2UTiw=; b=wevnjtzbE++ytMAvcHMdfrVyMMwyOPz7/JznsmEf7N5
-        G94EY8ry+lfbfdxN7meR0c8i9nE6GyqoHR7Z/EX8yschOMBAZw3JnJL32o8aeqho
-        y4ydB7Pu/ZrnDPD/omIQCIatGsjWJ3U8H+xs46Zh4YAWG7F2tp7RN2JRiaXFq2Dz
-        RwTWrYLc6UluGt1IOnhKAjEOqtjS5g62PtLLoGy3pnu7cr8idGD9qe8UiQWK+MI/
-        VEwAhmwdTySaYHdiMjQPD5KhVgYemo3+WOlDsSU7gkBOCqBJV+xhOICG+9iHbvEJ
-        hrjKZEZ4vH5xRAcxXIw//UOnMwgbODwmx2vdncIuePQ==
+        :content-type:in-reply-to; s=fm3; bh=pzxtxwlwXao9DM4Zcf4IJQyC+2x
+        psUjWreAYAaxyaNs=; b=V36NfkR26U0BWvxziQU+x9qxPrtF/DYxVbvhErb0rMI
+        xeh556/ApoTHfA9JhfQBW6LWFm3aef0rRVespwlDx8/3PBv37XeVpu0RlgwVnqIv
+        J+gjoad0CwcLtKPfjYBJpZEfzGu+gW00kCMAtC4vPcKEw7XRY54jukuZ5tbLEp64
+        cCg1rob2/N8QIzd7pd3ai96yZRmy1BTPtA6v56C2v6UVs71rhNEaxJ3sR3AgaY4f
+        XsonvlvPkppsGK24+C2oi4vUyRPrbpwxSnhQFZ/dWS70O0CSLDRe1fkmDMZXwDN8
+        /NaHRoFCmqkh12NzugF03h17d7WVfIc6z+fHsHpUYgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=y7RmNu
-        1d50ZRYBgivBIE9DBHaMXB5XxatWykHv2UTiw=; b=HslmJg93khwVeCjW2F2qWb
-        WGJx8Z3wGeBCdQL5JpNRLy/9eQYWEh68ulnML1R8BkVzAzfnYeKn4NXBWXH15UkN
-        HxoDBoIoUi5ATyaY/mIaqARMNAA8kyUznRd7OvVzA9J5K6g1qBkSgfX3n47MX0LM
-        ey7dEvHSyQFbcLEUO54CHeC6IBa1HqmphmXYZNBy1oeJg2AINBwpBDsxErKFIOmI
-        3UU/4ayk2Zu42hFao15Bys0LKRqJktsaWKNQ4KowiaX6LxoO8RF94gDoD5ItEE92
-        3xQKEuS2TY/w5MZ8bTp5PEWwKmu0T1A3lxpoAfFXTZyDvMwFZyQWKqFcBccGdTfg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=pzxtxw
+        lwXao9DM4Zcf4IJQyC+2xpsUjWreAYAaxyaNs=; b=Qll49AcEZuLPIJrkXv8mKu
+        SN2Ov7jEvKfdNaxv2R5Hq54CEwXZJsXkivBukM6btX34LGqdYsytdTIdxoT8xCq1
+        w67WBwOzHyQJZNoVHGPS2FzwTJj3YKCQ7AsS6zDjTJu7tCWO6f65+NdOoxQ9N985
+        vSJgr1Jn3TYkm40cId0x5LPzfgtJGOhCkmR8aNcXAnpd/SoCBtbCWo+2jDmpKnFa
+        9hap6GH5pDPfdBRDlTCmdAfOCKiYi3oKDxdn8RUOUvyc5tySE7t6yYuOyJspn9Fk
+        TpfClGi669BjapODvAM/B6DLKEAhE0nqRrFCziPorjSAkY1J6/dPZNzpn3NLx9MQ
         ==
-X-ME-Sender: <xms:Fdw8YMI_7C129d-pqTD33_gQwDhwAJLq_6cUwsU2y-DT3brmlcFbJg>
-    <xme:Fdw8YMKNrRnAh9uzf203vMRjbg3qohsD3gHOtn2tmV4s7QAXmBZFalFiyCDZlVUXC
-    b8fU_6yzWdViQuu_Q>
+X-ME-Sender: <xms:Gdw8YDEan4K7cHhX3UGBuLd6jM1EKBX-cCMKWxoLDKFMg9dA9yEJzQ>
+    <xme:Gdw8YAVJaHqTbIPmvSxBzTtDLf0LYtsbS70lqIJeWC_W4xjqSLl5tSwFfPnEvRSNG
+    _XdkEipQ-JV1MRgrg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrleekgdefkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudeluddrvdejrddufedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    kfhppeejjedrudeluddrvdejrddufedvnecuvehluhhsthgvrhfuihiivgepudenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Fdw8YMv_eb7igS05B3GCNMvOU5KLIgqHieYebtJR6wlUtpZ8X5CHOA>
-    <xmx:Fdw8YJa3ydM5Nf4iPhndqplEFJoiZnZA2kY6nrymRNQ_ivqOxxmAcQ>
-    <xmx:Fdw8YDazX_ZbpoEAZ8LARvg-TllMSaNitzV5sWq7ROOBr2ZQvr8vWQ>
-    <xmx:Fdw8YN32OIVJvBVOcDSwP5otDrkKBq3hel54u0tHIJrkGMr-79xOqw>
+X-ME-Proxy: <xmx:Gdw8YFLt_W1E1vyy6k7a1SNrBqEACz2OsXfsCbBLAsax8Qg8yu0SvA>
+    <xmx:Gdw8YBEk0SApxtsZhZ22ckjbwQ10d3U8vlMlBmGuyQT6De56dDQItQ>
+    <xmx:Gdw8YJVlYxkZlZQ9C2fkVAZRqVx-bfV_4t6NnZS8IZqNSyuNTfheDA>
+    <xmx:Gdw8YIC3SKVdk9faXMCvDYuSu2NMzKET6HXT7FIOqDfHgxq2wXiTog>
 Received: from vm-mail.pks.im (x4dbf1b84.dyn.telefonica.de [77.191.27.132])
-        by mail.messagingengine.com (Postfix) with ESMTPA id C3D70240064;
-        Mon,  1 Mar 2021 07:20:36 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 71E8724005C;
+        Mon,  1 Mar 2021 07:20:41 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7afba069 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 1 Mar 2021 12:20:35 +0000 (UTC)
-Date:   Mon, 1 Mar 2021 13:20:33 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 50936689 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 1 Mar 2021 12:20:40 +0000 (UTC)
+Date:   Mon, 1 Mar 2021 13:20:37 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 1/7] revision: mark commit parents as NOT_USER_GIVEN
-Message-ID: <f2ce5dac8965ab3ccb13d7600ea29310cbb5b863.1614600555.git.ps@pks.im>
+Subject: [PATCH 2/7] list-objects: move tag processing into its own function
+Message-ID: <9feadba12420842437047fe6ea1351a8a330714a.1614600555.git.ps@pks.im>
 References: <cover.1614600555.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="X7RdegxiNFdEp6pQ"
+        protocol="application/pgp-signature"; boundary="wMdeF7hoxz2/bCVf"
 Content-Disposition: inline
 In-Reply-To: <cover.1614600555.git.ps@pks.im>
 Precedence: bulk
@@ -82,98 +82,73 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---X7RdegxiNFdEp6pQ
+--wMdeF7hoxz2/bCVf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The NOT_USER_GIVEN flag of an object marks whether a flag was explicitly
-provided by the user or not. The most important use case for this is
-when filtering objects: only objects that were not explicitly requested
-will get filtered.
-
-The flag is currently only set for blobs and trees, which has been fine
-given that there are no filters for tags or commits currently. We're
-about to extend filtering capabilities to add object type filter though,
-which requires us to set up the NOT_USER_GIVEN flag correctly -- if it's
-not set, the object wouldn't get filtered at all.
-
-Mark unseen commit parents as NOT_USER_GIVEN when processing parents.
-Like this, explicitly provided parents stay user-given and thus
-unfiltered, while parents which get loaded as part of the graph walk
-can be filtered.
-
-This commit shouldn't have any user-visible impact yet as there is no
-logic to filter commits yet.
+Move processing of tags into its own function to make the logic easier
+to extend when we're going to implement filtering for tags. No change in
+behaviour is expected from this commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- revision.c | 4 ++--
- revision.h | 3 ---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ list-objects.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index b78733f508..26f422f50d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1123,7 +1123,7 @@ static int process_parents(struct rev_info *revs, str=
-uct commit *commit,
- 				mark_parents_uninteresting(p);
- 			if (p->object.flags & SEEN)
- 				continue;
--			p->object.flags |=3D SEEN;
-+			p->object.flags |=3D (SEEN | NOT_USER_GIVEN);
- 			if (list)
- 				commit_list_insert_by_date(p, list);
- 			if (queue)
-@@ -1165,7 +1165,7 @@ static int process_parents(struct rev_info *revs, str=
-uct commit *commit,
+diff --git a/list-objects.c b/list-objects.c
+index e19589baa0..093adf85b1 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -213,6 +213,15 @@ static void process_tree(struct traversal_context *ctx,
+ 	free_tree_buffer(tree);
+ }
+=20
++static void process_tag(struct traversal_context *ctx,
++			struct tag *tag,
++			struct strbuf *base,
++			const char *name)
++{
++	tag->object.flags |=3D SEEN;
++	ctx->show_object(&tag->object, name, ctx->show_data);
++}
++
+ static void mark_edge_parents_uninteresting(struct commit *commit,
+ 					    struct rev_info *revs,
+ 					    show_edge_fn show_edge)
+@@ -334,8 +343,7 @@ static void traverse_trees_and_blobs(struct traversal_c=
+ontext *ctx,
+ 		if (obj->flags & (UNINTERESTING | SEEN))
+ 			continue;
+ 		if (obj->type =3D=3D OBJ_TAG) {
+-			obj->flags |=3D SEEN;
+-			ctx->show_object(obj, name, ctx->show_data);
++			process_tag(ctx, (struct tag *)obj, base, name);
+ 			continue;
  		}
- 		p->object.flags |=3D left_flag;
- 		if (!(p->object.flags & SEEN)) {
--			p->object.flags |=3D SEEN;
-+			p->object.flags |=3D (SEEN | NOT_USER_GIVEN);
- 			if (list)
- 				commit_list_insert_by_date(p, list);
- 			if (queue)
-diff --git a/revision.h b/revision.h
-index e6be3c845e..f1f324a19b 100644
---- a/revision.h
-+++ b/revision.h
-@@ -44,9 +44,6 @@
- /*
-  * Indicates object was reached by traversal. i.e. not given by user on
-  * command-line or stdin.
-- * NEEDSWORK: NOT_USER_GIVEN doesn't apply to commits because we only supp=
-ort
-- * filtering trees and blobs, but it may be useful to support filtering co=
-mmits
-- * in the future.
-  */
- #define NOT_USER_GIVEN	(1u<<25)
- #define TRACK_LINEAR	(1u<<26)
+ 		if (!path)
 --=20
 2.30.1
 
 
---X7RdegxiNFdEp6pQ
+--wMdeF7hoxz2/bCVf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA83BAACgkQVbJhu7ck
-PpQgDw//WGQmZAcgqXIdSxCn3/mBhs8WEZzJ5HaifYMty5UyGqKAOCIZHotrqA6I
-a+ywieQbRKqY4uJR+cMf/lwriwDsMGi8lZ93K5eFPxYMpJKp40EZFnSp+WirtsRx
-99WkZ1BCBnaxtkutnIiCVTvxYtOfEsXrnCQPV7rgEaTQQGgL0yrylXRw/EvwXX4j
-25JLom1WNSmf3YBCRhri/SeodIGwdXJb0pWTK80g9QnbcHHxsq9hrhzNG5u+K1kA
-8zkcquz7QYSndTpn0nk8GtXlObuIc84RTxmgSiNkSVUJZ/7jeAubWYklflVaZJEc
-MtPzzApMTP/t6a9/ex03H+suKp5U9h6Oo1ZoH6jG5Tq7S8fWtq0sR1WfSDJLKh9q
-AOp50fKNFRtMzM0cYpPB3UAoaxHGvNb8Z05QOa/RKenDZcRMxesX7p4A4RayMS+j
-FThlMUIGZZo8rhpcNdim/XUkNnDwlN8qNBij/G8Ixyqh+fMjHkMU46vDAjoFRljD
-aprlFWrEDkqGsqUhge3VN41IKWfbRt7E4mbejBdhj2EhllpBBG7g2ybpUsB1aZkQ
-fpB9xm4+hy07eH4s69N/rRiXJnLSk1P9O5J5jfd3YIA3TwD6Uowm2dfmKEmfntKB
-wxnKx0Lyo3G6R6mXl4A9lur7u++08dbOYz9BHrjfGtVtXL+K9TY=
-=qlE8
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA83BQACgkQVbJhu7ck
+PpR3oA//TjlfJFYSecKMTR4ENaJTYUjHIHXsYbykUU3Sr9LQCCBC0KZKU5ded4iw
+YRc8qki0erOvVtCEC5xSJYctWvDZedaOcnJEPCqT/kngmsBo78+XZZ/sX1v1JtTe
+elDbDbt7bRnnUPqPbPmkPOqRX1Q3EZIS4QmATrDGTsBWLznJor7WtXUhzTAF0bd3
+7X5Cfev6fky/2wxuLjy55RQC8RQ9UH4U6VY48qhrU5MpX99WLp5XM385Gc7nZ9V/
+DzrQOUngdrKUHvcBh6YdWrGnVytDrxhFO2T1QiKoNRMgTIXtqhpHuzlcyzGhI1yn
+xnSPyG00Adx0Hh56oWBWAqNDErle1ztsV/pj4+ztOEBxwisB8OQNqkvqnqLfS8el
+usGMIW1rfRDdm0Jb80T+ei1m3KAS20AT+B33AS16uT6D+YvhvxTlGiw/smOEEoj1
+NXQ2GWY/ymVn6R8qzci0r4n8H5Us4uA/FafNB5a4XbJaDqFyPgiUapj4uLrmQRz9
+ccgBPOPls+49xgVq/Z4l0wbWjXOdaFDFrGDs5CR9JbgsIEImhWPqsruV7MbhP21G
+ugPMyB4jWJbn3GzGZCbgjHuzCEUPoHgS7WyGvG40YGnVP074gMrqByWeT2quf5Ar
+DbyJH7x5UyeFTFapn0Nyw8gIBNmTdB9woEYUnyTAvPW77h5yrXQ=
+=Odlg
 -----END PGP SIGNATURE-----
 
---X7RdegxiNFdEp6pQ--
+--wMdeF7hoxz2/bCVf--
