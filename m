@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A10D5C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 21:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7300FC433E0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 21:37:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 595FA60238
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 21:30:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4240F600CC
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 21:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241834AbhCAV3x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 16:29:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61130 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238761AbhCAV1t (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 16:27:49 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 20CA7ABD7D;
-        Mon,  1 Mar 2021 16:26:39 -0500 (EST)
+        id S243842AbhCAVgm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 16:36:42 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51606 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244387AbhCAVdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 16:33:40 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D95F12453B;
+        Mon,  1 Mar 2021 16:32:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=fgNH1PilQCN/
-        n11asVEPx3p6eD4=; b=sHrf9KPLdHyXJjB1SI3IPRcv4Flw+ozIw/Nzyq9uvs2Z
-        j2HvsAsjKzAu1b2LnL3iQmD8WoB+tlKnkW92V0B8KAPDxXXQbiZxeu6GjGPY6idj
-        fYZJS1JRS5fRGvmW13u/2t2Zy3ovx8iaHCgqU2TNp4rMB0zMVoqEr4asAYY3rZA=
+        :content-type:content-transfer-encoding; s=sasl; bh=nCFUlA30hi7B
+        mQjEF/tiBnu6BAc=; b=yHTEH12toAopVy7mnQeox5n2ktslQY/wUhxr23CIkuYz
+        PrP30GNT7pAxFICUisyyVxBN9KDqord4wkn1KCOrVZnVRYOnnPsam9ztP9IEprHG
+        G+hd+Wdmf68v6IJ1RPZkl1WtGuQfTBERC+GgGQBv86TaJtCnGqfqpEzKIsv+dsw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=R1wpzY
-        Lx7ro5uRsmlqKewCEJF7ytbSHvT4jTt+yuBw5z+FcD0TYf1x1ixCpDP4CnEbAIdG
-        hhQCzFLI6fEftA4VwPQ3PHaI64eLXnNBgKlcQ46ArKgyqcSE3cm0RKh9qMpaVhUs
-        IhHCyY475qFEzXzwFISmwwxgOpyo1AMCnTPOI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17A95ABD7C;
-        Mon,  1 Mar 2021 16:26:39 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FJYL6a
+        xyV3oOrYRVWn9+L/2j5jHIuNRmF9mfMvfSyy/cKb/bPId0SGYj+c+ml3AdTk8/kj
+        OCUKbZV/LGpI5fXESvBSBw0DeymCi2q1qN3td/IY5XlJsgWxxq0ltBmDHt7c0vbS
+        GJTzAPUYRTZRoGaQFQWgMRoiK7hz8zIIxXNr0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37EFE12453A;
+        Mon,  1 Mar 2021 16:32:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 92DD8ABD7B;
-        Mon,  1 Mar 2021 16:26:38 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7B3A5124539;
+        Mon,  1 Mar 2021 16:32:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>,
         Benno Evers <benno@bmevers.de>, Jean Privat <jean@pryen.org>,
         =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 02/10] describe tests: refactor away from glob matching
+Subject: Re: [PATCH 03/10] describe tests: always assert empty stderr from
+ "describe"
 References: <20200223125102.6697-1-benno@bmevers.de>
-        <20210228195414.21372-3-avarab@gmail.com>
-Date:   Mon, 01 Mar 2021 13:26:37 -0800
-In-Reply-To: <20210228195414.21372-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+        <20210228195414.21372-4-avarab@gmail.com>
+Date:   Mon, 01 Mar 2021 13:32:53 -0800
+In-Reply-To: <20210228195414.21372-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
  =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 28 Feb 2021 20:54:06 +0100")
-Message-ID: <xmqq1rcypnua.fsf@gitster.c.googlers.com>
+        Bjarmason"'s message of "Sun, 28 Feb 2021 20:54:07 +0100")
+Message-ID: <xmqqwnuqo8ze.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CECE19E4-7AD4-11EB-8075-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: AF740BF2-7AD5-11EB-BDE9-D609E328BF65-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,67 +70,77 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Change the glob matching via a "case" statement to a "test_cmp" after
-> we've stripped out the hash-specific g<hash-abbrev>
-> suffix. 5312ab11fbf (Add describe test., 2007-01-13).
+> Invert a test added in 3291fe4072e (Add git-describe test for "verify
+> annotated tag names on output", 2008-03-03) to make checking that we
+> don't have warnings the rule rather than the exception.
 >
-> This means that we can use test_cmp to compare the output. I could
-> omit the "-8" change of e.g. "A-*" to "A-8-gHASH", but I think it
-> makes sense to test that here explicitly. It means you need to add new
-> tests to the bottom of the file, but that's not a burden in this case.
+> There was only one case where we expected and got a warning. Let's
+> test for that case explicitly, and assert no warnings or other stderr
+> output for all the rest.
 
-I think the point in these tests are that they consider "which tip
-the tested commit is the closest" is the only piece of information
-that matter, and allows the numbers ("number of commits on top of")
-to be redefined in the future without having to change the tests,
-but I tend to agree that such a change should be accompanied by and
-documented with changes to these tests.=20
+When we are expecting an error from "describe", we would want to
+make sure that we will see an expected explanation of the failure
+(e.g. "you passed a non-commit") in the standard error stream, but I
+am somewhat skeptical about the value of a change like this that
+insists that there is nothing on the standard error stream when the
+command succeeds.
+
+It is unlikely to trigger auto GC during the operation of "git
+describe" and seeing some output in the standard error stream, but
+it is easy to imagine that we may add an "automatically cache
+precomputed topology information" feature and trigger during a
+history traversal operation like this one, with some note to the
+standard error output.
 
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 > ---
->  t/t6120-describe.sh | 78 ++++++++++++++++++++++-----------------------
->  1 file changed, 38 insertions(+), 40 deletions(-)
+>  t/t6120-describe.sh | 26 ++++++++++++--------------
+>  1 file changed, 12 insertions(+), 14 deletions(-)
 >
 > diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-> index 7bc2aaa46e..e4fd5d567f 100755
+> index e4fd5d567f..ef70c695be 100755
 > --- a/t/t6120-describe.sh
 > +++ b/t/t6120-describe.sh
-> @@ -21,12 +21,10 @@ check_describe () {
+> @@ -21,7 +21,8 @@ check_describe () {
 >  	shift
 >  	describe_opts=3D"$@"
-
-Just a style thing, when we are not invoking the "each positional
-arg is double-quoted individually against being split at $IFS" magic,
-we prefer to spell this as "$*".
-
 >  	test_expect_success "describe $describe_opts" '
-> +		git describe $describe_opts 2>err.actual >raw &&
-> +		sed -e "s/-g[0-9a-f]*\$/-gHASH/" <raw >actual &&
-
-The exact ones would be passed as-is (i.e. "test_cmp raw actual"
-could pass), which is what we want anyway.
-
-If we are planning to further extend this helper to make it more
-capable, we might want to consider quoting $describe to be evaled
-properly so that we can do an equivalent of
-
-	check_describe A-8-gHASH --dirty=3D'.d i r t y' HEAD
-
-when we gain new option that is more intresting than --dirty=3D<mark>
-that legitimately would benefit from being able to pass arguments
-with $IFS whitespace in them.
-
-But that is outside the scope of this step.  I haven't seen the
-overall topic yet, so it may or may not be within the scope of this
-series.  We'll see.
-
-> +		echo $expect >expect &&
-
-Let's double-quote to relieve readers from having to wonder if you
-are expecting the callers to feed crazy things like "a  b" and this
-echo to normalize it to "a b".
-
-> +		test_cmp expect actual
->  	'
->  }
+> -		git describe $describe_opts 2>err.actual >raw &&
+> +		git describe $describe_opts 2>err >raw &&
+> +		test_must_be_empty err &&
+>  		sed -e "s/-g[0-9a-f]*\$/-gHASH/" <raw >actual &&
+>  		echo $expect >expect &&
+>  		test_cmp expect actual
+> @@ -122,20 +123,17 @@ test_expect_success 'describe --contains defaults=
+ to HEAD without commit-ish' '
+>  '
+> =20
+>  check_describe tags/A --all A^0
+> -test_expect_success 'no warning was displayed for A' '
+> -	test_must_be_empty err.actual
+> -'
+> =20
+> -test_expect_success 'rename tag A to Q locally' '
+> -	mv .git/refs/tags/A .git/refs/tags/Q
+> -'
+> -cat - >err.expect <<EOF
+> -warning: tag 'Q' is externally known as 'A'
+> -EOF
+> -check_describe A-8-gHASH HEAD
+> -test_expect_success 'warning was displayed for Q' '
+> -	test_cmp err.expect err.actual
+> -'
+> +test_expect_success 'renaming tag A to Q locally produces a warning' "
+> +	mv .git/refs/tags/A .git/refs/tags/Q &&
+> +	git describe HEAD 2>actual >out &&
+> +	cat >expected <<-\EOF &&
+> +	warning: tag 'Q' is externally known as 'A'
+> +	EOF
+> +	test_cmp expected actual &&
+> +	grep -E '^A-8-g[0-9a-f]+$' out
+> +"
+> +
+>  test_expect_success 'misnamed annotated tag forces long output' '
+>  	description=3D$(git describe --no-long Q^0) &&
+>  	expr "$description" : "A-0-g[0-9a-f]*$" &&
