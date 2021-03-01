@@ -2,106 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B87ABC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07441C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:10:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B8C460231
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:05:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B48F960235
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238978AbhCAWFJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 17:05:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52214 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244933AbhCAWEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 17:04:04 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE7CC061788
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 14:03:23 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id v62so20315570ybb.15
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 14:03:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=AqmyodcHCWwqvdEgHev5icSZ5SOw1KXBs+XTKdSdY9M=;
-        b=GQ4lPss9yfa6dPZfiGLhwp3whmjZlHZ11EW+zXTsgC6XhTJWXX/8/L9c4m7UD4lHfq
-         tNKkWoH720A2PTb5DKVxakE5zXtORUXdK09h5t3zJuMily/H8BZpr6NMOGjrTPGxtX8d
-         ri4hbhcOAzNBbXuZuQz4ouQHDOYkSYeceTea6nrUEA7gjUVdHEeUNnlB+W410yB8KSaw
-         NqUt1QbEeuPuwV4kDp5YnVpPdsBMHZf2ExOu+OHQvrEkDNgvXATnhxziDoDg59fLNL80
-         XDOWI+BUO89GvU1lKFqwpcQOj4SaLk0RDxPNHGIzM3/hmCFuftqcYCBYxRLB5E+yq9iC
-         U4nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=AqmyodcHCWwqvdEgHev5icSZ5SOw1KXBs+XTKdSdY9M=;
-        b=ki5OEg4NuES9YXKEfgDB8QF2O5haSt48eC+HYF72/bsSZV932pAHe2jb6cC1jpltkC
-         C+XdvslJ+FtJuEpZqyqTcbfzuInejzREAAk4pabHimdPwoBlmDmshwwu8jbik77xABK0
-         r3WBTQgM+NabtxVaGw3xPwcJAHMI4350WfXyNqPAWi/wRHQo/JbNiuAQIeUloR/iLdS5
-         ixHjw2qgdFL9R2pHkFGgKoKlPCNHPnATuipc1xPcNoA5vLbnBJ3ez2S0qD7vxbFLRX0z
-         Y6aszEbjrXotQcDpJBwKP1MOe1LLphVm/vhL9rnXEDSC/HX+M4213ZMG8Psrh7suWkLt
-         1hdQ==
-X-Gm-Message-State: AOAM533uFX8IuS4X1CBKYlFqd8iEGwStWz5qpmsSHa1AYn64NVnq4Pyb
-        b0FaIK7foxxkA7fFRFKUvWoATljrIv6D3c181fMR
-X-Google-Smtp-Source: ABdhPJy/VqxrPTaAmFMIERbRlSSwesTHoD/J2QAPDtMOCGzzeWkyhPciBiahWmc/izuLhK52+0mQTu/aUyjFtuxfxGGB
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:7356:: with SMTP id
- o83mr25075335ybc.170.1614636202873; Mon, 01 Mar 2021 14:03:22 -0800 (PST)
-Date:   Mon,  1 Mar 2021 14:03:19 -0800
-In-Reply-To: <xmqq35xo7yzy.fsf@gitster.g>
-Message-Id: <20210301220319.3426185-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq35xo7yzy.fsf@gitster.g>
-X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: Re: [PATCH v4] builtin/clone.c: add --reject-shallow option
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, stolee@gmail.com,
-        johannes.schindelin@gmx.de, lilinchao@oschina.cn,
-        jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        id S244784AbhCAWHh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 17:07:37 -0500
+Received: from mout.gmx.net ([212.227.17.21]:34759 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236638AbhCAWEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 17:04:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1614636191;
+        bh=PNAmTJdAK/74ygJM48gWdZKnG8GVSBIP6OlNR5nv1AQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LXxOi9IXk166b3w9gARLmMM88Bsh0bs/+KEWN38nWwRTvxE9pi5Z0sRBKq5g6UjU4
+         Y7UIIfGt0KdRgHD5C3xAO8Cmve4Cu7dzpofs4208w2Jh3SVQQSzRhyJmiw5m+N6Snh
+         KLrguhpHMbQKVGRi0dOGE1L/WUm/fGcZhA7xHNmA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.162.2] ([89.1.214.35]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV67y-1lOzaz0kmE-00S8Oi; Mon, 01
+ Mar 2021 23:03:11 +0100
+Date:   Mon, 1 Mar 2021 23:03:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] t/perf worktree improvements
+In-Reply-To: <d6edd2e2-a1ae-bdef-7e6e-7c1984903a49@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2103012302490.57@tvgsbejvaqbjf.bet>
+References: <YCwnPVFsYDa0SNmG@coredump.intra.peff.net> <YDiesofYW18Mzd9Q@coredump.intra.peff.net> <d6edd2e2-a1ae-bdef-7e6e-7c1984903a49@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cJct/MPQ5JGm0xF7nLyRUVjlOYnFqEuR/eI2yxYd4l7l7Bls5zA
+ T537nyd9UupXLw2AxyPOeTchMxv3XG8sICADckpcBAt6GvaA6G/m3WL1sWG9LWWNWhLH37S
+ z9RHImUY4hNiMMCphukO4g/w1XNIFsbr43SWCAh4UEIsH6KGq4caPR6MDn8k9YXTEpDiStb
+ AxN+/wbTEEjalBRbxdetQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ga/xaZ5NkuY=:34t9gb0NVDE2z6FUpVcisb
+ IRf136NnNdelBmfq7SBtPo1cvKmMo/U2NCHeoWOkDX4OypylesuQCrck8BgsTWn+m4f5H8gox
+ ZYw3qaWh/nTA3QT+aQkbnUA3F+gH9/gLJYopOUYp0LWfxK30hTkge4ZOckwOz1PiA8a3sviqW
+ jcm/0g7AXtWyjOp4qne4aU1HNSG+vYPlVMkNqUZJetL/JC7e/y9afCe9zw/0v4jUnyERA7xVQ
+ F3Ggs7MhzBzyEFyMFmERWNw7V92edEO2K43GteUqBWro4oKjSyiKkNTaPkrijwb2XfEcnR0M6
+ 9NBf6FV3JCrGclKMFDrIxJVbOHP9sdhhMaAJL1dk/xmbkXxkOcTSGHwoMCUSkZ8Ah4lmM5nrq
+ 3RC1g4Abg5LQ3QLt9yyNNSjpbQ+S6IP7L+sfucFDoR8bDqHGOmKZKckkPWV7YGeY7UTFBrfYf
+ JaayX3eeWNv45wBzWZlIiwDE21lkUgIuVQs1S0NqkvYDZ0rz8S2e1AGbxF1eil824nV/X52zP
+ +KLG9eHzUusl+caWldEXppCeTjQLTWfivgSampvaVzotb6Y4HKqO1hofYy5loxEIm9mTYlHaw
+ 107s0LAuyS6LlwdevEvTGrY6bejvE0dsIIan5RvhcqJhxZmNFzR3FAV6qD7jHs8yDn11PeiVk
+ yxV6dyKFxizvygWrqxyAtgLRewhl7o9jtH1u3k/zP6Un9DeS2AtjdaqNjjiEYL6y8cEOeOaaZ
+ qu8WTfWd4kduAC1biuRLL+tWUsZZ29dHSwHC5UaciqxjpKPsKY2nu/CZJ6fT/GGPXyQyOGEBk
+ 5cdTk3xr+XLXrxa1DGrpfLUMe/MYg62fmIwLYZw9JAaqiwFxk9uFNQcMFp/RJIwLQlLn5eBE9
+ wYVf+eFnNxTLdSzaeIp/cLGmpsXmIJIHSf5z8tsiM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This may reject to clone from a shallow repository, but at this
-> point the bulk of the tranfer from the origin repository has already
-> happened, no?  Rejecting after transferring many megabytes feels a
-> bit too late.  That is one of the reasons why I kept hinting that
-> the transport layer needs to be taught an option to reject talking
-> to a shallow counterpart if we want to add this feature [*1*].
+Hi,
 
-Extending the transport layer in this way might not be too difficult in
-the case of native (SSH, git://) protocols and using protocol v0, since
-handshake() in transport.c (called indirectly from
-transport_get_remote_refs()) writes shallow information to a data
-structure that we could potentially expose for the caller to use (before
-it calls transport_fetch_refs(). I couldn't see how remote-using
-protocols (e.g. HTTP) communicate shallow information, though
-(remote-curl.c seems to just keep it for itself), so that will be a more
-difficult task. And of course there's the matter of protocol v2, which I
-discuss below.
+On Fri, 26 Feb 2021, Derrick Stolee wrote:
 
-> [Footnote]
-> 
-> *1* Looking at Documentation/technical/pack-protocol.txt, "git
->     fetch" seem to learn if the repository is shallow immediately
->     upon contacting "upload-pack" during the Reference Discovery
->     phase (we'd see 'shallow' packets if they are shallow). I
->     suspect that the right solution would be to teach the codepath
->     on the "git fetch" side that accepts, parses, and acts on this
->     packet to optionally stop communication and error out when the
->     caller asks not to talk with a shallow repository.
+> On 2/26/2021 2:09 AM, Jeff King wrote:
+> > I don't think v1 of this patch got picked up at all, so here it is
+> > again. There was a question of whether we could do the much simpler
+> > solution discussed in:
+> >
+> >   https://lore.kernel.org/git/22378ce3-6845-1cd9-996a-8bdc3a8b65d7@gma=
+il.com/
+> >
+> > But I think it would be confusing. So patch 1 is unchanged here from v=
+1.
+> >
+> > Johannes suggested we could add some extra protections to avoid
+> > accidentally modifying the original repo. Patch 2 does that.
+>
+> Thanks. LGTM.
 
-This is true with protocol v0, but protocol v2 bundles all shallow
-information (whether coming from the fact that the remote is shallow or
-the fact that the fetcher specified --depth etc.) and sends them
-together with the packfile. It may be possible to stop packfile download
-(saving bandwidth on the client side, at least) once such information is
-returned, though.
+TMT (To me, too)
+
+Thanks,
+Dscho
