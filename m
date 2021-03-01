@@ -7,74 +7,74 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07F58C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C817AC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:21:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B37C764D90
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:21:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8356264E31
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 12:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234001AbhCAMVe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 07:21:34 -0500
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:53279 "EHLO
+        id S234263AbhCAMVj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 07:21:39 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:57343 "EHLO
         wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233936AbhCAMVd (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 07:21:33 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 184E39F3;
-        Mon,  1 Mar 2021 07:20:47 -0500 (EST)
+        by vger.kernel.org with ESMTP id S233936AbhCAMVh (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 07:21:37 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 78B39A2F;
+        Mon,  1 Mar 2021 07:20:51 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 01 Mar 2021 07:20:47 -0500
+  by compute1.internal (MEProxy); Mon, 01 Mar 2021 07:20:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=DteBqglyH656CRYM6OxjEOoLal2
-        XkoZqJrGdaKfGaqs=; b=DWQPle+KikdO5Usk+fDDBGqyAsLGvEXqK0uIry0HeKT
-        oKIwgeEy20Gqa8GsqQ8CmwzHrrRJMol2sBOqc4Bu95NASCa4bsrnUPSzf73DVwFz
-        fWJicXFzjhUHYS50PnyFkIwzBFEKisS5nSES+fRIYk3Bj3lixImJkRWuIJzNXb0c
-        smBcRXW1C7/oUhC4n3acrAbb0YGgDx76QX1vfB6ZYUAOq6a8gB1f0ihCJrDH895s
-        EYSY1fnjIXmJxiOdW9yOAMSIaJTnsXhtcHIl8MqQeQGXfXo6oQInhD88HFBSpe7u
-        Ue1OgmysIZLp1aGjTrOc2rHztWP0aVdAvogfKsOx92A==
+        :content-type:in-reply-to; s=fm3; bh=uob51lyiCMA77JZKxCB6d2K3z7R
+        +M/p+bItjFkKGC5U=; b=q3aybrmJpCCpcOb+kQHMg8YSR/vSPQVFoZVk3g4kZYL
+        xZM0U4ae88c64zJdAWClg+AkO58ts2Z/e2lPIwdRXizlmnr3/fctC+yw2i3lHI9h
+        +IkRhnC6ykY8w5VjIFOI1Dftbozrl1dEYV1Khug/xE1LzcgdhUFJFlvjoWa3VOCY
+        m1Yua7pYiK7dwASimMaH67qSp1VUa/GcbJ/HMhVvCYbS80S8G8A3KXuhWO0BTpuj
+        jTzfiHhGGRWh1e7iHX/9lmEiFGeb0DL8VMMm/l7iZt+5Lu4S+FkdbekcDSZZK+XT
+        yPAgMpLqY/qgVue4DrFXoBgvx3Ga5lzz5oDCcQJ+tEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=DteBqg
-        lyH656CRYM6OxjEOoLal2XkoZqJrGdaKfGaqs=; b=MfGfGE9FXZqBJvu6ncbjHD
-        VKcknPSv90DllG6XvlM5kmuM5p21VZLjOt68S12jh3a59Gh+XfjZPCeREf6mEh7N
-        obfmXo9US0EYxhDgi7x7kP3MfQXdUSjbdTsvFeKoU31KYlvkEv7MJKXGGsrdFvfN
-        ODSlxx4q1M2EkP7lbDmJqnpZXU3X/op/8KIj/eS94E/Y21KqOWjaCn4ZIp62/NYv
-        IGlI1TviB0O3a2BhXlkQmxKz7RPXOGh6X5vHDLVOiqw3iIuk3qwmgoCKy26RQl2y
-        RylI7uYVvNzP16bWKRwnwD8Pwrb6ftF6ziHjE8sIovpLN3FFettWosnsS1i57Wsg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=uob51l
+        yiCMA77JZKxCB6d2K3z7R+M/p+bItjFkKGC5U=; b=AAHtI1x/nTu2Dl4F+TIGr4
+        shA/vz+DUzV6J5Ok0JNjBD0/7UmgND/hPTHPf6KX/LaL8qE9axzozPzXnDCVkDLW
+        1M0m3dy7KpYID62L1wTN6L41ivgZnNRfFvvEKI3jMok3Mqbvd68/qXfzZLl2u6tH
+        7OQE0bk5Gn2WWj2XHh4yQi3QtJswI0iUejjzagdzxZiuVuiZX6J/QAne/USM4mCE
+        RvKhvaZO5YCxMpphYDBuLlKKvLsA7mq7RjtXtpCPNSrbjwsliEQ62J7aOEiJgFxK
+        nnnZWVsGBMhqw5AKqw1ML7WzDBuDLtE6mAx5nCC7gbTDczYCIYZiRDNTzOZMoBXw
         ==
-X-ME-Sender: <xms:Htw8YGZ1jBJQFFQUF0_jcIJ4325CQ7bUv157zSCevk9AyOfAGPYxYQ>
-    <xme:Htw8YNqVdGYLlVKoi7Mr7bAidjQrF1vYGmP0h9YHSKuyZt3dUmOh1fLZBiL0HXkRi
-    iiGHTpWZjruMbOQnQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrleekgdefjecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:I9w8YFeqIUTUkPaRIXU5_1HuyXWu8YULr64A-SsAaIZ25dqbNcZ_Ew>
+    <xme:I9w8YDIyCSSaDTMAfpsRcFXxOUxF0OGeVL6SpuV_TyGvvpooWezVTrPcYL_D0lbuR
+    287zS65k4pBiztfCQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrleekgdefkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    kfhppeejjedrudeluddrvdejrddufedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    kfhppeejjedrudeluddrvdejrddufedvnecuvehluhhsthgvrhfuihiivgepvdenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Htw8YL-W6FCNbIuOcIiHs1bF7vnf325msrdzcn9hKk6ZkestPYmzMA>
-    <xmx:Htw8YM_SihNfT07lZBB3oPKw3M3gnMyywxvITNm_4jLzSlqkAQOnOg>
-    <xmx:Htw8YKtb6bwqgI3-WKWRpwvCX9OHdxuwL5qiZ-Pdn0S4TFYw-136Pg>
-    <xmx:Htw8YMf3_yVwa3hmBM9i9MLetitWsJPgv7y73jvZU8n2Jm6D_K8hWQ>
+X-ME-Proxy: <xmx:I9w8YLZAQN5wMSUwe5hgnAhhf8_rB6QmfbJ0OeGMbUi83t1fYz9nRw>
+    <xmx:I9w8YGv-8Zh9P5Ae1x2u9RksVWL2WEYV8LfErA_MN2V9cLakCTZS1Q>
+    <xmx:I9w8YAt_QO1wualqRLVQJi2dOAvDpykNel9J1TS40FophsBwYJkWUA>
+    <xmx:I9w8YEWkO4zmzItHPtblDWa3QUBLo34tkgNMrixEtO4IxVTzCu0jaw>
 Received: from vm-mail.pks.im (x4dbf1b84.dyn.telefonica.de [77.191.27.132])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1226E24005C;
-        Mon,  1 Mar 2021 07:20:45 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id A8A92240057;
+        Mon,  1 Mar 2021 07:20:50 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 0238c8cc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 1 Mar 2021 12:20:45 +0000 (UTC)
-Date:   Mon, 1 Mar 2021 13:20:42 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 99bbda6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 1 Mar 2021 12:20:49 +0000 (UTC)
+Date:   Mon, 1 Mar 2021 13:20:47 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 3/7] list-objects: support filtering by tag and commit
-Message-ID: <4aa13ee83fa81ef5cfe6da5810202400493a3008.1614600555.git.ps@pks.im>
+Subject: [PATCH 4/7] list-objects: implement object type filter
+Message-ID: <01b9fdbb9c0ca8d70281422a13f7f4df85ffed90.1614600555.git.ps@pks.im>
 References: <cover.1614600555.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KeYnpxFKeP+Vn1N9"
+        protocol="application/pgp-signature"; boundary="/XGNxH5iUKQW0qjQ"
 Content-Disposition: inline
 In-Reply-To: <cover.1614600555.git.ps@pks.im>
 Precedence: bulk
@@ -82,183 +82,295 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---KeYnpxFKeP+Vn1N9
+--/XGNxH5iUKQW0qjQ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Object filters currently only support filtering blobs or trees based on
-some criteria. This commit lays the foundation to also allow filtering
-of tags and commits.
+While it already is possible to filter objects by some criteria in
+git-rev-list(1), it is not yet possible to filter out only a specific
+type of objects. This makes some filters less useful. The `blob:limit`
+filter for example filters blobs such that only those which are smaller
+than the given limit are returned. But it is unfit to ask only for these
+smallish blobs, given that git-rev-list(1) will continue to print tags,
+commits and trees.
 
-No change in behaviour is expected from this commit given that there are
-no filters yet for those object types.
+Now that we have the infrastructure in place to also filter tags and
+commits, we can improve this situation by implementing a new filter
+which selects objects based on their type. Above query can thus
+trivially be implemented with the following command:
+
+    $ git rev-list --objects --filter=3Dobject:type=3Dblob \
+        --filter=3Dblob:limit=3D200
+
+Furthermore, this filter allows to optimize for certain other cases: if
+for example only tags or commits have been selected, there is no need to
+walk down trees.
+
+The new filter is not yet supported in bitmaps. This is going to be
+implemented in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- list-objects-filter.c | 40 ++++++++++++++++++++++++++++++++++++++++
- list-objects-filter.h |  2 ++
- list-objects.c        | 24 +++++++++++++++++++++---
- 3 files changed, 63 insertions(+), 3 deletions(-)
+ Documentation/rev-list-options.txt  |  3 ++
+ list-objects-filter-options.c       | 14 ++++++
+ list-objects-filter-options.h       |  2 +
+ list-objects-filter.c               | 76 +++++++++++++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh | 48 ++++++++++++++++++
+ 5 files changed, 143 insertions(+)
 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-op=
+tions.txt
+index b1c8f86c6e..3afa8fffbd 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -892,6 +892,9 @@ or units.  n may be zero.  The suffixes k, m, and g can=
+ be used to name
+ units in KiB, MiB, or GiB.  For example, 'blob:limit=3D1k' is the same
+ as 'blob:limit=3D1024'.
+ +
++The form '--filter=3Dobject:type=3D(tag|commit|tree|blob)' omits all objec=
+ts
++which are not of the requested type.
+++
+ The form '--filter=3Dsparse:oid=3D<blob-ish>' uses a sparse-checkout
+ specification contained in the blob (or blob-expression) '<blob-ish>'
+ to omit blobs that would not be not required for a sparse checkout on
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index d2d1c81caf..bb6f6577d5 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -29,6 +29,8 @@ const char *list_object_filter_config_name(enum list_obje=
+cts_filter_choice c)
+ 		return "tree";
+ 	case LOFC_SPARSE_OID:
+ 		return "sparse:oid";
++	case LOFC_OBJECT_TYPE:
++		return "object:type";
+ 	case LOFC_COMBINE:
+ 		return "combine";
+ 	case LOFC__COUNT:
+@@ -97,6 +99,18 @@ static int gently_parse_list_objects_filter(
+ 		}
+ 		return 1;
+=20
++	} else if (skip_prefix(arg, "object:type=3D", &v0)) {
++		int type =3D type_from_string_gently(v0, -1, 1);
++		if (type < 0) {
++			strbuf_addstr(errbuf, _("expected 'object:type=3D<type>'"));
++			return 1;
++		}
++
++		filter_options->object_type =3D type;
++		filter_options->choice =3D LOFC_OBJECT_TYPE;
++
++		return 0;
++
+ 	} else if (skip_prefix(arg, "combine:", &v0)) {
+ 		return parse_combine_filter(filter_options, v0, errbuf);
+=20
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 01767c3c96..4d0d0588cc 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -13,6 +13,7 @@ enum list_objects_filter_choice {
+ 	LOFC_BLOB_LIMIT,
+ 	LOFC_TREE_DEPTH,
+ 	LOFC_SPARSE_OID,
++	LOFC_OBJECT_TYPE,
+ 	LOFC_COMBINE,
+ 	LOFC__COUNT /* must be last */
+ };
+@@ -54,6 +55,7 @@ struct list_objects_filter_options {
+ 	char *sparse_oid_name;
+ 	unsigned long blob_limit_value;
+ 	unsigned long tree_exclude_depth;
++	enum object_type object_type;
+=20
+ 	/* LOFC_COMBINE values */
+=20
 diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 4ec0041cfb..7def039435 100644
+index 7def039435..650a7c2c80 100644
 --- a/list-objects-filter.c
 +++ b/list-objects-filter.c
-@@ -82,6 +82,16 @@ static enum list_objects_filter_result filter_blobs_none(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		/* always include all tree objects */
-@@ -173,6 +183,16 @@ static enum list_objects_filter_result filter_trees_de=
-pth(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_END_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		filter_data->current_depth--;
-@@ -267,6 +287,16 @@ static enum list_objects_filter_result filter_blobs_li=
-mit(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		/* always include all tree objects */
-@@ -371,6 +401,16 @@ static enum list_objects_filter_result filter_sparse(
- 	default:
- 		BUG("unknown filter_situation: %d", filter_situation);
-=20
-+	case LOFS_TAG:
-+		assert(obj->type =3D=3D OBJ_TAG);
-+		/* always include all tag objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
-+	case LOFS_COMMIT:
-+		assert(obj->type =3D=3D OBJ_COMMIT);
-+		/* always include all commit objects */
-+		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-+
- 	case LOFS_BEGIN_TREE:
- 		assert(obj->type =3D=3D OBJ_TREE);
- 		dtype =3D DT_DIR;
-diff --git a/list-objects-filter.h b/list-objects-filter.h
-index cfd784e203..9e98814111 100644
---- a/list-objects-filter.h
-+++ b/list-objects-filter.h
-@@ -55,6 +55,8 @@ enum list_objects_filter_result {
- };
-=20
- enum list_objects_filter_situation {
-+	LOFS_COMMIT,
-+	LOFS_TAG,
- 	LOFS_BEGIN_TREE,
- 	LOFS_END_TREE,
- 	LOFS_BLOB
-diff --git a/list-objects.c b/list-objects.c
-index 093adf85b1..3b63dfd4f2 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -218,8 +218,16 @@ static void process_tag(struct traversal_context *ctx,
- 			struct strbuf *base,
- 			const char *name)
- {
--	tag->object.flags |=3D SEEN;
--	ctx->show_object(&tag->object, name, ctx->show_data);
-+	enum list_objects_filter_result r;
-+
-+	r =3D list_objects_filter__filter_object(ctx->revs->repo, LOFS_TAG,
-+					       &tag->object, base->buf,
-+					       &base->buf[base->len],
-+					       ctx->filter);
-+	if (r & LOFR_MARK_SEEN)
-+		tag->object.flags |=3D SEEN;
-+	if (r & LOFR_DO_SHOW)
-+		ctx->show_object(&tag->object, name, ctx->show_data);
+@@ -545,6 +545,81 @@ static void filter_sparse_oid__init(
+ 	filter->free_fn =3D filter_sparse_free;
  }
 =20
- static void mark_edge_parents_uninteresting(struct commit *commit,
-@@ -369,6 +377,12 @@ static void do_traverse(struct traversal_context *ctx)
- 	strbuf_init(&csp, PATH_MAX);
++/*
++ * A filter for list-objects to omit large blobs.
++ * And to OPTIONALLY collect a list of the omitted OIDs.
++ */
++struct filter_object_type_data {
++	enum object_type object_type;
++};
++
++static enum list_objects_filter_result filter_object_type(
++	struct repository *r,
++	enum list_objects_filter_situation filter_situation,
++	struct object *obj,
++	const char *pathname,
++	const char *filename,
++	struct oidset *omits,
++	void *filter_data_)
++{
++	struct filter_object_type_data *filter_data =3D filter_data_;
++
++	switch (filter_situation) {
++	default:
++		BUG("unknown filter_situation: %d", filter_situation);
++
++	case LOFS_TAG:
++		assert(obj->type =3D=3D OBJ_TAG);
++		if (filter_data->object_type =3D=3D OBJ_TAG)
++			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
++		return LOFR_MARK_SEEN;
++
++	case LOFS_COMMIT:
++		assert(obj->type =3D=3D OBJ_COMMIT);
++		if (filter_data->object_type =3D=3D OBJ_COMMIT)
++			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
++		return LOFR_MARK_SEEN;
++
++	case LOFS_BEGIN_TREE:
++		assert(obj->type =3D=3D OBJ_TREE);
++
++		/*
++		 * If we only want to show commits or tags, then there is no
++		 * need to walk down trees.
++		 */
++		if (filter_data->object_type =3D=3D OBJ_COMMIT ||
++		    filter_data->object_type =3D=3D OBJ_TAG)
++			return LOFR_SKIP_TREE;
++
++		if (filter_data->object_type =3D=3D OBJ_TREE)
++			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
++
++		return LOFR_MARK_SEEN;
++
++	case LOFS_BLOB:
++		assert(obj->type =3D=3D OBJ_BLOB);
++
++		if (filter_data->object_type =3D=3D OBJ_BLOB)
++			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
++		return LOFR_MARK_SEEN;
++
++	case LOFS_END_TREE:
++		return LOFR_ZERO;
++	}
++}
++
++static void filter_object_type__init(
++	struct list_objects_filter_options *filter_options,
++	struct filter *filter)
++{
++	struct filter_object_type_data *d =3D xcalloc(1, sizeof(*d));
++	d->object_type =3D filter_options->object_type;
++
++	filter->filter_data =3D d;
++	filter->filter_object_fn =3D filter_object_type;
++	filter->free_fn =3D free;
++}
++
+ /* A filter which only shows objects shown by all sub-filters. */
+ struct combine_filter_data {
+ 	struct subfilter *sub;
+@@ -691,6 +766,7 @@ static filter_init_fn s_filters[] =3D {
+ 	filter_blobs_limit__init,
+ 	filter_trees_depth__init,
+ 	filter_sparse_oid__init,
++	filter_object_type__init,
+ 	filter_combine__init,
+ };
 =20
- 	while ((commit =3D get_revision(ctx->revs)) !=3D NULL) {
-+		enum list_objects_filter_result r;
-+
-+		r =3D list_objects_filter__filter_object(ctx->revs->repo,
-+				LOFS_COMMIT, &commit->object,
-+				NULL, NULL, ctx->filter);
-+
- 		/*
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
-@@ -383,7 +397,11 @@ static void do_traverse(struct traversal_context *ctx)
- 			die(_("unable to load root tree for commit %s"),
- 			      oid_to_hex(&commit->object.oid));
- 		}
--		ctx->show_commit(commit, ctx->show_data);
-+
-+		if (r & LOFR_MARK_SEEN)
-+			commit->object.flags |=3D SEEN;
-+		if (r & LOFR_DO_SHOW)
-+			ctx->show_commit(commit, ctx->show_data);
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters=
+-objects.sh
+index 31457d13b9..c79ec04060 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -159,6 +159,54 @@ test_expect_success 'verify blob:limit=3D1m' '
+ 	test_must_be_empty observed
+ '
 =20
- 		if (ctx->revs->tree_blobs_in_commit_order)
- 			/*
++# Test object:type=3D<type> filter.
++
++test_expect_success 'setup object-type' '
++	git init object-type &&
++	echo contents >object-type/blob &&
++	git -C object-type add blob &&
++	git -C object-type commit -m commit-message &&
++	git -C object-type tag tag -m tag-message
++'
++
++test_expect_success 'verify object:type=3D fails with invalid type' '
++	test_must_fail git -C object-type rev-list --objects --filter=3Dobject:ty=
+pe=3D HEAD &&
++	test_must_fail git -C object-type rev-list --objects --filter=3Dobject:ty=
+pe=3Dinvalid HEAD
++'
++
++test_expect_success 'verify object:type=3Dblob prints blob and commit' '
++	(
++		git -C object-type rev-parse HEAD &&
++		printf "%s blob\n" $(git -C object-type rev-parse HEAD:blob)
++	) >expected &&
++	git -C object-type rev-list --objects --filter=3Dobject:type=3Dblob HEAD =
+>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'verify object:type=3Dtree prints tree and commit' '
++	(
++		git -C object-type rev-parse HEAD &&
++		printf "%s \n" $(git -C object-type rev-parse HEAD^{tree})
++	) >expected &&
++	git -C object-type rev-list --objects --filter=3Dobject:type=3Dtree HEAD =
+>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'verify object:type=3Dcommit prints commit' '
++	git -C object-type rev-parse HEAD >expected &&
++	git -C object-type rev-list --objects --filter=3Dobject:type=3Dcommit HEA=
+D >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'verify object:type=3Dtag prints tag' '
++	(
++		git -C object-type rev-parse HEAD &&
++		printf "%s tag\n" $(git -C object-type rev-parse tag)
++	) >expected &&
++	git -C object-type rev-list --objects --filter=3Dobject:type=3Dtag tag >a=
+ctual &&
++	test_cmp expected actual
++'
++
+ # Test sparse:path=3D<path> filter.
+ # !!!!
+ # NOTE: sparse:path filter support has been dropped for security reasons,
 --=20
 2.30.1
 
 
---KeYnpxFKeP+Vn1N9
+--/XGNxH5iUKQW0qjQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA83BkACgkQVbJhu7ck
-PpQ9bBAArQJiN/H4RK1B0S34IP03fIX5RXc9uiFOwRD6R01FiNQNwjYmP2ZHv8nd
-n4/U5ne/+iky515Gy1GCYxFI3RMiogYuxsKtrqVeqo/GaBLMrnvoZ6OJG7CPGk9F
-3b6cPQRvtBuq7KUndSOBEg2Z04McX6VTnieqahjhz99njZLlSeZaLT34Avd86R7J
-oIgDGK4vk4svucDSsswjkjb/F6fQEL4d39zD9vtp+X9Rzqiuw6llnbtRf5HnnAQC
-hg3HfxgIxc1m/SabFAP0Fsqx+3UF13JjcihdpNC/BgYZC27FklHG4ZBxVclC4Dku
-BR4Q4tXc5wSXd1fzxImHMW1EzAOx7wpM+q8rJcJhL4sLBUlShDIrM0urtd3gT5mC
-GnG6BtGMNFbV7ZLYcRjSslHomeqxUKFEu8nbliSZ8AiO4HuMUEl5NAteOHV+qQAK
-CtDsrKVvg1A0jFuHxoQhlVKUXPlzHOvsrx53gwxmE+tgNVcYOYIbBtaicl0z0Kjj
-PDdIDd3j07irI199NnHRh6UTp5j/E9kb+1aLuEP36fLcL10h0Wtd+hYW317Vc+Vg
-4cFgkAyO4ZeX35/HNK19O2lHJ+5GgB8Z6EPyXZGFsCMewH7tgqMgLER9cgGkNW93
-l0pRqhdkjdYVKv6vsjCMhgvoSvBY7NMmYjzdH3MxcbBHk0MN7nY=
-=vJ+T
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmA83B4ACgkQVbJhu7ck
+PpSM/A//bdwZBhym91zcxNBZy5my6AjBPnAeBwF4YAQmPvFSFhU4pMOzyjT2WmY2
+6lzIkyVHKCnj+Ir1wvTugw7Gz+QgCbXz7YckDOK/S70xdu0QNr5KcPjwRjt9xNEl
+FVJckZvn0qwcRLMzKthStj9J8NmmsgrykoI6ELMdIsZ3JblV/1yD0gtlJhS2B10M
+W/OL0oG006Z+qbXFijl/Pdv3/dIFIyknOVkfaFM4Sa8FwVFzIQk9xGe8otDBJxhk
+spIlo2JEsqSBExYqCq7VNiFH4UZDgQzY0haeLRNxGtAPTLyYMOLFI55qgjEISyb1
+ioPoNOcNhQRthB+5sf5k4qoHUlZh/9Noqi5P9OlFLH1Ds5vRjSZG1SWjvpCJxUEE
+7DP/9EuM2sA5iQbY84Hzf/CH0Ox32Rh8XFXFiBhVYqr3NsjpvdHrdGjsQM/rIAal
+H2P4Ml+BM+iRum8dt/n7kHrfpf/QyngY8ElsyzTBacKX4hhbcOk/qmOZDCSRlzgk
+GsvJ98NLUlrim+mX8+uzOozWv8qt9Q7RlS2a1mq8Zz92foIsUxdGzTn5WFOX71Y9
+Tqk5+VA32cH4oegLLg38YCYJ3bSuhBpSHlJoDZAh5qLz8N9vmwO9j0wMFiqFThHj
+26gFKTzl1i4KpefV8P1aYrQVpLGZUKlxKPqTQ09cjW/lpzyiQMQ=
+=tCOU
 -----END PGP SIGNATURE-----
 
---KeYnpxFKeP+Vn1N9--
+--/XGNxH5iUKQW0qjQ--
