@@ -2,104 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B403DC433E0
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C9C4C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:21:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E9B9601FF
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:14:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC89060231
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240306AbhCAWO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 17:14:29 -0500
-Received: from mout.gmx.net ([212.227.17.22]:40751 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239883AbhCAWMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 17:12:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1614636625;
-        bh=GWWALM/qddlw6cKJ9fScsb9m07RkrwOAB53rpI0dvDs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QQ/vmkEPPsKVDNjlph33EEQNaoISX+W1L+CEGcRkQkknHoGLcRue5yINTY9JAt3TP
-         CYWEG5fLGChhEpawW9qocrkHMzka99p4zaQsy+ajaPgzkNrJDmCtBFVsAPzIEVVcZv
-         B4NsPvI5tP4bExUbtHH14myNW4l/lyzZrX3kaQXY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.19.162.2] ([89.1.214.35]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvbG2-1m79uw3QIQ-00shlD; Mon, 01
- Mar 2021 23:10:24 +0100
-Date:   Mon, 1 Mar 2021 23:10:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] commit-graph: warn about incompatibilities only when
- trying to write
-In-Reply-To: <8735xgkvuo.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2103012304580.57@tvgsbejvaqbjf.bet>
-References: <pull.888.git.1614351036334.gitgitgadget@gmail.com> <87r1l27rae.fsf@evledraar.gmail.com> <xmqqy2faqwr0.fsf@gitster.g> <8735xgkvuo.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S238236AbhCAWVE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 17:21:04 -0500
+Received: from mail-ej1-f42.google.com ([209.85.218.42]:33959 "EHLO
+        mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241137AbhCAWP7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 17:15:59 -0500
+Received: by mail-ej1-f42.google.com with SMTP id hs11so31294592ejc.1
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 14:15:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QONqDzuNDSmMLImXNAkbOMHS0qLZpZnJ1jIJYUxCNoQ=;
+        b=XOOC9aXNV4PZ5Kv2ciuYpVHmkVNlDGifmejTSTyJjaiY57WlJBt9PHWJODiCWoPruo
+         vGxpdrA5B4Funfs5MV4HqAJPSbvfnkIgu4vePK2bce3mj0IWJ25OY7ekqV66lPpyGU3X
+         7zWxHFvhMX/vwLbREf2vbUmiQJ/sC5KxPKbVnAosMJJ8rUxsDnTebG2o7sL6geHZVwcL
+         Qg27vyIPo9QLJEkr0tV0rgtk55B5rI86NQJLkG+oXU/vMw1aKNXzIriR7GSfiMNgo1eQ
+         T8XAg1UVBUM6qdWfDLyEiVDX24ruANjg8Monvhq3XSoYl20b2DT8azhj5mufyMkmofTL
+         X19g==
+X-Gm-Message-State: AOAM532id96A/iVMN1JWaM+knH/eWqgKBd5BBV6L9F4luKpADvamjEqV
+        V+ls/bZnAO51Gx/dU/EQCeI3oFfefBjSQ61mb9I=
+X-Google-Smtp-Source: ABdhPJziTZNb1/fgQOewdtxvFVcl1brSAI1XKqQirFn0EqgGeRNaOO7EuLuhvrHMWCbCN0pMf9aI4vdzuR/jiJKZedw=
+X-Received: by 2002:a17:906:68c5:: with SMTP id y5mr1831977ejr.371.1614636916283;
+ Mon, 01 Mar 2021 14:15:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-5155215-1614636624=:57"
-X-Provags-ID: V03:K1:HVI7QGs/VK61PQNNTVf+Qnc+C5XEtIrE0xtIu1quP4xNgV6WfYp
- IWC8yEkqukls0fog8OrEZL1M22Zes7TJ92jCPHBXs2Bqda/SQwQPF/59nA4Hib/0xoYGQLJ
- 0R1A5vv5CLhJq2+Byev1IU5OuHQYqRmvlP0AzdZfUOPfveYGJR71dZNqa2Wl4hQFtme7MGW
- AIp/qPXQhPbTmtaGIIMLA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:F1Q2WB/uFkc=:8pcYhqatN/w18Ug8Z8t0s5
- WecIYCQTP+HI3RkLKuBB05kmJ6swtEkhjrY9pZGEkb74KDdbNKfY5cTTWbmha1jQgH28lCm8u
- +umBbk0YdiZLJUeyQ7kSG88hMR5LLs54Bowc9SIuU++VILFyq4oNf6PxTKcPJk2FA5SyXpn4E
- 0qE3KF9XtW9tmRwwlNHlYzIgmF2vIB0+CGG4rlqhqX++mn2B/cMID8Wht+VAZomjgCq7kTsy1
- JE150Y0vmwMI453ZYUADblpLukoPKfL8oFmbPiOUaLyLaIEj0wu1kE718Q2kqE5RThpwAzXBe
- kZfjhbGMIazU4ybMZYNqm/yFtJrF4bKM2U7dW+yyOywlAXqcq8FL2TC2FU8EjBsdRPgHUofTk
- 5vVW3L4wVqEPYMsvXPmYZkIx5pjD8iGbVh8ve0dWtbXuqu6tD9GWleTZBaZWyRuxCi1MYUtvg
- 9HQqPvSyVCrRzoQf4wHeAXCPQXfaMUmnNaXpwh6auEQK7BlUOzwtP8KqOPr7fQsmDYth28+dx
- ZpZ7S2N/CBLQOvB6/f7MkYyX0ZB51fYY/qgMez+18BgGIqQ4gTyzFR50VMYRCMNipmkp50PCh
- n+4yqq/9c3CfLmbd/Gk/hFWJzhn/w7RE+groLBF4ZiGkLke9hegNSoro/F2e2vZFBlRUOmWJc
- UsmnSSpQsQYxGkXKBxEDCFYJ1sCuXhOQ8DqexwWw2m1JRaPk52CM2T5L2ujo9N6hrT0RfN6Jd
- xKhHQHz6we42J3Gr8e9okyBnQQXAhyTgtFmcPYok36jIImlbH7VyKQtFz0byDKrdo+0Gqddpr
- HB5SCYCEF5tbwX2ZlGJRbkk9gMh2vwzb4kPeZaswJyvsPcC7tw2YpR+LlX+WubKckcXvAoBWA
- vZ4IMAw6QLPCfcb+aOVaLyVmOB5EWhudrFjICP6Zs=
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-3-charvi077@gmail.com>
+In-Reply-To: <20210301084512.27170-3-charvi077@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 1 Mar 2021 17:15:05 -0500
+Message-ID: <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
+To:     20210217072904.16257-1-charvi077@gmail.com
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-5155215-1614636624=:57
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-On Sun, 28 Feb 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Fri, Feb 26 2021, Junio C Hamano wrote:
+On Mon, Mar 1, 2021 at 3:50 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> `git commit --fixup=amend:<commit>` will create an "amend!" commit.
+> The resulting commit message subject will be "amend! ..." where
+> "..." is the subject line of <commit> and the initial message
+> body will be <commit>'s message. -m can be used to override the
+> message body.
 >
-> > I am tempted to say that we should revert c85eec7f (commit-graph:
-> > when incompatible with graphs, indicate why, 2021-02-11) for the
-> > upcoming release.  That would give us enough time to come up with
-> > and cook the solution in 'next' in the meantime.
+> The "amend!" commit when rebased with --autosquash will fixup the
+> contents and replace the commit message of <commit> with the
+> "amend!" commit's message body.
 >
-> That's probably sensible.
+> In order to prevent rebase from creating commits with an empty
+> message we refuse to create an "amend!" commit if commit message
+> body is empty.
+>
+> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
+> ---
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> @@ -105,7 +105,8 @@ static const char *template_file;
+> +static int prepare_amend_commit(struct commit *commit, struct strbuf *sb,
+> +                                                                struct pretty_print_context *ctx) {
+> +       /*
+> +        * If we amend the 'amend!' commit then we don't want to
+> +        * duplicate the subject line.
+> +        */
+> +       const char *format = NULL;
+> +       if (starts_with(sb->buf, "amend! amend!"))
 
-I agree. This close to v2.31.0, I do not want to rush things.
+Is the content of the incoming strbuf created mechanically so that we
+know that there will only ever be one space between the two "amend!"
+literals? If not, then this starts_with() check feels fragile.
+(Compare with the code in sequencer.c which checks for this sort of
+duplication but is tolerant of one or more spaces, not just a single
+space.)
 
-> Also, I noticed that we went through this whole saga in the past, see
-> 25575015ca (repack: silence warnings when auto-enabled bitmaps cannot be
-> built, 2019-07-31), including breaking background gc.
+> +               format = "%b";
+> +       else
+> +               format = "%B";
 
-Sounds like it.
+It's subjective and minor, but this could be expressed more compactly as:
 
-Thank you for your valuable feedback!
+    const char *fmt = starts_with(...) ? "%b" : "%B";
 
-Ciao,
-Dscho
+Also, no need to initialize `format` to NULL since it gets assigned in
+all code paths.
 
---8323328-5155215-1614636624=:57--
+Not worth a re-roll.
+
+> @@ -745,15 +761,33 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+> +               if (!strcmp(fixup_prefix, "amend")) {
+> +                       if (have_option_m)
+> +                               die(_("cannot combine -m with --fixup:%s"), fixup_message);
+> +                       else
+> +                               prepare_amend_commit(commit, &sb, &ctx);
+> +               }
+
+This is minor, but the way this is written, the error case and the
+normal case appear to have the same significance, whereas, if you
+write it like this:
+
+    if (!strcmp(...)) {
+        if (have_option_m)
+            die(...);
+        prepare_amend_commit(...);
+    }
+
+then it's easier to see that you're checking for and getting an error
+case out of the way early, which allows the reader to concentrate
+without distraction on the normal case. As a minor benefit, you also
+get to eliminate an indentation level for the normal case, which could
+be important if more code is added to that case.
+
+Not worth a re-roll.
+
+> @@ -1227,6 +1267,28 @@ static int parse_and_validate_options(int argc, const char *argv[],
+> +       if (fixup_message) {
+> +               /*
+> +                * As `amend` suboption contains only alpha
+> +                * character. So check if first non alpha
+> +                * character in fixup_message is ':'.
+> +                */
+> +               size_t len = get_alpha_len(fixup_message);
+> +               if (len && fixup_message[len] == ':') {
+> +                       fixup_message[len++] = '\0';
+> +                       fixup_commit = fixup_message + len;
+> +                       if (starts_with("amend", fixup_message))
+> +                               fixup_prefix = "amend";
+> +                       else
+> +                               die(_("unknown option: --fixup=%s:%s"), fixup_message, fixup_commit);
+
+I haven't read ahead in the series yet, but I presume you're making
+this code extra generic because you plan to support additional `fixup`
+options (such as `reword`), but I wonder if the cognitive overhead is
+warranted or you could get by with something simpler, such as:
+
+    if (skip_prefix(msg, "amend:", &arg) ||
+        skip_prefix(msg, "reword:", &arg)) {
+        ...
+    }
+
+Also, am I misreading when I think that the use of starts_with() could
+be replaced with a simple strcmp() since you've already inserted a
+'\0' immediately after the final alphabetic character?
+
+Not necessarily worth a re-roll.
+
+> @@ -1663,6 +1729,19 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+> +               if (message_is_empty(&body, cleanup_mode)) {
+> +                       rollback_index_files();
+> +                       fprintf(stderr, _("Aborting commit due to empty commit message body.\n"));
+> +                       exit(1);
+
+I was wondering why you are capitalizing the error message (these days
+we don't) and using exit() instead of die(), but I see that you're
+mirroring existing practice in this function. Okay.
