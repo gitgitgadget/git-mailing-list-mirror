@@ -2,148 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F8F7C433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 679D3C433E6
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:19:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3306C64FAE
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:11:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4071E64F8F
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232660AbhCASKX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 13:10:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57954 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239150AbhCASHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 13:07:38 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99058C061756
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 10:06:55 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id f33so17327770otf.11
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 10:06:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mEY6XEBNd8TH6laIRI8u0+LBG2vGQilwivB/1xHUnK0=;
-        b=RD1urtohuQPTyq6v5DsFVMBddkuEemZPoy/m2tkcR14xp3J7UcG5VurkUZjauzuloq
-         UgF5SDaEsSPGyzo+bHXAPH6nA6bXk87biN6wZI1X2N9fcUuPVFr8MMA0IeE8aj2i+HxQ
-         X4Vx401EshbcP8/TkJB9XHJ1pYY6qQoJKRu4YBKtSF+3/IhyxNhOPLoi56kGNoyFCy37
-         uZvpSZ7q94RRscwcHwfLeI91EOmvAxnctpxCjGBWiw3dQ5ObBmVROlgtxmn9yZpJ3K03
-         0/ec5neaTM8xNbWpcElQwmVK91pAJNn0bQrBCjg/glAsRSudDdiXZstOhxC9IMyCj+Fm
-         DE+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mEY6XEBNd8TH6laIRI8u0+LBG2vGQilwivB/1xHUnK0=;
-        b=D4pCTaCv9cFLlF+8lFpn5ygI5IdI4R8cH83psOkXcSbY6tJuMKwKjc4FTYpdJaNtKf
-         ZS1GwgcQ2W//+j+nLlhUrML6/uo6sszUUINpx66vCl5u7W5RacgwsHlWcXa+6FOxERk9
-         U9OkODeXbwFtAfnNOGUL96tbz0B/I0kZB4ybAbrO/sJgbx0IgxvOquRsWlb6ucisxjrQ
-         fpBFPJxuhJ9C6DQS4HydFWzKKx3STLRS3i1OIoP+6SM4js2QiGkFGuX6bqQnzUcCXVSP
-         mItwcJtyVRuoucdSPj+I5kK2k0vL7jtXLAILrLE9knUfgUFbMD3/b2iXJcPab37GKSJG
-         nPJQ==
-X-Gm-Message-State: AOAM530mhquAr4NmWbY67pkAnr4f+xUjop9nAVACyw7mRncqg4t3K02M
-        LSvF3zqnPZCBvzEsHC2X1RUSunHuVdJUzssuGTzJyGeSRdg=
-X-Google-Smtp-Source: ABdhPJxDae1X/WrwxF/En/FycGcscBBNExR6OWYrbgEhbA7J9HPuPaAH/5MyZGhso7YlG/4ssZcVNZS7/SYpmbk4xxo=
-X-Received: by 2002:a05:6830:100c:: with SMTP id a12mr14881669otp.345.1614622014945;
- Mon, 01 Mar 2021 10:06:54 -0800 (PST)
+        id S231709AbhCASSz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 13:18:55 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59292 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234233AbhCASQO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 13:16:14 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33229AAF09;
+        Mon,  1 Mar 2021 13:15:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=a2L9wirCJBETbzPRTm+dFCGN414=; b=XAcPCI
+        ZPnRhbsEIh/CeAX0rGNEPtycSe0NznthWfyc7xhUJbbdxDyP3heaojmHWfaTrCkM
+        VVF2BAAX0OYNcU5Q8BLBIbIKNXwu5n543HIe3RPOiUVGR9cEoiXjk+rvGapI0BDj
+        8nf293U3uUNxZ6CU0soXuEJjh/wYsa2ngINz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DBGlilyBcUIsbuh/pbbw6HSjFEZhi6V2
+        Kx/MOGy9LIckh9PEFx8PFpne/IEydVLktL6OW8HQhMdZuStnYGM2zGf7uO7ukfGT
+        6BxJFfiY7Om08nPe97VtaWQT81f1agJ9YYyupvba7JRaL7Vsc3sP+MOjdhaGlcNx
+        qzqZNCZvGNo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B00BAAF08;
+        Mon,  1 Mar 2021 13:15:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9EBD7AAF06;
+        Mon,  1 Mar 2021 13:15:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Jason Pyeron <jpyeron@pdinc.us>
+Subject: Re: [PATCH 4/4] docs: note that archives are not stable
+References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
+        <20210227191813.96148-5-sandals@crustytoothpaste.net>
+        <87h7lwl5mv.fsf@evledraar.gmail.com>
+        <YDvexO2NFM0KZ1Jo@camp.crustytoothpaste.net>
+Date:   Mon, 01 Mar 2021 10:15:29 -0800
+In-Reply-To: <YDvexO2NFM0KZ1Jo@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Sun, 28 Feb 2021 18:19:48 +0000")
+Message-ID: <xmqqpn0irb9a.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
- <87mtvolbuj.fsf@evledraar.gmail.com> <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
-In-Reply-To: <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Mar 2021 10:06:43 -0800
-Message-ID: <CABPp-BE=9wzF6_VypoR-uEPHsLWdV7zyE13FOgLK0h8NOcMz3g@mail.gmail.com>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-To:     anatoly techtonik <techtonik@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B5FC282-7ABA-11EB-B7AF-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 28, 2021 at 11:44 PM anatoly techtonik <techtonik@gmail.com> wr=
-ote:
->
-> On Sun, Feb 28, 2021 at 1:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > I think Elijah means that in the general case people are using fast
-> > export/import to export/import between different systems or in
-> > combination with a utility like git-filter-repo.
-> >
-> > In those cases users are also changing the content of the repository, s=
-o
-> > the hashes will change, invalidating signatures.
-> >
-> > But there's also cases where e.g. you don't modify the history, or only
-> > part of it, and could then preserve these headers. I think there's no
-> > inherent reason not to do so, just that nobody's cared enough to submit
-> > patches etc.
->
-> Is fast-export/import the only way to filter information in `git`? Maybe =
-there
-> is a slow json-export/import tool that gives a complete representation of=
- all
-> events in a repository? Or API that can be used to serialize and import t=
-hat
-> stream?
->
-> If no, then I'd like to take a look at where header filtering and seriali=
-zation
-> takes place. My C skills are at the "hello world" level, so I am not sure=
- I can
-> write a patch. But I can write the logic in Python and ask somebody to po=
-rt
-> that.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-If you are intent on keeping signatures because you know they are
-still valid, then you already know you aren't modifying any
-blobs/trees/commits leading up to those signatures.  If that is the
-case, perhaps you should just avoid exporting the signature or
-anything it depends on, and just export the stuff after that point.
-You can do this with fast-export's --reference-excluded-parents option
-and pass it an exclusion range.  For example:
+>   The output of 'git archive' is guaranteed to be the same across
+>   versions of git, but the archive itself is not guaranteed to be
+>   bit-for-bit identical.
 
-   git fast-export --reference-excluded-parents ^master~5 --all
+I do not quite get this; your original was clearer.  What does it
+mean to "be the same across versions of git but not identical" at
+the same time?  If output from Git version 1.0 and 2.0 are guranteed
+to be the same across versions, what more is there for the readers
+to worry about the format stability?
 
-and then pipe that through fast-import.
+Perhaps you meant
+
+	... is guaranteed to be the same for any given version of
+	Git across ports.
+
+or something?  It would allow kernel.org's use of "Konstantin tells
+kernel.org users to use Git version X to run 'git archive' and
+create detached signature on the output, and upload only the
+signature.  The site uses the same Git version X to run 'git
+archive' to create a tarball and the detached signature magically
+matches, as the output on two places are bit-for-bit identical".
+
+>   The output of 'git archive' has changed
+>   in the past, and most likely will in the future.
+
+That is correct as a statement of fact.  I feel that saying it is
+either redundant and insufficient at the same time.  If we want to
+tell them "do not depend on the output being bit-for-bit identical",
+we should say it more explicitly after this sentence, I would think.
 
 
-In general, I think if fast-export or fast-import are lacking features
-you want, we should add them there, but I don't see how adding
-signature reading to fast-import and signature exporting to
-fast-export makes sense in general.  Even if you assume fast-import
-can process all the bits it is sent (e.g. you extend it to support
-commits without an author, tags without a tagger, signed objects, any
-other extended commit headers), and even if you add flags to
-fast-export to die if there are any bits it doesn't recognize and to
-export all pieces of blobs/trees/tags (e.g. don't add missing authors,
-don't re-encode messages in UTF-8, don't use grafts or replace
-objects, keep extended headers such as signatures, etc.), then it
-still couldn't possibly work in all cases in general.  For example, if
-you had a repository with unusual objects made by ancient or broken
-git versions (such as tree entries in the wrong sort order, or tree
-entries that recorded modes of 040000 instead of 40000 for trees or
-something with perms other than 100644 or 100755 for files), then when
-fast-import goes to recreate these objects using the canonical format
-they will no longer have the same hash and your commit signatures will
-get invalidated.  Other git commands will also refuse to create
-objects with those oddities, even if git accepts ancient objects that
-have them.
-
-So, it's basically impossible to have a "complete representation of
-all events in a repository" that do what you want except for the
-*original* binary format.  (But if you really want to see the original
-binary format, maybe `git cat-file --batch` will be handy to you.)
-
-But I think fast-export's --reference-excluded-parents might come in
-handy for you and let you do what you want.
