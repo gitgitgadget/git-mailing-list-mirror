@@ -2,72 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B11EC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 549EDC433E9
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:59:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D49FC64DCF
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:29:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E4EB601FA
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243452AbhCAU31 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 15:29:27 -0500
-Received: from mail-ej1-f45.google.com ([209.85.218.45]:37126 "EHLO
-        mail-ej1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243064AbhCAU0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 15:26:22 -0500
-Received: by mail-ej1-f45.google.com with SMTP id bm21so11884413ejb.4
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 12:26:00 -0800 (PST)
+        id S239084AbhCAU7I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 15:59:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37604 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240381AbhCAU4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:56:08 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E070C061788
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 12:55:27 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id o2so11958771pfd.1
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 12:55:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=X7E0S/iebJm50ZIDzo8uwopymdfUV1G/aZSXmIeLyx4=;
+        b=eOxIdnfCOF9VGjjmZBNVsWLc7B0QbqtZBNz4pBa/ewg49GiFXHElX7KWF9T32RqZjv
+         /2+pHiol1Ko9qU/sR5GPSIJ8bsuq34jzMoLSl+r8YHip84rBAgE/ikmHZP12r07j2aTL
+         3cFWGvEP3/ZJqeOUQHSUpyUuVdJfd3aZoZGkYTYd4hVcCGyc0mnyL0OMXj9aF9r2Fcwc
+         8rjxrCuvrsug+sDF7DlfYoVeyN+sRO99Gqqph908yqgpy0toVuUKNR26KbTpqtsW5yeN
+         Dy5grVJgg19CYEBRGg9T+uaOlZjxYfe5w0K5yyotuBYJfzJuUyOdIapeZGY7C0OXLN5W
+         YSBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d0xMxNDRP7hsWiWYi4qNrsmWz6KIVMWJGVpv9KgWy/M=;
-        b=hq7wle3yksUxOcoarIQNsFuYWnXfGDx0Jljs+rfcscaUxXMn463pOjTr6MW/gyhhHl
-         uJATvz0CdRi2KkNaGciD3LOEfDDERDHJMbFD58RKlVmcTmWl/qytaLphkzRm1a3utDq0
-         X9DPM25CYeYLyll86CgbHAU+d9JxaOSwCtz/ZkL0Wihuyk5w2ZRgcczIkcKwEH6KWUmg
-         T8w5JhVs9Zg9t9z+onqml+lbX+QaoRzGUj3kuBzrYUuuzDdVegjnbQCsW52gxpL4+YI8
-         xIY9s/7PfB9CZmzBTa+hBgOtM3rCJOUDVJajjg9xL1riEH9qtdOCZ5Ylm9rxdqU8ryRh
-         qiTA==
-X-Gm-Message-State: AOAM530+Jl1lkArmf05VTCwnXdWpXpkYWhl4TkE4BEdcbDSW8v+K9HhF
-        QqUFWrpQOp8azJ4g/QszftAXR7CloPwqu9XNnDffWODE
-X-Google-Smtp-Source: ABdhPJxjZ8P1bujioOvkpFkmJB2rlVGrY/IQgLW6c5ZM1923jUlT78hwFG3U2tx1J2GKGjezyFF8d7kql0XrGJ6QV0E=
-X-Received: by 2002:a17:906:a1c2:: with SMTP id bx2mr17933236ejb.138.1614630334203;
- Mon, 01 Mar 2021 12:25:34 -0800 (PST)
-MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-2-charvi077@gmail.com>
-In-Reply-To: <20210301084512.27170-2-charvi077@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 1 Mar 2021 15:25:23 -0500
-Message-ID: <CAPig+cSaZ+i+2P0x67BiHLxAGZaggNFK=dHxLJkmOfY8uafS5g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] sequencer: export subject_length()
-To:     20210217072904.16257-1-charvi077@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Charvi Mendiratta <charvi077@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=X7E0S/iebJm50ZIDzo8uwopymdfUV1G/aZSXmIeLyx4=;
+        b=F0/vLIzn15kjhj/+ri5UetLhVcSH/e2xP7+QytmPA5rQj18mR/rhuf9enhBXZVQ0Bz
+         xOUA18sFTCTA9XU1A2FTPq6yFYpUxQQXQ15wdt9lJ+QEL/lmzShh8R4lt23/gQoZxw5s
+         MPy9u/dNG4YtEvloi07xZ18ArrgLrOrcPugUCbXJKoQV7LJH0hgONOYUXDM1eoNY8KCx
+         R71I37MQ1fQaLvE+BFbtI4U1UTH2Menk241mj2gYy5wBmM928JwmA6DsfxeKDY9/6o7N
+         /jjgoXwYodLHwJGtOp9YkyQTlbChN1lP/lT9keuhJmm2KuIQREWELX1yYdyphFabIw87
+         C8aA==
+X-Gm-Message-State: AOAM533YQT3VJD99sZTHAgx68ykoDrD8rSbL96rpVFq0Stp9fj/aYunl
+        3xi8m1SC7Rr+agIhIlngIFbFwhvUoMz/F/5sgdLa
+X-Google-Smtp-Source: ABdhPJxL+Hi8bIPqyuV1I8C7gcSQkVTOvGcgJmFCw+2iLoIL/Rwk0WPWQwz7KO1TVagYPCSB1CAG685+7aXxVcvuKk8a
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:a63:: with SMTP id
+ o90mr796020pjo.90.1614632126695; Mon, 01 Mar 2021 12:55:26 -0800 (PST)
+Date:   Mon,  1 Mar 2021 12:55:21 -0800
+In-Reply-To: <CAFLLRpLoy6c_WSt1RR2-SPMzKK-MaBpkrCPuGqGGf8SwpCiSEA@mail.gmail.com>
+Message-Id: <20210301205521.3415173-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAFLLRpLoy6c_WSt1RR2-SPMzKK-MaBpkrCPuGqGGf8SwpCiSEA@mail.gmail.com>
+X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
+Subject: Re: partial clone: promisor fetch during push (pack-objects)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     robert.coup@koordinates.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 3:50 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> This function can be used in other parts of git. Let's move the
-> function to commit.c.
->
-> Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
-> ---
-> diff --git a/commit.h b/commit.h
-> @@ -165,6 +165,9 @@ const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
-> +/* Return length of the commit subject from commit log message. */
-> +size_t subject_length(const char *body);
+> > > 3. But push doesn't pass --missing= to pack-objects anyway, so that
+> > > wouldn't actually solve the original issue. Should it?
+> >
+> > If we fix the bug I described above, I think it's still OK if push
+> > doesn't pass --missing=.
+> 
+> I'll have a go at a patch. Any suggestions on how to approach
+> writing/expanding a test to cover this?
 
-Now that this function is public, is the name too generic? Most other
-functions in this header have "commit" in the name. So,
-commit_subject_length() might be one possibility (assuming the current
-name is too generic).
+I think the main thing is to test that such a push doesn't also fetch.
+The most straightforward and reliable way I can think of is to run "git
+count-objects -v" before and after the push. There are other ways like
+using GIT_TRACE_PACKET and then grep-ping for the absence of "fetch>
+done" (or something like that) (but I don't like this approach because
+grep-ping for absence is not robust in the face of typos) or checking
+the number of files in .git/objects/pack before and after (but that is
+not robust if Git decides to GC in between).
