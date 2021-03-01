@@ -2,240 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C96AAC433E9
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 16:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9728CC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 16:51:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A22FE64F48
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 16:44:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5731165094
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 16:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234792AbhCAQmf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 11:42:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39076 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232958AbhCAQj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 11:39:59 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA2CC06178A
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 08:39:19 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id i21so16374659oii.2
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 08:39:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5Ojz39XtyeceZ0NBGGsJqUsXELIlO80BFi8j+gbOlI8=;
-        b=mtj3dP7tXOZQytCS2U1TiKoKVjDfK6aWmZ4ObpXG2gEkWI5v6cTnUKh3b+AF4PAwBm
-         31m+WKHEy3YvZQy44l4XySRlQfTUgNrlzQTrqehC3IrWMSBBmN4c01TuHXdiApUnf/89
-         geIse9KTvOsoI596Q8yEd74SxTYhfgWPHJ8FUbxWB30lRPaebRYG3gZQfV1os8ADHEud
-         j69qsiIQXyJ/O7RahLawllTNabSzYXBitvq/LkEZDSI/buL07qi6VK4hnA4g+UpnoY+l
-         ZIjFwDyE9zUas/ISuXA5BgTUEoxRH88akh5wf8VLFiShmiy6HPZyaltjQOBtgIYuJf4s
-         k+Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5Ojz39XtyeceZ0NBGGsJqUsXELIlO80BFi8j+gbOlI8=;
-        b=r7h/AtWqYE1DMK6BYgzXzHz9zTpTcq+km02ue3HWEIZT9Q+UZ2Z2UPzsord7BZtJE1
-         fMjGdzUT8EXABpE4BEjPTG47c+Opl3Aqd027Fg7cMC3o5OA6leggl1eUVmGzuTo7Vfvh
-         CAqQHqYdAWugpkzYNPbqbJ8zFzX1IWE8OTIBGASLeI8TenTG747vZJA+bg9iTwvm2YLk
-         FAg7tpDPKHy443dq6KM8lTLT1qFknYEwRp2pVRj/4ZqrGqBZO6RX4jfGwTdv32aRIaIV
-         msRczc+ynGuTGZ7P9uv7hs/XvEXwFlRQb11LBBvX7lhCK4VEwphZz2gKP+6W44YdG92F
-         +QuQ==
-X-Gm-Message-State: AOAM5321Iw6X2ET7gT8e15LKAqbNQMwRcGmpOXRVvZwPgH+APrn5KaG0
-        MwEBj4pnBTv05a9WKCZqStssE1cQsd7uz6kqUbs=
-X-Google-Smtp-Source: ABdhPJwpxRtSM+NELuZNSL9L9IILgCc9uJK9BQSmReipN8ObB+C5p45Iu8AhldcVwhE+aJYC+ZIEtftW4ojJ4eGB2W0=
-X-Received: by 2002:aca:c48c:: with SMTP id u134mr12204637oif.31.1614616758402;
- Mon, 01 Mar 2021 08:39:18 -0800 (PST)
+        id S235223AbhCAQvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 11:51:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62433 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235714AbhCAQs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 11:48:58 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E941122367;
+        Mon,  1 Mar 2021 11:48:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jzhyheL2KcmAcPbTiTiFPd5AFDM=; b=upMaoc
+        FI9F0ZrQCOu/LRCUkw9QkvoILM6VlXuUnTLJJKSKijNzhogghYJihbDBm4+5wDKn
+        8RbOpuQUREL8v1rv+L05QKgbgWdxFsAgwF9fSdJ1ex/Cfp5SUgj3vLVk2rlSFpmT
+        2z9dGpPhufFIWmfDq1YwedSKKL8kGKeHDu7lM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=McJc17e3dNMf521MF7LS7DARihiDLobH
+        +6mHTWljRy4/rhWx3KRYvpuYpZEdqhZWSkwCVVrHm0tb3PAVvyucOxPbIs9XNC4f
+        UaUcZHJr9tOoU2HQssphTfkwV1LNZtt4scwSCikQxDpxwnOQCDku+BNPPKYcbwco
+        Fb0tKfDwx8c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3778E122366;
+        Mon,  1 Mar 2021 11:48:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7BD2D122365;
+        Mon,  1 Mar 2021 11:48:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Yaron Wittenstein <yaron.wittenstein@gmail.com>
+Subject: Re: [PATCH v2 1/2] githooks.txt: Replace mentions of SHA-1 specific
+ properties
+References: <c30d41de55b8991a09e1d550e853f582b5394dee.1614232040.git.ps@pks.im>
+        <294fb32de2681dfeac836d2b64c7e0853721d1a3.1614591751.git.ps@pks.im>
+Date:   Mon, 01 Mar 2021 08:48:04 -0800
+In-Reply-To: <294fb32de2681dfeac836d2b64c7e0853721d1a3.1614591751.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Mon, 1 Mar 2021 10:43:47 +0100")
+Message-ID: <xmqqsg5estvf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.845.git.1614484707.gitgitgadget@gmail.com>
-In-Reply-To: <pull.845.git.1614484707.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 1 Mar 2021 08:39:07 -0800
-Message-ID: <CABPp-BEVvfMLGFthb5EQpYORSe9BifQRNb40+mgcg=bGCABc5Q@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Optimization batch 9: avoid detecting irrelevant renames
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: E59E5C28-7AAD-11EB-98F3-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 27, 2021 at 7:58 PM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series depends textually on ort-perf-batch-8, but semantically it's
-> almost completely unrelated and can be reviewed without any familiarity w=
-ith
-> any of the previous patch series.
->
-> =3D=3D=3D Basic Optimization idea =3D=3D=3D
->
-> This series determines paths which meet special cases where detection of
-> renames is irrelevant, where the irrelevance is due to the fact that the
-> merge machinery will arrive at the same result regardless of whether a
-> rename is detected for any of those paths. This series represents
-> "Optimization #2" from my Git Merge 2020 talk[1], though this series has
-> some improvements on the optimization relative to what I had at that time=
-.
->
-> The basic idea here is that if side A of history:
->
->  * only modifies/adds/deletes a few files
->  * adds new files to few if any of the directories that side B deleted or
->    renamed
->
-> then when we do rename detection on side B we can avoid even looking at m=
-ost
-> (and perhaps even all) paths that side B deleted. Since commits being
-> rebased or cherry-picked tend to only modify a few files, this optimizati=
-on
-> tends to be particularly effective for rebases and cherry-picks.
->
-> Basing rename detection on what the other side of history did to a file
-> means that extra information needs to be fed from merge-ort to
-> diffcore-rename in order to take advantage of such an optimization.
->
-> =3D=3D=3D Comparison to previous series =3D=3D=3D
->
-> This series differs from my two previous optimizations[2][3] (focusing on
-> basename-guided rename detection) in two important aspects:
->
->  * there are no behavioral changes (there is no heuristic involved)
->
->  * this optimization is merge specific (it does not help the diff/status/=
-log
->    family of commands, just merge/rebase/cherry-pick and such)
->
-> =3D=3D=3D Results =3D=3D=3D
->
-> For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-> performance work; instrument with trace2_region_* calls", 2020-10-28), th=
-e
-> changes in just this series improves the performance as follows:
->
->                      Before Series           After Series
-> no-renames:       12.596 s =C2=B1  0.061 s     5.680 s =C2=B1  0.096 s
-> mega-renames:    130.465 s =C2=B1  0.259 s    13.812 s =C2=B1  0.162 s
-> just-one-mega:     3.958 s =C2=B1  0.010 s   506.0  ms =C2=B1  3.9  ms
->
->
-> However, interestingly, if we had ignored the basename-guided rename
-> detection optimizations[2][3], then this optimization series would have
-> improved the performance as follows:
->
->                Before Basename Series   After Just This Series
-> no-renames:      13.815 s =C2=B1  0.062 s      5.728 s =C2=B1  0.104 s
-> mega-renames:  1799.937 s =C2=B1  0.493 s     18.213 s =C2=B1  0.139 s
-> just-one-mega    51.289 s =C2=B1  0.019 s    891.9  ms =C2=B1  7.0  ms
->
->
-> As a reminder, before any merge-ort/diffcore-rename performance work, the
-> performance results we started with (as noted in the same commit message)
-> were:
->
-> no-renames-am:      6.940 s =C2=B1  0.485 s
-> no-renames:        18.912 s =C2=B1  0.174 s
-> mega-renames:    5964.031 s =C2=B1 10.459 s
-> just-one-mega:    149.583 s =C2=B1  0.751 s
->
->
-> =3D=3D=3D Competition between optimizations =3D=3D=3D
->
-> We now have three major rename-related optimizations:
->
->  * exact rename detection
->  * basename-guided rename detection[2][3]
->  * skip-because-unnecessary (this series)
->
-> It is possible for all three to potentially apply for specific paths (the=
-y
-> do for the majority of renamed paths in our testcases), but we cannot use
-> more than one for any given path. It turns out that the priority we give
-> each optimization is very important and can drastically affect performanc=
-e.
-> We get best results by prioritizing them as follows:
->
->  1. exact rename detection
->  2. skip-because-unnecessary
->  3. basename-guided rename detection
->
-> The third-to-last patch of this series also discusses this ordering and
-> another minor variant of the skip-because-unnecessary optimization that w=
-as
-> tried (and resulted in less effective performance gains than reported her=
-e),
-> as well as some of the preparatory work over the past few years that this
-> series relies on in order to enable this optimization.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Oops.  When I restructured the series I carefully re-read the commit
-messages to make sure I didn't forget to update one...but I apparently
-forgot to update the cover letter.  The discussion was actually split
-across a few patches by the refactoring, and what is now the
-third-to-last patch doesn't contain any of that discussion.
+> Subject: Re: [PATCH v2 1/2] githooks.txt: Replace mentions of SHA-1 specific properties
 
-> =3D=3D=3D Near optimal? =3D=3D=3D
+Looking at "git shortlog --no-merges -200 master" output, I'd
+suggest to please downcase "Replace" to match.
+
+> The githooks(5) documentation states in several places that the hook
+> will receive a SHA-1 or hashes of 40 characters length. Given that we're
+> transitioning to a world where both SHA-1 and SHA-256 are supported,
+> this is inaccurate.
 >
-> You may remember that there was a row labelled "everything else" from the
-> commit message of 557ac0350d that represented the maximum possible speed-=
-up
-> from accelerating rename detection alone; as stated in that commit, those
-> rows represented how fast the code could be if we had somehow infinitely
-> parallelized the inexact rename detection. However, if you compare those
-> "maximum speedup" numbers to what we have above, you'll note that the
-> infinitely parallelized inexact rename detection would have been slightly
-> slower than the results we have now achieved. (The reason this is possibl=
-e,
-> despite the fact that we still spend time in rename detection after our
-> optimizations, is because we implemented two optimizations outside of
-> diffcore_rename() along the way.) However, this good news does also come
-> with a downside -- it means that our remaining optimization potential is
-> somewhat limited, and subsequent optimization series will have to fight f=
-or
-> much smaller gains.
+> Fix the issue by replacing mentions of SHA-1 with "object name" and not
+> explicitly mentioning the hash size.
 >
-> [1]
-> https://github.com/newren/presentations/blob/pdfs/merge-performance/merge=
--performance-slides.pdf
-> [2]
-> https://lore.kernel.org/git/pull.843.git.1612651937.gitgitgadget@gmail.co=
-m/
-> [3]
-> https://lore.kernel.org/git/pull.844.git.1613289544.gitgitgadget@gmail.co=
-m/
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Documentation/githooks.txt | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
 >
-> Elijah Newren (8):
->   diffcore-rename: enable filtering possible rename sources
->   merge-ort: precompute subset of sources for which we need rename
->     detection
->   merge-ort: add data structures for an alternate tree traversal
->   merge-ort: introduce wrappers for alternate tree traversal
->   merge-ort: precompute whether directory rename detection is needed
->   merge-ort: use relevant_sources to filter possible rename sources
->   merge-ort: skip rename detection entirely if possible
->   diffcore-rename: avoid doing basename comparisons for irrelevant
->     sources
->
->  diffcore-rename.c |  63 ++++++++++---
->  diffcore.h        |   1 +
->  merge-ort.c       | 236 +++++++++++++++++++++++++++++++++++++++++++++-
->  3 files changed, 285 insertions(+), 15 deletions(-)
->
->
-> base-commit: 4be565c472088d4144063b736308bf2a57331f45
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-845%2Fn=
-ewren%2Fort-perf-batch-9-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-845/newren=
-/ort-perf-batch-9-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/845
-> --
-> gitgitgadget
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 1f3b57d04d..4dad80052e 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -138,7 +138,7 @@ given); `template` (if a `-t` option was given or the
+>  configuration option `commit.template` is set); `merge` (if the
+>  commit is a merge or a `.git/MERGE_MSG` file exists); `squash`
+>  (if a `.git/SQUASH_MSG` file exists); or `commit`, followed by
+> -a commit SHA-1 (if a `-c`, `-C` or `--amend` option was given).
+> +a commit object name (if a `-c`, `-C` or `--amend` option was given).
+>  
+>  If the exit status is non-zero, `git commit` will abort.
+>  
+> @@ -231,19 +231,19 @@ named remote is not being used both values will be the same.
+>  Information about what is to be pushed is provided on the hook's standard
+>  input with lines of the form:
+>  
+> -  <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
+> +  <local ref> SP <local object name> SP <remote ref> SP <remote object name> LF
+>  
+>  For instance, if the command +git push origin master:foreign+ were run the
+>  hook would receive a line like the following:
+>  
+>    refs/heads/master 67890 refs/heads/foreign 12345
+>  
+> -although the full, 40-character SHA-1s would be supplied.  If the foreign ref
+> -does not yet exist the `<remote SHA-1>` will be 40 `0`.  If a ref is to be
+> -deleted, the `<local ref>` will be supplied as `(delete)` and the `<local
+> -SHA-1>` will be 40 `0`.  If the local commit was specified by something other
+> -than a name which could be expanded (such as `HEAD~`, or a SHA-1) it will be
+> -supplied as it was originally given.
+> +although the full object name would be supplied.  If the foreign ref does not
+> +yet exist the `<remote object name>` will be the all-zeroes object name.  If a
+> +ref is to be deleted, the `<local ref>` will be supplied as `(delete)` and the
+> +`<local object name>` will be the all-zeroes object name.  If the local commit
+> +was specified by something other than a name which could be expanded (such as
+> +`HEAD~`, or an object name) it will be supplied as it was originally given.
+>  
+>  If this hook exits with a non-zero status, `git push` will abort without
+>  pushing anything.  Information about why the push is rejected may be sent
+> @@ -268,7 +268,7 @@ input a line of the format:
+>  where `<old-value>` is the old object name stored in the ref,
+>  `<new-value>` is the new object name to be stored in the ref and
+>  `<ref-name>` is the full name of the ref.
+> -When creating a new ref, `<old-value>` is 40 `0`.
+> +When creating a new ref, `<old-value>` is the all-zeroes object name.
+>  
+>  If the hook exits with non-zero status, none of the refs will be
+>  updated. If the hook exits with zero, updating of individual refs can
+> @@ -550,7 +550,7 @@ command-dependent arguments may be passed in the future.
+>  The hook receives a list of the rewritten commits on stdin, in the
+>  format
+>  
+> -  <old-sha1> SP <new-sha1> [ SP <extra-info> ] LF
+> +  <old-object-name> SP <new-object-name> [ SP <extra-info> ] LF
+
+<???-object-name> is a tad longer than the original as a
+placeholder, but this line does not look so bad.
+
+Thanks.
+
+>  The 'extra-info' is again command-dependent.  If it is empty, the
+>  preceding SP is also omitted.  Currently, no commands pass any
+> @@ -566,7 +566,7 @@ rebase::
+>  	For the 'squash' and 'fixup' operation, all commits that were
+>  	squashed are listed as being rewritten to the squashed commit.
+>  	This means that there will be several lines sharing the same
+> -	'new-sha1'.
+> +	'new-object-name'.
+>  +
+>  The commits are guaranteed to be listed in the order that they were
+>  processed by rebase.
+
