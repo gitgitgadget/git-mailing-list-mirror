@@ -6,98 +6,86 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 679D3C433E6
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:19:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C141C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:37:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4071E64F8F
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:19:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E24E560200
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 18:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231709AbhCASSz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 13:18:55 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59292 "EHLO
+        id S240183AbhCAShV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 13:37:21 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50375 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234233AbhCASQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 13:16:14 -0500
+        with ESMTP id S239802AbhCASfJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 13:35:09 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 33229AAF09;
-        Mon,  1 Mar 2021 13:15:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB71FAB152;
+        Mon,  1 Mar 2021 13:34:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a2L9wirCJBETbzPRTm+dFCGN414=; b=XAcPCI
-        ZPnRhbsEIh/CeAX0rGNEPtycSe0NznthWfyc7xhUJbbdxDyP3heaojmHWfaTrCkM
-        VVF2BAAX0OYNcU5Q8BLBIbIKNXwu5n543HIe3RPOiUVGR9cEoiXjk+rvGapI0BDj
-        8nf293U3uUNxZ6CU0soXuEJjh/wYsa2ngINz0=
+        :content-type; s=sasl; bh=0FWUyLDgdqdZFZJ5JP3Pmhb+LNw=; b=BSywgF
+        UIHSA8JrXVdv1IUSI7wYT87LD7VnKQVmLMPPo+MsrGdL3RGcf/huhvb6lZZb6+9u
+        /3dce9m0DYVoEHBAO87g0njVVLxZYeSr1ZIT34ZGph/UZm81JjnwkDrUPtu1OZPb
+        Mfr4GgL2ECW/QH6woiWbSDYoJ/CbqBYonuxWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DBGlilyBcUIsbuh/pbbw6HSjFEZhi6V2
-        Kx/MOGy9LIckh9PEFx8PFpne/IEydVLktL6OW8HQhMdZuStnYGM2zGf7uO7ukfGT
-        6BxJFfiY7Om08nPe97VtaWQT81f1agJ9YYyupvba7JRaL7Vsc3sP+MOjdhaGlcNx
-        qzqZNCZvGNo=
+        :content-type; q=dns; s=sasl; b=NZDctHFunyRHldBmTxUNu9jooEgfhO2b
+        xf2aOJh4gpKsDCfNy/+l9yXPIp7+atw3DY2S6hBXDwm37AX+cBiZBcu9NZtDR/k3
+        01i6rf0L/CfbVVIFrrFiM7kOAYA89+4cUtppNxiFIB34+/3lSqnKgkvlA3i8c5H0
+        X6ynRbiK75Y=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B00BAAF08;
-        Mon,  1 Mar 2021 13:15:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B26FCAB151;
+        Mon,  1 Mar 2021 13:34:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9EBD7AAF06;
-        Mon,  1 Mar 2021 13:15:30 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D84FAB150;
+        Mon,  1 Mar 2021 13:34:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Jason Pyeron <jpyeron@pdinc.us>
-Subject: Re: [PATCH 4/4] docs: note that archives are not stable
-References: <20210227191813.96148-1-sandals@crustytoothpaste.net>
-        <20210227191813.96148-5-sandals@crustytoothpaste.net>
-        <87h7lwl5mv.fsf@evledraar.gmail.com>
-        <YDvexO2NFM0KZ1Jo@camp.crustytoothpaste.net>
-Date:   Mon, 01 Mar 2021 10:15:29 -0800
-In-Reply-To: <YDvexO2NFM0KZ1Jo@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Sun, 28 Feb 2021 18:19:48 +0000")
-Message-ID: <xmqqpn0irb9a.fsf@gitster.c.googlers.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        phillip.wood123@gmail.com,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
+References: <20210301084512.27170-1-charvi077@gmail.com>
+        <20210301084512.27170-3-charvi077@gmail.com>
+Date:   Mon, 01 Mar 2021 10:34:25 -0800
+In-Reply-To: <20210301084512.27170-3-charvi077@gmail.com> (Charvi Mendiratta's
+        message of "Mon, 1 Mar 2021 14:15:10 +0530")
+Message-ID: <xmqqlfb6radq.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 1B5FC282-7ABA-11EB-B7AF-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C03E431C-7ABC-11EB-A3B3-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
->   The output of 'git archive' is guaranteed to be the same across
->   versions of git, but the archive itself is not guaranteed to be
->   bit-for-bit identical.
+> +static int prepare_amend_commit(struct commit *commit, struct strbuf *sb,
+> +								 struct pretty_print_context *ctx) {
 
-I do not quite get this; your original was clearer.  What does it
-mean to "be the same across versions of git but not identical" at
-the same time?  If output from Git version 1.0 and 2.0 are guranteed
-to be the same across versions, what more is there for the readers
-to worry about the format stability?
+Why does this need to be overly indented?  Are you using some funny
+tab width settings?  In this project, a tab stop is 8-spaces wide.
 
-Perhaps you meant
+> +		/*
+> +		 * Only `-m` commit message option is checked here, as
+> +		 * it supports `--fixup` to append the commit message.
 
-	... is guaranteed to be the same for any given version of
-	Git across ports.
+As it is OK to use "-m" with the plain vanilla "--fixup", an earlier
+check did not reject the combination, but now we look at what kind
+of fixup it is, and error out if it is "--fixup=amend:".  OK.
 
-or something?  It would allow kernel.org's use of "Konstantin tells
-kernel.org users to use Git version X to run 'git archive' and
-create detached signature on the output, and upload only the
-signature.  The site uses the same Git version X to run 'git
-archive' to create a tarball and the detached signature magically
-matches, as the output on two places are bit-for-bit identical".
-
->   The output of 'git archive' has changed
->   in the past, and most likely will in the future.
-
-That is correct as a statement of fact.  I feel that saying it is
-either redundant and insufficient at the same time.  If we want to
-tell them "do not depend on the output being bit-for-bit identical",
-we should say it more explicitly after this sentence, I would think.
+> +		 * The other commit message options `-c`/`-C`/`-F` are
+> +		 * incompatible with all the forms of `--fixup` and
+> +		 * have already errored out while parsing the `git commit`
+> +		 * options.
+> +		 */
 
 
