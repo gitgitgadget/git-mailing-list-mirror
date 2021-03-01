@@ -7,82 +7,105 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 057ACC433E6
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 19:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99CC7C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:09:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEF5D61490
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 19:40:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 651C264E68
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 20:09:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237461AbhCATkT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 14:40:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48944 "EHLO
+        id S242644AbhCAUHY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 15:07:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237908AbhCAThW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 14:37:22 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2B6C06178A
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 11:36:41 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id m22so27420790lfg.5
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 11:36:41 -0800 (PST)
+        with ESMTP id S242486AbhCAUCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 15:02:49 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F247BC061756
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 12:02:08 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id b7so8887010edz.8
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 12:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wB5ge/QVk6iwTT95hm1pdyaHWzgGeVSQ0/c81nZn4lQ=;
-        b=UUmAgqfWHbuY8XkVPWKHLClb3t7ltyYuOdNMn9Y+3VE1NYrQdO2gd2/YRyNt/GMEd6
-         FLj/8wM4AFqDPcLW4M5q+BCWN1wWyiQ+aFMTnzPQHwjtAJopR7mjxx0yH90MxfepcS06
-         cA9eOFyuEPlh2Dt331VevhncZwHL7nxAfIFLjBEdEqFpEaO5XbiVrlSAw3sGJXjxPlkl
-         +Zj8xMeO1Ec0rlNKDm3xLAnEyQJxsoQL9aRs0p7X8fvqB+QfB1/roh8dx2GttffWvwKS
-         ocKIFaJ/N9jPAeKjuNSpcpCpO/dcAufS2KRtSIJtvq1k6TMFnU0TeEwKtjKVS0EQdJoI
-         YTvw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=XQTvYnhSOGvAAj+6LmANBOpZ67XN0+2LzZzwc/a/PrU=;
+        b=Lv03pMYuEVM1Y2BcmoZ9FD/IO+cmQRQvv0d5c4DMbtJq58SEYvvAffoP1xuGjq9Tsn
+         5XFqBvlytubvFlo9eX3xJZ6bfRRRU2mSj+Kk7V0eeMv0AM4lkO4PdqTywwi3NEvYyg6P
+         isk2Q1GgXjisvo6wb7Q/SiRXTmcgBh+x05E8QoSvRFJ1bg8qc1PzS0uV9wPgsfiwGm8I
+         ezPqdIYbP//mY8bryQkMS4Cr75ag5eFbKL2Kl8/gjkAhxfProG3ec98KIGlxnnNlwUgT
+         OwCH7oxpJ7WcRe4xiYdri6sFtnps45znm9lVD7LVxKbtdIbCLYcX+XWTUfudUjtUh9qW
+         +z9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wB5ge/QVk6iwTT95hm1pdyaHWzgGeVSQ0/c81nZn4lQ=;
-        b=HiOlWqo3vbT3RR1vBydJW5r07leYNs9oUfbhd4sd/ig8o3kYEq2mRCsJQylfmheQID
-         RhGX7a/IC6rFPBzmeHBuGueGj+MO2QR/H8vqM0PoPxvDv8fLQU2Z6VKi51Rx7JYdGAlw
-         novA8O+BH76JrEoaOv5Ymfvf6CgOexiU6CCVZrltooVTlKDcn15c7KRP1e9cqeFmnrEd
-         VABqinRSkXhwn4n4B4HoGVyWReJLAapPYpOipuZzSeck3hM2WX6yNHNz79g4VpLB+9vS
-         afbr/cfwsUEeZfvoJdYelCtaTd2RqHXrLOdekVU4zHqGhontGcrKHQa5UCEXGzmYvPTm
-         xIdg==
-X-Gm-Message-State: AOAM530lwANyfQscYcgNKv+43KO2UnTRTJRCa6w+yqmkXqVkKoLQE3Cx
-        kCd4V1xmEIuAJBa9S4KvduSkFK3Ptx/JVdE6gFI=
-X-Google-Smtp-Source: ABdhPJxsiEGfiNn6kb/fII7Dm0F1Wl87vvNavvDG3ZylqiD1peFj1/qieukgxgMVhy+3VXsvw7MoxNLJLLLsnoNv3Rg=
-X-Received: by 2002:ac2:482b:: with SMTP id 11mr9975792lft.642.1614627399737;
- Mon, 01 Mar 2021 11:36:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=XQTvYnhSOGvAAj+6LmANBOpZ67XN0+2LzZzwc/a/PrU=;
+        b=CvdNw2THBRaM4XuptY8V6M/fL1Qrwl8vkioBC+EyAf/UeeRq2neXG/XG1dQUUwZxqj
+         Furas81MeA0F3nPNvEOtQri95+WOjNTD57TEzKW9r1BmYHNbd3b4Dpd6WdYkdhhAcRJW
+         QI3sijKvNwFzxZsfje+li/EhpZtTqusZyQKYN3fGTO0PupkpHjgz5tSqZICHUfnWHMPD
+         QJua2pYv1CUdJ6dxV+Nx5KvNq7IR+HE7NX/8UTlIK3cS+pL/pT+pHbyQAKdu8OZtlMSw
+         DStfc1Jr08LK3uiq9YRHpeed7VUw6gGhEk1xpA72/6nWax+PtliFFqJukK2swvPYTkF6
+         v7tQ==
+X-Gm-Message-State: AOAM532LA35BenLPmy9PnxrRRYQZVatSWXJL9djAm/5iKvH1+IcpRz8t
+        qTH0RRHrv5lL9sor1YMFPXPNo4fbuCw=
+X-Google-Smtp-Source: ABdhPJzxffFo+FyXTzyb/9K10eLQkCUwss6IzoaOspt1sKZqzBhRAyRz7jhycDhVibvSuDoZJ6IpXw==
+X-Received: by 2002:a50:aac8:: with SMTP id r8mr17606462edc.9.1614628927669;
+        Mon, 01 Mar 2021 12:02:07 -0800 (PST)
+Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
+        by smtp.gmail.com with ESMTPSA id yk8sm10644809ejb.123.2021.03.01.12.02.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Mar 2021 12:02:07 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     anatoly techtonik <techtonik@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Round-tripping fast-export/import changes commit hashes
+References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
+ <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
+ <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
+ <87mtvolbuj.fsf@evledraar.gmail.com>
+ <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
+In-reply-to: <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
+Date:   Mon, 01 Mar 2021 21:02:06 +0100
+Message-ID: <87im6ak5hd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <xmqq7doqwvzx.fsf@gitster.c.googlers.com> <20210301170536.12265-1-tboegi@web.de>
- <xmqqzgzmptmy.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqzgzmptmy.fsf@gitster.c.googlers.com>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Mon, 1 Mar 2021 11:36:28 -0800
-Message-ID: <CAPx1GvcjO0-3nbcC_oYkYjhYenb_J9CoM6bZNaR_-t93cpppSw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] git mv foo FOO ; git mv foo bar gave an assert
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     tboegi@web.de, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Dan.Moseley@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 11:26 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Before the problematic patch, this used to be
+
+On Mon, Mar 01 2021, anatoly techtonik wrote:
+
+> On Sun, Feb 28, 2021 at 1:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> I think Elijah means that in the general case people are using fast
+>> export/import to export/import between different systems or in
+>> combination with a utility like git-filter-repo.
+>>
+>> In those cases users are also changing the content of the repository, so
+>> the hashes will change, invalidating signatures.
+>>
+>> But there's also cases where e.g. you don't modify the history, or only
+>> part of it, and could then preserve these headers. I think there's no
+>> inherent reason not to do so, just that nobody's cared enough to submit
+>> patches etc.
 >
->                } else if (cache_name_pos(src, length) < 0)
->
-> I wonder if we should revert the change to use cache_file_exists()
-> in the first place (and rewrite the subsequent use of ce to match),
-> though.
+> Is fast-export/import the only way to filter information in `git`? Maybe =
+there
+> is a slow json-export/import tool that gives a complete representation of=
+ all
+> events in a repository? Or API that can be used to serialize and import t=
+hat
+> stream?
 
-For what it's worth, that was what I did originally; the change
-to look up the ce "up front" was because someone objected to the
-double search implied by calling cache_name_pos once, then
-cache_file_exists to determine the correct error message...
+Aside from other things mentioned & any issues in fast export/import in
+this thread, if you want round-trip correctness you're not going to want
+JSON-anything. It's not capable of representing arbitrary binary data.
 
-(I've never been 100% on how the ignore-case stuff works
-internally.)
-
-Chris
+But in any case, it's not the fast-export format that's the issue, but
+how the tools in git.git are munging/rewriting/omitting the repository
+data in question...
