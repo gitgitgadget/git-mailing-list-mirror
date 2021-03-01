@@ -2,89 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC2A6C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE259C433E0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:25:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8708860230
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:24:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98CEF60230
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 22:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241972AbhCAWW7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 17:22:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64862 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239909AbhCAWUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 17:20:17 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6879BAD118;
-        Mon,  1 Mar 2021 17:19:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HaheigCSlGdgZJDjh1h9j3ZeaX0=; b=qeNlKZ
-        FJ/7YePTE4DMEG8IJLVTD/rzy5i3+Q3o4Rt4tK7lFV0wNk9sdA2rOYdbN3xF9qQo
-        v3srAXl0anyyHqTmi2dRvNQ2in5c0g30FTAUb9SiY73LahLd25Zi4odq8gkR06HS
-        kGiDPGHaoL2F+yk2XG++uPRyCynUWviNEcleU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E+WOSpTXDOMN3u8A4rdkXrarNjXo3RUz
-        cAPE4qVP/16slJ4HhiicrsXt1GWbJpeLpzeUW+WlhtkjjmjwX8MjtNMBsaHHYaep
-        uiwp/zYAIvqxx2Lha8tcuWu4e4L9W2RKMUyIi5QslKwLAQ2ivOD71EteWHn+hZW7
-        5lKqG9TK/rA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F908AD117;
-        Mon,  1 Mar 2021 17:19:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D8A3DAD114;
-        Mon,  1 Mar 2021 17:19:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 00/17] propose config-based hooks (part I)
-References: <20201205014607.1464119-1-emilyshaffer@google.com>
-        <20201222000220.1491091-1-emilyshaffer@google.com>
-        <YCwhA6VIs16uMnJG@google.com>
-        <xmqqy2fnocjc.fsf@gitster.c.googlers.com>
-        <YC2IzVxLgvC7N8qd@google.com> <xmqqlfbmi99f.fsf@gitster.g>
-        <xmqq4ki0udu4.fsf@gitster.g> <YD1hfZqfu9bcMkra@google.com>
-Date:   Mon, 01 Mar 2021 14:19:31 -0800
-In-Reply-To: <YD1hfZqfu9bcMkra@google.com> (Emily Shaffer's message of "Mon, 1
-        Mar 2021 13:51:31 -0800")
-Message-ID: <xmqqtupums98.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S239909AbhCAWY2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 17:24:28 -0500
+Received: from mout.gmx.net ([212.227.15.18]:34059 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232944AbhCAWVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 17:21:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1614637135;
+        bh=s85FZQbFp+tO8pBGBy/+eTOe0FwiBpETSP9gJj/TbSc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KJYSQiQJXuZpZs4XpNjB/FKIJ8+wInfCnuUpVBgwftgWMKDEXKNNw+JJMtDjOejvg
+         zLLUvwCVgr0ZCCdZsrbsMhigdr6RKeGwy/yeB+EG4mgunfvfP8wG8fEhjERsloTCTR
+         svXa5p+ytxWqc8vx4qfwXEtQnsItnOMxJiFBYEjU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.19.162.2] ([89.1.214.35]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MkYXs-1lebNh3Cda-00m40e; Mon, 01
+ Mar 2021 23:18:55 +0100
+Date:   Mon, 1 Mar 2021 23:18:53 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH] pack-revindex.c: don't close unopened file descriptors
+In-Reply-To: <YDk1/y1CmsPYC88C@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2103012312230.57@tvgsbejvaqbjf.bet>
+References: <34c017296a7c5fe4a2ea70f8a0b2d8586b34a4dc.1614357030.git.me@ttaylorr.com> <YDk1/y1CmsPYC88C@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 323B00DA-7ADC-11EB-9019-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:+YzHeqV4IYxJUVoV8xBl8H2CSgtq5ATEjOJz7twqTdMtmZsyWlF
+ +GAcSeXIlRtwFKURGH3+r5Mfo6yvxC/Ngb6PkQf4RnT+bMhni0esglEeEAaQrV2MQGWPn5P
+ Dwxb1GLluspxKtx+1QS5cZXILL/3yWpO+J9hTi8xlWcm283AZeSC0teq+DbcD9iekuu5Cmq
+ P1GuOVmDu7jf//WMQHWgg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:foptPBP8IRo=:8zv58h4xgn9OvNArIl3Rlc
+ oW+It7sS9uWFOnXJiyTuxDokWiO92Db1J2/YOtrIVb4R18ExPoCZJJteBd2/p+b3tXPopfakL
+ HAibcD2CiaSfXpoKIz59tpElIl8jst6++kXceqyfBTQV3YeN62BAoEkx7oEvhJzm6orxB5AHn
+ G0sR/tkRO7wpxq7LNf0I7Vzuold+OUZrnLfQS+naboiw6oGATzB1+iqke+kxiKQZkzXTo4bay
+ GeamfqWeTpNC68PGPRxaIHJ0XZZD0bSPrGh7Orfh+p3qdv8bzj2dgfllbepiiCjWwPklMTwiy
+ BlYDLmj/d6c2HimbpPy8oTEKNF4ZEqlE7CfwJo1xXeYLluNmp893eLZHcgbPWCGO2rpxPvMLh
+ zLDe5IjittlqCiIKC9bGd8JOHkcts2wSjhQf63atUUWLvs8B3fFpRyZ6w2cYYL4D+JDMb/wjV
+ UHJmEK8VScsprr29Nal/Ebhymf8QSTgvfZ69tf+ejIbG+3ZRVfiWH1+QL30y86+ho/38XrCVC
+ S52d5I+VgIVzLXbUUIskhMe3P98tUnWCj5ysjptJ4YSFJnNm8Mra4s5LDZEyU7sEl/IieCQ9w
+ Tcaa0RMrfhzWowGOVRY98xlLjr1FpzMZdglbaPwHAufFMQ6rm5c2Mfx+h5Sz+oNw8Se4bRsTN
+ bGxsfKAbxxgoggQaGrkGj0nelNs1SIXqusU7o4K5y7mRPjz64279P1aWurF5u91alUeWxyZJM
+ iruse4YYtMvEN/seoFp9pla8dbosYNFOysc6AHcle+GAMAErLOYzUT7VghHjGv8E4B1BDNoyt
+ wbebowrFkJUgEeqIk9VSlYm9PXbwJLUvD5x7Wk+//kRe8p+zpTNB/pQbBM98TuvqZ3C1kYuav
+ N4/xzKP+TNDhmXKI2nC+Yom6rQtK0cW8nyPpCv8ks=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Hi Peff,
 
->> I said this on Feb 17th, but since then I think I saw you answer
->> "I'll do that" in responses to JTan's reviews in the past few days
->> (e.g. <YC7o2rUQOEdiMdqh@google.com>).  Would I regret if I merge the
->> topic down to 'next' today?
->
-> Bah, I'm sorry I missed this - I had a broken mutt config and wasn't
-> seeing replies, my own fault. Argh.
->
-> I have some pretty significant changes from JTan's reviews, so I'd
-> prefer if you would wait since it would be tricky to turn them into a
-> patch commit now. But if you'd rather merge it and see a patch instead,
-> that is fine with me.
+On Fri, 26 Feb 2021, Jeff King wrote:
 
-OK, I still have it outside 'next', I think.
+> On Fri, Feb 26, 2021 at 11:31:02AM -0500, Taylor Blau wrote:
+>
+> > Dscho mentioned this to me privately when reviewing Coverity results f=
+or
+> > -rc0. This one is legitimate, and the fix is easy enough, too.
+>
+> I'm excited that we might get Coverity results again. There were a lot
+> of false positives, but I found its signal-to-noise ratio higher than
+> almost every other static analysis tool I've looked at.
+
+Indeed, the signal:noise ratio is pretty bad, mainly because of all the
+false positives (Coverity _really_ hates what we do with `strbuf_slopbuf`,
+it simply doesn't understand that we allocate `buf` only when needing to
+write characters into that buffer) and the "intentional" issues (we leak
+memory left and right in `builtin/`).
+
+It does not help at all that Coverity has a bug for a pretty long while
+now where it simply throws up its digital hands in the air when it sees a
+GCC v10.x. I did find a work-around for Git for Windows' automated
+Coverity run, a work-around that is somewhat ugly yet necessary, sadly:
+https://github.com/git-for-windows/build-extra/commit/23eea104d53
+
+Ciao,
+Dscho
