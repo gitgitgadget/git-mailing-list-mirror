@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D1EBC433E9
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 08:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E3E7C433E9
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 08:50:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 415BF64E04
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 08:49:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6321664DE0
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 08:50:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233599AbhCAItA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 03:49:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50194 "EHLO
+        id S233646AbhCAItS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 03:49:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233456AbhCAIrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 03:47:37 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47DEAC0617AA
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 00:46:32 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id e9so9417664plh.3
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 00:46:32 -0800 (PST)
+        with ESMTP id S233549AbhCAIrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 03:47:40 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DCCC06174A
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 00:46:55 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id i10so1843482pfk.4
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 00:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
          :mime-version:content-transfer-encoding;
-        bh=lj8J54VPnUWrGYLdXGgLgaNBhpU1h+x2dO0LH2yGcuM=;
-        b=K/tEHUAC0MQhidsRpAv9ihCjpRXGg18TNCLQG7yeMcLX+G5W+0s38HmX/qlHGICiI4
-         OglpLldNM1jSOiIlAU5Dff4gv4aEHNaCWBwB2TaRdzEw1avUDXXCGiYWCYAz5glOqOzk
-         ntEkSSz6xFW0tl7rkoRccicGujN/hb6imYdOwXbxb/Am4ozB1+xYMrSjDPL9w21hGLUC
-         CxCrs09E/eFwf1bF5+O4BzpWGR5y9onfvde2v0AEXKSN+PT5Xz8vl0VfYum5T1ol6K2P
-         Wed0FFbi9c8u11BFPUdqLrePYl4HIdxU7ln6AqPSea2yxu8nLL/5WotHtqPOZ5vhvnl0
-         HvAw==
+        bh=ZqyQqnN/r9Yp2nVabx5VAmks8N5fv9M2AVAwzn2f2LI=;
+        b=B0LL4ZPultqRwEOXcX6CaD4kb3TBq75/xZ+23Uq+zQj3oj3pOtnx+w9CasSc9vtJik
+         vnKXTvEx9lB9FTmj9gyPXVYR9WRflF0LhwowxQgB/950d8UDhwSWAaDKXlTxa5qIE2zF
+         /0h5Yz5/5DHpUnbn4/qGwV1q96Omk2j5zes+269HaPc79UuBYexzjdKx2OYvdHOKdtWv
+         94XMpOnJYwRbcknEGooDATMccZocOF39JceC497W6D53yR6JH0zqVx6SRNinhCcFR8Ni
+         CEpTvNCgQLFsHx4sIM8DA20Clq38UQtCTXOWjzMirnntpWCXO7+/FY/Fr/w3pst+QpwV
+         YXdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:reply-to:mime-version:content-transfer-encoding;
-        bh=lj8J54VPnUWrGYLdXGgLgaNBhpU1h+x2dO0LH2yGcuM=;
-        b=XBEqabcMiDuKacGgCFRzUGdcx+5fzb7w7WpTNM2htRp3EgOeG6hOyTQm8rjM+P0nFV
-         tNAbLgnllumFDuXsPAZ50bAS0uHU3oLPvEZKVFJzCpd+bSHxVQ7RWtmPJ0AzGNNIKhML
-         S0z7xfkvbLjZdaYG1fYqYQP3yY4wm5bq/UhU6VMFGxb1+m2B9dI/iyc2dOim7AGq2skF
-         DfBsa/qqNNzM568cwsMax96l6mxw84GN3Ne8wNpsNAs+LrIVvA7DhnOY6+0oyc5+ZoB4
-         PHR8iFddAl++1gFvIgymq7Hma9nWGpBGtxJfIqITQ7F3LDGQH7KdUaxhWT0LR2UEaJXz
-         cCLg==
-X-Gm-Message-State: AOAM532M1pCIq+x0xdnRBzR6m+N9uDVANjlLEFJs1I3IQ/Qk00Vxa3Ai
-        KpiPkd1+sM79jB47W2IigedC01g9UBQDug==
-X-Google-Smtp-Source: ABdhPJx7K1mav7ol7OdZg+mwzeh4nXu89VWa5mNcyWcytIRUIbcahyLhpIvTyEuWfTnYsLCeMR8RbQ==
-X-Received: by 2002:a17:90a:8b02:: with SMTP id y2mr16412203pjn.111.1614588391647;
-        Mon, 01 Mar 2021 00:46:31 -0800 (PST)
+        bh=ZqyQqnN/r9Yp2nVabx5VAmks8N5fv9M2AVAwzn2f2LI=;
+        b=a2pkaGzSUj6ldgQdwVQvTLAK27qko5aEVoTtMhLe2Nlu/HvX+zp6G3TEEbZ58Nl1L9
+         ZdIv5rv8QOZeQBNO0tRH6PcDyu9WyvCL3FP+gMd63OtLAZy9Z2hgJeZm9ddqaM1NqkeB
+         f6aFMjilXiN8bLCrBN46DEVN4lFkn0atybgW3TICU9n0bTCVeUK2ywYko7OSMcUeaTc9
+         nm9nhVt0wa4jVtc8fFXy65DleZZuLc9GHfetiTGropIGD6VMxT4laFTjylRSB3D/A2Zv
+         7uKXW2nx+lKWNFNaA16qxLTEipPO0qdGcScprt5rJOQn5iQSJMtXjHIdvzfSraZMzkk1
+         4y/A==
+X-Gm-Message-State: AOAM531GzPoRBF9jDAN2mMpeq7qdL9aF4kh57NdOMCLDI8Eg8iJeCg2r
+        YqX+RDCYfjeciKQscvKvxaRTnbqnaCQ0BQ==
+X-Google-Smtp-Source: ABdhPJzJhPf8KlCAountqotwyDBkwvGpJeugP+o1oAf9QfrGUYn5BYX+bM9IP5k+JmaO+Wtsk64XWA==
+X-Received: by 2002:a05:6a00:a95:b029:1ee:471f:e323 with SMTP id b21-20020a056a000a95b02901ee471fe323mr11307770pfl.69.1614588415319;
+        Mon, 01 Mar 2021 00:46:55 -0800 (PST)
 Received: from localhost.localdomain ([2405:204:302d:d8af:c047:a272:aff7:4de6])
-        by smtp.googlemail.com with ESMTPSA id b34sm16781426pgl.63.2021.03.01.00.46.27
+        by smtp.googlemail.com with ESMTPSA id b34sm16781426pgl.63.2021.03.01.00.46.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Mar 2021 00:46:31 -0800 (PST)
+        Mon, 01 Mar 2021 00:46:55 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, christian.couder@gmail.com,
         phillip.wood123@gmail.com, Charvi Mendiratta <charvi077@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 1/6] sequencer: export subject_length()
-Date:   Mon,  1 Mar 2021 14:15:09 +0530
-Message-Id: <20210301084512.27170-2-charvi077@gmail.com>
+Subject: [PATCH v3 5/6] t3437: use --fixup with options to create amend! commit
+Date:   Mon,  1 Mar 2021 14:15:13 +0530
+Message-Id: <20210301084512.27170-6-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210301084512.27170-1-charvi077@gmail.com>
 References: <20210301084512.27170-1-charvi077@gmail.com>
@@ -75,82 +75,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function can be used in other parts of git. Let's move the
-function to commit.c.
+We taught `git commit --fixup` to create "amend!" commit. Let's also
+update the tests and use it to setup the rebase tests.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- commit.c    | 14 ++++++++++++++
- commit.h    |  3 +++
- sequencer.c | 14 --------------
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ t/t3437-rebase-fixup-options.sh | 30 +++---------------------------
+ 1 file changed, 3 insertions(+), 27 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index bab8d5ab07..41cc72c4de 100644
---- a/commit.c
-+++ b/commit.c
-@@ -535,6 +535,20 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
- 	return eol - p;
- }
+diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
+index a5a20354e3..d0bdc7ed02 100755
+--- a/t/t3437-rebase-fixup-options.sh
++++ b/t/t3437-rebase-fixup-options.sh
+@@ -72,40 +72,16 @@ test_expect_success 'setup' '
+ 	git commit --fixup=HEAD -a &&
+ 	git tag B1 &&
+ 	test_tick &&
+-	git commit --allow-empty -F - <<-EOF &&
+-	amend! B
+-	$EMPTY
+-	B
+-	$EMPTY
+-	edited 1
+-	EOF
++	FAKE_COMMIT_AMEND="edited 1" git commit --fixup=reword:B &&
+ 	test_tick &&
+-	git commit --allow-empty -F - <<-EOF &&
+-	amend! amend! B
+-	$EMPTY
+-	B
+-	$EMPTY
+-	edited 1
+-	$EMPTY
+-	edited 2
+-	EOF
++	FAKE_COMMIT_AMEND="edited 2" git commit --fixup=reword:HEAD &&
+ 	echo B2 >B &&
+ 	test_tick &&
+ 	FAKE_COMMIT_AMEND="edited squash" git commit --squash=HEAD -a &&
+ 	git tag B2 &&
+ 	echo B3 >B &&
+ 	test_tick &&
+-	git commit -a -F - <<-EOF &&
+-	amend! amend! amend! B
+-	$EMPTY
+-	B
+-	$EMPTY
+-	edited 1
+-	$EMPTY
+-	edited 2
+-	$EMPTY
+-	edited 3
+-	EOF
++	FAKE_COMMIT_AMEND="edited 3" git commit -a --fixup=amend:HEAD^ &&
+ 	git tag B3 &&
  
-+size_t subject_length(const char *body)
-+{
-+	const char *p = body;
-+	while (*p) {
-+		const char *next = skip_blank_lines(p);
-+		if (next != p)
-+			break;
-+		p = strchrnul(p, '\n');
-+		if (*p)
-+			p++;
-+	}
-+	return p - body;
-+}
-+
- struct commit_list *commit_list_insert(struct commit *item, struct commit_list **list_p)
- {
- 	struct commit_list *new_list = xmalloc(sizeof(struct commit_list));
-diff --git a/commit.h b/commit.h
-index f4e7b0158e..12ff6bc641 100644
---- a/commit.h
-+++ b/commit.h
-@@ -165,6 +165,9 @@ const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
- /* Find beginning and length of commit subject. */
- int find_commit_subject(const char *commit_buffer, const char **subject);
- 
-+/* Return length of the commit subject from commit log message. */
-+size_t subject_length(const char *body);
-+
- struct commit_list *commit_list_insert(struct commit *item,
- 					struct commit_list **list);
- int commit_list_contains(struct commit *item,
-diff --git a/sequencer.c b/sequencer.c
-index abc6d5cdfd..3fac4ba62f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1724,20 +1724,6 @@ enum todo_item_flags {
- 	TODO_EDIT_FIXUP_MSG    = (1 << 2),
- };
- 
--static size_t subject_length(const char *body)
--{
--	const char *p = body;
--	while (*p) {
--		const char *next = skip_blank_lines(p);
--		if (next != p)
--			break;
--		p = strchrnul(p, '\n');
--		if (*p)
--			p++;
--	}
--	return p - body;
--}
--
- static const char first_commit_msg_str[] = N_("This is the 1st commit message:");
- static const char nth_commit_msg_fmt[] = N_("This is the commit message #%d:");
- static const char skip_first_commit_msg_str[] = N_("The 1st commit message will be skipped:");
+ 	GIT_AUTHOR_NAME="Rebase Author" &&
 -- 
 2.29.0.rc1
 
