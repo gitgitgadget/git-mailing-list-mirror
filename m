@@ -2,114 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE49AC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3E4FC433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:22:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 918C7651F3
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:19:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A141C65215
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237898AbhCARTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 12:19:36 -0500
-Received: from mout.web.de ([212.227.15.4]:47235 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237832AbhCARQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 12:16:02 -0500
-X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Mar 2021 12:16:00 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1614618821;
-        bh=n0cCdISK8ZFAQod2sk6g6AYf1pWDfcZY9S+0dR8WoFA=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=URoPuCHkH88flBjgZiaF27ZDfivjNGcWTIB8Vv+7PzqKLbRzWbjTedINDX5bvmCC4
-         ufy/v9LxAklZQarmAAkUtqH60U++z8Hki1vXZfENdSgMoz91E3Ai/BbWeTBp1NfTWm
-         cuQl4yL3jXRttHEZ50c2uEbMdZ9LE8XfrHKygy2I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost.localdomain ([195.198.252.176]) by smtp.web.de
- (mrweb003 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0LcgYZ-1lgVol2iX9-00k8CX; Mon, 01 Mar 2021 18:05:36 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Dan.Moseley@microsoft.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v2 1/1] git mv foo FOO ; git mv foo bar gave an assert
-Date:   Mon,  1 Mar 2021 18:05:36 +0100
-Message-Id: <20210301170536.12265-1-tboegi@web.de>
-X-Mailer: git-send-email 2.30.0.155.g66e871b664
-In-Reply-To: <xmqq7doqwvzx.fsf@gitster.c.googlers.com>
-References: <xmqq7doqwvzx.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:bTs2FqAAcgx/8ZN6tguuyJBVgTTJj1W6PYRcQzCPIBIGeyKOjkn
- h3YHRiYD/g+zs+lfecjkl4SOjogv1Zfv3LrDXuBHIElaQL5xuTmxAgS+X8Cpdj+j0JgxDT0
- /0rbQ4UN9Dw8fhk0wsZ0JIgRFSBlxk1rCaht/R71jXNDs5zTDQZpASt5dHeqvEVE0c86AXy
- 0WX1qlXGDDpjxEgaqJmpA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0k1Q5tnYJqk=:9zeYIBKLjbe3PHKvUBwfyU
- uYcchM4+e8y2/lIDRK3XNILkeYrH4zfRvyG10SGHlH+uRh2ce3hQucSMVC2osukxxVsbd3gfq
- 1VdT9ZHTBF5IbwMdq4EAnNb7UNY+etMVzY1K7nxXAVULkSOhkfzCGlYef2WtHyG6IFYnpoxbZ
- 0vU/OJSv3qvlXpU33p/EDHiUFRhZGegoOTUhCLmZyV6sD8uJHZ4SnCn39zqEuegxsx2MhosLP
- FgdRN+yZVRCuIrgqNiwL6C9QyNQQ/LtyrotXKhtsTJbTw+8s7ZVtJhrMx9ulm9yRare8ZaiDX
- KuN3n+1EelMJfstrpxkjNkwmnr+cDxggVwKSBymFwvsteiFJQ/Spg+zUC4mMVJupefnxgzY77
- S7LjNevc2JxKi/9TMgCKoq+4fIGUsq4EpQauDVhvkAHHb+cfPqDzmU5oyZ7TLrZsdcfOfsuMq
- scmlchI3jOrBOwaOike2Yw+GE/LWxzwRpRpxyizEMZDR7lUlmzidEubdEunAIMrY2zble0viB
- 0y3EYL02UDQmolt5RC8wd1S5pKXr6eYyjZ+ikqOCKa0XOw/mKuHcPzooJ25Gvn48SQL9ACnWw
- T8NuLkCUzKJwvFmdIf7GQw/V5A/AKibiaI8n8bBf27j80dS77JaDsqKs1sacnCkeKFpqdEXiV
- 3PTJk9zedd6GFlM+mvcrXNw2gRfjSdBb3spkrgZccfQcDZpe5k0WioIMnbA1Rs2KoXCIumqDk
- hnpSTo4eflCbBE/Mkje4tUvgZOsQewpwjXnFoh4PiJkR1M3z6X4aLQolnyhDwOevqjj0W6sdz
- kQW95xsCqjAqFbHjJGGr1avrNI7MNiKdUaUcbabrZMKly0h+T4BO1t9WBKrAdPIbZ5KzKv7Ew
- 0ZWja3hP/oHXPRosBD8A==
+        id S237243AbhCARVs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 12:21:48 -0500
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:43137 "EHLO
+        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237643AbhCARTK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 12:19:10 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id B101DA0D
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 12:18:03 -0500 (EST)
+Received: from imap22 ([10.202.2.72])
+  by compute3.internal (MEProxy); Mon, 01 Mar 2021 12:18:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=barag.org; h=
+        mime-version:message-id:in-reply-to:references:date:from:to
+        :subject:content-type; s=fm2; bh=AvBiOCxMHUfBbjYH8PfX83wRB6GG7tr
+        90kPZO2/1F/Y=; b=ALV59mngcATQazslFgeGylGy1Xo+1zCQsybLjCzxRx2CGfB
+        p3Wu8NN9IE+yYge73mPr7f8vIS3v3Q/oD25t9qsYao5u1MVPfebqS8xs2GP8o2/7
+        vPZ03SsZ1JIj3p6tTZaZHd5CQ8jR5J5R9uisHWQPztDO4O13OmkWM7+NtsVst3IR
+        DcSWZyr8PVWqThWAJRspRSR7/LEvHV3ZScLW0gOP5p/VpQ++hf7RpjHXCr/bIyu2
+        6TGezrlyG0SjVw7rjn4beYOPkdbK6ouYRPQBLvm8zYyk4qJ11KqvdISQwhQLVUAA
+        aUXzvPOG3eq32FsmnHDEYTlom9q1GwXxTIgwT1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=AvBiOC
+        xMHUfBbjYH8PfX83wRB6GG7tr90kPZO2/1F/Y=; b=udNmVe6fQsyqAkqf6pUsox
+        EQPyvMoRbB+cOpxPr1/Gb+fvWeB9mj4cM7mMu2hogUgOWpVjsX/BRohpNLb/S6Km
+        4h5X9xteVdTmKOan8cKTxUQvnqoLJ1I0SFAEUlIpqAwfEOw6y0gvbpNu8wTxzaeA
+        Up92n1eD4etWWt/NnKqImP/d1YQO/mAt0KNG90cahxa6X2MdTB+mi1j7Bzc115f7
+        oLQU9iYueZqyy3FqfgVUIIbqYC0xF6C6V/grq55wsV4Jpnw7RAvZKJowrs/y8wY1
+        mNNa/Z3I/Xv4p2D8NCeRt24nlRMrY0OrAnYhk8nABhUjDupWEirZyGwM81JVzK0A
+        ==
+X-ME-Sender: <xms:yiE9YJ9_KaI7zxZTFrR27fU7rdM8UsVkURkxA_bIpPJMsu2lmSpgJg>
+    <xme:yiE9YNtM3iSWww8TZ4aAcYH2xJnJNlL1_qoLi_78DHKMmqN0rclEnR4cuGsLHubOd
+    BUMjkDF8eLQmFo7oXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrleekgdelkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+    dtreertdenucfhrhhomhepfdfuvggrnhcuuegrrhgrghdfuceoshgvrghnsegsrghrrghg
+    rdhorhhgqeenucggtffrrghtthgvrhhnpeettdehgedvudeuteffudegueeludfhfffgue
+    ehvdejteekveejiedttdfgfffffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehsvggrnhessggrrhgrghdrohhrgh
+X-ME-Proxy: <xmx:yiE9YHDT9yZiOij69yA1AoshLaLIjhSou9LDFNxjShD5WgyqI5va-Q>
+    <xmx:yiE9YNcSn49YrqFeFB9cq9yMVKX9KeKkw0OXyRrwomckThU3LDWU9A>
+    <xmx:yiE9YOPzHx5CYNiKh2h31kyliQ_rGUvoYy3zzgd4wgRFajN8rCARzw>
+    <xmx:yyE9YEaf6GyN2aTrnmoIV7IeOqlMBzObn_tc8RX1AzL0GDOMqhpmkg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id D657D62C005F; Mon,  1 Mar 2021 12:18:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-206-g078a48fda5-fm-20210226.001-g078a48fd
+Mime-Version: 1.0
+Message-Id: <58d3b7ba-b65d-432f-872d-adea7fad1317@www.fastmail.com>
+In-Reply-To: <2d58fe40-9e8c-4653-8170-5411fd3cf6f4@www.fastmail.com>
+References: <2d58fe40-9e8c-4653-8170-5411fd3cf6f4@www.fastmail.com>
+Date:   Mon, 01 Mar 2021 09:17:40 -0800
+From:   "Sean Barag" <sean@barag.org>
+To:     git@vger.kernel.org
+Subject: Re: [BUG?] git submodule update --remote assumes 'origin' remote
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Mon, Mar 01 2021, Sean Barag wrote:
 
-The following sequence, on a case-insensitive file system,
-(strictly speeking with core.ignorecase=3Dtrue)
-leads to an assertion, and leaves .git/index.lock behind.
+> I've experimented with
+> introducing fallbacks to `remote_for_branch` in `remote.c` [2] as an
+> alternative:
+> 
+> 1. use remote tracking branch; or
+> 2. if there's only one remote, use that; or
+> 3. if config.defaultRemoteName is set, use that; or
+> 4. fall back to "origin"
+> 
+> This seems to work (at the very least, no tests fail?), but leaves
+> `cd ./some-sm; git remote add foo bar; git remote rename origin baz`
+> open to the original behavior.
 
-git init
-echo foo >foo
-git add foo
-git mv foo FOO
-git mv foo bar
-
-This regression was introduced in Commit 9b906af657,
-"git-mv: improve error message for conflicted file"
-
-The bugfix is to change the "file exist case-insensitive in the index"
-into the correct "file exist (case-sensitive) in the index".
-This avoids the "assert".
-
-Reported-By: Dan Moseley <Dan.Moseley@microsoft.com>
-
-This fixes
-https://github.com/git-for-windows/git/issues/2920
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- builtin/mv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 7dac714af9..3fccdcb645 100644
-=2D-- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -221,7 +221,7 @@ int cmd_mv(int argc, const char **argv, const char *pr=
-efix)
- 				}
- 				argc +=3D last - first;
- 			}
--		} else if (!(ce =3D cache_file_exists(src, length, ignore_case))) {
-+		} else if (!(ce =3D cache_file_exists(src, length, 0))) {
- 			bad =3D _("not under version control");
- 		} else if (ce_stage(ce)) {
- 			bad =3D _("conflicted");
-=2D-
-2.30.0.155.g66e871b664
-
+I forgot to mention that this approach requires `get_default_remote` in
+`submodule--helper.c` to use the name of the remote returned by
+`remote_get(NULL)`.  That was probably obvious to regular mailing list
+readers :D
