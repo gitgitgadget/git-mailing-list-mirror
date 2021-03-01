@@ -6,90 +6,80 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3E4FC433DB
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34643C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:24:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A141C65215
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:22:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0443064FA1
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 17:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237243AbhCARVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 12:21:48 -0500
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:43137 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237643AbhCARTK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 1 Mar 2021 12:19:10 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id B101DA0D
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 12:18:03 -0500 (EST)
-Received: from imap22 ([10.202.2.72])
-  by compute3.internal (MEProxy); Mon, 01 Mar 2021 12:18:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=barag.org; h=
-        mime-version:message-id:in-reply-to:references:date:from:to
-        :subject:content-type; s=fm2; bh=AvBiOCxMHUfBbjYH8PfX83wRB6GG7tr
-        90kPZO2/1F/Y=; b=ALV59mngcATQazslFgeGylGy1Xo+1zCQsybLjCzxRx2CGfB
-        p3Wu8NN9IE+yYge73mPr7f8vIS3v3Q/oD25t9qsYao5u1MVPfebqS8xs2GP8o2/7
-        vPZ03SsZ1JIj3p6tTZaZHd5CQ8jR5J5R9uisHWQPztDO4O13OmkWM7+NtsVst3IR
-        DcSWZyr8PVWqThWAJRspRSR7/LEvHV3ZScLW0gOP5p/VpQ++hf7RpjHXCr/bIyu2
-        6TGezrlyG0SjVw7rjn4beYOPkdbK6ouYRPQBLvm8zYyk4qJ11KqvdISQwhQLVUAA
-        aUXzvPOG3eq32FsmnHDEYTlom9q1GwXxTIgwT1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=AvBiOC
-        xMHUfBbjYH8PfX83wRB6GG7tr90kPZO2/1F/Y=; b=udNmVe6fQsyqAkqf6pUsox
-        EQPyvMoRbB+cOpxPr1/Gb+fvWeB9mj4cM7mMu2hogUgOWpVjsX/BRohpNLb/S6Km
-        4h5X9xteVdTmKOan8cKTxUQvnqoLJ1I0SFAEUlIpqAwfEOw6y0gvbpNu8wTxzaeA
-        Up92n1eD4etWWt/NnKqImP/d1YQO/mAt0KNG90cahxa6X2MdTB+mi1j7Bzc115f7
-        oLQU9iYueZqyy3FqfgVUIIbqYC0xF6C6V/grq55wsV4Jpnw7RAvZKJowrs/y8wY1
-        mNNa/Z3I/Xv4p2D8NCeRt24nlRMrY0OrAnYhk8nABhUjDupWEirZyGwM81JVzK0A
-        ==
-X-ME-Sender: <xms:yiE9YJ9_KaI7zxZTFrR27fU7rdM8UsVkURkxA_bIpPJMsu2lmSpgJg>
-    <xme:yiE9YNtM3iSWww8TZ4aAcYH2xJnJNlL1_qoLi_78DHKMmqN0rclEnR4cuGsLHubOd
-    BUMjkDF8eLQmFo7oXg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrleekgdelkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
-    dtreertdenucfhrhhomhepfdfuvggrnhcuuegrrhgrghdfuceoshgvrghnsegsrghrrghg
-    rdhorhhgqeenucggtffrrghtthgvrhhnpeettdehgedvudeuteffudegueeludfhfffgue
-    ehvdejteekveejiedttdfgfffffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehsvggrnhessggrrhgrghdrohhrgh
-X-ME-Proxy: <xmx:yiE9YHDT9yZiOij69yA1AoshLaLIjhSou9LDFNxjShD5WgyqI5va-Q>
-    <xmx:yiE9YNcSn49YrqFeFB9cq9yMVKX9KeKkw0OXyRrwomckThU3LDWU9A>
-    <xmx:yiE9YOPzHx5CYNiKh2h31kyliQ_rGUvoYy3zzgd4wgRFajN8rCARzw>
-    <xmx:yyE9YEaf6GyN2aTrnmoIV7IeOqlMBzObn_tc8RX1AzL0GDOMqhpmkg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id D657D62C005F; Mon,  1 Mar 2021 12:18:02 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-206-g078a48fda5-fm-20210226.001-g078a48fd
-Mime-Version: 1.0
-Message-Id: <58d3b7ba-b65d-432f-872d-adea7fad1317@www.fastmail.com>
-In-Reply-To: <2d58fe40-9e8c-4653-8170-5411fd3cf6f4@www.fastmail.com>
-References: <2d58fe40-9e8c-4653-8170-5411fd3cf6f4@www.fastmail.com>
-Date:   Mon, 01 Mar 2021 09:17:40 -0800
-From:   "Sean Barag" <sean@barag.org>
-To:     git@vger.kernel.org
-Subject: Re: [BUG?] git submodule update --remote assumes 'origin' remote
-Content-Type: text/plain
+        id S238064AbhCARWN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 12:22:13 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62621 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237913AbhCARTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 12:19:45 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7BCE61226D6;
+        Mon,  1 Mar 2021 12:19:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=AQaTCz2Ujok3
+        EfZ8vCoybSr+sEE=; b=pvGPmB1vuqliNf4yIZRU4icJdWtwXPW5cxn8IKT5D9yV
+        NE8VBE7FV5QwnQv72AmnHxHpJALYZ54kWcjwV4aed5EVcknPQoP8RmJrarbBjecl
+        buhRasWoOLDNc4Uje31PugZnU6kn2TlGvP2drMDJu/O2bSTXWhVzWEo7MeqYj7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=m5cpjH
+        TskvKAyeDCkra8ZX1cO0EakkJTRwKx7MIv/wZCpffzYv7LAYJntJAN1MwsXyFYxY
+        UFhkZ4NIzMst+C7I/h6Pxgfvz0NW5epo/N+480s4ZCaRUYhGKEdBjplMhJ08jLxJ
+        GtMHYgzh/wMAdQXDOb0nVXwpGrvV3m33n3tOE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 758291226D5;
+        Mon,  1 Mar 2021 12:19:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B992B1226D3;
+        Mon,  1 Mar 2021 12:18:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] commit-graph: warn about incompatibilities only when
+ trying to write
+References: <pull.888.git.1614351036334.gitgitgadget@gmail.com>
+        <87r1l27rae.fsf@evledraar.gmail.com> <xmqqy2faqwr0.fsf@gitster.g>
+        <8735xgkvuo.fsf@evledraar.gmail.com>
+Date:   Mon, 01 Mar 2021 09:18:56 -0800
+In-Reply-To: <8735xgkvuo.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sun, 28 Feb 2021 17:20:15 +0100")
+Message-ID: <xmqqft1essfz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 350CE424-7AB2-11EB-AF70-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 01 2021, Sean Barag wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> I've experimented with
-> introducing fallbacks to `remote_for_branch` in `remote.c` [2] as an
-> alternative:
-> 
-> 1. use remote tracking branch; or
-> 2. if there's only one remote, use that; or
-> 3. if config.defaultRemoteName is set, use that; or
-> 4. fall back to "origin"
-> 
-> This seems to work (at the very least, no tests fail?), but leaves
-> `cd ./some-sm; git remote add foo bar; git remote rename origin baz`
-> open to the original behavior.
+>> I am tempted to say that we should revert c85eec7f (commit-graph:
+>> when incompatible with graphs, indicate why, 2021-02-11) for the
+>> upcoming release.  That would give us enough time to come up with
+>> and cook the solution in 'next' in the meantime.
+>
+> That's probably sensible.
+>
+> Also, I noticed that we went through this whole saga in the past, see
+> 25575015ca (repack: silence warnings when auto-enabled bitmaps cannot b=
+e
+> built, 2019-07-31), including breaking background gc.
 
-I forgot to mention that this approach requires `get_default_remote` in
-`submodule--helper.c` to use the name of the remote returned by
-`remote_get(NULL)`.  That was probably obvious to regular mailing list
-readers :D
+Thanks and sigh ;-)
