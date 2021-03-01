@@ -2,109 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC84C433E0
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 06:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 652E3C433DB
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 07:11:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1016F64E31
-	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 06:49:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DA9E64E38
+	for <git@archiver.kernel.org>; Mon,  1 Mar 2021 07:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232075AbhCAGtp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 1 Mar 2021 01:49:45 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:37307 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231185AbhCAGtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 01:49:42 -0500
-Received: by mail-ed1-f54.google.com with SMTP id d13so14141401edp.4
-        for <git@vger.kernel.org>; Sun, 28 Feb 2021 22:49:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PxSA88SJWYffmD9FJhwQDZPwGyVqlAsaeBjnQvEIVF8=;
-        b=Hv09tslBwLjcWsa+/FWYK8iEZgkMYwYnSZ6OimrO5OJbce6KxHeYutuwAtfu7+yCpT
-         /Rr7o4qmdMKfzYMEEFi/6bTN5PbU8lpYezNjen3MLp9nh+lJxD5sPQ8ACktGO9BFIG5Z
-         CkOu9xR7CuSO8pGD/ImWEUquWJbBHmzc6FjodYlTtDUE9AdgAYO3TW4nG64AeXD1ihXH
-         epW9YUNbLGznAe5BV6+nkaM3MgwoZTxtWXXNOrZsasepCDF+VDSlBoZJV2PoQeSxfD9E
-         5xOESKEUCVBD5OIF6AI/YCoFU/0yzfaxtYUnwHXnFuUhOmxxgd6R3TI8MMLG0Jzity/d
-         K7iQ==
-X-Gm-Message-State: AOAM533UUvtyU190dUtxcwUv3in/wxX0RPGVv56BoAtIyp4GvN1gtt1y
-        ttIBW2Yfu7qoVLeGzSvLsCu9iu9bgEyOYqiLh/sS1H2ODaI=
-X-Google-Smtp-Source: ABdhPJyVbppx0xLBWaQxKpjG3qSPKc8SymM3GVmkz4m8zegR04DEAFKukpd9Rc83JHb2uVSomfAKvj6olyI20ZyrPpA=
-X-Received: by 2002:aa7:c944:: with SMTP id h4mr14812809edt.233.1614581340891;
- Sun, 28 Feb 2021 22:49:00 -0800 (PST)
+        id S232320AbhCAHLQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 1 Mar 2021 02:11:16 -0500
+Received: from [93.83.142.38] ([93.83.142.38]:46880 "EHLO localhost"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232376AbhCAHLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 02:11:04 -0500
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by localhost (Postfix) with ESMTP id 26D7033877;
+        Mon,  1 Mar 2021 08:10:16 +0100 (CET)
+Subject: Re: [PATCH v3 00/35] 20210215154427.32693-1-avarab@gmail.com
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Adam Spiers <git@adamspiers.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Chris Torek <chris.torek@gmail.com>
+References: <20210215154427.32693-1-avarab@gmail.com>
+ <20210224195129.4004-1-avarab@gmail.com>
+ <c2e90134-35bb-24b2-a334-7c6abdd6dc6f@kdbg.org>
+ <3519e86e-d9eb-a9e0-ed28-72d32271d2bf@kdbg.org>
+ <875z2ckwfl.fsf@evledraar.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b9a0406d-a913-767c-fbec-be57246bd4e4@kdbg.org>
+Date:   Mon, 1 Mar 2021 08:10:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <20210228231110.24076-1-sunshine@sunshineco.com>
-In-Reply-To: <20210228231110.24076-1-sunshine@sunshineco.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 1 Mar 2021 01:48:49 -0500
-Message-ID: <CAPig+cRQN4PjfxEOZ8ZBA_uttsRPS8DPDgToM_JFvichDDh_HQ@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: fix commit message comment line removal with
- older Tcl versions
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <875z2ckwfl.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 28, 2021 at 6:12 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> git-gui was recently enhanced to remove comment lines from the commit
-> message similar to the way git-commit does so (see `core.commentchar`
-> and `git-stripspace`). Unfortunately, that change employs features which
-> are unavailable in older versions of Tcl, such as 8.5.9 which is shipped
-> with macOS (10.13), with the result that the commit operation errors
-> out.
->
-> There are two problems. First, to add a new informational message to the
-> main window, it invokes string method `cat` which does not exist in
-> older Tcl. Fix this by using `append` instead.
->
-> Second, when passing the commit message through git-stripspace, it
-> closes the "write" side of the bidirectional pipe after sending the
-> commit message to git-stripspace in order to avoid deadlock before
-> reading back the result, however the ability to close only one end of a
-> pipe is not present in older Tcl. Fix this by employing a temporary file
-> to received the output of git-stripspace.
+Am 28.02.21 um 17:07 schrieb Ævar Arnfjörð Bjarmason:
+> On Sun, Feb 28 2021, Johannes Sixt wrote:
+>> But I do not see the need for the framework provided by the new
+>> test_diff_funcname. At the end of the series, it is only used by Perl
+>> and custom driver tests. (I discount the new ADA and Ruby tests as they
+>> can easily migrated to the simple test scheme.) But then the Perl tests
+>> do not do anything special, either. The multi-line pattern test is just
+>> a nice add-on but not strictly needed. In the end, the Perl test is just
+>> as straight-forward as all others.
+> 
+> The benefit now is:
+> 
+>  1. Unlike the new plain-text "all test cases for a language driver" in
+>     the same file mechanism you can have test descriptions. The
+>     "description" in the golang one is just for show, you won't get
+>     anything informative from test-lib.sh when your test fails.
+> 
+>  2. I think having #1 beats not having test descriptions at all, or
+>      having to shove a description like the Ruby:
+> 
+>     "picks first "class/module/def" before changed context"
+> 
+>     into something that would make all the FS's we have to support
+>     happy.
 
-s/received/receive/
+I missed that the descriptions are gone now that many test cases are
+shoved into a single file when the simple framework is used. That is
+indeed a disadvantage. But please keep in mind that code is more often
+read than written. *If* we have to grow a new framework, then it must
+not suffer from unreadability.
 
-(I noticed this immediately after sending the patch, of course.)
+> 
+>  3. A test in the new perl.sh one sets config. I think in both that case
+>     and custom.sh it's more readable to carry such config setting with
+>     the test, rather than at a distance in the main setup of t4018-*.sh.
 
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
-> diff --git a/lib/commit.tcl b/lib/commit.tcl
-> @@ -142,16 +142,18 @@ proc setup_commit_encoding {msg_wt {quiet 0}} {
->  proc strip_msg {msg} {
-> -       set cmd [concat [list | ] [_git_cmd stripspace] --strip-comments]
-> +       set strip_p [gitdir GITGUI_EDITMSG_STRIP]
-> +       set cmd [concat [list | ] [_git_cmd stripspace] --strip-comments [list >$strip_p]]
->         _trace_exec $cmd
-> -       set fd [open $cmd r+]
-> +       set fd [open $cmd w]
->         fconfigure $fd -translation binary -encoding utf-8
-> -
->         puts -nonewline $fd $msg
-> -       close $fd w
-> -       set result [read $fd]
->         close $fd
->
-> +       set fd [open $strip_p r]
+As I said, the config in perl.sh is only used for a multi-line pattern
+test. That is dispensable as there is already a similar test with custom
+patterns. And the tests for custom patterns can be moved to the main
+test file entirely.
 
-I had meant to insert:
+> That being said I'd like to improve the syntax a bit, in particular
+> instead of having a wrapper for test_expect_success I think it makes
+> sense just to have the test call test_expect_success, and then provide a
+> couple of helper functions.
 
-    fconfigure $fd -translation binary -encoding utf-8
+That sounds like an improvement.
 
-here but forgot. Would you like me to resend the patch or can you
-tweak it locally?
-
-> +       set result [read $fd]
-> +       close $fd
-> +       file delete $strip_p
->         return $result
->  }
+-- Hannes
