@@ -2,117 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F85C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FD9AC43333
 	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A75E64F2F
-	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D53F264F2D
+	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1578529AbhCBPYt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Mar 2021 10:24:49 -0500
-Received: from smtp501.hk.chengmail.me ([113.10.190.210]:54600 "EHLO
-        smtp501.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377925AbhCBIpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Mar 2021 03:45:33 -0500
-X-CHENGMAILHOST: 113.10.190.210
-X-CHENGMAIL-INSTANCEID: 4bbb.603dfadb.aeef0.0
-Date:   Tue, 2 Mar 2021 16:44:13 +0800
-From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
-To:     "Jonathan Tan" <jonathantanmy@google.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>,
-        dscho <johannes.schindelin@gmx.de>,
-        "Jonathan Tan" <jonathantanmy@google.com>
-Subject: Re: Re: [PATCH v4] builtin/clone.c: add --reject-shallow option
-References: <xmqq35xo7yzy.fsf@gitster.g>, 
-        <20210301220319.3426185-1-jonathantanmy@google.com>
-X-Priority: 3
-X-Has-Attach: no
-X-Mailer: Foxmail 7.2.19.158[cn]
-Mime-Version: 1.0
-X-source-message-id: <20210302164412996872102@oschina.cn>
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: base64
-Message-ID: <7a2fa0ec7b3311eb83b80024e87935e7@oschina.cn>
+        id S1578515AbhCBPYd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Mar 2021 10:24:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53302 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345118AbhCBG4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Mar 2021 01:56:44 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E357C061756
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 22:55:31 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id o6so1294840pjf.5
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 22:55:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oU9ryKooSmjUlZvm9oQFjmWdcu1Fr7gE4wugTFS2IAg=;
+        b=dnPVG9VzirZTXcsWPpzKBzlxVJQC32MpgUI6lBA3UPavu4PG72HzIskoPmQYbcQ5NT
+         eDlz2ynZxm32AXy2xzJLOPWkpRv7FtYg72Wi5+JmKRWZv4xpoynu8aX7SpZZCC/1zmsk
+         rOIPXoarrTp/c9XGhVK0wQS29wGZUQ9tm8T+NmIzjNiTiDwLZ15YnsyDnGnjafsWhdRB
+         kg17+5Qd1/qVpuBsLaLO9AvLYJOMzyrJq3gEMKOIXmARn6VvEgjZomO2MT5+EqRSH4Ub
+         Sa9iqLqoOitHGkBUFVKv1XcB1tsaawKBYrLRR3Bf5nWolKFlOgHyMfzuCOFt0QMXTbcM
+         MMqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oU9ryKooSmjUlZvm9oQFjmWdcu1Fr7gE4wugTFS2IAg=;
+        b=mEcNmpd3nr4ImDsiJn6m0a+t3f9qZDEbnM0Xt5PiZf9jtKt4DEcKqfM7XlXVRk3NoS
+         IVQMhxRppV8/kbe0r2UMErPHVxrQcD4lYVJXANR62Wu43WwULSYYPKrFH67Ze9Yp4Tfl
+         SUY8XPGe6BT2Zl2G4C0hrgVpIj4kv7WPOHgYtDIznHgcqExFfzj0qLzEK7S5gLGaEgxY
+         sZBqVbQt0rCIx4g/I8g8rpfjZPUKUIE8ruDSKgr+8JnQYOvd9QDxwemCGSARY3mk+d9S
+         a6mC0RY6lpibkuhq2MY8g7K0/Ud2MeUcI04hCLMe6J0+JtcPovZpv8MiXx4oIa4Hmvq7
+         08Uw==
+X-Gm-Message-State: AOAM531WjA/1N3HQutRdlD6OUAlfXHbdlDrxRGi9v6B2g5wbBiD6hv0o
+        YIEzvf9R7EMajuMifrp3CC0UU9u4iBZUjw==
+X-Google-Smtp-Source: ABdhPJzgsLSaCrTgpT8tSZiZoyRuYjYzZGlC1D9jOP1bzTKzS8LfDFkTuJ/tUUJhUiOGvatcf+D4Bg==
+X-Received: by 2002:a17:90a:4708:: with SMTP id h8mr3014134pjg.75.1614668130753;
+        Mon, 01 Mar 2021 22:55:30 -0800 (PST)
+Received: from [192.168.43.80] (subs02-180-214-232-78.three.co.id. [180.214.232.78])
+        by smtp.gmail.com with ESMTPSA id s10sm19120703pgl.90.2021.03.01.22.55.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Mar 2021 22:55:30 -0800 (PST)
+Subject: Re: Argument list too long when fetching many missing objects from
+ partial clone
+To:     Bryan Turner <bturner@atlassian.com>
+References: <fd1ba192-b90c-ef20-0843-c0e47925c76a@gmail.com>
+ <CAGyf7-GJQU1s4H-pgVMEc_WB3C4ehppLieT2oiyxa5B8=yyjxA@mail.gmail.com>
+Cc:     bagasdotme@gmail.com, git@vger.kernel.org
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+Message-ID: <f185e87e-d8d2-3ac4-9ca1-7b96ffb30562@gmail.com>
+Date:   Tue, 2 Mar 2021 13:55:27 +0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+In-Reply-To: <CAGyf7-GJQU1s4H-pgVMEc_WB3C4ehppLieT2oiyxa5B8=yyjxA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ci0tLS0tLS0tLS0tLS0tCmxpbGluY2hhbwo+PiBUaGlzIG1heSByZWplY3QgdG8gY2xvbmUgZnJv
-bSBhIHNoYWxsb3cgcmVwb3NpdG9yeSwgYnV0IGF0IHRoaXMKPj4gcG9pbnQgdGhlIGJ1bGsgb2Yg
-dGhlIHRyYW5mZXIgZnJvbSB0aGUgb3JpZ2luIHJlcG9zaXRvcnkgaGFzIGFscmVhZHkKPj4gaGFw
-cGVuZWQsIG5vP8KgIFJlamVjdGluZyBhZnRlciB0cmFuc2ZlcnJpbmcgbWFueSBtZWdhYnl0ZXMg
-ZmVlbHMgYQo+PiBiaXQgdG9vIGxhdGUuwqAgVGhhdCBpcyBvbmUgb2YgdGhlIHJlYXNvbnMgd2h5
-IEkga2VwdCBoaW50aW5nIHRoYXQKPj4gdGhlIHRyYW5zcG9ydCBsYXllciBuZWVkcyB0byBiZSB0
-YXVnaHQgYW4gb3B0aW9uIHRvIHJlamVjdCB0YWxraW5nCj4+IHRvIGEgc2hhbGxvdyBjb3VudGVy
-cGFydCBpZiB3ZSB3YW50IHRvIGFkZCB0aGlzIGZlYXR1cmUgWyoxKl0uCj4KPkV4dGVuZGluZyB0
-aGUgdHJhbnNwb3J0IGxheWVyIGluIHRoaXMgd2F5IG1pZ2h0IG5vdCBiZSB0b28gZGlmZmljdWx0
-IGluCj50aGUgY2FzZSBvZiBuYXRpdmUgKFNTSCwgZ2l0Oi8vKSBwcm90b2NvbHMgYW5kIHVzaW5n
-IHByb3RvY29sIHYwLCBzaW5jZQo+aGFuZHNoYWtlKCkgaW4gdHJhbnNwb3J0LmMgKGNhbGxlZCBp
-bmRpcmVjdGx5IGZyb20KPnRyYW5zcG9ydF9nZXRfcmVtb3RlX3JlZnMoKSkgd3JpdGVzIHNoYWxs
-b3cgaW5mb3JtYXRpb24gdG8gYSBkYXRhCj5zdHJ1Y3R1cmUgdGhhdCB3ZSBjb3VsZCBwb3RlbnRp
-YWxseSBleHBvc2UgZm9yIHRoZSBjYWxsZXIgdG8gdXNlIChiZWZvcmUKPml0IGNhbGxzIHRyYW5z
-cG9ydF9mZXRjaF9yZWZzKCkuIEkgY291bGRuJ3Qgc2VlIGhvdyByZW1vdGUtdXNpbmcKPnByb3Rv
-Y29scyAoZS5nLiBIVFRQKSBjb21tdW5pY2F0ZSBzaGFsbG93IGluZm9ybWF0aW9uLCB0aG91Z2gK
-PihyZW1vdGUtY3VybC5jIHNlZW1zIHRvIGp1c3Qga2VlcCBpdCBmb3IgaXRzZWxmKSwgc28gdGhh
-dCB3aWxsIGJlIGEgbW9yZQo+ZGlmZmljdWx0IHRhc2suIEFuZCBvZiBjb3Vyc2UgdGhlcmUncyB0
-aGUgbWF0dGVyIG9mIHByb3RvY29sIHYyLCB3aGljaCBJCj5kaXNjdXNzIGJlbG93Lgo+IApUaGVz
-ZSBkaXNjdXNzaW9ucyB3ZXJlIGJhc2VkIG9uIFBBVENIX3Y0LCB3aGljaCBpcyBxdWlldCBpbW1h
-dHVyZSB0aGVuLApJbiB0aGUgbGF0ZXN0IFBBVENIX3Y1LCBmb3IgdGhlIGNhc2Ugb2YgbmF0aXZl
-IHByb3RvY29scyhzc2gsIGdpdCwgZmlsZTovLyksIHRoZXkKd2lsbCBldmVudHVhbGx5IGNhbGzC
-oGRvX2ZldGNoX3BhY2tfdjIoKSBpZiBpdCdzIHByb3RvY29sIHYyLCDCoGFuZCB0aGVuIHdpbGwg
-Y2FsbApyZWNlaXZlX3NoYWxsb3dfaW5mbygpIGZvciB0aGUgY2FzZSBGRVRDSF9HRVRfUEFDSywg
-c28gdGhpcyBpcyB0aGUgcGxhY2UKSSBtYWRlIHRoZSBjaGFuZ2UuCkFzIGZvciBIVFRQcyBwcm90
-b2NsLCBhcyBsb25nIGFzIGl0J3Mgc3RpbGwgc21hcnQgcHJvdG9jb2wsIHdoaWNoIG1lYW5zIGRv
-IG5vdApmYWxsYmFjayB0byBkdW1iIHByb3RvY29sLCBpdCB3aWxsIGFsc28gY2FsbMKgZG9fZmV0
-Y2hfcGFja192MigpLCBhbmQgZ28gdG/CoAoiY2hlY2sgc2hhbGxvdyBpbmZvIiB0cmlnZ2VyIGlu
-wqByZWNlaXZlX3NoYWxsb3dfaW5mbygpLgoKU28sIGJhc2Ugb24gUEFUQ0hfVjUsIEkgaGF2ZSB0
-ZXN0ZWQgcHJvdG9jb2wgdjIsIHdoaWNoIGdvZXMgbGlrZSB0aGlzOgoKRmlyc3QsIEkgY3JlYXRl
-ZCBhIHNoYWxsb3cgcmVwbyBvbiBnaXRsYWIgYW5kIGdpdGVlIHJlc3BlY3RpdmVseS4KClRoZW4g
-dHJpZWQgdG8gY2xvbmUgdGhlbSBpbiBteSB0ZXJtaW5hbCwgKGluIG9yZGVyIG5vdCB0byBsb29r
-IHRvbyB2ZXJib3NlLApJIG9tbWl0ZWQgdGhlIHJlc3VsdCB3aGVuIEdJVF9UUkFDRV9QQUNLRVQg
-aXMgb24pLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFsbG93IGh0dHBzOi8vZ2l0bGFiLmNv
-bS9DYWN0dXNpbmhhbmQvcnVnZ2VkLmdpdApDbG9uaW5nIGludG8gJ3J1Z2dlZCcuLi4KZmF0YWw6
-IHNvdXJjZSByZXBvc2l0b3J5IGlzIHNoYWxsb3csIHJlamVjdCB0byBjbG9uZS4KCiQgLi9naXQt
-Y2xvbmUgLS1yZWplY3Qtc2hhbGxvdyBzc2g6Ly9naXRsYWIuY29tL0NhY3R1c2luaGFuZC9ydWdn
-ZWQuZ2l0CkNsb25pbmcgaW50byAncnVnZ2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkg
-aXMgc2hhbGxvdywgcmVqZWN0IHRvIGNsb25lLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFs
-bG93IGdpdEBnaXRsYWIuY29tOkNhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAn
-cnVnZ2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRv
-IGNsb25lLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFsbG93IGh0dHBzOi8vZ2l0ZWUuY29t
-L2NhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAncnVnZ2VkJy4uLgpmYXRhbDog
-c291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRvIGNsb25lLgoKJCAuL2dpdC1j
-bG9uZSAtLXJlamVjdC1zaGFsbG93IHNzaDovL2dpdGVlLmNvbS9jYWN0dXNpbmhhbmQvcnVnZ2Vk
-LmdpdApDbG9uaW5nIGludG8gJ3J1Z2dlZCcuLi4KZmF0YWw6IHNvdXJjZSByZXBvc2l0b3J5IGlz
-IHNoYWxsb3csIHJlamVjdCB0byBjbG9uZS4KCiQgLi9naXQtY2xvbmUgLS1yZWplY3Qtc2hhbGxv
-dyBnaXRAZ2l0ZWUuY29tOmNhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAncnVn
-Z2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRvIGNs
-b25lLgoKSSBoYXZlbid0IHRlc3RlZCBwcm90b2NvbCB2MSwgYnV0IEkndmUgbWFkZSB0aGUgY2hh
-bmdlIGluIGRvX2ZldGNoX3BhY2soKSwKd2hpY2ggaXMgZm9yIHByb3RvY29sIHZlcnNpb24gMCBh
-bmQgdmVyc2lvbiAxLgoKSSBob3BlIHlvdSBjYW4gcmV2aWV3IHRoZSBsYXRlc3QgcGF0Y2gswqBh
-bmQgZ2l2ZSBtZSBzb21lIHN1Z2dlc3Rpb25zLgoKVGhhbmtzIQoKPj4gW0Zvb3Rub3RlXQo+Pgo+
-PiAqMSogTG9va2luZyBhdCBEb2N1bWVudGF0aW9uL3RlY2huaWNhbC9wYWNrLXByb3RvY29sLnR4
-dCwgImdpdAo+PsKgwqDCoMKgIGZldGNoIiBzZWVtIHRvIGxlYXJuIGlmIHRoZSByZXBvc2l0b3J5
-IGlzIHNoYWxsb3cgaW1tZWRpYXRlbHkKPj7CoMKgwqDCoCB1cG9uIGNvbnRhY3RpbmcgInVwbG9h
-ZC1wYWNrIiBkdXJpbmcgdGhlIFJlZmVyZW5jZSBEaXNjb3ZlcnkKPj7CoMKgwqDCoCBwaGFzZSAo
-d2UnZCBzZWUgJ3NoYWxsb3cnIHBhY2tldHMgaWYgdGhleSBhcmUgc2hhbGxvdykuIEkKPj7CoMKg
-wqDCoCBzdXNwZWN0IHRoYXQgdGhlIHJpZ2h0IHNvbHV0aW9uIHdvdWxkIGJlIHRvIHRlYWNoIHRo
-ZSBjb2RlcGF0aAo+PsKgwqDCoMKgIG9uIHRoZSAiZ2l0IGZldGNoIiBzaWRlIHRoYXQgYWNjZXB0
-cywgcGFyc2VzLCBhbmQgYWN0cyBvbiB0aGlzCj4+wqDCoMKgwqAgcGFja2V0IHRvIG9wdGlvbmFs
-bHkgc3RvcCBjb21tdW5pY2F0aW9uIGFuZCBlcnJvciBvdXQgd2hlbiB0aGUKPj7CoMKgwqDCoCBj
-YWxsZXIgYXNrcyBub3QgdG8gdGFsayB3aXRoIGEgc2hhbGxvdyByZXBvc2l0b3J5Lgo+Cj5UaGlz
-IGlzIHRydWUgd2l0aCBwcm90b2NvbCB2MCwgYnV0IHByb3RvY29sIHYyIGJ1bmRsZXMgYWxsIHNo
-YWxsb3cKPmluZm9ybWF0aW9uICh3aGV0aGVyIGNvbWluZyBmcm9tIHRoZSBmYWN0IHRoYXQgdGhl
-IHJlbW90ZSBpcyBzaGFsbG93IG9yCj50aGUgZmFjdCB0aGF0IHRoZSBmZXRjaGVyIHNwZWNpZmll
-ZCAtLWRlcHRoIGV0Yy4pIGFuZCBzZW5kcyB0aGVtCj50b2dldGhlciB3aXRoIHRoZSBwYWNrZmls
-ZS4gSXQgbWF5IGJlIHBvc3NpYmxlIHRvIHN0b3AgcGFja2ZpbGUgZG93bmxvYWQKPihzYXZpbmcg
-YmFuZHdpZHRoIG9uIHRoZSBjbGllbnQgc2lkZSwgYXQgbGVhc3QpIG9uY2Ugc3VjaCBpbmZvcm1h
-dGlvbiBpcwo+cmV0dXJuZWQsIHRob3VnaC4KPiAKCg==
+After trying your suggestion, I now get:
 
+error: RPC failed; HTTP 413 curl 22 The requested URL returned error: 413
+fatal: unable to write request to remote: Broken pipe
+
+On 02/03/21 02.22, Bryan Turner wrote:
+> On Mon, Mar 1, 2021 at 5:20 AM Bagas Sanjaya <bagasdotme@gmail.com> wrote:
+>>
+>> Thank you for filling out a Git bug report!
+>> Please answer the following questions to help us understand your issue.
+>>
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>
+>> I'm poking around with partial clone. On my local server on my computer
+>> I have full clone of Git (git.git) repo.
+>>
+>> I do partial clone from that server as remote (which is actually on the same
+>> computer):
+>>
+>>      git clone https://my-local-server.git/myself/git.git --filter=blob:none
+>>
+>> Inside the partial clone, I tried to convert it to full clone. First, I gather
+>> list of missing objects:
+>>
+>>      git rev-list --objects --all --missing=print | grep -oP '^\?\K\w+' > .git/missing.list
+>>
+>> Then I fetched those:
+>>
+>>      git fetch origin $(cat .git/missing.list)
+> 
+> Since you're on Git 2.30, instead of trying to place all the object
+> IDs on the `git fetch` command line, have you tried adding `--stdin`
+> and having it read from your `missing.list` directly? Something like
+> `git fetch --stdin origin <.git/missing.list` might do what you need.
+> 
+>>
+>> What did you expect to happen? (Expected behavior)
+>>
+>> All missing objects fetched successfully
+>>
+>> What happened instead? (Actual behavior)
+>>
+>> Git returned:
+>>
+>>       -bash: /opt/git/bin/git: Argument list too long
+>>
+>> What's different between what you expected and what actually happened?
+>>
+>> (nothing)
+>>
+>> Anything else you want to add:
+>>
+>> I think the problem lies on how to feed list of 110K+ objects to `git fetch`.
+>>
+>> Note: Both the local server and the computer use Git 2.30.1
+>>
+>> Please review the rest of the bug report below.
+>> You can delete any lines you don't wish to share.
+>>
+>> [System Info]
+>> git version:
+>> git version 2.30.1
+>> cpu: x86_64
+>> built from commit: 773e25afc41b1b6533fa9ae2cd825d0b4a697fad
+>> sizeof-long: 8
+>> sizeof-size_t: 8
+>> shell-path: /bin/sh
+>> uname: Linux 5.10.11-kernelorg-upstream-generic #1 SMP Fri Jan 29 12:56:19 WIB 2021 x86_64
+>> compiler info: gnuc: 9.3
+>> libc info: glibc: 2.31
+>> $SHELL (typically, interactive shell): /bin/bash
+>>
+>> [Enabled Hooks]
+>> (none)
+>>
+>> --
+>> An old man doll... just what I always wanted! - Clara
+
+-- 
+An old man doll... just what I always wanted! - Clara
