@@ -2,87 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42B3DC43381
-	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F85C43332
+	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 127D764F30
-	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A75E64F2F
+	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1578464AbhCBPYQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Mar 2021 10:24:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231324AbhCBEhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 23:37:20 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36DDC061756
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 20:36:23 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id v3so13929692qtw.4
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 20:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OlMlGiQiOggLpLXXXht0OCu7j/Rkf4Tqw+gDSm+504U=;
-        b=BHfkkv1TZ6Ro49qWD3EiuVDSY59e9XwOBRC49aa87wjmhWN7lOClLLY+fI1falv2gT
-         SLS8oY3OYJxyMyuTaGQa56epzEt6NOV2VAZC1rR6ld2XFiNJToJ6NXmdRLRRmQe6D2q5
-         K8rsktvEQQyZEbKIiGiEDWcpqaHXHbSMWjC7OMs6gOV7L0m/IVWoyEE0KIM1UJ+A7TJ5
-         K+6+2HOEPAH1twb9NiZfFt8sYj6TNPVSqYQQgVIj7UThvxFGaOB43kMo/mDI7Dss6gDc
-         xS7RLaMrnDi/IqmCyU8iIkANl4hYSo8CKEUz/7guihhSICRuuM1Jnj2uvohHzYme9y3v
-         vB2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OlMlGiQiOggLpLXXXht0OCu7j/Rkf4Tqw+gDSm+504U=;
-        b=Eo2a5UPJFFgESqbYg8k6yMTHKSzZ0H3FQ2YNuDfzp7Oflmg09wT3vMNs/gP+VuSuC1
-         cj7uELl6B7jpHVlGwtHr8LoVaNl2FJ3qv2zlZIMMFqpXMpWLHxOI0mXV/JrN9GlyVmdK
-         8QxF09Fez7dnOtwlJNrkY33AyPOH1D0CwbyzW1359kXcWKZYx8bxzuTrGBo8zoI6+PVZ
-         QSE3+a+l6KXEM3uTV20Zq0h/GZI4YsOvytZ/Goosuw5ggZ0ROrT9Istji72h3/Fe0cO/
-         +GDLcWcSpgNwprzmLX51GMR0SCezDDNM7rk/PZd3EtafZ9wOiYu1puIlzx+CTgw+y3Bm
-         k11g==
-X-Gm-Message-State: AOAM533QePTyR2bj9PDoOZ00G+Z7/DWUM+7ftAuZtbiQNhEJTKK84frn
-        ZPsAdz7qK5XUv2FglSQpNDtZ0E7ZGGDme9yL
-X-Google-Smtp-Source: ABdhPJyudwy5Mraymr6bBdqcUT+l7lRD93uakq8rYuMdO9srWUsE5l5O7gXR7C+ppX85W6GBJuzNbA==
-X-Received: by 2002:ac8:5503:: with SMTP id j3mr5173728qtq.19.1614659783005;
-        Mon, 01 Mar 2021 20:36:23 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:1582:4add:dc39:710a])
-        by smtp.gmail.com with ESMTPSA id c5sm14107957qkj.100.2021.03.01.20.36.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Mar 2021 20:36:22 -0800 (PST)
-Date:   Mon, 1 Mar 2021 23:36:20 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     me@ttaylorr.com, git@vger.kernel.org, peff@peff.net,
-        dstolee@microsoft.com, avarab@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 12/15] Documentation/technical: describe multi-pack
- reverse indexes
-Message-ID: <YD3AxOqA1wvUBkZO@nand.local>
-References: <404d730498938da034d860d894ddbb7d6dffc27d.1614193703.git.me@ttaylorr.com>
- <20210302042111.4038479-1-jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210302042111.4038479-1-jonathantanmy@google.com>
+        id S1578529AbhCBPYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Mar 2021 10:24:49 -0500
+Received: from smtp501.hk.chengmail.me ([113.10.190.210]:54600 "EHLO
+        smtp501.hk.chengmail.me" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1377925AbhCBIpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Mar 2021 03:45:33 -0500
+X-CHENGMAILHOST: 113.10.190.210
+X-CHENGMAIL-INSTANCEID: 4bbb.603dfadb.aeef0.0
+Date:   Tue, 2 Mar 2021 16:44:13 +0800
+From:   "lilinchao@oschina.cn" <lilinchao@oschina.cn>
+To:     "Jonathan Tan" <jonathantanmy@google.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Li Linchao via GitGitGadget" <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, "Derrick Stolee" <stolee@gmail.com>,
+        dscho <johannes.schindelin@gmx.de>,
+        "Jonathan Tan" <jonathantanmy@google.com>
+Subject: Re: Re: [PATCH v4] builtin/clone.c: add --reject-shallow option
+References: <xmqq35xo7yzy.fsf@gitster.g>, 
+        <20210301220319.3426185-1-jonathantanmy@google.com>
+X-Priority: 3
+X-Has-Attach: no
+X-Mailer: Foxmail 7.2.19.158[cn]
+Mime-Version: 1.0
+X-source-message-id: <20210302164412996872102@oschina.cn>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
+Message-ID: <7a2fa0ec7b3311eb83b80024e87935e7@oschina.cn>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 08:21:11PM -0800, Jonathan Tan wrote:
-> The previous patches look good to me, and I'll review the remaining
-> patches hopefully tomorrow.
+Ci0tLS0tLS0tLS0tLS0tCmxpbGluY2hhbwo+PiBUaGlzIG1heSByZWplY3QgdG8gY2xvbmUgZnJv
+bSBhIHNoYWxsb3cgcmVwb3NpdG9yeSwgYnV0IGF0IHRoaXMKPj4gcG9pbnQgdGhlIGJ1bGsgb2Yg
+dGhlIHRyYW5mZXIgZnJvbSB0aGUgb3JpZ2luIHJlcG9zaXRvcnkgaGFzIGFscmVhZHkKPj4gaGFw
+cGVuZWQsIG5vP8KgIFJlamVjdGluZyBhZnRlciB0cmFuc2ZlcnJpbmcgbWFueSBtZWdhYnl0ZXMg
+ZmVlbHMgYQo+PiBiaXQgdG9vIGxhdGUuwqAgVGhhdCBpcyBvbmUgb2YgdGhlIHJlYXNvbnMgd2h5
+IEkga2VwdCBoaW50aW5nIHRoYXQKPj4gdGhlIHRyYW5zcG9ydCBsYXllciBuZWVkcyB0byBiZSB0
+YXVnaHQgYW4gb3B0aW9uIHRvIHJlamVjdCB0YWxraW5nCj4+IHRvIGEgc2hhbGxvdyBjb3VudGVy
+cGFydCBpZiB3ZSB3YW50IHRvIGFkZCB0aGlzIGZlYXR1cmUgWyoxKl0uCj4KPkV4dGVuZGluZyB0
+aGUgdHJhbnNwb3J0IGxheWVyIGluIHRoaXMgd2F5IG1pZ2h0IG5vdCBiZSB0b28gZGlmZmljdWx0
+IGluCj50aGUgY2FzZSBvZiBuYXRpdmUgKFNTSCwgZ2l0Oi8vKSBwcm90b2NvbHMgYW5kIHVzaW5n
+IHByb3RvY29sIHYwLCBzaW5jZQo+aGFuZHNoYWtlKCkgaW4gdHJhbnNwb3J0LmMgKGNhbGxlZCBp
+bmRpcmVjdGx5IGZyb20KPnRyYW5zcG9ydF9nZXRfcmVtb3RlX3JlZnMoKSkgd3JpdGVzIHNoYWxs
+b3cgaW5mb3JtYXRpb24gdG8gYSBkYXRhCj5zdHJ1Y3R1cmUgdGhhdCB3ZSBjb3VsZCBwb3RlbnRp
+YWxseSBleHBvc2UgZm9yIHRoZSBjYWxsZXIgdG8gdXNlIChiZWZvcmUKPml0IGNhbGxzIHRyYW5z
+cG9ydF9mZXRjaF9yZWZzKCkuIEkgY291bGRuJ3Qgc2VlIGhvdyByZW1vdGUtdXNpbmcKPnByb3Rv
+Y29scyAoZS5nLiBIVFRQKSBjb21tdW5pY2F0ZSBzaGFsbG93IGluZm9ybWF0aW9uLCB0aG91Z2gK
+PihyZW1vdGUtY3VybC5jIHNlZW1zIHRvIGp1c3Qga2VlcCBpdCBmb3IgaXRzZWxmKSwgc28gdGhh
+dCB3aWxsIGJlIGEgbW9yZQo+ZGlmZmljdWx0IHRhc2suIEFuZCBvZiBjb3Vyc2UgdGhlcmUncyB0
+aGUgbWF0dGVyIG9mIHByb3RvY29sIHYyLCB3aGljaCBJCj5kaXNjdXNzIGJlbG93Lgo+IApUaGVz
+ZSBkaXNjdXNzaW9ucyB3ZXJlIGJhc2VkIG9uIFBBVENIX3Y0LCB3aGljaCBpcyBxdWlldCBpbW1h
+dHVyZSB0aGVuLApJbiB0aGUgbGF0ZXN0IFBBVENIX3Y1LCBmb3IgdGhlIGNhc2Ugb2YgbmF0aXZl
+IHByb3RvY29scyhzc2gsIGdpdCwgZmlsZTovLyksIHRoZXkKd2lsbCBldmVudHVhbGx5IGNhbGzC
+oGRvX2ZldGNoX3BhY2tfdjIoKSBpZiBpdCdzIHByb3RvY29sIHYyLCDCoGFuZCB0aGVuIHdpbGwg
+Y2FsbApyZWNlaXZlX3NoYWxsb3dfaW5mbygpIGZvciB0aGUgY2FzZSBGRVRDSF9HRVRfUEFDSywg
+c28gdGhpcyBpcyB0aGUgcGxhY2UKSSBtYWRlIHRoZSBjaGFuZ2UuCkFzIGZvciBIVFRQcyBwcm90
+b2NsLCBhcyBsb25nIGFzIGl0J3Mgc3RpbGwgc21hcnQgcHJvdG9jb2wsIHdoaWNoIG1lYW5zIGRv
+IG5vdApmYWxsYmFjayB0byBkdW1iIHByb3RvY29sLCBpdCB3aWxsIGFsc28gY2FsbMKgZG9fZmV0
+Y2hfcGFja192MigpLCBhbmQgZ28gdG/CoAoiY2hlY2sgc2hhbGxvdyBpbmZvIiB0cmlnZ2VyIGlu
+wqByZWNlaXZlX3NoYWxsb3dfaW5mbygpLgoKU28sIGJhc2Ugb24gUEFUQ0hfVjUsIEkgaGF2ZSB0
+ZXN0ZWQgcHJvdG9jb2wgdjIsIHdoaWNoIGdvZXMgbGlrZSB0aGlzOgoKRmlyc3QsIEkgY3JlYXRl
+ZCBhIHNoYWxsb3cgcmVwbyBvbiBnaXRsYWIgYW5kIGdpdGVlIHJlc3BlY3RpdmVseS4KClRoZW4g
+dHJpZWQgdG8gY2xvbmUgdGhlbSBpbiBteSB0ZXJtaW5hbCwgKGluIG9yZGVyIG5vdCB0byBsb29r
+IHRvbyB2ZXJib3NlLApJIG9tbWl0ZWQgdGhlIHJlc3VsdCB3aGVuIEdJVF9UUkFDRV9QQUNLRVQg
+aXMgb24pLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFsbG93IGh0dHBzOi8vZ2l0bGFiLmNv
+bS9DYWN0dXNpbmhhbmQvcnVnZ2VkLmdpdApDbG9uaW5nIGludG8gJ3J1Z2dlZCcuLi4KZmF0YWw6
+IHNvdXJjZSByZXBvc2l0b3J5IGlzIHNoYWxsb3csIHJlamVjdCB0byBjbG9uZS4KCiQgLi9naXQt
+Y2xvbmUgLS1yZWplY3Qtc2hhbGxvdyBzc2g6Ly9naXRsYWIuY29tL0NhY3R1c2luaGFuZC9ydWdn
+ZWQuZ2l0CkNsb25pbmcgaW50byAncnVnZ2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkg
+aXMgc2hhbGxvdywgcmVqZWN0IHRvIGNsb25lLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFs
+bG93IGdpdEBnaXRsYWIuY29tOkNhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAn
+cnVnZ2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRv
+IGNsb25lLgoKJCAuL2dpdC1jbG9uZSAtLXJlamVjdC1zaGFsbG93IGh0dHBzOi8vZ2l0ZWUuY29t
+L2NhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAncnVnZ2VkJy4uLgpmYXRhbDog
+c291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRvIGNsb25lLgoKJCAuL2dpdC1j
+bG9uZSAtLXJlamVjdC1zaGFsbG93IHNzaDovL2dpdGVlLmNvbS9jYWN0dXNpbmhhbmQvcnVnZ2Vk
+LmdpdApDbG9uaW5nIGludG8gJ3J1Z2dlZCcuLi4KZmF0YWw6IHNvdXJjZSByZXBvc2l0b3J5IGlz
+IHNoYWxsb3csIHJlamVjdCB0byBjbG9uZS4KCiQgLi9naXQtY2xvbmUgLS1yZWplY3Qtc2hhbGxv
+dyBnaXRAZ2l0ZWUuY29tOmNhY3R1c2luaGFuZC9ydWdnZWQuZ2l0CkNsb25pbmcgaW50byAncnVn
+Z2VkJy4uLgpmYXRhbDogc291cmNlIHJlcG9zaXRvcnkgaXMgc2hhbGxvdywgcmVqZWN0IHRvIGNs
+b25lLgoKSSBoYXZlbid0IHRlc3RlZCBwcm90b2NvbCB2MSwgYnV0IEkndmUgbWFkZSB0aGUgY2hh
+bmdlIGluIGRvX2ZldGNoX3BhY2soKSwKd2hpY2ggaXMgZm9yIHByb3RvY29sIHZlcnNpb24gMCBh
+bmQgdmVyc2lvbiAxLgoKSSBob3BlIHlvdSBjYW4gcmV2aWV3IHRoZSBsYXRlc3QgcGF0Y2gswqBh
+bmQgZ2l2ZSBtZSBzb21lIHN1Z2dlc3Rpb25zLgoKVGhhbmtzIQoKPj4gW0Zvb3Rub3RlXQo+Pgo+
+PiAqMSogTG9va2luZyBhdCBEb2N1bWVudGF0aW9uL3RlY2huaWNhbC9wYWNrLXByb3RvY29sLnR4
+dCwgImdpdAo+PsKgwqDCoMKgIGZldGNoIiBzZWVtIHRvIGxlYXJuIGlmIHRoZSByZXBvc2l0b3J5
+IGlzIHNoYWxsb3cgaW1tZWRpYXRlbHkKPj7CoMKgwqDCoCB1cG9uIGNvbnRhY3RpbmcgInVwbG9h
+ZC1wYWNrIiBkdXJpbmcgdGhlIFJlZmVyZW5jZSBEaXNjb3ZlcnkKPj7CoMKgwqDCoCBwaGFzZSAo
+d2UnZCBzZWUgJ3NoYWxsb3cnIHBhY2tldHMgaWYgdGhleSBhcmUgc2hhbGxvdykuIEkKPj7CoMKg
+wqDCoCBzdXNwZWN0IHRoYXQgdGhlIHJpZ2h0IHNvbHV0aW9uIHdvdWxkIGJlIHRvIHRlYWNoIHRo
+ZSBjb2RlcGF0aAo+PsKgwqDCoMKgIG9uIHRoZSAiZ2l0IGZldGNoIiBzaWRlIHRoYXQgYWNjZXB0
+cywgcGFyc2VzLCBhbmQgYWN0cyBvbiB0aGlzCj4+wqDCoMKgwqAgcGFja2V0IHRvIG9wdGlvbmFs
+bHkgc3RvcCBjb21tdW5pY2F0aW9uIGFuZCBlcnJvciBvdXQgd2hlbiB0aGUKPj7CoMKgwqDCoCBj
+YWxsZXIgYXNrcyBub3QgdG8gdGFsayB3aXRoIGEgc2hhbGxvdyByZXBvc2l0b3J5Lgo+Cj5UaGlz
+IGlzIHRydWUgd2l0aCBwcm90b2NvbCB2MCwgYnV0IHByb3RvY29sIHYyIGJ1bmRsZXMgYWxsIHNo
+YWxsb3cKPmluZm9ybWF0aW9uICh3aGV0aGVyIGNvbWluZyBmcm9tIHRoZSBmYWN0IHRoYXQgdGhl
+IHJlbW90ZSBpcyBzaGFsbG93IG9yCj50aGUgZmFjdCB0aGF0IHRoZSBmZXRjaGVyIHNwZWNpZmll
+ZCAtLWRlcHRoIGV0Yy4pIGFuZCBzZW5kcyB0aGVtCj50b2dldGhlciB3aXRoIHRoZSBwYWNrZmls
+ZS4gSXQgbWF5IGJlIHBvc3NpYmxlIHRvIHN0b3AgcGFja2ZpbGUgZG93bmxvYWQKPihzYXZpbmcg
+YmFuZHdpZHRoIG9uIHRoZSBjbGllbnQgc2lkZSwgYXQgbGVhc3QpIG9uY2Ugc3VjaCBpbmZvcm1h
+dGlvbiBpcwo+cmV0dXJuZWQsIHRob3VnaC4KPiAKCg==
 
-Thanks; I am sorely behind recent activity on the list. I had a
-last-minute errand to run last weekend and I haven't managed to quite
-dig out of the hole I created for myself since then.
-
-Incidentally, I have had this code (and the tb/multi-pack-bitmaps)
-running on a couple of high-traffic repositories internal to GitHub, and
-so have a couple of improvements that I was hoping to squash in, too.
-
-Thanks,
-Taylor
