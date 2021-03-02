@@ -2,162 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC7DC433DB
-	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 684DCC4332D
+	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8C18E64F2D
-	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C0C264F2D
+	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1575694AbhCBPX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Mar 2021 10:23:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47936 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347474AbhCBESh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Mar 2021 23:18:37 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88C1C061756
-        for <git@vger.kernel.org>; Mon,  1 Mar 2021 20:17:56 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id 19so980042pjk.7
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 20:17:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=lqDaMV9C9u3tELNnWaVd8MKTQLAZ/XxNEueQ4k6ibew=;
-        b=ACLEF2ZkAR9wrLBlUzAfdM7bGvTwjOOeo7aP1JjyPtb6qVdGBCmmZ0HaWmrqBGhqOq
-         O4EwNCQzcgsSceFnQ1sAnCzw4vAXwdmgt/8d9Qpm4IhNwBe40Ab6VNvbEnv+aCA7XUhz
-         MNBuli9RH1mnsiVw8oxL7v+c+cN4q31pUh8DCPqdJhUgjDH3QuHBFlsTQKybp9H2vGvi
-         Qo61cub/82cO8qwCclEiyR9kJPYoCjb+6pPRToskouYbnnvE3tmGobszNqqeIzxQxKLE
-         KZ5A/QcbJtP4SRklgZMcasYVxZ4YyFz5otQi2RvVmhTtM1Eo4Md6BmuGTHr8GJGxGueA
-         a+Ag==
+        id S1578477AbhCBPYU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Mar 2021 10:24:20 -0500
+Received: from mail-ej1-f53.google.com ([209.85.218.53]:40785 "EHLO
+        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1577115AbhCBFoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Mar 2021 00:44:03 -0500
+Received: by mail-ej1-f53.google.com with SMTP id ci14so13903930ejc.7
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 21:43:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=lqDaMV9C9u3tELNnWaVd8MKTQLAZ/XxNEueQ4k6ibew=;
-        b=m/LuBFWkOpGBzHKXuRom4/izre9UWMCy+jbNhUrLprkizqtGUiTnA/8RdYykOPF0wv
-         kR4cE1N43xS9gkiPCh0Co+eqHncBTZmRLSMt5MtDx710rHw9v8qKHM7ypQlg+kndUunY
-         Q4yL8UOPjxHu1bMmOnHIq1SXk+snNrN+iL8DfpkVf+N8tGal+u5isIYY+wPcNHcOFw4/
-         KdxM02zi3n4owvdDuz/3NBlUDsfJkdp7sUuR8jLfh0tPhXKeDmXFXer26KBtJn9ZCWAw
-         95Qm0xggcyriOw9/0vwlXfBiqBcVm91wsvy3s1pmRQrvuk0rZevL33kQE3v6tIR7eVMy
-         FENg==
-X-Gm-Message-State: AOAM533NQESrO9vskvOLAdSpNOo46oBv7cdu8cAt1Ahcqq42vKrU9LS7
-        ibIh//22dw8Ui1t5PDbeP3AfBLRis1DDH/Wy7wPE
-X-Google-Smtp-Source: ABdhPJwvrPoZvDf/P/vfip2oAiOyqSp9rn1y+ouKH8y6geobloqv/QMv/+j+t6Zi2UBwjvP350Qxt/ovSU5Eibr5SFLQ
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:5464:: with SMTP id
- e36mr13652491pgm.223.1614658676238; Mon, 01 Mar 2021 20:17:56 -0800 (PST)
-Date:   Mon,  1 Mar 2021 20:17:53 -0800
-In-Reply-To: <223b89909416ec7c5505f9cedaa80bf86ecc7b2e.1614193703.git.me@ttaylorr.com>
-Message-Id: <20210302041753.4037658-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <223b89909416ec7c5505f9cedaa80bf86ecc7b2e.1614193703.git.me@ttaylorr.com>
-X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: Re: [PATCH v2 08/15] midx: allow marking a pack as preferred
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     me@ttaylorr.com
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        avarab@gmail.com, gitster@pobox.com,
-        Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0f4gLSH4oaDWEnFiLc2nGLW10Lg33GrM5f75NtGEDeY=;
+        b=rEsoB53VDuyuSFJPKJyp7/ilMQusRujXdc6/EHvA2hwXbk0Jq9kK6YAbOVnQ3wcctV
+         rSSzBo1vAe6TE2TGQnuxEaA141QmvJfnRSiUykZrYSEh9mjYeVtri2P3lIdErIJXXFLA
+         KGmH6Df1aiMO7AwUDZiu3dsAzjBoaN7l3c8ylU8ZWuKsB47GAAO6Mf+HGTBlUBlhqI/J
+         dU7nM2jt+CpQnk5pR90o03zTTk9f/Qh5WuRaIHBFmIibsWG83uSsVKjAbzxTsiQoQWZP
+         Dyv0VnVdpBv0yeLGlAlGfJPcxWv5g6+icvbw8Oh3CQfo0cgs8a+Eya83jrQZH+qM4S4W
+         gTXA==
+X-Gm-Message-State: AOAM532mh8ImE9Kp/g6pEg7eeLiSlyaRbsCLJSnN2ZIQBBOFn5jXPiTN
+        PZo1hXau1skdc3EjC1yw9lMYO+zqwsYiJBEZX7c=
+X-Google-Smtp-Source: ABdhPJzBuHnWQ0ymnVyFAbs80yqqxMvUz3N7nwaoJ3lG815xcjXDxYpVBi5TXJyhi3ZfgsDBLgIpa5MEOBWT4eV/CT8=
+X-Received: by 2002:a17:906:68c5:: with SMTP id y5mr3173984ejr.371.1614663801809;
+ Mon, 01 Mar 2021 21:43:21 -0800 (PST)
+MIME-Version: 1.0
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-5-charvi077@gmail.com>
+In-Reply-To: <20210301084512.27170-5-charvi077@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 2 Mar 2021 00:43:10 -0500
+Message-ID: <CAPig+cTVrcWm8pJvnkP4gnWE6B8SKHENjvbAR7Do0ury-ArnaA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] t7500: add tests for --fixup=[amend|reword] options
+To:     20210217072904.16257-1-charvi077@gmail.com
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -589,12 +619,17 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
->  				nth_midxed_pack_midx_entry(m,
->  							   &entries_by_fanout[nr_fanout],
->  							   cur_object);
-> +				if (nth_midxed_pack_int_id(m, cur_object) == preferred_pack)
-> +					entries_by_fanout[nr_fanout].preferred = 1;
-> +				else
-> +					entries_by_fanout[nr_fanout].preferred = 0;
->  				nr_fanout++;
->  			}
->  		}
->  
->  		for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++) {
->  			uint32_t start = 0, end;
-> +			int preferred = cur_pack == preferred_pack;
->  
->  			if (cur_fanout)
->  				start = get_pack_fanout(info[cur_pack].p, cur_fanout - 1);
-> @@ -602,7 +637,11 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
->  
->  			for (cur_object = start; cur_object < end; cur_object++) {
->  				ALLOC_GROW(entries_by_fanout, nr_fanout + 1, alloc_fanout);
-> -				fill_pack_entry(cur_pack, info[cur_pack].p, cur_object, &entries_by_fanout[nr_fanout]);
-> +				fill_pack_entry(cur_pack,
-> +						info[cur_pack].p,
-> +						cur_object,
-> +						&entries_by_fanout[nr_fanout],
-> +						preferred);
->  				nr_fanout++;
->  			}
->  		}
+On Mon, Mar 1, 2021 at 3:50 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> t7500: add tests for --fixup=[amend|reword] options
 
-I was initially confused that "preferred" was set twice, but this makes
-sense - the first one is when an existing midx is reused, and the second
-one is for objects in packs that the midx (if it exists) does not cover.
+It's usually preferable for tests and documentation updates to be
+bundled along with the patch which makes a particular change[1] rather
+than waiting until the very end of the series and adding tests and
+documentation covering all the changes made by patches earlier in the
+series. As a reviewer, it is much harder to tell if the late-added
+tests and documentation updates are comprehensive since it's difficult
+to keep in mind all the changes made by earlier patches.
 
-> @@ -828,7 +869,19 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
->  	if (ctx.m && ctx.nr == ctx.m->num_packs && !packs_to_drop)
->  		goto cleanup;
->  
-> -	ctx.entries = get_sorted_entries(ctx.m, ctx.info, ctx.nr, &ctx.entries_nr);
-> +	if (preferred_pack_name) {
-> +		for (i = 0; i < ctx.nr; i++) {
-> +			if (!cmp_idx_or_pack_name(preferred_pack_name,
-> +						  ctx.info[i].pack_name)) {
-> +				ctx.preferred_pack_idx = i;
-> +				break;
-> +			}
-> +		}
-> +	} else
-> +		ctx.preferred_pack_idx = -1;
+When reading earlier patches in this series, I questioned whether or
+not certain features of each patch were going to be covered by tests
+or documentation updates, but I couldn't tell because those updates
+weren't made at the same time as the change about which I was reading.
+For instance, when reading the implementation of `--fixup:reword`, I
+was wondering if the documentation was going to be updated to mention
+that it would ignore changes staged in the index and leave the index
+untouched, and I wondered if and hoped that tests would be added to
+verify that the index was indeed left untouched. Over the course of
+many patches, it can be difficult to keep track of all the accumulated
+questions, which makes it onerous to review the final patches adding
+the tests and documentation updates enmasse.
 
-Looks safer to put "ctx.preferred_pack_idx = -1" before the "if", just
-in case the given pack name does not exist?
+I'm not necessarily suggesting that you re-roll merely to incorporate
+the tests and documentation updates into the patches to which they
+belong, but it's something to keep in mind for future submissions.
 
-> @@ -889,6 +942,31 @@ static int write_midx_internal(const char *object_dir, struct multi_pack_index *
->  			pack_name_concat_len += strlen(ctx.info[i].pack_name) + 1;
->  	}
->  
-> +	/*
-> +	 * Recompute the preferred_pack_idx (if applicable) according to the
-> +	 * permuted pack order.
-> +	 */
-> +	ctx.preferred_pack_idx = -1;
-> +	if (preferred_pack_name) {
-> +		ctx.preferred_pack_idx = lookup_idx_or_pack_name(ctx.info,
-> +							     ctx.nr,
-> +							     preferred_pack_name);
-> +		if (ctx.preferred_pack_idx < 0)
-> +			warning(_("unknown preferred pack: '%s'"),
-> +				preferred_pack_name);
-> +		else {
-> +			uint32_t orig = ctx.info[ctx.preferred_pack_idx].orig_pack_int_id;
-> +			uint32_t perm = ctx.pack_perm[orig];
-> +
-> +			if (perm == PACK_EXPIRED) {
-> +				warning(_("preferred pack '%s' is expired"),
-> +					preferred_pack_name);
-> +				ctx.preferred_pack_idx = -1;
-> +			} else
-> +				ctx.preferred_pack_idx = perm;
-> +		}
-> +	}
+FOOTNOTES
 
-I couldn't figure out why the preferred pack index needs to be
-recalculated here, since the pack entries would have already been
-sorted. Also, the tests still pass when I comment this part out. A
-comment describing what's going on would be helpful.
-
-All previous patches look good to me.
+[1]: Once in a while a patch introducing a change is so large on its
+own that it may make sense to split tests and documentation updates
+out to their own patches which immediately follow the patch to which
+they apply, but that's different from delaying _all_ tests and
+documentation updates and plopping them at the end of the series all
+crammed together.
