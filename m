@@ -2,96 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CD1C43603
-	for <git@archiver.kernel.org>; Wed,  3 Mar 2021 06:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29EBAC433E0
+	for <git@archiver.kernel.org>; Wed,  3 Mar 2021 06:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1B8664EBA
-	for <git@archiver.kernel.org>; Wed,  3 Mar 2021 06:41:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3E7A64ED0
+	for <git@archiver.kernel.org>; Wed,  3 Mar 2021 06:42:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1447357AbhCCGfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 01:35:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S1448758AbhCCGfl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 01:35:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1837956AbhCBWNC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Mar 2021 17:13:02 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04962C06178C
-        for <git@vger.kernel.org>; Tue,  2 Mar 2021 14:12:22 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id k2so19499230ili.4
-        for <git@vger.kernel.org>; Tue, 02 Mar 2021 14:12:21 -0800 (PST)
+        with ESMTP id S229463AbhCBXeA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Mar 2021 18:34:00 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B28AC061756
+        for <git@vger.kernel.org>; Tue,  2 Mar 2021 15:33:20 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id p1so2520666pgi.16
+        for <git@vger.kernel.org>; Tue, 02 Mar 2021 15:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=EeJv+I/ah6G8G+q92r/POP19r3/TisEaUNSKQMrOgJM=;
-        b=fr1ib5I/XGE29xls3AG/X2S6cadk6A64TJGYufWNHF0TYhwJlO5oI2JXSZ8H3E83bC
-         rfE4AbtO692L83jVq2pPU8bV9GyliJFdZnIllFACwkX6yuSeDvK1f4Ho1Unz5+yGFYrH
-         HWzBHbT3BiIh7fMrq/RU5cba54wuoI5o2cTNykyIZaJjDeJUVZvV3RUl++SKFcIGMm/C
-         ryS8BjmLuKITUseBrvh4hRD9W5PitUnGpLE//0TAWTUlXyNBENCxSk2P39+QzX1WANEI
-         bi0GMZ7W1uDhtFDZLDQowiLV25cB+vmqB/I1o4OY6CfCejUfkRc92/gKWm81LiCdz0Ja
-         BDHg==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=9IuhOXk2BjzCyymfiApUeS+aRwiiDI2jMUV7vIaySx8=;
+        b=sxMc0DIz0zvBYi6acklhNDc7L5O8h/1im29exT4JlzFbRvUCsRMpgiqsnYEBHP2Ljo
+         SV45EdtHHbdFEETezmzX6aeEo1lrjMa1sj3SfcvSWPjDcFRFxB/ewt7ek/FZ4tzLuTVp
+         Gws/r9G8jwIzY+o66NGxbUeFTq2fzpG36SqcVfpGnboeXcCn366XzFwh2OWwXVDRZ4Al
+         DuGJ5KARzgW8jeLlGJ9GghgHbYxDMFoJVZ3SWZWfYskL2VWW/undEB3Ho0vqbpU8zMqi
+         3eL2gB7n6eSyy4x4MWCXRIIqh48tQ7QQU6at1UjSm9WzYXl9ZZiJsUaRTE2ybI415Fwv
+         r6Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=EeJv+I/ah6G8G+q92r/POP19r3/TisEaUNSKQMrOgJM=;
-        b=ULoVUA2+Ywoq4PdHRUtfsHpSlRM6uhG8QMNUP5+A7lfEq7THH8bqLlCboBJBHpau4B
-         spBgD8PQTh1Txo2sgfof0cpzEaFsHnm6JuPH6WawLRPelUmrBWMQpldQUz6U+6Qqt2Qh
-         Tiknq0LrZoHiSDDGIDY2pYSQjJcrt9fK1Y2bMvVp6Pd/o0XMtQcZnPwRkN7WcyjS70Q4
-         PupqqG7FzJwl4ceyGCrtcK7Y29Qkn0GsOt/iRyQvNhySULX60KFd+vM3aJtAYS6+cBmI
-         Ro7Sv4e+lHhhe8Ep/9KWG0nmQXmM834FmdZuOcbiXY/IO7mZWeiSUcbRvMv5yWQHf6a0
-         iMKg==
-X-Gm-Message-State: AOAM530sABElhLT4CLUs5n5Seb166PdoENvOiRAWJZTwkW7MqGEHBy/p
-        2lw6wucWVsYPzJlmOTI5Q5doN1kC4MJhRhYlPj4=
-X-Google-Smtp-Source: ABdhPJztGImTWe08aTtDJDHYp4o4OcsKN/1fJJfHY7BRgDJLOQyuPYAX5a7Z7x8Mw/dVfNB1r+A2io4Mjl5oLOXgsww=
-X-Received: by 2002:a92:c145:: with SMTP id b5mr18836869ilh.186.1614723141170;
- Tue, 02 Mar 2021 14:12:21 -0800 (PST)
-MIME-Version: 1.0
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
- <87mtvolbuj.fsf@evledraar.gmail.com> <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
- <CABPp-BE=9wzF6_VypoR-uEPHsLWdV7zyE13FOgLK0h8NOcMz3g@mail.gmail.com>
-In-Reply-To: <CABPp-BE=9wzF6_VypoR-uEPHsLWdV7zyE13FOgLK0h8NOcMz3g@mail.gmail.com>
-From:   anatoly techtonik <techtonik@gmail.com>
-Date:   Wed, 3 Mar 2021 01:12:05 +0300
-Message-ID: <CAPkN8xKTAEfm+1-PfjUPYMf7RhjuwSEb3eESkTQjcWhUDi+7FA@mail.gmail.com>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=9IuhOXk2BjzCyymfiApUeS+aRwiiDI2jMUV7vIaySx8=;
+        b=DGMRBewvlBvSuISoOktVtdI/ic1bvPckp33BMXPC74WhVTGzdzrLmcj9xGNaNcLi9I
+         x19Wj9rUBHJKuJbc7//bEj7rpoSyN5J4NbSSCfWrS6Ls3vn1oSEEVjKrNojkyNeiJJu8
+         O+5ReIdL4rczd9hU2r7f+9mQ6Bs8mVHgGeHG3cYaDqcc4AIgHMOhFlweo7nKnhvBMQun
+         b7s0KfAltojg44KQMEjgIx/shPxnUDiH5N4MkX4My6obijWHlnAxEVnrESSiIpK8kQjA
+         MgKOEck5uodf/NHsqE2YFsTrjICk9QPBrkVm9w19tWQ6Na0Ve8AFyv2kJD6jsWpGz6IH
+         egag==
+X-Gm-Message-State: AOAM531IJe4kDEVZUMpyb0uYr7XsD2GK55E9XniGA+HjihB3VbQ7ffIt
+        op/4QL//L3TgcU+7vlGWDWKdnIrs8A7BidPv55Pr
+X-Google-Smtp-Source: ABdhPJyxEggBD/jVfs61ANCHrKNocLA6A4CdX2HnsUhYmjtuugwqjFBJEdqPJAZog9j+RteOP+lMdKd6ycrWgKEqV3uG
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:9a48:b029:e1:268d:e800 with
+ SMTP id x8-20020a1709029a48b02900e1268de800mr311629plv.69.1614727999674; Tue,
+ 02 Mar 2021 15:33:19 -0800 (PST)
+Date:   Tue,  2 Mar 2021 15:33:14 -0800
+In-Reply-To: <YD2ZQIRfcwGzpFuQ@google.com>
+Message-Id: <20210302233314.43539-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <YD2ZQIRfcwGzpFuQ@google.com>
+X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
+Subject: Re: [PATCH v7 15/17] hook: provide stdin by string_list or callback
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 9:06 PM Elijah Newren <newren@gmail.com> wrote:
-> On Sun, Feb 28, 2021 at 11:44 PM anatoly techtonik <techtonik@gmail.com> wrote:
-> For example:
->
->    git fast-export --reference-excluded-parents ^master~5 --all
->
-> and then pipe that through fast-import.
+> Jonathan and I discussed this a little more offline and agreed to leave
+> the implementation as is.
+> 
+> Jonathan had suggested "have one callback invocation apply to all hooks
+> that are running now", either by having the callback iterate over the
+> task queue or by having the run-command lib take the result from the
+> callback and have *that* iterate over the task queue. The idea being,
+> one pointer to one copy of source material is easier to handle than
+> many.
+> 
+> I suggested that the callback's implementation of the second version of
+> that, where the library takes care of the "and do it for each task in
+> progress" part, would be pretty much identical to the callback's
+> implementation as it is in this patch, except that as it is here the
+> context pointer is per-task and as Jonathan suggests the context pointer
+> is per-entire-hook-invocation - so there isn't much complexity
+> difference between the two, from the user's perspective.
+> 
+> We also talked about cases where N=# of hooks > M=# of jobs, that is,
+> where some hooks must wait for other hooks to finish executing before
+> that could start. In this case, users' callback implementations would
+> need to be able to start over from the beginning of the source material,
+> and a long-running hook would block other short-running hooks from
+> beginning (because the long-running hook would be confused by hearing
+> the source material to its stdin again).
 
-That may come in handy, but if certain parents are excluded, it will be
-impossible to find them to reference and attach branches to them.
-
-> Other git commands will also refuse to create
-> objects with those oddities, even if git accepts ancient objects that
-> have them.
-
-Are there any `lint` commands that can detect and warn about those
-oddities?
-
-> (But if you really want to see the original
-> binary format, maybe `git cat-file --batch` will be handy to you.)
-
-Looks good. Is there a way to import it back? And how hard it could
-be to write a parser for it? Is there a specification for its fields?
--- 
-anatoly t.
+Yes - this (number of hooks greater than number of jobs allowed to run
+in parallel) was the case in which my suggestion of not having
+hook-specific state would not work. The case we were talking about is
+when there's a large amount of dynamically-generated data to be
+transmitted to the hooks' stdins and I was thinking that it would be
+best anyway if the callback looped over all hooks as data was generated,
+but it would not be possible to only do a single pass if the number of
+hooks is greater than the number of jobs.
