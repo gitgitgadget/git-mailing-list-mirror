@@ -2,92 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 684DCC4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42B3DC43381
 	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C0C264F2D
+	by mail.kernel.org (Postfix) with ESMTP id 127D764F30
 	for <git@archiver.kernel.org>; Tue,  2 Mar 2021 15:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1578477AbhCBPYU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 2 Mar 2021 10:24:20 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:40785 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1577115AbhCBFoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Mar 2021 00:44:03 -0500
-Received: by mail-ej1-f53.google.com with SMTP id ci14so13903930ejc.7
-        for <git@vger.kernel.org>; Mon, 01 Mar 2021 21:43:47 -0800 (PST)
+        id S1578464AbhCBPYQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 2 Mar 2021 10:24:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51856 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231324AbhCBEhU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Mar 2021 23:37:20 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36DDC061756
+        for <git@vger.kernel.org>; Mon,  1 Mar 2021 20:36:23 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id v3so13929692qtw.4
+        for <git@vger.kernel.org>; Mon, 01 Mar 2021 20:36:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OlMlGiQiOggLpLXXXht0OCu7j/Rkf4Tqw+gDSm+504U=;
+        b=BHfkkv1TZ6Ro49qWD3EiuVDSY59e9XwOBRC49aa87wjmhWN7lOClLLY+fI1falv2gT
+         SLS8oY3OYJxyMyuTaGQa56epzEt6NOV2VAZC1rR6ld2XFiNJToJ6NXmdRLRRmQe6D2q5
+         K8rsktvEQQyZEbKIiGiEDWcpqaHXHbSMWjC7OMs6gOV7L0m/IVWoyEE0KIM1UJ+A7TJ5
+         K+6+2HOEPAH1twb9NiZfFt8sYj6TNPVSqYQQgVIj7UThvxFGaOB43kMo/mDI7Dss6gDc
+         xS7RLaMrnDi/IqmCyU8iIkANl4hYSo8CKEUz/7guihhSICRuuM1Jnj2uvohHzYme9y3v
+         vB2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0f4gLSH4oaDWEnFiLc2nGLW10Lg33GrM5f75NtGEDeY=;
-        b=rEsoB53VDuyuSFJPKJyp7/ilMQusRujXdc6/EHvA2hwXbk0Jq9kK6YAbOVnQ3wcctV
-         rSSzBo1vAe6TE2TGQnuxEaA141QmvJfnRSiUykZrYSEh9mjYeVtri2P3lIdErIJXXFLA
-         KGmH6Df1aiMO7AwUDZiu3dsAzjBoaN7l3c8ylU8ZWuKsB47GAAO6Mf+HGTBlUBlhqI/J
-         dU7nM2jt+CpQnk5pR90o03zTTk9f/Qh5WuRaIHBFmIibsWG83uSsVKjAbzxTsiQoQWZP
-         Dyv0VnVdpBv0yeLGlAlGfJPcxWv5g6+icvbw8Oh3CQfo0cgs8a+Eya83jrQZH+qM4S4W
-         gTXA==
-X-Gm-Message-State: AOAM532mh8ImE9Kp/g6pEg7eeLiSlyaRbsCLJSnN2ZIQBBOFn5jXPiTN
-        PZo1hXau1skdc3EjC1yw9lMYO+zqwsYiJBEZX7c=
-X-Google-Smtp-Source: ABdhPJzBuHnWQ0ymnVyFAbs80yqqxMvUz3N7nwaoJ3lG815xcjXDxYpVBi5TXJyhi3ZfgsDBLgIpa5MEOBWT4eV/CT8=
-X-Received: by 2002:a17:906:68c5:: with SMTP id y5mr3173984ejr.371.1614663801809;
- Mon, 01 Mar 2021 21:43:21 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OlMlGiQiOggLpLXXXht0OCu7j/Rkf4Tqw+gDSm+504U=;
+        b=Eo2a5UPJFFgESqbYg8k6yMTHKSzZ0H3FQ2YNuDfzp7Oflmg09wT3vMNs/gP+VuSuC1
+         cj7uELl6B7jpHVlGwtHr8LoVaNl2FJ3qv2zlZIMMFqpXMpWLHxOI0mXV/JrN9GlyVmdK
+         8QxF09Fez7dnOtwlJNrkY33AyPOH1D0CwbyzW1359kXcWKZYx8bxzuTrGBo8zoI6+PVZ
+         QSE3+a+l6KXEM3uTV20Zq0h/GZI4YsOvytZ/Goosuw5ggZ0ROrT9Istji72h3/Fe0cO/
+         +GDLcWcSpgNwprzmLX51GMR0SCezDDNM7rk/PZd3EtafZ9wOiYu1puIlzx+CTgw+y3Bm
+         k11g==
+X-Gm-Message-State: AOAM533QePTyR2bj9PDoOZ00G+Z7/DWUM+7ftAuZtbiQNhEJTKK84frn
+        ZPsAdz7qK5XUv2FglSQpNDtZ0E7ZGGDme9yL
+X-Google-Smtp-Source: ABdhPJyudwy5Mraymr6bBdqcUT+l7lRD93uakq8rYuMdO9srWUsE5l5O7gXR7C+ppX85W6GBJuzNbA==
+X-Received: by 2002:ac8:5503:: with SMTP id j3mr5173728qtq.19.1614659783005;
+        Mon, 01 Mar 2021 20:36:23 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:1582:4add:dc39:710a])
+        by smtp.gmail.com with ESMTPSA id c5sm14107957qkj.100.2021.03.01.20.36.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Mar 2021 20:36:22 -0800 (PST)
+Date:   Mon, 1 Mar 2021 23:36:20 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     me@ttaylorr.com, git@vger.kernel.org, peff@peff.net,
+        dstolee@microsoft.com, avarab@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v2 12/15] Documentation/technical: describe multi-pack
+ reverse indexes
+Message-ID: <YD3AxOqA1wvUBkZO@nand.local>
+References: <404d730498938da034d860d894ddbb7d6dffc27d.1614193703.git.me@ttaylorr.com>
+ <20210302042111.4038479-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-5-charvi077@gmail.com>
-In-Reply-To: <20210301084512.27170-5-charvi077@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 2 Mar 2021 00:43:10 -0500
-Message-ID: <CAPig+cTVrcWm8pJvnkP4gnWE6B8SKHENjvbAR7Do0ury-ArnaA@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] t7500: add tests for --fixup=[amend|reword] options
-To:     20210217072904.16257-1-charvi077@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Charvi Mendiratta <charvi077@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210302042111.4038479-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 1, 2021 at 3:50 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> t7500: add tests for --fixup=[amend|reword] options
+On Mon, Mar 01, 2021 at 08:21:11PM -0800, Jonathan Tan wrote:
+> The previous patches look good to me, and I'll review the remaining
+> patches hopefully tomorrow.
 
-It's usually preferable for tests and documentation updates to be
-bundled along with the patch which makes a particular change[1] rather
-than waiting until the very end of the series and adding tests and
-documentation covering all the changes made by patches earlier in the
-series. As a reviewer, it is much harder to tell if the late-added
-tests and documentation updates are comprehensive since it's difficult
-to keep in mind all the changes made by earlier patches.
+Thanks; I am sorely behind recent activity on the list. I had a
+last-minute errand to run last weekend and I haven't managed to quite
+dig out of the hole I created for myself since then.
 
-When reading earlier patches in this series, I questioned whether or
-not certain features of each patch were going to be covered by tests
-or documentation updates, but I couldn't tell because those updates
-weren't made at the same time as the change about which I was reading.
-For instance, when reading the implementation of `--fixup:reword`, I
-was wondering if the documentation was going to be updated to mention
-that it would ignore changes staged in the index and leave the index
-untouched, and I wondered if and hoped that tests would be added to
-verify that the index was indeed left untouched. Over the course of
-many patches, it can be difficult to keep track of all the accumulated
-questions, which makes it onerous to review the final patches adding
-the tests and documentation updates enmasse.
+Incidentally, I have had this code (and the tb/multi-pack-bitmaps)
+running on a couple of high-traffic repositories internal to GitHub, and
+so have a couple of improvements that I was hoping to squash in, too.
 
-I'm not necessarily suggesting that you re-roll merely to incorporate
-the tests and documentation updates into the patches to which they
-belong, but it's something to keep in mind for future submissions.
-
-FOOTNOTES
-
-[1]: Once in a while a patch introducing a change is so large on its
-own that it may make sense to split tests and documentation updates
-out to their own patches which immediately follow the patch to which
-they apply, but that's different from delaying _all_ tests and
-documentation updates and plopping them at the end of the series all
-crammed together.
+Thanks,
+Taylor
