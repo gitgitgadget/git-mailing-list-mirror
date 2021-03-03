@@ -2,52 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04EFDC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1380C4332B
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFAB16146D
+	by mail.kernel.org (Postfix) with ESMTP id 6AEE46146D
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380991AbhCDAW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1381470AbhCDAW1 (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 3 Mar 2021 19:22:27 -0500
-Received: from mail-ej1-f53.google.com ([209.85.218.53]:34465 "EHLO
-        mail-ej1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357157AbhCCITT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 03:19:19 -0500
-Received: by mail-ej1-f53.google.com with SMTP id hs11so40457766ejc.1
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 00:19:02 -0800 (PST)
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:33011 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1357187AbhCCIUM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 03:20:12 -0500
+Received: by mail-wr1-f41.google.com with SMTP id 7so22654689wrz.0
+        for <git@vger.kernel.org>; Wed, 03 Mar 2021 00:19:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/YeoKnQlTR9qIj/EAC84Fhfw8PZb1EgVlHbDxxtl0Kc=;
-        b=kmx8Qtpvt2U6AHq1ZHHzYA1TKknnAPINHfSzPtbgZT2HMmSwzZzIqBNd+4C/e6F1HP
-         MyTRDVJB75og2OkfNGlG/aSzAVN0WqA5LEBEP8/brEzf36mdY3Bh2gbIlyE8yRWoaw4O
-         R9IMbOHUUcHWntUSEFuo3VGxZZhtDXUm7tt6tgcsINpZ7zvLM0gnSQVAdb57RwKd0j78
-         kd3EVQn3ZpOsQdmzrexMoVFVFds9C2E0DAUIJi7SKY81vTbsz7emSsl9FEZ6P6yi4zz9
-         oR0aEYDggWMcFTCzGk3sESvw/10i816CBOutHskn2PkMwpEWGgzCR82SMjAOTVirzFg3
-         /bSQ==
-X-Gm-Message-State: AOAM532rMvng+1ghaxIxU6l4OlcrQCBfP1QIv+UqiO0wCSKgwAOp750O
-        tK7fS6EmypzP0cZ+f8QLaImWP4EI+oiohF5w40I=
-X-Google-Smtp-Source: ABdhPJwsooxZDlfyxzH3zuqNYnJbQTRPd8vQ2CyF6WXCWAwFNoNCEcp8AjSNf1bLJ0VWd8WeU6IFO794YIXnqqIHjUo=
-X-Received: by 2002:a17:906:7c48:: with SMTP id g8mr1293140ejp.138.1614759516979;
- Wed, 03 Mar 2021 00:18:36 -0800 (PST)
+        bh=ua1JRSyjsphEwYR7n69MI7SrbBmia4TKXY/VkXpVr3k=;
+        b=XfSugt32By2PN6EjZzEb6Eb9i8vBnVyrsxlg+uY/MnUUkQ/0tcDj4HCDZAdYkOp7K0
+         fdmGa3Jzs5r7LnNF8n118/L3BVnvPLG6sRkcFLN1hGZKjAInQZAf8z7xmqeIeqwJyyP0
+         sj6/oqkEdHfFiuYreIdPkMEtM2PdlpRWWtll3RCrvttaz89WGl/1pjUCyO6D6kV5nCm8
+         e5ySwf47HZds8Lf1AJXMxE9X8qOWh0Ag5GDFy3EBvedGaYlSIYD5lBHI6M9k7eSnZyKi
+         yDu2AuJbAtYtx7FmHBGfSHUDex+aT0XsZNsllEBH6gpE6Iea3xYn3tNHB514fS25rky4
+         rXDQ==
+X-Gm-Message-State: AOAM5327GszKO0r8sHbq1scpi70WEtdi4tb4lcjNSb9w8yLZL++A522E
+        csb08Bb3PREjGOw1+QKn6vqeA9VherJ7BhIcOHvcLT/u
+X-Google-Smtp-Source: ABdhPJzEmnHSeYjqwkLmoMudqSp0dICNTEYi5F+cjwhR09tfwW9261Ys63YrOq4AH0CKEKfZQ/M4l8QLxoRjDYTP2TQ=
+X-Received: by 2002:a17:906:68c5:: with SMTP id y5mr8535883ejr.371.1614757588604;
+ Tue, 02 Mar 2021 23:46:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-7-charvi077@gmail.com>
- <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com> <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
-In-Reply-To: <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-3-charvi077@gmail.com>
+ <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com> <CAPSFM5dm7vD8pszCG+JKNb7Hu6Zp48wKXaj9ayxe6yaf6swePA@mail.gmail.com>
+In-Reply-To: <CAPSFM5dm7vD8pszCG+JKNb7Hu6Zp48wKXaj9ayxe6yaf6swePA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Mar 2021 03:18:25 -0500
-Message-ID: <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
- fixup=[amend|reword] options
+Date:   Wed, 3 Mar 2021 02:46:17 -0500
+Message-ID: <CAPig+cSJCSLBDumaXvnkdSBTATs62h9EfgtgJu0O7R_PJEumCg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
 To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc:     20210217072904.16257-1-charvi077@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
@@ -57,42 +58,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 3, 2021 at 2:44 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> On Tue, 2 Mar 2021 at 12:09, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Mon, Mar 1, 2021 at 3:52 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > > Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
-> > > +       Without `amend:` or `reword:`, create a `fixup!` commit where
-> > > +       the commit message will be the subject line from the specified
-> > > +       commit with a prefix of "fixup!'". The resulting "fixup!" commit
-> > > +       is further used with `git rebase --autosquash` to fixup the
-> > > +       content of the specified commit.
-
-By the way, now that you explained in the other thread that "short"
-prefix-matching of "amend" and "reword" are allowed, I realize that
-the documentation doesn't mention it (or at least I don't remember
-reading it).
-
-(Nevertheless, I still feel uncomfortable about supporting short
-prefix-matching in the initial implementation without any evidence
-that users will demand it, since we can't change that decision once
-it's in the hands of users.)
-
-> > > +       When the commit log message begins with "squash! ..." (or "fixup! ..."
-> > > +       or "amend! ..."), and there is already a commit in the todo list that
+On Wed, Mar 3, 2021 at 2:37 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> On Tue, 2 Mar 2021 at 03:45, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > +       if (starts_with(sb->buf, "amend! amend!"))
 > >
-> > Should this also be mentioning `reword!`?
+> > Is the content of the incoming strbuf created mechanically so that we
+> > know that there will only ever be one space between the two "amend!"
+> > literals? If not, then this starts_with() check feels fragile.
 >
-> No, as both `amend` and `reword` suboptions create "amend!" commit
-> only. I think it seems a bit confusing but I will try another attempt
-> to reword the document.
+> Yes, so for preparing each "amend!" commit we add prefix "amend! '' to
+> the subject of the specific commit. And further if we amend the
+> "amend!" commit then this above code is checked before creating a
+> "amend! amend!" commit for the user. So I think maybe we don't need to
+> check for multiple spaces ?
 
-Hmm, I see. So "reword!" is really just an "amend!" with only commit
-message but no patch content. That makes perfect sense from an
-implementation standpoint, but it makes me wonder if it would be
-easier for users to understand if it created a "reword!" commit which
-would be recognized as an alias of "amend!". (But maybe that's getting
-too confusing, and my musing should be ignored.)
+Okay, if this is guaranteed to be created mechanically, then what you
+have should work, though it may be a good idea to add an in-code
+comment stating the reason it is okay to expect just the single space.
 
-This also answers an unasked question I had regarding the duplicate
-"amend! amend!" check. I was wondering why it wasn't also checking for
-"reword! reword!".
+The alternative would be to avoid having "amend! amend!" in the first
+place. I didn't trace through the code carefully so I don't know if it
+is possible, but would it make sense for the caller(s) to check before
+adding a second "amend!", thus eliminating the need to do so here?
+(Perhaps I'm misunderstanding, but the above code almost feels like a
+case of "whoops, we did something undesirable, so let's undo it.".)
