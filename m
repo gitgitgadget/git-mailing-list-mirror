@@ -2,87 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B989C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E63C433DB
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35F0964E90
+	by mail.kernel.org (Postfix) with ESMTP id 6413764DDA
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242339AbhCDAXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60656 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359438AbhCCOTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 09:19:33 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E14E9C06178A
-        for <git@vger.kernel.org>; Wed,  3 Mar 2021 06:18:51 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id y12so15943010ljj.12
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 06:18:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:user-agent:mime-version;
-        bh=aFeMjByTtux/1Yc5qn8a1GfzayX9+vizJil+eRJdAUQ=;
-        b=iLTXctb+SVvKDzec/IBWUVktSaroKztrhYegeOqmhjSeJ2kKnYl1/rQKwlztuwgArn
-         Y6tjCklzczA8aJZKpdSmj3UjbzWCCHyND+FJZKthRgT3jUA7T1RxBHEP2GXpy2qytMlQ
-         KvavcWaMosHgniK6ZeiB/haPzj45pv9IdReQSrnClEi3QxnOeUHxkhsVYCwO65wxEYqb
-         R2NBKRGf4JXGJg0TYWxZzsf2YsWI56iUQBQoW9ZDMyfSCEUVZ6t3GKoS6GXpekqKuL7Y
-         +VymdaDhGbd1lxQFqaKz9oXuppC6OKaHXwhQM2AlP/3Dd5gNsvHNZGeY9Z/tYww7S2UI
-         0nRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:user-agent
-         :mime-version;
-        bh=aFeMjByTtux/1Yc5qn8a1GfzayX9+vizJil+eRJdAUQ=;
-        b=mrd0P4Fe5NGSvbqhPGEUk12YCk1gSxkfOhinaCClbHGe09ds5j4Jsi/sJyKh/Oq+ol
-         CIFflGNjcMd3D73TQo5OxlAs66rgjoSQmpIt7BgHik64SouA91k5jXnSVxVl6rnmDCXk
-         3eMRErCfgJfTVipzCksKiNdyvULP+UuRA3xX1cNjqj6kQ8HbEVdCgDNExleG41nYX9q9
-         aCVH4wRtFIqEv3LxykmkTKPsSCSSUpZvADZxL55GypK74CDrawprFsae012p8wIqwSAH
-         K4aL31vRBRvDMX1NjmSKQiemit4XeMqAWnBwDh7mlM8s4Lllo5oldudrhLrDMvVHiEQk
-         Ed7A==
-X-Gm-Message-State: AOAM531nRaIAHita08hnxV31HB8bzQh7vn/gTgyUsYgYJ1xTwr6szxYe
-        NDkE3koaNwB6pvTX9KpaBmbam2WcjGw=
-X-Google-Smtp-Source: ABdhPJzcdMm3z2nuDpl1+RWwwuoWRl72I0+X6m6dcz+kpMsy2W1GlfjUZ5od5HBzJybk8OFl/Ti9ZQ==
-X-Received: by 2002:a2e:8018:: with SMTP id j24mr5813018ljg.188.1614781129700;
-        Wed, 03 Mar 2021 06:18:49 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h10sm3141256ljb.101.2021.03.03.06.18.48
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 06:18:48 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     git@vger.kernel.org
-Subject: git pull unclear manual
-Date:   Wed, 03 Mar 2021 17:18:47 +0300
-Message-ID: <874khsqq0o.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1352912AbhCDAXR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:23:17 -0500
+Received: from siwi.pair.com ([209.68.5.199]:64488 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1448595AbhCCP0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 10:26:35 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 0CFE03F40B7;
+        Wed,  3 Mar 2021 10:25:39 -0500 (EST)
+Received: from ATP-Win2012.bjwce.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id CCEC33F4098;
+        Wed,  3 Mar 2021 10:25:38 -0500 (EST)
+Subject: Re: [PATCH v4 12/12] t0052: add simple-ipc tests and
+ t/helper/test-simple-ipc tool
+To:     Jeff King <peff@peff.net>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
+ <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
+ <09568a6500dde4a592a994b661a7beec23af32b4.1613598529.git.gitgitgadget@gmail.com>
+ <YD4JAvK0epzm9b2y@coredump.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3ad0d153-0f02-341e-1828-688b82a91ecf@jeffhostetler.com>
+Date:   Wed, 3 Mar 2021 10:25:38 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <YD4JAvK0epzm9b2y@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-Here is how "git help pull" begins:
 
-<q>
-NAME
-       git-pull - Fetch from and integrate with another repository or a local
-       branch
+On 3/2/21 4:44 AM, Jeff King wrote:
+> On Wed, Feb 17, 2021 at 09:48:48PM +0000, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> Create t/helper/test-simple-ipc test tool to exercise the "simple-ipc"
+>> functions.
+> 
+> BTW, one oddity I noticed in this (because of my -Wunused-parameters
+> branch):
+> 
+>> +#ifndef GIT_WINDOWS_NATIVE
+>> +/*
+>> + * This is adapted from `daemonize()`.  Use `fork()` to directly create and
+>> + * run the daemon in a child process.
+>> + */
+>> +static int spawn_server(const char *path,
+>> +			const struct ipc_server_opts *opts,
+>> +			pid_t *pid)
+>> +{
+>> +	*pid = fork();
+>> +
+>> +	switch (*pid) {
+>> +	case 0:
+>> +		if (setsid() == -1)
+>> +			error_errno(_("setsid failed"));
+>> +		close(0);
+>> +		close(1);
+>> +		close(2);
+>> +		sanitize_stdfds();
+>> +
+>> +		return ipc_server_run(path, opts, test_app_cb, (void*)&my_app_data);
+>> +
+>> +	case -1:
+>> +		return error_errno(_("could not spawn daemon in the background"));
+>> +
+>> +	default:
+>> +		return 0;
+>> +	}
+>> +}
+> 
+> In the non-Windows version, we spawn a server using the "path" parameter
+> we got from the caller.
+> 
+> But in the Windows version:
+> 
+>> +#else
+>> +/*
+>> + * Conceptually like `daemonize()` but different because Windows does not
+>> + * have `fork(2)`.  Spawn a normal Windows child process but without the
+>> + * limitations of `start_command()` and `finish_command()`.
+>> + */
+>> +static int spawn_server(const char *path,
+>> +			const struct ipc_server_opts *opts,
+>> +			pid_t *pid)
+>> +{
+>> +	char test_tool_exe[MAX_PATH];
+>> +	struct strvec args = STRVEC_INIT;
+>> +	int in, out;
+>> +
+>> +	GetModuleFileNameA(NULL, test_tool_exe, MAX_PATH);
+>> +
+>> +	in = open("/dev/null", O_RDONLY);
+>> +	out = open("/dev/null", O_WRONLY);
+>> +
+>> +	strvec_push(&args, test_tool_exe);
+>> +	strvec_push(&args, "simple-ipc");
+>> +	strvec_push(&args, "run-daemon");
+>> +	strvec_pushf(&args, "--threads=%d", opts->nr_threads);
+>> +
+>> +	*pid = mingw_spawnvpe(args.v[0], args.v, NULL, NULL, in, out, out);
+>> +	close(in);
+>> +	close(out);
+>> +
+>> +	strvec_clear(&args);
+>> +
+>> +	if (*pid < 0)
+>> +		return error(_("could not spawn daemon in the background"));
+>> +
+>> +	return 0;
+>> +}
+>> +#endif
+> 
+> We ignore the "path" parameter entirely. Should we be passing it along
+> as an option to the child process? I think it doesn't really matter at
+> this point because both the parent and child processes will use the
+> hard-coded string "ipc-test", but it seems like something the test
+> script might want to be able to specify.
+> 
+> -Peff
+> 
 
-SYNOPSIS
-       git pull [<options>] [<repository> [<refspec>...]]
-</q>
+Yeah, since it was a test helper I hesitated to add a command line
+arg to pass it to the child process (when all callers were right here
+and using the same default value).  However it would be good to do so
+in case we want to write more complicated tests.
 
-From this, how do one figures how to "integrate with ... local branch"?
-
-Is "git pull" useful to integrate with a local branch at all?
-
-Thanks,
--- Sergey
+Jeff
