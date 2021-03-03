@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0992FC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A806C433E6
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9D2064F14
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3AF4D64E12
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355364AbhCDAXj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:23:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41148 "EHLO
+        id S1355367AbhCDAXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:23:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245229AbhCCTWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 14:22:16 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23ADC061760
-        for <git@vger.kernel.org>; Wed,  3 Mar 2021 11:21:35 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id x20so27191712oie.11
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 11:21:35 -0800 (PST)
+        with ESMTP id S245321AbhCCTWx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 14:22:53 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06D1C061763
+        for <git@vger.kernel.org>; Wed,  3 Mar 2021 11:22:08 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id u3so6506439otg.13
+        for <git@vger.kernel.org>; Wed, 03 Mar 2021 11:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=u+80dJk0KRGs0d1vcGY0/QNjtc+3Bg1JEd5AW28abnM=;
-        b=d7DZy3MmugZJ8wzZwWUUoMWmepsg3HqYK9c+WkFxBM73pU+I32OIYANixOAjtmvYOB
-         +p8DEkVxSbT7DWnudTnuKh0aMpNhpKOR5Cg32cyxznbbZ/QcCRuQw89OPa59JrU3u8vL
-         h4jf7uXfoqAWe+G6P6F6KoBOPX8vMptuobK9wgmOiWaLqINN1uwLs8ZfL9GZqkT1SUfH
-         ykbagZG+ydaqARbH0tFNS+qnuG9j3+oOl62o5qD5Xg9c71pxdTi6iPhvgc3Qa1JuXtPT
-         c9W0M8ytkD2StdyVtMt8qdpYIc0im/CPijoYaFqdd6AV5xJy2hgaNlfFj2ZlROm0rR1k
-         2MJA==
+        bh=1Y3DFa5s1KKv0gVWQQ9zZjpmEZzdOaiH6zu5Jw7aZmM=;
+        b=A/oN2yH6KCkyFxzpeKmxRoYPvP114ZqM17uLSDqifVMkEBI1WMkpHmThL0LRd5azEe
+         vD8nxNJzGLwoNAu10lnXMI6y/dd1INa+tfsafRK7ve0VIdKlfSCr0OqySuh422j/mwXU
+         AoLuH4AijH4gLZE2CE+3sF/o7hf15YEwYJPPRSAWLJnh5clnAptAGfrG+qa9n89HRyut
+         VmqAxwbaQQiXQulvIAw+UvsMOS/zqXSQk6Hkj9Nz2M/Fz6mRyPM+WQJZPIQGycN0zyv2
+         Wa7KaKsHSoIQLZ9LrVnnwXZP/xr/NBgPmyOggwdRj4igxN1+AKuN7lQGTwzKm//07Ssa
+         S/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=u+80dJk0KRGs0d1vcGY0/QNjtc+3Bg1JEd5AW28abnM=;
-        b=cI/Hl9gR3TvnU7vq75LEhDTdgBCRtM1mxm2iOekd1I7ivNi2v1NV/urx5wGC5vT4Z9
-         b8qPNqS67IRyABKctiSD46OnBhQdrHbla11e8iZkETuyLAJN0EOrboNzkAaoQk4VgosK
-         ilbPIuOCnoVer2hOC2/6BA2Wuctud+CkyFUHRqzSF+g+11CafNIPdh603R5EQS38ez3A
-         a81w4DIQBQ0ifC0i9nWcpwd6Z5Ft0Dw+h5mZ7WN798+rYQ+qr7MFCB8Ipfx+rHbjD28a
-         v7Dl5ww1WYA3G6RUk8PV/0irKla29ef+QozIxO8shcckQsbEmrQaN19AsIfxF9wRpCCU
-         aJqg==
-X-Gm-Message-State: AOAM531k/X9KuifiJ7AmbKWKTedQD/a7nU8D8bshhVOg0s4AhZFacwQd
-        OCHd8x8D+RMx+s+Nti+qdlZ9STmCPxFJ6ROy6NM=
-X-Google-Smtp-Source: ABdhPJyXGwokf2c2jJn3w3s5zyRhESCsw1yYtG4HZ9VFlXnfO9UVOVSJnbvwkQ70a35AQux4MkUlWgwKnl03vQmbxTc=
-X-Received: by 2002:aca:a809:: with SMTP id r9mr253660oie.163.1614799295101;
- Wed, 03 Mar 2021 11:21:35 -0800 (PST)
+        bh=1Y3DFa5s1KKv0gVWQQ9zZjpmEZzdOaiH6zu5Jw7aZmM=;
+        b=KVFMAO4VNeCk2VpsuzOTZIpX8uav+ZYGgJqr+Wnv04r23CWeblYSDS9ju8B769r9qJ
+         WGJM61t9JtvlWTxPNiNtVzgDUrHZ00SrqY3vGlkbrctDTaMMbV/IoA47vgiDxAp6oJha
+         X3F3Q8sL2uakN+N5vMrRGIuTuy0O9gsCX3Ybqlt4ZWxTNhI1stRJgFoowuyhpuKseXSg
+         qu7e9rbbGDZEcpiop9pFPCzsQu84YepNgTNnD383W5IVnYnV+GrunvlU7Aeb0FWbInP8
+         pRW9U73gShLViNf/9n6/YH2DDxri+SGWLA1kCJLqMDDfuu6oanHFH3+hvcCs7zaKcGK9
+         lQfg==
+X-Gm-Message-State: AOAM532Wks1i9ZCLdMBz7mLRCXlxnQ8sNqMdyPpQlQRWR/hGaIRYr5BM
+        zU6/cVCbCUL4CHl7oZP65gJhOQc5afRmJ1m6d4+zU2Bg3rs=
+X-Google-Smtp-Source: ABdhPJySyxounAJ6Kecozr8N6h+hyZrxKnKW2Qk0QQE6z9a07qpv880LnhjlxAXRog/IAz10n7OJ/rKk/9GyACm20uM=
+X-Received: by 2002:a9d:6b8b:: with SMTP id b11mr519586otq.210.1614799328362;
+ Wed, 03 Mar 2021 11:22:08 -0800 (PST)
 MIME-Version: 1.0
 References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-3-charvi077@gmail.com>
  <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com>
- <CAPSFM5dm7vD8pszCG+JKNb7Hu6Zp48wKXaj9ayxe6yaf6swePA@mail.gmail.com> <CAPig+cSJCSLBDumaXvnkdSBTATs62h9EfgtgJu0O7R_PJEumCg@mail.gmail.com>
-In-Reply-To: <CAPig+cSJCSLBDumaXvnkdSBTATs62h9EfgtgJu0O7R_PJEumCg@mail.gmail.com>
+ <xmqqlfb6mrnx.fsf@gitster.c.googlers.com> <CAPSFM5fmK_3rFfTbD7o3qCcYYeMXoX7K-HhGorXDPcFseBEDzQ@mail.gmail.com>
+ <CAPig+cQcjUzXpW1OBCiEC3Sr13uyeesqK49KWmgnY1iHNnS2Rw@mail.gmail.com>
+In-Reply-To: <CAPig+cQcjUzXpW1OBCiEC3Sr13uyeesqK49KWmgnY1iHNnS2Rw@mail.gmail.com>
 From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Thu, 4 Mar 2021 00:51:23 +0530
-Message-ID: <CAPSFM5cECFPk180G3aOdqnZ09FogwsBzC_WwO4OFutsjnTXQ7w@mail.gmail.com>
+Date:   Thu, 4 Mar 2021 00:51:57 +0530
+Message-ID: <CAPSFM5eAdfAD+TeLn8f4+1x38g_6r7T=DuyPJf2f-828pwqgyQ@mail.gmail.com>
 Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
  amend! commit
 To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     20210217072904.16257-1-charvi077@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
@@ -74,54 +73,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-
-On Wed, 3 Mar 2021 at 13:16, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, 3 Mar 2021 at 13:27, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> On Wed, Mar 3, 2021 at 2:37 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> > On Tue, 2 Mar 2021 at 03:45, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > > +       if (starts_with(sb->buf, "amend! amend!"))
-> > >
-> > > Is the content of the incoming strbuf created mechanically so that we
-> > > know that there will only ever be one space between the two "amend!"
-> > > literals? If not, then this starts_with() check feels fragile.
+[...]
+> > I am not sure about this because we used the starts_with() so that it can
+> > support the _any_ prefix of `amend` or `reword` i.e to make all below
+> > like combinations possible :
+> > --fixup=a:HEAD~2
+> > --fixup=am:HEAD~2
 > >
-> > Yes, so for preparing each "amend!" commit we add prefix "amend! '' to
-> > the subject of the specific commit. And further if we amend the
-> > "amend!" commit then this above code is checked before creating a
-> > "amend! amend!" commit for the user. So I think maybe we don't need to
-> > check for multiple spaces ?
+> > So, I am not sure if we need to replace it with !strcmp and work for
+> > the specified prefix only ?
 >
-> Okay, if this is guaranteed to be created mechanically, then what you
-> have should work, though it may be a good idea to add an in-code
-> comment stating the reason it is okay to expect just the single space.
+> Hmm, I see. I didn't follow whatever discussion led to the decision to
+> use this sort of prefix matching, but I have to wonder if it is a good
+> idea. Was the idea that it behave similarly to sequencer commands in
+> `git rebase --interactive` which are often abbreviated to a single
+> letter?
+
+Yes, this is also true. Also, same is discussed as here:
+https://lore.kernel.org/git/CAPSFM5cEnex1xaBy5ia_xNFDNzt5_Y=W-6TB9d9yW_AiPAKxDg@mail.gmail.com/
+
+>I personally would feel much more comfortable requiring a
+> full-word match for `amend` and `reword` at initial implementation.
+> That leaves the door open to later loosening it to do prefix-matching
+> if enough people request such a feature, whereas starting with
+> prefix-matching closes that door since we can never later tighten it
+> to require full words.
 >
-> The alternative would be to avoid having "amend! amend!" in the first
-> place.
+> Anyhow, if the decision is to keep this behavior, then it almost
+> certainly deserves an in-code comment explaining the sort of
+> prefix-matching it's doing since it's otherwise too easy for readers
+> to be fooled as Junio and I were by not noticing that you had reversed
+> the arguments to starts_with().
 
-Agree. I think we can do this...
-
-> I didn't trace through the code carefully so I don't know if it
-> is possible, but would it make sense for the caller(s) to check before
-> adding a second "amend!", thus eliminating the need to do so here?
-> (Perhaps I'm misunderstanding, but the above code almost feels like a
-> case of "whoops, we did something undesirable, so let's undo it.".)
-
-I looked into it and got another alternative, to extend the same
-prepare_amend_commit() function and replace the check condition of
-if (starts_with(sb->buf, "amend! amend!")) with the code as below :
-
-const char *buffer = get_commit_buffer(commit, NULL);
-const char *subject;
-find_commit_subject(buffer, &subject);
-if (starts_with(subject, "amend!"))
-const char *fmt = starts_with(subject, "amend!") ? "%b" : "%B";
-format_commit_message(commit, fmt, sb, ctx);
-unuse_commit_buffer(commit, buffer);
-
-So, now it checks the commit subject here only. Otherwise as you have
-suggested above to check before adding a second "amend!", I think that
-can result in confusion as currently both "fixup!" and "amend!"
-commits (commit's subject) are prepared by same code and further for
-"amend!" commit as we write a commit message body also so we used
-prepare_amend_commit() to do that stuff.
+Okay, I will add the comments to it .
