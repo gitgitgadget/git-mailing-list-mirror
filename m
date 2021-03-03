@@ -2,95 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E0AC433E6
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0992FC433DB
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B821664EEC
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9D2064F14
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355359AbhCDAXe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:23:34 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53589 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243665AbhCCSkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 13:40:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1614796708;
-        bh=qESeCAUWhGByyvz/9P19oDywXhWLr4OtpCFTRxvPP/o=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=fZdFI0AKYAGKZ/NpU8AOVzpqsRpuVZ2KvxQ6QW3dQ/wU1O8Rs14g9MerL3cRq+YR8
-         utoAT3YyFaaWrnBON3Oxlb0hjSYwT7x1S35Wcc4+xVqnJFD/rfJSXjfDD1W9TDjIi4
-         vYlzJGvhobpA/nHa53zphNy0jK7uCgb+W305WlLE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az54-159.cu2syw3x4zuejejfhhverhjdaa.cx.internal.cloudapp.net
- ([52.167.218.166]) by mail.gmx.net (mrgmx005 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1N2mFi-1lw3DM2Gui-0139fE; Wed, 03 Mar 2021 19:38:28 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.31.0-rc1
-Date:   Wed,  3 Mar 2021 18:38:26 +0000
-Message-Id: <20210303183826.6350-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.30.1
-Content-Type: text/plain; charset=UTF-8
+        id S1355364AbhCDAXj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:23:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41148 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245229AbhCCTWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 14:22:16 -0500
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23ADC061760
+        for <git@vger.kernel.org>; Wed,  3 Mar 2021 11:21:35 -0800 (PST)
+Received: by mail-oi1-x236.google.com with SMTP id x20so27191712oie.11
+        for <git@vger.kernel.org>; Wed, 03 Mar 2021 11:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u+80dJk0KRGs0d1vcGY0/QNjtc+3Bg1JEd5AW28abnM=;
+        b=d7DZy3MmugZJ8wzZwWUUoMWmepsg3HqYK9c+WkFxBM73pU+I32OIYANixOAjtmvYOB
+         +p8DEkVxSbT7DWnudTnuKh0aMpNhpKOR5Cg32cyxznbbZ/QcCRuQw89OPa59JrU3u8vL
+         h4jf7uXfoqAWe+G6P6F6KoBOPX8vMptuobK9wgmOiWaLqINN1uwLs8ZfL9GZqkT1SUfH
+         ykbagZG+ydaqARbH0tFNS+qnuG9j3+oOl62o5qD5Xg9c71pxdTi6iPhvgc3Qa1JuXtPT
+         c9W0M8ytkD2StdyVtMt8qdpYIc0im/CPijoYaFqdd6AV5xJy2hgaNlfFj2ZlROm0rR1k
+         2MJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u+80dJk0KRGs0d1vcGY0/QNjtc+3Bg1JEd5AW28abnM=;
+        b=cI/Hl9gR3TvnU7vq75LEhDTdgBCRtM1mxm2iOekd1I7ivNi2v1NV/urx5wGC5vT4Z9
+         b8qPNqS67IRyABKctiSD46OnBhQdrHbla11e8iZkETuyLAJN0EOrboNzkAaoQk4VgosK
+         ilbPIuOCnoVer2hOC2/6BA2Wuctud+CkyFUHRqzSF+g+11CafNIPdh603R5EQS38ez3A
+         a81w4DIQBQ0ifC0i9nWcpwd6Z5Ft0Dw+h5mZ7WN798+rYQ+qr7MFCB8Ipfx+rHbjD28a
+         v7Dl5ww1WYA3G6RUk8PV/0irKla29ef+QozIxO8shcckQsbEmrQaN19AsIfxF9wRpCCU
+         aJqg==
+X-Gm-Message-State: AOAM531k/X9KuifiJ7AmbKWKTedQD/a7nU8D8bshhVOg0s4AhZFacwQd
+        OCHd8x8D+RMx+s+Nti+qdlZ9STmCPxFJ6ROy6NM=
+X-Google-Smtp-Source: ABdhPJyXGwokf2c2jJn3w3s5zyRhESCsw1yYtG4HZ9VFlXnfO9UVOVSJnbvwkQ70a35AQux4MkUlWgwKnl03vQmbxTc=
+X-Received: by 2002:aca:a809:: with SMTP id r9mr253660oie.163.1614799295101;
+ Wed, 03 Mar 2021 11:21:35 -0800 (PST)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:GmEBMgULU9ZKY61Q5LSXU0E2PrbJsqcxxyRffA4bBEVp8u8tgZM
- j0dxwpUHj6LPjHouwWIeLNvhuZR1IcoGsdftmb/CdGPcaMTaG6mWANYMGtEmHPrJzcYFXl3
- mrJrhSbZvpK+cOhsJx/oZLEXnN4Y4SwbCvJTY/p3zY1Q278JL2/yIVBxgMfRPWlY6ZIcUCN
- h0kY8LuTWJxxNaoes89UA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kB8qlkDbzZ0=:71I+kSJpsNrQy2Xip9MJjt
- cA0JesNbRYuQWrYVSxOys2/RgAcnZGdsWrihDxqo4AbaCUxCTfjf5NvCw0ATIYk3BA+pjmre9
- cF7Q0LNnQF1H5HSm4KXJzrJAn8H90tol789FE34b7WKmFouPZw9aGMS8xt+8rv7SMjxOSBWmV
- 3apFMkkOIyZ5O1WMW8jje+QD9DdzcyTxxN9Bf6PstPY0hEyBAi+Dpo3W7oHNp07ZG5aVre57R
- s35sV44ZHHQNo1zaULKOQgSGZE4c1w9DxO0b4F3924t1qAWv1Yh4auYajHsVUtgxsNRrYpY5i
- V6WyFxMFRmUGFgci6k2+2J5iX1pWjppb6emV29DNmMkcAyfz9VSumcOsaonw30xIlgpyGfC8G
- vI+Fp0tVgiAhR/NaRgHqJWtXqELjKQlB3s1o+xYJ7WWtRpvoT+XGZ+RK1qswiqYUmiwNiP1AR
- ZZ2/nlf63MbyXfqKvf999GaNvI1nD1oC2LA2GjXQ+HVPvlh7RXrZObufeJdfI4qPst90s5xG7
- tDVc4W6EUGu085aKixRIxc4JxNVx12fFT1oqoSK2iQg5bDuQ0fJeTnbgAPO34Sq3/l/YBfIuR
- y2Av8Cia9K6+UuWIPgfABFeLsj/pdHuHfEHWm2yRtZT22L/7ngpCNgRKavbzC+SFrvotcah/G
- gdlgMfGmCPSIYECq0gJwUogfePzdpYEKtNuWhyb54OWK8aug3p1Blesc114QF1tMaDLHpm5Lr
- 5yutQ5VSU7+jG3HaDKG4qbocuIAp2Rg9y2ahR8N9yA9UFdQfFB4mF/q4CIg7K1qml8XkBn9B6
- bhm52BQqFYP/75UyYKoZic2i693q5oIPc0PHLLIQ/igIOGmm/sNeE2/hMcW1IqGXmuaCzWeMa
- KyFiHk/c9hsJnSmFXA49XtimReUpK155Up7uDoYGw=
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-3-charvi077@gmail.com>
+ <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com>
+ <CAPSFM5dm7vD8pszCG+JKNb7Hu6Zp48wKXaj9ayxe6yaf6swePA@mail.gmail.com> <CAPig+cSJCSLBDumaXvnkdSBTATs62h9EfgtgJu0O7R_PJEumCg@mail.gmail.com>
+In-Reply-To: <CAPig+cSJCSLBDumaXvnkdSBTATs62h9EfgtgJu0O7R_PJEumCg@mail.gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Thu, 4 Mar 2021 00:51:23 +0530
+Message-ID: <CAPSFM5cECFPk180G3aOdqnZ09FogwsBzC_WwO4OFutsjnTXQ7w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     20210217072904.16257-1-charvi077@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Hi Eric,
 
-I hereby announce that Git for Windows 2.31.0-rc1 is available from:
+On Wed, 3 Mar 2021 at 13:16, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Wed, Mar 3, 2021 at 2:37 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> > On Tue, 2 Mar 2021 at 03:45, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > > +       if (starts_with(sb->buf, "amend! amend!"))
+> > >
+> > > Is the content of the incoming strbuf created mechanically so that we
+> > > know that there will only ever be one space between the two "amend!"
+> > > literals? If not, then this starts_with() check feels fragile.
+> >
+> > Yes, so for preparing each "amend!" commit we add prefix "amend! '' to
+> > the subject of the specific commit. And further if we amend the
+> > "amend!" commit then this above code is checked before creating a
+> > "amend! amend!" commit for the user. So I think maybe we don't need to
+> > check for multiple spaces ?
+>
+> Okay, if this is guaranteed to be created mechanically, then what you
+> have should work, though it may be a good idea to add an in-code
+> comment stating the reason it is okay to expect just the single space.
+>
+> The alternative would be to avoid having "amend! amend!" in the first
+> place.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.31.0-rc1.windows.1
+Agree. I think we can do this...
 
-Changes since Git for Windows v2.30.1 (February 9th 2021)
+> I didn't trace through the code carefully so I don't know if it
+> is possible, but would it make sense for the caller(s) to check before
+> adding a second "amend!", thus eliminating the need to do so here?
+> (Perhaps I'm misunderstanding, but the above code almost feels like a
+> case of "whoops, we did something undesirable, so let's undo it.".)
 
-New Features
+I looked into it and got another alternative, to extend the same
+prepare_amend_commit() function and replace the check condition of
+if (starts_with(sb->buf, "amend! amend!")) with the code as below :
 
-  * Comes with Git v2.31.0-rc1.
-  * Comes with PCRE2 v10.36.
-  * Comes with tig v2.5.2.
-  * Comes with OpenSSL v1.1.1j.
-  * Comes with OpenSSH v8.5p1.
-  * Comes with Git Credential Manager Core v2.0.374.5910.
+const char *buffer = get_commit_buffer(commit, NULL);
+const char *subject;
+find_commit_subject(buffer, &subject);
+if (starts_with(subject, "amend!"))
+const char *fmt = starts_with(subject, "amend!") ? "%b" : "%B";
+format_commit_message(commit, fmt, sb, ctx);
+unuse_commit_buffer(commit, buffer);
 
-Git-2.31.0-rc1-64-bit.exe | 4a0d7aedb38ecd5f7739a3fd5e4e1283b2b57915dde2381190ee5d53f17e42b3
-Git-2.31.0-rc1-32-bit.exe | cd074d80b9553eb46686bb4a37ae2ffa58421fee591257e941ca57212517e4f3
-PortableGit-2.31.0-rc1-64-bit.7z.exe | f2d215d33778ac4f33a1c7c5b9e1699d0065e939be6e891ffe760ee3dd74fc86
-PortableGit-2.31.0-rc1-32-bit.7z.exe | 1d61749005cb40903178220c648542b7cc8b46347de3d558bc2538f8cd0474ae
-MinGit-2.31.0-rc1-64-bit.zip | 05f556ab7f3d1463a81b8d08dbd844917bf82720236a7edc8feef9d5df25b6cf
-MinGit-2.31.0-rc1-32-bit.zip | e6129de9071115cb448a2199010be4656ae6a4aee2e50023c4f04f47cc04c75c
-MinGit-2.31.0-rc1-busybox-64-bit.zip | 054fb3fbbc31a2d9fec678ee68eb2bde458a5e51bb74cf0e585f1a5fb6267ea4
-MinGit-2.31.0-rc1-busybox-32-bit.zip | 79df95331ab28a9a2db37965e785ebc966b80fba90b3a07c762969dfbab66b8e
-Git-2.31.0-rc1-64-bit.tar.bz2 | 5933ced6f44dd266d207fde3a5fb093eb897e7b0e68882f911c15d2ae884feb7
-Git-2.31.0-rc1-32-bit.tar.bz2 | 521850caba164d1581ed50de5cbc18270bbca99995bc4c062c12fe70c43a7908
-
-Ciao,
-Johannes
+So, now it checks the commit subject here only. Otherwise as you have
+suggested above to check before adding a second "amend!", I think that
+can result in confusion as currently both "fixup!" and "amend!"
+commits (commit's subject) are prepared by same code and further for
+"amend!" commit as we write a commit message body also so we used
+prepare_amend_commit() to do that stuff.
