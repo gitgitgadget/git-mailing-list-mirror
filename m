@@ -7,83 +7,107 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5797CC433E9
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC1DFC433E6
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D62864E56
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:22:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EDF964E12
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355292AbhCDAWE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:22:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60740 "EHLO
+        id S231800AbhCDAWk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:22:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1579047AbhCCHdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 02:33:54 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660BAC061788
-        for <git@vger.kernel.org>; Tue,  2 Mar 2021 23:33:13 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id s3so22685740otg.5
-        for <git@vger.kernel.org>; Tue, 02 Mar 2021 23:33:13 -0800 (PST)
+        with ESMTP id S1842951AbhCCKW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 05:22:56 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3A6CC0698C2
+        for <git@vger.kernel.org>; Tue,  2 Mar 2021 23:43:15 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id e45so22667295ote.9
+        for <git@vger.kernel.org>; Tue, 02 Mar 2021 23:43:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=vDeMRxSRqbqmAZ/eKxBYkRnY8T35Et356OZqoqgETbU=;
-        b=P7dP485im+Uof4u49q6XIOyXaMrvXk1+BluO5fFDns86u/r6PS6vjXqWbzgzkywAHP
-         6tREoWk6qYJg5ZnOrEzH3Le/p3SUlzFzTWG6XDARTncfR3w6BsUaVHUAMNZhOeUqhd3l
-         zqFcPI3f8vtR9vWrrUGXBbxtKHku41QDWtFdTGWPfbzqG5gIgKTFZ1igbgXdJiu+15it
-         K4Zm9CotXVxeNuRhekc8paiofDcwnZaE5dqp19bhdUjSyOA7nAUM+FUXltITJqdRlHPx
-         /1qqXwtEfOZy9lwl1MkN5NZKS+ebhqgSqapTGthTWfYw6e2ShWJJj+yvTwiK03zo7JhB
-         w92g==
+        bh=b0mk/9Au3bvd9wYZ7Zd5TpHA/IY80v5XsZczaMsCyh0=;
+        b=MRPSReUba5mwBJ92/nOE33c4XNhlziGkqbcjsTEQTLrEVN8ywqyudIRSNenQcEVMBF
+         RbWAJVRwSD2j0CHxEkczvqawygspoUfD+rkXqKU3XzQMAKn1imq4AEPIOibOGUcePAgA
+         7JAEtlC8/27O+FzsrNLCIhm0PwM5Pvgb/g6h5XEcJs+0M+9XdaH9Havje/Nm7SeNzIiO
+         p2W+7ufye1bbFS5yAMgo8fVY3UmhvjkJVur/77WATNxk3gX0+oJ91GhP0BSbUNfWppg6
+         tck0t4xEQCOARo5duk3uxW+xIM1LJE9g4OxOm0zGqqNZcEAeJi8KwF+6d67jPNV4DvGQ
+         2NAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=vDeMRxSRqbqmAZ/eKxBYkRnY8T35Et356OZqoqgETbU=;
-        b=sESAmP6qsBddysDSP+WyFZP4jBCl/ATDerksX0gX7IAqcbjvs2BI3suNP4s5gSnLC5
-         02Z2V2REkdZTZAoIwtkHoTJ3T/uh+zZgIkob8huZJ/rYBnXi4SaI9KvnASuKsNYX1M0d
-         Aldb9RREcox3Jkviust29kvp92LnEnur1tRL9XaQVi6fRk9Dm2xQLKW9y0XfAjzUg9Is
-         Cf+f1Iau1y0smQ7Lrg7ryC7G8bHoiixkG553pZBiCGYvn2JgOcQF3yQKrMdZLYgDWa5f
-         h4As0/ZJfsXboPCiSKHSW6mUOB7/0p6dzURQ3+lNci4RhD5ExHH+n5i9IXA5QNtb0kjh
-         7KDQ==
-X-Gm-Message-State: AOAM533Usy1o2kbzrTyAfRrUnUUIU9EL5vMukqax63yHpe/DprElMzUZ
-        Wn67cJhG/Vd/67+OdfF96YdoXRA3KVRQsetNjWg=
-X-Google-Smtp-Source: ABdhPJwzTuTKYtb3UfI/TWKF2QSgYIA4AF66kLtBz0wZeraGBWlMNtyI9Wh2ske3Y9ZRrj9DnL+zf0SwzYfiBc2PQjE=
-X-Received: by 2002:a9d:6b8b:: with SMTP id b11mr21531239otq.210.1614756792837;
- Tue, 02 Mar 2021 23:33:12 -0800 (PST)
+        bh=b0mk/9Au3bvd9wYZ7Zd5TpHA/IY80v5XsZczaMsCyh0=;
+        b=CFJbcsGI3Ydb/heWCIQLcrPutHfeIkHNeQZnFE2LujD9FyusW76iHSFAUs9oyalSki
+         SxqeI9FzO5W6kQ1rrZssELI71ecBo7ocLXOhKACB0uiWVAVOmk6BpYVJTkMGSI6z7N/U
+         xD3KJxYPb1iIxq/5mAaOwH+21gUv6Ed2TQHCrXJHmieBLDET8A1rSVWIJS8bb6vQxzMe
+         PgBA108ebfdx5AFVO7l2y7iT3nC0+KBIX39CktiyBEv2mvKGtQZpRWpRfW2frh+KMXVN
+         UknNXOI4OHR05NkphVeLvckeQ1f70FjTBzVA5Q3y5WeI2xbbRc0fAnmC542HOaZnAxxt
+         IN3A==
+X-Gm-Message-State: AOAM5324g74sD32DWIfvs7ajypgOqkrtf2cMFISYuQnP5StdySY8cqwR
+        zI7ey04OpwGE3ysQ6jRZ3en5iapEeKMLJ1a3jyg=
+X-Google-Smtp-Source: ABdhPJyP0IsIXGcOt+jV1jfzAs1OiTURf9y47mmr6+dXyMo1OQE6NHp/PC+w5d+Qa7J1FgZSBOd0entJdG+N7pR+S24=
+X-Received: by 2002:a9d:6b8b:: with SMTP id b11mr21555143otq.210.1614757395229;
+ Tue, 02 Mar 2021 23:43:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-4-charvi077@gmail.com>
- <xmqqh7lura1j.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqh7lura1j.fsf@gitster.c.googlers.com>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-5-charvi077@gmail.com>
+ <CAPig+cTVrcWm8pJvnkP4gnWE6B8SKHENjvbAR7Do0ury-ArnaA@mail.gmail.com>
+In-Reply-To: <CAPig+cTVrcWm8pJvnkP4gnWE6B8SKHENjvbAR7Do0ury-ArnaA@mail.gmail.com>
 From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Wed, 3 Mar 2021 13:03:02 +0530
-Message-ID: <CAPSFM5cgwX+NfsJ7Rib9xk0RGhTo4C35s2vTRG_Qxny=mwPk0Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] commit: add a reword suboption to --fixup
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
+Date:   Wed, 3 Mar 2021 13:13:04 +0530
+Message-ID: <CAPSFM5eskkpwB0gN-nr3KBeH31A+K3LRh50daHZ-xhR9EaQpug@mail.gmail.com>
+Subject: Re: [PATCH v3 4/6] t7500: add tests for --fixup=[amend|reword] options
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Christian Couder <christian.couder@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        20210217072904.16257-1-charvi077@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2 Mar 2021 at 00:11, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, 2 Mar 2021 at 11:13, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-[...]
-> > +     if (argc)
-> > +             die(_("cannot combine reword option of --fixup with path %s"), *argv);
+> On Mon, Mar 1, 2021 at 3:50 AM Charvi Mendiratta <charvi077@gmail.com> wrote:
+> > t7500: add tests for --fixup=[amend|reword] options
 >
-> I think our convention is to quote '%s' with a single-quote pair.
-> See other error messages.
+> It's usually preferable for tests and documentation updates to be
+> bundled along with the patch which makes a particular change[1] rather
+> than waiting until the very end of the series and adding tests and
+> documentation covering all the changes made by patches earlier in the
+> series. As a reviewer, it is much harder to tell if the late-added
+> tests and documentation updates are comprehensive since it's difficult
+> to keep in mind all the changes made by earlier patches.
 >
-> commit.c:                       die_errno(_("could not read '%s'"), templat...
-> commit.c:               die_errno(_("could not open '%s'"), git_path_commit...
-> commit.c:       die(_("--author '%s' is not 'Name <email>' and matches no e...
-> commit.c:               die(_("Invalid ignored mode '%s'"), ignored_arg);
-> commit.c:               die(_("Invalid untracked files mode '%s'"), untrack...
-> ...
+> When reading earlier patches in this series, I questioned whether or
+> not certain features of each patch were going to be covered by tests
+> or documentation updates, but I couldn't tell because those updates
+> weren't made at the same time as the change about which I was reading.
+> For instance, when reading the implementation of `--fixup:reword`, I
+> was wondering if the documentation was going to be updated to mention
+> that it would ignore changes staged in the index and leave the index
+> untouched, and I wondered if and hoped that tests would be added to
+> verify that the index was indeed left untouched. Over the course of
+> many patches, it can be difficult to keep track of all the accumulated
+> questions, which makes it onerous to review the final patches adding
+> the tests and documentation updates enmasse.
+>
+> I'm not necessarily suggesting that you re-roll merely to incorporate
+> the tests and documentation updates into the patches to which they
+> belong, but it's something to keep in mind for future submissions.
+>
+> FOOTNOTES
+>
+> [1]: Once in a while a patch introducing a change is so large on its
+> own that it may make sense to split tests and documentation updates
+> out to their own patches which immediately follow the patch to which
+> they apply, but that's different from delaying _all_ tests and
+> documentation updates and plopping them at the end of the series all
+> crammed together.
 
-I admit I forgot to add it. I will fix it.
+Noted. Thanks for guiding, I will take care of it.
