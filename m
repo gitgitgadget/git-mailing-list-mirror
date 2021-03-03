@@ -2,101 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 816C6C43332
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 162D0C43331
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E3F764E12
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE1126146D
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241105AbhCDAXH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:23:07 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50646 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231670AbhCCNmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 08:42:47 -0500
-Received: (qmail 22013 invoked by uid 109); 3 Mar 2021 13:41:31 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 03 Mar 2021 13:41:31 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26961 invoked by uid 111); 3 Mar 2021 13:41:30 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 03 Mar 2021 08:41:30 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 3 Mar 2021 08:41:30 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Joachim Schmitz <jojo@schmitz-digital.de>,
-        Matt Kraai <kraai@ftbfs.org>,
-        "Randall S. Becker" <randall.becker@nexbridge.ca>,
-        git@vger.kernel.org, Aleksey Kliger <alklig@microsoft.com>
-Subject: Re: [PATCH] config.mak.uname: enable OPEN_RETURNS_EINTR for macOS
- Big Sur
-Message-ID: <YD+SCtzmtWgFArwW@coredump.intra.peff.net>
-References: <YDXZY8XFRayiM1If@coredump.intra.peff.net>
- <YDXaJHnZ5LgCj9NX@coredump.intra.peff.net>
- <xmqqzgzuyqli.fsf@gitster.g>
- <YDaY/M3Rw+6xwZlf@coredump.intra.peff.net>
- <YDiRywyld/0OTT5U@coredump.intra.peff.net>
- <xmqq8s7ascby.fsf@gitster.g>
- <YDy0C9sRvboGXQ7P@coredump.intra.peff.net>
- <xmqqczwimnps.fsf@gitster.c.googlers.com>
+        id S1376679AbhCDAWZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:22:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1842736AbhCCILP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 03:11:15 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B954DC061756
+        for <git@vger.kernel.org>; Tue,  2 Mar 2021 23:36:00 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id w65so1393864oie.7
+        for <git@vger.kernel.org>; Tue, 02 Mar 2021 23:36:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=As/l0MeUXW6jGRKruS98oScp5fewA8LOo8h4hl1TeB8=;
+        b=h34C2TYY6QDKLPn7JmawGjbTmVp4CkAFowsUC5FCN3yeUcfu1opmdHa3dJw9zDGX1I
+         Q9Ay5WbdVnP//zMZ4/L+pLfQZLFGxA+6FPjjnGhWMQMPxvXID133/VDe9h5cjYrUmsEd
+         Hx5g4vHNNJ3o8myjBGfV0LTiHCg+xsKIi3/7eqg7LjqQXHa1jmw2KqBVLIrtZ2g81bwN
+         pWCALxyY7UQqELjWE8Dks+NaMv6+j6hyqC2vod6O++CFIeQ76icVS2HNE984BMozdypX
+         Iz24ewncIgg05juNxi6wmVadXR9jCd2GUC8TQK3bygho4GPwGuZzGezH0q3bKouCmYdo
+         4tVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=As/l0MeUXW6jGRKruS98oScp5fewA8LOo8h4hl1TeB8=;
+        b=n/QTtNj40rASFfKCH4/EcD+rA+mEVhES0MEN74Wh7GW7sKQZEsTiTVCrHLoSBoBB2W
+         cEysNfObdDsShy0lgXsLcQKgpd4MhnyukICTX3nSicoSodE+u8i/PshF0Fc27lUPhDnP
+         3GcgHRlIxByp4Pa/5q4r91nDCrSKUo7VE3H1JB235JT0IkCnHxIQSVIJouJhFQp/Kjdw
+         G0AAaAmd5oFTfSfwKFfU7MTuecI+d/HX0ZE3evCGrAB19qR3EOhgsL8WjMtNfhuOA8qj
+         OEuvzdKE0y7aqOY/hozmSaeZwakXpkCOCslPgaZeCNrvLLAKEBCmjl52Nw0BKd/FwBP8
+         oaHQ==
+X-Gm-Message-State: AOAM5302sM8ibdTNgTOb8hqfi44nVs9pyEq6jj+uxioL4mPF0QCYkw6G
+        15ua4ECx0uhlRIff2sb8M/c6KLxS4KO30Pu/es4=
+X-Google-Smtp-Source: ABdhPJz6jYG2nuDUJv5Di03kCpJI+J9jgF9tz/AQqMoBPnYbBUUSgZyGLOTYsZhZ8HMFC/G9fcYKvlEPB+MjcONr7yI=
+X-Received: by 2002:aca:a809:: with SMTP id r9mr6140632oie.163.1614756960109;
+ Tue, 02 Mar 2021 23:36:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqczwimnps.fsf@gitster.c.googlers.com>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-2-charvi077@gmail.com>
+ <CAPig+cSaZ+i+2P0x67BiHLxAGZaggNFK=dHxLJkmOfY8uafS5g@mail.gmail.com>
+In-Reply-To: <CAPig+cSaZ+i+2P0x67BiHLxAGZaggNFK=dHxLJkmOfY8uafS5g@mail.gmail.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Wed, 3 Mar 2021 13:05:49 +0530
+Message-ID: <CAPSFM5eqspjRbQa-i+W5q+NkggaSuBhYVqu6uQrU1KBMxh1Ceg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] sequencer: export subject_length()
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     20210217072904.16257-1-charvi077@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 03:57:35PM -0800, Junio C Hamano wrote:
+On Tue, 2 Mar 2021 at 01:55, Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I got another off-list report of the problem. I think we probably want
-> > to do this on top:
-> 
-> Queued and pushed out.
+> Now that this function is public, is the name too generic? Most other
+> functions in this header have "commit" in the name. So,
+> commit_subject_length() might be one possibility (assuming the current
+> name is too generic).
 
-Thanks. I guess we're a bit late to make it into the upcoming release.
-Certainly we have survived for many years without this particular
-bugfix, so in that sense it is not urgent. But I do wonder if we will
-see more reports as more people start using the new macOS release. So it
-might be good to keep in mind for maint, if we cut a minor release.
-
-Or alternatively, we could include _just_ the first patch. That's low
-risk, since you have to enable to knob yourself, but it gives people an
-option if they run into the symptom. But even that is probably not that
-urgent. People can also cherry-pick the patch, after all (and a
-distributor like homebrew can probably include the patch in their recipe
-if need be).
-
-> I wonder if these hits for SA_RESTART in config.mak.uname would be a
-> good way to guide us.
-> 
->     [6c109904 (Port to HP NonStop, 2012-09-19)]
->             # Not detected (nor checked for) by './configure'.
->             # We don't have SA_RESTART on NonStop, unfortunalety.
->             COMPAT_CFLAGS += -DSA_RESTART=0
-> 
->     [40036bed (Port to QNX, 2012-12-18)]
->     ifeq ($(uname_S),QNX)
->             COMPAT_CFLAGS += -DSA_RESTART=0
-
-I'm inclined to leave them alone until somebody with access to such a
-system can look further into it. After all, if you do not have
-SA_RESTART, you might not even have EINTR in the first place.
-
-> One caveat is that we do not know if their system headers hide the
-> real implementation of open(2) behind a C preprocessor macro, in
-> whcih case OPEN_RETURNS_EINTR wrapper may not work correctly.
-
-Yeah. I didn't think about that when I did the original "just do it
-everywhere" patch. But that is exactly what caused the problem on
-Windows (not a system macro, but in fact our own!). So I'm glad to have
-backed it off to a Makefile knob.
-
--Peff
+Agree, I will change it and update the patch. Thanks for this fix.
