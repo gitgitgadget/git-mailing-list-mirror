@@ -2,152 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6E63C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAB21C433E6
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6413764DDA
+	by mail.kernel.org (Postfix) with ESMTP id AD7D164F02
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352912AbhCDAXR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:23:17 -0500
-Received: from siwi.pair.com ([209.68.5.199]:64488 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1448595AbhCCP0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 10:26:35 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 0CFE03F40B7;
-        Wed,  3 Mar 2021 10:25:39 -0500 (EST)
-Received: from ATP-Win2012.bjwce.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id CCEC33F4098;
-        Wed,  3 Mar 2021 10:25:38 -0500 (EST)
-Subject: Re: [PATCH v4 12/12] t0052: add simple-ipc tests and
- t/helper/test-simple-ipc tool
-To:     Jeff King <peff@peff.net>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
- <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
- <09568a6500dde4a592a994b661a7beec23af32b4.1613598529.git.gitgitgadget@gmail.com>
- <YD4JAvK0epzm9b2y@coredump.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <3ad0d153-0f02-341e-1828-688b82a91ecf@jeffhostetler.com>
-Date:   Wed, 3 Mar 2021 10:25:38 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S1355319AbhCDAXT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:23:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47340 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234831AbhCCP2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 10:28:30 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DC3C061760
+        for <git@vger.kernel.org>; Wed,  3 Mar 2021 07:27:22 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id q85so24305955qke.8
+        for <git@vger.kernel.org>; Wed, 03 Mar 2021 07:27:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Bmz7bo1UdYH+cuLhX7XtgLV8nuzBCUyj+ldZh/QrXsA=;
+        b=jf/0ZgPuMbihyIdrVT3rzWiK8tIwl68p60ssrh/aL4il5lcHM5W8N16fAwzd2OdDkV
+         fMQqlkjQ1NJgxjDHj/kBF02WFzWvw5N/kIaVgP7FheTIbro95QnIGhbwiH1K6TfpvAZn
+         5R0/fjklt2AECkoIvRSEzLGfYnv/CJNncT4T34q0iepKGMpNDdx0JZfR7M4epcMxCEAS
+         had0i3x8LijBDXWQo3ZLGWmBeWtvyr81nWuIFAT16T6gKao4xR8WdOZ4VwEcvxShG69k
+         N/I0j30635dDGo09DNcG0IVEpi4NuaiyWAKda5c39xztfLgJwgjL5k0VWaYtnYuTMYMb
+         n16g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Bmz7bo1UdYH+cuLhX7XtgLV8nuzBCUyj+ldZh/QrXsA=;
+        b=BFGPdUcHpY4FxaKWdi4Jy8naGlg79CReN1N9k0i0E7BHtRNVW39CYoGFyLreNyZQyV
+         wZmOWoAl6MSgbqeIkUmTALKK4xmZDcWomYl6eOZm0R6TRKDp6WAx83OJDykPtj92dncR
+         dE/LoD5PitKkVFAdYt0gCUJaTrCdqWPNuAXgEUFikZaULoC0hdPSNWstamKSr2UFi5p5
+         JfCNmz78tMvAmvIObrhj1IYzlcfypwmTpCvjsyxjHXruBly9Rcp9RQ6syGPhdfagtD29
+         eutGiZzOsvZcAzvA4KKKftfWXwgSEGddIlAh67vDgvw8RSsDU1I9FD8SCqN+WuqKmtu9
+         5yQg==
+X-Gm-Message-State: AOAM533ussaedqrlws4ZnAOuweePuuqvdPrGC9R/50lU3xauj10FYHYM
+        5mQaXeHYjJRfjVD1aX5W5N+Vdw==
+X-Google-Smtp-Source: ABdhPJx3R2/g965ThQRr9K3VBREtZvHD+LsmVrLqfwYj72Gfv/19BdyCBpW3scf0eRW9LBNuMYOwZw==
+X-Received: by 2002:a05:620a:2013:: with SMTP id c19mr24014039qka.403.1614785242018;
+        Wed, 03 Mar 2021 07:27:22 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:7fe2:f960:a24a:8111])
+        by smtp.gmail.com with ESMTPSA id z65sm15567520qtd.15.2021.03.03.07.27.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Mar 2021 07:27:21 -0800 (PST)
+Date:   Wed, 3 Mar 2021 10:27:18 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
+        avarab@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v2 13/15] pack-revindex: read multi-pack reverse indexes
+Message-ID: <YD+q1lmA8lFzDMT2@nand.local>
+References: <d4e01a44e72998f88dc253cd04845ac2e6bb165b.1614193703.git.me@ttaylorr.com>
+ <20210302183620.11040-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <YD4JAvK0epzm9b2y@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210302183620.11040-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Mar 02, 2021 at 10:36:20AM -0800, Jonathan Tan wrote:
+> > midx_to_pack_pos() is the trickiest, since it needs to find an object's
+> > position in the psuedo-pack order, but that order can only be recovered
+> > in the .rev file itself. This mapping can be implemented with a binary
+> > search, but note that the thing we're binary searching over isn't an
+> > array, but rather a _permutation_.
+> >
+> > So, when comparing two items, it's helpful to keep in mind the
+> > difference. Instead of a traditional binary search, where you are
+> > comparing two things directly, here we're comparing a (pack, offset)
+> > tuple with an index into the multi-pack index. That index describes
+> > another (pack, offset) tuple, and it is _those_ two tuples that are
+> > compared.
+>
+> Well, the binary search is indeed over an array :-)
 
+:-). This might be more clearer as:
 
-On 3/2/21 4:44 AM, Jeff King wrote:
-> On Wed, Feb 17, 2021 at 09:48:48PM +0000, Jeff Hostetler via GitGitGadget wrote:
-> 
->> Create t/helper/test-simple-ipc test tool to exercise the "simple-ipc"
->> functions.
-> 
-> BTW, one oddity I noticed in this (because of my -Wunused-parameters
-> branch):
-> 
->> +#ifndef GIT_WINDOWS_NATIVE
->> +/*
->> + * This is adapted from `daemonize()`.  Use `fork()` to directly create and
->> + * run the daemon in a child process.
->> + */
->> +static int spawn_server(const char *path,
->> +			const struct ipc_server_opts *opts,
->> +			pid_t *pid)
->> +{
->> +	*pid = fork();
->> +
->> +	switch (*pid) {
->> +	case 0:
->> +		if (setsid() == -1)
->> +			error_errno(_("setsid failed"));
->> +		close(0);
->> +		close(1);
->> +		close(2);
->> +		sanitize_stdfds();
->> +
->> +		return ipc_server_run(path, opts, test_app_cb, (void*)&my_app_data);
->> +
->> +	case -1:
->> +		return error_errno(_("could not spawn daemon in the background"));
->> +
->> +	default:
->> +		return 0;
->> +	}
->> +}
-> 
-> In the non-Windows version, we spawn a server using the "path" parameter
-> we got from the caller.
-> 
-> But in the Windows version:
-> 
->> +#else
->> +/*
->> + * Conceptually like `daemonize()` but different because Windows does not
->> + * have `fork(2)`.  Spawn a normal Windows child process but without the
->> + * limitations of `start_command()` and `finish_command()`.
->> + */
->> +static int spawn_server(const char *path,
->> +			const struct ipc_server_opts *opts,
->> +			pid_t *pid)
->> +{
->> +	char test_tool_exe[MAX_PATH];
->> +	struct strvec args = STRVEC_INIT;
->> +	int in, out;
->> +
->> +	GetModuleFileNameA(NULL, test_tool_exe, MAX_PATH);
->> +
->> +	in = open("/dev/null", O_RDONLY);
->> +	out = open("/dev/null", O_WRONLY);
->> +
->> +	strvec_push(&args, test_tool_exe);
->> +	strvec_push(&args, "simple-ipc");
->> +	strvec_push(&args, "run-daemon");
->> +	strvec_pushf(&args, "--threads=%d", opts->nr_threads);
->> +
->> +	*pid = mingw_spawnvpe(args.v[0], args.v, NULL, NULL, in, out, out);
->> +	close(in);
->> +	close(out);
->> +
->> +	strvec_clear(&args);
->> +
->> +	if (*pid < 0)
->> +		return error(_("could not spawn daemon in the background"));
->> +
->> +	return 0;
->> +}
->> +#endif
-> 
-> We ignore the "path" parameter entirely. Should we be passing it along
-> as an option to the child process? I think it doesn't really matter at
-> this point because both the parent and child processes will use the
-> hard-coded string "ipc-test", but it seems like something the test
-> script might want to be able to specify.
-> 
-> -Peff
-> 
+  ...isn't an array of values, but rather a permuted order of those values.
 
-Yeah, since it was a test helper I hesitated to add a command line
-arg to pass it to the child process (when all callers were right here
-and using the same default value).  However it would be good to do so
-in case we want to write more complicated tests.
+> The patch itself looks good.
 
-Jeff
+Thanks.
+
+Taylor
