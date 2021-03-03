@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC92FC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ECAEC43142
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:27:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9259464EBA
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:26:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD58564E6C
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382487AbhCDAYL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:24:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60874 "EHLO
+        id S1355382AbhCDAXt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:23:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59739 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238923AbhCDAAC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 19:00:02 -0500
+        with ESMTP id S1387902AbhCCTe5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 14:34:57 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D8C2BEBCC;
-        Wed,  3 Mar 2021 18:59:21 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8399CBD2B0;
+        Wed,  3 Mar 2021 14:29:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GRydcKcYZaGsGpyvx6jbXwg2yds=; b=pM5cNN
-        JOfmmF8zCeid52nZsZpC+7mBxBRYrRTRCCo2MjJO/N6X4lIIpdpAfSnrX6fIVeD4
-        uibm/7zF/DU9M5ud44eSKc98gIHmxOUPGldC3gn3TG8AdIJp1Sc0k7FF/ez7ezDE
-        6Wko6MYX3o/RRTKpIIwiIHP5F1LY/CgakEXvc=
+        :content-type; s=sasl; bh=ivaAsbUjw5+lehF6K47apihi5JE=; b=EeGlUB
+        c4aBPr7f/SiKulGCu6OtzSV2YrOGBA9AMwKjUSi2pGSVOjDmtZP5iPeCfGP/J6Ic
+        ovCEhDnFomr2Y1jTQtMv9Slhl7J2lT3a3FhYxZepa3zQmrrEJAecZEj5uqD8GwZh
+        uYw35sj+/T2OkBLTuUZsa0E5C5Rgqk8OZctNM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LIXtRGtlIbRtnT67aw+o9YZxF5xphZns
-        NHAHYVqeHaEEsuUnvneYSTQJ6GqGrAwVhLc/PqvBuhpItIWrEhAvU7x5VyxqRaoR
-        F/UH8iSKmT4XUc6ikJuP/WPK7ankSLEs3H3qrq0NYnwJ5n7+zUSbdydHei3WIsYv
-        MVAwDxUTt3Y=
+        :content-type; q=dns; s=sasl; b=MluIJoFS5gIKZM8hnBH37OEDrTjfmoc/
+        u+MIxKgNVT5t/sYKk57cVubPtHipSBV8J5CSCvwD4cyzuN9NpZPZZX9H0mywUtCu
+        Xm2uMmyQQ0Wu5aRdjfIFIrQGASPgm+wN7m/42o1syLn4ZAjVJc/BlEeNgTKrExao
+        dNky7wjA8zQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 833DEBEBCB;
-        Wed,  3 Mar 2021 18:59:21 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 77888BD2AF;
+        Wed,  3 Mar 2021 14:29:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0F41DBEBCA;
-        Wed,  3 Mar 2021 18:59:21 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E181CBD2AE;
+        Wed,  3 Mar 2021 14:29:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, stolee@gmail.com,
-        johannes.schindelin@gmx.de, lilinchao@oschina.cn
-Subject: Re: [PATCH v4] builtin/clone.c: add --reject-shallow option
-References: <xmqq35xo7yzy.fsf@gitster.g>
-        <20210301220319.3426185-1-jonathantanmy@google.com>
-Date:   Wed, 03 Mar 2021 15:59:20 -0800
-In-Reply-To: <20210301220319.3426185-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 1 Mar 2021 14:03:19 -0800")
-Message-ID: <xmqqy2f3hjqf.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1?= =?utf-8?Q?bor?= 
+        <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 00/12] Simple IPC Mechanism
+References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
+        <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
+        <xmqq8s7cuebo.fsf@gitster.g>
+        <YDiqeaNX/BeROFGf@coredump.intra.peff.net>
+        <ff2eb93c-9b96-6fec-961b-adbe0fbda6fb@jeffhostetler.com>
+        <YDlfDZcMkcfJ8N7e@coredump.intra.peff.net>
+Date:   Wed, 03 Mar 2021 11:29:08 -0800
+In-Reply-To: <YDlfDZcMkcfJ8N7e@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 26 Feb 2021 15:50:21 -0500")
+Message-ID: <xmqq8s74jat7.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 78E29E5C-7C7C-11EB-98F3-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B9B28382-7C56-11EB-A96E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> This is true with protocol v0, but protocol v2 bundles all shallow
-> information (whether coming from the fact that the remote is shallow or
-> the fact that the fetcher specified --depth etc.) and sends them
-> together with the packfile.
+> And by "not interested" I don't mean that I think the topic is without
+> value. Far from it; I think this is an important area to be working in.
+> But it's complex and time-consuming to review. So I was hoping somebody
+> with more expertise and interest in the problem space would do that part
+> of the review, and I could continue to focus on other stuff. That may be
+> wishful thinking, though. :)
 
-By the above do you mean what happens in FETCH_GET_PACK arm where
-receive_shallow_info() is called when "shallow-info" header is seen,
-before the code continues to process wanted-refs, packfile-uris and
-then finally the packfile?
-
-I do not think it makes much sense to ask any option to make us
-shallow (like --depth=<n>) while --reject-shallow is in use (after
-all, if the other side is deep enough to make us <n> commits deep,
-there is no reason to reject the other side as the source), so your
-"whether coming from the fact ..." part, while is a valid
-observation, can be ignored in practice (meaning: it is OK to make
-"--reject-shallow" be in effect only when we are trying to make a
-full clone, and reject combinations of it with --depth=<n> and such
-at the command parsing time).
-
-> It may be possible to stop packfile download (saving bandwidth on
-> the client side, at least) once such information is returned,
-> though.
-
-Just like "upload-pack" does not get upset by a client that comes
-only for the initial refs advertisement and disconnects without
-asking for any "want" (aka "ls-remote"), the server side should be
-prepared to see if the other side cuts off after seeing the
-"shallow-info" section header or after seeing the the whole
-"shallow-info" section, so we should be able to leave early without
-having to download the bulk data.  If the "upload-pack" spends
-unnecessary cycles when it happens, then we need to fix that.  Even
-if the "fetch" client does not willingly disconnect in the middle,
-the network disconnect may happen at any point in the exchange, and
-we'd need to be prepared for it.
-
-Do we need to read and parse the "shallow-info" section, or would
-the mere presense of the section mean the other side knows this side
-needs to futz with the .git/shallow information (either because we
-asked to be made shallow with --depth and the like, or because we
-tried to clone from them and they are shallow)?
-
-Thanks.
-
+I was not paying close attention to this series, and was planning to
+visit it before merging it to 'next' but only to ensure that changes
+to any existing code would not regress existing callers, so it seems
+that we two have been with pretty much the same attitude;-)
