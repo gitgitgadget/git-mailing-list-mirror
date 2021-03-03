@@ -2,77 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82A9FC43142
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 663F3C43603
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:26:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49BBC64E12
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:24:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3613F64E68
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:26:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235125AbhCDAYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:24:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44274 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353082AbhCDADH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 19:03:07 -0500
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABC0EC06178C
-        for <git@vger.kernel.org>; Wed,  3 Mar 2021 15:45:34 -0800 (PST)
-Received: by mail-qt1-x849.google.com with SMTP id k15so8358047qtx.15
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 15:45:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=OdCeLpO7fqCuTeCSWq9Bkc+hVrbLJ5krU3iWiw33THA=;
-        b=SZZnY4JeCfCJYqEfl3LK9Sw3t1PAtS3A+8Aet965tAbPe44Uat4EFHv9tlzEOGD9eq
-         Z16zeNhmMgQVraiynnz2qYWBkz+9VKU5s5XHXy15mCimx3FZnQUU6EO5pB4OY2MngemR
-         5IRkPg21qayybwkx9JgdLSPfpqowiUIV7i8nzN38BOMU+xBOadxkHBxeF6r9dL9YYFmT
-         6tAaJzPBDgO95rlmUddyVuA+Qr8460HiJGmABR4nmXTXk1Pklx/EA1mdBKXdhaw0bJoI
-         6n4MtJl5q6ES+JXX5grxisRVH8qP+FP+0XbpssKuBrcJFjourPZgNIXlNQUSpS6tOH+q
-         foyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=OdCeLpO7fqCuTeCSWq9Bkc+hVrbLJ5krU3iWiw33THA=;
-        b=c4OhJ7Mrei1xHf0EU5qBo8eDZhfWNZ4x+9fd7Nj1HHTcPF+w5EqwSqsP31bmBKX7ER
-         EcexUCKG1b87gSsBimWt8VjJlSLKeSsnyCimlS51eWf7G7cVzMUjbzPTyjGMDx3N3ifk
-         /D8mOikkdgcmH34GPaSZpV1g9oujlfteQ82Jb87lGa4caYQPjW6i5Ge2Ci3d+HfDvxbR
-         NaffqouCivqXSxRHLAse7lPrXd9QMys3QiuLlzGZGorkBc+wRom/t4gHLiDyLe0xWQz2
-         vbSUVURhUtBODM/QyWlqGLGcrgekrJe9pLx75qvNTWnMcZKPk0nJT9kZNzFxU6oMfI7c
-         3KDA==
-X-Gm-Message-State: AOAM5313aZnJwqOoXHrlZI49RcZnXKvHrCow2nl4/IZF6qelNSROSN8W
-        hIWQbCncm1Fa7FD0FYUaIapJOqAW6vIwSsqEM+fE
-X-Google-Smtp-Source: ABdhPJwB/UYYdEosn+tv+4Yeb2mEeKefN8c6qJEVf4VKd/mD5/dxo0dyS2bjE/cx6KhxW2X5QI/y5L6tjxPRxBltcmLS
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0c:bf12:: with SMTP id
- m18mr1449671qvi.40.1614815133888; Wed, 03 Mar 2021 15:45:33 -0800 (PST)
-Date:   Wed,  3 Mar 2021 15:45:30 -0800
-In-Reply-To: <CA+cU71=FfReSG411Feo=vmkw4MdK4KDgokP1jH6uwOkC_0AbYA@mail.gmail.com>
-Message-Id: <20210303234530.3122368-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CA+cU71=FfReSG411Feo=vmkw4MdK4KDgokP1jH6uwOkC_0AbYA@mail.gmail.com>
-X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: Re: Can I convince the diff algorithm to behave better?
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     tom@ritter.vg
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S231989AbhCDAYM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 19:24:12 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33514 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233401AbhCDAAQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 3 Mar 2021 19:00:16 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F2DA560DF4;
+        Wed,  3 Mar 2021 23:59:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1614815975;
+        bh=PGa+Cis4K+w7FxYa/S//meNHi2sSMJbn7wendwUQqLg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Ec4lpZrXv2waCq6Qfj+gSMDzlquE6MXPYF2DZJzri+tIZ3KrMV5uBfXeQi5DH9B4X
+         e85ea1GckoDDeI3l9xQK1NTZumtqRigWdDaBG3PX/9AHAtdAFYH0yvDSABIzZ99ipP
+         WEqH7UPq2xqwf5yAOFhTgIEnKz3xdCq66jQDF7qOslhQsAR7LLK4BGffvGVgSMZYuJ
+         wextc86mGOtqOiKMaFhUDT20ih9jyBCB4RDWHKvb0AsSqJWdL2/CfYqeJb+mlOwp1A
+         Ed9tQzC4wwliaBHnIaHxjCObzBy7mkg01cBe5bKuM3IW2/vIzd+iRbRKyi4kbGwdGl
+         1IcOQJA/qmtAGyZjlR1/rP6PS+5pa5/o+9f67gicVj/YJoO5p8SxMfCDTn8CtabvKX
+         Z5al5kzcZbQK1Kyt7LbAlPVdIxyXPnojTqSdY2rYOubmx+Xo7ZBNC+Boe7A3rzkg95
+         /ak0dATbFM5bq4VpEwq4tmub1j2P0r3W0u1xz/X6fyVkBZhvHn5
+Date:   Wed, 3 Mar 2021 23:59:28 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Vusich, Joseph" <jvusich@amazon.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: bug: conflicting core.bare setting causes segfault during bare
+ clone
+Message-ID: <YEAi4OkkNnp+IMJD@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Vusich, Joseph" <jvusich@amazon.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rXMaVlYZg8teHd0E"
+Content-Disposition: inline
+In-Reply-To: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I know that git includes four diff algorithms; in my testing patience
-> or histogram exacerbated the problem; and none of them improved upon
-> it.  If anyone has suggestions I'd be curious to know if there's
-> anything that could be done...
 
-In your particular case, I can't think of anything, but in general, if
-one of the lines weren't repeated, you might be able to use the
---anchored option.
+--rXMaVlYZg8teHd0E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2021-03-03 at 00:06:01, Vusich, Joseph wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> $ env | grep GIT
+>=20
+> $ git config --list
+> user.email=3Djvusich@amazon.com
+> user.name=3DJoseph Vusich
+> core.bare=3Dfalse
+>=20
+> $ git clone --bare https://github.com/josephvusich/fixture
+> Cloning into bare repository 'fixture.git'...
+> zsh: segmentation fault  /opt/local/bin/git clone --bare https://github.c=
+om/josephvusich/fixture
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> "git clone --bare" should clone a bare repository, regardless of the core=
+=2Ebare setting in the global config
+>=20
+> What happened instead? (Actual behavior)
+>=20
+> "git clone --bare" causes a segfault if the global gitconfig has core.bar=
+e=3Dfalse
+
+I appreciate the report, and I can reproduce with 45526154a5 from next.
+We should definitely not segfault in this case.  I completely agree that
+segfaulting is the wrong behavior (because it's always the wrong
+behavior for a command-line tool).
+
+I do, however, think we should either ignore core.bare in the global
+configuration, if we don't already, or produce an error.  The
+documentation says, "If true this repository is assumed to be bare" and
+much like we ignore certain other settings outside of .git/config, we
+should ignore this one.
+
+I also agree that "git clone --bare" should clone a bare repository
+since we'd ignore the global setting.
+
+I'm probably not going to get a chance to look at this before the
+weekend, so anyone is free to come up with a patch in the meantime, but
+if nobody has gotten to it then, I'll try to send out a patch.
+
+I will admit being a bit interested in how this was discovered, since it
+seems like an odd configuration to have, so if you can share, I'd
+appreciate it, if only to satisfy my curiosity.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--rXMaVlYZg8teHd0E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYEAi4AAKCRB8DEliiIei
+gRlMAP948fVIKVW2xrfPqJNk/ZXy4XqKeRDap2jlKqB6S38teAEAr+BUpYFqGWHx
+eDa4BpRWGPXELKNj8Oa4xEaolgsc6wg=
+=TmRG
+-----END PGP SIGNATURE-----
+
+--rXMaVlYZg8teHd0E--
