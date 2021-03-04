@@ -2,126 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 306E7C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 22:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95244C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 22:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07F8B64FF3
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 22:51:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6849564FF3
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 22:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232498AbhCDWvg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 17:51:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58988 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbhCDWvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 17:51:36 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74AD0C061574
-        for <git@vger.kernel.org>; Thu,  4 Mar 2021 14:51:34 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id a18so21225889wrc.13
-        for <git@vger.kernel.org>; Thu, 04 Mar 2021 14:51:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=gZcXrUoRXW7PQ7dE3CbX1ne++k2BYVgDIeMkV1MIwYM=;
-        b=uqBUAKrjeP9yXNXn0e4B46ViEWjRYURQ9M9r44dFuiyG5oIieLzmfydRiB8B9HKwAm
-         h1yHvYkfu6087MDpPsBELZ0jFJRBoeNcUiTNn22MwI4a7LmOumfYSxAISZXy0O7y+yiA
-         /3DaReWBy4+xIvygkA5YiQzIB40DUu/hDTvzvchn4ROfXY0CqeYTfgZnO7G4YNLYBVGU
-         LoKxKF7ctsAWN6UXufX87GXgrAhjmnkRov1rNBX23G4uku9JLSNYHFX+DwaJh+WIZzRm
-         sG/cF3yDr74cC66E2nLGbC5FdZBo0IqUSbmNWNaHlECjP0q2G+uS96Ke6dJzmQZO/t7S
-         9xMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gZcXrUoRXW7PQ7dE3CbX1ne++k2BYVgDIeMkV1MIwYM=;
-        b=DCJVFdmQSKcvbuMcPACBbCtsFfSwnlEUdRdzQnCluGFioQSyDb+FKvVxuJ9/5atiMG
-         yI4soi38VoqWJ0K+J58/Tui4VGf2ocXLiOFGrsNDfqR0dRRUvMlnVG1qYj8YSa0D5r9U
-         vfn4WtWHR5+LWNRlvOoAzcE/WO/3OmyeQuShFOdZqHM1I23crH4lLL2h8SV0vpZ0PIqU
-         oMzO7mwteZsM8XE6OVkoQ+ZikgqMd74PM2Eq70+fILK2HM8YSsfNb3OnNwf95vt2uFvh
-         McyAkhQT5wsH8GYDgCc6ZuiVC1RXFAY4WOzEBT6LD3Xnx7ulxm20alo7m0O1mESXGnH9
-         riNw==
-X-Gm-Message-State: AOAM532a1BI2RaDkEF/xZk1loHqjGQrasDWQar4xgjB82fX7Eq9GDN2c
-        0TKxY533Nm+5fvdcCYgQuZVUDmr5TmM=
-X-Google-Smtp-Source: ABdhPJyUST+Lx/wSzCm1u2YEXJbsj5kH3khrbxxQliVtIpGW1VKhyhNt9+/0GgGSlS4TcmAqlHKFEQ==
-X-Received: by 2002:a5d:6304:: with SMTP id i4mr6090238wru.155.1614898293295;
-        Thu, 04 Mar 2021 14:51:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w25sm1276081wmc.42.2021.03.04.14.51.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Mar 2021 14:51:33 -0800 (PST)
-Message-Id: <pull.974.git.git.1614898292503.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 04 Mar 2021 22:51:32 +0000
-Subject: [PATCH] Documentation/RelNotes: improve release note for rename
- detection work
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S232702AbhCDWzL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 17:55:11 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64341 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229505AbhCDWzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 17:55:11 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC45DA8DA0;
+        Thu,  4 Mar 2021 17:55:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=o1DZ8rOEaw4wPmHEvc7P9EvgDNE=; b=TDyLl9
+        Mm0JaCtAShrZ0sTP8XzFS3dXCBZ7RZuBcph42C72W3D1Dcbbg02ZHJwIO5Xsn1YE
+        ex5qJ/ApW7xjNLGt9B3xNT/XvM/6NBlrINRdPvH7x0ROTT0Z2L4O3AbBaYvTWWe8
+        WZHfFGSOFwqZZl9YB15UBSbzS5n0VZ+h6KHnw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Z31Hfsoz9XzDdPPHIzua+ZIKFzvAvTGu
+        zy5ep+QkG9FtA89/HrfyYdJSOkQEQ+HlSy16VaS9fVHQAp2uChDODr64K6EKoJ5z
+        skLGsuFktyGHpF78XWbCxdyFfK4yL8XMkphn9RdS9wgCfyMm7lckl4ausokuiDVG
+        YHw6XPL/lmA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E1DDDA8D9F;
+        Thu,  4 Mar 2021 17:55:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B523A8D9E;
+        Thu,  4 Mar 2021 17:55:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/8] pkt-line: remove buffer arg from
+ write_packetized_from_fd_no_flush()
+References: <pull.893.git.1614889047.gitgitgadget@gmail.com>
+        <d6ea7688dfb2536312b627f7ed47ff7f42091f60.1614889047.git.gitgitgadget@gmail.com>
+Date:   Thu, 04 Mar 2021 14:55:09 -0800
+In-Reply-To: <d6ea7688dfb2536312b627f7ed47ff7f42091f60.1614889047.git.gitgitgadget@gmail.com>
+        (Jeff Hostetler via GitGitGadget's message of "Thu, 04 Mar 2021
+        20:17:20 +0000")
+Message-ID: <xmqqh7lqcywi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: AC1B8836-7D3C-11EB-898C-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-There were some early changes in the 2.31 cycle to optimize some setup
-in diffcore-rename.c[1], some later changes to measure performance[2],
-and finally some significant changes to improve rename detection
-performance.  The final one was merged with the note
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Remove the scratch buffer argument from `write_packetized_from_fd_no_flush()`
+> and allocate a temporary buffer within the function.
+>
+> In 3e4447f1ea (pkt-line: eliminate the need for static buffer in
+> packet_write_gently(), 2021-02-13) we added the argument in order to
+> get rid of a static buffer to make the routine safe in multi-threaded
+> contexts and to avoid putting a very large buffer on the stack.  This
+> delegated the problem to the caller who has more knowledge of the use
+> case and can best decide the most efficient way to provide such a
+> buffer.
+>
+> However, in practice, the (currently, only) caller just created the
+> buffer on the stack, so we might as well just allocate it within the
+> function and restore the original API.
 
-   Performance optimization work on the rename detection continues.
+Hmph, I would have expected, since we already have changed the
+callchain to pass the buffer down, that we'd keep the structure and
+update the caller to heap-allocate, but I think I like the result of
+this patch better.  It's not like the caller can allocate and reuse
+a single buffer with repeated calls to the function; rather, the
+caller makes a single call that results in relaying many bytes by
+the helper, all done in a loop, and it is sufficient for the helper
+to allocate/deallocate outside of its loop to reuse the buffer.
 
-That works for the commit log, but feels misleading as a release note
-since all the changes were within one cycle.  Simplify this to just
-
-   Performance improvements for rename detection.
-
-The former wording could be seen as hinting that more performance
-improvements will come in 2.32, which is true, but we can just cover
-those in the 2.32 release notes when the time comes.
-
-[1] a5ac31b5b1 (Merge branch 'en/diffcore-rename', 2021-01-25)
-[2] d3a035b055 (Merge branch 'en/merge-ort-perf', 2021-02-11)
-[3] 12bd17521c (Merge branch 'en/diffcore-rename', 2021-03-01)
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    Documentation/RelNotes: improve release note for rename detection work
-    
-    Just a tiny release note tweak
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-974%2Fnewren%2Frelease-notes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-974/newren/release-notes-v1
-Pull-Request: https://github.com/git/git/pull/974
-
- Documentation/RelNotes/2.31.0.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/RelNotes/2.31.0.txt b/Documentation/RelNotes/2.31.0.txt
-index 04bd5b70a950..56d4643de909 100644
---- a/Documentation/RelNotes/2.31.0.txt
-+++ b/Documentation/RelNotes/2.31.0.txt
-@@ -199,7 +199,7 @@ Performance, Internal Implementation, Development Support etc.
- 
-  * Preliminary changes to fsmonitor integration.
- 
-- * Performance optimization work on the rename detection continues.
-+ * Performance improvements for rename detection.
- 
-  * The common code to deal with "chunked file format" that is shared
-    by the multi-pack-index and commit-graph files have been factored
-
-base-commit: f01623b2c9d14207e497b21ebc6b3ec4afaf4b46
--- 
-gitgitgadget
