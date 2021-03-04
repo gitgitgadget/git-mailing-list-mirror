@@ -2,91 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92D8BC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7F3BC433E0
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:29:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4482264E99
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:08:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83FD064EE9
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232125AbhCDDHl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 22:07:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232159AbhCDDHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 22:07:30 -0500
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C14C061574
-        for <git@vger.kernel.org>; Wed,  3 Mar 2021 19:06:44 -0800 (PST)
-Received: by mail-qv1-xf2d.google.com with SMTP id t1so11865257qvj.8
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 19:06:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lad0hHuzARwvTKhKpK5dKrzc/NUTh5thaVBItqDFShk=;
-        b=NxraKVzYqfZdW5x+mjeY5PO8D5gN2Y2QxRrNHGvAH98zNqiZZlJ02UZG4uxhL+rtx9
-         G2gXN2jTugfI1fBRN0e8ba4xy7QmcYSNZIA/ZyA5ts6iCGDFTEf/RgdiA686ozDEwFPp
-         woQFMSNMVlXwxW8iyWktoSpaeWuLMDUGjaKnxcYqZi2GsfDHa3SmK6SryyvLxEGnlOmd
-         oaYEkRTYnIj3vFSFJUCsZRjZJXqEL5al/qbuAOzVPux3j8ubBgGRV7DP8vO/rvrtjgAZ
-         4VYiYxP90cLexEI03d6KjQBuvDMCz5LwOkkLFw78/vMfXq5sjHuF7tt2yM1+ffKqh8cS
-         hb3g==
+        id S232292AbhCDD23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 22:28:29 -0500
+Received: from mail-ej1-f49.google.com ([209.85.218.49]:46478 "EHLO
+        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232274AbhCDD2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 22:28:17 -0500
+Received: by mail-ej1-f49.google.com with SMTP id r17so46528638ejy.13
+        for <git@vger.kernel.org>; Wed, 03 Mar 2021 19:28:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lad0hHuzARwvTKhKpK5dKrzc/NUTh5thaVBItqDFShk=;
-        b=l97lPDFla5Ol0jboyg5MYx0ZvrzETCoyvVA0a+x4dWoDQY7WtaT/tSBUDAetpWOeTj
-         I/Y4TsXr9OjMLwUNunpNey9PFsIUgqMzU+E4YGlDsCVFiRzgPYmGMgxoGeogwijdP957
-         9oXnvx5bpBgCc6HhBhwf+aDGSV0rys3nwt0HLwUSjG7G7fYI2/yESx4YpZypnJKuN1a+
-         YEbImXBj2YYkMWvcpqJOltGu6vxVWgwgZcEgRpSPDhdoNuAaz8KowWaon8BtPYR+zF9v
-         reOYoJTUO/wRseVkMdpcs2CzyAa2AJcHh0Kt6wjoTWfpRP0rRMPM1dfETOEkR2OgOFsq
-         XxZw==
-X-Gm-Message-State: AOAM5307L7m1UT4dL/ycselMddSlKzBV4ZzvNktsPx6qpv/1jr8RtUEM
-        ImjIftWuGzOg2S7iveV2z1dIIw==
-X-Google-Smtp-Source: ABdhPJyDPbwn4PMYKUfDqkT2Bcqk5zi15sKHJGGy5qMGmbXth5+eErn4cTjPUvPKCw/VxProFSt/Cw==
-X-Received: by 2002:ad4:4421:: with SMTP id e1mr2080167qvt.48.1614827203894;
-        Wed, 03 Mar 2021 19:06:43 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:661d:484a:c652:586b])
-        by smtp.gmail.com with ESMTPSA id d12sm16608788qth.11.2021.03.03.19.06.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Mar 2021 19:06:43 -0800 (PST)
-Date:   Wed, 3 Mar 2021 22:06:38 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        avarab@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 15/15] pack-revindex: write multi-pack reverse indexes
-Message-ID: <YEBOvgm8yG9RiL0P@nand.local>
-References: <YD+rlaYGylVSkg1D@nand.local>
- <20210304020444.1803406-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QN7m0I0j8bTsdEo5xo1SYa6fRWbM3h60PDqUhN1pHJU=;
+        b=N6QAedPwQsQEAmkUUbkepiOieBRz2AfkAx1SR7FisF5LpGCFZVJyg1snPJfGFeindc
+         BWRCg8XHyX4pQoC9tflcHWhopUgOzTguLoN0z6O121krZ6PWIUxudLxNMApGK2YD8x/9
+         Dk6TuPfFO5XUT3Kk7ps+1/CfeTeZncIysc1ItP5QUHqCbkPWPWNiiA7+94Y69Ksq6CsO
+         6KKTXmj0i0gE12OZ68XxHE/vjcE0FSzfcIYwz50SZIiVLQ64Eav/QcPwUCUTWLagAfZ1
+         KKXaXQ+CIZbhXwOdmCbWSAfdeoAjjFYi3zVH72AC4/DoeHQqzgJp1qAFAmWTkkaKLA8W
+         oIJA==
+X-Gm-Message-State: AOAM532dvSMQIxr1/x/jN6z9Dyh8dkmCdIZ/DSTq2QA8BrAsVCHtPL1A
+        LWWOoWf5nsC3nJN5ediwW+T6kWeHY1Grh9/+fcw=
+X-Google-Smtp-Source: ABdhPJz80GH1O1MZhCbEv6yJLlCqaylC6QjvKDRwrr4KyREEA9akDOZRVzWdgA+7L2DZWWDc/I4PA+9uwTA5oN9fQZw=
+X-Received: by 2002:a17:906:3105:: with SMTP id 5mr2016828ejx.168.1614828456172;
+ Wed, 03 Mar 2021 19:27:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210304020444.1803406-1-jonathantanmy@google.com>
+References: <pull.885.git.1614269753194.gitgitgadget@gmail.com>
+ <pull.885.v2.git.1614588030233.gitgitgadget@gmail.com> <YD9Qv/sTDmOE9jlq@generichostname>
+ <xmqqpn0fg2ls.fsf@gitster.c.googlers.com> <CAOLTT8RdXC+KQNupU1TQdPh-tQO+syd6WJe85GzieE3uWt2ibA@mail.gmail.com>
+In-Reply-To: <CAOLTT8RdXC+KQNupU1TQdPh-tQO+syd6WJe85GzieE3uWt2ibA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 3 Mar 2021 22:27:25 -0500
+Message-ID: <CAPig+cTncEC4njnu+FB9tKwu20xi_UuL4TWW3_zD3drD3fyrHw@mail.gmail.com>
+Subject: Re: [PATCH v2] format-patch: allow a non-integral version numbers
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 03, 2021 at 06:04:44PM -0800, Jonathan Tan wrote:
-> > > Any reason why we're using 2 separate "if" statements?
-> >
-> > Yeah. This first if statement will turn into:
-> >
-> >   if (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))
-> >
-> > so that the pack order is computed in either case (since both the
-> > existing write_midx_reverse_index() and the eventual write_midx_bitmap()
-> > will be able to use the pack order).
+On Wed, Mar 3, 2021 at 9:08 PM ZheNing Hu <adlternative@gmail.com> wrote:
+> What we are arguing now is whether it is necessary to add
+> "aginst v<previous_count>" to the patch when the non-integer version
+> number + rangediff/interdiff is required. Denton's point of view may be
+> similar to that of Eric before.
+
+Yes, it sounds as if Denton and I share the same point of view.
+
+> Here are my personal thoughts:
 >
-> Ah, OK. That's what I was thinking of, but nice to have confirmation.
-> Maybe write in the commit message that these are separated because in
-> the future, one of the conditions will change.
+> Of course this `previous count` can be used in a very small range, but
+> I think it
+>  doesn't hurt to keep it, because even if you don't use it, `format
+> patch` will still
+> output "Range-diff", which will not break any known functions. It can
+> only be said
+> that `previous count` provides an option for submitters to know the
+> previous version
+>  for reviewers. In this regard, I agree with Junio's point of view.
 
-Thanks; that's a great idea.
+I'm not outright opposed to supporting non-numeric, non-integer
+reroll-counts, but I also don't see a big need for it. As mentioned
+earlier, Denton is the only person I recall who sends fractional
+re-rolls, so it's not obvious that there is a big advantage to adding
+such support and complicating the code just for one person. Also, when
+Denton does send fractional re-rolls, he typically does so for just a
+single patch out of a longer series, and he doesn't (I think) provide
+a range-diff or interdiff for the patch. So, for Denton's intended
+use-case, this entire discussion about "Range-diff against v$V" and
+"Interdiff against v$V" seems superfluous. That is, the simple logic:
 
-Thanks,
-Taylor
+    if reroll_count specified and is integer:
+        s = "Range-diff against v${reroll_count -1}:"
+    else
+        s = "Range-diff:"
+
+satisfies Denton's case without the complication of adding a
+--previous-count switch. This probably explains why Denton doesn't see
+a need for the extra complexity of --previous-count.
+
+So, some ways forward are:
+
+(1) drop this topic altogether since it so far seems of interest to
+only a single person (Denton) -- nobody else has asked for it
+
+(2) support non-integer reroll-count but just use the simple logic
+shown above for constructing the "Range-diff/Interdiff against"
+header; this leaves the door open for Junio's idea(s) of allowing the
+user to specify --previous-count and automatically determining the
+previous reroll-count by scanning a directory
+
+(3) continue refining the changes made by this patch until reviewers
+are happy with it (which might take a few more re-rolls)
+
+I lean toward #1, but wouldn't be opposed to #2 or #3 either.
