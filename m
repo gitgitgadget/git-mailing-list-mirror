@@ -3,110 +3,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7F3BC433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95C32C433E6
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:43:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83FD064EE9
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:29:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7184B64EEF
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232292AbhCDD23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 22:28:29 -0500
-Received: from mail-ej1-f49.google.com ([209.85.218.49]:46478 "EHLO
-        mail-ej1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232274AbhCDD2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 22:28:17 -0500
-Received: by mail-ej1-f49.google.com with SMTP id r17so46528638ejy.13
-        for <git@vger.kernel.org>; Wed, 03 Mar 2021 19:28:02 -0800 (PST)
+        id S232735AbhCDDnC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 22:43:02 -0500
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:35314 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232685AbhCDDml (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 22:42:41 -0500
+Received: by mail-ej1-f54.google.com with SMTP id dx17so19047137ejb.2;
+        Wed, 03 Mar 2021 19:42:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=QN7m0I0j8bTsdEo5xo1SYa6fRWbM3h60PDqUhN1pHJU=;
-        b=N6QAedPwQsQEAmkUUbkepiOieBRz2AfkAx1SR7FisF5LpGCFZVJyg1snPJfGFeindc
-         BWRCg8XHyX4pQoC9tflcHWhopUgOzTguLoN0z6O121krZ6PWIUxudLxNMApGK2YD8x/9
-         Dk6TuPfFO5XUT3Kk7ps+1/CfeTeZncIysc1ItP5QUHqCbkPWPWNiiA7+94Y69Ksq6CsO
-         6KKTXmj0i0gE12OZ68XxHE/vjcE0FSzfcIYwz50SZIiVLQ64Eav/QcPwUCUTWLagAfZ1
-         KKXaXQ+CIZbhXwOdmCbWSAfdeoAjjFYi3zVH72AC4/DoeHQqzgJp1qAFAmWTkkaKLA8W
-         oIJA==
-X-Gm-Message-State: AOAM532dvSMQIxr1/x/jN6z9Dyh8dkmCdIZ/DSTq2QA8BrAsVCHtPL1A
-        LWWOoWf5nsC3nJN5ediwW+T6kWeHY1Grh9/+fcw=
-X-Google-Smtp-Source: ABdhPJz80GH1O1MZhCbEv6yJLlCqaylC6QjvKDRwrr4KyREEA9akDOZRVzWdgA+7L2DZWWDc/I4PA+9uwTA5oN9fQZw=
-X-Received: by 2002:a17:906:3105:: with SMTP id 5mr2016828ejx.168.1614828456172;
- Wed, 03 Mar 2021 19:27:36 -0800 (PST)
+        bh=UWjGkxRM9xTK3Oxe58Zk6wy2u5TkskdEma3Q5K5bnV0=;
+        b=cD7KcsD92IHbazc0lPeiBdZNyecvbUMGh6T4AT5Ww5ZjSnyQ7olr5MnXwCgA20HxxP
+         pRCi/eTd2nI831PqpWghqlX2ZV+7uRnrfbgzzUZAECt/24nISAuKD1GOHRgHBnDwGQQc
+         a5hIFvfN4/tOlgAF8OyFT16/V8rESVYr/FYY9o1kXKxK8R+s2jYz0yi9bPrBc532J71V
+         ZfxFzPUZ37WAeYBHc7alLsDFnS3AsZR95crQx90jiOE6cDPy5HMegcA9YWFKQoT+qm3R
+         WiQ3hellC7Vu2dSgbhtNbowxQud8YJs+oU5OCG2L/hOMKge3M8k6DCXn3syr5LsX0R7Z
+         28eA==
+X-Gm-Message-State: AOAM530CVS1IBghEPH2HTBfVo8wfVwEv/5FevtYByKnRePpJmgaG26wn
+        x0xRnyS4m7zGA0RKO1nEGnTFZSytejcr+P9XAqk=
+X-Google-Smtp-Source: ABdhPJxNs0kWsKEcqBHTKza6uK/Ep/qWjS3ZdqweJtG+HT6UWS0Gk+XXDm3Bpf4w8Um9XD1M4IEnWzBuIES5LJ9aCGk=
+X-Received: by 2002:a17:907:76b3:: with SMTP id jw19mr1991870ejc.202.1614829319883;
+ Wed, 03 Mar 2021 19:41:59 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.885.git.1614269753194.gitgitgadget@gmail.com>
- <pull.885.v2.git.1614588030233.gitgitgadget@gmail.com> <YD9Qv/sTDmOE9jlq@generichostname>
- <xmqqpn0fg2ls.fsf@gitster.c.googlers.com> <CAOLTT8RdXC+KQNupU1TQdPh-tQO+syd6WJe85GzieE3uWt2ibA@mail.gmail.com>
-In-Reply-To: <CAOLTT8RdXC+KQNupU1TQdPh-tQO+syd6WJe85GzieE3uWt2ibA@mail.gmail.com>
+References: <xmqqr1kwk0h9.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1kwk0h9.fsf@gitster.c.googlers.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Mar 2021 22:27:25 -0500
-Message-ID: <CAPig+cTncEC4njnu+FB9tKwu20xi_UuL4TWW3_zD3drD3fyrHw@mail.gmail.com>
-Subject: Re: [PATCH v2] format-patch: allow a non-integral version numbers
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
+Date:   Wed, 3 Mar 2021 22:41:49 -0500
+Message-ID: <CAPig+cRqED-d_hFN80UuPhS+77k6qw_G9Q-m9tWUZsNynQfVvA@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.31.0-rc1
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 3, 2021 at 9:08 PM ZheNing Hu <adlternative@gmail.com> wrote:
-> What we are arguing now is whether it is necessary to add
-> "aginst v<previous_count>" to the patch when the non-integer version
-> number + rangediff/interdiff is required. Denton's point of view may be
-> similar to that of Eric before.
+On Wed, Mar 3, 2021 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine (3):
+>       worktree: teach `repair` to fix multi-directional breakage
 
-Yes, it sounds as if Denton and I share the same point of view.
+The merge message associated with this change is:
 
-> Here are my personal thoughts:
->
-> Of course this `previous count` can be used in a very small range, but
-> I think it
->  doesn't hurt to keep it, because even if you don't use it, `format
-> patch` will still
-> output "Range-diff", which will not break any known functions. It can
-> only be said
-> that `previous count` provides an option for submitters to know the
-> previous version
->  for reviewers. In this regard, I agree with Junio's point of view.
+    "git worktree repair" learned to deal with the case where both the
+    repository and the worktree moved.
 
-I'm not outright opposed to supporting non-numeric, non-integer
-reroll-counts, but I also don't see a big need for it. As mentioned
-earlier, Denton is the only person I recall who sends fractional
-re-rolls, so it's not obvious that there is a big advantage to adding
-such support and complicating the code just for one person. Also, when
-Denton does send fractional re-rolls, he typically does so for just a
-single patch out of a longer series, and he doesn't (I think) provide
-a range-diff or interdiff for the patch. So, for Denton's intended
-use-case, this entire discussion about "Range-diff against v$V" and
-"Interdiff against v$V" seems superfluous. That is, the simple logic:
-
-    if reroll_count specified and is integer:
-        s = "Range-diff against v${reroll_count -1}:"
-    else
-        s = "Range-diff:"
-
-satisfies Denton's case without the complication of adding a
---previous-count switch. This probably explains why Denton doesn't see
-a need for the extra complexity of --previous-count.
-
-So, some ways forward are:
-
-(1) drop this topic altogether since it so far seems of interest to
-only a single person (Denton) -- nobody else has asked for it
-
-(2) support non-integer reroll-count but just use the simple logic
-shown above for constructing the "Range-diff/Interdiff against"
-header; this leaves the door open for Junio's idea(s) of allowing the
-user to specify --previous-count and automatically determining the
-previous reroll-count by scanning a directory
-
-(3) continue refining the changes made by this patch until reviewers
-are happy with it (which might take a few more re-rolls)
-
-I lean toward #1, but wouldn't be opposed to #2 or #3 either.
+which seems worth mentioning in the v2.31.0 release notes, so it's a
+bit surprising that it is not mentioned anywhere. I haven't
+investigated how the release notes are generated from the merge
+messages, so it is unclear if this is a mere oversight, an intentional
+omission, or a tooling error.
