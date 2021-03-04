@@ -7,87 +7,85 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72E96C432C3
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4372C433E9
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3226564F1E
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E5C164E99
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354666AbhCDBDp (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1354600AbhCDBDp (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 3 Mar 2021 20:03:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63740 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237592AbhCDA6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 19:58:49 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9767BF1B3;
-        Wed,  3 Mar 2021 19:58:08 -0500 (EST)
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51641 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1451303AbhCDA4i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 19:56:38 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F63F10F642;
+        Wed,  3 Mar 2021 19:55:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AMnzGUgH0K2lhRwfciRDp+AQdMw=; b=Yl8wsD
-        aWoJ/xiR9HdTk4w4lIA/5mRMviXLbE7e/InoYVB4xNDWY9wVL/3+OvigGlNc5l9K
-        wN3NkGHqirkFtZWQb3Wq5XjW+J1dPXEfAYpFNRawb5MuM/2BaB3PS/pkujEaR91R
-        FXeTqyKwVTVF8iT+ZU9TftiQKrs+9sbmwKE34=
+        :content-type; s=sasl; bh=R3TINW2FbSUeCo5187BlJPTK6E8=; b=W+LEWB
+        Rd+EUML0ljkzssBs71IFPFiIFGCah3CywHPSD2WVd3BVV8kdSzjKaoFyh+DkaauJ
+        sQA4SSEMYo2KOLeL0X6Be5ywUCwDvsZ9groyD2I8u0jwCltnSo4u+c2p+VdzoUAs
+        EDSneQ7NIZiEDAsHmRCBJV8EKMcBeJUpbJ5gA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=r8vYOzNRXUcXr7dnRDf+oPTc50dRS8y5
-        UYSWugoBofuNNC9wjGAgj8Z1ZlKSTCq8thM7Jmx+ZEhYOHpNdAUfI4aUZoARckOE
-        878u4x00yGVNJgQkljOVPq7PQ0IoWz8aTvSC/oY53tQe2dnFq3PhQhuGiUbQAyQV
-        xG41J1k5ADM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9E81DBF1B2;
-        Wed,  3 Mar 2021 19:58:08 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=ggIpq0bVy/yyWDyGDeMWnFbjh2SyJNqP
+        Wixll3BQzJyPeqwRf339pMNgcqYmAfv/DN/aMpBoRgQ7Risyw1m9FHuiCxlWYXoM
+        yH7h1EXJHdjTg15k//he9vcvPYYeYznFrRrh4gve4zODKDSqiNXZSypD6eqgXR2B
+        SHQXog7/1Is=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 482F110F640;
+        Wed,  3 Mar 2021 19:55:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F2ABBF1B1;
-        Wed,  3 Mar 2021 19:58:08 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 94D3F10F63F;
+        Wed,  3 Mar 2021 19:55:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Charvi Mendiratta <charvi077@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
- amend! commit
-References: <20210301084512.27170-1-charvi077@gmail.com>
-        <20210301084512.27170-3-charvi077@gmail.com>
-        <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com>
-        <xmqqlfb6mrnx.fsf@gitster.c.googlers.com>
-        <CAPSFM5fmK_3rFfTbD7o3qCcYYeMXoX7K-HhGorXDPcFseBEDzQ@mail.gmail.com>
-        <CAPig+cQcjUzXpW1OBCiEC3Sr13uyeesqK49KWmgnY1iHNnS2Rw@mail.gmail.com>
-Date:   Wed, 03 Mar 2021 16:58:07 -0800
-In-Reply-To: <CAPig+cQcjUzXpW1OBCiEC3Sr13uyeesqK49KWmgnY1iHNnS2Rw@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 3 Mar 2021 02:57:41 -0500")
-Message-ID: <xmqqh7lrg2g0.fsf@gitster.c.googlers.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     anatoly techtonik <techtonik@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Round-tripping fast-export/import changes commit hashes
+References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
+        <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
+        <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
+        <87mtvolbuj.fsf@evledraar.gmail.com>
+        <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
+        <xmqqblc2srq0.fsf@gitster.c.googlers.com>
+        <CAPkN8xKM0zi-AB1xKRGp=whEQTZAbn78w0JjvUXfGfRDky0C=w@mail.gmail.com>
+        <08f31194-dce6-9434-c362-94d9a2d97563@kdbg.org>
+Date:   Wed, 03 Mar 2021 16:55:54 -0800
+In-Reply-To: <08f31194-dce6-9434-c362-94d9a2d97563@kdbg.org> (Johannes Sixt's
+        message of "Wed, 3 Mar 2021 08:13:13 +0100")
+Message-ID: <xmqqlfb3g2jp.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: AF2E514C-7C84-11EB-9AA1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 60305540-7C84-11EB-B5D8-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> Hmm, I see. I didn't follow whatever discussion led to the decision to
-> use this sort of prefix matching, but I have to wonder if it is a good
-> idea.
+> Am 02.03.21 um 22:52 schrieb anatoly techtonik:
+>> For my use case, where I just need to attach another branch in
+>> time without altering original commits in any way, `reposurgeon`
+>> can not be used.
+>
+> What do you mean by "attach another branch in time"? Because if you
+> really do not want to alter original commits in any way, perhaps you
+> only want `git fetch /the/other/repository master:the-other-one-s-master`?
 
-Meaning --fixup=a:<commit> and --fixup=amend:<commit> do the same
-thing, until somebody invents --fixup=another:<commit> and makes the
-prefix 'a' no longer unique?  I tend to agree that, especially with
-command line completion support with modern shells, such a prefix
-matching would not be necessary. 
+Yeah, I had the same impression.  If a bit-for-bit identical copy of
+the original history is needed, then fetching from the original
+repository (either directly or via a bundle) would be a much simpler
+and performant way.
 
-> Was the idea that it behave similarly to sequencer commands in
-> `git rebase --interactive` which are often abbreviated to a single
-> letter? I personally would feel much more comfortable requiring a
-> full-word match for `amend` and `reword` at initial implementation.
-
-Me too.
+Thanks.
