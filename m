@@ -2,131 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 332FDC1551D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E243C1551C
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CF7864F0D
+	by mail.kernel.org (Postfix) with ESMTP id 223F964E99
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241036AbhCDBDd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 20:03:33 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57199 "EHLO
+        id S1354495AbhCDBDl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 20:03:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58545 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236834AbhCDAQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 19:16:56 -0500
+        with ESMTP id S1453068AbhCDAoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 19:44:20 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 69E55BEE21;
-        Wed,  3 Mar 2021 19:16:14 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4095CBF0E6;
+        Wed,  3 Mar 2021 19:43:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FSwioEXr/oX9
-        2gRAYTrDlZdJo2I=; b=fMwVjCHPIh6+7nndYTHDQCRwCXYYoq3LO+KIYvJaW7zn
-        EldFp0GIgrqJGhsnriwkSiPRQB01Qi6jcujmkMRmTaX0+Xxi+O0Es4g+3hEC8Nxo
-        eqOkjvAqJtJK+idWGuwKpZGwKMzVk0macwmAQmZ0RG0vAeJav1/ZYfNXJEvVK+A=
+        :content-type; s=sasl; bh=BtICHjEGQ//ReqliIqOgEJfhAcg=; b=plEBYD
+        dMSN36GhuwvHyoPrRCqfiOaso/rV/8pIhJuVKwKyfZWcUtsMH3FprzUEBUq/pxeH
+        I08pw8nj5332uR4j2SbBZb6sxkXlu511YetbdgLlTNbfqUifMFSJGTkyaFxck3qd
+        e5l43a7UAspZgFEzhpIWD1y4WlNa02eNOF78I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IePeLt
-        Plvg1iubSx/Lbmz2rwsfyPLHqD4A7P+I2alvocmfu62htyPlnSH0yyCI4N+bFrPj
-        LcDub79GuVkapNVfLp4+2N7glHARtVpFn1GSUwxNULEp0XC81znhvzU/jFKMCzi4
-        utgyGoZl9s4hhleESYxVOLa692Boam0LN1LaQ=
+        :content-type; q=dns; s=sasl; b=PDCdgtleKe6H8bJhdUPfeEW3wq5IL1NC
+        aKwGRK12dH5hl6X71tWwoFmtyPvPBwP97vXfZzgCSgSfPxgkFSlnxpiXk27ZK76O
+        NCJmaVNcjWgZbnI9YOLPJRTji7jwquBSDsWvKVp7AyjIoHdcIfPZYWAqAiSPaV9X
+        zrdK3MpJ//U=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 61E55BEE20;
-        Wed,  3 Mar 2021 19:16:14 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 314BFBF0E5;
+        Wed,  3 Mar 2021 19:43:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E5E7EBEE1F;
-        Wed,  3 Mar 2021 19:16:13 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B6BB1BF0E4;
+        Wed,  3 Mar 2021 19:43:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH 07/10] grep/pcre2: use pcre2_maketables_free() function
-References: <191d3a2280232ff98964fd42bfe0bc85ee3708f5.1571227824.git.gitgitgadget@gmail.com>
-        <20210204210556.25242-8-avarab@gmail.com>
-Date:   Wed, 03 Mar 2021 16:16:13 -0800
-In-Reply-To: <20210204210556.25242-8-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 4 Feb 2021 22:05:53 +0100")
-Message-ID: <xmqqpn0fhiya.fsf@gitster.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/2] git-cat-file.txt: doc cleanup
+References: <cover.1614062288.git.liu.denton@gmail.com>
+        <cover.1614763281.git.liu.denton@gmail.com>
+Date:   Wed, 03 Mar 2021 16:43:38 -0800
+In-Reply-To: <cover.1614763281.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Wed, 3 Mar 2021 01:21:54 -0800")
+Message-ID: <xmqqzgzjg345.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D49B249C-7C7E-11EB-914B-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A9956768-7C82-11EB-A5AE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> Make use of the pcre2_maketables_free() function to free the memory
-> allocated by pcre2_maketables(). At first sight it's strange that
-> 10da030ab75 (grep: avoid leak of chartables in PCRE2, 2019-10-16)
-> which added the free() call here doesn't make use of the pcre2_free()
-> the author introduced in the preceding commit in 513f2b0bbd4 (grep:
-> make PCRE2 aware of custom allocator, 2019-10-16).
->
-> The reason is that at the time the function didn't exist. It was first
-> introduced in PCREv2 version 10.34, released on 2019-11-21.
->
-> Let's make use of it behind a macro. I don't think this matters for
-> anything to do with custom allocators, but it makes our use of PCREv2
-> more discoverable. At some distant point in the future we'll be able
-> to drop the version guard, as nobody will be running a version older
-> than 10.34.
+> Denton Liu (2):
+>   git-cat-file.txt: monospace args, placeholders and filenames
+>   git-cat-file.txt: remove references to "sha1"
 
-OK.  The same comment about the macro that happens to be OK only
-because 10 and 11 are consecutive applies here.
-
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  grep.c | 4 ++++
->  grep.h | 3 +++
->  2 files changed, 7 insertions(+)
->
-> diff --git a/grep.c b/grep.c
-> index e58044474d..c63dbff4b2 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -490,7 +490,11 @@ static void free_pcre2_pattern(struct grep_pat *p)
->  	pcre2_compile_context_free(p->pcre2_compile_context);
->  	pcre2_code_free(p->pcre2_pattern);
->  	pcre2_match_data_free(p->pcre2_match_data);
-> +#ifdef GIT_PCRE2_VERSION_10_34_OR_HIGHER
-> +	pcre2_maketables_free(pcre2_global_context, p->pcre2_tables);
-> +#else
->  	free((void *)p->pcre2_tables);
-> +#endif
->  }
->  #else /* !USE_LIBPCRE2 */
->  static void compile_pcre2_pattern(struct grep_pat *p, const struct gre=
-p_opt *opt)
-> diff --git a/grep.h b/grep.h
-> index 54e52042cb..64666e9204 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -7,6 +7,9 @@
->  #if (PCRE2_MAJOR >=3D 10 && PCRE2_MINOR >=3D 36) || PCRE2_MAJOR >=3D 1=
-1
->  #define GIT_PCRE2_VERSION_10_36_OR_HIGHER
->  #endif
-> +#if (PCRE2_MAJOR >=3D 10 && PCRE2_MINOR >=3D 34) || PCRE2_MAJOR >=3D 1=
-1
-> +#define GIT_PCRE2_VERSION_10_34_OR_HIGHER
-> +#endif
->  #else
->  typedef int pcre2_code;
->  typedef int pcre2_match_data;
+Thanks, will queue.
