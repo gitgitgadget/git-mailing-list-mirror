@@ -2,105 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E4DC433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7B9BC433E0
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:57:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 897F664F5B
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:54:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69DAD64F53
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232736AbhCDOyM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 09:54:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39666 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbhCDOyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 09:54:02 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F19C061574
-        for <git@vger.kernel.org>; Thu,  4 Mar 2021 06:53:22 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id i14so6725737pjz.4
-        for <git@vger.kernel.org>; Thu, 04 Mar 2021 06:53:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Gw1eZTHQNZ5i6PdgJwJwmcYf5ZHbUZslZhTo2QzJMgs=;
-        b=R+S8+YKYEsmrHm5ptabYlaB08C70mDlClIOJLNtV+PZ8PwSF95svkfHGpIyOmRL0rY
-         jpGZuaCP1FfC6eLndnNRzqY0Xrt0UtpkeoO43QVR1ujIUrVF8PPauTz9EX7emsXE1aZt
-         q1X5Lm+ax+CT2I35QSgWeQAzhmNFC/nF79IckvvP197nCMeuG/2xNglyjlVUGfv9i24C
-         P17AAjmxaqXwMBzT16n31vsWQcUJ2oroaG6sNGTcfULsqNejw2yzuKA98j8Vh9K/swaE
-         coY7C3u+HnVVelAK9LttIHw+iZ6EbVSE1AcWucVtvFnLky/jjyka0zNklJE+OHBDjcMl
-         ZNUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Gw1eZTHQNZ5i6PdgJwJwmcYf5ZHbUZslZhTo2QzJMgs=;
-        b=XuLyBM0SVmCC3IgHsy68OIfZVv3trM3pDio/malC+TqiOIL+VZoUYzTxFh9KWiKRCy
-         mNPnFLSPYX1fthkKEGlrpJAxNI6m1IYmlX81U3g2mjDib+Gn3+w4e4NuOyyyDBLszD9I
-         9cMP4g73WK/iYIdiM7K02Hdl/xpqOVo5ayDDOCREl7NAyo8HGm79m2gpHHf+g2WxMJYx
-         yeIYA8TXptJokNOXYYaAhKaAvkfZABe8R4Z7ucF/o8LwmplQiU2RKp6z88Fl1ox6vG2A
-         gpesJizJga/GypEuj4Iaa7XcpVMBRMHyK2MlWR6MDFWQKiYfeRYMoJsvsFi4p43QfvL3
-         mi+g==
-X-Gm-Message-State: AOAM533nXkgEQd5jpK2eaxXUynz5Q0RuziDMy1lpNsgcVaYKPMUawTCF
-        //7ukMF8yOTxNEpLD/BLHOLKZ55U3Ijibw==
-X-Google-Smtp-Source: ABdhPJxR/oLwUZm+EUV1XrJIsCRF+vu7o9X8vAzFpAaK9beLkZDGo4L75oX5hM7+lnnPv7fqNN3dGA==
-X-Received: by 2002:a17:902:b601:b029:e3:7aab:704d with SMTP id b1-20020a170902b601b02900e37aab704dmr4405715pls.58.1614869601594;
-        Thu, 04 Mar 2021 06:53:21 -0800 (PST)
-Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id ml17sm11810449pjb.18.2021.03.04.06.53.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Mar 2021 06:53:20 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <hello@brighterdan.com>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [L10N] Kickoff for Git 2.31.0 round #2
-Date:   Thu,  4 Mar 2021 09:53:16 -0500
-Message-Id: <20210304145316.15617-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.26.0.rc0
+        id S229729AbhCDO5Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 09:57:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52216 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229575AbhCDO44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 09:56:56 -0500
+Received: (qmail 27141 invoked by uid 109); 4 Mar 2021 14:56:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Mar 2021 14:56:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9382 invoked by uid 111); 4 Mar 2021 14:56:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Mar 2021 09:56:14 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 4 Mar 2021 09:56:14 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 09/12] unix-socket: disallow chdir() when creating
+ unix domain sockets
+Message-ID: <YED1DmLWd+ciySNa@coredump.intra.peff.net>
+References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
+ <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
+ <1bfa36409d0706d5e22703f80bf95dfa1a313a83.1613598529.git.gitgitgadget@gmail.com>
+ <xmqqblbzj1cs.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqblbzj1cs.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Mar 03, 2021 at 02:53:23PM -0800, Junio C Hamano wrote:
 
-Git v2.31.0-rc1 has been released, and introduced 9 new messages.
-Let's start a new round of git l10n based on this commit:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > From: Jeff Hostetler <jeffhost@microsoft.com>
+> >
+> > Calls to `chdir()` are dangerous in a multi-threaded context.  If
+> > `unix_stream_listen()` or `unix_stream_connect()` is given a socket
+> > pathname that is too long to fit in a `sockaddr_un` structure, it will
+> > `chdir()` to the parent directory of the requested socket pathname,
+> > create the socket using a relative pathname, and then `chdir()` back.
+> > This is not thread-safe.
+> >
+> > Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when this
+> > flag is set.
+> 
+> While it is clear that this will not affect any existing callers, I
+> am not sure if this is a good direction to go in the longer term.
+> 
+> I have to wonder if somebody actually relies on this "feature",
+> though.  As long as ENAMETOOLONG is passed back to the caller so
+> that it can react to it, any caller that knows it is safe to chdir()
+> at the point of calling "send_request()" should be able to chdir()
+> itself and come back (or fork a child that chdirs and opens a unix
+> domain socket there, and then send the file descriptor back to the
+> parent process).
 
-    l10n: git.pot: v2.31.0 round 2 (9 new, 8 removed)
-    
-    Generate po/git.pot from v2.31.0-rc1 for git v2.31.0 l10n round 2.
-    
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+The feature is definitely useful; I think I did 1eb10f4091 (unix-socket:
+handle long socket pathnames, 2012-01-09) in response to a real problem.
 
-You can get it from the usual place:
+Certainly callers could handle the error themselves. The reason I pushed
+it down into the socket code was to avoid having to implement in
+multiple callers. There are only two, but we'd have needed it in both
+sides (credential-cache--daemon as the listener, and credential-cache as
+the client).
 
-    https://github.com/git-l10n/git-po/
+Ironically, the listening side now does a permanent chdir() to the
+socket directory anyway, since 6e61449051 (credential-cache--daemon:
+change to the socket dir on startup, 2016-02-23). So we could just do
+that first, and then feed the basename to the socket code.
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in "po/README" file.
+The client side would still need to handle it, though. It could probably
+also chdir to the socket directory without any real downside (once
+started, I don't think the helper program needs to access the filesystem
+at all outside of the socket).
 
---
-Jiang Xin
+So I dunno. I'd be OK to just rip the feature out in favor of doing
+those chdir()s. But that seems like a non-zero amount of work versus
+leaving, and the existing code has the benefit that if another caller
+shows up, it could benefit from the feature.
+
+-Peff
