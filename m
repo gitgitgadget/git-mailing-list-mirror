@@ -6,92 +6,106 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABE7C15501
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48953C43381
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:08:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BAAC64EDF
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 00:27:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2194A64EAE
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382111AbhCDAYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 19:24:05 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59234 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235302AbhCCWyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 17:54:32 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64A2011000B;
-        Wed,  3 Mar 2021 17:53:28 -0500 (EST)
+        id S1348026AbhCDBDe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 20:03:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53441 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1388496AbhCDAZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 19:25:05 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3894BF663;
+        Wed,  3 Mar 2021 19:24:19 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=98WyYO7ITDt6cVFoEHwRQXJviqg=; b=fM7rXu
-        qaNwupmPp28EDa50jmCe1ub2KUOFdi3ASRvQzXL1jd0I9DuKKfHelD0TZIcKNIsF
-        JXZw7c2ef20WGR8e6G3ffJ7hkMEU/9EnLGLFF9f1yPcglgXPgCcUWyfNsdciFJ64
-        IQ4SvFOCBpFkkJMEnjxx6lj8cj+V3ikBIjoyU=
+        :content-type:content-transfer-encoding; s=sasl; bh=GQGxiLbG+Mrf
+        sibZxtX4dGsSuJ4=; b=cH2lTtGzzrgiQOE2bErBmNu5D5RVnhHX0CuGNL/xM8js
+        wuSuPRpbwdQf+B0NFcoLZErFuz2iu1qaZxOVGwhajd9AyIwp6ZDf+Hb53eDx1dH5
+        LyrRNUrcpHGzgR2t7BKEFat97+0V2VcgPdZ/r6f1mtZR0BHhD5603TkGFFcIv5k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=greZ087de6pJ2AJ9EAbiHPpJDzMKorBw
-        66G26u+5Lwae3z5WNUq33PeQAOCNaltmG/gMCguUmMP5Xo9pGW6kchm+Rab2GrTz
-        gNPh+ut8aciZr1iC8aW7p89N2cUuuVcXlSt/k+MTdZTybwz0mCKcg+UjlzavE2fs
-        DCmF3DKmSYw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5C4A311000A;
-        Wed,  3 Mar 2021 17:53:28 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Jq+nIS
+        a8ldzlP+uE1IECOJYLQc7Z9DuxmomeEetdtA9BfHcdVREQecmBgiMreOt+8Dw7xs
+        B5bE85VDPJU+/HXa3pgaSEXyGZX0nAwGnpGfXRCs0QDY9BxUsXzAezDgEOFEfAKY
+        wAO4x/aMDuWuai8rnwuBlQDPBknY3XV174iBQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C178BF661;
+        Wed,  3 Mar 2021 19:24:19 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5F27110009;
-        Wed,  3 Mar 2021 17:53:25 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E068ABF65D;
+        Wed,  3 Mar 2021 19:24:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 09/12] unix-socket: disallow chdir() when creating
- unix domain sockets
-References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
-        <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
-        <1bfa36409d0706d5e22703f80bf95dfa1a313a83.1613598529.git.gitgitgadget@gmail.com>
-Date:   Wed, 03 Mar 2021 14:53:23 -0800
-In-Reply-To: <1bfa36409d0706d5e22703f80bf95dfa1a313a83.1613598529.git.gitgitgadget@gmail.com>
-        (Jeff Hostetler via GitGitGadget's message of "Wed, 17 Feb 2021
-        21:48:45 +0000")
-Message-ID: <xmqqblbzj1cs.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2 08/10] grep/pcre2: actually make pcre2 use custom
+ allocator
+References: <20210204210556.25242-1-avarab@gmail.com>
+        <20210218000728.13995-9-avarab@gmail.com>
+Date:   Wed, 03 Mar 2021 16:24:17 -0800
+In-Reply-To: <20210218000728.13995-9-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 18 Feb 2021 01:07:26 +0100")
+Message-ID: <xmqqlfb3hiku.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 434A97DA-7C73-11EB-9EC2-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F513D86C-7C7F-11EB-847A-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> Continue work started in 513f2b0bbd4 (grep: make PCRE2 aware of custom
+> allocator, 2019-10-16) and make PCREv2 use our pcre2_{malloc,free}().
+> functions for allocation. We'll now use it for all PCREv2 allocations.
 >
-> Calls to `chdir()` are dangerous in a multi-threaded context.  If
-> `unix_stream_listen()` or `unix_stream_connect()` is given a socket
-> pathname that is too long to fit in a `sockaddr_un` structure, it will
-> `chdir()` to the parent directory of the requested socket pathname,
-> create the socket using a relative pathname, and then `chdir()` back.
-> This is not thread-safe.
+> The reason 513f2b0bbd4 worked as a bugfix for the USE_NED_ALLOCATOR
+> issue is because it targeted the allocation freed via free(), as
+> opposed to by a pcre2_*free() function. I.e. the pcre2_maketables()
+> and pcre2_maketables_free() pair.
 >
-> Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when this
-> flag is set.
+> For most of the rest we continued allocating with stock malloc()
+> inside PCREv2 itself, but didn't segfault because we'd use its
+> corresponding free().
+>
+> In a preceding commit of mine I changed the free() to
+> pcre2_maketables_free() on versions of PCREv2 10.34 and newer. So as
+> far as fixing the segfault goes ...
 
-While it is clear that this will not affect any existing callers, I
-am not sure if this is a good direction to go in the longer term.
+Wait, wait.  So, because of the previous step, we would start
+segfaulting and we need to fix that breakage, which is the reason
+why this commit exists?
 
-I have to wonder if somebody actually relies on this "feature",
-though.  As long as ENAMETOOLONG is passed back to the caller so
-that it can react to it, any caller that knows it is safe to chdir()
-at the point of calling "send_request()" should be able to chdir()
-itself and come back (or fork a child that chdirs and opens a unix
-domain socket there, and then send the file descriptor back to the
-parent process).
+If so, ...
+
+> we could revert 513f2b0bbd4. But then
+> we wouldn't use the desired allocator, let's just use it instead.
+
+... I agree with the conclusion that both the previous step and this
+step are needed and better than a reversion of 513f2b0b (grep: make
+PCRE2 aware of custom allocator, 2019-10-16) and the previou step.
+
+But even then, it feels somewhat backwards.  Shouldn't this step
+come first, so that we would be using a matching alloc/free pair,
+and then do the previous step?
+
+> Instead we should always create it, and then pass the general context
+> to those functions that accept it, so that they'll consistently use
+> our preferred memory allocation functions.
 
 Thanks.
