@@ -2,92 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EFE3C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 15:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2C5DC433E6
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 15:29:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65EA264F21
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 15:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A0DC64FCB
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 15:29:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234630AbhCDP2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 10:28:52 -0500
-Received: from mx.kolabnow.com ([95.128.36.41]:42142 "EHLO mx.kolabnow.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233616AbhCDP2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 10:28:20 -0500
-Received: from localhost (unknown [127.0.0.1])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTP id CD81BBCD;
-        Thu,  4 Mar 2021 16:26:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-        content-transfer-encoding:content-language:content-type
-        :content-type:in-reply-to:mime-version:date:date:message-id:from
-        :from:references:subject:subject:received:received:received; s=
-        dkim20160331; t=1614871587; x=1616685988; bh=JQZJoflvvfq8p8tHV8w
-        XAEZ9rRIIVrCRIMUuZCKTdhc=; b=QLLwB1b5Arr1iBGVUcg8s1AxejKLUJD66ff
-        9YDKPxgCxYD1aJxqA4evQGKkN5TtmE3UP9E0gNRLdUxd1riDeYPErDw6mZvkH+sR
-        zYk5nJ4ZnRybsA71eXwi+HKp/ZfvFLTTBUUE/LbAJe/wWYVfF9vTY1L7Ks7w5BJK
-        pnIk8Ld3LmYZWVy51h05m3HsjeHXTIziRBj/mN1/sQYhL0EnRCGi+hYDtSkYKbg6
-        B4HwZ17hqxdMpOpmfOtRBLzGGqTGsiJAfBM2HnhvhDCKaRkhWPz/AbCg8rGXe9P5
-        drcQoihSHFraQXtFis1d0PEmLPbFU850J5MLyCkv6X8Hg4xae3vOhK+DpxYb+zv2
-        vPXAk9brnIoPk99bRboFuEOHtAVuQXWkxHiGNTno45rJwGmln6ZcT+k6VxtskXRi
-        rRNQCMM1uskA4tJ6D/VMTkNj3QgZejsmtV1yQEstoWAhzkFDxAwafkJH3xiwbRom
-        plo+blCCfeQrM0/tT/G57SmmoSmPXv8oa2bKmxoFXzSSFprmoHjEkCgFUcPEBdBg
-        gxJoQXxxIgo27WKJhXJ0efwy06qi6xPD22tXTXfm+4hO2EEhMyv/rY7ro8AlFRqK
-        AWW6iUMWhQYoQH/s6tP4WoGhySEDuzROioFOHlf20pQp8T3fWN97kb+yutTDPJJb
-        bv9htGaM=
-X-Virus-Scanned: amavisd-new at mykolab.com
-Received: from mx.kolabnow.com ([127.0.0.1])
-        by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 4ye-iO-PnBC3; Thu,  4 Mar 2021 16:26:27 +0100 (CET)
-Received: from int-mx003.mykolab.com (unknown [10.9.13.3])
-        by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id F1763BCC;
-        Thu,  4 Mar 2021 16:26:26 +0100 (CET)
-Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
-        by int-mx003.mykolab.com (Postfix) with ESMTPS id 87186310C;
-        Thu,  4 Mar 2021 16:26:23 +0100 (CET)
-Subject: Re: [PATCH] Update 'make fuzz-all' docs to reflect modern clang
-To:     Josh Steadmon <steadmon@google.com>,
-        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Andrzej Hunt <ajrhunt@google.com>
+        id S234895AbhCDP3Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 10:29:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47240 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235060AbhCDP3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 10:29:10 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1BD5C061756
+        for <git@vger.kernel.org>; Thu,  4 Mar 2021 07:28:29 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id k66so10102317wmf.1
+        for <git@vger.kernel.org>; Thu, 04 Mar 2021 07:28:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NVSf2LZtXYxYfCF8ZxQ4K2+ZMsHLCDy/reu3l9Vvlsk=;
+        b=bW0RAzCsrbl4fcPD3rd05ok3NlDkkaSzQfrQt/55jyg1bxExsluuKx0p4DPMvR6FMt
+         3+Gs9wJAQ092W607fpeN38u4wWNTrbKLlK4DDKxFWVxHWYvPYq709FOsyqL+PRpLHtkN
+         68tDpnRcCZhjrbKHBj00cQnsQ7qsPT4+At6/+EG7Q8wsOq3czIjNVgZeXBYDe17QilY+
+         I2qwf9jj2YWpYbwhgjVl6RrXqe3wQwBSCeiQ1tIStTrPzWaQIYyO5eJ+oR4B7YSTiJl+
+         lV/NoChyrc8TEESyzxILLazUuh/m40bahdJMuAqtpzGgNl912zUvmHq5dwJAO4pGAEcu
+         HD1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NVSf2LZtXYxYfCF8ZxQ4K2+ZMsHLCDy/reu3l9Vvlsk=;
+        b=U9mikL/dKFoJDMTPUye8ABof1ZNowgX7wkXTYCzsVMpkZbn0mOkeAQfEt1GbH/jJCG
+         oKa3v+gyXrsrhHh2WWBXArn0QDtC3Ep7IB4+LwzQ/1UeJUdWi+IMu2OQFQp+uCFyyp/v
+         bf7ZcT/NnM8X9iz7EhBuimdh/uzrJ06vCgCEZoU2kUzGE48tQ1YAsuuuC24ebnZ2seF7
+         /3P6YIL3WSbp3b0F3HE0MkxLK7bmHSnDslnGZNMIXqaumWZRhsElellTrawC3BhVe4WA
+         L53moEF+n3/uPVlFMR3ullboQGG3bbyJna4Js3ojOroXGz3edXIVcEefXpJbLnfsCrd3
+         mDlw==
+X-Gm-Message-State: AOAM5323GtjKOBdKzeYYbbWj+X58K1bSkEKGCDYW+Bowabj99VtUOBSx
+        aT3jvDGTnbj7KuD9cI67/cAhPIhazIY=
+X-Google-Smtp-Source: ABdhPJzXsqz3E1HCsQKc+yuJA+rLAlo+B5DjHebKJ4tQ1K1QLzhQZ03IfdD+neRYFC30V199+utWGA==
+X-Received: by 2002:a05:600c:3581:: with SMTP id p1mr4491180wmq.91.1614871708628;
+        Thu, 04 Mar 2021 07:28:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m14sm10127406wmi.27.2021.03.04.07.28.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Mar 2021 07:28:28 -0800 (PST)
+Message-Id: <pull.889.v2.git.1614871707845.gitgitgadget@gmail.com>
+In-Reply-To: <pull.889.git.1614514959347.gitgitgadget@gmail.com>
 References: <pull.889.git.1614514959347.gitgitgadget@gmail.com>
- <YD1tJlY/mqZOmTNm@google.com>
-From:   Andrzej Hunt <andrzej@ahunt.org>
-Message-ID: <094d75bf-707a-5b0d-fead-5c9ad08e0a18@ahunt.org>
-Date:   Thu, 4 Mar 2021 16:26:21 +0100
+From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 04 Mar 2021 15:28:27 +0000
+Subject: [PATCH v2] Update 'make fuzz-all' docs to reflect modern clang
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <YD1tJlY/mqZOmTNm@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Josh Steadmon <steadmon@google.com>,
+        Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/03/2021 23:39, Josh Steadmon wrote:
-> Thanks for taking a look at this! This looked correct to me, but when I
-> tried to run the fuzzers I got an error about
-> "-fsanitize-coverage=trace-pc-guard" not being supported any longer.
+From: Andrzej Hunt <ajrhunt@google.com>
 
-Oops, I realised I was accidentally using clang 7 (instead of 11) 
-locally. I can reproduce the same error with my copy of clang-11. Thanks 
-for catching this!
+Clang no longer produces a libFuzzer.a, instead you can include
+libFuzzer by using -fsanitize=fuzzer. Therefore we should use
+that in the example command for building fuzzers.
 
-> Looking at the LLVM 11.0.0 docs [1], I see that it recommends using
-> "-fsanitize=fuzzer-no-link" instead (the "-no-link" is because we're
-> also building executables that have their own main()).
-> 
-> So we'd also want to change CFLAGS to
-> "-fsanitize=fuzzer-no-link,address".
+We also add -fsanitize=fuzzer-no-link to ensure that all the required
+instrumentation is added when compiling git [1], and remove
+ -fsanitize-coverage=trace-pc-guard as it is deprecated.
 
-I will fix this too!
+I happen to have tested with LLVM 11 - however -fsanitize=fuzzer appears to
+work in a wide range of reasonably modern clangs.
 
-I suspect that when I built without fuzzer-no-link, the fuzzer binaries 
-included libFuzzer, but were missing whatever fuzzing-related
-instrumentation clang should have added. (Fortunately oss-fuzz seems to
-be adding this to the CFLAGS automatically [1].)
+(On my system: what used to be libFuzzer.a now lives under the following path,
+ which is tricky albeit not impossible for a novice such as myself to find:
+/usr/lib64/clang/11.0.0/lib/linux/libclang_rt.fuzzer-x86_64.a )
 
-[1] 
-https://oss-fuzz-build-logs.storage.googleapis.com/log-74f40f33-f384-475b-b141-0e44afb272f5.txt
+[1] https://releases.llvm.org/11.0.0/docs/LibFuzzer.html#fuzzer-usage
+
+Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+---
+    Update 'make fuzz-all' docs to reflect modern clang
+    
+    I have updated my patch to:
+    
+     * Remove -fsanitize-coverage=trace-pc-guard as it is deprecated.
+     * Add -fsanitize=fuzzer-no-link as per Josh's suggestion.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-889%2Fahunt%2Ffuzz-docs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-889/ahunt/fuzz-docs-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/889
+
+Range-diff vs v1:
+
+ 1:  d804b24907fd ! 1:  f5b5a11966ca Update 'make fuzz-all' docs to reflect modern clang
+     @@ Commit message
+          libFuzzer by using -fsanitize=fuzzer. Therefore we should use
+          that in the example command for building fuzzers.
+      
+     +    We also add -fsanitize=fuzzer-no-link to ensure that all the required
+     +    instrumentation is added when compiling git [1], and remove
+     +     -fsanitize-coverage=trace-pc-guard as it is deprecated.
+     +
+          I happen to have tested with LLVM 11 - however -fsanitize=fuzzer appears to
+          work in a wide range of reasonably modern clangs.
+      
+     -    (On my system what used to be libFuzzer.a now lives under the following path,
+     +    (On my system: what used to be libFuzzer.a now lives under the following path,
+           which is tricky albeit not impossible for a novice such as myself to find:
+          /usr/lib64/clang/11.0.0/lib/linux/libclang_rt.fuzzer-x86_64.a )
+      
+     +    [1] https://releases.llvm.org/11.0.0/docs/LibFuzzer.html#fuzzer-usage
+     +
+          Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
+      
+       ## Makefile ##
+     @@ Makefile: cover_db_html: cover_db
+      +# An example command to build against libFuzzer from LLVM 11.0.0:
+       #
+       # make CC=clang CXX=clang++ \
+     - #      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+     +-#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+      -#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
+     -+#      LIB_FUZZING_ENGINE=-fsanitize=fuzzer \
+     ++#      CFLAGS="-fsanitize=fuzzer-no-link,address" \
+     ++#      LIB_FUZZING_ENGINE="-fsanitize=fuzzer" \
+       #      fuzz-all
+       #
+       FUZZ_CXXFLAGS ?= $(CFLAGS)
+
+
+ Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index dd08b4ced01c..c7248ac6057b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3292,11 +3292,11 @@ cover_db_html: cover_db
+ # are not necessarily appropriate for general builds, and that vary greatly
+ # depending on the compiler version used.
+ #
+-# An example command to build against libFuzzer from LLVM 4.0.0:
++# An example command to build against libFuzzer from LLVM 11.0.0:
+ #
+ # make CC=clang CXX=clang++ \
+-#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+-#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
++#      CFLAGS="-fsanitize=fuzzer-no-link,address" \
++#      LIB_FUZZING_ENGINE="-fsanitize=fuzzer" \
+ #      fuzz-all
+ #
+ FUZZ_CXXFLAGS ?= $(CFLAGS)
+
+base-commit: f01623b2c9d14207e497b21ebc6b3ec4afaf4b46
+-- 
+gitgitgadget
