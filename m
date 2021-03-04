@@ -2,103 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D214C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 313B7C433DB
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 21:05:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 574B064F6F
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:53:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3A9764F10
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 21:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbhCDUxL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 15:53:11 -0500
-Received: from relay5-d.mail.gandi.net ([217.70.183.197]:55419 "EHLO
-        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232444AbhCDUwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 15:52:39 -0500
-X-Originating-IP: 50.39.163.217
-Received: from localhost (unknown [50.39.163.217])
-        (Authenticated sender: josh@joshtriplett.org)
-        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id B096E1C0005;
-        Thu,  4 Mar 2021 20:51:43 +0000 (UTC)
-Date:   Thu, 4 Mar 2021 12:51:40 -0800
-From:   Josh Triplett <josh@joshtriplett.org>
-To:     linux-kernel@vger.kernel.org, git@vger.kernel.org
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: A note on the 5.12-rc1 tag
-Message-ID: <YEFIXFyP5tWrPDMw@localhost>
+        id S235257AbhCDVE6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 16:04:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58629 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232783AbhCDVEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 16:04:35 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CF11974E6;
+        Thu,  4 Mar 2021 16:03:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BzR9mVotBhF4490XGM/R3uoA23E=; b=fo/N9S
+        Ow152gtG6kjaVZp/+FT6VbqMIMLytq8KaHjvAH8AMkEUFWRASZddnXK9ofFNBe9V
+        OVtKmF3tdpccN2sokS8Zc7Uw6Hn7EhrPkbBJrI8x8eOhAYZjh1F5ByJ5K8cAnlCB
+        XFGylnPcRXtHMfWFXTxc3sS8/O5V2wS1lc+zQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=HaT7WShogeY3ev+x1R1dh69L088Ce8/v
+        /E7sL+huV28mTCdj3XlyFUQlOtQMPCRW825yYr25eEShz3+sbdVAAuQsCj8EGVGy
+        5+XJBBW/xTOLS1iOWBq2n7NGSYsp/k8EqJnSf/hj9vlZXW6HOyH6dZW2Lm36vxRy
+        IuL+5VP0lu0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 32B9D974E5;
+        Thu,  4 Mar 2021 16:03:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB4B3974E1;
+        Thu,  4 Mar 2021 16:03:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 6/7] add: warn when pathspec only matches
+ SKIP_WORKTREE entries
+References: <CABPp-BEpnaR1tydJ-vcWAUYnT-TFcfCMMqwbmOz1Dx+nvsHZMQ@mail.gmail.com>
+        <20210304152315.18498-1-matheus.bernardino@usp.br>
+        <CABPp-BE9QA5RAwdebmAyK3b3wh1mGE+NF7sPS5RCf4FogYBV7A@mail.gmail.com>
+Date:   Thu, 04 Mar 2021 13:03:53 -0800
+In-Reply-To: <CABPp-BE9QA5RAwdebmAyK3b3wh1mGE+NF7sPS5RCf4FogYBV7A@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 4 Mar 2021 09:21:48 -0800")
+Message-ID: <xmqq5z26eime.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wjnzdLSP3oDxhf9eMTYo7GF-QjaNLBUH1Zk3c4A7X75YA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2118B7FE-7D2D-11EB-A3B9-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[CCing the git list]
+Elijah Newren <newren@gmail.com> writes:
 
-On Wed, Mar 03, 2021 at 12:53:18PM -0800, Linus Torvalds wrote:
-> Hey peeps - some of you may have already noticed that in my public git
-> tree, the "v5.12-rc1" tag has magically been renamed to
-> "v5.12-rc1-dontuse". It's still the same object, it still says
-> "v5.12-rc1" internally, and it is still is signed by me, but the
-> user-visible name of the tag has changed.
-> 
-> The reason is fairly straightforward: this merge window, we had a very
-> innocuous code cleanup and simplification that raised no red flags at
-> all, but had a subtle and very nasty bug in it: swap files stopped
-> working right.  And they stopped working in a particularly bad way:
-> the offset of the start of the swap file was lost.
-> 
-> Swapping still happened, but it happened to the wrong part of the
-> filesystem, with the obvious catastrophic end results.
-[...]
-> One additional reason for this note is that I want to not just warn
-> people to not run this if you have a swapfile - even if you are
-> personally not impacted (like I am, and probably most people are -
-> swap partitions all around) - I want to make sure that nobody starts
-> new topic branches using that 5.12-rc1 tag. I know a few developers
-> tend to go "Ok, rc1 is out, I got all my development work into this
-> merge window, I will now fast-forward to rc1 and use that as a base
-> for the next release". Don't do it this time. It may work perfectly
-> well for you because you have the common partition setup, but it can
-> end up being a horrible base for anybody else that might end up
-> bisecting into that area.
+> I think it's kind of lame that git-add won't provide a warning for
+> ignored files when the match is via glob/pattern; if git-add didn't
+> end up adding anything, but an ignored file was matched, I think a
+> warning is appropriate.
 
-Even if people avoid basing their topic branches on 5.12-rc1, it's still
-possible for a future bisect to end up wandering to one of the existing
-dangerous commits, if someone's trying to find a historical bug and git
-happens to choose that as a halfway point. And if they happen to be
-using a swap file, they could end up with serious data loss, years from
-now when "5.12-rc1 is broken" isn't on the top of their mind or even
-something they heard about originally.
+I am not so sure.  When I have this in my exclude list:
 
-Would it make sense to add a feature to git that allows defining a
-"dangerous" region for bisect? Rough sketch:
-- Add a `/.git-bisect-dangerous` file to the repository, containing a
-  list of of commit range expressions (contains commit X, doesn't
-  contain commit Y) and associated messages ("Do not use these kernels
-  if you have a swap file; if you need to bisect into here, disable swap
-  files first").
-- git-bisect, as it navigates commits, always checks that file for any
-  commit it processes, and adds any new entries it sees into
-  `.git/bisect-dangerous`; it never removes entries from there.
-- git-bisect avoids choosing bisection points anywhere in that range
-  until it absolutely has to (because it's narrowed an issue to that
-  range). This can use something similar to the existing `git bisect
-  skip` machinery. Manual bisections print the message at that point.
-  Automated bisections (`git bisect run`) stop and print the range
-  without narrowing further, unless the user passes something like
-  `--dangerous-ok=commit-range`.
+	tmp-*
 
-(git notes would be nice for this, but they're hard to share reliably;
-the above mechanism to accumulate entries from a file in the repo seems
-simpler. I can imagine other possibilities.)
+and have this file in the working tree:
 
-Does something like this seem potentially reasonable, and worth doing to
-help people avoid future catastrophic data loss?
+	tmp-000.txt
 
+I am not sure if I want to see any such warning when I did
 
-- Josh Triplett
+	$ git add "*.txt"
+
+After all, I said that I never would want to worry about anything
+that begins with "tmp-".  It would be a totally different issue if I
+did
+
+	$ git add tmp-000.txt
+
+as I am contermanding my previous wish and saying that I care about
+this particular file, even if its name begins with "tmp-".
+
+So far, the flow of logic is simple, clear and straight-forward.
+
+BUT.
+
+What makes the whole thing tricky is that people don't do
+
+	$ git add "*.txt"
+
+The instead do
+
+	$ git add *.txt
+
+and "git add" cannot tell if the tmp-000.txt it sees is what the
+user meant, or what the shell expanded.
+
+If there were no shell glob expansion, then "warn only if a
+glob/pattern did not match any" would have been an attractive
+option, especially when we had another file in the working tree,
+say, hello.txt, next to the tmp-000.txt.  Then
+
+	$ git add "*.txt"
+
+would add only hello.txt, and we won't see a warning about
+tmp-000.txt.  But end-users will use shell expansion, i.e.
+
+	$ git add *.txt
+
+(1) warning against tmp-000.txt because the command line named it
+    explicitly (from "git add"'s point of view, but never from the
+    user's point of view) would be a disaster.  I think that is why
+    your suggestion was "if git-add did not add anything then warn".
+    but ...
+
+(2) not warning, because the command line named hello.txt as well,
+    i.e. "git add" added something, would make it inconsistent.
+    Whether there is another file whose name ends with .txt, what
+    the user typed (i.e. *.txt) to the command line is the same, and
+    the exclude pattern (i.e. tmp-*) is the same, but the presence
+    of an unrelated hello.txt affects if a warning is given for
+    tmp-000.txt.
+
+So, I dunno.
