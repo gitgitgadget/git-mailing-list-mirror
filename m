@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 016B3C43381
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98AD3C433E9
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:15:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4D3B64F79
+	by mail.kernel.org (Postfix) with ESMTP id 775BA64F6C
 	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 01:15:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239574AbhCDBPT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 20:15:19 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55655 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349581AbhCDBNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 20:13:55 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7DEF111028;
-        Wed,  3 Mar 2021 20:13:14 -0500 (EST)
+        id S238557AbhCDBPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 3 Mar 2021 20:15:14 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61362 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243418AbhCDBMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Mar 2021 20:12:14 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22729BF3F5;
+        Wed,  3 Mar 2021 20:11:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mgwTqO1dLA83q4bRmNCODhwYI+A=; b=t9SEeU
-        /haqXU+iFm7BjgPG9AaleuHoNnxF6PqgREkOa5WDyv1x6Rp3krbKcqTUHUpE0M5h
-        bmHx1YC5FRda+1Sebi8+hegsqtdZbp5OFu4hB9PGcH1HBX+UTWCNhFM7JQUby8I/
-        gpijk6hYC1dMuFAZrs0MIsIvdFPcMDSKCd4UQ=
+        :content-type; s=sasl; bh=DGiGylCWYH0lU1gnYiK2abSj1oY=; b=gLYzcJ
+        a+oYGAcXcXMwxxQrz1NHQrRbcedMHzibFX77Cxz0Drc9c3mGbbqJdE6erHoMe/kB
+        IV+GdkvsMg1JBb8i2Z9DTrqUWYww8Vx5HkjatMfBam+WC8GCBffV4q1fEUgqrMUU
+        q+dmAi1UJoqIH6AmAARvdNiuaxhipti0BoUTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YGbn/EfvIUSHvdO7KpAONI64NeG8bZID
-        V1amAAfc34zHUdfehheda9rHiNXLXGy5w3o9fBr6dDz26ZmHfqLIyZyLaygUXPGA
-        Bciz9DAii65nNxjOBvRClaOrW1dYlCOHhSMtCR/UTqNAlriLminc8OJyK1aFtyvq
-        2GwJhbS6MJM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C174E111027;
-        Wed,  3 Mar 2021 20:13:14 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=x0wHtDBTHc9ZJP8aHRaTfhNnJGrOwEMR
+        QXv/d+I40A/jAnLMaTbjTnXU35rZjDR2W7g677j+jeGt9YWVJA7S1yoELktoMIuI
+        p3b8S1kjFpeC2aXENm8iGc4SFEiz2TCBW1OOjezM9lvzS5T8TtAVlLtcq/jy7OWz
+        A8mXfKDvov0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1960DBF3F4;
+        Wed,  3 Mar 2021 20:11:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 15D9B111026;
-        Wed,  3 Mar 2021 20:13:12 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C71DBF3F3;
+        Wed,  3 Mar 2021 20:11:29 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "Vusich, Joseph" <jvusich@amazon.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: bug: conflicting core.bare setting causes segfault during bare
- clone
-References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
-        <YEAi4OkkNnp+IMJD@camp.crustytoothpaste.net>
-Date:   Wed, 03 Mar 2021 17:13:10 -0800
-In-Reply-To: <YEAi4OkkNnp+IMJD@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Wed, 3 Mar 2021 23:59:28 +0000")
-Message-ID: <xmqq4khrg1qx.fsf@gitster.c.googlers.com>
+To:     Shubham Verma <shubhunic@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] t9801: replace test -f with test_path_is_file
+References: <20210302185056.65929-1-shubhunic@gmail.com>
+Date:   Wed, 03 Mar 2021 17:11:28 -0800
+In-Reply-To: <20210302185056.65929-1-shubhunic@gmail.com> (Shubham Verma's
+        message of "Wed, 3 Mar 2021 00:20:56 +0530")
+Message-ID: <xmqq8s73g1tr.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C9FA95A6-7C86-11EB-8685-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 8CEA3B08-7C86-11EB-9FC1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Shubham Verma <shubhunic@gmail.com> writes:
 
-> I will admit being a bit interested in how this was discovered, since it
-> seems like an odd configuration to have, so if you can share, I'd
-> appreciate it, if only to satisfy my curiosity.
+> -		test -f file1 &&
+> -		test -f file2 &&
+> +		test_path_is_file file1 &&
+> +		test_path_is_file file2 &&
+>  		test ! -f file3 &&
 
-I had the same reaction.  Forcing everything to be bare is quite
-unusual.
+You chose not to touch the last one, which is the right thing to do.
+Replacing "test -f P" with "test_path_is_file P" can be done
+mechanically, but it takes understanding of what the test is doing
+to come up the correct replacement for "test ! -f P".  It may be
+expecting P to be a directory, or it may be expecting P to be
+missing, for example.
+
+Will queue.  Thanks.
+
