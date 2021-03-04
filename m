@@ -2,104 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16DC5C433E0
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D214C433E0
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:53:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D20E064F70
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:38:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 574B064F6F
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 20:53:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230140AbhCDUgG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 15:36:06 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61720 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhCDUfi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 15:35:38 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99052118A1C;
-        Thu,  4 Mar 2021 15:34:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gjCojF/jK6v+Y1z8SuDoOSFN01w=; b=AQkidW
-        +7HSTV+eoiCn2zYdTjm01U8djbOGukJLuy0BrbQ8bgjXEJkG5ctEn/XyAaoDpApx
-        h+1UTt4QWDKdoM1hgJTfUa6JRWbJQdPp7rAdXUpoPn8ceh97Pp9oFIZu8uvqkE7v
-        w0PS1nCcklJ2kEdX9ahhkSZtlTIKyws+UJ5lU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tTEzF+fEdFan4n9Dsq8rjgGene3eAN4/
-        hgV9T3J9c64e0jb1ZytQGen3/xC34PMt8MEWOrZdsCums3qwBz4518lfZrm22qjd
-        q9rCQ282T3oeCWTJve3yWNtpNuO/Q5dSsh1OOXMVwXcNPN6JpzfJplayReaOIUAO
-        Hya4C9ont3k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 90EE9118A1B;
-        Thu,  4 Mar 2021 15:34:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB72C118A19;
-        Thu,  4 Mar 2021 15:34:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 09/12] unix-socket: disallow chdir() when creating
- unix domain sockets
-References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
-        <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
-        <1bfa36409d0706d5e22703f80bf95dfa1a313a83.1613598529.git.gitgitgadget@gmail.com>
-        <xmqqblbzj1cs.fsf@gitster.c.googlers.com>
-        <YED1DmLWd+ciySNa@coredump.intra.peff.net>
-Date:   Thu, 04 Mar 2021 12:34:54 -0800
-In-Reply-To: <YED1DmLWd+ciySNa@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 4 Mar 2021 09:56:14 -0500")
-Message-ID: <xmqqa6riejyp.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S232414AbhCDUxL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 15:53:11 -0500
+Received: from relay5-d.mail.gandi.net ([217.70.183.197]:55419 "EHLO
+        relay5-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232444AbhCDUwj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 15:52:39 -0500
+X-Originating-IP: 50.39.163.217
+Received: from localhost (unknown [50.39.163.217])
+        (Authenticated sender: josh@joshtriplett.org)
+        by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id B096E1C0005;
+        Thu,  4 Mar 2021 20:51:43 +0000 (UTC)
+Date:   Thu, 4 Mar 2021 12:51:40 -0800
+From:   Josh Triplett <josh@joshtriplett.org>
+To:     linux-kernel@vger.kernel.org, git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: A note on the 5.12-rc1 tag
+Message-ID: <YEFIXFyP5tWrPDMw@localhost>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 14B00552-7D29-11EB-8DB1-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wjnzdLSP3oDxhf9eMTYo7GF-QjaNLBUH1Zk3c4A7X75YA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+[CCing the git list]
 
-> The feature is definitely useful; I think I did 1eb10f4091 (unix-socket:
-> handle long socket pathnames, 2012-01-09) in response to a real problem.
->
-> Certainly callers could handle the error themselves. The reason I pushed
-> it down into the socket code was to avoid having to implement in
-> multiple callers. There are only two, but we'd have needed it in both
-> sides (credential-cache--daemon as the listener, and credential-cache as
-> the client).
->
-> Ironically, the listening side now does a permanent chdir() to the
-> socket directory anyway, since 6e61449051 (credential-cache--daemon:
-> change to the socket dir on startup, 2016-02-23). So we could just do
-> that first, and then feed the basename to the socket code.
->
-> The client side would still need to handle it, though. It could probably
-> also chdir to the socket directory without any real downside (once
-> started, I don't think the helper program needs to access the filesystem
-> at all outside of the socket).
->
-> So I dunno. I'd be OK to just rip the feature out in favor of doing
-> those chdir()s. But that seems like a non-zero amount of work versus
-> leaving, and the existing code has the benefit that if another caller
-> shows up, it could benefit from the feature.
+On Wed, Mar 03, 2021 at 12:53:18PM -0800, Linus Torvalds wrote:
+> Hey peeps - some of you may have already noticed that in my public git
+> tree, the "v5.12-rc1" tag has magically been renamed to
+> "v5.12-rc1-dontuse". It's still the same object, it still says
+> "v5.12-rc1" internally, and it is still is signed by me, but the
+> user-visible name of the tag has changed.
+> 
+> The reason is fairly straightforward: this merge window, we had a very
+> innocuous code cleanup and simplification that raised no red flags at
+> all, but had a subtle and very nasty bug in it: swap files stopped
+> working right.  And they stopped working in a particularly bad way:
+> the offset of the start of the swap file was lost.
+> 
+> Swapping still happened, but it happened to the wrong part of the
+> filesystem, with the obvious catastrophic end results.
+[...]
+> One additional reason for this note is that I want to not just warn
+> people to not run this if you have a swapfile - even if you are
+> personally not impacted (like I am, and probably most people are -
+> swap partitions all around) - I want to make sure that nobody starts
+> new topic branches using that 5.12-rc1 tag. I know a few developers
+> tend to go "Ok, rc1 is out, I got all my development work into this
+> merge window, I will now fast-forward to rc1 and use that as a base
+> for the next release". Don't do it this time. It may work perfectly
+> well for you because you have the common partition setup, but it can
+> end up being a horrible base for anybody else that might end up
+> bisecting into that area.
 
-I am OK to keep the series as-is, and leave it to a possible future
-work to remove the need for chdir even for long paths and not having
-to return an error with ENAMETOOLONG; when such an update happens,
-the "fail if need to chdir" feature this patch is adding will become
-a no-op.
+Even if people avoid basing their topic branches on 5.12-rc1, it's still
+possible for a future bisect to end up wandering to one of the existing
+dangerous commits, if someone's trying to find a historical bug and git
+happens to choose that as a halfway point. And if they happen to be
+using a swap file, they could end up with serious data loss, years from
+now when "5.12-rc1 is broken" isn't on the top of their mind or even
+something they heard about originally.
 
+Would it make sense to add a feature to git that allows defining a
+"dangerous" region for bisect? Rough sketch:
+- Add a `/.git-bisect-dangerous` file to the repository, containing a
+  list of of commit range expressions (contains commit X, doesn't
+  contain commit Y) and associated messages ("Do not use these kernels
+  if you have a swap file; if you need to bisect into here, disable swap
+  files first").
+- git-bisect, as it navigates commits, always checks that file for any
+  commit it processes, and adds any new entries it sees into
+  `.git/bisect-dangerous`; it never removes entries from there.
+- git-bisect avoids choosing bisection points anywhere in that range
+  until it absolutely has to (because it's narrowed an issue to that
+  range). This can use something similar to the existing `git bisect
+  skip` machinery. Manual bisections print the message at that point.
+  Automated bisections (`git bisect run`) stop and print the range
+  without narrowing further, unless the user passes something like
+  `--dangerous-ok=commit-range`.
+
+(git notes would be nice for this, but they're hard to share reliably;
+the above mechanism to accumulate entries from a file in the repo seems
+simpler. I can imagine other possibilities.)
+
+Does something like this seem potentially reasonable, and worth doing to
+help people avoid future catastrophic data loss?
+
+
+- Josh Triplett
