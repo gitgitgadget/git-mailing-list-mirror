@@ -6,42 +6,42 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95C32C433E6
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABB5CC433DB
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 05:15:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7184B64EEF
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 03:43:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6A76F64EF4
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 05:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232735AbhCDDnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 3 Mar 2021 22:43:02 -0500
-Received: from mail-ej1-f54.google.com ([209.85.218.54]:35314 "EHLO
-        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232685AbhCDDml (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Mar 2021 22:42:41 -0500
-Received: by mail-ej1-f54.google.com with SMTP id dx17so19047137ejb.2;
-        Wed, 03 Mar 2021 19:42:25 -0800 (PST)
+        id S234018AbhCDFPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 00:15:04 -0500
+Received: from mail-ej1-f50.google.com ([209.85.218.50]:43130 "EHLO
+        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234066AbhCDFO6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 00:14:58 -0500
+Received: by mail-ej1-f50.google.com with SMTP id p8so20583416ejb.10;
+        Wed, 03 Mar 2021 21:14:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UWjGkxRM9xTK3Oxe58Zk6wy2u5TkskdEma3Q5K5bnV0=;
-        b=cD7KcsD92IHbazc0lPeiBdZNyecvbUMGh6T4AT5Ww5ZjSnyQ7olr5MnXwCgA20HxxP
-         pRCi/eTd2nI831PqpWghqlX2ZV+7uRnrfbgzzUZAECt/24nISAuKD1GOHRgHBnDwGQQc
-         a5hIFvfN4/tOlgAF8OyFT16/V8rESVYr/FYY9o1kXKxK8R+s2jYz0yi9bPrBc532J71V
-         ZfxFzPUZ37WAeYBHc7alLsDFnS3AsZR95crQx90jiOE6cDPy5HMegcA9YWFKQoT+qm3R
-         WiQ3hellC7Vu2dSgbhtNbowxQud8YJs+oU5OCG2L/hOMKge3M8k6DCXn3syr5LsX0R7Z
-         28eA==
-X-Gm-Message-State: AOAM530CVS1IBghEPH2HTBfVo8wfVwEv/5FevtYByKnRePpJmgaG26wn
-        x0xRnyS4m7zGA0RKO1nEGnTFZSytejcr+P9XAqk=
-X-Google-Smtp-Source: ABdhPJxNs0kWsKEcqBHTKza6uK/Ep/qWjS3ZdqweJtG+HT6UWS0Gk+XXDm3Bpf4w8Um9XD1M4IEnWzBuIES5LJ9aCGk=
-X-Received: by 2002:a17:907:76b3:: with SMTP id jw19mr1991870ejc.202.1614829319883;
- Wed, 03 Mar 2021 19:41:59 -0800 (PST)
+        bh=qSIypw1gJds7lAPyMLE7FS5X4k+fvlO0M2Uln3WKofI=;
+        b=IEDe16jnhyW+cWqA0dPLFBKF0U04iVnQ2rVMKb6ki7lizaC1D14HSTsk5WEv+qVgLj
+         N8CpO2jbLttKSdOyjgmc/YImkgnnUpY7osTSZR2orrBj4t5g5LSspEniKd33lJri+zrO
+         a/WkvA7mgyOUnPK/B4m9CLmNFYJF5SqPoRflb0SiF5nDLEKetbcSCalSA7iyanlLfEpW
+         LJ92Hso3mPOfKlMyR9CeKLpy0dxGCOL+ZUo3810eK0MIojtGgyka5TMwFS7hi2CQE89Z
+         87oLBEUVuPrwNNNXUdWlYtr57MdxJ8bJd0MbfGAlDlS9fYHEj266Kij/G0eZ9H11zsET
+         TxLQ==
+X-Gm-Message-State: AOAM5311vNSbvzaNtznyQfq/rcFFY5e9He+vJBueJKk2c/YX1Bm63oy3
+        y4yAF5aehQmyzTWzdV0S6wpNFyBtrSrPKshJalY=
+X-Google-Smtp-Source: ABdhPJzRlgTmF5hN4QBDxejbDzbAXOew/il/TLHwchMUXKBA6NZGM+g9jAoz+gnvE3T1HudvDor7ZtiuQA8jvNEbubc=
+X-Received: by 2002:a17:906:3105:: with SMTP id 5mr2361861ejx.168.1614834856800;
+ Wed, 03 Mar 2021 21:14:16 -0800 (PST)
 MIME-Version: 1.0
 References: <xmqqr1kwk0h9.fsf@gitster.c.googlers.com>
 In-Reply-To: <xmqqr1kwk0h9.fsf@gitster.c.googlers.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 3 Mar 2021 22:41:49 -0500
-Message-ID: <CAPig+cRqED-d_hFN80UuPhS+77k6qw_G9Q-m9tWUZsNynQfVvA@mail.gmail.com>
+Date:   Thu, 4 Mar 2021 00:14:06 -0500
+Message-ID: <CAPig+cSC8uNfoAjDKdBNheod9_0-pCD-K_2kwt+J8USnoyQ7Aw@mail.gmail.com>
 Subject: Re: [ANNOUNCE] Git v2.31.0-rc1
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git List <git@vger.kernel.org>,
@@ -53,16 +53,13 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Mar 3, 2021 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine (3):
->       worktree: teach `repair` to fix multi-directional breakage
+> Pratyush Yadav (1):
+>       git-gui: remove lines starting with the comment character
 
-The merge message associated with this change is:
+Is there some way that this can be removed from v2.31.0 before final
+release? It badly breaks git-gui on macOS[1,2] to the point of making
+it unusable (Tcl throws errors at launch time and when trying to
+commit, and committing is 100% broken).
 
-    "git worktree repair" learned to deal with the case where both the
-    repository and the worktree moved.
-
-which seems worth mentioning in the v2.31.0 release notes, so it's a
-bit surprising that it is not mentioned anywhere. I haven't
-investigated how the release notes are generated from the merge
-messages, so it is unclear if this is a mere oversight, an intentional
-omission, or a tooling error.
+[1]: https://lore.kernel.org/git/CAPig+cT-sfgMDi9-6AEKF85NtOiXeqddJjk-pYuhDtTVAE-UEw@mail.gmail.com/
+[2]: https://lore.kernel.org/git/20210228231110.24076-1-sunshine@sunshineco.com/
