@@ -2,95 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 852DEC433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8E4DC433E0
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:54:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55BA464F42
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:42:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 897F664F5B
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 14:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232146AbhCDOl1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 09:41:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52178 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232172AbhCDOk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 09:40:57 -0500
-Received: (qmail 27072 invoked by uid 109); 4 Mar 2021 14:40:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 04 Mar 2021 14:40:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9267 invoked by uid 111); 4 Mar 2021 14:40:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 04 Mar 2021 09:40:16 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 4 Mar 2021 09:40:16 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 03/12] pkt-line: (optionally) libify the packet readers
-Message-ID: <YEDxUFJmPH4nP6Qk@coredump.intra.peff.net>
-References: <pull.766.v3.git.1613174954.gitgitgadget@gmail.com>
- <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
- <e05467def4e158a5f1cfa3aafffdb5c77097859a.1613598529.git.gitgitgadget@gmail.com>
- <xmqqwnuohv4t.fsf@gitster.c.googlers.com>
- <6b1ce8c0-0881-77a0-deda-677e34560cc0@jeffhostetler.com>
+        id S232736AbhCDOyM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 09:54:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39666 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229563AbhCDOyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 09:54:02 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62F19C061574
+        for <git@vger.kernel.org>; Thu,  4 Mar 2021 06:53:22 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id i14so6725737pjz.4
+        for <git@vger.kernel.org>; Thu, 04 Mar 2021 06:53:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gw1eZTHQNZ5i6PdgJwJwmcYf5ZHbUZslZhTo2QzJMgs=;
+        b=R+S8+YKYEsmrHm5ptabYlaB08C70mDlClIOJLNtV+PZ8PwSF95svkfHGpIyOmRL0rY
+         jpGZuaCP1FfC6eLndnNRzqY0Xrt0UtpkeoO43QVR1ujIUrVF8PPauTz9EX7emsXE1aZt
+         q1X5Lm+ax+CT2I35QSgWeQAzhmNFC/nF79IckvvP197nCMeuG/2xNglyjlVUGfv9i24C
+         P17AAjmxaqXwMBzT16n31vsWQcUJ2oroaG6sNGTcfULsqNejw2yzuKA98j8Vh9K/swaE
+         coY7C3u+HnVVelAK9LttIHw+iZ6EbVSE1AcWucVtvFnLky/jjyka0zNklJE+OHBDjcMl
+         ZNUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gw1eZTHQNZ5i6PdgJwJwmcYf5ZHbUZslZhTo2QzJMgs=;
+        b=XuLyBM0SVmCC3IgHsy68OIfZVv3trM3pDio/malC+TqiOIL+VZoUYzTxFh9KWiKRCy
+         mNPnFLSPYX1fthkKEGlrpJAxNI6m1IYmlX81U3g2mjDib+Gn3+w4e4NuOyyyDBLszD9I
+         9cMP4g73WK/iYIdiM7K02Hdl/xpqOVo5ayDDOCREl7NAyo8HGm79m2gpHHf+g2WxMJYx
+         yeIYA8TXptJokNOXYYaAhKaAvkfZABe8R4Z7ucF/o8LwmplQiU2RKp6z88Fl1ox6vG2A
+         gpesJizJga/GypEuj4Iaa7XcpVMBRMHyK2MlWR6MDFWQKiYfeRYMoJsvsFi4p43QfvL3
+         mi+g==
+X-Gm-Message-State: AOAM533nXkgEQd5jpK2eaxXUynz5Q0RuziDMy1lpNsgcVaYKPMUawTCF
+        //7ukMF8yOTxNEpLD/BLHOLKZ55U3Ijibw==
+X-Google-Smtp-Source: ABdhPJxR/oLwUZm+EUV1XrJIsCRF+vu7o9X8vAzFpAaK9beLkZDGo4L75oX5hM7+lnnPv7fqNN3dGA==
+X-Received: by 2002:a17:902:b601:b029:e3:7aab:704d with SMTP id b1-20020a170902b601b02900e37aab704dmr4405715pls.58.1614869601594;
+        Thu, 04 Mar 2021 06:53:21 -0800 (PST)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id ml17sm11810449pjb.18.2021.03.04.06.53.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Mar 2021 06:53:20 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <hello@brighterdan.com>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Jiang Xin <worldhello.net@gmail.com>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [L10N] Kickoff for Git 2.31.0 round #2
+Date:   Thu,  4 Mar 2021 09:53:16 -0500
+Message-Id: <20210304145316.15617-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.26.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6b1ce8c0-0881-77a0-deda-677e34560cc0@jeffhostetler.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 04, 2021 at 09:17:41AM -0500, Jeff Hostetler wrote:
+Hi,
 
-> > In the post-context of this hunk, there is this code:
-> > 
-> > 	if ((options & PACKET_READ_DIE_ON_ERR_PACKET) &&
-> > 	    starts_with(buffer, "ERR "))
-> > 		die(_("remote error: %s"), buffer + 4);
-> > 
-> > 	*pktlen = len;
-> > 	return PACKET_READ_NORMAL;
-> > 
-> > But here, there is no way to override the DIE_ON_ERR with
-> > READ_NEVER_DIE.
-> > 
-> > The asymmetry is somewhat annoying (i.e. if "if you do not want to
-> > die upon ERR, don't pass DIE_ON_ERR" could be a valid suggestion to
-> > the callers, then "if you do not want to die upon an unexpected
-> > hung-up, pass GENTLE_ON_EOF" would equally be valid suggestion),
-> > but I'll let it pass.
-> 
-> I agree that there is something odd about all of these flags,
-> but I don't have the context on all the various caller combinations
-> to make a better suggestion at this time.  And I certainly don't
-> want to stir up a bigger mess than I already have. :-)
-> 
-> We did document in the .h that READ_NEVER_DIE excludes ERR packets
-> when READ_DIE_ON_ERR is set, so I think we're safe from unexpected
-> surprises.
+Git v2.31.0-rc1 has been released, and introduced 9 new messages.
+Let's start a new round of git l10n based on this commit:
 
-I think the flag is doing sensible things; it's just that the word
-"never" in the name is confusing, since it is "never except this one
-time".
+    l10n: git.pot: v2.31.0 round 2 (9 new, 8 removed)
+    
+    Generate po/git.pot from v2.31.0-rc1 for git v2.31.0 l10n round 2.
+    
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-Would PACKET_READ_GENTLE_ON_READ_ERROR be a better name, to match
-GENTLE_ON_EOF? I was tempted to just call it "ON_ERROR", since it also
-include parsing errors, but maybe somebody would think that includes ERR
-packets (that is more of a stretch, though, I think).
+You can get it from the usual place:
 
-Likewise, I kind of wonder if callers would really prefer suppressing
-the error() calls, too. Saying "error: the remote end hung up
-unexpectedly" is not that helpful if the "remote end" we are talking
-about is fsmonitor, and not the server side of a fetch.
+    https://github.com/git-l10n/git-po/
 
--Peff
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in "po/README" file.
+
+--
+Jiang Xin
