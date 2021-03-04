@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A56C433DB
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 09:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9524FC433E6
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 09:03:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 22DC764E60
-	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 09:02:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6847764F20
+	for <git@archiver.kernel.org>; Thu,  4 Mar 2021 09:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237097AbhCDJBt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 04:01:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48550 "EHLO
+        id S237088AbhCDJCx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 04:02:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237090AbhCDJB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 04:01:26 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D7ACC061574
-        for <git@vger.kernel.org>; Thu,  4 Mar 2021 01:00:46 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id f26so6411552oog.5
-        for <git@vger.kernel.org>; Thu, 04 Mar 2021 01:00:46 -0800 (PST)
+        with ESMTP id S237090AbhCDJCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 04:02:44 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68F21C061574
+        for <git@vger.kernel.org>; Thu,  4 Mar 2021 01:02:04 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id x10so6418255oor.3
+        for <git@vger.kernel.org>; Thu, 04 Mar 2021 01:02:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mqdaOBSX9jYCJAgOMkDbt8ffIhUkqfxVI9W73cDUQ8w=;
-        b=OO21NOOFVZrwBzGna1QMOnRuCv3aC37JRiUo/crM95esKDDKjBWIdQ225TbVyMpsGf
-         0OwPEegGckKaTNFgKpuviKi3ShPLWjjIKls9jftUkYXBWm1TQbYjjFdhE+cElUIe3xXh
-         9773mKp+JubBuAPodIoOvtJFwQEMyLhBuZ5R6eAkx4Hcx3BjGpCtEjwkhbeOrNgFEZgv
-         KO07okLMi7O0pDserwdLkQ7gUD1JCAJoU+SpqZVQaPda9lGLLA84tPHZzFV/hq1CQNbl
-         Np7y1+M+FltwUJ5Wzah9xCtMKpbwemYB7HDuryBNoEeshQrndsDKM99iYlX9KjiHJVLx
-         +U6A==
+        bh=oR1oNrUjbVdZhjBSaH3iZm7Fb/n6MJtNXvMy7AmvhLQ=;
+        b=P3yR072dlS6wbvEuzBR99DOsuFfrrGcpv8Qz5wrLjss+YhEqJQOsoz3bgE8iw00s54
+         L7O7EWgBiJMIYzLQS13OlpJqcBrvJfEDtJ45jbp/wquYg+9VbsuMclAdY/3Sz8TvUrQ5
+         DE9NYlrjaaly0J4GaEPJIRZqXEUeKP1/tkMq0l60tBboLtSvcUDYeir9HVd70nyE1rVR
+         u0QPdKGkmn436C3GXFfQ02TuENjvtzG4X+cD3FNF6bf3CSBJ9EG+KCuUaxVbgazo08pn
+         EisWGSV9aGBDEX28z+fc6UuE4bqwtZWVNgTSUAHZ23KG3YA0ry6Zt2iSTWRE/wt2psHd
+         gXbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mqdaOBSX9jYCJAgOMkDbt8ffIhUkqfxVI9W73cDUQ8w=;
-        b=tgAruphMlVqU6TO3oeervzGiWB/AoaMugU8fIiuiAtDGFIPaSLFD57tbYP0ac6Ufww
-         SKgEMSssh0e8SX+lSgxrRNrdFM9Ek+uiPGHyTZbvzrhyN8ztchr69AifObCZR/qx8ftn
-         7hnNVTCswL/FEFjfsxf0dR4Rn5UNku6n0thDfZfoGA/xTTmKS0Uh7F5Z6xd8IH14eMZu
-         w9/CTq4pd7QFuhnwCumgKEsLJ8AOslFn+4oSoXI+zfIPM+Yqf2ZkykjMTYhGqfmAkiSI
-         7IPsr+oNvCYzIZjeZjphKEklJCPzR+GSeQe85qibkoJS1KgvaQRmUrOyuAuwsXC9zzGb
-         Z5Ug==
-X-Gm-Message-State: AOAM530A871TSrJrdKeLAOf0p3mrkdY9LlHuBxIQJllK+AXiwLenfvZH
-        jzc3IL2E4N9cH/ZoL8ilcPlcczfiwkJrPbeB79g=
-X-Google-Smtp-Source: ABdhPJxAVdHctHfZpIME/xuCnyxfHy3t2CVeIz7ImlEt+NuU8i5Z0K7DKTyRjRS8sJoLiGH4V6ZUdr2Q8YH8i4a5oH4=
-X-Received: by 2002:a4a:e70a:: with SMTP id y10mr2554302oou.75.1614848446054;
- Thu, 04 Mar 2021 01:00:46 -0800 (PST)
+        bh=oR1oNrUjbVdZhjBSaH3iZm7Fb/n6MJtNXvMy7AmvhLQ=;
+        b=merKUkH7XlI4YelhEsgH4uZK3yBM5zH7/ZnQjrTFREBbEIaNc0oGm0j9S1rUidZMuq
+         CamE+x1tS0G/0oi/C+e8XK8iOkNpSHBGoMKawfxQROLzRVC+7CRWtKtJwFqrj/fCmkGT
+         2LDdlrNR5KRZ7Zyu+kgFSsdkhznb1Q4vuJ8O6PHZPPBPZg25axFSDOJPQmqhNv1V1hXN
+         tng6MGAKvAhygKfThUpmAKnnft8XiLuqW2eYyX6JsTP0G3/MBxP/dqPb0hneVfAu195J
+         UWyJG8UP8uty2HM/VKOpx/lcWH3Qo7aLlsoue9t4LBg8CjMS8tC6vvOm23ARwdoNVU3/
+         f+yQ==
+X-Gm-Message-State: AOAM530j3k0EuqCV4lLo0Eoc4WGsw1t27JyFpfNnfQYw5lW91Ow9UT04
+        N55m1YGtE/V+kDjeSDLIBnF7Xfu2JxETrAnkqSc=
+X-Google-Smtp-Source: ABdhPJx6KgeIbZcR2Q6It3TOddFLfMKtS1CALCSAPU27bMiLGT8/Wnirhb0J2M4gsnE+TMNfigpjXD4Z8QjK4a+0nPI=
+X-Received: by 2002:a4a:e70a:: with SMTP id y10mr2558257oou.75.1614848523649;
+ Thu, 04 Mar 2021 01:02:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-7-charvi077@gmail.com>
- <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com>
- <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
- <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com> <xmqqczwfg23t.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqczwfg23t.fsf@gitster.c.googlers.com>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-3-charvi077@gmail.com>
+ <CAPig+cQAG3p6rhGHzBNGPUxMXQbbLZgiw-uUpizNiEWY9wm-3A@mail.gmail.com>
+ <xmqqlfb6mrnx.fsf@gitster.c.googlers.com> <CAPSFM5fmK_3rFfTbD7o3qCcYYeMXoX7K-HhGorXDPcFseBEDzQ@mail.gmail.com>
+ <CAPig+cQcjUzXpW1OBCiEC3Sr13uyeesqK49KWmgnY1iHNnS2Rw@mail.gmail.com> <xmqqh7lrg2g0.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqh7lrg2g0.fsf@gitster.c.googlers.com>
 From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Thu, 4 Mar 2021 14:30:34 +0530
-Message-ID: <CAPSFM5cM4fdyWXD33PkT2bH6kM+3ixkxgAnhjUVYFtjUHgwU5g@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
- fixup=[amend|reword] options
+Date:   Thu, 4 Mar 2021 14:31:52 +0530
+Message-ID: <CAPSFM5dXDdi9_RF7nK+JTgPUUfvY4j3AMuWVoqaY=3yhCBwyWA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/6] commit: add amend suboption to --fixup to create
+ amend! commit
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Git List <git@vger.kernel.org>,
@@ -74,49 +74,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 4 Mar 2021 at 06:35, Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, 4 Mar 2021 at 06:28, Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Eric Sunshine <sunshine@sunshineco.com> writes:
 >
-> > Hmm, I see. So "reword!" is really just an "amend!" with only commit
-> > message but no patch content. That makes perfect sense from an
-> > implementation standpoint, but it makes me wonder if it would be
-> > easier for users to understand if it created a "reword!" commit which
-> > would be recognized as an alias of "amend!". (But maybe that's getting
-> > too confusing, and my musing should be ignored.)
+> > Hmm, I see. I didn't follow whatever discussion led to the decision to
+> > use this sort of prefix matching, but I have to wonder if it is a good
+> > idea.
 >
-> Perhaps related, perhaps not, but I wonder if we really need --fixup=amend
-> and --fixup=reword to begin with.  The "amend" variant,
->
->     $ git commit --fixup=amend:<original> ... other args ...
->
-> is about shaping the index with "other args" and recording the
-> resulting tree with the log message taken from <original>, marked
-> with the "amend!" prefix.  The --fixup=reword:<original> variant
-> is a mere special case of it where the recorded tree is made of the
-> index in the same way as a partial commit with pathspec that matches
-> no paths, i.e.  If you have --fixup=amend, you can do
->
->     $ git commit --fixup=amend:<original> --only
->
-> and you do not need --fixup=reword:<original> at all, no?
+> Meaning --fixup=a:<commit> and --fixup=amend:<commit> do the same
+> thing, until somebody invents --fixup=another:<commit> and makes the
+> prefix 'a' no longer unique?  I tend to agree that, especially with
+> command line completion support with modern shells, such a prefix
+> matching would not be necessary.
 >
 
-Maybe as an alternative User interface, we can remove the
-`--fixup=reword:<original>`.
-
-But for this patch, as we have kept separate suboption
-`--fixup=reword:<original>` , so if now we do
-`--fixup=amend:<original> --only` then it will return the error as
-below :
-fatal: No paths with --include/--only does not make sense.
-So, `amend` works only if staged changes are present otherwise to
-change only the commit message `reword` option is there.
-
-I agree we can change to the above UI but still I wonder which one is
-more friendly ? Also, I think we need to add complete `--allow-empty
---only` to mirror the working of `reword` so this may result in a lot
-of typing and hard to remember.
+Okay, so for now I think (as suggested), let's remove it and directly
+use "!strcmp()" only instead of "starts_with()". I agree that if we
+keep prefix matching or not, it will not matter much.
 
 Thanks and Regards,
 Charvi
