@@ -2,152 +2,207 @@ Return-Path: <SRS0=rdad=ID=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB3ECC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42FA7C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:16:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99BB265074
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:11:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEB8165074
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:16:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbhCETKo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 14:10:44 -0500
-Received: from mout.web.de ([212.227.17.11]:36623 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229582AbhCETKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 14:10:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1614971419;
-        bh=qJV2IqgdOVAaLouTaC+grwTYdKybom6ipH5a7VjE6Fw=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=aCuq2FZ6Yl3ouLNc6vtuxFc7Ysfam5MSPboYbSTjzfYPklqZpS2jj9gPLBbXL7eRG
-         6q1zM67AcgHMWhqcUFUWW/1el6miZzyrRdsF1t+al6Lf2secHvZKjn4PpVp9djLr9b
-         SKKUeDjpPLShWmo7G+yGgpztXdbzmSKF/DI78S6s=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.24.70]) by smtp.web.de
- (mrweb101 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 0LmLoU-1lqlNR2GYM-00ZxzF; Fri, 05 Mar 2021 20:10:19 +0100
-Subject: Re: [PATCH v2 0/4] Makefile/coccicheck: fix bugs and speed it up
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Eric Wong <e@80x24.org>, Denton Liu <liu.denton@gmail.com>
-References: <20210302205103.12230-1-avarab@gmail.com>
- <20210305170724.23859-1-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Message-ID: <3aac381e-2ce9-e35e-498c-9c26df235aed@web.de>
-Date:   Fri, 5 Mar 2021 20:10:18 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.7.1
+        id S229615AbhCETQI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 14:16:08 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63625 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229517AbhCETQD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 14:16:03 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6A0412017B;
+        Fri,  5 Mar 2021 14:16:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TLlr5c2KMCn38GL0xgrwLMR4N0E=; b=ecIU+B
+        7l4reXYtXauad2b1oJTEBs2frENrkjbAGi/X8j3O+6Ztdd7eXpp55XtimOC4jZND
+        nRXqDJ2N2rLKf7D1FRh0rVvAXXTK4VryRAv+nH5irIsPyYi7LG/NulkZZDXG5iZb
+        uLjarq1gyxzpFlxLm3vzX0rtHKEUVwNuj1Lek=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Q4snBRUaoqG605RezVk6Igb+fw2PT29J
+        Zujf6de0OAESJwHV0ZLsyxjY6a8Nk2KCFAGA1wPURYFMAauXsO1YZB3+XbBVJkRE
+        UcqCxk/pyXpX1TZsNULiMq7rLhEpoVYnir6ba4LHnSsXcR+dKwBFuCaoUlpFZuAO
+        Q6EpX5zHhnw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AF0A0120179;
+        Fri,  5 Mar 2021 14:16:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E78D1120174;
+        Fri,  5 Mar 2021 14:15:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 1/5] builtin/repack.c: do not repack single packs with
+ --geometric
+References: <cover.1614957681.git.me@ttaylorr.com>
+        <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
+Date:   Fri, 05 Mar 2021 11:15:58 -0800
+In-Reply-To: <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Fri, 5 Mar 2021 10:21:37 -0500")
+Message-ID: <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20210305170724.23859-1-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FNWY63bjBVz1ASLN50eHCGK0JeOjzLzFYivf1GzvBOrlUR/9cif
- mIhx/uhWwu6AixU56gHHYjDL/rYvlNr7u/pJxvY+lroIdIJkqmur+0HvQMPq4zadD9iuYSk
- tzfztFXlJdPF5TT+Uqc4z4z8T/r3dXqzR5QJ4Ji6P1Zqea20o8K1i80BuPvbRA+vKxFndjD
- sG31v67dlUacPUhC/3OYQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7Zdrdfs55Us=:hhVLsWdSLIu1HbiAR/Psbe
- k+JIsYzPSIogqku087iNNG/cqN0L2j/K6lDt2s+uQbDzbZEfwNVsifQ13OUhObby10AwqJo5J
- k92M7qHL3AdQ8IbVQ3U6dc8fj6XX/saFmeiPrNXdxhAge4JEzqHor71Ij2kdM5q7Mm+Cl8Qd8
- fjB0gxibAGTGPXueufzTMOaTxXZKZ+UL06Xn0/oQ4bJPiOc5KUK20pZVeZbjxzu1FfzZwxSfU
- O15i3uCRbZG19tDYsoV1SnbPKgER/HeYEmL6SYYIpA3cHMefbPIHyJiqWGT8VIjflAPdHsf+f
- 1M6ARHF79r0bIfEMEaKamDZE7AyEiFaSdtLR0Mwlu38FViFOQ8lrrOCOXxMWplB1AsAhQO9MF
- 927SmU2sKnSYsAX92G6SoXuelhf2OMCW4p2eeADVi8AGnR6oBUevKTL0rovxZzXUoACXBY7cU
- 1p31Zhbko6jZu38HE6IV14pJ73vhNrKXY/2hRyReLAk42o2jG0W5PLVTuO1yhUJ4nxYtp0hRA
- 4OxBKk+k6AkxWcRhDneaF6O7bZKw1MvZ0jUbrh5sMPK+uCT0pw67CtBK94dXT7vDQkBsHiui9
- 1CvVGWRRAdiRnjUFhnLTGrej8cqTiiyq1AJaPjID4mOcthmszZJc6idSdu8JTL6ppNegaVIRM
- p/0tjXv2+fHe6Vb9PFTgYo+8/dw5BNVXdcGetoGHGwvBE6ieYMU2EEKo7M74oLI3n6kZE38Qa
- /b9RWfL2xDtt0GsZVbgEx1QCG3cL9NGJo5ybZ9she/sbk7h6O3GaUr4TtmnatsHTuh1SFB5l1
- 4AHdg00AMjGIYBWbOdhx6/h6mQg2+Y4v7Ydhy130t8ESEmsSAHtm3j/xm2equYkVw6QYoo9Un
- O3vHmY1l18XEkf14eYDQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 38414210-7DE7-11EB-BAF5-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.03.21 um 18:07 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Addresses feedback on v1:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> Loosen the guard to only stop when there aren't any packs, and let the
+> rest of the code do the right thing. Add a test to ensure that this is
+> the case.
 >
->  - The removal of the "cat $@.log" is gone.
->  - Split up into N changes.
->  - Explained why 960154b9c17 (coccicheck: optionally batch spatch
->    invocations, 2019-05-06) broke things and produced duplicate hunks
->    in 2/4: tl;dr: spatch does its own locking etc., xargs -n trips it
->    up.
->  - Set number of batch processes to 8, as suggested by Jeff King.
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
->   Makefile/coccicheck: add comment heading for all SPATCH flags
->   Makefile/coccicheck: speed up and fix bug with duplicate hunks
->   Makefile/coccicheck: allow for setting xargs concurrency
->   Makefile/coccicheck: set SPATCH_BATCH_SIZE to 8
->
->  Makefile | 34 +++++++++++++++++++++++++---------
->  1 file changed, 25 insertions(+), 9 deletions(-)
+> Noticed-by: Junio C Hamano <gitster@pobox.com>
 
-This speeds up "make coccicheck" after "make clean" as advertized for
-me:
+I do not think I "noticed" anything, though.
 
-   before: 572.64s user 33.08s system 622% cpu 1:37.30  total
-   after:  195.40s user  9.97s system 629% cpu   32.612 total
+> -	if (geometry->pack_nr <= 1) {
+> +	if (!geometry->pack_nr) {
+>  		geometry->split = geometry->pack_nr;
+>  		return;
+>  	}
 
-However, it also misses several conversions that coccicheck generated
-without this series for the example added by the patch at the bottom.
-Here's the difference of diffstats (< before, > after):
+When pack_nr is 0, split is set to 0.  Otherwise we compute the
+split the usual way in the new code.  Let's see the post-context of
+the above code and figure out what happens when pack_nr is 1.
 
-   $ diff <(diffstat b | sort) <(diffstat a | sort) | grep '^[<>]' | sort =
--k2 -k1
-   >  27 files changed, 55 insertions(+), 57 deletions(-)
-   <  36 files changed, 70 insertions(+), 71 deletions(-)
-   <  attr.c                   |    2 +-
-   >  blame.c                  |   15 +++++++--------
-   <  blame.c                  |   17 ++++++++---------
-   <  bloom.c                  |    2 +-
-   <  cache-tree.c             |    2 +-
-   >  combine-diff.c           |   18 +++++++++---------
-   <  combine-diff.c           |   20 ++++++++++----------
-   <  decorate.c               |    2 +-
-   <  diffcore-rename.c        |    2 +-
-   >  diffcore-rename.c        |    3 +--
-   <  ewah/bitmap.c            |    2 +-
-   <  hashmap.c                |    2 +-
-   >  midx.c                   |    4 ++--
-   <  midx.c                   |    8 ++++----
-   <  pack-objects.c           |    2 +-
-   <  pathspec.c               |    2 +-
-   >  read-cache.c             |    2 +-
-   <  read-cache.c             |    4 ++--
-   >  ref-filter.c             |    2 +-
-   <  ref-filter.c             |    4 ++--
-   <  remote.c                 |    2 +-
+	split = geometry->pack_nr - 1;
 
-That's with the current spatch version 1.1.0-00072-g3dc5d027.
+split set to 0 here.
+
+	/*
+	 * First, count the number of packs (in descending order of size) which
+	 * already form a geometric progression.
+	 */
+	for (i = geometry->pack_nr - 1; i > 0; i--) {
+
+Iterate from i = 0 while i is positive, which means this entire loop
+is skipped.
+
+		struct packed_git *ours = geometry->pack[i];
+		struct packed_git *prev = geometry->pack[i - 1];
+		if (geometry_pack_weight(ours) >= factor * geometry_pack_weight(prev))
+			split--;
+		else
+			break;
+	}
+
+	if (split) {
+		/*
+		 * Move the split one to the right, since the top element in the
+		 * last-compared pair can't be in the progression. Only do this
+		 * when we split in the middle of the array (otherwise if we got
+		 * to the end, then the split is in the right place).
+		 */
+		split++;
+	}
+
+And split is still 0.
 
 
-diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
-ci
-index 46b8d2ee11..1f26da007a 100644
-=2D-- a/contrib/coccinelle/array.cocci
-+++ b/contrib/coccinelle/array.cocci
-@@ -88,3 +88,16 @@ expression n;
- @@
- - ptr =3D xmalloc((n) * sizeof(T));
- + ALLOC_ARRAY(ptr, n);
-+
-+@@
-+type T;
-+T *ptr;
-+expression n !=3D 1;
-+@@
-+(
-+- ptr =3D xcalloc(n, \( sizeof(*ptr) \| sizeof(T) \));
-++ CALLOC_ARRAY(ptr, n);
-+|
-+- ptr =3D xcalloc(\( sizeof(*ptr) \| sizeof(T) \), n);
-++ CALLOC_ARRAY(ptr, n);
-+)
+	/*
+	 * Then, anything to the left of 'split' must be in a new pack. But,
+	 * creating that new pack may cause packs in the heavy half to no longer
+	 * form a geometric progression.
+	 *
+	 * Compute an expected size of the new pack, and then determine how many
+	 * packs in the heavy half need to be joined into it (if any) to restore
+	 * the geometric progression.
+	 */
+	for (i = 0; i < split; i++)
+		total_size += geometry_pack_weight(geometry->pack[i]);
+
+The loop is skipped, as split is 0.
+
+	for (i = split; i < geometry->pack_nr; i++) {
+
+Iterate from i = 0 and for just once.
+
+		struct packed_git *ours = geometry->pack[i];
+		if (geometry_pack_weight(ours) < factor * total_size) {
+
+But total_size is 0 so split is not incremented.
+
+			split++;
+			total_size += geometry_pack_weight(ours);
+		} else
+			break;
+	}
+
+	geometry->split = split;
+
+Hence we assign 0 to .split member.
+
+I however wonder if it expresses the intent more clearly if you did
+this upfront, instead of forcing the readers to go through the code.
+
+	if (geometry->pack_nr <= 1) {
+-		geometry->split = geometry->pack_nr;
++		geometry->split = 0;
+ 		return;
+ 	}
+
+That is, "when there is no existing packs, or just one pack, we
+split at 0"
+
+The code that gets affected by the setting of "split" is this piece
+in the caller, cmd_repack():
+
+	if (geometry) {
+		FILE *in = xfdopen(cmd.in, "w");
+		for (i = 0; i < geometry->split; i++)
+			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
+		for (i = geometry->split; i < geometry->pack_nr; i++)
+			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
+		fclose(in);
+	}
+
+When split == 0, we end up feeding no positive packs and all
+negative packs, which results in nothing to pack.  I wonder if we
+can optimize out the spawning of the pack-object process, but that
+is probalby optimizing for a wrong case.
+
+> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+> index 96917fc163..4a1952a054 100755
+> --- a/t/t7703-repack-geometric.sh
+> +++ b/t/t7703-repack-geometric.sh
+> @@ -20,6 +20,21 @@ test_expect_success '--geometric with no packs' '
+>  	)
+>  '
+>  
+> +test_expect_success '--geometric with one pack' '
+> +	git init geometric &&
+> +	test_when_finished "rm -fr geometric" &&
+> +	(
+> +		cd geometric &&
+> +
+> +		test_commit "base" &&
+> +		git repack -d &&
+> +
+> +		git repack --geometric 2 >out &&
+> +
+> +		test_i18ngrep "Nothing new to pack" out
+> +	)
+> +'
+> +
+>  test_expect_success '--geometric with an intact progression' '
+>  	git init geometric &&
+>  	test_when_finished "rm -fr geometric" &&
