@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2161C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21577C43381
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D5E365093
+	by mail.kernel.org (Postfix) with ESMTP id E7A4565090
 	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbhCEPWL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 10:22:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
+        id S230511AbhCEPWN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 10:22:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230496AbhCEPVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 10:21:46 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E490C061574
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:46 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id z190so2259253qka.9
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:46 -0800 (PST)
+        with ESMTP id S230519AbhCEPV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 10:21:59 -0500
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E29C061574
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:59 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id g185so2281678qkf.6
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=NqZE+1NU2pbwR6Xfi6vWCpphssMaMePk2IJI5dO+HRg=;
-        b=pm4o4UuopSUzPnxx97/mpEj9F6tT4gqBgYveobiGuQBdUFl566kzTNUs+MRnS9vOev
-         qr5CwfJaU5EOfXj8RgfyZcSagyTo7ORkuWtUB2bq6c/0pjcfQr/E4bbde8sx3OioxbJp
-         DH8HIqREUa0pV9waorRklH9A2kQ+ryyVsufFeLxgDXQuuRqYRKNgaWXUcPIQbIsF8Jds
-         aYJp115PEsHwu6yo1HrJl9Sz1Ei+rs0pAF3HqH5DC8bpGSGZBYswjST8X/rjsRNpsaJK
-         0fBlpCYV+Ziap+gyqpnpKUaIHaAPo5fEjiMfhqUc9W4NirPkNX/g6r3W84c3gC1tzKBD
-         b8ZA==
+        bh=s7hlQUvDHq4CPNNuQV1QFKvrPQVVOTVCw1T1CbYiepM=;
+        b=rbkVmHdWDrh3R1B1Ic/sYumz+SKu3OoNdQn513Tf33Zdrr5NvCPHTl/rzYMZgJbMP3
+         Pl12VZoyfS9T9hTEj4KvwQipOrF6wpOC1cexmey/Yjw0ojqyYE+EA4y9Yvwtu4dsFqcC
+         bpCjj4YDJ+WoyBfjw/GPKmPTE9uUqlu5/nHB8kTgFCjJmVFrlO/g2BrNgwtzgQChpN1c
+         2WLr8u8M0KEyw81L+AwW+A34qyy0/tEnArN3a2WM84ub4cxmf5rmmX+Wo7zxTGYgw+dJ
+         UEdKkQpHsGvwgkRPXSvPbtq1W6fMqz59QL1CCJkAO3Uu/Dm9LJ0gU/hey4uT+5Riuamt
+         Hrug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=NqZE+1NU2pbwR6Xfi6vWCpphssMaMePk2IJI5dO+HRg=;
-        b=pg2mcm0SjzqT+AGK3hMzFCxkTKUEC4ESGWmouVl5mGk/+ValYg9IuF+homfPOY1AdM
-         D2kqGPyYO1u/6RV6JmOLGqXrik3d5Vbl35YEvidbhiiaY+QDH6UQGGyZh54GobTfzb8J
-         /GyKukryZUwkIMMshlk5i95jEMZgw91xrMDd2CViFZjvNwW6jC7xyOdOGamu45Cv8Xem
-         G6k5F3kXNrIpSNpbwsUzv0DVw42d1KReoelxDTbhhSe7/fQoBgEXdvx98m5XpV/mHGD4
-         +yk2xQfc42tRSsOeqnJb3Qr8rzstohfJBZVKsDw4jmmLBRLB3dYkW55JjclUL2zx76q5
-         b/MQ==
-X-Gm-Message-State: AOAM5324JFiGOYHzQhDrY3kLOT8HEpLEPodZlh0fUjYTU3hFDXgqcu04
-        h8PmaZyjY28AlujnBq2En0YVNMQyF4JGcq6y
-X-Google-Smtp-Source: ABdhPJxKxKIidGiHQXuNSuTZU5HeNQwfQxca8VRqBiKb4mKi88VzX7oLclwp4jRUgY6T+fRLUiGRhQ==
-X-Received: by 2002:a05:620a:31a:: with SMTP id s26mr9504626qkm.355.1614957705229;
-        Fri, 05 Mar 2021 07:21:45 -0800 (PST)
+        bh=s7hlQUvDHq4CPNNuQV1QFKvrPQVVOTVCw1T1CbYiepM=;
+        b=BfCQMO5+cSeJ5v/L5QTKVSCqAXHhF06D/LfqYUc4YiCGSLtSXx/lnCchQesNDMak/S
+         j4bOTKivflYB+ArvGmQxz5rLwzsoIWczMKBWqnvmrBNDwRz7thwMSl6UHzBfUUc3tmrj
+         ujqo88cfAOzGbCDHmE02yqNVs3COXwDL4GQ7hGQBqxDox8Ml5fnNXxfRqqfhq9uFqSRs
+         IY/b1KAOF5SVmXeDt+yoXfGO8QdmOsI5mtsW3KPNbZs7iQyLAn5/NIXko024Ge+E2hMy
+         M1g2Y6DEvIgBPpIu6dXHc0mj4XwM/dF/up2+Bk2STWuTrUeyHYgAfx1gBFVCXs2hxirR
+         gWmw==
+X-Gm-Message-State: AOAM531/bUfvbhkqqfUtE82RCccNACZBRlZBlySoESAsrfM729kCFbJf
+        aOCicBW7gko7zse+Mq/WEnapp7DZNlTsFHxc
+X-Google-Smtp-Source: ABdhPJzzvQRoWTiZ0PV2lnN330qYXEe8fQBVH2PYNmZOq8NIq+e9hb0ixwWX+eB3hqt+r7puF9z+1A==
+X-Received: by 2002:a05:620a:1133:: with SMTP id p19mr9929600qkk.340.1614957718090;
+        Fri, 05 Mar 2021 07:21:58 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
-        by smtp.gmail.com with ESMTPSA id g2sm1868516qkd.124.2021.03.05.07.21.44
+        by smtp.gmail.com with ESMTPSA id b63sm1925850qkd.84.2021.03.05.07.21.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 07:21:44 -0800 (PST)
-Date:   Fri, 5 Mar 2021 10:21:43 -0500
+        Fri, 05 Mar 2021 07:21:57 -0800 (PST)
+Date:   Fri, 5 Mar 2021 10:21:56 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net
-Subject: [PATCH 2/5] t7703: test --geometric repack with loose objects
-Message-ID: <ad516e78690913843416b22d184a04fc0362a24d.1614957681.git.me@ttaylorr.com>
+Subject: [PATCH 4/5] builtin/repack.c: be more conservative with unsigned
+ overflows
+Message-ID: <d55324f7a256fce491a29a1debf142f817eb01d3.1614957681.git.me@ttaylorr.com>
 References: <cover.1614957681.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,57 +71,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We don't currently have a test that demonstrates the non-idempotent
-behavior of 'git repack --geometric' with loose objects, so add one here
-to make sure we don't regress in this area.
+There are a number of places in the geometric repack code where we
+multiply the number of objects in a pack by another unsigned value. We
+trust that the number of objects in a pack is always representable by a
+uint32_t, but we don't necessarily trust that that number can be
+multiplied without overflow.
 
+Sprinkle some unsigned_add_overflows() and unsigned_mult_overflows() in
+split_pack_geometry() to check that we never overflow any unsigned types
+when adding or multiplying them.
+
+Arguably these checks are a little too conservative, and certainly they
+do not help the readability of this function. But they are serving a
+useful purpose, so I think they are worthwhile overall.
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t7703-repack-geometric.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ builtin/repack.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 4a1952a054..5ccaa440e0 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -54,6 +54,37 @@ test_expect_success '--geometric with an intact progression' '
- 	)
- '
- 
-+test_expect_success '--geometric with loose objects' '
-+	git init geometric &&
-+	test_when_finished "rm -fr geometric" &&
-+	(
-+		cd geometric &&
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 21a5778e73..677c6b75c1 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -363,6 +363,12 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+ 	for (i = geometry->pack_nr - 1; i > 0; i--) {
+ 		struct packed_git *ours = geometry->pack[i];
+ 		struct packed_git *prev = geometry->pack[i - 1];
 +
-+		# These packs already form a geometric progression.
-+		test_commit_bulk --start=1 1 && # 3 objects
-+		test_commit_bulk --start=2 2 && # 6 objects
-+		# The loose objects are packed together, breaking the
-+		# progression.
-+		test_commit loose && # 3 objects
++		if (unsigned_mult_overflows(factor, geometry_pack_weight(prev)))
++			die(_("pack %s too large to consider in geometric "
++			      "progression"),
++			    prev->pack_name);
 +
-+		find $objdir/pack -name "*.pack" | sort >before &&
-+		git repack --geometric 2 -d &&
-+		find $objdir/pack -name "*.pack" | sort >after &&
+ 		if (geometry_pack_weight(ours) < factor * geometry_pack_weight(prev))
+ 			break;
+ 	}
+@@ -388,11 +394,25 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+ 	 * packs in the heavy half need to be joined into it (if any) to restore
+ 	 * the geometric progression.
+ 	 */
+-	for (i = 0; i < split; i++)
+-		total_size += geometry_pack_weight(geometry->pack[i]);
++	for (i = 0; i < split; i++) {
++		struct packed_git *p = geometry->pack[i];
 +
-+		comm -13 before after >new &&
-+		comm -23 before after >removed &&
++		if (unsigned_add_overflows(total_size, geometry_pack_weight(p)))
++			die(_("pack %s too large to roll up"), p->pack_name);
++		total_size += geometry_pack_weight(p);
++	}
+ 	for (i = split; i < geometry->pack_nr; i++) {
+ 		struct packed_git *ours = geometry->pack[i];
 +
-+		test_line_count = 1 new &&
-+		test_must_be_empty removed &&
++		if (unsigned_mult_overflows(factor, total_size))
++			die(_("pack %s too large to roll up"), ours->pack_name);
 +
-+		git repack --geometric 2 -d &&
-+		find $objdir/pack -name "*.pack" | sort >after &&
+ 		if (geometry_pack_weight(ours) < factor * total_size) {
++			if (unsigned_add_overflows(total_size,
++						   geometry_pack_weight(ours)))
++				die(_("pack %s too large to roll up"),
++				    ours->pack_name);
 +
-+		# The progression (3, 3, 6) is combined into one new pack.
-+		test_line_count = 1 after
-+	)
-+'
-+
- test_expect_success '--geometric with small-pack rollup' '
- 	git init geometric &&
- 	test_when_finished "rm -fr geometric" &&
+ 			split++;
+ 			total_size += geometry_pack_weight(ours);
+ 		} else
 -- 
 2.30.0.667.g81c0cbc6fd
 
