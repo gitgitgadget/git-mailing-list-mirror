@@ -2,150 +2,150 @@ Return-Path: <SRS0=rdad=ID=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4576EC433E0
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F7BC433E0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:29:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06FE8650A0
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:28:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DC89650A0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbhCET1u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 14:27:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42292 "EHLO
+        id S229687AbhCET2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 14:28:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbhCET1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 14:27:47 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDBFC06175F
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 11:27:45 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id t4so3167696qkp.1
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 11:27:45 -0800 (PST)
+        with ESMTP id S229589AbhCET2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 14:28:23 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9085C06175F
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 11:28:22 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id d20so3158399qkc.2
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 11:28:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mUP5Jte/WeQ0XZB4+ANPZxhsOVLCwnJ/LtRLcURJGr0=;
-        b=FRl47ikl9zlKGLkwBGzHIHFfHtpTn63NrkmsMNwCKY72hRFaEjXOalt8q2yvJntfn3
-         y7ZC5M+NWHWFXhf7EBd0QnasMtm6SPkwnasbzCAMME4FE56ribkbRJR3eXTltO7T+M1H
-         0w+aUJaOQg8t8jFBiOfN9sDXVeQFdXrmSWqGJ2tEquLw6VdiYjZ6aXWsaghldgEmUvye
-         d05+L4iBXHvj13XokGU3hteKpln2+w/MbgOjWQNpI6ZLp/P8a3kh6VC7hcwOanKAKo1a
-         BKJIytGcdK5Ic4ZLvap4LHJqeWPfawLtCEUEBupXSZb2Mp4tN8HaL32yAlr70b6ZkmMG
-         BwlQ==
+        d=discourse.org; s=google;
+        h=from:to:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=FmGT9O8ya8BW7QMm7gCBIGRKjXTNFyYhIqW9gGKy3s8=;
+        b=mZz5YlO72GwZbb2pfK+mLzyFrFio2FZUpC9nnD3ekTOFfdOahz6hQ5eQJCkRlJYf0z
+         0PzSUSqPHg9B/JqrxcPnANQ7000MvJPaCYcgUy9u9As9PC0PImUD1NEo/TiFcaD3x7RG
+         8mkUjy6oOXvQN4WhWFmAO7lQCCtvl/cE+1iSw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mUP5Jte/WeQ0XZB4+ANPZxhsOVLCwnJ/LtRLcURJGr0=;
-        b=fOB3p3pdv1+ZboAb2OG3FcSDzpabUR/CBCftntgJ9mYQAuC9vxZ/TzasMXsOQT7/mR
-         /rdoByjkVhO1PwHGCHkbXXLjskjVJOc6BjS/z5KuXkaqSqmIHHqGWlux7gg+Ji/VbSX3
-         AAzYnA1I6pilzzNS9BJU1JFioXGhFUM9lRF96bFLgHe+xtWxYLQVobVVO7XLs6ZZxKdc
-         9lxBIcKzdKcl1x6oB3YkYa/Fr5SuZlQI1mJzn1uoeKB+mN7F6Tb/32sTiBjUzeusImag
-         JRUY7ZifoVZzu7cfOe5RivOXJjjQVYmRY1f//nukBR4B4kMmcxTnGzDLcw+gPHC9on6P
-         X6Dg==
-X-Gm-Message-State: AOAM5315UtgHkN73zj3L2P4kSpaf9dXKlWMb+0qpqGRvnJq3Xi0J7rGR
-        teMbo8ZbMR4e7S3dq1Zl1i9Byw==
-X-Google-Smtp-Source: ABdhPJyOfMuBjHzWh5yw8ZFHTcLt1WcXYeRi1oK/DWIZoLlIvkxwAxEBhXr1O+dljmZZDOjrh3hJxA==
-X-Received: by 2002:a37:c16:: with SMTP id 22mr10737060qkm.84.1614972464748;
-        Fri, 05 Mar 2021 11:27:44 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
-        by smtp.gmail.com with ESMTPSA id 4sm866909qth.74.2021.03.05.11.27.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 11:27:44 -0800 (PST)
-Date:   Fri, 5 Mar 2021 14:27:41 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 1/5] builtin/repack.c: do not repack single packs with
- --geometric
-Message-ID: <YEKGLfUM1DSHk74B@nand.local>
-References: <cover.1614957681.git.me@ttaylorr.com>
- <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
- <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=FmGT9O8ya8BW7QMm7gCBIGRKjXTNFyYhIqW9gGKy3s8=;
+        b=HF4T96nE81ks8lsndAnOHAX7SxrTj5U7Nmpe63xRH+4vmzkw4X/bqnWiU44R/18Fzt
+         FeS406Txm4ihoOwBlOgPt1HY2fGtxuknN2vm1KxhgOCsWqxmU3Gx0J67YNJcxwo2kvRG
+         VOK18zpc5h3kg43TooqdH4vWPKwZw+qi5gkgeJZpNjExbmFJRw/u6wZ0E9RAuvx0NofL
+         CkfWqDmlAzRf8pqWUT1WzKDpqx6XWnRc4XTm2eFdi8KunQ9+9zdrgaWImyjCjBrYDXAu
+         IUXL0ErpfALnWtUB/NTu8HMp4eONoSbmwb6yy5HMeoz50QoNnrob+hbueFB2y6/TH/Qg
+         QLww==
+X-Gm-Message-State: AOAM532k51vg2K1Ze9pLAHtmddOlYFjDcB4moGldFfkkSP+hFxOhIX/C
+        R9Toh61eFkzrmqRRL2WHaEhp/L55MiarzlZx
+X-Google-Smtp-Source: ABdhPJwdFQjpPs2fNl+mnQyvHhd/iWDDFib2JCvBydfOFAvzgX7Xv3/oVhF2EYNJUmfVqP815cYMSw==
+X-Received: by 2002:a37:660e:: with SMTP id a14mr10305639qkc.35.1614972501870;
+        Fri, 05 Mar 2021 11:28:21 -0800 (PST)
+Received: from [192.168.1.216] (dhcp-24-53-242-66.cable.user.start.ca. [24.53.242.66])
+        by smtp.gmail.com with ESMTPSA id z2sm2589431qkg.22.2021.03.05.11.28.21
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Mar 2021 11:28:21 -0800 (PST)
+From:   Michael Brown <michael.brown@discourse.org>
+To:     git@vger.kernel.org
+Subject: "git diff-files" command reports differences that don't exist
+X-Clacks-Overhead:  GNU Terry Pratchett
+Message-ID: <4210f5f1-dd7e-f425-6ab2-e220a33e82bf@discourse.org>
+Date:   Fri, 5 Mar 2021 14:28:20 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-CA
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 05, 2021 at 11:15:58AM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Loosen the guard to only stop when there aren't any packs, and let the
-> > rest of the code do the right thing. Add a test to ensure that this is
-> > the case.
-> >
-> > Noticed-by: Junio C Hamano <gitster@pobox.com>
->
-> I do not think I "noticed" anything, though.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Well, I clearly didn't notice it, so I'm happy to pass the buck to you.
+1. Be in any existing repository in a clean state (I tested with 2 existing
+   repositories and 1 completely fresh)
+1. run `git diff-files`, see no output
+1. touch an existing file: `touch a`
+1. run `git diff-files`
 
-> > -	if (geometry->pack_nr <= 1) {
-> > +	if (!geometry->pack_nr) {
-> >  		geometry->split = geometry->pack_nr;
-> >  		return;
-> >  	}
->
-> When pack_nr is 0, split is set to 0.  Otherwise we compute the
-> split the usual way in the new code.  Let's see the post-context of
-> the above code and figure out what happens when pack_nr is 1.
->
-> [snip]
->
-> I however wonder if it expresses the intent more clearly if you did
-> this upfront, instead of forcing the readers to go through the code.
->
-> 	if (geometry->pack_nr <= 1) {
-> -		geometry->split = geometry->pack_nr;
-> +		geometry->split = 0;
->  		return;
->  	}
->
-> That is, "when there is no existing packs, or just one pack, we
-> split at 0"
+What did you expect to happen? (Expected behavior)
 
-Hmm. I originally wrote the patch as:
+`git diff-files` should show no output
 
-    if (geometry->pack_nr <= 1) {
-      geometry->split = 0;
-      return;
-    }
+What happened instead? (Actual behavior)
 
-instead of only when geometry->pack_nr == 0. But I was pretty sure that
-the code below was doing the right thing even for geometry->pack_nr ==
-1, and so I decided to avoid making this non-special case "special" by
-returning early.
+`git diff-files` reported a difference on the touched file.
 
-I could see arguments in both directions. But I may be biased as the
-author, so I'd rather defer to your judgement instead.
+What's different between what you expected and what actually happened?
 
-> The code that gets affected by the setting of "split" is this piece
-> in the caller, cmd_repack():
->
-> 	if (geometry) {
-> 		FILE *in = xfdopen(cmd.in, "w");
-> 		for (i = 0; i < geometry->split; i++)
-> 			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
-> 		for (i = geometry->split; i < geometry->pack_nr; i++)
-> 			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
-> 		fclose(in);
-> 	}
->
-> When split == 0, we end up feeding no positive packs and all
-> negative packs, which results in nothing to pack.  I wonder if we
-> can optimize out the spawning of the pack-object process, but that
-> is probalby optimizing for a wrong case.
+git reports a difference where none exists
 
-Yeah, I think the earlier optimization (avoiding repacking the contents
-of a single pack) is more important than not opening pack objects here.
+Anything else you want to add:
 
-But the next patch demonstrates why we can't do this: we care about
-loose objects, which we may still pick up even if split == 0.
+This difference vanished after running other commands (e.g. `git diff`).
 
-Thanks,
-Taylor
+A complete reproduction using docker is below:
+
+$ docker run -it --rm debian:latest
+root@d24ec0793bdf:/# apt update && apt -y install git
+…
+root@d24ec0793bdf:/# mkdir ~/new-repo
+root@d24ec0793bdf:/# cd ~/new-repo
+root@d24ec0793bdf:~/new-repo# git init
+Initialized empty Git repository in /root/new-repo/.git/
+root@d24ec0793bdf:~/new-repo# touch a
+root@d24ec0793bdf:~/new-repo# git add a
+root@d24ec0793bdf:~/new-repo# git config --global user.email
+'user@example.net'
+root@d24ec0793bdf:~/new-repo# git config --global user.name 'Example User'
+root@d24ec0793bdf:~/new-repo# git commit -m 'initial'
+[master (root-commit) 791011f] initial
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a
+root@d24ec0793bdf:~/new-repo# git diff-files
+root@d24ec0793bdf:~/new-repo# touch a
+root@d24ec0793bdf:~/new-repo# git diff-files
+:100644 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+0000000000000000000000000000000000000000 M    a
+root@d24ec0793bdf:~/new-repo# git diff
+root@d24ec0793bdf:~/new-repo# git diff-files
+root@d24ec0793bdf:~/new-repo# git --version
+git version 2.20.1
+
+
+[System Info]
+git version:
+git version 2.30.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.11.1-arch1-1 #1 SMP PREEMPT Tue, 23 Feb 2021 14:05:30
++0000 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.33
+$SHELL (typically, interactive shell): /bin/bash
+
+This same behaviour was also found in:
+
+* 2.20.1
+* 2.25.1
+
+[Enabled Hooks]
+(none)
+
+-- 
+Michael Brown
+Civilized Discourse Construction Kit, Inc.
+https://www.discourse.org/
+
