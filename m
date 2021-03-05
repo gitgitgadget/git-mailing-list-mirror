@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA045C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2161C433DB
 	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7835E65090
+	by mail.kernel.org (Postfix) with ESMTP id 9D5E365093
 	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbhCEPWL (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229982AbhCEPWL (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 5 Mar 2021 10:22:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45604 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbhCEPVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 10:21:41 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2328C061574
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:40 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id w6so1955569qti.6
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:40 -0800 (PST)
+        with ESMTP id S230496AbhCEPVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 10:21:46 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E490C061574
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:46 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id z190so2259253qka.9
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=yxu++oTaPW9TpZXN2sKeiBmTS3Ujf/7mqu1jVuZQlSo=;
-        b=iOmrpg32W0QsiIQZhzw7QqBO2MFjpkRL4xg7GtXwzG5uVEiBfFGQGe1PIn9EA635wg
-         di0AnTAwWZhTEboijG4W4GR4NZ2IfZquYj13sdmn40DF7AisRWiK1LfcqWa2UgLLEhdL
-         DKADxFonf/mYwVIjJn80Lt/naBEbsUWKDY0SVx2j88e9X4CH/GqOxnerZDZLiVUqgafH
-         EunddHYWKXu2c9gUWxwwVwkgDwGac6XDXWLUidvgVJI5NHQF6om/aB0ny2O293XDi3GR
-         RCLbNwCMy/Hed5RYLoHDjSB5zXk2bHj2Lksn7u3KT96MpCj+R3BEWF9rJjaPR9LQf/n5
-         SPEg==
+        bh=NqZE+1NU2pbwR6Xfi6vWCpphssMaMePk2IJI5dO+HRg=;
+        b=pm4o4UuopSUzPnxx97/mpEj9F6tT4gqBgYveobiGuQBdUFl566kzTNUs+MRnS9vOev
+         qr5CwfJaU5EOfXj8RgfyZcSagyTo7ORkuWtUB2bq6c/0pjcfQr/E4bbde8sx3OioxbJp
+         DH8HIqREUa0pV9waorRklH9A2kQ+ryyVsufFeLxgDXQuuRqYRKNgaWXUcPIQbIsF8Jds
+         aYJp115PEsHwu6yo1HrJl9Sz1Ei+rs0pAF3HqH5DC8bpGSGZBYswjST8X/rjsRNpsaJK
+         0fBlpCYV+Ziap+gyqpnpKUaIHaAPo5fEjiMfhqUc9W4NirPkNX/g6r3W84c3gC1tzKBD
+         b8ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=yxu++oTaPW9TpZXN2sKeiBmTS3Ujf/7mqu1jVuZQlSo=;
-        b=Jl04NuBde6RVA1/T1ikFeTecX1Yhw1ZKm/D5aB3Ga2D0cPxw+Zpe5AkbKlwpiyMzgH
-         cLQuQlaACnG1cTK+GN3kQT0lHq9rDo33iWHyYO84wUwPbe922b5aFxdQ16m7uPJ4oanL
-         CMmBuwjlsTMQyCSRHa1xRPGXwH5NY1BOCcZoJwns0ctC0inaottTnEauaK6BbEqbk0pX
-         Mh/IOl2YrWOGG5rjUaozO4t6KR5ViUk25MokgdmByfBZ9U6xbqmINvn3hUnsYI5Ct5yD
-         3K63I7dZHgdh7ax8paD6ZrTx6F80sBeyfmKRmOulFyIjjoN0Dc7mcPFDnwWJb8Oedi9Z
-         PBMw==
-X-Gm-Message-State: AOAM533xHuqPiPYTPV+Oohxs7er0svZelmugX4wCyOCeF2Cubqj6jxc1
-        +LUkB8p6CNQdvxhm23KEYTWo0iD/gfiRYSia
-X-Google-Smtp-Source: ABdhPJwbcPAr4TS88wr3pqTPP4DorznsIhSl/53SfpVEJG29Ta0Sz5IDoUPmCZpHJuvkOcoOxseHLg==
-X-Received: by 2002:a05:622a:102:: with SMTP id u2mr9170398qtw.37.1614957699903;
-        Fri, 05 Mar 2021 07:21:39 -0800 (PST)
+        bh=NqZE+1NU2pbwR6Xfi6vWCpphssMaMePk2IJI5dO+HRg=;
+        b=pg2mcm0SjzqT+AGK3hMzFCxkTKUEC4ESGWmouVl5mGk/+ValYg9IuF+homfPOY1AdM
+         D2kqGPyYO1u/6RV6JmOLGqXrik3d5Vbl35YEvidbhiiaY+QDH6UQGGyZh54GobTfzb8J
+         /GyKukryZUwkIMMshlk5i95jEMZgw91xrMDd2CViFZjvNwW6jC7xyOdOGamu45Cv8Xem
+         G6k5F3kXNrIpSNpbwsUzv0DVw42d1KReoelxDTbhhSe7/fQoBgEXdvx98m5XpV/mHGD4
+         +yk2xQfc42tRSsOeqnJb3Qr8rzstohfJBZVKsDw4jmmLBRLB3dYkW55JjclUL2zx76q5
+         b/MQ==
+X-Gm-Message-State: AOAM5324JFiGOYHzQhDrY3kLOT8HEpLEPodZlh0fUjYTU3hFDXgqcu04
+        h8PmaZyjY28AlujnBq2En0YVNMQyF4JGcq6y
+X-Google-Smtp-Source: ABdhPJxKxKIidGiHQXuNSuTZU5HeNQwfQxca8VRqBiKb4mKi88VzX7oLclwp4jRUgY6T+fRLUiGRhQ==
+X-Received: by 2002:a05:620a:31a:: with SMTP id s26mr9504626qkm.355.1614957705229;
+        Fri, 05 Mar 2021 07:21:45 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
-        by smtp.gmail.com with ESMTPSA id 46sm2063401qte.7.2021.03.05.07.21.39
+        by smtp.gmail.com with ESMTPSA id g2sm1868516qkd.124.2021.03.05.07.21.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 07:21:39 -0800 (PST)
-Date:   Fri, 5 Mar 2021 10:21:37 -0500
+        Fri, 05 Mar 2021 07:21:44 -0800 (PST)
+Date:   Fri, 5 Mar 2021 10:21:43 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net
-Subject: [PATCH 1/5] builtin/repack.c: do not repack single packs with
- --geometric
-Message-ID: <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
+Subject: [PATCH 2/5] t7703: test --geometric repack with loose objects
+Message-ID: <ad516e78690913843416b22d184a04fc0362a24d.1614957681.git.me@ttaylorr.com>
 References: <cover.1614957681.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,67 +70,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 0fabafd0b9 (builtin/repack.c: add '--geometric' option, 2021-02-22),
-the 'git repack --geometric' code aborts early when there is zero or one
-pack.
+We don't currently have a test that demonstrates the non-idempotent
+behavior of 'git repack --geometric' with loose objects, so add one here
+to make sure we don't regress in this area.
 
-When there are no packs, this code does the right thing by placing the
-split at "0". But when there is exactly one pack, the split is placed at
-"1", which means that "git repack --geometric" (with any factor)
-repacks all of the objects in a single pack.
-
-This is wasteful, and the remaining code in split_pack_geometry() does
-the right thing (not repacking the objects in a single pack) even when
-only one pack is present.
-
-Loosen the guard to only stop when there aren't any packs, and let the
-rest of the code do the right thing. Add a test to ensure that this is
-the case.
-
-Noticed-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c            |  2 +-
- t/t7703-repack-geometric.sh | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ t/t7703-repack-geometric.sh | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index bcf280b10d..4ca2f647b4 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -351,7 +351,7 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 	uint32_t split;
- 	off_t total_size = 0;
- 
--	if (geometry->pack_nr <= 1) {
-+	if (!geometry->pack_nr) {
- 		geometry->split = geometry->pack_nr;
- 		return;
- 	}
 diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 96917fc163..4a1952a054 100755
+index 4a1952a054..5ccaa440e0 100755
 --- a/t/t7703-repack-geometric.sh
 +++ b/t/t7703-repack-geometric.sh
-@@ -20,6 +20,21 @@ test_expect_success '--geometric with no packs' '
+@@ -54,6 +54,37 @@ test_expect_success '--geometric with an intact progression' '
  	)
  '
  
-+test_expect_success '--geometric with one pack' '
++test_expect_success '--geometric with loose objects' '
 +	git init geometric &&
 +	test_when_finished "rm -fr geometric" &&
 +	(
 +		cd geometric &&
 +
-+		test_commit "base" &&
-+		git repack -d &&
++		# These packs already form a geometric progression.
++		test_commit_bulk --start=1 1 && # 3 objects
++		test_commit_bulk --start=2 2 && # 6 objects
++		# The loose objects are packed together, breaking the
++		# progression.
++		test_commit loose && # 3 objects
 +
-+		git repack --geometric 2 >out &&
++		find $objdir/pack -name "*.pack" | sort >before &&
++		git repack --geometric 2 -d &&
++		find $objdir/pack -name "*.pack" | sort >after &&
 +
-+		test_i18ngrep "Nothing new to pack" out
++		comm -13 before after >new &&
++		comm -23 before after >removed &&
++
++		test_line_count = 1 new &&
++		test_must_be_empty removed &&
++
++		git repack --geometric 2 -d &&
++		find $objdir/pack -name "*.pack" | sort >after &&
++
++		# The progression (3, 3, 6) is combined into one new pack.
++		test_line_count = 1 after
 +	)
 +'
 +
- test_expect_success '--geometric with an intact progression' '
+ test_expect_success '--geometric with small-pack rollup' '
  	git init geometric &&
  	test_when_finished "rm -fr geometric" &&
 -- 
