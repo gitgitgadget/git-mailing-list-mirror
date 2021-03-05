@@ -2,116 +2,82 @@ Return-Path: <SRS0=rdad=ID=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D4DEC433E6
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF366C433E6
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 16:48:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C673A6508D
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9256865074
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 16:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230487AbhCEPWM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 10:22:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45660 "EHLO
+        id S231325AbhCEQrt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 11:47:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230511AbhCEPVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 10:21:54 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34BFC061574
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:53 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id 18so1973506qty.3
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:53 -0800 (PST)
+        with ESMTP id S231161AbhCEQrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 11:47:20 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE53FC061574
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 08:47:19 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id b18so2803279wrn.6
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 08:47:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/U3pYSgUtgqQM+PBSge337RhCEGhTiHYrdje1g3WRM0=;
-        b=BnZLdYN7TDPt2UWrvwUphpSC44OeJNxFi7lZJ/zfuK+grHr6qMWLfVZURP7yNLRx4Y
-         OKebTKbT8OHFk5erhcz1CFCDtsCrSxnEk6pW9XpYI8i/9mob5aD/3e5a5Bq4iGBczdpo
-         nKn2su5sRacao4TvHaSs80cAoXM4rgcU1Zbx+FYwSVb7Asv9Xa/88b4naWBWcBwDNl1Z
-         pBkjlWyKlEZkgUdkbt97VWt42Jx2gISgUeOpnAf+Giy28QQiOUDtImKk+KkPcAlUKRie
-         DxA15Vtufmw8Knf54GpAMMXix7hWuX1OCQrp7CMYmplOz9GQHHH6+6Yrdj6aqngDpD5B
-         qeVw==
+        d=gmail.com; s=20161025;
+        h=sender:to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=QH+au7VRimP7lMDw8pDsxWSpN2vEnl9cL+F9edwZssQ=;
+        b=gcPARdABkCZDg0yOlLVbepvcfSXav7CN4cGJSYqWh5QvHr/yK+IQBtTzKuoDObs223
+         KXEX+eSb6htey+RaiplxqJrmbNEfQ132oGrV3bXuoaCYsUd0MrA+5zM9eCDHP/5y2Tmc
+         9UCK/oCgIQ1ICkn214RsMjjAg5oee54wPQaV5/Ya8nRN7plQteXmKhVBApK0jiQQZJQ/
+         L6+9lfqc2cphLo6ncDa6f8qmJINZR5pMb+s0VyNDHYWMlVW1DpC1HsV+D7WumyHmmSeI
+         3jVii33cubf/7jCNFrRGQhtvwl2tc3y5opslOOY+G/3pOVphbUEdBLGA9yeTVTIWDjOz
+         +epw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/U3pYSgUtgqQM+PBSge337RhCEGhTiHYrdje1g3WRM0=;
-        b=WOeAVv1GRRTn/3rKPXUjygiW5KX3+tIgE4jRZazxS6UuKNL4bZb7RB6GAtVtiqt8N5
-         48zJkVrGcpO+YXdi6Se4TJHfpzl0iQOL0WCkB8w7iZZTdNvZCjDq3fQB1opkqSVFzjm2
-         ICQOVE90bkx4fXsAZOBUYxx0nmI59E05oT0lwsy3em8sm5QCXtNWynbDJcLw5Y7VkNFz
-         OhyjSv5scHqEkfO2hdQPiy+BZ17rFqEsCezkBOM8L6Pf8iHSawu8xVigzUUhRD6jCZU5
-         A9KM576a6MMvE7X9fsj7tE0sCSemhbJVdBTtSGLFoD/oOt/FQHR0fXaBuJinU3K5w6GR
-         leGA==
-X-Gm-Message-State: AOAM532znQI1RNAtQPh6i6i0eqwgVAShn87MGEH3Lq8rKw6LYTP7dVUQ
-        8goeyvWpq2isQcZ7V9vnQ+qJ3QqoVL4EOIDq
-X-Google-Smtp-Source: ABdhPJwTe7gp+zhLaGkXDsss8+yAJK1zOD6JSxqhKJksp9XsuQ+KtqpM/U2lSIkjQrfMJ+8pb3Owsw==
-X-Received: by 2002:a05:622a:506:: with SMTP id l6mr9234188qtx.134.1614957712790;
-        Fri, 05 Mar 2021 07:21:52 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
-        by smtp.gmail.com with ESMTPSA id g11sm1992651qkk.5.2021.03.05.07.21.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 07:21:52 -0800 (PST)
-Date:   Fri, 5 Mar 2021 10:21:50 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Subject: [PATCH 3/5] builtin/repack.c: assign pack split later
-Message-ID: <60f13524bd602517c41554898b213161e9d603ce.1614957681.git.me@ttaylorr.com>
-References: <cover.1614957681.git.me@ttaylorr.com>
+        h=x-gm-message-state:sender:to:from:subject:message-id:date
+         :user-agent:mime-version:content-transfer-encoding:content-language;
+        bh=QH+au7VRimP7lMDw8pDsxWSpN2vEnl9cL+F9edwZssQ=;
+        b=om99n42qE7XcUsMg1B/oyKd3J7lBYr1fEGHfZtBgrcZr8iwW69/Sydg6gZKlRLvjv8
+         Jj2cAouLHsyrF4Lk/IPhi15te3PO5pk41MT2LJZwtapa0mC5HmzouqD3HNs4lYNhie1D
+         AARxYqr1k5X+UJDu3AbR2l8mhmww/ryMr3Qp/93U5ehwR8nNa1XmLEDKy3XuK9Rt/Fa0
+         Ab2zvOI3H2qpKO7Keea8opOV2cTEfoEv8/wKDCA5MtBgbdwxqC/lU/afr0MpK9cFPoi5
+         QhBwnaoeX4GqR2WPcE/ExYFyCeWmznXtViJb9CcWU3BBUWuygQLD8yCn00oB/M5bFp5K
+         2Tdw==
+X-Gm-Message-State: AOAM533YtsTsXgenOITOms+9ayQAh8AVSgedlkAhz6jrKJNOKYpGCYJu
+        Phk30rUT31tXWXLM7KnIvGzsdSLDHNs=
+X-Google-Smtp-Source: ABdhPJznercnccOOyCdLPsvccdabI9mkx/m5MQNcrwev2SQGZtIqELgu+KahFKkXxqJBNJZRzmE46g==
+X-Received: by 2002:a05:6000:18a:: with SMTP id p10mr10502707wrx.166.1614962838469;
+        Fri, 05 Mar 2021 08:47:18 -0800 (PST)
+Received: from ?IPv6:2804:431:d77c:4285::536f:6e69? ([2804:431:d77c:4285::536f:6e69])
+        by smtp.googlemail.com with ESMTPSA id q15sm5354443wrr.58.2021.03.05.08.47.17
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Mar 2021 08:47:18 -0800 (PST)
+Sender: "Soni L." <fakedme@gmail.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   "Soni L." <fakedme+git@gmail.com>
+Subject: Cross-signing commits
+Message-ID: <355bb5d1-f661-4ac2-d536-d1c56ec5e408@gmail.com>
+Date:   Fri, 5 Mar 2021 13:47:14 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1614957681.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To determine the where to place the split when repacking with the
-'--geometric' option, split_pack_geometry() assigns the "split" variable
-and then decrements it in a loop.
+We have a somewhat unusual use-case where we need to cross-sign commits. =
 
-It would be equivalent (and more readable) to assign the split to the
-loop position after exiting the loop, so do that instead.
+Is there any way to do this in git? As far as one can tell, attempting=20
+to cross-sign a commit would cause its hash to change, and creating a=20
+signed child commit would break fast-forward merges. So these are a no-go=
+=2E
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 4ca2f647b4..21a5778e73 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -356,8 +356,6 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 		return;
- 	}
- 
--	split = geometry->pack_nr - 1;
--
- 	/*
- 	 * First, count the number of packs (in descending order of size) which
- 	 * already form a geometric progression.
-@@ -365,12 +363,12 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
- 	for (i = geometry->pack_nr - 1; i > 0; i--) {
- 		struct packed_git *ours = geometry->pack[i];
- 		struct packed_git *prev = geometry->pack[i - 1];
--		if (geometry_pack_weight(ours) >= factor * geometry_pack_weight(prev))
--			split--;
--		else
-+		if (geometry_pack_weight(ours) < factor * geometry_pack_weight(prev))
- 			break;
- 	}
- 
-+	split = i;
-+
- 	if (split) {
- 		/*
- 		 * Move the split one to the right, since the top element in the
--- 
-2.30.0.667.g81c0cbc6fd
+Thanks.
 
