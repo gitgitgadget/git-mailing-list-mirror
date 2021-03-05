@@ -2,146 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D99C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 05:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 050B9C433E0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 06:15:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDA7A65014
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 05:40:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9A7A65000
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 06:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229651AbhCEFkG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 00:40:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33732 "EHLO
+        id S229478AbhCEGPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 01:15:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229494AbhCEFkE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 00:40:04 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE08AC061574;
-        Thu,  4 Mar 2021 21:40:03 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id b7so923650edz.8;
-        Thu, 04 Mar 2021 21:40:03 -0800 (PST)
+        with ESMTP id S229458AbhCEGPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 01:15:04 -0500
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCCE6C061574
+        for <git@vger.kernel.org>; Thu,  4 Mar 2021 22:15:03 -0800 (PST)
+Received: by mail-ot1-x32e.google.com with SMTP id e45so766539ote.9
+        for <git@vger.kernel.org>; Thu, 04 Mar 2021 22:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lBCWGdO9ttBa6bwSQbn6+grvew9hSstcWY182hlBYEM=;
-        b=rJQXYGimR08jN/gQDfES8jfSvwKcM0pia534mWsfkeY46w1w3Ns96ld7txEzSa4Tp7
-         m8xbaH5WMDyWwWnu9++GSiUhFFMx8y9jlrujXEZJk+XMNKtzMKR+CgG2xTPiAHKlZbTN
-         cbKrjY2rgsjs66hPNlFHETHTpAzjIj9w1hBZ9wuRb3+FVHe0sMNV/NcwypoU8UWGSbJy
-         WLu9RDf7f5FIfwOgBbHLdOHndQcEJxVcxxShvY3zMswgeSoaUkU45SOtYYGZ9p8snaXz
-         FgXkPNSkrKSqk9k7mi+2C2OqtRMEkVrAHjqB0xe4OJFV48q00//6gte9HM/fgxKd0w5U
-         XFdw==
+        bh=1pR1+BS3g+9GyhwJ+R1ZG5l6wfkZ7vYWUvzvm30+B1M=;
+        b=iuKi+l1ioMlhJ3mB2T0gCZLjnB6tnuS2dJ06YkU6Y/rEHhBPpzC2kYs+HpA8dE/HFC
+         tmupyrMJYpsKwJT9KVx3o5NXls2mXY15r89gSzUemWLkGzfPvV1V1dOsW3qzct7OcwFh
+         V1P592Gur6FCk0Mbq4aM0s6ffqPI7LNmeUcIo+xkWxVu6gNl6AipalXa9SqEJA0ZpB2L
+         T9fMpONIpE5+lrLbQnwKnBDvhmgO1vqLXp77Z1Y9ByRFPiqY0vuwJI9QBpr8O/EMGnYj
+         WsRnyv1UIj3RIV+pEeDyz3SNX4QnXCFc9HOXyJziob7XLNTFAn2DptVtDSGxpRmNkgAN
+         gGhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lBCWGdO9ttBa6bwSQbn6+grvew9hSstcWY182hlBYEM=;
-        b=gchJ42pu7qWg3oEadxmQyLJ/xb04OtqFqlev8T/XPqgg3VTof/YyuwfReURxdy5uJe
-         NL5Lw3+AtGlUJkAZnF7hnTqizTF+6n63JN3ejnoT2XngyYkMFNAZR3KiA96/vJd+8O2y
-         PoWfHLD73amUtnT6EeT1t+yssEyP3EIDmP7nBHBVH3AM2vlsTqvfTlGWyDtgUPceyOxD
-         AoC4vxFlkw0xaxCColTJwnjEYXFlT32e6LKwkNNnD87pwpBBRWVkeZg/GMtUJ7EBegeR
-         o7UEDqShxY/W2F12Z8777UfTVpjPujoDxZtpLy2FTMvVRmOSyT1TKWk9adUK9PWv90Rf
-         lYYg==
-X-Gm-Message-State: AOAM533fNj40DcBsiC74AWTNmbIVk88H3oB5KD8ECH2M9yN4s7Ukxcbl
-        4lL+lhkCB0eaRJxKHfs076jVLSiwAd7Lk85JJ4yJnphSiGs/MA==
-X-Google-Smtp-Source: ABdhPJwRYPqV/WwnWo7oMVkuV/nG6sJ/y9vzbn1Nm9xklW0+3v+eQWia67FEOL3YXyt3hmuJKCns0CIPbYxLeZv/mXE=
-X-Received: by 2002:a05:6402:5244:: with SMTP id t4mr6521852edd.87.1614922802651;
- Thu, 04 Mar 2021 21:40:02 -0800 (PST)
+        bh=1pR1+BS3g+9GyhwJ+R1ZG5l6wfkZ7vYWUvzvm30+B1M=;
+        b=ahgyvchWGTx9dXAZ52sBDMrLmATnLE+5wMqq9O9TmeT+L4bDr0ZbnmT7HSAXpoGp2y
+         T9CMga88mF4xDABVf2tBJYBilAcQ8aClYxY0PsgYCGAalJH+0Iis6TkdPhZdGrCDcTTX
+         Teux1arN67/01q7vfpubCXqHFZOPquDOGCpBE3Kc9ISQ+ruotcHOzDXUmpsi7UTBZx0v
+         jxWoOTWqVdj1+Y565vzW9ea9gAPu2w9upKiZG7ey0L6hIkgvgunuS1vFIfHkWY32lQ+N
+         xphIPOnTyViN/MtmQgoZjUJhYeK14qp0PaPYk57W9ANZFfqOCrYHKCCfGQRcniiGL3FZ
+         um2Q==
+X-Gm-Message-State: AOAM533DGPok7nhjnGi7nuMXlCwqzHeDxXe2Jd6EB+SAlPsgRb7VpKL4
+        j0IaJpvD/4WPZoydgaaj/5eT/kqCCvHINI6nNLM=
+X-Google-Smtp-Source: ABdhPJzbtFvrjBWjo6GH8hSYi3LfC6sst4RSyizTVmghZcm2DN4SeX600uabCkOz+vsaRxZCNoiEhleH6q3dxYoUCKU=
+X-Received: by 2002:a9d:66:: with SMTP id 93mr6615211ota.147.1614924903085;
+ Thu, 04 Mar 2021 22:15:03 -0800 (PST)
 MIME-Version: 1.0
-References: <CAHk-=wjnzdLSP3oDxhf9eMTYo7GF-QjaNLBUH1Zk3c4A7X75YA@mail.gmail.com>
- <YEFIXFyP5tWrPDMw@localhost>
-In-Reply-To: <YEFIXFyP5tWrPDMw@localhost>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 5 Mar 2021 06:39:51 +0100
-Message-ID: <CAP8UFD07ezNOXU5Q3RZAHOJGMjuaJY-R=x=hhQcQvYOAKzKF2g@mail.gmail.com>
-Subject: Re: A note on the 5.12-rc1 tag
-To:     Josh Triplett <josh@joshtriplett.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>, git <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-7-charvi077@gmail.com>
+ <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com>
+ <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
+ <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com>
+ <xmqqczwfg23t.fsf@gitster.c.googlers.com> <CAPSFM5cM4fdyWXD33PkT2bH6kM+3ixkxgAnhjUVYFtjUHgwU5g@mail.gmail.com>
+ <xmqqpn0ed0m2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpn0ed0m2.fsf@gitster.c.googlers.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Fri, 5 Mar 2021 11:44:51 +0530
+Message-ID: <CAPSFM5dM4NMeGqEG7hFLzyhJskqcrNtNqL9=MUCw9SEYYaFLoQ@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
+ fixup=[amend|reword] options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 5, 2021 at 1:58 AM Josh Triplett <josh@joshtriplett.org> wrote:
-> On Wed, Mar 03, 2021 at 12:53:18PM -0800, Linus Torvalds wrote:
-
-> > One additional reason for this note is that I want to not just warn
-> > people to not run this if you have a swapfile - even if you are
-> > personally not impacted (like I am, and probably most people are -
-> > swap partitions all around) - I want to make sure that nobody starts
-> > new topic branches using that 5.12-rc1 tag. I know a few developers
-> > tend to go "Ok, rc1 is out, I got all my development work into this
-> > merge window, I will now fast-forward to rc1 and use that as a base
-> > for the next release". Don't do it this time. It may work perfectly
-> > well for you because you have the common partition setup, but it can
-> > end up being a horrible base for anybody else that might end up
-> > bisecting into that area.
+On Fri, 5 Mar 2021 at 03:48, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Even if people avoid basing their topic branches on 5.12-rc1, it's still
-> possible for a future bisect to end up wandering to one of the existing
-> dangerous commits, if someone's trying to find a historical bug and git
-> happens to choose that as a halfway point. And if they happen to be
-> using a swap file, they could end up with serious data loss, years from
-> now when "5.12-rc1 is broken" isn't on the top of their mind or even
-> something they heard about originally.
+> Charvi Mendiratta <charvi077@gmail.com> writes:
 >
-> Would it make sense to add a feature to git that allows defining a
-> "dangerous" region for bisect? Rough sketch:
-> - Add a `/.git-bisect-dangerous` file to the repository, containing a
->   list of of commit range expressions (contains commit X, doesn't
->   contain commit Y) and associated messages ("Do not use these kernels
->   if you have a swap file; if you need to bisect into here, disable swap
->   files first").
-> - git-bisect, as it navigates commits, always checks that file for any
->   commit it processes, and adds any new entries it sees into
->   `.git/bisect-dangerous`; it never removes entries from there.
+> >> no paths, i.e.  If you have --fixup=amend, you can do
+> >>
+> >>     $ git commit --fixup=amend:<original> --only
+> >>
+> >> and you do not need --fixup=reword:<original> at all, no?
+> >>
+> >
+> > Maybe as an alternative User interface, we can remove the
+> > `--fixup=reword:<original>`.
+> >
+> > But for this patch, as we have kept separate suboption
+> > `--fixup=reword:<original>` , so if now we do
+> > `--fixup=amend:<original> --only` then it will return the error as
+> > below :
+> > fatal: No paths with --include/--only does not make sense.
+>
+> Yes, but it is something we can easily fix, just like we made
+> "--only" without any pathname to work with "--amend" (or with
+> "--allow-empty").
+>
 
-The `git bisect skip` machinery uses `refs/bisect/skip-<commit>` refs
-instead of such a file, so I wonder if such a file is needed. It could
-be used to store a map between skipped commits and the associated
-messages though. Or git notes could be used for that purpose.
+Agree.
 
-By the way I wonder what should happen if a commit is associated with
-a message by a `/.git-bisect-dangerous` file, but in another branch
-such file associates it with a different message. I guess all the
-different messages should be stored, and then displayed.
+> The reason I brought it up was not because "--fixup=reword" is not
+> needed as a short-hand for "--only --fixup=amend" (but thinking
+> about it again, I do not think it is so bad), but primarily in
+> response to "would it be easier for users if we had reword! insn in
+> addition to amend! verb in the todo file?" that was raised earlier
+> in the thread.  If we position "--fixup=reword" as a short-hand
+> and/or a syntax sugar for "--fixup=amend" and advertise it as such
+> sufficiently to educate users, it would be easier for users to
+> understand why they both result in "amend!".
 
-> - git-bisect avoids choosing bisection points anywhere in that range
->   until it absolutely has to (because it's narrowed an issue to that
->   range). This can use something similar to the existing `git bisect
->   skip` machinery. Manual bisections print the message at that point.
->   Automated bisections (`git bisect run`) stop and print the range
->   without narrowing further, unless the user passes something like
->   `--dangerous-ok=commit-range`.
-
-Yeah, using the `git bisect skip` machinery looks like a good idea.
-Instead of `/.git-bisect-dangerous`, the file could actually be called
-`/.git-bisect-skip` and could also store ranges where the code doesn't
-compile, or completely misbehave, without necessarily being dangerous.
-The dangerous status would only be conveyed by the associated messages
-then.
-
-Another way could be to directly share some special refs similar to
-the existing `refs/bisect/skip-<commit>` refs, instead of a
-`/.git-bisect-dangerous` file. This would likely raise some issues
-about how to create and share these refs and the associated messages
-though.
-
-> (git notes would be nice for this, but they're hard to share reliably;
-> the above mechanism to accumulate entries from a file in the repo seems
-> simpler. I can imagine other possibilities.)
-
-If the notes are created automatically from the `/.git-bisect-skip`
-files and stored in `refs/notes/skip`, then they might not need to be
-shared. If people already share notes, they would just need to stop
-sharing those in `refs/notes/skip`.
-
-> Does something like this seem potentially reasonable, and worth doing to
-> help people avoid future catastrophic data loss?
-
-It seems reasonable as part of the skip mechanism.
+Okay, so now if it's Ok to keep the short-hand "--fixup=reword" ? then
+I think making the documentation more clear would be sufficient to
+serve it to the users ?
+Otherwise if the votes are more that the user will get confused as
+both results in "amend!", then should we change this patch to "--only
+--fixup=amend" ?
