@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81347C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D4DEC433E6
 	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B45465015
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C673A6508D
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 15:22:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbhCEPWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 10:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45706 "EHLO
+        id S230487AbhCEPWM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 10:22:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbhCEPWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 10:22:06 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B1DC061574
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:22:05 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id r5so1128762qvv.9
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:22:05 -0800 (PST)
+        with ESMTP id S230511AbhCEPVy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 10:21:54 -0500
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34BFC061574
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 07:21:53 -0800 (PST)
+Received: by mail-qt1-x830.google.com with SMTP id 18so1973506qty.3
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 07:21:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=88MkexIJZ7VpGMDZp9DCeqY4uEnqyzGiUxC7bKMLQHY=;
-        b=zwYjybWiVqMyBtqy3JcY0pSmIOawaLQQYa27wdbMCl4BG5rWorSa6+653U3pvqi3H+
-         sId3Dyf0mWhcD8RD1FZS4arfeQphO6Ynb8FGaInYUu4/gSn171ReqXbQx+cbmSwab2SK
-         MjVyzgsnCX3W2ScrhtJfo29VFu/g2bYkZB6bHbXXXqMUglglTuC3TtitI+XQzdMAs4aX
-         PqwsDHQMhh9Wgim6pExcxdBsqt5wsVbnqwRntqKPL8i4dzOyPjCon3EY+OdUCd8FRZLS
-         +2nBV/Nmh/iBis8wwtJ3YkZG0+jAVTPSV9rHg6okUMkI1fBC9eGTvuEHU/ZJu1i7tsLr
-         Msfw==
+        bh=/U3pYSgUtgqQM+PBSge337RhCEGhTiHYrdje1g3WRM0=;
+        b=BnZLdYN7TDPt2UWrvwUphpSC44OeJNxFi7lZJ/zfuK+grHr6qMWLfVZURP7yNLRx4Y
+         OKebTKbT8OHFk5erhcz1CFCDtsCrSxnEk6pW9XpYI8i/9mob5aD/3e5a5Bq4iGBczdpo
+         nKn2su5sRacao4TvHaSs80cAoXM4rgcU1Zbx+FYwSVb7Asv9Xa/88b4naWBWcBwDNl1Z
+         pBkjlWyKlEZkgUdkbt97VWt42Jx2gISgUeOpnAf+Giy28QQiOUDtImKk+KkPcAlUKRie
+         DxA15Vtufmw8Knf54GpAMMXix7hWuX1OCQrp7CMYmplOz9GQHHH6+6Yrdj6aqngDpD5B
+         qeVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=88MkexIJZ7VpGMDZp9DCeqY4uEnqyzGiUxC7bKMLQHY=;
-        b=lfwmg22XmR2UCp1tJQnnHghBu2JdiHc+qkbk2uNFm86YUv8Nsm0Qcj8epFFPw57KeG
-         pJE9aO65Y97z4APUphBr2aVlcKPAkNOVHNDVNJKu1snDtuspddbw1wNWzRcDBCiNPoGo
-         HEvjtUpwK6Xv94Ik3005fk1ZEjHpHNzwQQAy2nWEr/6oPdA94YVxt0+VlBPbsakenmjk
-         1WnQxv9ym0En7ljlZzcuTisXuWKA8Lr3S9GDFij5XHKB8RvAeSkmYSuTlf/k32w0z9R0
-         d15/eB8mn8rYvi82ugfPZePVqEhENB+4oOjctoiT/7o3Gw3ZbRUtXLj6gKNiXR98kKmD
-         nF8g==
-X-Gm-Message-State: AOAM531eIWrgu8fdfty7jWHH7uv401ZYeFgULb5hkJk2ivvsWcdkoq+G
-        qHkevYlMX3gl8+nNJGQoWcjMHpOF4FjOwbx4
-X-Google-Smtp-Source: ABdhPJyGQSGnco0fX3iHlWJG4Ae3xM0BCIAO62rqCEvvqc5W9G/V9/gC7Z6QREWRw125I1zFmoNF8A==
-X-Received: by 2002:a05:6214:b27:: with SMTP id w7mr9457981qvj.34.1614957724696;
-        Fri, 05 Mar 2021 07:22:04 -0800 (PST)
+        bh=/U3pYSgUtgqQM+PBSge337RhCEGhTiHYrdje1g3WRM0=;
+        b=WOeAVv1GRRTn/3rKPXUjygiW5KX3+tIgE4jRZazxS6UuKNL4bZb7RB6GAtVtiqt8N5
+         48zJkVrGcpO+YXdi6Se4TJHfpzl0iQOL0WCkB8w7iZZTdNvZCjDq3fQB1opkqSVFzjm2
+         ICQOVE90bkx4fXsAZOBUYxx0nmI59E05oT0lwsy3em8sm5QCXtNWynbDJcLw5Y7VkNFz
+         OhyjSv5scHqEkfO2hdQPiy+BZ17rFqEsCezkBOM8L6Pf8iHSawu8xVigzUUhRD6jCZU5
+         A9KM576a6MMvE7X9fsj7tE0sCSemhbJVdBTtSGLFoD/oOt/FQHR0fXaBuJinU3K5w6GR
+         leGA==
+X-Gm-Message-State: AOAM532znQI1RNAtQPh6i6i0eqwgVAShn87MGEH3Lq8rKw6LYTP7dVUQ
+        8goeyvWpq2isQcZ7V9vnQ+qJ3QqoVL4EOIDq
+X-Google-Smtp-Source: ABdhPJwTe7gp+zhLaGkXDsss8+yAJK1zOD6JSxqhKJksp9XsuQ+KtqpM/U2lSIkjQrfMJ+8pb3Owsw==
+X-Received: by 2002:a05:622a:506:: with SMTP id l6mr9234188qtx.134.1614957712790;
+        Fri, 05 Mar 2021 07:21:52 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
-        by smtp.gmail.com with ESMTPSA id e15sm2104410qtp.58.2021.03.05.07.22.04
+        by smtp.gmail.com with ESMTPSA id g11sm1992651qkk.5.2021.03.05.07.21.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 07:22:04 -0800 (PST)
-Date:   Fri, 5 Mar 2021 10:22:02 -0500
+        Fri, 05 Mar 2021 07:21:52 -0800 (PST)
+Date:   Fri, 5 Mar 2021 10:21:50 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net
-Subject: [PATCH 5/5] builtin/repack.c: reword comment around pack-objects
- flags
-Message-ID: <de4715c7c75e36c446782107f3194a3eedaffdde.1614957681.git.me@ttaylorr.com>
+Subject: [PATCH 3/5] builtin/repack.c: assign pack split later
+Message-ID: <60f13524bd602517c41554898b213161e9d603ce.1614957681.git.me@ttaylorr.com>
 References: <cover.1614957681.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,48 +70,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+To determine the where to place the split when repacking with the
+'--geometric' option, split_pack_geometry() assigns the "split" variable
+and then decrements it in a loop.
 
-The comment in this block is meant to indicate that passing '--all',
-'--reflog', and so on aren't necessary when repacking with the
-'--geometric' option.
+It would be equivalent (and more readable) to assign the split to the
+loop position after exiting the loop, so do that instead.
 
-But, it has two problems: first, it is factually incorrect ('--all' is
-*not* incompatible with '--stdin-packs' as the comment suggests);
-second, it is quite focused on the geometric case for a block that is
-guarding against it.
-
-Reword this comment to address both issues.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ builtin/repack.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 677c6b75c1..6ce2556c9e 100644
+index 4ca2f647b4..21a5778e73 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -545,12 +545,14 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	strvec_push(&cmd.args, "--non-empty");
- 	if (!geometry) {
+@@ -356,8 +356,6 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+ 		return;
+ 	}
+ 
+-	split = geometry->pack_nr - 1;
+-
+ 	/*
+ 	 * First, count the number of packs (in descending order of size) which
+ 	 * already form a geometric progression.
+@@ -365,12 +363,12 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+ 	for (i = geometry->pack_nr - 1; i > 0; i--) {
+ 		struct packed_git *ours = geometry->pack[i];
+ 		struct packed_git *prev = geometry->pack[i - 1];
+-		if (geometry_pack_weight(ours) >= factor * geometry_pack_weight(prev))
+-			split--;
+-		else
++		if (geometry_pack_weight(ours) < factor * geometry_pack_weight(prev))
+ 			break;
+ 	}
+ 
++	split = i;
++
+ 	if (split) {
  		/*
--		 * 'git pack-objects' will up all objects loose or packed
--		 * (either rolling them up or leaving them alone), so don't pass
--		 * these options.
-+		 * We need to grab all reachable objects, including those that
-+		 * are reachable from reflogs and the index.
- 		 *
--		 * The implementation of 'git pack-objects --stdin-packs'
--		 * makes them redundant (and the two are incompatible).
-+		 * When repacking into a geometric progression of packs,
-+		 * however, we ask 'git pack-objects --stdin-packs', and it is
-+		 * not about packing objects based on reachability but about
-+		 * repacking all the objects in specified packs and loose ones
-+		 * (indeed, --stdin-packs is incompatible with these options).
- 		 */
- 		strvec_push(&cmd.args, "--all");
- 		strvec_push(&cmd.args, "--reflog");
+ 		 * Move the split one to the right, since the top element in the
 -- 
 2.30.0.667.g81c0cbc6fd
+
