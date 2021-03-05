@@ -2,121 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1CCC433DB
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF5BC433E0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:25:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8008A64FFF
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:19:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36C6765005
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbhCEATV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 19:19:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49704 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbhCEATV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 19:19:21 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55B08C061574
-        for <git@vger.kernel.org>; Thu,  4 Mar 2021 16:19:21 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id t26so130688pgv.3
-        for <git@vger.kernel.org>; Thu, 04 Mar 2021 16:19:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5ikfCTwEbDg86NEXUuXvPwidoS90Y53fyKcy0PZBXRo=;
-        b=QKfYhk6OE3b6TJTEMSLYjALkFI/IBJuxHJaCv5akMwLUSdQtgb4g8RfJiSP4Pn5CTK
-         0IfIdbwOmpFjoqOroZH9uMhdz2fHG0o0MhPdnvuaUZd2Ji2NIkn4iYCAPr37YYqLLWOM
-         bW7bJ3DldPecmvDqE9fkbwvONHQm7XE4vEFnwievp1aX1/VznhyToF8JLpXtcJzP/HVW
-         MONz1oAGNgnEm/IQ1/ncNknch+vYcgxLAIFaMYeRT3neS9kVlvQtfy9M1gLpfsEZjhsm
-         GCkQb1ZXd5Ianh4JCMYXcg+4TzKyAB97dpv8JGkYo/FigFsUQViJHCLjIXRyqo1VcrZ2
-         dHTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5ikfCTwEbDg86NEXUuXvPwidoS90Y53fyKcy0PZBXRo=;
-        b=hLzqMcHlyGu2YLhK8gag27YwpJjospQr8yMbZunZBHMtIw/BWEWC8AoSNrTGB3yD1Z
-         SHuMDDEaX3x7SYqGPudekVNepicUS4QGJ7TFEMpNqM46jGdQKXzy8cvFD4w6bHEka3Ry
-         vg71nW8gv1qyf4vnZmpokqyEdTt6eGIndRHJSRd4K13W0vK9K1lX0ta6h/5s+h/iNoOQ
-         Y/6njmJv89kcJX8b2KOXdoV4C8fwvuoquWUPwilViM+H6h/l1rye8mAXt6Dm5KzXQxkj
-         geGCyqQz4DGbKjm1MClpCm1+uFPlJ+arg82zrNv18QCzr8DzI/4VwCigZfBITQA/fAxz
-         ybgA==
-X-Gm-Message-State: AOAM531Fh09BaYMKFeADjaURfKs9ls02v220Rv9q0nk1JoHZlOrCg8oP
-        1t4dcDSIjLCODpN/s2jrUuM=
-X-Google-Smtp-Source: ABdhPJwialbkJJ6ra1LRDoJauRobqoye+UEziX5jw/ZDfr/toy/uiZ33hLePODFOm1oSCiY2B52TJA==
-X-Received: by 2002:a62:2acf:0:b029:1ed:5dbb:717a with SMTP id q198-20020a622acf0000b02901ed5dbb717amr6002950pfq.39.1614903560851;
-        Thu, 04 Mar 2021 16:19:20 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:199c:b0c3:47a8:7430])
-        by smtp.gmail.com with ESMTPSA id h186sm470118pgc.38.2021.03.04.16.19.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Mar 2021 16:19:20 -0800 (PST)
-Date:   Thu, 4 Mar 2021 16:19:17 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com,
-        Nathan Mulcahey <nmulcahey@google.com>
-Subject: Re: [PATCH v2 2/4] http-fetch: allow custom index-pack args
-Message-ID: <YEF5BfE6eXmhhiAf@google.com>
-References: <20210115234300.350442-1-jonathantanmy@google.com>
- <cover.1614021092.git.jonathantanmy@google.com>
- <57220ceb841056aade08705ca0ac73ccc69f05ab.1614021093.git.jonathantanmy@google.com>
+        id S231209AbhCEAZH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 19:25:07 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53498 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229601AbhCEAZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 19:25:03 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 84BF198DE1;
+        Thu,  4 Mar 2021 19:25:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EXky+jhoKdqW0e9YLxxNFK+K5eQ=; b=odtIxa
+        eIq0DRgN9eAxm2WUu1lnljFAFYy4j/Qv4y4c0FPKHRQbCQNCneVj3BP7crjhdAh6
+        E6vtgLvSACJ+2DtfSrl7XMAWdC3FiGJMV0rteaHRHoZFS1T4oBgMcZ36bOZWd0F6
+        EryoqWFHtBnm5MXuCczkjsNtqUDkb6VcQ2Mc0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cFkfJBU7Qysx8EyZ9WzGd5hZi97VVPAZ
+        Tg9yBJAVtCczQATTaBzjgQ8C64Wr/wRa26FvZZduUthtPFt4IglemgbkPwMlG2Ek
+        O8a2zz73yTA6xmTvaBYrykTHpPzDQqNhAzDVW3H7feFXnBJY1u49AyX3LO3SzzYr
+        nKS2OssUYts=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4D90B98DDF;
+        Thu,  4 Mar 2021 19:25:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2EFC098DDC;
+        Thu,  4 Mar 2021 19:25:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 0/8] Simple IPC Cleanups
+References: <pull.893.git.1614889047.gitgitgadget@gmail.com>
+Date:   Thu, 04 Mar 2021 16:24:59 -0800
+In-Reply-To: <pull.893.git.1614889047.gitgitgadget@gmail.com> (Jeff Hostetler
+        via GitGitGadget's message of "Thu, 04 Mar 2021 20:17:19 +0000")
+Message-ID: <xmqqlfb2bg6c.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <57220ceb841056aade08705ca0ac73ccc69f05ab.1614021093.git.jonathantanmy@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3949B744-7D49-11EB-8759-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+sparse failed seen, so I tentatively added this on top of your
+series.
 
-Jonathan Tan wrote:
+Thanks.
 
-> This is the next step in teaching fetch-pack to pass its index-pack
-> arguments when processing packfiles referenced by URIs.
->
-> The "--keep" in fetch-pack.c will be replaced with a full message in a
-> subsequent commit.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-http-fetch.txt | 10 ++++++++--
->  fetch-pack.c                     |  3 +++
->  http-fetch.c                     | 20 +++++++++++++++-----
->  t/t5550-http-fetch-dumb.sh       |  5 ++++-
->  4 files changed, 30 insertions(+), 8 deletions(-)
+ t/helper/test-simple-ipc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is producing an interesting symptom for me:
-
- git init repro
- cd repro
- git config fetch.uriprotocols https
- git config remote.origin.url https://fuchsia.googlesource.com/fuchsia
- git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
- git fetch -p origin
-
-Expected result: fetches
-
-Actual result:
-
- fatal: pack has bad object at offset 12: unknown object type 5
- fatal: finish_http_pack_request gave result -1
- fatal: fetch-pack: expected keep then TAB at start of http-fetch output
-
-Thanks to Nathan Mulcahey (cc-ed) for a clear report.
-
-Bisects to b664e9ffa153189dae9b88f32d1c5fedcf85056a, which is part of
-"next" and 2.31.0-rc1.  Another report of the same is at
-https://crbug.com/1184814.
-
-Known problem?
-
-Thanks,
-Jonathan
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+index 4da63fd30c..42040ef81b 100644
+--- a/t/helper/test-simple-ipc.c
++++ b/t/helper/test-simple-ipc.c
+@@ -227,7 +227,7 @@ struct cl_args
+ 	char bytevalue;
+ };
+ 
+-struct cl_args cl_args = {
++static struct cl_args cl_args = {
+ 	.subcommand = NULL,
+ 	.path = "ipc-test",
+ 	.token = NULL,
