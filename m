@@ -6,88 +6,108 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD676C433E0
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 18:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE470C433DB
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 18:25:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 748696509B
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 18:11:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78A2565059
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 18:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbhCESKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 13:10:37 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51452 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbhCESKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 13:10:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FCB7A00CC;
-        Fri,  5 Mar 2021 13:10:12 -0500 (EST)
+        id S229772AbhCESZT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 13:25:19 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59084 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229801AbhCESZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 13:25:12 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F85B120CFA;
+        Fri,  5 Mar 2021 13:25:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gVtvmkcliMBg6vvAAuIEg+A73LI=; b=tvgN6R
-        yXcHHvhhHheeOXmbd25GZ+YmzEiR7Oy/JbZ8dZ2/2So6uoEJ2PaWPoRj6J4T8nFJ
-        rki3jMNZzaSEOKFwL3w1bTN7gtAxKc5+cjaU2N8N9FOTvq0Q4lmVBB4xbcTcXSg4
-        Zpkbe8oka/GorVxvUDpTzfDlDhNLCOa6YfddI=
+        :content-type; s=sasl; bh=vX5iAQoVDthI3RnII4CSpTk97Xk=; b=gaXaDq
+        IqUdfi3YDOlAq1hSQ2W+uNRdqb9PcZNkokWIHRU1saNUt//ST3rlyPX0a4R8BLoN
+        p+Y1LGMGTTe0UeZuj3qcb/evbziwGTWOVEUr999PQbzJUhxhz0MI8WA0sTcm57kT
+        BZVg2s9tMox4Qhrrv4I3xCr4U+wc20qDxfr+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fsqB6Qg4AO3zPofeguDaEmIdVJ4EdOoX
-        kcbGls3AT9OpgH9GWt2y7/1WazbHa9BIbq0hQ4MSBNsg4O9X/67Eixw3EFHeGkGr
-        /3rdvrb6llS2YeDUBf7yLXcicOFtiSOzdLJ5YUtBLqo1RZDXmzldkdzG99XHr0xw
-        xkNZ222uJ0E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6A39AA00CA;
-        Fri,  5 Mar 2021 13:10:12 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=dqzwOOOt1ubph2SkC1UyzJvivufxaZ8S
+        EENMqDJWvZTugDgpmlxr/rWdlxYQ+thOggumpvMF6I8szRTd8FH+68w8m+BQ7WME
+        M6EPaFAYg+4NLiX7vY8fHRu+epPGaT7DGa3V1kKVszj/LDHifhBNmlkLkoqPHpzj
+        j13AzzJZHeM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24E57120CF9;
+        Fri,  5 Mar 2021 13:25:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76D7EA00C9;
-        Fri,  5 Mar 2021 13:10:10 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 17F14120CF3;
+        Fri,  5 Mar 2021 13:25:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Josh Triplett <josh@joshtriplett.org>,
-        LKML <linux-kernel@vger.kernel.org>, git <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: A note on the 5.12-rc1 tag
-References: <CAHk-=wjnzdLSP3oDxhf9eMTYo7GF-QjaNLBUH1Zk3c4A7X75YA@mail.gmail.com>
-        <YEFIXFyP5tWrPDMw@localhost>
-        <CAP8UFD07ezNOXU5Q3RZAHOJGMjuaJY-R=x=hhQcQvYOAKzKF2g@mail.gmail.com>
-Date:   Fri, 05 Mar 2021 10:10:05 -0800
-In-Reply-To: <CAP8UFD07ezNOXU5Q3RZAHOJGMjuaJY-R=x=hhQcQvYOAKzKF2g@mail.gmail.com>
-        (Christian Couder's message of "Fri, 5 Mar 2021 06:39:51 +0100")
-Message-ID: <xmqq8s71bhfm.fsf@gitster.c.googlers.com>
+To:     Charvi Mendiratta <charvi077@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
+ fixup=[amend|reword] options
+References: <20210301084512.27170-1-charvi077@gmail.com>
+        <20210301084512.27170-7-charvi077@gmail.com>
+        <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com>
+        <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
+        <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com>
+        <xmqqczwfg23t.fsf@gitster.c.googlers.com>
+        <CAPSFM5cM4fdyWXD33PkT2bH6kM+3ixkxgAnhjUVYFtjUHgwU5g@mail.gmail.com>
+        <xmqqpn0ed0m2.fsf@gitster.c.googlers.com>
+        <CAPSFM5dM4NMeGqEG7hFLzyhJskqcrNtNqL9=MUCw9SEYYaFLoQ@mail.gmail.com>
+Date:   Fri, 05 Mar 2021 10:25:07 -0800
+In-Reply-To: <CAPSFM5dM4NMeGqEG7hFLzyhJskqcrNtNqL9=MUCw9SEYYaFLoQ@mail.gmail.com>
+        (Charvi Mendiratta's message of "Fri, 5 Mar 2021 11:44:51 +0530")
+Message-ID: <xmqq4khpbgqk.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 06323918-7DDE-11EB-8F08-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 1DCE95BA-7DE0-11EB-8E3E-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Charvi Mendiratta <charvi077@gmail.com> writes:
 
->> (git notes would be nice for this, but they're hard to share reliably;
->> the above mechanism to accumulate entries from a file in the repo seems
->> simpler. I can imagine other possibilities.)
+>> The reason I brought it up was not because "--fixup=reword" is not
+>> needed as a short-hand for "--only --fixup=amend" (but thinking
+>> about it again, I do not think it is so bad), but primarily in
+>> response to "would it be easier for users if we had reword! insn in
+>> addition to amend! verb in the todo file?" that was raised earlier
+>> in the thread.  If we position "--fixup=reword" as a short-hand
+>> and/or a syntax sugar for "--fixup=amend" and advertise it as such
+>> sufficiently to educate users, it would be easier for users to
+>> understand why they both result in "amend!".
 >
-> If the notes are created automatically from the `/.git-bisect-skip`
-> files and stored in `refs/notes/skip`, then they might not need to be
-> shared. If people already share notes, they would just need to stop
-> sharing those in `refs/notes/skip`.
+> Okay, so now if it's Ok to keep the short-hand "--fixup=reword" ? then
+> I think making the documentation more clear would be sufficient to
+> serve it to the users ?
 
-Ehh, doesn't Josh _want_ to share them, though?  I do not know if a
-single "refs/notes/bisect-skip" notes would do, or you'd need one
-notes tree per the kind of bisection (iow, people may be chasing
-different set of bugs, and the commits that need to be skipped while
-chasing one bug may be OK to test while chasing another one), but I
-would imagine that for this particular use case of marking "these
-commits are dangerous to check out and build on", it does not depend
-on what you are bisecting to find at all, so sharing would be a
-sensible thing to do.
+It would be good 
 
-It is trivial for you to fetch the refs/notes/do-not--checkout notes
-tree from me and merge it into your refs/notes/do-not--checkout
-notes tree, I would think; "git notes merge" may have room for
-improvement, but essentially it would just want a union of two
-sets, no?
+ (1) to keep "--fixup=reword:<commit>"
+
+ (2) to keep "amend!" but not introduce "reword!" insn
+
+ (3) document "--fixup=reword:<commit>" can be thought of as a mere
+     special-case short-hand for "--fixup=amend:<commit> --only",
+     and
+
+ (4) make sure "fixup=amend:<commit> --only" is usable as a
+     replacement for "--fixup=reword:<commit>".
+
+but if we are not doing (3) and (4), then it would also be OK to
+
+ (1) to keep "--fixup=reword:<commit>"
+
+ (2) to keep "amend!" and introduce "reword!" insn
+
+I would think.
