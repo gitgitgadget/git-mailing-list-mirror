@@ -2,207 +2,150 @@ Return-Path: <SRS0=rdad=ID=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42FA7C433E0
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4576EC433E0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:28:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEB8165074
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:16:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 06FE8650A0
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 19:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbhCETQI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 14:16:08 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63625 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbhCETQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 14:16:03 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6A0412017B;
-        Fri,  5 Mar 2021 14:16:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TLlr5c2KMCn38GL0xgrwLMR4N0E=; b=ecIU+B
-        7l4reXYtXauad2b1oJTEBs2frENrkjbAGi/X8j3O+6Ztdd7eXpp55XtimOC4jZND
-        nRXqDJ2N2rLKf7D1FRh0rVvAXXTK4VryRAv+nH5irIsPyYi7LG/NulkZZDXG5iZb
-        uLjarq1gyxzpFlxLm3vzX0rtHKEUVwNuj1Lek=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q4snBRUaoqG605RezVk6Igb+fw2PT29J
-        Zujf6de0OAESJwHV0ZLsyxjY6a8Nk2KCFAGA1wPURYFMAauXsO1YZB3+XbBVJkRE
-        UcqCxk/pyXpX1TZsNULiMq7rLhEpoVYnir6ba4LHnSsXcR+dKwBFuCaoUlpFZuAO
-        Q6EpX5zHhnw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AF0A0120179;
-        Fri,  5 Mar 2021 14:16:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E78D1120174;
-        Fri,  5 Mar 2021 14:15:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
+        id S229818AbhCET1u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 14:27:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42292 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229589AbhCET1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 14:27:47 -0500
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EDBFC06175F
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 11:27:45 -0800 (PST)
+Received: by mail-qk1-x734.google.com with SMTP id t4so3167696qkp.1
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 11:27:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=mUP5Jte/WeQ0XZB4+ANPZxhsOVLCwnJ/LtRLcURJGr0=;
+        b=FRl47ikl9zlKGLkwBGzHIHFfHtpTn63NrkmsMNwCKY72hRFaEjXOalt8q2yvJntfn3
+         y7ZC5M+NWHWFXhf7EBd0QnasMtm6SPkwnasbzCAMME4FE56ribkbRJR3eXTltO7T+M1H
+         0w+aUJaOQg8t8jFBiOfN9sDXVeQFdXrmSWqGJ2tEquLw6VdiYjZ6aXWsaghldgEmUvye
+         d05+L4iBXHvj13XokGU3hteKpln2+w/MbgOjWQNpI6ZLp/P8a3kh6VC7hcwOanKAKo1a
+         BKJIytGcdK5Ic4ZLvap4LHJqeWPfawLtCEUEBupXSZb2Mp4tN8HaL32yAlr70b6ZkmMG
+         BwlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=mUP5Jte/WeQ0XZB4+ANPZxhsOVLCwnJ/LtRLcURJGr0=;
+        b=fOB3p3pdv1+ZboAb2OG3FcSDzpabUR/CBCftntgJ9mYQAuC9vxZ/TzasMXsOQT7/mR
+         /rdoByjkVhO1PwHGCHkbXXLjskjVJOc6BjS/z5KuXkaqSqmIHHqGWlux7gg+Ji/VbSX3
+         AAzYnA1I6pilzzNS9BJU1JFioXGhFUM9lRF96bFLgHe+xtWxYLQVobVVO7XLs6ZZxKdc
+         9lxBIcKzdKcl1x6oB3YkYa/Fr5SuZlQI1mJzn1uoeKB+mN7F6Tb/32sTiBjUzeusImag
+         JRUY7ZifoVZzu7cfOe5RivOXJjjQVYmRY1f//nukBR4B4kMmcxTnGzDLcw+gPHC9on6P
+         X6Dg==
+X-Gm-Message-State: AOAM5315UtgHkN73zj3L2P4kSpaf9dXKlWMb+0qpqGRvnJq3Xi0J7rGR
+        teMbo8ZbMR4e7S3dq1Zl1i9Byw==
+X-Google-Smtp-Source: ABdhPJyOfMuBjHzWh5yw8ZFHTcLt1WcXYeRi1oK/DWIZoLlIvkxwAxEBhXr1O+dljmZZDOjrh3hJxA==
+X-Received: by 2002:a37:c16:: with SMTP id 22mr10737060qkm.84.1614972464748;
+        Fri, 05 Mar 2021 11:27:44 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:4ce8:219:f731:dbf5])
+        by smtp.gmail.com with ESMTPSA id 4sm866909qth.74.2021.03.05.11.27.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Mar 2021 11:27:44 -0800 (PST)
+Date:   Fri, 5 Mar 2021 14:27:41 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, peff@peff.net
 Subject: Re: [PATCH 1/5] builtin/repack.c: do not repack single packs with
  --geometric
+Message-ID: <YEKGLfUM1DSHk74B@nand.local>
 References: <cover.1614957681.git.me@ttaylorr.com>
-        <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
-Date:   Fri, 05 Mar 2021 11:15:58 -0800
-In-Reply-To: <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 5 Mar 2021 10:21:37 -0500")
-Message-ID: <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+ <80bc7fa8397491d015b80a39168813d2019e262d.1614957681.git.me@ttaylorr.com>
+ <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 38414210-7DE7-11EB-BAF5-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv9a59ztd.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> Loosen the guard to only stop when there aren't any packs, and let the
-> rest of the code do the right thing. Add a test to ensure that this is
-> the case.
+On Fri, Mar 05, 2021 at 11:15:58AM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Noticed-by: Junio C Hamano <gitster@pobox.com>
+> > Loosen the guard to only stop when there aren't any packs, and let the
+> > rest of the code do the right thing. Add a test to ensure that this is
+> > the case.
+> >
+> > Noticed-by: Junio C Hamano <gitster@pobox.com>
+>
+> I do not think I "noticed" anything, though.
 
-I do not think I "noticed" anything, though.
+Well, I clearly didn't notice it, so I'm happy to pass the buck to you.
 
-> -	if (geometry->pack_nr <= 1) {
-> +	if (!geometry->pack_nr) {
->  		geometry->split = geometry->pack_nr;
+> > -	if (geometry->pack_nr <= 1) {
+> > +	if (!geometry->pack_nr) {
+> >  		geometry->split = geometry->pack_nr;
+> >  		return;
+> >  	}
+>
+> When pack_nr is 0, split is set to 0.  Otherwise we compute the
+> split the usual way in the new code.  Let's see the post-context of
+> the above code and figure out what happens when pack_nr is 1.
+>
+> [snip]
+>
+> I however wonder if it expresses the intent more clearly if you did
+> this upfront, instead of forcing the readers to go through the code.
+>
+> 	if (geometry->pack_nr <= 1) {
+> -		geometry->split = geometry->pack_nr;
+> +		geometry->split = 0;
 >  		return;
 >  	}
+>
+> That is, "when there is no existing packs, or just one pack, we
+> split at 0"
 
-When pack_nr is 0, split is set to 0.  Otherwise we compute the
-split the usual way in the new code.  Let's see the post-context of
-the above code and figure out what happens when pack_nr is 1.
+Hmm. I originally wrote the patch as:
 
-	split = geometry->pack_nr - 1;
+    if (geometry->pack_nr <= 1) {
+      geometry->split = 0;
+      return;
+    }
 
-split set to 0 here.
+instead of only when geometry->pack_nr == 0. But I was pretty sure that
+the code below was doing the right thing even for geometry->pack_nr ==
+1, and so I decided to avoid making this non-special case "special" by
+returning early.
 
-	/*
-	 * First, count the number of packs (in descending order of size) which
-	 * already form a geometric progression.
-	 */
-	for (i = geometry->pack_nr - 1; i > 0; i--) {
+I could see arguments in both directions. But I may be biased as the
+author, so I'd rather defer to your judgement instead.
 
-Iterate from i = 0 while i is positive, which means this entire loop
-is skipped.
+> The code that gets affected by the setting of "split" is this piece
+> in the caller, cmd_repack():
+>
+> 	if (geometry) {
+> 		FILE *in = xfdopen(cmd.in, "w");
+> 		for (i = 0; i < geometry->split; i++)
+> 			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
+> 		for (i = geometry->split; i < geometry->pack_nr; i++)
+> 			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
+> 		fclose(in);
+> 	}
+>
+> When split == 0, we end up feeding no positive packs and all
+> negative packs, which results in nothing to pack.  I wonder if we
+> can optimize out the spawning of the pack-object process, but that
+> is probalby optimizing for a wrong case.
 
-		struct packed_git *ours = geometry->pack[i];
-		struct packed_git *prev = geometry->pack[i - 1];
-		if (geometry_pack_weight(ours) >= factor * geometry_pack_weight(prev))
-			split--;
-		else
-			break;
-	}
+Yeah, I think the earlier optimization (avoiding repacking the contents
+of a single pack) is more important than not opening pack objects here.
 
-	if (split) {
-		/*
-		 * Move the split one to the right, since the top element in the
-		 * last-compared pair can't be in the progression. Only do this
-		 * when we split in the middle of the array (otherwise if we got
-		 * to the end, then the split is in the right place).
-		 */
-		split++;
-	}
+But the next patch demonstrates why we can't do this: we care about
+loose objects, which we may still pick up even if split == 0.
 
-And split is still 0.
-
-
-	/*
-	 * Then, anything to the left of 'split' must be in a new pack. But,
-	 * creating that new pack may cause packs in the heavy half to no longer
-	 * form a geometric progression.
-	 *
-	 * Compute an expected size of the new pack, and then determine how many
-	 * packs in the heavy half need to be joined into it (if any) to restore
-	 * the geometric progression.
-	 */
-	for (i = 0; i < split; i++)
-		total_size += geometry_pack_weight(geometry->pack[i]);
-
-The loop is skipped, as split is 0.
-
-	for (i = split; i < geometry->pack_nr; i++) {
-
-Iterate from i = 0 and for just once.
-
-		struct packed_git *ours = geometry->pack[i];
-		if (geometry_pack_weight(ours) < factor * total_size) {
-
-But total_size is 0 so split is not incremented.
-
-			split++;
-			total_size += geometry_pack_weight(ours);
-		} else
-			break;
-	}
-
-	geometry->split = split;
-
-Hence we assign 0 to .split member.
-
-I however wonder if it expresses the intent more clearly if you did
-this upfront, instead of forcing the readers to go through the code.
-
-	if (geometry->pack_nr <= 1) {
--		geometry->split = geometry->pack_nr;
-+		geometry->split = 0;
- 		return;
- 	}
-
-That is, "when there is no existing packs, or just one pack, we
-split at 0"
-
-The code that gets affected by the setting of "split" is this piece
-in the caller, cmd_repack():
-
-	if (geometry) {
-		FILE *in = xfdopen(cmd.in, "w");
-		for (i = 0; i < geometry->split; i++)
-			fprintf(in, "%s\n", pack_basename(geometry->pack[i]));
-		for (i = geometry->split; i < geometry->pack_nr; i++)
-			fprintf(in, "^%s\n", pack_basename(geometry->pack[i]));
-		fclose(in);
-	}
-
-When split == 0, we end up feeding no positive packs and all
-negative packs, which results in nothing to pack.  I wonder if we
-can optimize out the spawning of the pack-object process, but that
-is probalby optimizing for a wrong case.
-
-> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-> index 96917fc163..4a1952a054 100755
-> --- a/t/t7703-repack-geometric.sh
-> +++ b/t/t7703-repack-geometric.sh
-> @@ -20,6 +20,21 @@ test_expect_success '--geometric with no packs' '
->  	)
->  '
->  
-> +test_expect_success '--geometric with one pack' '
-> +	git init geometric &&
-> +	test_when_finished "rm -fr geometric" &&
-> +	(
-> +		cd geometric &&
-> +
-> +		test_commit "base" &&
-> +		git repack -d &&
-> +
-> +		git repack --geometric 2 >out &&
-> +
-> +		test_i18ngrep "Nothing new to pack" out
-> +	)
-> +'
-> +
->  test_expect_success '--geometric with an intact progression' '
->  	git init geometric &&
->  	test_when_finished "rm -fr geometric" &&
+Thanks,
+Taylor
