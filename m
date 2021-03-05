@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E16C433DB
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 373E9C433E6
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:55:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06BD264F59
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:55:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AF5E64FD3
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 00:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231384AbhCEAzq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 4 Mar 2021 19:55:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S232063AbhCEAzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 4 Mar 2021 19:55:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231993AbhCEAzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Mar 2021 19:55:42 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44321C061574
+        with ESMTP id S232016AbhCEAzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Mar 2021 19:55:43 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC87DC061756
         for <git@vger.kernel.org>; Thu,  4 Mar 2021 16:55:42 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id l12so252722wry.2
+Received: by mail-wr1-x435.google.com with SMTP id b18so235480wrn.6
         for <git@vger.kernel.org>; Thu, 04 Mar 2021 16:55:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1m5gwebwysSqPY8ol6mtnZ1CYvl2KEt25N49Yi1cJKU=;
-        b=Ac4uXuRph1kWA84HXvzwfcwrwtT74ZcclSt5DdSfAyDzV9yyr1if8+qdB22jRzA3Q7
-         d5zlh5qg2tub1RBAw+Mto0ywIF9PF3I5jgrLf9tFdm8NzQTjKsC+9FbeDL9kIrDHyINj
-         B27jfPoLE0UL/uGFLB9ydG/JmJyCZuwPXJCprL3wJ3qlWeHPFzKBlzlyl4PbbmyDg/Qi
-         YtBz1XBKvDOLC/GT7x47E9lQKyukZ9aH2CgUJYi6bnz+TBxZJ9//xyoP4RGC/wSX/EeW
-         +zFJMAXebThqEeG7Ldpd+Wh2nUvI2rve6u8Dt5Gw7ggvUNKhiWyJkXBnR9qj1ab1ePDU
-         uodA==
+        bh=z/aJo75dNhsQ7aTf5zagZWSLinhoohO+zk07aKf06jI=;
+        b=KcALPoxPerN6b1KIiITkWQ/SFnDWz62CW9EZtS63A6S4mIVyiXcCL48ijy3q4de86n
+         qYQfAZsPs9d9SO/lypHPlW/dpI+8a9V0oPbHmsP4DIeGlxjeJ1Uase/ksTyPafFwN2ms
+         hx0cwL4G/S4OOQC5cXej6O3/02MzYxwAZ1Zpb1o0LKOCKn+NVCzS99vxbYRyQnybXW0a
+         XAe09cnOssfF2KiUf90tvFsJ/8rFNPdL79HN3wK2SDUhVwbURlO/SuLEqwgD5qiCLMMF
+         UtiMLabLqPsuki8u4y95/NVv1XXal0rH0y+U9Y8MaL+TVKsSFOFa7UHovTRSWn4IlgJ0
+         uTnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1m5gwebwysSqPY8ol6mtnZ1CYvl2KEt25N49Yi1cJKU=;
-        b=sUjCo/vPrrGq9ps3TK30xBpngcSHlPvCMXvT8OdX9nyyrVl+JjeBxABZmYT0nilRE7
-         A7no9XyUrq761GfOztjDHWO7CbNEEDskNEC0hnbz44DB1iwDNLEDVh7nxeJ4Zk2SZIm5
-         JSeQLUQZFAUjxDHeIRmXJub9/DUjuTyRYrSFHqlSUSWkqr1GZOpUApDVoMoXiDT1qc2j
-         rplZeyPsZAi7zJbenbuFzO/HP1ZjXGdwsTJhuoqcM4lSmgZ80UYFfQvi6JMb9LdHOko2
-         a4mgwtlcbwEEKYs3QfYyfsUYPS58GFq4ljYbVykAtEj7TuCnHD6ulQSyGmvv1dg33diY
-         NyiQ==
-X-Gm-Message-State: AOAM533D2GxDVU6YMcwLuu8yz1gsbSf5R/E+vXJuMRgknHcUbq78oVuT
-        Gbb8/3eqKb1oWdCT5NFPgjgkwd8NTpg=
-X-Google-Smtp-Source: ABdhPJyjCDeO36YviyvLpvSHzHOSWGqSyKZvUuDe5gaX3Bez3jVZCtJZ/vbisLqOsZ+PnRUPkZm2Uw==
-X-Received: by 2002:adf:d236:: with SMTP id k22mr6653858wrh.144.1614905741042;
+        bh=z/aJo75dNhsQ7aTf5zagZWSLinhoohO+zk07aKf06jI=;
+        b=YWnfNoKxXzGvMKM6QkJ/PeTK3EhPUwpcENrnYRkvMelFx1V/FwJVSDiyGFT3SPyW/i
+         LEH9ieQXx8U3yYzsen+HGKfZv4vL/KklklU8Jzu+FnTp6jegCoc9qaITU/oJTi0rb/iP
+         Wp/rg2wTCbcxTxS4N7d9ssqfPd7ImK+R24RrYFsYMap+f6v93Ix/WILe1+Jha/6MT6Xd
+         EODa5lDpuZqFHJv82cPxUxp5gP2Lbez16E1OLvZB93ppmthJ977nQZ5BDrvW5auDxTSJ
+         4sHItL+N838XJJC4WkhyN0ui3kW282U6zipTz2WYBkFaISoLC3+RX5wHeUGE10m3xxln
+         yvEQ==
+X-Gm-Message-State: AOAM533Iy7TQb+iLyBkeXXD4uIKhb6ZxnSc3eF4vLp7d1SsnHhgh2Y5R
+        S/8FgYIOTLqGFFT8xISN5gojKX28S10=
+X-Google-Smtp-Source: ABdhPJwtiAE5v4bqiJFNtmDLESHeOEeA7E5OiK/SvOv21POfEFyww9JBKD0ircVwfnPQafScc8TfpA==
+X-Received: by 2002:adf:e94a:: with SMTP id m10mr6519598wrn.55.1614905741566;
         Thu, 04 Mar 2021 16:55:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i10sm1539182wrs.11.2021.03.04.16.55.40
+        by smtp.gmail.com with ESMTPSA id 91sm1768662wrl.20.2021.03.04.16.55.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Mar 2021 16:55:40 -0800 (PST)
-Message-Id: <815af5d30ebd5e7f80aa42e4a54808af2e3781e0.1614905738.git.gitgitgadget@gmail.com>
+        Thu, 04 Mar 2021 16:55:41 -0800 (PST)
+Message-Id: <cb035ac5fe4ab18b697eff42afedcab62880ceec.1614905738.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
 References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 05 Mar 2021 00:55:29 +0000
-Subject: [PATCH 03/11] merge-ort: add a function for initializing our special
- attr_index
+Date:   Fri, 05 Mar 2021 00:55:30 +0000
+Subject: [PATCH 04/11] merge-ort: have ll_merge() calls use the attr_index for
+ renormalization
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,115 +80,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Add a function which can be called to populate the attr_index with the
-appropriate .gitattributes contents when necessary.  Make it return
-early if the attr_index is already initialized or if we are not
-renormalizing files.
-
-NOTE 1: Even if the user has a working copy or a real index (which is
-not a given as merge-ort can be used in bare repositories), we
-explicitly ignore any .gitattributes file from either of these
-locations.  merge-ort can be used to merge two branches that are
-unrelated to HEAD, so .gitattributes from the working copy and current
-index should not be considered relevant.
-
-NOTE 2: Since we are in the middle of merging, there is a risk that
-.gitattributes itself is conflicted...leaving us with an ill-defined
-situation about how to perform the rest of the merge.  It could be that
-the .gitattributes file does not even exist on one of the sides of the
-merge, or that it has been modified on both sides.  If it's been
-modified on both sides, it's possible that it could itself be merged
-cleanly, though it's also possible that it only merges cleanly if you
-use the right version of the .gitattributes file to drive the merge.  It
-gets kind of complicated.  The only test we ever had that attempted to
-test behavior in this area was seemingly unaware of the undefined
-behavior, but knew the test wouldn't work for lack of attribute handling
-support, marked it as test_expect_failure from the beginning, but
-managed to fail for several reasons unrelated to attribute handling.
-See commit 6f6e7cfb52 ("t6038: remove problematic test", 2020-08-03) for
-details.  So there are probably various ways to improve what
-initialize_attr_index() picks in the case of a conflicted .gitattributes
-but for now I just implemented something simple -- look for whatever
-.gitattributes file we can find in any of the higher order stages and
-use it.
+ll_merge() needs an index when renormalization is requested.  Give it
+the special one we created exactly for that purpose.  This fixes t6418.4
+and t6418.5 under GIT_TEST_MERGE_ALGORITHM=ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ merge-ort.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index d91b66a052b6..028d1adcd2c9 100644
+index 028d1adcd2c9..87c553c0882c 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -988,6 +988,67 @@ static int merge_submodule(struct merge_options *opt,
+@@ -360,7 +360,7 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
+ 	string_list_clear(&opti->paths_to_free, 0);
+ 	opti->paths_to_free.strdup_strings = 0;
+ 
+-	if (opti->attr_index.cache_nr)
++	if (opti->attr_index.cache_nr) /* true iff opt->renormalize */
+ 		discard_index(&opti->attr_index);
+ 
+ 	/* Free memory used by various renames maps */
+@@ -988,7 +988,6 @@ static int merge_submodule(struct merge_options *opt,
  	return 0;
  }
  
-+MAYBE_UNUSED
-+static void initialize_attr_index(struct merge_options *opt)
-+{
-+	/*
-+	 * The renormalize_buffer() functions require attributes, and
-+	 * annoyingly those can only be read from the working tree or from
-+	 * an index_state.  merge-ort doesn't have an index_state, so we
-+	 * generate a fake one containing only attribute information.
-+	 */
-+	struct merged_info *mi;
-+	struct index_state *attr_index = &opt->priv->attr_index;
-+	struct cache_entry *ce;
+-MAYBE_UNUSED
+ static void initialize_attr_index(struct merge_options *opt)
+ {
+ 	/*
+@@ -1063,6 +1062,8 @@ static int merge_3way(struct merge_options *opt,
+ 	char *base, *name1, *name2;
+ 	int merge_status;
+ 
++	initialize_attr_index(opt);
 +
-+	if (!opt->renormalize)
-+		return;
-+
-+	if (attr_index->initialized)
-+		return;
-+	attr_index->initialized = 1;
-+
-+	mi = strmap_get(&opt->priv->paths, GITATTRIBUTES_FILE);
-+	if (!mi)
-+		return;
-+
-+	if (mi->clean) {
-+		int len = strlen(GITATTRIBUTES_FILE);
-+		ce = make_empty_cache_entry(attr_index, len);
-+		ce->ce_mode = create_ce_mode(mi->result.mode);
-+		ce->ce_flags = create_ce_flags(0);
-+		ce->ce_namelen = len;
-+		oidcpy(&ce->oid, &mi->result.oid);
-+		memcpy(ce->name, GITATTRIBUTES_FILE, len);
-+		add_index_entry(attr_index, ce,
-+				ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+		get_stream_filter(attr_index, GITATTRIBUTES_FILE, &ce->oid);
-+	}
-+	else {
-+		int stage, len;
-+		struct conflict_info *ci;
-+
-+		ASSIGN_AND_VERIFY_CI(ci, mi);
-+		for (stage=0; stage<3; ++stage) {
-+			unsigned stage_mask = (1 << stage);
-+
-+			if (!(ci->filemask & stage_mask))
-+				continue;
-+			len = strlen(GITATTRIBUTES_FILE);
-+			ce = make_empty_cache_entry(attr_index, len);
-+			ce->ce_mode = create_ce_mode(ci->stages[stage].mode);
-+			ce->ce_flags = create_ce_flags(stage);
-+			ce->ce_namelen = len;
-+			oidcpy(&ce->oid, &ci->stages[stage].oid);
-+			memcpy(ce->name, GITATTRIBUTES_FILE, len);
-+			add_index_entry(attr_index, ce,
-+					ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+			get_stream_filter(attr_index, GITATTRIBUTES_FILE,
-+					  &ce->oid);
-+		}
-+	}
-+}
-+
- static int merge_3way(struct merge_options *opt,
- 		      const char *path,
- 		      const struct object_id *o,
+ 	ll_opts.renormalize = opt->renormalize;
+ 	ll_opts.extra_marker_size = extra_marker_size;
+ 	ll_opts.xdl_opts = opt->xdl_opts;
+@@ -1101,7 +1102,7 @@ static int merge_3way(struct merge_options *opt,
+ 
+ 	merge_status = ll_merge(result_buf, path, &orig, base,
+ 				&src1, name1, &src2, name2,
+-				opt->repo->index, &ll_opts);
++				&opt->priv->attr_index, &ll_opts);
+ 
+ 	free(base);
+ 	free(name1);
 -- 
 gitgitgadget
 
