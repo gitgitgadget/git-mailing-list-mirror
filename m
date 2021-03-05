@@ -2,111 +2,67 @@ Return-Path: <SRS0=rdad=ID=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20154C4332D
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 22:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01752C433E9
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 22:19:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD72D650B6
-	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 22:00:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0B5A650A9
+	for <git@archiver.kernel.org>; Fri,  5 Mar 2021 22:19:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbhCEV7c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 16:59:32 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:34750 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229854AbhCEV7D (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Mar 2021 16:59:03 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6418C60DF4;
-        Fri,  5 Mar 2021 21:59:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1614981542;
-        bh=vwoiPHWcxF8lJrgp3xFtZ5pXaO6e2N4p5N4Jub+y3sY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=wZ6GBMx1up/77DjMhbflIbD+MfAL06DtmYR5VVoUOjJPIJCp6ZiuR4iTpWG6+HQ5R
-         cPjFKrE2dHtBRyZC8sr31VRWwCzQpiEOFMlUnCTTRclESHkjS0WTHxelMiaGyGbzEy
-         5x6fwlqiVEU2w41Wi2LzSvDGHcnuuCQckuTDJCEFc7AXywUlYczJjKtEJFjlApiD3o
-         6nonLue8MsgKbifIOeyvH/x92iwbr6hzZi5lyhJlAa4sLAmvIPT9S+GluoKVlWv7VS
-         wAF9wefo9ZtlGvIXSOQXlag5g3TqAAIsmOP5mL7iPtQmTzd3GhSLwDbjRKyTTaR7gt
-         Ta0PdbDyFg0gqchaNaoZeC16HJDMPhNgT/fGlTfuNnPTOv3hvb7HSkDmKUHwDsfh9w
-         ZuumJ4yLtfhdYEq/IFS74lEKubx0oefJ4RdZCjPhtwAQ1KYi558/pom2JwHRhsq5KJ
-         DlhL62cswG1D4PiR/5+v9sNiEDTVOcaiW5FmFht+NtMupA0ndVq
-Date:   Fri, 5 Mar 2021 21:58:58 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Soni L." <fakedme+git@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cross-signing commits
-Message-ID: <YEKpoiy//SR5Nt3q@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Soni L." <fakedme+git@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <355bb5d1-f661-4ac2-d536-d1c56ec5e408@gmail.com>
- <YEKmVWHJchUhxZmn@camp.crustytoothpaste.net>
- <537258e7-fcf4-814c-c7c1-95c8d525f34a@gmail.com>
+        id S229813AbhCEWSw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 17:18:52 -0500
+Received: from mail-ej1-f43.google.com ([209.85.218.43]:38668 "EHLO
+        mail-ej1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229611AbhCEWSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 17:18:25 -0500
+Received: by mail-ej1-f43.google.com with SMTP id mj10so6457223ejb.5
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 14:18:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xy0hv/3LKf2IJ34jYgoYSFrUVS7d6eW+heh3bDU3vMU=;
+        b=WwQy3Xggo4qDH4XrSYdZkBgRgKpojTjFjz7Jo2Lazbq/YSw67NfEJHphykC093g4wD
+         p0gTEvloDepMoRAbvVS2qjeW9WBsICnF7YkuUx5DF2M7eKxvb6bWAXzw2YRZhCwlLwJY
+         uytaS7D0HIBgo7kLCaMbLN6hWOYzOPOBKTP9sBvlxTEPW/m2cseF8ytL5hL+nutvCrM0
+         uK9yTDnAhaQanzHmXDu5ffSvpXdew779KIcN9Wd2aW3wScGRTC3peUr1j4Vs3I6P+fnI
+         r3/vo/JSS0mE9gbaLqrU+KRIxamgisKtsZLV8hQPX22OMToRXSlRN3mq2fki4u3y+yiE
+         GtGA==
+X-Gm-Message-State: AOAM532at4q1BqyrAH+rUb8HluhE4Fp7CDWJjOJGVlZbSrcEqWqCTk5F
+        XnYR8wBC13YzUCItS8vbpbhshb+G34q4kIuxeq0=
+X-Google-Smtp-Source: ABdhPJwpE2/wQvXQF02xC/n2LNsd+bSOxs3FVDOrjbuxlWs/tsCmvfETRJajUNq7sSTomH7pSYtLJohjS9f1YY39/Fk=
+X-Received: by 2002:a17:906:d8c6:: with SMTP id re6mr4196882ejb.311.1614982703888;
+ Fri, 05 Mar 2021 14:18:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YnLUKgbskzUz+ohy"
-Content-Disposition: inline
-In-Reply-To: <537258e7-fcf4-814c-c7c1-95c8d525f34a@gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+References: <4210f5f1-dd7e-f425-6ab2-e220a33e82bf@discourse.org> <xmqqa6rh9sph.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqa6rh9sph.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 5 Mar 2021 17:18:13 -0500
+Message-ID: <CAPig+cSRKJUhwMagx_h21pJbBiX9paA5cvDbudDNcRVea6g3Mg@mail.gmail.com>
+Subject: Re: "git diff-files" command reports differences that don't exist
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Brown <michael.brown@discourse.org>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 5, 2021 at 4:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+> This is totally expected behaviour.  In general when you are working
+> with plumbing commands like diff-files and diff-index, you are
+> expected to do "update-index --refresh" upfront.
+>
+> A plumbing command "git diff" has an equivalent of "update-index
+> --refresh" built into it, but the plumbing commands are designed
+> to be used in scripts, and in order to allow scripting programmers
+> to avoid making unnecessary "update-index --refresh", e.g.
 
---YnLUKgbskzUz+ohy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Did you mean:
 
-On 2021-03-05 at 21:53:14, Soni L. wrote:
->=20
->=20
-> On 2021-03-05 6:44 p.m., brian m. carlson wrote:
-> > Can you explain what you mean by "cross-signing"?  Are you proposing a
-> > situation where two parties sign the same commit?
->=20
-> Yep. See, the repos enforce signing, but they can also be forks. If someo=
-ne
-> wants to track upstream in one of their branches they just can't. Would be
-> cool if they could just say they trust the commits by signing the relevant
-> commits with their own key instead - on the assumption that they actually
-> reviewed said commits.
+    A porcelain command "git diff" has an equivalent...
 
-Git doesn't natively support having multiple signatures in a commit,
-although it is of course possible to do, since OpenPGP supports it.
-However, as you noted, changing the signature changes the object ID, so
-if you re-sign a commit for any reason, that changes the commit ID.
-There isn't any way around this at all; that's just how it works.
-
-So you can either re-sign or have an unchanged commit ID, but not both
-at the same time.
-
-You can use additional empty signed commits or signed tags, or you can
-use some sort of external system that keeps track of additional
-signatures or approvals if you want.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---YnLUKgbskzUz+ohy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYEKpogAKCRB8DEliiIei
-gc/cAQDp2n4uGgwhjK6MiEJyOCLDyed64AmblgYfD6u2YkeKlQEAuMAfyMQ9YARg
-TPQNNcNpRgP2cs17mWPHv8zJL1kc2wY=
-=1wnv
------END PGP SIGNATURE-----
-
---YnLUKgbskzUz+ohy--
+?
