@@ -2,63 +2,62 @@ Return-Path: <SRS0=58cf=IE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12C56C433DB
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 21:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F6B1C433DB
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 22:07:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D30A6650BE
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 21:57:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01A4A650D7
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 22:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbhCFV41 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 16:56:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43566 "EHLO
+        id S229801AbhCFWHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 17:07:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbhCFV4D (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Mar 2021 16:56:03 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C20F9C06174A
-        for <git@vger.kernel.org>; Sat,  6 Mar 2021 13:56:01 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id j8so5536804otc.0
-        for <git@vger.kernel.org>; Sat, 06 Mar 2021 13:56:01 -0800 (PST)
+        with ESMTP id S229713AbhCFWGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Mar 2021 17:06:49 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB74DC06174A
+        for <git@vger.kernel.org>; Sat,  6 Mar 2021 14:06:48 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id x78so6858445oix.1
+        for <git@vger.kernel.org>; Sat, 06 Mar 2021 14:06:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=pJnKtV8aK88r79OBHR3Tlq9hiya3gYR5CzpKRPZo+84=;
-        b=Rkc2Dt3D9cyxZ7We7bfCj7NU7QYhh4hZqOTdGkl3wopKSiVjOzUZ8HELX1qMZI6Ki7
-         Eo6xyLMm/ydJ70CZai6/Qc3q9ihtrnVJcS4EmIl6CAL1pMgJEBpWHLqvN3xGkMkgj3qY
-         rbYItPpMrVWsM7bEFjQCgNG8HpmqD8ylV0PzR+SbpFJp61IOjdbpmwdXXM9DtAKtaBas
-         9LDoNv8XteCMY2MNW3zxUbNKhdWc2XYDFFJAhkecmcQxsrvnz0BkEBtzP1sNBLOuEc69
-         V7a+yRKRqmbgErBQky0V/sLHsXnRG8bnsyQcMgZS+8YhCs0IrFrMore/5sKhXibxb+7Y
-         mgJA==
+        bh=gSCQA2HijEZrIuN0WfjE4tQLTkz4VTbqV3NIgFgmrts=;
+        b=UaQhTwp3N2N6eWu0DpfqbP0Ef7vzq5HTZgjUafRWZmPpSRpb3+XB0Oqb+6FQQLbcEt
+         UTaVM7tMW//DaxOpr0ED/hSst/obZPi+FRhTrpmTBOiD5ckyeHZJhja0jEnUrdBN4G+G
+         04krzV7G919lrVRNyfA0KztmGzsiEoQ9acAmPbhL2K6SHKOTN3IVhCg5msd5vnFi+rgR
+         J1RVz5MD0pz0NWHOpCP1xWieUePxfhahTpnl6oy3EjyTKOw7dgeo1efigmlTL3ak/vsn
+         2hfqHXQmcwg+8vVdW9eMwdU957PuhCoeMMKLLLOOZoNKw2RsdPW9QjVWQUig2lWGSlWz
+         677g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pJnKtV8aK88r79OBHR3Tlq9hiya3gYR5CzpKRPZo+84=;
-        b=DdS/WADOxfcRq5B7piD9hA70QiKNIoelweWC2MzAmeD0IoJD+M/Qr2lbqvDYVXH94X
-         GmdGplFVcKk6e5irRKxY9TUT8G+wR2+cHp/sh+/XPK9sKGD6xG401Lmm7mhUWlpBObJd
-         Hwz5EV9M4OrSuDSnN+oR5bW4Bdo4rtR96PHuDpeMqmL70LOCsuqJa2yQOHhssdPO/7T5
-         l+2W2Ue7ns296glnFMrpRio7V8UUurUt4ox2DwfA0n1TpGOxMecyQClnigRpkC65Snhs
-         JiSKAJcjt+TD8codpRbFEPAK1RWq7IsNt9ZIMtbG2bivOmBpVE1rXPBlf1tL4pPuhtX3
-         eiJw==
-X-Gm-Message-State: AOAM5331QfuWSuRfWIu/oyxFPAvEM3LKBqZ/T6+LR07j+SuLGYVY/NU+
-        d4nnXwRP4Omx90JjLoSqxkBlnhJdQFaqk+06OA0=
-X-Google-Smtp-Source: ABdhPJyhNHLS7Nu2I1UCPsyQNICCP9sG8ZjFn2ISCIgZETxUuHuS53CskrMxp7huQgCTNkxTiWUvZLv0dleRyodE2yM=
-X-Received: by 2002:a9d:6251:: with SMTP id i17mr13467293otk.162.1615067760974;
- Sat, 06 Mar 2021 13:56:00 -0800 (PST)
+        bh=gSCQA2HijEZrIuN0WfjE4tQLTkz4VTbqV3NIgFgmrts=;
+        b=lzSA5EnfVu+L3yPPSFHtyQSyeuqj+281DzPuYNz9YDyjsyYpDgsTurj7WhdlaYU85g
+         y+osk/I0rnpBz/R5e6if0D9Jr6mKVqSnPMZuqtKwaZPefojk9orclBFGRxU6mvB35pJ3
+         6rZBOazOgLzJ1DV9sIwjUngpwrYhsSCgrbYKCFIIY53Uza+my33T2F1r4CpJXRZBxPNY
+         iEWQUMu2OcHXqKUxRbqVH875iw95jvdJFYR9Fg7NFYVkNj6kw47WbBuLQ826zXUvVYiC
+         FgltQ0Aolq/OrwfV1Y3PA1K8O3rAv6GTuEkWbK5uPvt7cvN9D9Rz9nwlRAHk36zJiR/i
+         EFNw==
+X-Gm-Message-State: AOAM531KywSA+N+xNRRLNJ+6jmphh91a2aHDUnp1aZLwK4C13aU5MVA6
+        SLDnHOxj/5eoTfinbA4BrhpYvsI2cy/qtmbufiM=
+X-Google-Smtp-Source: ABdhPJy2MQDJqfOgazFZN/kLXTXX6+PA7lEU0OJyGuWgL5nECv4CycvjjtsUkaIeKemlQZ6x8q7OFb6L/e7MGBkGMJw=
+X-Received: by 2002:aca:b489:: with SMTP id d131mr6156519oif.39.1615068408371;
+ Sat, 06 Mar 2021 14:06:48 -0800 (PST)
 MIME-Version: 1.0
-References: <1240014568-3675-1-git-send-email-pclouds@gmail.com> <20210306193458.20633-7-avarab@gmail.com>
-In-Reply-To: <20210306193458.20633-7-avarab@gmail.com>
+References: <1240014568-3675-1-git-send-email-pclouds@gmail.com> <20210306193458.20633-1-avarab@gmail.com>
+In-Reply-To: <20210306193458.20633-1-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 6 Mar 2021 13:55:49 -0800
-Message-ID: <CABPp-BGj2k=idn8wqpek-3m5NwNbSPCNM6mFXVyFMTDoWu44JA@mail.gmail.com>
-Subject: Re: [PATCH 6/7] tree.h API: remove support for starting at prefix != ""
+Date:   Sat, 6 Mar 2021 14:06:37 -0800
+Message-ID: <CABPp-BHTPmW+uwHum7p0PsWbMpM2uGX7CP=KoZ+W3PRzxjQxWw@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Move the read_tree() function to its only user
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -73,190 +72,30 @@ X-Mailing-List: git@vger.kernel.org
 On Sat, Mar 6, 2021 at 11:35 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
-> Every caller or the read_tree_recursive() function hardcoded a
-
-s/or/of/?
-
-> starting point of "" in the tree. So let's simply remove that
-> parameter.
-
-Interesting.  It appears that read_tree_recursive() was the last
-function to call read_tree_recursive() with a starting point other
-than "", but that was changed in commit ffd31f661d ("Reimplement
-read_tree_recursive() using tree_entry_interesting()", 2011-03-25).
-
-The last caller of read_tree_recursive() other than itself to call it
-with base !=3D "", was ebfbdb340a ("Git archive and trailing "/" in
-prefix", 2009-10-08).
-
-> It might be useful in the future to get this functionality back,
-> there's no reason we won't have a read_tree_recursive() use-case that
-> would want to start in a subdirectory.
-
-This paragraph is very hard to parse.
-
-> But if and when that happens we can just add something like a
-> read_tree_recursive_subdir() and have both read_tree_recursive() and
-> that function be a thin wrapper for read_tree_1().
-
-Starting with "But if and when that happens" suggests this shouldn't
-be an independent paragraph.
-
-> In the meantime there's no reason to keep around what amounts to dead
-> code just in case we need it in the future.
-
-Makes sense to me.
-
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  archive.c          | 8 ++++----
->  builtin/checkout.c | 2 +-
->  builtin/log.c      | 4 ++--
->  builtin/ls-files.c | 2 +-
->  builtin/ls-tree.c  | 2 +-
->  merge-recursive.c  | 2 +-
->  tree.c             | 2 --
->  tree.h             | 1 -
->  8 files changed, 10 insertions(+), 13 deletions(-)
+> This is a small cleanup series to remove move the last user of
+> read_tree() over to read_tree_recursive(), and while we're at it
+> adjust the API of read_tree_fn_t to its current use-case.
 >
-> diff --git a/archive.c b/archive.c
-> index 5919d9e5050..9394f170f7f 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -316,8 +316,8 @@ int write_archive_entries(struct archiver_args *args,
->                 git_attr_set_direction(GIT_ATTR_INDEX);
->         }
+> I found out after writing this that there had been a FIXME comment
+> (never made it into git.git) about this from mid-2009:
+> https://lore.kernel.org/git/1240014568-3675-1-git-send-email-pclouds@gmai=
+l.com/
 >
-> -       err =3D read_tree_recursive(args->repo, args->tree, "",
-> -                                 0, 0, &args->pathspec,
-> +       err =3D read_tree_recursive(args->repo, args->tree,
-> +                                 0, &args->pathspec,
->                                   queue_or_write_archive_entry,
->                                   &context);
->         if (err =3D=3D READ_TREE_RECURSIVE)
-> @@ -405,8 +405,8 @@ static int path_exists(struct archiver_args *args, co=
-nst char *path)
->         ctx.args =3D args;
->         parse_pathspec(&ctx.pathspec, 0, 0, "", paths);
->         ctx.pathspec.recursive =3D 1;
-> -       ret =3D read_tree_recursive(args->repo, args->tree, "",
-> -                                 0, 0, &ctx.pathspec,
-> +       ret =3D read_tree_recursive(args->repo, args->tree,
-> +                                 0, &ctx.pathspec,
->                                   reject_entry, &ctx);
->         clear_pathspec(&ctx.pathspec);
->         return ret !=3D 0;
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 2d6550bc3c8..21b742c0f07 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -155,7 +155,7 @@ static int update_some(const struct object_id *oid, s=
-truct strbuf *base,
->
->  static int read_tree_some(struct tree *tree, const struct pathspec *path=
-spec)
->  {
-> -       read_tree_recursive(the_repository, tree, "", 0, 0,
-> +       read_tree_recursive(the_repository, tree, 0,
->                             pathspec, update_some, NULL);
->
->         /* update the index with the given tree's info
-> diff --git a/builtin/log.c b/builtin/log.c
-> index f67b67d80ed..ffa3fb8c286 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -681,8 +681,8 @@ int cmd_show(int argc, const char **argv, const char =
-*prefix)
->                                         diff_get_color_opt(&rev.diffopt, =
-DIFF_COMMIT),
->                                         name,
->                                         diff_get_color_opt(&rev.diffopt, =
-DIFF_RESET));
-> -                       read_tree_recursive(the_repository, (struct tree =
-*)o, "",
-> -                                           0, 0, &match_all, show_tree_o=
-bject,
-> +                       read_tree_recursive(the_repository, (struct tree =
-*)o,
-> +                                           0, &match_all, show_tree_obje=
-ct,
->                                             rev.diffopt.file);
->                         rev.shown_one =3D 1;
->                         break;
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index c0349a7b206..2c609428eea 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -483,7 +483,7 @@ void overlay_tree_on_index(struct index_state *istate=
-,
->                                PATHSPEC_PREFER_CWD, prefix, matchbuf);
->         } else
->                 memset(&pathspec, 0, sizeof(pathspec));
-> -       if (read_tree_recursive(the_repository, tree, "", 0, 1,
-> +       if (read_tree_recursive(the_repository, tree, 1,
->                                 &pathspec, read_one_entry_quick, istate))
->                 die("unable to read tree entries %s", tree_name);
->
-> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index 7cad3f24ebd..7d3fb2e6d0f 100644
-> --- a/builtin/ls-tree.c
-> +++ b/builtin/ls-tree.c
-> @@ -185,6 +185,6 @@ int cmd_ls_tree(int argc, const char **argv, const ch=
-ar *prefix)
->         tree =3D parse_tree_indirect(&oid);
->         if (!tree)
->                 die("not a tree object");
-> -       return !!read_tree_recursive(the_repository, tree, "", 0, 0,
-> +       return !!read_tree_recursive(the_repository, tree, 0,
->                                      &pathspec, show_tree, NULL);
->  }
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index b052974f191..fa7602ff0f2 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -473,7 +473,7 @@ static void get_files_dirs(struct merge_options *opt,=
- struct tree *tree)
->  {
->         struct pathspec match_all;
->         memset(&match_all, 0, sizeof(match_all));
-> -       read_tree_recursive(opt->repo, tree, "", 0, 0,
-> +       read_tree_recursive(opt->repo, tree, 0,
->                             &match_all, save_files_dirs, opt);
->  }
->
-> diff --git a/tree.c b/tree.c
-> index c1bde9314d0..285633892c2 100644
-> --- a/tree.c
-> +++ b/tree.c
-> @@ -82,14 +82,12 @@ static int read_tree_1(struct repository *r,
->
->  int read_tree_recursive(struct repository *r,
->                         struct tree *tree,
-> -                       const char *base, int baselen,
->                         int stage, const struct pathspec *pathspec,
->                         read_tree_fn_t fn, void *context)
->  {
->         struct strbuf sb =3D STRBUF_INIT;
->         int ret;
->
-> -       strbuf_add(&sb, base, baselen);
->         ret =3D read_tree_1(r, tree, &sb, stage, pathspec, fn, context);
->         strbuf_release(&sb);
->         return ret;
-> diff --git a/tree.h b/tree.h
-> index 34549c86c9f..9a0fd3221e3 100644
-> --- a/tree.h
-> +++ b/tree.h
-> @@ -33,7 +33,6 @@ typedef int (*read_tree_fn_t)(const struct object_id *,=
- struct strbuf *, const c
->
->  int read_tree_recursive(struct repository *r,
->                         struct tree *tree,
-> -                       const char *base, int baselen,
->                         int stage, const struct pathspec *pathspec,
->                         read_tree_fn_t fn, void *context);
->
-> --
-> 2.31.0.rc0.126.g04f22c5b82
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (7):
+>   tree.c API: move read_tree() into builtin/ls-files.c
+>   ls-files: don't needlessly pass around stage variable
+>   ls-files: remove cache juggling + sorting
+>   merge-ort: move cmp_cache_name_compare() from tree.c
+>   ls-files: refactor read_one_entry_quick() to use a strbuf
+>   tree.h API: remove support for starting at prefix !=3D ""
+>   tree.h API: remove "stage" parameter from read_tree_recursive()
 
-Looks good.
+I read over all 7 patches.  For the most part, they look good.
+
+Some of the wording in the commit message for patch 6 seemed confusing
+and could use some touch-ups; it may also be worth documenting when
+the code stopped having any callers with a base other than "".
+
+For patch 3 (the actual removal of read_tree()), either I'm
+misunderstanding something, or the changes look problematic and
+unsafe.  I'm hoping it's the former.
