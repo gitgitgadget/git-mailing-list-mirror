@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4461FC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D39BC433E9
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 19:35:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BC9B650CF
+	by mail.kernel.org (Postfix) with ESMTP id 45AE8650DA
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 19:35:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbhCFTf0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 14:35:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41378 "EHLO
+        id S231550AbhCFTfa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 14:35:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231529AbhCFTfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Mar 2021 14:35:15 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53C5C06174A
-        for <git@vger.kernel.org>; Sat,  6 Mar 2021 11:35:14 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso1374951wma.4
-        for <git@vger.kernel.org>; Sat, 06 Mar 2021 11:35:14 -0800 (PST)
+        with ESMTP id S231534AbhCFTfS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Mar 2021 14:35:18 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B21C06174A
+        for <git@vger.kernel.org>; Sat,  6 Mar 2021 11:35:18 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id h98so6557693wrh.11
+        for <git@vger.kernel.org>; Sat, 06 Mar 2021 11:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=l44t0kx9MTkP83vPd5vNxPvm69YH9r5x3db1VIahav4=;
-        b=TGzUCBjBNIwD3ZdPdqevMQx7sQHvlNIy3dQOS4DxGhWwo+J73bYiI9JYXT+dIKALV9
-         UVPY5Qh9uOp1uYKMPY1EsWuWT/YnjuC5ot2wakD+2yYvdS6fIdhgoJH9wXhZ4HPZH++h
-         crCWopDjyuHz+6vLnLdh59C1oQNxrM9jYXubDqHVVwyS7c2Cu8U1ONpF5uieboqdURku
-         yE0kyMDtZ+EskEdSyT5NDIbr7aB4uWHbPJYgNGxMoyWqjfkfGn6gBKuzEQcho6qlZNK9
-         xcvW0caEfZ7JO6iISIuWjMCsqWkn2kGzAhY1uw3hgy2JlyP2XUQ4KJ+8IbXdV8Z5hY4V
-         lsLg==
+        bh=wmAkSq8IagvE7+NAwHoAE0V4jW/rRsqaPepw1V8Hrfk=;
+        b=rogK9AoTnpsGlNnDBJNm5tf+R8o7LH+8oAlV2poqdXwK48b0fG7iXZoEE4M/vJ+aam
+         DVQ3eYNZSfrYSPKinwQSGG8nUR+0KNbT6Ub7AYJYw5YggheTjkCZYlGT9BaGEWnsnl9l
+         Bnxucb31wVZb38+LOjPYLZHu6Sxdsrytwzz31aqgakpRliHqp9V3M0mf/Ue0CxnKIzVg
+         9I/Q7lR1RWPHpvW/pELCUIquvdDZWcnEVISUbdK6SdOIu400TPoaCLIum0YpOBwaEpxP
+         DxrSTcdLRVv20j5smFhCXxG7xborSe3rwH2mtb88E+ucprYBC4eOAqUe5NicndvfHjxp
+         Jajg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=l44t0kx9MTkP83vPd5vNxPvm69YH9r5x3db1VIahav4=;
-        b=lvvFUEumM9/mk2epvv59vVDQCgN7JKRXucmlbH1z8laH4bE0L/PL9ViJiZYnjn4tcr
-         bkfxHak3+3mJdQf73fSWhCzms+mSBc3X2d8AkIApatSMy9tycJ8GzW9iKKK6+EgHPw2j
-         S3B+l+P8FisjBvL8VpDzBZGh8viGk8wtcHK6ZMFKAbjsEw8wdSvXg9fro0lbap3nqg1i
-         hIqLPHvX0sepVMXwssescOWPg02aj+b+cxMr5Fcg+5Jf0rZ565M9HXeFzClHvoQ0uc7z
-         Vh4wVTLfGrVEh5MxEwZSsgJGpiLqB7/Cf5dAwKKIbQejnmhFD+NeZJltmiAVKBaxNwK1
-         Q6Dw==
-X-Gm-Message-State: AOAM530RK5iGaGp8oZ+RfgiIPCipbrMBuFlFTk7wKq2jwkeLo/ozB+6b
-        gzwTqPk1XRttBfxCqq4bfGl+sdbE4HEFlw==
-X-Google-Smtp-Source: ABdhPJxijE3x1+VhIKo7sxDdGcbYaX5wysxBqrmfYcOvnax227c6aDAGAhyy/GLZrkvbHv314cWR4A==
-X-Received: by 2002:a1c:7901:: with SMTP id l1mr14986599wme.114.1615059313304;
-        Sat, 06 Mar 2021 11:35:13 -0800 (PST)
+        bh=wmAkSq8IagvE7+NAwHoAE0V4jW/rRsqaPepw1V8Hrfk=;
+        b=C66fjfUNEQ3O1DegUP8god3f0dUXN0hCZWNAMZ012Q4Df22G52lQ9HQY5XkMc5hdxB
+         T0XSnYkMn24D4xHpP3bkjBIwOXHTaXD1LhrPIen8QRbinWBV8TgqhEpOHH5MMa3bNaTa
+         PuaK2PeVCq6FtkWt1srqBcNxNIUS5e6pJhjiMBaqmKHzZ/OPV6OoAtxU1YbqV89sAkFm
+         a1TUTl4QJhfZdzGHz4f8+Dz+lLbypF+qhVm+UeX0xjeplooac0c7JxZav3JFr0AcNUBQ
+         MrwhQJX9eLZHc/mVQZ8+UMvBROpm0YzhFnuLm5S6XfdARTl8T6xFE3hSfi7xkGUe667o
+         K1Jw==
+X-Gm-Message-State: AOAM532PD4MjcQ8b0rVcp3JLnnSdfvTohHhaFVU/XB8Pv1dwdtbgUCgC
+        4hsB2bs9jQ3SQ78bWKbksJo6oQeD/Y/5cA==
+X-Google-Smtp-Source: ABdhPJwQolVj6ts8agfeTJ/U9yQt8TRp58IhN8qrNqgVTGR42O1A+6Ji9yQ26WH00V5kUF2dA/Ki5Q==
+X-Received: by 2002:adf:f411:: with SMTP id g17mr15024386wro.22.1615059316970;
+        Sat, 06 Mar 2021 11:35:16 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a5sm9951578wrs.35.2021.03.06.11.35.12
+        by smtp.gmail.com with ESMTPSA id a5sm9951578wrs.35.2021.03.06.11.35.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Mar 2021 11:35:12 -0800 (PST)
+        Sat, 06 Mar 2021 11:35:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/7] tree.c API: move read_tree() into builtin/ls-files.c
-Date:   Sat,  6 Mar 2021 20:34:52 +0100
-Message-Id: <20210306193458.20633-2-avarab@gmail.com>
+Subject: [PATCH 5/7] ls-files: refactor read_one_entry_quick() to use a strbuf
+Date:   Sat,  6 Mar 2021 20:34:56 +0100
+Message-Id: <20210306193458.20633-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <1240014568-3675-1-git-send-email-pclouds@gmail.com>
 References: <1240014568-3675-1-git-send-email-pclouds@gmail.com>
@@ -78,252 +78,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the read_tree() API was added around the same time as
-read_tree_recursive() in 94537c78a82 (Move "read_tree()" to
-"tree.c"[...], 2005-04-22) and b12ec373b8e ([PATCH] Teach read-tree
-about commit objects, 2005-04-20) things have gradually migrated over
-to the read_tree_recursive() version.
-
-Now builtin/ls-files.c is the last user of this code, let's move all
-the relevant code there. This allows for subsequent simplification of
-it, and an eventual move to read_tree_recursive().
+Refactor the code in read_one_entry_quick() that used "base" and
+"baselen" to just use the "buf" and "len" fields in the "base" strbuf
+directly. Having the "basebuf" variable was a transitory step in
+moving away from the old read_tree() in tree.c.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/ls-files.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++
- tree.c             | 89 ---------------------------------------------
- tree.h             |  4 --
- 3 files changed, 91 insertions(+), 93 deletions(-)
+ builtin/ls-files.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index f6f9e483b27..a4458622813 100644
+index f5239437809..c0349a7b206 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -12,6 +12,7 @@
- #include "dir.h"
- #include "builtin.h"
- #include "tree.h"
-+#include "cache-tree.h"
- #include "parse-options.h"
- #include "resolve-undo.h"
- #include "string-list.h"
-@@ -420,6 +421,96 @@ static int get_common_prefix_len(const char *common_prefix)
- 	return common_prefix_len;
+@@ -421,14 +421,12 @@ static int get_common_prefix_len(const char *common_prefix)
  }
  
-+static int read_one_entry_opt(struct index_state *istate,
-+			      const struct object_id *oid,
-+			      const char *base, int baselen,
-+			      const char *pathname,
-+			      unsigned mode, int stage, int opt)
-+{
-+	int len;
-+	struct cache_entry *ce;
-+
-+	if (S_ISDIR(mode))
-+		return READ_TREE_RECURSIVE;
-+
-+	len = strlen(pathname);
-+	ce = make_empty_cache_entry(istate, baselen + len);
-+
-+	ce->ce_mode = create_ce_mode(mode);
-+	ce->ce_flags = create_ce_flags(stage);
-+	ce->ce_namelen = baselen + len;
-+	memcpy(ce->name, base, baselen);
-+	memcpy(ce->name + baselen, pathname, len+1);
-+	oidcpy(&ce->oid, oid);
-+	return add_index_entry(istate, ce, opt);
-+}
-+
-+static int read_one_entry(const struct object_id *oid, struct strbuf *base,
-+			  const char *pathname, unsigned mode, int stage,
-+			  void *context)
-+{
-+	struct index_state *istate = context;
-+	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
-+				  mode, stage,
-+				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
-+}
-+
-+/*
-+ * This is used when the caller knows there is no existing entries at
-+ * the stage that will conflict with the entry being added.
-+ */
-+static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
-+				const char *pathname, unsigned mode, int stage,
-+				void *context)
-+{
-+	struct index_state *istate = context;
-+	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
-+				  mode, stage,
-+				  ADD_CACHE_JUST_APPEND);
-+}
-+
-+
-+static int read_tree(struct repository *r, struct tree *tree, int stage,
-+		     struct pathspec *match, struct index_state *istate)
-+{
-+	read_tree_fn_t fn = NULL;
-+	int i, err;
-+
-+	/*
-+	 * Currently the only existing callers of this function all
-+	 * call it with stage=1 and after making sure there is nothing
-+	 * at that stage; we could always use read_one_entry_quick().
-+	 *
-+	 * But when we decide to straighten out git-read-tree not to
-+	 * use unpack_trees() in some cases, this will probably start
-+	 * to matter.
-+	 */
-+
-+	/*
-+	 * See if we have cache entry at the stage.  If so,
-+	 * do it the original slow way, otherwise, append and then
-+	 * sort at the end.
-+	 */
-+	for (i = 0; !fn && i < istate->cache_nr; i++) {
-+		const struct cache_entry *ce = istate->cache[i];
-+		if (ce_stage(ce) == stage)
-+			fn = read_one_entry;
-+	}
-+
-+	if (!fn)
-+		fn = read_one_entry_quick;
-+	err = read_tree_recursive(r, tree, "", 0, stage, match, fn, istate);
-+	if (fn == read_one_entry || err)
-+		return err;
-+
-+	/*
-+	 * Sort the cache entry -- we need to nuke the cache tree, though.
-+	 */
-+	cache_tree_free(&istate->cache_tree);
-+	QSORT(istate->cache, istate->cache_nr, cmp_cache_name_compare);
-+	return 0;
-+}
-+
- /*
-  * Read the tree specified with --with-tree option
-  * (typically, HEAD) into stage #1 and then
-diff --git a/tree.c b/tree.c
-index a52479812ce..a6c12f2745a 100644
---- a/tree.c
-+++ b/tree.c
-@@ -11,54 +11,6 @@
+ static int read_one_entry_quick(const struct object_id *oid,
+-				struct strbuf *basebuf,
++				struct strbuf *base,
+ 				const char *pathname,
+ 				unsigned mode,
+ 				int stage, void *context)
+ {
+ 	struct index_state *istate = context;
+-	const char *base = basebuf->buf;
+-	const int baselen = basebuf->len;
+ 	int len;
+ 	struct cache_entry *ce;
  
- const char *tree_type = "tree";
+@@ -436,13 +434,13 @@ static int read_one_entry_quick(const struct object_id *oid,
+ 		return READ_TREE_RECURSIVE;
  
--static int read_one_entry_opt(struct index_state *istate,
--			      const struct object_id *oid,
--			      const char *base, int baselen,
--			      const char *pathname,
--			      unsigned mode, int stage, int opt)
--{
--	int len;
--	struct cache_entry *ce;
--
--	if (S_ISDIR(mode))
--		return READ_TREE_RECURSIVE;
--
--	len = strlen(pathname);
+ 	len = strlen(pathname);
 -	ce = make_empty_cache_entry(istate, baselen + len);
--
--	ce->ce_mode = create_ce_mode(mode);
--	ce->ce_flags = create_ce_flags(stage);
++	ce = make_empty_cache_entry(istate, base->len + len);
+ 
+ 	ce->ce_mode = create_ce_mode(mode);
+ 	ce->ce_flags = create_ce_flags(stage);
 -	ce->ce_namelen = baselen + len;
 -	memcpy(ce->name, base, baselen);
 -	memcpy(ce->name + baselen, pathname, len+1);
--	oidcpy(&ce->oid, oid);
--	return add_index_entry(istate, ce, opt);
--}
--
--static int read_one_entry(const struct object_id *oid, struct strbuf *base,
--			  const char *pathname, unsigned mode, int stage,
--			  void *context)
--{
--	struct index_state *istate = context;
--	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
--				  mode, stage,
--				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
--}
--
--/*
-- * This is used when the caller knows there is no existing entries at
-- * the stage that will conflict with the entry being added.
-- */
--static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
--				const char *pathname, unsigned mode, int stage,
--				void *context)
--{
--	struct index_state *istate = context;
--	return read_one_entry_opt(istate, oid, base->buf, base->len, pathname,
--				  mode, stage,
--				  ADD_CACHE_JUST_APPEND);
--}
--
- static int read_tree_1(struct repository *r,
- 		       struct tree *tree, struct strbuf *base,
- 		       int stage, const struct pathspec *pathspec,
-@@ -154,47 +106,6 @@ int cmp_cache_name_compare(const void *a_, const void *b_)
- 				  ce2->name, ce2->ce_namelen, ce_stage(ce2));
++	ce->ce_namelen = base->len + len;
++	memcpy(ce->name, base->buf, base->len);
++	memcpy(ce->name + base->len, pathname, len+1);
+ 	oidcpy(&ce->oid, oid);
+ 	return add_index_entry(istate, ce, ADD_CACHE_JUST_APPEND);
  }
- 
--int read_tree(struct repository *r, struct tree *tree, int stage,
--	      struct pathspec *match, struct index_state *istate)
--{
--	read_tree_fn_t fn = NULL;
--	int i, err;
--
--	/*
--	 * Currently the only existing callers of this function all
--	 * call it with stage=1 and after making sure there is nothing
--	 * at that stage; we could always use read_one_entry_quick().
--	 *
--	 * But when we decide to straighten out git-read-tree not to
--	 * use unpack_trees() in some cases, this will probably start
--	 * to matter.
--	 */
--
--	/*
--	 * See if we have cache entry at the stage.  If so,
--	 * do it the original slow way, otherwise, append and then
--	 * sort at the end.
--	 */
--	for (i = 0; !fn && i < istate->cache_nr; i++) {
--		const struct cache_entry *ce = istate->cache[i];
--		if (ce_stage(ce) == stage)
--			fn = read_one_entry;
--	}
--
--	if (!fn)
--		fn = read_one_entry_quick;
--	err = read_tree_recursive(r, tree, "", 0, stage, match, fn, istate);
--	if (fn == read_one_entry || err)
--		return err;
--
--	/*
--	 * Sort the cache entry -- we need to nuke the cache tree, though.
--	 */
--	cache_tree_free(&istate->cache_tree);
--	QSORT(istate->cache, istate->cache_nr, cmp_cache_name_compare);
--	return 0;
--}
--
- struct tree *lookup_tree(struct repository *r, const struct object_id *oid)
- {
- 	struct object *obj = lookup_object(r, oid);
-diff --git a/tree.h b/tree.h
-index 3eb0484cbf2..84d66b45538 100644
---- a/tree.h
-+++ b/tree.h
-@@ -39,8 +39,4 @@ int read_tree_recursive(struct repository *r,
- 			int stage, const struct pathspec *pathspec,
- 			read_tree_fn_t fn, void *context);
- 
--int read_tree(struct repository *r, struct tree *tree,
--	      int stage, struct pathspec *pathspec,
--	      struct index_state *istate);
--
- #endif /* TREE_H */
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
