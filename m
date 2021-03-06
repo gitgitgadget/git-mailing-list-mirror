@@ -2,102 +2,150 @@ Return-Path: <SRS0=58cf=IE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92C44C433E6
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 06:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC1D4C433E0
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 10:46:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63A9B65012
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 06:12:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 887596501E
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 10:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229881AbhCFGME (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 01:12:04 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:35626 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbhCFGL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Mar 2021 01:11:59 -0500
-Received: by mail-ed1-f41.google.com with SMTP id p1so5851494edy.2
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 22:11:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4G8Pt6RIrQcYNFTP9/oNmCez2PRhi/WvvRtRcwZSfXs=;
-        b=j6BNI6TZNSKxKopXoA9aVcEu/lcYDgcAI/bEEazoacW4vtLVpOrRMkGskvtTymQ2Lt
-         CcnCRkAETztF297nwEQSpJpB615+qFdFxfO1NDK6Qo6sNQb2Qzq7Htsl4P1agLHRS0Q4
-         g77Ygvauo140hw+dxQShz40PGYw4xsAPImfsJfffPW26/0hyYmoF7RXCFT9I4PifgA6B
-         BgK4uB/2LiYYaL+XcJVdGK3TdaMPNpS53MwrKbzS+qeGCFdf2mQf44TJc5SeZpScHWVV
-         AdqI3ud2PP7cl3LVw/TJkCYG/XhLfNXteAOwphiRL7EVVfgTG4nTki0XhjR3u/FPGsX1
-         WyXQ==
-X-Gm-Message-State: AOAM531n3jySY6gWNB2umtg8PkkL7OZMPoDb3sUDVtS8ZgyHHUbolVIJ
-        bGWg7qYMNECuUrsn11ZSXgr2gToF2+bmNy6fOVA=
-X-Google-Smtp-Source: ABdhPJzDK3zEndacaiqoNQTkniHg7LFf+LC0TZ6OFJmXJJ5auAozyws2rgGZxhyNvA3RcQUSMidDlAW3i3nbZ3rI3ss=
-X-Received: by 2002:aa7:da14:: with SMTP id r20mr478841eds.181.1615011118255;
- Fri, 05 Mar 2021 22:11:58 -0800 (PST)
+        id S230093AbhCFKpw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 05:45:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54380 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229881AbhCFKpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Mar 2021 05:45:39 -0500
+Received: (qmail 12109 invoked by uid 109); 6 Mar 2021 10:45:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 06 Mar 2021 10:45:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29364 invoked by uid 111); 6 Mar 2021 10:45:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 06 Mar 2021 05:45:39 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 6 Mar 2021 05:45:36 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Eric Wong <e@80x24.org>, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2 2/4] Makefile/coccicheck: speed up and fix bug with
+ duplicate hunks
+Message-ID: <YENdUMLTM+cerfqJ@coredump.intra.peff.net>
+References: <20210302205103.12230-1-avarab@gmail.com>
+ <20210305170724.23859-3-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-7-charvi077@gmail.com>
- <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com>
- <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
- <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com>
- <xmqqczwfg23t.fsf@gitster.c.googlers.com> <CAPSFM5cM4fdyWXD33PkT2bH6kM+3ixkxgAnhjUVYFtjUHgwU5g@mail.gmail.com>
- <xmqqpn0ed0m2.fsf@gitster.c.googlers.com> <CAPSFM5dM4NMeGqEG7hFLzyhJskqcrNtNqL9=MUCw9SEYYaFLoQ@mail.gmail.com>
- <xmqq4khpbgqk.fsf@gitster.c.googlers.com> <CAPSFM5dhxm9kuzyXj6wF7s3BoDNzCmZHpaDFhvOBVB1QWbM25w@mail.gmail.com>
-In-Reply-To: <CAPSFM5dhxm9kuzyXj6wF7s3BoDNzCmZHpaDFhvOBVB1QWbM25w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 6 Mar 2021 01:11:47 -0500
-Message-ID: <CAPig+cQ-MaASh4pq1GyvGpFyQRUyw2RHg9HnPTAWe7fvaHOfxA@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
- fixup=[amend|reword] options
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210305170724.23859-3-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 5, 2021 at 11:13 PM Charvi Mendiratta <charvi077@gmail.com> wrote:
-> On Fri, 5 Mar 2021 at 23:55, Junio C Hamano <gitster@pobox.com> wrote:
-> >  (1) to keep "--fixup=reword:<commit>"
-> >
-> >  (2) to keep "amend!" but not introduce "reword!" insn
-> >
-> >  (3) document "--fixup=reword:<commit>" can be thought of as a mere
-> >      special-case short-hand for "--fixup=amend:<commit> --only",
-> >      and
-> >
-> >  (4) make sure "fixup=amend:<commit> --only" is usable as a
-> >      replacement for "--fixup=reword:<commit>".
->
-> Okay, I agree that this method is more clear ...
+On Fri, Mar 05, 2021 at 06:07:22PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-This works for me too, especially the bit about improving the
-documentation to be more clear that --fixup=reword: is a special-case
-(or syntactic sugar) for --fixup=amend:.
+> Using --no-includes also fixes a subtle bug introduced in
+> 960154b9c17 (coccicheck: optionally batch spatch invocations,
+> 2019-05-06) with duplicate hunks being written to the
+> generated *.patch files.
+> 
+> This is because that change altered a file-at-a-time for-loop to an
+> invocation of "xargs -n X". This would not matter for most other
+> programs, but it matters for spatch.
+> 
+> This is because each spatch invocation will maintain shared lock files
+> in /tmp, check if files being parsed were changed etc. I haven't dug
+> into why exactly, but it's easy to reproduce the issue[2]. The issue
+> goes away entirely if we just use --no-includes, which as noted above
+> would have made sense even without that issue.
 
-My confusion all along was thinking that --fixup=amend: and
---fixup=reword: resulted in distinct "amend!" and "reword!" prefixes.
-I don't know whether that confusion was due to me not reading the
-commit messages or documentation carefully enough, or because the
-behavior wasn't clearly documented or easily understood. (I did have
-to re-read the documentation patch multiple times in an attempt to
-understand what it was saying, so perhaps I can blame that. ;-) At any
-rate, it will be good if we can get it clearly documented.
+This part still doesn't make any sense to me. If we are running with
+SPATCH_BATCH_SIZE=1, which is the default, then "xargs -n" is still
+going to run it in file-at-a-time mode. From spatch's perspective,
+there's no difference between a for-loop and "xargs -n 1" (unless it
+somehow cares about stdin, but it shouldn't).
 
-> > but if we are not doing (3) and (4), then it would also be OK to
-> >
-> >  (1) to keep "--fixup=reword:<commit>"
-> >
-> >  (2) to keep "amend!" and introduce "reword!" insn
->
-> ... than this one and will update the patch in the above (former) suggested way.
+Using strace, I do see it creating files in /tmp, but they are all named
+after the process id, and cleaned up before exit. So I don't see how
+they could interfere with each other (certainly not in a sequential run,
+but even if you were to use "xargs -P" to get parallel runs, they seem
+distinct).
 
-This option would likely be less desirable since it could confuse
-people into thinking that "reword!" would become "reword" in the
-sequencer instruction sheet -- which isn't the case at all -- it
-becomes "fixup -c" (or -C, I can't remember).
+If we increase the batch size, I'd expect _fewer_ duplicates. Because in
+file-at-a-time mode with --all-includes, wouldn't every file that
+mentions an include possibly end up emitting a patch for it?
+
+The results you show here (which do replicate for me) imply something
+much weirder is going on:
+
+>     with xargs -n 1:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>     with xargs -n 2:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>     with xargs -n 4:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+
+These results are wrong! They are not finding the entry in strbuf.h that
+should be changed.
+
+>     with xargs -n 16:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>           2 +++ b/strbuf.h
+>     with xargs -n 64:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>           2 +++ b/strbuf.h
+>     with xargs -n 128:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>           2 +++ b/strbuf.h
+
+These ones are also wrong. Now we find the strbuf.h mention, but we are
+finding it twice.
+
+>     with xargs -n 512:
+>           1 +++ b/convert.c
+>           1 +++ b/strbuf.c
+>           1 +++ b/strbuf.h
+
+And this one, which is given all of the paths in one invocation gets it
+right. I'd expect that over the "128" version, which is running two
+independent spatch invocations. But the fact that "64" and "16" produce
+exactly two duplicates makes little sense. And even less that 1, 2, and
+4 don't find the header change at all.
+
+Running the same test with a for loop produces the same (wrong) results
+as "-n 1", as expected:
+
+  $ for i in *.c; do
+      spatch --sp-file test.cocci --all-includes --patch . $i 2>/dev/null
+    done | grep -F +++ | sort | uniq -c
+        1 +++ b/convert.c
+        1 +++ b/strbuf.c
+
+So in short I have no idea what spatch is doing. But I remain
+unconvinced that there is anything wrong with the batch-size patch.
+
+Running it like your patch will, feeding the header directly along with
+--no-includes, does find the correct result:
+
+  $ for i in *.c *.h; do
+      spatch --sp-file test.cocci --no-includes --patch . $i 2>/dev/null
+    done | grep -F +++ | sort | uniq -c
+        1 +++ b/convert.c
+        1 +++ b/strbuf.c
+        1 +++ b/strbuf.h
+
+though I am still concerned by René's example which is missing more
+results.
+
+-Peff
