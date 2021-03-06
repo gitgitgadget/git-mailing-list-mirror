@@ -7,67 +7,70 @@ X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE184C433DB
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 15:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92664C433E0
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 15:46:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB85264FDF
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 15:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55F4864FC9
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 15:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230523AbhCFP2Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 10:28:24 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:51749 "EHLO
+        id S230512AbhCFPp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 10:45:59 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52231 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230413AbhCFP2T (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 Mar 2021 10:28:19 -0500
+        by vger.kernel.org with ESMTP id S230415AbhCFPpS (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 Mar 2021 10:45:18 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 8EFBF5C0051
-        for <git@vger.kernel.org>; Sat,  6 Mar 2021 10:28:18 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Sat, 06 Mar 2021 10:28:18 -0500
+        by mailout.nyi.internal (Postfix) with ESMTP id 2EB135C00CB
+        for <git@vger.kernel.org>; Sat,  6 Mar 2021 10:45:18 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Sat, 06 Mar 2021 10:45:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
-        from:to:subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=fm1; bh=I4elMPxXcUKBOFgizhdHFeacIj
-        hQm4+3gTzkEsyF/m0=; b=C8bQOfD0OT3CJ6p9h20JC1uFCUWB75UIz3zUWCV8L6
-        a0DA2tB5zTIyz5qxrY/ozn01NA/wVkV9n06EMK2xihWVIbpvTD74+L3BHgHScvN4
-        D870LHYd33cvxSF9iFejoJoAzYxPKKSao43bRLmiroRYH6fkbTsk9awiuczF0OmM
-        44jD3bQ4hcHR+haax0QheC7FsWkd5STg116vuHfAKElvldyLmwCAk6FZqgD4JZeE
-        0PmkhBYROsBAisRz7XEqi+ZiFj0FZYDsa9wFFo+agyoO2p9zHuaydokLF3mtYswY
-        qqYj+vwqnktW1ifsPV7ZG4u+2TroQFdUK6CT0agq0Y3Q==
+        from:to:subject:date:message-id:in-reply-to:references
+        :mime-version:content-type:content-transfer-encoding; s=fm1; bh=
+        AgjCU8MF4aX45tuGShAPe+zAuk0p6KplCeoI0qG4WoI=; b=FaXZEuemNOZk1KaT
+        Fy0boxDU8+at0sDghTpB3PLuILOEWx66JF5ketiR8yn5aycsAkQwlqkDHWhrkr2d
+        459C+sG6WHXEjtuW56w7O8BAIBtmbE7OyRzVgOJBPTfoPk+djZEYLN+IBOUU2dlQ
+        L6oebrFgJimRFq2pGQotTz2NzfZ3zrrcRpbDTpavcSbuOZME4NlrUW9s9gA34fi2
+        4EP0DcWLg46MQu849H4icYcqttdA8RLr0c8XOlA4l6GoJ18KUIWyDVGKex0VpH2o
+        sSxXP33bNhP7xsCJd6gmjnWIYTqavJjeLLI1ZqhXOmeymQ1gkm2J/9fzNL/yfqbB
+        hbU2hA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=I4elMP
-        xXcUKBOFgizhdHFeacIjhQm4+3gTzkEsyF/m0=; b=TrOG838qgxQyiJBjoLLekI
-        yEb3F05hrmiTaDuMXQsfEz3rzcplVELeC/wRuRzEuNjePXAzWE59IL7cIVHIh8OX
-        6Gq/sziJKY8a5HBJxA2PK8km3DHeK7FtmogCGFfJsBuCoHX0cwkuJ6iKJMAkDT4U
-        dfQa7XMAXyAXUxbeWXh4QA/mOxyqO1xlW1EPVg/qkUhYBt5KXtPTvhiuYNT+IXkF
-        gfTFwvIS+g8D+72oEX3OdhE36WgtL+yIx1V0QEZgW91LzLtdQ4AN/crkcZWPb6R/
-        ersV3p5lPexcO2/Bg2I2tfchWzrNQdSgeAG9VU66eKen/2PshN4gHMZwdeOzIEww
-        ==
-X-ME-Sender: <xms:kp9DYJh_9AUHq5-4tNf0w7dkJeay2y8Ayhje_LkCjs5-rpCLHVZ2Nw>
-    <xme:kp9DYOD_0usDnble9G_eD_z_uW76JK0Wh60sstJQbM_sSU0K6Efp_wmcixm11_Bbj
-    iD9K3yShB8r0BMbO1M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddtkedgjeduucetufdoteggodetrfdotf
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; bh=AgjCU8MF4aX45tuGShAPe+zAuk0p6KplCeoI0qG4W
+        oI=; b=PkphhFNpEQ+C9fgzJzpIGNy/F6A3F3+CzsyLAQWQbp5aKdOmsvgArGeCH
+        41P9BImtqu7DUALP255k51nU77SLfgAU2gXHTILgRdRJfas7wx5XFT6lTFuySQkB
+        iax7OE7zQ2q2CCtyr4bfRge1Tti1fjMtWi9jrpnzlpQPv6qNGvqC0MTUs1aHS6QK
+        O5cs0hdSplMq/9318rGZLVDEaq3ej0YGWf/T8rE1M0QsM3swJZ78Seez3s61Iz1k
+        jC1dowj7khXLQPDUNGbyxyBQGZw17Lm/PTd7MgyPkdNLNOBUCG8FG4B/zHfB77bg
+        vDoK+98CY3KQrZGXtUrilJtJY366w==
+X-ME-Sender: <xms:jqNDYEPdTtYae1vAsjp9MU20YFUfmjqMxDhJLJKnwzFNfgCwNBwBnw>
+    <xme:jqNDYK-DGHYOQifRxd4HgLjaFp0_1aghQea-R9JTVBXCHl8jg3Wc-M5so_8H3z8yB
+    XTb0IRFYAdKx2p-YQo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddtkedgjeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofggtgfgsehtkeertd
-    ertdejnecuhfhrohhmpeftrghmkhhumhgrrhcutfgrmhgrtghhrghnughrrgcuoehrsegr
-    rhhtrghgnhhonhdrtghomheqnecuggftrfgrthhtvghrnhepudfggfdtvdeuhedugeefve
-    duffehledthfdvleeuteehueeihfdtvedtkeffgeefnecukfhppeefjedrudejvddrudej
-    uddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehrsegrrhhtrghgnhhonhdrtghomh
-X-ME-Proxy: <xmx:kp9DYJGKmhT2j371Vl5FCWgWuAAWGoHjOwYIyT1pWTLdwMzgM8xOoA>
-    <xmx:kp9DYOSx2l4W6XjeihQYayl9yLBQ9f3VpjyXafUFpXDXPYyQ9G9g6w>
-    <xmx:kp9DYGxaZNG-V3MCu8avO8kSwiYYBrUnHysv5OxLUqztjOWmsUGlPA>
-    <xmx:kp9DYF9FDAXvEH_HHmITU9g5j9VcSV86YjuAB-0LhmGZCXW3tS3Hpg>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhggtgfgsehtke
+    ertdertdejnecuhfhrohhmpeftrghmkhhumhgrrhcutfgrmhgrtghhrghnughrrgcuoehr
+    segrrhhtrghgnhhonhdrtghomheqnecuggftrfgrthhtvghrnhepfeeifeejgeeigfffje
+    evkeekveevfefhjefggeekfffhteelgfdthfefffefudeinecukfhppeefjedrudejvddr
+    udejuddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehrsegrrhhtrghgnhhonhdrtghomh
+X-ME-Proxy: <xmx:jqNDYLSjc234ZpFXK1TvWMcoaHlINpoyzYz4jRSP6U6rvlEQjZXZaw>
+    <xmx:jqNDYMvXI8YG1t5XRIJVxZy6wl_rPQM3pUXH0PYXx_vLZbCWDls_yw>
+    <xmx:jqNDYMcHi8YDCx1WF6xgj7br_S_y8jhIdYFFYuj9D4yz0f2_B_eYjA>
+    <xmx:jqNDYGqNlr8rOfDr11CkNzQZo2S_IuZEHiWGdfMsv5fua-JqoGJlGw>
 Received: from localhost.localdomain (unknown [37.172.171.105])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 0980C108005F
-        for <git@vger.kernel.org>; Sat,  6 Mar 2021 10:28:17 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 85312240057
+        for <git@vger.kernel.org>; Sat,  6 Mar 2021 10:45:17 -0500 (EST)
 From:   Ramkumar Ramachandra <r@artagnon.com>
 To:     git@vger.kernel.org
-Subject: [PATCH] [.mailmap] Add entry for Ramkumar Ramachandra
-Date:   Sat,  6 Mar 2021 16:28:14 +0100
-Message-Id: <20210306152814.8687-1-r@artagnon.com>
+Subject: [PATCH v2] [.mailmap] Add entry for Ramkumar Ramachandra
+Date:   Sat,  6 Mar 2021 16:45:15 +0100
+Message-Id: <20210306154515.10575-1-r@artagnon.com>
 X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+In-Reply-To: <20210306152814.8687-1-r@artagnon.com>
+References: <20210306152814.8687-1-r@artagnon.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,17 +84,17 @@ Signed-off-by: Ramkumar Ramachandra <r@artagnon.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/.mailmap b/.mailmap
-index bde7aba756..64fb63fd90 100644
+index bde7aba756..9c6a446bdf 100644
 --- a/.mailmap
 +++ b/.mailmap
 @@ -220,6 +220,7 @@ Philipp A. Hartmann <pah@qo.cx> <ph@sorgh.de>
  Philippe Bruhat <book@cpan.org>
  Ralf Thielow <ralf.thielow@gmail.com> <ralf.thielow@googlemail.com>
  Ramsay Jones <ramsay@ramsayjones.plus.com> <ramsay@ramsay1.demon.co.uk>
-+Ramkumar Ramachandra <artagnon@gmail.com> <r@artagnon.com>
++Ramkumar Ramachandra <r@artagnon.com> <artagnon@gmail.com>
  Randall S. Becker <randall.becker@nexbridge.ca> <rsbecker@nexbridge.com>
  René Scharfe <l.s.r@web.de> <rene.scharfe@lsrfire.ath.cx>
  René Scharfe <l.s.r@web.de> Rene Scharfe
 -- 
-2.24.3 (Apple Git-128)
+2.31.0.rc1.9.gdc14ed5ae3
 
