@@ -2,121 +2,126 @@ Return-Path: <SRS0=58cf=IE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2E6C433DB
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 00:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05CBFC433DB
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 04:25:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 68CC865077
-	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 00:52:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B506A64F85
+	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 04:25:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbhCFAwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 5 Mar 2021 19:52:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55130 "EHLO
+        id S229788AbhCFEN5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 5 Mar 2021 23:13:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhCFAvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Mar 2021 19:51:39 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5362EC06175F
-        for <git@vger.kernel.org>; Fri,  5 Mar 2021 16:51:39 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id w11so4012927wrr.10
-        for <git@vger.kernel.org>; Fri, 05 Mar 2021 16:51:39 -0800 (PST)
+        with ESMTP id S229642AbhCFENX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Mar 2021 23:13:23 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDD1DC06175F
+        for <git@vger.kernel.org>; Fri,  5 Mar 2021 20:13:22 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id 97so3829670otf.13
+        for <git@vger.kernel.org>; Fri, 05 Mar 2021 20:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=xdMK+ecLk6KFyQF3X2MxYu8lwk/NeBRXKdpONZmH6Fw=;
-        b=r39HRZmFcVASFgCQ2Yz1if/60zs3L+mLex6/wo1nLAtsJVzcovGqpKR1b99Um+nJBL
-         cAP65A3B6JPi9sJBbzCjbcMpJKc060Yogvb7fhpn0irwuQ9Ycsn4gQaLYOFe/oULCtPv
-         GjXCkdGZAeJB+MWDgOhwBBMv5bR7X9iCL0sGc+hoZBmuZk+VsIGgzKOl8gnIgHKWarq+
-         dA96IAO0izlCT2hhu0DV4bD3rtOgkRQJgPPeQicfOcZT1ZNo9hm+GY08m0uuKSjlKaOO
-         6KSWqQFqPhD0/PVXvQBIV6QG6l2+YJ7KwMkJ8u4n4cPnP/GWw2mQ8ISW5VuqJLgacr/l
-         /Ulg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7OR40ZvaM9DinnaxU17jSGoX5q0Bn34V0PdMXd+STq0=;
+        b=MtoJpMYh/R7Np57/3kPu7x9ad5DIT/+zsCw556gGIDvaLruHJdDEE/k8O3+aJDnOJZ
+         ehWuKXjeq2hBdQZkuozNn5cf1kAqDaOj/jcpaohYk2sylRO4TU/FI98jjQceZZ7V5Tl2
+         r9XnQm2N4RwensxWXey6rP4G0qHfQCNT2tcukzWZjuljmlgR6zOxurIwSLx9n4kxnBOK
+         8MN1YAOW8qKVqeW3lUcftaNcLTaFlaaSrozJ/x3+yDzfzzJ3Hw2A2CCpU8yRXZ5CMRfD
+         kShvI5yGVbDvkORRgaubTDHeSMviXrDE+JxaEhzhq15xw5aXo9ydIoviOG5zbXgyFd0T
+         gZ0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=xdMK+ecLk6KFyQF3X2MxYu8lwk/NeBRXKdpONZmH6Fw=;
-        b=i7OzxxXd1/IGS5TeyWwmNH+AcWIxtpTY+LI+gWtyhR3ooSxYQEUAiEAMYCrJ2FT9Gz
-         lN2G04pxGD0u12osYO99jd/N6AKpDdvNA69ZB3im+a8/1D4qmm0PFBK5sIm8XLjmRNml
-         pfui9aaBsy9vT/rfk0UczR9mTfzkJMLyNZKKFNX9RtJ6D5l+SbmDBJAbg/ZoayGYCHdn
-         8hEI+rFXFNcKCQ37GPYJkR1Lgb+Ms6BGnza/dG0kiGWpnRjoon9sANUswiaUUrKkn757
-         EJtP2zvG2SaaEZ2l1dYNQw/svUgxNe6gx48RXAayCXTdNjiyGe03G20n0TvrCUPwOfQd
-         eWXg==
-X-Gm-Message-State: AOAM533FRCrPCvL7sLmF//0MyeU5iMNgO8cOz/COT0zIUe0VTikE/guQ
-        e48GbXIzjWgSD4ZeDypoJUHNroNducc=
-X-Google-Smtp-Source: ABdhPJyNJ1CACHwSvVyoxEdzYhasxjTNH+Pu7beIcq7q4IUal7Z7O8qY2ciZShkTkB4ky+0KToR04g==
-X-Received: by 2002:a5d:52c2:: with SMTP id r2mr12285864wrv.40.1614991897981;
-        Fri, 05 Mar 2021 16:51:37 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x25sm6811742wmj.14.2021.03.05.16.51.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Mar 2021 16:51:37 -0800 (PST)
-Message-Id: <pull.896.git.1614991897210.gitgitgadget@gmail.com>
-From:   "HG King via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 06 Mar 2021 00:51:36 +0000
-Subject: [PATCH] fix: added new BANNED_EXPL macro for better error messages,
- new parameter
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7OR40ZvaM9DinnaxU17jSGoX5q0Bn34V0PdMXd+STq0=;
+        b=RGGrZaJvsqR7kC76FwBmPXzVLYRPM2gMVsDAhlnjFkyXq2FG7hCpT0YmljpcHhQOXc
+         AtqsruF75KgvZxW2NfZ2IZ59zCnRG5XWVKb3dQQ9Go/x4b8x0ollxcgWbwfSE3nP6hko
+         uVWpiET2yhsgbbzFatM+zdCFRWe7hRg4mY7RmqKUL8ndFEmuAnBHv1Lfsm+BdtfGFuaq
+         FZ6c/pQJofYylCTjyMVFmfaCluxi9WF+5v/tRt85nrogKuXXIAzD1DLZf4NxKBK+szga
+         QRt0ISMVSsaDEY0encH1fry58WFU6OgZTdnZDKtJnh7xJnTgOHF7ii48BnMgblDyLpBI
+         D6qw==
+X-Gm-Message-State: AOAM531WtgEI0g3D5EHcvuGOBwGb+2tjjKFZQyHnB7sIySpyXIoy7EZd
+        qQPL2VT3Yn+LEH21u36+amhWAGqFWB+HWaZ90JJSKcHwlEZftg==
+X-Google-Smtp-Source: ABdhPJyF8BmXJV972Mp+/3WGL6EBvNFPXTWC7oK6awI2AQbJgYfyirClZMWaucm9K4WsPa0S3n7d4dY0TJZDi3r04iI=
+X-Received: by 2002:a05:6830:1d43:: with SMTP id p3mr11026854oth.184.1615004002072;
+ Fri, 05 Mar 2021 20:13:22 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     HG King <hgmaxwellking@gmail.com>,
-        HGimself <hgmaxwellking@gmail.com>
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210301084512.27170-7-charvi077@gmail.com>
+ <CAPig+cRvwvT7QrO0-aLZX-2vsBPJSq6WO-O7g5A0OjDMNAYmCQ@mail.gmail.com>
+ <CAPSFM5c1zR6yz=gATGxih0wL-W18AWgCHQhL_SPno5SeTzGQGg@mail.gmail.com>
+ <CAPig+cRiiQyavaMGzgBkXOoGFPhMBC7GbpB61ziFMrckReFbcQ@mail.gmail.com>
+ <xmqqczwfg23t.fsf@gitster.c.googlers.com> <CAPSFM5cM4fdyWXD33PkT2bH6kM+3ixkxgAnhjUVYFtjUHgwU5g@mail.gmail.com>
+ <xmqqpn0ed0m2.fsf@gitster.c.googlers.com> <CAPSFM5dM4NMeGqEG7hFLzyhJskqcrNtNqL9=MUCw9SEYYaFLoQ@mail.gmail.com>
+ <xmqq4khpbgqk.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq4khpbgqk.fsf@gitster.c.googlers.com>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Sat, 6 Mar 2021 09:43:10 +0530
+Message-ID: <CAPSFM5dhxm9kuzyXj6wF7s3BoDNzCmZHpaDFhvOBVB1QWbM25w@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] doc/git-commit: add documentation for
+ fixup=[amend|reword] options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: HGimself <hgmaxwellking@gmail.com>
+On Fri, 5 Mar 2021 at 23:55, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Charvi Mendiratta <charvi077@gmail.com> writes:
+>
+> >> The reason I brought it up was not because "--fixup=reword" is not
+> >> needed as a short-hand for "--only --fixup=amend" (but thinking
+> >> about it again, I do not think it is so bad), but primarily in
+> >> response to "would it be easier for users if we had reword! insn in
+> >> addition to amend! verb in the todo file?" that was raised earlier
+> >> in the thread.  If we position "--fixup=reword" as a short-hand
+> >> and/or a syntax sugar for "--fixup=amend" and advertise it as such
+> >> sufficiently to educate users, it would be easier for users to
+> >> understand why they both result in "amend!".
+> >
+> > Okay, so now if it's Ok to keep the short-hand "--fixup=reword" ? then
+> > I think making the documentation more clear would be sufficient to
+> > serve it to the users ?
+>
+> It would be good
+>
+>  (1) to keep "--fixup=reword:<commit>"
+>
+>  (2) to keep "amend!" but not introduce "reword!" insn
+>
+>  (3) document "--fixup=reword:<commit>" can be thought of as a mere
+>      special-case short-hand for "--fixup=amend:<commit> --only",
+>      and
+>
+>  (4) make sure "fixup=amend:<commit> --only" is usable as a
+>      replacement for "--fixup=reword:<commit>".
+>
 
-Signed-off-by: HGimself <hgmaxwellking@gmail.com>
----
-    fix: added new BANNED_EXPL macro for better error messages, has a par…
-    
-    
-    Extend Banned Function Error Messages
-    =====================================
-    
-    AS A NEWER USER, I WANT TO BE ABLE TO UNDERSTAND WHY CERTAIN FUNCTIONS
-    ARE BANNED AS WELL AS KNOW WHAT FUNCTIONS TO USE INSTEAD.
-    
-    
-    Changes
-    =======
-    
-     * Added new macro named BANNED_EXPL(func, expl) which added the expl
-       onto the error message
-     * Used strcpy as an example
+Okay, I agree that this method is more clear ...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-896%2FHGHimself%2Ffix%2Fadd-new-ban-macro-with-explanation-parameter-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-896/HGHimself/fix/add-new-ban-macro-with-explanation-parameter-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/896
+> but if we are not doing (3) and (4), then it would also be OK to
+>
+>  (1) to keep "--fixup=reword:<commit>"
+>
+>  (2) to keep "amend!" and introduce "reword!" insn
+>
 
- banned.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+... than this one and will update the patch in the above (former) suggested way.
 
-diff --git a/banned.h b/banned.h
-index 7ab4f2e49219..a19f0afeda79 100644
---- a/banned.h
-+++ b/banned.h
-@@ -9,9 +9,10 @@
-  */
- 
- #define BANNED(func) sorry_##func##_is_a_banned_function
-+#define BANNED_EXPL(func, expl) sorry_##func##_is_a_banned_funcion_because_##expl##.
- 
- #undef strcpy
--#define strcpy(x,y) BANNED(strcpy)
-+#define strcpy(x,y) BANNED_EXPL(strcpy, buffer_overflow_risk)
- #undef strcat
- #define strcat(x,y) BANNED(strcat)
- #undef strncpy
 
-base-commit: be7935ed8bff19f481b033d0d242c5d5f239ed50
--- 
-gitgitgadget
+Thanks for suggestions and detailed explanation.
+
+Thanks and Regards,
+Charvi
