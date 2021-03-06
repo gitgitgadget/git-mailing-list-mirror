@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D4EFC4361B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C968C43619
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 11:06:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A9A96502E
+	by mail.kernel.org (Postfix) with ESMTP id 189406503A
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 11:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230386AbhCFLFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 06:05:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44628 "EHLO
+        id S230346AbhCFLFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 06:05:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbhCFLFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Mar 2021 06:05:09 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B06C06175F
+        with ESMTP id S230156AbhCFLFI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Mar 2021 06:05:08 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A5CFC06175F
         for <git@vger.kernel.org>; Sat,  6 Mar 2021 03:05:08 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id y124-20020a1c32820000b029010c93864955so857562wmy.5
+Received: by mail-wm1-x32a.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so826753wmj.1
         for <git@vger.kernel.org>; Sat, 06 Mar 2021 03:05:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6OppBDh+FuN/e8FvLGeM+X8T1snD58GEV/Dew+cV19A=;
-        b=cxOcZjYsHggJAV3omPVHVMDW4mUkcng+8LfbPF3GXTXuVBD+eA4j4xTpBueP9I3cyi
-         fucL8epVHbHjX4OyP1kt4YwKHRXUfklFJvrqvUqp80K3ITBBM96otgFn5MKYHPNt1EO0
-         3gzGadlIKZU/GLZDgVRVo0Rlmu/aKDkgD6yo8iFpJ9jeiqKxcK/To3jIdUQdofzAxIpd
-         g21J8Cda/BcszuRRbNcTY8KAAANEDxgMWpUtmvElscbNbgKu58nYRNhb6yiJaY9hKkrM
-         lRrhh874IEIG57wIgM6jryI9/nEjIsK/VbD6PRhQ9HvhAR7zyyIqXAXTT8BKFb2c0pGV
-         c15g==
+        bh=TRWoV/+h5pPWadif3wMm5bfmuMMKe1qbLrvHaSNO0gc=;
+        b=apIynBFsWO8JkF2RrqyXuzfVLj383DLfASpKafk/QHu+gkyRS0oY5kSfHkfzPeZkzM
+         /9xoFJoECPp0w74+eCqq35VZPnpVn/usvLpsDcJy+HPPB8kytYvBHQ1weUoqyEfxi+8/
+         6nD10TVLUd9dessJTjT6EwN9honzCytZNvq8r+UmuHldIGEHm/csn92qQunmdJg4TgKn
+         zBlu45mj6asQLFNdRAj1FMHpx/FZXrsOHzo9JERwIgQgNIqaZlbxE4Ym5/Aj4jS4pb/H
+         vSn3d896MB4OSGEKDCb9nDPUAwvtGMEFSxv/Np3sGKJPORj7IrZ5nuYNthceIF1j0MPG
+         o+1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6OppBDh+FuN/e8FvLGeM+X8T1snD58GEV/Dew+cV19A=;
-        b=g1NCy//rR9gd1ITTyAODh7FLw0HVXqLOWBET6Vb7r3PeL2rL9e/LbsCn3dZHHKTGSV
-         mbUFKm2HE4DgC527KXKUWk2UpZ+R1ns7MSS0DVq3WzSV3gTSji911LUGDySCWlIQjpgz
-         JneL6xQlDq1+f+2A4r713um4E+Qe9KcAycRclVEItbBX3M43sVbtHl96UcBL4Pk4TWuZ
-         y7H5bSPERAyW+iJDIVBxMcIJ755mXfQ669KSY5VptgRR7iSKx1Io7PvsKdipDFuKh18q
-         lR7yI9H9tZbF0nySm0zLmgdFvtqGyWJhBhkZhXr8mBwX5pXQ97Fg+xSIVG5OwEAQtxeG
-         gNQA==
-X-Gm-Message-State: AOAM532IVV3X8J4mnyMcIsBZxWVVCzv8UVUjtbbk2RJwX4gXMHqQZ2tb
-        yLaobBPQXxYLGarEL12t/Go0rGxbMbWNKA==
-X-Google-Smtp-Source: ABdhPJzBg0QiCBW0LLFzIQoWoNo/YCi1UfiE2s9Ypsgz5jNMdyvnFhIbpGUG+nd6N3jYjv7/yuL6PA==
-X-Received: by 2002:a7b:c3c1:: with SMTP id t1mr13028470wmj.47.1615028707402;
-        Sat, 06 Mar 2021 03:05:07 -0800 (PST)
+        bh=TRWoV/+h5pPWadif3wMm5bfmuMMKe1qbLrvHaSNO0gc=;
+        b=at1BAWB2lC9a1BSE62MNe5L05ViGNJ2rDeMApUtZoiuPWoVzqOGIQC+0ZgJF93SPIa
+         O51Dke2eSvpv9fBWS61wkt3O+MITkce8Skn9q4LhXbxAB0yRtZU+GQ6TpKkNzOKcmcqP
+         COIbLWulR6cJMF/VW6kH6BP3mgjaszM0qsogvE9bQtug5jHgR/rAqLkVMk/zYKKV3lYM
+         HHIrsyiKCjvcEj6Lpm1qc+o2IAM7ZJ4I8syChrrDHb8E3bZMFBzqVovopbU63CiBLKGf
+         tANyEFqw6CjH0NJjHCGi6FkS1vpPWHjSB6wYkq7Nxu9+Y4yol2qS/2OZ2Okj71itm7QB
+         MJzQ==
+X-Gm-Message-State: AOAM533G01ubDcKI5C5exF38A71UZuimFVvUYC7cf8GNwa//oibl24Ea
+        Rjl6rudtH+QK2RiEEvA2dAHUJUFvUXNErg==
+X-Google-Smtp-Source: ABdhPJz2AEMxAVJzEYYP1TlCKJuxkYiBEDsbFIBpBIHU7QDOIk8kqOV2z8rfsMWPac58Kv3+EfTlcg==
+X-Received: by 2002:a1c:61c5:: with SMTP id v188mr12877484wmb.20.1615028706592;
+        Sat, 06 Mar 2021 03:05:06 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o7sm8470797wrs.16.2021.03.06.03.05.06
+        by smtp.gmail.com with ESMTPSA id o7sm8470797wrs.16.2021.03.06.03.05.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 06 Mar 2021 03:05:06 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 19/22] fsck.c: move gitmodules_{found,done} into fsck_options
-Date:   Sat,  6 Mar 2021 12:04:36 +0100
-Message-Id: <20210306110439.27694-20-avarab@gmail.com>
+Subject: [PATCH v3 18/22] fsck.c: add an fsck_set_msg_type() API that takes enums
+Date:   Sat,  6 Mar 2021 12:04:35 +0100
+Message-Id: <20210306110439.27694-19-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <20210218105840.11989-1-avarab@gmail.com>
 References: <20210218105840.11989-1-avarab@gmail.com>
@@ -77,153 +77,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the gitmodules_{found,done} static variables added in
-159e7b080bf (fsck: detect gitmodules files, 2018-05-02) into the
-fsck_options struct. It makes sense to keep all the context in the
-same place.
+Change code I added in acf9de4c94e (mktag: use fsck instead of custom
+verify_tag(), 2021-01-05) to make use of a new API function that takes
+the fsck_msg_{id,type} types, instead of arbitrary strings that
+we'll (hopefully) parse into those types.
 
-This requires changing the recently added register_found_gitmodules()
-function added in 5476e1efde (fetch-pack: print and use dangling
-.gitmodules, 2021-02-22) to take fsck_options. That function will be
-removed in a subsequent commit, but as it'll require the new
-gitmodules_found attribute of "fsck_options" we need this intermediate
-step first.
+At the time that the fsck_set_msg_type() API was introduced in
+0282f4dced0 (fsck: offer a function to demote fsck errors to warnings,
+2015-06-22) it was only intended to be used to parse user-supplied
+data.
+
+For things that are purely internal to the C code it makes sense to
+have the compiler check these arguments, and to skip the sanity
+checking of the data in fsck_set_msg_type() which is redundant to
+checks we get from the compiler.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fetch-pack.c |  2 +-
- fsck.c       | 23 ++++++++++-------------
- fsck.h       |  7 ++++++-
- 3 files changed, 17 insertions(+), 15 deletions(-)
+ builtin/mktag.c |  3 ++-
+ fsck.c          | 27 +++++++++++++++++----------
+ fsck.h          |  3 +++
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 0cb59acc486..53d7ef00856 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -998,7 +998,7 @@ static void fsck_gitmodules_oids(struct oidset *gitmodules_oids)
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index dc989c356f5..de67a94f24e 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -93,7 +93,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
+ 		die_errno(_("could not read from stdin"));
  
- 	oidset_iter_init(gitmodules_oids, &iter);
- 	while ((oid = oidset_iter_next(&iter)))
--		register_found_gitmodules(oid);
-+		register_found_gitmodules(&fo, oid);
- 	if (fsck_finish(&fo))
- 		die("fsck failed");
- }
+ 	fsck_options.error_func = mktag_fsck_error_func;
+-	fsck_set_msg_type(&fsck_options, "extraheaderentry", "warn");
++	fsck_set_msg_type_from_ids(&fsck_options, FSCK_MSG_EXTRA_HEADER_ENTRY,
++				   FSCK_WARN);
+ 	/* config might set fsck.extraHeaderEntry=* again */
+ 	git_config(mktag_config, NULL);
+ 	if (fsck_tag_standalone(NULL, buf.buf, buf.len, &fsck_options,
 diff --git a/fsck.c b/fsck.c
-index f26f47b2a10..565274a946c 100644
+index 5a040eb4fd5..f26f47b2a10 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -19,9 +19,6 @@
- #include "credential.h"
- #include "help.h"
- 
--static struct oidset gitmodules_found = OIDSET_INIT;
--static struct oidset gitmodules_done = OIDSET_INIT;
--
- #define STR(x) #x
- #define MSG_ID(id, msg_type) { STR(id), NULL, NULL, FSCK_##msg_type },
- static struct {
-@@ -624,7 +621,7 @@ static int fsck_tree(const struct object_id *oid,
- 
- 		if (is_hfs_dotgitmodules(name) || is_ntfs_dotgitmodules(name)) {
- 			if (!S_ISLNK(mode))
--				oidset_insert(&gitmodules_found, oid);
-+				oidset_insert(&options->gitmodules_found, oid);
- 			else
- 				retval += report(options,
- 						 oid, OBJ_TREE,
-@@ -638,7 +635,7 @@ static int fsck_tree(const struct object_id *oid,
- 				has_dotgit |= is_ntfs_dotgit(backslash);
- 				if (is_ntfs_dotgitmodules(backslash)) {
- 					if (!S_ISLNK(mode))
--						oidset_insert(&gitmodules_found, oid);
-+						oidset_insert(&options->gitmodules_found, oid);
- 					else
- 						retval += report(options, oid, OBJ_TREE,
- 								 FSCK_MSG_GITMODULES_SYMLINK,
-@@ -1150,9 +1147,9 @@ static int fsck_blob(const struct object_id *oid, const char *buf,
- 	struct fsck_gitmodules_data data;
- 	struct config_options config_opts = { 0 };
- 
--	if (!oidset_contains(&gitmodules_found, oid))
-+	if (!oidset_contains(&options->gitmodules_found, oid))
- 		return 0;
--	oidset_insert(&gitmodules_done, oid);
-+	oidset_insert(&options->gitmodules_done, oid);
- 
- 	if (object_on_skiplist(options, oid))
- 		return 0;
-@@ -1217,9 +1214,9 @@ int fsck_error_function(struct fsck_options *o,
+@@ -132,6 +132,22 @@ int is_valid_msg_type(const char *msg_id, const char *msg_type)
  	return 1;
  }
  
--void register_found_gitmodules(const struct object_id *oid)
-+void register_found_gitmodules(struct fsck_options *options, const struct object_id *oid)
++void fsck_set_msg_type_from_ids(struct fsck_options *options,
++				enum fsck_msg_id msg_id,
++				enum fsck_msg_type msg_type)
++{
++	if (!options->msg_type) {
++		int i;
++		enum fsck_msg_type *severity;
++		ALLOC_ARRAY(severity, FSCK_MSG_MAX);
++		for (i = 0; i < FSCK_MSG_MAX; i++)
++			severity[i] = fsck_msg_type(i, options);
++		options->msg_type = severity;
++	}
++
++	options->msg_type[msg_id] = msg_type;
++}
++
+ void fsck_set_msg_type(struct fsck_options *options,
+ 		const char *msg_id_str, const char *msg_type_str)
  {
--	oidset_insert(&gitmodules_found, oid);
-+	oidset_insert(&options->gitmodules_found, oid);
+@@ -144,16 +160,7 @@ void fsck_set_msg_type(struct fsck_options *options,
+ 	if (msg_type != FSCK_ERROR && msg_id_info[msg_id].msg_type == FSCK_FATAL)
+ 		die("Cannot demote %s to %s", msg_id_str, msg_type_str);
+ 
+-	if (!options->msg_type) {
+-		int i;
+-		enum fsck_msg_type *severity;
+-		ALLOC_ARRAY(severity, FSCK_MSG_MAX);
+-		for (i = 0; i < FSCK_MSG_MAX; i++)
+-			severity[i] = fsck_msg_type(i, options);
+-		options->msg_type = severity;
+-	}
+-
+-	options->msg_type[msg_id] = msg_type;
++	fsck_set_msg_type_from_ids(options, msg_id, msg_type);
  }
  
- int fsck_finish(struct fsck_options *options)
-@@ -1228,13 +1225,13 @@ int fsck_finish(struct fsck_options *options)
- 	struct oidset_iter iter;
- 	const struct object_id *oid;
- 
--	oidset_iter_init(&gitmodules_found, &iter);
-+	oidset_iter_init(&options->gitmodules_found, &iter);
- 	while ((oid = oidset_iter_next(&iter))) {
- 		enum object_type type;
- 		unsigned long size;
- 		char *buf;
- 
--		if (oidset_contains(&gitmodules_done, oid))
-+		if (oidset_contains(&options->gitmodules_done, oid))
- 			continue;
- 
- 		buf = read_object_file(oid, &type, &size);
-@@ -1259,8 +1256,8 @@ int fsck_finish(struct fsck_options *options)
- 	}
- 
- 
--	oidset_clear(&gitmodules_found);
--	oidset_clear(&gitmodules_done);
-+	oidset_clear(&options->gitmodules_found);
-+	oidset_clear(&options->gitmodules_done);
- 	return ret;
- }
- 
+ void fsck_set_msg_types(struct fsck_options *options, const char *values)
 diff --git a/fsck.h b/fsck.h
-index 6c2fd9c5cc0..bb59ef05b68 100644
+index 33ecf3f3f16..6c2fd9c5cc0 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -118,6 +118,8 @@ struct fsck_options {
- 	unsigned strict:1;
- 	enum fsck_msg_type *msg_type;
- 	struct oidset skiplist;
-+	struct oidset gitmodules_found;
-+	struct oidset gitmodules_done;
- 	kh_oid_map_t *object_names;
- };
+@@ -82,6 +82,9 @@ enum fsck_msg_id {
+ struct fsck_options;
+ struct object;
  
-@@ -125,6 +127,8 @@ struct fsck_options {
- 	.walk = NULL, \
- 	.msg_type = NULL, \
- 	.skiplist = OIDSET_INIT, \
-+	.gitmodules_found = OIDSET_INIT, \
-+	.gitmodules_done = OIDSET_INIT, \
- 	.object_names = NULL,
- #define FSCK_OPTIONS_COMMON_ERROR_FUNC \
- 	FSCK_OPTIONS_COMMON \
-@@ -149,7 +153,8 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
- int fsck_object(struct object *obj, void *data, unsigned long size,
- 	struct fsck_options *options);
- 
--void register_found_gitmodules(const struct object_id *oid);
-+void register_found_gitmodules(struct fsck_options *options,
-+			       const struct object_id *oid);
- 
- /*
-  * fsck a tag, and pass info about it back to the caller. This is
++void fsck_set_msg_type_from_ids(struct fsck_options *options,
++				enum fsck_msg_id msg_id,
++				enum fsck_msg_type msg_type);
+ void fsck_set_msg_type(struct fsck_options *options,
+ 		       const char *msg_id, const char *msg_type);
+ void fsck_set_msg_types(struct fsck_options *options, const char *values);
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
