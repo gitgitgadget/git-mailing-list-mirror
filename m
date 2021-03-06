@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D39BC433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C71FC433E6
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 19:35:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45AE8650DA
+	by mail.kernel.org (Postfix) with ESMTP id 349FA650BC
 	for <git@archiver.kernel.org>; Sat,  6 Mar 2021 19:35:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231550AbhCFTfa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 6 Mar 2021 14:35:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41400 "EHLO
+        id S231542AbhCFTf3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 6 Mar 2021 14:35:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231534AbhCFTfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Mar 2021 14:35:18 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60B21C06174A
-        for <git@vger.kernel.org>; Sat,  6 Mar 2021 11:35:18 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id h98so6557693wrh.11
-        for <git@vger.kernel.org>; Sat, 06 Mar 2021 11:35:18 -0800 (PST)
+        with ESMTP id S231531AbhCFTfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Mar 2021 14:35:16 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE335C06174A
+        for <git@vger.kernel.org>; Sat,  6 Mar 2021 11:35:15 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id j2so6575579wrx.9
+        for <git@vger.kernel.org>; Sat, 06 Mar 2021 11:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wmAkSq8IagvE7+NAwHoAE0V4jW/rRsqaPepw1V8Hrfk=;
-        b=rogK9AoTnpsGlNnDBJNm5tf+R8o7LH+8oAlV2poqdXwK48b0fG7iXZoEE4M/vJ+aam
-         DVQ3eYNZSfrYSPKinwQSGG8nUR+0KNbT6Ub7AYJYw5YggheTjkCZYlGT9BaGEWnsnl9l
-         Bnxucb31wVZb38+LOjPYLZHu6Sxdsrytwzz31aqgakpRliHqp9V3M0mf/Ue0CxnKIzVg
-         9I/Q7lR1RWPHpvW/pELCUIquvdDZWcnEVISUbdK6SdOIu400TPoaCLIum0YpOBwaEpxP
-         DxrSTcdLRVv20j5smFhCXxG7xborSe3rwH2mtb88E+ucprYBC4eOAqUe5NicndvfHjxp
-         Jajg==
+        bh=IPKfvej6w7tTutDJz8cAOO04Knc3C1maiRIg6hg7wGc=;
+        b=j5Gcu35wZGaBt6dj4xcF4Zfjob5BzV7TNBDVbi0isvm2moEOSkdDNC5lzpZ1NrC9CD
+         ZshiGA0WYhafeU4etKQ12AhUooxgd/GHWRRtjwdDASqxg9lvhPcJhdP40TnU2mlTvDr5
+         C0KdBabpYLyb+wBJN+jvJz6dLeUy7ghUbMXh+tKDvsUQvzL/c38iM3zQZ+hX7oYqijCO
+         Pe0QYgzh1DckAWhDhCxSS+sxA/8EoqJ8xTDSsTMssnMVVwhebWE1R7Do7/a3gmJal1sW
+         aTVXBH3cK7OswOHHqDT/YJtxIDxU05ANdcoQjgiRA894eZtF9fA0RRolMjVCV3AyNBHa
+         7ikg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wmAkSq8IagvE7+NAwHoAE0V4jW/rRsqaPepw1V8Hrfk=;
-        b=C66fjfUNEQ3O1DegUP8god3f0dUXN0hCZWNAMZ012Q4Df22G52lQ9HQY5XkMc5hdxB
-         T0XSnYkMn24D4xHpP3bkjBIwOXHTaXD1LhrPIen8QRbinWBV8TgqhEpOHH5MMa3bNaTa
-         PuaK2PeVCq6FtkWt1srqBcNxNIUS5e6pJhjiMBaqmKHzZ/OPV6OoAtxU1YbqV89sAkFm
-         a1TUTl4QJhfZdzGHz4f8+Dz+lLbypF+qhVm+UeX0xjeplooac0c7JxZav3JFr0AcNUBQ
-         MrwhQJX9eLZHc/mVQZ8+UMvBROpm0YzhFnuLm5S6XfdARTl8T6xFE3hSfi7xkGUe667o
-         K1Jw==
-X-Gm-Message-State: AOAM532PD4MjcQ8b0rVcp3JLnnSdfvTohHhaFVU/XB8Pv1dwdtbgUCgC
-        4hsB2bs9jQ3SQ78bWKbksJo6oQeD/Y/5cA==
-X-Google-Smtp-Source: ABdhPJwQolVj6ts8agfeTJ/U9yQt8TRp58IhN8qrNqgVTGR42O1A+6Ji9yQ26WH00V5kUF2dA/Ki5Q==
-X-Received: by 2002:adf:f411:: with SMTP id g17mr15024386wro.22.1615059316970;
-        Sat, 06 Mar 2021 11:35:16 -0800 (PST)
+        bh=IPKfvej6w7tTutDJz8cAOO04Knc3C1maiRIg6hg7wGc=;
+        b=q3rZL94Y7VVn9WfIiZI8oktk0NP5iDc1CQ6WIjkapZYAIQTgJVUgdGTidt67Zc30m5
+         u1AiwD5Q7oWb+F0wvD83i5xOhFmNVUYt4c1KLvTgeIRJ+SgmykJ0y/P7+TcxqNnJaJ5W
+         ONDct5sgAPIjv6PhS0zOAsHAPnsIcz5AKC+L3TNhww2G87p14Wf/g0HEVTFFRumuR9Vq
+         yHx0pqJhH17V8XeOyPh1ETUukV7vL3BPfTb9j7DSvcOjbMICDDBV5ZVA1YLMX8/aMv1V
+         k4b69EWdYaiC88uqatuEEXAcRM1/SZKNbr6m4wLz/OvzFKEcpQg+sxeuSIedLcAz0qn5
+         wzyQ==
+X-Gm-Message-State: AOAM531JSViOpbZV8hRM5T256G1oLm6d8gJbhV4SFEnYA/fsvXc1UtSE
+        C5+4bNekeraq84REpZ+/ZhaYAqfE3KZ/VQ==
+X-Google-Smtp-Source: ABdhPJxUGaqixtZ1DrOqgERJIoNqZmIMNP/SNRPc49dUAiQCbZtoQfMObl79Ch0Grsfo1s117uXYLg==
+X-Received: by 2002:adf:f144:: with SMTP id y4mr15401414wro.408.1615059314382;
+        Sat, 06 Mar 2021 11:35:14 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a5sm9951578wrs.35.2021.03.06.11.35.16
+        by smtp.gmail.com with ESMTPSA id a5sm9951578wrs.35.2021.03.06.11.35.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Mar 2021 11:35:16 -0800 (PST)
+        Sat, 06 Mar 2021 11:35:13 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/7] ls-files: refactor read_one_entry_quick() to use a strbuf
-Date:   Sat,  6 Mar 2021 20:34:56 +0100
-Message-Id: <20210306193458.20633-6-avarab@gmail.com>
+Subject: [PATCH 2/7] ls-files: don't needlessly pass around stage variable
+Date:   Sat,  6 Mar 2021 20:34:53 +0100
+Message-Id: <20210306193458.20633-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <1240014568-3675-1-git-send-email-pclouds@gmail.com>
 References: <1240014568-3675-1-git-send-email-pclouds@gmail.com>
@@ -78,54 +78,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the code in read_one_entry_quick() that used "base" and
-"baselen" to just use the "buf" and "len" fields in the "base" strbuf
-directly. Having the "basebuf" variable was a transitory step in
-moving away from the old read_tree() in tree.c.
+Now that read_tree() has been moved to ls-files.c we can get rid of
+the stage != 1 case that'll never happen.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/ls-files.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ builtin/ls-files.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index f5239437809..c0349a7b206 100644
+index a4458622813..74d572a3e4a 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -421,14 +421,12 @@ static int get_common_prefix_len(const char *common_prefix)
+@@ -470,21 +470,12 @@ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base
  }
  
- static int read_one_entry_quick(const struct object_id *oid,
--				struct strbuf *basebuf,
-+				struct strbuf *base,
- 				const char *pathname,
- 				unsigned mode,
- 				int stage, void *context)
+ 
+-static int read_tree(struct repository *r, struct tree *tree, int stage,
++static int read_tree(struct repository *r, struct tree *tree,
+ 		     struct pathspec *match, struct index_state *istate)
  {
- 	struct index_state *istate = context;
--	const char *base = basebuf->buf;
--	const int baselen = basebuf->len;
- 	int len;
- 	struct cache_entry *ce;
+ 	read_tree_fn_t fn = NULL;
+ 	int i, err;
  
-@@ -436,13 +434,13 @@ static int read_one_entry_quick(const struct object_id *oid,
- 		return READ_TREE_RECURSIVE;
+-	/*
+-	 * Currently the only existing callers of this function all
+-	 * call it with stage=1 and after making sure there is nothing
+-	 * at that stage; we could always use read_one_entry_quick().
+-	 *
+-	 * But when we decide to straighten out git-read-tree not to
+-	 * use unpack_trees() in some cases, this will probably start
+-	 * to matter.
+-	 */
  
- 	len = strlen(pathname);
--	ce = make_empty_cache_entry(istate, baselen + len);
-+	ce = make_empty_cache_entry(istate, base->len + len);
+ 	/*
+ 	 * See if we have cache entry at the stage.  If so,
+@@ -493,13 +484,13 @@ static int read_tree(struct repository *r, struct tree *tree, int stage,
+ 	 */
+ 	for (i = 0; !fn && i < istate->cache_nr; i++) {
+ 		const struct cache_entry *ce = istate->cache[i];
+-		if (ce_stage(ce) == stage)
++		if (ce_stage(ce) == 1)
+ 			fn = read_one_entry;
+ 	}
  
- 	ce->ce_mode = create_ce_mode(mode);
- 	ce->ce_flags = create_ce_flags(stage);
--	ce->ce_namelen = baselen + len;
--	memcpy(ce->name, base, baselen);
--	memcpy(ce->name + baselen, pathname, len+1);
-+	ce->ce_namelen = base->len + len;
-+	memcpy(ce->name, base->buf, base->len);
-+	memcpy(ce->name + base->len, pathname, len+1);
- 	oidcpy(&ce->oid, oid);
- 	return add_index_entry(istate, ce, ADD_CACHE_JUST_APPEND);
- }
+ 	if (!fn)
+ 		fn = read_one_entry_quick;
+-	err = read_tree_recursive(r, tree, "", 0, stage, match, fn, istate);
++	err = read_tree_recursive(r, tree, "", 0, 1, match, fn, istate);
+ 	if (fn == read_one_entry || err)
+ 		return err;
+ 
+@@ -549,7 +540,7 @@ void overlay_tree_on_index(struct index_state *istate,
+ 			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
+ 	} else
+ 		memset(&pathspec, 0, sizeof(pathspec));
+-	if (read_tree(the_repository, tree, 1, &pathspec, istate))
++	if (read_tree(the_repository, tree, &pathspec, istate))
+ 		die("unable to read tree entries %s", tree_name);
+ 
+ 	for (i = 0; i < istate->cache_nr; i++) {
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
