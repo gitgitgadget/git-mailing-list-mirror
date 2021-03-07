@@ -2,94 +2,132 @@ Return-Path: <SRS0=HVLo=IF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B115C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 18:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 943E9C433DB
+	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:30:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D477865172
-	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 18:58:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50DB465168
+	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:30:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232070AbhCGS6B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Mar 2021 13:58:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60008 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232063AbhCGS5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Mar 2021 13:57:38 -0500
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6C77C06174A
-        for <git@vger.kernel.org>; Sun,  7 Mar 2021 10:57:37 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id t9so12188126ljt.8
-        for <git@vger.kernel.org>; Sun, 07 Mar 2021 10:57:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=+m4dlag91BRQrBC84FEVf0NJfNEzJniAQxTmtcV1Kr8=;
-        b=Nlk5piCXkBJGYYBGvpM3Ldxrss1+Gf8puxug0qauoXrE0OL32eGk3ukDRERab9TIoq
-         PasQtoe8WI+42agqKTq2E5e1jzHsG6KhknEfEtw06fCdp7hyIwdc+lz9SDlBm7WIxxjW
-         MBfsUg68Zbs3zfz0OkyM8nvI9gbRUlG8utZ/1vtWFmLAu6WjY0YJSNrkO5UryAIVbVZY
-         WYF01iFna1/1maiCl49Q4YScCSkzlFbVdIHN6pxYVtULpWKOPv5cVYBbfmIaD9k7GwSw
-         fQ+4lRYvwjN8fmCtNVA1gMsl9njfsXayYzSgB7OIllHSoaxSyvRCxwSsVvVDDn8Zt1Lp
-         V2Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:message-id
-         :user-agent:mime-version;
-        bh=+m4dlag91BRQrBC84FEVf0NJfNEzJniAQxTmtcV1Kr8=;
-        b=L6hwu0O8m3aEpfFRrtJb/VOxflYnmaGwZxhdrsmGhtPj3Pp+xJbkZ5/dQieINGdciX
-         Gs5M/Ci6sBskjO5Wumi0UgQiynZd4tximRsSTXAxDNSCoEqZC2atZC7h9fRu1fqjgAVC
-         LU/ngWFQc66FHXmUVl03zoOwt3f1CAACkWcTLwelJhUscfsPyoY93TN9+hjDH5/t8fDz
-         os864VaabBjzGZ8+hoI1YCNpN5sZPGFjxmQk+s++lVpwt4cA+BKNMBu87BKi8SgGRu9I
-         DsC9zHaHVeuHe/d3TjOF3xEmZGcOZO07lXjySznfGHrklD3fqZBhzuVMtvxM3oq3QWfs
-         4rVA==
-X-Gm-Message-State: AOAM533wWBuCQ52AUq9mi0y+TCezTSzG47SG6zjE4FUzlJr4QrPiimVB
-        C58Qy16QAJ1S2Nw2ce/LLNl5PjaNJYE=
-X-Google-Smtp-Source: ABdhPJwQyS5ulasPioEz35iJjmgt1COLRf+JLtU3MIStAFooi+mIUyQA53bLlOf2clIPar/0JIlAtA==
-X-Received: by 2002:a2e:9bd0:: with SMTP id w16mr11451508ljj.465.1615143455758;
-        Sun, 07 Mar 2021 10:57:35 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id w1sm1087765lfp.202.2021.03.07.10.57.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Mar 2021 10:57:34 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git pull unclear manual
-References: <874khsqq0o.fsf@osv.gnss.ru>
-        <xmqqv9a7emx6.fsf@gitster.c.googlers.com> <87blbzm901.fsf@osv.gnss.ru>
-        <xmqqy2f2biz5.fsf@gitster.c.googlers.com>
-Date:   Sun, 07 Mar 2021 21:57:33 +0300
-Message-ID: <87y2eyg5b6.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S232935AbhCGUaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Mar 2021 15:30:07 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57026 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232888AbhCGU3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Mar 2021 15:29:35 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id ADE9C12FA98;
+        Sun,  7 Mar 2021 15:29:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aGGTU5+E2fECLnReTSDzIQoidLg=; b=MhBLwE
+        +gDVZucQgekgJwul4z3gFPGEGjruv4eGh5QJPV3AipPkvyktIKbVe58CGAnok5ON
+        SKO+zJpc4wFyZGnEsar6iJQI3UoaAkzGEyS8i1lI7LAv5aEDjSOd1ILKAz22b48z
+        1wPUl5fUhbrDv0loH5u6zofPX4Di0nLNwi0no=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GdZDoLXRCWAdjqrZdgTHs+Fo5w3+y7HY
+        buUKZ2MU4HfDGdfc2H4maboQ/oKhkn2PVe9ioB3dEVEOyUPxfLRonLAUizuFlURI
+        /nMyPQ6pWfWq+tC9Fnb9RVlEZx/OeYh+5rwWqcE0kdd1pu2UHIpUvQ3yN+Yw99EF
+        c3fRywI1GXI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A368E12FA97;
+        Sun,  7 Mar 2021 15:29:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DF53612FA96;
+        Sun,  7 Mar 2021 15:29:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shourya Shukla <periperidip@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org,
+        levraiphilippeblain@gmail.com
+Subject: Re: [PATCH v2 1/1] rm: stage submodule removal from '.gitmodules'
+ when using '--cached'
+References: <20210218184931.83613-1-periperidip@gmail.com>
+        <20210222172623.69313-1-periperidip@gmail.com>
+        <20210222172623.69313-2-periperidip@gmail.com>
+        <xmqqo8gb7vf9.fsf@gitster.g> <20210307164644.GA8702@konoha>
+Date:   Sun, 07 Mar 2021 12:29:30 -0800
+In-Reply-To: <20210307164644.GA8702@konoha> (Shourya Shukla's message of "Sun,
+        7 Mar 2021 22:16:44 +0530")
+Message-ID: <xmqqblbu907p.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: D2D13D56-7F83-11EB-B28C-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Shourya Shukla <periperidip@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
+> On 22/02 11:29, Junio C Hamano wrote:
+>> Shourya Shukla <periperidip@gmail.com> writes:
+>> 
+>> > +	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
+>> > +					      GITMODULES_FILE, sect.buf, NULL) < 0) {
+>> 
+>> Also, is it really sufficient to pass GITMODULES_INDEX as the first
+>> argument to this function to tweak what is in the index?
+>> 
+>> git_config_copy_or_rename_section_in_file() which is the
+>> implementation of that helper seems to always want to work with a
+>> file that is on disk, by making unconditional calls to
+>> hold_lock_file_for_update(), fopen(), fstat(), chmod(), etc.
+>> 
+>> So I suspect that there are much more work needed.  
 >
->> Do you think the manual needs some improvement still?
->
-> My reading is already tainted by using Git for a long time, so I
-> won't be the best person to judge what's missing in the manual.
->
->> I mean, I'd then expect something like this as the SYNOPSIS:
->>
->> "git-pull - Fetch from and integrate with another or current repository"
->> ...
->>   git-fetch - Download objects and refs from *another repository*
->
-> Just replacing "another repository" with "a repository", the latter
-> of which includes the current one, would be sufficient, perhaps?
+> I am not able to comprehend _why_ we need so much more work. To me it
+> seems to work fine.
 
-Yeah, just "a repository" is fine with me, perhaps followed by a note in
-the DESCRIPTION that the current one is indeed included.
+> The flow now is something like:
+>
+> 1. If !index_only i.e., '--cached' is not passed then remove the entry
+> of the SM from the working tree copy of '.gitmodules' i.e.,
+> GITMODULES_FILE. If there are any unstaged mods in '.gitmodules', we do
+> not proceed with 'git rm'.
 
--- Sergey
+That side is fine, especially if we are extending the "when doing
+'git rm PATH' (without '--cached'), PATH must match between the
+index and the working tree" to "when doing 'git rm SUBMODULE', not
+just SUBMODULE but also '.gitmodules' must match between the index
+and the working tree", then adjusting the entry for SUBMODULE in
+'.gitmodules' in the working tree and adding the result to the index
+would give the same result as editing '.gitmodules' both in the
+index and in the working tree independently.
+
+But the problem is that there is no way "--cached" case would work
+with your code.
+
+> What exactly do we need to change then?
+
+Have you traced what happens when you make this call
+
+>> > +	if (git_config_rename_section_in_file(index_only ? GITMODULES_INDEX :
+>> > +					      GITMODULES_FILE, sect.buf, NULL) < 0) {
+
+with index_only set?  i.e. GIT_MODULES_INDEX passed as the
+config_filename argument?
+
+The first parameter to the git_config_rename_section_in_file() names
+a filename in the working tree to be edited.  Writing ':.gitmodules'
+does not make the function magically work in-core without touching
+the working tree.  It will make it update a file (likely not
+tracked) whose name is ":.gitmodules" in the working tree, no?
+
+Presumably you want to edit in-index .gitmodules without touching
+the working tree file, but the call is not doing that---and it would
+take much more work to teach it do so.
+
+And a cheaper way out would be how I outlined in the message you are
+responding to, i.e. write out the in-index .gitmodules to a
+temporary file, let git_config_rename_section_in_file() tweak that
+temporary file, and add it back into the index.
+
