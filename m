@@ -6,73 +6,82 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68235C433E0
-	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF12CC433DB
+	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:41:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0C3A9614A5
-	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:35:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AAE965168
+	for <git@archiver.kernel.org>; Sun,  7 Mar 2021 20:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232878AbhCGUfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 7 Mar 2021 15:35:05 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55642 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231732AbhCGUe7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Mar 2021 15:34:59 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23A31BFD43;
-        Sun,  7 Mar 2021 15:34:59 -0500 (EST)
+        id S232954AbhCGUl0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 7 Mar 2021 15:41:26 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61193 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232958AbhCGUlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Mar 2021 15:41:13 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F3DF912F890;
+        Sun,  7 Mar 2021 15:41:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5vAHWwtiLTQ16IJ6a/avWHQt8ag=; b=GdLckZ
-        qdSmhpTMNWLOl5IwJAl4AMENyyKyXkf+PqLldM+dAPId2/uZWd6DnGyHzw8IKYMz
-        Zy4/6G2OGLuRs7K8qHAh6+svjMOLMGnqyUakxiKHpqQcueLE6Vk47fAIJUE1dqIw
-        OECeTv/VgBLPuXulFZI3/WSRn/KdLAd5efJ6w=
+        :content-type:content-transfer-encoding; s=sasl; bh=5xn6DAFljbrT
+        6RLmPz8oxlRre5s=; b=BA2rMGBO9c3c8bDEKSVpTgaq3/SXWsqbQMNsTsxrp4fW
+        fJWbCyd0/CZc9PrD8834DUX5c04jNomN0op+nWYoztI0fGvWTUyHpueLssT9tDpd
+        j87dG/crbb7nHg0K1QnO0PiCPFbqMtZ+95S9gNwqN8PrYdZsm/XtTQWO7XRE2ho=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c1BA+uGXrEPHmHz3XBpyKjQJPRgMtEX9
-        TgFcT5/b7RGHKSdEQfsIpbZS4LTstyVHwtPcok6rp5sKGDFstzgxrDWiiwB1kqNs
-        ExaKmBjl6KqtEjnCNGfaspcFkldh302zWnPYzc8kqO2BHIdINyRx9QJ49knkSx/x
-        RAre8298SxA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C373BFD41;
-        Sun,  7 Mar 2021 15:34:59 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hKeKCX
+        c21sFENo6qaSyXeXs3amNMD29X/L69XHZIlRvRPUz/eHrR4xyJPLIAtQNT9Kffxh
+        K+t1v/mN5YNHevaas/hduowLnf6KYs/HqIbE3CDsEq47qcS/GX3hG1uwRql+2K2V
+        T2b1ZuHX/OpxrA7mwsdudXZYzvo+FcdFkqLjg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E029012F88E;
+        Sun,  7 Mar 2021 15:41:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 91A8CBFD40;
-        Sun,  7 Mar 2021 15:34:58 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27D9A12F88D;
+        Sun,  7 Mar 2021 15:41:10 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "HG King via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, HG King <hgmaxwellking@gmail.com>
-Subject: Re: [PATCH] fix: added new BANNED_EXPL macro for better error
- messages, new parameter
-References: <pull.896.git.1614991897210.gitgitgadget@gmail.com>
-Date:   Sun, 07 Mar 2021 12:34:57 -0800
-In-Reply-To: <pull.896.git.1614991897210.gitgitgadget@gmail.com> (HG King via
-        GitGitGadget's message of "Sat, 06 Mar 2021 00:51:36 +0000")
-Message-ID: <xmqq7dmi8zym.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Makefile: generate 'git' as 'cc [...] -o git+ && mv
+ git+ git'
+References: <20210307132001.7485-1-avarab@gmail.com>
+Date:   Sun, 07 Mar 2021 12:41:08 -0800
+In-Reply-To: <20210307132001.7485-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 7 Mar 2021 14:20:01 +0100")
+Message-ID: <xmqq35x68zob.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 95899C9E-7F84-11EB-80A3-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 73014824-7F85-11EB-8B60-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"HG King via GitGitGadget" <gitgitgadget@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
->  #undef strcpy
-> -#define strcpy(x,y) BANNED(strcpy)
-> +#define strcpy(x,y) BANNED_EXPL(strcpy, buffer_overflow_risk)
+> Change the compilation of the main 'git' binary to not have the CC
+> clobber 'git' in-place. This means that e.g. running the test suite
+> in-place and recompiling won't fail whatever tests happen to be
+> running for the duration of the binary being regenerated.
 
-That does not help programmers that much (the above does not say
-what to use instead, for example), and the mechanism inherently
-does not give you sufficient space to give helpful guidance.
+I am not sure why I would want to support the workflow this is
+trying to help.
 
-Adding a comment around each of these definition may be OK.  Upon
-seeing foo_is_a_banned_function, somebody new to the codebase would
-look for where it is banned, and find the above, so that is a good
-place to give guidance.
+I do not want to see a patch on this list claiming that "While the
+whole test suite is running, I tweaked the source three times and
+recompiled, so some tests may have used my second iteration while
+others may have used my third and the final version of the code---in
+any case, all tests passed".  And when a patch that was developed
+that way came in, I do not want to hear "Yes, the test suite used
+mixed binaries, but I KNOW the difference between my second and
+third iteration should not matter the parts of the earlier tests
+that used the older iteration".
+
