@@ -2,317 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C577C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEC4FC433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:23:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1197964FB8
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:04:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B9A065253
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbhCHXEW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 18:04:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56048 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbhCHXDs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 18:03:48 -0500
-Received: from smtp.gentoo.org (dev.gentoo.org [IPv6:2001:470:ea4a:1:5054:ff:fec7:86e4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1304EC06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 15:03:48 -0800 (PST)
-Received: from vapier.lan (localhost [127.0.0.1])
-        by smtp.gentoo.org (Postfix) with ESMTP id 3E54733BE68
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 23:03:46 +0000 (UTC)
-From:   Mike Frysinger <vapier@gentoo.org>
-To:     git@vger.kernel.org
-Subject: [PATCH] contrib/rebase-catchup: helper for updating old branches
-Date:   Mon,  8 Mar 2021 18:03:45 -0500
-Message-Id: <20210308230345.28498-1-vapier@gentoo.org>
-X-Mailer: git-send-email 2.30.0
+        id S231292AbhCHXXE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 18:23:04 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36730 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229471AbhCHXWp (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 8 Mar 2021 18:22:45 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1604760DF4;
+        Mon,  8 Mar 2021 23:22:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1615245734;
+        bh=tKCbHS2Dyb8R26b2ac6R06/aMsrEEbYg+IStBoxOm0o=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=OGo0DM9Y6fUjW4h9pxqZsHYNoz0NFWIBgznheLp77332ckGphuo3WrN+34EjJeR6o
+         5xoZxOWCKTcoCfgJ8OtuGbuDCko+7gqxXNVLj9DkLZ9JdA+Sy5mYxZ6iRZJPbme8Vr
+         Fo/6sORNhWhBMyuwhYWseOnEi2yJj48BbpwYoHwz8yHxoNENwvHT46Ux1nLrUP19yM
+         LzagddsmDqXnEpoMsJlRLHgoykbmAYRRGsPxT3YhgAyFI1JXcmEfEy64gLxCxaTXhY
+         CbbHurC/zoe86CBefHzFCdrRzc3IUHqMlVjl5T+AoseSdaDAN5h3S0qOHAn0Qhe1tQ
+         IA49UfpEV1ChaF4OqXtZytGrjii5t+fL1IyyeL1WgErLdz2SMJEpS7ir/Mc9FlsgsL
+         AbFk54YZ+GR8+QfwXjIu5BC4bbWDROP+J3RsbXVJEIwidAa+4/VeBYUdBytuXrDyHa
+         7/T1oFm3B3nrCXSJCRQ1ZeXjLinNMqjD0GnA4xK9VfE0RmOs8+V
+Date:   Mon, 8 Mar 2021 23:22:10 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, jvusich@amazon.com
+Subject: Re: [PATCH] builtin/init-db: handle bare clones when core.bare set
+ to false
+Message-ID: <YEaxomZIluLVRWEr@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, jvusich@amazon.com
+References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
+ <20210308131718.546055-1-sandals@crustytoothpaste.net>
+ <CAPig+cRoZPg96aSgPoswYf-fz1_1Hxc1NfAER0kUB8Hy00WB9Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ZSPOHTTQ4E4bpvhv"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRoZPg96aSgPoswYf-fz1_1Hxc1NfAER0kUB8Hy00WB9Q@mail.gmail.com>
+User-Agent: Mutt/2.0.5 (2021-01-21)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For people who want to rebase their work onto the latest branch
-(instead of merging), but there's many conflicting changes.  This
-allows you to address those conflicts one-by-one and work through
-each issue instead of trying to take them all on at once.
 
-Signed-off-by: Mike Frysinger <vapier@gentoo.org>
----
-If there's no interest in merging this into contrib, then this is more spam,
-and anyone interested can use https://github.com/vapier/git-rebase-catchup
+--ZSPOHTTQ4E4bpvhv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- contrib/rebase-catchup/README.md             |  61 ++++++
- contrib/rebase-catchup/git-rebase-catchup.py | 187 +++++++++++++++++++
- 2 files changed, 248 insertions(+)
- create mode 100644 contrib/rebase-catchup/README.md
- create mode 100755 contrib/rebase-catchup/git-rebase-catchup.py
+On 2021-03-08 at 16:43:58, Eric Sunshine wrote:
+> On Mon, Mar 8, 2021 at 8:18 AM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > In 552955ed7f ("clone: use more conventional config/option layering",
+> > 2020-10-01), clone learned to read configuration options earlier in its
+> > execution, before creating the new repository.  However, that led to a
+> > problem: if the core.bare setting is set to false in the global config,
+> > cloning a bare repository segfaults.  This happens because the
+> > repository is falsely thought to be non-bare, but clone has set the work
+> > tree to NULL, which is then dereferenced.
+> > [...]
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+>=20
+> Perhaps this deserves a:
+>=20
+>     Reported-by: Joseph Vusich <jvusich@amazon.com>
 
-diff --git a/contrib/rebase-catchup/README.md b/contrib/rebase-catchup/README.md
-new file mode 100644
-index 000000000000..083d2012f833
---- /dev/null
-+++ b/contrib/rebase-catchup/README.md
-@@ -0,0 +1,61 @@
-+# Rebase Catchup
-+
-+Helpful when you have a branch tracking an old commit, and a lot of conflicting
-+changes have landed in the latest branch, but you still want to update.
-+
-+A single rebase to the latest commit will require addressing all the different
-+changes at once which can be difficult, overwhelming, and error-prone.  Instead,
-+if you rebased onto each intermediate conflicting point, you'd break up the work
-+into smaller pieces, and be able to run tests to make sure things were still OK.
-+
-+## Example
-+
-+Let's say you have a branch that is currently 357 commits behind.  When you try
-+rebasing onto the latest, it hits a lot of conflicts.  The tool will bisect down
-+to find the most recent commit it can cleanly rebase onto.
-+
-+```sh
-+$ git rebase-catchup
-+Local branch resolved to "s-logs"
-+Tracking branch resolved to "origin/master"
-+Branch is 2 commits ahead and 357 commits behind
-+Trying to rebase onto latest origin/master ... failed; falling back to bisect
-+Rebasing onto origin/master~178 ... failed
-+Rebasing onto origin/master~267 ... failed
-+Rebasing onto origin/master~312 ... failed
-+Rebasing onto origin/master~334 ... failed
-+Rebasing onto origin/master~345 ... OK
-+Rebasing onto origin/master~339 ... OK
-+Rebasing onto origin/master~336 ... failed
-+Rebasing onto origin/master~337 ... OK
-+Rebasing onto origin/master~336 ... failed
-+Found first failure origin/master~336
-+```
-+
-+Now you know the first conflicting change is `origin/master~336`.  Rebase onto
-+that directly and address all the problems (and run tests/etc...).  Then restart
-+the process.
-+
-+```sh
-+$ git rebase origin/master~336
-+... address all the conflicts ...
-+$ git rebase --continue
-+$ git rebase-catchup
-+Local branch resolved to "s-logs"
-+Tracking branch resolved to "origin/master"
-+Branch is 2 commits ahead and 335 commits behind
-+Trying to rebase onto latest origin/master ... failed; falling back to bisect
-+Rebasing onto origin/master~167 ... OK
-+Rebasing onto origin/master~83 ... OK
-+Rebasing onto origin/master~41 ... failed
-+Rebasing onto origin/master~62 ... OK
-+Rebasing onto origin/master~51 ... OK
-+Rebasing onto origin/master~46 ... OK
-+Rebasing onto origin/master~43 ... failed
-+Rebasing onto origin/master~44 ... failed
-+Rebasing onto origin/master~45 ... OK
-+Rebasing onto origin/master~44 ... failed
-+Found first failure origin/master~44
-+```
-+
-+Now you're only 44 commits behind.  Keep doing this until you catchup!
-diff --git a/contrib/rebase-catchup/git-rebase-catchup.py b/contrib/rebase-catchup/git-rebase-catchup.py
-new file mode 100755
-index 000000000000..2cc5c5381616
---- /dev/null
-+++ b/contrib/rebase-catchup/git-rebase-catchup.py
-@@ -0,0 +1,187 @@
-+#!/usr/bin/env python3
-+# Distributed under the terms of the GNU General Public License v2 or later.
-+
-+"""Helper to automatically rebase onto latest commit possible.
-+
-+Helpful when you have a branch tracking an old commit, and a lot of conflicting
-+changes have landed in the latest branch, but you still want to update.
-+
-+A single rebase to the latest commit will require addressing all the different
-+changes at once which can be difficult, overwhelming, and error-prone.  Instead,
-+if you rebased onto each intermediate conflicting point, you'd break up the work
-+into smaller pieces, and be able to run tests to make sure things were still OK.
-+"""
-+
-+import argparse
-+import subprocess
-+import sys
-+from typing import List, Tuple, Union
-+
-+
-+assert sys.version_info >= (3, 7), f'Need Python 3.7+, not {sys.version_info}'
-+
-+
-+def git(args: List[str], **kwargs) -> subprocess.CompletedProcess:
-+    """Run git."""
-+    kwargs.setdefault('check', True)
-+    kwargs.setdefault('capture_output', True)
-+    kwargs.setdefault('encoding', 'utf-8')
-+    # pylint: disable=subprocess-run-check
-+    return subprocess.run(['git'] + args, **kwargs)
-+
-+
-+def rebase(target: str) -> bool:
-+    """Try to rebase onto |target|."""
-+    try:
-+        git(['rebase', target])
-+        return True
-+    except KeyboardInterrupt:
-+        git(['rebase', '--abort'])
-+        print('aborted')
-+        sys.exit(1)
-+    except:
-+        git(['rebase', '--abort'])
-+        return False
-+
-+
-+def rebase_bisect(lbranch: str,
-+                  rbranch: str,
-+                  behind: int,
-+                  leave_rebase: bool = False,
-+                  force_checkout: bool = False):
-+    """Try to rebase branch as close to |rbranch| as possible."""
-+    def attempt(pos: int) -> bool:
-+        target = f'{rbranch}~{pos}'
-+        print(f'Rebasing onto {target} ', end='')
-+        print('.', end='', flush=True)
-+        # Checking out these branches directly helps clobber orphaned files,
-+        # but is usually unnessary, and can slow down the overall process.
-+        if force_checkout:
-+            git(['checkout', '-f', target])
-+        print('.', end='', flush=True)
-+        if force_checkout:
-+            git(['checkout', '-f', lbranch])
-+        print('. ', end='', flush=True)
-+        ret = rebase(target)
-+        print('OK' if ret else 'failed')
-+        return ret
-+
-+    # "pmin" is the latest branch position while "pmax" is where we're now.
-+    pmin = 0
-+    pmax = behind
-+    old_mid = None
-+    first_fail = 0
-+    while True:
-+        mid = pmin + (pmax - pmin) // 2
-+        if mid == old_mid or mid < pmin or mid >= pmax:
-+            break
-+        if attempt(mid):
-+            pmax = mid
-+        else:
-+            first_fail = max(first_fail, mid)
-+            pmin = mid
-+        old_mid = mid
-+
-+    if pmin or pmax:
-+        last_target = f'{rbranch}~{first_fail}'
-+        if leave_rebase:
-+            print('Restarting', last_target)
-+            result = git(['rebase', last_target], check=False)
-+            print(result.stdout.strip())
-+        else:
-+            print('Found first failure', last_target)
-+    else:
-+        print('All caught up!')
-+
-+
-+def get_ahead_behind(lbranch: str, rbranch: str) -> Tuple[int, int]:
-+    """Return number of commits |lbranch| is ahead & behind relative to |rbranch|."""
-+    output = git(
-+        ['rev-list', '--left-right', '--count', f'{lbranch}...{rbranch}']).stdout
-+    return [int(x) for x in output.split()]
-+
-+
-+def get_tracking_branch(branch: str) -> Union[str, None]:
-+    """Return branch that |branch| is tracking."""
-+    merge = git(['config', '--local', f'branch.{branch}.merge']).stdout.strip()
-+    if not merge:
-+        return None
-+
-+    remote = git(['config', '--local', f'branch.{branch}.remote']).stdout.strip()
-+    if remote:
-+        if merge.startswith('refs/heads/'):
-+            merge = merge[11:]
-+        return f'{remote}/{merge}'
-+    else:
-+        return merge
-+
-+
-+def get_local_branch() -> str:
-+    """Return the name of the local checked out branch."""
-+    return git(['branch', '--show-current']).stdout.strip()
-+
-+
-+def get_parser() -> argparse.ArgumentParser:
-+    """Get CLI parser."""
-+    parser = argparse.ArgumentParser(
-+        description=__doc__,
-+        formatter_class=argparse.RawDescriptionHelpFormatter)
-+    parser.add_argument(
-+        '--skip-initial-rebase-latest', dest='initial_rebase',
-+        action='store_false', default=True,
-+        help='skip initial rebase attempt onto the latest branch')
-+    parser.add_argument(
-+        '--leave-at-last-failed-rebase', dest='leave_rebase',
-+        action='store_true', default=False,
-+        help='leave tree state at last failing rebase')
-+    parser.add_argument(
-+        '--checkout-before-rebase', dest='force_checkout',
-+        action='store_true', default=False,
-+        help='force checkout before rebasing to target (to cleanup orphans)')
-+    parser.add_argument(
-+        'branch', nargs='?',
-+        help='branch to rebase onto')
-+    return parser
-+
-+
-+def main(argv: List[str]) -> int:
-+    """The main entry point for scripts."""
-+    parser = get_parser()
-+    opts = parser.parse_args(argv)
-+
-+    lbranch = get_local_branch()
-+    print(f'Local branch resolved to "{lbranch}"')
-+    if not lbranch:
-+        print('Unable to resolve local branch', file=sys.stderr)
-+        return 1
-+
-+    if opts.branch:
-+        rbranch = opts.branch
-+    else:
-+        rbranch = get_tracking_branch(lbranch)
-+    print(f'Tracking branch resolved to "{rbranch}"')
-+
-+    ahead, behind = get_ahead_behind(lbranch, rbranch)
-+    print(f'Branch is {ahead} commits ahead and {behind} commits behind')
-+
-+    if not behind:
-+        print('Up-to-date!')
-+    elif not ahead:
-+        print('Fast forwarding ...')
-+        git(['merge'])
-+    else:
-+        if opts.initial_rebase:
-+            print(f'Trying to rebase onto latest {rbranch} ... ',
-+                  end='', flush=True)
-+            if rebase(rbranch):
-+                print('OK!')
-+                return 0
-+            print('failed; falling back to bisect')
-+        rebase_bisect(lbranch, rbranch, behind, leave_rebase=opts.leave_rebase,
-+                      force_checkout=opts.force_checkout)
-+
-+    return 0
-+
-+
-+if __name__ == '__main__':
-+    sys.exit(main(sys.argv[1:]))
--- 
-2.30.0
+Good point.  Will fix.
 
+> > diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+> > @@ -104,6 +104,13 @@ test_expect_success 'redirected clone -v does show=
+ progress' '
+> > +test_expect_success 'clone does not segfault with --bare and core.bare=
+=3Dfalse' '
+> > +       test_config_global core.bare false &&
+> > +       git clone --bare "file://$(pwd)/parent" clone-bare &&
+>=20
+> Can this be done more simply as:
+>=20
+>     git clone --bare parent clone-bare &&
+>=20
+> or even:
+>=20
+>     git clone --bare . clone-bare &&
+>=20
+> without mucking about with $(pwd)?
+
+Sure.  I pulled the line from the test above, but I agree that's nicer.
+
+> > +       git -C clone-bare rev-parse --is-bare-repository >is-bare &&
+> > +       test "$(cat is-bare)" =3D true
+>=20
+> These days, we'd probably say:
+>=20
+>     echo true >expect &&
+>     git -C clone-bare rev-parse --is-bare-repository >actual &&
+>     test_cmp expect actual
+>=20
+> but it's subjective and minor; not at all worth a re-roll.
+
+There's enough nits to warrant a v2, so I can do one.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--ZSPOHTTQ4E4bpvhv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.27 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYEaxoQAKCRB8DEliiIei
+gSg6AQCLs8ilf7rGNX3ngjsqO3xrbAGbNBgm8oJnE/7bKr/e7gEAi6R2Mtg320Zw
+BZ6ySR5lH0MnhbR3V+LLh/SgJtQnWgU=
+=VS2l
+-----END PGP SIGNATURE-----
+
+--ZSPOHTTQ4E4bpvhv--
