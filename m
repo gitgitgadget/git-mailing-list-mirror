@@ -2,151 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 845B8C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 116D9C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:56:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 52ADD65296
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:44:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C920A65294
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230480AbhCHSoA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 13:44:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbhCHSnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 13:43:51 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03420C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 10:43:51 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id p10so9767330ils.9
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 10:43:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wrIHsl50SuzzplipbU7ydZHXd0y9cMwEiw4cP5ZNplQ=;
-        b=saFPFpMzjVhTSt2+ky6EUbN3WjH+37MQBDMZ0Cy4VUGZIkE6w+8q6hxKmnyt2R1ln+
-         ym4AIf0QIMUXOjtJGsBr0/nKPDhExXHJNGbs5ItW1qN6114mzxbdXyJvvqz25Hza1ZY/
-         EhWSN9u1yWIUH8nZs7HuK62fC3KvLvanQgQtJUThQqgfxnAthenEmHZ2XHihMuO/XGOX
-         W8Mc1ZTqwDgOK9pSswpIsoOlh/D4aurgV+ScMp4vuRrdz6hHPOULCkFibWLqMN5u1Q11
-         MHa9KLwgYYF9uFQbRLz5zDgKi5XDTzrq1pLB4onBH45qcwFEtta1c+rGsWAwBNHBzW4p
-         HXGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wrIHsl50SuzzplipbU7ydZHXd0y9cMwEiw4cP5ZNplQ=;
-        b=R5tIupCPlKE1qFT2Kcneyz3FKc+xFWvMyX9sgybR5M7uDsTjUTaMGlFpVFhBVCrRkY
-         XJUiMPVEUP9jPyAOv4rXZlCFHd7aUBseUJN35YIP1jHuYiUrFKs4c7s4K/zxGBwktNcW
-         MG0FHBaHGzszoqcp+sePanML7yk/JmOxDfVOLo2oTRPA1mftVLrwRhavvgJKAb6JrKU/
-         9c9nd3u3lyn0JqQ2ZcQ027UJmZB86PYPHES8RCcbNSk3RHSc5JB17uSvaP9GD4YdHaYl
-         Sa153s94PCW8x8B1ej8GQcie/pxIjsTEhcnMheZXyVUmiFizmQzzRjLcQyiewKujbzfw
-         yf2g==
-X-Gm-Message-State: AOAM5333DUZE423/QKGTJDxDFCLAvb8fuxQFVEes+SuQ77OPlDDKQ6l+
-        81k5H7V+cWbziKwGjf4UAiTg/avtcC57gHUV
-X-Google-Smtp-Source: ABdhPJxJcbGtqcD7EV3xF/nI2y2nVaaxFmmCWiruByQKMmgIWBP15ooPENCo+eCD/MknYN/9fZFhOw==
-X-Received: by 2002:a92:cda1:: with SMTP id g1mr21120332ild.267.1615229030377;
-        Mon, 08 Mar 2021 10:43:50 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:d16b:b0bc:c9fc:2720])
-        by smtp.gmail.com with ESMTPSA id w9sm6635655ioj.0.2021.03.08.10.43.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 10:43:49 -0800 (PST)
-Date:   Mon, 8 Mar 2021 13:43:47 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Fabien Terrani <terranifabien@gmail.com>, git@vger.kernel.org
-Subject: Re: remote.<name>.merge missing from the git-config man page?
-Message-ID: <YEZwY0721KvQNkK+@nand.local>
-References: <CAOuwed4HJLTgk48Fre5vGYjYanqD6hu8yZM73CpcAmF1ajiTnA@mail.gmail.com>
- <xmqqlfax7dya.fsf@gitster.c.googlers.com>
+        id S230124AbhCHSzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 13:55:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55840 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230510AbhCHSzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 13:55:23 -0500
+Received: (qmail 26519 invoked by uid 109); 8 Mar 2021 18:55:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Mar 2021 18:55:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20224 invoked by uid 111); 8 Mar 2021 18:55:23 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Mar 2021 13:55:23 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 8 Mar 2021 13:55:22 -0500
+From:   Jeff King <peff@peff.net>
+To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>
+Subject: Re: [PATCH 0/7] Fix all leaks in t0001
+Message-ID: <YEZzGjNMSj+MkDUH@coredump.intra.peff.net>
+References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlfax7dya.fsf@gitster.c.googlers.com>
+In-Reply-To: <pull.899.git.1615228580.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 08, 2021 at 09:27:57AM -0800, Junio C Hamano wrote:
-> >> git push origin
->
-> >>     Without additional configuration, pushes the current branch
-> >>     to the configured upstream (remote.origin.merge configuration
-> >>     variable) if it has the same name as the current branch, and
-> >>     errors out without pushing otherwise.
->
-> Hmph, it seems it talks about the branch on the remote side that is
-> configured for the current branch to integrate with.  Most likely
-> that is misspelt "branch.<name>.merge" where <name> is the name of
-> the branch currently checked out.
+On Mon, Mar 08, 2021 at 06:36:13PM +0000, Andrzej Hunt via GitGitGadget wrote:
 
-I agree; this should definitely refer to "branch.<name>.merge", not
-"remote.<name>.merge" (which to my knowledge has never existed).
+> This series fixes (or annotates) all the memory leaks that can cause t0001
+> to fail when run with LeakSanitizer (t0000 already passes without failures).
+> 
+> I suspect that none of these leaks had any user impact, and I'm aware that
+> every change does cause some noise - I would have no objections to
+> abandoning this series if it's not deemed valuable enough. On the other
+> hand: fixing or suppressing these leaks should make it easier to spot leaks
+> that have more significant user impact (it's entirely plausible that no real
+> impactful leaks exist).
 
-I had to double check that this "without additional configuration" is
-right. Indeed:
+I think it's worth doing. The reason t0000 passes is because it was my
+reference script when adding UNLEAK() back in:
 
-  - The default value of the 'push.default' variable is "simple", which
-    in a non-triangular workflow calls
-    "builtin/push.c:setup_push_upstream()".
+  https://lore.kernel.org/git/20170905130149.agc3zp3s6i6e5aki@sigill.intra.peff.net/
 
-  - 'setup_push_upstream()' dies on L213 if strcmp(branch->refname,
-    branch->merge[0]->src).
+(which might be of historical interest if you haven't read it). I knew
+that the next step would be tediously going through the test suite
+looking at the tool results, and I somehow stalled on that part. ;)
 
-  - Othewrise, it sets up the expected refspec (to push the local branch
-    to the remote branch 'branch.<name>.merge').
+But I think it's nice to move the goal forward incrementally. I agree
+that a lot of these leaks aren't that important, but it's generally as
+easy to fix or annotate them as it is to argue that they shouldn't be
+dealt with.
 
-> The text comes from b2ed944a (push: switch default from "matching"
-> to "simple", 2013-01-04); I am a bit surprised how such a typo
-> survived this long ;-)
+> Note: this series does not guarantee that there are no leaks within
+> t0000-t0001, it only fixes those leaks which cause test failures. There is
+> at least one test case in t0000 where git is invoked in a subshell, and the
+> return value is ignored - meaning that a memory leak that is occuring during
+> that invocation does not cause tests to fail (I'm still trying to figure out
+> if that's something that's worth fixing - but that's probably a topic for a
+> separate thread):
+> https://git.kernel.org/pub/scm/git/git.git/tree/t/t0000-basic.sh#n1285
 
-Me too :). Here's a patch to rectify the confusion:
+It's not the subshell there, but rather that git is on the left-hand
+side of a pipe (and so its exit code is discarded). We've been slowly
+fixing such cases (the usual technique is to use a tempfile).
 
---- >8 ---
+> In case anyone is interested: I have been using the following workflow to
+> find leaks and verify fixes - I'm running into crashes when using LSAN
+> standalone, therefore I'm using full ASAN instead (I'm not particularly
+> concerned about this: LSAN standalone mode is known to be less-well tested
+> than leak-checking within ASAN [1], and the crashes are occurring within the
+> leak-checker itself):
 
-Subject: [PATCH] Documentation/git-push.txt: correct configuration typo
+Yeah, I think using ASAN is just fine. I found that LSAN is faster, but
+if you are running a single script the difference probably doesn't
+matter. I also found that clang's support was much more mature than
+gcc's (I don't know how different the state is these days, though).
 
-In the EXAMPLES section, git-push(1) says that 'git push origin' pushes
-the current branch to the value of the 'remote.origin.merge'
-configuration.
+Regardless, if you can get it to run cleanly with _any_ leak checker,
+I'll be quite happy. :)
 
-This wording (which dates back to b2ed944af7 (push: switch default from
-"matching" to "simple", 2013-01-04)) is incorrect. There is no such
-configuration as 'remote.<name>.merge'. This likely was originally
-intended to read "branch.<name>.merge" instead.
+> make GIT_TEST_OPTS="-i -v" DEFAULT_TEST_TARGET="t0000-basic.sh"
+> ASAN_OPTIONS="detect_leaks=1:abort_on_error=1" SANITIZE=address DEVELOPER=1
+> CFLAGS="-DSUPPRESS_ANNOTATED_LEAKS -g -fno-optimize-sibling-calls -O1
+> -fno-omit-frame-pointer" test
 
-Indeed, when 'push.default' is 'simple' (which is the default value, and
-is applicable in this scenario per "without additional configuration"),
-setup_push_upstream() dies if the branch's local name does not match
-'branch.<name>.merge'.
+There's some magic in the Makefile for detecting SANITIZE=leak and
+setting -DSUPPRESS_ANNOTATED_LEAKS. It might be worth that extending
+that to SANITIZE=address, but I guess we wouldn't want to do so for most
+builds (which also are setting detect_leaks=0 in the test suite). Maybe
+we should have some other name to trigger asan-as-a-leak-detector. Or
+maybe that just gets complicated, because we pass the results of
+SANITIZE on to the compiler directly.
 
-Correct this long-standing typo to resolve some recent confusion on the
-intended behavior of this example.
+> (I then rerun the entire test suite with ASAN but with leak-checking
+> disabled in order to gain some confidence that my fixes aren't inadvertently
+> introducing memory safety issues.)
 
-Reported-by: Adam Sharafeddine <adam.shrfdn@gmail.com>
-Reported-by: Fabien Terrani <terranifabien@gmail.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/git-push.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Definitely a good idea.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index ab103c82cf..a953c7c387 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -600,7 +600,7 @@ EXAMPLES
+> Andrzej Hunt (7):
+>   symbolic-ref: don't leak shortened refname in check_symref()
+>   reset: free instead of leaking unneeded ref
+>   clone: free or UNLEAK further pointers when finished
+>   worktree: fix leak in dwim_branch()
+>   init: remove git_init_db_config() while fixing leaks
+>   init-db: silence template_dir leak when converting to absolute path
+>   parse-options: don't leak alias help messages
 
- `git push origin`::
- 	Without additional configuration, pushes the current branch to
--	the configured upstream (`remote.origin.merge` configuration
-+	the configured upstream (`branch.<name>.merge` configuration
- 	variable) if it has the same name as the current branch, and
- 	errors out without pushing otherwise.
- +
---
-2.30.0.667.g81c0cbc6fd
+I haven't looked at the individual patches yet. I'll respond to them
+individually.
 
+-Peff
