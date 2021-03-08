@@ -2,138 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEC4FC433E0
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD30C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:38:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B9A065253
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:23:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C9DC64FA9
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 23:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbhCHXXE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 18:23:04 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36730 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229471AbhCHXWp (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Mar 2021 18:22:45 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S230410AbhCHXiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 18:38:22 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52586 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231307AbhCHXiO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 18:38:14 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 01F10BB4B9;
+        Mon,  8 Mar 2021 18:38:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LrPvnpdut7NS0heBHd7/ALzfwhQ=; b=swOHT8
+        ZM1xyqcWCtGLGoH2sJ3d6m+0y6yeydrowc+8DaFUkcH9xjkz5LaJ0gNII0MtKg0J
+        hWwBhR0FekmkUbd2bK4k7ZskTxlLcaVhHIlMLsZ/DDABa7BmxtQBzpCP6tNqbzLM
+        tftpQGgB3+kWxeXdFvsrBF8sWQQISxsCNKBkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=V6GyuJDLMzKxHuMiM0Zj1leCSIjjZEqW
+        cdeu/Or45+BDbVguywCPkz1sWJeWveYnzFnOLjLfKl3C4RZnqEuy8i8+BusXus8n
+        QDHN+hO4QPr1Gv32QYeGWjuslN7YEGOD+eP/MtaScw0vK1dAMgvLpQ5VQSJVxk+1
+        Noy+rtx7T4Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE5BFBB4B8;
+        Mon,  8 Mar 2021 18:38:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1604760DF4;
-        Mon,  8 Mar 2021 23:22:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1615245734;
-        bh=tKCbHS2Dyb8R26b2ac6R06/aMsrEEbYg+IStBoxOm0o=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=OGo0DM9Y6fUjW4h9pxqZsHYNoz0NFWIBgznheLp77332ckGphuo3WrN+34EjJeR6o
-         5xoZxOWCKTcoCfgJ8OtuGbuDCko+7gqxXNVLj9DkLZ9JdA+Sy5mYxZ6iRZJPbme8Vr
-         Fo/6sORNhWhBMyuwhYWseOnEi2yJj48BbpwYoHwz8yHxoNENwvHT46Ux1nLrUP19yM
-         LzagddsmDqXnEpoMsJlRLHgoykbmAYRRGsPxT3YhgAyFI1JXcmEfEy64gLxCxaTXhY
-         CbbHurC/zoe86CBefHzFCdrRzc3IUHqMlVjl5T+AoseSdaDAN5h3S0qOHAn0Qhe1tQ
-         IA49UfpEV1ChaF4OqXtZytGrjii5t+fL1IyyeL1WgErLdz2SMJEpS7ir/Mc9FlsgsL
-         AbFk54YZ+GR8+QfwXjIu5BC4bbWDROP+J3RsbXVJEIwidAa+4/VeBYUdBytuXrDyHa
-         7/T1oFm3B3nrCXSJCRQ1ZeXjLinNMqjD0GnA4xK9VfE0RmOs8+V
-Date:   Mon, 8 Mar 2021 23:22:10 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, jvusich@amazon.com
-Subject: Re: [PATCH] builtin/init-db: handle bare clones when core.bare set
- to false
-Message-ID: <YEaxomZIluLVRWEr@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, jvusich@amazon.com
-References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
- <20210308131718.546055-1-sandals@crustytoothpaste.net>
- <CAPig+cRoZPg96aSgPoswYf-fz1_1Hxc1NfAER0kUB8Hy00WB9Q@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6A7B3BB4B7;
+        Mon,  8 Mar 2021 18:38:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mike Frysinger <vapier@gentoo.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] contrib/rebase-catchup: helper for updating old branches
+References: <20210308230345.28498-1-vapier@gentoo.org>
+Date:   Mon, 08 Mar 2021 15:38:12 -0800
+In-Reply-To: <20210308230345.28498-1-vapier@gentoo.org> (Mike Frysinger's
+        message of "Mon, 8 Mar 2021 18:03:45 -0500")
+Message-ID: <xmqqk0qh43ob.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ZSPOHTTQ4E4bpvhv"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRoZPg96aSgPoswYf-fz1_1Hxc1NfAER0kUB8Hy00WB9Q@mail.gmail.com>
-User-Agent: Mutt/2.0.5 (2021-01-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 596263CA-8067-11EB-A143-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Mike Frysinger <vapier@gentoo.org> writes:
 
---ZSPOHTTQ4E4bpvhv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> For people who want to rebase their work onto the latest branch
+> (instead of merging), but there's many conflicting changes.  This
+> allows you to address those conflicts one-by-one and work through
+> each issue instead of trying to take them all on at once.
 
-On 2021-03-08 at 16:43:58, Eric Sunshine wrote:
-> On Mon, Mar 8, 2021 at 8:18 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > In 552955ed7f ("clone: use more conventional config/option layering",
-> > 2020-10-01), clone learned to read configuration options earlier in its
-> > execution, before creating the new repository.  However, that led to a
-> > problem: if the core.bare setting is set to false in the global config,
-> > cloning a bare repository segfaults.  This happens because the
-> > repository is falsely thought to be non-bare, but clone has set the work
-> > tree to NULL, which is then dereferenced.
-> > [...]
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
->=20
-> Perhaps this deserves a:
->=20
->     Reported-by: Joseph Vusich <jvusich@amazon.com>
+I wonder how well this compares or complements with Michael
+Haggerty's "git imerge".
 
-Good point.  Will fix.
+> If there's no interest in merging this into contrib, then this is more spam,
+> and anyone interested can use https://github.com/vapier/git-rebase-catchup
 
-> > diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> > @@ -104,6 +104,13 @@ test_expect_success 'redirected clone -v does show=
- progress' '
-> > +test_expect_success 'clone does not segfault with --bare and core.bare=
-=3Dfalse' '
-> > +       test_config_global core.bare false &&
-> > +       git clone --bare "file://$(pwd)/parent" clone-bare &&
->=20
-> Can this be done more simply as:
->=20
->     git clone --bare parent clone-bare &&
->=20
-> or even:
->=20
->     git clone --bare . clone-bare &&
->=20
-> without mucking about with $(pwd)?
+The thinking during the past several years is that the Git ecosystem
+and userbase have grown large enough, and unlike our earlier years,
+individual add-on's like this (and "imerge" I mentioned earlier) can
+thrive without being in-tree to gain an undue exposure boost over
+its competitors, so I doubt that adding more stuff to contrib/ would
+be a good direction to go in the longer term.
 
-Sure.  I pulled the line from the test above, but I agree that's nicer.
+>  create mode 100755 contrib/rebase-catchup/git-rebase-catchup.py
 
-> > +       git -C clone-bare rev-parse --is-bare-repository >is-bare &&
-> > +       test "$(cat is-bare)" =3D true
->=20
-> These days, we'd probably say:
->=20
->     echo true >expect &&
->     git -C clone-bare rev-parse --is-bare-repository >actual &&
->     test_cmp expect actual
->=20
-> but it's subjective and minor; not at all worth a re-roll.
+And it does not help for this to be written in Python (which we've
+been moving away from).
 
-There's enough nits to warrant a v2, so I can do one.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+Having said all that, the end-user community may benefit from having
+a well curated set of third-party tools advertised at a single
+autoritative-sounding place, but it is dubious that contrib/
+subdirectory of my tree should be such a place (I won't be its
+curator anyway).
 
---ZSPOHTTQ4E4bpvhv
-Content-Type: application/pgp-signature; name="signature.asc"
+Perhaps there is an opening for non-code contribution for those
+without much programming experience but with great organizational
+skills.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.27 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYEaxoQAKCRB8DEliiIei
-gSg6AQCLs8ilf7rGNX3ngjsqO3xrbAGbNBgm8oJnE/7bKr/e7gEAi6R2Mtg320Zw
-BZ6ySR5lH0MnhbR3V+LLh/SgJtQnWgU=
-=VS2l
------END PGP SIGNATURE-----
-
---ZSPOHTTQ4E4bpvhv--
+Thanks.
