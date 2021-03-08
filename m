@@ -2,127 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6222C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9A22C4332B
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:37:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 77C3D6516B
+	by mail.kernel.org (Postfix) with ESMTP id A31F76520C
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229893AbhCHSg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 13:36:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54148 "EHLO
+        id S229469AbhCHSg2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 13:36:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbhCHSgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 13:36:23 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB478C06175F
+        with ESMTP id S230173AbhCHSgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 13:36:22 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72777C06174A
         for <git@vger.kernel.org>; Mon,  8 Mar 2021 10:36:22 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id f22-20020a7bc8d60000b029010c024a1407so4424647wml.2
+Received: by mail-wm1-x329.google.com with SMTP id r10-20020a05600c35cab029010c946c95easo4411833wmq.4
         for <git@vger.kernel.org>; Mon, 08 Mar 2021 10:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WLt+Mw3aUHd8kwTus48dz1NRvLaZykpZPphmoIPyrT4=;
-        b=QuiUhoJLtOhRDcBbkDfgd0H0u+XFypqSHLJG32xnKk8VDIpwhoBLnsuxOSQbKzP0JG
-         MNtmqXs2ilw+K/tjN8g58/SZAaN8USTcQelHrixDcYETLlM38aHRNHqNJkWD+RMbxLGc
-         DeocYnFAKf7QfU2pA8V7zbDWw3bCZZehh8abd16D0isUXE5iVyyfX4tff0Ik2Yyv+oD0
-         al/hMXRWMAxqH9w34OWTuCWRQPAjnxi2WPVJ4FRGEhABps4gNm+KKlQHCqsXJAK3d1tW
-         OLYFSxffLBa5Q7Hq9c2BCAnU5ROc+1XgT6toKAGZCfmH9PTW/FQnj/fEVP3bHTg9wGYt
-         0w/Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=/Q77lp/ov3oo4heLK9b7CgfsYKZjRW0s4eD1rr6y9XY=;
+        b=gtF2UhOdObFUqE+btK46ozzaRlbNHH1jauSwSl8znPReDclV30nay6maCKm9szXOQJ
+         1Dp8QUWTkrjJWGOUTMCB38lqpmVjrTkkY7bei3iBNhML4pN7zMkg3V2ExQBccGKEcB6l
+         IvmriZONLILDWM7y7WaEg66x64z/E9QCwJnCW0REro8UiSqNanb7YB5eEZ2OmRQBvsXv
+         cCTDfgkengyA393L1cQkLw3gmeN17CtZC3GCxlJyvvynfEsskBAPcXrJ16uV4E576bhg
+         RsW7KASGPxbEwWeCkkHSUChihJDsU4dT7yXEVi2IWCC6oQRew8QWfvBh6JoJ1qfzVAVs
+         /uXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WLt+Mw3aUHd8kwTus48dz1NRvLaZykpZPphmoIPyrT4=;
-        b=pQzQFsgcjaJG9f21jv5A0lXzqb5p4D9fwZezQl/h3gFoUedjjT6h77nDwcEA5T4bBr
-         hBuk1oSEcyY5CeZiMdWE/h0Q+zPVvPXxYcd+yeMvKfBi+2BDVZbpqeupqKBzx7fydek9
-         uR9ZNuJtyAWQKhixowmillKOSYVE+z7mBWrGt1sQpxdyqGy9U4tVPs8zSeGWbJinpA5F
-         dLLKzOigYjkEe3KBujMf6B6jDZ9+qqlHzTjfHmMInAWZIuECuYtEUvag/bZamOUmz5jH
-         5ITdPS1Qzbef1lNDhLEe1P4PEp2hhZDXUf/A+soOLij2sMiK4lvoATsJTlf6aMn3pv+Q
-         uM/Q==
-X-Gm-Message-State: AOAM530C6AjIH5kSwd+1BL4edGQkC2rLdlWlJY2VVcEe+lyPiiT3M8qf
-        Zn8siGNRwV0KNBBpKswfHi0I7jPhur8=
-X-Google-Smtp-Source: ABdhPJxDOrg51Sltbp1tyu/rAt3pPD6j5Cxx+MsZYRcY7so0fEzs31anrz1uCx1gNCm0CJT55W1sRw==
-X-Received: by 2002:a05:600c:289:: with SMTP id 9mr114223wmk.135.1615228581775;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/Q77lp/ov3oo4heLK9b7CgfsYKZjRW0s4eD1rr6y9XY=;
+        b=dsCGMcaU+qexdE8V+edUz3GmbhL3xGcYiLniFVzLuDVScaO2pM2N4e9KcdJlzfRzxA
+         AuoPk4iFSn5Y4TeIoet0UN2oaZtLlxkfrLN20cWCylSNnxbrgrtYudZXcRyuODLi/9N1
+         UWGe0oj5JB7jmvsGd/qDQ0Xa8Si3kSKDFOlPcYwak4ONozMu6HcT9IZDOjNRl6KagBFx
+         jujZ8w0beRHh76IYCJtKHQIv7qZaRkRq2eCwP2Qh2G6ID/EQQ1tctRomfpLayp/lgWn3
+         BNli0Xybb1KDBHcNbjZ2NvGeE4KGHgtjCZq2pZj9RwlUmTL8bZMCqAtkz3ifXv95WkEm
+         LyDg==
+X-Gm-Message-State: AOAM530y4Gqk07tNFdWRfZGlvm8dlRNx6kshaTWkUVAoz8tcxM9K6czC
+        9nQWLosxwwRAbaEpmYI+WSNpAx2fAVw=
+X-Google-Smtp-Source: ABdhPJzS2IiDabER+86gkXb6KrQrzv2vxuf8VomykJ6No0Yr/C6sRaQd2j9clTQuPb1QMVZRNdgRDw==
+X-Received: by 2002:a1c:6707:: with SMTP id b7mr114342wmc.185.1615228581204;
         Mon, 08 Mar 2021 10:36:21 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h62sm229087wmf.37.2021.03.08.10.36.21
+        by smtp.gmail.com with ESMTPSA id 21sm270547wme.6.2021.03.08.10.36.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 10:36:21 -0800 (PST)
-Message-Id: <ff0f7c167fa5b5da2d843fa03edb70907e6af763.1615228580.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.899.git.1615228580.gitgitgadget@gmail.com>
-References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
+        Mon, 08 Mar 2021 10:36:20 -0800 (PST)
+Message-Id: <pull.899.git.1615228580.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 08 Mar 2021 18:36:14 +0000
-Subject: [PATCH 1/7] symbolic-ref: don't leak shortened refname in
- check_symref()
+Date:   Mon, 08 Mar 2021 18:36:13 +0000
+Subject: [PATCH 0/7] Fix all leaks in t0001
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Andrzej Hunt <andrzej@ahunt.org>, Andrzej Hunt <ajrhunt@google.com>
+Cc:     Andrzej Hunt <andrzej@ahunt.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Andrzej Hunt <ajrhunt@google.com>
+This series fixes (or annotates) all the memory leaks that can cause t0001
+to fail when run with LeakSanitizer (t0000 already passes without failures).
 
-This leak has existed since:
-9ab55daa55 (git symbolic-ref --delete $symref, 2012-10-21)
+I suspect that none of these leaks had any user impact, and I'm aware that
+every change does cause some noise - I would have no objections to
+abandoning this series if it's not deemed valuable enough. On the other
+hand: fixing or suppressing these leaks should make it easier to spot leaks
+that have more significant user impact (it's entirely plausible that no real
+impactful leaks exist).
 
-This leak was found when running t0001 with LSAN, see also LSAN output
-below:
+Note: this series does not guarantee that there are no leaks within
+t0000-t0001, it only fixes those leaks which cause test failures. There is
+at least one test case in t0000 where git is invoked in a subshell, and the
+return value is ignored - meaning that a memory leak that is occuring during
+that invocation does not cause tests to fail (I'm still trying to figure out
+if that's something that's worth fixing - but that's probably a topic for a
+separate thread):
+https://git.kernel.org/pub/scm/git/git.git/tree/t/t0000-basic.sh#n1285
 
-Direct leak of 19 byte(s) in 1 object(s) allocated from:
-    #0 0x486514 in strdup /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_interceptors.cpp:452:3
-    #1 0x9ab048 in xstrdup /home/ahunt/oss-fuzz/git/wrapper.c:29:14
-    #2 0x8b452f in refs_shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c
-    #3 0x8b47e8 in shorten_unambiguous_ref /home/ahunt/oss-fuzz/git/refs.c:1287:9
-    #4 0x679fce in check_symref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:28:14
-    #5 0x679ad8 in cmd_symbolic_ref /home/ahunt/oss-fuzz/git/builtin/symbolic-ref.c:70:9
-    #6 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #7 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #8 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #9 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #10 0x69cc6e in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #11 0x7f98388a4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+In case anyone is interested: I have been using the following workflow to
+find leaks and verify fixes - I'm running into crashes when using LSAN
+standalone, therefore I'm using full ASAN instead (I'm not particularly
+concerned about this: LSAN standalone mode is known to be less-well tested
+than leak-checking within ASAN [1], and the crashes are occurring within the
+leak-checker itself):
 
-Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
----
+make GIT_TEST_OPTS="-i -v" DEFAULT_TEST_TARGET="t0000-basic.sh"
+ASAN_OPTIONS="detect_leaks=1:abort_on_error=1" SANITIZE=address DEVELOPER=1
+CFLAGS="-DSUPPRESS_ANNOTATED_LEAKS -g -fno-optimize-sibling-calls -O1
+-fno-omit-frame-pointer" test
+
+(I then rerun the entire test suite with ASAN but with leak-checking
+disabled in order to gain some confidence that my fixes aren't inadvertently
+introducing memory safety issues.)
+
+[1]
+https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer#stand-alone-mode
+
+Andrzej Hunt (7):
+  symbolic-ref: don't leak shortened refname in check_symref()
+  reset: free instead of leaking unneeded ref
+  clone: free or UNLEAK further pointers when finished
+  worktree: fix leak in dwim_branch()
+  init: remove git_init_db_config() while fixing leaks
+  init-db: silence template_dir leak when converting to absolute path
+  parse-options: don't leak alias help messages
+
+ builtin/clone.c        | 13 ++++++++++---
+ builtin/init-db.c      | 32 ++++++++++----------------------
+ builtin/reset.c        |  2 +-
  builtin/symbolic-ref.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ builtin/worktree.c     | 12 ++++++------
+ parse-options.c        | 29 ++++++++++++++++++++++++-----
+ 6 files changed, 60 insertions(+), 40 deletions(-)
 
-diff --git a/builtin/symbolic-ref.c b/builtin/symbolic-ref.c
-index 80237f0df10f..8cf52599693a 100644
---- a/builtin/symbolic-ref.c
-+++ b/builtin/symbolic-ref.c
-@@ -24,9 +24,15 @@ static int check_symref(const char *HEAD, int quiet, int shorten, int print)
- 			return 1;
- 	}
- 	if (print) {
--		if (shorten)
--			refname = shorten_unambiguous_ref(refname, 0);
--		puts(refname);
-+		if (shorten) {
-+			const char *shortened_refname;
-+
-+			shortened_refname = shorten_unambiguous_ref(refname, 0);
-+			puts(shortened_refname);
-+			free((void *)shortened_refname);
-+		} else {
-+			puts(refname);
-+		}
- 	}
- 	return 0;
- }
+
+base-commit: be7935ed8bff19f481b033d0d242c5d5f239ed50
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-899%2Fahunt%2Fleaksan-t0001-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-899/ahunt/leaksan-t0001-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/899
 -- 
 gitgitgadget
-
