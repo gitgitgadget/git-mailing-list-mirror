@@ -2,126 +2,102 @@ Return-Path: <SRS0=iBdC=IG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE9D2C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F3FC433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 14:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBD3E651CC
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:18:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73DAE6512B
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 14:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230095AbhCHNSC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 08:18:02 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:36452 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229505AbhCHNRc (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Mar 2021 08:17:32 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S229674AbhCHOPF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 09:15:05 -0500
+Received: from siwi.pair.com ([209.68.5.199]:34635 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229580AbhCHOOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 09:14:54 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 4DE7D3F4096;
+        Mon,  8 Mar 2021 09:14:49 -0500 (EST)
+Received: from ATP-Win2012.bjwce.com (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 06B6660DF4;
-        Mon,  8 Mar 2021 13:17:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1615209451;
-        bh=477rPPPIrXVAWW3/7s04CBWAWD1rPS8GplMseRhE1OA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=m3MskxpYZUKQC2OAqyfy78NAJXON7rRs0bO5EylI4HhCCrFQK3eJl55VW/CAQpgTV
-         V7Fg5msdfmYyXGKwTlL9qCjskf94lFh3OQ4VSGEfCESdaBDAEj+i6rh+VF7N7yAUTa
-         aEnxgW4xwA/OvlIbkB62lNhdG0Ei14bYBSTy3zSXvw30iL97OGtrJ2s9yyk47QqiMT
-         aRVliK11MycwLyzy/K+lACnSdxyJjSZFpT63bWi0rcWJIkBpOHQQdrRUW7Cy5ZMTWc
-         ee/b3cMKS+frFkHKU7pToRwtKVrqE91RodAKSe/xVkLyLIPd7zSt8RnBg0RhFADu8O
-         9UjDN55C+etiWlair7M6l0mw2n/IH3hygHYwA/V6kT5V25CZbIkC5U5QQRFujB4NaF
-         UHauzdG93eSJdE0wtdZft1ryMw4qfRS6ZVf3Vj6pvvTqEx2rWjFz413qXJCEnxFwfg
-         4AmDf8I07s++fGTj4nmV6H8HpsUsTMdRfM89+TqpIpjN7basLcW
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     jvusich@amazon.com
-Subject: [PATCH] builtin/init-db: handle bare clones when core.bare set to false
-Date:   Mon,  8 Mar 2021 13:17:18 +0000
-Message-Id: <20210308131718.546055-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.31.0.rc1.246.gcd05c9c855
-In-Reply-To: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
-References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id 20B783F4047;
+        Mon,  8 Mar 2021 09:14:49 -0500 (EST)
+Subject: Re: [PATCH 5/8] unix-stream-server: add st_dev and st_mode to socket
+ stolen checks
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.893.git.1614889047.gitgitgadget@gmail.com>
+ <89100959528c6a3c16622cf86e6920273f5ed2d3.1614889047.git.gitgitgadget@gmail.com>
+ <05f4cb97-5d78-4698-795d-311197052e22@web.de>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <f74c7b94-0378-edfc-6f34-18c896570a3e@jeffhostetler.com>
+Date:   Mon, 8 Mar 2021 09:14:48 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
+In-Reply-To: <05f4cb97-5d78-4698-795d-311197052e22@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 552955ed7f ("clone: use more conventional config/option layering",
-2020-10-01), clone learned to read configuration options earlier in its
-execution, before creating the new repository.  However, that led to a
-problem: if the core.bare setting is set to false in the global config,
-cloning a bare repository segfaults.  This happens because the
-repository is falsely thought to be non-bare, but clone has set the work
-tree to NULL, which is then dereferenced.
 
-The code to initialize the repository already considers the fact that a
-user might want to override the --bare option for git init, but it
-doesn't take into account clone, which uses a different option.  Let's
-just check that the work tree is not NULL, since that's how clone
-indicates that the repository is bare.  This is also the case for git
-init, so we won't be regressing that case.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
-It appears from my reading of the init code that we did intentionally
-already honor core.bare in some case, so I have not implemented ignoring
-that here and instead went for the limited approach.
+On 3/6/21 6:42 AM, René Scharfe wrote:
+> Am 04.03.21 um 21:17 schrieb Jeff Hostetler via GitGitGadget:
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> When checking to see if our unix domain socket was stolen, also check
+>> whether the st.st_dev and st.st_mode fields changed (in addition to
+>> the st.st_ino field).
+>>
+>> The inode by itself is not unique; it is only unique on a given
+>> device.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>   unix-stream-server.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/unix-stream-server.c b/unix-stream-server.c
+>> index f00298ca7ec3..366ece69306b 100644
+>> --- a/unix-stream-server.c
+>> +++ b/unix-stream-server.c
+>> @@ -120,8 +120,11 @@ int unix_stream_server__was_stolen(
+>>
+>>   	if (st_now.st_ino != server_socket->st_socket.st_ino)
+>>   		return 1;
+>> +	if (st_now.st_dev != server_socket->st_socket.st_dev)
+>> +		return 1;
+>>
+>> -	/* We might also consider the ctime on some platforms. */
+> 
+> Why remove that comment?  (This change is not mentioned in the commit
+> message.)
 
- builtin/init-db.c        | 4 ++--
- t/t5606-clone-options.sh | 7 +++++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+I added it as a TODO to myself thinking that it might give us
+additional assurances on some platforms while I was originally
+getting things working.  In hindsight (and now that we have the
+lockfile helping us), I didn't think it was actually needed, so
+I removed it.
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index dcc45bef51..f82efe4aff 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -212,6 +212,7 @@ static int create_default_files(const char *template_path,
- 	int reinit;
- 	int filemode;
- 	struct strbuf err = STRBUF_INIT;
-+	const char *work_tree = get_git_work_tree();
- 
- 	/* Just look for `init.templatedir` */
- 	init_db_template_dir = NULL; /* re-set in case it was set before */
-@@ -235,7 +236,7 @@ static int create_default_files(const char *template_path,
- 	 * We must make sure command-line options continue to override any
- 	 * values we might have just re-read from the config.
- 	 */
--	is_bare_repository_cfg = init_is_bare_repository;
-+	is_bare_repository_cfg = init_is_bare_repository || !work_tree;
- 	if (init_shared_repository != -1)
- 		set_shared_repository(init_shared_repository);
- 
-@@ -299,7 +300,6 @@ static int create_default_files(const char *template_path,
- 	if (is_bare_repository())
- 		git_config_set("core.bare", "true");
- 	else {
--		const char *work_tree = get_git_work_tree();
- 		git_config_set("core.bare", "false");
- 		/* allow template config file to override the default */
- 		if (log_all_ref_updates == LOG_REFS_UNSET)
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index 52e5789fb0..9b62708d76 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -104,6 +104,13 @@ test_expect_success 'redirected clone -v does show progress' '
- 
- '
- 
-+test_expect_success 'clone does not segfault with --bare and core.bare=false' '
-+	test_config_global core.bare false &&
-+	git clone --bare "file://$(pwd)/parent" clone-bare &&
-+	git -C clone-bare rev-parse --is-bare-repository >is-bare &&
-+	test "$(cat is-bare)" = true
-+'
-+
- test_expect_success 'chooses correct default initial branch name' '
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
- 	git -c init.defaultBranch=foo init --bare empty &&
+I didn't think it warranted a mention in the commit message.
+
+> 
+>> +	if (!S_ISSOCK(st_now.st_mode))
+>> +		return 1;
+>>
+>>   	return 0;
+>>   }
+>>
+> 
