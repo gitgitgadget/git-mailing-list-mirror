@@ -8,68 +8,68 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A50EBC433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A0DC433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:06:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7453C64FE3
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:04:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3E0065200
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbhCHND7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 08:03:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37796 "EHLO
+        id S229711AbhCHNGN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 08:06:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbhCHNDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 08:03:35 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B013C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 05:03:34 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id h10so14646515edl.6
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 05:03:34 -0800 (PST)
+        with ESMTP id S229580AbhCHNGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 08:06:04 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85011C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 05:06:03 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id bm21so20234779ejb.4
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 05:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=q5cD6ZtkcW5RluvrvUqEcbR5IsR1wmDU1VDpe/1pmkA=;
-        b=evHwILg4y0+vSqjNVdvGxTBdZJwNETjOhWzdOB2AJUBPWS7esF9f5maKytqilGQGoU
-         pChCA+i/U9uWsK36zvWxGpnm7g59hQ1O0Z+1xKguTruu+BmLi+zAjCS92QASGp8eYeFP
-         2v/+Uc608dnezpVLK4F+g113v33xhQgMWL5FW2DuLL/yoX04TykgXx5KuYr1vOynJHFu
-         neF+5owcgngBLBXSW5MMeNzcJU1yRTM8EzQnJBnGcvVL8nqps+RTFR3lv4XRpQYO083J
-         44GF9kdROiQurztEYwe5gLamfjtf7Awwqru0QXB7djiRgI1SD33Nig+lefDDSw76c9sF
-         QpWg==
+        bh=Sp4GKfh8YqL0Zqk0a/BN/4755ALpdMojXMo1U58DYrs=;
+        b=QR9CPcQ57NnjmE593m9Nhs0xrXjNv31JYl0mI2WtKPBs2k56h+ldjAUuTQasiPnzm1
+         6g8g52sEkMIXhfStcnvR3ZcHNPLriAz3DcnObd2JOt7kOEwd7hyvGkMfK4CpKSwd2RUV
+         FLcydw80cE+ONqnfmrpNo9Xigc0RY71Ey6NPeRx2WANIR8nUixBMTBjgTvU8ausr2q6i
+         1XLxzdc2VMtqLCKNm9q4S2x2iPzrvhIj5RHjfymj7yOpRoW8Xad55wj2g92L51kO762Z
+         Y+zap7rBecQoEjgY2CPb1/4uCiL8C6cciiwQno1xhHO2LY5AEelh8ohanffGVGKi8Qwv
+         Q5hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=q5cD6ZtkcW5RluvrvUqEcbR5IsR1wmDU1VDpe/1pmkA=;
-        b=laFdd/jHgdvzwjpApuc5H97Uupp5hiyXvS1HFZXOfFiWdEbISe1+wNtVKz7VcaoIOq
-         eEU8nah7RFGL8pewJHCMKGXRRsOkxRIcDWcQHhDKGFAKKbXRKUY8fFc+hQfV0niBjGPg
-         vwQtMX8IrZOhZyI28iRiW/dRmJKatQfcIj9+hyVC8T/Vdl6t1oGRG/Wkzlv6rRbgqm4Q
-         f8N7z+pZdvOcw73vVJkdnZLzXuKvTLzKsRtSrOxdvxLRyU8/cNmQQFBH8aVqFGPcrpHm
-         2CLzx8sb6A9x9CNoO3TnwBGxkdrF/l5uovMGA0Z7dUnfx6hJh2ZEAJRVrriv5H2Wax8h
-         T5VQ==
-X-Gm-Message-State: AOAM532yPmYcxP5qCHyO6OeBjjrvVp2DCAW8Ux+wdmoPVMP5u2/Vb/wX
-        zde6BCLb9MugACoFPFf3+oVXrCMmIdIOBQ==
-X-Google-Smtp-Source: ABdhPJyGJe54HRw37XvATckMIcYVgRu+sRllNsBg+o0XjEXaydeVDBng6QgDDGenGtU5X9z/bMWEHg==
-X-Received: by 2002:a05:6402:1d1a:: with SMTP id dg26mr21511166edb.266.1615208613034;
-        Mon, 08 Mar 2021 05:03:33 -0800 (PST)
+        bh=Sp4GKfh8YqL0Zqk0a/BN/4755ALpdMojXMo1U58DYrs=;
+        b=sJeM5kBbNKapGQ8ic9DIqlQBElbDl3Y+1fm5GvjVEIS7i1YacE9o6GDRQrjq+DVGX1
+         A5OsXZR/wjx+sHkf9hgs/EICt9KCqJ0xDBwXJLpKL8Ridi9QofC3LIiFHsFEzKPyHA4H
+         /Fd7IqUC9CBeFRSospbXnCqeezleuLVYt/NWkd7ID0WFcy0nkilQeTRtly4w9vMTWe2i
+         EaIOGD7ZOeda6jZmvHnOHdSWwMIVCEINFreSmEDg+nt+9JkyqVjxpT+Zfa2LvNGB3FmU
+         Xd2i8IGOiyB6So6vdUqRrIYYt0ZD/mYtnuOk7IwrEX3lkHY1ZBbYtDxJCVCjM8c3nEWB
+         BhVg==
+X-Gm-Message-State: AOAM532fXa5rW90vrLjvGKkgtIMYwy0byk+8YJvFMUg2vPOTfdSkyewS
+        3xjCo8S2A2TC25gjXZMOIpynan9p5HdSRQ==
+X-Google-Smtp-Source: ABdhPJx81On4JC482QaFkIbrRmy9QnbykUFel6AXbHbQXA/tpvWHxWjmlXMiBV7dqM0jHFRHW2cxSg==
+X-Received: by 2002:a17:906:5e50:: with SMTP id b16mr15245637eju.272.1615208761927;
+        Mon, 08 Mar 2021 05:06:01 -0800 (PST)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id t15sm7525620edc.34.2021.03.08.05.03.32
+        by smtp.gmail.com with ESMTPSA id v9sm6471181ejd.92.2021.03.08.05.06.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 05:03:32 -0800 (PST)
+        Mon, 08 Mar 2021 05:06:01 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 07/11] t6428: new test for SKIP_WORKTREE handling and
- conflicts
+Subject: Re: [PATCH 08/11] merge-ort: implement CE_SKIP_WORKTREE handling
+ with conflicted entries
 References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
- <6ccb24b557fc9c9d8e3d307d3e142d8393920414.1614905738.git.gitgitgadget@gmail.com>
+ <100c0187bdfeef5c560ecd17160ed7c9a3032156.1614905738.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <6ccb24b557fc9c9d8e3d307d3e142d8393920414.1614905738.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 Mar 2021 14:03:31 +0100
-Message-ID: <874khlkdb0.fsf@evledraar.gmail.com>
+In-reply-to: <100c0187bdfeef5c560ecd17160ed7c9a3032156.1614905738.git.gitgitgadget@gmail.com>
+Date:   Mon, 08 Mar 2021 14:06:00 +0100
+Message-ID: <871rcpkd6v.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -81,126 +81,83 @@ On Fri, Mar 05 2021, Elijah Newren via GitGitGadget wrote:
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> If there is a conflict during a merge for a SKIP_WORKTREE entry, we
-> expect that file to be written to the working copy and have the
-> SKIP_WORKTREE bit cleared in the index.  If the user had manually
-> created a file in the working tree despite SKIP_WORKTREE being set, we
-> do not want to clobber their changes to that file, but want to move it
-> out of the way.  Add tests that check for these behaviors.
+> When merge conflicts occur in paths removed by a sparse-checkout, we
+> need to unsparsify those paths (clear the SKIP_WORKTREE bit), and write
+> out the conflicted file to the working copy.  In the very unlikely case
+> that someone manually put a file into the working copy at the location
+> of the SKIP_WORKTREE file, we need to avoid overwriting whatever edits
+> they have made and move that file to a different location first.
 >
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  t/t6428-merge-conflicts-sparse.sh | 158 ++++++++++++++++++++++++++++++
->  1 file changed, 158 insertions(+)
->  create mode 100755 t/t6428-merge-conflicts-sparse.sh
+>  merge-ort.c                       | 43 +++++++++++++++++++++----------
+>  t/t6428-merge-conflicts-sparse.sh |  4 +--
+>  2 files changed, 32 insertions(+), 15 deletions(-)
 >
-> diff --git a/t/t6428-merge-conflicts-sparse.sh b/t/t6428-merge-conflicts-sparse.sh
-> new file mode 100755
-> index 000000000000..1bb52ff6f38c
-> --- /dev/null
-> +++ b/t/t6428-merge-conflicts-sparse.sh
-> @@ -0,0 +1,158 @@
-> +#!/bin/sh
+> diff --git a/merge-ort.c b/merge-ort.c
+> index a998f843a1da..37b69cbe0f9a 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -3235,23 +3235,27 @@ static int checkout(struct merge_options *opt,
+>  	return ret;
+>  }
+>  
+> -static int record_conflicted_index_entries(struct merge_options *opt,
+> -					   struct index_state *index,
+> -					   struct strmap *paths,
+> -					   struct strmap *conflicted)
+> +static int record_conflicted_index_entries(struct merge_options *opt)
+>  {
+>  	struct hashmap_iter iter;
+>  	struct strmap_entry *e;
+> +	struct index_state *index = opt->repo->index;
+> +	struct checkout state = CHECKOUT_INIT;
+>  	int errs = 0;
+>  	int original_cache_nr;
+>  
+> -	if (strmap_empty(conflicted))
+> +	if (strmap_empty(&opt->priv->conflicted))
+>  		return 0;
+>  
+> +	/* If any entries have skip_worktree set, we'll have to check 'em out */
+> +	state.force = 1;
+> +	state.quiet = 1;
+> +	state.refresh_cache = 1;
+> +	state.istate = index;
+>  	original_cache_nr = index->cache_nr;
+>  
+>  	/* Put every entry from paths into plist, then sort */
+> -	strmap_for_each_entry(conflicted, &iter, e) {
+> +	strmap_for_each_entry(&opt->priv->conflicted, &iter, e) {
+>  		const char *path = e->key;
+>  		struct conflict_info *ci = e->value;
+>  		int pos;
+> @@ -3292,9 +3296,23 @@ static int record_conflicted_index_entries(struct merge_options *opt,
+>  			 * the higher order stages.  Thus, we need override
+>  			 * the CE_SKIP_WORKTREE bit and manually write those
+>  			 * files to the working disk here.
+> -			 *
+> -			 * TODO: Implement this CE_SKIP_WORKTREE fixup.
+>  			 */
+> +			if (ce_skip_worktree(ce)) {
+> +				struct stat st;
 > +
-> +test_description="merge cases"
+> +				if (!lstat(path, &st)) {
+> +					char *new_name = unique_path(&opt->priv->paths,
+> +								     path,
+> +								     "cruft");
 > +
-> +# The setup for all of them, pictorially, is:
-> +#
-> +#      A
-> +#      o
-> +#     / \
-> +#  O o   ?
-> +#     \ /
-> +#      o
-> +#      B
-> +#
-> +# To help make it easier to follow the flow of tests, they have been
-> +# divided into sections and each test will start with a quick explanation
-> +# of what commits O, A, and B contain.
-> +#
-> +# Notation:
-> +#    z/{b,c}   means  files z/b and z/c both exist
-> +#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
-> +#                     underscore notation is to differentiate different
-> +#                     files that might be renamed into each other's paths.)
-> +
-> +. ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-merge.sh
-> +
-> +
-> +# Testcase basic, conflicting changes in 'numerals'
-> +
-> +test_setup_numerals () {
-> +	test_create_repo numerals_$1 &&
-> +	(
-> +		cd numerals_$1 &&
-> +
-> +		>README &&
-> +		test_write_lines I II III >numerals &&
-> +		git add README numerals &&
-> +		test_tick &&
-> +		git commit -m "O" &&
+> +					path_msg(opt, path, 1,
+> +						 _("Note: %s not up to date and in way of checking out conflicted version; old copy renamed to %s"),
+> +						 path, new_name);
 
-As an aside this could use the --printf option to test_commit I've got
-in next, but that's also a bit painful to use since you can't use
-test_write_lines.
+I see this follows existing uses in merge-ort.c, but I wonder if this
+won't be quite unreadable on long paths, i.e.:
 
-I've wanted to just support something like this for this use-case of
-using an existing file:
+    <long x> renamed to <long x.new>
 
-    test_write_lines A B C D >lines &&
-    test_commit --add O lines &&
+As opposed to:
 
-
-> +
-> +		git branch O &&
-> +		git branch A &&
-> +		git branch B &&
-> +
-> +		git checkout A &&
-> +		test_write_lines I II III IIII >numerals &&
-> +		git add numerals &&
-> +		test_tick &&
-> +		git commit -m "A" &&
-> +
-> +		git checkout B &&
-> +		test_write_lines I II III IV >numerals &&
-> +		git add numerals &&
-> +		test_tick &&
-> +		git commit -m "B" &&
-> +
-> +		cat <<-EOF >expected-index &&
-> +		H README
-> +		M numerals
-> +		M numerals
-> +		M numerals
-> +		EOF
-> +
-> +		cat <<-EOF >expected-merge
-> +		I
-> +		II
-> +		III
-> +		<<<<<<< HEAD
-> +		IIII
-> +		=======
-> +		IV
-> +		>>>>>>> B^0
-> +		EOF
-> +
-> +	)
-> +}
-> +
-> +test_expect_merge_algorithm success failure 'conflicting entries written to worktree even if sparse' '
-> +	test_setup_numerals plain &&
-
-A small nit, but makes it easier to debug things: I think having what
-you have in "test_setup_numerals" above in a test_expect_success is a
-better pattern, then if it fails we can see where exactly.
-
-Then instead of calling "test_setup_numerals" here you'd do:
-
-    cp -R template plain &&
-
-To just copy over that existing setup template, or re-use it and have
-have the tests call a small helper to "test_when_finish" reset --hard
-back as appropriate.
+    We had to rename your thing:
+        from: <long x>
+          to: <long x.new>
