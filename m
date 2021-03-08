@@ -2,95 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ACB7C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 16:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E5BAC433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 16:58:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3B7365227
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 16:45:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BE6EE6522F
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 16:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbhCHQoc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 11:44:32 -0500
-Received: from mail-ej1-f54.google.com ([209.85.218.54]:42124 "EHLO
-        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbhCHQoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 11:44:10 -0500
-Received: by mail-ej1-f54.google.com with SMTP id c10so21643357ejx.9
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 08:44:10 -0800 (PST)
+        id S229729AbhCHQ55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 11:57:57 -0500
+Received: from mail-ej1-f51.google.com ([209.85.218.51]:42164 "EHLO
+        mail-ej1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229463AbhCHQ5b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 11:57:31 -0500
+Received: by mail-ej1-f51.google.com with SMTP id c10so21721252ejx.9
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 08:57:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=j3OE5dlBHTpS9q8NX1v6Zy1gUYuJ39HPmg/LAXFVWPc=;
-        b=Fs197XI9KKycmU+VZbMuCt9F+Yr/O7OP9bG9PdeGdLNTu93ed5jtuymbeIFh+40lHg
-         7MGMHkr1KV6xQ0pul+EeB2TfZjmcG+w2OQaRUwSrNWCfk+VLu18KxQ8di0GAmXYdPq2p
-         zcOi40C8X9jto+dC7m9GT9TNUc0TXp+jt8POCdSKBLd5mLQw2wHcbAybg+gK5RDRwwPI
-         ZSlFFOaazrt39HXUC4J/v3G5WX4E+IkUb3LAOW+mLVkELWiBAtuq3twE+tGWwzFDTQ5T
-         iydrf0CoS5e5jy3YbdZ/6h9y+zSxMIr54CrTamQuF/rLm4iWfqdaBoBQy4YnYKHOP7Yl
-         lReQ==
-X-Gm-Message-State: AOAM532ixWey1LBgm5DdqZdb/At+vdcZyu93ixK46HGZqLcdwQtU+Tc2
-        WSWfpbiz/NUAp2oHRpfVB0x88XbHNch//wjeX8s=
-X-Google-Smtp-Source: ABdhPJw1LGNBoZKiJ9Zp7ENakGbhDtFOrcJHYXjtkh/hIo95aIXKb9bsRf9WSRfCW7x3Y5kTUZ4eQdyGMvtJkGuzq9M=
-X-Received: by 2002:a17:907:7684:: with SMTP id jv4mr16424098ejc.231.1615221849361;
- Mon, 08 Mar 2021 08:44:09 -0800 (PST)
+        bh=uEHh0a2emm5sSiG0Y6FOnPBGSUXU1TVJdTlLOAT6Zko=;
+        b=TwXm18Q5Hl4gdGVmh5gzeC2MJmMcg5HnOkqIFYbfDoaHHNCNiB2veZbiZzmW0Vz3RG
+         +8ooGfgUOoR9fyb2z2VDXK7dPxq8g1jWmPjjP0iP1XVHkGKR5bCqM6rwuRK+ECVL0Q5W
+         iWxk9jilO2mgzXOb2WAJd0RQhEVQtuxZs+pR/mmx6Y6OXk5LoyJSuKf4u9pmmE4HJ/iJ
+         hC+HX6DIUHrqq4abpD1R8XZ/T0wOkNB8sCgY0TJRUwSJEla8WXl0JYdKHflx2kOH2BLC
+         Yog4k3el1SwhxQos5A5tCZmQaRjjVwbZ+TfPC8trtwFQlEW8r85B9CtPHQaCZU3ObLou
+         eYDQ==
+X-Gm-Message-State: AOAM530gPRVsdbazxBDGkG2cAuSKGitlROuGcEjP3y9TCS7YTmwpZ+js
+        eUqPtb+1Fsw71Yx8kJwwFBMNBTRFT2uLnEFAfG0=
+X-Google-Smtp-Source: ABdhPJwBvLnUzBkpyJc2eKSGg6h4Y/GDx0UmVuvo/dhAutI1djDsGHmO1SIw3O+pXP7lKS035O95orrqYl+/3Nuu1jk=
+X-Received: by 2002:a17:907:76b3:: with SMTP id jw19mr15698900ejc.202.1615222650572;
+ Mon, 08 Mar 2021 08:57:30 -0800 (PST)
 MIME-Version: 1.0
-References: <D99DD9AD-54E5-4357-BA50-8B9CAE23084E@amazon.com> <20210308131718.546055-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20210308131718.546055-1-sandals@crustytoothpaste.net>
+References: <CAOuwed4HJLTgk48Fre5vGYjYanqD6hu8yZM73CpcAmF1ajiTnA@mail.gmail.com>
+In-Reply-To: <CAOuwed4HJLTgk48Fre5vGYjYanqD6hu8yZM73CpcAmF1ajiTnA@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 8 Mar 2021 11:43:58 -0500
-Message-ID: <CAPig+cRoZPg96aSgPoswYf-fz1_1Hxc1NfAER0kUB8Hy00WB9Q@mail.gmail.com>
-Subject: Re: [PATCH] builtin/init-db: handle bare clones when core.bare set to false
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git List <git@vger.kernel.org>, jvusich@amazon.com
+Date:   Mon, 8 Mar 2021 11:57:19 -0500
+Message-ID: <CAPig+cR13JTmLmjk=g8sFowEY2zNZiqVFCHOCYnQ9LX5URjdGA@mail.gmail.com>
+Subject: Re: remote.<name>.merge missing from the git-config man page?
+To:     Fabien Terrani <terranifabien@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Adam Sharafeddine <adam.shrfdn@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 8, 2021 at 8:18 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> In 552955ed7f ("clone: use more conventional config/option layering",
-> 2020-10-01), clone learned to read configuration options earlier in its
-> execution, before creating the new repository.  However, that led to a
-> problem: if the core.bare setting is set to false in the global config,
-> cloning a bare repository segfaults.  This happens because the
-> repository is falsely thought to be non-bare, but clone has set the work
-> tree to NULL, which is then dereferenced.
-> [...]
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
+[cc:+adam +phillipe]
 
-Perhaps this deserves a:
+On Mon, Mar 8, 2021 at 7:11 AM Fabien Terrani <terranifabien@gmail.com> wrote:
+> I was recently trying to understand the git-push command's behavior,
+> especially regarding the configuration values's resolution. I read the
+> following in the EXAMPLES section of the git-push man page:
+>
+> > git push origin
+> >     Without additional configuration, pushes the current branch to the configured upstream (remote.origin.merge configuration variable) if it has the same name as the current branch, and errors out without pushing otherwise.
+>
+> I then had a look at the git-config man page and I was surprised to
+> notice that there was no documentation at all about a
+> remote.<name>.merge or remote.origin.merge configuration value. I am
+> definitely not a git expert but this looks strange to me. Am I missing
+> something? Is remote.<name>.merge used by git at all?
 
-    Reported-by: Joseph Vusich <jvusich@amazon.com>
+Yours is the second report[1] about this in a few weeks.
 
-> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> @@ -104,6 +104,13 @@ test_expect_success 'redirected clone -v does show progress' '
-> +test_expect_success 'clone does not segfault with --bare and core.bare=false' '
-> +       test_config_global core.bare false &&
-> +       git clone --bare "file://$(pwd)/parent" clone-bare &&
+> (before mailing here, I tried carefully examining git's source code to
+> see if there was a remote.<name>.merge value used somewhere. I can't
+> be 100% positive since this was very complex to me, but I personally
+> couldn't find anything referencing remote.<name>.merge, while I found
+> code using other values like remote.<name>.push, push.default etc.)
 
-Can this be done more simply as:
+I spent a bit of time going through the source code, as well, trying
+to determine the correct name of this variable but didn't arrive at an
+answer before having to turn to other tasks.
 
-    git clone --bare parent clone-bare &&
+Hopefully, someone more familiar with this area of the project can
+chime in with the correct answer and more useful response.
 
-or even:
-
-    git clone --bare . clone-bare &&
-
-without mucking about with $(pwd)?
-
-> +       git -C clone-bare rev-parse --is-bare-repository >is-bare &&
-> +       test "$(cat is-bare)" = true
-
-These days, we'd probably say:
-
-    echo true >expect &&
-    git -C clone-bare rev-parse --is-bare-repository >actual &&
-    test_cmp expect actual
-
-but it's subjective and minor; not at all worth a re-roll.
+[1]: https://lore.kernel.org/git/CAAxrY9yjTKV8-K0AmO4fBmtDrSB4KkN_xKOMmtSb-dvixJNaEQ@mail.gmail.com/T/
