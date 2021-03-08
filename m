@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B0CBC1550C
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8EA9C4332D
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 047CB65240
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 888FC65232
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231633AbhCHPHy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 10:07:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37094 "EHLO
+        id S231460AbhCHPHq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 10:07:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbhCHPHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 10:07:31 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6DAC06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:31 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l12so11813271wry.2
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:31 -0800 (PST)
+        with ESMTP id S231395AbhCHPHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 10:07:16 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F27FC06175F
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:16 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id h98so11772431wrh.11
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Gsch7+D5XioVjRaPI/HDT9iSBwQKY5WoWjqpMCIafvw=;
-        b=LOCgLeHUtxildwKM260p2Qbl6wGCRilA7FP3DhAICl+qowPAKkiVd0Xh8tAvOOx1Fn
-         LQfgW2gAE9M/Ya7V6DjoHgoMhdo3RgnJTzS8NxY4JRXaB8ElWRAM7htbwSwq+Bo8vbJH
-         3S1FbKUwdVBpa7kyTcqg0BjHHtzoQ/RXLanowKhJQHV2hyCm3/RyFo47tE8QLd2vp+WQ
-         /vDK0fts9cijsxYFGY+df+kb5c1PBbNP1Q5K47+SipMc8sTuWFxnwa9mSYyUEKDOpZAa
-         GyVG3ZVwD6Xffsxqw+6pq7UavvdfTY40CAHsOC9R1mck2+DTRg4eAaRIClXpNN2pM5vu
-         R/Kw==
+        bh=DiUgvF5gaDU/CnclRudjbSlYBEppYZeQvpzv3YQOLj4=;
+        b=DqisSue5aQTKSBPkyAoNvOvgQ4jU9WjyTvMtYFB/ilFPganw/qWpMB++wJyvR3aVT9
+         Yk1bEaykUDMjyBht8su9iGyoPiFdxdT+jWaOdGeqQjOIo0HqiyvGpTPpifALMpnXUCEA
+         J9qijLHhopBMrbgab5vyDWS5C8AZ2YgEYCUKs6ax6XsEAcY4x/Ken/Ugt1k+SkI1dfbD
+         XRbotOp0FXmZoXt6iDyWeo2uFmJeTDCUpvp97NB69l10edJ3j5BcDzNM86PL2DO8U7LA
+         UL3GJ2AIBtupXBe9hZAGx/ORsCWd8jUoWGWXrQ4vgi+gKqpa+ynBF6AHfZYPYfDGCXBJ
+         ppvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Gsch7+D5XioVjRaPI/HDT9iSBwQKY5WoWjqpMCIafvw=;
-        b=ovxPW7K9YD0dNnbd6ssVbNz+LqwDvZAjehw+kbwG7FU7l/ZFvVCeVzDUv/3KcHcSNM
-         vjX+NRaddLc6hE5w3od36kl8V6ud5qQWl0fYx8mMft8rTrirqT2sMcVJ4ag219iPniTN
-         01DxYcjfid5gh+3zn1sy/w034opVvekLu15OJ2g8gXu6piYKr0PKZAAad0jPvuBCBaB3
-         p0voKzC15w3TnsfE3eldQ7j5BZ6Fc78tbCcZkltqOo9DRKNxsPUYKAvDekOYTmbxcY8w
-         5PG+v/ANNi1gGsHvbTMvUb2HM7ngfjBVpMcpX/rC1l81LPDTJrcX/AaDbQbQueAOHUvz
-         jl4Q==
-X-Gm-Message-State: AOAM532JRnjuqp+ksYZsuxW6aw2PJQw0BVausN3+TZF3dwuF2OM6nfo4
-        WTD1oJRkP/0vAlYB6gsQ7E24VWBtOzdQXQ==
-X-Google-Smtp-Source: ABdhPJygLQqKfk4ar8Wh3zx5qkK3F3Mj/0r7N58v49y40chmkHJh+ZikWWADjMM0ZhxSoz8l8YoC1w==
-X-Received: by 2002:adf:ee92:: with SMTP id b18mr22164711wro.275.1615216049802;
-        Mon, 08 Mar 2021 07:07:29 -0800 (PST)
+        bh=DiUgvF5gaDU/CnclRudjbSlYBEppYZeQvpzv3YQOLj4=;
+        b=VsP2+V9FFptvpcvKBIjBGeE+RbxP8lOEbvyJBBPagN5/4UTEHwVexW0Up7Vl8XUNK5
+         WvlNgQqFecDuUeXXgbXMUzVXEmSxasF5lopj82iwLVIrCV0AOZrGC5NbGuieJemf28XR
+         eCk4+4293VBw3PUqPO8jphR2wUyzIeE7s8AUv7wezR4+ThHcfrO5fa88zXweDUvpF18f
+         /HrYB3ovFdYLZKHubZZgO8C7LEdpjipO/MSMk7aNFpSZXhXCe8ZSo4flCjqA4wcc9BxG
+         Gzbx4+0iY7EEu4Y+wx9vR2RtdlZ5H3cVvRPyOz+DMVCmn2kqCUiTVp5/jW0RRqElRQrr
+         ZeZA==
+X-Gm-Message-State: AOAM5324auKgK/S5RHd6rcl68BVljvUHgqfkvy7zvKAHl9BQ8YUQL4Ds
+        Vrbn1K3IGsKlZD7TOYg5NVoBWpwP1T+Cig==
+X-Google-Smtp-Source: ABdhPJzAbZUBwkgmieUy0kUf4zGq+/ShhRqgbzVAhfkg2kU/hgq51Aoqoa5IQijbSdBeIQ7pX2D/DA==
+X-Received: by 2002:adf:ba87:: with SMTP id p7mr24004607wrg.298.1615216034822;
+        Mon, 08 Mar 2021 07:07:14 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.28
+        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 07:07:28 -0800 (PST)
+        Mon, 08 Mar 2021 07:07:14 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 24/30] tree-walk.h API: document and format tree_entry_extract()
-Date:   Mon,  8 Mar 2021 16:06:44 +0100
-Message-Id: <20210308150650.18626-25-avarab@gmail.com>
+Subject: [PATCH 07/30] tree-walk.h users: switch object_type(...) to new .object_type
+Date:   Mon,  8 Mar 2021 16:06:27 +0100
+Message-Id: <20210308150650.18626-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <20210308022138.28166-1-avarab@gmail.com>
 References: <20210308022138.28166-1-avarab@gmail.com>
@@ -79,40 +79,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document and format the argument list of the tree_entry_extract()
-function in preparation for adding a sister function.
+Change uses of object_type(entry.mode) to use the new
+entry.object_type field.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- tree-walk.h | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ builtin/pack-objects.c |  2 +-
+ http-push.c            |  6 ++++--
+ pack-bitmap-write.c    |  8 +++++---
+ revision.c             | 12 ++++++++----
+ 4 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/tree-walk.h b/tree-walk.h
-index 1bfa839b275..61fdcb166d2 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -40,11 +40,17 @@ struct tree_desc {
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6d62aaf59a0..d3ba1d4a4a6 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1534,7 +1534,7 @@ static void add_pbase_object(struct tree_desc *tree,
+ 			return;
+ 		if (name[cmplen] != '/') {
+ 			add_object_entry(&entry.oid,
+-					 object_type(entry.mode),
++					 entry.object_type,
+ 					 fullname, 1);
+ 			return;
+ 		}
+diff --git a/http-push.c b/http-push.c
+index 6a4a43e07f2..234b79a5dba 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1314,7 +1314,7 @@ static struct object_list **process_tree(struct tree *tree,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
  
- /**
-  * Decode the entry currently being visited (the one pointed to by
-- * `tree_desc's` `entry` member) and return the sha1 of the entry. The
-- * `pathp` and `modep` arguments are set to the entry's pathname and mode
-- * respectively.
-+ * `tree_desc's` `entry` member) and return the OID of the entry.
-+
-+ * There are variants of this function depending on what fields in the
-+ * "struct name_entry" you'd like. You always need to pointer to an
-+ * appropriate variable to fill in (NULL won't do!):
-+ *
-+ * tree_entry_extract_mode(): const char *path, unsigned int mode
-  */
--static inline const struct object_id *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned short *modep)
-+static inline const struct object_id *tree_entry_extract(struct tree_desc *desc,
-+							 const char **pathp,
-+							 unsigned short *modep)
- {
- 	*pathp = desc->entry.path;
- 	*modep = desc->entry.mode;
+ 	while (tree_entry(&desc, &entry))
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			p = process_tree(lookup_tree(the_repository, &entry.oid),
+ 					 p);
+@@ -1323,9 +1323,11 @@ static struct object_list **process_tree(struct tree *tree,
+ 			p = process_blob(lookup_blob(the_repository, &entry.oid),
+ 					 p);
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 
+ 	free_tree_buffer(tree);
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 88d9e696a54..ac32bf2242c 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -353,7 +353,7 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			fill_bitmap_tree(bitmap,
+ 					 lookup_tree(the_repository, &entry.oid));
+@@ -361,9 +361,11 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ 		case OBJ_BLOB:
+ 			bitmap_set(bitmap, find_object_pos(&entry.oid));
+ 			break;
+-		default:
+-			/* Gitlink, etc; not reachable */
++		case OBJ_COMMIT:
++			/* submodule commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 	}
+ 
+diff --git a/revision.c b/revision.c
+index b78733f5089..1db4e4e90a2 100644
+--- a/revision.c
++++ b/revision.c
+@@ -72,16 +72,18 @@ static void mark_tree_contents_uninteresting(struct repository *r,
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			mark_tree_uninteresting(r, lookup_tree(r, &entry.oid));
+ 			break;
+ 		case OBJ_BLOB:
+ 			mark_blob_uninteresting(lookup_blob(r, &entry.oid));
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 	}
+ 
+@@ -179,7 +181,7 @@ static void add_children_by_path(struct repository *r,
+ 
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+-		switch (object_type(entry.mode)) {
++		switch (entry.object_type) {
+ 		case OBJ_TREE:
+ 			paths_and_oids_insert(map, entry.path, &entry.oid);
+ 
+@@ -196,9 +198,11 @@ static void add_children_by_path(struct repository *r,
+ 					child->object.flags |= UNINTERESTING;
+ 			}
+ 			break;
+-		default:
++		case OBJ_COMMIT:
+ 			/* Subproject commit - not in this repository */
+ 			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 	}
+ 
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
