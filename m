@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2504CC432C3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A6BC43333
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:37:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 100A965202
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:37:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD01165210
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 18:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231148AbhCHSgc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 13:36:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
+        id S230519AbhCHSgb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 13:36:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230429AbhCHSg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 13:36:26 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B9A9C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 10:36:26 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso4405663wma.4
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 10:36:26 -0800 (PST)
+        with ESMTP id S230050AbhCHSgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 13:36:25 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A09DC06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 10:36:25 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id v15so12536537wrx.4
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 10:36:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wGG4egWIxxqcq3y4zt/9zTlxYxwt8ggAUlD96Vterb4=;
-        b=pRgPyvreCD+S1dpqMSrer6+RqSPZeqcOjDlvWbq4tZfmxf3fAEYYr0dQECzOhuJwZn
-         +4I+BIavlOo53YYQSrZUk9w1YmoqYK4xObY1xEpAn5tuTZnMo+N67eNZIHGs67s2xlvU
-         JejMf3zBBt1xWePaxh1O/LjpsmDNoW7w0XPXtLihPO0q7Fj+iu7G6twhUydbm7nMlM8J
-         sWzRPicECNCmj7hk7cCHFNiF+BuIVE1nF0DH8KeiKYCxnOnn7LwleoJVXaSDB/2VJGRA
-         UYiPtLmQXWhQ7FrG3fHCv/PC3pBqmPyK5xoFsOQ/NsGNvMnAm0yLBRUjZNgr0jaVEoXR
-         HjXA==
+        bh=1KBF5N6/UdlX0Uvlr+J/y3JlDuq6Ng41G1ae0vnw04Y=;
+        b=ucoPW2dj/KG54W9UBLcr8BHeZsWveJ2n7DgiCqxqov9D+fqjnrnGq5BkRRHACcmqf8
+         vjjcD2nzZz2ElPxsw74KUTkULUq8uopuGJJhg5wCzjoQ9V1D2pECDSzc207ABJDHZCSP
+         lNOxyQzWTkRTnBzAXCzDeiPVldeDX7Afh2/S7Ge57DXfzvu3QUwaxEI9nMsxurwESNLX
+         +oMQ7pvBI2le+/Nfw1ktyTjfXBGIiEvmDQ9RUnWgRzse+wMVoUcGfVo/5Vm1brdzcVUp
+         JNgUXt6o9f97bhWHt6FakLQfufJI636VPhaseRZSgDfwT489p3pbI5CRJP1svE9iTIjf
+         RBzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wGG4egWIxxqcq3y4zt/9zTlxYxwt8ggAUlD96Vterb4=;
-        b=ioN4mpr8jyFqCMStv53OPfyOjbi3PWm5ic+l95gR9cPZvXV90WLRWD0jrQ1S36rwhR
-         LbpPV7HjWnatyNwBtavHuseDMQUyEpiKw2lSBmnruAvqAEEoVVx2GEio4vo9USZ6K24S
-         3FVIpSgLTAtX9dtJmgiv4fPGl0JeXb4qmdLrVpMeLi01J8UK40lcVhL6iMU0zoD6zxRA
-         fEFT06BNQb+QIJYb2K6+76xsnaCLp6iwgJcesP+G/XkBDAvEmF3DOcdvkQu3b0hc5152
-         Gj8Kke8LIitl9KpFqv6p8w7vc7yW01wkTWOuOguYVpzo6Dtuvw0s26R8D/Lqrg8aDlcF
-         Nv2Q==
-X-Gm-Message-State: AOAM533VOeo46DJ4wTXupLMQPLAekQtEhVQzxz6cllKp6u0QVNBFRuNj
-        TMyFVcf1fcazCf0zL8DIrgau6o1qnyM=
-X-Google-Smtp-Source: ABdhPJz53qhmdX4xAvjTkP4J95n4HK6QZwhut3qQS1fPKZehUaz+fRjobywY0qGoOPSdRzhrxSjXUQ==
-X-Received: by 2002:a7b:c842:: with SMTP id c2mr157242wml.100.1615228585337;
-        Mon, 08 Mar 2021 10:36:25 -0800 (PST)
+        bh=1KBF5N6/UdlX0Uvlr+J/y3JlDuq6Ng41G1ae0vnw04Y=;
+        b=TzxAXuMPNN8Wx+niKWhoUC0SShcXp82rVnE/bjRdo2sxLAYzK9p2irznLq9vNCNINp
+         rwLE3nVQYZbTf+e8G6L3SiX/n0hCpzDj3dT/EBpvQU8jvm3u/4w2W2JVEKOymcPEftYo
+         XfcoTY+1vmJtQbwws+BqMpQrAgsX7Bb/x2YPMTkHA+Ypjw419hAT2H88qH4VilELKImD
+         AOfMvkKosOLP+f0Ze+2JiTUn2LivRTbG/UEKU+xRkn5mYIaNl+pwAiXZwKwYFREhf1pQ
+         V/2wowI6ghf/d3NF+Yw+5tpLWVy6NLWnTThIN6aMShBPr0qsVDUHAmKkAPOEXmvugyZI
+         MaQg==
+X-Gm-Message-State: AOAM530fe/XSdkkU+AD98fgN5/y1ds1LmPZ08Vkcc2CYVUQkrMoaDGv4
+        nARn+XIpsMk7vlyufKQ87v5osB4GQ68=
+X-Google-Smtp-Source: ABdhPJyH/YaR1RfpZouZQVXrvSh8dGO4PgkXQhFAv3jRjoEkUyNWS4Mvd7PvC2znXjC9dDK8c8MZuQ==
+X-Received: by 2002:adf:c641:: with SMTP id u1mr24494597wrg.332.1615228584160;
+        Mon, 08 Mar 2021 10:36:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h62sm229423wmf.37.2021.03.08.10.36.24
+        by smtp.gmail.com with ESMTPSA id q15sm20568353wrx.56.2021.03.08.10.36.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 10:36:25 -0800 (PST)
-Message-Id: <fb456bee0f69e0ca5e596b30705c42cc037edecc.1615228580.git.gitgitgadget@gmail.com>
+        Mon, 08 Mar 2021 10:36:23 -0800 (PST)
+Message-Id: <d30365d967651c6090635ec564d2ed2d051e8aec.1615228580.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.899.git.1615228580.gitgitgadget@gmail.com>
 References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
 From:   "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 08 Mar 2021 18:36:20 +0000
-Subject: [PATCH 7/7] parse-options: don't leak alias help messages
+Date:   Mon, 08 Mar 2021 18:36:18 +0000
+Subject: [PATCH 5/7] init: remove git_init_db_config() while fixing leaks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,111 +74,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Andrzej Hunt <ajrhunt@google.com>
 
-preprocess_options() allocates new strings for help messages for
-OPTION_ALIAS. Therefore we also need to clean those help messages up
-when freeing the returned options.
+The primary goal of this change is to stop leaking init_db_template_dir.
+This leak can happen because:
+ 1. git_init_db_config() allocates new memory into init_db_template_dir
+    without first freeing the existing value.
+ 2. init_db_template_dir might already contain data, either because:
+  2.1 git_config() can be invoked twice with this callback in a single
+      process - at least 2 allocations are likely.
+  2.2 A single git_config() allocation can invoke the callback multiple
+      times for a given key (see further explanation in the function
+      docs) - each of those calls will trigger another leak.
 
-First introduced in:
-  7c280589cf (parse-options: teach "git cmd -h" to show alias as alias, 2020-03-16)
+The simplest fix for the leak would be to free(init_db_template_dir)
+before overwriting it. Instead we choose to convert to fetching
+init.templatedir via git_config_get_value() as that is more explicit,
+more efficient, and avoids allocations (the returned result is owned by
+the config cache, so we aren't responsible for freeing it).
 
-The preprocessed options themselves no longer contain any indication
-that a given option is/was an alias: the easiest and fastest way to
-figure it out is to look back at the original options. Alternatively we
-could iterate over the alias_groups list - but that would require nested
-looping and is likely to be a (little) less efficient.
+If we remove init_db_template_dir, git_init_db_config() ends up being
+responsible only for forwarding core.* config values to
+platform_core_config(). However platform_core_config() already ignores
+non-core.* config values, so we can safely remove git_init_db_config()
+and invoke git_config() directly with platform_core_config() as the
+callback.
 
-As far as I can tell, parse_options() is only ever used once per
-command, and the help messages are small - hence this leak has very
-little impact.
+The platform_core_config forwarding was originally added in:
+  287853392a (mingw: respect core.hidedotfiles = false in git-init again, 2019-03-11
+And I suspect the potential for a leak existed since the original
+implementation of git_init_db_config in:
+  90b45187ba (Add `init.templatedir` configuration variable., 2010-02-17)
 
-This leak was found while running t0001. LSAN output can be found below:
+LSAN output from t0001:
 
-Direct leak of 65 byte(s) in 1 object(s) allocated from:
+Direct leak of 73 byte(s) in 1 object(s) allocated from:
     #0 0x49a859 in realloc /home/abuild/rpmbuild/BUILD/llvm-11.0.0.src/build/../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:164:3
-    #1 0x9aae36 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
-    #2 0x939d8d in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
-    #3 0x93b936 in strbuf_vaddf /home/ahunt/oss-fuzz/git/strbuf.c:392:3
-    #4 0x93b7ff in strbuf_addf /home/ahunt/oss-fuzz/git/strbuf.c:333:2
-    #5 0x86747e in preprocess_options /home/ahunt/oss-fuzz/git/parse-options.c:666:3
-    #6 0x866ed2 in parse_options /home/ahunt/oss-fuzz/git/parse-options.c:847:17
-    #7 0x51c4a7 in cmd_clone /home/ahunt/oss-fuzz/git/builtin/clone.c:989:9
-    #8 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
-    #9 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
-    #10 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
-    #11 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
-    #12 0x69c9fe in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
-    #13 0x7fdac42d4349 in __libc_start_main (/lib64/libc.so.6+0x24349)
+    #1 0x9a7276 in xrealloc /home/ahunt/oss-fuzz/git/wrapper.c:126:8
+    #2 0x9362ad in strbuf_grow /home/ahunt/oss-fuzz/git/strbuf.c:98:2
+    #3 0x936eaa in strbuf_add /home/ahunt/oss-fuzz/git/strbuf.c:295:2
+    #4 0x868112 in strbuf_addstr /home/ahunt/oss-fuzz/git/./strbuf.h:304:2
+    #5 0x86a8ad in expand_user_path /home/ahunt/oss-fuzz/git/path.c:758:2
+    #6 0x720bb1 in git_config_pathname /home/ahunt/oss-fuzz/git/config.c:1287:10
+    #7 0x5960e2 in git_init_db_config /home/ahunt/oss-fuzz/git/builtin/init-db.c:161:11
+    #8 0x7255b8 in configset_iter /home/ahunt/oss-fuzz/git/config.c:1982:7
+    #9 0x7253fc in repo_config /home/ahunt/oss-fuzz/git/config.c:2311:2
+    #10 0x725ca7 in git_config /home/ahunt/oss-fuzz/git/config.c:2399:2
+    #11 0x593e8d in create_default_files /home/ahunt/oss-fuzz/git/builtin/init-db.c:225:2
+    #12 0x5935c6 in init_db /home/ahunt/oss-fuzz/git/builtin/init-db.c:449:11
+    #13 0x59588e in cmd_init_db /home/ahunt/oss-fuzz/git/builtin/init-db.c:714:9
+    #14 0x4cd60d in run_builtin /home/ahunt/oss-fuzz/git/git.c:453:11
+    #15 0x4cb2da in handle_builtin /home/ahunt/oss-fuzz/git/git.c:704:3
+    #16 0x4ccc37 in run_argv /home/ahunt/oss-fuzz/git/git.c:771:4
+    #17 0x4cac29 in cmd_main /home/ahunt/oss-fuzz/git/git.c:902:19
+    #18 0x69c4de in main /home/ahunt/oss-fuzz/git/common-main.c:52:11
+    #19 0x7f23552d6349 in __libc_start_main (/lib64/libc.so.6+0x24349)
 
 Signed-off-by: Andrzej Hunt <ajrhunt@google.com>
 ---
- parse-options.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ builtin/init-db.c | 28 +++++++---------------------
+ 1 file changed, 7 insertions(+), 21 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index fbea16eaf5c2..3fe1dacc08cb 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -625,6 +625,8 @@ static int show_gitcomp(const struct option *opts, int show_all)
-  *
-  * Right now this is only used to preprocess and substitute
-  * OPTION_ALIAS.
-+ *
-+ * The returned options should be freed using free_preprocessed_options.
-  */
- static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 					 const struct option *options)
-@@ -693,6 +695,21 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 	return newopt;
- }
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index dcc45bef5148..d31dbc883746 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -25,7 +25,6 @@
  
-+static void free_preprocessed_options(const struct option ** preprocessed_options, const struct option *original_options)
-+{
-+	int i;
-+
-+	if (!*preprocessed_options) {
-+		return;
-+	}
-+	for (i = 0; original_options[i].type != OPTION_END; i++) {
-+		if (original_options[i].type == OPTION_ALIAS) {
-+			free((void *)(*preprocessed_options)[i].help);
-+		}
-+	}
-+	free((void *)*preprocessed_options);
-+}
-+
- static int usage_with_options_internal(struct parse_opt_ctx_t *,
- 				       const char * const *,
- 				       const struct option *, int, int);
-@@ -838,15 +855,17 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 		  int flags)
- {
- 	struct parse_opt_ctx_t ctx;
--	struct option *real_options;
-+	const struct option *preprocessed_options, *original_options = NULL;
+ static int init_is_bare_repository = 0;
+ static int init_shared_repository = -1;
+-static const char *init_db_template_dir;
  
- 	disallow_abbreviated_options =
- 		git_env_bool("GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS", 0);
- 
- 	memset(&ctx, 0, sizeof(ctx));
--	real_options = preprocess_options(&ctx, options);
--	if (real_options)
--		options = real_options;
-+	preprocessed_options = preprocess_options(&ctx, options);
-+	if (preprocessed_options) {
-+		original_options = options;
-+		options = preprocessed_options;
-+	}
- 	parse_options_start_1(&ctx, argc, argv, prefix, options, flags);
- 	switch (parse_options_step(&ctx, options, usagestr)) {
- 	case PARSE_OPT_HELP:
-@@ -870,7 +889,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
+ 			     DIR *dir)
+@@ -94,7 +93,7 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
  	}
- 
- 	precompose_argv_prefix(argc, argv, NULL);
--	free(real_options);
-+	free_preprocessed_options(&preprocessed_options, original_options);
- 	free(ctx.alias_groups);
- 	return parse_options_end(&ctx);
  }
+ 
+-static void copy_templates(const char *template_dir)
++static void copy_templates(const char *template_dir, const char *init_template_dir)
+ {
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf template_path = STRBUF_INIT;
+@@ -107,7 +106,7 @@ static void copy_templates(const char *template_dir)
+ 	if (!template_dir)
+ 		template_dir = getenv(TEMPLATE_DIR_ENVIRONMENT);
+ 	if (!template_dir)
+-		template_dir = init_db_template_dir;
++		template_dir = init_template_dir;
+ 	if (!template_dir)
+ 		template_dir = to_free = system_path(DEFAULT_GIT_TEMPLATE_DIR);
+ 	if (!template_dir[0]) {
+@@ -154,17 +153,6 @@ static void copy_templates(const char *template_dir)
+ 	clear_repository_format(&template_format);
+ }
+ 
+-static int git_init_db_config(const char *k, const char *v, void *cb)
+-{
+-	if (!strcmp(k, "init.templatedir"))
+-		return git_config_pathname(&init_db_template_dir, k, v);
+-
+-	if (starts_with(k, "core."))
+-		return platform_core_config(k, v, cb);
+-
+-	return 0;
+-}
+-
+ /*
+  * If the git_dir is not directly inside the working tree, then git will not
+  * find it by default, and we need to set the worktree explicitly.
+@@ -212,10 +200,7 @@ static int create_default_files(const char *template_path,
+ 	int reinit;
+ 	int filemode;
+ 	struct strbuf err = STRBUF_INIT;
+-
+-	/* Just look for `init.templatedir` */
+-	init_db_template_dir = NULL; /* re-set in case it was set before */
+-	git_config(git_init_db_config, NULL);
++	const char *init_template_dir = NULL;
+ 
+ 	/*
+ 	 * First copy the templates -- we might have the default
+@@ -226,7 +211,8 @@ static int create_default_files(const char *template_path,
+ 	 * values (since we've just potentially changed what's available on
+ 	 * disk).
+ 	 */
+-	copy_templates(template_path);
++	git_config_get_value("init.templatedir", &init_template_dir);
++	copy_templates(template_path, init_template_dir);
+ 	git_config_clear();
+ 	reset_shared_repository();
+ 	git_config(git_default_config, NULL);
+@@ -422,8 +408,8 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	}
+ 	startup_info->have_repository = 1;
+ 
+-	/* Just look for `core.hidedotfiles` */
+-	git_config(git_init_db_config, NULL);
++	/* Ensure `core.hidedotfiles` is processed */
++	git_config(platform_core_config, NULL);
+ 
+ 	safe_create_dir(git_dir, 0);
+ 
 -- 
 gitgitgadget
+
