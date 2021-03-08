@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F3E9C1550F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 553A2C433E0
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71A666521F
+	by mail.kernel.org (Postfix) with ESMTP id 2BCDB6521F
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231675AbhCHPH4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 10:07:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37124 "EHLO
+        id S231648AbhCHPHz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 10:07:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231512AbhCHPHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 10:07:36 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A601C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:36 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso3998954wma.4
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:36 -0800 (PST)
+        with ESMTP id S231490AbhCHPHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 10:07:34 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D87A6C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:33 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso3998865wma.4
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gJLudztODFKzoIhgtxZ28nICKp+MPrebrA5U6dRSsmw=;
-        b=dz9gLElDp8IUO9WJ7M5huyK6Rp7m7PCdTRW90x17OkBabju7yFoFSl31ffY/3ton0V
-         eEhFWSJbSSkNzerGDyak7sk4PVmAorbvv2MKJzHpuuAY1iy1yIxnCG+dvctN/wrF5N/u
-         TRlZQ/0qBrT4LJt3Emo5IKd6TwsWNOBWRl2dJmV6H7DXxxiJp2Jt3WbLIGVqUiys+kJP
-         VBE24OdfUMTkBJLs7oZgevymwyaPg3GhYD2NUCKnHDnQ+VgYD3jlTzG6KSw+Pb8dp4z6
-         0Zb/TO/sViOLMRTZAZZMYyVMkIoqNp1MKPkXYp0T0UalIiN2nwvD1IrUTVMziShANZBJ
-         Xozw==
+        bh=KFeEOmsFZJPbSy/QcU7L4jdMb/+AWwLbq9RwsyCQvX8=;
+        b=FP9YDo7DqMuAa6e5YRPnuUgbLZX2SA0KLoCPqoRB711eWpI2Cqy2RH2Vh9F2iyustH
+         xNtg/s7A4Ulo6SVLyfM7W6XqaRcKINv9ESr4NgEx8LbI8Rzhg9s9TgFchC0/xQsc7pgF
+         LrFREml+Pq3i6iMNlxhjXnJBWHp2LJdMBY8ZdOFD/42jGZ9mohfYGSMp8meDRcEJMay8
+         Shk/H2mUgQsJHWB7Aco1NywxuJBjePR+jX0Ha5hCC3FhM09hLIotirUUSt4GAC6nk2eE
+         43C29xhSKz1Vs8fYrxDbLhl1yd8cd0tReMzUznSy55kPf/mvsbEGzpE2HnAjDueqQBlt
+         TNyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gJLudztODFKzoIhgtxZ28nICKp+MPrebrA5U6dRSsmw=;
-        b=LY+Itlp4Pq3GokhslOlqlQL4tetu+I4UR3sF+/JPvw1WJKvP5OCh1/BuCUgFQAqJoF
-         bL5ANNEujkaiivfKWraTP/Qwv5LzSRizWxnB4bcsyM+s+N1ogzDY7aXL3ggdVplzj9jM
-         NlKIFGMSGCmUixSWca4VupLJTFFON5HyIcgy9z0SIJDI6QuKaFqH78eYI02ajAdpcb5e
-         hDD9A/iCQjusDCgl6KRJRjQSmM86fPcHUln7QdUARIEZ6CU1UIcsWyfcABQ+wpC0pdQq
-         DiYKz1Tiko1WsT00u+CKmgoL5CCwlijBFUvSpnHjpIRYDTzrYNgGoYW4xC1s6AFtqwop
-         f8xA==
-X-Gm-Message-State: AOAM532zaVW6JD6g+dt+SBh/OoJBcoUuhPNMzuhzxG0ytIdPK+Kvzsnp
-        g35BOuBpOtl5zzrjqSL/QpwaOqVT7XQDNg==
-X-Google-Smtp-Source: ABdhPJz4u2pT54X7xcPcN+WLRI0U//PYah5hNHIBHteI8tGThrmigVgzDJd0aYp2CmcwYZUNUD3RpQ==
-X-Received: by 2002:a1c:4802:: with SMTP id v2mr23077311wma.139.1615216054548;
-        Mon, 08 Mar 2021 07:07:34 -0800 (PST)
+        bh=KFeEOmsFZJPbSy/QcU7L4jdMb/+AWwLbq9RwsyCQvX8=;
+        b=oa+EcCBTu11VRMIS/iCMqh4XYj8SoUfyL6v28/cBr5Mo9KOa9EUgLVQ1YEiyHe/v9R
+         NDQTwk14SFTVN+P8RRSVNnOAJOmJDsUVwGLQEeLUYS0514RGRIpHTgUvCaeOBf9YjF9O
+         bi4eM+GuP6HrTLCnpmt184vdUyN9I3boZ0WZsNWAyHdUNXqLTvM/JdgNkxVRixSUMFkQ
+         cmgL0py53wZw82PDQL+bhAakA2YNyMkmNkpgQ0ndcszTFXdMNXm36xDb956ucnbntt1D
+         6BilFlA9vwu1eSVhAJSfXMvW7R1IYNRcAJXo1nt9HrwLMN2UW8kCC+US504+1P37Hw09
+         0CaA==
+X-Gm-Message-State: AOAM532nK8pSI3ZBG2gRWnHDvJZL6ntQrQ0WLDEwf2V4ZD8xQj+hgwtK
+        cdpSthPtHfFJI45IZNZF7qov86pf1g8N9A==
+X-Google-Smtp-Source: ABdhPJx8jytEdIs+Qpsx2wue+KvFsAvH+xoMjCrzcmU59ZxQzOA5Hxap2zXthyibXY7Dle7T34cyFw==
+X-Received: by 2002:a05:600c:2301:: with SMTP id 1mr23253533wmo.36.1615216052331;
+        Mon, 08 Mar 2021 07:07:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.33
+        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 07:07:34 -0800 (PST)
+        Mon, 08 Mar 2021 07:07:31 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 30/30] tree-walk.h API: move canon_mode() back out of decode_tree_entry()
-Date:   Mon,  8 Mar 2021 16:06:50 +0100
-Message-Id: <20210308150650.18626-31-avarab@gmail.com>
+Subject: [PATCH 27/30] tree-walk.h API: add a tree_entry_extract_type() function
+Date:   Mon,  8 Mar 2021 16:06:47 +0100
+Message-Id: <20210308150650.18626-28-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <20210308022138.28166-1-avarab@gmail.com>
 References: <20210308022138.28166-1-avarab@gmail.com>
@@ -79,243 +79,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the canon_mode() call back out of decode_tree_entry(), and
-instead make it the responsibility of its callers to canonicalize the
-tree modes we get.
+Add and use a tree_entry_extract_type() function. There were callers
+of tree_entry_extract() which didn't care about the mode, but just the
+type in the tree entry.
 
-This effectively reverts 7146e66f086 (tree-walk: finally switch over
-tree descriptors to contain a pre-parsed entry, 2014-02-06), with the
-recent of most callers away from "mode" (now "raw_mode") towards "enum
-object_id" in recent commit the motivation for that commit effectively
-doesn't exist anymore.
-
-I.e. I'm not adding the canon_mode() call back to
-tree_entry_extract(), instead it's now become sane to move this
-responsibility to those callers that still care about the "raw_mode".
-
-That change was meant as a pure optimization change, but it actually
-introduced a subtle bug. We were left without any low-level API to get
-non-standard mode bits out of trees. Having non-standard modes isn't
-the norm, and fsck should warn about it.
-
-Except after 7146e66f086 it couldn't anymore, since the modes
-fsck_tree() got would be pre-sanitized for it. I believe that fsck
-issue is per-se a serious bug, the "bad mode" was a default warning,
-not an error.
-
-This change makes that fsck check work again, why aren't there any
-test changes for fsck here? Because we didn't have a test for that
-fsck feature in the first place, which is why the regression in
-7146e66f086 snuck by us. A follow-up commit will add such a test.
-
-It is possible that this commit is introducing some subtle regression
-that I've missed.
-
-We are now propagating the "raw_mode" outside of everything downstream
-of decode_tree_entry(), which is everything we have that decodes
-trees. It's our most low-level tree decoding API.
-
-As shown here we rely parsing out a "raw" (and possibly something fsck
-would complain about) mode as-is, but when we run merge, add something
-new to the index, create an archive etc. we don't want to propagate
-that bad mode when we create new data. We want to canon_mode() it.
-
-I'm also pretty sure that we don't have good enough test coverage for
-those scenarios. We barely have tests for these bad mode bits at
-all (not even one for fsck). We definitely are not testing all
-merge/index/archive etc. interactions.
-
-Still, I think this change is worth it overall, because:
-
- 1. We must have a way to get at these raw modes in some way, even if
-    just for fsck. There's also other things that care, see e.g. the
-    FIXME comment in 62fdec17a11 (merge-ort: flesh out implementation of
-    handle_content_merge(), 2021-01-01)
-
- 2. #1 is not a justification for this change, I could have e.g. just
-    added the ability to pass some "want_raw" flag into
-    decode_tree_entry() for use in fsck. But I think with the migration
-    of most tree iteration towards "enum object_type" it's become worth
-    it.
-
- 3. Yes our test coverage sucks, but before 7146e66f086 we were also
-    spreading what's now the "raw_mode" all over the place. That commit
-    was first released with Git v2.0.0 in mid-2014. A while ago for sure,
-    but most of this code existed in something approximating its current
-    form then. This isn't new territory.
+In emit_path() the "mode" variable was not used after the "isdir"
+assignment, as can be seen in the diff with it being set to 0.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive.c              |  2 +-
- builtin/checkout.c     |  1 +
- builtin/ls-files.c     |  2 +-
- builtin/merge-tree.c   |  6 +++---
- builtin/update-index.c |  1 +
- merge-ort.c            | 13 ++++++++++++-
- notes.c                |  1 +
- tree-walk.c            |  1 -
- unpack-trees.c         |  4 +++-
- 9 files changed, 23 insertions(+), 8 deletions(-)
+ match-trees.c | 12 ++++++------
+ tree-diff.c   |  5 +++--
+ tree-walk.h   | 11 +++++++++++
+ 3 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 5b85aae8106..8083f15f3ba 100644
---- a/archive.c
-+++ b/archive.c
-@@ -236,7 +236,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 					void *context)
- {
- 	struct archiver_context *c = context;
--	unsigned mode = raw_mode;
-+	unsigned mode = canon_mode(raw_mode);
+diff --git a/match-trees.c b/match-trees.c
+index 3d2c74a44ac..0636f6e58e9 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -143,11 +143,11 @@ static void match_trees(const struct object_id *hash1,
+ 	while (one.size) {
+ 		const char *path;
+ 		const struct object_id *elem;
+-		unsigned short mode;
++		enum object_type object_type;
+ 		int score;
  
- 	while (c->bottom &&
- 	       !(base->len >= c->bottom->len &&
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d4adfdb5046..7f25b955616 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -132,6 +132,7 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
- 	memcpy(ce->name + base->len, pathname, len - base->len);
- 	ce->ce_flags = create_ce_flags(0) | CE_UPDATE;
- 	ce->ce_namelen = len;
-+	mode = canon_mode(mode);
- 	ce->ce_mode = create_ce_mode(mode);
+-		elem = tree_entry_extract_mode(&one, &path, &mode);
+-		if (!S_ISDIR(mode))
++		elem = tree_entry_extract_type(&one, &path, &object_type);
++		if (object_type != OBJ_TREE)
+ 			goto next;
+ 		score = score_trees(elem, hash2);
+ 		if (*best_score < score) {
+@@ -198,14 +198,14 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
  
- 	/*
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 391e6a9f141..926523d77a7 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -429,7 +429,7 @@ static int read_one_entry_opt(struct index_state *istate,
- {
- 	int len;
- 	struct cache_entry *ce;
--	unsigned mode = raw_mode;
-+	unsigned mode = canon_mode(raw_mode);
+ 	rewrite_here = NULL;
+ 	while (desc.size) {
++		enum object_type object_type;
+ 		const char *name;
+-		unsigned short mode;
+ 		int len = tree_entry_len(&desc.entry);
  
- 	if (S_ISDIR(mode))
- 		return READ_TREE_RECURSIVE;
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index b4e736e4b72..f8733a86eb7 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -197,9 +197,9 @@ static void resolve(const struct traverse_info *info, struct name_entry *ours, s
- 		return;
+-		tree_entry_extract_mode(&desc, &name, &mode);
++		tree_entry_extract_type(&desc, &name, &object_type);
+ 		if (len == toplen &&
+ 		    !memcmp(name, prefix, toplen)) {
+-			if (!S_ISDIR(mode))
++			if (object_type != OBJ_TREE)
+ 				die("entry %s in tree %s is not a tree", name,
+ 				    oid_to_hex(oid1));
  
- 	path = traverse_path(info, result);
--	orig_mode = ours->raw_mode;
-+	orig_mode = canon_mode(ours->raw_mode);
- 	orig = create_entry(2, orig_mode, &ours->oid, path);
--	final_mode = result->raw_mode;
-+	final_mode = canon_mode(result->raw_mode);
- 	final = create_entry(0, final_mode, &result->oid, path);
+diff --git a/tree-diff.c b/tree-diff.c
+index b25095c1164..10c92d39c42 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -208,10 +208,11 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *p,
+ 		 * 1) all modes for tp[i]=tp[imin] should be the same wrt
+ 		 *    S_ISDIR, thanks to base_name_compare().
+ 		 */
+-		tree_entry_extract_mode(&tp[imin], &path, &mode);
++		enum object_type object_type;
++		tree_entry_extract_type(&tp[imin], &path, &object_type);
+ 		pathlen = tree_entry_len(&tp[imin].entry);
  
- 	final->link = orig;
-@@ -252,7 +252,7 @@ static struct merge_list *link_entry(unsigned stage, const struct traverse_info
- 		path = entry->path;
- 	else
- 		path = traverse_path(info, n);
--	link_mode = n->raw_mode;
-+	link_mode = canon_mode(n->raw_mode);
- 	link = create_entry(stage, link_mode, &n->oid, path);
- 
- 	link->link = entry;
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index b489a876392..1996fdd97af 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -621,6 +621,7 @@ static struct cache_entry *read_one_ent(const char *which,
- 	memcpy(ce->name, path, namelen);
- 	ce->ce_flags = create_ce_flags(stage);
- 	ce->ce_namelen = namelen;
-+	mode = canon_mode(mode);
- 	ce->ce_mode = create_ce_mode(mode);
- 	return ce;
+-		isdir = S_ISDIR(mode);
++		isdir = object_type == OBJ_TREE;
+ 		oid = NULL;
+ 		mode = 0;
+ 	}
+diff --git a/tree-walk.h b/tree-walk.h
+index 06ad40ab2f1..1f69e57db4c 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -47,6 +47,7 @@ struct tree_desc {
+  * appropriate variable to fill in (NULL won't do!):
+  *
+  * tree_entry_extract_mode(): const char *path, unsigned int mode
++ * tree_entry_extract_type(): const char *path, enum object_type
+  * tree_entry_extract_all(): const char *path, unsigned int mode, enum object_type
+  */
+ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *desc,
+@@ -58,6 +59,16 @@ static inline const struct object_id *tree_entry_extract_mode(struct tree_desc *
+ 	return &desc->entry.oid;
  }
-diff --git a/merge-ort.c b/merge-ort.c
-index ea20bbe2af3..d1e8a2823e0 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -502,7 +502,7 @@ static void setup_path_info(struct merge_options *opt,
- 	mi->basename_offset = current_dir_name_len;
- 	mi->clean = !!resolved;
- 	if (resolved) {
--		mi->result.mode = merged_version->raw_mode;
-+		mi->result.mode = canon_mode(merged_version->raw_mode);
- 		oidcpy(&mi->result.oid, &merged_version->oid);
- 		mi->is_null = !!is_null;
- 	} else {
-@@ -512,6 +512,16 @@ static void setup_path_info(struct merge_options *opt,
- 		ASSIGN_AND_VERIFY_CI(ci, mi);
- 		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
- 			ci->pathnames[i] = fullpath;
-+			/*
-+			 * We must not use canon_mode() here. Will
-+			 * fail on an the is_null assertion in
-+			 * 6a02dd90c99 (merge-ort: add a preliminary
-+			 * simple process_entries() implementation,
-+			 * 2020-12-13) when combined with the tests in
-+			 * "[PATCH 00/11] Complete merge-ort
-+			 * implementation...almost" (see
-+			 * https://lore.kernel.org/git/pull.973.git.git.1614905738.gitgitgadget@gmail.com/)
-+			 */
- 			ci->stages[i].mode = names[i].raw_mode;
- 			oidcpy(&ci->stages[i].oid, &names[i].oid);
- 		}
-@@ -546,6 +556,7 @@ static void add_pair(struct merge_options *opt,
- 	int names_idx = is_add ? side : 0;
- 	const struct object_id *oid = &names[names_idx].oid;
- 	unsigned int mode = names[names_idx].raw_mode;
-+	mode = canon_mode(mode);
  
- 	one = alloc_filespec(pathname);
- 	two = alloc_filespec(pathname);
-diff --git a/notes.c b/notes.c
-index 2817325651a..78b1b38d36b 100644
---- a/notes.c
-+++ b/notes.c
-@@ -479,6 +479,7 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 			const char *q = oid_to_hex(&subtree->key_oid);
- 			size_t i;
- 			unsigned int mode = entry.raw_mode;
-+			mode = canon_mode(mode);
- 			for (i = 0; i < prefix_len; i++) {
- 				strbuf_addch(&non_note_path, *q++);
- 				strbuf_addch(&non_note_path, *q++);
-diff --git a/tree-walk.c b/tree-walk.c
-index 099a9b3bd77..3175430d049 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -47,7 +47,6 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
- 
- 	/* Initialize the descriptor entry */
- 	desc->entry.path = path;
--	mode = canon_mode(mode);
- 	desc->entry.raw_mode = mode;
- 	desc->entry.object_type = object_type(mode);
- 	desc->entry.pathlen = len - 1;
-diff --git a/unpack-trees.c b/unpack-trees.c
-index dcdf8130745..2fb346714b3 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -868,6 +868,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	newinfo.name = p->path;
- 	newinfo.namelen = p->pathlen;
- 	newinfo.mode = p->raw_mode;
-+	newinfo.mode = canon_mode(newinfo.mode);
- 	newinfo.pathlen = st_add3(newinfo.pathlen, tree_entry_len(p), 1);
- 	newinfo.df_conflicts |= df_conflicts;
- 
-@@ -1020,7 +1021,8 @@ static struct cache_entry *create_ce_entry(const struct traverse_info *info,
- 		is_transient ?
- 		make_empty_transient_cache_entry(len) :
- 		make_empty_cache_entry(istate, len);
--	unsigned int mode = n->raw_mode;
-+	unsigned int mode = canon_mode(n->raw_mode);
-+	mode = canon_mode(mode);
- 
- 	ce->ce_mode = create_ce_mode(mode);
- 	ce->ce_flags = create_ce_flags(stage);
++static inline const struct object_id *tree_entry_extract_type(struct tree_desc *desc,
++							      const char **pathp,
++							      enum object_type *object_typep)
++{
++	*pathp = desc->entry.path;
++	*object_typep = desc->entry.object_type;
++	return &desc->entry.oid;
++}
++
++
+ static inline const struct object_id *tree_entry_extract_all(struct tree_desc *desc,
+ 							     const char **pathp,
+ 							     unsigned short *modep,
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
