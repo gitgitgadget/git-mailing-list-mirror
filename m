@@ -2,74 +2,73 @@ Return-Path: <SRS0=iBdC=IG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60E1CC433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 333E7C433E0
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:13:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E7BC651A2
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:12:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6D9F651CC
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 13:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbhCHNMH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 08:12:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39768 "EHLO
+        id S229601AbhCHNMn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 08:12:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbhCHNLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 08:11:45 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E76D7C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 05:11:44 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id dm26so14603792edb.12
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 05:11:44 -0800 (PST)
+        with ESMTP id S229972AbhCHNMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 08:12:18 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A21C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 05:12:17 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id jt13so20344018ejb.0
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 05:12:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=YgJ5tLVnQ9x97B62KTToLJUamZZEMA9Abm+FjsYNg1M=;
-        b=F2ZhPptzfXdik+94g6EqtF4jh41lYSWkj9zWTFmpUHnndxSW6kJ/JPTMyYM/w8OmjL
-         wutW6UKPSNZ8ca+yTulUzEyAYdp2IY+06vx9apnVEQEiJHQmd8suUkBk+sGj/MmlND5r
-         XpftXq5U1y8lHqIAGBjemsHhFVPnvbpOZ2agynOajRc+iMvT5kugCthmzj+aPU3DIOgV
-         +GpiZVBIo6jR5pResW7tG1mlMoxCLK7fXyEM2/lujSugBTV7ZrQD9QxV2wKL819G3pFF
-         rHYY6Lukdrwg6tFVVUqBHsM+B/ejGeVP93UsO1PcSU+F6H0QnZj5w2YywJ0bDslxN4Tg
-         ubmQ==
+        bh=qgfaXNd5jkDp1390s8Pkt/vQ/fCb1zB7q09f5yOWTZU=;
+        b=jhMHyCkVqkhfTSATmFv02CUAXO6q/dcpa5CXEXmKBEWsb2oaNomGslaH7tgO5G55Sv
+         C5gfPFxVvuJ/w9oF7GIKwC2ZF01myVcm2sEn7w1evtNVSfIUlppxxxdj37GB+2MHdeec
+         zyJrShHiWTYt9c3bpeIOigu6H4EyIvV7acvOgP1wTRDxTYq16umNi098m+DPQizVlVDQ
+         SEhTVXMbhGtxrGpvno0XYoofhV0VKTO4iFdmpvzvrSRanyT1SgrFKhRc0Dj8pgImXymy
+         84CY/kewBsI5/NG3zW+dlNy8cVgaNBRujvzKHovy43SzR08yA1n8VgCSwAArG0gkMroG
+         TlhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=YgJ5tLVnQ9x97B62KTToLJUamZZEMA9Abm+FjsYNg1M=;
-        b=dRGH0kM99Pt8q7yWXKdhrPCweZAxh5MdSfkqZFQ7IHUtPjIuFAGPPYJ6+RfwSG+F84
-         TIztbP0SGxqUTId5raqGux9vRsT3rcxhHgsyp2YmXdCgPGqd6Q7OlUbOqtpewI42aZ8o
-         3+b+3cT/nXX94aw/J9F801K0hWHiUJgKpkZZIrms+jPj01VZBT4NEam3KOBWjuZEKWnv
-         p8JbpnzUUBQOcyKb2suTIuOEpdj5xdvxwiN57CebZz5XKDRZIMGLKT1SxpeBypl9qZj3
-         BDn22NWLeHOrcGwFNKN6y+o9Yw0hd3Ok4gL5MuMii+/ij9cUrVHnIbsPKqs7dpRWlFZw
-         3c+Q==
-X-Gm-Message-State: AOAM531GuCoJelZyFa9XXtAkkogOuqATiJgOUSsxzoA/uUrBahQn+9yj
-        ukOjmrcixV8F1xGpYer6FiQPkcXamzzPRA==
-X-Google-Smtp-Source: ABdhPJxJ1NxM58OfYv/m2uGOSJ5w9kCbNczZLNDtdJWd6tZdG8ZhWdrc4JTA+AfLwSUNZcJwu6jwiA==
-X-Received: by 2002:a50:fd83:: with SMTP id o3mr22690339edt.90.1615209103026;
-        Mon, 08 Mar 2021 05:11:43 -0800 (PST)
+        bh=qgfaXNd5jkDp1390s8Pkt/vQ/fCb1zB7q09f5yOWTZU=;
+        b=cV4epZrIQz4I0Z376GsQNg+UOYnFhSjZoqXzRQPiF96cNOZktMeqT0S0oA3lGyacwk
+         SUwgrsggXjHESWz3YSDhSAo4+/diY0+avBw9H/IWtuLrUgff/UbMUQ9PWU/U8TacdrNo
+         884/gg+IPzyfyHUr0kdLUNlFzTzGG84j5grEYxwt6QtLlPcLErLPuc6uIEOYAOWCFD6q
+         3twUDmCX4K4MvwfXa2Rc+w7wZG97F97OXgeVD2/6WMUGvZMj/MYa8f96/aq6hlfjT5i2
+         CPlYfPGo1zMKqRZdes+AKLUP1pkNZDVaDy+hOnP+KI78ZtHz8UkfWbhmW6hOyzGdnOgS
+         OWMw==
+X-Gm-Message-State: AOAM531iBF6M0OEGdseBIOQ7cuWdFE+wXAE4CQIgbBh0dC9Z9ybSPtwb
+        S/Tn/Jb/4ksKsAW70EghxX0b4dlHxn104Q==
+X-Google-Smtp-Source: ABdhPJzEmmQr2D6GkbS/sUmjEZ8CtbVU3Num7YZ5E4H2Q3R8MvFfp2vo35C11uNATRulFXcz+SUawA==
+X-Received: by 2002:a17:906:7fc4:: with SMTP id r4mr14708129ejs.81.1615209136343;
+        Mon, 08 Mar 2021 05:12:16 -0800 (PST)
 Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id u15sm6521014ejy.48.2021.03.08.05.11.42
+        by smtp.gmail.com with ESMTPSA id b4sm7679851edh.40.2021.03.08.05.12.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 05:11:42 -0800 (PST)
+        Mon, 08 Mar 2021 05:12:15 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
         Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 10/11] merge-ort: write $GIT_DIR/AUTO_MERGE whenever we
- hit a conflict
+Subject: Re: [PATCH 11/11] merge-recursive: add a bunch of FIXME comments
+ documenting known bugs
 References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
- <d8c6eb39aa7c39263b7f0333ec92a3cc65c367ec.1614905738.git.gitgitgadget@gmail.com>
+ <0409118d4ff76a8dc0285c436f89478176752955.1614905738.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <d8c6eb39aa7c39263b7f0333ec92a3cc65c367ec.1614905738.git.gitgitgadget@gmail.com>
-Date:   Mon, 08 Mar 2021 14:11:42 +0100
-Message-ID: <87v9a1iycx.fsf@evledraar.gmail.com>
+In-reply-to: <0409118d4ff76a8dc0285c436f89478176752955.1614905738.git.gitgitgadget@gmail.com>
+Date:   Mon, 08 Mar 2021 14:12:15 +0100
+Message-ID: <87sg55iyc0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -81,171 +80,11 @@ On Fri, Mar 05 2021, Elijah Newren via GitGitGadget wrote:
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> There are a variety of questions users might ask while resolving
-> conflicts:
->   * What changes have been made since the previous (first) parent?
->   * What changes are staged?
->   * What is still unstaged? (or what is still conflicted?)
->   * What changes did I make to resolve conflicts so far?
-> The first three of these have simple answers:
->   * git diff HEAD
->   * git diff --cached
->   * git diff
-> There was no way to answer the final question previously.  Adding one
-> is trivial in merge-ort, since it works by creating a tree representing
-> what should be written to the working copy complete with conflict
-> markers.  Simply write that tree to .git/AUTO_MERGE, allowing users to
-> answer the fourth question with
->   * git diff AUTO_MERGE
->
-> I avoided using a name like "MERGE_AUTO", because that would be
-> merge-specific (much like MERGE_HEAD, REBASE_HEAD, REVERT_HEAD,
-> CHERRY_PICK_HEAD) and I wanted a name that didn't change depending on
-> which type of operation the merge was part of.
+> The plan is to just delete merge-recursive, but not until everyone is
+> comfortable with merge-ort as a replacement.  Given that I haven't
+> switched all callers of merge-recursive over yet (e.g. git-am still uses
+> merge-recursive), maybe there's some value documenting known bugs in the
+> algorithm in case we end up keeping it or someone wants to dig it up in
+> the future.
 
-That's a really cool feature. I'm starting to like this "ort" thing :)
-
-(After knowing almost nothing about it until a few days ago...)
-
-> Ensure that paths which clean out other temporary operation-specific
-> files (e.g. CHERRY_PICK_HEAD, MERGE_MSG, rebase-merge/ state directory)
-> also clean out this AUTO_MERGE file.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  branch.c         |  1 +
->  builtin/rebase.c |  1 +
->  merge-ort.c      | 10 ++++++++++
->  path.c           |  1 +
->  path.h           |  2 ++
->  sequencer.c      |  5 +++++
->  6 files changed, 20 insertions(+)
->
-> diff --git a/branch.c b/branch.c
-> index 9c9dae1eae32..b71a2de29dbe 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -344,6 +344,7 @@ void remove_merge_branch_state(struct repository *r)
->  	unlink(git_path_merge_rr(r));
->  	unlink(git_path_merge_msg(r));
->  	unlink(git_path_merge_mode(r));
-> +	unlink(git_path_auto_merge(r));
->  	save_autostash(git_path_merge_autostash(r));
->  }
->  
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index de400f9a1973..7d9afe118fd4 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -739,6 +739,7 @@ static int finish_rebase(struct rebase_options *opts)
->  	int ret = 0;
->  
->  	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-> +	unlink(git_path_auto_merge(the_repository));
->  	apply_autostash(state_dir_path("autostash", opts));
->  	close_object_store(the_repository->objects);
->  	/*
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 37b69cbe0f9a..cf927cd160e1 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -3362,6 +3362,9 @@ void merge_switch_to_result(struct merge_options *opt,
->  {
->  	assert(opt->priv == NULL);
->  	if (result->clean >= 0 && update_worktree_and_index) {
-> +		const char *filename;
-> +		FILE *fp;
-> +
->  		trace2_region_enter("merge", "checkout", opt->repo);
->  		if (checkout(opt, head, result->tree)) {
->  			/* failure to function */
-> @@ -3380,6 +3383,13 @@ void merge_switch_to_result(struct merge_options *opt,
->  		}
->  		opt->priv = NULL;
->  		trace2_region_leave("merge", "record_conflicted", opt->repo);
-> +
-> +		trace2_region_enter("merge", "write_auto_merge", opt->repo);
-> +		filename = git_path_auto_merge(opt->repo);
-> +		fp = xfopen(filename, "w");
-> +		fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid));
-> +		fclose(fp);
-> +		trace2_region_leave("merge", "write_auto_merge", opt->repo);
-
-This isn't a new problem since you're just folling an existing pattern,
-but here you (rightly) do xopen()< and the:n
-
->  	}
->  
->  	if (display_update_msgs) {
-> diff --git a/path.c b/path.c
-> index 7b385e5eb282..9e883eb52446 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -1534,5 +1534,6 @@ REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
->  REPO_GIT_PATH_FUNC(merge_mode, "MERGE_MODE")
->  REPO_GIT_PATH_FUNC(merge_head, "MERGE_HEAD")
->  REPO_GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
-> +REPO_GIT_PATH_FUNC(auto_merge, "AUTO_MERGE")
->  REPO_GIT_PATH_FUNC(fetch_head, "FETCH_HEAD")
->  REPO_GIT_PATH_FUNC(shallow, "shallow")
-> diff --git a/path.h b/path.h
-> index e7e77da6aaa5..251c78d98000 100644
-> --- a/path.h
-> +++ b/path.h
-> @@ -176,6 +176,7 @@ struct path_cache {
->  	const char *merge_mode;
->  	const char *merge_head;
->  	const char *merge_autostash;
-> +	const char *auto_merge;
->  	const char *fetch_head;
->  	const char *shallow;
->  };
-> @@ -191,6 +192,7 @@ const char *git_path_merge_rr(struct repository *r);
->  const char *git_path_merge_mode(struct repository *r);
->  const char *git_path_merge_head(struct repository *r);
->  const char *git_path_merge_autostash(struct repository *r);
-> +const char *git_path_auto_merge(struct repository *r);
->  const char *git_path_fetch_head(struct repository *r);
->  const char *git_path_shallow(struct repository *r);
->  
-> diff --git a/sequencer.c b/sequencer.c
-> index d2332d3e1787..472cdd8c620d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2096,6 +2096,7 @@ static int do_pick_commit(struct repository *r,
->  		refs_delete_ref(get_main_ref_store(r), "", "CHERRY_PICK_HEAD",
->  				NULL, 0);
->  		unlink(git_path_merge_msg(r));
-> +		unlink(git_path_auto_merge(r));
-
-Shouldn't this & the rest ideally be at least unlink_or_warn()?
-
->  		fprintf(stderr,
->  			_("dropping %s %s -- patch contents already upstream\n"),
->  			oid_to_hex(&commit->object.oid), msg.subject);
-> @@ -2451,6 +2452,8 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
->  		need_cleanup = 1;
->  	}
->  
-> +	unlink(git_path_auto_merge(r));
-> +
->  	if (!need_cleanup)
->  		return;
->  
-> @@ -4111,6 +4114,7 @@ static int pick_commits(struct repository *r,
->  			unlink(rebase_path_stopped_sha());
->  			unlink(rebase_path_amend());
->  			unlink(git_path_merge_head(r));
-> +			unlink(git_path_auto_merge(r));
->  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
->  
->  			if (item->command == TODO_BREAK) {
-> @@ -4505,6 +4509,7 @@ static int commit_staged_changes(struct repository *r,
->  		return error(_("could not commit staged changes."));
->  	unlink(rebase_path_amend());
->  	unlink(git_path_merge_head(r));
-> +	unlink(git_path_auto_merge(r));
->  	if (final_fixup) {
->  		unlink(rebase_path_fixup_msg());
->  		unlink(rebase_path_squash_msg());
-
+Yes, I think that's very useful.
