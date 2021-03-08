@@ -2,177 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77396C433DB
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 19:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2896C433E6
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 20:05:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E1CE652B4
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 19:46:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FB1F65274
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 20:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbhCHTq1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 14:46:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55970 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231254AbhCHTqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 14:46:14 -0500
-Received: (qmail 26842 invoked by uid 109); 8 Mar 2021 19:46:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 08 Mar 2021 19:46:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21523 invoked by uid 111); 8 Mar 2021 19:46:14 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 08 Mar 2021 14:46:14 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 8 Mar 2021 14:46:13 -0500
-From:   Jeff King <peff@peff.net>
-To:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
-        Andrzej Hunt <ajrhunt@google.com>
-Subject: Re: [PATCH 7/7] parse-options: don't leak alias help messages
-Message-ID: <YEZ/BWWbpfVwl6nO@coredump.intra.peff.net>
-References: <pull.899.git.1615228580.gitgitgadget@gmail.com>
- <fb456bee0f69e0ca5e596b30705c42cc037edecc.1615228580.git.gitgitgadget@gmail.com>
+        id S231570AbhCHUFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 15:05:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231744AbhCHUEo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 15:04:44 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE68C06175F
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 12:04:44 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id l22so250209wme.1
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 12:04:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KipHiPsZVwAPYodCfTd8SF40vSGhuGSBk2G5AKWbUz4=;
+        b=I6IOvalpWsDl9Lmnr53keAkSizp4eO37GssYsZoXylY3fLBjrwXlbHDQc3Ik2hWhuV
+         ssN7U5YT5B7OUDRVmN1iX/ENcGMRQRRf6/9xeHphersWB+x6Bc5MTeUGH9qA57tNrB0j
+         bwe7phB1eiyky0RtKFQxpL7dJCZg7MT51NT2CsSZWrEJlIzrXVmIBiXfniH7s67hF990
+         xiEq8U3xEmlcrRtrNVNuoaNmlfNWjp2q8z7aA9nBVL+AMZTmT8XIbi7xWIhl0Fqewdyu
+         4TOBeqGwHAZKKNqiIecqI49qATFosx/IfW46yaSwKBSMF3R8ofWFxiUvVBw2qdMCX4+G
+         MxPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KipHiPsZVwAPYodCfTd8SF40vSGhuGSBk2G5AKWbUz4=;
+        b=bCZc19WZmbNHEC/LR54B6bIRwum8W5Xwh84TvNQ6vJV/D2VXVS9RrN5ZW92Hk1gCK7
+         iOcvI48ieUzYfzd0CBKBn886s2ondn6+TLG4fxVz/cXdTU/uifzrAtWYXla3FF1O8hnn
+         fGrVLzM2PCpXDvOx6YUfD2xqCopqmuAbWZJdYWMGrjMzrNrEvQH7rf2UsrK69s7jV13h
+         hCX1stHk5hBWHO9Rxg9eg51peLz8OxypaBfyOoUovXQcwd6ErN1E1QblC+MCGO4Rtn7h
+         PiIih37F/pQr8m/futczrfV2a0jWCOL7MFsLJD73pR66T9bCloae9AiyJh8yD3gstpoL
+         S3Sw==
+X-Gm-Message-State: AOAM5322K2dlWV9GLq2DzxDz0EIr82Ye+d68ufPOBEaSApb1cDlbpqbe
+        OF3QHtxPQuYvptig70Atma0sKi2x0meE/g==
+X-Google-Smtp-Source: ABdhPJz65vuLI5qVfeAbDuKB+nxfq6rICHt14yYTYFoo0SgWOUf98ehwB/htroxOnmbMT3tq01PEPA==
+X-Received: by 2002:a1c:2017:: with SMTP id g23mr439651wmg.126.1615233882715;
+        Mon, 08 Mar 2021 12:04:42 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q15sm20790786wrr.58.2021.03.08.12.04.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Mar 2021 12:04:42 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 2/7] object.c: make type_from_string() return "enum object_type"
+Date:   Mon,  8 Mar 2021 21:04:21 +0100
+Message-Id: <20210308200426.21824-3-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.0.rc1.210.g0f8085a843c
+In-Reply-To: <Pine.LNX.4.21.0506212033590.30848-100000@iabervon.org>
+References: <Pine.LNX.4.21.0506212033590.30848-100000@iabervon.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fb456bee0f69e0ca5e596b30705c42cc037edecc.1615228580.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 08, 2021 at 06:36:20PM +0000, Andrzej Hunt via GitGitGadget wrote:
+Change the type_from_string*() functions to return an "enum
+object_type", and refactor their callers to check for "== OBJ_BAD"
+instead of "< 0".
 
-> preprocess_options() allocates new strings for help messages for
-> OPTION_ALIAS. Therefore we also need to clean those help messages up
-> when freeing the returned options.
+This helps to distinguish code in object.c where we really do return
+-1 from code that returns an "enum object_type", whose OBJ_BAD happens
+to be -1.
 
-Yep, makes sense.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ fsck.c        |  2 +-
+ object-file.c |  2 +-
+ object.c      | 12 ++++++------
+ object.h      |  4 ++--
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-> The preprocessed options themselves no longer contain any indication
-> that a given option is/was an alias: the easiest and fastest way to
-> figure it out is to look back at the original options. Alternatively we
-> could iterate over the alias_groups list - but that would require nested
-> looping and is likely to be a (little) less efficient.
-
-Yeah, this is a bit ugly. We could probably set a bit in the aliased
-struct's flags field to indicate that it's an alias, though.
-
-> As far as I can tell, parse_options() is only ever used once per
-> command, and the help messages are small - hence this leak has very
-> little impact.
-
-We _could_ UNLEAK() it, but I prefer this actual cleanup. We're getting
-far enough away from main() that we aren't actually sure that we'll only
-be called once per process.
-
-> +static void free_preprocessed_options(const struct option ** preprocessed_options, const struct option *original_options)
-
-A few style nits:
-
-  - omit the space between "**" and preprocessed_options
-
-  - we'd usually break a long line (after the first parameter comma)
-
-I think preprocessed_options shouldn't be const here. After all, our aim
-is to free it! I'm also not sure why it's a pointer-to-pointer. If we
-were setting it to NULL after freeing, that would be valuable, but we
-don't. So all together:
-
-  static void free_preprocessed_options(struct option *preprocessed_options,
-                                        const struct option *original_options)
-
-> +{
-> +	int i;
-> +
-> +	if (!*preprocessed_options) {
-> +		return;
-> +	}
-
-Style: we'd generally omit the curly braces for a single-liner like
-this.
-
-Without the double-pointer, we can omit the extra "*" here, too.
-
-> +	for (i = 0; original_options[i].type != OPTION_END; i++) {
-> +		if (original_options[i].type == OPTION_ALIAS) {
-> +			free((void *)(*preprocessed_options)[i].help);
-> +		}
-> +	}
-
-OK, so we look through the original options to find ones that became an
-alias, and then free them. Makes sense.
-
-Do the indexes always correspond between the original and the
-preprocessed arrays? I _think_ so, but preprocess_options() is a little
-hard to follow.
-
-If the preprocess code set a flag in the resulting option, though, we
-could make it much more obviously correct. And avoid having to pass
-original_options at all.
-
-> +	free((void *)*preprocessed_options);
-
-With the interface suggestions above, this becomes just:
-
-  free(preprocessed_options);
-
-> @@ -838,15 +855,17 @@ int parse_options(int argc, const char **argv, const char *prefix,
->  		  int flags)
->  {
->  	struct parse_opt_ctx_t ctx;
-> -	struct option *real_options;
-> +	const struct option *preprocessed_options, *original_options = NULL;
->  
->  	disallow_abbreviated_options =
->  		git_env_bool("GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS", 0);
->  
->  	memset(&ctx, 0, sizeof(ctx));
-> -	real_options = preprocess_options(&ctx, options);
-> -	if (real_options)
-> -		options = real_options;
-> +	preprocessed_options = preprocess_options(&ctx, options);
-> +	if (preprocessed_options) {
-> +		original_options = options;
-> +		options = preprocessed_options;
-> +	}
-
-OK, we have to keep two variables now rather than aliasing "options",
-because we need the original for feeding to the free function (but this
-hunk too would go away if we set a flag).
-
-To spell it out, I mean something like on the writing side:
-
-diff --git a/parse-options.c b/parse-options.c
-index fbea16eaf5..43431b96b1 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -678,6 +678,7 @@ static struct option *preprocess_options(struct parse_opt_ctx_t *ctx,
- 			newopt[i].short_name = short_name;
- 			newopt[i].long_name = long_name;
- 			newopt[i].help = strbuf_detach(&help, NULL);
-+			newopt[i].flags |= PARSE_OPT_FROM_ALIAS;
- 			break;
- 		}
+diff --git a/fsck.c b/fsck.c
+index 6cc4f9ea892..a6d00dfa2e6 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -958,7 +958,7 @@ int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
+ 		goto done;
+ 	}
+ 	*tagged_type = type_from_string_gently(buffer, eol - buffer);
+-	if (*tagged_type < 0)
++	if (*tagged_type == OBJ_BAD)
+ 		ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_TYPE, "invalid 'type' value");
+ 	if (ret)
+ 		goto done;
+diff --git a/object-file.c b/object-file.c
+index 42bc579828d..cd30c2b5590 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1324,7 +1324,7 @@ static int parse_loose_header_extended(const char *hdr, struct object_info *oi,
+ 	 */
+ 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE) && (type < 0))
+ 		type = 0;
+-	else if (type < 0)
++	else if (type == OBJ_BAD)
+ 		die(_("invalid object type"));
+ 	if (oi->typep)
+ 		*oi->typep = type;
+diff --git a/object.c b/object.c
+index c7586e46727..eebacc28847 100644
+--- a/object.c
++++ b/object.c
+@@ -35,22 +35,22 @@ const char *type_name(unsigned int type)
+ 	return object_type_strings[type];
+ }
  
-diff --git a/parse-options.h b/parse-options.h
-index ff6506a504..32b0b49a2d 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -47,7 +47,8 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_SHELL_EVAL = 256,
- 	PARSE_OPT_NOCOMPLETE = 512,
- 	PARSE_OPT_COMP_ARG = 1024,
--	PARSE_OPT_CMDMODE = 2048
-+	PARSE_OPT_CMDMODE = 2048,
-+	PARSE_OPT_FROM_ALIAS = 4096,
+-int type_from_string_gently(const char *str, ssize_t len)
++enum object_type type_from_string_gently(const char *str, ssize_t len)
+ {
+-	int i;
++	enum object_type i;
+ 
+ 	for (i = 1; i < ARRAY_SIZE(object_type_strings); i++)
+ 		if (!strncmp(str, object_type_strings[i], len) &&
+ 		    object_type_strings[i][len] == '\0')
+ 			return i;
+-	return -1;
++	return OBJ_BAD;
+ }
+ 
+-int type_from_string(const char *str)
++enum object_type type_from_string(const char *str)
+ {
+ 	size_t len = strlen(str);
+-	int ret = type_from_string_gently(str, len);
+-	if (ret < 0)
++	enum object_type ret = type_from_string_gently(str, len);
++	if (ret == OBJ_BAD)
+ 		die(_("invalid object type \"%s\""), str);
+ 	return ret;
+ }
+diff --git a/object.h b/object.h
+index ffdc1298300..5e7a523e858 100644
+--- a/object.h
++++ b/object.h
+@@ -93,8 +93,8 @@ struct object {
  };
  
- enum parse_opt_result {
+ const char *type_name(unsigned int type);
+-int type_from_string_gently(const char *str, ssize_t len);
+-int type_from_string(const char *str);
++enum object_type type_from_string_gently(const char *str, ssize_t len);
++enum object_type type_from_string(const char *str);
+ 
+ /*
+  * Return the current number of buckets in the object hashmap.
+-- 
+2.31.0.rc1.210.g0f8085a843c
 
-(as an aside, these manual bitfield values are tedious; I wouldn't be
-sad to see them converted to "1 << 0", "1 << 1", and so on).
-
--Peff
