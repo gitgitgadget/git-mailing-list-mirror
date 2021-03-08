@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D18C43619
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C661C4360C
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4DEA765237
+	by mail.kernel.org (Postfix) with ESMTP id 1662D6522D
 	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231573AbhCHPHt (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231561AbhCHPHt (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 8 Mar 2021 10:07:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37038 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231424AbhCHPHV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 10:07:21 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBC9C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:21 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso3998431wma.4
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:21 -0800 (PST)
+        with ESMTP id S231209AbhCHPHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 10:07:20 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A27C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:19 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id e10so11773816wro.12
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LKOl172f0szZDOK4L874N/sT6mhDzVTQVWxMqG4032M=;
-        b=rZyzwV+RBtoqwP+TQMfADVgijTK50Tq3Ad8nb2aMJ/V25mRqdUnhawTYBXsCwa4gBG
-         zU+uhnZ7/OsNdugePzY8dBb6eC362QQqL/T3u+jFJhzWccwTQGhOz+tA73QKrTa1Gni1
-         G30+kIqdr1tsbaetlk/k++yAffXImAMOTbQn7AN0p9eg1VVZ3s30ObEJauYRMGOLd739
-         hSCbG4+X7pm9kO3hG/NKtaWuyp/venXyVceZLyi7/tmhvsSEHY/qqIy0CmafNSp5Bk9l
-         8lupFkd0tItI9zlJDMwF318dq39mmhUysarHjyUvAKs72KIEkjLdvX2j4lwmKReqFtbs
-         0eWA==
+        bh=m1DEudJkxr160UNtr0+Bc4d83nR7jJt+Lf4NNxdQYgo=;
+        b=GqVnIOLlK94GoVtJfIBuxMkUOwOz8my56j5ZaXnjuec5xc9kco6XcikE6Gyu3OyauL
+         v4P7jzptlLkY0Zlc/nJwEIcHMQH90jxnOETnNuptYhuqDQ7+/Ki0pGXPSHkDyP+HJ19k
+         q0yz2gZrC9id11Da0nx1w4t4p7F2ySYWArZ5NfTjylNbQyIX8vRLgKojC7t08jSp5qce
+         mX8EKw4eO9g29c3InK5BXXYegIFw64eIzv1swaQOJ33mBsPzJGV8crPzbtFKLhzbwqAe
+         OyItkK0IPYlgXoWxmRJkZ+OFZsSMyUSQ7rHvmRgC0fqgP+UkHXpwh7lJeLrJ98PyNj/u
+         M1rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LKOl172f0szZDOK4L874N/sT6mhDzVTQVWxMqG4032M=;
-        b=d/Kb97d2YWy8MZezAp9WKNYJ8eMsqRa1EqBH8ckXSSB3NdFidKZOJlkzRFq/+jammN
-         b7hisYKK65bAYbG/4GrnSQMq8dZK6TgsymIpzItP1RExqkXNGaO6O4/0TptjFrJt99J+
-         wdiTg3H+89PXwNJiIRNc/kBazkE9C/x8FsP0/qCrkeodakLVIN10wJtVU8H52zIyfV+R
-         QuOzE5jsNdR0iBdx0z11YL4Rg2fEiyA4fFdeTiqVbjdG83Ar/tEBwbSgHbyc6Rg/sqQt
-         hHRwzZl5g17Fbzw7kuDqqd7EUCWa0yKzE11YthcmK6L1J/KAJVSX7EeFNAKegZ8sqaJf
-         ku7g==
-X-Gm-Message-State: AOAM532SnXLEQMOCAtWZqcDL/iBrmoBMElOxn+fCyeNJvnzuWvlgRPKR
-        FRt6vPbcgUTInzY3GaOR01tHLSFbcpZt7Q==
-X-Google-Smtp-Source: ABdhPJwzCQpEs3FED2+SXPzDGg6UpurVsHk/l7rlgjG1CEYmw2MStGcDIa7KPi8d2ad0C/2Cdsalug==
-X-Received: by 2002:a1c:195:: with SMTP id 143mr22003077wmb.81.1615216039149;
-        Mon, 08 Mar 2021 07:07:19 -0800 (PST)
+        bh=m1DEudJkxr160UNtr0+Bc4d83nR7jJt+Lf4NNxdQYgo=;
+        b=BFidOgkOFv4+crKWsNWUNFYmUEMV3z5leiY6c9iD/Caw4aB+SzdoB8iqWYadS1oViS
+         nDlLjRoWYNK2N2C85OSkxhOam6gaLXSgh1Mdf2fKlpbIw+gG+DqedKKfQ2/YrFs4Rt5U
+         iu3nvTM3+35+SJi9fJqsjIskLcP5qwWNJDbcUWMORXgVr5QTt+ceWrO9AK/vyuJ1FKTT
+         esvUSu+fViFszebDzeqEeHraalcoiseQnOtU1cLZQY01vaAZjKtpP1K1DoAX+hRSwiRw
+         UpsYHlaWqudWNFRNhLn7vJseWE+ZT2v+ct92Tu1l/uePNrZbetNficgxaNChlLkzqJfV
+         /0HA==
+X-Gm-Message-State: AOAM533Zdlo5jxgFJpyvEkaT4QEJYr1rJLzwtP2kQvgAy4o7bXZw0woA
+        1zuoI484LsqkzkqMYyhotlnmA+ofuwXVLA==
+X-Google-Smtp-Source: ABdhPJxso7gpaCJJQ9MK9frHzFgbutkXxHwwNEg+IKkwrOKTs43xDXCUh7fJu9bIYufzGJMNQbaRWA==
+X-Received: by 2002:a5d:55c4:: with SMTP id i4mr23495953wrw.84.1615216037991;
+        Mon, 08 Mar 2021 07:07:17 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.18
+        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 07:07:18 -0800 (PST)
+        Mon, 08 Mar 2021 07:07:17 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/30] tree-walk.h users: refactor chained "mode" if/else into switch
-Date:   Mon,  8 Mar 2021 16:06:33 +0100
-Message-Id: <20210308150650.18626-14-avarab@gmail.com>
+Subject: [PATCH 11/30] tree.h API: make read_tree_fn_t take an "enum object_type"
+Date:   Mon,  8 Mar 2021 16:06:31 +0100
+Message-Id: <20210308150650.18626-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <20210308022138.28166-1-avarab@gmail.com>
 References: <20210308022138.28166-1-avarab@gmail.com>
@@ -79,112 +79,273 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor a couple of "switch" statements that previously relied on
-"entry.mode" to switch on "entry.object_type" instead.
+Most of the users of the read_tree_fn_t callback do not care about the
+"mode" per-se, they just care what type it resolves to.
 
-This is more obvious, and allows us to explicitly handle all the OBJ_*
-cases, not just have a wildcard "else". That doesn't matter for the
-behavior of this code, but for its readability and maintainability.
+Amend this callback mechanism added in 3c5e8468a93 (ls-tree: major
+rewrite to do pathspec, 2005-11-26) to pass the object_type, and use
+it whenever possible.
+
+In the archive.c code we could go much deeper with this refactoring,
+after getting the "mode" that code will pass it around itself and into
+archive-{tar,zip}.c. As far as I can tell we could drop the mode
+early, and just pass "enum_object_type type, int is_executable". That
+would be slightly redundant space-wise, but would assure us that we're
+not writing out raw modes found in trees, but are normalizing them.
+
+But that particular refactoring would be larger than what I'm trying
+to accomplish here, so let's leave it for now.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- list-objects.c | 20 ++++++++++++++------
- walker.c       | 22 +++++++++++++---------
- 2 files changed, 27 insertions(+), 15 deletions(-)
+ archive.c          |  8 ++++----
+ builtin/checkout.c |  4 ++--
+ builtin/log.c      |  4 ++--
+ builtin/ls-files.c |  6 ++++--
+ builtin/ls-tree.c  | 12 +++++-------
+ merge-recursive.c  |  6 ++++--
+ tree.c             | 19 ++++++++++++-------
+ tree.h             |  2 +-
+ 8 files changed, 34 insertions(+), 27 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index e19589baa04..37434ba89d3 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -111,6 +111,9 @@ static void process_tree_contents(struct traversal_context *ctx,
- 	init_tree_desc(&desc, tree->buffer, tree->size);
+diff --git a/archive.c b/archive.c
+index 26534a30d3b..64abe736f93 100644
+--- a/archive.c
++++ b/archive.c
+@@ -232,7 +232,7 @@ static int write_directory(struct archiver_context *c)
  
- 	while (tree_entry(&desc, &entry)) {
-+		struct tree *t;
-+		struct blob *b;
-+
- 		if (match != all_entries_interesting) {
- 			match = tree_entry_interesting(ctx->revs->repo->index,
- 						       &entry, base, 0,
-@@ -121,8 +124,9 @@ static void process_tree_contents(struct traversal_context *ctx,
- 				continue;
- 		}
- 
--		if (S_ISDIR(entry.mode)) {
--			struct tree *t = lookup_tree(ctx->revs->repo, &entry.oid);
-+		switch (entry.object_type) {
-+		case OBJ_TREE:
-+			t = lookup_tree(ctx->revs->repo, &entry.oid);
- 			if (!t) {
- 				die(_("entry '%s' in tree %s has tree mode, "
- 				      "but is not a tree"),
-@@ -130,12 +134,13 @@ static void process_tree_contents(struct traversal_context *ctx,
- 			}
- 			t->object.flags |= NOT_USER_GIVEN;
- 			process_tree(ctx, t, base, entry.path);
--		}
--		else if (S_ISGITLINK(entry.mode))
-+			break;
-+		case OBJ_COMMIT:
- 			process_gitlink(ctx, entry.oid.hash,
- 					base, entry.path);
--		else {
--			struct blob *b = lookup_blob(ctx->revs->repo, &entry.oid);
-+			break;
-+		case OBJ_BLOB:
-+			b = lookup_blob(ctx->revs->repo, &entry.oid);
- 			if (!b) {
- 				die(_("entry '%s' in tree %s has blob mode, "
- 				      "but is not a blob"),
-@@ -143,6 +148,9 @@ static void process_tree_contents(struct traversal_context *ctx,
- 			}
- 			b->object.flags |= NOT_USER_GIVEN;
- 			process_blob(ctx, b, base, entry.path);
-+			break;
-+		default:
-+			BUG("unreachable");
- 		}
+ static int queue_or_write_archive_entry(const struct object_id *oid,
+ 					struct strbuf *base, const char *filename,
+-					unsigned mode,
++					enum object_type object_type, unsigned mode,
+ 					void *context)
+ {
+ 	struct archiver_context *c = context;
+@@ -245,7 +245,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
+ 		c->bottom = next;
  	}
- }
-diff --git a/walker.c b/walker.c
-index 4984bf8b3d6..7ba757244e6 100644
---- a/walker.c
-+++ b/walker.c
-@@ -45,21 +45,25 @@ static int process_tree(struct walker *walker, struct tree *tree)
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
- 		struct object *obj = NULL;
-+		struct tree *tree;
-+		struct blob *blob;
  
--		/* submodule commits are not stored in the superproject */
--		if (S_ISGITLINK(entry.mode))
-+		switch (entry.object_type) {
-+		case OBJ_COMMIT:
-+			/* submodule commits are not stored in the superproject */
+-	if (S_ISDIR(mode)) {
++	if (object_type == OBJ_TREE) {
+ 		size_t baselen = base->len;
+ 		const struct attr_check *check;
+ 
+@@ -382,13 +382,13 @@ struct path_exists_context {
+ 
+ static int reject_entry(const struct object_id *oid, struct strbuf *base,
+ 			const char *filename,
+-			unsigned mode,
++			enum object_type object_type, unsigned mode,
+ 			void *context)
+ {
+ 	int ret = -1;
+ 	struct path_exists_context *ctx = context;
+ 
+-	if (S_ISDIR(mode)) {
++	if (object_type == OBJ_TREE) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		strbuf_addbuf(&sb, base);
+ 		strbuf_addstr(&sb, filename);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a78b54624b0..d4adfdb5046 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -115,14 +115,14 @@ static int post_checkout_hook(struct commit *old_commit, struct commit *new_comm
+ 
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+ 		       const char *pathname,
+-		       unsigned mode,
++		       enum object_type object_type, unsigned mode,
+ 		       void *context)
+ {
+ 	int len;
+ 	struct cache_entry *ce;
+ 	int pos;
+ 
+-	if (S_ISDIR(mode))
++	if (object_type == OBJ_TREE)
+ 		return READ_TREE_RECURSIVE;
+ 
+ 	len = base->len + strlen(pathname);
+diff --git a/builtin/log.c b/builtin/log.c
+index 3766f553971..19a916221d5 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -599,11 +599,11 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
+ 
+ static int show_tree_object(const struct object_id *oid,
+ 			    struct strbuf *base, const char *pathname,
+-			    unsigned mode,
++			    enum object_type object_type, unsigned mode,
+ 			    void *context)
+ {
+ 	FILE *file = context;
+-	fprintf(file, "%s%s\n", pathname, S_ISDIR(mode) ? "/" : "");
++	fprintf(file, "%s%s\n", pathname, object_type == OBJ_TREE ? "/" : "");
+ 	return 0;
+ }
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index fa9b01b6cc7..f38df439410 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -446,7 +446,8 @@ static int read_one_entry_opt(struct index_state *istate,
+ }
+ 
+ static int read_one_entry(const struct object_id *oid, struct strbuf *base,
+-			  const char *pathname, unsigned mode,
++			  const char *pathname,
++			  enum object_type object_type, unsigned mode,
+ 			  void *context)
+ {
+ 	struct index_state *istate = context;
+@@ -460,7 +461,8 @@ static int read_one_entry(const struct object_id *oid, struct strbuf *base,
+  * the stage that will conflict with the entry being added.
+  */
+ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base,
+-				const char *pathname, unsigned mode,
++				const char *pathname,
++				enum object_type object_type, unsigned mode,
+ 				void *context)
+ {
+ 	struct index_state *istate = context;
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index aaa41e66234..c6ec3ca751e 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -63,14 +63,13 @@ static int show_recursive(const char *base, int baselen, const char *pathname)
+ 
+ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 		     const char *pathname,
+-		     unsigned mode,
++		     enum object_type object_type, unsigned mode,
+ 		     void *context)
+ {
+ 	int retval = 0;
+ 	int baselen;
+-	const char *type = blob_type;
+ 
+-	if (S_ISGITLINK(mode)) {
++	if (object_type == OBJ_COMMIT) {
+ 		/*
+ 		 * Maybe we want to have some recursive version here?
+ 		 *
+@@ -80,22 +79,21 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 			retval = READ_TREE_RECURSIVE;
+ 		 *
+ 		 */
+-		type = commit_type;
+-	} else if (S_ISDIR(mode)) {
++	} else if (object_type == OBJ_TREE) {
+ 		if (show_recursive(base->buf, base->len, pathname)) {
+ 			retval = READ_TREE_RECURSIVE;
+ 			if (!(ls_options & LS_SHOW_TREES))
+ 				return retval;
+ 		}
+-		type = tree_type;
+ 	}
+ 	else if (ls_options & LS_TREE_ONLY)
+ 		return 0;
+ 
+ 	if (!(ls_options & LS_NAME_ONLY)) {
++		const char *type = type_name(object_type);
+ 		if (ls_options & LS_SHOW_SIZE) {
+ 			char size_text[24];
+-			if (!strcmp(type, blob_type)) {
++			if (object_type == OBJ_BLOB) {
+ 				unsigned long size;
+ 				if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
+ 					xsnprintf(size_text, sizeof(size_text),
+diff --git a/merge-recursive.c b/merge-recursive.c
+index aa12543ecc9..31c080538ef 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -453,7 +453,7 @@ static void unpack_trees_finish(struct merge_options *opt)
+ 
+ static int save_files_dirs(const struct object_id *oid,
+ 			   struct strbuf *base, const char *path,
+-			   unsigned int mode,
++			   enum object_type object_type, unsigned int mode,
+ 			   void *context)
+ {
+ 	struct path_hashmap_entry *entry;
+@@ -467,7 +467,9 @@ static int save_files_dirs(const struct object_id *oid,
+ 	hashmap_add(&opt->priv->current_file_dir_set, &entry->e);
+ 
+ 	strbuf_setlen(base, baselen);
+-	return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
++	if (object_type != OBJ_TREE)
++		return 0;
++	return READ_TREE_RECURSIVE;
+ }
+ 
+ static void get_files_dirs(struct merge_options *opt, struct tree *tree)
+diff --git a/tree.c b/tree.c
+index fb4985f22ca..e4402fad69b 100644
+--- a/tree.c
++++ b/tree.c
+@@ -28,6 +28,8 @@ static int read_tree_1(struct repository *r,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 
+ 	while (tree_entry(&desc, &entry)) {
++		struct commit *commit;
++
+ 		if (retval != all_entries_interesting) {
+ 			retval = tree_entry_interesting(r->index, &entry,
+ 							base, 0, pathspec);
+@@ -38,7 +40,7 @@ static int read_tree_1(struct repository *r,
+ 		}
+ 
+ 		switch (fn(&entry.oid, base,
+-			   entry.path, entry.mode, context)) {
++			   entry.path, entry.object_type, entry.mode, context)) {
+ 		case 0:
  			continue;
--		if (S_ISDIR(entry.mode)) {
--			struct tree *tree = lookup_tree(the_repository,
--							&entry.oid);
+ 		case READ_TREE_RECURSIVE:
+@@ -47,11 +49,11 @@ static int read_tree_1(struct repository *r,
+ 			return -1;
+ 		}
+ 
+-		if (S_ISDIR(entry.mode))
++		switch (entry.object_type) {
 +		case OBJ_TREE:
-+			tree = lookup_tree(the_repository, &entry.oid);
- 			if (tree)
- 				obj = &tree->object;
+ 			oidcpy(&oid, &entry.oid);
+-		else if (S_ISGITLINK(entry.mode)) {
+-			struct commit *commit;
+-
++			break;
++		case OBJ_COMMIT:
+ 			commit = lookup_commit(r, &entry.oid);
+ 			if (!commit)
+ 				die("Commit %s in submodule path %s%s not found",
+@@ -64,9 +66,12 @@ static int read_tree_1(struct repository *r,
+ 				    base->buf, entry.path);
+ 
+ 			oidcpy(&oid, get_commit_tree_oid(commit));
 -		}
--		else {
--			struct blob *blob = lookup_blob(the_repository,
--							&entry.oid);
+-		else
 +			break;
 +		case OBJ_BLOB:
-+			blob = lookup_blob(the_repository, &entry.oid);
- 			if (blob)
- 				obj = &blob->object;
-+			break;
+ 			continue;
 +		default:
 +			BUG("unreachable");
- 		}
- 		if (!obj || process(walker, obj))
- 			return -1;
++		}
+ 
+ 		len = tree_entry_len(&entry);
+ 		strbuf_add(base, entry.path, len);
+diff --git a/tree.h b/tree.h
+index a7030e52679..eba51417d26 100644
+--- a/tree.h
++++ b/tree.h
+@@ -33,7 +33,7 @@ int cmp_cache_name_compare(const void *a_, const void *b_);
+ #define READ_TREE_RECURSIVE 1
+ typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *,
+ 			      const char *,
+-			      unsigned int,
++			      enum object_type, unsigned int,
+ 			      void *);
+ 
+ int read_tree_recursive(struct repository *r,
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
