@@ -2,106 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA782C433E0
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 21:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DEDFC433E6
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 21:31:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B168864FA8
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 21:21:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CD9865191
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 21:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230250AbhCHVVB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 16:21:01 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62554 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhCHVUs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 16:20:48 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89EC5BA777;
-        Mon,  8 Mar 2021 16:20:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VvyJICRjmYHFaDtE0WS5/DyUIzU=; b=NVPjnL
-        AXH9iQ7u0wYsw1UnyPywXeC0CIPYn6WpdQsnWvreuqwK2z1jkJg0M+pkrHUhA7Se
-        XerOqbKn00pdz+FlgIddEwBuJ798GWPY+1YO6dsR0NHbYvc/NeLbOPmFEpiXSYjV
-        b+spF9RXEPDGDemVhZJlAIqVG8ZXoPUwnHKkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XtBNgFbQJV5U8UVvlfL5CltYSxzLcp7F
-        gjdlzxI8TtbYOOr/F6nyEblRvcA/XqfWrwmW689lUkeOOYuNgLJRCZYTD/VlOkVv
-        jgmVhYpW/hF9dMnv/DWFUAiInXs5DkmPDXTACzFXCEiUZzERv97PLvT8La1g/qAV
-        JZYbwwug2qY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81C3EBA776;
-        Mon,  8 Mar 2021 16:20:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0FA9EBA775;
-        Mon,  8 Mar 2021 16:20:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Fabien Terrani <terranifabien@gmail.com>, git@vger.kernel.org
-Subject: Re: remote.<name>.merge missing from the git-config man page?
-References: <CAOuwed4HJLTgk48Fre5vGYjYanqD6hu8yZM73CpcAmF1ajiTnA@mail.gmail.com>
-        <xmqqlfax7dya.fsf@gitster.c.googlers.com>
-        <YEZwY0721KvQNkK+@nand.local> <87pn092yja.fsf@igel.home>
-        <YEaI5JIobsbtBQO1@nand.local> <87lfax2xat.fsf@igel.home>
-        <YEaM7ruZCvaQQbPI@nand.local>
-Date:   Mon, 08 Mar 2021 13:20:46 -0800
-In-Reply-To: <YEaM7ruZCvaQQbPI@nand.local> (Taylor Blau's message of "Mon, 8
-        Mar 2021 15:45:34 -0500")
-Message-ID: <xmqq8s6x5olt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S231455AbhCHVb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 16:31:28 -0500
+Received: from sender4-op-o18.zoho.com ([136.143.188.18]:17889 "EHLO
+        sender4-op-o18.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231445AbhCHVa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 16:30:59 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Mar 2021 16:30:59 EST
+ARC-Seal: i=1; a=rsa-sha256; t=1615238151; cv=none; 
+        d=zohomail.com; s=zohoarc; 
+        b=KO1f/qn4Jmy7AHCFcuPks8sevBC5jT7XEH2F1nkxVGB1nLQOjHviDtGgtN+w3tsibgp5/wtuo7nvIU6WXlgqNrqXg+rB+wYgZA5XsbI0x3WISTG8mY5rBGp+p4z/xxv3cLz7yL2CUu8IC2ZXkB2QFwdzbjAn88woaQJHS5GZxgM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+        t=1615238151; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To; 
+        bh=jzweo4A40UPGlwoqan5nFzEjOcP43Swj4OZflI9ZEfc=; 
+        b=Hx+b3AnbT87yNcN56Va2WY52McuJwwSjWqg6OYUi7oCIo1OHuB8AK1B4WqOXL8B1C2Fx7UO2BlV1Vmqr3Ez4BHUvLSbiF0OmG9nsHf2vXkyYorBLZ3lWAMfUj9V+RfRqNVkJKg8hAl3fSJ8WEmSGJ53b/kXFF2x8U4s+I7JrwSk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+        dkim=pass  header.i=monospace.sh;
+        spf=pass  smtp.mailfrom=anthony@monospace.sh;
+        dmarc=pass header.from=<anthony@monospace.sh> header.from=<anthony@monospace.sh>
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
+  s=pdk; d=monospace.sh; 
+  h=date:from:to:message-id:in-reply-to:subject:mime-version:content-type:user-agent; 
+  b=O88XPwUDx+flzATJSo6+HKE/jyfEX8kwESQ2CFYbNqdxw3pOLz5hmru3wtRV66pQonuIsMQRzCEZ
+    Bpz6LW0gy90DDmyvE1tgf83+UsKlJjjJk9A7mnx8akJheWABgNW6P7L09G6wDojXLxCU8kl1n4+o
+    +eTCSAtSwmL7vSZgCVU=  
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1615238151;
+        s=mdk; d=monospace.sh; i=anthony@monospace.sh;
+        h=Date:From:To:Message-ID:In-Reply-To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=jzweo4A40UPGlwoqan5nFzEjOcP43Swj4OZflI9ZEfc=;
+        b=mjrGfm0UmhLJBccAaHGAJcJtOKYZ6HiHA40KQO+PJbPDPMbQmqvkHy9ACVxKivpk
+        ScTr1Jc1l0ys0WN8UmOeelieUGjJGZW6LhJomg6ExpJ66r92DL3j71q5DiTnHt6dMl9
+        4oPv2lCpn8PJES7S7SWo/6AF114jL2b6uGc58ciU=
+Received: from mail.zoho.com by mx.zohomail.com
+        with SMTP id 1615238148863160.34575115860002; Mon, 8 Mar 2021 13:15:48 -0800 (PST)
+Date:   Mon, 08 Mar 2021 21:15:48 +0000
+From:   Anthony Muller <anthony@monospace.sh>
+To:     "git" <git@vger.kernel.org>
+Message-ID: <17813b232e9.e48d03c3862272.7793967418558853913@monospace.sh>
+In-Reply-To: 
+Subject: Performance of "git gc..." is extremely bad in some cases
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2629BC6E-8054-11EB-9A21-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> On Mon, Mar 08, 2021 at 09:41:14PM +0100, Andreas Schwab wrote:
->> >> >  `git push origin`::
->> >> >  	Without additional configuration, pushes the current branch to
->> >> > -	the configured upstream (`remote.origin.merge` configuration
->> >> > +	the configured upstream (`branch.<name>.merge` configuration
->> >> >  	variable) if it has the same name as the current branch, and
->> >> >  	errors out without pushing otherwise.
->
-> ... IOW, "if both your and the remote copy call the
-> branch you have checked out the same thing."
+git clone https://github.com/notracking/hosts-blocklists
+cd hosts-blocklists
+git reflog expire --all --expire=now && git gc --prune=now --aggressive
 
-Introducing a new term "remote copy" makes it even more confusing at
-least to me.  And you are *not* checking out whatever branch any
-remote repository has.  Your 'master' and my 'master' are different
-entities.
 
-I actually wonder what configuration the paragraph considers
-fundamental and mandatory (as opposed to "additional" ones).
+What did you expect to happen? (Expected behavior)
 
-At the most basic "I just ran 'git clone' from somewhere" level,
-remote.origin.url would be set and, branch.master.remote and
-branch.master.merge are present.
+Running gc on a ~300 MB repo should not take 1 hour 55 minutes when
+running gc on a 2.6 GB repo (LLVM) only takes 24 minutes.
 
-I wonder if we should update the heading and extend the description
-a bit further, e.g.
 
-	`git push`::
-		Without additional configuration, uses the
-		`branch.<name>.remote` configuration variable for
-		the branch that is currently checked-out to figure
-		out which remote to push to, and pushes the current
-		branch to update their branch with the same name.
-		If `branch.<name>.merge` is set to a name different
-		from `<name>`, however, errors out without pushing.
+What happened instead? (Actual behavior)
 
-so that it makes it clear that .remote and .merge come in pair.
+Command took 1h 55m to complete on a ~300MB repo and used enough
+resources that the machine is almost unusable.
+
+
+What's different between what you expected and what actually happened?
+
+Compression stage uses the majority of the resources and time. Compression
+itself, when compared to something like zlib or lzma, should not take very long.
+While more may be happening as objects are compressed, the amount of time
+gc takes to compress the objects and the resources it consumed are both
+unreasonable.
+
+Memory: RSS = 3451152 KB (3.29 GB), VSZ = 29286272 KB (27.92 GB)
+Time: 12902.83s user 8995.41s system 315% cpu 1:55:36.73 total
+
+I've seen this issue with a number of repos and size of the repo does not
+determine if this happens. LLVM @ 2.6 GB worked flawlessly, a 900 MB
+repo never finished, this 300 MB repo takes forever, and if you test something
+like chromium git will just crash.
+
+
+[System Info]
+hardware: 2.9Ghz Quad Core i7
+git version:
+git version 2.30.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Jan 12 22:13:05 PST 2021; root:xnu-6153.141.16~1/RELEASE_X86_64 x86_64
+compiler info: clang: 12.0.0 (clang-1200.0.32.28)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /usr/local/bin/zsh
+
