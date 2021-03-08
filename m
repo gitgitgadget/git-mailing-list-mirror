@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAF55C432C3
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D18C43619
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BBD1565234
-	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4DEA765237
+	for <git@archiver.kernel.org>; Mon,  8 Mar 2021 15:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbhCHPHq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 10:07:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37006 "EHLO
+        id S231573AbhCHPHt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 10:07:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231389AbhCHPHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 10:07:16 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FC4C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:15 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id u14so11830849wri.3
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:15 -0800 (PST)
+        with ESMTP id S231424AbhCHPHV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 10:07:21 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBC9C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 07:07:21 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id 124-20020a1c00820000b029010b871409cfso3998431wma.4
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 07:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+/xUqGxpPsHeXsVnfIMYk6eHQJ/PXQHhu1Yna3mB2gs=;
-        b=s3s0YjJ0Ohb4FE9HCsLOyrNEqm359lwImwXYcdJBbi3xgWCH6fi+MiDB9H554Oxa7c
-         10Y6S0CoaBKxynmmAxI4vYYO23sEEBvWdb4cdI61xxe9oD1/vh2YnldCSvwuHJmgt97o
-         Bcq5dIM2Q/TUDLd3iifyoojcj48tNAzMYqgRTLguIQWtwxLC6xkq55FNjqwsxj2ng4xA
-         09/gbDRIaMGGRsX01OJghOst6lsIyrKynpt0C1F5cfQzMGXqftOllBagAbrOkCW+BjXV
-         HtzNkY1xwdkwdKl+ZdyjzMykzWC80J1Hh1Szlenul+pnPhwOJVKLVjEcm5MroC16Mcf6
-         /ZtA==
+        bh=LKOl172f0szZDOK4L874N/sT6mhDzVTQVWxMqG4032M=;
+        b=rZyzwV+RBtoqwP+TQMfADVgijTK50Tq3Ad8nb2aMJ/V25mRqdUnhawTYBXsCwa4gBG
+         zU+uhnZ7/OsNdugePzY8dBb6eC362QQqL/T3u+jFJhzWccwTQGhOz+tA73QKrTa1Gni1
+         G30+kIqdr1tsbaetlk/k++yAffXImAMOTbQn7AN0p9eg1VVZ3s30ObEJauYRMGOLd739
+         hSCbG4+X7pm9kO3hG/NKtaWuyp/venXyVceZLyi7/tmhvsSEHY/qqIy0CmafNSp5Bk9l
+         8lupFkd0tItI9zlJDMwF318dq39mmhUysarHjyUvAKs72KIEkjLdvX2j4lwmKReqFtbs
+         0eWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+/xUqGxpPsHeXsVnfIMYk6eHQJ/PXQHhu1Yna3mB2gs=;
-        b=jxiDGWfWLyzDD9JaD29Izg//4pHQ6DWKmeGpkM3wQhXEJvpNdp54cM7DccojQPxWys
-         gPeXjHTQXXODIX6eAC+JCzEOSHCELr6KjuyDRV6j5QLwLaeUz46gIRihOpylTa2qWwQ4
-         8Jas3LsXgF/hayFsPthg37JRzp/98hW9AnnJR3bA2IQE8QUC3lyimqyvBNoiQj6mWIQ6
-         UST162KBjKqF7I3QIw0Gvy8sb6tcz07Z7kDfnCtMYLSqEHMXa220plug0Qgwz8txrkk/
-         z51ChYTW0GwAe+DoAfnuxh5mV0k3VAplOUwLWrz/Y9FrfafjyORNN7dOmj3smpUi6xiB
-         ltvg==
-X-Gm-Message-State: AOAM530kdEhIeSUcZ3G7RtDW9F7xQ/CPaVhPZr6L8CebgmYDvuPbagmz
-        WGEoDBwnhnrtOFZ++1bspH2S4s4p5jZiVg==
-X-Google-Smtp-Source: ABdhPJwQ8W85AbIOFzFmzEd1CmyFrFPXXssySi3OSdHp87NpXhsLEzlSIYQ6eDABN+EOSQDb0w+A0A==
-X-Received: by 2002:a5d:6989:: with SMTP id g9mr6626250wru.198.1615216034133;
-        Mon, 08 Mar 2021 07:07:14 -0800 (PST)
+        bh=LKOl172f0szZDOK4L874N/sT6mhDzVTQVWxMqG4032M=;
+        b=d/Kb97d2YWy8MZezAp9WKNYJ8eMsqRa1EqBH8ckXSSB3NdFidKZOJlkzRFq/+jammN
+         b7hisYKK65bAYbG/4GrnSQMq8dZK6TgsymIpzItP1RExqkXNGaO6O4/0TptjFrJt99J+
+         wdiTg3H+89PXwNJiIRNc/kBazkE9C/x8FsP0/qCrkeodakLVIN10wJtVU8H52zIyfV+R
+         QuOzE5jsNdR0iBdx0z11YL4Rg2fEiyA4fFdeTiqVbjdG83Ar/tEBwbSgHbyc6Rg/sqQt
+         hHRwzZl5g17Fbzw7kuDqqd7EUCWa0yKzE11YthcmK6L1J/KAJVSX7EeFNAKegZ8sqaJf
+         ku7g==
+X-Gm-Message-State: AOAM532SnXLEQMOCAtWZqcDL/iBrmoBMElOxn+fCyeNJvnzuWvlgRPKR
+        FRt6vPbcgUTInzY3GaOR01tHLSFbcpZt7Q==
+X-Google-Smtp-Source: ABdhPJwzCQpEs3FED2+SXPzDGg6UpurVsHk/l7rlgjG1CEYmw2MStGcDIa7KPi8d2ad0C/2Cdsalug==
+X-Received: by 2002:a1c:195:: with SMTP id 143mr22003077wmb.81.1615216039149;
+        Mon, 08 Mar 2021 07:07:19 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.13
+        by smtp.gmail.com with ESMTPSA id j13sm3820488wrt.29.2021.03.08.07.07.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 07:07:13 -0800 (PST)
+        Mon, 08 Mar 2021 07:07:18 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 06/30] cache.h: have base_name_compare() take "is tree?", not "mode"
-Date:   Mon,  8 Mar 2021 16:06:26 +0100
-Message-Id: <20210308150650.18626-7-avarab@gmail.com>
+Subject: [PATCH 13/30] tree-walk.h users: refactor chained "mode" if/else into switch
+Date:   Mon,  8 Mar 2021 16:06:33 +0100
+Message-Id: <20210308150650.18626-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.31.0.rc0.126.g04f22c5b82
 In-Reply-To: <20210308022138.28166-1-avarab@gmail.com>
 References: <20210308022138.28166-1-avarab@gmail.com>
@@ -79,299 +79,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the base_name_compare() API and the related df_name_compare()
-function to take a boolean argument indicating whether the entry is a
-tree or not, instead of having them call S_ISDIR(mode) on their own.
+Refactor a couple of "switch" statements that previously relied on
+"entry.mode" to switch on "entry.object_type" instead.
 
-This makes use of the new "object_type" field in the "name_entry".
-
-The API being modified here was originally added way back in
-958ba6c96eb (Introduce "base_name_compare()" helper function,
-2005-05-20).
+This is more obvious, and allows us to explicitly handle all the OBJ_*
+cases, not just have a wildcard "else". That doesn't matter for the
+behavior of this code, but for its readability and maintainability.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fast-import.c |  8 ++++----
- builtin/mktree.c      |  4 ++--
- cache.h               |  4 ++--
- combine-diff.c        |  8 +++++---
- match-trees.c         |  6 ++++--
- merge-ort.c           |  4 ++--
- merge-recursive.c     |  6 +++---
- read-cache.c          | 16 ++++++++--------
- tree-diff.c           |  7 +++++--
- unpack-trees.c        | 15 ++++++++-------
- 10 files changed, 43 insertions(+), 35 deletions(-)
+ list-objects.c | 20 ++++++++++++++------
+ walker.c       | 22 +++++++++++++---------
+ 2 files changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index dd4d09ceceb..ce4613c1595 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1288,8 +1288,8 @@ static int tecmp0 (const void *_a, const void *_b)
- 	struct tree_entry *a = *((struct tree_entry**)_a);
- 	struct tree_entry *b = *((struct tree_entry**)_b);
- 	return base_name_compare(
--		a->name->str_dat, a->name->str_len, a->versions[0].mode,
--		b->name->str_dat, b->name->str_len, b->versions[0].mode);
-+		a->name->str_dat, a->name->str_len, 1,
-+		b->name->str_dat, b->name->str_len, 1);
- }
+diff --git a/list-objects.c b/list-objects.c
+index e19589baa04..37434ba89d3 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -111,6 +111,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
  
- static int tecmp1 (const void *_a, const void *_b)
-@@ -1297,8 +1297,8 @@ static int tecmp1 (const void *_a, const void *_b)
- 	struct tree_entry *a = *((struct tree_entry**)_a);
- 	struct tree_entry *b = *((struct tree_entry**)_b);
- 	return base_name_compare(
--		a->name->str_dat, a->name->str_len, a->versions[1].mode,
--		b->name->str_dat, b->name->str_len, b->versions[1].mode);
-+		a->name->str_dat, a->name->str_len, 1,
-+		b->name->str_dat, b->name->str_len, 1);
- }
- 
- static void mktree(struct tree_content *t, int v, struct strbuf *b)
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 891991b00d6..2c1973229ac 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -37,8 +37,8 @@ static int ent_compare(const void *a_, const void *b_)
- {
- 	struct treeent *a = *(struct treeent **)a_;
- 	struct treeent *b = *(struct treeent **)b_;
--	return base_name_compare(a->name, a->len, a->mode,
--				 b->name, b->len, b->mode);
-+	return base_name_compare(a->name, a->len, S_ISDIR(a->mode),
-+				 b->name, b->len, S_ISDIR(b->mode));
- }
- 
- static void write_tree(struct object_id *oid)
-diff --git a/cache.h b/cache.h
-index e513f0ee5b4..49994dae916 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1506,8 +1506,8 @@ int repo_interpret_branch_name(struct repository *r,
- 
- int validate_headref(const char *ref);
- 
--int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
--int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
-+int base_name_compare(const char *name1, int len1, int isdir1, const char *name2, int len2, int isdir2);
-+int df_name_compare(const char *name1, int len1, int isdir1, const char *name2, int len2, int isdir2);
- int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
- int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
- 
-diff --git a/combine-diff.c b/combine-diff.c
-index 9228aebc16b..64d7aaf1710 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -16,11 +16,13 @@
- static int compare_paths(const struct combine_diff_path *one,
- 			  const struct diff_filespec *two)
- {
--	if (!S_ISDIR(one->mode) && !S_ISDIR(two->mode))
-+	int isdir_one = S_ISDIR(one->mode);
-+	int isdir_two = S_ISDIR(two->mode);
-+	if (!isdir_one && !isdir_two)
- 		return strcmp(one->path, two->path);
- 
--	return base_name_compare(one->path, strlen(one->path), one->mode,
--				 two->path, strlen(two->path), two->mode);
-+	return base_name_compare(one->path, strlen(one->path), isdir_one,
-+				 two->path, strlen(two->path), isdir_two);
- }
- 
- static int filename_changed(char status)
-diff --git a/match-trees.c b/match-trees.c
-index 1011357ad0c..4d124a0fd1b 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -67,8 +67,10 @@ static void *fill_tree_desc_strict(struct tree_desc *desc,
- static int base_name_entries_compare(const struct name_entry *a,
- 				     const struct name_entry *b)
- {
--	return base_name_compare(a->path, tree_entry_len(a), a->mode,
--				 b->path, tree_entry_len(b), b->mode);
-+	int isdira = a->object_type == OBJ_TREE;
-+	int isdirb = b->object_type == OBJ_TREE;
-+	return base_name_compare(a->path, tree_entry_len(a), isdira,
-+				 b->path, tree_entry_len(b), isdirb);
- }
- 
- /*
-diff --git a/merge-ort.c b/merge-ort.c
-index 603d30c5217..4075d13aaab 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2390,8 +2390,8 @@ static int tree_entry_order(const void *a_, const void *b_)
- 
- 	const struct merged_info *ami = a->util;
- 	const struct merged_info *bmi = b->util;
--	return base_name_compare(a->string, strlen(a->string), ami->result.mode,
--				 b->string, strlen(b->string), bmi->result.mode);
-+	return base_name_compare(a->string, strlen(a->string), S_ISDIR(ami->result.mode),
-+				 b->string, strlen(b->string), S_ISDIR(bmi->result.mode));
- }
- 
- static void write_tree(struct object_id *result_oid,
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1593f374495..0baa6b5ca56 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -554,12 +554,12 @@ static int string_list_df_name_compare(const char *one, const char *two)
- 	 *
- 	 * To achieve this, we sort with df_name_compare and provide
- 	 * the mode S_IFDIR so that D/F conflicts will sort correctly.
--	 * We use the mode S_IFDIR for everything else for simplicity,
-+	 * We say we have a directory for everything else for simplicity,
- 	 * since in other cases any changes in their order due to
- 	 * sorting cause no problems for us.
- 	 */
--	int cmp = df_name_compare(one, onelen, S_IFDIR,
--				  two, twolen, S_IFDIR);
-+	int cmp = df_name_compare(one, onelen, 1, two, twolen, 1);
+ 	while (tree_entry(&desc, &entry)) {
++		struct tree *t;
++		struct blob *b;
 +
- 	/*
- 	 * Now that 'foo' and 'foo/bar' compare equal, we have to make sure
- 	 * that 'foo' comes before 'foo/bar'.
-diff --git a/read-cache.c b/read-cache.c
-index 1e9a50c6c73..edfce1f0cb8 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -462,8 +462,8 @@ int ie_modified(struct index_state *istate,
- 	return 0;
- }
+ 		if (match != all_entries_interesting) {
+ 			match = tree_entry_interesting(ctx->revs->repo->index,
+ 						       &entry, base, 0,
+@@ -121,8 +124,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 				continue;
+ 		}
  
--int base_name_compare(const char *name1, int len1, int mode1,
--		      const char *name2, int len2, int mode2)
-+int base_name_compare(const char *name1, int len1, int isdir1,
-+		      const char *name2, int len2, int isdir2)
- {
- 	unsigned char c1, c2;
- 	int len = len1 < len2 ? len1 : len2;
-@@ -474,9 +474,9 @@ int base_name_compare(const char *name1, int len1, int mode1,
- 		return cmp;
- 	c1 = name1[len];
- 	c2 = name2[len];
--	if (!c1 && S_ISDIR(mode1))
-+	if (!c1 && isdir1)
- 		c1 = '/';
--	if (!c2 && S_ISDIR(mode2))
-+	if (!c2 && isdir2)
- 		c2 = '/';
- 	return (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
- }
-@@ -491,8 +491,8 @@ int base_name_compare(const char *name1, int len1, int mode1,
-  * This is used by routines that want to traverse the git namespace
-  * but then handle conflicting entries together when possible.
-  */
--int df_name_compare(const char *name1, int len1, int mode1,
--		    const char *name2, int len2, int mode2)
-+int df_name_compare(const char *name1, int len1, int isdir1,
-+		    const char *name2, int len2, int isdir2)
- {
- 	int len = len1 < len2 ? len1 : len2, cmp;
- 	unsigned char c1, c2;
-@@ -504,10 +504,10 @@ int df_name_compare(const char *name1, int len1, int mode1,
- 	if (len1 == len2)
- 		return 0;
- 	c1 = name1[len];
--	if (!c1 && S_ISDIR(mode1))
-+	if (!c1 && isdir1)
- 		c1 = '/';
- 	c2 = name2[len];
--	if (!c2 && S_ISDIR(mode2))
-+	if (!c2 && isdir2)
- 		c2 = '/';
- 	if (c1 == '/' && !c2)
- 		return 0;
-diff --git a/tree-diff.c b/tree-diff.c
-index 7cebbb327e2..f133834597c 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -50,6 +50,7 @@ static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
- {
- 	struct name_entry *e1, *e2;
- 	int cmp;
-+	int e1_is_tree, e2_is_tree;
- 
- 	/* empty descriptors sort after valid tree entries */
- 	if (!t1->size)
-@@ -58,9 +59,11 @@ static int tree_entry_pathcmp(struct tree_desc *t1, struct tree_desc *t2)
- 		return -1;
- 
- 	e1 = &t1->entry;
-+	e1_is_tree = e1->object_type == OBJ_TREE;
- 	e2 = &t2->entry;
--	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1->mode,
--				e2->path, tree_entry_len(e2), e2->mode);
-+	e2_is_tree = e2->object_type == OBJ_TREE;
-+	cmp = base_name_compare(e1->path, tree_entry_len(e1), e1_is_tree,
-+				e2->path, tree_entry_len(e2), e2_is_tree);
- 	return cmp;
- }
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f5f668f532d..802f7771d75 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -922,7 +922,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 				      const struct traverse_info *info,
- 				      const char *name, size_t namelen,
--				      unsigned mode)
-+				      unsigned is_tree)
- {
- 	int pathlen, ce_len;
- 	const char *ce_name;
-@@ -930,7 +930,7 @@ static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 	if (info->prev) {
- 		int cmp = do_compare_entry_piecewise(ce, info->prev,
- 						     info->name, info->namelen,
--						     info->mode);
-+						     S_ISDIR(info->mode));
- 		if (cmp)
- 			return cmp;
+-		if (S_ISDIR(entry.mode)) {
+-			struct tree *t = lookup_tree(ctx->revs->repo, &entry.oid);
++		switch (entry.object_type) {
++		case OBJ_TREE:
++			t = lookup_tree(ctx->revs->repo, &entry.oid);
+ 			if (!t) {
+ 				die(_("entry '%s' in tree %s has tree mode, "
+ 				      "but is not a tree"),
+@@ -130,12 +134,13 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 			}
+ 			t->object.flags |= NOT_USER_GIVEN;
+ 			process_tree(ctx, t, base, entry.path);
+-		}
+-		else if (S_ISGITLINK(entry.mode))
++			break;
++		case OBJ_COMMIT:
+ 			process_gitlink(ctx, entry.oid.hash,
+ 					base, entry.path);
+-		else {
+-			struct blob *b = lookup_blob(ctx->revs->repo, &entry.oid);
++			break;
++		case OBJ_BLOB:
++			b = lookup_blob(ctx->revs->repo, &entry.oid);
+ 			if (!b) {
+ 				die(_("entry '%s' in tree %s has blob mode, "
+ 				      "but is not a blob"),
+@@ -143,6 +148,9 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 			}
+ 			b->object.flags |= NOT_USER_GIVEN;
+ 			process_blob(ctx, b, base, entry.path);
++			break;
++		default:
++			BUG("unreachable");
+ 		}
  	}
-@@ -944,13 +944,13 @@ static int do_compare_entry_piecewise(const struct cache_entry *ce,
- 	ce_len -= pathlen;
- 	ce_name = ce->name + pathlen;
- 
--	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-+	return df_name_compare(ce_name, ce_len, 0, name, namelen, is_tree);
  }
+diff --git a/walker.c b/walker.c
+index 4984bf8b3d6..7ba757244e6 100644
+--- a/walker.c
++++ b/walker.c
+@@ -45,21 +45,25 @@ static int process_tree(struct walker *walker, struct tree *tree)
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	while (tree_entry(&desc, &entry)) {
+ 		struct object *obj = NULL;
++		struct tree *tree;
++		struct blob *blob;
  
- static int do_compare_entry(const struct cache_entry *ce,
- 			    const struct traverse_info *info,
- 			    const char *name, size_t namelen,
--			    unsigned mode)
-+			    unsigned is_tree)
- {
- 	int pathlen, ce_len;
- 	const char *ce_name;
-@@ -962,7 +962,7 @@ static int do_compare_entry(const struct cache_entry *ce,
- 	 * it is quicker to use the precomputed version.
- 	 */
- 	if (!info->traverse_path)
--		return do_compare_entry_piecewise(ce, info, name, namelen, mode);
-+		return do_compare_entry_piecewise(ce, info, name, namelen, is_tree);
- 
- 	cmp = strncmp(ce->name, info->traverse_path, info->pathlen);
- 	if (cmp)
-@@ -977,12 +977,13 @@ static int do_compare_entry(const struct cache_entry *ce,
- 	ce_len -= pathlen;
- 	ce_name = ce->name + pathlen;
- 
--	return df_name_compare(ce_name, ce_len, S_IFREG, name, namelen, mode);
-+	return df_name_compare(ce_name, ce_len, 0, name, namelen, is_tree);
- }
- 
- static int compare_entry(const struct cache_entry *ce, const struct traverse_info *info, const struct name_entry *n)
- {
--	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, n->mode);
-+	int is_tree = n->object_type == OBJ_TREE;
-+	int cmp = do_compare_entry(ce, info, n->path, n->pathlen, is_tree);
- 	if (cmp)
- 		return cmp;
- 
+-		/* submodule commits are not stored in the superproject */
+-		if (S_ISGITLINK(entry.mode))
++		switch (entry.object_type) {
++		case OBJ_COMMIT:
++			/* submodule commits are not stored in the superproject */
+ 			continue;
+-		if (S_ISDIR(entry.mode)) {
+-			struct tree *tree = lookup_tree(the_repository,
+-							&entry.oid);
++		case OBJ_TREE:
++			tree = lookup_tree(the_repository, &entry.oid);
+ 			if (tree)
+ 				obj = &tree->object;
+-		}
+-		else {
+-			struct blob *blob = lookup_blob(the_repository,
+-							&entry.oid);
++			break;
++		case OBJ_BLOB:
++			blob = lookup_blob(the_repository, &entry.oid);
+ 			if (blob)
+ 				obj = &blob->object;
++			break;
++		default:
++			BUG("unreachable");
+ 		}
+ 		if (!obj || process(walker, obj))
+ 			return -1;
 -- 
 2.31.0.rc0.126.g04f22c5b82
 
