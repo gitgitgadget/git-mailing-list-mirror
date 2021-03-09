@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC61C433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5207FC433E6
 	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CB5C56529E
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:10:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1498665290
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:10:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231921AbhCIAKZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 19:10:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41952 "EHLO
+        id S231945AbhCIAK0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 19:10:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbhCIAKD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230460AbhCIAKD (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 8 Mar 2021 19:10:03 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D775C06175F
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 16:10:03 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id u14so13331419wri.3
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 16:10:03 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38C4C06175F
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 16:10:02 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id l12so13314640wry.2
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 16:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=epK0IZOqPbqDp9yCjCsz0W5BjBwKPxEN87dSlW9uDUY=;
-        b=Af+zswgyODO+Jgx6ukE2/KvEuD7jd6z2XuJxvrAppiOYWfRQSubJHMYA++KU7s7ggQ
-         sh1bCVga7+9jgIF9h75pgwAPYnnNuGA/kdQb+bqnCmblU1MXBLpIQk9dJTKveeD15lw7
-         oA9zfXABWnk6FqmgkepAwJLBF8sMRoVlXosa3jS/3CooS2mlXVOeYQu+8Vzv4tjUF6Ui
-         EVNeoFtg71KCkJvO3yeR9mM2kJluZVQDN2AB+h9tGo9vexiX4iRqjQb2z7L2YvLgkTG1
-         PJC45ztL6grw0YlqGAbGFPOdG7pg6LEJgWSL1LbCPsozc1bRaJ6Bf4DWB6a5VF5hpaqa
-         decw==
+        bh=HfxVlplU/cnoYrBNq0JnG8uKRsCkGyRl+116KdStR84=;
+        b=SyO7lgQBI3F1p+QbjW2ACuDpFyJsgX0OIHeRxsZLPJ8fP0zNaqGb/sUXS2Jh6uawx9
+         pzZlpMxd36MRo761J59QRYvtVNWVlZb1KYVB4GtgSSq8fcLS+RISIC8Q9ikHtmN5x4HB
+         /W+FfujqhQOQDnZso3AMu0dlH+J1S8qYiAoi/xbLsyGnPhHhPyUvZYEL48WdE6KSYTg4
+         MeSEsL+dCtkm/JyTDxfxQ2GZfspVz6tXo/2OjyN6iVxdUzoWThqG23lHBr4Fz5dfWldn
+         8cQf09e+9KZkJAPks1KKni9bERyVEBAamDivNV4LLm1fXwUw3F23vcJAJaA0KnPps/tN
+         nKSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=epK0IZOqPbqDp9yCjCsz0W5BjBwKPxEN87dSlW9uDUY=;
-        b=kGUveKFsthyD1gxDUqoRRh/XY9gNvJYquKSOwDA4DuOG5MFBS912stwuCfCj7mzSz/
-         pSAgnKVpq/CZ3VAVXz06bq5HpEbr3ykPHSGgsCtnSrP+SK84AhX0oVFLVjSteMgtHTmu
-         IAsK8XQ4qSJEDyV0bMc2Mv6VX9iIfA+FWWVI3j8nJwUCDMYoVkbWD1Lp4WP31vYPjKEj
-         9iFK/0mVJdN9ZLoz3vxbU6RlZq5qGZHRSh0UqD7ektp2Hf2+RM32cGJNOg4+vZ1DvA1f
-         63aVinG2W3jhjKGppw62ndbKKi8ViWqniPRIOqvIgeu+4pF6puUPP+pqmTDHGG823/MX
-         y8pg==
-X-Gm-Message-State: AOAM5302BCsJ63BCWaZzuXVevaYMc5p11U3UBZuF+LnwLHZLH9Ar/ccF
-        0lVLPUse59zNyIV41apXvv0Q8XFNf1s=
-X-Google-Smtp-Source: ABdhPJxXk25m4ZrJfL86mQBRV8T376WClpbCzpmINKo4C0dDwUo7DqH/erz8LeJx9DJHHtoz0HGo5A==
-X-Received: by 2002:a5d:6052:: with SMTP id j18mr3587995wrt.295.1615248602106;
-        Mon, 08 Mar 2021 16:10:02 -0800 (PST)
+        bh=HfxVlplU/cnoYrBNq0JnG8uKRsCkGyRl+116KdStR84=;
+        b=tJbZ80gQxa4l2mwbINo09L6Ba0IgqIH9ClA/FK+geKJBQp/uxyaWhlQ1S1ymYTWPZQ
+         WFeQOsY3rd1unsXzhR6BatRJkyXyFi97tsbmWCiI4BtFIUmOMdM+i6C6XkFPojBmBfMY
+         4CPv0fjyrIxwnwbl+ulCKP75ly1HsvUlCIGzXvKmqUaJWDbTdzUhm3ecaYVMlqPMgTQ2
+         QDH4Kp/dS/nu+YPWHHgiYKwYUgcXNMyUGU3dg4In73wSk8wXh8Q9seQoDBMqPJRmjrfk
+         0/zyjIvGlWrJmLutJB+qIHnoW27BmiuasfwshDaWgx18IGkLVrPu6dKe/DvfpBZw3cQ2
+         2eWg==
+X-Gm-Message-State: AOAM5324cIzrv3X1J/fPgqKaIk8mXOYhedDvAPAuuJDm7l5flHZE0+yd
+        f9QJO7wOVq1kHfQw0LuESSNw4S7GG4s=
+X-Google-Smtp-Source: ABdhPJweKkSljX7oGO9Hi5+OCPAiWig2GpDkF8yfdm5jcKzvRZt6hLkqn/58OhiHVNULIvGHRZ8vmQ==
+X-Received: by 2002:a5d:6807:: with SMTP id w7mr24902467wru.103.1615248601596;
+        Mon, 08 Mar 2021 16:10:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a124sm1138888wmh.39.2021.03.08.16.10.01
+        by smtp.gmail.com with ESMTPSA id a131sm1229344wmc.48.2021.03.08.16.10.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 08 Mar 2021 16:10:01 -0800 (PST)
-Message-Id: <33c231331744833e318cc652f5c7109861e010b3.1615248599.git.gitgitgadget@gmail.com>
+Message-Id: <dab8e3c6aee5a852ad46c569c0be729d64310ad9.1615248599.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
 References: <pull.845.git.1614484707.gitgitgadget@gmail.com>
         <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Mar 2021 00:09:53 +0000
-Subject: [PATCH v2 2/8] merge-ort: precompute subset of sources for which we
- need rename detection
+Date:   Tue, 09 Mar 2021 00:09:52 +0000
+Subject: [PATCH v2 1/8] diffcore-rename: enable filtering possible rename
+ sources
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,190 +83,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-rename detection works by trying to pair all file deletions (or
-"sources") with all file additions (or "destinations"), checking
-similarity, and then marking the sufficiently similar ones as renames.
-This can be expensive if there are many sources and destinations on a
-given side of history as it results in an N x M comparison matrix.
-However, there are many cases where we can compute in advance that
-detecting renames for some of the sources provides no useful information
-and thus that we can exclude those sources from the matrix.
+Add the ability to diffcore_rename_extended() to allow external callers
+to declare that they only need renames detected for a subset of source
+files, and use that information to skip detecting renames for them.
 
-To see why, first note that the merge machinery uses detected renames in
-two ways:
+There are two important pieces to this optimization that may not be
+obvious at first glance:
 
-   * directory rename detection: when one side of history renames a
-       directory, and the other side of history adds new files to that
-       directory, we want to be able to warn the user about the need to
-       chose whether those new files stay in the old directory or move
-       to the new one.
+  * We do not require callers to just filter the filepairs out
+    to remove the non-relevant sources, because exact rename detection
+    is fast and when it finds a match it can remove both a source and a
+    destination whereas the relevant_sources filter can only remove a
+    source.
 
-   * three-way content merging: in order to do three-way content merging
-       of files, we need three different file versions.  If one side of
-       history renamed a file, then some of the content for the file is
-       found under a different path than in the merge base or on the
-       other side of history.
+  * We need to filter out the source pairs in a preliminary pass instead
+    of adding a
+       strset_contains(relevant_sources, one->path)
+    check within the nested matrix loop.  The reason for that is if we
+    have 30k renames, doing 30k * 30k = 900M strset_contains() calls
+    becomes extraordinarily expensive and defeats the performance gains
+    from this change; we only want to do 30k such calls instead.
 
-This commit concentrates just on the three-way content merging; it will
-punt and mark all sources as needed for directory rename detection, and
-leave it to future commits to narrow that down more.
-
-The point of three-way content merging is to reconcile changes made on
-*both* sides of history.  What if the file wasn't modified on both
-sides?  There are two possibilities:
-
-   * If it wasn't modified on the renamed side:
-       -> then we get to do exact rename detection, which is cheap.
-
-   * If it wasn't modified on the unrenamed side:
-       -> then detection of a rename for that source file is irrelevant
-
-That latter claim might be surprising at first, so let's walk through a
-case to show why rename detection for that source file is irrelevant.
-Let's use two filenames, old.c & new.c, with the following abbreviated
-object ids (and where the value '000000' is used to denote that the file
-is missing in that commit):
-
-                 old.c     new.c
-   MERGE_BASE:   01d01d    000000
-   MERGE_SIDE1:  01d01d    000000
-   MERGE_SIDE2:  000000    5e1ec7
-
-If the rename *isn't* detected:
-   then old.c looks like it was unmodified on one side and deleted on
-   the other and should thus be removed.  new.c looks like a new file we
-   should keep as-is.
-
-If the rename *is* detected:
-   then a three-way content merge is done.  Since the version of the
-   file in MERGE_BASE and MERGE_SIDE1 are identical, the three-way merge
-   will produce exactly the version of the file whose abbreviated
-   object id is 5e1ec7.  It will record that file at the path new.c,
-   while removing old.c from the directory.
-
-Note that these two results are identical -- a single file named 'new.c'
-with object id 5e1ec7.  In other words, it doesn't matter if the rename
-is detected in the case where the file is unmodified on the unrenamed
-side.
-
-Use this information to compute whether we need rename detection for
-each source created in add_pair().
-
-It's probably worth noting that there used to be a few other edge or
-corner cases besides three-way content merges and directory rename
-detection where lack of rename detection could have affected the result,
-but those cases actually highlighted where conflict resolution methods
-were not consistent with each other.  Fixing those inconsistencies were
-thus critically important to enabling this optimization.  That work
-involved the following:
-
- * bringing consistency to add/add, rename/add, and rename/rename
-    conflict types, as done back in the topic merged at commit
-    ac193e0e0a ("Merge branch 'en/merge-path-collision'", 2019-01-04),
-    and further extended in commits 2a7c16c980 ("t6422, t6426: be more
-    flexible for add/add conflicts involving renames", 2020-08-10) and
-    e8eb99d4a6 ("t642[23]: be more flexible for add/add conflicts
-    involving pair renames", 2020-08-10)
-
-  * making rename/delete more consistent with modify/delete
-    as done in commits 1f3c9ba707 ("t6425: be more flexible with
-    rename/delete conflict messages", 2020-08-10) and 727c75b23f
-    ("t6404, t6423: expect improved rename/delete handling in ort
-    backend", 2020-10-26)
-
-Since the set of relevant_sources we compute has not yet been narrowed
-down for directory rename detection, we do not pass it to
-diffcore_rename_extended() yet.  That will be done after subsequent
-commits narrow down the list of relevant_sources needed for directory
-rename detection reasons.
+If callers pass NULL for relevant_sources, that is special cases to
+treat all sources as relevant.  Since all callers currently pass NULL,
+this optimization does not yet have any effect.  Subsequent commits will
+have merge-ort compute a set of relevant_sources to restrict which
+sources we detect renames for, and have merge-ort pass that set of
+relevant_sources to diffcore_rename_extended().
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 35 ++++++++++++++++++++++++++++++++---
- 1 file changed, 32 insertions(+), 3 deletions(-)
+ diffcore-rename.c | 26 +++++++++++++++++++-------
+ diffcore.h        |  1 +
+ merge-ort.c       |  1 +
+ 3 files changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index aba0b9fa54c3..83aa4c08121f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -88,6 +88,20 @@ struct rename_info {
- 	 */
- 	struct strmap dir_renames[3];
- 
-+	/*
-+	 * relevant_sources: deleted paths for which we need rename detection
-+	 *
-+	 * relevant_sources is a set of deleted paths on each side of
-+	 * history for which we need rename detection.  If a path is deleted
-+	 * on one side of history, we need to detect if it is part of a
-+	 * rename if either
-+	 *    * we need to detect renames for an ancestor directory
-+	 *    * the file is modified/deleted on the other side of history
-+	 * If neither of those are true, we can skip rename detection for
-+	 * that path.
-+	 */
-+	struct strset relevant_sources[3];
-+
- 	/*
- 	 * needed_limit: value needed for inexact rename detection to run
- 	 *
-@@ -358,6 +372,8 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 			strmap_clear(&renames->dir_rename_count[i], 1);
- 
- 		strmap_func(&renames->dir_renames[i], 0);
-+
-+		strset_func(&renames->relevant_sources[i]);
- 	}
- 
- 	if (!reinitialize) {
-@@ -533,12 +549,21 @@ static void add_pair(struct merge_options *opt,
- 		     struct name_entry *names,
- 		     const char *pathname,
- 		     unsigned side,
--		     unsigned is_add /* if false, is_delete */)
-+		     unsigned is_add /* if false, is_delete */,
-+		     unsigned match_mask)
- {
- 	struct diff_filespec *one, *two;
- 	struct rename_info *renames = &opt->priv->renames;
- 	int names_idx = is_add ? side : 0;
- 
-+	if (!is_add) {
-+		unsigned content_relevant = (match_mask == 0);
-+		unsigned location_relevant = 1; /* FIXME: compute this */
-+
-+		if (content_relevant || location_relevant)
-+			strset_add(&renames->relevant_sources[side], pathname);
-+	}
-+
- 	one = alloc_filespec(pathname);
- 	two = alloc_filespec(pathname);
- 	fill_filespec(is_add ? two : one,
-@@ -575,11 +600,13 @@ static void collect_rename_info(struct merge_options *opt,
- 
- 		/* Check for deletion on side */
- 		if ((filemask & 1) && !(filemask & side_mask))
--			add_pair(opt, names, fullname, side, 0 /* delete */);
-+			add_pair(opt, names, fullname, side, 0 /* delete */,
-+				 match_mask & filemask);
- 
- 		/* Check for addition on side */
- 		if (!(filemask & 1) && (filemask & side_mask))
--			add_pair(opt, names, fullname, side, 1 /* add */);
-+			add_pair(opt, names, fullname, side, 1 /* add */,
-+				 match_mask & filemask);
- 	}
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 1fe902ed2af0..7f6115fd9018 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -991,11 +991,12 @@ static int find_renames(struct diff_score *mx,
+ 	return count;
  }
  
-@@ -3228,6 +3255,8 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 					 NULL, 1);
- 		strmap_init_with_options(&renames->dir_renames[i],
- 					 NULL, 0);
-+		strset_init_with_options(&renames->relevant_sources[i],
-+					 NULL, 0);
+-static void remove_unneeded_paths_from_src(int detecting_copies)
++static void remove_unneeded_paths_from_src(int detecting_copies,
++					   struct strset *interesting)
+ {
+ 	int i, new_num_src;
+ 
+-	if (detecting_copies)
++	if (detecting_copies && !interesting)
+ 		return; /* nothing to remove */
+ 	if (break_idx)
+ 		return; /* culling incompatible with break detection */
+@@ -1022,12 +1023,18 @@ static void remove_unneeded_paths_from_src(int detecting_copies)
+ 	 *      from rename_src here.
+ 	 */
+ 	for (i = 0, new_num_src = 0; i < rename_src_nr; i++) {
++		struct diff_filespec *one = rename_src[i].p->one;
++
+ 		/*
+ 		 * renames are stored in rename_dst, so if a rename has
+ 		 * already been detected using this source, we can just
+ 		 * remove the source knowing rename_dst has its info.
+ 		 */
+-		if (rename_src[i].p->one->rename_used)
++		if (!detecting_copies && one->rename_used)
++			continue;
++
++		/* If we don't care about the source path, skip it */
++		if (interesting && !strset_contains(interesting, one->path))
+ 			continue;
+ 
+ 		if (new_num_src < i)
+@@ -1040,6 +1047,7 @@ static void remove_unneeded_paths_from_src(int detecting_copies)
+ }
+ 
+ void diffcore_rename_extended(struct diff_options *options,
++			      struct strset *relevant_sources,
+ 			      struct strset *dirs_removed,
+ 			      struct strmap *dir_rename_count)
+ {
+@@ -1060,6 +1068,8 @@ void diffcore_rename_extended(struct diff_options *options,
+ 	want_copies = (detect_rename == DIFF_DETECT_COPY);
+ 	if (dirs_removed && (break_idx || want_copies))
+ 		BUG("dirs_removed incompatible with break/copy detection");
++	if (break_idx && relevant_sources)
++		BUG("break detection incompatible with source specification");
+ 	if (!minimum_score)
+ 		minimum_score = DEFAULT_RENAME_SCORE;
+ 
+@@ -1127,9 +1137,10 @@ void diffcore_rename_extended(struct diff_options *options,
+ 		/*
+ 		 * Cull sources:
+ 		 *   - remove ones corresponding to exact renames
++		 *   - remove ones not found in relevant_sources
+ 		 */
+ 		trace2_region_enter("diff", "cull after exact", options->repo);
+-		remove_unneeded_paths_from_src(want_copies);
++		remove_unneeded_paths_from_src(want_copies, relevant_sources);
+ 		trace2_region_leave("diff", "cull after exact", options->repo);
+ 	} else {
+ 		/* Determine minimum score to match basenames */
+@@ -1148,7 +1159,7 @@ void diffcore_rename_extended(struct diff_options *options,
+ 		 *   - remove ones involved in renames (found via exact match)
+ 		 */
+ 		trace2_region_enter("diff", "cull after exact", options->repo);
+-		remove_unneeded_paths_from_src(want_copies);
++		remove_unneeded_paths_from_src(want_copies, NULL);
+ 		trace2_region_leave("diff", "cull after exact", options->repo);
+ 
+ 		/* Preparation for basename-driven matching. */
+@@ -1167,9 +1178,10 @@ void diffcore_rename_extended(struct diff_options *options,
+ 		/*
+ 		 * Cull sources, again:
+ 		 *   - remove ones involved in renames (found via basenames)
++		 *   - remove ones not found in relevant_sources
+ 		 */
+ 		trace2_region_enter("diff", "cull basename", options->repo);
+-		remove_unneeded_paths_from_src(want_copies);
++		remove_unneeded_paths_from_src(want_copies, relevant_sources);
+ 		trace2_region_leave("diff", "cull basename", options->repo);
  	}
  
- 	/*
+@@ -1342,5 +1354,5 @@ void diffcore_rename_extended(struct diff_options *options,
+ 
+ void diffcore_rename(struct diff_options *options)
+ {
+-	diffcore_rename_extended(options, NULL, NULL);
++	diffcore_rename_extended(options, NULL, NULL, NULL);
+ }
+diff --git a/diffcore.h b/diffcore.h
+index c6ba64abd198..737c93a6cc79 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -166,6 +166,7 @@ void partial_clear_dir_rename_count(struct strmap *dir_rename_count);
+ void diffcore_break(struct repository *, int);
+ void diffcore_rename(struct diff_options *);
+ void diffcore_rename_extended(struct diff_options *options,
++			      struct strset *relevant_sources,
+ 			      struct strset *dirs_removed,
+ 			      struct strmap *dir_rename_count);
+ void diffcore_merge_broken(void);
+diff --git a/merge-ort.c b/merge-ort.c
+index 467404cc0a35..aba0b9fa54c3 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2029,6 +2029,7 @@ static void detect_regular_renames(struct merge_options *opt,
+ 	diff_queued_diff = renames->pairs[side_index];
+ 	trace2_region_enter("diff", "diffcore_rename", opt->repo);
+ 	diffcore_rename_extended(&diff_opts,
++				 NULL,
+ 				 &renames->dirs_removed[side_index],
+ 				 &renames->dir_rename_count[side_index]);
+ 	trace2_region_leave("diff", "diffcore_rename", opt->repo);
 -- 
 gitgitgadget
 
