@@ -2,190 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A84C43619
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 15:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF92C433E0
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 16:03:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB17865279
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 15:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9700665279
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 16:03:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231948AbhCIPDg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Mar 2021 10:03:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37662 "EHLO
+        id S231951AbhCIQCs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 11:02:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231270AbhCIPC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Mar 2021 10:02:58 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027B1C06174A
-        for <git@vger.kernel.org>; Tue,  9 Mar 2021 07:02:58 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so6702626wmj.1
-        for <git@vger.kernel.org>; Tue, 09 Mar 2021 07:02:57 -0800 (PST)
+        with ESMTP id S231484AbhCIQCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 11:02:35 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2972CC06174A
+        for <git@vger.kernel.org>; Tue,  9 Mar 2021 08:02:35 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id w11so16656312wrr.10
+        for <git@vger.kernel.org>; Tue, 09 Mar 2021 08:02:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lHzIhsUhBoGLcHN3G24uN3UPY7gPzQXhJA11HE1H76c=;
-        b=JEYOHwz+P3u39dZe81lxlWl6oIJwZAXAuUVh06YI6iNBnj0bhUFPVk9Y2d0MRunvUs
-         CcD40q7OxLfYiP0ymkCzuKUnEmt2RzVgbnXltrmDnp3Iv/eOCjLmmDiTOvGE8RR88Ay1
-         PAFS1N77OHJ1ElFKQMDEDblvNl1z/UhCpk8elfFQmm42ByMVhWwjtNyj+l7/7KVdpSla
-         47bkzpmQzLzxR2LG+YyAkKmGhFrep+5DJPkD91ccSCdGqzfzJCc7Vt9+oBb2uLTxpv2k
-         vmjUo+tQgLhTYFyfgOkeMtbVkA6uZL5QMr7R7KVwLwWP3aq1eD6tt+JOb9erPEfHCefs
-         WYOQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ph0NilpACD3zCe5Zy7GHWAlD/Zf3mMOaHSF10YLJ+4A=;
+        b=kj7YEZTmGViTBxIC3zaZRFsd+/zupQvV68SKXNULhuzXuVeD1fun0PL+EMHjKg0vfC
+         7DWuvz8ZZpQH2y6vxoQ7iYZ0O1bj4LTjDurmXlwyLLV0NfETJvok8kvULtawK7mrI4va
+         FdOxsPC2/9FHRGUhWk3/33UGaCK3YyepZ5G2K/TumLF/oa5TmwAH3TR4sJnfPFZ6YyrU
+         Dxdb5h1EnMwA4TO5/2lGc+P21tmemR49ukcJ6qE4b3RTD84U7LfF4DSNQPTsVn5lSgex
+         8aJTtvAaAt7Hsls9oVvhd/owSg/wtpdn/FlaupG3pDguKP7YziZdRAg3wLJEE5TgNzCz
+         lTWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lHzIhsUhBoGLcHN3G24uN3UPY7gPzQXhJA11HE1H76c=;
-        b=Fd9aPMVsVHeRhNC+ZHBhzQWCD5XTH25fWqKOTsyi6U4+1nbbE0YdlYo+75LLDQaAAV
-         3kFCo8PTjORY+p10RsKV7a8RQRgpn3ZCgN+g7Q7bkoFZxL82B+06v8jMiv0kpjJDCSk6
-         Y5AKigSSIq5kpzudIhOu/KdxYzFJrLo7VdE9YMoZXYJNJuy0hdkAbr+QZ0hCzStXXEob
-         wGehtkmQB/zcYu/9hKlDSU+IfHAlQ1YsnfZF3/bduoFVShS2XA5SvspOjt10hHgEJpvu
-         2VbSwDh7LbI8sgI3/y4atvianf+Pk+b9FmsxZWKtbzwP+lvUxzn00xuY89wKtWayUzJR
-         rO5Q==
-X-Gm-Message-State: AOAM5315UMo1m9gVlLm3B6rqsZlZ/RK7qG5hgH4iGTwsxu5WvRzt+fzB
-        1J9aC2aUbTPyMpB1iyAdhi5diRjFQZc=
-X-Google-Smtp-Source: ABdhPJy4wSsqLq65ySardMv0r/VPszV4z8jPUOmP/pWbojw1fDiMOWzoh8DOH6s3XUrGH5jDW5ovOQ==
-X-Received: by 2002:a7b:cc85:: with SMTP id p5mr4588100wma.148.1615302172556;
-        Tue, 09 Mar 2021 07:02:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n4sm4301072wmq.40.2021.03.09.07.02.52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ph0NilpACD3zCe5Zy7GHWAlD/Zf3mMOaHSF10YLJ+4A=;
+        b=U7ZPgIw8Dk+REBYeIoI34SsVa85k6a9tdiCigXi3IOS54bQwgRAkTaFMnTck1ESJqB
+         SP8HcMqEUb+iNjzTYzOZTF08oVrqxMgoIg4/1XC7/EVatutpPfMyFTY1dWTk0ZJs6q4O
+         ojIMypl2j/iJ89PEEJF3n8VvVqFhRuP34nbPsqEl174AeebFSRytmgANbhtW+do/ebhk
+         1EMJm8IkQe0/WA6WTDOZgjFKiYRzVpJ1S6B4Hi8F6NHQVZ1zDrwoGn3ZnNDtWmYYuZ/v
+         0Dr0aOHyJRoEKZ5Rj06g8QUG9Ze+zcomWFfWTYCbZZw87rrvXCEHnthjEiJpVcj+UAhH
+         WW5Q==
+X-Gm-Message-State: AOAM531RDZLK9InpciE2v4IFGwLHyLkJF8kfeHiQaqtlGxVleLkQwO9z
+        oab2cjLwZ3RPfQvVzJBz2+gHR2OqUQntxw==
+X-Google-Smtp-Source: ABdhPJw8DeNTCH5N8NPj7JftAOjLWv0M5JZAh+Z4HbE2OmQoQxlT1LNvCm1DauRyTRdWE7WVCRLR0Q==
+X-Received: by 2002:adf:fb91:: with SMTP id a17mr28760099wrr.93.1615305751654;
+        Tue, 09 Mar 2021 08:02:31 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n6sm5089223wmd.27.2021.03.09.08.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 07:02:52 -0800 (PST)
-Message-Id: <21b8d3c63dbf3d1e5a05274b9693612ac4a14a36.1615302157.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
-References: <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
-        <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Mar 2021 15:02:34 +0000
-Subject: [PATCH v5 09/12] unix-socket: disallow chdir() when creating unix
- domain sockets
-Fcc:    Sent
+        Tue, 09 Mar 2021 08:02:30 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/6 + 1] test-lib: make --verbose output valid TAP
+Date:   Tue,  9 Mar 2021 17:02:12 +0100
+Message-Id: <20210309160219.13779-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.31.0.rc1.210.g0f8085a843c
+In-Reply-To: <87r1kzj7xi.fsf@evledraar.gmail.com>
+References: <87r1kzj7xi.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Chris Torek <chris.torek@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+This makes the --verbose valid TAP.
 
-Calls to `chdir()` are dangerous in a multi-threaded context.  If
-`unix_stream_listen()` or `unix_stream_connect()` is given a socket
-pathname that is too long to fit in a `sockaddr_un` structure, it will
-`chdir()` to the parent directory of the requested socket pathname,
-create the socket using a relative pathname, and then `chdir()` back.
-This is not thread-safe.
+This is a non-RFC version of an RFC patch I sent in
+https://lore.kernel.org/git/87tupwj5y5.fsf@evledraar.gmail.com/
 
-Teach `unix_sockaddr_init()` to not allow calls to `chdir()` when this
-flag is set.
+There's a 7/7 patch that's an RFC at the end. It works for me, but
+since I haven't used the JUnit output it's likely subtly broken in
+some way (e.g. the new output doesn't include a timestamp attribute),
+but it shows how easy it is to add new output targets.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/credential-cache.c |  2 +-
- unix-socket.c              | 17 ++++++++++++-----
- unix-socket.h              |  3 ++-
- 3 files changed, 15 insertions(+), 7 deletions(-)
+The eventual goal not included in this series is to have multiple
+output targets, and e.g. convert ci/print-test-failures.sh to use a
+TAP parser.
 
-diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
-index 9b3f70990597..76a6ba37223f 100644
---- a/builtin/credential-cache.c
-+++ b/builtin/credential-cache.c
-@@ -14,7 +14,7 @@
- static int send_request(const char *socket, const struct strbuf *out)
- {
- 	int got_data = 0;
--	int fd = unix_stream_connect(socket);
-+	int fd = unix_stream_connect(socket, 0);
- 
- 	if (fd < 0)
- 		return -1;
-diff --git a/unix-socket.c b/unix-socket.c
-index 012becd93d57..e0be1badb58d 100644
---- a/unix-socket.c
-+++ b/unix-socket.c
-@@ -30,16 +30,23 @@ static void unix_sockaddr_cleanup(struct unix_sockaddr_context *ctx)
- }
- 
- static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
--			      struct unix_sockaddr_context *ctx)
-+			      struct unix_sockaddr_context *ctx,
-+			      int disallow_chdir)
- {
- 	int size = strlen(path) + 1;
- 
- 	ctx->orig_dir = NULL;
- 	if (size > sizeof(sa->sun_path)) {
--		const char *slash = find_last_dir_sep(path);
-+		const char *slash;
- 		const char *dir;
- 		struct strbuf cwd = STRBUF_INIT;
- 
-+		if (disallow_chdir) {
-+			errno = ENAMETOOLONG;
-+			return -1;
-+		}
-+
-+		slash = find_last_dir_sep(path);
- 		if (!slash) {
- 			errno = ENAMETOOLONG;
- 			return -1;
-@@ -65,13 +72,13 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
- 	return 0;
- }
- 
--int unix_stream_connect(const char *path)
-+int unix_stream_connect(const char *path, int disallow_chdir)
- {
- 	int fd = -1, saved_errno;
- 	struct sockaddr_un sa;
- 	struct unix_sockaddr_context ctx;
- 
--	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
-+	if (unix_sockaddr_init(&sa, path, &ctx, disallow_chdir) < 0)
- 		return -1;
- 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
- 	if (fd < 0)
-@@ -101,7 +108,7 @@ int unix_stream_listen(const char *path,
- 
- 	unlink(path);
- 
--	if (unix_sockaddr_init(&sa, path, &ctx) < 0)
-+	if (unix_sockaddr_init(&sa, path, &ctx, opts->disallow_chdir) < 0)
- 		return -1;
- 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
- 	if (fd < 0)
-diff --git a/unix-socket.h b/unix-socket.h
-index ec2fb3ea7267..8542cdd7995d 100644
---- a/unix-socket.h
-+++ b/unix-socket.h
-@@ -3,11 +3,12 @@
- 
- struct unix_stream_listen_opts {
- 	int listen_backlog_size;
-+	unsigned int disallow_chdir:1;
- };
- 
- #define UNIX_STREAM_LISTEN_OPTS_INIT { 0 }
- 
--int unix_stream_connect(const char *path);
-+int unix_stream_connect(const char *path, int disallow_chdir);
- int unix_stream_listen(const char *path,
- 		       const struct unix_stream_listen_opts *opts);
- 
+Machine-readable "TAP --verbose -x" output can bring us a lot of nice
+things down the line, I have some local WIP code that's a smarter
+version of ci/print-test-failures.sh that knows how to spew out only
+the output relevant to the failing test(s).
+
+Future improvements based on that could be showing what specific line
+in a &&-chain failed, as well as e.g. running a debug version of a
+failing "grep" if we detect that the failing line line was 'grep <pat>
+<filename>'.
+
+Ævar Arnfjörð Bjarmason (7):
+  test-lib: remove test_external
+  test-lib: add say_color_tap helper to emit TAP format
+  test-lib: color "ok" TAP directives green under --verbose (or -x)
+  test-lib: add tee with TAP support to test-tool
+  test-lib: indent and format GIT_TEST_TEE_OUTPUT_FILE code
+  test-lib: make --verbose output valid TAP
+  test-lib: generate JUnit output via TAP
+
+ Makefile                                      |   2 +-
+ .../netrc/t-git-credential-netrc.sh           |   7 +-
+ t/README                                      |  35 +--
+ t/helper/test-date.c                          |  12 -
+ t/helper/test-path-utils.c                    |  21 --
+ t/helper/test-tee.c                           |  85 +++++++
+ t/helper/test-tool.c                          |   2 +-
+ t/helper/test-tool.h                          |   2 +-
+ t/helper/test-xml-encode.c                    |  80 -------
+ t/t0000-basic.sh                              |   8 +
+ t/t0202-gettext-perl.sh                       |  10 +-
+ t/t9700-perl-git.sh                           |  10 +-
+ t/test-lib-functions.sh                       |  89 +------
+ t/test-lib.sh                                 | 226 +++++-------------
+ 14 files changed, 177 insertions(+), 412 deletions(-)
+ create mode 100644 t/helper/test-tee.c
+ delete mode 100644 t/helper/test-xml-encode.c
+
 -- 
-gitgitgadget
+2.31.0.rc1.210.g0f8085a843c
 
