@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C4AC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90DF1C43381
 	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 06:25:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3794A652A4
+	by mail.kernel.org (Postfix) with ESMTP id 6226D6528C
 	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 06:25:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230177AbhCIGZF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Mar 2021 01:25:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
+        id S230194AbhCIGZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 01:25:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbhCIGYu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Mar 2021 01:24:50 -0500
+        with ESMTP id S229790AbhCIGYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 01:24:52 -0500
 Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C15C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 22:24:50 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id e10so13889808wro.12
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 22:24:50 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3AC4C06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 22:24:51 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id b18so13922587wrn.6
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 22:24:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+SeWPFdImdnYO4XXes7FXQjYB3PNMLwsm8j9cD3i6nw=;
-        b=kFBE+EYiUY4VzQ6N6I94orTrlv5pRRT6ToMLjUE1ASyTdogK1JEdzz9MHg6jDrgCH2
-         TFAg2qSsYjoBj6HLNY5TAoOvBchUifCxyYqIUSgpEVxewdSLeHKm1HnezY3GEUMisrnQ
-         RPI6pCMfbfaq3m8UncWDe1H3Umdw2QrwPErMNmPbV+lh812t4HAU0D9Zw2+0aoumKNnG
-         PNe7dF/xV87a7n9cp/M6QgFnA7MG0nCxCPs2kdp/HiJUmPudRmWo0LUNka/BC1b8ScU4
-         +OvZsFoYDnMJ3x95RpWijmu4SWct7Migaa2TJsbKJCtAzkfxuFYDheCmGO6Xd1spIJBm
-         /ftA==
+        bh=AUKeDKPuqxhv/6Lfxp0d9Im1h1wJr9EUYccuGbNuGZg=;
+        b=QTvXDAt7JfT3+TuuaSF4qx6DMa8xnJ9QgEQt/OKi6x8xiZlp38n6Gki+EgPcjBE2jd
+         SLfnrEvSfFnjW7dHgE5c6FlBO/l/gk2Tu7SupLbPXfgEoFgo06N3gn1Z0yhP84LzbUjL
+         50vRtrEWlZk7fUSCS6q6+bwLVGhDJD+fjoUvOSkBgg9FsxPGGH+0DK2PW3d7ct9FCGMz
+         Wxj9t6M+hLr7/L97zkT8G1rePrJLDnXXBn8ZT6Rr6ZXyuIgZMB1xEYU5LSjgnoRn2KcM
+         /Izga3skVDFkP10tPGhmwRT7OjMveeEBmtSKYdfa7DUy8ZkJBI0hbX2gxtZBErdda/dp
+         f59A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+SeWPFdImdnYO4XXes7FXQjYB3PNMLwsm8j9cD3i6nw=;
-        b=P6M4dQ0NTHlF2vvBog20FKIvF5Vm/h62dPexSBQt6MC29CWkTgIoIEuUTKMxnUlgCZ
-         r0gGN+V/hLq6xbpozI7LT0DfxSuJM49H19S8oU1RUDQ7Y/Ih6Hg7QF/871nVqpYySrCQ
-         1TY9lCMBzdFQxRC5okbcFGZoBh5AFBEudGLSzdWGt5nBOlO3pb/r/8tgTcaPqYWtA9wz
-         dCTvyp7vmpBHTKRcD+kbwI6moiv3OawDINNEn3sAXBiXqytZeYct5RI5oqX/YJexBX/M
-         dYKTwFxN8FmK3zHbgqokDaE0SpJbVVlSyvCEpFcoeatKhDQIDFUhkwOPxoN4FTRaq4y7
-         0fNw==
-X-Gm-Message-State: AOAM532k94uMZHVHoct2tvTGCdcZCDFFMg+nXIZWO2/FrOiObIAtiKjb
-        Q5iuiQOb7iZ3371jBfNvOhsBtra7cpk=
-X-Google-Smtp-Source: ABdhPJyhBXJyZWQEzxwaPX4H8LsMiWx99QA6ReAPxFU+9wE60uNBS+JAWyBBd9I9jdYk4F63o8pElQ==
-X-Received: by 2002:adf:83c2:: with SMTP id 60mr26097516wre.386.1615271089027;
-        Mon, 08 Mar 2021 22:24:49 -0800 (PST)
+        bh=AUKeDKPuqxhv/6Lfxp0d9Im1h1wJr9EUYccuGbNuGZg=;
+        b=lapFxSW8G4P6TJKEHVo9BeraqGk6zKHcHVf5pry9IF/LT93BgqFhZ6/yWh/4+IsqLa
+         r5XsarZkCJ0/5e6WxGh/HuL51KPfUPSuZimz5EODs6Wfk+qScytrKAUM42CzCrKpbtvN
+         Ay5BHljXt2tMtmLVVoFwoyMQdRfd9tynmLDFFiYQH5tR6gKcqOHeNsQUhM3/wnpbVeI5
+         969ztO7v+pB3I4Rr8Ykp0DHLT4vZuHArCHaKiyl2NxkSi0uTLy0h875JdWemsjbkH8N7
+         mo9LriiVROkluPw81KPNN9THBbADvmKEtF64t7uCOm/vPB3cMO84g6VXEiuqDYIRfLsH
+         rZSQ==
+X-Gm-Message-State: AOAM5336CmS9WktEiyJADOhBTOACGQE/e3IlSLhgVZaKA4NBlKivtaLp
+        t76scAhXUHXh5MLnSnCg5x9MFLg4fdg=
+X-Google-Smtp-Source: ABdhPJyo9Rh9yQUJ100TZTrWAYPBQc+jrKXfWGm+hX7oD2lMDGnPdXD4ud9AldeQPvTQKQHRfxg35g==
+X-Received: by 2002:adf:d1c2:: with SMTP id b2mr26048378wrd.424.1615271090597;
+        Mon, 08 Mar 2021 22:24:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o11sm23662906wrq.74.2021.03.08.22.24.48
+        by smtp.gmail.com with ESMTPSA id j20sm2266198wmp.30.2021.03.08.22.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 22:24:48 -0800 (PST)
-Message-Id: <24454e67b186992b9ef7a8ac6f220cbb4aaafd6b.1615271086.git.gitgitgadget@gmail.com>
+        Mon, 08 Mar 2021 22:24:50 -0800 (PST)
+Message-Id: <e21eea71e70733a035031bd4e97957b08bc6b22a.1615271086.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com>
 References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
         <pull.973.v2.git.git.1615271086.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Mar 2021 06:24:37 +0000
-Subject: [PATCH v2 02/10] merge-ort: add a special minimal index just for
- renormalization
+Date:   Tue, 09 Mar 2021 06:24:40 +0000
+Subject: [PATCH v2 05/10] merge-ort: support subtree shifting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,79 +81,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-renormalize_buffer() requires an index_state, which is something that
-merge-ort does not operate with.  However, all the renormalization code
-needs is an index with a .gitattributes file...plus a little bit of
-setup.  Create such an index, along with the deallocation and
-attr_direction handling.
-
-A subsequent commit will add a function to finish the initialization
-of this index.
+merge-recursive has some simple code to support subtree shifting; copy
+it over to merge-ort.  This fixes t6409.12 under
+GIT_TEST_MERGE_ALGORITHM=ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ merge-ort.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 5309488fd9d8..d91b66a052b6 100644
+index db46f496cb82..cfd956a3f435 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -18,6 +18,7 @@
- #include "merge-ort.h"
+@@ -3416,6 +3416,23 @@ void merge_finalize(struct merge_options *opt,
  
- #include "alloc.h"
-+#include "attr.h"
- #include "blob.h"
- #include "cache-tree.h"
- #include "commit.h"
-@@ -170,6 +171,16 @@ struct merge_options_internal {
- 	 */
- 	struct rename_info renames;
+ /*** Function Grouping: helper functions for merge_incore_*() ***/
  
-+	/*
-+	 * attr_index: hacky minimal index used for renormalization
-+	 *
-+	 * renormalization code _requires_ an index, though it only needs to
-+	 * find a .gitattributes file within the index.  So, when
-+	 * renormalization is important, we create a special index with just
-+	 * that one file.
-+	 */
-+	struct index_state attr_index;
++static struct tree *shift_tree_object(struct repository *repo,
++				      struct tree *one, struct tree *two,
++				      const char *subtree_shift)
++{
++	struct object_id shifted;
 +
- 	/*
- 	 * current_dir_name, toplevel_dir: temporary vars
- 	 *
-@@ -349,6 +360,9 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 	string_list_clear(&opti->paths_to_free, 0);
- 	opti->paths_to_free.strdup_strings = 0;
- 
-+	if (opti->attr_index.cache_nr)
-+		discard_index(&opti->attr_index);
++	if (!*subtree_shift) {
++		shift_tree(repo, &one->object.oid, &two->object.oid, &shifted, 0);
++	} else {
++		shift_tree_by(repo, &one->object.oid, &two->object.oid, &shifted,
++			      subtree_shift);
++	}
++	if (oideq(&two->object.oid, &shifted))
++		return two;
++	return lookup_tree(repo, &shifted);
++}
 +
- 	/* Free memory used by various renames maps */
- 	for (i = MERGE_SIDE1; i <= MERGE_SIDE2; ++i) {
- 		struct hashmap_iter iter;
-@@ -3272,6 +3286,8 @@ void merge_finalize(struct merge_options *opt,
+ static inline void set_commit_tree(struct commit *c, struct tree *t)
  {
- 	struct merge_options_internal *opti = result->priv;
+ 	c->maybe_tree = t;
+@@ -3543,6 +3560,13 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
+ {
+ 	struct object_id working_tree_oid;
  
-+	if (opt->renormalize)
-+		git_attr_set_direction(GIT_ATTR_CHECKIN);
- 	assert(opt->priv == NULL);
- 
- 	clear_or_reinit_internal_opts(opti, 0);
-@@ -3347,6 +3363,10 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	/* Default to histogram diff.  Actually, just hardcode it...for now. */
- 	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
- 
-+	/* Handle attr direction stuff for renormalization */
-+	if (opt->renormalize)
-+		git_attr_set_direction(GIT_ATTR_CHECKOUT);
++	if (opt->subtree_shift) {
++		side2 = shift_tree_object(opt->repo, side1, side2,
++					  opt->subtree_shift);
++		merge_base = shift_tree_object(opt->repo, side1, merge_base,
++					       opt->subtree_shift);
++	}
 +
- 	/* Initialization of opt->priv, our internal merge data */
- 	trace2_region_enter("merge", "allocate/init", opt->repo);
- 	if (opt->priv) {
+ 	trace2_region_enter("merge", "collect_merge_info", opt->repo);
+ 	if (collect_merge_info(opt, merge_base, side1, side2) != 0) {
+ 		/*
 -- 
 gitgitgadget
 
