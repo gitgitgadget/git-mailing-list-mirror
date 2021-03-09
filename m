@@ -4,188 +4,214 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51763C43333
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E1BC433DB
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:11:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2CD5B64FFD
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:10:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99D066528C
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 00:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231730AbhCIAKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 19:10:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41970 "EHLO
+        id S232008AbhCIAK6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 8 Mar 2021 19:10:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231877AbhCIAKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 19:10:06 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08CC3C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 16:10:06 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id a18so13266107wrc.13
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 16:10:05 -0800 (PST)
+        with ESMTP id S230070AbhCIAKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Mar 2021 19:10:51 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D6EC06174A
+        for <git@vger.kernel.org>; Mon,  8 Mar 2021 16:10:51 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id h22so11112830otr.6
+        for <git@vger.kernel.org>; Mon, 08 Mar 2021 16:10:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=KWaxSZgzerRR2+AOXRgojJoGF8Bm1+wLklgOoYKNF54=;
-        b=tAJKjKe0k9V//oV/KLyW8OvJCdaMvmhfI5PSbGZhA2DFeRhTN2gQ+kXOdmX0202Y15
-         Vcji2RGNp6OzaWDJJ8/Gx7g6UqR5hVwjRkm9HCNjWdKBCI06zueVe6taMs7Q/x/YIYdb
-         tUVvym9Xkh6CKikCeRWfQwrcwKE8Ds/FGOEZgmIbF1DwINoOhKqJb3mwHpwcNfhheqII
-         sDRBklmQ8fI7k+xbEKzUhaQvzgilW/fcjMJA0wO7yr0NH3Sh/OdJRFx8m+zJSIay/8wm
-         7XExeBr0Vr6l/3UTIx33nRNJNtd8hrvewSznFrY9proeUEeFUjFAFkz8w9ELHXtNVA0Z
-         5xzg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=WWYT445Ys209uEBYAmknVOJgRSGil8VA/DxmTwUnBBA=;
+        b=MPlyj7utXdcoZxlXLm3AAKaRyeiLDfCtF54wh86liYCtzZtIdLOFaPNgJRIl90ELR/
+         7qEU5npo4j6Fr6u6Daatau19VlDvv6rcRKHHtrOGfLHBV6Ds2ER31E1UpQgpnm2OMdW9
+         STFMqXoqtEAWhkPCrFSl2ml3THKHAn49yOQx5EQO5wTsfqm4AeUznU5bEQes7g6MI75d
+         MfaANiOmX/6kawM/2RtkPeuENNb/teYX2/uucaVpW/MRp1dKlpLdP6MoKpuHI6QxjhmC
+         0AVN9KPlZaf37V/wEL1EwkQ+InATWmJWEjrfS3ZhJPhVkM1+DD9pCXUBKY+4abxNC5dS
+         xx4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=KWaxSZgzerRR2+AOXRgojJoGF8Bm1+wLklgOoYKNF54=;
-        b=UK91jZpnEdn0rfFTJmdfnZvMOg/z+g6T/h0S+/XeE+dBm0GKDEkdJupJHVhHA/PlJD
-         dWTPN8HaufiKnuaNiF0AP0CIl61BFXflEU0oToc6dFpSnlns52RFOfgDj+0M4sGUCQLE
-         4GC+EY3TMLR5Ppa0IEjAhCbEVLdoSRhylTmNOEtFy4fl22VwYi7uUB3u+XkaW5sz0Nq9
-         V6KhnyrnZEQQMO2R5a+c8s+wpTN6kNnIS3apgLb8x3rtXYozdVSEC1wlFXd5PmqCyxUL
-         JyYu3ZYWJ9VasCKxMGXGzfmqKaOMnhB7rdq6IlZmOIed9eVm9wj3ocdyLi8B7oyVxugj
-         TRyw==
-X-Gm-Message-State: AOAM533pSXmqEqKDve4an856BzlWVna1hm01WkREoiv7xgpJ5bCSbq5n
-        XhbmReOI26EytAojP06q7icHVl7wp9E=
-X-Google-Smtp-Source: ABdhPJwhb5sUUAxLzKkR06UOC9V33gytCqmc4Ox4t3Mw4UcA826tPcWk1GlZ6+I4Du4uDOn00GvkJw==
-X-Received: by 2002:a5d:410b:: with SMTP id l11mr24480813wrp.16.1615248604865;
-        Mon, 08 Mar 2021 16:10:04 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f22sm1205378wmc.33.2021.03.08.16.10.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Mar 2021 16:10:04 -0800 (PST)
-Message-Id: <cd931286f24d66efbf6b0f0a1f520b58ac468f88.1615248599.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
-References: <pull.845.git.1614484707.gitgitgadget@gmail.com>
-        <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 09 Mar 2021 00:09:58 +0000
-Subject: [PATCH v2 7/8] merge-ort: skip rename detection entirely if possible
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WWYT445Ys209uEBYAmknVOJgRSGil8VA/DxmTwUnBBA=;
+        b=tQBeZjOw7gme2hjZ7Rsyo9RpVULcztxdVy+SKyvDte8kO4ck0fdmjRWOg3mKCwM8dp
+         JanHSNMEF9v7KEzmBe/7BmXxSCIh//Gy3KDU3f8WmmMLnyPr4ZYX6khkZv190bqPRgY7
+         sqYr37L2XGWMdngdlRn6+u06W/fCmtrzftXk18N7DyJ1TAKNmTFzkFjNoEuXFR0Zzkfr
+         K/CiPkdkw+kFelxoWgFngilauy779jCF/pljc5JyBltlHbcJ/fUBJI4yF2RuKfn2RASA
+         kx8B4F035Ojfz1KNuJAmjwBsXphVIFae0ggs9fCxOpSPByNp6XSUAjraxdrGvSFg2v8t
+         oOWA==
+X-Gm-Message-State: AOAM5300uIayDTLGFuNO3FnVO08aNEym3mEv+O2yF2/H7voFe+cMGJQ6
+        VB95dxisYvIwoP1l9mmwfFRQs4k3kamxLtTNMhxYGZtubUz70Q==
+X-Google-Smtp-Source: ABdhPJw55B2b7tKVCoZ3+5LBS56HnYkypAis4Ft9w7Bi9S1agWKgxRGth4Br8lEogr9loGnneiHbg82PsRsCLj1ogxw=
+X-Received: by 2002:a9d:8ae:: with SMTP id 43mr3221624otf.162.1615248650963;
+ Mon, 08 Mar 2021 16:10:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
+References: <20210308022138.28166-1-avarab@gmail.com> <20210308150650.18626-1-avarab@gmail.com>
+In-Reply-To: <20210308150650.18626-1-avarab@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 8 Mar 2021 16:10:40 -0800
+Message-ID: <CABPp-BHPR7SZHtuyROBc=c_g2nGyV_RA3xv9vmNXJw3v9KJurQ@mail.gmail.com>
+Subject: Re: [PATCH 00/30] tree-walk: mostly "mode" to "enum object_type"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Kirill Smelkov <kirr@navytux.spb.ru>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Mon, Mar 8, 2021 at 7:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> This large series goes on top of my 6 patch series for
+> read_tree_recursive() as this one further refactors that function. See
+> https://lore.kernel.org/git/20210308022138.28166-1-avarab@gmail.com/
+> for that series.
+>
+> I noticed that since 2014 or so we haven't been doing the fsck checks
+> for bad file modes in trees. This series fixes that. I plan to add
+> tests etc. for that in another follow-up series.
+>
+> I wanted to get this out for review sooner than later, particularly
+> since the fsck testing will probably get me down another refactoring
+> path (fsck testing in general in this area is pretty bad...).
+>
+> As noted in 30/30 it would have been way easier to simply do an
+> isolated fix for that bug by introducing some fsck-specific API for
+> raw tree reading.
+>
+> But I thought the bug was symptomatic of a wider problem in our
+> codebase. Namely that we pass around the tree's mode *a lot*.
+>
+> But almost everything that then deals with the mode doesn't per-se
+> care about the mode bits in the tree, but using them to map that mode
+> to a tree entry for one of of OBJ_{BLOB,TREE,COMMIT}.
+>
+> So this is a large refactoring of all users of the widely used
+> tree-walk.h API to "enum obj2ect_type", finally in 29/30 I rename the
+> field to a scary "raw_mode".
+>
+> At that point we have just ~30-50 grep hits left for "raw_mode" in the
+> codebase (depending on whether we count names in function parameters).
+>
+> Hopefully being in that state alleviates e.g. Elijah's concerns
+> expressed in
+> https://lore.kernel.org/git/CABPp-BEdu1PqV5W=3DFuL0f08iFhGzvzV8oSUybNj4eF=
+0aAwTnAw@mail.gmail.com/
+> I agree that doing the equivalent of 30/30 on top of master would be
+> way too scary, but once we're at 29/30 I think it's sane.
+>
+> I tested this in combination with his on-list series to add more
+> merge-ort testing:
+> https://lore.kernel.org/git/pull.973.git.git.1614905738.gitgitgadget@gmai=
+l.com/
+>
+> I found a regression I'd caused in the merge-ort.c code with those
+> tests, fixed here. See the comment in merge-ort.c in 30/30.
 
-diffcore_rename_extended() will do a bunch of setup, then check for
-exact renames, then abort before inexact rename detection if there are
-no more sources or destinations that need to be matched.  It will
-sometimes be the case, however, that either
-  * we start with neither any sources or destinations
-  * we start with no *relevant* sources
-In the first of these two cases, the setup and exact rename detection
-will be very cheap since there are 0 files to operate on.  In the second
-case, it is quite possible to have thousands of files with none of the
-source ones being relevant.  Avoid calling diffcore_rename_extended() or
-even some of the setup before diffcore_rename_extended() when we can
-determine that rename detection is unnecessary.
+I'll start reading through this series, but two quick early notes:
+  - I was worried about touching the tree-walk code message up
+performance.  Since collect_rename_info() in merge-ort.c takes the
+most time (and it's mostly a tree-walk), I was worried this would
+regress performance for me.  A couple runs of my mega-renames big
+rebase testcase suggests performance is not that different, so my
+fears look unfounded.  (Note: I tested in combination with all my
+performance improvements, because otherwise tree-walking would just be
+in the noise of overall runtime.)
+  - There's a textual conflict with this series and my sets of patch
+series that finish off the ort implementation[1], but it's just two
+lines that are pretty easy to resolve.
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+[1] https://github.com/gitgitgadget/git/pulls?q=3Dis%3Aopen+is%3Apr+author%=
+3Anewren+Optimization+batch
 
-                            Before                  After
-    no-renames:        6.003 s ±  0.048 s     5.708 s ±  0.111 s
-    mega-renames:    114.009 s ±  0.236 s   102.171 s ±  0.440 s
-    just-one-mega:     3.489 s ±  0.017 s     3.471 s ±  0.015 s
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index 66892c63cee2..8602c7b8936f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2158,6 +2158,19 @@ static int process_renames(struct merge_options *opt,
- 	return clean_merge;
- }
- 
-+static inline int possible_side_renames(struct rename_info *renames,
-+					unsigned side_index)
-+{
-+	return renames->pairs[side_index].nr > 0 &&
-+	       !strset_empty(&renames->relevant_sources[side_index]);
-+}
-+
-+static inline int possible_renames(struct rename_info *renames)
-+{
-+	return possible_side_renames(renames, 1) ||
-+	       possible_side_renames(renames, 2);
-+}
-+
- static void resolve_diffpair_statuses(struct diff_queue_struct *q)
- {
- 	/*
-@@ -2194,6 +2207,16 @@ static void detect_regular_renames(struct merge_options *opt,
- 	struct diff_options diff_opts;
- 	struct rename_info *renames = &opt->priv->renames;
- 
-+	if (!possible_side_renames(renames, side_index)) {
-+		/*
-+		 * No rename detection needed for this side, but we still need
-+		 * to make sure 'adds' are marked correctly in case the other
-+		 * side had directory renames.
-+		 */
-+		resolve_diffpair_statuses(&renames->pairs[side_index]);
-+		return;
-+	}
-+
- 	repo_diff_setup(opt->repo, &diff_opts);
- 	diff_opts.flags.recursive = 1;
- 	diff_opts.flags.rename_empty = 0;
-@@ -2311,6 +2334,8 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	int need_dir_renames, s, clean = 1;
- 
- 	memset(&combined, 0, sizeof(combined));
-+	if (!possible_renames(renames))
-+		goto cleanup;
- 
- 	trace2_region_enter("merge", "regular renames", opt->repo);
- 	detect_regular_renames(opt, MERGE_SIDE1);
-@@ -2345,6 +2370,26 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	clean &= process_renames(opt, &combined);
- 	trace2_region_leave("merge", "process renames", opt->repo);
- 
-+	goto simple_cleanup; /* collect_renames() handles some of cleanup */
-+
-+cleanup:
-+	/*
-+	 * Free now unneeded filepairs, which would have been handled
-+	 * in collect_renames() normally but we're about to skip that
-+	 * code...
-+	 */
-+	for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++) {
-+		struct diff_queue_struct *side_pairs;
-+		int i;
-+
-+		side_pairs = &renames->pairs[s];
-+		for (i = 0; i < side_pairs->nr; ++i) {
-+			struct diff_filepair *p = side_pairs->queue[i];
-+			diff_free_filepair(p);
-+		}
-+	}
-+
-+simple_cleanup:
- 	/* Free memory for renames->pairs[] and combined */
- 	for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++) {
- 		free(renames->pairs[s].queue);
--- 
-gitgitgadget
-
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (30):
+>   diff.c: remove redundant canon_mode() call
+>   notes & match-trees: use name_entry's "pathlen" member
+>   cache.h: add a comment to object_type()
+>   tree-walk.h: add object_type member to name_entry
+>   tree-walk.c: migrate to using new "object_type" field when possible
+>   cache.h: have base_name_compare() take "is tree?", not "mode"
+>   tree-walk.h users: switch object_type(...) to new .object_type
+>   tree.h: format argument lists of read_tree_recursive() users
+>   tree.h users: format argument lists in archive.c
+>   archive: get rid of 'stage' parameter
+>   tree.h API: make read_tree_fn_t take an "enum object_type"
+>   tree-walk.h users: migrate "p->mode &&" pattern
+>   tree-walk.h users: refactor chained "mode" if/else into switch
+>   tree-walk.h users: migrate miscellaneous "mode" to "object_type"
+>   merge-tree tests: test for the mode comparison in same_entry()
+>   merge-ort: correct reference to test in 62fdec17a11
+>   fsck.c: switch on "object_type" in fsck_walk_tree()
+>   tree-walk.h users: use temporary variable(s) for "mode"
+>   tree-walk.h API: formatting changes for subsequent commit
+>   tree-walk.h API: rename get_tree_entry() to get_tree_entry_mode()
+>   tree-walk.h API users: use "tmp" for mode in shift_tree_by()
+>   tree-walk.h API: Add get_tree_entry_type()
+>   tree-walk.h API: add a get_tree_entry_path() function
+>   tree-walk.h API: document and format tree_entry_extract()
+>   tree-entry.h API: rename tree_entry_extract() to
+>     tree_entry_extract_mode()
+>   tree-walk.h API: add a tree_entry_extract_all() function
+>   tree-walk.h API: add a tree_entry_extract_type() function
+>   tree-walk.h API users: rename "struct name_entry"'s "mode" to
+>     "raw_mode"
+>   tree.h API users: rename read_tree_fn_t's "mode" to "raw_mode"
+>   tree-walk.h API: move canon_mode() back out of decode_tree_entry()
+>
+>  archive.c              | 51 +++++++++++++-----------
+>  blame.c                |  9 +++--
+>  builtin/checkout.c     |  7 +++-
+>  builtin/fast-import.c  |  8 ++--
+>  builtin/grep.c         |  6 +--
+>  builtin/log.c          |  7 ++--
+>  builtin/ls-files.c     | 13 +++---
+>  builtin/ls-tree.c      | 18 ++++-----
+>  builtin/merge-tree.c   | 32 +++++++++------
+>  builtin/mktree.c       |  4 +-
+>  builtin/pack-objects.c |  6 +--
+>  builtin/reflog.c       |  3 +-
+>  builtin/rm.c           |  2 +-
+>  builtin/update-index.c |  7 +++-
+>  cache-tree.c           |  2 +-
+>  cache.h                | 11 ++++--
+>  combine-diff.c         |  8 ++--
+>  delta-islands.c        |  2 +-
+>  diff.c                 |  2 +-
+>  fsck.c                 | 23 +++++------
+>  http-push.c            |  6 ++-
+>  line-log.c             |  2 +-
+>  list-objects.c         | 20 +++++++---
+>  match-trees.c          | 52 ++++++++++++------------
+>  merge-ort.c            | 34 ++++++++++------
+>  merge-recursive.c      | 33 ++++++++--------
+>  notes.c                | 15 +++----
+>  object-name.c          |  7 ++--
+>  pack-bitmap-write.c    |  8 ++--
+>  read-cache.c           | 16 ++++----
+>  revision.c             | 12 ++++--
+>  t/t4300-merge-tree.sh  | 44 +++++++++++++++++++++
+>  tree-diff.c            | 44 ++++++++++++---------
+>  tree-walk.c            | 89 +++++++++++++++++++++++++++++++-----------
+>  tree-walk.h            | 67 ++++++++++++++++++++++++++-----
+>  tree.c                 | 19 +++++----
+>  tree.h                 |  5 ++-
+>  unpack-trees.c         | 30 ++++++++------
+>  walker.c               | 22 ++++++-----
+>  39 files changed, 482 insertions(+), 264 deletions(-)
+>
+> --
+> 2.31.0.rc0.126.g04f22c5b82
+>
