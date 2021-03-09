@@ -8,59 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 242BAC433DB
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 17:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7700C433E9
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 17:20:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E60C365237
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 17:12:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F9466523D
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 17:20:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbhCIRL4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Mar 2021 12:11:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
+        id S231414AbhCIRUB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 12:20:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230386AbhCIRLu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Mar 2021 12:11:50 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A72BC06174A
-        for <git@vger.kernel.org>; Tue,  9 Mar 2021 09:11:50 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id m6so9916951pfk.1
-        for <git@vger.kernel.org>; Tue, 09 Mar 2021 09:11:50 -0800 (PST)
+        with ESMTP id S230449AbhCIRTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 12:19:31 -0500
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FAE5C06174A
+        for <git@vger.kernel.org>; Tue,  9 Mar 2021 09:19:31 -0800 (PST)
+Received: by mail-oo1-xc2c.google.com with SMTP id x23so3231347oop.1
+        for <git@vger.kernel.org>; Tue, 09 Mar 2021 09:19:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=CJydoA9TEkJkIrsAAZaSRdFE0s9WLcfDJ2sG/qaX7uQ=;
-        b=cMuqNztdA9d6U8oIAMxPoP+SZEDuNLTn8kCbo0sOA4aOayz8FCHtV1+pPGqyg1Om61
-         N/Zbr3hQqx5GzhvFdbyhkj8/1TwpwjGao8amwSIk3uiMGYfhGgTuSqj1uHMd0dWqIj/0
-         I4NMVaKM72Vd2h4TEDq7WhDvTyPwLrMonuUM+Nmj5+qAqmq50AwoIdLsHFz0NsHbTYdL
-         /7YL4C2BGdeCzMCGo0IE0QEiNdNqiVU+QYiMk9REcFn1a08pvBqPwFqJ8hCnbVOv0DlV
-         Exim1ahCYvD9RcFjVpapFP769v7BmG46ISl1nq3FIlUKXwhLzMPA6PcRAFCvX6PiiGGu
-         OyuQ==
+        bh=dVaeidsGxst5Gul55dqqgOZj7jZQO9C+5FhhFrEMT/4=;
+        b=prUCAe33KAgGwXLcQrVWZg0j5E8/FZbLwdPvHz3mmI2Ssl7zaguATde0CWEqtfj5u0
+         jz6lMoHFI3T5Bje9isetCpvQnzKpdQSE+ycABOMzSzonbonx2yj4IKgvqOOpTDT5uRgg
+         SXwjQHjpuxNds4RrEw6m/g8F/7ebiPQP1krvKpVjUHNGym98ZwZgUoPk+MzaLVPavwL+
+         Mf9ob/Kqd/1etZF3gqhgxFnjC5JmXjlvH0ak+cGKggBMgNPcyfjvTy7GzVOartOjOntf
+         brpdLkJdRn3pHg11Tu5+87Lm+ZzrBAID2JV0owEYb0brXQ4gqfke9kflKqFPhx03lWdZ
+         qhAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CJydoA9TEkJkIrsAAZaSRdFE0s9WLcfDJ2sG/qaX7uQ=;
-        b=HYKQEJAB7ev/aZAedtwaGsfPBu8Kyr5XUxx/Wb6LAz6ckmOgQCxQmgQ8xMITP14fdp
-         DxDaONFYPFapaTMu/phO+gSHeASJEfOwL0sNF14NNbLwWVqjFCJEser4Cg3Gv39XZes6
-         NemOwyYl2KVBtLZgAWq19aKoewBm1oTG80av3d6RdVCRNLE/D66qIMCuJfrU9XY0iLRN
-         yMREc7WlNWbPtNWVemO0Efy1XcVecBmj0xJFugN9wlksXepW2rfC63atat32n2wgmtQ0
-         BisEms5Q4AhdU2Shp/dJxjtWPhUBampdoGIRjZiXrmHofpJm0s8RRX4XEKbSyZBfOzk9
-         curQ==
-X-Gm-Message-State: AOAM5327/1KbVkzhLD8EfVIDvfvHK2RuK74dlqvWKxSeK4XRTIqVryUX
-        qsHWrETohLrW+UHBVXmi7NytWkT4EN4KDeF5Up8=
-X-Google-Smtp-Source: ABdhPJwBhfIRMmu7PEjA6e6g1Gu0Z7NGinJzIqEkdGl5HCgiZnC3fgJDsqZdj1DA4tBKAuXjHSnfDbQs+oA9V98ehp4=
-X-Received: by 2002:aa7:8001:0:b029:1ee:6e01:f54 with SMTP id
- j1-20020aa780010000b02901ee6e010f54mr26496026pfi.48.1615309909897; Tue, 09
- Mar 2021 09:11:49 -0800 (PST)
+        bh=dVaeidsGxst5Gul55dqqgOZj7jZQO9C+5FhhFrEMT/4=;
+        b=TnoocZTJ9I4S6FEdWGO4fIDFI0sWkRz8thFybI2ojsNKSvmenCpZkUZ6KZ3njQoRdH
+         It2fk2Nssyj3u6p4knZ+YN34Yhx4C+QBUrVNWCAqmHgk/XSgXSm2ORvo4t/x6NOwrmXa
+         zVUuaYVGQkFsFjB3aECkOo4XcfFldHt1hAGpXTHOrJkllpslJqqWVMKcL9I8KGNC6dlO
+         MtQ5QZfNQ97ARWdH4LNJ8uslHDnAlK1kVhRsNCKoKGE51GSW7Zpcm0KXRrXJs9HNH9Fq
+         7hBTsVl7X4e0vMuzr3m4w3P4xQyuGSZgIJxLZjD1gjf7WZe0g7AIEN2W9Pu/1pgXtHCe
+         goOw==
+X-Gm-Message-State: AOAM530KNGo1GZhc5d4ORdkP9Ze3Wbm1feh+sffxb8lOXLG20ZnC3wIa
+        rcqKK2evE9KR69e9p9b96bWmic6W7Z+OJFIamae8aJqdFYw=
+X-Google-Smtp-Source: ABdhPJyCAoTCS2ggNB3dbmO+YR+ByobQUYR/BxoSnLJC0BlOMRxVRCPFpPeFUMOusZxrIylTYb21/jBWXA83yRl8Q/o=
+X-Received: by 2002:a4a:94a7:: with SMTP id k36mr22849556ooi.45.1615310370440;
+ Tue, 09 Mar 2021 09:19:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20210308022138.28166-1-avarab@gmail.com> <20210308150650.18626-14-avarab@gmail.com>
-In-Reply-To: <20210308150650.18626-14-avarab@gmail.com>
+References: <20210308022138.28166-1-avarab@gmail.com> <20210308150650.18626-16-avarab@gmail.com>
+In-Reply-To: <20210308150650.18626-16-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 9 Mar 2021 09:11:39 -0800
-Message-ID: <CABPp-BEC+Hi+EXF_QK0-o9oqmMnVu3_mX-GN0m24vY_NgLSnVw@mail.gmail.com>
-Subject: Re: [PATCH 13/30] tree-walk.h users: refactor chained "mode" if/else
- into switch
+Date:   Tue, 9 Mar 2021 09:19:19 -0800
+Message-ID: <CABPp-BHfH4v4xEc4MPv24tRoW1pPrXSCFfqCpSSyGOGT_-1kCA@mail.gmail.com>
+Subject: Re: [PATCH 15/30] merge-tree tests: test for the mode comparison in same_entry()
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -76,125 +74,101 @@ X-Mailing-List: git@vger.kernel.org
 On Mon, Mar 8, 2021 at 7:07 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
 ab@gmail.com> wrote:
 >
-> Refactor a couple of "switch" statements that previously relied on
-> "entry.mode" to switch on "entry.object_type" instead.
+> Add a test to stress the "a->mode =3D=3D b->mode" comparison in
+> merge-tree.c's same_entry().
+
+I can't remember now; did you remove the preliminary canon_mode()?  If
+so, does this check actually need to be generalized?
+
+For example, if someone has a git repository where a mode on a file in
+one part of history is 100666, and on the other is 100644, then the
+equality comparison no longer is satisfied because the modes haven't
+been canonicalized.  Yet it's clear how the merge-tree should resolve
+it -- both are regular, non-executable files, so the merged mode
+should be 100644.
+
+> That code was initially added by Linus in 33deb63a36f (Add
+> "merge-tree" helper program. Maybe it's retarded, maybe it's helpful.,
+> 2005-04-14), and then again in its current form in
+> 492e0759bfe (Handling large files with GIT, 2006-02-14).
 >
-> This is more obvious, and allows us to explicitly handle all the OBJ_*
-> cases, not just have a wildcard "else". That doesn't matter for the
-> behavior of this code, but for its readability and maintainability.
+> However, nothing was testing that we handled this case
+> correctly. Simply removing the mode comparison left all tests passing,
+> but as seen here it's important that we don't think a path with the
+> same content but different modes is the same_entry().
+>
+> The rest of this series will touch code that's relevant to this, but
+> won't change its behavior. This test is just something I came up with
+> in testing whether the mode test in same_entry() was needed at all.
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  list-objects.c | 20 ++++++++++++++------
->  walker.c       | 22 +++++++++++++---------
->  2 files changed, 27 insertions(+), 15 deletions(-)
+>  t/t4300-merge-tree.sh | 44 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
 >
-> diff --git a/list-objects.c b/list-objects.c
-> index e19589baa04..37434ba89d3 100644
-> --- a/list-objects.c
-> +++ b/list-objects.c
-> @@ -111,6 +111,9 @@ static void process_tree_contents(struct traversal_co=
-ntext *ctx,
->         init_tree_desc(&desc, tree->buffer, tree->size);
+> diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+> index e59601e5fe9..f783d784d02 100755
+> --- a/t/t4300-merge-tree.sh
+> +++ b/t/t4300-merge-tree.sh
+> @@ -40,6 +40,25 @@ test_expect_success 'file add A, B (same)' '
+>         test_must_be_empty actual
+>  '
 >
->         while (tree_entry(&desc, &entry)) {
-> +               struct tree *t;
-> +               struct blob *b;
+> +test_expect_success 'file add A, B (different mode)' '
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-same-diff-mode-A" "ONE" "AAA" &&
+> +       git reset --hard initial &&
+> +       echo AAA >ONE &&
+> +       test_chmod +x ONE &&
+> +       test_tick &&
+> +       git commit -m"add-a-b-same-diff-mode-B" &&
+> +       git tag "add-a-b-same-diff-mode-B" HEAD &&
+> +       git merge-tree initial add-a-b-same-diff-mode-A add-a-b-same-diff=
+-mode-B >actual &&
+> +       cat >expected <<EXPECTED &&
+> +added in both
+> +  our    100644 $(git rev-parse add-a-b-same-diff-mode-A:ONE) ONE
+> +  their  100755 $(git rev-parse add-a-b-same-diff-mode-B:ONE) ONE
+> +EXPECTED
 > +
->                 if (match !=3D all_entries_interesting) {
->                         match =3D tree_entry_interesting(ctx->revs->repo-=
->index,
->                                                        &entry, base, 0,
-> @@ -121,8 +124,9 @@ static void process_tree_contents(struct traversal_co=
-ntext *ctx,
->                                 continue;
->                 }
+> +       test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'file add A, B (different)' '
+>         git reset --hard initial &&
+>         test_commit "add-a-b-diff-A" "ONE" "AAA" &&
+> @@ -61,6 +80,31 @@ EXPECTED
+>         test_cmp expected actual
+>  '
 >
-> -               if (S_ISDIR(entry.mode)) {
-> -                       struct tree *t =3D lookup_tree(ctx->revs->repo, &=
-entry.oid);
-> +               switch (entry.object_type) {
-> +               case OBJ_TREE:
-> +                       t =3D lookup_tree(ctx->revs->repo, &entry.oid);
->                         if (!t) {
->                                 die(_("entry '%s' in tree %s has tree mod=
-e, "
->                                       "but is not a tree"),
-> @@ -130,12 +134,13 @@ static void process_tree_contents(struct traversal_=
-context *ctx,
->                         }
->                         t->object.flags |=3D NOT_USER_GIVEN;
->                         process_tree(ctx, t, base, entry.path);
-> -               }
-> -               else if (S_ISGITLINK(entry.mode))
-> +                       break;
-> +               case OBJ_COMMIT:
->                         process_gitlink(ctx, entry.oid.hash,
->                                         base, entry.path);
-> -               else {
-> -                       struct blob *b =3D lookup_blob(ctx->revs->repo, &=
-entry.oid);
-> +                       break;
-> +               case OBJ_BLOB:
-> +                       b =3D lookup_blob(ctx->revs->repo, &entry.oid);
->                         if (!b) {
->                                 die(_("entry '%s' in tree %s has blob mod=
-e, "
->                                       "but is not a blob"),
-> @@ -143,6 +148,9 @@ static void process_tree_contents(struct traversal_co=
-ntext *ctx,
->                         }
->                         b->object.flags |=3D NOT_USER_GIVEN;
->                         process_blob(ctx, b, base, entry.path);
-> +                       break;
-> +               default:
-> +                       BUG("unreachable");
->                 }
->         }
->  }
-> diff --git a/walker.c b/walker.c
-> index 4984bf8b3d6..7ba757244e6 100644
-> --- a/walker.c
-> +++ b/walker.c
-> @@ -45,21 +45,25 @@ static int process_tree(struct walker *walker, struct=
- tree *tree)
->         init_tree_desc(&desc, tree->buffer, tree->size);
->         while (tree_entry(&desc, &entry)) {
->                 struct object *obj =3D NULL;
-> +               struct tree *tree;
-> +               struct blob *blob;
->
-> -               /* submodule commits are not stored in the superproject *=
-/
-> -               if (S_ISGITLINK(entry.mode))
-> +               switch (entry.object_type) {
-> +               case OBJ_COMMIT:
-> +                       /* submodule commits are not stored in the superp=
-roject */
->                         continue;
-> -               if (S_ISDIR(entry.mode)) {
-> -                       struct tree *tree =3D lookup_tree(the_repository,
-> -                                                       &entry.oid);
-> +               case OBJ_TREE:
-> +                       tree =3D lookup_tree(the_repository, &entry.oid);
->                         if (tree)
->                                 obj =3D &tree->object;
-> -               }
-> -               else {
-> -                       struct blob *blob =3D lookup_blob(the_repository,
-> -                                                       &entry.oid);
-> +                       break;
-> +               case OBJ_BLOB:
-> +                       blob =3D lookup_blob(the_repository, &entry.oid);
->                         if (blob)
->                                 obj =3D &blob->object;
-> +                       break;
-> +               default:
-> +                       BUG("unreachable");
->                 }
->                 if (!obj || process(walker, obj))
->                         return -1;
+> +test_expect_success 'file add A, B (different and different mode)' '
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-diff-diff-mode-A" "ONE" "AAA" &&
+> +       git reset --hard initial &&
+> +       echo BBB >ONE &&
+> +       test_chmod +x ONE &&
+> +       test_tick &&
+> +       git commit -m"add-a-b-diff-diff-mode-B" &&
+> +       git tag "add-a-b-diff-diff-mode-B" &&
+> +       git merge-tree initial add-a-b-diff-diff-mode-A add-a-b-diff-diff=
+-mode-B >actual &&
+> +       cat >expected <<EXPECTED &&
+> +added in both
+> +  our    100644 $(git rev-parse add-a-b-diff-diff-mode-A:ONE) ONE
+> +  their  100755 $(git rev-parse add-a-b-diff-diff-mode-B:ONE) ONE
+> +@@ -1 +1,5 @@
+> ++<<<<<<< .our
+> + AAA
+> ++=3D=3D=3D=3D=3D=3D=3D
+> ++BBB
+> ++>>>>>>> .their
+> +EXPECTED
+> +
+> +       test_cmp expected actual
+> +'
+> +
+>  test_expect_success 'file change A, !B' '
+>         git reset --hard initial &&
+>         test_commit "change-a-not-b" "initial-file" "BBB" &&
 > --
 > 2.31.0.rc0.126.g04f22c5b82
-
-This does make it nicer.  :-)
