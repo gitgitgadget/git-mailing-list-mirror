@@ -2,255 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55745C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 20:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E64DC433E0
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:00:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BBCB6522E
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 20:58:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1292D65244
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:00:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231886AbhCIU5c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Mar 2021 15:57:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231806AbhCIU5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Mar 2021 15:57:06 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F24C06174A
-        for <git@vger.kernel.org>; Tue,  9 Mar 2021 12:57:06 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id h10so23168740edl.6
-        for <git@vger.kernel.org>; Tue, 09 Mar 2021 12:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=vLWDUH7MhBs5V20jhZmyuAE++wegtOLCdL4fIcpT1/M=;
-        b=bIN18QZZgZsJxX13TVORpwXwF2jUmHy91U/bSgJ5WLakDbkUOMYwXYfXnDw7WFF4f+
-         wa0BJKyAd+b+jCzcWT7XEsqaPBc2p+OPIkiGXHZ66ZNoujjrtIzf/JhSrrqPHmwm39zR
-         hBNFEA6j7+MoPCridLa6XjOANNVLCHP91kXrmJpxwNadoamF4bhAsXgeK2pd5I2o4cSB
-         GhGJPCCW1xcD1EmXORkn31FOQH+6EY30GLh9B3MukDd4prOFXsFQOjvy9IdXbCI4tCli
-         ONUTfI4+3tetOLQ3DqratsHJ9Lh/fXnh/H1VMOJz9VGM4c07Y4TlC4xN8lzEP/MN8Ckc
-         84dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=vLWDUH7MhBs5V20jhZmyuAE++wegtOLCdL4fIcpT1/M=;
-        b=sqZ8wujfJBBavnvaGMTK3mSc+GBP0PhogdDXlDdOo1DTE9xjeu972bOQ1XxDoeRKrh
-         E/Flf7NTCLdEdaapAwcBvEYtoKcwufc7Lu6nj91csG66aVc4gYN9iQXP92aIrtnJy8YM
-         9FUJf2jFYMnT19klzzBifio4XNRgO4fDtQOeXG1wifraWVeMU9pFTqhVBTejzLGhi+di
-         zjCMg8IgREHPl0MiNVuEEEeL+IeKEeNh3XU5NOUmTiZ3aueHZnRh0PsB9q9G8Z/fpKTM
-         hitP1Ic/sKRzEkI18i4BUtYwo4hdNmIVhVUeF6zTDVFP2UbNcFRdBARKQQUgjiIKv39+
-         z6YQ==
-X-Gm-Message-State: AOAM531jjwR4yHz/t+aI75gEXm1UMaYDIBE6mdfazFPwciv4Vw8kGYX5
-        RNMxu5IED6XeUB0D8M7ZcNU=
-X-Google-Smtp-Source: ABdhPJwzRDensX/mElD3fHQmB6lYNb1ZJhA11zzVaJyATOppPyBJGwUb4UtPvXdfW/fs+z6DCJoztQ==
-X-Received: by 2002:a05:6402:c96:: with SMTP id cm22mr6375735edb.128.1615323424758;
-        Tue, 09 Mar 2021 12:57:04 -0800 (PST)
-Received: from evledraar (j57224.upc-j.chello.nl. [24.132.57.224])
-        by smtp.gmail.com with ESMTPSA id b12sm9537945eds.94.2021.03.09.12.57.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 12:57:04 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/7] test-lib: make --verbose output valid TAP
-References: <87r1kzj7xi.fsf@evledraar.gmail.com>
- <20210309160219.13779-7-avarab@gmail.com>
- <20210309185911.GF3590451@szeder.dev>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.15
-In-reply-to: <20210309185911.GF3590451@szeder.dev>
-Date:   Tue, 09 Mar 2021 21:57:03 +0100
-Message-ID: <87k0qghwps.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S231510AbhCIU7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 15:59:39 -0500
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:40939 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231272AbhCIU72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 15:59:28 -0500
+X-Greylist: delayed 312 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Mar 2021 15:59:28 EST
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 4Dw6rk5c2Mz8sfT
+        for <git@vger.kernel.org>; Tue,  9 Mar 2021 20:54:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=twosigma.com;
+        s=202008; t=1615323254;
+        bh=D/U/RhYXy9irWBkP/8+lJ0Vu+uafSoI0rj3RNc2xtSc=;
+        h=From:To:Subject:Date:From;
+        b=Rsw4makD5LGjJMuZ2mdiYThoBLZF0Tg8pgV09+d6Ujv4hDRm91GhbAU9bsP4RtIku
+         sMmeEn5g96iVcYZU4yO/eR3yC1XEpOyVeGHJOvo5VvfAHbzHI5XrCq2cnD7NXTipDt
+         8K5vTu7wrFij1zsR+poZ9MGvMf7VorixYpetorLN11C4E8i5MNkYaPDCUJfUHcq7PK
+         TQng8DtaTNwEFuzTKolH2sd0u6SS93CuNf2ZGgYKV4TGw7tIaFvYanbrsVRBaDjnea
+         E1ZaDvImxj7KLNV13JPKW7NgG/vweg40LhM+qBARiHoH9oshgTLN0YFJbs/QUcSkXo
+         BgO1BewTnzxTA==
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id a_vz8szLHOKz for <git@vger.kernel.org>;
+        Tue,  9 Mar 2021 20:54:14 +0000 (UTC)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 4Dw6rk4XXNz8sc2
+        for <git@vger.kernel.org>; Tue,  9 Mar 2021 20:54:14 +0000 (UTC)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1497.2; Tue, 9 Mar 2021 20:54:14 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1497.012; Tue, 9 Mar 2021 20:54:14 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: slow object packing during push
+Thread-Topic: slow object packing during push
+Thread-Index: AdcVJlVNhy4BoRPbT22BeCkXYnHixw==
+Date:   Tue, 9 Mar 2021 20:54:14 +0000
+Message-ID: <38b99459158a45b1bea09037f3dd092d@exmbdft7.ad.twosigma.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.185.79]
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I have a large, funny repository that has very slow pushes unless I set pac=
+k.usebitmaps=3Dfalse to false.
 
-On Tue, Mar 09 2021, SZEDER G=C3=A1bor wrote:
+First, a description of the repo: it's about 175GB, and was created by comb=
+ining about 40,000 smaller repositories.=A0 Historically, these repos were =
+submodules of one meta repository[2].=A0 I have stitched together the submo=
+dules, and this is the repository in which the stitching was done - that is=
+, it contains all of the objects from the smaller repos, plus all of the ob=
+jects from the meta repository, plus the newly-created trees & commits for =
+the stitched repositories.=A0 As new commits come into the meta repository =
+(which have gitlinks to new submodule commits), we fetch from the meta repo=
+sitory (8s - it would be 2s if we were fetching into a normal clone without=
+ all of the other stuff), and the submodules (up to 10s per and embarrassin=
+gly parallel). Then we stitch (~0s), and push to the stitched "unity" repos=
+itory (~2 minutes!!!).=A0 The entire repo fits in RAM (yes, all 175G) and i=
+s in fact in the disk cache (I prewarmed the cache before testing anything)=
+.=A0=20
 
-> On Tue, Mar 09, 2021 at 05:02:18PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> Make the --verbose output be valid TAP, making it machine-readable for
->> TAP parsers again.
->>=20
->> Both the verbose and non-verbose test outputs were valid TAP back when
->> I added support for TAP in 5099b99d25f (test-lib: Adjust output to be
->> valid TAP format, 2010-06-24).
->>=20
->> Sometime after that the --verbose output broke due to some tests
->> emitting their own lines starting "ok" (or otherwise invalidate the
->> TAP). That was noticed and fixed in 452320f1f5 (test-lib: add
->> --verbose-log option, 2016-10-21) and "fixed" by simply turning off
->> the verbose mode when we were running under TAP::Harness (e.g. under
->> "prove").
->>=20
->> That solution worked for running under Travis CI. After that fix it
->> was made to use the --verbose-log option in 041c72de109 (travis: use
->> --verbose-log test option, 2016-10-21), see 522354d70f4 (Add Travis CI
->> support, 2015-11-27) for the "cat t/test-results/*.out" code that was
->> aimed at.
->>=20
->> But that solution and others discussed in 452320f1f5 closed the door
->> on us having reliable machine-readable TAP output.
->>=20
->> Let's instead revert the work done in 452320f1f5 and, as well as the
->> follow-up commits 88c6e9d31c (test-lib: --valgrind should not override
->> --verbose-log, 2017-09-05) and f5ba2de6bc (test-lib: make "-x" work
->> with "--verbose-log", 2017-12-08), which were only needed to work
->> around bugs in the the previous --verbose-log implementation.
->>=20
->> Replace it with a simple method for ensuring that we have valid TAP
->> both on stdout, and in any verbose output we write. When we detect
->> that we're running under "prove" we prefix all legitimate TAP
->> directives with "GIT_TEST_TEE_STARTED":
->>=20
->>     $ GIT_TEST_TEE_STARTED=3D1 ./t5547-push-quarantine.sh
->>     GIT_TEST_TEE_STARTED ok 1 - create picky dest repo
->>     GIT_TEST_TEE_STARTED ok 2 - accepted objects work
->>     [...]
->>     GIT_TEST_TEE_STARTED 1..6
->>=20
->> Then, instead of piping the output to "tee -a" we pipe it to a helper
->> which first converts "ok" and other TAP syntax to e.g. "\ok", and then
->> strips that "GIT_TEST_TEE_STARTED " prefix from the start of the line.
->>=20
->> The end result is that we're guaranteed to have valid TAP syntax on
->> stdout.
->>=20
->> We can thus get rid of the --verbose-log special-case. Since that
->> option was meant to get around the TAP issue let's simply make it an
->> alias for "--verbose --tee".
->>=20
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+The vast majority of the time appears to be spent in git pack-objects, and =
+in particular in the stack trace in [1].=A0 If I set pack.usebitmaps=3Dfals=
+e, the push only takes 10s. =A0=A0This seems like pack bitmaps are a severe=
+ pessimization for my purposes.=A0 This is true even immediately after a re=
+pack (that is, almost all of the objects are in one giant pack, except the =
+newly-fetched ones).=A0 I also tried setting up pack islands - one for each=
+ smaller repo, one for the stitched commits, and one for commits from the m=
+eta repo.=A0 I'm not sure if this is necessary, but it's definitely not suf=
+ficient (my current config has it turned on, because I didn't feel like rep=
+acking again after testing it, and I tested it before testing pack.usebimap=
+s).=20
 
-[Relpying to both replies in this sub-thread]
 
-> After applying this patch series there is still one place where we
-> look at $verbose_log:
->
->   $ git grep -C4 verbose_log -- test-lib.sh
->   test-lib.sh-
->   test-lib.sh-exec 5>&1
->   test-lib.sh-exec 6<&0
->   test-lib.sh-exec 7>&2
->   test-lib.sh:if test "$verbose_log" =3D "t"
->   test-lib.sh-then
->   test-lib.sh-    exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
->   test-lib.sh-elif test "$verbose" =3D "t"
->   test-lib.sh-then
+[1]
+#9=A0 0x000055d849183bfe in traverse_trees_and_blobs (ctx=3Dctx@entry=3D0x7=
+fff2de42a80,=20
+=A0=A0=A0=A0base=3Dbase@entry=3D0x7fff2de42a30) at list-objects.c:344
+#10 0x000055d849183d2b in do_traverse (ctx=3Dctx@entry=3D0x7fff2de42a80) at=
+ list-objects.c:388
+#11 0x000055d84918408f in traverse_commit_list_filtered (
+=A0=A0=A0 filter_options=3Dfilter_options@entry=3D0x55d849544e80 <filter_op=
+tions>,=20
+=A0=A0=A0=A0revs=3Drevs@entry=3D0x7fff2de43f00, show_commit=3Dshow_commit@e=
+ntry=3D0x55d8491a7830 <show_commit>,=20
+=A0=A0=A0=A0show_object=3Dshow_object@entry=3D0x55d8491ac920 <show_object>,=
+=20
+=A0=A0=A0=A0show_data=3Dshow_data@entry=3D0x7fff2de42b50, omitted=3Domitted=
+@entry=3D0x0) at list-objects.c:421
+#12 0x000055d8491a8c1a in find_objects (bitmap_git=3Dbitmap_git@entry=3D0x5=
+5d84a41cd40,=20
+=A0=A0=A0=A0revs=3Drevs@entry=3D0x7fff2de43f00, roots=3D0x0, seen=3Dseen@en=
+try=3D0x0,=20
+=A0=A0=A0=A0filter=3Dfilter@entry=3D0x55d849544e80 <filter_options>) at pac=
+k-bitmap.c:603
+#13 0x000055d8491af68d in prepare_bitmap_walk (revs=3Drevs@entry=3D0x7fff2d=
+e43f00,=20
+=A0=A0=A0=A0filter=3Dfilter@entry=3D0x55d849544e80 <filter_options>) at pac=
+k-bitmap.c:1004
+#14 0x000055d8490b1983 in get_object_list_from_bitmap (revs=3D0x7fff2de43f0=
+0)
+=A0=A0=A0 at builtin/pack-objects.c:3294
+#15 get_object_list (av=3D<optimized out>, ac=3D<optimized out>) at builtin=
+/pack-objects.c:3373
+#16 cmd_pack_objects (argc=3D<optimized out>, argv=3D<optimized out>, prefi=
+x=3D<optimized out>)
+=A0=A0=A0 at builtin/pack-objects.c:3739
+#17 0x000055d84903ed19 in run_builtin (argv=3D<optimized out>, argc=3D<opti=
+mized out>,=20
+=A0=A0=A0=A0p=3D<optimized out>) at git.c:450
+#18 handle_builtin (argc=3D7, argv=3D0x7fff2de45320) at git.c:700
+#19 0x000055d84903fd96 in run_argv (argv=3D0x7fff2de450a0, argcp=3D0x7fff2d=
+e450ac) at git.c:767
+#20 cmd_main (argc=3D<optimized out>, argv=3D<optimized out>) at git.c:898
+#21 0x000055d84903e8ef in main (argc=3D8, argv=3D0x7fff2de45318) at common-=
+main.c:52
 
-Yes, well spotted. The way this patch is implemented that exec branch
-should have been deleted. I just missed it.
-
-[From your <20210309191230.GG3590451@szeder.dev>]:
-
->> diff --git a/t/README b/t/README
->> index 2cc8cbc7185..f09d94e754e 100644
->> --- a/t/README
->> +++ b/t/README
->> @@ -157,10 +157,13 @@ appropriately before running "make". Short options=
- can be bundled, i.e.
->>=20=20
->>  -V::
->>  --verbose-log::
->> -	Write verbose output to the same logfile as `--tee`, but do
->> -	_not_ write it to stdout. Unlike `--tee --verbose`, this option
->> +	An alias for `--verbose --tee`. This option
->>  	is safe to use when stdout is being consumed by a TAP parser
->> -	like `prove`. Implies `--tee` and `--verbose`.
->> +	like `prove`.
->> +	Historically this option was different from `--verbose --tee`
->> +	and would not write any verbose output to stdout to ensure the
->> +	TAP-correctness of the output. The TAP-correctness of the
->> +	output is now sanity checked by the test library,
->
-> Not everyone is using a TAP harness to run the tests, and, therefore,
-> '--verbose-log' should not spew out verbose output to the terminal.
-
-IOW even though --verbose-log was meant as a hack to make prove happy,
-you've since come to like the "verbose in log, but not stdout" mode and
-want that kept?
-
-Yes, this patch takes that mode away.
-
-Yes, I can change it.
-
-Would your use-case for this be satisfied by having prove(1) just emit
-different output for you in this scenario, so you'd need to invoke this
-as something like:
-
-    prove <test> :: --verbose --tee # or --verbose-log
-
-Becuse the advantage of this series is that that sort of thing becomes
-really trivial without everything needing to be hardcoded in
-test-lib.sh, observe (this is with my series):
-
-=20=20=20=20
-    0 $ PERL5LIB=3D. prove -v --formatter=3DSZEDERVerboseLog ./t0201-gettex=
-t-fallbacks.sh :: --verbose-log
-    # lib-gettext: No is_IS UTF-8 locale available
-    # lib-gettext: No is_IS ISO-8859-1 locale available
-    ok 1 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME is set (to fallthrough)
-    ok 2 - sanity: $GIT_INTERNAL_GETTEXT_TEST_FALLBACKS is set
-    ok 3 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME" is fallthrough
-    ok 4 - gettext: our gettext() fallback has pass-through semantics
-    ok 5 - eval_gettext: our eval_gettext() fallback has pass-through seman=
-tics
-    ok 6 - eval_gettext: our eval_gettext() fallback can interpolate variab=
-les
-    ok 7 - eval_gettext: our eval_gettext() fallback can interpolate variab=
-les with spaces
-    ok 8 - eval_gettext: our eval_gettext() fallback can interpolate variab=
-les with spaces and quotes
-    # passed all 8 test(s)
-    1..8
-    ok
-    All tests successful.
-    Files=3D1, Tests=3D8,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.07 cu=
-sr  0.01 csys =3D  0.10 CPU)
-    Result: PASS
-    $ wc -l test-results/t0201-gettext-fallbacks.out=20
-    75 test-results/t0201-gettext-fallbacks.out
-
-All without any patching on top to the test-lib.sh, just:
-=20=20=20=20
-    $ cat SZEDERVerboseLog.pm=20
-    package SZEDERVerboseLog::Session;
-    use base 'TAP::Formatter::Console::Session';
-=20=20=20=20
-    sub result {
-        my ($self, $result) =3D @_;
-        return if $result->is_unknown;
-        return $self->SUPER::result($result);
-    }
-=20=20=20=20
-    package SZEDERVerboseLog;
-    use strict;
-    use warnings;
-    use base 'TAP::Formatter::Console';
-=20=20=20=20
-    sub open_test {
-        my ($self, $test, $parser) =3D @_;
-        my $session =3D SZEDERVerboseLog::Session->new( {
-            name            =3D> $test,
-            formatter       =3D> $self,
-            parser          =3D> $parser,
-        } );
-        return $session;
-    }
-=20=20=20=20
-    1;
-
-The "is_unknown" is everything that's not TAP syntax.
+[2] https://github.com/twosigma/git-meta
 
