@@ -2,186 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 365F7C433DB
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 472EDC433DB
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:36:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E0C464ECF
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:32:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEB4864FC0
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 21:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232045AbhCIVbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 9 Mar 2021 16:31:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
+        id S232037AbhCIVfz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 16:35:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbhCIVbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Mar 2021 16:31:20 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 479E3C06174A
-        for <git@vger.kernel.org>; Tue,  9 Mar 2021 13:31:20 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id v15so18711094wrx.4
-        for <git@vger.kernel.org>; Tue, 09 Mar 2021 13:31:20 -0800 (PST)
+        with ESMTP id S231788AbhCIVff (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 16:35:35 -0500
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C344C06174A
+        for <git@vger.kernel.org>; Tue,  9 Mar 2021 13:35:35 -0800 (PST)
+Received: by mail-oi1-x234.google.com with SMTP id x78so16652616oix.1
+        for <git@vger.kernel.org>; Tue, 09 Mar 2021 13:35:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=KaeZJM1/WH1rCcHz4q9prIWXgiRP3E15ofuRDcCTB1g=;
-        b=ATJiDA1Cft0dIo3O6QmLxdm+vQD8u7vi3HePLUZJCe9OllL7sm3+g1o2QjG4swYcYJ
-         Y6S9RC5emQdTwlNhUfegnKSBT5QhXfqaIVnEUZ+67CYkpuVOTHgJosjw894U4/wfrgJ2
-         QeeBobTpLCwfmHo3wFjexlwgbDwaHRy8QjHS4uIWccnlAWKb9psSIkOLuJ4cZBsuWQyn
-         O+e5ex3N3tbCwPusmR2gMl9eHz658vgqDonwoEiK5NsbiQKQwP17NZgLZz+uz8H6aM1O
-         tOGPmoJ463K8HW0BPqkNzqw9BhyYAE5tXdapzBo+Tpal6VfpYdr1eT1S6WSK32iBm1lI
-         0ojA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/ys8HVAJvAR/sfzUamhU65w/1NjebasJSzfYZQGdgkw=;
+        b=dW/E5U47uwNtgICsGb/SLc30SdBw4Pzi5PEbmnWov+Sl04lidB0knXBSbdFdRcuHkr
+         Fq5bgWD9f5xE4+FNTGZb4ph4DvPhZ8LP/nOAopJU9g/aogu1VE1vr0bmC0kev+e9JlA+
+         JpkeVQ0M0G2scw2kc8JSTNBd0FlPF45KDA0yxDgbX0cHNNPf8547RK+4dcsUtKXCCs7j
+         P+Q1QE2wyxTmUkwgYYvBpALO5J3sHo1O1OtHMaLFmK+XYL7qbpO3VK+lG4+cCEvY96xQ
+         eHf81KfmfolATDMtKcHCllDN3Tmc7mBRtuNynIHgLV+dIBcGalTslUrx0/AunTyNvsQ+
+         +DAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=KaeZJM1/WH1rCcHz4q9prIWXgiRP3E15ofuRDcCTB1g=;
-        b=ot2XbOKb7AvBfHD2GBuwxpj0qKT411lZWXCT4Namk0RChLofbJOEh38Ri1+0d1bTYU
-         aw1ft0ZONjRYKaRGFMz9H4x55m1CItDgAbdp7IkmzdKzhJIJPNlhc23l4k5l1LUCiDzI
-         4VSbYDfTfm3KsCSIAkhuDKhZs2LszmeXA5iKSncoNmiplyPjI9yLbC769cx8RMFKXiii
-         tvTvBLK2H3HZUDcu8HNd6zBg1QWGW934/MjUiQzjpCjnTpu495V5+JEy8eXvfUi3Nimy
-         oHKJaVpQfRDhZAbYBr4Urej6CFjsTqfPPlP1M6RD7LPXHuphQsEOWZSO7CPje8ncrAPO
-         RApQ==
-X-Gm-Message-State: AOAM532rzVK2bV9Z/OnVNU9VmFQiXfJlYRNCasNpEOBQKaICZU8wutUG
-        QACsQy+14zLlAAO4tNJiZH0=
-X-Google-Smtp-Source: ABdhPJxbTFg21yJp/uELHqCdQ9PpNoPSJndH23MCQ6GDCy/iYpPC6bmG5dDOA5PPJQnOO+kO2HMN1w==
-X-Received: by 2002:a05:6000:1803:: with SMTP id m3mr30352223wrh.50.1615325479010;
-        Tue, 09 Mar 2021 13:31:19 -0800 (PST)
-Received: from szeder.dev (94-21-29-148.pool.digikabel.hu. [94.21.29.148])
-        by smtp.gmail.com with ESMTPSA id a8sm5993028wmm.46.2021.03.09.13.31.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Mar 2021 13:31:18 -0800 (PST)
-Date:   Tue, 9 Mar 2021 22:31:17 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/7] test-lib: make --verbose output valid TAP
-Message-ID: <20210309213117.GB1016223@szeder.dev>
-References: <87r1kzj7xi.fsf@evledraar.gmail.com>
- <20210309160219.13779-7-avarab@gmail.com>
- <20210309185911.GF3590451@szeder.dev>
- <87k0qghwps.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=/ys8HVAJvAR/sfzUamhU65w/1NjebasJSzfYZQGdgkw=;
+        b=El0/lLjFwCRGHf5cePO97dF9fM15bs8qW0UfSjmAub27SBpPNiQZQ+FTJD6UftbG0I
+         YCd1luIzRnrae76nX6RusWL+H/wQ1nLccn76GvrRhXZRm1U9UEp75wbMKtRfPKO9DxK4
+         gUwTB1vr6Ox7GHNZ0NoyraUIRUdcyBpDK2uxOjIrcuP5p8jOsDZvxLw/+QAcyV0fUM/9
+         mxR5s8amODGoQVcp4v6sNiRuOjGzkXDmUYP2PTeLgK5VuusAotHMpoaM75rwmYYxgHK5
+         HhTMdPhJAH5YFi5wsTZtiQcx+Fc5vFtOLl12UBd+sg6wJlhj+tvN7IcKP8NQ+wi4LxT1
+         aJ5Q==
+X-Gm-Message-State: AOAM530R4gX6/qRV/in2Am2C3p+otQv+1sqB5Ui2gxnIh+UJakrJ0RDI
+        xpYkMuOGfsSu7PcaCoVIHZA=
+X-Google-Smtp-Source: ABdhPJz+nROSqTxHXFXeTmgJl2R1W/LRyIZH+/XpGSy8YnoMng4phTOq4s31J7f6SB+TDYOsK3NvHw==
+X-Received: by 2002:a54:450c:: with SMTP id l12mr112732oil.133.1615325734281;
+        Tue, 09 Mar 2021 13:35:34 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:88a7:dd04:71df:86ee? ([2600:1700:e72:80a0:88a7:dd04:71df:86ee])
+        by smtp.gmail.com with ESMTPSA id q22sm426151otl.56.2021.03.09.13.35.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 09 Mar 2021 13:35:33 -0800 (PST)
+Subject: Re: [PATCH 13/20] unpack-trees: allow sparse directories
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+ <fda23f07e6a20408b0a10c8944d54e7c65a1d629.1614111270.git.gitgitgadget@gmail.com>
+ <CABPp-BEMNavqAEG54VYkZvSiJ4=X3vZUXsubCmFfk3yxUWOjXQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4d5d12e9-cd14-c195-b267-0e130109f1e0@gmail.com>
+Date:   Tue, 9 Mar 2021 16:35:32 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
+In-Reply-To: <CABPp-BEMNavqAEG54VYkZvSiJ4=X3vZUXsubCmFfk3yxUWOjXQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k0qghwps.fsf@evledraar.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 09, 2021 at 09:57:03PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> >> diff --git a/t/README b/t/README
-> >> index 2cc8cbc7185..f09d94e754e 100644
-> >> --- a/t/README
-> >> +++ b/t/README
-> >> @@ -157,10 +157,13 @@ appropriately before running "make". Short options can be bundled, i.e.
-> >>  
-> >>  -V::
-> >>  --verbose-log::
-> >> -	Write verbose output to the same logfile as `--tee`, but do
-> >> -	_not_ write it to stdout. Unlike `--tee --verbose`, this option
-> >> +	An alias for `--verbose --tee`. This option
-> >>  	is safe to use when stdout is being consumed by a TAP parser
-> >> -	like `prove`. Implies `--tee` and `--verbose`.
-> >> +	like `prove`.
-> >> +	Historically this option was different from `--verbose --tee`
-> >> +	and would not write any verbose output to stdout to ensure the
-> >> +	TAP-correctness of the output. The TAP-correctness of the
-> >> +	output is now sanity checked by the test library,
-> >
-> > Not everyone is using a TAP harness to run the tests, and, therefore,
-> > '--verbose-log' should not spew out verbose output to the terminal.
+On 2/25/2021 2:40 AM, Elijah Newren wrote:
+> On Tue, Feb 23, 2021 at 12:14 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> The index_pos_by_traverse_info() currently throws a BUG() when a
+>> directory entry exists exactly in the index. We need to consider that it
+>> is possible to have a directory in a sparse index as long as that entry
+>> is itself marked with the skip-worktree bit.
+>>
+>> The negation of the 'pos' variable must be conditioned to only when it
+>> starts as negative. This is identical behavior as before when the index
+>> is full.
 > 
-> IOW even though --verbose-log was meant as a hack to make prove happy,
-> you've since come to like the "verbose in log, but not stdout" mode and
-> want that kept?
+> Same comment on the second paragraph as I made in the RFC series --
+> https://lore.kernel.org/git/CABPp-BGPJgA4guWHVm3AVS=hM0fTixUpRvJe5i9NnHT-3QJMfw@mail.gmail.com/.
+> I apologize if I'm repeating stuff you chose to not change, but I
+> didn't see a response and given the three typos left in previous
+> patches, I'm unsure whether it was unaddressed on purpose or on
+> accident.
 
-Yes, '--verbose-log' proved to be really convenient, even if it was
-meant to solve a different issue.
+Yes, I dropped this one. How about this?
 
-> Yes, this patch takes that mode away.
-> 
-> Yes, I can change it.
-> 
-> Would your use-case for this be satisfied by having prove(1) just emit
-> different output for you in this scenario, so you'd need to invoke this
-> as something like:
-> 
->     prove <test> :: --verbose --tee # or --verbose-log
+    The 'pos' variable is assigned a negative value if an exact match is not
+    found. Since a directory name can be an exact match, it is no longer an
+    error to have a nonnegative 'pos' value.
 
-I use prove to run the test suite, but I don't and won't use prove to
-run a single test.
-
-The behavior of './t1234-foo.sh -V' with or without '-x' should not
-change without _very_ convincing reasons.  "We now output valid TAP
-even with --verbose, so we don't need it for the TAP harness" is
-definitely not convincing.
-
-> Becuse the advantage of this series is that that sort of thing becomes
-> really trivial without everything needing to be hardcoded in
-> test-lib.sh, observe (this is with my series):
-> 
->     
->     0 $ PERL5LIB=. prove -v --formatter=SZEDERVerboseLog ./t0201-gettext-fallbacks.sh :: --verbose-log
-
-Well, this doesn't look trivial at all, does it?  In fact, I consider
-this unusably convoluted.
-
->     # lib-gettext: No is_IS UTF-8 locale available
->     # lib-gettext: No is_IS ISO-8859-1 locale available
->     ok 1 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME is set (to fallthrough)
->     ok 2 - sanity: $GIT_INTERNAL_GETTEXT_TEST_FALLBACKS is set
->     ok 3 - sanity: $GIT_INTERNAL_GETTEXT_SH_SCHEME" is fallthrough
->     ok 4 - gettext: our gettext() fallback has pass-through semantics
->     ok 5 - eval_gettext: our eval_gettext() fallback has pass-through semantics
->     ok 6 - eval_gettext: our eval_gettext() fallback can interpolate variables
->     ok 7 - eval_gettext: our eval_gettext() fallback can interpolate variables with spaces
->     ok 8 - eval_gettext: our eval_gettext() fallback can interpolate variables with spaces and quotes
->     # passed all 8 test(s)
->     1..8
->     ok
->     All tests successful.
->     Files=1, Tests=8,  1 wallclock secs ( 0.01 usr  0.01 sys +  0.07 cusr  0.01 csys =  0.10 CPU)
->     Result: PASS
->     $ wc -l test-results/t0201-gettext-fallbacks.out 
->     75 test-results/t0201-gettext-fallbacks.out
-> 
-> All without any patching on top to the test-lib.sh, just:
->     
->     $ cat SZEDERVerboseLog.pm 
->     package SZEDERVerboseLog::Session;
->     use base 'TAP::Formatter::Console::Session';
->     
->     sub result {
->         my ($self, $result) = @_;
->         return if $result->is_unknown;
->         return $self->SUPER::result($result);
->     }
->     
->     package SZEDERVerboseLog;
->     use strict;
->     use warnings;
->     use base 'TAP::Formatter::Console';
->     
->     sub open_test {
->         my ($self, $test, $parser) = @_;
->         my $session = SZEDERVerboseLog::Session->new( {
->             name            => $test,
->             formatter       => $self,
->             parser          => $parser,
->         } );
->         return $session;
->     }
->     
->     1;
-> 
-> The "is_unknown" is everything that's not TAP syntax.
-> 
+Thanks,
+-Stolee
