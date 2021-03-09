@@ -2,154 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF38C433E0
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 04:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53497C433DB
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 05:43:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D366765267
-	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 04:28:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17F736522F
+	for <git@archiver.kernel.org>; Tue,  9 Mar 2021 05:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbhCIE2C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 8 Mar 2021 23:28:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41320 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbhCIE1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Mar 2021 23:27:47 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15F1C06174A
-        for <git@vger.kernel.org>; Mon,  8 Mar 2021 20:27:46 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id o22so3810078oic.3
-        for <git@vger.kernel.org>; Mon, 08 Mar 2021 20:27:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dThKOpH6vHJwPGmsyGNRvXxqiX9/i9MSS7PhaxUrn9Y=;
-        b=BA/kC5LmnDjSAU3Pvgw///yi8/TZZnPAQu/JHtIjeUH/9fuP3zRg/O2SAoX5TiwVTE
-         J4li5bC1eZ75/48Ma6JTYkx4BeVKcLIWU1892+AzcPWQHChEpgOtJdJkkmKddm2WC43o
-         LTKKdRlIxM9X/wYy1uLX3eYhciF28DXTfK/dhmw5vV6JKqEwA/ScQqiGUZunv8uBD2E1
-         Yz8Dg8dJ/gDtiBlPiHk61fmLpCP6wBiXOchApWV9LEqV5iK8evPGElds/zFXJiwuhsT4
-         1L/2cdrQEYxhfCIZSrgDWUWkUkSAbP3BMo9txdvszTs2GdqubAS6onnZL6NybY7F5BXr
-         yPVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dThKOpH6vHJwPGmsyGNRvXxqiX9/i9MSS7PhaxUrn9Y=;
-        b=isWFXivnqyl5Azf+uNguP+efSLl8ucsOx7+I4Yi2SLiFBCJEt0RZ5x+btMfzWpoC7j
-         ragKhb127dT8je9kJ9aBTIbG1m46jGQOxrU8DrvbluDJrXOWGkvPw7yBHEpELYAPjqrP
-         lixCJeMqptTqyiRs7KZeOX7mvdnvXSbL3KEHAUJFloF7s6OEY0t2SGw6FvTsdW3swHvO
-         Gd0xgpHVijIhEqHEcsJqtPVj1c8Q1HACb2IxGTEohsXFBKLslEKRxbGkieSW9k+S09ny
-         SEG/+qpqILRYyMn8HcZ19KQexkEC1aM2OKnE/CBgUtry6qLpjU/CNVw/NzcJ+GXxhyri
-         8x4g==
-X-Gm-Message-State: AOAM532mzklMXC2Akjccu8dU/zjgAl+iwJxSADzsXRL1p1zGrLeKyrkH
-        ulsBxboUlXl3XA1GNLE1trX+YOm0N3/nlQiXQJw=
-X-Google-Smtp-Source: ABdhPJzb9SBOv96cH8Ds2xfsiz4PN2kvUc2UcyVJqsm8eB2NR9/2LKK7s89u9KUgIFyVJ0FBvQCObUSkh5R2Om8b/Nw=
-X-Received: by 2002:aca:b489:: with SMTP id d131mr1651982oif.39.1615264066366;
- Mon, 08 Mar 2021 20:27:46 -0800 (PST)
+        id S229587AbhCIFnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 9 Mar 2021 00:43:13 -0500
+Received: from out03.mta.xmission.com ([166.70.13.233]:58454 "EHLO
+        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229515AbhCIFmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Mar 2021 00:42:43 -0500
+Received: from in01.mta.xmission.com ([166.70.13.51])
+        by out03.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.93)
+        (envelope-from <seth@eseth.com>)
+        id 1lJV8h-000xRj-BE; Mon, 08 Mar 2021 22:42:39 -0700
+Received: from mta4.zcs.xmission.com ([166.70.13.68])
+        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.87)
+        (envelope-from <seth@eseth.com>)
+        id 1lJV8f-0002Pw-MU; Mon, 08 Mar 2021 22:42:39 -0700
+Received: from localhost (localhost [127.0.0.1])
+        by mta4.zcs.xmission.com (Postfix) with ESMTP id 842C750107E;
+        Mon,  8 Mar 2021 22:42:37 -0700 (MST)
+X-Amavis-Modified: Mail body modified (using disclaimer) -
+        mta4.zcs.xmission.com
+Received: from mta4.zcs.xmission.com ([127.0.0.1])
+        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id GvR6ZvrMNip0; Mon,  8 Mar 2021 22:42:37 -0700 (MST)
+Received: from ellen.lan (unknown [139.60.10.209])
+        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id F2808500656;
+        Mon,  8 Mar 2021 22:42:36 -0700 (MST)
+Date:   Mon, 8 Mar 2021 22:42:35 -0700
+From:   Seth House <seth@eseth.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Dana Dahlstrom <dahlstrom@google.com>
+Message-ID: <YEcKy83ZmvGTAfxq@ellen.lan>
+References: <20210130054655.48237-1-seth@eseth.com>
+ <20210209200712.156540-1-seth@eseth.com>
+ <20210209200712.156540-2-seth@eseth.com>
+ <YEbdj27CmjNKSWf4@google.com>
 MIME-Version: 1.0
-References: <pull.973.git.git.1614905738.gitgitgadget@gmail.com>
- <cb035ac5fe4ab18b697eff42afedcab62880ceec.1614905738.git.gitgitgadget@gmail.com>
- <87a6rdkdxq.fsf@evledraar.gmail.com>
-In-Reply-To: <87a6rdkdxq.fsf@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 8 Mar 2021 20:27:35 -0800
-Message-ID: <CABPp-BEMAbeQAcja=MFU3_N7dUOpKWCohtyNfnTj9npep8j1Lw@mail.gmail.com>
-Subject: Re: [PATCH 04/11] merge-ort: have ll_merge() calls use the attr_index
- for renormalization
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YEbdj27CmjNKSWf4@google.com>
+X-XM-SPF: eid=1lJV8f-0002Pw-MU;;;mid=<YEcKy83ZmvGTAfxq@ellen.lan>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
+X-SA-Exim-Connect-IP: 166.70.13.68
+X-SA-Exim-Mail-From: seth@eseth.com
+Subject: Re: [PATCH] mergetool: do not enable hideResolved by default
+X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
+X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 8, 2021 at 4:49 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
->
-> On Fri, Mar 05 2021, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > ll_merge() needs an index when renormalization is requested.  Give it
-> > the special one we created exactly for that purpose.  This fixes t6418.=
-4
-> > and t6418.5 under GIT_TEST_MERGE_ALGORITHM=3Dort.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  merge-ort.c | 7 ++++---
-> >  1 file changed, 4 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index 028d1adcd2c9..87c553c0882c 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -360,7 +360,7 @@ static void clear_or_reinit_internal_opts(struct me=
-rge_options_internal *opti,
-> >       string_list_clear(&opti->paths_to_free, 0);
-> >       opti->paths_to_free.strdup_strings =3D 0;
-> >
-> > -     if (opti->attr_index.cache_nr)
-> > +     if (opti->attr_index.cache_nr) /* true iff opt->renormalize */
-> >               discard_index(&opti->attr_index);
->
-> Perhaps instead of a comment, in that "if":
->
->     assert(opt->renormalize);
+On Mon, Mar 08, 2021 at 06:29:35PM -0800, Jonathan Nieder wrote:
+> A typical mergetool uses four panes, showing the content of the file
+> being resolved from MERGE_BASE ('BASE'), HEAD ('LOCAL'), MERGE_HEAD
+> ('REMOTE'), and the working copy.  This allows understanding the
+> conflicts in context: by seeing the entire content of the file from
+> MERGE_HEAD, say, we can see the full intent of the code we are pulling
+> in and understand what they were trying to do that conflicted with our
+> own changes.
 
-I would, but opt isn't defined here, and passing it in merely for an
-assertion seems overboard.
+Well said. Agreed on all counts.
 
-> >       /* Free memory used by various renames maps */
-> > @@ -988,7 +988,6 @@ static int merge_submodule(struct merge_options *op=
-t,
-> >       return 0;
-> >  }
-> >
-> > -MAYBE_UNUSED
-> >  static void initialize_attr_index(struct merge_options *opt)
-> >  {
-> >       /*
-> > @@ -1063,6 +1062,8 @@ static int merge_3way(struct merge_options *opt,
-> >       char *base, *name1, *name2;
-> >       int merge_status;
-> >
-> > +     initialize_attr_index(opt);
->
-> Subjective, but I think it's more readable to move the "initialized"
-> check in initialize_attr_index() here, so:
->
->     if (!attr_index->initialized)
->         initialize_attr_index(opt);
->
-> Saves the reader a trip to the function to see that it doesn't do
-> anything except exit early on that flag.
+The very early days of these patch sets touched on this exact discussion
+point. (I'd link to it but that early discussion was a tad...unfocused.)
+I make semi-frequent reference of those versions of the conflicted file
+in the way you describe and have disabled hideResolved for a merge tool
+I maintain for that reason.
 
-Makes sense; I'll fix this up.
+>     No adverse effects were noted in a small survey of popular mergetools[1]
+>     so this behavior defaults to `true`. However it can be globally disabled
+>     by setting `mergetool.hideResolved` to `false`.
+> 
+> In practice, however, this has proved confusing for users.  No
+> indication is shown in the UI that the base, local, and remote
+> versions shown have been modified by additional resolution.
 
->
-> >       ll_opts.renormalize =3D opt->renormalize;
-> >       ll_opts.extra_marker_size =3D extra_marker_size;
-> >       ll_opts.xdl_opts =3D opt->xdl_opts;
-> > @@ -1101,7 +1102,7 @@ static int merge_3way(struct merge_options *opt,
-> >
-> >       merge_status =3D ll_merge(result_buf, path, &orig, base,
-> >                               &src1, name1, &src2, name2,
-> > -                             opt->repo->index, &ll_opts);
-> > +                             &opt->priv->attr_index, &ll_opts);
-> >
-> >       free(base);
-> >       free(name1);
->
+Compelling point. This flag drastically changes what LOCAL and REMOTE
+represent with little to no explanation.
+
+There are three options to achieve the same end-goal of hideResolved
+that I've thought of:
+
+1.  Individual merge tools should do this work, not Git.
+
+    A merge tool already has all the information needed to hide
+    already-resolved conflicts since that is what MERGED represents.
+    Conflict markers *are* a two-way diff and a merge tool should
+    display them as such, rather than display the textual markers
+    verbatim.
+
+    In many ways this is the ideal approach -- all merge tools could be
+    doing this with existing Git right now but none have seemingly
+    thought of doing so yet.
+
+2.  Git could pass six versions of the conflicted file to a merge tool,
+    rather than the current four.
+
+    Merge tools could accept LOCAL, REMOTE, BASE, MERGED (as most
+    currently do), and also LCONFL and RCONFL files. The latter two
+    being copies of MERGED but "pre split" by Git into the left
+    conflicts and the right conflicts.
+
+    This would spare the merge tool the work of splitting MERGED. It may
+    encourage them to continue displaying LOCAL and REMOTE as useful
+    context but also make it easy to diff LCONFL with RCONFL and use
+    that diff to actually resolve the conflict. It could also make
+    things worse, as many tools simply diff _every_ file Git gives them
+    regardless if that makes sense or not (>_<).
+
+3.  Git could overwrite LOCAL and REMOTE to display only unresolved
+    conflicts.
+
+    (The current hideResolved addition.) This has the pragmatic benefit
+    of requiring the least amount of change for all merge tools, but to
+    your point above, *destroys* valuable data -- the additional context
+    to help understand where the conflicts came from -- and that data
+    can't be viewd without running additional Git commands to fetch it.
+
+Defaulting hideResolved to off is a fine change IMO. We don't have a way
+to communicate to the end-user that LOCAL and REMOTE represent something
+markedly different than what they have traditionally represented, so
+having this be an opt-in will force the user to read the docs and
+understand the ramifications.
+
+I really appreciate your thoughts that accompanied this patch. Sorry for
+the long response but your email made me want to ask the question:
+
+Does the need to default hideResolved to off mean that it is the wrong
+approach?
+
+Thinking through an end-user's workflow: would a user want to configure
+two copies of the same merge tool -- one with hideResolved and one
+without? An easy conflict could benefit from the former but if it's
+a tricky conflict the user would have to exit the tool and reopen the
+same tool without the flag. That sounds like an annoying workflow, and
+although the user would now have that extra, valuable context it would
+also put them squarely back into the current state of viewing
+already-resolved conflicts.
+
+I know the Option 3, hideResolved, is merged and has that momentum and
+this patch looks good to me -- but perhaps Option 2 is more "correct",
+or Option 1, or yet another option I haven't thought of. Thoughts?
+
