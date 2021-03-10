@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FB31C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2D2EC433E6
 	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 17:08:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E46664F9A
+	by mail.kernel.org (Postfix) with ESMTP id 8AE2F64FCA
 	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 17:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbhCJRHl (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231362AbhCJRHl (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 10 Mar 2021 12:07:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:58698 "EHLO cloud.peff.net"
+Received: from cloud.peff.net ([104.130.231.41]:58710 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233619AbhCJRHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 12:07:20 -0500
-Received: (qmail 6414 invoked by uid 109); 10 Mar 2021 17:07:20 -0000
+        id S233620AbhCJRH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 12:07:28 -0500
+Received: (qmail 6432 invoked by uid 109); 10 Mar 2021 17:07:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 17:07:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 17:07:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23356 invoked by uid 111); 10 Mar 2021 17:07:20 -0000
+Received: (qmail 23369 invoked by uid 111); 10 Mar 2021 17:07:28 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 12:07:20 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 12:07:28 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Mar 2021 12:07:19 -0500
+Date:   Wed, 10 Mar 2021 12:07:27 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/3] t7003: test ref rewriting explicitly
-Message-ID: <YEj8x5fQl1fyLGNg@coredump.intra.peff.net>
+Subject: [PATCH 2/3] filter-branch: drop multiple-ancestor warning
+Message-ID: <YEj8zy5JX+KvlfGJ@coredump.intra.peff.net>
 References: <YEj8meoPn/g6tCe3@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -44,70 +44,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After it has rewritten all of the commits, filter-branch will then
-rewrite each of the input refs based on the resulting map of old/new
-commits. But we don't have any explicit test coverage of this code.
-Let's make sure we are covering each of those cases:
+When a ref maps to a commit that is neither rewritten nor kept by
+filter-branch (e.g., because it was eliminated by rev-list's pathspec
+selection), we rewrite it to its nearest ancestor.
 
-  - deleting a ref when all of its commits were pruned
+Since the initial commit in 6f6826c52b (Add git-filter-branch,
+2007-06-03), we have warned when there are multiple such ancestors in
+the map file. However, the warning code is impossible to trigger these
+days. Since a0e46390d3 (filter-branch: fix ref rewriting with
+--subdirectory-filter, 2008-08-12), we find the ancestor using "rev-list
+-1", so it can only ever have a single value.
 
-  - rewriting a ref based on the mapping (this happens throughout the
-    script, but let's make sure we generate the correct messages)
+This code is made doubly confusing by the fact that we append to the map
+file when mapping ancestors. However, this can never yield multiple
+values because:
 
-  - rewriting a ref whose tip was excluded, in which case we rewrite to
-    the nearest ancestor. Note in this case that we still insist that no
-    "warning" line is present (even though it looks like we'd trigger
-    the "... was rewritten into multiple commits" one). See the next
-    commit for more details.
+  - we explicitly check whether the map already exists, and if so, do
+    nothing (so our "append" will always be to a file that does not
+    exist)
 
-Note these all pass currently, but the latter two will fail when run
-with GIT_TEST_DEFAULT_HASH=sha256.
+  - even if we were to try mapping twice, the process to do so is
+    deterministic. I.e., we'd always end up with the same ancestor for a
+    given sha1. So warning about it would be pointless; there is no
+    ambiguity.
+
+So swap out the warning code for a BUG (which we'll simplify further in
+the next commit). And let's stop using the append operator to make the
+ancestor-mapping code less confusing.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t7003-filter-branch.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ git-filter-branch.sh | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 1c55695034..1349e5b232 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -506,4 +506,35 @@ test_expect_success 'rewrite repository including refs that point at non-commit
- 	! fgrep fatal filter-output
- '
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index fea7964617..a1e80bd552 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -492,7 +492,7 @@ then
+ 		sha1=$(git rev-parse "$ref"^0)
+ 		test -f "$workdir"/../map/$sha1 && continue
+ 		ancestor=$(git rev-list --simplify-merges -1 "$ref" "$@")
+-		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
++		test "$ancestor" && echo $(map $ancestor) >"$workdir"/../map/$sha1
+ 	done < "$tempdir"/heads
+ fi
  
-+test_expect_success 'filter-branch handles ref deletion' '
-+	git switch --orphan empty-commit &&
-+	git commit --allow-empty -m "empty commit" &&
-+	git tag empty &&
-+	git branch to-delete &&
-+	git filter-branch -f --prune-empty to-delete >out 2>&1 &&
-+	grep "to-delete.*was deleted" out &&
-+	test_must_fail git rev-parse --verify to-delete
-+'
-+
-+test_expect_success 'filter-branch handles ref rewrite' '
-+	git checkout empty &&
-+	test_commit to-drop &&
-+	git branch rewrite &&
-+	git filter-branch -f \
-+		--index-filter "git rm --ignore-unmatch --cached to-drop.t" \
-+		 rewrite >out 2>&1 &&
-+	grep "rewrite.*was rewritten" out &&
-+	! grep -i warning out &&
-+	git diff-tree empty rewrite
-+'
-+
-+test_expect_success 'filter-branch handles ancestor rewrite' '
-+	test_commit to-exclude &&
-+	git branch ancestor &&
-+	git filter-branch -f ancestor -- :^to-exclude.t >out 2>&1 &&
-+	grep "ancestor.*was rewritten" out &&
-+	! grep -i warning out &&
-+	git diff-tree HEAD^ ancestor
-+'
-+
- test_done
+@@ -534,14 +534,7 @@ do
+ 		fi
+ 	;;
+ 	*)
+-		# NEEDSWORK: possibly add -Werror, making this an error
+-		warn "WARNING: '$ref' was rewritten into multiple commits:"
+-		warn "$rewritten"
+-		warn "WARNING: Ref '$ref' points to the first one now."
+-		rewritten=$(echo "$rewritten" | head -n 1)
+-		git update-ref -m "filter-branch: rewrite to first" \
+-				"$ref" $rewritten $sha1 ||
+-			die "Could not rewrite $ref"
++		die "BUG: multiple ancestors in map file?"
+ 	;;
+ 	esac
+ 	git update-ref -m "filter-branch: backup" "$orig_namespace$ref" $sha1 ||
 -- 
 2.31.0.rc2.525.gc2268d2248
 
