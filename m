@@ -2,137 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43F06C433DB
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54EFC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02E0964FAB
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:40:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B477464E33
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231197AbhCJVkE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 16:40:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59228 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229505AbhCJVjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 16:39:23 -0500
-Received: (qmail 7089 invoked by uid 109); 10 Mar 2021 21:39:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 21:39:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26060 invoked by uid 111); 10 Mar 2021 21:39:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 16:39:23 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Mar 2021 16:39:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 0/7] rev-parse: implement object type filter
-Message-ID: <YEk8iiDf/FMxzhIF@coredump.intra.peff.net>
-References: <cover.1614600555.git.ps@pks.im>
+        id S231532AbhCJVkl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 16:40:41 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61482 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229563AbhCJVkF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 16:40:05 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DC6CB4B04;
+        Wed, 10 Mar 2021 16:40:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5+UoSGFIapChXNF6aMrDo+LoZ1A=; b=M2ymPa
+        N/HID68Rfe4OT24S8tX5Ys1isKPX5Qa8S+O/DPSs51IuoGlO7pcjji27An5cf6I+
+        wX3nWxCjXy1i7ucglTkUD3OsLtLAcnHkWt9GfLmrqEVk0M5jUCRT+gm+vuXVhW1X
+        lBVyL01Of5zBeVQeVLdRiU+lAvJtx2znfiAYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Iv3MGIuBe9QrEWa+Cn5nQ5b523hHMcGv
+        Plh7JP0yzarfYoC4bsiH0Ks7GHRB5Vm1ykT/IbIs8pJlXDvWra2JsslEZWCUfhaE
+        mSWexTRnssUjggnKrVnyhymBMNIE9ryHrSQO0VWL8cj4d5oig3iTSzDwilbDD35F
+        0WE+Fz4dSEM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D564B4B01;
+        Wed, 10 Mar 2021 16:40:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1CDEEB4AFC;
+        Wed, 10 Mar 2021 16:40:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Daniel Gruesso <daniel.gruesso@gmail.com>,
+        "Patricia B. C." <pati.camsky@gmail.com>,
+        Martin von Zweigbergk <martinvonz@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: RES: Can git change?
+References: <CAK8LAYVZKjbMEDWTyvQv2eY+qR0qw1=mn=c4KCZvit7gsqTibA@mail.gmail.com>
+        <CAP8UFD0fZBdZ6qwDP9_yW7VAfskTKPC7HVSpK4rD=bORuECpJA@mail.gmail.com>
+        <xmqqpn1w95dj.fsf@gitster.c.googlers.com>
+        <CANiSa6gEJ8ezVLhHf+TkGpqvEwvb8HhqtU3ETKiopjLQj6E_QQ@mail.gmail.com>
+        <xmqqh7n85qwd.fsf@gitster.c.googlers.com>
+        <CAK8LAYUsebOau+XJ66fEesLm4MfMuxJjse0YL408-2jih1d1eg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2101251650150.57@tvgsbejvaqbjf.bet>
+        <CAFdpPnBG==5L6hwH6h2JTFtYVQqLZUcCi4+wzL_cpKKg_X3yoA@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2103101038170.50@tvgsbejvaqbjf.bet>
+Date:   Wed, 10 Mar 2021 13:39:59 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2103101038170.50@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 10 Mar 2021 22:03:29 +0100 (CET)")
+Message-ID: <xmqqy2euit74.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1614600555.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B74EBDA-81E9-11EB-BF50-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 01, 2021 at 01:20:26PM +0100, Patrick Steinhardt wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Altogether, this ends up with the following queries, both of which have
-> been executed in a well-packed linux.git repository:
-> 
->     # Previous query which uses object names as a heuristic to filter
->     # non-blob objects, which bars us from using bitmap indices because
->     # they cannot print paths.
->     $ time git rev-list --objects --filter=blob:limit=200 \
->         --object-names --all | sed -r '/^.{,41}$/d' | wc -l
->     4502300
-> 
->     real 1m23.872s
->     user 1m30.076s
->     sys  0m6.002s
-> 
->     # New query.
->     $ time git rev-list --objects --filter-provided \
->         --filter=object:type=blob --filter=blob:limit=200 \
->         --use-bitmap-index --all | wc -l
->     22585
-> 
->     real 0m19.216s
->     user 0m16.768s
->     sys  0m2.450s
+> I guess that something like 6 months of a "deprecation period" (i.e. the
+> time to keep `master` as the default) _might_ be enough, so we could
+> potentially move forward with changing the default around end of May (by
+> my calculation, v2.32.0 should be due around May 24th, that might be a
+> good candidate to target).
 
-Those produce very different answers. I guess because in the first one,
-you still have a bunch of tree objects, too. You'd do much better to get
-the actual types from cat-file, and filter on that. That also lets you
-use bitmaps for the traversal portion. E.g.:
+You are apparently more ambitious and risk tolerant than I am.  I
+was expecting it to be more towards the end of the year myself.
 
-  $ time git rev-list --use-bitmap-index --objects --filter=blob:limit=200 --all |
-         git cat-file --buffer --batch-check='%(objecttype) %(objectname)' |
-	 perl -lne 'print $1 if /^blob (.*)/' | wc -l
-  14966
-  
-  real	0m6.248s
-  user	0m7.810s
-  sys	0m0.440s
+And we already made sure that it would be easy to interact with
+projects by using the same primary branch name as the upstream
+project uses when cloning; hopefully by the time we change the
+built-in hardcoded fallback default, it would not have much impact
+to the real life usability than it is a symbolic act.
 
-which is faster than what you showed above (this is on linux.git, but my
-result is different; maybe you have more refs than me?). But we should
-be able to do better purely internally, so I suspect my computer is just
-faster (or maybe your extra refs just aren't well-covered by bitmaps).
-Running with your patches I get:
-
-  $ time git rev-list --objects --use-bitmap-index --all \
-             --filter-provided --filter=object:type=blob \
-	     --filter=blob:limit=200 | wc -l
-  16339
-
-  real	0m1.309s
-  user	0m1.234s
-  sys	0m0.079s
-
-which is indeed faster. It's quite curious that the answer is not the
-same, though! I think yours has some bugs. If I sort and diff the
-results, I see some commits mentioned in the output. Perhaps this is
---filter-provided not working, as they all seem to be ref tips.
-
-> To be able to more efficiently answer this query, I've implemented
-> multiple things:
-> 
-> - A new object type filter `--filter=object:type=<type>` for
->   git-rev-list(1), which is implemented both for normal graph walks and
->   for the packfile bitmap index.
-> 
-> - Given that above usecase requires two filters (the object type
->   and blob size filters), bitmap filters were extended to support
->   combined filters.
-
-That's probably reasonable, especially because it lets us use bitmaps. I
-do have a dream that we'll eventually be able to support more extensive
-formatting via log/rev-list, which would allow:
-
-  git rev-list --use-bitmap-index --objects --all \
-               --format=%(objecttype) %(objectname) |
-  perl -ne 'print $1 if /^blob (.*)/'
-
-That should be faster than the separate cat-file (which has to re-lookup
-each object, in addition to the extra pipe overhead), but I expect the
---filter solution should always be faster still, as it can very quickly
-eliminate the majority of the objects at the bitmap level.
-
-> - git-rev-list(1) doesn't filter user-provided objects and always prints
->   them. I don't want the listed commits though and only their referenced
->   potential LFS blobs. So I've added a new flag `--filter-provided`
->   which marks all provided objects as not-user-provided such that they
->   get filtered the same as all the other objects.
-
-Yeah, this "user-provided" behavior was quite a surprise to me when I
-started implementing the bitmap versions of the existing filters. It's
-nice to have the option to specify which you want.
-
--Peff
