@@ -2,96 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E529BC433DB
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECB7DC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5BD664FC6
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:39:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73D1B64FD0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233342AbhCJTjR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:39:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42514 "EHLO
+        id S232387AbhCJToH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232907AbhCJTjK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:39:10 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB31C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:39:10 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id c16so9015730ply.0
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:39:10 -0800 (PST)
+        with ESMTP id S232616AbhCJTnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:43:43 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA9B9C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:43:43 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id o10so12085645pgg.4
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PAPmTi+C6RokibWNDFDkszel3ecZt28NddBTMaXlq94=;
-        b=tlhQcTMln68+MzKJLDAH+L9DbPKEJIZ7yYx0SPfYCUvNgepWNAxuVUK6URCZNwGpO/
-         cwgSn5DGVKHt4i5kZRe+fz7q5crXmB8PWxLQCscn7eAq3E6y1rBxYbcuNxcY9kk8LkNE
-         1qfSjMEMoSZm7KWpTvzC7CCS6U3m+9i8CPJ+i13i+Uud1j+NPyFsnZiiCT2sYqLwM/iR
-         +A4XdARx21dJDllQLFcXfPKO8Qh7hNRONbrLDdPePMCqkzedPJdVwNuj/RB0yHVuDPPi
-         3tRzyF1SH52iy6tSA3Myo8MKfOCgmYMj/1Sy1dDu1HvufP1fAGNF4W9sDNzBu6m1Y0cA
-         n3eg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=OmLS39q+2JCJcOWs1rdaDIf8vZEou8KrGO5TsWEVm7w=;
+        b=WvROorA6bGmQFKk4sCcY6TzauI0fmAh00mnAOY5D0RQyrzF2e8W3kBWEoLUo2gWWvk
+         C6YHGdSdcUnWwukTzBNv1bmTaPxz2PlG2vPs9WbC+HVezq023Cu8Y+o07en5qNMzuAgJ
+         pj12paFc3SuIUWKDNx5eIBuz+s6K8wbNLVOmsQ1SaIp/0+qpPT+weyRArk7C5dWE1I/b
+         8/g9TETT0YDLKD0bIrg2Tid/OsQzw3AXyyWb51nX9+wsd91tSENL5J+s5WaS6ntOvZbT
+         w8NbWmmmuP8mr2FZLnq5QYHAMY4IqbKgxI0VF1kvoI7oGWGuQD6Tyn7dimOZnvWhjami
+         rNnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PAPmTi+C6RokibWNDFDkszel3ecZt28NddBTMaXlq94=;
-        b=Zv0EcYuj9ZAsbje1a68QKBu2MZwRsPk7rhLQRsfQZq3I+4UwIk7uOHpmJBB0ooHlNW
-         3ajZgCMpZEEPEpeGNcRHqygFpfGMAKasJLSNtPxmvOvur6/TNKYtCH63OK9066KArIgG
-         MmahHnpyv5lJBJljRTnYgH7Sv/AeakpudvNTzQhJkfG96Xaryilr0HM74izDQaUaKlNp
-         s0ulCzbHEBNDm7MRLm576jwaS77varfyfJY7qwHVMdtV9SZoHcq23nMgzNXHRunxOM50
-         w8WGu4eC0FbcF/Nbayekub4U5DprtujpvboH/WUBBJoxjv+7VF8N4h6QS4dDjGjEoxPY
-         x/Vw==
-X-Gm-Message-State: AOAM531Xm6WEYJvAvxLs/hBKvDBB1/v/miOn+AouLLl9+Hqly6siZDHx
-        GyCQGkgxQ6bdT8m6tWk8Vfic5aYhTY7WcA==
-X-Google-Smtp-Source: ABdhPJxLdkfSCHVyIDrjuxHNR/eUPBE9m+SYjZbknxuvQ73w2lSWuxf5TXtUJ+bMJuqrXyhMWh/q5Q==
-X-Received: by 2002:a17:902:b210:b029:e6:33b4:cd9e with SMTP id t16-20020a170902b210b02900e633b4cd9emr4192168plr.67.1615405149553;
-        Wed, 10 Mar 2021 11:39:09 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
-        by smtp.gmail.com with ESMTPSA id b3sm290216pgd.48.2021.03.10.11.39.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OmLS39q+2JCJcOWs1rdaDIf8vZEou8KrGO5TsWEVm7w=;
+        b=q2xwY4l3pChl9ioQM5oe72W/YWzmJPcPKMGd0J79gfo2Aupv2AkyRqD48MTufOMzBy
+         ZUyjkULC/uY2e5LLeqYjjV08N9yAVx3Afeqg+rDvKoguFW8b0YzRjBK3rck++hpAWTyV
+         VXEcOidEgRJdxz57j3WVr4nhkzT1vwhmBo2W+XFnzYoAmw1gPzP5xs5lh/eEOCdIPEZP
+         PT92K3WWRYFA1bVv/EcjoL/qUe31uK9Xh2qNtxhMEKmtsGNpqibyqeIJk28+jstiZ48V
+         u/eBzYqsraPWU/nx3dBCtENMizlXRFLEuepV3b/lGBhWB10Wy8woPj3u74QvUSHHiZO/
+         76Yw==
+X-Gm-Message-State: AOAM532EugSSvwZN5/0VpnGFEIAmSWdBvDskZANlGvTRl8j0mcgRe3TT
+        YA/8XnAbx2dqnd7oiW0o6QwUCb904m+uBA==
+X-Google-Smtp-Source: ABdhPJwcdrew5Y9kmzeXdz1fCOwiZFHfHziZoQyGEvh4sqgcOn/JILPB7APt1+/bejuRwIZjcSFcpA==
+X-Received: by 2002:a63:4a44:: with SMTP id j4mr4067703pgl.199.1615405423100;
+        Wed, 10 Mar 2021 11:43:43 -0800 (PST)
+Received: from localhost.localdomain ([2405:204:130f:1562:5082:417f:76e8:c75])
+        by smtp.googlemail.com with ESMTPSA id p5sm296480pfq.56.2021.03.10.11.43.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:39:08 -0800 (PST)
-Date:   Wed, 10 Mar 2021 11:39:04 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 01/17] commit: use config-based hooks
-Message-ID: <YEkgWDthF7sObtAt@google.com>
-References: <20201222000435.1529768-1-emilyshaffer@google.com>
- <20201222000435.1529768-2-emilyshaffer@google.com>
- <xmqqwnvrie8k.fsf@gitster.c.googlers.com>
+        Wed, 10 Mar 2021 11:43:42 -0800 (PST)
+From:   Charvi Mendiratta <charvi077@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, sunshine@sunshineco.com,
+        chriscool@tuxfamily.org, phillip.wood@dunelm.org.uk,
+        Charvi Mendiratta <charvi077@gmail.com>
+Subject: [PATCH v4 0/6][Outreachy] commit: Implementation of "amend!" commit
+Date:   Thu, 11 Mar 2021 01:13:01 +0530
+Message-Id: <20210310194306.32565-1-charvi077@gmail.com>
+X-Mailer: git-send-email 2.29.0.rc1
+In-Reply-To: <20210301084512.27170-1-charvi077@gmail.com>
+References: <20210301084512.27170-1-charvi077@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwnvrie8k.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 01, 2021 at 03:02:03PM -0800, Junio C Hamano wrote:
-> 
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > @@ -175,6 +183,8 @@ invoked after a commit is made.
-> >  This hook is meant primarily for notification, and cannot affect
-> >  the outcome of `git commit`.
-> >  
-> > +Hooks executed during 'post-commit' will run in parallel by default.
-> 
-> The "by default" makes it sound as if there is a way to force
-> 'post-commit' alone serially, but other than hook.jobs that can be
-> used to uniformly make everything run serially, I didn't find a way
-> to do so.
+This patch series teaches `git commit --fixup` to create "amend!" commit
+as an alternative that works with `git rebase --autosquash`. It allows to
+fixup both the content and the commit message of the specified commit.
+Here we add two suboptions to the `--fixup`, first `amend` suboption that
+creates an "amend!" commit. It takes the staged changes and also allows to
+edit the commit message of the commit we are fixing.
+Example usuage:
+git commit --fixup=amend:<commit>
 
-Yeah, hook.jobs is the way to make it run serially, and as you say, it
-can't be applied everywhere. I'll try to change the language.
+Secondly, `reword` suboption that creates an empty "amend!" commit i.e it
+ignores the staged changes and only allows to reword/edit the commit message
+of the commit we are fixing. `--fixup=reword:<commit>` is a short-hand of
+`--fixup=amend:<commit> --only`.
+Example usuage:
+git commit --fixup=reword:<commit>
 
-> 
-> The comment applies to all the "by default" in this latter half of
-> the series.
-> 
-> Thanks.
+** This work is rebased on the top of cm/rebase-i-updates.
+
+Changes from v3 :
+(Thanks to Junio C Hamano and Eric Sunshine for the reviews and suggesting the
+improvements required in the previous patches )
+
+* Now `--fixup=reword:` aliases `--fixup=amend: --only`. Added the respective
+test and updated documentation.
+* Modified prepared_amend_commit() in commit.c.
+* Renamed the subject_length() to commit_subject_length() [v3 - 1/6]
+* Modified the --fixup=[amend|reword] documentation
+* Also, updated the commit messages and some other minor cleanup.
+
+Charvi Mendiratta (6):
+  sequencer: export and rename subject_length()
+  commit: add amend suboption to --fixup to create amend! commit
+  commit: add a reword suboption to --fixup
+  t7500: add tests for --fixup=[amend|reword] options
+  t3437: use --fixup with options to create amend! commit
+  doc/git-commit: add documentation for fixup=[amend|reword] options
+
+ Documentation/git-commit.txt              |  40 ++++++-
+ Documentation/git-rebase.txt              |  21 ++--
+ builtin/commit.c                          | 118 +++++++++++++++++--
+ commit.c                                  |  14 +++
+ commit.h                                  |   3 +
+ sequencer.c                               |  16 +--
+ t/t3437-rebase-fixup-options.sh           |  30 +----
+ t/t7500-commit-template-squash-signoff.sh | 135 ++++++++++++++++++++++
+ 8 files changed, 309 insertions(+), 68 deletions(-)
+
+--
+2.29.0.rc1
+
