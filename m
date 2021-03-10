@@ -2,109 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE0B9C43381
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7DC2C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:01:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9BCB64FC9
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:01:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 812A864FAF
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 21:01:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232066AbhCJUBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 15:01:20 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59084 "EHLO cloud.peff.net"
+        id S232099AbhCJVBY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 16:01:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59184 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232181AbhCJUBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 15:01:18 -0500
-Received: (qmail 6890 invoked by uid 109); 10 Mar 2021 20:01:18 -0000
+        id S232413AbhCJVAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 16:00:51 -0500
+Received: (qmail 7014 invoked by uid 109); 10 Mar 2021 21:00:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 20:01:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 21:00:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25235 invoked by uid 111); 10 Mar 2021 20:01:18 -0000
+Received: (qmail 25841 invoked by uid 111); 10 Mar 2021 21:00:51 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 15:01:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 16:00:51 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 10 Mar 2021 15:01:17 -0500
+Date:   Wed, 10 Mar 2021 16:00:49 -0500
 From:   Jeff King <peff@peff.net>
-To:     John Szakmeister <john@szakmeister.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] http: store credential when PKI auth is used
-Message-ID: <YEkljZWg4+lTQRyS@coredump.intra.peff.net>
-References: <20210306225253.87130-1-john@szakmeister.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 4/5] builtin/repack.c: be more conservative with unsigned
+ overflows
+Message-ID: <YEkzgeuqkgF4RvaF@coredump.intra.peff.net>
+References: <cover.1614957681.git.me@ttaylorr.com>
+ <d55324f7a256fce491a29a1debf142f817eb01d3.1614957681.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210306225253.87130-1-john@szakmeister.net>
+In-Reply-To: <d55324f7a256fce491a29a1debf142f817eb01d3.1614957681.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 06, 2021 at 05:52:53PM -0500, John Szakmeister wrote:
+On Fri, Mar 05, 2021 at 10:21:56AM -0500, Taylor Blau wrote:
 
-> We already looked for the PKI credentials in the credential store, but
-> failed to approve it on success.  Meaning, the PKI certificate password
-> was never stored and git would request it on every connection to the
-> remote.  Let's complete the chain by storing the certificate password on
-> success.
+> There are a number of places in the geometric repack code where we
+> multiply the number of objects in a pack by another unsigned value. We
+> trust that the number of objects in a pack is always representable by a
+> uint32_t, but we don't necessarily trust that that number can be
+> multiplied without overflow.
 > 
-> Signed-off-by: John Szakmeister <john@szakmeister.net>
-> ---
+> Sprinkle some unsigned_add_overflows() and unsigned_mult_overflows() in
+> split_pack_geometry() to check that we never overflow any unsigned types
+> when adding or multiplying them.
 > 
-> I'm not sure if certificate passwords were not stored for some reason, but
-> searching the archives I didn't see a mention of it.  Hopefully this is
-> acceptable.  I did try this in an environment where we have client SSL certs and
-> this made the user experience much better.
+> Arguably these checks are a little too conservative, and certainly they
+> do not help the readability of this function. But they are serving a
+> useful purpose, so I think they are worthwhile overall.
 
-I think it was just something that nobody ever cared about before. The
-cert password request got converted to credential_fill() as part of
-148bb6a7b4 (http: use credential API to get passwords, 2011-12-10). That
-commit added approve/reject for http, because that's what I really cared
-about, but the intent was always to treat most password queries
-consistently.
+Hmm. My initial reaction was: how close might we reasonably come to the
+limit? Packfiles are limited to uint32_t, and:
 
-> diff --git a/http.c b/http.c
-> index f8ea28bb2e..440890695f 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -1637,6 +1637,8 @@ static int handle_curl_result(struct slot_results *results)
->  		credential_approve(&http_auth);
->  		if (proxy_auth.password)
->  			credential_approve(&proxy_auth);
-> +		if (cert_auth.password)
-> +			credential_approve(&cert_auth);
+  - you'd have a pretty hard time approaching that; pack-objects needs
+    at least 100 bytes of heap per object for its internal book-keeping.
+    So you're looking at 200GB-400GB of RAM to generate such a packfile.
 
-So I think this is the right direction, but:
+  - I'm pretty sure the rest of the repack code would die horribly and
+    unpredictably if it were allowed to have that much RAM.
 
-  - you'd need a credential_reject() somewhere, too. Otherwise a bad
-    password will get stored and then reused over and over, with no
-    opportunity to tell the helper to forget about it.
+Which isn't an argument against such protections, but I wonder if it
+might give people a false sense that we are in any way prepared for
+repositories of this scale.
 
-  - is this the best spot to check that our password was right? We only
-    care about unlocking the local cert, which in theory is independent
-    of what the server tells us. I suspect we can't really tell the
-    difference, though (we hand the cert path and password off to curl,
-    and then hopefully a request is successful). So this may be the best
-    we can do for approval. But for rejection, I doubt that a 401 would
-    be the right response. How does curl respond when the password is
-    bad? Likewise, what happens if the password is bad but the server is
-    willing to make the request anyway (does curl bail immediately, or
-    might we get an HTTP 200 even with a bad cert password)?
+However, at least one of these looks to be multiplying the user-provided
+scale factor. I can't imagine a scale factor beyond "2" is all that
+useful, but conceptually somebody could provide a big number there.
 
-  - I think proxy_cert_auth would probably want the same treatment.
+Looking at the code, though...
 
-  - The "if (cert_auth.password)" is redundant. credential_approve()
-    will return silently if there is no password to approve. I know
-    you're copying the pattern from directly above, but I think that one
-    should be cleaned up, too.
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 21a5778e73..677c6b75c1 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -363,6 +363,12 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+>  	for (i = geometry->pack_nr - 1; i > 0; i--) {
+>  		struct packed_git *ours = geometry->pack[i];
+>  		struct packed_git *prev = geometry->pack[i - 1];
+> +
+> +		if (unsigned_mult_overflows(factor, geometry_pack_weight(prev)))
+> +			die(_("pack %s too large to consider in geometric "
+> +			      "progression"),
+> +			    prev->pack_name);
 
-    (I also was mildly surprised that this worked at all, since
-    credential_approve() will bail if there is no username field. But
-    the cert code fills in an empty username).
+This says "unsigned_mult_overflows", but "factor" is a signed int. This
+will generally be cast to unsigned in the actual multiplication, but it
+depends on the size of the operands.
 
-Most of those are "nice to have" improvements over what you have here,
-but I think without a matching reject() this would be a regression.
+If int is larger than uint32_t, we'd do the multiplication as a signed
+int. But the overflow check would be against an unsigned int (since our
+macro only looks at the type of the first argument). So it would be
+overly permissive with the final bit. I suspect it would also be wrong
+if "factor" is negative.
+
+If int is smaller than 32 bits, then we'd be too conservative (it would
+get promoted to uint32_t for the actual multiplication). Also, you
+should get a better computer in that case.
+
+It's probably OK in practice, as int tends to just be 32 bits. But if
+the point is to be careful, we should probably just take "factor" as a
+uint32_t in the first place.
+
+> @@ -388,11 +394,25 @@ static void split_pack_geometry(struct pack_geometry *geometry, int factor)
+>  	 * packs in the heavy half need to be joined into it (if any) to restore
+>  	 * the geometric progression.
+>  	 */
+> -	for (i = 0; i < split; i++)
+> -		total_size += geometry_pack_weight(geometry->pack[i]);
+> +	for (i = 0; i < split; i++) {
+> +		struct packed_git *p = geometry->pack[i];
+> +
+> +		if (unsigned_add_overflows(total_size, geometry_pack_weight(p)))
+> +			die(_("pack %s too large to roll up"), p->pack_name);
+> +		total_size += geometry_pack_weight(p);
+> +	}
+
+This one seems even less likely to overflow. total_size is an off_t, so
+unless you're on a really lame system, we should be able to fit a lot of
+uint32_t's in there.
+
+(It actually feels a little weird for it to be an off_t in the first
+place; we're still dealing in units of "number of objects", which the
+rest of Git generally considers to be in the realm of a uint32_t).
+
+>  	for (i = split; i < geometry->pack_nr; i++) {
+>  		struct packed_git *ours = geometry->pack[i];
+> +
+> +		if (unsigned_mult_overflows(factor, total_size))
+> +			die(_("pack %s too large to roll up"), ours->pack_name);
+
+This one is wrong in the same way as the earlier multiplication, except
+this time we're pretty sure that total_size actually is much bigger. So
+we'll complain about overflowing an int, but the multiplication will
+actually be done as an off_t. And of course it has the same problems
+with negative values.
+
+Should total_size just be a uint32_t? Or perhaps any of these factor
+multiplication results should just be uint64_t, which would be the
+obviously-large-enough type. Then you wouldn't have these ugly overflow
+checks. :)
 
 -Peff
