@@ -2,178 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28F35C433DB
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 18:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A05B3C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 18:51:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F39EE64FB1
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 18:31:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6868B64F78
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 18:51:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbhCJSbA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 13:31:00 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56701 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbhCJSaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 13:30:46 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21FDA11894A;
-        Wed, 10 Mar 2021 13:30:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=cnEUezra4S3tIN6rGeGLZvJuzAY=; b=rkaw2V
-        gISen/3zVfBXrU1smIEKC/jajCpoZvs/xaWsO2GT4ET9nI6pxUR3SOudhSxTM2oa
-        8HtEbyKtPB3+YgiE4VgsYLFn/lrTR00avbpBxlr2Ly8sk07NVrtV+wzrFemorEg9
-        83Pk58bha9AkJbHSlpyZ3QMT0onSvz38DqUkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A4i3CxLqoYuVM+2gwuvYXSK3skFjAyX7
-        pmLrlkCjxHlFWjNjojkyR7CfxszXdDF9hc7zC2tOHNiQK1xm3+El6c4EZA40TQpO
-        55hc3u3ayepCTaL0y7PPnxHw4+ZeMpUxqXn3i5FoB4/P8RVZPO25DhTN5yzuCIGf
-        FeQoLVTdVYo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1AC63118949;
-        Wed, 10 Mar 2021 13:30:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 41817118948;
-        Wed, 10 Mar 2021 13:30:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, nmulcahey@google.com
-Subject: Re: [PATCH] fetch-pack: do not mix --pack_header and packfile uri
-References: <xmqqwnugywax.fsf@gitster.c.googlers.com>
-        <20210310165716.2014235-1-jonathantanmy@google.com>
-Date:   Wed, 10 Mar 2021 10:30:40 -0800
-In-Reply-To: <20210310165716.2014235-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 10 Mar 2021 08:57:16 -0800")
-Message-ID: <xmqqa6rakgj3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S233475AbhCJSv0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 13:51:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60178 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233480AbhCJSu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 13:50:58 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF540C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 10:50:58 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id lr10-20020a17090b4b8ab02900dd61b95c5eso5486399pjb.4
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 10:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=E5I3eybp10QBOARB2B3zftjKU2qmNCsTa3FttP5x/HI=;
+        b=ogOOGD+VBnnkiddQeNDlkwnsQLiuMB7PgCn/tQZUEuan999lv5vLF72DJ8w725sOup
+         6DofPHeoH+xFnZ9seLvUpgjEihLAKYpWFUvhiJ5YlnYrifpoMjn7I91XU7COUqKAhZi7
+         GV3ck1pZo3dAuj2uHnMQgdh8Los8LcxIKc/qEw+MXz4iqm4mGJY9+Go9woOqTcViSsR6
+         ZhINIqJwShb+tHtUEJagL9BN2jYruck8r/OQ5/TYM8rxE7IMaXWiW8beWnx0LSBd5Lgo
+         BoweMH0B1kyKBrZdiGW0/nJWc6Alt21KEwF4fSb4eNrkFgilGtOusoINXn/mmSEoI+DH
+         2Mlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=E5I3eybp10QBOARB2B3zftjKU2qmNCsTa3FttP5x/HI=;
+        b=U3lP1CvqsInAxeOqSDWLubGIBVizHEC8WR0jBvgvTTLIh1BW60wgbFsfIjhrdMYtz1
+         ZI0A9oyB7eRZ22N60A1VDjcUjo2M9VWeZxh058dOwzYE9fqVdONsZxeG5zMsdqaWhTIE
+         CRjgdgj7U33Ib8NBsD5r0FaCqljYMDqcZ2P77tPg0sAziWZt2QghM/PwhcEvEwmFocVa
+         +rH2ZqXGyZbRRkD9ZSJ8EIILjAFnQLKsMh6i0lsxcNUAeAXqcxv/gThY7wpQQAASEzSc
+         LO9ZWDCjmjnH4aWLULOW/o0YdxuMNks77WyU0Sp0k88nnVF4ZizrPbMdMML0c/5qIXov
+         KFiw==
+X-Gm-Message-State: AOAM532pjKi8rJ5FBj0wI3eFZ4zbNKy7s84QuoS+DjklZwOHVcSO6PFh
+        9iyaC2qqFaDp6D5pj47SD9e4TyVupKtJpA==
+X-Google-Smtp-Source: ABdhPJwpjjlnvZNUB3SOSPTnYaqEhWn/4FCtJZgQX7a/t+FNEC2KZHoB0rEd1RPjA4z9EUdueACNRQ==
+X-Received: by 2002:a17:902:cb0b:b029:e5:b670:d905 with SMTP id c11-20020a170902cb0bb02900e5b670d905mr4369643ply.18.1615402257573;
+        Wed, 10 Mar 2021 10:50:57 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:c4cf:5d59:92e7:3736])
+        by smtp.gmail.com with ESMTPSA id 82sm254321pfv.19.2021.03.10.10.50.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Mar 2021 10:50:56 -0800 (PST)
+Date:   Wed, 10 Mar 2021 10:50:49 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
+Subject: Re: [PATCH v2] Update 'make fuzz-all' docs to reflect modern clang
+Message-ID: <YEkVCRtVimEct0D8@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Andrzej Hunt via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Andrzej Hunt <andrzej@ahunt.org>,
+        Andrzej Hunt <ajrhunt@google.com>
+References: <pull.889.git.1614514959347.gitgitgadget@gmail.com>
+ <pull.889.v2.git.1614871707845.gitgitgadget@gmail.com>
+ <xmqqlfb2cz8c.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B874A342-81CE-11EB-B191-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqlfb2cz8c.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On 2021.03.04 14:48, Junio C Hamano wrote:
+> "Andrzej Hunt via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > From: Andrzej Hunt <ajrhunt@google.com>
+> 
+> > Subject: Re: [PATCH v2] Update 'make fuzz-all' docs to reflect modern clang
+> 
+> I'd retitte it to
+> 
+>     Makefile: update 'make fuzz-all' docs to reflect modern clang
+> 
+> > Clang no longer produces a libFuzzer.a, instead you can include
+> > libFuzzer by using -fsanitize=fuzzer.
+> 
+> Do we see two sentences here?  IOW, s/, instead/. Instead/ is needed?
+> 
+> > Therefore we should use
+> > that in the example command for building fuzzers.
+> >
+> > We also add -fsanitize=fuzzer-no-link to ensure that all the required
+> > instrumentation is added when compiling git [1], and remove
+> >  -fsanitize-coverage=trace-pc-guard as it is deprecated.
+> 
+> Without something like s/add/add to CFLAGS/, I found this a bit
+> cryptic and failed to read what it wanted to do without looking at
+> the patch text itself.
+> 
+> > I happen to have tested with LLVM 11 - however -fsanitize=fuzzer appears to
+> > work in a wide range of reasonably modern clangs.
+> >
+> > (On my system: what used to be libFuzzer.a now lives under the following path,
+> >  which is tricky albeit not impossible for a novice such as myself to find:
+> > /usr/lib64/clang/11.0.0/lib/linux/libclang_rt.fuzzer-x86_64.a )
+> 
+> All nice things to have in the log message.
+> 
+> >  Makefile | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index dd08b4ced01c..c7248ac6057b 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -3292,11 +3292,11 @@ cover_db_html: cover_db
+> >  # are not necessarily appropriate for general builds, and that vary greatly
+> >  # depending on the compiler version used.
+> >  #
+> > -# An example command to build against libFuzzer from LLVM 4.0.0:
+> > +# An example command to build against libFuzzer from LLVM 11.0.0:
+> >  #
+> >  # make CC=clang CXX=clang++ \
+> > -#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+> > -#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
+> > +#      CFLAGS="-fsanitize=fuzzer-no-link,address" \
+> > +#      LIB_FUZZING_ENGINE="-fsanitize=fuzzer" \
+> >  #      fuzz-all
+> >  #
+> >  FUZZ_CXXFLAGS ?= $(CFLAGS)
+> 
+> LIB_FUZZING_ENGINE is used this way in the Makefile:
+> 
+>     $(FUZZ_PROGRAMS): all
+>             $(QUIET_LINK)$(CXX) $(FUZZ_CXXFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
+>                     $(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+> 
+> and it is somewhat annoying to see a compiler/linker option that
+> late on the command line, where readers would expect an object file
+> or a library archive would appear.
 
-> You mentioned --fix-thin (5) and --promisor (8). Why do you think that
-> none of these should be given to the "index-pack" that processes the
-> packfiles given by URI?
+Yes, it appears that clang has changed how the fuzzing engine is
+selected, as this used to be just a library path (as you see in the
+diff). We might as well move this option up with the rest of the flags.
 
-Actually, --fix-thin is probably even worse than that.
+> It makes me wonder if we should
+> instead be doing something along the following line:
+> 
+>  - empty LIB_FUZZING_ENGINE by default
+>  - add -fsanitize=fuzzer names to FUZZ_CXXFLAGS
+> 
+> i.e.
+> 
+> diff --git c/Makefile w/Makefile
+> index 4128b457e1..b5df76b33b 100644
+> --- c/Makefile
+> +++ w/Makefile
+> @@ -3306,14 +3306,15 @@ cover_db_html: cover_db
+>  # are not necessarily appropriate for general builds, and that vary greatly
+>  # depending on the compiler version used.
+>  #
+> -# An example command to build against libFuzzer from LLVM 4.0.0:
+> +# An example command to build against libFuzzer from LLVM 11.0.0:
+>  #
+>  # make CC=clang CXX=clang++ \
+> -#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+> -#      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
+> +#      CFLAGS="-fsanitize=fuzzer-no-link,address" \
+>  #      fuzz-all
+>  #
+>  FUZZ_CXXFLAGS ?= $(CFLAGS)
+> +FUZZ_CXXFLAGS += -fsanitize=fuzzer
+> +LIB_FUZZING_ENGINE =
 
-As the code processes the in-stream packdata before processing or
-even downloading the pregenerated URI packfile, the objects
-necessary to fix a "thin" in-stream packdata are likely to be
-unavailable (it is exactly the same problem as the one that made us
-to delay the fsckobjects done in index-pack when URI packfile is
-involved, isn't it?).  Even if the client asks --thin, the server
-side shouldn't produce a thin pack for in-stream packdata, no?
+I don't think we want to mess with FUZZ_CXXFLAGS, as oss-fuzz may be
+adding conflicting -fsanitize args here. Having LIB_FUZZING_ENGINE
+default to empty should be fine though.
 
-> Perhaps it could be argued that these extra
-> packfiles don't need --fix-thin (but I would say that I think servers
-> should be allowed to serve thin packfiles through URI too), 
-
-I agree that URI packfile could be thin; after all, the server end
-chooses, based on what the client claims to have, which pregenerated
-packfile to hand out, so it is perfectly fine to hand out a
-pregenerated packfile that is thin if the client asks for a thin
-pack and says it has base objects missing from that packfile.  And
-because it is (assumed to be) pregenerated, we can make a requirement
-that no URI packfile should depend on objects that are created later
-that that (which means it won't depend on in-stream packdata).
-
-But we cannot process a thin in-stream packdata, if we are to
-process it first, right?
-
-> but I think
-> that --promisor is necessary (so that a server could, for example,
-> offload all trees and commits to a packfile in a CDN, and offload all
-> blobs to a separate packfile in a CDN).
-
-Yes, both packfiles conceptually are given by that same server who
-promises to be always available to feed us everything we'd need
-later, so both packfiles should be marked to have come from the same
-promisor.  So this is one example that happens to be sharable
-between the two.
-
-But I do not see it as an indication that the two packs inherently
-must be processed with the same options.
-
-> Looking at this list, I think that all the arguments (except 9, which
-> has been fixed) are necessary (or at least useful) for indexing a
-> packfile given by URI.
-
-I have to say that this is focusing too much on the current need by
-going through how the current code handles two packs.  Of course, if
-we start from "two must be the same" viewpoint, and restrict what
-the code can do by "guarding" bits that require the two to be
-different out based on "if (index_pack_args)", then the resulting
-code would invoke two index-pack the same way.
-
-I am more worried about the longer term code health, so "currently
-mostly the same" does not make a convincing argument for the future
-why the two must be processed the same way.
-
->> Also, because this loop copies everything in cmd.args, if our
->> in-stream packdata is small, cmd.args.v[0] would be "unpack-objects",
->> and we end up asking the command to explode the (presumably large
->> enough to be worth pre-generating and serving via CDN) packfile that
->> is given via the packfile URI mechanism.
->
-> I specifically guard against this through the "if (do_keep ||
-> args->from_promisor || index_pack_args || fsck_objects) {" line (which
-> is a complicated line, unfortunately).
-
-I am aware of that line that forbids the in-stream packdata from
-getting unpacked into loose objects.  But unless we were told to
-keep the resulting pack, or run fsck-objects via the index-pack, I
-do not see an inherent reason why the "most recent leftover bits
-that are not in the pregenerated pack offloaded to CDN" objects must
-be kept in a separate packfile, especially if the number of objects
-in it is smaller than the unpack limit threshold.  In other words,
-I view that "guard" as one of the things that blinds us into thinking
-that the two packs should be handled the same way.  It is the other
-way around---the guard is there only because the code wanted to handle
-the two packs the same way.
-
-When cloning from a server that offers bulk of old history in a URI
-packfile and an in-stream packfile, shouldn't the result be like
-cloning from the server back when it had only the objects in the URI
-packfile, and then fetching from it again when it acquired objects
-that came in the in-stream packfile?  The objects that come during
-the second fetch would be left loose if there aren't that many, so
-that the third and subsequent fetches and local activity can
-accumulate enough loose objects to be packed into a single new pack,
-avoiding accumulation of too many tiny packs.  And the "guard"
-breaks that only because this codepath wants to reuse cmd.args that
-is unrelated to populate index_pack_args.  Isn't that an artificial
-limitation that we may want to eventually fix?
-
-When we want to fix that, the "options are mostly the same when we
-use the index-pack command for both packdata, so let's copy the
-entire command line" would come back and haunt us.  The person who
-is doing the fix may be somebody other than you, so it may not
-matter to you today, but it will hurt somebody tomorrow.
-
-I already said that I think 2aec3bc4 (fetch-pack: do not mix
---pack_header and packfile uri, 2021-03-04) is OK as a short-term
-fix for the upcoming release, but it does not change the fact that
-it is piling technical debt on top of existing technical debt.
-
-And that is why I am reacting against your earlier mention of
-"filering out" rather strongly.  The approach continues the "keep
-the single args array in the belief that two must be mostly the
-same", which I view as a misguided starting point that must be
-rethought.
-
-Thanks.
-
+>  
+>  .PHONY: fuzz-all
+>  
+> 
+> In the meantime, I'll queue the version you sent as-is (modulo the
+> retitling).
+> 
+> Thanks.
+> 
+> 
