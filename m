@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2611C43331
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F35EC43333
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B131C64EF6
+	by mail.kernel.org (Postfix) with ESMTP id CDC8D64FDC
 	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233885AbhCJTbx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:31:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40744 "EHLO
+        id S233874AbhCJTbw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:31:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233725AbhCJTbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:31:14 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F11AC061761
+        with ESMTP id S233731AbhCJTbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:31:15 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7308C061762
         for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:14 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so11454222wmj.1
+Received: by mail-wr1-x42f.google.com with SMTP id v15so24640332wrx.4
         for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
-        b=nPXZErV6qHySWytLoOl9f7EugQpanl+q1uXl60kFcSZKWeIFJSMkpeIUjh3yvDurPE
-         YWgnQm0NGgiw9s4dXRMUn//ggvaUXbYgeS0GEepeXworIa4ZMvIzDQw58zpvk32e8O4f
-         BoVapKjRwKJqFsjFLjNlQEUKhz3y3m1eZTu7G7i6BwCMS5B/hnvRDY8UF1X8732Lw1/H
-         Bs16ZW2O720WhV4HY/acns4FVvmJUuf3f9yyD5L1/bB6CZqwDEulbgBXuqOKt1y9QsIq
-         PWb6KtNPPNXm6OKIQf4KlYWAzj26nCq/f+vR0mW5uRXjZVMJX01z/xuzmXIEWbIpL4lf
-         rRFA==
+        bh=zTzPdzknucQx81xJWRuZF717S/E2tCr/L+NZEBArTdk=;
+        b=jS2YlEXBAVLNFvl5jex/Ro/xmCKVujyBd4BpMHiOPsI/e02B9UZQvl2ceSeX7zcmJP
+         NY0sj5qQOvArxnT3MO0goBsGtqiK6/HrjQWO6h9F0Skr8m91IcdcV1Iat3bwW+uq0Y8A
+         5w5R9VoThKlBc45a7OcY92+06RXCu1Dl9M7BzkFDQQJXbCdQaL5HAvXIfsQr2ONPGGaX
+         tqhOGVGnjSDdC1DG5hd+/eZps/nHuxf9eNuawMu/PFv1fJpoKwGXGN9KlnaiQG1sgkgq
+         qGYrnnYYnYoFLx9Y8Bo99oFxmJ+MyVpr77m0DCWrlE0IwcW2+q7myuAF6kvsFWdU3Ccu
+         qcoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
-        b=a5Ps/C7aChzrIfjkDuJisSN3GEAU0MJ4/QAayWKivVpJBzgyhWpIlgf6Z6XPzBLZ7B
-         39HsLrbBGpkYAzzLSxe3YiG/hqXngXhV4uzaaU8Wm5GxbfVH63aFAlQI9KjNJJSp0wkt
-         uQWc1KBHP/U9/JehQlMEiyiL/l+j392HUHngOOkagBBTBPqVT2PXMoQ1wpQlT8tFrTzW
-         zDNdFHOtYWLiv4Ye+ewNUpQDIo5wxl0LrOmvNwhupvxOKMkimuWeazKUdyT4AyBKk96F
-         C21a0IuK5OlIfrPKn5ceu5kzT3OuWzVpU0YyIB33+X3jCu59/oBbkIBWoeSgO27JcBVo
-         iNgA==
-X-Gm-Message-State: AOAM532PnQe9AfL4JbkY8h2TCZgFT3qbDD5L/maRBE24HT7QCT3A84mg
-        FtidirkZqeJhzeMjrVaQJ8u0XqYsJ0w=
-X-Google-Smtp-Source: ABdhPJxeO6rhvcvSdmVEPojtTtAzeYNJTUTPfbb7UI6q1a7vLA1E/8GgdyCFSr0hwB88+l7TZuCWqg==
-X-Received: by 2002:a1c:2390:: with SMTP id j138mr4765929wmj.72.1615404672912;
-        Wed, 10 Mar 2021 11:31:12 -0800 (PST)
+        bh=zTzPdzknucQx81xJWRuZF717S/E2tCr/L+NZEBArTdk=;
+        b=cP+ncPQVHLCTJBIXnJGrboIYFBWyewoK9LXxXvhkYOppGTLHdmiAM3osHI4zS8dE+M
+         froWx9XA0y2upJwpSaiC0JSSCVyt077KMYNXjF4yxlF7Y1aD3oXJ7eWK8CRiT9uVRyBL
+         bIWf/cNUAimrBveCY8QUUzg+/9quIrL6uFv+wohK9gE9pMeopa2VrhUNsPovYFm3L3Zf
+         TRikZyVmO2RC8FKhClJZIxEw0O3880KVn7s4jS/Xhmyu/y0xDCEOBMlluL9ogiMqpA/5
+         MY0pV5qUD4hCSDajlGuVD/iQKngS0PmYOsJL4/oDRAIXHNxKBBxuJadxZIwxf2ENzwzB
+         pkpg==
+X-Gm-Message-State: AOAM5307VMAz9Bw/8VOtAkvsAMjVEuXpFibaaYV6CJlXgBlzBf2JBAqK
+        sZfJqPeXbueg4A7cOp9UitiZ15bTORU=
+X-Google-Smtp-Source: ABdhPJwbEvjyyBM55Et7BKrK/ZnZUlS/PoP0GtTCNFhF0Q6d3oL9ZpFdvi4Xo3PsM+TBbKWhCiMIvQ==
+X-Received: by 2002:a5d:698d:: with SMTP id g13mr5232086wru.2.1615404673520;
+        Wed, 10 Mar 2021 11:31:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s84sm446008wme.11.2021.03.10.11.31.12
+        by smtp.gmail.com with ESMTPSA id s20sm392610wmj.36.2021.03.10.11.31.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:31:12 -0800 (PST)
-Message-Id: <48f65093b3da3fdee606e6d52e81795cdfcbbd22.1615404665.git.gitgitgadget@gmail.com>
+        Wed, 10 Mar 2021 11:31:13 -0800 (PST)
+Message-Id: <83aac8b7a1ec18d018205117dc2e98a5bb99d4c6.1615404665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
         <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Mar 2021 19:30:52 +0000
-Subject: [PATCH v2 09/20] unpack-trees: ensure full index
+Date:   Wed, 10 Mar 2021 19:30:53 +0000
+Subject: [PATCH v2 10/20] sparse-checkout: hold pattern list in index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,50 +81,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The next change will translate full indexes into sparse indexes at write
-time. The existing logic provides a way for every sparse index to be
-expanded to a full index at read time. However, there are cases where an
-index is written and then continues to be used in-memory to perform
-further updates.
+As we modify the sparse-checkout definition, we perform index operations
+on a pattern_list that only exists in-memory. This allows easy backing
+out in case the index update fails.
 
-unpack_trees() is frequently called after such a write. In particular,
-commands like 'git reset' do this double-update of the index.
-
-Ensure that we have a full index when entering unpack_trees(), but only
-when command_requires_full_index is true. This is always true at the
-moment, but we will later relax that after unpack_trees() is updated to
-handle sparse directory entries.
+However, if the index write itself cares about the sparse-checkout
+pattern set, we need access to that in-memory copy. Place a pointer to
+a 'struct pattern_list' in the index so we can access this on-demand.
+This will be used in the next change which uses the sparse-checkout
+definition to filter out directories that are outside the sparse cone.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- unpack-trees.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ builtin/sparse-checkout.c | 17 ++++++++++-------
+ cache.h                   |  2 ++
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f5f668f532d8..4dd99219073a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1567,6 +1567,7 @@ static int verify_absent(const struct cache_entry *,
-  */
- int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
- {
-+	struct repository *repo = the_repository;
- 	int i, ret;
- 	static struct cache_entry *dfc;
- 	struct pattern_list pl;
-@@ -1578,6 +1579,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	trace_performance_enter();
- 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 2306a9ad98e0..e00b82af727b 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -110,6 +110,8 @@ static int update_working_directory(struct pattern_list *pl)
+ 	if (is_index_unborn(r->index))
+ 		return UPDATE_SPARSITY_SUCCESS;
  
-+	prepare_repo_settings(repo);
-+	if (repo->settings.command_requires_full_index) {
-+		ensure_full_index(o->src_index);
-+		ensure_full_index(o->dst_index);
-+	}
++	r->index->sparse_checkout_patterns = pl;
 +
- 	if (!core_apply_sparse_checkout || !o->update)
- 		o->skip_sparse_checkout = 1;
- 	if (!o->skip_sparse_checkout && !o->pl) {
+ 	memset(&o, 0, sizeof(o));
+ 	o.verbose_update = isatty(2);
+ 	o.update = 1;
+@@ -138,6 +140,7 @@ static int update_working_directory(struct pattern_list *pl)
+ 	else
+ 		rollback_lock_file(&lock_file);
+ 
++	r->index->sparse_checkout_patterns = NULL;
+ 	return result;
+ }
+ 
+@@ -517,19 +520,18 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+ {
+ 	int result;
+ 	int changed_config = 0;
+-	struct pattern_list pl;
+-	memset(&pl, 0, sizeof(pl));
++	struct pattern_list *pl = xcalloc(1, sizeof(*pl));
+ 
+ 	switch (m) {
+ 	case ADD:
+ 		if (core_sparse_checkout_cone)
+-			add_patterns_cone_mode(argc, argv, &pl);
++			add_patterns_cone_mode(argc, argv, pl);
+ 		else
+-			add_patterns_literal(argc, argv, &pl);
++			add_patterns_literal(argc, argv, pl);
+ 		break;
+ 
+ 	case REPLACE:
+-		add_patterns_from_input(&pl, argc, argv);
++		add_patterns_from_input(pl, argc, argv);
+ 		break;
+ 	}
+ 
+@@ -539,12 +541,13 @@ static int modify_pattern_list(int argc, const char **argv, enum modify_type m)
+ 		changed_config = 1;
+ 	}
+ 
+-	result = write_patterns_and_update(&pl);
++	result = write_patterns_and_update(pl);
+ 
+ 	if (result && changed_config)
+ 		set_config(MODE_NO_PATTERNS);
+ 
+-	clear_pattern_list(&pl);
++	clear_pattern_list(pl);
++	free(pl);
+ 	return result;
+ }
+ 
+diff --git a/cache.h b/cache.h
+index 1f0b42264606..303411726e10 100644
+--- a/cache.h
++++ b/cache.h
+@@ -307,6 +307,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+ struct split_index;
+ struct untracked_cache;
+ struct progress;
++struct pattern_list;
+ 
+ struct index_state {
+ 	struct cache_entry **cache;
+@@ -338,6 +339,7 @@ struct index_state {
+ 	struct mem_pool *ce_mem_pool;
+ 	struct progress *progress;
+ 	struct repository *repo;
++	struct pattern_list *sparse_checkout_patterns;
+ };
+ 
+ /* Name hashing */
 -- 
 gitgitgadget
 
