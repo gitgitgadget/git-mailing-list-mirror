@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA1CC433E0
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16885C43381
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9ED1464FD0
+	by mail.kernel.org (Postfix) with ESMTP id D64D864EF6
 	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233431AbhCJTbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:31:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
+        id S233766AbhCJTbR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:31:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233470AbhCJTbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:31:08 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B58C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:08 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id f12so24632729wrx.8
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:08 -0800 (PST)
+        with ESMTP id S233660AbhCJTbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:31:09 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE41C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:09 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id l12so24598189wry.2
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4vFzYKJO90agG78/KWXHjfzDVT/uh9gsi1HJ/WmDVEU=;
-        b=MBUt9gmqcoJOg/y8/fio12zMVaoNuvPh/fpIjZqmk5fTuffRFdZyYDW2vWPcJ7F1kj
-         6/bxzdBxDrX9rrruCP8BZStb9Lh4VQ7dkUQzO3r9zt7gzYkGYWXoTF6we4zcurvNDe3M
-         moFE8NMYL7GovmYeuTwl6ZlOupVCpWd2KTXhKJPlkE9LhSjBg082epaBNJrn4aPyPGDF
-         ZWbmhCtXxhX40pP7bA6VriwtkqihrGSNm6MKp+8EdJdMQCihPJVRloS5lvq4PWCGUmW9
-         3UsDvZjPQ7v1c/rGyeViZUGLalC4738oErGXFt8nVxnWCHrXpGaZ0+jPfoKlRS4N8PV6
-         OYlg==
+        bh=DW5DCSyEvSe7T85a+PC5MW200sQbjVqUWH/eAQ17LaU=;
+        b=bu9xJnEdoJQnP0m0JqX5XCWY51D4ZM/6N1cG9jaXUK4BBuE/fDcO0Tbvb3KoI6tEAA
+         +g2KOockD0tkH2EHhfl8MpGIjgB/hHPNkafkVc1aHrgyCq1vNrFv3MPPbk/GoHK5Wi6d
+         DF5OM3kFQ3C3glsLjnGUAylwOcUJUtrTKnEgv1DjmFANpa0j1ewBShXPgphH7mhMI7Hr
+         alv2B37Oj0LyhKW34F3Kn1naYGe8cOPpKtcWBjfKWsoIMUfLF6ma3R7Y/xFNuPoJTorO
+         0BPJMlZPEzxFT5mSIpU4Dg5u34y5Ax0cd3y8lkj1ZainONgdxdNl3Wnc6/a6YdNNcSLD
+         741Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4vFzYKJO90agG78/KWXHjfzDVT/uh9gsi1HJ/WmDVEU=;
-        b=eU9od1+Zohw5yw1GyLNnePtJ09n7Hu6yJ3YzBte9kSGAhYUeBdD3/Xe7txUePTNBPe
-         OlLA3GUF5Q+Jmi1IWlpt1UGqol70INiuwJBC8k/7IUxK6h/vOemyU+9JIiYAIA0BMyNO
-         Ja315ypPq7ztZl6+7CDuZlWSMMSs2EA8qjMPyTvDi0rSYPW/8KPNPxb9Jmis9bNTwKlK
-         4CSPDmEHctUi1dR+f7uQNLUXFmw/5KuOzavZ0wMxsCcjIZ6zwCPsp01fZgmFjqwuB/uW
-         GD/VPdI4ub/ti7eEbHdsPytK96yVqqH4Ni+mAEmTqyaf+kKSbZfpfYdC1JpRKoGnBWVO
-         0XWg==
-X-Gm-Message-State: AOAM532fAcxVEYrvcPXPd5shiU7TATs3679q8mcgYieLA0u7QhwzHGJS
-        ycTnVEVdOEmB9FpVouV6UB6lDmQW+EY=
-X-Google-Smtp-Source: ABdhPJxJRWXPoZetazgvFpH1KU0YV196k5MwoowuhNzbZNx8xtqPIo0L1zWiG4gKt8IXAawCF7KcyQ==
-X-Received: by 2002:adf:f743:: with SMTP id z3mr5104506wrp.304.1615404667093;
+        bh=DW5DCSyEvSe7T85a+PC5MW200sQbjVqUWH/eAQ17LaU=;
+        b=lSEg1RpQrJ96mMzeiZZlFeOmKKAYlHz8c5TS3kbPcq2TCWcZ6CEEyZBBWPlXvP61VC
+         9Y3eWMNsbLo+FjZFFp0NFR+Zs+tGSMYktCsxxD0UONjOH4rcPg9AqB4QWmKAxvlYHewU
+         PZbVspNgOmvTWb+Lb27+4Jw0TehSYuDgv7AMvHTpUQl72PGgbRarSadoRpCScEsJD5as
+         fGUQjAuCChbgtz0c1lbn55H1U58jLsTlTlgZFOLI44n6K6DhkVQyWnY5zCH5vMbMe/x7
+         p0qc196k55aoOnEwn2zTR8hLW1AdijpbWv/GXlw49amfsxJ3/BFFMUGL+ZOox3FctC+W
+         8PRg==
+X-Gm-Message-State: AOAM532AHrhInUYqLMH50VhPNEmlRShcoWSc2JeJF8j61z8hHZniR5Mx
+        +Fgun4e7vW93A0GLH5rTnOJX9F77TY4=
+X-Google-Smtp-Source: ABdhPJyAA/cb9pTwPyuKLkSJj3IF4AmYexsQtTcESngjV6O8B66fbHlwN/hbisWE0zDq7Oh+u/5jXA==
+X-Received: by 2002:adf:8b58:: with SMTP id v24mr5032941wra.160.1615404667777;
         Wed, 10 Mar 2021 11:31:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j30sm382243wrj.62.2021.03.10.11.31.06
+        by smtp.gmail.com with ESMTPSA id m3sm389300wmc.48.2021.03.10.11.31.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:31:06 -0800 (PST)
-Message-Id: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
-In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+        Wed, 10 Mar 2021 11:31:07 -0800 (PST)
+Message-Id: <2fe413fdac808807e2058caeee6ce86c54a678c0.1615404664.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+        <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Mar 2021 19:30:43 +0000
-Subject: [PATCH v2 00/20] Sparse Index: Design, Format, Tests
+Date:   Wed, 10 Mar 2021 19:30:44 +0000
+Subject: [PATCH v2 01/20] sparse-index: design doc and format update
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,322 +73,231 @@ Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
         Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here is the first full patch series submission coming out of the
-sparse-index RFC [1].
+From: Derrick Stolee <dstolee@microsoft.com>
 
-[1]
-https://lore.kernel.org/git/pull.847.git.1611596533.gitgitgadget@gmail.com/
+This begins a long effort to update the index format to allow sparse
+directory entries. This should result in a significant improvement to
+Git commands when HEAD contains millions of files, but the user has
+selected many fewer files to keep in their sparse-checkout definition.
 
-I won't waste too much space here, because PATCH 1 includes a sizeable
-design document that describes the feature, the reasoning behind it, and my
-plan for getting this implemented widely throughout the codebase.
+Currently, the index format is only updated in the presence of
+extensions.sparseIndex instead of increasing a file format version
+number. This is temporary, and index v5 is part of the plan for future
+work in this area.
 
-There are some new things here that were not in the RFC:
+The design document details many of the reasons for embarking on this
+work, and also the plan for completing it safely.
 
- * Design doc and format updates. (Patch 1)
- * Performance test script. (Patches 2 and 20)
-
-Notably missing in this series from the RFC:
-
- * The mega-patch inserting ensure_full_index() throughout the codebase.
-   That will be a follow-up series to this one.
- * The integrations with git status and git add to demonstrate the improved
-   performance. Those will also appear in their own series later.
-
-I plan to keep my latest work in this area in my 'sparse-index/wip' branch
-[2]. It includes all of the work from the RFC right now, updated with the
-work from this series.
-
-[2] https://github.com/derrickstolee/git/tree/sparse-index/wip
-
-
-Updates in V2
-=============
-
- * Various typos and awkward grammar is fixed.
- * Cleaned up unnecessary commands in p2000-sparse-operations.sh
- * Added a comment to the sparse_index member of struct index_state.
- * Used tree_type, commit_type, and blob_type in test-read-cache.c.
-
-Thanks, -Stolee
-
-Derrick Stolee (20):
-  sparse-index: design doc and format update
-  t/perf: add performance test for sparse operations
-  t1092: clean up script quoting
-  sparse-index: add guard to ensure full index
-  sparse-index: implement ensure_full_index()
-  t1092: compare sparse-checkout to sparse-index
-  test-read-cache: print cache entries with --table
-  test-tool: don't force full index
-  unpack-trees: ensure full index
-  sparse-checkout: hold pattern list in index
-  sparse-index: convert from full to sparse
-  submodule: sparse-index should not collapse links
-  unpack-trees: allow sparse directories
-  sparse-index: check index conversion happens
-  sparse-index: create extension for compatibility
-  sparse-checkout: toggle sparse index from builtin
-  sparse-checkout: disable sparse-index
-  cache-tree: integrate with sparse directory entries
-  sparse-index: loose integration with cache_tree_verify()
-  p2000: add sparse-index repos
-
- Documentation/config/extensions.txt      |   8 +
- Documentation/git-sparse-checkout.txt    |  14 ++
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  Documentation/technical/index-format.txt |   7 +
- Documentation/technical/sparse-index.txt | 173 ++++++++++++++
- Makefile                                 |   1 +
- builtin/sparse-checkout.c                |  44 +++-
- cache-tree.c                             |  40 ++++
- cache.h                                  |  18 +-
- read-cache.c                             |  35 ++-
- repo-settings.c                          |  15 ++
- repository.c                             |  11 +-
- repository.h                             |   3 +
- setup.c                                  |   3 +
- sparse-index.c                           | 290 +++++++++++++++++++++++
- sparse-index.h                           |  11 +
- t/README                                 |   3 +
- t/helper/test-read-cache.c               |  66 +++++-
- t/perf/p2000-sparse-operations.sh        | 102 ++++++++
- t/t1091-sparse-checkout-builtin.sh       |  13 +
- t/t1092-sparse-checkout-compatibility.sh | 136 +++++++++--
- unpack-trees.c                           |  16 +-
- 21 files changed, 969 insertions(+), 40 deletions(-)
+ Documentation/technical/sparse-index.txt | 173 +++++++++++++++++++++++
+ 2 files changed, 180 insertions(+)
  create mode 100644 Documentation/technical/sparse-index.txt
- create mode 100644 sparse-index.c
- create mode 100644 sparse-index.h
- create mode 100755 t/perf/p2000-sparse-operations.sh
 
-
-base-commit: 966e671106b2fd38301e7c344c754fd118d0bb07
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-883%2Fderrickstolee%2Fsparse-index%2Fformat-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-883/derrickstolee/sparse-index/format-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/883
-
-Range-diff vs v1:
-
-  1:  daa9a6bcefbc !  1:  2fe413fdac80 sparse-index: design doc and format update
-     @@ Documentation/technical/sparse-index.txt (new)
-      +If we need to discover the details for paths within that directory, we
-      +can parse trees to find that list.
-      +
-     -+This addition of sparse-directory entries violates expectations about the
-     ++At time of writing, sparse-directory entries violate expectations about the
-      +index format and its in-memory data structure. There are many consumers in
-      +the codebase that expect to iterate through all of the index entries and
-      +see only files. In addition, they expect to see all files at `HEAD`. One
-     @@ Documentation/technical/sparse-index.txt (new)
-      +* `git merge`
-      +* `git rebase`
-      +
-     ++Hopefully, commands such as `git merge` and `git rebase` can benefit
-     ++instead from merge algorithms that do not use the index as a data
-     ++structure, such as the merge-ORT strategy. As these topics mature, we
-     ++may enalbe the ORT strategy by default for repositories using the
-     ++sparse-index feature.
-     ++
-      +Along with `git status` and `git add`, these commands cover the majority
-      +of users' interactions with the working directory. In addition, we can
-      +integrate with these commands:
-  2:  a8c6322a3dbe !  2:  540ab5495065 t/perf: add performance test for sparse operations
-     @@ t/perf/p2000-sparse-operations.sh (new)
-      +	# Remove submodules from the example repo, because our
-      +	# duplication of the entire repo creates an unlikly data shape.
-      +	git config --file .gitmodules --get-regexp "submodule.*.path" >modules &&
-     -+	rm -f .gitmodules &&
-     -+	git add .gitmodules &&
-     ++	git rm -f .gitmodules &&
-      +	for module in $(awk "{print \$2}" modules)
-      +	do
-      +		git rm $module || return 1
-      +	done &&
-     -+	git add . &&
-      +	git commit -m "remove submodules" &&
-      +
-      +	echo bogus >a &&
-  3:  6e783c88821e =  3:  5cbedb377b37 t1092: clean up script quoting
-  4:  01da4c48a1fa =  4:  6e21f776e883 sparse-index: add guard to ensure full index
-  5:  2b83989fbcd3 !  5:  399ddb0bad56 sparse-index: implement ensure_full_index()
-     @@ cache.h: struct index_state {
-       		 updated_skipworktree : 1,
-      -		 fsmonitor_has_run_once : 1;
-      +		 fsmonitor_has_run_once : 1,
-     ++
-     ++		 /*
-     ++		  * sparse_index == 1 when sparse-directory
-     ++		  * entries exist. Requires sparse-checkout
-     ++		  * in cone mode.
-     ++		  */
-      +		 sparse_index : 1;
-       	struct hashmap name_hash;
-       	struct hashmap dir_hash;
-  6:  c9910a37579c =  6:  eac2db5efc22 t1092: compare sparse-checkout to sparse-index
-  7:  3d92df7a0cf9 !  7:  e9c82d2eda82 test-read-cache: print cache entries with --table
-     @@ Commit message
-      
-       ## t/helper/test-read-cache.c ##
-      @@
-     + #include "test-tool.h"
-       #include "cache.h"
-       #include "config.h"
-     - 
-     ++#include "blob.h"
-     ++#include "commit.h"
-     ++#include "tree.h"
-     ++
-      +static void print_cache_entry(struct cache_entry *ce)
-      +{
-     -+	printf("%06o ", ce->ce_mode & 0777777);
-     ++	const char *type;
-     ++	printf("%06o ", ce->ce_mode & 0177777);
-      +
-      +	if (S_ISSPARSEDIR(ce->ce_mode))
-     -+		printf("tree ");
-     ++		type = tree_type;
-      +	else if (S_ISGITLINK(ce->ce_mode))
-     -+		printf("commit ");
-     ++		type = commit_type;
-      +	else
-     -+		printf("blob ");
-     ++		type = blob_type;
-      +
-     -+	printf("%s\t%s\n",
-     ++	printf("%s %s\t%s\n",
-     ++	       type,
-      +	       oid_to_hex(&ce->oid),
-      +	       ce->name);
-      +}
-      +
-     -+static void print_cache(struct index_state *cache)
-     ++static void print_cache(struct index_state *istate)
-      +{
-      +	int i;
-     -+	for (i = 0; i < the_index.cache_nr; i++)
-     -+		print_cache_entry(the_index.cache[i]);
-     ++	for (i = 0; i < istate->cache_nr; i++)
-     ++		print_cache_entry(istate->cache[i]);
-      +}
-     -+
-     + 
-       int cmd__read_cache(int argc, const char **argv)
-       {
-      +	struct repository *r = the_repository;
-  8:  94373e2bfbbc !  8:  243541fc5820 test-tool: don't force full index
-     @@ Commit message
-      
-       ## t/helper/test-read-cache.c ##
-      @@
-     - #include "test-tool.h"
-     - #include "cache.h"
-     - #include "config.h"
-     + #include "blob.h"
-     + #include "commit.h"
-     + #include "tree.h"
-      +#include "sparse-index.h"
-       
-       static void print_cache_entry(struct cache_entry *ce)
-  9:  e71f033c2871 =  9:  48f65093b3da unpack-trees: ensure full index
- 10:  f86d3dc154d1 ! 10:  83aac8b7a1ec sparse-checkout: hold pattern list in index
-     @@ Commit message
-          pattern set, we need access to that in-memory copy. Place a pointer to
-          a 'struct pattern_list' in the index so we can access this on-demand.
-          This will be used in the next change which uses the sparse-checkout
-     -    definition to filter out directories that are outsie the sparse cone.
-     +    definition to filter out directories that are outside the sparse cone.
-      
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
- 11:  a2d77c23a0cb ! 11:  f6db0c27a285 sparse-index: convert from full to sparse
-     @@ read-cache.c: int verify_path(const char *path, unsigned mode)
-       				return 0;
-      +			/*
-      +			 * allow terminating directory separators for
-     -+			 * sparse directory enries.
-     ++			 * sparse directory entries.
-      +			 */
-      +			if (c == '\0')
-      +				return S_ISDIR(mode);
-     @@ sparse-index.c
-      +		struct cache_entry *ce = istate->cache[i];
-      +
-      +		/*
-     -+		 * Detect if this is a normal entry oustide of any subtree
-     ++		 * Detect if this is a normal entry outside of any subtree
-      +		 * entry.
-      +		 */
-      +		base = ce->name + ct_pathlen;
- 12:  4405a9115c3b = 12:  f2a3e7298798 submodule: sparse-index should not collapse links
- 13:  fda23f07e6a2 ! 13:  6f1ebe6ccc08 unpack-trees: allow sparse directories
-     @@ Commit message
-          is possible to have a directory in a sparse index as long as that entry
-          is itself marked with the skip-worktree bit.
-      
-     -    The negation of the 'pos' variable must be conditioned to only when it
-     -    starts as negative. This is identical behavior as before when the index
-     -    is full.
-     +    The 'pos' variable is assigned a negative value if an exact match is not
-     +    found. Since a directory name can be an exact match, it is no longer an
-     +    error to have a nonnegative 'pos' value.
-      
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
- 14:  7d4627574bb8 = 14:  3fa684b315fb sparse-index: check index conversion happens
- 15:  564503f78784 ! 15:  d74576d677f6 sparse-index: create extension for compatibility
-     @@ Commit message
-      
-          We _could_ add a new index version that explicitly adds these
-          capabilities, but there are nuances to index formats 2, 3, and 4 that
-     -    are still valuable to select as options. For now, create a repo
-     -    extension, "extensions.sparseIndex", that specifies that the tool
-     -    reading this repository must understand sparse directory entries.
-     +    are still valuable to select as options. Until we add index format
-     +    version 5, create a repo extension, "extensions.sparseIndex", that
-     +    specifies that the tool reading this repository must understand sparse
-     +    directory entries.
-      
-          This change only encodes the extension and enables it when
-          GIT_TEST_SPARSE_INDEX=1. Later, we will add a more user-friendly CLI
-     @@ Documentation/config/extensions.txt: extensions.objectFormat::
-      +	When combined with `core.sparseCheckout=true` and
-      +	`core.sparseCheckoutCone=true`, the index may contain entries
-      +	corresponding to directories outside of the sparse-checkout
-     -+	definition. Versions of Git that do not understand this extension
-     -+	do not expect directory entries in the index.
-     ++	definition in lieu of containing each path under such directories.
-     ++	Versions of Git that do not understand this extension do not
-     ++	expect directory entries in the index.
-      
-       ## cache.h ##
-      @@ cache.h: struct repository_format {
- 16:  6d6b230e3318 ! 16:  e530ca5f668d sparse-checkout: toggle sparse index from builtin
-     @@ Documentation/git-sparse-checkout.txt: To avoid interfering with other worktrees
-      +a sparse index until they are properly integrated with the feature.
-      ++
-      +**WARNING:** Using a sparse index requires modifying the index in a way
-     -+that is not completely understood by other tools. Enabling sparse index
-     -+enables the `extensions.spareseIndex` config value, which might cause
-     -+other tools to stop working with your repository. If you have trouble with
-     -+this compatibility, then run `git sparse-checkout sparse-index disable` to
-     -+remove this config and rewrite your index to not be sparse.
-     ++that is not completely understood by external tools. If you have trouble
-     ++with this compatibility, then run `git sparse-checkout sparse-index disable`
-     ++to rewrite your index to not be sparse. Older versions of Git will not
-     ++understand the `sparseIndex` repository extension and may fail to interact
-     ++with your repository until it is disabled.
-       
-       'set'::
-       	Write a set of patterns to the sparse-checkout file, as given as
- 17:  bcf960ef2362 = 17:  42d0da9c5def sparse-checkout: disable sparse-index
- 18:  e6afec58674e = 18:  6bb0976a6295 cache-tree: integrate with sparse directory entries
- 19:  2be4981fe698 = 19:  07f34e80609a sparse-index: loose integration with cache_tree_verify()
- 20:  a738b0ba8ab4 = 20:  41e3b56b9c17 p2000: add sparse-index repos
-
+diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+index b633482b1bdf..387126582556 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -44,6 +44,13 @@ Git index format
+   localization, no special casing of directory separator '/'). Entries
+   with the same name are sorted by their stage field.
+ 
++  An index entry typically represents a file. However, if sparse-checkout
++  is enabled in cone mode (`core.sparseCheckoutCone` is enabled) and the
++  `extensions.sparseIndex` extension is enabled, then the index may
++  contain entries for directories outside of the sparse-checkout definition.
++  These entries have mode `0040000`, include the `SKIP_WORKTREE` bit, and
++  the path ends in a directory separator.
++
+   32-bit ctime seconds, the last time a file's metadata changed
+     this is stat(2) data
+ 
+diff --git a/Documentation/technical/sparse-index.txt b/Documentation/technical/sparse-index.txt
+new file mode 100644
+index 000000000000..787a2a0b3b81
+--- /dev/null
++++ b/Documentation/technical/sparse-index.txt
+@@ -0,0 +1,173 @@
++Git Sparse-Index Design Document
++================================
++
++The sparse-checkout feature allows users to focus a working directory on
++a subset of the files at HEAD. The cone mode patterns, enabled by
++`core.sparseCheckoutCone`, allow for very fast pattern matching to
++discover which files at HEAD belong in the sparse-checkout cone.
++
++Three important scale dimensions for a Git worktree are:
++
++* `HEAD`: How many files are present at `HEAD`?
++
++* Populated: How many files are within the sparse-checkout cone.
++
++* Modified: How many files has the user modified in the working directory?
++
++We will use big-O notation -- O(X) -- to denote how expensive certain
++operations are in terms of these dimensions.
++
++These dimensions are ordered by their magnitude: users (typically) modify
++fewer files than are populated, and we can only populate files at `HEAD`.
++These dimensions are also ordered by how expensive they are per item: it
++is expensive to detect a modified file than it is to write one that we
++know must be populated; changing `HEAD` only really requires updating the
++index.
++
++Problems occur if there is an extreme imbalance in these dimensions. For
++example, if `HEAD` contains millions of paths but the populated set has
++only tens of thousands, then commands like `git status` and `git add` can
++be dominated by operations that require O(`HEAD`) operations instead of
++O(Populated). Primarily, the cost is in parsing and rewriting the index,
++which is filled primarily with files at `HEAD` that are marked with the
++`SKIP_WORKTREE` bit.
++
++The sparse-index intends to take these commands that read and modify the
++index from O(`HEAD`) to O(Populated). To do this, we need to modify the
++index format in a significant way: add "sparse directory" entries.
++
++With cone mode patterns, it is possible to detect when an entire
++directory will have its contents outside of the sparse-checkout definition.
++Instead of listing all of the files it contains as individual entries, a
++sparse-index contains an entry with the directory name, referencing the
++object ID of the tree at `HEAD` and marked with the `SKIP_WORKTREE` bit.
++If we need to discover the details for paths within that directory, we
++can parse trees to find that list.
++
++At time of writing, sparse-directory entries violate expectations about the
++index format and its in-memory data structure. There are many consumers in
++the codebase that expect to iterate through all of the index entries and
++see only files. In addition, they expect to see all files at `HEAD`. One
++way to handle this is to parse trees to replace a sparse-directory entry
++with all of the files within that tree as the index is loaded. However,
++parsing trees is slower than parsing the index format, so that is a slower
++operation than if we left the index alone.
++
++The implementation plan below follows four phases to slowly integrate with
++the sparse-index. The intention is to incrementally update Git commands to
++interact safely with the sparse-index without significant slowdowns. This
++may not always be possible, but the hope is that the primary commands that
++users need in their daily work are dramatically improved.
++
++Phase I: Format and initial speedups
++------------------------------------
++
++During this phase, Git learns to enable the sparse-index and safely parse
++one. Protections are put in place so that every consumer of the in-memory
++data structure can operate with its current assumption of every file at
++`HEAD`.
++
++At first, every index parse will expand the sparse-directory entries into
++the full list of paths at `HEAD`. This will be slower in all cases. The
++only noticable change in behavior will be that the serialized index file
++contains sparse-directory entries.
++
++To start, we use a new repository extension, `extensions.sparseIndex`, to
++allow inserting sparse-directory entries into indexes with file format
++versions 2, 3, and 4. This prevents Git versions that do not understand
++the sparse-index from operating on one, but it also prevents other
++operations that do not use the index at all. A new format, index v5, will
++be introduced that includes sparse-directory entries by default. It might
++also introduce other features that have been considered for improving the
++index, as well.
++
++Next, consumers of the index will be guarded against operating on a
++sparse-index by inserting calls to `ensure_full_index()` or
++`expand_index_to_path()`. After these guards are in place, we can begin
++leaving sparse-directory entries in the in-memory index structure.
++
++Even after inserting these guards, we will keep expanding sparse-indexes
++for most Git commands using the `command_requires_full_index` repository
++setting. This setting will be on by default and disabled one builtin at a
++time until we have sufficient confidence that all of the index operations
++are properly guarded.
++
++To complete this phase, the commands `git status` and `git add` will be
++integrated with the sparse-index so that they operate with O(Populated)
++performance. They will be carefully tested for operations within and
++outside the sparse-checkout definition.
++
++Phase II: Careful integrations
++------------------------------
++
++This phase focuses on ensuring that all index extensions and APIs work
++well with a sparse-index. This requires significant increases to our test
++coverage, especially for operations that interact with the working
++directory outside of the sparse-checkout definition. Some of these
++behaviors may not be the desirable ones, such as some tests already
++marked for failure in `t1092-sparse-checkout-compatibility.sh`.
++
++The index extensions that may require special integrations are:
++
++* FS Monitor
++* Untracked cache
++
++While integrating with these features, we should look for patterns that
++might lead to better APIs for interacting with the index. Coalescing
++common usage patterns into an API call can reduce the number of places
++where sparse-directories need to be handled carefully.
++
++Phase III: Important command speedups
++-------------------------------------
++
++At this point, the patterns for testing and implementing sparse-directory
++logic should be relatively stable. This phase focuses on updating some of
++the most common builtins that use the index to operate as O(Populated).
++Here is a potential list of commands that could be valuable to integrate
++at this point:
++
++* `git commit`
++* `git checkout`
++* `git merge`
++* `git rebase`
++
++Hopefully, commands such as `git merge` and `git rebase` can benefit
++instead from merge algorithms that do not use the index as a data
++structure, such as the merge-ORT strategy. As these topics mature, we
++may enalbe the ORT strategy by default for repositories using the
++sparse-index feature.
++
++Along with `git status` and `git add`, these commands cover the majority
++of users' interactions with the working directory. In addition, we can
++integrate with these commands:
++
++* `git grep`
++* `git rm`
++
++These have been proposed as some whose behavior could change when in a
++repo with a sparse-checkout definition. It would be good to include this
++behavior automatically when using a sparse-index. Some clarity is needed
++to make the behavior switch clear to the user.
++
++This phase is the first where parallel work might be possible without too
++much conflicts between topics.
++
++Phase IV: The long tail
++-----------------------
++
++This last phase is less a "phase" and more "the new normal" after all of
++the previous work.
++
++To start, the `command_requires_full_index` option could be removed in
++favor of expanding only when hitting an API guard.
++
++There are many Git commands that could use special attention to operate as
++O(Populated), while some might be so rare that it is acceptable to leave
++them with additional overhead when a sparse-index is present.
++
++Here are some commands that might be useful to update:
++
++* `git sparse-checkout set`
++* `git am`
++* `git clean`
++* `git stash`
 -- 
 gitgitgadget
+
