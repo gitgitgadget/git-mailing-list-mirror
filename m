@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01F03C433E6
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:45:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 355E3C433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:45:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE79C64FD3
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:45:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE44E64EB2
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:45:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232806AbhCJToj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:44:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43608 "EHLO
+        id S233548AbhCJTpM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:45:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232901AbhCJToN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:44:13 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629F7C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:44:13 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id n17so5447076plc.7
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:44:13 -0800 (PST)
+        with ESMTP id S233480AbhCJTon (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:44:43 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4CD4C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:44:42 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id ha17so1458360pjb.2
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:44:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mcS+cwJAO9Eb4R+IsReFOa08QcwCUEWiCUs1P4606Mk=;
-        b=p3+/CDJ65OvwPvlKJOpDxQF5onL7Tse9tUkq7oN4au/zQRnlgPdfDcullCP06MKbrx
-         6NFn0pd7J2Vz6BUc6GMGZmUMASSqYqmbxUofvl5mSO0Hw4MWStTOew20++XPzyep9My/
-         hHztALzVJdupr/KLkxoMcuscupkyGA147FOvWPndyiHZ6CarPRA30rixeKgj84CRplaU
-         zAwgIbAPhLYKH784yevjAR5ANLrCp28OeDkrqr2LyRyCRsjR5b4VC3XK63ursatYYA6N
-         xFx5Uxz6/ZV9ys1GqW43+6Btit6A40L5o2hppnaUaqDcQt3Az+/ydvStmqvpVpRYkHYD
-         Eodg==
+        bh=MFp76Qv8hHZc5alYHtPgWg02sSI+wvny6olDlJAq4Cs=;
+        b=kAQUScOA4flE71fI9hlLYRy7UuH+8nSbP8UmF4Rth55qbLxXsb4aBes/z9+B+KQo7d
+         sURBIEOzYAp5n8K9adn+WAF9DNQ4cTFvtM1cA70Yi+17cvPxjUMKB1PZYqKwCsL1AFCF
+         eFYOhQn+Ci7POPwiEq+z043KFv5AATDaD5GL/F4QYd6NEgFFeBqd0kbKyV7ZwP0nnViN
+         XVos182cGK+GqDRTDEEimY7GwvFbqOEDKj8G3p3zb/3QlaQGjGPFzgpgLCIPAAN2m0WJ
+         /7CzeaYaZwzh2pR70oj7OeuOnaMJkkzQLSjUkQR/cmhX2npiFvT96GH+0aBXV9qyqDK2
+         X5VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mcS+cwJAO9Eb4R+IsReFOa08QcwCUEWiCUs1P4606Mk=;
-        b=fELg+Yw1vvHiuKfkYFuBW8NzlMt6RgLQsX6kuCkIGJEkIVYXG+Jv/4Ka18bFLpn+f+
-         o8cBZ2/6E6RC7RLNR65TDYK/XVWWOXJaaBura7bSfzHyoZ8XwH6BSLJuDb0EfaM6D0FR
-         vZImg6s20sa/7GmtIFhziiGxsaSmrPdfPHFPMZvZza6vjOBOtY9pVtYQqW/DIG0ftU4b
-         3ji9GWdbm59fvttdMTSWLOll5mVn1pyehnPG+Bhe+G26ptlO6ILRJwVn8timONzTReDi
-         rl4p5iFAbz61oq/CHvD9fmLYCFIiBf0m4FGXLflA0TuCDb4U1Ot3Q95hhVZKXcj6PQty
-         PGGg==
-X-Gm-Message-State: AOAM533RVLxGVyDB6DnLhC5NjEkiCeldhM1qqDm3mkqh9a9pODzQimlu
-        qWyNCsXwXaiDvPb65xi8MnY4n0wuenVUVA==
-X-Google-Smtp-Source: ABdhPJxE6DtTSlIcw6MAk0MypxeHuitAHRW2dZtunFq2bznH8wEq5A5mOIjDfsWDQWnKH9MQiIM2Ww==
-X-Received: by 2002:a17:90a:7103:: with SMTP id h3mr5167004pjk.82.1615405452696;
-        Wed, 10 Mar 2021 11:44:12 -0800 (PST)
+        bh=MFp76Qv8hHZc5alYHtPgWg02sSI+wvny6olDlJAq4Cs=;
+        b=hHhrbn/dai1TkZTUovpoMfjDxBmQsV1CKSHXSXunskWS6yzvdveR4rWtS9sD4lID35
+         VjLE3g5hzI2ffKMJ5eXkztsriEseKYHmaK8SPeO++fmjPy41fRqlg/dAjntN9y6dr7we
+         jhf72Old/34p4PfVLFUeYOopTXt6G+MwQ3k0G8WjRd/xG3fKlRhibVWjkrHpeNPx6iqK
+         rOOh/9UF8vBMtBKSLiIIDlPQPzvVMlj0VX8g64VFC29J7JN8KmTQpuFn3w4VQ6UVNbuJ
+         Ape9cd8/2waN+mdH/KLt4be7U7K2JjR279lqiA4YN5/5V6OU6DJjLM10RirMtEIxbxTm
+         CCyw==
+X-Gm-Message-State: AOAM533OSCn66mm/K9vuK/qw6ql+hcLUi0hBN+izzzHM+/tH9ilLH8xH
+        VyeIpOls7PekAaVG6oZ3UubPP6k6i0dKPA==
+X-Google-Smtp-Source: ABdhPJwtOz12U4wXoQmsPx5dPJlpnTQf6Q49Xz8VuNpO8RsuRyEAp5HigPa1pHKSobgZ65NfXNEaXg==
+X-Received: by 2002:a17:902:9786:b029:e6:508a:7b8c with SMTP id q6-20020a1709029786b02900e6508a7b8cmr4498870plp.44.1615405482276;
+        Wed, 10 Mar 2021 11:44:42 -0800 (PST)
 Received: from localhost.localdomain ([2405:204:130f:1562:5082:417f:76e8:c75])
-        by smtp.googlemail.com with ESMTPSA id p5sm296480pfq.56.2021.03.10.11.44.08
+        by smtp.googlemail.com with ESMTPSA id p5sm296480pfq.56.2021.03.10.11.44.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:44:12 -0800 (PST)
+        Wed, 10 Mar 2021 11:44:41 -0800 (PST)
 From:   Charvi Mendiratta <charvi077@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sunshine@sunshineco.com,
         chriscool@tuxfamily.org, phillip.wood@dunelm.org.uk,
         Charvi Mendiratta <charvi077@gmail.com>
-Subject: [PATCH v4 1/6] sequencer: export and rename subject_length()
-Date:   Thu, 11 Mar 2021 01:13:04 +0530
-Message-Id: <20210310194306.32565-2-charvi077@gmail.com>
+Subject: [PATCH v4 3/6] commit: add a reword suboption to --fixup
+Date:   Thu, 11 Mar 2021 01:13:07 +0530
+Message-Id: <20210310194306.32565-4-charvi077@gmail.com>
 X-Mailer: git-send-email 2.29.0.rc1
 In-Reply-To: <20210301084512.27170-1-charvi077@gmail.com>
 References: <20210301084512.27170-1-charvi077@gmail.com>
@@ -73,93 +73,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function can be used in other parts of git. Let's move the
-function to commit.c and also rename it to make the name of the
-function more generic.
+`git commit --fixup=reword:<commit>` aliases
+`--fixup=amend:<commit> --only`, where it creates an empty "amend!"
+commit that will reword <commit> without changing its contents when
+it is rebased with `--autosquash`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Mentored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Charvi Mendiratta <charvi077@gmail.com>
 ---
- commit.c    | 14 ++++++++++++++
- commit.h    |  3 +++
- sequencer.c | 16 +---------------
- 3 files changed, 18 insertions(+), 15 deletions(-)
+ builtin/commit.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index bab8d5ab07..199c7e274c 100644
---- a/commit.c
-+++ b/commit.c
-@@ -535,6 +535,20 @@ int find_commit_subject(const char *commit_buffer, const char **subject)
- 	return eol - p;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 05594fa8ab..d8cec75888 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1188,6 +1188,19 @@ static void finalize_deferred_config(struct wt_status *s)
+ 		s->ahead_behind_flags = AHEAD_BEHIND_FULL;
  }
  
-+size_t commit_subject_length(const char *body)
-+{
-+	const char *p = body;
-+	while (*p) {
-+		const char *next = skip_blank_lines(p);
-+		if (next != p)
-+			break;
-+		p = strchrnul(p, '\n');
-+		if (*p)
-+			p++;
++static void check_fixup_reword_options(int argc, const char *argv[]) {
++	if (whence != FROM_COMMIT) {
++		if (whence == FROM_MERGE)
++			die(_("You are in the middle of a merge -- cannot reword."));
++		else if (is_from_cherry_pick(whence))
++			die(_("You are in the middle of a cherry-pick -- cannot reword."));
 +	}
-+	return p - body;
++	if (argc)
++		die(_("cannot combine reword option of --fixup with path '%s'"), *argv);
++	if (patch_interactive || interactive || all || also || only)
++		die(_("reword option of --fixup is mutually exclusive with --patch/--interactive/--all/--include/--only"));
 +}
 +
- struct commit_list *commit_list_insert(struct commit *item, struct commit_list **list_p)
- {
- 	struct commit_list *new_list = xmalloc(sizeof(struct commit_list));
-diff --git a/commit.h b/commit.h
-index f4e7b0158e..e65d9b3e75 100644
---- a/commit.h
-+++ b/commit.h
-@@ -165,6 +165,9 @@ const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
- /* Find beginning and length of commit subject. */
- int find_commit_subject(const char *commit_buffer, const char **subject);
- 
-+/* Return length of the commit subject from commit log message. */
-+size_t commit_subject_length(const char *body);
-+
- struct commit_list *commit_list_insert(struct commit *item,
- 					struct commit_list **list);
- int commit_list_contains(struct commit *item,
-diff --git a/sequencer.c b/sequencer.c
-index abc6d5cdfd..da7d54c7ce 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1724,20 +1724,6 @@ enum todo_item_flags {
- 	TODO_EDIT_FIXUP_MSG    = (1 << 2),
- };
- 
--static size_t subject_length(const char *body)
--{
--	const char *p = body;
--	while (*p) {
--		const char *next = skip_blank_lines(p);
--		if (next != p)
--			break;
--		p = strchrnul(p, '\n');
--		if (*p)
--			p++;
--	}
--	return p - body;
--}
--
- static const char first_commit_msg_str[] = N_("This is the 1st commit message:");
- static const char nth_commit_msg_fmt[] = N_("This is the commit message #%d:");
- static const char skip_first_commit_msg_str[] = N_("The 1st commit message will be skipped:");
-@@ -1861,7 +1847,7 @@ static int append_squash_message(struct strbuf *buf, const char *body,
- 	if (starts_with(body, "amend!") ||
- 	    ((command == TODO_SQUASH || seen_squash(opts)) &&
- 	     (starts_with(body, "squash!") || starts_with(body, "fixup!"))))
--		commented_len = subject_length(body);
-+		commented_len = commit_subject_length(body);
- 
- 	strbuf_addf(buf, "\n%c ", comment_line_char);
- 	strbuf_addf(buf, _(nth_commit_msg_fmt),
+ /* returns the length of intial segment of alpha characters only */
+ static size_t get_alpha_len(char *fixup_message) {
+ 	const char alphas[] = "abcdefghijklmnopqrstuvwxyz";
+@@ -1276,17 +1289,22 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		 * reference for example: --fixup="HEAD^{/^area: string}" or
+ 		 * a suboption of `--fixup`.
+ 		 *
+-		 * As `amend` suboption contains only alpha character.
+-		 * So check if first non alpha character in fixup_message
+-		 * is ':'.
++		 * As `amend`/`reword` suboptions contains only alpha
++		 * characters. So check if first non alpha character
++		 * in fixup_message is ':'.
+ 		 */
+ 		size_t len = get_alpha_len(fixup_message);
+ 		if (len && fixup_message[len] == ':') {
+ 			fixup_message[len++] = '\0';
+ 			fixup_commit = fixup_message + len;
+-			if (!strcmp("amend", fixup_message)) {
++			if (!strcmp("amend", fixup_message) ||
++			    !strcmp("reword", fixup_message)) {
+ 				fixup_prefix = "amend";
+ 				allow_empty = 1;
++				if (*fixup_message == 'r') {
++					check_fixup_reword_options(argc, argv);
++					only = 1;
++				}
+ 			} else {
+ 				die(_("unknown option: --fixup=%s:%s"), fixup_message, fixup_commit);
+ 			}
+@@ -1575,10 +1593,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING('c', "reedit-message", &edit_message, N_("commit"), N_("reuse and edit message from specified commit")),
+ 		OPT_STRING('C', "reuse-message", &use_message, N_("commit"), N_("reuse message from specified commit")),
+ 		/*
+-		 * TRANSLATORS: Leave "[amend:]" as-is, and
+-		 * only translate <commit>.
++		 * TRANSLATORS: Leave "[(amend|reword):]" as-is,
++		 * and only translate <commit>.
+ 		 */
+-		OPT_STRING(0, "fixup", &fixup_message, N_("[amend:]commit"), N_("use autosquash formatted message to fixup or amend specified commit")),
++		OPT_STRING(0, "fixup", &fixup_message, N_("[(amend|reword):]commit"), N_("use autosquash formatted message to fixup or amend/reword specified commit")),
+ 		OPT_STRING(0, "squash", &squash_message, N_("commit"), N_("use autosquash formatted message to squash specified commit")),
+ 		OPT_BOOL(0, "reset-author", &renew_authorship, N_("the commit is authored by me now (used with -C/-c/--amend)")),
+ 		OPT_BOOL('s', "signoff", &signoff, N_("add a Signed-off-by trailer")),
 -- 
 2.29.0.rc1
 
