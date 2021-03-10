@@ -2,128 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 942DEC433E6
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 15:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAFECC433DB
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 15:42:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D21464F4E
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 15:09:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC79464F95
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 15:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbhCJPJV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 10:09:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
+        id S233216AbhCJPm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 10:42:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230270AbhCJPJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 10:09:01 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63F62C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 07:09:01 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id w6so13209885qti.6
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 07:09:01 -0800 (PST)
+        with ESMTP id S230270AbhCJPmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 10:42:08 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BF83C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 07:42:08 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id y20so56264iot.4
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 07:42:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zlG9MtQb9xEfKTjuof32ul7X5X3R1+wVpoBXUVkoHhk=;
-        b=Fl9XCTU06hJ6rjYhtyynS/2ebRm87iVyMQXd7E39mwm1ZkllWfW/ylJbU3VjKDbGIj
-         wsxOQcPeac+a4Mzc4AGa4XoGmfDUMyLCYBm1SQKXq1f9dVELWM2Ff9Z5G0r2/02vXe1b
-         yh3BpNFST0MWD2Kr38NFZ1o7jrNDT69QYo6+isiI79mhCYESLtrHu3Ua/3TYy4JeidWS
-         FNweryVpZHzr/68AoKKuUYHFJ0DiDpwDBIE/tc0/YHwnmuJsD6S8k4LIPF7SOIjMScFG
-         FtwYz6JBMR3HEpKZEnhq8VBiIxPs8Kd8//waWd5JUdhAB1BSYArMWHnlLrlmlQOrMdf+
-         J6AQ==
+        d=technoplaza.net; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=H0p977snu4wbxTNumHjCGiSQHzZLJ09quXFRlnmjxqs=;
+        b=BXE8rxp2YJlahG1n9q7sRSBiroiB3Zzz3uqdm5SqPaHIw35/YdWpPHhd+LwVQrBp2H
+         Fkn+zffyH1zh2BgtWzVL9xP4bsY25SVRijYi0GvPQ3lYvDBNwfNH/WpBsMosUnLiY5Mg
+         DDyQhx52Q1zL+1V5YQLYuCew4dBgL3EhPrQ6tkH4NZPN3LgVMykKlfTZC1qhTqOnXZkO
+         digSn2KC91rVYoXEfqy1VckkitjxbQnpOFe8E5CzamgsH9u84i7ROtFSEhGVKEVsdGca
+         /THgOSXbws1ay0ArzOP7seHZPVptcWhGXCOhdwwhTe3UK/cEVEGEoczmco/yMMzNabdt
+         bQhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zlG9MtQb9xEfKTjuof32ul7X5X3R1+wVpoBXUVkoHhk=;
-        b=jvSOd+iXSCAfAJQ5Cq6juzvhPJ0aOSLGKRm1lUQIYWq8f6qt2qxUlxEK4undlM9AX4
-         4iqhmeSwihaxiLKXSOdt6OyQbTXg1JQnxb478luFfyL2+cFoDMy4TGf3iHbJNeCGQcUe
-         tJRiTYNn2sN8U2pwWc3ctl5KGR0M6Q55Y6m4zOp631VLjpnqQioKkUq6pPEh36yjrz0L
-         JL7K2+R3GGtinTsCzaBMnPijnPkHqEFmEN4gRPsXp7Aiera9VqtdpqRHPc1kJ2eqTY2F
-         BdbN4+OPPOkljMRAwpXuNOuHxwaPFjWQXSgyVzaqqf/9ZDv/dSpTFbtGIpmcHwMi/4AD
-         3PDg==
-X-Gm-Message-State: AOAM532mIgUwPu+719MlVgDjPehNrHgOhDxzg021QGI+bq0A1XQTeloR
-        BjQscXGiqQPOic3/txGjaEI=
-X-Google-Smtp-Source: ABdhPJyDMct4ZyK1pI8gAg0fDlsk/VwBvrieYdPhq4ZmWTKqu9+3XDy0Pb7HH85S75aRToeAqp0ODA==
-X-Received: by 2002:ac8:7516:: with SMTP id u22mr2948963qtq.113.1615388940531;
-        Wed, 10 Mar 2021 07:09:00 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:cc70:a06f:72ba:12a7? ([2600:1700:e72:80a0:cc70:a06f:72ba:12a7])
-        by smtp.gmail.com with ESMTPSA id s13sm896959qkg.17.2021.03.10.07.08.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Mar 2021 07:09:00 -0800 (PST)
-Subject: Re: [PATCH v2 0/8] Optimization batch 9: avoid detecting irrelevant
- renames
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.845.git.1614484707.gitgitgadget@gmail.com>
- <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c4ce57f2-fc02-a70c-5ecb-0911a551192c@gmail.com>
-Date:   Wed, 10 Mar 2021 10:08:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H0p977snu4wbxTNumHjCGiSQHzZLJ09quXFRlnmjxqs=;
+        b=sFtMYjQUVKK63Qj4RpjiXh0uabSbhPaROWbDrbvVaZJHFKy7RpAyqIKrw86YShWOW1
+         ix0FzKhATDvqCvXJgxxBs5VX33+VZvS1wUuXRwB+BSZQTXzB/Z1GEuhUXo9D+D6IgzZe
+         WQKrtU/DfhPvaWEFuhSy5rfmYSdlIghoOocmTsSFbPm8/lO0COcdY5TVghEVIEyTLmp0
+         c80ovUr7iA7rpI7zCDyGdLJV7GSnQyDD35upupotFf+u987++0jl7GPGaWIf1nO03FX8
+         uFcSWUT1W3qETxpeEDA0a7284AfLIjNQ0WPb766l/BWVV9DJgbkijtrH4qq9t6R5uz2e
+         WxmA==
+X-Gm-Message-State: AOAM532PMdQBfZm4Gu3swrMaD+u1rHSceXngrrqCbHeqXuYTbuXluGqu
+        34mTmGRkoH75500BNBF43Vu/NYETnB/mfzPHqfpUtw==
+X-Google-Smtp-Source: ABdhPJxCB6lBcYcvDgNluq7w4Ao8uDMWrsEr/zjBSFyyoQzwsLp14Q0cOF2B/JmpfmqIgeaDpSECcdkn69p1J6NMER4=
+X-Received: by 2002:a6b:7302:: with SMTP id e2mr2702614ioh.106.1615390927380;
+ Wed, 10 Mar 2021 07:42:07 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAP8UukiL0niGSm3o7uYNBzL3FP-UEgfOuq-Tu=fksWJkerT5fg@mail.gmail.com>
+ <YC/vqJBSnDHoLIdJ@coredump.intra.peff.net>
+In-Reply-To: <YC/vqJBSnDHoLIdJ@coredump.intra.peff.net>
+From:   John Ratliff <john@technoplaza.net>
+Date:   Wed, 10 Mar 2021 10:41:56 -0500
+Message-ID: <CAP8UukgvnxtMLa00jNn-T_sATNMz2qDo6bCVBnWhqqLmqA42Xw@mail.gmail.com>
+Subject: Re: git credential cache timeout questions
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/8/2021 7:09 PM, Elijah Newren via GitGitGadget wrote:
-> This series depends textually on ort-perf-batch-8, but semantically it's
-> almost completely unrelated and can be reviewed without any familiarity with
-> any of the previous patch series.
-> 
-> There are no changes since v1; it's just a resend just over a week later to
-> bump it so it isn't lost.
-> 
-> === Basic Optimization idea ===
-> 
-> This series determines paths which meet special cases where detection of
-> renames is irrelevant, where the irrelevance is due to the fact that the
-> merge machinery will arrive at the same result regardless of whether a
-> rename is detected for any of those paths. This series represents
-> "Optimization #2" from my Git Merge 2020 talk[1], though this series has
-> some improvements on the optimization relative to what I had at that time.
-> 
-> The basic idea here is:
-> 
-> We only need expensive rename detection on the subset of files changed on
-> both sides of history (for the most part).
+Thanks. Now that I know it is a rolling timeout, I was able to narrow
+my search for anything that might be causing the timer to extend.
 
-I've taken time this morning to re-read some of the patches. I have a
-grasp on the idea of the optimization and the code looks well presented
-and correct.
+There is a git helper program I use that has a background refresh that
+I think I must leave open overnight sometimes. I think this was
+causing my timeout to be extended. I disabled the background refresh
+task and the timeout seems to be expiring like I expect now.
 
-The only issue I have is that there are no additional tests to ensure that
-these scenarios are being tested and are checked to return the correct
-results. Naturally, it seems we are not testing the ORT strategy by default,
-and if I do enable it, that causes test failures still.
+--John
 
-I wonder how much we should be merging these optimizations before the full
-test suite can pass with ORT as the default. Then, we can check to see if
-small mutations can be caught by the test suite. In particular, everything
-in this optimization seems to revolve around this condition in add_pair():
-
-		if (content_relevant || location_relevant)
-			strset_add(&renames->relevant_sources[side], pathname);
-
-I'd prefer to have test cases that cover all four options for the two boolean
-values on this operator. Mostly, I'd like to know that if I delete either side
-of the || operator (or change it to &&) then we would have a test failure.
-
-Thanks,
--Stolee
+On Fri, Feb 19, 2021 at 12:04 PM Jeff King <peff@peff.net> wrote:
+>
+> On Fri, Feb 19, 2021 at 10:46:48AM -0500, John Ratliff wrote:
+>
+> > I have configured my git to cache my credentials for 12 hours using
+> > this section in my .gitconfig
+> >
+> > [credential "https://mygithub.example.edu"]
+> >     username =3D myuser
+> >     helper =3D cache --timeout 43200
+> >
+> > However, the credentials don=E2=80=99t always seem to expire after 12 h=
+ours.
+> > Sometimes I come back the next morning and the credentials still work.
+> > This is generally after leaving at 5:00 PM and coming back in the next
+> > day at 9:00 AM, well past the 12 hour timeout.
+> >
+> > Is there any way to see the current timeout value? Is it a rolling
+> > timeout (i.e. any git action resets the timeout)?
+>
+> It's the "rolling" thing, though the source is a bit subtle. The
+> credential-cache helper sets an absolute expiration when the value is
+> stored, and it doesn't update it on a "get" request.
+>
+> However, Git's interaction with the helpers is generally:
+>
+>   - when we need a credential ask for one
+>
+>   - when a credential is rejected by a server, tell helpers to erase it
+>
+>   - when a credential is accepted by a server, tell helpers to store it
+>
+> And it's that last one that provides the rolling timeout, because we do
+> it even if the credential came from a helper in the first place!
+>
+> I actually wrote a patch long ago to switch this behavior:
+>
+>   https://lore.kernel.org/git/20120407033417.GA13914@sigill.intra.peff.ne=
+t/
+>
+> But it turned out some people actually rely on it. :)
+>
+> There's some discussion in that thread about paths forward, and I think
+> I even played around with it back then. But then it sat on my todo list,
+> and now it has been 9 years, so I don't remember if there were good
+> reasons not to push it forward, or if I simply never got around to it (I
+> suspect the latter; nobody had a pressing use case that was solved by
+> avoiding the rolling timeouts, it just seemed to me to be a bit less
+> surprising). I'd be happy if somebody wanted to revisit the topic.
+>
+> (To your other question, "is there a way to see the timeout value", the
+> answer is "not really, without running it under gdb". I wouldn't be
+> opposed to adding more diagnostic output to the daemon. But you can also
+> see some of what's going on by setting GIT_TRACE=3D1 in the environment,
+> which will show the extra "store" operation being done by Git).
+>
+> -Peff
