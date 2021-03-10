@@ -2,99 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5360C433E0
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE0B9C43381
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:01:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9514664FBB
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:00:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9BCB64FC9
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 20:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231396AbhCJT7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:59:43 -0500
-Received: from mout.gmx.net ([212.227.17.21]:38183 "EHLO mout.gmx.net"
+        id S232066AbhCJUBU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 15:01:20 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59084 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231301AbhCJT7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:59:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1615406356;
-        bh=AdnHtdKH+y6qILfzWF2J7dQ6gUeAO/95cMp5tiO7Gnc=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=JtX5qclPbAVYZx9Wd05ojiDtZpRLf0M7jhsw+Entew+PMEZ2XybDNHWAUZTUh38o8
-         PQ7W0DrZQKF8Yg5b8aK4qPibHLPrIy9hodIStzPtRhojSs7rPs+r1qb0JKuMYM4Nvs
-         JK04I1A3fUC2vraS/ulV8S7dLIE+k74+avF40A9U=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az225-425.pnudxjuhuivetef20c4tpj434f.bx.internal.cloudapp.net
- ([52.249.178.141]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1Mz9Ux-1lgZua3Hdr-00wEcf; Wed, 10 Mar 2021 20:59:16 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.31.0-rc2
-Date:   Wed, 10 Mar 2021 19:59:13 +0000
-Message-Id: <20210310195913.7022-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.30.2
-Content-Type: text/plain; charset=UTF-8
+        id S232181AbhCJUBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 15:01:18 -0500
+Received: (qmail 6890 invoked by uid 109); 10 Mar 2021 20:01:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 10 Mar 2021 20:01:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25235 invoked by uid 111); 10 Mar 2021 20:01:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 10 Mar 2021 15:01:18 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 10 Mar 2021 15:01:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     John Szakmeister <john@szakmeister.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] http: store credential when PKI auth is used
+Message-ID: <YEkljZWg4+lTQRyS@coredump.intra.peff.net>
+References: <20210306225253.87130-1-john@szakmeister.net>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:aLNOgqBosLTNjwwBPRP+Dy3oTsUZmBE8icG1Bv7BALk3RXpLo07
- 0VmG/8gHiW0mhpw9/15aAi0V7rJXo62B0yrHZsmxNSvCV1YxDzJA/kH62BykY3/APRdPc1Z
- H0CcRAbIqrajGX3RvMsdCEY/plyOfztpmOIvPjs0VdLxlZV9xK0ThfYmhvySUSQlnnv2LIo
- nQ7ScUHfpaSbqRhswgpdw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d+BIMs4/n0Y=:PHqb5e52Vx8XKlhkOUSVp4
- ad973daSfInr77+cl8z3MAbawzXRjRbOS10RJWCfct31nkzwFe7WMRHfsogD6hk/cNAufF2vq
- rIA5P7qTDx+ZeDAtH8BeVcOlTKoqbj9AUYQo+3f/h/GtSzGVLTUzyIXOL0ma39C3Ue7eJNRXA
- eh8YLQ+Jth8or9WDeaAG5ohUAcJyzFzfjF3ND7dd926Y2tGJLfHkyRikH/MiHldcUGPE7Hu+G
- E1iGLhV0qKwkpLxK6BE5uWhSxQ8bl3GXAXVY16UxhZ1OA8Ldr17w2FmWVQ7sUc/lNiNtc2+no
- VljNZ86vXfMCsFmpIpq+xmem8O2dwZUYIPqHUEkgoIy20xHsPEExtLF/M2ycEC/+CxeRbdIF7
- Ek+uBfx1F+EEk0HrE43k1M8pJPeDOVfwNTVlp/9GYF5S4IxfD/rjgYOx/8G2/TSD0qzQaDLXw
- AM248g8i+v6rmKZbQyfqNHnawyq4Advw8EhhNjmFwmxnNjKm1wO1z9W3u/2g0xI88Bv09uNB5
- dZR0BR5k3UnOsnsz/AsGZ89RMGnNoXZbTHANnv+D0yXV8Lxcnu90+1wovcRhs1d+dQavGhTHJ
- sz5U4/tL+7IBK1dvpxr6T+e6iSGsCZ9UFOykBh4AHaS47yuojP0PszbIt7xaXGJ3ZnwzRwdUS
- VResqxPSxAJaRWejBBzncSlFxw4K/LxT7SHb0zlemH+rBnwhiw1i4FsH4v/hE0LZhmkhwrHDv
- zlY5snvbwJaeXWjwYDBADQPNOTP0b0XEnLWjDM6thZP4h7xIfxUV6u6qyMgslbaNfirGgw5Ha
- Hl8jJ+7O87f/qS0uVJxvj9ILNepf6LgpVPu0nWJV8IDPIJ7kPyJ3F6WYuokFE+NghcM/feC5E
- mNPn5XiVDGkEWv4kw2+rSDuX2Y4m9dX5x0M9ieXAI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210306225253.87130-1-john@szakmeister.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Sat, Mar 06, 2021 at 05:52:53PM -0500, John Szakmeister wrote:
 
-I hereby announce that Git for Windows 2.31.0-rc2 is available from:
+> We already looked for the PKI credentials in the credential store, but
+> failed to approve it on success.  Meaning, the PKI certificate password
+> was never stored and git would request it on every connection to the
+> remote.  Let's complete the chain by storing the certificate password on
+> success.
+> 
+> Signed-off-by: John Szakmeister <john@szakmeister.net>
+> ---
+> 
+> I'm not sure if certificate passwords were not stored for some reason, but
+> searching the archives I didn't see a mention of it.  Hopefully this is
+> acceptable.  I did try this in an environment where we have client SSL certs and
+> this made the user experience much better.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.31.0-rc2.windows.1
+I think it was just something that nobody ever cared about before. The
+cert password request got converted to credential_fill() as part of
+148bb6a7b4 (http: use credential API to get passwords, 2011-12-10). That
+commit added approve/reject for http, because that's what I really cared
+about, but the intent was always to treat most password queries
+consistently.
 
-Changes since Git for Windows v2.30.2 (March 9th 2021)
+> diff --git a/http.c b/http.c
+> index f8ea28bb2e..440890695f 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -1637,6 +1637,8 @@ static int handle_curl_result(struct slot_results *results)
+>  		credential_approve(&http_auth);
+>  		if (proxy_auth.password)
+>  			credential_approve(&proxy_auth);
+> +		if (cert_auth.password)
+> +			credential_approve(&cert_auth);
 
-New Features
+So I think this is the right direction, but:
 
-  * Comes with Git v2.31.0-rc2.
-  * Comes with OpenSSH v8.5p1.
-  * Comes with tig v2.5.3.
-  * Git for Windows now ships with an experimental built-in file-system
-    monitor, without the need to install Watchman and setting
-    core.fsmonitor. It can be turned on by setting both
-    feature.manyFiles=true and feature.experimental=true (or directly,
-    via core.useBuiltinFSMonitor=true).
-  * Comes with Git Credential Manager Core v2.0.394.50751.
+  - you'd need a credential_reject() somewhere, too. Otherwise a bad
+    password will get stored and then reused over and over, with no
+    opportunity to tell the helper to forget about it.
 
-Git-2.31.0-rc2-64-bit.exe | 83c836e53d283cc930aee72b709d64747875a7f128a30b77cfb2776023166409
-Git-2.31.0-rc2-32-bit.exe | c54d12db288d071348e23665b1a52e94d7b0be3b4f547a17b1ed4c64bbf5120f
-PortableGit-2.31.0-rc2-64-bit.7z.exe | 89aede2d9b8931d7b6e5c4cdff4cdeef0784ee01b85b41f742c74d35fc1aedb8
-PortableGit-2.31.0-rc2-32-bit.7z.exe | 2e38d508d5099da021ff612408e66c2508e074d67e98636b3afe2181f2c1772b
-MinGit-2.31.0-rc2-64-bit.zip | c9b22aa14003687bb53d43b12c9139d6365ca2aeebb509e66b9a724ef1d89c34
-MinGit-2.31.0-rc2-32-bit.zip | a43c977b91f90cc606ef33899483020854b6424dc79c0f35372fcf4b8ad2f414
-MinGit-2.31.0-rc2-busybox-64-bit.zip | a497a9694a5b395691386f1c7ab91b725a742908bfaca239b725e0404e122ba6
-MinGit-2.31.0-rc2-busybox-32-bit.zip | 056521d281d7efcc945d3b52602df659dceac95841560e28e94275fbef995a77
-Git-2.31.0-rc2-64-bit.tar.bz2 | f0e5aee5409f78c31b659a31cfe40881bce545e12d52d82bc149f636bb387bf2
-Git-2.31.0-rc2-32-bit.tar.bz2 | 1ff79b87a0f951dfcf901cdb2db1426fc720ad87de94d065edd499111d91f423
+  - is this the best spot to check that our password was right? We only
+    care about unlocking the local cert, which in theory is independent
+    of what the server tells us. I suspect we can't really tell the
+    difference, though (we hand the cert path and password off to curl,
+    and then hopefully a request is successful). So this may be the best
+    we can do for approval. But for rejection, I doubt that a 401 would
+    be the right response. How does curl respond when the password is
+    bad? Likewise, what happens if the password is bad but the server is
+    willing to make the request anyway (does curl bail immediately, or
+    might we get an HTTP 200 even with a bad cert password)?
 
-Ciao,
-Johannes
+  - I think proxy_cert_auth would probably want the same treatment.
+
+  - The "if (cert_auth.password)" is redundant. credential_approve()
+    will return silently if there is no password to approve. I know
+    you're copying the pattern from directly above, but I think that one
+    should be cleaned up, too.
+
+    (I also was mildly surprised that this worked at all, since
+    credential_approve() will bail if there is no username field. But
+    the cert code fills in an empty username).
+
+Most of those are "nice to have" improvements over what you have here,
+but I think without a matching reject() this would be a regression.
+
+-Peff
