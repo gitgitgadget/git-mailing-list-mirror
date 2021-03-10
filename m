@@ -2,272 +2,392 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7844C433E6
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA1CC433E0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86F1664FC6
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9ED1464FD0
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233182AbhCJTal (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:30:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40554 "EHLO
+        id S233431AbhCJTbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:31:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233710AbhCJTa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:30:26 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B75AFC061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:30:26 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id v14so5137089pgq.2
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:30:26 -0800 (PST)
+        with ESMTP id S233470AbhCJTbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:31:08 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B58C061760
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:08 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id f12so24632729wrx.8
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6XfkPfjjocPSCDy/w69AWU6/W1pDBk6Dx9JsVh1v2zE=;
-        b=mCu9BF1G1NYjJI9Ksh2mSzuLm0cFXTXymTVJZS9KYV8hV0DP9/8bTYolI+FweEyRqo
-         G1960xLwmeq0zofbriR3R77g3vPo4Jv6MQjvB4xeCvyMJsMqECp8Xg6PLQ2UFxTC0ZUd
-         1sw9pQv0RGFXMARuHfgmpibp+vRrCkfxYT/EgunubU93p4c6ySWhsLGCl+gLg4hU6BGQ
-         LYp/YuvTDLolv3+8Z6pVwaE+39vsRN6lxhOki6zvU7emQmTsAhnIkcRDp893GXjTuPgI
-         4Zq8VXyacQlKZ0YfNjAdDgaPbVPXoyCi96lOIeeEFQ8dp4Vm+10mvrvNe+pf+H/1HhsT
-         QaJQ==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4vFzYKJO90agG78/KWXHjfzDVT/uh9gsi1HJ/WmDVEU=;
+        b=MBUt9gmqcoJOg/y8/fio12zMVaoNuvPh/fpIjZqmk5fTuffRFdZyYDW2vWPcJ7F1kj
+         6/bxzdBxDrX9rrruCP8BZStb9Lh4VQ7dkUQzO3r9zt7gzYkGYWXoTF6we4zcurvNDe3M
+         moFE8NMYL7GovmYeuTwl6ZlOupVCpWd2KTXhKJPlkE9LhSjBg082epaBNJrn4aPyPGDF
+         ZWbmhCtXxhX40pP7bA6VriwtkqihrGSNm6MKp+8EdJdMQCihPJVRloS5lvq4PWCGUmW9
+         3UsDvZjPQ7v1c/rGyeViZUGLalC4738oErGXFt8nVxnWCHrXpGaZ0+jPfoKlRS4N8PV6
+         OYlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6XfkPfjjocPSCDy/w69AWU6/W1pDBk6Dx9JsVh1v2zE=;
-        b=VwhpU2zQibhdOU73AuB53elI/Xf99plEizcVBqNFVBEMUbYrfU70rCOrO2/MOdSvG7
-         BwKCf0buhEc5bXezVMbz3QxTSNuF49d4XoQOpbzUpLFlG7ch+Jm+Mf0RqGlqwImgC1xs
-         trbkUjx7Kl9lVR0g3/3EJAvfwkDn1DXUOw9i63EyKlU4XR9uIrLqKyVKBDLaiozN0tnq
-         XrSbIgCdhq0bOMtJpxegtXUPvKaATrDeIzkSALIsvmNodRVZrU33AmCLqZGYMev4zMrr
-         ahLByAVg4SSuijb0KLOkagmx7DukPbhPaFUMZ4Uc8S7FJU55NYI6e9BZ34QNaNYVsm3a
-         6ceg==
-X-Gm-Message-State: AOAM532uoUl18zjNA2ny9Z9NhDy//tDJdmkkGSD7/9GTGDn2GLy+yiPw
-        RRYaM2It+lJjpkK4f5UvRTS9cA==
-X-Google-Smtp-Source: ABdhPJx3sx6vBYzIaAQSP4WPqRcWcmi/fwaHSnfrX/an3o/AFC05LOK6jwrhYWSfIxWPMGm4ioGyCw==
-X-Received: by 2002:aa7:848b:0:b029:1ef:4e98:6bb6 with SMTP id u11-20020aa7848b0000b02901ef4e986bb6mr4091688pfn.58.1615404625839;
-        Wed, 10 Mar 2021 11:30:25 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
-        by smtp.gmail.com with ESMTPSA id k15sm318917pgt.23.2021.03.10.11.30.24
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4vFzYKJO90agG78/KWXHjfzDVT/uh9gsi1HJ/WmDVEU=;
+        b=eU9od1+Zohw5yw1GyLNnePtJ09n7Hu6yJ3YzBte9kSGAhYUeBdD3/Xe7txUePTNBPe
+         OlLA3GUF5Q+Jmi1IWlpt1UGqol70INiuwJBC8k/7IUxK6h/vOemyU+9JIiYAIA0BMyNO
+         Ja315ypPq7ztZl6+7CDuZlWSMMSs2EA8qjMPyTvDi0rSYPW/8KPNPxb9Jmis9bNTwKlK
+         4CSPDmEHctUi1dR+f7uQNLUXFmw/5KuOzavZ0wMxsCcjIZ6zwCPsp01fZgmFjqwuB/uW
+         GD/VPdI4ub/ti7eEbHdsPytK96yVqqH4Ni+mAEmTqyaf+kKSbZfpfYdC1JpRKoGnBWVO
+         0XWg==
+X-Gm-Message-State: AOAM532fAcxVEYrvcPXPd5shiU7TATs3679q8mcgYieLA0u7QhwzHGJS
+        ycTnVEVdOEmB9FpVouV6UB6lDmQW+EY=
+X-Google-Smtp-Source: ABdhPJxJRWXPoZetazgvFpH1KU0YV196k5MwoowuhNzbZNx8xtqPIo0L1zWiG4gKt8IXAawCF7KcyQ==
+X-Received: by 2002:adf:f743:: with SMTP id z3mr5104506wrp.304.1615404667093;
+        Wed, 10 Mar 2021 11:31:07 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j30sm382243wrj.62.2021.03.10.11.31.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:30:25 -0800 (PST)
-Date:   Wed, 10 Mar 2021 11:30:20 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7 01/17] doc: propose hooks managed by the config
-Message-ID: <YEkeTB5MPjXJQRrO@google.com>
-References: <20201222000220.1491091-1-emilyshaffer@google.com>
- <20201222000220.1491091-2-emilyshaffer@google.com>
- <xmqqa6snjv4m.fsf@gitster.c.googlers.com>
+        Wed, 10 Mar 2021 11:31:06 -0800 (PST)
+Message-Id: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
+In-Reply-To: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 10 Mar 2021 19:30:43 +0000
+Subject: [PATCH v2 00/20] Sparse Index: Design, Format, Tests
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa6snjv4m.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com, pclouds@gmail.com,
+        jrnieder@gmail.com,
+        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 01, 2021 at 02:11:53PM -0800, Junio C Hamano wrote:
-> 
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > +ways, providing an avenue to deprecate these "legacy" hooks if desired. The
-> > +handling is based on a config `hook.runHookDir`, which is checked against a
-> > +number of cases:
-> 
-> Don't we want to also warn when the setting "no" or something
-> similar prevents the legacy hook from running, to help users
-> who wonder why their hook scripts are not running?  I.e.
-> 
-> > +- "no": the legacy hook will not be run
-> 
-> +- "warn-no": Git will print a warning to stderr before ignoring the
-> +  legacy hook
+Here is the first full patch series submission coming out of the
+sparse-index RFC [1].
 
-Yeah, I think you are right. Jonathan N suggested such an option as
-"error" (as opposed to warning); I'll add it here plus to the enum and
-take your description verbatim. Thanks.
+[1]
+https://lore.kernel.org/git/pull.847.git.1611596533.gitgitgadget@gmail.com/
 
-> 
-> > +- "interactive": Git will prompt the user before running the legacy hook
-> > +- "warn": Git will print a warning to stderr before running the legacy hook
-> > +- "yes" (default): Git will silently run the legacy hook
-> 
-> > +In case this list is expanded in the future, if a value for `hook.runHookDir` is
-> > +given which Git does not recognize, Git should discard that config entry. For
-> > +example, if "warn" was specified at system level and "junk" was specified at
-> > +global level, Git would resolve the value to "warn"; if the only time the config
-> > +was set was to "junk", Git would use the default value of "yes".
-> 
-> Hmph, instead of complaining "value 'junk' is not recognized" and
-> erroring out?  Why?
+I won't waste too much space here, because PATCH 1 includes a sizeable
+design document that describes the feature, the reasoning behind it, and my
+plan for getting this implemented widely throughout the codebase.
 
-I think for the exact case you're describing above - where I forgot some
-useful combination of "run/don't run" and "warn/don't warn" (or, one
-could forsee, "first" e.g. to run the legacy hook early on instead of
-late, or "only" e.g. config hooks don't exist, etc etc), we add this
-flag, and some enterprise (like Jonathan N's team) distributes the new
-config to folks' system configs before 100% of machines are using the
-newer Git executable. It's a long shot :) but I'd rather be flexible
-than inflexible.
+There are some new things here that were not in the RFC:
 
-I will update the design doc anyway - I ended up implementing it as
-"complain about 'junk' and then do default behavior".
+ * Design doc and format updates. (Patch 1)
+ * Performance test script. (Patches 2 and 20)
 
-> 
-> > +[[stage-3]]
-> > +==== Stage 3
-> > +
-> > +`.git/hooks` is removed from the template and the hook directory is considered
-> > +deprecated. To avoid breaking older repos, the default of `hook.runHookDir` is
-> > +not changed, and `find_hook()` is not removed.
-> 
-> Presumably, we'll have documentation somewhere that instructs users
-> (who were taught by slashdot and other site to add certain scripts
-> under their .git/hooks/) how to do the equivalent without adding
-> scripts in .git/hooks/ directory and instead using the config
-> mechanism (e.g. "when told to add script X in .git/hooks/, read such
-> an instruction as if telling you to do Y instead") by the time this
-> happens?  It probably makes sense to do so as part of stage-2, at
-> which point the users are _ready_ to migrate.
+Notably missing in this series from the RFC:
 
-Hm. Where should we distribute such a documentation? git-hook.txt?
-githooks.txt? I think it's a good idea, sure.
+ * The mega-patch inserting ensure_full_index() throughout the codebase.
+   That will be a follow-up series to this one.
+ * The integrations with git status and git add to demonstrate the improved
+   performance. Those will also appear in their own series later.
 
-> 
-> > +[[security]]
-> > +=== Security and repo config
-> > +
-> > +Part of the motivation behind this refactor is to mitigate hooks as an attack
-> > +vector;footnote:[https://lore.kernel.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/]
-> > +however, as the design stands, users can still provide hooks in the repo-level
-> > +config, which is included when a repo is zipped and sent elsewhere.  The
-> > +security of the repo-level config is still under discussion; this design
-> > +generally assumes the repo-level config is secure, which is not true yet. The
-> > +goal is to avoid an overcomplicated design to work around a problem which has
-> > +ceased to exist.
-> 
-> I doubt we want to claim anything about security as part of this
-> series.  As you say in the paragraph, .git/config and .git/hooks/
-> are equally (un)protected and if we decide to punt .git/config
-> security, then not moving away from .git/hooks would not hurt
-> security-wise, either (in other words, security is not a viable
-> motivation behind this series).
+I plan to keep my latest work in this area in my 'sparse-index/wip' branch
+[2]. It includes all of the work from the RFC right now, updated with the
+work from this series.
 
-Yeah, I think you are right that despite my best efforts to spin it that
-way, it just isn't a security win :) Ah well...
+[2] https://github.com/derrickstolee/git/tree/sparse-index/wip
 
-> 
-> And if we stop advertising 'security merit' that does not exist,
-> what remains?  Isn't the biggest selling point that an identical set
-> of hook configuration can be shared among multiple repositories, and
-> it allows more than one hook scripts to be triggered by a single
-> "hook event"?  There may be other good things we should be able to
-> sell the new mechanism to our users, and we do stress on them, which
-> is done in the motivation section.  So...
 
-Ok.
+Updates in V2
+=============
 
-I would like to keep this header and make it more clear that we didn't
-fully succeed in the wish to make zip attacks impossible, but I will
-remove it from the motivations section at the top. I also added a little
-more clarity (I hope) on the other pieces in the motivation section.
+ * Various typos and awkward grammar is fixed.
+ * Cleaned up unnecessary commands in p2000-sparse-operations.sh
+ * Added a comment to the sparse_index member of struct index_state.
+ * Used tree_type, commit_type, and blob_type in test-read-cache.c.
 
-> 
-> > +.Comparison of alternatives
-> > +|===
-> > +|Feature |Config-based hooks |Hook directories |Status quo
-> 
-> Sorry, but I did not find this table particularly convincing.
-> 
-> The only thing I sense is a hand-wavy desire that "we could make it
-> better than everybody else if we work on it in this area", which can
-> apply equally for other approaches---they could enhance what they
-> already have (e.g. "discoverability & documentation").
-> 
-> As a list of "these are the points we aspire to do better than other
-> people", I think it is an excellent idea to have a table like this
-> here in the documentation.  But that is not a "comparison".
+Thanks, -Stolee
 
-Ok. I'll see what I can do to frame it better.
+Derrick Stolee (20):
+  sparse-index: design doc and format update
+  t/perf: add performance test for sparse operations
+  t1092: clean up script quoting
+  sparse-index: add guard to ensure full index
+  sparse-index: implement ensure_full_index()
+  t1092: compare sparse-checkout to sparse-index
+  test-read-cache: print cache entries with --table
+  test-tool: don't force full index
+  unpack-trees: ensure full index
+  sparse-checkout: hold pattern list in index
+  sparse-index: convert from full to sparse
+  submodule: sparse-index should not collapse links
+  unpack-trees: allow sparse directories
+  sparse-index: check index conversion happens
+  sparse-index: create extension for compatibility
+  sparse-checkout: toggle sparse index from builtin
+  sparse-checkout: disable sparse-index
+  cache-tree: integrate with sparse directory entries
+  sparse-index: loose integration with cache_tree_verify()
+  p2000: add sparse-index repos
 
-> 
-> > +[[execution-ordering]]
-> > +=== Execution ordering
-> > +
-> > +We may find that config order is insufficient for some users; for example,
-> > +config order makes it difficult to add a new hook to the system or global config
-> > +which runs at the end of the hook list. A new ordering schema should be:
-> > +
-> > +1) Specified by a `hook.order` config, so that users will not unexpectedly see
-> > +their order change;
-> > +
-> > +2) Either dependency or numerically based.
-> > +
-> > +Dependency-based ordering is prone to classic linked-list problems, like a
-> > +cycles and handling of missing dependencies. But, it paves the way for enabling
-> > +parallelization if some tasks truly depend on others.
-> > +
-> > +Numerical ordering makes it tricky for Git to generate suggested ordering
-> > +numbers for each command, but is easy to determine a definitive order.
-> 
-> OK.
-> 
-> Have we decided what we do for hooks whose interface is to feed
-> their input from their standard input?  The current system, I think,
-> just feeds the single hook by writing into a pipe to it, but if we
-> were to drive multiple hooks, we'd need to write the same thing to
-> each of these hook programs?  
+ Documentation/config/extensions.txt      |   8 +
+ Documentation/git-sparse-checkout.txt    |  14 ++
+ Documentation/technical/index-format.txt |   7 +
+ Documentation/technical/sparse-index.txt | 173 ++++++++++++++
+ Makefile                                 |   1 +
+ builtin/sparse-checkout.c                |  44 +++-
+ cache-tree.c                             |  40 ++++
+ cache.h                                  |  18 +-
+ read-cache.c                             |  35 ++-
+ repo-settings.c                          |  15 ++
+ repository.c                             |  11 +-
+ repository.h                             |   3 +
+ setup.c                                  |   3 +
+ sparse-index.c                           | 290 +++++++++++++++++++++++
+ sparse-index.h                           |  11 +
+ t/README                                 |   3 +
+ t/helper/test-read-cache.c               |  66 +++++-
+ t/perf/p2000-sparse-operations.sh        | 102 ++++++++
+ t/t1091-sparse-checkout-builtin.sh       |  13 +
+ t/t1092-sparse-checkout-compatibility.sh | 136 +++++++++--
+ unpack-trees.c                           |  16 +-
+ 21 files changed, 969 insertions(+), 40 deletions(-)
+ create mode 100644 Documentation/technical/sparse-index.txt
+ create mode 100644 sparse-index.c
+ create mode 100644 sparse-index.h
+ create mode 100755 t/perf/p2000-sparse-operations.sh
 
-Yep. There are a few ways to do it:
-1. Provide a file to be used as stdin. This way we just hook up that
-file's fd to each hook process's stdin fd. (Example:
-https://lore.kernel.org/git/20201222000435.1529768-11-emilyshaffer@google.com
-in builtin/am.c:run_post_rewrite_hook())
-2. Provide a string_list in the run_hooks_opt struct; hook.c treats each
-entry in the string_list as a line to stdin, separated by a newline, and
-"replays" the list to each hook in order. (Example:
-https://lore.kernel.org/git/20201222000435.1529768-12-emilyshaffer@google.com)
-3. Set up your own more complicated version of (2) by writing your own
-callback to provide "next line of stdin" based on a context pointer. The
-context pointer is per-hook-task. (Example:
-https://lore.kernel.org/git/20201222000435.1529768-17-emilyshaffer@google.com)
 
-> 
-> Do we have a plan to deal with hooks whose outcome is not just
-> "yes/no", e.g. "proc-receive" hook that munges the list of refs to
-> be updated and the new values for them, or "applypatch-msg" that
-> munges the incoming proposed commit log message?  Does the second
-> hook work on the result of the first hook?  Do the two hooks work on
-> the vanilla state and their output have to agree with each other?
+base-commit: 966e671106b2fd38301e7c344c754fd118d0bb07
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-883%2Fderrickstolee%2Fsparse-index%2Fformat-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-883/derrickstolee/sparse-index/format-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/883
 
-The only hook I found this way was 'proc-receive' itself - and in the
-end, because it's somewhat interactive with two-way communication with
-the caller, it didn't seem like there was a good way to reason about
-multiple hooks, like you say. So in the 'proc-receive' case, we disallow
-multiple hooks. See
-https://lore.kernel.org/git/20201222000435.1529768-15-emilyshaffer@google.com.
-> 
-> > +[[parallelization]]
-> > +=== Parallelization with dependencies
-> > +
-> > +Currently hooks use a naive parallelization scheme or are run in series.  But if
-> > +one hook depends on another's output, then users will want to specify those
-> > +dependencies.
-> 
-> An untold assumption here is that the questions I asked earlier on
-> having more than one hooks that is not just yes/no is something
-> readers know the same answer, and that answer is "the outcome of the
-> first hook is passed along (as if it were the input given by Git
-> directly, if the first hook did not exist), to the second hook.  It
-> should be spelled out somewhere before the execution ordering
-> section, I think.
+Range-diff vs v1:
 
-I'll make an explicit callout about that case, thanks.
+  1:  daa9a6bcefbc !  1:  2fe413fdac80 sparse-index: design doc and format update
+     @@ Documentation/technical/sparse-index.txt (new)
+      +If we need to discover the details for paths within that directory, we
+      +can parse trees to find that list.
+      +
+     -+This addition of sparse-directory entries violates expectations about the
+     ++At time of writing, sparse-directory entries violate expectations about the
+      +index format and its in-memory data structure. There are many consumers in
+      +the codebase that expect to iterate through all of the index entries and
+      +see only files. In addition, they expect to see all files at `HEAD`. One
+     @@ Documentation/technical/sparse-index.txt (new)
+      +* `git merge`
+      +* `git rebase`
+      +
+     ++Hopefully, commands such as `git merge` and `git rebase` can benefit
+     ++instead from merge algorithms that do not use the index as a data
+     ++structure, such as the merge-ORT strategy. As these topics mature, we
+     ++may enalbe the ORT strategy by default for repositories using the
+     ++sparse-index feature.
+     ++
+      +Along with `git status` and `git add`, these commands cover the majority
+      +of users' interactions with the working directory. In addition, we can
+      +integrate with these commands:
+  2:  a8c6322a3dbe !  2:  540ab5495065 t/perf: add performance test for sparse operations
+     @@ t/perf/p2000-sparse-operations.sh (new)
+      +	# Remove submodules from the example repo, because our
+      +	# duplication of the entire repo creates an unlikly data shape.
+      +	git config --file .gitmodules --get-regexp "submodule.*.path" >modules &&
+     -+	rm -f .gitmodules &&
+     -+	git add .gitmodules &&
+     ++	git rm -f .gitmodules &&
+      +	for module in $(awk "{print \$2}" modules)
+      +	do
+      +		git rm $module || return 1
+      +	done &&
+     -+	git add . &&
+      +	git commit -m "remove submodules" &&
+      +
+      +	echo bogus >a &&
+  3:  6e783c88821e =  3:  5cbedb377b37 t1092: clean up script quoting
+  4:  01da4c48a1fa =  4:  6e21f776e883 sparse-index: add guard to ensure full index
+  5:  2b83989fbcd3 !  5:  399ddb0bad56 sparse-index: implement ensure_full_index()
+     @@ cache.h: struct index_state {
+       		 updated_skipworktree : 1,
+      -		 fsmonitor_has_run_once : 1;
+      +		 fsmonitor_has_run_once : 1,
+     ++
+     ++		 /*
+     ++		  * sparse_index == 1 when sparse-directory
+     ++		  * entries exist. Requires sparse-checkout
+     ++		  * in cone mode.
+     ++		  */
+      +		 sparse_index : 1;
+       	struct hashmap name_hash;
+       	struct hashmap dir_hash;
+  6:  c9910a37579c =  6:  eac2db5efc22 t1092: compare sparse-checkout to sparse-index
+  7:  3d92df7a0cf9 !  7:  e9c82d2eda82 test-read-cache: print cache entries with --table
+     @@ Commit message
+      
+       ## t/helper/test-read-cache.c ##
+      @@
+     + #include "test-tool.h"
+       #include "cache.h"
+       #include "config.h"
+     - 
+     ++#include "blob.h"
+     ++#include "commit.h"
+     ++#include "tree.h"
+     ++
+      +static void print_cache_entry(struct cache_entry *ce)
+      +{
+     -+	printf("%06o ", ce->ce_mode & 0777777);
+     ++	const char *type;
+     ++	printf("%06o ", ce->ce_mode & 0177777);
+      +
+      +	if (S_ISSPARSEDIR(ce->ce_mode))
+     -+		printf("tree ");
+     ++		type = tree_type;
+      +	else if (S_ISGITLINK(ce->ce_mode))
+     -+		printf("commit ");
+     ++		type = commit_type;
+      +	else
+     -+		printf("blob ");
+     ++		type = blob_type;
+      +
+     -+	printf("%s\t%s\n",
+     ++	printf("%s %s\t%s\n",
+     ++	       type,
+      +	       oid_to_hex(&ce->oid),
+      +	       ce->name);
+      +}
+      +
+     -+static void print_cache(struct index_state *cache)
+     ++static void print_cache(struct index_state *istate)
+      +{
+      +	int i;
+     -+	for (i = 0; i < the_index.cache_nr; i++)
+     -+		print_cache_entry(the_index.cache[i]);
+     ++	for (i = 0; i < istate->cache_nr; i++)
+     ++		print_cache_entry(istate->cache[i]);
+      +}
+     -+
+     + 
+       int cmd__read_cache(int argc, const char **argv)
+       {
+      +	struct repository *r = the_repository;
+  8:  94373e2bfbbc !  8:  243541fc5820 test-tool: don't force full index
+     @@ Commit message
+      
+       ## t/helper/test-read-cache.c ##
+      @@
+     - #include "test-tool.h"
+     - #include "cache.h"
+     - #include "config.h"
+     + #include "blob.h"
+     + #include "commit.h"
+     + #include "tree.h"
+      +#include "sparse-index.h"
+       
+       static void print_cache_entry(struct cache_entry *ce)
+  9:  e71f033c2871 =  9:  48f65093b3da unpack-trees: ensure full index
+ 10:  f86d3dc154d1 ! 10:  83aac8b7a1ec sparse-checkout: hold pattern list in index
+     @@ Commit message
+          pattern set, we need access to that in-memory copy. Place a pointer to
+          a 'struct pattern_list' in the index so we can access this on-demand.
+          This will be used in the next change which uses the sparse-checkout
+     -    definition to filter out directories that are outsie the sparse cone.
+     +    definition to filter out directories that are outside the sparse cone.
+      
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+ 11:  a2d77c23a0cb ! 11:  f6db0c27a285 sparse-index: convert from full to sparse
+     @@ read-cache.c: int verify_path(const char *path, unsigned mode)
+       				return 0;
+      +			/*
+      +			 * allow terminating directory separators for
+     -+			 * sparse directory enries.
+     ++			 * sparse directory entries.
+      +			 */
+      +			if (c == '\0')
+      +				return S_ISDIR(mode);
+     @@ sparse-index.c
+      +		struct cache_entry *ce = istate->cache[i];
+      +
+      +		/*
+     -+		 * Detect if this is a normal entry oustide of any subtree
+     ++		 * Detect if this is a normal entry outside of any subtree
+      +		 * entry.
+      +		 */
+      +		base = ce->name + ct_pathlen;
+ 12:  4405a9115c3b = 12:  f2a3e7298798 submodule: sparse-index should not collapse links
+ 13:  fda23f07e6a2 ! 13:  6f1ebe6ccc08 unpack-trees: allow sparse directories
+     @@ Commit message
+          is possible to have a directory in a sparse index as long as that entry
+          is itself marked with the skip-worktree bit.
+      
+     -    The negation of the 'pos' variable must be conditioned to only when it
+     -    starts as negative. This is identical behavior as before when the index
+     -    is full.
+     +    The 'pos' variable is assigned a negative value if an exact match is not
+     +    found. Since a directory name can be an exact match, it is no longer an
+     +    error to have a nonnegative 'pos' value.
+      
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+ 14:  7d4627574bb8 = 14:  3fa684b315fb sparse-index: check index conversion happens
+ 15:  564503f78784 ! 15:  d74576d677f6 sparse-index: create extension for compatibility
+     @@ Commit message
+      
+          We _could_ add a new index version that explicitly adds these
+          capabilities, but there are nuances to index formats 2, 3, and 4 that
+     -    are still valuable to select as options. For now, create a repo
+     -    extension, "extensions.sparseIndex", that specifies that the tool
+     -    reading this repository must understand sparse directory entries.
+     +    are still valuable to select as options. Until we add index format
+     +    version 5, create a repo extension, "extensions.sparseIndex", that
+     +    specifies that the tool reading this repository must understand sparse
+     +    directory entries.
+      
+          This change only encodes the extension and enables it when
+          GIT_TEST_SPARSE_INDEX=1. Later, we will add a more user-friendly CLI
+     @@ Documentation/config/extensions.txt: extensions.objectFormat::
+      +	When combined with `core.sparseCheckout=true` and
+      +	`core.sparseCheckoutCone=true`, the index may contain entries
+      +	corresponding to directories outside of the sparse-checkout
+     -+	definition. Versions of Git that do not understand this extension
+     -+	do not expect directory entries in the index.
+     ++	definition in lieu of containing each path under such directories.
+     ++	Versions of Git that do not understand this extension do not
+     ++	expect directory entries in the index.
+      
+       ## cache.h ##
+      @@ cache.h: struct repository_format {
+ 16:  6d6b230e3318 ! 16:  e530ca5f668d sparse-checkout: toggle sparse index from builtin
+     @@ Documentation/git-sparse-checkout.txt: To avoid interfering with other worktrees
+      +a sparse index until they are properly integrated with the feature.
+      ++
+      +**WARNING:** Using a sparse index requires modifying the index in a way
+     -+that is not completely understood by other tools. Enabling sparse index
+     -+enables the `extensions.spareseIndex` config value, which might cause
+     -+other tools to stop working with your repository. If you have trouble with
+     -+this compatibility, then run `git sparse-checkout sparse-index disable` to
+     -+remove this config and rewrite your index to not be sparse.
+     ++that is not completely understood by external tools. If you have trouble
+     ++with this compatibility, then run `git sparse-checkout sparse-index disable`
+     ++to rewrite your index to not be sparse. Older versions of Git will not
+     ++understand the `sparseIndex` repository extension and may fail to interact
+     ++with your repository until it is disabled.
+       
+       'set'::
+       	Write a set of patterns to the sparse-checkout file, as given as
+ 17:  bcf960ef2362 = 17:  42d0da9c5def sparse-checkout: disable sparse-index
+ 18:  e6afec58674e = 18:  6bb0976a6295 cache-tree: integrate with sparse directory entries
+ 19:  2be4981fe698 = 19:  07f34e80609a sparse-index: loose integration with cache_tree_verify()
+ 20:  a738b0ba8ab4 = 20:  41e3b56b9c17 p2000: add sparse-index repos
 
- - Emily
+-- 
+gitgitgadget
