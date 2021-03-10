@@ -2,68 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FC4CC43332
-	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2611C43331
+	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB59664FD6
+	by mail.kernel.org (Postfix) with ESMTP id B131C64EF6
 	for <git@archiver.kernel.org>; Wed, 10 Mar 2021 19:32:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233900AbhCJTby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 14:31:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40778 "EHLO
+        id S233885AbhCJTbx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 14:31:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233751AbhCJTbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 14:31:20 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B37C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:20 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id f22-20020a7bc8d60000b029010c024a1407so11810215wml.2
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:20 -0800 (PST)
+        with ESMTP id S233725AbhCJTbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 14:31:14 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F11AC061761
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:14 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id b2-20020a7bc2420000b029010be1081172so11454222wmj.1
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 11:31:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5pUTXKGQuSdTT7ILEy7EmDD3wWlGK1ztMU7gpypslrM=;
-        b=Gxa9T7G4XdswJJcpfAlLNaJhmQO9wt8f551DCwNsx0QNuKm0jpeWrLoGvQXuXD+h4d
-         AsNSrinRZA+Ia/YXoycbWTkeyClusCS7Bv3AnmoW2O6XCWch6dTZwpEl5z4WCkrOgeHh
-         ywbHejKEO/vQ6ecDGkgRrq4cOvbe5x33mEUPCZ2C+rQj8P6JMHv8xCHdBzG1t1GZX2nM
-         JiuvqrJgVaqkj573igBmEJF9YH6TP2TsfeFDNh+gqILHu88//E2k4NpV13G6dxwpMruq
-         pR6YjTTjY3TjnaKoC3hgF1woO+LbSADqu3l4vXTtXda/4led2s5EZXtrGeUXiFFJ0SvA
-         /jZA==
+        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
+        b=nPXZErV6qHySWytLoOl9f7EugQpanl+q1uXl60kFcSZKWeIFJSMkpeIUjh3yvDurPE
+         YWgnQm0NGgiw9s4dXRMUn//ggvaUXbYgeS0GEepeXworIa4ZMvIzDQw58zpvk32e8O4f
+         BoVapKjRwKJqFsjFLjNlQEUKhz3y3m1eZTu7G7i6BwCMS5B/hnvRDY8UF1X8732Lw1/H
+         Bs16ZW2O720WhV4HY/acns4FVvmJUuf3f9yyD5L1/bB6CZqwDEulbgBXuqOKt1y9QsIq
+         PWb6KtNPPNXm6OKIQf4KlYWAzj26nCq/f+vR0mW5uRXjZVMJX01z/xuzmXIEWbIpL4lf
+         rRFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5pUTXKGQuSdTT7ILEy7EmDD3wWlGK1ztMU7gpypslrM=;
-        b=NYk8GkgjDNFQU88FAIXEJ7r4DMb8UCU5wDe22MxYBmZXnsCkWcur2ainAD4wvlcN+9
-         N0iDZRfYN1rXhO7g8S55KLsq+xRMowsLn6PJm7C9fVwDuY+az1ci5WF2XvAxdJ+BOg/m
-         cC+fCk8s8b654VkqlRgDM3M7YdMBT3iRSQZYtK0r1EB1c/hqo+BfB3bK1UszXIHpaQuB
-         ApCgZjxegFumMUMNa0DuBYp7t1udh9Vxb4uwxrMx1ap8Z6AifKKRWO75BSIqlpRxb4o9
-         PoFuMM3sii22UVzghrKJN9QQ1isJYx92Oa+zPCrwBYYdvZKOWvJNhL953oE9ehrf9tKz
-         Z/PA==
-X-Gm-Message-State: AOAM531dk4cj63TE2lvB6eMSUTyEf5Lm9K7+cMdcRwdcRWa9JaeKwslE
-        aNsjpuBcFmFq1UKatemaWvgLfM9/32w=
-X-Google-Smtp-Source: ABdhPJyM+CcI7MXm2vwmJ22UuVZIRdOCwadzRgFoxDO+nzjADTBbDBPDFMhd5+StvN2IsHMXBrdgQg==
-X-Received: by 2002:a1c:cc04:: with SMTP id h4mr4753475wmb.142.1615404678974;
-        Wed, 10 Mar 2021 11:31:18 -0800 (PST)
+        bh=i+gKe8EgHfQlDyjY32XCjj4qcNKDY7Jfl7pEV2IN20w=;
+        b=a5Ps/C7aChzrIfjkDuJisSN3GEAU0MJ4/QAayWKivVpJBzgyhWpIlgf6Z6XPzBLZ7B
+         39HsLrbBGpkYAzzLSxe3YiG/hqXngXhV4uzaaU8Wm5GxbfVH63aFAlQI9KjNJJSp0wkt
+         uQWc1KBHP/U9/JehQlMEiyiL/l+j392HUHngOOkagBBTBPqVT2PXMoQ1wpQlT8tFrTzW
+         zDNdFHOtYWLiv4Ye+ewNUpQDIo5wxl0LrOmvNwhupvxOKMkimuWeazKUdyT4AyBKk96F
+         C21a0IuK5OlIfrPKn5ceu5kzT3OuWzVpU0YyIB33+X3jCu59/oBbkIBWoeSgO27JcBVo
+         iNgA==
+X-Gm-Message-State: AOAM532PnQe9AfL4JbkY8h2TCZgFT3qbDD5L/maRBE24HT7QCT3A84mg
+        FtidirkZqeJhzeMjrVaQJ8u0XqYsJ0w=
+X-Google-Smtp-Source: ABdhPJxeO6rhvcvSdmVEPojtTtAzeYNJTUTPfbb7UI6q1a7vLA1E/8GgdyCFSr0hwB88+l7TZuCWqg==
+X-Received: by 2002:a1c:2390:: with SMTP id j138mr4765929wmj.72.1615404672912;
+        Wed, 10 Mar 2021 11:31:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l4sm321856wrt.60.2021.03.10.11.31.18
+        by smtp.gmail.com with ESMTPSA id s84sm446008wme.11.2021.03.10.11.31.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 11:31:18 -0800 (PST)
-Message-Id: <07f34e80609a39f7cf52d21cc8fe0d83ee728fb0.1615404665.git.gitgitgadget@gmail.com>
+        Wed, 10 Mar 2021 11:31:12 -0800 (PST)
+Message-Id: <48f65093b3da3fdee606e6d52e81795cdfcbbd22.1615404665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 References: <pull.883.git.1614111270.gitgitgadget@gmail.com>
         <pull.883.v2.git.1615404664.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 10 Mar 2021 19:31:02 +0000
-Subject: [PATCH v2 19/20] sparse-index: loose integration with
- cache_tree_verify()
+Date:   Wed, 10 Mar 2021 19:30:52 +0000
+Subject: [PATCH v2 09/20] unpack-trees: ensure full index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,74 +81,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The cache_tree_verify() method is run when GIT_TEST_CHECK_CACHE_TREE
-is enabled, which it is by default in the test suite. The logic must
-be adjusted for the presence of these directory entries.
+The next change will translate full indexes into sparse indexes at write
+time. The existing logic provides a way for every sparse index to be
+expanded to a full index at read time. However, there are cases where an
+index is written and then continues to be used in-memory to perform
+further updates.
 
-For now, leave the test as a simple check for whether the directory
-entry is sparse. Do not go any further until needed.
+unpack_trees() is frequently called after such a write. In particular,
+commands like 'git reset' do this double-update of the index.
 
-This allows us to re-enable GIT_TEST_CHECK_CACHE_TREE in
-t1092-sparse-checkout-compatibility.sh. Further,
-p2000-sparse-operations.sh uses the test suite and hence this is enabled
-for all tests. We need to integrate with it before we run our
-performance tests with a sparse-index.
+Ensure that we have a full index when entering unpack_trees(), but only
+when command_requires_full_index is true. This is always true at the
+moment, but we will later relax that after unpack_trees() is updated to
+handle sparse directory entries.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c                             | 19 +++++++++++++++++++
- t/t1092-sparse-checkout-compatibility.sh |  1 -
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ unpack-trees.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 950a9615db8f..11bf1fcae6e1 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -808,6 +808,19 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 	return 0;
- }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f5f668f532d8..4dd99219073a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1567,6 +1567,7 @@ static int verify_absent(const struct cache_entry *,
+  */
+ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options *o)
+ {
++	struct repository *repo = the_repository;
+ 	int i, ret;
+ 	static struct cache_entry *dfc;
+ 	struct pattern_list pl;
+@@ -1578,6 +1579,12 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	trace_performance_enter();
+ 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
  
-+static void verify_one_sparse(struct repository *r,
-+			      struct index_state *istate,
-+			      struct cache_tree *it,
-+			      struct strbuf *path,
-+			      int pos)
-+{
-+	struct cache_entry *ce = istate->cache[pos];
++	prepare_repo_settings(repo);
++	if (repo->settings.command_requires_full_index) {
++		ensure_full_index(o->src_index);
++		ensure_full_index(o->dst_index);
++	}
 +
-+	if (!S_ISSPARSEDIR(ce->ce_mode))
-+		BUG("directory '%s' is present in index, but not sparse",
-+		    path->buf);
-+}
-+
- static void verify_one(struct repository *r,
- 		       struct index_state *istate,
- 		       struct cache_tree *it,
-@@ -830,6 +843,12 @@ static void verify_one(struct repository *r,
- 
- 	if (path->len) {
- 		pos = index_name_pos(istate, path->buf, path->len);
-+
-+		if (pos >= 0) {
-+			verify_one_sparse(r, istate, it, path, pos);
-+			return;
-+		}
-+
- 		pos = -pos - 1;
- 	} else {
- 		pos = 0;
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9c2bc4d25f66..c2624176c2e0 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2,7 +2,6 @@
- 
- test_description='compare full workdir to sparse workdir'
- 
--GIT_TEST_CHECK_CACHE_TREE=0
- GIT_TEST_SPLIT_INDEX=0
- GIT_TEST_SPARSE_INDEX=
- 
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout && !o->pl) {
 -- 
 gitgitgadget
 
