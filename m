@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99AC5C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76D27C433E6
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6360C64FC5
+	by mail.kernel.org (Postfix) with ESMTP id 38BD964FBF
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbhCKCLh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:11:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42148 "EHLO
+        id S229469AbhCKCLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:11:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229741AbhCKCLG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229675AbhCKCLG (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 10 Mar 2021 21:11:06 -0500
-Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF07C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:10:55 -0800 (PST)
-Received: by mail-qv1-xf4a.google.com with SMTP id bt20so5266329qvb.0
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:10:55 -0800 (PST)
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB016C061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:05 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id m8so12375122qtp.14
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Hsejj3QOv3VNOHJVFzz1trgAk7BJM3wGQFZt6KLQh7g=;
-        b=v7f/44R1N/z6muOWI9QV6DmRUcdbUNAgKTY42JgIj3k6PKXLDPOQNDi65wl8AUqIJ+
-         UIuF9Xl1/+3hWKQ8KHR7UNRKgv5C2/Bf7zlz5UpDTXnou1oTb7Ij27mKSLMuHXbUFSPk
-         qKcTyR00nxGmMwYzhKaSZZPCZ+TXmseY7K2+PVGdcwd0MlApoKYLs28DT1Qfknw2XMbV
-         laef/B4E/N7ySZTUOOUkttlMxxElU8NdVsTPdp/i9NZrSl317jKDvnswZvyEG86IK463
-         UcST90VCUngwsooRvS8EMTM4ux20xTrMyLiW52QRE8EzJzGyap0lROr+okiGHnB73FHN
-         PAMQ==
+        bh=p4F1JvYDQ75IJIS63+nBocPfvaxsm7Y8tpbLacpxf+8=;
+        b=NGW97OLYnJXxQ5/UrZIV5HuJnVuVsmKuJDxVXW3Lc6FJ19hNuSSukt0t7o6kzRmlNV
+         S+yl4MWJ9UFA/cDo4joj1PypyGK81hckks4ico6OyQ7RqZPdcOSxWNhNG8PlX5f+5q4a
+         MaF2+F/dLiKsiRfHUxUpDfhzJ49UG0/UCfHZu+fVH9+ewS/5l76e3gREJ9im7mKZGqNR
+         XWmn9A0XYtJs+ww5YOSpJZQTlJlAr9dS38eC3rL9HKDTeS8FDKWQwzwxuuRUBJR9iUMF
+         0WVLteMmBWMFhq7NsHyr4SjZMrugJdd2FXcRdhjfn32MRrGbCkgcKpdhOMQmZJbs49MF
+         w8pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Hsejj3QOv3VNOHJVFzz1trgAk7BJM3wGQFZt6KLQh7g=;
-        b=hFcHr2mCHVqWHs64EEFQmTXv+KFiIODHZIZnf1O9WpOB/zVPGXu8M7Vx/Nru4Udluk
-         IofQx5xky0ttSGDg0vEi3Y8Zl6rwFNjJ2vH01AAMKEbbpnC50C3j9z8K+5+YzWjux8ZA
-         0LaUXLieHRr4m+oe8RYTt5RSmvnvdfqSPKnP09IVadGy3tcApkS+23DhgE92cHxlI6wx
-         81EEwzlD8KWRDlCxh8jbXXwsI4eied2SZjoaIkx/vZpcTM5uBIygUy6O4e7miI7nhZGu
-         CtDvREgMsrD4nbf6Kf6RTIOjGi6IkRDk9R5ru3Qla8OucYCEoyOuGuQShI+QHe2Rrxki
-         kJ7Q==
-X-Gm-Message-State: AOAM531VTFSwZG0uYmbCkz6SyR6ClhDgBAP5JGNFclbz6YG8+qm4yZ4Y
-        m20A8pa1OVm9pBKi67M0CawaqB6fGFEIgDtPcW20vGO7YlBARVGsgUCEAAtfwTX49FesMEiWdZ2
-        AC8EsL3fsJ9/RHf/httAT8flbnVppnCRdf7Ld5nW2JXqDBsRKNLKHV2r0OMHl9jOqbbKgaYxbKw
+        bh=p4F1JvYDQ75IJIS63+nBocPfvaxsm7Y8tpbLacpxf+8=;
+        b=sl0YSxfsErLvko92sW+GtStSGBnww5bBFsZvsVwtYUl+wqk9MX/xL2Vx4eU5rPxzFd
+         wLCnfuBG6mYdB6WZdpCDl0I4fDdxeXzJFruWZOq5G50d2784fuc0dPfMkAOsgmv7BSfB
+         NWBWRtXE2pRlfbAxBEsUTlw3lTA0SrKk3EYEPLNU7QTnpjW+ibFWn7mdxYCNICt0HCts
+         iDZTwNu02wry6vVvAMZ307zwJcH9408M19RHcJfiSOmgyp0vsxHSJMR+VPH1tNqwS14Z
+         D7a+BMKt+jhvmDah78/hWhyM5fXsov65bLtvke2qUtnIilO8L0toVWpW9guiLH6WTcrh
+         K8nw==
+X-Gm-Message-State: AOAM532C1z366TBk2QL8neAP3BxxPCByMk9gkeOZAYGCGUkXMoipFFpd
+        JJBe1WJUPsD+DZzNeLotfNndNu90xJl7XSnZ/Ox6BWPBN5gNeF3VPE0lBP2WbsEBx9h4hPyHbrx
+        dxansSIsSxAxWPXPCc9kS/HwHmiBLgxzA+iOCMr59F149c0xs/tPuBJoPdRCPzauh4QH87cYhJQ
         ==
-X-Google-Smtp-Source: ABdhPJwVVgzr3qSJA7kFxqheVhZj1hoz1Y+SDwy53vRJW0QgYBb5MvmwaiEivay/T3Op/1A53zIh3PRebszsqCG2u8U=
+X-Google-Smtp-Source: ABdhPJxhauq8L10eiui98lobey5VmVhFNyt70SVKehGDd8iYhSP2VO2ZKpir+HImIfxZnevk6L7CQJU8tUICoE/hdpg=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:ad4:4904:: with SMTP id
- bh4mr5598311qvb.53.1615428654491; Wed, 10 Mar 2021 18:10:54 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:02 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:18c3:: with SMTP id
+ cy3mr5856229qvb.1.1615428665026; Wed, 10 Mar 2021 18:11:05 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:08 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-3-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-9-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 02/37] hook: scaffolding for git-hook subcommand
+Subject: [PATCH v8 08/37] hook: add 'run' subcommand
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,158 +70,483 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce infrastructure for a new subcommand, git-hook, which will be
-used to ease config-based hook management. This command will handle
-parsing configs to compose a list of hooks to run for a given event, as
-well as adding or modifying hook configs in an interactive fashion.
+In order to enable hooks to be run as an external process, by a
+standalone Git command, or by tools which wrap Git, provide an external
+means to run all configured hook commands for a given hook event.
+
+For now, the hook commands will run in config order, in series. As
+alternate ordering or parallelism is supported in the future, we should
+add knobs to use those to the command line as well.
+
+As with the legacy hook implementation, all stdout generated by hook
+commands is redirected to stderr. Piping from stdin is not yet
+supported.
+
+Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
+execution list. They can be disabled, or made to print warnings, or to
+prompt before running, with the 'hook.runHookDir' config.
+
+Users may wish to provide hook commands like 'git config
+hook.pre-commit.command "~/linter.sh --pre-commit"'. To enable this,
+config-defined hooks are run in a shell. (Since hooks in $GITDIR/hooks
+can't be specified with included arguments or paths which need expansion
+like this, they are run without a shell instead.)
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
-No change since v7.
 
- .gitignore                    |  1 +
- Documentation/git-hook.txt    | 20 ++++++++++++++++++++
- Makefile                      |  1 +
- builtin.h                     |  1 +
- builtin/hook.c                | 21 +++++++++++++++++++++
- command-list.txt              |  1 +
- git.c                         |  1 +
- t/t1360-config-based-hooks.sh | 11 +++++++++++
- 8 files changed, 57 insertions(+)
- create mode 100644 Documentation/git-hook.txt
- create mode 100644 builtin/hook.c
- create mode 100755 t/t1360-config-based-hooks.sh
+Notes:
+    Since v7, added support for "error" hook.runHookDir setting.
+    
+    Since v4, updated the docs, and did less local application of single
+    quotes. In order for hookdir hooks to run successfully with a space in
+    the path, though, they must not be run with 'sh -c'. So we can treat the
+    hookdir hooks specially, and warn users via doc about special
+    considerations for configured hooks with spaces in their path.
 
-diff --git a/.gitignore b/.gitignore
-index 3dcdb6bb5a..3608c35b73 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -76,6 +76,7 @@
- /git-grep
- /git-hash-object
- /git-help
-+/git-hook
- /git-http-backend
- /git-http-fetch
- /git-http-push
+ Documentation/git-hook.txt    |  31 +++++++-
+ builtin/hook.c                |  42 ++++++++++-
+ hook.c                        | 128 ++++++++++++++++++++++++++++++++++
+ hook.h                        |  26 +++++++
+ t/t1360-config-based-hooks.sh |  72 ++++++++++++++++++-
+ 5 files changed, 292 insertions(+), 7 deletions(-)
+
 diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-new file mode 100644
-index 0000000000..9eeab0009d
---- /dev/null
+index c84520cb38..8f96c347ea 100644
+--- a/Documentation/git-hook.txt
 +++ b/Documentation/git-hook.txt
-@@ -0,0 +1,20 @@
-+git-hook(1)
-+===========
+@@ -9,11 +9,12 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git hook' list <hook-name>
++'git hook' run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] <hook-name>
+ 
+ DESCRIPTION
+ -----------
+-You can list configured hooks with this command. Later, you will be able to run,
+-add, and modify hooks with this command.
++You can list and run configured hooks with this command. Later, you will be able
++to add and modify hooks with this command.
+ 
+ This command parses the default configuration files for sections `hook` and
+ `hookcmd`. `hook` is used to describe the commands which will be run during a
+@@ -97,6 +98,32 @@ in the order they should be run, and print the config scope where the relevant
+ `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
+ This output is human-readable and the format is subject to change over time.
+ 
++run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] `<hook-name>`::
 +
-+NAME
-+----
-+git-hook - Manage configured hooks
++Runs hooks configured for `<hook-name>`, in the same order displayed by `git
++hook list`. Hooks configured this way may be run prepended with `sh -c`, so
++paths containing special characters or spaces should be wrapped in single
++quotes: `command = '/my/path with spaces/script.sh' some args`.
 +
-+SYNOPSIS
-+--------
-+[verse]
-+'git hook'
++OPTIONS
++-------
++--run-hookdir::
++	Overrides the hook.runHookDir config. Must be 'yes', 'warn',
++	'interactive', or 'no'. Specifies how to handle hooks located in the Git
++	hook directory (core.hooksPath).
 +
-+DESCRIPTION
-+-----------
-+A placeholder command. Later, you will be able to list, add, and modify hooks
-+with this command.
++-a::
++--arg::
++	Only valid for `run`.
+++
++Specify arguments to pass to every hook that is run.
 +
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index dfb0f1000f..8e904a1ab5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1087,6 +1087,7 @@ BUILTIN_OBJS += builtin/get-tar-commit-id.o
- BUILTIN_OBJS += builtin/grep.o
- BUILTIN_OBJS += builtin/hash-object.o
- BUILTIN_OBJS += builtin/help.o
-+BUILTIN_OBJS += builtin/hook.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
- BUILTIN_OBJS += builtin/interpret-trailers.o
-diff --git a/builtin.h b/builtin.h
-index b6ce981b73..8df1d36a7a 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -163,6 +163,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
- int cmd_grep(int argc, const char **argv, const char *prefix);
- int cmd_hash_object(int argc, const char **argv, const char *prefix);
- int cmd_help(int argc, const char **argv, const char *prefix);
-+int cmd_hook(int argc, const char **argv, const char *prefix);
- int cmd_index_pack(int argc, const char **argv, const char *prefix);
- int cmd_init_db(int argc, const char **argv, const char *prefix);
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix);
++-e::
++--env::
++	Only valid for `run`.
+++
++Specify environment variables to set for every hook that is run.
++
+ CONFIGURATION
+ -------------
+ include::config/hook.txt[]
 diff --git a/builtin/hook.c b/builtin/hook.c
-new file mode 100644
-index 0000000000..b2bbc84d4d
---- /dev/null
+index 310f696ebf..e823a96238 100644
+--- a/builtin/hook.c
 +++ b/builtin/hook.c
-@@ -0,0 +1,21 @@
-+#include "cache.h"
-+
-+#include "builtin.h"
-+#include "parse-options.h"
-+
-+static const char * const builtin_hook_usage[] = {
-+	N_("git hook"),
-+	NULL
-+};
-+
-+int cmd_hook(int argc, const char **argv, const char *prefix)
+@@ -4,9 +4,11 @@
+ #include "hook.h"
+ #include "parse-options.h"
+ #include "strbuf.h"
++#include "strvec.h"
+ 
+ static const char * const builtin_hook_usage[] = {
+ 	N_("git hook list <hookname>"),
++	N_("git hook run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] <hookname>"),
+ 	NULL
+ };
+ 
+@@ -88,6 +90,40 @@ static int list(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++static int run(int argc, const char **argv, const char *prefix)
 +{
-+	struct option builtin_hook_options[] = {
++	struct strbuf hookname = STRBUF_INIT;
++	struct run_hooks_opt opt;
++	int rc = 0;
++
++	struct option run_options[] = {
++		OPT_STRVEC('e', "env", &opt.env, N_("var"),
++			   N_("environment variables for hook to use")),
++		OPT_STRVEC('a', "arg", &opt.args, N_("args"),
++			   N_("argument to pass to hook")),
 +		OPT_END(),
 +	};
 +
-+	argc = parse_options(argc, argv, prefix, builtin_hook_options,
++	run_hooks_opt_init(&opt);
++
++	argc = parse_options(argc, argv, prefix, run_options,
 +			     builtin_hook_usage, 0);
 +
-+	return 0;
++	if (argc < 1)
++		usage_msg_opt(_("You must specify a hook event to run."),
++			      builtin_hook_usage, run_options);
++
++	strbuf_addstr(&hookname, argv[0]);
++	opt.run_hookdir = should_run_hookdir;
++
++	rc = run_hooks(hookname.buf, &opt);
++
++	strbuf_release(&hookname);
++	run_hooks_opt_clear(&opt);
++
++	return rc;
 +}
-diff --git a/command-list.txt b/command-list.txt
-index a289f09ed6..9ccd8e5aeb 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -103,6 +103,7 @@ git-grep                                mainporcelain           info
- git-gui                                 mainporcelain
- git-hash-object                         plumbingmanipulators
- git-help                                ancillaryinterrogators          complete
-+git-hook                                mainporcelain
- git-http-backend                        synchingrepositories
- git-http-fetch                          synchelpers
- git-http-push                           synchelpers
-diff --git a/git.c b/git.c
-index 9bc077a025..14adac716f 100644
---- a/git.c
-+++ b/git.c
-@@ -528,6 +528,7 @@ static struct cmd_struct commands[] = {
- 	{ "grep", cmd_grep, RUN_SETUP_GENTLY },
- 	{ "hash-object", cmd_hash_object },
- 	{ "help", cmd_help },
-+	{ "hook", cmd_hook, RUN_SETUP_GENTLY },
- 	{ "index-pack", cmd_index_pack, RUN_SETUP_GENTLY | NO_PARSEOPT },
- 	{ "init", cmd_init_db },
- 	{ "init-db", cmd_init_db },
++
+ int cmd_hook(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *run_hookdir = NULL;
+@@ -99,10 +135,10 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_hook_options,
+-			     builtin_hook_usage, 0);
++			     builtin_hook_usage, PARSE_OPT_KEEP_UNKNOWN);
+ 
+ 	/* after the parse, we should have "<command> <hookname> <args...>" */
+-	if (argc < 1)
++	if (argc < 2)
+ 		usage_with_options(builtin_hook_usage, builtin_hook_options);
+ 
+ 	git_config(git_default_config, NULL);
+@@ -128,6 +164,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!strcmp(argv[0], "list"))
+ 		return list(argc, argv, prefix);
++	if (!strcmp(argv[0], "run"))
++		return run(argc, argv, prefix);
+ 
+ 	usage_with_options(builtin_hook_usage, builtin_hook_options);
+ }
+diff --git a/hook.c b/hook.c
+index 37b740d58d..d166d17fb0 100644
+--- a/hook.c
++++ b/hook.c
+@@ -3,6 +3,7 @@
+ #include "hook.h"
+ #include "config.h"
+ #include "run-command.h"
++#include "prompt.h"
+ 
+ void free_hook(struct hook *ptr)
+ {
+@@ -143,6 +144,64 @@ enum hookdir_opt configured_hookdir_opt(void)
+ 	return HOOKDIR_UNKNOWN;
+ }
+ 
++static int should_include_hookdir(const char *path, enum hookdir_opt cfg)
++{
++	struct strbuf prompt = STRBUF_INIT;
++	/*
++	 * If the path doesn't exist, don't bother adding the empty hook and
++	 * don't bother checking the config or prompting the user.
++	 */
++	if (!path)
++		return 0;
++
++	switch (cfg)
++	{
++		case HOOKDIR_ERROR:
++			fprintf(stderr, _("Skipping legacy hook at '%s'\n"),
++				path);
++			/* FALLTHROUGH */
++		case HOOKDIR_NO:
++			return 0;
++		case HOOKDIR_WARN:
++			fprintf(stderr, _("Running legacy hook at '%s'\n"),
++				path);
++			return 1;
++		case HOOKDIR_INTERACTIVE:
++			do {
++				/*
++				 * TRANSLATORS: Make sure to include [Y] and [n]
++				 * in your translation. Only English input is
++				 * accepted. Default option is "yes".
++				 */
++				fprintf(stderr, _("Run '%s'? [Yn] "), path);
++				git_read_line_interactively(&prompt);
++				strbuf_tolower(&prompt);
++				if (starts_with(prompt.buf, "n")) {
++					strbuf_release(&prompt);
++					return 0;
++				} else if (starts_with(prompt.buf, "y")) {
++					strbuf_release(&prompt);
++					return 1;
++				}
++				/* otherwise, we didn't understand the input */
++			} while (prompt.len); /* an empty reply means "Yes" */
++			strbuf_release(&prompt);
++			return 1;
++		/*
++		 * HOOKDIR_UNKNOWN should match the default behavior, but let's
++		 * give a heads up to the user.
++		 */
++		case HOOKDIR_UNKNOWN:
++			fprintf(stderr,
++				_("Unrecognized value for 'hook.runHookDir'. "
++				  "Is there a typo? "));
++			/* FALLTHROUGH */
++		case HOOKDIR_YES:
++		default:
++			return 1;
++	}
++}
++
+ struct list_head* hook_list(const struct strbuf* hookname)
+ {
+ 	struct strbuf hook_key = STRBUF_INIT;
+@@ -176,3 +235,72 @@ struct list_head* hook_list(const struct strbuf* hookname)
+ 	strbuf_release(&hook_key);
+ 	return hook_head;
+ }
++
++void run_hooks_opt_init(struct run_hooks_opt *o)
++{
++	strvec_init(&o->env);
++	strvec_init(&o->args);
++	o->run_hookdir = configured_hookdir_opt();
++}
++
++void run_hooks_opt_clear(struct run_hooks_opt *o)
++{
++	strvec_clear(&o->env);
++	strvec_clear(&o->args);
++}
++
++static void prepare_hook_cp(struct hook *hook, struct run_hooks_opt *options,
++			    struct child_process *cp)
++{
++	if (!hook)
++		return;
++
++	cp->no_stdin = 1;
++	cp->env = options->env.v;
++	cp->stdout_to_stderr = 1;
++	cp->trace2_hook_name = hook->command.buf;
++
++	/*
++	 * Commands from the config could be oneliners, but we know
++	 * for certain that hookdir commands are not.
++	 */
++	cp->use_shell = !hook->from_hookdir;
++
++	/* add command */
++	strvec_push(&cp->args, hook->command.buf);
++
++	/*
++	 * add passed-in argv, without expanding - let the user get back
++	 * exactly what they put in
++	 */
++	strvec_pushv(&cp->args, options->args.v);
++}
++
++int run_hooks(const char *hookname, struct run_hooks_opt *options)
++{
++	struct strbuf hookname_str = STRBUF_INIT;
++	struct list_head *to_run, *pos = NULL, *tmp = NULL;
++	int rc = 0;
++
++	if (!options)
++		BUG("a struct run_hooks_opt must be provided to run_hooks");
++
++	strbuf_addstr(&hookname_str, hookname);
++
++	to_run = hook_list(&hookname_str);
++
++	list_for_each_safe(pos, tmp, to_run) {
++		struct child_process hook_proc = CHILD_PROCESS_INIT;
++		struct hook *hook = list_entry(pos, struct hook, list);
++
++		if (hook->from_hookdir &&
++		    !should_include_hookdir(hook->command.buf, options->run_hookdir))
++			continue;
++
++		prepare_hook_cp(hook, options, &hook_proc);
++
++		rc |= run_command(&hook_proc);
++	}
++
++	return rc;
++}
+diff --git a/hook.h b/hook.h
+index 1c4b953aec..c24b2c9ecd 100644
+--- a/hook.h
++++ b/hook.h
+@@ -1,6 +1,7 @@
+ #include "config.h"
+ #include "list.h"
+ #include "strbuf.h"
++#include "strvec.h"
+ 
+ struct hook {
+ 	struct list_head list;
+@@ -36,6 +37,31 @@ enum hookdir_opt
+  */
+ enum hookdir_opt configured_hookdir_opt(void);
+ 
++struct run_hooks_opt
++{
++	/* Environment vars to be set for each hook */
++	struct strvec env;
++
++	/* Args to be passed to each hook */
++	struct strvec args;
++
++	/*
++	 * How should the hookdir be handled?
++	 * Leave the RUN_HOOKS_OPT_INIT default in most cases; this only needs
++	 * to be overridden if the user can override it at the command line.
++	 */
++	enum hookdir_opt run_hookdir;
++};
++
++void run_hooks_opt_init(struct run_hooks_opt *o);
++void run_hooks_opt_clear(struct run_hooks_opt *o);
++
++/*
++ * Runs all hooks associated to the 'hookname' event in order. Each hook will be
++ * passed 'env' and 'args'.
++ */
++int run_hooks(const char *hookname, struct run_hooks_opt *options);
++
+ /* Free memory associated with a 'struct hook' */
+ void free_hook(struct hook *ptr);
+ /* Empties the list at 'head', calling 'free_hook()' on each entry */
 diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-new file mode 100755
-index 0000000000..34b0df5216
---- /dev/null
+index a9b1b046c1..1fca83d536 100755
+--- a/t/t1360-config-based-hooks.sh
 +++ b/t/t1360-config-based-hooks.sh
-@@ -0,0 +1,11 @@
-+#!/bin/bash
+@@ -115,7 +115,10 @@ test_expect_success 'hook.runHookDir = no is respected by list' '
+ 
+ 	git hook list pre-commit >actual &&
+ 	# the hookdir annotation is translated
+-	test_i18ncmp expected actual
++	test_i18ncmp expected actual &&
 +
-+test_description='config-managed multihooks, including git-hook command'
++	git hook run pre-commit 2>actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'hook.runHookDir = error is respected by list' '
+@@ -129,6 +132,13 @@ test_expect_success 'hook.runHookDir = error is respected by list' '
+ 
+ 	git hook list pre-commit >actual &&
+ 	# the hookdir annotation is translated
++	test_i18ncmp expected actual &&
 +
-+. ./test-lib.sh
++	cat >expected <<-EOF &&
++	Skipping legacy hook at '\''$(pwd)/.git/hooks/pre-commit'\''
++	EOF
 +
-+test_expect_success 'git hook command does not crash' '
-+	git hook
++	git hook run pre-commit 2>actual &&
+ 	test_i18ncmp expected actual
+ '
+ 
+@@ -143,6 +153,14 @@ test_expect_success 'hook.runHookDir = warn is respected by list' '
+ 
+ 	git hook list pre-commit >actual &&
+ 	# the hookdir annotation is translated
++	test_i18ncmp expected actual &&
++
++	cat >expected <<-EOF &&
++	Running legacy hook at '\''$(pwd)/.git/hooks/pre-commit'\''
++	"Legacy Hook"
++	EOF
++
++	git hook run pre-commit 2>actual &&
+ 	test_i18ncmp expected actual
+ '
+ 
+@@ -182,7 +200,7 @@ test_expect_success 'git hook list removes skipped inlined hook' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'hook.runHookDir = interactive is respected by list' '
++test_expect_success 'hook.runHookDir = interactive is respected by list and run' '
+ 	setup_hookdir &&
+ 
+ 	test_config hook.runHookDir "interactive" &&
+@@ -193,7 +211,55 @@ test_expect_success 'hook.runHookDir = interactive is respected by list' '
+ 
+ 	git hook list pre-commit >actual &&
+ 	# the hookdir annotation is translated
+-	test_i18ncmp expected actual
++	test_i18ncmp expected actual &&
++
++	test_write_lines n | git hook run pre-commit 2>actual &&
++	! grep "Legacy Hook" actual &&
++
++	test_write_lines y | git hook run pre-commit 2>actual &&
++	grep "Legacy Hook" actual
 +'
 +
-+test_done
++test_expect_success 'inline hook definitions execute oneliners' '
++	test_config hook.pre-commit.command "echo \"Hello World\"" &&
++
++	echo "Hello World" >expected &&
++
++	# hooks are run with stdout_to_stderr = 1
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'inline hook definitions resolve paths' '
++	write_script sample-hook.sh <<-EOF &&
++	echo \"Sample Hook\"
++	EOF
++
++	test_when_finished "rm sample-hook.sh" &&
++
++	test_config hook.pre-commit.command "\"$(pwd)/sample-hook.sh\"" &&
++
++	echo \"Sample Hook\" >expected &&
++
++	# hooks are run with stdout_to_stderr = 1
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'hookdir hook included in git hook run' '
++	setup_hookdir &&
++
++	echo \"Legacy Hook\" >expected &&
++
++	# hooks are run with stdout_to_stderr = 1
++	git hook run pre-commit 2>actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'out-of-repo runs excluded' '
++	setup_hooks &&
++
++	nongit test_must_fail git hook run pre-commit
+ '
+ 
+ test_expect_success 'hook.runHookDir is tolerant to unknown values' '
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
