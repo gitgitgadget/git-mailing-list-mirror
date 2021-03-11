@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87772C4361A
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83DC0C433DB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5429064FDC
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4035F64FAA
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230051AbhCKCLo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:11:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
+        id S230173AbhCKCMG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:12:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbhCKCLb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 21:11:31 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2498C061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:30 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id q77so23900371ybq.0
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:30 -0800 (PST)
+        with ESMTP id S229791AbhCKCLi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 21:11:38 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0E4C061762
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:37 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id o7so14419094qtw.7
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=LK9AvPeCqTvaxfb5WC9sejNPiAu/1Rrn4PDquj7Aux4=;
-        b=DLSXagUHTTMmeFys3lJn3Y+B5s0XlY3nJF8CSMo8b5R7Wk3zZH6PwLhzpaBVzJTaDz
-         hFomlGjfZ2YNH39mVEisDDkloN0IIL34DZoh8iIxMIRbeXe+VHYBWQ3Q+3HjR3Qd6Csj
-         /xlgTlRUvCGJbE2pp3vSj2JWItcMw6DRWdxWgSJAJgLoZ3IkhtWceX37JmIkxv9bEENo
-         n05oIyUk/TXybAFvJKPm2LoHXJAOt7N5W/cwp495EB4AjZQUrHTdLGQjs0pNVcm7IwO+
-         i4VU8ySCCbxJsgDR7A8Gw250BDaqs/Zp5oCttsk7b4jNeqwnuuB2lBeKl+8aWtHAUDEI
-         3boA==
+        bh=Bnq0SMExdgj7ERjG7VLd2BP1kiGs0pvkvTHdIxv+kaE=;
+        b=HoAtqWZWb8Gg/NS5WW/UxdtqamIcVebB1Ouf23Lo2zl3uEZ53ERtsoQW/xF43tVk/u
+         tppt0S6Xqv+BiOiP1MWQIT2N9cgC3zfEUqvG+YFoIWKaPVrH6JPTeKiuwlqvI0FzAOkA
+         dC09PyNM+DjlqgTlA+M1Rcxm3sL/MiiXvlDhTbVekfXoFI7/cXkBChRRGNVezsDveXg6
+         AW+CLykWMCkJ6Z5XH9Y7ErHTo/OS8G2B+0uT8OxQxgMiMSOpDjKe+PXgHXSh9cer15k7
+         sJImq/W+wAMPDmo3SqdRY7CDZr2hPN76kZQW/0fYVAZV26UDYB9+NI5lHw6a4J5SyDed
+         KFpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=LK9AvPeCqTvaxfb5WC9sejNPiAu/1Rrn4PDquj7Aux4=;
-        b=bgcNECVQlOCJOnWPrMHleRrw8sDWeo61Y8PT2DaD5zoT6QRHe1L7U6YPfwLcDjhrul
-         1GLOUVMNeqzev5onFR4PLJj3dBt28zq9igZpq93y3jcYZWe5TnadBbpvm+qPXXbXyspv
-         OPfSjqNlinmjwBbny728kpJZX0btNeWsul0Cy1nTT/fnZKoj+zCCskSu30DCS6pbSZZo
-         b/G3O6kD5XPVSdtkBtzQ8k/PLRnMtNOEiTLEaREZtPRk+y5IWUGwyNKl5H9sdjAj+rTk
-         Yae6yqPSz3njzDe/lqXmsCEFwwj6xOagvG3xjm79zhGB4yahisel8btPj0kzEdf/WNiZ
-         S5Cw==
-X-Gm-Message-State: AOAM533p/8aqLfps9Ii1FJzbTXzTKCgO8O+CXKoThGuO7WRZzBbd4jIr
-        YHzkeWlHA0ZHke78vjiZYxAUUKB4aKB/uyJecwFOaL1sdsDfhlV5zry5kjx+nvsqnSAH1zYNovu
-        grma73hmskFpEl9PO4hTU9dQyQYz2IDgBeP8VOWAwT9p+HTQ+jHgGUaMs9vBY4C8e0wPQX1k7hQ
+        bh=Bnq0SMExdgj7ERjG7VLd2BP1kiGs0pvkvTHdIxv+kaE=;
+        b=M4WmNKgW8YikiX1515GwpLzVvb3NcZTexOabNvw7LZhZS7N36hL31vran484B12Mtm
+         0I8U27qBchnCe2aQ8dgZ5mVkSLFjfyCsPAKe730shHETaAEvKDvFu+XWPrzbzelGTxIV
+         qXwEeIFLFSutccuMsKK7t/QLa8/3Zr7F+KWJAloGD7hO7H/7hJ7KHr4NBRY8WUtbhIrV
+         tJud36MCRpR7sHXJwgdLJt/9KrS47l9WLYI+qtes7xyBPhaQ1zSNYXw9kMk7XH3bc1gW
+         L2n8AeZlfDnezCJzSFtUFbQxC5obpUWofZVFFkBZeByW+m7GvnLHxRJ+7eEMj+JsxKF3
+         GZnQ==
+X-Gm-Message-State: AOAM531CHPiAEC9A8iYZYI8gwy8+PBUuJIGzVsKX4sYxPncGj+Z/gqS2
+        yzflDLU9BIzEo5bQH8eMc6nwQoQxzpExRhk0Vnd37M/vwT735rNtg+XUaa976Y7gVilAOf9xvcC
+        NuGLa9Xx6pGI0BtbfeVF6qJ1pKzMoo6O7ER84oD4vzDBc4C1NUjDwIZOMRkkKH0NurHoXfUzY/A
         ==
-X-Google-Smtp-Source: ABdhPJyKqclLp6AbQL7FIfKvU13w3s1a3en+HbOej/qhdySbAjJ2/xiXGkRFLLthh79+t8ZcDArYuPZBEz0Kg6/390g=
+X-Google-Smtp-Source: ABdhPJwh9ws8WNEdoYLlZE5iSBg3HGpqVE1CluthIKNwdEadHUxrwt06hARZt5Unl5a8skf9Y2/GpoOeBQvMTvD1xag=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:a25:6c46:: with SMTP id
- h67mr8529551ybc.224.1615428690141; Wed, 10 Mar 2021 18:11:30 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:22 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:262a:: with SMTP id
+ gv10mr6016177qvb.50.1615428697038; Wed, 10 Mar 2021 18:11:37 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:26 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-23-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-27-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 22/37] rebase: teach pre-rebase to use hook.h
+Subject: [PATCH v8 26/37] hooks: convert 'post-checkout' hook to hook library
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,79 +70,186 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using hook.h instead of run-command.h to run hooks, pre-rebase hooks
-can now be specified in the config as well as in the hookdir. pre-rebase
-is not called anywhere besides builtin/rebase.c.
+By using the 'hook.h' library, 'post-checkout' hooks can now be
+specified in the config as well as in the hook directory.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt | 3 +++
- builtin/rebase.c           | 9 +++++++--
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ Documentation/githooks.txt |  2 ++
+ builtin/checkout.c         | 19 ++++++++++++++-----
+ builtin/clone.c            |  8 ++++++--
+ builtin/worktree.c         | 31 +++++++++++++++----------------
+ reset.c                    | 16 ++++++++++++----
+ 5 files changed, 49 insertions(+), 27 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 00f88912cd..e3a0375827 100644
+index f2178dbc83..362224a03b 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -206,6 +206,9 @@ two parameters.  The first parameter is the upstream from which
- the series was forked.  The second parameter is the branch being
- rebased, and is not set when rebasing the current branch.
+@@ -231,6 +231,8 @@ This hook can be used to perform repository validity checks, auto-display
+ differences from the previous HEAD if different, or set working dir metadata
+ properties.
  
-+Hooks executed during 'pre-rebase' will run in parallel, unless hook.jobs is
-+configured to 1.
++Hooks executed during 'post-checkout' will not be parallelized.
 +
- post-checkout
- ~~~~~~~~~~~~~
+ post-merge
+ ~~~~~~~~~~
  
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index de400f9a19..c35b5ba452 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -28,6 +28,7 @@
- #include "sequencer.h"
- #include "rebase-interactive.h"
- #include "reset.h"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 2d6550bc3c..f287b5e643 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "dir.h"
++#include "hook.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "merge-recursive.h"
+@@ -104,13 +105,21 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
+ {
+-	return run_hook_le(NULL, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
+-			   changed ? "1" : "0", NULL);
++	struct run_hooks_opt opt;
++	int rc;
++
++	run_hooks_opt_init_sync(&opt);
++
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+-
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
++		     changed ? "1" : "0",
++		     NULL);
++	rc = run_hooks("post-checkout", &opt);
++	run_hooks_opt_clear(&opt);
++	return rc;
+ }
+ 
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 51e844a2de..52f2a5ecb4 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,7 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
 +#include "hook.h"
  
- #define DEFAULT_REFLOG_ACTION "rebase"
- 
-@@ -1318,6 +1319,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	char *squash_onto_name = NULL;
- 	int reschedule_failed_exec = -1;
- 	int allow_preemptive_ff = 1;
+ /*
+  * Overall FIXMEs:
+@@ -771,6 +772,8 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
 +	struct run_hooks_opt hook_opt;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
-@@ -1431,6 +1433,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	};
- 	int i;
++	run_hooks_opt_init_sync(&hook_opt);
  
-+	run_hooks_opt_init_async(&hook_opt);
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -816,8 +819,9 @@ static int checkout(int submodule_progress)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(&null_oid),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(&null_oid), oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks("post-checkout", &hook_opt);
++	run_hooks_opt_clear(&hook_opt);
+ 
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct strvec args = STRVEC_INIT;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 1cd5c2016e..8b06d121e5 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -13,6 +13,7 @@
+ #include "utf8.h"
+ #include "worktree.h"
+ #include "quote.h"
++#include "hook.h"
+ 
+ static const char * const worktree_usage[] = {
+ 	N_("git worktree add [<options>] <path> [<commit-ish>]"),
+@@ -383,22 +384,20 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		const char *hook = find_hook("post-checkout");
+-		if (hook) {
+-			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
+-			cp.no_stdin = 1;
+-			cp.stdout_to_stderr = 1;
+-			cp.dir = path;
+-			cp.env = env;
+-			cp.argv = NULL;
+-			cp.trace2_hook_name = "post-checkout";
+-			strvec_pushl(&cp.args, absolute_path(hook),
+-				     oid_to_hex(&null_oid),
+-				     oid_to_hex(&commit->object.oid),
+-				     "1", NULL);
+-			ret = run_command(&cp);
+-		}
++		struct run_hooks_opt opt;
++		run_hooks_opt_init_sync(&opt);
 +
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
-@@ -2032,9 +2036,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
++		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(&null_oid),
++			     oid_to_hex(&commit->object.oid),
++			     "1",
++			     NULL);
++		opt.dir = path;
++
++		ret = run_hooks("post-checkout", &opt);
++
++		run_hooks_opt_clear(&opt);
  	}
  
- 	/* If a hook exists, give it a chance to interrupt*/
-+	strvec_pushl(&hook_opt.args, options.upstream_arg, argc ? argv[0] : NULL, NULL);
- 	if (!ok_to_skip_pre_rebase &&
--	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
--			argc ? argv[0] : NULL, NULL))
-+	    run_hooks("pre-rebase", &hook_opt))
- 		die(_("The pre-rebase hook refused to rebase."));
+ 	strvec_clear(&child_env);
+diff --git a/reset.c b/reset.c
+index 2f4fbd07c5..85ee75f7fd 100644
+--- a/reset.c
++++ b/reset.c
+@@ -7,6 +7,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "unpack-trees.h"
++#include "hook.h"
  
- 	if (options.flags & REBASE_DIFFSTAT) {
-@@ -2114,6 +2118,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	ret = !!run_specific_rebase(&options, action);
+ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	       const char *switch_to_branch, unsigned flags,
+@@ -126,10 +127,17 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+ 	}
+-	if (run_hook)
+-		run_hook_le(NULL, "post-checkout",
+-			    oid_to_hex(orig ? orig : &null_oid),
+-			    oid_to_hex(oid), "1", NULL);
++	if (run_hook) {
++		struct run_hooks_opt opt;
++		run_hooks_opt_init_sync(&opt);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(orig ? orig : &null_oid),
++			     oid_to_hex(oid),
++			     "1",
++			     NULL);
++		run_hooks("post-checkout", &opt);
++		run_hooks_opt_clear(&opt);
++	}
  
- cleanup:
-+	run_hooks_opt_clear(&hook_opt);
- 	strbuf_release(&buf);
- 	strbuf_release(&revisions);
- 	free(options.head_name);
+ leave_reset_head:
+ 	strbuf_release(&msg);
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
