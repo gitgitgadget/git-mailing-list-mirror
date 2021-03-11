@@ -2,120 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 182BDC433DB
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 13:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A842C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 14:09:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF2DE64FAA
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 13:13:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7FFD64FA9
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 14:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233337AbhCKNNS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 08:13:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
+        id S233876AbhCKOJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 09:09:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233306AbhCKNNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 08:13:04 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30EC8C061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 05:13:04 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id ha17so2687471pjb.2
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 05:13:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=g0EgguUV+if6iAW/X6lmqRfh963GqtYZa5vyXfzyVJc=;
-        b=Hqns9CfoE/4ukN4hp6Nc3jbr7LSkn9syvZyFbnJjU92vmt0LQ3sow1EDwd4gtlj0hs
-         gTe2HAIKNmwuDoo4BBTKMC8ExtsgdfmECVotZ4TUpvbxblfI40Tw+PLopE4cYkXubjYA
-         mEZ1qzep1aZuDguPyALOPhE9njeOj3y2J7Guyx7gjvihHSot5YnnUvRSoPp8pGxUdHDz
-         DodQX3hj1tK3O1oH037MYyxylA9fE1OPdJAbxYihVfefkKvN/R/ZVh1oHEyx7mp/Q3Vl
-         N63uLoTFhN1IbwtFg0xscyWvkVsZC0wKCm8B+Lsrnh+mcON0k8VvNi8dCA4pn1GLB1y9
-         eB3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=g0EgguUV+if6iAW/X6lmqRfh963GqtYZa5vyXfzyVJc=;
-        b=tAbUvdIIQ6WoEHebjKGX5n9nNvczwh1KcxYeZ2KSznZ3Fqb4Bj24T0H0UWtNSNThw3
-         r/FtZislG68AUXGNYET9N2CXuHTklB6tECKpX1MBrOJ5SirDBflOZW2Ztu9UBDO5CCpT
-         eRzmcbAg+drYITSwVNEKt1p6JHIxQrYUvkuIHcbzgySSAMtCm24r5MvLjwn4VUGUA9oR
-         X5XA4WxMzOYAyy+0qgA0shNxXrwgRqJnqJM8+GOXlvhmpZPvHkOz9B3bo6jHP9+V3sKi
-         XRhN6JyOMXqkrSXTM9SwXKTvHCUOnu9mbuQtrGIo1nZLI0rm7S55ZUd6Hq3b9R3rmcH8
-         etpQ==
-X-Gm-Message-State: AOAM530NmgKIz91CEtMmB44YhLGeLEsmqTqdFtaRD91D9obWk6wwFu/X
-        OSB0XRwFFDaktnJhTcgBGKWHU/btRqAetA==
-X-Google-Smtp-Source: ABdhPJwdJmXzmrShuABY03P1rGVWCbM81a7brfwfDByKyRlbu2RN/+P+se78WPlqzfpuHE5I1qD0Ag==
-X-Received: by 2002:a17:902:fe0d:b029:e5:ffb8:1c28 with SMTP id g13-20020a170902fe0db02900e5ffb81c28mr7857393plj.62.1615468383620;
-        Thu, 11 Mar 2021 05:13:03 -0800 (PST)
-Received: from [192.168.43.80] (subs03-180-214-233-84.three.co.id. [180.214.233.84])
-        by smtp.gmail.com with ESMTPSA id b186sm2449500pfb.170.2021.03.11.05.13.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Mar 2021 05:13:03 -0800 (PST)
-Subject: Re: [PATCH 3/3] po/README: document l10n conventions
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-References: <20210311125511.51152-1-bagasdotme@gmail.com>
- <20210311125511.51152-4-bagasdotme@gmail.com>
-Cc:     git@vger.kernel.org
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Message-ID: <9b50b5e1-33c2-2562-4b3a-f25db3f6ac1c@gmail.com>
-Date:   Thu, 11 Mar 2021 20:13:01 +0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        with ESMTP id S233874AbhCKOJS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 09:09:18 -0500
+Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DCF5C061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 06:09:18 -0800 (PST)
+Received: from fencepost.gnu.org ([2001:470:142:3::e]:39248)
+        by eggs.gnu.org with esmtp (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1lKM04-0002mo-3s
+        for git@vger.kernel.org; Thu, 11 Mar 2021 09:09:16 -0500
+Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:54525)
+        by fencepost.gnu.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+        (Exim 4.82)
+        (envelope-from <tsdh@gnu.org>)
+        id 1lKM02-0004DM-R5
+        for git@vger.kernel.org; Thu, 11 Mar 2021 09:09:14 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailauth.nyi.internal (Postfix) with ESMTP id 622A827C0054
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 09:09:14 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 11 Mar 2021 09:09:14 -0500
+X-ME-Sender: <xms:iiRKYKEPqQClM-2uMZBx38_kxjL_NesxXoZFnSY8f7IJebBDskDNsQ>
+    <xme:iiRKYLTO55rRSoOTBvMtObJfBiLTBsEwvW3eLklILxynAHLzASPz2UZxlMGph6-6X
+    E5YVhLD_1jyJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvtddgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpegfhffvufffkfggtgesthdtredttd
+    ertdenucfhrhhomhepvfgrshhsihhlohcujfhorhhnuceothhsughhsehgnhhurdhorhhg
+    qeenucggtffrrghtthgvrhhnpeeltefgteeklefgtdevleekgedugefgheefkefgveefud
+    euudeitdfhtdduieehieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeeg
+    iedrkedtrdejhedrvdefudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehthhhorhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithih
+    qdekieejfeekjeekgedqieefhedvleekqdhtshguhheppehgnhhurdhorhhgsehfrghsth
+    hmrghilhdrfhhm
+X-ME-Proxy: <xmx:iiRKYBCwfX9Tprbe4EXOIU7Ec7C9bhsus1sE7gk6UVcjaQBuzwUS_Q>
+    <xmx:iiRKYL1DHSVhsBETVMuvNfPjRJolJ8XH6lJbIWuARXM8YmIRYHwK8Q>
+    <xmx:iiRKYPWujH8YWH0ZmJwDTWwu2Zt-WCAY-fZ-IrNIklT4dknZVSD36g>
+    <xmx:iiRKYML5pqcNtb0zyd2E0KyYw2D_Ueuv7vT1W_xClxKoNgqdmJGSH23hjwo>
+Received: from thinkpad-t440p (p2e504be7.dip0.t-ipconnect.de [46.80.75.231])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 9E9231080068
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 09:09:13 -0500 (EST)
+User-agent: mu4e 1.5.9; emacs 28.0.50
+From:   Tassilo Horn <tsdh@gnu.org>
+To:     git@vger.kernel.org
+Subject: [Bug] Stashing during merge loses MERGING state
+Date:   Thu, 11 Mar 2021 15:00:58 +0100
+Message-ID: <875z1xwznd.fsf@gnu.org>
 MIME-Version: 1.0
-In-Reply-To: <20210311125511.51152-4-bagasdotme@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/03/21 19.55, Bagas Sanjaya wrote:
-> Document things that l10n contributors must folow.
-> 
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-> ---
->   po/README | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Oh oh oh, typo there. folow -> follow.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> diff --git a/po/README b/po/README
-> index eda7edf4e6..e1a0494b17 100644
-> --- a/po/README
-> +++ b/po/README
-> @@ -344,3 +344,24 @@ Below are the usage examples:
->           po-helper.sh check XX.po
->   
->   Run po-helper.sh without arguments for usage help.
-> +
-> +
-> +Conventions
-> +-----------
-> +
-> +There are some conventions that l10n contributors must follow:
-> +
-> +   1. The subject of each commit should be prefixed with `l10n: `.
-> +   2. The length of commit log title (subject) should be less than 50
-> +      characters, and the length of other lines (commit log body)
-> +      should be no more than 72 characters.
-> +   3. Add "Signed-off-by" trailer to your commit log, like other
-> +      commits in Git. You can automatically add the trailer by
-> +      committing with `git commit -s`.
-> +   4. Check syntax with `msgfmt` or `po-helper.sh check` before
-> +      committing.
-> +   5. Squash trivial commits to make history clear.
-> +   6. Do NOT edit files outside po/ directory.
-> +   7. Other subsystems ("git-gui", "gitk", and Git itself) have their
-> +      own workflow. See Documentation/SubmittingPatches if you want
-> +      to make contributions to these subsystems.
-> 
+I did a large merge, resolved the conflicts but still had compile
+errors.  In order to check how stuff has worked before the merge, I
+stashed all changes, and eventually popped the stash.  Then the MERGING
+state was gone and committing created a single-parent commit rather than
+a merge commit with two parents.  I was lucky to see that before
+pushing, so all is good.
 
--- 
-An old man doll... just what I always wanted! - Clara
+Here is a simple recipe with a publicly available repo:
+
+```sh
+git clone https://github.com/magit/magit.git
+# Current master is 4735b9254105eb7dd538f979d8b4c6ab96b827b9
+cd magit
+git merge origin/km/reshelve-rewrite # currently 0073bff21c826a57a4b48076074bdbba092d4b67
+# Conflict in magit-extras.el
+git add lisp/magit-extras.el
+git stash
+# The MERGING state is gone
+git stash pop
+# And it won't come back, so when I commit now, my "merge" has just
+# one parent.
+```
+
+What did you expect to happen? (Expected behavior)
+
+I expected that stashing during a merge will keep the MERGING state.
+Or that popping the stash again would also restore the MERGING state.
+
+What happened instead? (Actual behavior)
+
+The MERGING state is lost.
+
+What's different between what you expected and what actually happened?
+
+I've lost the MERGING state, thus committing results in a one-parent
+commit rather than a 2-parent merge commit.
+
+Anything else you want to add:
+
+In my original situation, I've copied the working tree to /tmp, resetted
+to origin/master, re-initiated the merge, copied the modified files from
+the /tmp backup, staged the changes, committed, and pushed.
+
+I wonder if there would have been a better approach to come from the
+"accidentally having a single-parent commit containing all merged and
+resolution changes" state to a proper merge commit state.  In the end,
+the tree was correct, just the second parent to the commit on the merged
+branch was missing.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.30.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.11.4-arch1-1 #1 SMP PREEMPT Sun, 07 Mar 2021 18:00:49 +0000 x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.33
+$SHELL (typically, interactive shell): /usr/bin/fish
+
+
+[Enabled Hooks]
