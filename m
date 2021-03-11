@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82A90C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58B4DC433E9
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:39:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A6A864D99
+	by mail.kernel.org (Postfix) with ESMTP id 1A05E64FCD
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:39:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbhCKAiv (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S230212AbhCKAiv (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 10 Mar 2021 19:38:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50532 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbhCKAig (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 19:38:36 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D44D5C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:35 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id d15so25361956wrv.5
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:35 -0800 (PST)
+        with ESMTP id S230409AbhCKAih (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 19:38:37 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C9FC061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:37 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id u16so25338544wrt.1
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fcQkjCw6zC06N7gSUFzG0EzW9qGvc97YSBo5+h04zSE=;
-        b=aMBGdwreoGCIZbtaMq5yrMLmywq4rFNjwuqdqpnPCUSEWSQy4VSzVDztasgXwCId07
-         YU0eJGpNVAKLTqo59r2FzUUs/cnwJmYSKfY03W5lxB3kF1z00+5pX/CDSu2EFJItsiY6
-         7jEjTobvg7v2nmxLKH0Euss4uV7mDYR3BM4tRTuax3h9IDJsFGf0rgKocbefqjS915fm
-         4sRS1dlUB4hIDoxJNN9sLOh0E8gMGXzfwonKZi7KYsjCB/1LWLOW2SqQHTMwJYmGJkMo
-         zKxxghTvWcZbv+umPNyvAI6PefC1cI/H+OyZGg35GTsGWC9/FH6sElq3OzqAPFDxhYZp
-         5/SA==
+        bh=XMmTPgcNN7fjlnFPTnl/MMazJMOaP5Kcor5uUNPOJEM=;
+        b=W+qA/dzaN0ZxI5LNQ+uy8zVmbiA1sHL2wwXVFBVRwStbP7N5GUQimpRBK6Vu+4K/GM
+         ntmPNXvM42Y5XeP2TZ6ELDnwBoEbCbnlfmQi75hSlcnq8vJuRhg/rLsyc3Lz4nuOa8FQ
+         0YO+CZwu94QjrIcfAiFYZ1hasytHbJZaZ7nj1wxz5ovXDmS/J/4fGDUo75QPvqepqdPf
+         BsXudSUbP3mjV7uewI0WlPq2Jiqevi02GCcx4+S74/Vv3cl8+5of+AXQ+Vf9dEHWEY9N
+         5HqfTwwfG1Y0hbdxMqbRYgdCQ4LLjBIqJMgIBg8c7JqtcSv2kVKL5+jk0Ja7lzWAMSO9
+         cnKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fcQkjCw6zC06N7gSUFzG0EzW9qGvc97YSBo5+h04zSE=;
-        b=HjnP3dYJ06rcp+iMlDFFGrKfDiSDtMQ6kgODKF96FbXVcegEiEyOMUpWyaQqeR+LFc
-         7qaGwU5y+roixOYrEghef5zdE8sHDOu9wvapQkotfDlOkKn52rQDXAhMA2aFoDsFRbfC
-         KlZEaghoFHZuyRoZaSE8tpFEzT2TtJOp6NbJIUB7JCJAZAeK+vDV+tlpWoN+3Hvvtzo+
-         XLJQi/zHI6pCW/rk5Dil6mx2KXzuSk7DXki/WS8enx5et0Ixi9+QQwku2DKFHYoWGUka
-         OLzjhopk5d1Tivt6IP2Qz2vF9HuDDiBPOff1MdSdMM1xHMw/MabP/jxAHK14J0C3wpko
-         OXqA==
-X-Gm-Message-State: AOAM531Ozf2/dyMTzhr1Ql/k1AYsmG6iDBfeO/XoQ7zL1LIoPFyOr+k7
-        7zTmo0mqLBAl/q1VUohYw2VDpgdEP0I=
-X-Google-Smtp-Source: ABdhPJwMjJ8JymazwUMAY6L4bnvyIFHaOBQsIdN5BIqUo1Wvg7gn4uWW8ouXEp6PkkMtGmq0bwGO6Q==
-X-Received: by 2002:adf:df10:: with SMTP id y16mr6006493wrl.372.1615423114556;
-        Wed, 10 Mar 2021 16:38:34 -0800 (PST)
+        bh=XMmTPgcNN7fjlnFPTnl/MMazJMOaP5Kcor5uUNPOJEM=;
+        b=q2ba9tKFYxDF/5aLQ/YbcMEFpKMBmit8vZYaklcy4iwyRInCqJG74S6hp6eL4FzdOc
+         RgMpfVKREnBuAwU5hUe+JqLI79E9vnbe/md0RZP05ZZfcE8w6PextMNhOhYWh34Tzvl8
+         ptlrc1Kf1Rmg29TluB4PzChiI1Iy/prr8doRUrVn1yGsCoklSIacnPzqiJ4EWyqztxOt
+         nkf/stqzTByyzkSVmM6VFr02XP/idopEiyEmRtmGV0mg0hPKZhw+2B0xPpTzb1oNE21J
+         /D1EVGGZ95/1m36yl/Ov2DKfDmN4ccZRLsLNZCYmuue04MCOy+F4yXnXMBcT7bcq9TAE
+         7HKA==
+X-Gm-Message-State: AOAM532arSaenpmKM6kBzaXcj62UdDvAkJ/o3EFFhxxVMAumv0GroGO/
+        NGQtfcxV6+uI0jBFkYii3uWra4iFUcw=
+X-Google-Smtp-Source: ABdhPJyePovR+kbJPH6SdbTn75Uj1sAr7SxpL2JLgUzBXi3o6CX8QZYtcZ7NWZhv97dDfX2Yin5fuw==
+X-Received: by 2002:a05:6000:1a8c:: with SMTP id f12mr5929214wry.173.1615423115812;
+        Wed, 10 Mar 2021 16:38:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h25sm1273362wml.32.2021.03.10.16.38.34
+        by smtp.gmail.com with ESMTPSA id m17sm1004329wrx.92.2021.03.10.16.38.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 16:38:34 -0800 (PST)
-Message-Id: <a57cc981608c67b068e1c32a68363c3180cab6e5.1615423112.git.gitgitgadget@gmail.com>
+        Wed, 10 Mar 2021 16:38:35 -0800 (PST)
+Message-Id: <dc146a867b16cefeee71104f1967c5d325f5ffee.1615423112.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
 References: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
         <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Mar 2021 00:38:26 +0000
-Subject: [PATCH v3 3/8] merge-ort: add data structures for an alternate tree
- traversal
+Date:   Thu, 11 Mar 2021 00:38:28 +0000
+Subject: [PATCH v3 5/8] merge-ort: precompute whether directory rename
+ detection is needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,70 +84,222 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In order to determine whether directory rename detection is needed, we
-as a pre-requisite need a way to traverse through all the files in a
-given tree before visiting any directories within that tree.
-traverse_trees() only iterates through the entries in the order they
-appear, so add some data structures that will store all the entries as
-we iterate through them in traverse_trees(), which will allow us to
-re-traverse them in our desired order.
+The point of directory rename detection is that if one side of history
+renames a directory, and the other side adds new files under the old
+directory, then the merge can move those new files into the new
+directory.  This leads to the following important observation:
+
+  * If the other side does not add any new files under the old
+    directory, we do not need to detect any renames for that directory.
+
+Similarly, directory rename detection had an important requirement:
+
+  * If a directory still exists on one side of history, it has not been
+    renamed on that side of history.  (See section 4 of t6423 or
+    Documentation/technical/directory-rename-detection.txt for more
+    details).
+
+Using these two bits of information, we note that directory rename
+detection is only needed in cases where (1) directories exist in the
+merge base and on one side of history (i.e. dirmask == 3 or dirmask ==
+5), and (2) where there is some new file added to that directory on the
+side where it still exists (thus where the file has filemask == 2 or
+filemask == 4, respectively).  This has to be done in two steps, because
+we have the dirmask when we are first considering the directory, and
+won't get the filemasks for the files within it until we recurse into
+that directory.  So, we save
+  dir_rename_mask = dirmask - 1
+when we hit a directory that is missing on one side, and then later look
+for cases of
+  filemask == dir_rename_mask
+
+One final note is that as soon as we hit a directory that needs
+directory rename detection, we will need to detect renames in all
+subdirectories of that directory as well due to the "majority rules"
+decision when files are renamed into different directory hierarchies.
+We arbitrarily use the special value of 0x07 to record when we've hit
+such a directory.
+
+The combination of all the above mean that we introduce a variable
+named dir_rename_mask (couldn't think of a better name) which has one
+of the following values as we traverse into a directory:
+   * 0x00: directory rename detection not needed
+   * 0x02 or 0x04: directory rename detection only needed if files added
+   * 0x07: directory rename detection definitely needed
+
+We then pass this value through to add_pairs() so that it can mark
+location_relevant as true only when dir_rename_mask is 0x07.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ merge-ort.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 61 insertions(+), 6 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 83aa4c08121f..d49cfa8b030b 100644
+index f8f7d06d481a..5840832cf3ed 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -51,6 +51,12 @@ enum merge_side {
- 	MERGE_SIDE2 = 2
- };
- 
-+struct traversal_callback_data {
-+	unsigned long mask;
-+	unsigned long dirmask;
-+	struct name_entry names[3];
-+};
-+
- struct rename_info {
- 	/*
- 	 * All variables that are arrays of size 3 correspond to data tracked
-@@ -102,6 +108,22 @@ struct rename_info {
+@@ -108,6 +108,14 @@ struct rename_info {
  	 */
  	struct strset relevant_sources[3];
  
 +	/*
-+	 * callback_data_*: supporting data structures for alternate traversal
-+	 *
-+	 * We sometimes need to be able to traverse through all the files
-+	 * in a given tree before all immediate subdirectories within that
-+	 * tree.  Since traverse_trees() doesn't do that naturally, we have
-+	 * a traverse_trees_wrapper() that stores any immediate
-+	 * subdirectories while traversing files, then traverses the
-+	 * immediate subdirectories later.  These callback_data* variables
-+	 * store the information for the subdirectories so that we can do
-+	 * that traversal order.
++	 * dir_rename_mask:
++	 *   0: optimization removing unmodified potential rename source okay
++	 *   2 or 4: optimization okay, but must check for files added to dir
++	 *   7: optimization forbidden; need rename source in case of dir rename
 +	 */
-+	struct traversal_callback_data *callback_data;
-+	int callback_data_nr, callback_data_alloc;
-+	char *callback_data_traverse_path;
++	unsigned dir_rename_mask:3;
 +
  	/*
- 	 * needed_limit: value needed for inexact rename detection to run
+ 	 * callback_data_*: supporting data structures for alternate traversal
  	 *
-@@ -396,6 +418,10 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
- 		}
+@@ -419,6 +427,8 @@ static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
  		strmap_clear(&opti->output, 0);
  	}
+ 
++	renames->dir_rename_mask = 0;
 +
-+	/* Clean out callback_data as well. */
-+	FREE_AND_NULL(renames->callback_data);
-+	renames->callback_data_nr = renames->callback_data_alloc = 0;
+ 	/* Clean out callback_data as well. */
+ 	FREE_AND_NULL(renames->callback_data);
+ 	renames->callback_data_nr = renames->callback_data_alloc = 0;
+@@ -520,12 +530,16 @@ static int traverse_trees_wrapper_callback(int n,
+ {
+ 	struct merge_options *opt = info->data;
+ 	struct rename_info *renames = &opt->priv->renames;
++	unsigned filemask = mask & ~dirmask;
+ 
+ 	assert(n==3);
+ 
+ 	if (!renames->callback_data_traverse_path)
+ 		renames->callback_data_traverse_path = xstrdup(info->traverse_path);
+ 
++	if (filemask && filemask == renames->dir_rename_mask)
++		renames->dir_rename_mask = 0x07;
++
+ 	ALLOC_GROW(renames->callback_data, renames->callback_data_nr + 1,
+ 		   renames->callback_data_alloc);
+ 	renames->callback_data[renames->callback_data_nr].mask = mask;
+@@ -544,7 +558,6 @@ static int traverse_trees_wrapper_callback(int n,
+  *     additional details before the "real" traversal
+  *   - loop through the saved entries and call the original callback on them
+  */
+-MAYBE_UNUSED
+ static int traverse_trees_wrapper(struct index_state *istate,
+ 				  int n,
+ 				  struct tree_desc *t,
+@@ -556,6 +569,8 @@ static int traverse_trees_wrapper(struct index_state *istate,
+ 	struct merge_options *opt = info->data;
+ 	struct rename_info *renames = &opt->priv->renames;
+ 
++	assert(renames->dir_rename_mask == 2 || renames->dir_rename_mask == 4);
++
+ 	old_callback_data_traverse_path = renames->callback_data_traverse_path;
+ 	old_fn = info->fn;
+ 	old_offset = renames->callback_data_nr;
+@@ -647,7 +662,8 @@ static void add_pair(struct merge_options *opt,
+ 		     const char *pathname,
+ 		     unsigned side,
+ 		     unsigned is_add /* if false, is_delete */,
+-		     unsigned match_mask)
++		     unsigned match_mask,
++		     unsigned dir_rename_mask)
+ {
+ 	struct diff_filespec *one, *two;
+ 	struct rename_info *renames = &opt->priv->renames;
+@@ -655,7 +671,7 @@ static void add_pair(struct merge_options *opt,
+ 
+ 	if (!is_add) {
+ 		unsigned content_relevant = (match_mask == 0);
+-		unsigned location_relevant = 1; /* FIXME: compute this */
++		unsigned location_relevant = (dir_rename_mask == 0x07);
+ 
+ 		if (content_relevant || location_relevant)
+ 			strset_add(&renames->relevant_sources[side], pathname);
+@@ -679,6 +695,36 @@ static void collect_rename_info(struct merge_options *opt,
+ 	struct rename_info *renames = &opt->priv->renames;
+ 	unsigned side;
+ 
++	/*
++	 * Update dir_rename_mask (determines ignore-rename-source validity)
++	 *
++	 * dir_rename_mask helps us keep track of when directory rename
++	 * detection may be relevant.  Basically, whenver a directory is
++	 * removed on one side of history, and a file is added to that
++	 * directory on the other side of history, directory rename
++	 * detection is relevant (meaning we have to detect renames for all
++	 * files within that directory to deduce where the directory
++	 * moved).  Also, whenever a directory needs directory rename
++	 * detection, due to the "majority rules" choice for where to move
++	 * it (see t6423 testcase 1f), we also need to detect renames for
++	 * all files within subdirectories of that directory as well.
++	 *
++	 * Here we haven't looked at files within the directory yet, we are
++	 * just looking at the directory itself.  So, if we aren't yet in
++	 * a case where a parent directory needed directory rename detection
++	 * (i.e. dir_rename_mask != 0x07), and if the directory was removed
++	 * on one side of history, record the mask of the other side of
++	 * history in dir_rename_mask.
++	 */
++	if (renames->dir_rename_mask != 0x07 &&
++	    (dirmask == 3 || dirmask == 5)) {
++		/* simple sanity check */
++		assert(renames->dir_rename_mask == 0 ||
++		       renames->dir_rename_mask == (dirmask & ~1));
++		/* update dir_rename_mask; have it record mask of new side */
++		renames->dir_rename_mask = (dirmask & ~1);
++	}
++
+ 	/* Update dirs_removed, as needed */
+ 	if (dirmask == 1 || dirmask == 3 || dirmask == 5) {
+ 		/* absent_mask = 0x07 - dirmask; sides = absent_mask/2 */
+@@ -698,12 +744,14 @@ static void collect_rename_info(struct merge_options *opt,
+ 		/* Check for deletion on side */
+ 		if ((filemask & 1) && !(filemask & side_mask))
+ 			add_pair(opt, names, fullname, side, 0 /* delete */,
+-				 match_mask & filemask);
++				 match_mask & filemask,
++				 renames->dir_rename_mask);
+ 
+ 		/* Check for addition on side */
+ 		if (!(filemask & 1) && (filemask & side_mask))
+ 			add_pair(opt, names, fullname, side, 1 /* add */,
+-				 match_mask & filemask);
++				 match_mask & filemask,
++				 renames->dir_rename_mask);
+ 	}
  }
  
- static int err(struct merge_options *opt, const char *err, ...)
+@@ -721,12 +769,14 @@ static int collect_merge_info_callback(int n,
+ 	 */
+ 	struct merge_options *opt = info->data;
+ 	struct merge_options_internal *opti = opt->priv;
++	struct rename_info *renames = &opt->priv->renames;
+ 	struct string_list_item pi;  /* Path Info */
+ 	struct conflict_info *ci; /* typed alias to pi.util (which is void*) */
+ 	struct name_entry *p;
+ 	size_t len;
+ 	char *fullpath;
+ 	const char *dirname = opti->current_dir_name;
++	unsigned prev_dir_rename_mask = renames->dir_rename_mask;
+ 	unsigned filemask = mask & ~dirmask;
+ 	unsigned match_mask = 0; /* will be updated below */
+ 	unsigned mbase_null = !(mask & 1);
+@@ -867,8 +917,13 @@ static int collect_merge_info_callback(int n,
+ 
+ 		original_dir_name = opti->current_dir_name;
+ 		opti->current_dir_name = pi.string;
+-		ret = traverse_trees(NULL, 3, t, &newinfo);
++		if (renames->dir_rename_mask == 0 ||
++		    renames->dir_rename_mask == 0x07)
++			ret = traverse_trees(NULL, 3, t, &newinfo);
++		else
++			ret = traverse_trees_wrapper(NULL, 3, t, &newinfo);
+ 		opti->current_dir_name = original_dir_name;
++		renames->dir_rename_mask = prev_dir_rename_mask;
+ 
+ 		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++)
+ 			free(buf[i]);
 -- 
 gitgitgadget
 
