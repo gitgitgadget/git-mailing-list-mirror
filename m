@@ -2,103 +2,234 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A4DC4332D
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60C34C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:16:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD6E764EF2
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:13:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19EC264F00
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230461AbhCKTN1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 14:13:27 -0500
-Received: from mout.web.de ([212.227.15.4]:35775 "EHLO mout.web.de"
+        id S229469AbhCKTQE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 14:16:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60804 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230196AbhCKTNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 14:13:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1615489983;
-        bh=tq/DprAyUeeoyCFrQcW3v59JgQEa6Alk2LwIoRUN5vE=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=qgbF6BZltBRrCHqvbcV1qMWOA4eds6ASVjFwtZR2Y0ZDVIo0ceFcQZVk2I+gj9jEr
-         Gtf04PqLe/AivdcD3Wa1C1L/MM/nYa9qntg9m8JkxCHOLzVasZTgwYx+P9sJfiLTrG
-         09ad3nF4FVbDF7hS2/qf9wcbWo37Gug6AGJsbjQs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from Mini-von-Rene.fritz.box ([79.203.24.70]) by smtp.web.de
- (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 0MfqWi-1l8Hff1upY-00ND94; Thu, 11 Mar 2021 20:13:03 +0100
-Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-References: <xmqqmtvafl62.fsf@gitster.g> <87r1klhq3y.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
-Message-ID: <bb5f06df-226f-8c2d-93e1-7e55aab73917@web.de>
-Date:   Thu, 11 Mar 2021 20:13:02 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.8.1
+        id S229809AbhCKTPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 14:15:55 -0500
+Received: (qmail 16818 invoked by uid 109); 11 Mar 2021 19:15:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Mar 2021 19:15:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12927 invoked by uid 111); 11 Mar 2021 19:15:54 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 14:15:54 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 11 Mar 2021 14:15:53 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 3/4] shortlog tests: rewrite to get rid of --abbrev=35
+ hardcoding
+Message-ID: <YEpsaZ9Kr+i0Sbyd@coredump.intra.peff.net>
+References: <YEj82fOf+F4xJC8S@coredump.intra.peff.net>
+ <20210311001447.28254-4-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87r1klhq3y.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1l9duRFJ29oOGIwqj5WIpDQDEQv+rq9hsGPz1YQh3qAY6+7z10Z
- PxP/2XbUn4BGjbzA7uarBvUEU7pWK4LiyGWzC/sL9t+tSxUpm03xkmEhv3OnoxEz5k8HBKz
- V8rQSW3u/W9HOBbKYZhfJM8M5nVn3/ds5TWfjM1UpUDsru0pwdf2Ha2Nl2dF/js+b1qtJcl
- OObYujc2SpQNMGoMqg90g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:E3vDF9aRBng=:4Gsp+Tu1mLxlWNQWhBLmcM
- wB708HzlHNeklCgZ/ZWo6rMJtwW6MDRlMNOx73zYYKjL0otb1KLT1buOF6BzwPR/rmvWViBZT
- v1gZx5TeU1zltfr1GD8KceFJUz9hijzJwxbj1Gq3bJ3YzvYHLH+E+7Hq2GYVc+IkHqrlfcPte
- 7Hvh8qxE6hqzYdi8e8h6A7HLQGQum5RnJbIeC3a0lrHDnvxaw1j1sNKFMgnlEvTjMIDAtSHgC
- x0pzaAOa6oXSjD3XMFRtep/G8KpbiZWuvIz7932get2bu5sEmWZ/7Dviv/jTtXMbDWQkE3oSr
- 8M/UUGxfbtKPYsO5nFsp8ky/15rxjckCAGusPzA0iW3vkvgxvEiRwwBEVzr5eu4LfIGJFevUN
- xzMrFUrJlKaMsOp/1GzVVHm6KAdlH9mGgf7oJlGS+pfp5OURwzn6lVorr2iEiX928/1OEEasE
- DXGq+T4/iywboYDcH8eRwegU5raAw/3WU44giXBqnfAvBhsgfaZGEC03Jh7qcqlI/i7rQRy1m
- VbBEp+syZKZRa3DW9Gd7K881UYEVFS/+gnf5g0g1oHZPHbmpag6eMtWNNBkS9mjYKmb6AJXtI
- 4ItM+EDv7W40hQFRUUqW7CHqC0yUVYQbQ9anDRGzeFl770J4v6WHrTLDONznNJXOZjNZ7zmlf
- RqofKnnv/I/E7emWCZVouk9htxupwJBSwQGP002NmKspDH6/FxoL+9rweu0YNcD8v5OmAMuQs
- zlc5ayQhS51S0/5riCarpUd10P/hDBc7LS24Y/OIoSbrFCzQ7M9N4ptb/nQYK+g+OLq8m9cTd
- tic2FWFK7sEFd39wgK+U8mMdpP2LR3FCpfdZbIG+PIl2+rqWinLDlm2a3VHDxWu4J75cjSLFj
- yTDvnRI9B60xGBxw2rdA==
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210311001447.28254-4-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.03.21 um 12:44 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Thu, Mar 11 2021, Junio C Hamano wrote:
->
->> * rs/pretty-describe (2021-03-01) 4 commits
->>   (merged to 'next' on 2021-03-01 at bee9248828)
->>  + pretty: document multiple %(describe) being inconsistent
->>  + t4205: assert %(describe) test coverage
->>   (merged to 'next' on 2021-02-25 at 2347ed8fe6)
->>  + pretty: add merge and exclude options to %(describe)
->>  + pretty: add %(describe)
->>
->>  "git log --format=3D'...'" learned "%(describe)" placeholder.
+On Thu, Mar 11, 2021 at 01:14:46AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-This is missing the patch to limit %(describe) expansing to one per
-archive [1].  I think we need it to avoid hosters that generate archives
-for user-supplied repos becoming vulnerable to a DoS attack via this new
-feature.  Demo script in [2].
+> Rewrite much of the test logic introduced in 600372497c (shortlog:
+> Document and test --format option, 2010-05-03), this allows us to get
+> rid of the now-unused $_x35 variable in test-lib.sh
+> 
+> There was a minimal migration of this test to SHA-256 in
+> 2ece6ad281 (t: switch $_x40 to $OID_REGEX, 2018-05-13), but actually
+> we can just get rid of all the assumptions about hashing here, and
+> make this easier to understand and maintain while we're at it.
 
-> As an aside did anyone look into making most of ./builtin/describe.c a
-> new ./describe.c library? I had a quick aborted attempt at doing that,
-> but it didn't seem like it would be all that hard...
+Sounds like a good goal. I had to spend a few minutes deciphering what
+was going on in the diff, so I'll follow along loudly...
 
-That's what I thought as well, but combined with log --format it
-produced bogus results for some commits.  No idea what went wrong
-there.
+> diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+> index 3095b1b2ff..3ef17c06e4 100755
+> --- a/t/t4201-shortlog.sh
+> +++ b/t/t4201-shortlog.sh
+> @@ -19,82 +19,94 @@ test_expect_success 'setup' '
+>  	commit=$(printf "%s\n" "Test" "" | git commit-tree "$tree") &&
+>  	git update-ref HEAD "$commit" &&
+>  
+> +	echo "This is a very, very long first line for the commit message to see if it is wrapped correctly" >message &&
+> +
+> +	sed "s/i/1234/g" <message >tmp &&
+> +	tr 1234 "\360\235\204\236" <tmp >message.2 &&
+> +
+> +	sed "s/i/1234/g" <message >tmp &&
+> +	tr 1234 "\370\235\204\236" <tmp >message.3 &&
+> +
+> +	echo "a								12	34	56	78" >message.4 &&
+> +	echo "Commit by someone else" >message.5 &&
+> +
 
-Ren=C3=A9
+This is all moving the messages into files so that you can pull them
+into the expected output later. OK (feels weird to use sed and tr
+together like this, but maybe it's a portability thing for sed which
+doesn't understand octal; anyway, it's definitely not new in your
+patch).
 
+That might have been easier to understand if each message was generated
+next to its comment. E.g...
 
-[1] http://public-inbox.org/git/b7e1f6c0-6b13-efe4-74b5-ec8249855644@web.d=
-e/
-[2] http://public-inbox.org/git/a28592c5-4a70-1ea8-fd73-959e28b4278d@web.d=
-e/
+>  	# test if the wrapping is still valid
+>  	# when replacing all is by treble clefs.
+>  	echo 3 >a1 &&
+> -	git commit --quiet -m "$(
+> -		echo "This is a very, very long first line for the commit message to see if it is wrapped correctly" |
+> -		sed "s/i/1234/g" |
+> -		tr 1234 "\360\235\204\236")" a1 &&
+> +	git commit --quiet -F message.2 a1 &&
+
+...if we made message.2 here, then the comment would be explaining what
+the opaque bytes are doing (and likewise why they differ in message.3).
+
+Also, the mismatch between the "3" going into the file and "message.2"
+is confusing. It's not important, but I wonder if using "commit
+--allow-empty" and just skipping a1, etc, would make it easier to read.
+
+Similarly, --quiet seems pointless here. If the test isn't run with
+--verbose, the user doesn't see it either way. If it is, then they
+probably want to see the output.
+
+> -	cat >expect.template <<-\EOF
+> +	cat >expect.default <<-EOF
+>  	A U Thor (5):
+> -	      SUBJECT
+> -	      SUBJECT
+> -	      SUBJECT
+> -	      SUBJECT
+> -	      SUBJECT
+> +	      Test
+> +	      $(cat message)
+> +	      $(cat message.2)
+> +	      $(cat message.3)
+> +	      $(cat message.4)
+>  
+>  	Someone else (1):
+> -	      SUBJECT
+> +	      $(cat message.5)
+>  
+>  	EOF
+
+OK, and here's where we make the actual expected output, rather than a
+template. I think this is an improvement in understanding what's going
+on (and also is more robust).
+
+I was slightly confused that we are not looking for the messages to have
+been wrapped (just based on the surrounding code), but that is not new
+to your patch.
+
+> -fuzz() {
+> -	file=$1 &&
+> -	sed "
+> -			s/$OID_REGEX/OBJECT_NAME/g
+> -			s/$_x35/OBJID/g
+> -			s/^ \{6\}[CTa].*/      SUBJECT/g
+> -			s/^ \{8\}[^ ].*/        CONTINUATION/g
+> -		" <"$file" >"$file.fuzzy" &&
+> -	sed "/CONTINUATION/ d" <"$file.fuzzy"
+> -}
+> [...]
+>  test_expect_success 'pretty format' '
+> -	sed s/SUBJECT/OBJECT_NAME/ expect.template >expect &&
+> +	cat >expect <<-EOF &&
+> +	A U Thor (5):
+> +	      $(git rev-parse HEAD~5)
+> +	      $(git rev-parse HEAD~4)
+> +	      $(git rev-parse HEAD~3)
+> +	      $(git rev-parse HEAD~2)
+> +	      $(git rev-parse HEAD~1)
+
+And here we expect the real hashes rather than the fuzz() magic, which
+makes sense.
+
+Aside: here and in the others, I cringe a little at the cost of all of
+the $() calls inside the here-doc. But I don't think there's a better
+way to do it. I'd sometimes use environment variables for this, but the
+processing we're doing probably makes it better to keep them in real
+files. Or maybe not. TBH, just expanding out the messages in the source
+like:
+
+  m1=$(printf "Th\370\235\204\236s \370\235\204\236s a very, very long f\370\235\204\236rst l\370\235\204\236ne for the comm\370\235\204\236t message to see \370\235\204\236f \370\235\204\236t \370\235\204\236s wrapped correctly")
+
+is equally unreadable to the original to me. ;) Possibly it would be
+even more readable if some more meaningful pattern of replacements was
+used. But I am firmly in bikeshedding territory there, so feel free to
+ignore.
+
+>  test_expect_success '--abbrev' '
+> -	sed s/SUBJECT/OBJID/ expect.template >expect &&
+> +	cut -c 1-41 <expect >expect.abbrev &&
+>  	git shortlog --format="%h" --abbrev=35 HEAD >log &&
+> -	fuzz log >log.predictable &&
+> -	test_cmp expect log.predictable
+> +	test_cmp expect.abbrev log
+>  '
+
+And this is the same thing as %H, but abbreviated.
+
+I agree with Junio that the "1-41" seems magical. His suggestion to show
+the math helps with that (or even just a comment). You could also just
+build the "expect" file with:
+
+  $(git rev-parse --abbrev=35 HEAD~5)
+
+etc (I also have to wonder if there is much value in this beyond
+checking the first commit, but that certainly predates your patch).
+
+>  test_expect_success 'output from user-defined format is re-wrapped' '
+> -	sed "s/SUBJECT/two lines/" expect.template >expect &&
+> +	cat >expect <<-EOF &&
+> +	A U Thor (5):
+> +	      two lines
+> +	      two lines
+> +	      two lines
+> +	      two lines
+> +	      two lines
+> +
+> +	Someone else (1):
+> +	      two lines
+> +
+> +	EOF
+>  	git shortlog --format="two%nlines" HEAD >log &&
+> -	fuzz log >log.predictable &&
+> -	test_cmp expect log.predictable
+> +	test_cmp expect log
+>  '
+
+And this one is IMHO much improved in readability.
+
+>  test_expect_success !MINGW 'shortlog wrapping' '
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 5f2ad2fd81..4d5ba558d3 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -511,7 +511,7 @@ SQ=\'
+>  # when case-folding filenames
+>  u200c=$(printf '\342\200\214')
+>  
+> -export _x05 _x35 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
+> +export _x05 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
+
+And now we can get rid of _x05. Yay.
+
+-Peff
