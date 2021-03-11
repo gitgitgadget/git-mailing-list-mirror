@@ -2,83 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B447C433E6
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4026C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:13:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBC5064F94
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:03:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7460164FA0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:13:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230226AbhCKSC7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 13:02:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61877 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbhCKSCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 13:02:41 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28D2DBC15D;
-        Thu, 11 Mar 2021 13:02:41 -0500 (EST)
+        id S230053AbhCKSMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 13:12:38 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58808 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229483AbhCKSMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 13:12:10 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 358EAB434B;
+        Thu, 11 Mar 2021 13:12:09 -0500 (EST)
         (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:cc:date:message-id:mime-version:content-type; s=sasl;
-         bh=qZBugPVGVkawwCM4WVDdyok2OkE=; b=OdNSNCDyT+5hRgisbMT6E7o6LQir
-        5NayibZqwsk38bxzPJzFSEd8qCCPdBaRE32+DPv27YDce1LWWCO4mxyaker8GidH
-        MW63F+n6eK7nfduElFHURfqS5SL0fXORk7J9ir7njSl5vJO6MgQofXkGRWciBCnK
-        qGTvCFNyhliarFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-        DibmYweHQg/Z6KutU9zv9I46s+F9Mpo2HOb0/oK/zbUTVswwEhwvkLfg9sDyhhhe
-        r9djiUgR/5fVgGyJy/q6J/o2pat+YQwv3/fAhbd4rY0uO4iecakam4g7SPoW1WUT
-        rbcq6DJbmgWNf7a4xpdh9R0D5Z5frEUYtnoKbsv9N7I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 20EAEBC15C;
-        Thu, 11 Mar 2021 13:02:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7jjYDco3Gh7V5kCr3bpYgSgEMfo=; b=x4uWw0
+        odoaUyMjQQdiVnLBmR2cWkcPONpPl9gaEMR6CJ0MuaPSyXktsBj237R8nW0JTe8V
+        nfayZOueVc2alCFG7cCLyCbRdJJsAjUqllE3bMuBk1ybw+Ug7RRqVwa2uMZwmcVO
+        WPcSmAyYTxt3spCxXpu4iTC9FXCYIpA7MSHtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lcw02h9Gy9LQb1IuUA8ZMzua532DpTgO
+        K5w9cNXtcBOp7W/LGPPPdlvHDftcyGWHn1V6YUZ6u/77Rd24qfBPuuNAi+WGfXvZ
+        LjP33OPJtViFASKmE+x0hgvAMc8jqb3XmCt6Tzxf6DrNQjZK83EH1e2PtJDzh0zS
+        0THaAwEYpmk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A2F1B434A;
+        Thu, 11 Mar 2021 13:12:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E8D6BC15B;
-        Thu, 11 Mar 2021 13:02:40 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2ACD3B4349;
+        Thu, 11 Mar 2021 13:12:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH] SQUASH??? calloc(nmemb,size)
-cc:     git@vger.kernel.org
-Date:   Thu, 11 Mar 2021 10:02:38 -0800
-Message-ID: <xmqqa6r9efgh.fsf@gitster.g>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
+References: <xmqqmtvafl62.fsf@gitster.g> <87r1klhq3y.fsf@evledraar.gmail.com>
+        <CAFQ2z_NL1NYunAKwGGF2eK4hMS11gz_4VUw1rhd2rmPw60OZ9Q@mail.gmail.com>
+Date:   Thu, 11 Mar 2021 10:12:05 -0800
+In-Reply-To: <CAFQ2z_NL1NYunAKwGGF2eK4hMS11gz_4VUw1rhd2rmPw60OZ9Q@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Thu, 11 Mar 2021 14:01:27 +0100")
+Message-ID: <xmqq35x1ef0q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F863C13E-8293-11EB-AA90-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4A39ACE8-8295-11EB-9956-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please squash this in to an appropriate step in your series;
-otherwise it triggers a Coccinelle check when merged to 'seen'.
+Han-Wen Nienhuys <hanwen@google.com> writes:
+
+> However, the primary reason nothing has changed is that I posted a
+> large round of updates early December, in response to reviews from
+> Google's git team, and I haven't gotten any code review or other type
+> of feedback since (except your one message about the errno side band)
+>
+> Is there anything I should do to get this moving again?
+
+Unfortunately there aren't many effective things the patch authors
+can do (other than making sure their series are easily digestible
+and by begging X-<) when nobody is looking at their patches and
+potential reviewers and those who may show interest in the series
+are running around producing their own changes instead of giving
+reviews, both positive and negative.
+
+I try to chip in with my own reviewing time but I am only a single
+person, so help from others are required.
 
 Thanks.
-
- refs/reftable-backend.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index b7d12ca91d..6faad8ce50 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -996,7 +996,7 @@ static struct ref_iterator_vtable git_reftable_reflog_ref_iterator_vtable = {
- static struct ref_iterator *
- git_reftable_reflog_iterator_begin(struct ref_store *ref_store)
- {
--	struct git_reftable_reflog_ref_iterator *ri = xcalloc(sizeof(*ri), 1);
-+	struct git_reftable_reflog_ref_iterator *ri = xcalloc(1, sizeof(*ri));
- 	struct git_reftable_ref_store *refs =
- 		(struct git_reftable_ref_store *)ref_store;
- 
--- 
-2.31.0-rc2-173-g36b77366ca
 
