@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FDA0C432C3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7554C4360C
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B8E164FEE
+	by mail.kernel.org (Postfix) with ESMTP id 9CC8B64F95
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbhCKCMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:12:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42324 "EHLO
+        id S229660AbhCKCMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:12:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbhCKCLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 21:11:45 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74855C061760
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:34 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id l3so23889161ybf.17
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:34 -0800 (PST)
+        with ESMTP id S230075AbhCKCLr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 21:11:47 -0500
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31B9FC061761
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:36 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id k185so14272178qkb.17
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=0BuRmGZKoOY5XfD4AJjW5pTpDGMeN228GKmYi+Vi1Tc=;
-        b=jSRYkW2gkRNjtN0dTlkbHeUZqytsYE6Ra5rGr6GH0tYBpBgS353RbP9KbBwoWpw1Rl
-         76bMF8X4AWPkAbWwXjA5NNYrhE/t2X+LH1g/SptNi2Dap2cMCr18qS07AEpGRI4ChLxW
-         b362DWQDdWtdpBkRNEedTIqdkDl4ly8C6eeqPQLznx/ezRX1NwF4DOHkju1Qtd4LE9P2
-         hcGiphIe3AaPaw7u9mKxEpsl6N/3Gg/q66GFmJ9KaVO8IPVHFfVkGf7DSuRPOcJWbcCK
-         5pp3kf0u8xf0OA/x+Ojuqr7k71gw1qqfA8lpLop0N5JlvrC45C0UXh7XLFof1W3EGCzx
-         6dmg==
+        bh=SnF4+xvrJCimJCe+8zZxVyDOEtpGuUX/xjX/UPmE6mw=;
+        b=O79uHMcbCTzeUFlBR1lykYS2oBdPTzcM6rPrK8SjeW9oDj9kcQyVNL88UXVLbb1zvR
+         aVR8tVutQS1yAOZrN1Z6vAs8EK+Tjvi1rOmmj5LmMBkVFpWYBKBqbbwS+e+j4NnpR+AL
+         ag83MVvLC5275vtgxOgRHclvDzVjvE1zhvZUVSFKOUV9Npg+jiG/K9PJrrsqeWnuVO7X
+         VE3k6t0owXFNLVQuh839IYprtH+m1yFxp/Roy2zlvE7OINJcY+x4sN+AXi01dSU8P/eT
+         2IeYV9bLbx0k4lOvLfX5jf5m8bTUlJXhqj5xVS+om+ZvbXu5It1w41Tn3pmpFNk4x3en
+         oSOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=0BuRmGZKoOY5XfD4AJjW5pTpDGMeN228GKmYi+Vi1Tc=;
-        b=XyF1PDzIWLI1X7c8Lv3n5lyE112Wnl+w5BGHEyCU4snTw/HRwbG+Y55aM6hoqqNaXB
-         CF5d6UaZPYJxfSJMbmq2piKy8xCsopGoYvRVaIWtDjp1Ne+ITxQJijiVYCP8wT4XdZwH
-         LfnBEgsVfYsMiT7boN6a05YsVEFlh3d9RYVqemdeQDV9xrqTON7woWJi/44Zg8F/sc8N
-         yZkGIdoglqSMJpqMDEhdeQp73ARxU+rL9wkMqzjs8h8dQ1BWEo5EyLKaZpF7SWY6IlD1
-         5aPGoYik+wYEh8gUul6L9hyTDh47xxbLk7m2fa8zmnM07e2Ow6vON4az987jxv9XxOp7
-         RThA==
-X-Gm-Message-State: AOAM5301U4s2p8+aIlyBFQKA6nsaCv5ApbsICTwyZ2LpLXADPwls0Q+u
-        l2FY7oVzCQEK/L/SA44gwF/CNXOhxP0VwVJAUVwvaY0oD4sDkwCPuzQ8QisrWjh1DR7htkv8oBa
-        X3VTQv1hQCmNjgCqPoMbEP0gkMoslKDKuysH8TwKU7vO7G9CyRnkE6WgOJ0wihH2B1XxkJDD2/w
+        bh=SnF4+xvrJCimJCe+8zZxVyDOEtpGuUX/xjX/UPmE6mw=;
+        b=hZzjCqnW9h02ZVZhZZzI3T0CLzVF4YP+OufFSqZPUODqiaKkqLvM+EituoImD/mb+u
+         WNkUmD62L8nut+GkzYM2173eyXhl1ssh9qeNAiu8A5xqpMTEU8oBsmTUAyLFmo4PFHGL
+         TF/phnL1YXfR3I85aeokvI6iaInG9xc5aQFEyHsMFsudh6ZWK15dqiVUa+W2cDKJYdar
+         Dfny1DVFevUSYux66IoxdpHCxA7UJsETqBuEfYmJ2FufUgI/ZMFTTqC3E/0EAHKHGurC
+         ZfgmSloUQVpIR8vOVu4a9zQ9jEabaxy3sANDm2j/1Rj+r1C+MMXK/3vyI+B5+EuoSEZd
+         JUUQ==
+X-Gm-Message-State: AOAM532TYA9o9dmer1gfaenmDN5ktFSXH8Uqzm5xfoPRYw0Sy9n8szSv
+        cKFFVfkg4KLAxb/sOvUizQE2aKb3KdAD9Q7W7uO1t7yoWPQVqPAXxXVfWGpo0H9XAWDY9yk13Ax
+        kDfmVKE2j8FVpXUJh4mfBKuasaEDYWnjOB8Pc1IXnkbG7NBMflBRCIKR7H6pE6hk1+VBmEld7+w
         ==
-X-Google-Smtp-Source: ABdhPJyqgPoy3LbjarlnGCQiHV2ULg5EpEtjcMRSzFB1DboVgo3SjD6HCntmrGvLhgvrmCcHnIg1S+pwXXRatZolTI0=
+X-Google-Smtp-Source: ABdhPJw/cud39csES+05Q1FjqUbk9hF2CJkcfxssVLySJ6Bp9yW8AFkpSUkTwNYd38+O36TOM+UXhBgdQOSyi8B88Tg=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:a25:e752:: with SMTP id
- e79mr8684278ybh.373.1615428693672; Wed, 10 Mar 2021 18:11:33 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:24 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:fd41:: with SMTP id
+ j1mr4089072qvs.29.1615428695384; Wed, 10 Mar 2021 18:11:35 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:25 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-25-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-26-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 24/37] receive-pack: convert push-to-checkout hook to hook.h
+Subject: [PATCH v8 25/37] git-p4: use 'git hook' to run hooks
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,72 +70,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using hook.h instead of run-command.h to invoke push-to-checkout,
-hooks can now be specified in the config as well as in the hookdir.
-push-to-checkout is not called anywhere but in builtin/receive-pack.c.
+Instead of duplicating the behavior of run-command.h:run_hook_le() in
+Python, we can directly call 'git hook run'. As a bonus, this means
+git-p4 learns how to find hook specifications from the Git config as
+well as from the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt |  1 +
- builtin/receive-pack.c     | 16 ++++++++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index e5c2cef271..f2178dbc83 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -555,6 +555,7 @@ that switches branches while
- keeping the local changes in the working tree that do not interfere
- with the difference between the branches.
+Notes:
+    Maybe there is a better way to do this - I had a hard time getting this to run
+    locally, and Python is not my forte, so if anybody has a better approach I'd
+    love to just take that patch instead :)
+    
+    Since v6, removed the developer debug print statements.... :X
+    
+    Maybe there is a better way to do this - I had a hard time getting this to run
+    locally, and Python is not my forte, so if anybody has a better approach I'd
+    love to just take that patch instead :)
+
+ git-p4.py | 67 +++++--------------------------------------------------
+ 1 file changed, 6 insertions(+), 61 deletions(-)
+
+diff --git a/git-p4.py b/git-p4.py
+index 09c9e93ac4..4b1c69822c 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -208,70 +208,15 @@ def decode_path(path):
  
-+Hooks executed during 'push-to-checkout' will not be parallelized.
+ def run_git_hook(cmd, param=[]):
+     """Execute a hook if the hook exists."""
+-    if verbose:
+-        sys.stderr.write("Looking for hook: %s\n" % cmd)
+-        sys.stderr.flush()
+-
+-    hooks_path = gitConfig("core.hooksPath")
+-    if len(hooks_path) <= 0:
+-        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
+-
+-    if not isinstance(param, list):
+-        param=[param]
+-
+-    # resolve hook file name, OS depdenent
+-    hook_file = os.path.join(hooks_path, cmd)
+-    if platform.system() == 'Windows':
+-        if not os.path.isfile(hook_file):
+-            # look for the file with an extension
+-            files = glob.glob(hook_file + ".*")
+-            if not files:
+-                return True
+-            files.sort()
+-            hook_file = files.pop()
+-            while hook_file.upper().endswith(".SAMPLE"):
+-                # The file is a sample hook. We don't want it
+-                if len(files) > 0:
+-                    hook_file = files.pop()
+-                else:
+-                    return True
+-
+-    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
++    if not cmd:
+         return True
  
- pre-auto-gc
- ~~~~~~~~~~~
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index d26040c477..234b70f0d1 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -29,6 +29,7 @@
- #include "commit-reach.h"
- #include "worktree.h"
- #include "shallow.h"
-+#include "hook.h"
+-    return run_hook_command(hook_file, param) == 0
+-
+-def run_hook_command(cmd, param):
+-    """Executes a git hook command
+-       cmd = the command line file to be executed. This can be
+-       a file that is run by OS association.
+-
+-       param = a list of parameters to pass to the cmd command
+-
+-       On windows, the extension is checked to see if it should
+-       be run with the Git for Windows Bash shell.  If there
+-       is no file extension, the file is deemed a bash shell
+-       and will be handed off to sh.exe. Otherwise, Windows
+-       will be called with the shell to handle the file assocation.
+-
+-       For non Windows operating systems, the file is called
+-       as an executable.
+-    """
+-    cli = [cmd] + param
+-    use_shell = False
+-    if platform.system() == 'Windows':
+-        (root,ext) = os.path.splitext(cmd)
+-        if ext == "":
+-            exe_path = os.environ.get("EXEPATH")
+-            if exe_path is None:
+-                exe_path = ""
+-            else:
+-                exe_path = os.path.join(exe_path, "bin")
+-            cli = [os.path.join(exe_path, "SH.EXE")] + cli
+-        else:
+-            use_shell = True
+-    return subprocess.call(cli, shell=use_shell)
++    """args are specified with -a <arg> -a <arg> -a <arg>"""
++    args = (['git', 'hook', 'run'] +
++	    ["-a" + arg for arg in param] +
++	    [cmd])
  
- static const char * const receive_pack_usage[] = {
- 	N_("git receive-pack <git-dir>"),
-@@ -1435,12 +1436,19 @@ static const char *push_to_checkout(unsigned char *hash,
- 				    struct strvec *env,
- 				    const char *work_tree)
- {
-+	struct run_hooks_opt opt;
-+	run_hooks_opt_init_sync(&opt);
-+
- 	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
--	if (run_hook_le(env->v, push_to_checkout_hook,
--			hash_to_hex(hash), NULL))
-+	strvec_pushv(&opt.env, env->v);
-+	strvec_push(&opt.args, hash_to_hex(hash));
-+	if (run_hooks(push_to_checkout_hook, &opt)) {
-+		run_hooks_opt_clear(&opt);
- 		return "push-to-checkout hook declined";
--	else
-+	} else {
-+		run_hooks_opt_clear(&opt);
- 		return NULL;
-+	}
- }
++    return subprocess.call(args) == 0
  
- static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
-@@ -1464,7 +1472,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
- 
- 	strvec_pushf(&env, "GIT_DIR=%s", absolute_path(git_dir));
- 
--	if (!find_hook(push_to_checkout_hook))
-+	if (!hook_exists(push_to_checkout_hook, HOOKDIR_USE_CONFIG))
- 		retval = push_to_deploy(sha1, &env, work_tree);
- 	else
- 		retval = push_to_checkout(sha1, &env, work_tree);
+ def write_pipe(c, stdin):
+     if verbose:
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
