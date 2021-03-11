@@ -2,72 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42634C433DB
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 740D6C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:26:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1F4564F05
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:18:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A68264F10
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229607AbhCKTRl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 14:17:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60824 "EHLO cloud.peff.net"
+        id S229675AbhCKTZo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 14:25:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60848 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229789AbhCKTR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 14:17:27 -0500
-Received: (qmail 16848 invoked by uid 109); 11 Mar 2021 19:17:26 -0000
+        id S229938AbhCKTZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 14:25:37 -0500
+Received: (qmail 16921 invoked by uid 109); 11 Mar 2021 19:25:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Mar 2021 19:17:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Mar 2021 19:25:37 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12957 invoked by uid 111); 11 Mar 2021 19:17:27 -0000
+Received: (qmail 13008 invoked by uid 111); 11 Mar 2021 19:25:37 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 14:17:27 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 14:25:37 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 11 Mar 2021 14:17:25 -0500
+Date:   Thu, 11 Mar 2021 14:25:36 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
-Message-ID: <YEpsxUhVmYLK0ZK8@coredump.intra.peff.net>
-References: <xmqqmtvafl62.fsf@gitster.g>
- <87r1klhq3y.fsf@evledraar.gmail.com>
- <xmqqy2etczqi.fsf@gitster.g>
+To:     Tassilo Horn <tsdh@gnu.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug] Stashing during merge loses MERGING state
+Message-ID: <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
+References: <875z1xwznd.fsf@gnu.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy2etczqi.fsf@gitster.g>
+In-Reply-To: <875z1xwznd.fsf@gnu.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 11, 2021 at 10:27:33AM -0800, Junio C Hamano wrote:
+On Thu, Mar 11, 2021 at 03:00:58PM +0100, Tassilo Horn wrote:
 
-> >> * ab/tests-cleanup-around-sha1 (2021-03-10) 4 commits
-> >>  - tests: get rid of $_x05 from the test suite
-> >>  - shortlog tests: rewrite to get rid of --abbrev=35 hardcoding
-> >>  - test-lib: remove unused $_x40 and $_z40 variables
-> >>  - git-bisect: remove unused SHA-1 $x40 shell variable
-> >
-> > FWIW (mostly for other readers) I suggested in
-> > https://lore.kernel.org/git/87tupigf02.fsf@evledraar.gmail.com/ just now
-> > that we drop 4/4.
+> Here is a simple recipe with a publicly available repo:
 > 
-> I do not trust myself; we need to get 2&3 reviewed independently
-> before we can move beyond discarding the $_x05 step.
+> ```sh
+> git clone https://github.com/magit/magit.git
+> # Current master is 4735b9254105eb7dd538f979d8b4c6ab96b827b9
+> cd magit
+> git merge origin/km/reshelve-rewrite # currently 0073bff21c826a57a4b48076074bdbba092d4b67
+> # Conflict in magit-extras.el
+> git add lisp/magit-extras.el
+> git stash
+> # The MERGING state is gone
+> git stash pop
+> # And it won't come back, so when I commit now, my "merge" has just
+> # one parent.
+> ```
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> I expected that stashing during a merge will keep the MERGING state.
 
-Patch 2 looks obviously correct to me (along with 1).
+Thanks for providing a clear recipe and expectation. However, I think
+Git is working here as intended. The MERGE_HEAD file (which is how "git
+status", the prompt, etc figure out that we're in the middle of a merge)
+is cleaned up when stash runs "git reset --hard" under the hood.
 
-I responded to patch 3. Mostly with nitpicks, though I tend to agree
-that the "1-41" magic at least deserves a comment.
+However, I don't think we would want to _not_ clear that file. The
+conflicted merge placed some changes into the index and working tree
+representing what happened on the branch you're merging in. Then making
+the stash (and the reset of the working tree) removes those changes. If
+we were to leave MERGE_HEAD in place and you ran "git commit", then it
+would create a merge commit that claims to have incorporated everything
+from the other branch, but has quietly dropped those changes as part of
+the merge resolution.
 
-I didn't look at patch 4, since it seemed scary and you suggested
-dropping it. ;)
+> Or that popping the stash again would also restore the MERGING state.
+
+This would make more sense: the stash records that part of the state,
+and then we make it available again later when the stash is applied.
+However, that feature doesn't exist yet.
+
+I can't offhand think of a reason it couldn't be implemented. It's
+possible that it would mess with somebody else's workflow (e.g., they
+think it's useful to stash some changes independent of the merging
+state, and then apply it later, perhaps while replaying the same or a
+similar merge). So it might need to be tied to a command-line option or
+similar.
 
 -Peff
