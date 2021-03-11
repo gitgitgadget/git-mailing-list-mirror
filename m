@@ -6,119 +6,85 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE19DC433DB
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24EADC433DB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:54:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E01E64F85
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:44:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEAA364F8C
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230386AbhCKUoP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 15:44:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55810 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230266AbhCKUoM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 15:44:12 -0500
-Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C3BC061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 12:44:11 -0800 (PST)
-Received: from fencepost.gnu.org ([2001:470:142:3::e]:57150)
-        by eggs.gnu.org with esmtp (Exim 4.90_1)
-        (envelope-from <tsdh@gnu.org>)
-        id 1lKSA8-0000qf-GQ; Thu, 11 Mar 2021 15:44:04 -0500
-Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:47459)
-        by fencepost.gnu.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
-        (Exim 4.82)
-        (envelope-from <tsdh@gnu.org>)
-        id 1lKSA7-0007UT-65; Thu, 11 Mar 2021 15:44:03 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailauth.nyi.internal (Postfix) with ESMTP id A7C8C27C005A;
-        Thu, 11 Mar 2021 15:44:02 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 11 Mar 2021 15:44:02 -0500
-X-ME-Sender: <xms:EoFKYCsL28v0m81eY5f3J_UgaZ7cIl8KSkQWZ8ZwQs-b1WbZQkKhWA>
-    <xme:EoFKYHd_5nVmAoTr_MKNvjqnslG9MEss8DGPIV-mfce3cNBe3C2S7oxSSyfNhcHew
-    pI9WcUhcd-dMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvtddgudegtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfhgfhffvufffjgfkgggtsehttd
-    ertddtredtnecuhfhrohhmpefvrghsshhilhhoucfjohhrnhcuoehtshguhhesghhnuhdr
-    ohhrgheqnecuggftrfgrthhtvghrnhepfefgjeeuueevvefghfduheethffhgfefveefve
-    ekgffhvedtjeeghefftdeftddtnecuffhomhgrihhnpeigkhgtugdrtghomhenucfkphep
-    geeirdektddrjeehrddvfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepthhhohhrnhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihht
-    hidqkeeijeefkeejkeegqdeifeehvdelkedqthhsughhpeepghhnuhdrohhrghesfhgrsh
-    htmhgrihhlrdhfmh
-X-ME-Proxy: <xmx:EoFKYNyHvfRo1TbEIWU-jWeDZ8uw8kgKeE_DXf9OBMnNupd3yrXNWA>
-    <xmx:EoFKYNPsdciq0fkvKJhq78Bg0lJ5hz6W02KPb2NHTlwq7BwEsue2eA>
-    <xmx:EoFKYC8sw9VweJsQ1VCZ_Q3EBHcWbGa5RWHAhrnbIGvPJ2teAr0FjA>
-    <xmx:EoFKYDKK2CA7Irv6gtUf4hkjfK9-9A23J_VRE6G8C3mYGLWpxfreZcysHMM>
-Received: from thinkpad-t440p (p2e504be7.dip0.t-ipconnect.de [46.80.75.231])
-        by mail.messagingengine.com (Postfix) with ESMTPA id AF6101080067;
-        Thu, 11 Mar 2021 15:44:01 -0500 (EST)
-References: <875z1xwznd.fsf@gnu.org> <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
-User-agent: mu4e 1.5.9; emacs 28.0.50
-From:   Tassilo Horn <tsdh@gnu.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [Bug] Stashing during merge loses MERGING state
-Date:   Thu, 11 Mar 2021 21:31:09 +0100
-In-reply-to: <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
-Message-ID: <87a6r9o1yo.fsf@gnu.org>
+        id S230162AbhCKUyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 15:54:00 -0500
+Received: from cloud.peff.net ([104.130.231.41]:32774 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229490AbhCKUx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 15:53:57 -0500
+Received: (qmail 17622 invoked by uid 109); 11 Mar 2021 20:53:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Mar 2021 20:53:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13823 invoked by uid 111); 11 Mar 2021 20:53:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Mar 2021 15:53:57 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 11 Mar 2021 15:53:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 01/12] pkt-line: eliminate the need for static buffer
+ in packet_write_gently()
+Message-ID: <YEqDZP/Ea+qf0Qrp@coredump.intra.peff.net>
+References: <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
+ <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
+ <311ea4a5cd71c5dd2407348ad4608d2f7dd77ce5.1615302157.git.gitgitgadget@gmail.com>
+ <xmqqblbrzy5j.fsf@gitster.c.googlers.com>
+ <YEpvfztZWhAvSDTL@coredump.intra.peff.net>
+ <xmqq4khhctya.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4khhctya.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Mar 11, 2021 at 12:32:29PM -0800, Junio C Hamano wrote:
 
-Hi Jeff,
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Mar 09, 2021 at 03:48:40PM -0800, Junio C Hamano wrote:
+> >
+> >> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >> 
+> >> > +	/*
+> >> > +	 * Write the header and the buffer in 2 parts so that we do not need
+> >> > +	 * to allocate a buffer or rely on a static buffer.  This avoids perf
+> >> > +	 * and multi-threading issues.
+> >> > +	 */
+> >> 
+> >> I understand "multi-threading issues" (i.e. let's not have too much
+> >> stuff on the stack), but what issue around "perf" are we worried
+> >> about?
+> >>  ...
+> > Yeah, this came from my suggestion. My gut feeling is that it isn't
+> > likely to matter, but I'd much rather solve any performance problem we
+> > find using writev(), which would be pretty easy to emulate with a
+> > wrapper for systems that lack it.
+> 
+> I too had writev() in mind when I said "can fix it locally", so we
+> are on the same page, which is good.
+> 
+> So "this avoid multi-threading issues" without mentioning "perf and"
+> would be more appropriate?
 
->> What did you expect to happen? (Expected behavior)
->> 
->> I expected that stashing during a merge will keep the MERGING state.
->
-> Thanks for providing a clear recipe and expectation. However, I think
-> Git is working here as intended. The MERGE_HEAD file (which is how "git
-> status", the prompt, etc figure out that we're in the middle of a merge)
-> is cleaned up when stash runs "git reset --hard" under the hood.
->
-> However, I don't think we would want to _not_ clear that file. The
-> conflicted merge placed some changes into the index and working tree
-> representing what happened on the branch you're merging in. Then
-> making the stash (and the reset of the working tree) removes those
-> changes. If we were to leave MERGE_HEAD in place and you ran "git
-> commit", then it would create a merge commit that claims to have
-> incorporated everything from the other branch, but has quietly dropped
-> those changes as part of the merge resolution.
+IMHO yes. I think "avoid perf issues" is probably answering the "why not
+just heap-allocate the buffer" question. But that makes sense in the
+commit message, not in a comment.
 
-Yes, that makes sense.
-
->> Or that popping the stash again would also restore the MERGING state.
->
-> This would make more sense: the stash records that part of the state,
-> and then we make it available again later when the stash is applied.
-> However, that feature doesn't exist yet.
-
-Too bad.
-
-> I can't offhand think of a reason it couldn't be implemented. It's
-> possible that it would mess with somebody else's workflow (e.g., they
-> think it's useful to stash some changes independent of the merging
-> state, and then apply it later, perhaps while replaying the same or a
-> similar merge). So it might need to be tied to a command-line option
-> or similar.
-
-Everything breakes someones workflow [1], so an option would be fine.
-
-However, I'd suggest to protect users shooting in their foot with a
-warning and confirmation query for the time being.  I consider myself a
-quite experienced git user but this stash trouble today came totally
-unexpected.  And I've asked on #git@irc.freenode.net and got no answer
-which is totally uncommon.  So I guess that this stash during merge
-thing is pretty much a gray area.
-
-Bye,
-Tassilo
-
-[1] https://xkcd.com/1172/
+-Peff
