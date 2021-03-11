@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E399C4332E
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90258C43142
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E5F764FD0
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78B5164FD7
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbhCKCLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:11:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42226 "EHLO
+        id S230046AbhCKCLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:11:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbhCKCLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 21:11:13 -0500
+        with ESMTP id S229805AbhCKCL2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 21:11:28 -0500
 Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E88CFC061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:12 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id 6so23891204ybq.7
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:12 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C0BC061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:20 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id l3so23888510ybf.17
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lkAVMRoNnAO5iSSXdpavWYaf7kpDdRwGqRdd5exn/tY=;
-        b=ZWUdnyroFzJo6ofVTCFp3Z2QrbfLMc5YlwsV+O+izMtACRQgqYc8rQXG50wn5n80bN
-         VNJvm/9fZKUbL+Idyunm9o6oHIcynOZ4BYkvileM5t8MkVQkvvkvHAn5gnr0ywh5XdFr
-         V5pgGcQ+oCuL9Kn9SJSmQ9rBztt+/qDndnSUffZ/2jHDDwiRXHKGPv5/DpD6cp1j5Pzs
-         03/0PKiJcA1KoyxUjgJRLJYARxp+xXHkCf7wxrEoARuBHrnlJ+bxxKpGJ96d6+rLwzeI
-         WUWED/RMoj0xF78vS3RwCIjl4HZNlMRfcKWrS8GYRP8dB6niTXXH0K/Xex9RjJCrvSVh
-         PsoQ==
+        bh=OvdtPyvUSX9T0E7rDIn7PYUQpwLC5XXdi4eoLFgyEY8=;
+        b=rIgYGVopfckLYeGV+AnZVtqqsbm5ZcoRPpumT+W48eOVgtKgoKNHfcpdrQd8xicUlP
+         2o9Jp0HcjIEyFyOqm4W+zxcR2IvNYCSrSURv5qjcuFUtvGwmwhatS2XtfpeW5DvUeWUl
+         acH6dZE4Crepx2v7QogA2JqlOfRmTW88Up6McW23CIfB//hXCowR5AGnUqaE3rpTZZ3i
+         3xjHMrP5z/hAT933zB4DDSos9+YdLGA5b752LtCpQCzJpy25xGxYk3kIvg6+lBQ86kNk
+         icar5iACylxa2D9Ojj0v5bBViXv4r1ksvu81CyYjAZHmEVQP8AK5C4e3LHMeBIKaouwq
+         Lh9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lkAVMRoNnAO5iSSXdpavWYaf7kpDdRwGqRdd5exn/tY=;
-        b=YYieI/9uum7q3MtnDsYfYmQEY1iyp6PY3Ts33LYWC//qqX2GOQM7n3pomOOZI7+6Mr
-         51s59Eym0944O7DuPD5dYDkbKpM+0DDEV0D//vu0CCgN1E9XZoZxJjWUENlxQRm/nElj
-         xJSLSs/lolZbCcKWEOrG0zFQxG9aD5dNRW+4VVu0FuC8CCeC5lHX3uynzrW0sxKoWu0S
-         BfghX3vdjRf8kc1S8cON7gvRjEXRUniWojNvlUmyrhHICjEP2q8JoJdW6/2irDT7LJAa
-         cjCceABFFFv5hH6wrMvOggjmLbQ5MunMhNY+iLCW+FYexXnF3vVxylQ9cw6QmD+MP9al
-         N2zQ==
-X-Gm-Message-State: AOAM531nbbtp/HPJWTOXSdkeEhYlNdCpQqHxET3u2HX1cG8Iiu0DQyXn
-        dbWrgkwyD1LL/NkPz+ZRYeiGzbVkOnqkrSiLMUcTa6D9LMXz69dUyN9GAYg++qs+HuQffQ+6nXF
-        tfwq0gHywmCdhCGz8gHzM7ravAXvlfHhrVEavJKIxoi5tI6rBwHKLNSnZG2DGbNy4Qe4XyDR78Q
+        bh=OvdtPyvUSX9T0E7rDIn7PYUQpwLC5XXdi4eoLFgyEY8=;
+        b=bNTrLcf4BT0nkngKWqIAQnr0iEdDL3Ohiip7CLmluKwN1bexPEgTwI8oI+jorlLQkK
+         sKBvcKBzlKRNxY6bf2A/INPnf9SxwY7Oi8P7Vt6mmWeGnTsl74gxzcaDPEzZBJqiffpE
+         CCK+8b0tFe+IUtX/Xc61YkTL4zT+I+ddEProJ0a9mkHzLMbIn6/gYaXWtEO7EMhCMCot
+         5U2wjQBphfTQUtgoNGBHJE0UQfDwiIQSjCxTRfVfnrA7a/no9h/mIaGuOLr5/fd11ZIM
+         ecICjqkBJD8BadQYhXJ6Xf9/fA8ZfG2C33Aed9M6pgmUFwNWdhC3hi1GiumgZ2Lh4rKD
+         1BDA==
+X-Gm-Message-State: AOAM532NJ/JILtAvHKi2TWS/042bh7wjqNgnhzMe63lKlQBRnUO/LnK+
+        c4DXZ8d+jujS1r4kNk3DdLcUB4nSDjUvbXn078JKHbeoeFjE093ivxi6KIFQuE2lXqginOgg1q4
+        qvpwP1+YIi3hpqLQFOUPxJJwzDUEYGug7Sjboh1rrLZEkCKx0YFxyMIS7gWevVaC6WDmJz1foyQ
         ==
-X-Google-Smtp-Source: ABdhPJxZEufD4J1uOqx6vUL8snHfPpwxfFHhnFKiNDdrRzzxi98o9RXlo/0G0PG7f70vClNSIZzS4SpHNmHfOdjvHug=
+X-Google-Smtp-Source: ABdhPJwM53JJOHX86XNYHhGW3ZiBlRr2m+puYjJTGOEv52POGa2RX1EK6FNygZQ9LzM9t6IgihALpnVFT3ULFc3YEUk=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6902:4b3:: with SMTP id
- r19mr8485666ybs.432.1615428672152; Wed, 10 Mar 2021 18:11:12 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:12 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a25:dd43:: with SMTP id
+ u64mr8896750ybg.96.1615428679415; Wed, 10 Mar 2021 18:11:19 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:16 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-13-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-17-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 12/37] hook: allow parallel hook execution
+Subject: [PATCH v8 16/37] run-command: allow capturing of collated output
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,334 +70,312 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In many cases, there's no reason not to allow hooks to execute in
-parallel. run_processes_parallel() is well-suited - it's a task queue
-that runs its housekeeping in series, which means users don't
-need to worry about thread safety on their callback data. True
-multithreaded execution with the async_* functions isn't necessary here.
-Synchronous hook execution can be achieved by only allowing 1 job to run
-at a time.
+Some callers, for example server-side hooks which wish to relay hook
+output to clients across a transport, want to capture what would
+normally print to stderr and do something else with it. Allow that via a
+callback.
 
-Teach run_hooks() to use that function for simple hooks which don't
-require stdin or capture of stderr.
+By calling the callback regardless of whether there's output available,
+we allow clients to send e.g. a keepalive if necessary.
+
+Because we expose a strbuf, not a fd or FILE*, there's no need to create
+a temporary pipe or similar - we can just skip the print to stderr and
+instead hand it to the caller.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
 
-Notes:
-    Per AEvar's request - parallel hook execution on day zero.
-    
-    In most ways run_processes_parallel() worked great for me - but it didn't
-    have great support for hooks where we pipe to and from. I had to add this
-    support later in the series.
-    
-    Since I modified an existing and in-use library I'd appreciate a keen look on
-    these patches.
-    
-     - Emily
+ builtin/fetch.c             |  2 +-
+ builtin/submodule--helper.c |  2 +-
+ hook.c                      |  1 +
+ run-command.c               | 33 +++++++++++++++++++++++++--------
+ run-command.h               | 18 +++++++++++++++++-
+ submodule.c                 |  2 +-
+ t/helper/test-run-command.c | 25 ++++++++++++++++++++-----
+ t/t0061-run-command.sh      |  7 +++++++
+ 8 files changed, 73 insertions(+), 17 deletions(-)
 
- Documentation/config/hook.txt |   5 ++
- Documentation/git-hook.txt    |  14 ++++-
- builtin/hook.c                |   6 +-
- hook.c                        | 108 +++++++++++++++++++++++++++++-----
- hook.h                        |  21 ++++++-
- 5 files changed, 132 insertions(+), 22 deletions(-)
-
-diff --git a/Documentation/config/hook.txt b/Documentation/config/hook.txt
-index 8b12512e33..4f66bb35cf 100644
---- a/Documentation/config/hook.txt
-+++ b/Documentation/config/hook.txt
-@@ -20,3 +20,8 @@ hook.runHookDir::
- 	Controls how hooks contained in your hookdir are executed. Can be any of
- 	"yes", "warn", "interactive", or "no". Defaults to "yes". See
- 	linkgit:git-hook[1] and linkgit:git-config[1] "core.hooksPath").
-+
-+hook.jobs::
-+	Specifies how many hooks can be run simultaneously during parallelized
-+	hook execution. If unspecified, defaults to the number of processors on
-+	the current system.
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index 96a857c682..81b8e94994 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- [verse]
- 'git hook' list <hook-name>
- 'git hook' run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] [--to-stdin=<path>]
--	<hook-name>
-+	[(-j|--jobs) <n>] <hook-name>
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d8e798dc69..b6d45f8359 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1757,7 +1757,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
+ 		result = run_processes_parallel_tr2(max_children,
+ 						    &fetch_next_remote,
+ 						    &fetch_failed_to_start,
+-						    NULL,
++						    NULL, NULL,
+ 						    &fetch_finished,
+ 						    &state,
+ 						    "fetch", "parallel/fetch");
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 14f6e4ee8c..136e09a016 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2294,7 +2294,7 @@ static int update_submodules(struct submodule_update_clone *suc)
+ 	int i;
  
- DESCRIPTION
- -----------
-@@ -99,7 +99,7 @@ in the order they should be run, and print the config scope where the relevant
- `hook.<hook-name>.command` was specified, not the `hookcmd` (if applicable).
- This output is human-readable and the format is subject to change over time.
+ 	run_processes_parallel_tr2(suc->max_jobs, update_clone_get_next_task,
+-				   update_clone_start_failure, NULL,
++				   update_clone_start_failure, NULL, NULL,
+ 				   update_clone_task_finished, suc, "submodule",
+ 				   "parallel/update");
  
--run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] [--to-stdin=<path>] `<hook-name>`::
-+run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...] [--to-stdin=<path>] [(-j|--jobs)<n>] `<hook-name>`::
- 
- Runs hooks configured for `<hook-name>`, in the same order displayed by `git
- hook list`. Hooks configured this way may be run prepended with `sh -c`, so
-@@ -131,6 +131,16 @@ Specify environment variables to set for every hook that is run.
- Specify a file which will be streamed into stdin for every hook that is run.
- Each hook will receive the entire file from beginning to EOF.
- 
-+-j::
-+--jobs::
-+	Only valid for `run`.
-++
-+Specify how many hooks to run simultaneously. If this flag is not specified, use
-+the value of the `hook.jobs` config. If the config is not specified, use the
-+number of CPUs on the current system. Some hooks may be ineligible for
-+parallelization: for example, 'commit-msg' intends hooks modify the commit
-+message body and cannot be parallelized.
-+
- CONFIGURATION
- -------------
- include::config/hook.txt[]
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 38a4555e05..b4f4adb1de 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -9,7 +9,7 @@
- static const char * const builtin_hook_usage[] = {
- 	N_("git hook list <hookname>"),
- 	N_("git hook run [(-e|--env)=<var>...] [(-a|--arg)=<arg>...]"
--	   "[--to-stdin=<path>] <hookname>"),
-+	   "[--to-stdin=<path>] [(-j|--jobs) <count>] <hookname>"),
- 	NULL
- };
- 
-@@ -104,10 +104,12 @@ static int run(int argc, const char **argv, const char *prefix)
- 			   N_("argument to pass to hook")),
- 		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
- 			   N_("file to read into hooks' stdin")),
-+		OPT_INTEGER('j', "jobs", &opt.jobs,
-+			    N_("run up to <n> hooks simultaneously")),
- 		OPT_END(),
- 	};
- 
--	run_hooks_opt_init(&opt);
-+	run_hooks_opt_init_async(&opt);
- 
- 	argc = parse_options(argc, argv, prefix, run_options,
- 			     builtin_hook_usage, 0);
 diff --git a/hook.c b/hook.c
-index f906e8c61c..fe8860860b 100644
+index a509d2d80e..e16b082cbd 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -144,6 +144,14 @@ enum hookdir_opt configured_hookdir_opt(void)
- 	return HOOKDIR_UNKNOWN;
- }
+@@ -434,6 +434,7 @@ int run_hooks(const char *hookname, struct run_hooks_opt *options)
+ 				   pick_next_hook,
+ 				   notify_start_failure,
+ 				   options->feed_pipe,
++				   NULL,
+ 				   notify_hook_finished,
+ 				   &cb_data,
+ 				   "hook",
+diff --git a/run-command.c b/run-command.c
+index e7eeb6c49b..36a4edbacf 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1559,6 +1559,7 @@ struct parallel_processes {
+ 	get_next_task_fn get_next_task;
+ 	start_failure_fn start_failure;
+ 	feed_pipe_fn feed_pipe;
++	consume_sideband_fn consume_sideband;
+ 	task_finished_fn task_finished;
  
-+int configured_hook_jobs(void)
-+{
-+	int n = online_cpus();
-+	git_config_get_int("hook.jobs", &n);
-+
-+	return n;
-+}
-+
- static int should_include_hookdir(const char *path, enum hookdir_opt cfg)
+ 	struct {
+@@ -1624,6 +1625,7 @@ static void pp_init(struct parallel_processes *pp,
+ 		    get_next_task_fn get_next_task,
+ 		    start_failure_fn start_failure,
+ 		    feed_pipe_fn feed_pipe,
++		    consume_sideband_fn consume_sideband,
+ 		    task_finished_fn task_finished,
+ 		    void *data)
  {
- 	struct strbuf prompt = STRBUF_INIT;
-@@ -236,12 +244,19 @@ struct list_head* hook_list(const struct strbuf* hookname)
- 	return hook_head;
- }
+@@ -1644,6 +1646,7 @@ static void pp_init(struct parallel_processes *pp,
+ 	pp->start_failure = start_failure ? start_failure : default_start_failure;
+ 	pp->feed_pipe = feed_pipe ? feed_pipe : default_feed_pipe;
+ 	pp->task_finished = task_finished ? task_finished : default_task_finished;
++	pp->consume_sideband = consume_sideband;
  
--void run_hooks_opt_init(struct run_hooks_opt *o)
-+void run_hooks_opt_init_sync(struct run_hooks_opt *o)
- {
- 	strvec_init(&o->env);
- 	strvec_init(&o->args);
- 	o->path_to_stdin = NULL;
- 	o->run_hookdir = configured_hookdir_opt();
-+	o->jobs = 1;
-+}
-+
-+void run_hooks_opt_init_async(struct run_hooks_opt *o)
-+{
-+	run_hooks_opt_init_sync(o);
-+	o->jobs = configured_hook_jobs();
- }
- 
- int hook_exists(const char *hookname, enum hookdir_opt should_run_hookdir)
-@@ -269,19 +284,26 @@ void run_hooks_opt_clear(struct run_hooks_opt *o)
- 	strvec_clear(&o->args);
- }
- 
--static void prepare_hook_cp(struct hook *hook, struct run_hooks_opt *options,
--			    struct child_process *cp)
-+static int pick_next_hook(struct child_process *cp,
-+			  struct strbuf *out,
-+			  void *pp_cb,
-+			  void **pp_task_cb)
- {
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct hook *hook = hook_cb->run_me;
-+
- 	if (!hook)
--		return;
-+		return 0;
- 
- 	/* reopen the file for stdin; run_command closes it. */
--	if (options->path_to_stdin)
--		cp->in = xopen(options->path_to_stdin, O_RDONLY);
--	else
-+	if (hook_cb->options->path_to_stdin) {
-+		cp->no_stdin = 0;
-+		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
-+	} else {
- 		cp->no_stdin = 1;
-+	}
- 
--	cp->env = options->env.v;
-+	cp->env = hook_cb->options->env.v;
- 	cp->stdout_to_stderr = 1;
- 	cp->trace2_hook_name = hook->command.buf;
- 
-@@ -298,14 +320,59 @@ static void prepare_hook_cp(struct hook *hook, struct run_hooks_opt *options,
- 	 * add passed-in argv, without expanding - let the user get back
- 	 * exactly what they put in
+ 	pp->nr_processes = 0;
+ 	pp->output_owner = 0;
+@@ -1680,7 +1683,10 @@ static void pp_cleanup(struct parallel_processes *pp)
+ 	 * When get_next_task added messages to the buffer in its last
+ 	 * iteration, the buffered output is non empty.
  	 */
--	strvec_pushv(&cp->args, options->args.v);
-+	strvec_pushv(&cp->args, hook_cb->options->args.v);
-+
-+	/* Provide context for errors if necessary */
-+	*pp_task_cb = hook;
-+
-+	/* Get the next entry ready */
-+	if (hook_cb->run_me->list.next == hook_cb->head)
-+		hook_cb->run_me = NULL;
+-	strbuf_write(&pp->buffered_output, stderr);
++	if (pp->consume_sideband)
++		pp->consume_sideband(&pp->buffered_output, pp->data);
 +	else
-+		hook_cb->run_me = list_entry(hook_cb->run_me->list.next,
-+					     struct hook, list);
-+
-+	return 1;
-+}
-+
-+static int notify_start_failure(struct strbuf *out,
-+				void *pp_cb,
-+				void *pp_task_cp)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+	struct hook *attempted = pp_task_cp;
-+
-+	/* |= rc in cb */
-+	hook_cb->rc |= 1;
-+
-+	strbuf_addf(out, _("Couldn't start '%s', configured in '%s'\n"),
-+		    attempted->command.buf,
-+		    attempted->from_hookdir ? "hookdir"
-+			: config_scope_name(attempted->origin));
-+
-+	/* NEEDSWORK: if halt_on_error is desired, do it here. */
-+	return 0;
-+}
-+
-+static int notify_hook_finished(int result,
-+				struct strbuf *out,
-+				void *pp_cb,
-+				void *pp_task_cb)
-+{
-+	struct hook_cb_data *hook_cb = pp_cb;
-+
-+	/* |= rc in cb */
-+	hook_cb->rc |= result;
-+
-+	/* NEEDSWORK: if halt_on_error is desired, do it here. */
-+	return 0;
- }
++		strbuf_write(&pp->buffered_output, stderr);
+ 	strbuf_release(&pp->buffered_output);
  
- int run_hooks(const char *hookname, struct run_hooks_opt *options)
+ 	sigchain_pop_common();
+@@ -1801,9 +1807,13 @@ static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
+ static void pp_output(struct parallel_processes *pp)
  {
- 	struct strbuf hookname_str = STRBUF_INIT;
- 	struct list_head *to_run, *pos = NULL, *tmp = NULL;
--	int rc = 0;
-+	struct hook_cb_data cb_data = { 0, NULL, NULL, options };
- 
- 	if (!options)
- 		BUG("a struct run_hooks_opt must be provided to run_hooks");
-@@ -315,17 +382,26 @@ int run_hooks(const char *hookname, struct run_hooks_opt *options)
- 	to_run = hook_list(&hookname_str);
- 
- 	list_for_each_safe(pos, tmp, to_run) {
--		struct child_process hook_proc = CHILD_PROCESS_INIT;
- 		struct hook *hook = list_entry(pos, struct hook, list);
- 
- 		if (hook->from_hookdir &&
- 		    !should_include_hookdir(hook->command.buf, options->run_hookdir))
--			continue;
-+			    list_del(pos);
-+	}
+ 	int i = pp->output_owner;
 +
-+	if (list_empty(to_run))
-+		return 0;
- 
--		prepare_hook_cp(hook, options, &hook_proc);
-+	cb_data.head = to_run;
-+	cb_data.run_me = list_entry(to_run->next, struct hook, list);
- 
--		rc |= run_command(&hook_proc);
--	}
-+	run_processes_parallel_tr2(options->jobs,
-+				   pick_next_hook,
-+				   notify_start_failure,
-+				   notify_hook_finished,
-+				   &cb_data,
-+				   "hook",
-+				   hookname);
- 
--	return rc;
-+	return cb_data.rc;
+ 	if (pp->children[i].state == GIT_CP_WORKING &&
+ 	    pp->children[i].err.len) {
+-		strbuf_write(&pp->children[i].err, stderr);
++		if (pp->consume_sideband)
++			pp->consume_sideband(&pp->children[i].err, pp->data);
++		else
++			strbuf_write(&pp->children[i].err, stderr);
+ 		strbuf_reset(&pp->children[i].err);
+ 	}
  }
-diff --git a/hook.h b/hook.h
-index 2314ec5962..2593f932c0 100644
---- a/hook.h
-+++ b/hook.h
-@@ -38,6 +38,9 @@ enum hookdir_opt
-  */
- enum hookdir_opt configured_hookdir_opt(void);
+@@ -1842,11 +1852,15 @@ static int pp_collect_finished(struct parallel_processes *pp)
+ 			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
+ 			strbuf_reset(&pp->children[i].err);
+ 		} else {
+-			strbuf_write(&pp->children[i].err, stderr);
++			/* Output errors, then all other finished child processes */
++			if (pp->consume_sideband) {
++				pp->consume_sideband(&pp->children[i].err, pp->data);
++				pp->consume_sideband(&pp->buffered_output, pp->data);
++			} else {
++				strbuf_write(&pp->children[i].err, stderr);
++				strbuf_write(&pp->buffered_output, stderr);
++			}
+ 			strbuf_reset(&pp->children[i].err);
+-
+-			/* Output all other finished child processes */
+-			strbuf_write(&pp->buffered_output, stderr);
+ 			strbuf_reset(&pp->buffered_output);
  
-+/* Provides the number of threads to use for parallel hook execution. */
-+int configured_hook_jobs(void);
-+
- struct run_hooks_opt
+ 			/*
+@@ -1870,6 +1884,7 @@ int run_processes_parallel(int n,
+ 			   get_next_task_fn get_next_task,
+ 			   start_failure_fn start_failure,
+ 			   feed_pipe_fn feed_pipe,
++			   consume_sideband_fn consume_sideband,
+ 			   task_finished_fn task_finished,
+ 			   void *pp_cb)
  {
- 	/* Environment vars to be set for each hook */
-@@ -48,16 +51,30 @@ struct run_hooks_opt
+@@ -1880,7 +1895,7 @@ int run_processes_parallel(int n,
  
- 	/*
- 	 * How should the hookdir be handled?
--	 * Leave the RUN_HOOKS_OPT_INIT default in most cases; this only needs
-+	 * Leave the run_hooks_opt_init_*() default in most cases; this only needs
- 	 * to be overridden if the user can override it at the command line.
- 	 */
- 	enum hookdir_opt run_hookdir;
+ 	sigchain_push(SIGPIPE, SIG_IGN);
  
- 	/* Path to file which should be piped to stdin for each hook */
- 	const char *path_to_stdin;
-+
-+	/* Number of threads to parallelize across */
-+	int jobs;
-+};
-+
-+/*
-+ * Callback provided to feed_pipe_fn and consume_sideband_fn.
+-	pp_init(&pp, n, get_next_task, start_failure, feed_pipe, task_finished, pp_cb);
++	pp_init(&pp, n, get_next_task, start_failure, feed_pipe, consume_sideband, task_finished, pp_cb);
+ 	while (1) {
+ 		for (i = 0;
+ 		    i < spawn_cap && !pp.shutdown &&
+@@ -1918,6 +1933,7 @@ int run_processes_parallel(int n,
+ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 			       start_failure_fn start_failure,
+ 			       feed_pipe_fn feed_pipe,
++			       consume_sideband_fn consume_sideband,
+ 			       task_finished_fn task_finished, void *pp_cb,
+ 			       const char *tr2_category, const char *tr2_label)
+ {
+@@ -1927,7 +1943,8 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
+ 				   ((n < 1) ? online_cpus() : n));
+ 
+ 	result = run_processes_parallel(n, get_next_task, start_failure,
+-					feed_pipe, task_finished, pp_cb);
++					feed_pipe, consume_sideband,
++					task_finished, pp_cb);
+ 
+ 	trace2_region_leave(tr2_category, tr2_label, NULL);
+ 
+diff --git a/run-command.h b/run-command.h
+index 1e3cf0999f..ebc4a95a94 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -457,6 +457,20 @@ typedef int (*feed_pipe_fn)(struct strbuf *pipe,
+ 			    void *pp_cb,
+ 			    void *pp_task_cb);
+ 
++/**
++ * If this callback is provided, instead of collating process output to stderr,
++ * they will be collated into a new pipe. consume_sideband_fn will be called
++ * repeatedly. When output is available on that pipe, it will be contained in
++ * 'output'. But it will be called with an empty 'output' too, to allow for
++ * keepalives or similar operations if necessary.
++ *
++ * pp_cb is the callback cookie as passed into run_processes_parallel.
++ *
++ * Since this callback is provided with the collated output, no task cookie is
++ * provided.
 + */
-+struct hook_cb_data {
-+	int rc;
-+	struct list_head *head;
-+	struct hook *run_me;
-+	struct run_hooks_opt *options;
- };
++typedef void (*consume_sideband_fn)(struct strbuf *output, void *pp_cb);
++
+ /**
+  * This callback is called on every child process that finished processing.
+  *
+@@ -492,10 +506,12 @@ int run_processes_parallel(int n,
+ 			   get_next_task_fn,
+ 			   start_failure_fn,
+ 			   feed_pipe_fn,
++			   consume_sideband_fn,
+ 			   task_finished_fn,
+ 			   void *pp_cb);
+ int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
+-			       feed_pipe_fn, task_finished_fn, void *pp_cb,
++			       feed_pipe_fn, consume_sideband_fn,
++			       task_finished_fn, void *pp_cb,
+ 			       const char *tr2_category, const char *tr2_label);
  
--void run_hooks_opt_init(struct run_hooks_opt *o);
-+void run_hooks_opt_init_sync(struct run_hooks_opt *o);
-+void run_hooks_opt_init_async(struct run_hooks_opt *o);
- void run_hooks_opt_clear(struct run_hooks_opt *o);
+ #endif
+diff --git a/submodule.c b/submodule.c
+index dc4a6a60f4..4926642451 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1644,7 +1644,7 @@ int fetch_populated_submodules(struct repository *r,
+ 	run_processes_parallel_tr2(max_parallel_jobs,
+ 				   get_next_submodule,
+ 				   fetch_start_failure,
+-				   NULL,
++				   NULL, NULL,
+ 				   fetch_finish,
+ 				   &spf,
+ 				   "submodule", "parallel/fetch");
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index 9348184d30..d53db6d11c 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -51,6 +51,16 @@ static int no_job(struct child_process *cp,
+ 	return 0;
+ }
  
- /*
++static void test_consume_sideband(struct strbuf *output, void *cb)
++{
++	FILE *sideband;
++
++	sideband = fopen("./sideband", "a");
++
++	strbuf_write(output, sideband);
++	fclose(sideband);
++}
++
+ static int task_finished(int result,
+ 			 struct strbuf *err,
+ 			 void *pp_cb,
+@@ -201,7 +211,7 @@ static int testsuite(int argc, const char **argv)
+ 		suite.tests.nr, max_jobs);
+ 
+ 	ret = run_processes_parallel(max_jobs, next_test, test_failed,
+-				     test_stdin, test_finished, &suite);
++				     test_stdin, NULL, test_finished, &suite);
+ 
+ 	if (suite.failed.nr > 0) {
+ 		ret = 1;
+@@ -429,23 +439,28 @@ int cmd__run_command(int argc, const char **argv)
+ 
+ 	if (!strcmp(argv[1], "run-command-parallel"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, NULL, NULL, &proc));
++					    NULL, NULL, NULL, NULL, &proc));
+ 
+ 	if (!strcmp(argv[1], "run-command-abort"))
+ 		exit(run_processes_parallel(jobs, parallel_next,
+-					    NULL, NULL, task_finished, &proc));
++					    NULL, NULL, NULL, task_finished, &proc));
+ 
+ 	if (!strcmp(argv[1], "run-command-no-jobs"))
+ 		exit(run_processes_parallel(jobs, no_job,
+-					    NULL, NULL, task_finished, &proc));
++					    NULL, NULL, NULL, task_finished, &proc));
+ 
+ 	if (!strcmp(argv[1], "run-command-stdin")) {
+ 		proc.in = -1;
+ 		proc.no_stdin = 0;
+ 		exit (run_processes_parallel(jobs, parallel_next, NULL,
+-					     test_stdin, NULL, &proc));
++					     test_stdin, NULL, NULL, &proc));
+ 	}
+ 
++	if (!strcmp(argv[1], "run-command-sideband"))
++		exit(run_processes_parallel(jobs, parallel_next, NULL, NULL,
++					    test_consume_sideband, NULL,
++					    &proc));
++
+ 	fprintf(stderr, "check usage\n");
+ 	return 1;
+ }
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 87759482ad..e99f6c7f44 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -143,6 +143,13 @@ test_expect_success 'run_command runs in parallel with more tasks than jobs avai
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'run_command can divert output' '
++	test_when_finished rm sideband &&
++	test-tool run-command run-command-sideband 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test_must_be_empty actual &&
++	test_cmp expect sideband
++'
++
+ cat >expect <<-EOF
+ preloaded output of a child
+ listening for stdin:
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
