@@ -2,98 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F2CC433E9
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E33C433E9
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:33:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6ED6664F92
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:20:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EE7964ECD
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbhCKUTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 15:19:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50458 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230410AbhCKUTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 15:19:18 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E999C061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 12:19:18 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id z9so550339iln.1
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 12:19:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KldTajwZjeoz82xMUEE56I9sjBI6jZAhLVjJJj5co+k=;
-        b=P1Z7msSe+uIHerV10HYNA+Nb1TC9yDp4CGbeTy1zNz9dOtnNCWLlb2VbNuk4OTpHgU
-         V9F5jpicvggdGq3FAGilbHWXCc2teV6JpcGWazuV87P7SWhjX4n4cRLiDlV5Mwe9P07P
-         vDl5YulRZ0rOaaQu6PRn6mUQs3LcMqNBSBSL6GimW5WNtI2/9iNBOCfiCWi8sivWxVMk
-         RSovLawVPmmSRhdKhDgaWFaudioXCn3MbFJUZKjSPBKG5j265gr+mjjhwroTUGHihIX0
-         cnmneWHlw53uw5q0soUquVoVoBH4VArttbFc7k7U3WaTM7jx0QcRJp9wfunFg7meK6/S
-         9klw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KldTajwZjeoz82xMUEE56I9sjBI6jZAhLVjJJj5co+k=;
-        b=hD/Wm3oOocJ2TOgHIYBLokOzGhaBAFhdvDURwHob20IVZbnFY4ditIeVI5vwK3SiA5
-         rtnLmThvMPZn4ev0P1pFrlMWwzsFmGbQ/YGTAbGaELkLPBSHZi9hg8MHQbji7OjEPBN5
-         0T4xiGHMI9XkOOKmYRFdOCQ8oRVQlHN4G7P1l28RJB4UUTbPArfiZEUJ9rkkamtb08Xy
-         raWNfFd/PQBJFVvxeyfIpdGNyZJLCTK1qVSsQjiLN6f3SrfRypqC68XTTshQOZfMglTg
-         SE5/dAuunwcgChVwKg2eX9aL8prM5C/cZEvnT730i+IPmGI0SpUrSpNOs9Z9TBh+n5LE
-         nS3g==
-X-Gm-Message-State: AOAM5305URz89gr6yiRWsA47sbgBx/1Lf0bhaZG0sWUaSQ0sk00eRQVO
-        a4D2sZiI9JLHKRuJEywduZaM6NGtAotP/HzyxxT0fkL6Av9VcA==
-X-Google-Smtp-Source: ABdhPJxi0PH9D8w3bN7LuByqhxyCC89qzjbZFRzt2LRpD5r970Qd7DyqthkkJBDxvLFG7dcvg+hdj04gll/aX/Lnl64=
-X-Received: by 2002:a05:6e02:152f:: with SMTP id i15mr160998ilu.277.1615493957848;
- Thu, 11 Mar 2021 12:19:17 -0800 (PST)
+        id S230475AbhCKUdE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 15:33:04 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56694 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230363AbhCKUcd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 15:32:33 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A7FF812BACA;
+        Thu, 11 Mar 2021 15:32:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=olfaKXZR8hVC8loEXqlqcUVtXho=; b=F1ZrL2
+        ymPXVMh0wG7WJKlECjq7j1kJA9Aq53TfICfzAP7TWIdtpdL/PST/8rNQOuDyp2rE
+        XYGlhhztSGT50i4wLWEOy/ePQcm3inxB6TYmNuw+BYUQOERyqc6XInHK9xybxNmT
+        o61RCiEyUrTOQTUNvAYO6N1WkDUVDlclpXuQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=N8SQBqjbqKg9zUTweY1rSC5M4yyTS2zn
+        UHi5McKVDM7jyP/VbzlhAsTtypwm4BZZRIJ0XvH3mCk2VXDbo2Qj9qvMBgVne13k
+        IT5Q//1SBVk5TfYw9cWkjIJM+G9ZgRXWCaKDuUttcSbOw31eZeHq68F+S30GlN9G
+        zfzVohXsVLo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A05E612BAC9;
+        Thu, 11 Mar 2021 15:32:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EB04012BAC8;
+        Thu, 11 Mar 2021 15:32:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Chris Torek <chris.torek@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 01/12] pkt-line: eliminate the need for static buffer
+ in packet_write_gently()
+References: <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
+        <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
+        <311ea4a5cd71c5dd2407348ad4608d2f7dd77ce5.1615302157.git.gitgitgadget@gmail.com>
+        <xmqqblbrzy5j.fsf@gitster.c.googlers.com>
+        <YEpvfztZWhAvSDTL@coredump.intra.peff.net>
+Date:   Thu, 11 Mar 2021 12:32:29 -0800
+In-Reply-To: <YEpvfztZWhAvSDTL@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 11 Mar 2021 14:29:03 -0500")
+Message-ID: <xmqq4khhctya.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-From:   Mustafa Zengin <mzengin88@gmail.com>
-Date:   Thu, 11 Mar 2021 12:18:50 -0800
-Message-ID: <CAJ-1jP7fy95V5ROj0gE3UC9zn5f=8pTTGy1Y7cwQtx7DidEhqw@mail.gmail.com>
-Subject: git difftool -I and git diff -I behave differently
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: E730CBA4-82A8-11EB-88B3-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-git difftool and git diff behave differently for option -I.
+> On Tue, Mar 09, 2021 at 03:48:40PM -0800, Junio C Hamano wrote:
+>
+>> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> 
+>> > +	/*
+>> > +	 * Write the header and the buffer in 2 parts so that we do not need
+>> > +	 * to allocate a buffer or rely on a static buffer.  This avoids perf
+>> > +	 * and multi-threading issues.
+>> > +	 */
+>> 
+>> I understand "multi-threading issues" (i.e. let's not have too much
+>> stuff on the stack), but what issue around "perf" are we worried
+>> about?
+>>  ...
+> Yeah, this came from my suggestion. My gut feeling is that it isn't
+> likely to matter, but I'd much rather solve any performance problem we
+> find using writev(), which would be pretty easy to emulate with a
+> wrapper for systems that lack it.
 
-Repro steps:
-1. Add a line with "text" into a file (without the quotes)
-2. Run
-  git diff -I"text"
-3. Observe that no output is returned
-4. Run
-  git difftool -I"text"
-5. Observe that the assigned diff tool is opened with the change
-including "text".
+I too had writev() in mind when I said "can fix it locally", so we
+are on the same page, which is good.
 
-Expected:
-In step 5, no diff is shown.
+So "this avoid multi-threading issues" without mentioning "perf and"
+would be more appropriate?
 
-My expectation is based on three things:
-1. -S and -G options behave the same for `git diff` and `git difftool`.
-2. Quote from https://git-scm.com/docs/git-difftool
-    "See git-diff[1] for the full list of supported options."
-   It implies that all `git diff` options are inherited to `git difftool`.
-3. It looks like the command is attempting to parse the option so it
-is not completely ignored. If I make the regex malformed, e.g.
-     git difftool -I"*text"
-   I get back:
-     error: invalid regex given to -I: '*text'
-
-StackOverflow post:
-https://stackoverflow.com/questions/66574689/git-difftool-with-i-option
-
-Versions tested:
-Windows: git version 2.30.0.windows.1
-Ubuntu: git version 2.30.2
-
-Thanks,
-Mustafa
+Thanks.
