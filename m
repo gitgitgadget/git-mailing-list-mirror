@@ -6,102 +6,86 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A611C433E0
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 157A8C43381
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:42:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EF93E64FC4
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:24:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD8C264FC5
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:42:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbhCKBX5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 20:23:57 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56660 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229696AbhCKBXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 20:23:38 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0948511B7AD;
-        Wed, 10 Mar 2021 20:23:38 -0500 (EST)
+        id S229608AbhCKBle (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 20:41:34 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51933 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229520AbhCKBlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 20:41:18 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A8910AE3CE;
+        Wed, 10 Mar 2021 20:41:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GkOc3o9z7oi6
-        TLHkxjxfcX1K3po=; b=YiW1o1/iacuo1RzG86+aeSNqYZCapFVaNJR0rwcOJgH9
-        bMnLQE3ONxXf+hpYRQwkmeHrTG4nzqTMxOHDy0EPW25tbYlTlGuWiKBL5Ew8zdP6
-        BozoQgDiKEHrzu5Zuo5QFULWTvJvvhjbXWcmDNPW1rFiQOq5Lv3EfW9EfdPYzBQ=
+        :content-type; s=sasl; bh=UmUJwcZKj2OMtcZlZF+3rXceJvc=; b=LnQdFf
+        elUFHj+bhyXP7HaFzSkqXjpSBMCYfSdeATds2PxJ8j2aMAFKrdbhuLeqnoSW25ep
+        oGMk+I7UrU/sxRrxjIrdshBWhIwbhxsB35gOWW8dGBNDEHSHrfjdIf4JtXtrdVHU
+        daLySNx5am76LEqwrwa75XH5U3t3LnEr7oLg0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=TTRiXd
-        +qWNnbjOAzB/UjzbET4EvkT0TkINV3jfuRGJ1wkvM6F1Gum7/+jd+F86UtVblisq
-        r3ttVzYkA3vcepRQj1IJg7SXTuKj+Xu1lkcTdohOtlICSN2QtJ9DAunwlfPQsP5E
-        3WuxGBYzwsIZfBYQPP8Qqe+LtwBDagV8/Wc5Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0119811B7AC;
-        Wed, 10 Mar 2021 20:23:38 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=iwroeyGev1n+93xjwTQzYWY599OY5NtI
+        NJSuvYicJPCd9OFgSUx5ZRw4NVZhzbq4q3K0AAve4x254DevQJbuA3A56uQ3bfDh
+        1qd5RtbLi91YIhSVPErWDPtolTMhETHa+tac7lY+7eYebzVYu3sJwhDyivQTfFmP
+        H0pzlRiVN+Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0AFBAE3CD;
+        Wed, 10 Mar 2021 20:41:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3FEEF11B7AA;
-        Wed, 10 Mar 2021 20:23:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 32324AE3CC;
+        Wed, 10 Mar 2021 20:41:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 4/4] tests: get rid of $_x05 from the test suite
-References: <YEj82fOf+F4xJC8S@coredump.intra.peff.net>
-        <20210311001447.28254-5-avarab@gmail.com>
-Date:   Wed, 10 Mar 2021 17:23:33 -0800
-In-Reply-To: <20210311001447.28254-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 11 Mar 2021 01:14:47 +0100")
-Message-ID: <xmqq8s6uh4a2.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, nmulcahey@google.com
+Subject: Re: [PATCH] fetch-pack: do not mix --pack_header and packfile uri
+References: <xmqq5z1ykckc.fsf@gitster.g>
+        <20210310232906.2135256-1-jonathantanmy@google.com>
+Date:   Wed, 10 Mar 2021 17:41:16 -0800
+In-Reply-To: <20210310232906.2135256-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 10 Mar 2021 15:29:06 -0800")
+Message-ID: <xmqq4khih3gj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 664F960A-8208-11EB-88E5-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: DF47871E-820A-11EB-A214-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Remove the last users of the $_x05 variable from the tests. It turns
-> out that all of these tests can be rewritten unambiguously to simply
-> use [0-9a-f]* instead.
+> This probably means that fetch-pack.c itself (instead of
+> finish_http_pack_request(), currently being called from a separate
+> http_fetch process) should call index-pack for the out-of-band
+> packfiles, which is conceptually reasonable. This means that
+> finish_http_pack_request() will need to be able to refrain from running
+> index-pack itself and instead just return where the pack was downloaded.
 
-I am unsure about the "unambiguously" part, e.g.
+The HTTP downloading for packfile specified via the packfile URI
+mechansim is so different from the rest of the HTTP codepaths in
+nature, isn't it?  It is a straight "download a static file over the
+web, and we could even afford to resume, or send multiple requests
+to gain throughput" usecase, which does not exist anywhere else in
+Git (eh, other than the dumb HTTP protocol nobody sane should be
+using anymore).
 
-> -	sed -e "s/ $_x05[0-9a-f]*	/ X	/" <current >check &&
-> +	sed -e "s/ [0-9a-f]*	/ X	/" <current >check &&
+Since we are not in the business of writing a performant HTTP
+downloader, if we can update the codepath not to rely on our http.c
+code, and instead spawn one of the command line tools written
+specifically for the "download a single large file over HTTP"
+usecase (like curl, wget or aria2c), wait for it to do its thing and
+then concentrate on the processing specific to Git (like running
+index-pack with various options), it would take us closer to the
+"make clone resumable" dream, wouldn't it?
 
-does't the preimage say "we expect at least 5 hexdigits to be shown
-here"?  The postimage lets even an empty string to pass.=20
-
-> In the case of the tree matching we're relying on there being a <TAB>
-> after the SHA (but a space between the modes and type), then in some
-> of the other tests here that an abbreviated SHA is at the start of the
-> line, etc.
-
-Sure, but these being tests, I am not sure we should be assuming the
-correct input to these transformations.
-
->  test_expect_success 'ls-tree --abbrev=3D5' '
->  	git ls-tree --abbrev=3D5 $tree >current &&
-> -	sed -e "s/ $_x05[0-9a-f]*	/ X	/" <current >check &&
-> +	sed -e "s/ [0-9a-f]*	/ X	/" <current >check &&
->  	cat >expected <<\EOF &&
->  100644 blob X	1.txt
->  100644 blob X	2.txt
-
-This one is particularly iffy.  The --abbrev=3D5 test is designed to
-ensure that the resulting abbreviated object names are at least 5
-hexdigits long, even when the repository is so small that only 4
-hexdigits are sufficient to avoid ambiguity, while allowing the
-output to be longer than specified 5 (when 5 turns out to be
-insufficient for disambiguation).
-
-So, I dunno.
+Thanks.
