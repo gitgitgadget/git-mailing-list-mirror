@@ -2,102 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76E33C433E9
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE19DC433DB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:44:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2EE7964ECD
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:33:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E01E64F85
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 20:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230475AbhCKUdE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 15:33:04 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56694 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbhCKUcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 15:32:33 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A7FF812BACA;
-        Thu, 11 Mar 2021 15:32:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=olfaKXZR8hVC8loEXqlqcUVtXho=; b=F1ZrL2
-        ymPXVMh0wG7WJKlECjq7j1kJA9Aq53TfICfzAP7TWIdtpdL/PST/8rNQOuDyp2rE
-        XYGlhhztSGT50i4wLWEOy/ePQcm3inxB6TYmNuw+BYUQOERyqc6XInHK9xybxNmT
-        o61RCiEyUrTOQTUNvAYO6N1WkDUVDlclpXuQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=N8SQBqjbqKg9zUTweY1rSC5M4yyTS2zn
-        UHi5McKVDM7jyP/VbzlhAsTtypwm4BZZRIJ0XvH3mCk2VXDbo2Qj9qvMBgVne13k
-        IT5Q//1SBVk5TfYw9cWkjIJM+G9ZgRXWCaKDuUttcSbOw31eZeHq68F+S30GlN9G
-        zfzVohXsVLo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A05E612BAC9;
-        Thu, 11 Mar 2021 15:32:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EB04012BAC8;
-        Thu, 11 Mar 2021 15:32:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S230386AbhCKUoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 15:44:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55810 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230266AbhCKUoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 15:44:12 -0500
+Received: from eggs.gnu.org (eggs.gnu.org [IPv6:2001:470:142:3::10])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9C3BC061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 12:44:11 -0800 (PST)
+Received: from fencepost.gnu.org ([2001:470:142:3::e]:57150)
+        by eggs.gnu.org with esmtp (Exim 4.90_1)
+        (envelope-from <tsdh@gnu.org>)
+        id 1lKSA8-0000qf-GQ; Thu, 11 Mar 2021 15:44:04 -0500
+Received: from auth1-smtp.messagingengine.com ([66.111.4.227]:47459)
+        by fencepost.gnu.org with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+        (Exim 4.82)
+        (envelope-from <tsdh@gnu.org>)
+        id 1lKSA7-0007UT-65; Thu, 11 Mar 2021 15:44:03 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailauth.nyi.internal (Postfix) with ESMTP id A7C8C27C005A;
+        Thu, 11 Mar 2021 15:44:02 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 11 Mar 2021 15:44:02 -0500
+X-ME-Sender: <xms:EoFKYCsL28v0m81eY5f3J_UgaZ7cIl8KSkQWZ8ZwQs-b1WbZQkKhWA>
+    <xme:EoFKYHd_5nVmAoTr_MKNvjqnslG9MEss8DGPIV-mfce3cNBe3C2S7oxSSyfNhcHew
+    pI9WcUhcd-dMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledruddvtddgudegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfhgfhffvufffjgfkgggtsehttd
+    ertddtredtnecuhfhrohhmpefvrghsshhilhhoucfjohhrnhcuoehtshguhhesghhnuhdr
+    ohhrgheqnecuggftrfgrthhtvghrnhepfefgjeeuueevvefghfduheethffhgfefveefve
+    ekgffhvedtjeeghefftdeftddtnecuffhomhgrihhnpeigkhgtugdrtghomhenucfkphep
+    geeirdektddrjeehrddvfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepthhhohhrnhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihht
+    hidqkeeijeefkeejkeegqdeifeehvdelkedqthhsughhpeepghhnuhdrohhrghesfhgrsh
+    htmhgrihhlrdhfmh
+X-ME-Proxy: <xmx:EoFKYNyHvfRo1TbEIWU-jWeDZ8uw8kgKeE_DXf9OBMnNupd3yrXNWA>
+    <xmx:EoFKYNPsdciq0fkvKJhq78Bg0lJ5hz6W02KPb2NHTlwq7BwEsue2eA>
+    <xmx:EoFKYC8sw9VweJsQ1VCZ_Q3EBHcWbGa5RWHAhrnbIGvPJ2teAr0FjA>
+    <xmx:EoFKYDKK2CA7Irv6gtUf4hkjfK9-9A23J_VRE6G8C3mYGLWpxfreZcysHMM>
+Received: from thinkpad-t440p (p2e504be7.dip0.t-ipconnect.de [46.80.75.231])
+        by mail.messagingengine.com (Postfix) with ESMTPA id AF6101080067;
+        Thu, 11 Mar 2021 15:44:01 -0500 (EST)
+References: <875z1xwznd.fsf@gnu.org> <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
+User-agent: mu4e 1.5.9; emacs 28.0.50
+From:   Tassilo Horn <tsdh@gnu.org>
 To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Chris Torek <chris.torek@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 01/12] pkt-line: eliminate the need for static buffer
- in packet_write_gently()
-References: <pull.766.v4.git.1613598529.gitgitgadget@gmail.com>
-        <pull.766.v5.git.1615302157.gitgitgadget@gmail.com>
-        <311ea4a5cd71c5dd2407348ad4608d2f7dd77ce5.1615302157.git.gitgitgadget@gmail.com>
-        <xmqqblbrzy5j.fsf@gitster.c.googlers.com>
-        <YEpvfztZWhAvSDTL@coredump.intra.peff.net>
-Date:   Thu, 11 Mar 2021 12:32:29 -0800
-In-Reply-To: <YEpvfztZWhAvSDTL@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 11 Mar 2021 14:29:03 -0500")
-Message-ID: <xmqq4khhctya.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+Cc:     git@vger.kernel.org
+Subject: Re: [Bug] Stashing during merge loses MERGING state
+Date:   Thu, 11 Mar 2021 21:31:09 +0100
+In-reply-to: <YEpusE7ZIE5RgOws@coredump.intra.peff.net>
+Message-ID: <87a6r9o1yo.fsf@gnu.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E730CBA4-82A8-11EB-88B3-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Tue, Mar 09, 2021 at 03:48:40PM -0800, Junio C Hamano wrote:
+Hi Jeff,
+
+>> What did you expect to happen? (Expected behavior)
+>> 
+>> I expected that stashing during a merge will keep the MERGING state.
 >
->> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> 
->> > +	/*
->> > +	 * Write the header and the buffer in 2 parts so that we do not need
->> > +	 * to allocate a buffer or rely on a static buffer.  This avoids perf
->> > +	 * and multi-threading issues.
->> > +	 */
->> 
->> I understand "multi-threading issues" (i.e. let's not have too much
->> stuff on the stack), but what issue around "perf" are we worried
->> about?
->>  ...
-> Yeah, this came from my suggestion. My gut feeling is that it isn't
-> likely to matter, but I'd much rather solve any performance problem we
-> find using writev(), which would be pretty easy to emulate with a
-> wrapper for systems that lack it.
+> Thanks for providing a clear recipe and expectation. However, I think
+> Git is working here as intended. The MERGE_HEAD file (which is how "git
+> status", the prompt, etc figure out that we're in the middle of a merge)
+> is cleaned up when stash runs "git reset --hard" under the hood.
+>
+> However, I don't think we would want to _not_ clear that file. The
+> conflicted merge placed some changes into the index and working tree
+> representing what happened on the branch you're merging in. Then
+> making the stash (and the reset of the working tree) removes those
+> changes. If we were to leave MERGE_HEAD in place and you ran "git
+> commit", then it would create a merge commit that claims to have
+> incorporated everything from the other branch, but has quietly dropped
+> those changes as part of the merge resolution.
 
-I too had writev() in mind when I said "can fix it locally", so we
-are on the same page, which is good.
+Yes, that makes sense.
 
-So "this avoid multi-threading issues" without mentioning "perf and"
-would be more appropriate?
+>> Or that popping the stash again would also restore the MERGING state.
+>
+> This would make more sense: the stash records that part of the state,
+> and then we make it available again later when the stash is applied.
+> However, that feature doesn't exist yet.
 
-Thanks.
+Too bad.
+
+> I can't offhand think of a reason it couldn't be implemented. It's
+> possible that it would mess with somebody else's workflow (e.g., they
+> think it's useful to stash some changes independent of the merging
+> state, and then apply it later, perhaps while replaying the same or a
+> similar merge). So it might need to be tied to a command-line option
+> or similar.
+
+Everything breakes someones workflow [1], so an option would be fine.
+
+However, I'd suggest to protect users shooting in their foot with a
+warning and confirmation query for the time being.  I consider myself a
+quite experienced git user but this stash trouble today came totally
+unexpected.  And I've asked on #git@irc.freenode.net and got no answer
+which is totally uncommon.  So I guess that this stash during merge
+thing is pretty much a gray area.
+
+Bye,
+Tassilo
+
+[1] https://xkcd.com/1172/
