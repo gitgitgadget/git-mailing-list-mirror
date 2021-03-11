@@ -2,147 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE2C2C433E6
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A4DC4332D
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 971FB64FEC
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 18:43:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD6E764EF2
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 19:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229483AbhCKSmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 13:42:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57864 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230039AbhCKSmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 13:42:37 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04ED2C061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 10:42:32 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id 15so3469846ljj.0
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 10:42:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=lMWRY38ntveTqYmrj/Xqp4HRgvs1JL8qlxvprhCTP0I=;
-        b=CYVqcOzARl5MZo0KY7cw6cTrv1tihRwr3MNw1jjOisk61zq4SKwLOoXxcUp9RQdvVS
-         AKJKahYtsBsZUqQtTgqukaRE/kVJmpn+gg0LhhlD/ApQxrPMGFbESpT9eZbIGpxKYDv3
-         NuaEopVvo/N9uGQqKGp3WVuepUhOYKYTp2yqtfLg7DoqVCgnFg3TKsafuzD2jstRW4IS
-         HL0Baxhi76f4HBreATemzrQtn29rw65CrI+94XTUbRwfOv5VCixA8C86cWjvRVBmUNPe
-         GF28EgAtDkMPpAx5Xv5KHBq9pIDTOvbfYzfWfcMohcPhU/2wGMwVKFuFw827Sfc02sbO
-         LmmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=lMWRY38ntveTqYmrj/Xqp4HRgvs1JL8qlxvprhCTP0I=;
-        b=gVHywZGNSTAg8w1rcF1gbsQTGrHAe7A9+r9upcSY5xnWMrkf0NuWCB0iUlAQl+pOAa
-         yWAViu4+6O7xD7hr5voKtkfMS53FtnXzwQRAeint0jgDhoKuODBe2KvRbWbdqnez/Avw
-         LXLgzaYealv3iwubfEr01uhyOpVe1vE3DfJfGTeLSXOIXfYY18UX0KfBzUVEgvUqMBs3
-         KxvoFfhlotu9svaQ91bsHXiuiEvSDqmstQqSxm+MueuCUc1mqKK2E9KWjH1M5Lg7ochT
-         ZqpfuSp0+epVwfUWSfC/is+0t9TAAfSpezl/U+eTNivcvmUe9wiPoio/wEWZfbIOur6c
-         3yLw==
-X-Gm-Message-State: AOAM531jqxR9gxmaTkrRvaPrctl55mY24KzpxhXzfLERoa6OWVQx2NGU
-        VCes18MQaF72cmb3VUos3Wfc27kvBD8MHQ9riBfMDgj3KhsHDw==
-X-Google-Smtp-Source: ABdhPJztERGpdjPaf8Wn+eAegwouMtiGyYtSs/PYw0F13kYkTUC/64Ru4iVXkbzx6z/J4RCMy2Qi0nKXHNdXJKCO/zo=
-X-Received: by 2002:a05:651c:103a:: with SMTP id w26mr137467ljm.273.1615488150929;
- Thu, 11 Mar 2021 10:42:30 -0800 (PST)
+        id S230461AbhCKTN1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 14:13:27 -0500
+Received: from mout.web.de ([212.227.15.4]:35775 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230196AbhCKTNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 14:13:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1615489983;
+        bh=tq/DprAyUeeoyCFrQcW3v59JgQEa6Alk2LwIoRUN5vE=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=qgbF6BZltBRrCHqvbcV1qMWOA4eds6ASVjFwtZR2Y0ZDVIo0ceFcQZVk2I+gj9jEr
+         Gtf04PqLe/AivdcD3Wa1C1L/MM/nYa9qntg9m8JkxCHOLzVasZTgwYx+P9sJfiLTrG
+         09ad3nF4FVbDF7hS2/qf9wcbWo37Gug6AGJsbjQs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from Mini-von-Rene.fritz.box ([79.203.24.70]) by smtp.web.de
+ (mrweb002 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 0MfqWi-1l8Hff1upY-00ND94; Thu, 11 Mar 2021 20:13:03 +0100
+Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+References: <xmqqmtvafl62.fsf@gitster.g> <87r1klhq3y.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe=2e?= <l.s.r@web.de>
+Message-ID: <bb5f06df-226f-8c2d-93e1-7e55aab73917@web.de>
+Date:   Thu, 11 Mar 2021 20:13:02 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.8.1
 MIME-Version: 1.0
-From:   Emily Shaffer <emilyshaffer@google.com>
-Date:   Thu, 11 Mar 2021 10:42:19 -0800
-Message-ID: <CAJoAoZk0fSyPSJZ51wNv4XujPA_-hPfh8eMRQPbyeTXFvKJ9+Q@mail.gmail.com>
-Subject: What to do with fsmonitor-watchman hook and config-based hooks?
-To:     Git List <git@vger.kernel.org>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Kevin Willford <Kevin.Willford@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87r1klhq3y.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:1l9duRFJ29oOGIwqj5WIpDQDEQv+rq9hsGPz1YQh3qAY6+7z10Z
+ PxP/2XbUn4BGjbzA7uarBvUEU7pWK4LiyGWzC/sL9t+tSxUpm03xkmEhv3OnoxEz5k8HBKz
+ V8rQSW3u/W9HOBbKYZhfJM8M5nVn3/ds5TWfjM1UpUDsru0pwdf2Ha2Nl2dF/js+b1qtJcl
+ OObYujc2SpQNMGoMqg90g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E3vDF9aRBng=:4Gsp+Tu1mLxlWNQWhBLmcM
+ wB708HzlHNeklCgZ/ZWo6rMJtwW6MDRlMNOx73zYYKjL0otb1KLT1buOF6BzwPR/rmvWViBZT
+ v1gZx5TeU1zltfr1GD8KceFJUz9hijzJwxbj1Gq3bJ3YzvYHLH+E+7Hq2GYVc+IkHqrlfcPte
+ 7Hvh8qxE6hqzYdi8e8h6A7HLQGQum5RnJbIeC3a0lrHDnvxaw1j1sNKFMgnlEvTjMIDAtSHgC
+ x0pzaAOa6oXSjD3XMFRtep/G8KpbiZWuvIz7932get2bu5sEmWZ/7Dviv/jTtXMbDWQkE3oSr
+ 8M/UUGxfbtKPYsO5nFsp8ky/15rxjckCAGusPzA0iW3vkvgxvEiRwwBEVzr5eu4LfIGJFevUN
+ xzMrFUrJlKaMsOp/1GzVVHm6KAdlH9mGgf7oJlGS+pfp5OURwzn6lVorr2iEiX928/1OEEasE
+ DXGq+T4/iywboYDcH8eRwegU5raAw/3WU44giXBqnfAvBhsgfaZGEC03Jh7qcqlI/i7rQRy1m
+ VbBEp+syZKZRa3DW9Gd7K881UYEVFS/+gnf5g0g1oHZPHbmpag6eMtWNNBkS9mjYKmb6AJXtI
+ 4ItM+EDv7W40hQFRUUqW7CHqC0yUVYQbQ9anDRGzeFl770J4v6WHrTLDONznNJXOZjNZ7zmlf
+ RqofKnnv/I/E7emWCZVouk9htxupwJBSwQGP002NmKspDH6/FxoL+9rweu0YNcD8v5OmAMuQs
+ zlc5ayQhS51S0/5riCarpUd10P/hDBc7LS24Y/OIoSbrFCzQ7M9N4ptb/nQYK+g+OLq8m9cTd
+ tic2FWFK7sEFd39wgK+U8mMdpP2LR3FCpfdZbIG+PIl2+rqWinLDlm2a3VHDxWu4J75cjSLFj
+ yTDvnRI9B60xGBxw2rdA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks, I grabbed a bunch of CC from 'git blame fsmonitor.c' so
-sorry if you don't care about fsmonitor-watchman anymore... :) Note
-that this whole conversation has to do with the series proposed at
-https://lore.kernel.org/git/20210311021037.3001235-1-emilyshaffer@google.com.
+Am 11.03.21 um 12:44 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Thu, Mar 11 2021, Junio C Hamano wrote:
+>
+>> * rs/pretty-describe (2021-03-01) 4 commits
+>>   (merged to 'next' on 2021-03-01 at bee9248828)
+>>  + pretty: document multiple %(describe) being inconsistent
+>>  + t4205: assert %(describe) test coverage
+>>   (merged to 'next' on 2021-02-25 at 2347ed8fe6)
+>>  + pretty: add merge and exclude options to %(describe)
+>>  + pretty: add %(describe)
+>>
+>>  "git log --format=3D'...'" learned "%(describe)" placeholder.
 
-When I was looking through the remaining hooks in
-Documentation/githooks.txt I noticed that the fsmonitor-watchman hook
-is implemented somewhat differently than most other hooks. As I
-understand it, to use that hook someone needs to:
+This is missing the patch to limit %(describe) expansing to one per
+archive [1].  I think we need it to avoid hosters that generate archives
+for user-supplied repos becoming vulnerable to a DoS attack via this new
+feature.  Demo script in [2].
 
-1. Configure core.fsmonitor with a path to some fsmonitor-watchman
-hook. The documentation in 'Documentation/githooks.txt' claims that it
-needs to point to '.git/hooks/fsmonitor-watchman' or
-'.git/hooks/fsmonitor-watchmanv2', but I don't see that constraint
-enforced when the config is read (config.c:git_config_get_fsmonitor()
-and fsmonitor.c:query_fsmonitor()), so it seems that core.fsmonitor
-can point to wherever it wants. (Plus
-'templates/blt/hooks/fsmonitor-watchman.sample' suggests setting
-'core.fsmonitor' = '.git/hooks/query-watchman'...)
-2. Configure core.fsmonitorhookversion to 1 or 2, to indicate the arg
-structure for the executable specified in core.fsmonitor.
+> As an aside did anyone look into making most of ./builtin/describe.c a
+> new ./describe.c library? I had a quick aborted attempt at doing that,
+> but it didn't seem like it would be all that hard...
 
-Because the executable doesn't necessarily live in .git/hooks/,
-fsmonitor.c:query_fsmonitor() completely skips the "API" for running
-hooks (run-command.h:run_hook_le()) and just uses
-run-command.h:capture_command() directly.
+That's what I thought as well, but combined with log --format it
+produced bogus results for some commits.  No idea what went wrong
+there.
 
-Interestingly, this is really similar to the way config-based hooks
-(https://lore.kernel.org/git/20210311021037.3001235-1-emilyshaffer@google.com)
-work - but different enough that I think it may be awkward to
-transition fsmonitor-watchman to work like everything else. So, some
-questions, plus a proposal:
+Ren=C3=A9
 
-Q1: Does fsmonitor-watchman make sense to provide more than once
-(since config-based hooks support multiple execs per hook)? (I get the
-feeling the answer is no here - but what if, for example, I have an
-NTFS partition with some repos and an ext4 partition with some other
-repos, and only want to configure fsmonitor magic once at global
-scope? I don't know anything about fsmonitor so maybe that is a very
-stupid question ;) )
-Q2: Does it make sense to specify anywhere other than per-repo scope?
-(system/global scope, e.g., applying to all repos? One could imagine
-providing it in a config which is inherited by submodules of a
-superproject?) It looks like it operates on CWD + timestamp-ish, so it
-seems to me like some user might want to only set it up once (e.g.
-globally) and have it Just Work in all their repos afterwards. In
-fact, I think you could configure core.fsmonitor in ~/.gitconfig today
-and it would work for everything.
 
-If we want to support checking vs multiple fsmonitor-watchman execs
-(that is, if Q1's answer is "yes"), then I propose:
-1. Check for values on 'hook.fsmonitor-watchman.command' and add them
-to the execution list in config order.
-  1a. Here we could either check for
-'hookcmd.<command-value>.fsmonitor-watchman-version' or we could just
-check separately for 'hook.fsmonitor-watchmanv2.command' as implied by
-'githooks.txt' to determine the arg syntax for each hook.
-2. Check for values on 'core.fsmonitor' and
-'core.fsmonitorhookversion' to add a "legacy" hook at the end of the
-execution list. (This is the same thing we do for hooks that live in
-.git/hooks/<hookname>.)
-
-If we don't want to support adding multiple fsmonitor-watchman execs,
-then I propose:
-1. Check hook.runHookDir's value to decide whether we believe in "legacy" hooks.
-2. If we do, then check for core.fsmonitor and
-core.fsmonitorhookversion, and run that one.
-3. If we don't, or if core.fsmonitor was unset, then check for
-(hook.fsmonitor-watchman +
-hookcmd.<command-value>.fsmonitor-watchman-version) or
-(hook.fsmonitor-watchman.command or
-hook.fsmonitor-watchmanv2.command), error if we find more than one
-candidate, and run the one candidate we do find. (Or I could see us
-running only the most-local one, but that might be confusing for the
-user.)
-
-Thanks, all - I'm curious to learn more about this hook and the right
-way to move forward :)
-
- - Emily
+[1] http://public-inbox.org/git/b7e1f6c0-6b13-efe4-74b5-ec8249855644@web.d=
+e/
+[2] http://public-inbox.org/git/a28592c5-4a70-1ea8-fd73-959e28b4278d@web.d=
+e/
