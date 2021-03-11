@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59956C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0B95C43381
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A7D064FAA
+	by mail.kernel.org (Postfix) with ESMTP id 8426864FBF
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbhCKCLh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:11:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
+        id S229821AbhCKCLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:11:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbhCKCLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 21:11:07 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF8DFC061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:07 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id s187so23864319ybs.22
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:07 -0800 (PST)
+        with ESMTP id S229762AbhCKCLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 21:11:11 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23ADAC061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:11 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id a63so23852711yba.2
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Kk5R8aI97X58ZOVmCowISGPjO//7aBJKSYMp9czi5eo=;
-        b=q6Zh50j3PUsTiZSgv4Mbm8ZrBy04yoLi/Zto6bVu20Fs2Gpk17KqsSG50dZnQLzvHn
-         H8WGOKucfLYk94fq1oxSnon55al470KDnMxbCA6zF3k/4iUTXYKeNs8mDfKDiNt/skn6
-         KR/ippUBmm03zLLgw/fyytgvgt32QsQd62FevU3rL9nzJD9sxLs4yrPoeAaFF+L+c038
-         t850ZwA3ekO0Nm+KHowr3wKl30+x96fkjNhyJmCkKOunzGG7tICjxCGr8Ya5ep1o8uLw
-         S4CMNlVaHZNPuR2q/Uk1VkZE1WalG7j4MwfP8fpVlJVacccfDIeClzDjHxA0yHFRkk0p
-         ehIg==
+        bh=9OCy3vXtF54gXMJlKk7YyB6MxtyztYa4LcpqDc08UtY=;
+        b=eoIRxh9ApeN80U23D9LW+YmOZTCXQ5rR4J9Mbk+oMr+JGEaqsl9vMXTxGk27rHmphB
+         /9eDp5jlwhwLfL2vLEkyQlddi3uz8RDAvSvqo8ii/lRmWPdgms8SC3NWy5MUjEJWcPGR
+         W8qNyQhBm6+3J0PZ8EBhzdAUMVlvh1gyIbd+e8Cv+IqBfHr8jAFgThWGlgtcWcq6YHUg
+         4YMlFag+xtOHJraPQdbDOUg+srqfbXsJNn24Pcu9sRZC2aAJwes4SZPAxXcqtLowPSNE
+         nFZ94+hmfbWoanBvSsCE+HgZS16fM1WccTcfABS9E4/CROTt8yV5fC2ltMG8UKQAeIZy
+         l9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Kk5R8aI97X58ZOVmCowISGPjO//7aBJKSYMp9czi5eo=;
-        b=iBsqGcvh8RFpwqaQFR8F2mdQNLs3cyHIG9ZYRRqiOpArqNtNXlyuY6immdqyv3MUCW
-         I7F88HBsl1vqbDXL8wBGFjz30kbjgmNKNWxOuHXruHJ2rU7fdKvI0CHP4faSdVVkFPdz
-         2OcmlWyXOWnnVIiQw7tcNvpVwxioXmGrXCiCNSUHMC301TiS9Hm3FbDEgWqFqbDYngSd
-         t39pu/7ztr/DHQShUsEiS7W5Gi3gd/Ukam4Dt0bRJ/KKcn5qKBxPI36Mbck5mUo7TooI
-         nwTB/X0Hf+iwST85rcKo7Z1UT64YgMAuohRvYPTDEFsVz3mrCmpUJl/vw8VL9CMnE1me
-         BDmg==
-X-Gm-Message-State: AOAM531jqYJcCCa3bGKqhmSruKWRbmgEBEFqVUMJgz0MQ1ciGWG0xCb0
-        ZuezndJv0nqptyM9aE9Gc9yAuvY1IfWYtPBNt57RpjNA23sYRx7H6oZvVKWmUm/k0a+X+ySrLQ3
-        sGe0ED6c0IrjkYu/H08YUElmyQGvNxWj1uhn14dTFB1FoHQ0nRPVQAIFCHYaL++iev64T1t/1sA
+        bh=9OCy3vXtF54gXMJlKk7YyB6MxtyztYa4LcpqDc08UtY=;
+        b=ea392ojSJG2Mc83V2bMTcJrpc4V28l3WKskPoyQ3kPomsqbqJt4dmj74VkE69udaxh
+         OCRs8kVUXCkV/re6guzThadeTzJIjEoqbCDtLlAa0L4LDmFL58Ys8qHhM38vD5pDe6fq
+         rm2SGrJ7mGeA0MEsY6Ksyjp6ajHgwCi94Ti/ev111xrgJU7koXH4uD73+r6V2YcaxF+P
+         +xcRRcajzLbeXQdxbCEhM9xi2aK22zlhvt/+YmIEszOmO4ro74bnUiWnr23UGvOYGgqB
+         8gQgmL+0RTepI9+FZvNAR+kK5weVcb3o3k1YRC0vXx3PJtLDTq5iwen1WZTb6S17sXT4
+         67Tg==
+X-Gm-Message-State: AOAM531XILWERTUZUKGOhDTVuVE8th0fHsfTzTqW3XstRfh+V4Tzk0VW
+        /HEs4Wf/9DB1IXjm/Vi5rxO1ZNBl5tFe1hbYS0QlA4izAxSpRI/KO5snLw2S3FtO0sfdQRQUGbM
+        yD03hIlpiaKiIBKiYCPUQBDWw7iK3XiHPyfFmRCCitEBfP8q+ZAwV/4iZoyEkkjZTDaMlVBQcHg
         ==
-X-Google-Smtp-Source: ABdhPJzBeKtLyAo8DyERj2K9Pb3jlsYgf+c9iX8NX3QHXrEm3Ke7zXxi6pP8NpptOSTIYXJPoNEp6iXachRznZ9czhQ=
+X-Google-Smtp-Source: ABdhPJwWTrMHi9ZizFqUknXUi6ZML29SpUVt7fTxiRlRE1PG3r5MXOebhiXLGBX3+xbAqjRafDygCm90A1wgT4T45no=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:a25:c943:: with SMTP id
- z64mr8644906ybf.73.1615428666931; Wed, 10 Mar 2021 18:11:06 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:09 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a25:cfc5:: with SMTP id
+ f188mr8369771ybg.485.1615428670361; Wed, 10 Mar 2021 18:11:10 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:11 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-10-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-12-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 09/37] hook: introduce hook_exists()
+Subject: [PATCH v8 11/37] run-command: allow stdin for run_processes_parallel
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,88 +70,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a helper to easily determine whether any hooks exist for a given
-hook event.
+While it makes sense not to inherit stdin from the parent process to
+avoid deadlocking, it's not necessary to completely ban stdin to
+children. An informed user should be able to configure stdin safely. By
+setting `some_child.process.no_stdin=1` before calling `get_next_task()`
+we provide a reasonable default behavior but enable users to set up
+stdin streaming for themselves during the callback.
 
-Many callers want to check whether some state could be modified by a
-hook; that check should include the config-based hooks as well. Optimize
-by checking the config directly. Since commands which execute hooks
-might want to take args to replace 'hook.runHookDir', let
-'hook_exists()' take a hookdir_opt to override that config.
-
-In some cases, external callers today use find_hook() to discover the
-location of a hook and then run it manually with run-command.h (that is,
-not with run_hook_le()). Later, those cases will call hook.h:run_hook()
-directly instead.
-
-Once the entire codebase is using hook_exists() instead of find_hook(),
-find_hook() can be safely rolled into hook_exists() and removed from
-run-command.h.
+`some_child.process.stdout_to_stderr`, however, remains unmodifiable by
+`get_next_task()` - the rest of the run_processes_parallel() API depends
+on child output in stderr.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- hook.c | 19 +++++++++++++++++++
- hook.h | 10 ++++++++++
- 2 files changed, 29 insertions(+)
+ run-command.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hook.c b/hook.c
-index d166d17fb0..118931f273 100644
---- a/hook.c
-+++ b/hook.c
-@@ -243,6 +243,25 @@ void run_hooks_opt_init(struct run_hooks_opt *o)
- 	o->run_hookdir = configured_hookdir_opt();
- }
+diff --git a/run-command.c b/run-command.c
+index 4e34623e2e..e6d7541b84 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1693,6 +1693,14 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	if (i == pp->max_processes)
+ 		BUG("bookkeeping is hard");
  
-+int hook_exists(const char *hookname, enum hookdir_opt should_run_hookdir)
-+{
-+	const char *value = NULL; /* throwaway */
-+	struct strbuf hook_key = STRBUF_INIT;
-+	int could_run_hookdir;
++	/*
++	 * By default, do not inherit stdin from the parent process - otherwise,
++	 * all children would share stdin! Users may overwrite this to provide
++	 * something to the child's stdin by having their 'get_next_task'
++	 * callback assign 0 to .no_stdin and an appropriate integer to .in.
++	 */
++	pp->children[i].process.no_stdin = 1;
 +
-+	if (should_run_hookdir == HOOKDIR_USE_CONFIG)
-+		should_run_hookdir = configured_hookdir_opt();
-+
-+	could_run_hookdir = (should_run_hookdir == HOOKDIR_INTERACTIVE ||
-+				should_run_hookdir == HOOKDIR_WARN ||
-+				should_run_hookdir == HOOKDIR_YES)
-+				&& !!find_hook(hookname);
-+
-+	strbuf_addf(&hook_key, "hook.%s.command", hookname);
-+
-+	return (!git_config_get_value(hook_key.buf, &value)) || could_run_hookdir;
-+}
-+
- void run_hooks_opt_clear(struct run_hooks_opt *o)
- {
- 	strvec_clear(&o->env);
-diff --git a/hook.h b/hook.h
-index c24b2c9ecd..0df785add5 100644
---- a/hook.h
-+++ b/hook.h
-@@ -23,6 +23,7 @@ struct list_head* hook_list(const struct strbuf *hookname);
+ 	code = pp->get_next_task(&pp->children[i].process,
+ 				 &pp->children[i].err,
+ 				 pp->data,
+@@ -1704,7 +1712,6 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	}
+ 	pp->children[i].process.err = -1;
+ 	pp->children[i].process.stdout_to_stderr = 1;
+-	pp->children[i].process.no_stdin = 1;
  
- enum hookdir_opt
- {
-+	HOOKDIR_USE_CONFIG,
- 	HOOKDIR_NO,
- 	HOOKDIR_ERROR,
- 	HOOKDIR_WARN,
-@@ -56,6 +57,15 @@ struct run_hooks_opt
- void run_hooks_opt_init(struct run_hooks_opt *o);
- void run_hooks_opt_clear(struct run_hooks_opt *o);
- 
-+/*
-+ * Returns 1 if any hooks are specified in the config or if a hook exists in the
-+ * hookdir. Typically, invoke hook_exsts() like:
-+ *   hook_exists(hookname, configured_hookdir_opt());
-+ * Like with run_hooks, if you take a --run-hookdir flag, reflect that
-+ * user-specified behavior here instead.
-+ */
-+int hook_exists(const char *hookname, enum hookdir_opt should_run_hookdir);
-+
- /*
-  * Runs all hooks associated to the 'hookname' event in order. Each hook will be
-  * passed 'env' and 'args'.
+ 	if (start_command(&pp->children[i].process)) {
+ 		code = pp->start_failure(&pp->children[i].err,
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
