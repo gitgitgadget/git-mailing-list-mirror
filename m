@@ -4,91 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2977EC433E6
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 15:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27976C433E9
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 16:18:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C333264FEE
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 15:25:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DFC0064F93
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 16:18:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234156AbhCKPYw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 10:24:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43116 "EHLO
+        id S234438AbhCKQRs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 11:17:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234105AbhCKPYs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 10:24:48 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CD8FC061574
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 07:24:48 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id y131so20618652oia.8
-        for <git@vger.kernel.org>; Thu, 11 Mar 2021 07:24:48 -0800 (PST)
+        with ESMTP id S234487AbhCKQRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 11:17:32 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2039FC061574
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 08:17:32 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id u62so7878848oib.6
+        for <git@vger.kernel.org>; Thu, 11 Mar 2021 08:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=e4Oy28Lf2WkPvsuTfm0xZQEq4c/OVqrQQqQ4tQLgRcU=;
-        b=fbP+4HTovSzpyt41Nar+T6qqtD8rRKrUTgR0lyAmv60yDvGlwMiaNqF5gKagzdfRMT
-         7e29pSyT3rUjyPJDtasil9vqOaa/8SEnxxhRlIlIJyomBFGYO2YlF3rbeBiUwSN2jZ+7
-         XAIeIwye7TRQR31u0guNNsE2P+5tn5sKJ0EbhLeh4uks+f6rYzEXVJvdk4IYV4tVx4P1
-         CGlTDSLL4odKbaRnTMtzMhn9TGJvbgpNeQh4CfJr9LwXPUsFEon+x+kSIppG00JeJDAa
-         Kxva/efqGPComhWy29AOl+RhUzXaA3tVR4cherh7CfyXbr5JxmzBCCcZFLGhcb3GcH/s
-         XR+w==
+         :cc:content-transfer-encoding;
+        bh=AHurpjhKCyXzSmtw2uLj1ztAyv9mlTPQ/Nwu0h8Tpr8=;
+        b=l3hewqa0xUVj1mnE1dcfGZRAuVRCZKZ+ou0BasO08hxKJdkfSkA3Yg0e2VHIZaUwZi
+         Mz6BzYN28tSKAVnJmrsObz/cE1eAOotGyJ+Zwp9Rtf06HhwqAKMsut5IA9KFR9k1AdaW
+         be1NOeh2PhyouHSC3pd3FKO+h3nAIt4zxfbvb823oRviSw280kfWQ+dld4GtulThEPKZ
+         ZFV5VfRbYVjT1jWjJuKQ8Qij7qrOM7begsiO8KI1O0trl3frETC1dRWeaOasdnsvWJQZ
+         0QRTOFtHhCnAi2RdfRqRDSi6Wi5ML4shl4sFu806OMVtwl2blbd0OtfPigfTPyx2svj8
+         /BXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=e4Oy28Lf2WkPvsuTfm0xZQEq4c/OVqrQQqQ4tQLgRcU=;
-        b=t8KcGe2JjqJVwl0xRbOEWJFO/vt7Xw4hi1fxt5sMnFVBQw2+NccoKFaiNmztnBy/zl
-         fxxyXmH9DjauTbh4p6VpCsrLZ6u48b9RDs1bAnRjfSkM/QgC8RqJGza4p09+FnlWrGBt
-         0ocVZKfO8Kj9WzeL8y30NnGvkVzliEAZvIgcoM802i+zl6iR6I0Dceiow2+lpX58d0mB
-         jyCxrO7hU9njYkKYwFLHBjVin11GrPxN+JfEb3C8R81DnMKrZYIkO1ynLNPuR7muYsEa
-         MkW9Esxr0nz/Tz6QCaeVYUv4+ApXPpI71kfBolp+7QbDZDzcDWin6ejd3Rlb4shinYki
-         scYw==
-X-Gm-Message-State: AOAM532dtxvXJOxQh8x52aBMJFaoOq9BGZxauY5QAUYavCeqSUz7xt33
-        roMTdPOKVHmLpHlCq9VTImp2njfMC+r9B8f6Wpo=
-X-Google-Smtp-Source: ABdhPJy7G7mwLeP7iQr7QLRsnb8PzKPsSogbF6apbcszy0+xrStNiQg/v9bOwXvFeeOJdrJzahNkFd8W4ziWysBfY8A=
-X-Received: by 2002:aca:3285:: with SMTP id y127mr6489956oiy.98.1615476288093;
- Thu, 11 Mar 2021 07:24:48 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=AHurpjhKCyXzSmtw2uLj1ztAyv9mlTPQ/Nwu0h8Tpr8=;
+        b=e6ZHX7+q+yysHgFIlh4etx+cUpN8GnzZIbPpO90IRb+zGNmFDG0nwNVoyOvDmcjYmU
+         kzqH+gdJvemIEA4nWR9LKSNaKZYdKzip4YQ6vrzJoDSyr5XoFhjCwIXMjDPJSO2PIrNl
+         zq8om7zD6MXMI4Hiqfcbq76KK9xw8ekAqrOPKmQJC7iwf6wFcMA6NOeY5WTMogiAQS2s
+         dzakVaw6MqJiGiaqHeCNWa88BFhFI9aezNKwmyoyLpxNlVAgmq2LDribWxokw2DFRFQa
+         k35D16PvhBcAlaCaesCXMhIjN8kA2gER0X47ocYEHhh77GH9FoUJWKIPEFGXu8K+1dX9
+         yNNg==
+X-Gm-Message-State: AOAM533impCg6dxX9Tzhv+iQzqHnPtE/JbtOhV/G9Nzxb4zpKUoipHcj
+        aoC2xUrGJqZTpWRQf/MqFMu6B6h1P+hhXcZw67M=
+X-Google-Smtp-Source: ABdhPJwPTNaxwrQoWkC+9aATFfZZKYBmw6P07AXyHjarHGz/KAcuJDOzYpuVJJUXC9uIDFX+KA8952Bf1B/eVbfVHXc=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id q10mr6756158oij.167.1615479451524;
+ Thu, 11 Mar 2021 08:17:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20210301084512.27170-1-charvi077@gmail.com> <20210310194306.32565-1-charvi077@gmail.com>
- <CAPig+cREZvoFLNNmZROXOP5EKW36L7SKQMjYJJTsbtMeiK2wNw@mail.gmail.com>
-In-Reply-To: <CAPig+cREZvoFLNNmZROXOP5EKW36L7SKQMjYJJTsbtMeiK2wNw@mail.gmail.com>
-From:   Charvi Mendiratta <charvi077@gmail.com>
-Date:   Thu, 11 Mar 2021 20:54:37 +0530
-Message-ID: <CAPSFM5eDSwBO+PHNzjvLhuor4Cs6VSmu714T4aCF8mgjfDqwLw@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6][Outreachy] commit: Implementation of "amend!" commit
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <xmqqmtvafl62.fsf@gitster.g> <87r1klhq3y.fsf@evledraar.gmail.com>
+In-Reply-To: <87r1klhq3y.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 11 Mar 2021 08:17:20 -0800
+Message-ID: <CABPp-BHLNm14c9Sxv6zWBod7wxK6gSWwt=SR3J4NVObAprcomQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 11 Mar 2021 at 13:36, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Thu, Mar 11, 2021 at 3:44 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-[...]
-> Thanks for re-rolling. I left some relatively minor comments on patch
-> [2/6] and some substantial documentation-related comments on [6/6].
-> (If you take my suggested documentation rewrites verbatim, you can
-> have my Signed-off-by: along with them.)
+> On Thu, Mar 11 2021, Junio C Hamano wrote:
 >
+> >  Will merge to 'next'.
+> >  In the longer term, we might want to remove filter-branch and nudge
+> >  folks to more modern tools.
+>
+> Did we ever have a re-discussion of adding Elijah's
+> git-filter-replacement-whose-name-I-always-forget to git.git? :)
 
-Sure, I will add the Signed-off-by.
+git-filter-repo (https://github.com/newren/git-filter-repo)
 
-Thanks for all the suggestions, I will fix them and update in the next version.
+The original discussion you were probably thinking of was at
+https://lore.kernel.org/git/CABPp-BHqdKvsUDx40Tz-A3z32TN_KWcDENWb8zsaidxxf8=
+SNCg@mail.gmail.com/.
 
-> One final request: Please consider using the --range-diff or
-> --interdiff options or both when preparing your series with
-> git-format-patch. Doing so can really help reviewers focus on the
-> changes made from re-roll to re-roll without having to painstakingly
-> re-read each patch in the series -- even if a patch didn't change --
-> thus saving time.
+Re-discussion was at
+https://lore.kernel.org/git/CABPp-BEr8LVM+yWTbi76hAq7Moe1hyp2xqxXfgVV4_teh_=
+9skA@mail.gmail.com/.
 
-Okay, I will add it next time.
-
-Thanks and Regards,
-Charvi
+Resulted in https://lore.kernel.org/git/20190828002210.8862-1-newren@gmail.=
+com/
+instead.
