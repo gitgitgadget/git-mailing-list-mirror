@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02AF7C4332B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D973C4332E
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8EF464FD8
+	by mail.kernel.org (Postfix) with ESMTP id 02E1064FDC
 	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 02:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230391AbhCKCMM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 21:12:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
+        id S230319AbhCKCML (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 21:12:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbhCKCLn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 21:11:43 -0500
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45BD1C061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:43 -0800 (PST)
-Received: by mail-qk1-x74a.google.com with SMTP id o70so14289150qke.16
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:43 -0800 (PST)
+        with ESMTP id S229929AbhCKCLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 21:11:41 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E623C061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:41 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id v196so23762077ybv.3
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 18:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=GjM4mAmp+AKf53XGmy31JDt5g6a1N4hK21N+qPDtk6E=;
-        b=v8DNhrvGKrntreeJWV2EUg8qZHi+nJy3wbznZr/vDrx8sLvc37CtTtgg5AGSp6AJz/
-         PZ5LdMwJR6B5C6oo28pAKOMbNGwetXB5dolWoDOxGt946Cg3KCaDIpnZjRSCLmXiraLi
-         hIDbu+diDW8p5vGR3INrkKn0DReUFmHoIILuQy+my9UIs0b7mV/zmDVJX6/YllVdm1du
-         x8CbKPH91VLzsR7ZPSY2iTWYaibmKrBmZvJm3E+auC+keN60792MCyuRuLUj0an1AKLf
-         mJGWwEnWuQJhwVH1EgobCLcqyGH6WMZseZlYgz4yPY84rvZFURY6RLZdx5bTNK20oWyJ
-         koFA==
+        bh=fdrNjGSbgR3/k0inoRDYCwzDeCzZNtFZVESEGgQH1Xs=;
+        b=en5T94YvrFd3luglCzx3sqWtRmXZjDONjL3gYZR6AwNlaIymTcl6iMn0qKU+bKEE6b
+         ABYHQ4sqpa0VqIg22UtPCCiSVH+N8G+amx5+THqsUEzxMG4lPrmxarw16fDcvw6tR+RI
+         TjAZJGCzZsxPo0uXBOkd3Hj2XO98Y7ca7Nn2EwWddpBcS/rESV1IpFASkfXYvqvpx9Ec
+         S0Wd+uUFS1TI0fJ3EpesGegaLWkP4BurJhun74aYFmFzrKr/xJGdIC4fDwNPed4SzVNb
+         tp0lyrh6mVxBPveQy+Rsom1+ZASN8R6ALr5yikeHYQ8eGfaWgMEa30FJcfMTckf0XuZu
+         9EGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=GjM4mAmp+AKf53XGmy31JDt5g6a1N4hK21N+qPDtk6E=;
-        b=dPt4+lhV9bnMsOPpJmXXDfpjJU6uLd1F/Y6HKHBkCaXUxhC9xaHzNgXznJMFmhRojt
-         qODk6enZUt2MnRi5bGFtWJGC8+8uOe/jPW+ShGp4EOXQBU2DxVXf+BxegGKJX4ZtveNH
-         8vJnYNkzPAbxG2RPzr378M5zOcIlAdbXu/8k+rVh0TZIjI6U1WldswBbQeRIk0+cKBq7
-         h+hXb+4bpaSWmU/NYG3N8FsGKp7Q1Zrs0aaRnUfajKK9e+ONV56BGIR3Hnk6i1f4+WV9
-         RPPyokxm9CAoG/BRn+jTbOWnF61MzgfBZwpxgWXxQy8edlFg+oagYOawkGePgMUfAA3E
-         J6yQ==
-X-Gm-Message-State: AOAM533jNZYcjwmyW3+slZsGb0D4w2HrkrE+wvlMH5pIvYLUUYHFmQZv
-        Moarh3/tRiegb838X1A3rOPmXz2fsSLqDvfhpiq+lBLFGjtPNdbKNvl4EqHds2OtjHTc7Ic5Gcx
-        YLntuZrAv8Za2E7QS5lt8qVT1ez9JffD1Jdn24An048IM5WyOqYbdjUH2R4Euni15lWf2Y1EClg
+        bh=fdrNjGSbgR3/k0inoRDYCwzDeCzZNtFZVESEGgQH1Xs=;
+        b=NgahSYvvEu2yMxEcQ74otSlwhXsDC7p2HbkUWc5OF6t/SuOiwkrDU3tYI587D2FTA6
+         6+cQt/TiRD49HQy+5fFw6nVEYNw+9+0B7qGc+hBOX1q2x2S0CeWZIdWKQS68GuFu1/aF
+         a1fnF4EKQbQybBx+MUDPIF+OfzDzDDrd6N2whYaCi1s+N4z00FFC/0ggGC1emPX2a+vI
+         kzi2WJZf2o9hFHxS5KAvtUn1c69OUegyeAdWo476ff1Dg7/fEruTuWsoRKVRebg6HJwH
+         F/qIhSQ5S7e+0fnUVBTNbQD7qUJ8yaAy2k8SwtZ5Vllf0EYD1jkBrRC7p4kxW78jGcey
+         TuZw==
+X-Gm-Message-State: AOAM530/wDCi0FbIUzEHc8IZ/MhgQ9E1UTye73NYcZHpQ7Rgu8DWV1ro
+        PuwbZvsB8yPuW84Pwm/q/wTqujTRY0OBamXEGqnzPo/GYJOhVLMpM/7hcQB6VIWQI0ET2uq6196
+        xH0s7ZUZV/+OcEpCgESVxd7D7EM9QTzWvQz2nHro9Iq0u4SEuSZPW/psJhXY1kc43VLhF7NDkmA
         ==
-X-Google-Smtp-Source: ABdhPJwmsb+/NrbVHWNd5uGyftZ18fpIykQ4kRyLJdsRzjKym1lJQ3OG+TMs5HZsZqITG3M9/F81H5xMvpmBYHe0jBs=
+X-Google-Smtp-Source: ABdhPJxdjWVHYhNA2NaCsc2nFA+AA5VxGb3ebkhUa47Q5mtsjGH/t6pdVzgeHS/hzfCCLI7q4GIqpU0kII/PRiAZQbY=
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:3521:9495:983c:f6d5])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:20a1:: with SMTP id
- 1mr5957436qvd.30.1615428702475; Wed, 10 Mar 2021 18:11:42 -0800 (PST)
-Date:   Wed, 10 Mar 2021 18:10:29 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a25:d251:: with SMTP id
+ j78mr7804221ybg.480.1615428700686; Wed, 10 Mar 2021 18:11:40 -0800 (PST)
+Date:   Wed, 10 Mar 2021 18:10:28 -0800
 In-Reply-To: <20210311021037.3001235-1-emilyshaffer@google.com>
-Message-Id: <20210311021037.3001235-30-emilyshaffer@google.com>
+Message-Id: <20210311021037.3001235-29-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20210311021037.3001235-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v8 29/37] reference-transaction: look for hooks in config
+Subject: [PATCH v8 28/37] transport: convert pre-push hook to use config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,130 +70,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using the hook.h library, reference-transaction hooks can be
-specified in the config instead.
-
-The expected output of the test is not fully updated to reflect the
-absolute path of the hook called because the 'update' hook has not yet
-been converted to use hook.h.
+By using the hook.h:run_hooks API, pre-push hooks can be specified in
+the config as well as in the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt       |  3 +++
- refs.c                           | 43 +++++++++++++-------------------
- t/t1416-ref-transaction-hooks.sh |  8 +++---
- 3 files changed, 24 insertions(+), 30 deletions(-)
+ Documentation/githooks.txt |  3 ++
+ transport.c                | 59 +++++++++++---------------------------
+ 2 files changed, 20 insertions(+), 42 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 489c93a7cb..dc8b7111d5 100644
+index 544238b381..489c93a7cb 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -530,6 +530,9 @@ The exit status of the hook is ignored for any state except for the
- cause the transaction to be aborted. The hook will not be called with
- "aborted" state in that case.
+@@ -279,6 +279,9 @@ If this hook exits with a non-zero status, `git push` will abort without
+ pushing anything.  Information about why the push is rejected may be sent
+ to the user by writing to standard error.
  
-+Hooks run during 'reference-transaction' will be run in parallel, unless
-+hook.jobs is configured to 1.
++Hooks executed during 'pre-push' will run in parallel, unless hook.jobs is
++configured to 1.
 +
- push-to-checkout
- ~~~~~~~~~~~~~~~~
- 
-diff --git a/refs.c b/refs.c
-index a665ed5e10..4fccbac3e6 100644
---- a/refs.c
-+++ b/refs.c
-@@ -18,6 +18,7 @@
- #include "strvec.h"
- #include "repository.h"
- #include "sigchain.h"
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/transport.c b/transport.c
+index b13fab5dc3..286b73881b 100644
+--- a/transport.c
++++ b/transport.c
+@@ -22,6 +22,7 @@
+ #include "protocol.h"
+ #include "object-store.h"
+ #include "color.h"
 +#include "hook.h"
  
- /*
-  * List of all available backends
-@@ -2061,47 +2062,37 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- static int run_transaction_hook(struct ref_transaction *transaction,
- 				const char *state)
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -1172,31 +1173,15 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ static int run_pre_push_hook(struct transport *transport,
+ 			     struct ref *remote_refs)
  {
--	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	const char *hook;
+-	int ret = 0, x;
++	int ret = 0;
 +	struct run_hooks_opt opt;
-+	struct string_list to_stdin = STRING_LIST_INIT_DUP;
- 	int ret = 0, i;
-+	char o[GIT_MAX_HEXSZ + 1], n[GIT_MAX_HEXSZ + 1];
- 
--	hook = find_hook("reference-transaction");
--	if (!hook)
--		return ret;
++	struct strbuf tmp = STRBUF_INIT;
+ 	struct ref *r;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct strbuf buf;
+-	const char *argv[4];
 -
--	strvec_pushl(&proc.args, hook, state, NULL);
+-	if (!(argv[0] = find_hook("pre-push")))
+-		return 0;
+-
+-	argv[1] = transport->remote->name;
+-	argv[2] = transport->url;
+-	argv[3] = NULL;
+-
+-	proc.argv = argv;
 -	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "reference-transaction";
+-	proc.trace2_hook_name = "pre-push";
+-
+-	if (start_command(&proc)) {
+-		finish_command(&proc);
+-		return -1;
+-	}
+-
+-	sigchain_push(SIGPIPE, SIG_IGN);
++	struct string_list to_stdin = STRING_LIST_INIT_DUP;
 +	run_hooks_opt_init_async(&opt);
  
--	ret = start_command(&proc);
--	if (ret)
-+	if (!hook_exists("reference-transaction", HOOKDIR_USE_CONFIG))
- 		return ret;
+-	strbuf_init(&buf, 256);
++	strvec_push(&opt.args, transport->remote->name);
++	strvec_push(&opt.args, transport->url);
  
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	strvec_push(&opt.args, state);
+ 	for (r = remote_refs; r; r = r->next) {
+ 		if (!r->peer_ref) continue;
+@@ -1205,30 +1190,20 @@ static int run_pre_push_hook(struct transport *transport,
+ 		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+ 		if (r->status == REF_STATUS_UPTODATE) continue;
  
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-+		oid_to_hex_r(o, &update->old_oid);
-+		oid_to_hex_r(n, &update->new_oid);
- 
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s %s %s\n",
--			    oid_to_hex(&update->old_oid),
--			    oid_to_hex(&update->new_oid),
--			    update->refname);
+-		strbuf_reset(&buf);
+-		strbuf_addf( &buf, "%s %s %s %s\n",
++		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, "%s %s %s %s",
+ 			 r->peer_ref->name, oid_to_hex(&r->new_oid),
+ 			 r->name, oid_to_hex(&r->old_oid));
 -
 -		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+-			/* We do not mind if a hook does not read all refs. */
 -			if (errno != EPIPE)
 -				ret = -1;
 -			break;
 -		}
-+		strbuf_addf(&buf, "%s %s %s", o, n, update->refname);
-+		string_list_append(&to_stdin, buf.buf);
++		string_list_append(&to_stdin, tmp.buf);
  	}
  
--	close(proc.in);
+-	strbuf_release(&buf);
+-
+-	x = close(proc.in);
+-	if (!ret)
+-		ret = x;
+-
 -	sigchain_pop(SIGPIPE);
 +	opt.feed_pipe = pipe_from_string_list;
 +	opt.feed_pipe_ctx = &to_stdin;
-+
-+	ret = run_hooks("reference-transaction", &opt);
+ 
+-	x = finish_command(&proc);
+-	if (!ret)
+-		ret = x;
++	ret = run_hooks("pre-push", &opt);
 +	run_hooks_opt_clear(&opt);
- 	strbuf_release(&buf);
++	strbuf_release(&tmp);
 +	string_list_clear(&to_stdin, 0);
  
--	ret |= finish_command(&proc);
  	return ret;
  }
- 
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index 6c941027a8..3a90a59143 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -125,11 +125,11 @@ test_expect_success 'interleaving hook calls succeed' '
- 
- 	cat >expect <<-EOF &&
- 		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 		hooks/update refs/tags/POST $ZERO_OID $POST_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 	EOF
- 
- 	git push ./target-repo.git PRE POST &&
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
