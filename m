@@ -2,780 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B74B6C433DB
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 03:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1835C433DB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:02:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CADA64FC1
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 03:02:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADE2F64FBB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230033AbhCKDCT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 22:02:19 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64124 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbhCKDBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 22:01:46 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id F1E38125C00;
-        Wed, 10 Mar 2021 22:01:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=z
-        pyyrKyRzwHOHG0lw/z1i5Wowjo=; b=gcaz2vEqPWm13YIUqxMtEZxpVD4Umn+Cx
-        sNTSftUymFPb/Z8bO3Xmtq1hzVGlDMe2jsIpK84BuUcbIZD1JJSlln6jiVLue/Fr
-        P/ujrXVVkl70QLb04/urc/NoaB/UB91vWRoQAeN5Q8DuxLjFli3WT66z4nMvqYsI
-        XZc3K1AYS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=Fse
-        3xxXbmcLm7V1MeROzI8aGDUV9q2rHSOQzkcTZ2jtH1hRsM9UOl4dI2vtUMPEdw6q
-        pePLEe/QBx85WsoW/iGAkmpb+gVvmY/KVYivfYWuWhmCLgyJUrP+rDIlDT4tqb3W
-        LTbtoTM0MRR/zjfAcPBUqlZIv4zaJlRLdyYQBlrA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E94E2125BFF;
-        Wed, 10 Mar 2021 22:01:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 14176125BFD;
-        Wed, 10 Mar 2021 22:01:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: What's cooking in git.git (Mar 2021, #03; Wed, 10)
-X-master-at: 13d7ab6b5d7929825b626f050b62a11241ea4945
-X-next-at: 7f7177462022378fff6bd671b691b9f3771eb75b
-Date:   Wed, 10 Mar 2021 19:01:41 -0800
-Message-ID: <xmqqmtvafl62.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S230242AbhCKECW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 23:02:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230406AbhCKECL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 23:02:11 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C21C061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:02:10 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id f8so246935otp.8
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:02:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CDafgmlt31C01oAF0BYhbVAcuF5XSkS0E6IcC4N4L64=;
+        b=eYYjazGXFLKmTNKJr3+Q59B3d+4iRij7hHTYHCbEnE8we3JP+qvhhzjjUJLD3m4KuS
+         0c2ep39bOMyHa5619hXDfA9Omy6fGBMAMDgtW8tIf7ej20QseFJzEJHpvBUrf+TMvIs0
+         xutZMxMhqsFnr3QU3ASgZHAcDf6pQPDT4/mr5ts6NVAO1eh125ouLNMmls07VcCn0NiD
+         XpoqJKNCIkeK2cEtbF/uCKUrZIUSbSULmMusC6Y7ztnvPeon5PJO0V3a98npn6yKYnnl
+         Dv9Aj4YENnLQz3OP/8QjF6eTMH52DJIZ1qVcVzgI7lqxcKI95h5tTQozNxYetQuPBEHi
+         MZKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CDafgmlt31C01oAF0BYhbVAcuF5XSkS0E6IcC4N4L64=;
+        b=s/gh3/avZtYXy+zhhEz72H55xpSsNZmosg5HQTPcDaK/R9ViAp+2HL8yIb50WcegDT
+         e5XMhnlzCEwlG6l50AIxpORjUpr5Q2wx89vg3SNoRE6MvRv4WNkkqE1ZPPSbIM1ydewC
+         6A7ckwSzTFP0ggmI5GoCxM+eePhIf5cX2jw1KWH6aOf3uP4V+QSvedF52RvWVIbejko1
+         nY2gyF3SwlKUxF7bcPJB8+3eAW/tIVLj7CZsiYS7gjBS+HMGVYREnu4Js1tuJDyfzVBi
+         QhGz3bBHDVCYBoWvbTQijzW5+tyDUL9TkJmq14sFYvCNnj+OyfHEF82yii1FsM7s1fto
+         QHHQ==
+X-Gm-Message-State: AOAM530EYYUQyxwsmSR0pq7TP9XBl5xggkAE1CP47Bm8F2eACXOW0+83
+        odVAZU/4/6cdBElFg1dB0NSwod9F7uvaN2lkxKY=
+X-Google-Smtp-Source: ABdhPJz1VsFVnqv4HDTxVzPqthihQb0eEnWfK4azRdlEZPzrdthWZPRMDdqdCxnyMEXDPAKkns1mtfbFY4FmlhbREbk=
+X-Received: by 2002:a9d:66:: with SMTP id 93mr5295647ota.147.1615435330333;
+ Wed, 10 Mar 2021 20:02:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1BB9B9FA-8216-11EB-8F64-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20210301084512.27170-1-charvi077@gmail.com> <20210310194306.32565-4-charvi077@gmail.com>
+ <xmqqpn06h6os.fsf@gitster.g>
+In-Reply-To: <xmqqpn06h6os.fsf@gitster.g>
+From:   Charvi Mendiratta <charvi077@gmail.com>
+Date:   Thu, 11 Mar 2021 09:31:59 +0530
+Message-ID: <CAPSFM5dqRbuoCvEFcHQPSQt+EK1_pBVQ--f42jR+GNqCFd_SOg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] commit: add a reword suboption to --fixup
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
-with '+' are in 'next'.  The ones marked with '.' do not appear in any of
-the integration branches, but I am still holding onto them.
-
-The second release candidate Git v2.31.0-rc2, together with
-maintenance releases for CVE-2021-21300, have been released.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* ab/tests-cleanup-around-sha1 (2021-03-10) 4 commits
- - tests: get rid of $_x05 from the test suite
- - shortlog tests: rewrite to get rid of --abbrev=35 hardcoding
- - test-lib: remove unused $_x40 and $_z40 variables
- - git-bisect: remove unused SHA-1 $x40 shell variable
-
- Remove variables that hold regexp and glob that match fixed number
- of hexadecimal digits from the test suite.
-
- Expecting a reroll.
- At least the last one weakens a test; there may be similar breakage
- due to not understanding what they are trying to test.
-
-
-* jk/filter-branch-sha256 (2021-03-10) 3 commits
- - filter-branch: drop $_x40 glob
- - filter-branch: drop multiple-ancestor warning
- - t7003: test ref rewriting explicitly
-
- Code clean-up.
-
- Will merge to 'next'.
- In the longer term, we might want to remove filter-branch and nudge
- folks to more modern tools.
-
-
-* jn/mergetool-hideresolved-is-optional (2021-03-10) 1 commit
- - mergetool: do not enable hideResolved by default
-
- Disable the recent mergetool's hideresolved feature by default for
- backward compatibility and safety.
-
- Expecting a reroll.  
- We may want to give a more meaning log message to explain why it is
- undesirable to turn it on by default.
-
-
---------------------------------------------------
-[Graduated to 'master']
-
-* jt/transfer-fsck-across-packs-fix (2021-03-05) 1 commit
-  (merged to 'next' on 2021-03-07 at c79f295216)
- + fetch-pack: do not mix --pack_header and packfile uri
-
- The code to fsck objects received across multiple packs during a
- single git fetch session has been broken when the packfile URI
- feature was in use.  A workaround has been added by disabling the
- codepath that avoids keeping a packfile that is too small.
-
---------------------------------------------------
-[Stalled]
-
-* hn/reftable (2021-03-08) 17 commits
- - SQUASH??? calloc(nmemb,size)
- - SQUASH??? allow t0031 to run with any default branch name
- - Add "test-tool dump-reftable" command.
- - git-prompt: prepare for reftable refs backend
- - Reftable support for git-core
- - reftable: rest of library
- - reftable: reftable file level tests
- - reftable: read reftable files
- - reftable: write reftable files
- - reftable: a generic binary tree implementation
- - reftable: reading/writing blocks
- - reftable: (de)serialization for the polymorphic record type.
- - reftable: add blocksource, an abstraction for random access reads
- - reftable: utility functions
- - reftable: add error related functionality
- - reftable: add LICENSE
- - init-db: set the_repository->hash_algo early on
-
- The "reftable" backend for the refs API.
-
-
-* mt/parallel-checkout-part-1 (2020-12-16) 9 commits
- - entry: add checkout_entry_ca() taking preloaded conv_attrs
- - entry: move conv_attrs lookup up to checkout_entry()
- - entry: extract update_ce_after_write() from write_entry()
- - entry: make fstat_output() and read_blob_entry() public
- - entry: extract a header file for entry.c functions
- - convert: add classification for conv_attrs struct
- - convert: add get_stream_filter_ca() variant
- - convert: add [async_]convert_to_working_tree_ca() variants
- - convert: make convert_attrs() and convert structs public
-
- Parallel checkout.
-
- Looking good.
-
-
-* es/config-hooks-part-1 (2021-02-16) 17 commits
- - hooks: allow callers to capture output
- - run-command: allow capturing of collated output
- - hook: provide stdin by string_list or callback
- - run-command: add stdin callback for parallelization
- - hook: allow specifying working directory for hooks
- - hook: allow parallel hook execution
- - run-command: allow stdin for run_processes_parallel
- - hook: support passing stdin to hooks
- - hook: replace find_hook() with hook_exists()
- - hook: add 'run' subcommand
- - parse-options: parse into strvec
- - hook: implement hookcmd.<name>.skip
- - hook: respect hook.runHookDir
- - hook: include hookdir hook in list
- - hook: add list command
- - hook: scaffolding for git-hook subcommand
- - doc: propose hooks managed by the config
- (this branch is used by es/config-hooks.)
-
- A way to specify hooks in the configuration files is introduced.
-
- Expecting another reroll??
- cf. <YC7o2rUQOEdiMdqh@google.com>
-
-
-* dl/stash-show-untracked (2021-03-05) 2 commits
-  (merged to 'next' on 2021-03-08 at 510d4cfa5f)
- + stash show: learn stash.showIncludeUntracked
- + stash show: teach --include-untracked and --only-untracked
-
- "git stash show" learned to optionally show untracked part of the
- stash.
-
- Will cook in 'next'.
-
-
-* ab/fsck-api-cleanup (2021-02-18) 10 commits
- - fsck.h: update FSCK_OPTIONS_* for object_name
- - fsck.c: give "FOREACH_MSG_ID" a more specific name
- - fsck.c: undefine temporary STR macro after use
- - fsck.c: call parse_msg_type() early in fsck_set_msg_type()
- - fsck.h: move FSCK_{FATAL,INFO,ERROR,WARN,IGNORE} into an enum
- - fsck.c: rename remaining fsck_msg_id "id" to "msg_id"
- - fsck.c: move definition of msg_id into append_msg_id()
- - fsck.c: rename variables in fsck_set_msg_type() for less confusion
- - fsck.h: use "enum object_type" instead of "int"
- - fsck.h: indent arguments to of fsck_set_msg_type
-
- Preliminary fsck API clean-up.
-
- Expecting a reroll.
- cf. <xmqqczwxc8bw.fsf@gitster.g>
-
-
-* jk/symlinked-dotgitx-files (2020-10-23) 9 commits
- - docs: document symlink restrictions for .git* files
- - fsck: complain when .gitattributes or .gitignore is a symlink
- - verify_path(): disallow symlinks in .gitattributes and .gitignore
- - t0060: test obscured .gitattributes and .gitignore matching
- - t7450: test .gitmodules symlink matching against obscured names
- - t7450: test verify_path() handling of gitmodules
- - t7415: rename to expand scope
- - fsck_tree(): wrap some long lines
- - fsck_tree(): fix shadowed variable
-
- "git fsck" and the corresponding check done during the transport
- learned to ensure that in-tree files like `.gitignore` and
- `.gitattributes` are not symbolic links.
-
- It seems that there are real projects with .gitignore recorded as
- symlinks, which may need to loosen the fsck setting.  Do we need to
- introduce a class that is separate from symlinked .gitmodules that
- has potential consequences that is more/less grave, so that these
- projects can opt out of the new checks?
-
-
-* ag/merge-strategies-in-c (2020-11-24) 13 commits
- - sequencer: use the "octopus" merge strategy without forking
- - sequencer: use the "resolve" strategy without forking
- - merge: use the "octopus" strategy without forking
- - merge: use the "resolve" strategy without forking
- - merge-octopus: rewrite in C
- - merge-recursive: move better_branch_name() to merge.c
- - merge-resolve: rewrite in C
- - merge-index: don't fork if the requested program is `git-merge-one-file'
- - merge-index: libify merge_one_path() and merge_all()
- - merge-one-file: rewrite in C
- - update-index: move add_cacheinfo() to read-cache.c
- - t6060: modify multiple files to expose a possible issue with merge-index
- - t6407: modernise tests
-
- The resolve and octopus merge strategy backends have been rewritten
- in C.
-
- Got enough review comments to get updated.
-
---------------------------------------------------
-[Cooking]
-
-* ab/make-cocci-dedup (2021-03-05) 4 commits
- - Makefile/coccicheck: set SPATCH_BATCH_SIZE to 8
- - Makefile/coccicheck: allow for setting xargs concurrency
- - Makefile/coccicheck: speed up and fix bug with duplicate hunks
- - Makefile/coccicheck: add comment heading for all SPATCH flags
-
- An attempt to speed up the coccicheck target with incorrect
- results.
-
- A reroll exists to address correctness issue, but not picked up.
-
-
-* ab/read-tree (2021-03-08) 6 commits
- - tree.h API: remove "stage" parameter from read_tree_recursive()
- - tree.h API: remove support for starting at prefix != ""
- - ls-files: refactor away read_tree()
- - ls-files: don't needlessly pass around stage variable
- - tree.c API: move read_tree() into builtin/ls-files.c
- - ls-files tests: add meaningful --with-tree tests
-
- Code simplification by removing support for a caller that is long gone.
-
- Looked good.
-
-
-* ab/unexpected-object-type (2021-03-08) 7 commits
- - tag: don't misreport type of tagged objects in errors
- - object tests: add test for unexpected objects in tags
- - object.c: add a utility function for "expected type X, got Y"
- - tree.c: fix misindentation in parse_tree_gently()
- - oid_object_info(): return "enum object_type"
- - object.c: make type_from_string() return "enum object_type"
- - object.c: refactor type_from_string_gently()
-
- Error reporting upon object type mismatch has been improved
-
- Looked good.
-
-
-* ah/make-fuzz-all-doc-update (2021-03-08) 1 commit
- - Makefile: update 'make fuzz-all' docs to reflect modern clang
-
- Update insn in Makefile comments to run fuzz-all target.
-
- Needs review.
- cf. <pull.889.v3.git.1615223682911.gitgitgadget@gmail.com>
- cf. <defff7a3-2104-4fa1-7750-0b13ca5cdf59@ahunt.org>
-
-
-* ah/plugleaks (2021-03-08) 7 commits
- - parse-options: don't leak alias help messages
- - init-db: silence template_dir leak when converting to absolute path
- - init: remove git_init_db_config() while fixing leaks
- - worktree: fix leak in dwim_branch()
- - clone: free or UNLEAK further pointers when finished
- - reset: free instead of leaking unneeded ref
- - symbolic-ref: don't leak shortened refname in check_symref()
-
- Plug or annotate remaining leaks that trigger while running the
- very basic set of tests.
-
-
-* bc/clone-bare-with-conflicting-config (2021-03-10) 1 commit
- - builtin/init-db: handle bare clones when core.bare set to false
-
- "git -c core.bare=false clone --bare ..." would have segfaulted,
- which has been corrected.
-
- Will merge to 'next'.
-
-
-* dl/cat-file-doc-cleanup (2021-03-03) 2 commits
- - git-cat-file.txt: remove references to "sha1"
- - git-cat-file.txt: monospace args, placeholders and filenames
-
- Doc cleanup.
-
- Will merge to 'next'.
-
-
-* jr/doc-ignore-typofix (2021-03-03) 1 commit
- - doc: .gitignore documentation typofix
-
- Doc cleanup.
-
- Will merge to 'next'.
-
-
-* rr/mailmap-entry-self (2021-03-08) 1 commit
- - Add entry for Ramkumar Ramachandra
-
- Will merge to 'next'.
-
-
-* rs/xcalloc-takes-nelem-first (2021-03-08) 1 commit
- - fix xcalloc() argument order
-
- Code cleanup.
-
- Will merge to 'next'.
-
-
-* sv/t9801-test-path-is-file-cleanup (2021-03-03) 1 commit
- - t9801: replace test -f with test_path_is_file
-
- Test cleanup.
-
- Will merge to 'next'.
-
-
-* tb/git-mv-icase-fix (2021-03-03) 1 commit
- - git mv foo FOO ; git mv foo bar gave an assert
-
- Fix a corner case bug in "git mv" on case insensitive systems,
- which was introduced in 2.29 timeframe.
-
- Will merge to 'next'.
-
-
-* tb/push-simple-uses-branch-merge-config (2021-03-08) 1 commit
- - Documentation/git-push.txt: correct configuration typo
-
- Doc update.
-
- cf. <YEaM7ruZCvaQQbPI@nand.local>
-
-
-* ab/remote-write-config-in-camel-case (2021-02-24) 2 commits
-  (merged to 'next' on 2021-03-01 at a01bd0d8e4)
- + remote: write camel-cased *.pushRemote on rename
- + remote: add camel-cased *.tagOpt key, like clone
-
- Update C code that sets a few configuration variables when a remote
- is configured so that it spells configuration variable names in the
- canonical camelCase.
-
- Will cook in 'next'.
-
-
-* ds/commit-graph-generation-config (2021-02-25) 2 commits
-  (merged to 'next' on 2021-03-01 at 926537ea97)
- + commit-graph: use config to specify generation type
- + commit-graph: create local repository pointer
-
- A new configuration variable has been introduced to allow choosing
- which version of the generation number gets used in the
- commit-graph file.
-
- Will cook in 'next'.
-
-
-* mt/cleanly-die-upon-missing-required-filter (2021-02-26) 1 commit
-  (merged to 'next' on 2021-03-01 at 357954af7c)
- + convert: fail gracefully upon missing clean cmd on required filter
-
- We had a code to diagnose and die cleanly when a required
- clean/smudge filter is missing, but an assert before that
- unnecessarily fired, hiding the end-user facing die() message.
-
- Will cook in 'next'.
-
-
-* ab/describe-tests-fix (2021-03-01) 10 commits
- - test-lib: return 1 from test_expect_{success,failure}
- - svn tests: refactor away a "set -e" in test body
- - svn tests: remove legacy re-setup from init-clone test
- - describe tests: support -C in "check_describe"
- - describe tests: fix nested "test_expect_success" call
- - describe tests: convert setup to use test_commit
- - test-lib functions: add an --annotated-tag option to "test_commit"
- - describe tests: always assert empty stderr from "describe"
- - describe tests: refactor away from glob matching
- - describe tests: improve test for --work-tree & --dirty
-
- Various updates to tests around "git describe"
-
-
-* en/ort-perf-batch-8 (2021-02-26) 10 commits
-  (merged to 'next' on 2021-03-07 at f03b2c1acd)
- + diffcore-rename: compute dir_rename_guess from dir_rename_counts
- + diffcore-rename: limit dir_rename_counts computation to relevant dirs
- + diffcore-rename: compute dir_rename_counts in stages
- + diffcore-rename: extend cleanup_dir_rename_info()
- + diffcore-rename: move dir_rename_counts into dir_rename_info struct
- + diffcore-rename: add function for clearing dir_rename_count
- + Move computation of dir_rename_count from merge-ort to diffcore-rename
- + diffcore-rename: add a mapping of destination names to their indices
- + diffcore-rename: provide basic implementation of idx_possible_rename()
- + diffcore-rename: use directory rename guided basename comparisons
-
- Rename detection rework continues.
-
- Will cook in 'next'.
-
-
-* jk/perf-in-worktrees (2021-02-26) 2 commits
-  (merged to 'next' on 2021-03-02 at ea298cb298)
- + t/perf: avoid copying worktree files from test repo
- + t/perf: handle worktrees as test repos
-
- Perf test update to work better in secondary worktrees.
-
- Will cook in 'next'.
-
-
-* ps/update-ref-trans-hook-doc (2021-03-01) 2 commits
- - githooks.txt: clarify documentation on reference-transaction hook
- - githooks.txt: replace mentions of SHA-1 specific properties
-
-
-* tb/pack-revindex-on-disk (2021-02-26) 1 commit
- - pack-revindex.c: don't close unopened file descriptors
-
-
-* zh/format-patch-fractional-reroll-count (2021-03-01) 1 commit
- - format-patch: allow a non-integral version numbers
-
-
-* ab/make-cleanup (2021-02-23) 6 commits
- - Makefile: build "$(FUZZ_OBJS)" in CI, not under "all"
- - Makefile: add {program,xdiff,test,git,fuzz}-objs & objects targets
- - Makefile: split OBJECTS into OBJECTS and GIT_OBJS
- - Makefile: sort OBJECTS assignment for subsequent change
- - Makefile: split up long OBJECTS line
- - Makefile: guard against TEST_OBJS in the environment
-
- Reorganize Makefile to allow building git.o and other essential
- objects without extra stuff needed only for testing.
-
- The last step is of dubious value, but otherwise looked OK.
- cf. <YDVJZnmTiBYZ4iPM@coredump.intra.peff.net>
-
-
-* ab/grep-pcre2-allocfix (2021-02-17) 10 commits
-  (merged to 'next' on 2021-03-04 at 26d2b726b1)
- + grep/pcre2: move definitions of pcre2_{malloc,free}
- + grep/pcre2: move back to thread-only PCREv2 structures
- + grep/pcre2: actually make pcre2 use custom allocator
- + grep/pcre2: use pcre2_maketables_free() function
- + grep/pcre2: use compile-time PCREv2 version test
- + grep/pcre2: add GREP_PCRE2_DEBUG_MALLOC debug mode
- + grep/pcre2: prepare to add debugging to pcre2_malloc()
- + grep/pcre2: correct reference to grep_init() in comment
- + grep/pcre2: drop needless assignment to NULL
- + grep/pcre2: drop needless assignment + assert() on opt->pcre2
-
- Updates to memory allocation code around the use of pcre2 library.
-
- Will cook in 'next'.
-
-
-* tb/reverse-midx (2021-02-24) 16 commits
- - pack-revindex: write multi-pack reverse indexes
- - pack-write.c: extract 'write_rev_file_order'
- - pack-revindex: read multi-pack reverse indexes
- - Documentation/technical: describe multi-pack reverse indexes
- - midx: make some functions non-static
- - midx: keep track of the checksum
- - midx: don't free midx_name early
- - midx: allow marking a pack as preferred
- - t/helper/test-read-midx.c: add '--show-objects'
- - builtin/multi-pack-index.c: display usage on unrecognized command
- - builtin/multi-pack-index.c: don't enter bogus cmd_mode
- - builtin/multi-pack-index.c: split sub-commands
- - builtin/multi-pack-index.c: define common usage with a macro
- - builtin/multi-pack-index.c: don't handle 'progress' separately
- - builtin/multi-pack-index.c: inline 'flags' with options
- - Merge branch 'ds/chunked-file-api' into tb/reverse-midx
-
- An on-disk reverse-index to map the in-pack location of an object
- back to its object name across multiple packfiles is introduced.
-
-
-* ab/pickaxe-pcre2 (2021-02-18) 24 commits
- - pickaxe -G: don't special-case create/delete
- - pickaxe -G: terminate early on matching lines
- - xdiff-interface: support early exit in xdiff_outf()
- - xdiff-interface: allow early return from xdiff_emit_{line,hunk}_fn
- - pickaxe -S: slightly optimize contains()
- - pickaxe: rename variables in has_changes() for brevity
- - pickaxe -S: support content with NULs under --pickaxe-regex
- - pickaxe: assert that we must have a needle under -G or -S
- - pickaxe: refactor function selection in diffcore-pickaxe()
- - perf: add performance test for pickaxe
- - pickaxe/style: consolidate declarations and assignments
- - diff.h: move pickaxe fields together again
- - pickaxe: die when --find-object and --pickaxe-all are combined
- - pickaxe: die when -G and --pickaxe-regex are combined
- - pickaxe tests: test for -G, -S and --find-object incompatibility
- - pickaxe tests: add test for "log -S" not being a regex
- - pickaxe tests: add test for diffgrep_consume() internals
- - pickaxe tests: refactor to use test_commit --append --printf
- - test-lib functions: add --printf option to test_commit
- - test-lib-functions: reword "test_commit --append" docs
- - test-lib-functions: document and test test_commit --no-tag
- - grep/pcre2 tests: reword comments referring to kwset
- - Merge branch 'jk/rev-list-disk-usage' into ab/pickaxe-pcre2
- - Merge branch 'ab/test-lib' into ab/pickaxe-pcre2
-
- Rewrite the backend for "diff -G/-S" to use pcre2 engine when
- available.
-
- Needs review.
- cf. <20210216115801.4773-1-avarab@gmail.com>
-
-
-* cm/rebase-i-fixup-amend-reword (2021-03-10) 6 commits
- - doc/git-commit: add documentation for fixup=[amend|reword] options
- - t3437: use --fixup with options to create amend! commit
- - t7500: add tests for --fixup=[amend|reword] options
- - commit: add a reword suboption to --fixup
- - commit: add amend suboption to --fixup to create amend! commit
- - sequencer: export and rename subject_length()
- (this branch uses cm/rebase-i and cm/rebase-i-updates.)
-
- "git commit --fixup=<commit>", which was to tweak the changes made
- to the contents while keeping the original log message intact,
- learned "--fixup=(amend|reword):<commit>", that can be used to
- tweak both the message and the contents, and only the message,
- respectively.
-
- Getting there.
-
-
-* jk/open-dotgitx-with-nofollow (2021-02-16) 6 commits
-  (merged to 'next' on 2021-02-25 at a784bf7be6)
- + mailmap: do not respect symlinks for in-tree .mailmap
- + exclude: do not respect symlinks for in-tree .gitignore
- + attr: do not respect symlinks for in-tree .gitattributes
- + exclude: add flags parameter to add_patterns()
- + attr: convert "macro_ok" into a flags field
- + add open_nofollow() helper
-
- It does not make sense to make ".gitattributes", ".gitignore" and
- ".mailmap" symlinks, as they are supposed to be usable from the
- object store (think: bare repositories where HEAD:.mailmap etc. are
- used).  When these files are symbolic links, we used to read the
- contents of the files pointed by them by mistake, which has been
- corrected.
-
- Will cook in 'next'.
-
-
-* rs/pretty-describe (2021-03-01) 4 commits
-  (merged to 'next' on 2021-03-01 at bee9248828)
- + pretty: document multiple %(describe) being inconsistent
- + t4205: assert %(describe) test coverage
-  (merged to 'next' on 2021-02-25 at 2347ed8fe6)
- + pretty: add merge and exclude options to %(describe)
- + pretty: add %(describe)
-
- "git log --format='...'" learned "%(describe)" placeholder.
-
- Will cook in 'next'.
-
-
-* cm/rebase-i-updates (2021-02-10) 11 commits
-  (merged to 'next' on 2021-02-12 at e29227780b)
- + doc/rebase -i: fix typo in the documentation of 'fixup' command
- + t/t3437: fixup the test 'multiple fixup -c opens editor once'
- + t/t3437: use named commits in the tests
- + t/t3437: simplify and document the test helpers
- + t/t3437: check the author date of fixed up commit
- + t/t3437: remove the dependency of 'expected-message' file from tests
- + t/t3437: fixup here-docs in the 'setup' test
- + t/lib-rebase: update the documentation of FAKE_LINES
- + rebase -i: clarify and fix 'fixup -c' rebase-todo help
- + sequencer: rename a few functions
- + sequencer: fixup the datatype of the 'flag' argument
- (this branch is used by cm/rebase-i-fixup-amend-reword; uses cm/rebase-i.)
-
- Follow-up fixes to "cm/rebase-i" topic.
-
- Will cook in 'next', together with "cm/rebase-i".
-
-
-* jh/simple-ipc (2021-03-09) 12 commits
- - t0052: add simple-ipc tests and t/helper/test-simple-ipc tool
- - simple-ipc: add Unix domain socket implementation
- - unix-stream-server: create unix domain socket under lock
- - unix-socket: disallow chdir() when creating unix domain sockets
- - unix-socket: add backlog size option to unix_stream_listen()
- - unix-socket: eliminate static unix_stream_socket() helper function
- - simple-ipc: add win32 implementation
- - simple-ipc: design documentation for new IPC mechanism
- - pkt-line: add options argument to read_packetized_to_strbuf()
- - pkt-line: add PACKET_READ_GENTLE_ON_READ_ERROR option
- - pkt-line: do not issue flush packets in write_packetized_*()
- - pkt-line: eliminate the need for static buffer in packet_write_gently()
-
- A simple IPC interface gets introduced to build services like
- fsmonitor on top.
-
- Replaced with a new iteration.
-
-
-
-* cm/rebase-i (2021-01-29) 9 commits
-  (merged to 'next' on 2021-02-01 at 4f9aa6cec3)
- + doc/git-rebase: add documentation for fixup [-C|-c] options
- + rebase -i: teach --autosquash to work with amend!
- + t3437: test script for fixup [-C|-c] options in interactive rebase
- + rebase -i: add fixup [-C | -c] command
- + sequencer: use const variable for commit message comments
- + sequencer: pass todo_item to do_pick_commit()
- + rebase -i: comment out squash!/fixup! subjects from squash message
- + sequencer: factor out code to append squash message
- + rebase -i: only write fixup-message when it's needed
- (this branch is used by cm/rebase-i-fixup-amend-reword and cm/rebase-i-updates.)
-
- "rebase -i" is getting cleaned up and also enhanced.
-
- Will cook in 'next', together with "cm/rebase-i-updates".
-
-
-* tb/geometric-repack (2021-03-05) 13 commits
-  (merged to 'next' on 2021-03-08 at def1c48d43)
- + builtin/repack.c: reword comment around pack-objects flags
- + builtin/repack.c: be more conservative with unsigned overflows
- + builtin/repack.c: assign pack split later
- + t7703: test --geometric repack with loose objects
- + builtin/repack.c: do not repack single packs with --geometric
-  (merged to 'next' on 2021-02-25 at a854fdbaff)
- + builtin/repack.c: add '--geometric' option
- + packfile: add kept-pack cache for find_kept_pack_entry()
- + builtin/pack-objects.c: rewrite honor-pack-keep logic
- + p5303: measure time to repack with keep
- + p5303: add missing &&-chains
- + builtin/pack-objects.c: add '--stdin-packs' option
- + revision: learn '--no-kept-objects'
- + packfile: introduce 'find_kept_pack_entry()'
-
- "git repack" so far has been only capable of repacking everything
- under the sun into a single pack (or split by size).  A cleverer
- strategy to reduce the cost of repacking a repository has been
- introduced.
-
- Will cook in 'next'.
-
-
-* es/config-hooks (2021-02-16) 17 commits
- - run-command: stop thinking about hooks
- - receive-pack: convert receive hooks to hook.h
- - post-update: use hook.h library
- - proc-receive: acquire hook list from hook.h
- - receive-pack: convert 'update' hook to hook.h
- - reference-transaction: look for hooks in config
- - transport: convert pre-push hook to use config
- - hook: convert 'post-rewrite' hook to config
- - hooks: convert 'post-checkout' hook to hook library
- - git-p4: use 'git hook' to run hooks
- - receive-pack: convert push-to-checkout hook to hook.h
- - read-cache: convert post-index-change hook to use config
- - rebase: teach pre-rebase to use hook.h
- - gc: use hook library for pre-auto-gc hook
- - merge: use config-based hooks for post-merge hook
- - am: convert applypatch hooks to use config
- - commit: use config-based hooks
- (this branch uses es/config-hooks-part-1.)
-
- The "hooks defined in config" topic.
-
- Expecting doc updates, but otherwise seems to be progressing nicely.
-
---------------------------------------------------
-[Discarded]
-
-* cw/pack-vs-bigfilethreashold (2021-02-09) 2 commits
- . fixup! doc: mention bigFileThreshold for packing
- . doc: mention bigFileThreshold for packing
-
- Doc update.
-
- cw/pack-config-doc supersedes this with a bit more coverage on
- related knobs.
-
-
-* jh/simple-ipc-cleanups (2021-03-04) 9 commits
- - SQUASH???
- - simple-ipc: update design documentation with more details
- - test-simple-ipc: add --token=<token> string option
- - test-simple-ipc: refactor command line option processing in helper
- - unix-stream-server: add st_dev and st_mode to socket stolen checks
- - simple-ipc: move error handling up a level
- - unix-stream-server: create unix-stream-server.c
- - unix-socket: simplify initialization of unix_stream_listen_opts
- - pkt-line: remove buffer arg from write_packetized_from_fd_no_flush()
-
- After kicking jh/simple-ipc out of 'next' and rewinding
- jh/simple-ipc to contain the incremental clean-up in this follow-up
- topic, it is no longer needed, hence retired.
+On Thu, 11 Mar 2021 at 06:01, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Charvi Mendiratta <charvi077@gmail.com> writes:
+>
+> >                * reference for example: --fixup="HEAD^{/^area: string}" or
+> >                * a suboption of `--fixup`.
+> >                *
+> > -              * As `amend` suboption contains only alpha character.
+> > -              * So check if first non alpha character in fixup_message
+> > -              * is ':'.
+> > +              * As `amend`/`reword` suboptions contains only alpha
+> > +              * characters. So check if first non alpha character
+> > +              * in fixup_message is ':'.
+>
+> Sorry, but I cannot quite follow the logic.
+>
+>         We limit --fixup's suboptions to only alpha characters.  If
+>         the first character after a len of alpha is colon, then the
+>         part before the colon may be a known suboption name like
+>         `amend` or `reword`, or a misspelt suboption name.
+>
+>         Otherwise, we are dealing with --fixup=<commit> that happens
+>         to have a colon in <commit> object name.
+>
+> perhaps?
+
+Yes, Agree. Here I just intend to mention the special case
+"--fixup=HEAD^{/^area: string}" because of which we chose the method
+to check if first non alpha char is ':' instead of directly checking
+the suboption like (skip_prefix(msg, "amend:", &arg). So maybe we can
+reword it like
+
+- To check if fixup_message that contains ':' is a commit
+- reference for example: --fixup="HEAD^{/^area: string}" or
+- a suboption of `--fixup`.
++ fixup_message could be a commit reference for example:
++ --fixup="HEAD^{/^area:string}" or a suboption of `--fixup`.
++
++ As `amend` ...
+
+Thanks and Regards,
+Charvi
