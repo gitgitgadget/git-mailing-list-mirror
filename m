@@ -7,97 +7,75 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1105CC433E0
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE4ECC433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:51:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4D7364F47
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:07:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6831564FC9
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 04:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231164AbhCKEHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 23:07:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38828 "EHLO
+        id S231209AbhCKEui (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 23:50:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbhCKEGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 23:06:50 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 242AEC061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:06:50 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id bm21so43378249ejb.4
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:06:50 -0800 (PST)
+        with ESMTP id S230462AbhCKEuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 23:50:08 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2308C061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:50:07 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id o22so12084441oic.3
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 20:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yn9JVaq9qmJFOwDUd5ioHdlXoe3IFUsOgCoVmlQrj/U=;
-        b=BIPcZreQHL69dYzYXG6IlgmtjQJdR+5lqWIDmAHhNnbHRGsOcQhS9DX1xD4wjTubTS
-         JeJUbiSk8JtpOKKbUh5xUKidXDtboEj7epN1/EW7xxw6aL+CDuEEX3ffMmtzgSMrMq+N
-         JKB3/eow5oIv8MgngpDskdWVCLSz3mUV00pU1Cf4MigqOWvEmGQEEG3bg5DiEjbyALsJ
-         Is/b5IyimR8P/suVPF0P+R8LhXR5pnOV/d5YCJOeTQo+j45w4/BjdlslDaqCGizxHHZH
-         Ohm9Z45fth6/MUURWVAqaBy5liIOBvrzHgbiQVTokOCH4VFv3pljNodl43sWYGh0l7O/
-         6uDw==
+        bh=r4nQxQmSAXBDXzZ/vs8OSoWBHt5YFo4pnUJCTQWKunU=;
+        b=dLZlZ8o+NBIqOqLqBuJ3YET4lG2B4G+NIvI6XRE9Mkij1VojTAVISnS78kQOkNLf7+
+         SkbWyBg9SqGoPDjmRojC1rcMJkvKL9YYaDfFn/yjbWP4rTWRMZ7nC8gUFfzCZv7LmlM2
+         uoeBhTQQTixbS3Y0UWv+qRPICV5VrvGxl1ZQJcyz3/wnmeR+lGiGvY5CK9+6XTZkuvPn
+         1ndMiU316Zku4Wx/IQEMpB7UgdgyQYO7H3Fkiwje4y9tIrwFaECERrrjrJAt5OS1oeGQ
+         vzsTaFsKxl9gRUih8CmS9AmliJahWgr82ZSWXs4o2EaXoGDopuN11ERUUd+S1wP8ms5x
+         qh5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yn9JVaq9qmJFOwDUd5ioHdlXoe3IFUsOgCoVmlQrj/U=;
-        b=bCVE3qc0jgMQBPG38sFcCE0qhtrFhZlNwdgWnpLDJqNOmKGOH+6FcaP7fV+BDogKeQ
-         9REQ9AicNJa41tyrGBw7rYNyG7oMvoAT6eNQ32mjcaLP7/0qHNaDV1k2HkzsTfaYJAcd
-         Oa6JPv19+247ZWD9tCa3K1hRcIhMmFOz8BWdpZKVi0NyhM8OxtcVHBtzOYsfcL2rrBLr
-         ydgDBxffjAC9Qzg8bjXXt/V3dS3/H++rixXZHFH1jBua+MJrzjJ6JG5GJBEjUZjsIMG6
-         X/aTOJ6SH//gqrGW37NLxJ2Oy32rrPfXkb3nVMpSbdv/Up4uwwQJbD270+IlUzxh6fVu
-         k/aA==
-X-Gm-Message-State: AOAM533hfwmp1PqfcT9WSmJAhM2VF6bAeiMaToJkRNvLq1GZj9L4Tn/f
-        Tw123BAox5eyxaqjc+I/alqxau2ZrR23KRrDkaQ=
-X-Google-Smtp-Source: ABdhPJyKdCfXYt2jpS9hdM5Km4cmaN5A+NCznRTKn0ZPYphG5RVAJpKlS2WEP+N9ByTNYfPHgoZex/AVH/A6HvjadCY=
-X-Received: by 2002:a17:906:5849:: with SMTP id h9mr1118446ejs.551.1615435608882;
- Wed, 10 Mar 2021 20:06:48 -0800 (PST)
+        bh=r4nQxQmSAXBDXzZ/vs8OSoWBHt5YFo4pnUJCTQWKunU=;
+        b=oAUHDwXQhkApjcwfFUMf7axLVixrx7Z3/M9/10GFU4RCrMI9AJiFrnbVL6se7YrXDg
+         2tOAIWQo6pPAgzwDNglC03kQfQeKrxN3hk9rnmKbpJRHzBMhc+dgmy2EmRUQ+Do8NlEq
+         q4jclgmPfktZjH/uu6E/tXsMbnPnnQ9wP2jgvbC1kL+Roy9Eh5Sl3lxn4OBerf66X9pt
+         QSZiLlaexq9Q3Uyt5JLV7G0w2Vepv5vovel62hoO2vkBPz16VxaaS8RfwfIOVHB7aDf7
+         LHxYFQ4MdOCmoNknYu/QiiQQty8qCyUKEZbC0wfEGOJfl6g9j6lpz77+5ky/bht8CJZ/
+         qX1Q==
+X-Gm-Message-State: AOAM533S5i9vBB9h/tLOhFl5KkKZoomdcFpPl75wPbu6X2ZqpFJRSG6Z
+        ORiRrxWYHlEYVHgptrcycjnmnRy6iwHFZKIUUZ4=
+X-Google-Smtp-Source: ABdhPJwOAosHpcjcnWBVMgReTwp8q8twRxHd0PWGlyZEkwfyB0lpHWyizndwfuOkxeKf2OwMfmn8Wya0TlSUfYq2Paw=
+X-Received: by 2002:aca:b489:: with SMTP id d131mr4989321oif.39.1615438207048;
+ Wed, 10 Mar 2021 20:50:07 -0800 (PST)
 MIME-Version: 1.0
-References: <CAFufNaq=FCfvBGBhnjatdn1KUoQYV=Y2zOWWMFWwDLwTR-ujrw@mail.gmail.com>
-In-Reply-To: <CAFufNaq=FCfvBGBhnjatdn1KUoQYV=Y2zOWWMFWwDLwTR-ujrw@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 11 Mar 2021 05:06:37 +0100
-Message-ID: <CAP8UFD0rKtx8R1jYe+_fjJq5FDKLnkvpt_+BAPUQ2VxaU_JyUA@mail.gmail.com>
-Subject: Re: GSoC'21@git project application
-To:     Krushnal Patel <krushnalpatel11@gmail.com>
-Cc:     git <git@vger.kernel.org>
+References: <xmqqmtvafl62.fsf@gitster.g>
+In-Reply-To: <xmqqmtvafl62.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 10 Mar 2021 20:49:56 -0800
+Message-ID: <CABPp-BHxj8jS62mVH4qgmoh1v48ciz8CRswz3+twSnuxUo7Rmw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Krushnal,
+On Wed, Mar 10, 2021 at 7:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+> --------------------------------------------------
+> [New Topics]
+...
 
-On Wed, Mar 10, 2021 at 8:08 PM Krushnal Patel
-<krushnalpatel11@gmail.com> wrote:
+Is there any reason the topics at
 
-> I am Krushnal, a 2-nd year Computer Engineering and GSoC'21 aspirant.
-> I was going through the organizations and git caught my eye. I was
-> really impressed by gt as it is due to its daily use but after seeing
-> it listed in GSoC'21 I specifically want to focus on applying to git.
+https://lore.kernel.org/git/pull.845.git.1614484707.gitgitgadget@gmail.com/T/#t
 
-Great!
+and
 
-> The project which I look forward to contributing is the git submodules
-> conversion from bash to C.
-> I would like to have a discussion on this project with either of the
-> mentors Christian Couder or Shaurya Shukla regarding the next
-> procedure for the selection process. C/C++ being my primary language
-> and being decently proficient at bash, this project is perfect for me.
-> I am ready to work on any pre-requisites required for the selection
-> process
+https://lore.kernel.org/git/pull.973.git.git.1614905738.gitgitgadget@gmail.com/T/#t
 
-You might want to read the following pages:
-
-https://git.github.io/General-Application-Information/
-https://git.github.io/General-Microproject-Information/
-
-At one point we will likely have a specific page that lists
-micro-projects, but it's better if you can find one by yourself and
-start working on it as soon as possible.
-
-You can have discussions with us on this mailing list. Public
-discussions make sure we don't favor anyone and we don't repeat
-ourselves too much.
-
-Best,
-Christian.
+haven't been picked up yet?
