@@ -2,91 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6721C433DB
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 06:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D601C433DB
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 06:19:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7758064FAA
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 06:09:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15F2764FB8
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 06:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbhCKGJO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 11 Mar 2021 01:09:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57993 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhCKGJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Mar 2021 01:09:02 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CB73AFE2E;
-        Thu, 11 Mar 2021 01:09:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YW+mRr0O0KI0NGdT9fKrE5+AX2Q=; b=F8KgZk
-        ylilmUHs9r6oKGcJCnx0rcXPy4DwLfzb91aPf8u/sZLTtwExINr0SwtZ6u8DWNY6
-        mScrj+BFqPpEyVePRoCeil0Pz1X33/7xrD1yMRMD7BW+nWWCETVn7UpSnu6rXMat
-        8GJ3h94yHfZffm2PQaqzOA9WEmz7Y8KwDMsRI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WDulAO/rvLhX4iIEU4JdHm8r0QrA8PJq
-        uqFJFpZfUvIo3Gv13U8z6MHYJPbMXbcF1Byn/9xtYHh66X1FfuDg/O6Id4JVkLE4
-        LxGeTcPApMKOsyECVd5S9AAa1mNjRWjUOILhJk7kh9exrzk7Zj//NOkLkSv4FECQ
-        KC0EzF1ospU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 33174AFE2C;
-        Thu, 11 Mar 2021 01:09:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EA0F5AFE2A;
-        Thu, 11 Mar 2021 01:08:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
-References: <xmqqmtvafl62.fsf@gitster.g>
-        <CABPp-BHxj8jS62mVH4qgmoh1v48ciz8CRswz3+twSnuxUo7Rmw@mail.gmail.com>
-Date:   Wed, 10 Mar 2021 22:08:58 -0800
-In-Reply-To: <CABPp-BHxj8jS62mVH4qgmoh1v48ciz8CRswz3+twSnuxUo7Rmw@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 10 Mar 2021 20:49:56 -0800")
-Message-ID: <xmqq5z1yfchx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
+        id S229914AbhCKGSx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 11 Mar 2021 01:18:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38716 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230026AbhCKGSb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Mar 2021 01:18:31 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3A2C061574
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 22:18:31 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id d20so21988526oiw.10
+        for <git@vger.kernel.org>; Wed, 10 Mar 2021 22:18:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=H+XnRtNf4FgTNwpVQnJ/xl+MmG9MreTiqr2kK403WvA=;
+        b=U/60zdgg2rGZbpO0jYmnyGbnuYOs6F8Y6X849GdbsrQDF17FLjbHNP2jVNWZGHMNmr
+         yuNh7POupsp2YXwlI9+B2yWnlCmXfhXZ07QAn8uEVFsAo7TztJIbZKPSa014pCA7JBJD
+         1H7z3h3KfVqbJ5h3nHPqwzUPq9F53qEJYQaOqkVBog2hq7UT3+NrCPQGU00UCwuSQiOD
+         ijzf8OcwvUHS6dH2QcGLfiIZW+s6sw/MSBJoClfZ4jln3Ho1R85NpOwPW4sQ3qlHcgDn
+         iJI71LFJhV8Pa3g5DOvkNz6y91pUTzXB08rYfc7G3qeorjka+0Ey3GmAoLuRpubUSCtj
+         IFDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H+XnRtNf4FgTNwpVQnJ/xl+MmG9MreTiqr2kK403WvA=;
+        b=aqrZT49NoJX0dUVS8pfyDiiAIDZN6SwAnOTh84AbJ0Vdb8qhCA6giK/Qmi4PvC+sqt
+         JugsU4dx9L5IMc7muqFL8VYteAbwbo/i3utneOIGrx7a1Mr767+hOgSOrWjFidaodWnQ
+         JHa4aeivZMiW7fw+avUU+qoMFs7X9/Xs2IRVneeH7AjeKL4n8SftNez9vlrzn7E59XHl
+         BabJVN/bXAe+zyFhtHH/lplmbRZ0xyOWT5NAsAEaiew+3Cy8xt4cHUk+xGrfNBaOCdBw
+         znqDUUQp2eVX3xDNoSnBd+2y4dGiMJ3KEh8KicesfQ9Az6zenIDxOuOnmlDwG/v5ZKaF
+         VqPA==
+X-Gm-Message-State: AOAM532LavXlS/CpbzrwSf5MUNW4z1x3W7myAiQh2sVqhj21uaX1ewct
+        N2k+/bzFyJCwgBWGTcvrf8r/8Ub615JM1aL83vE390RCK/hgXw==
+X-Google-Smtp-Source: ABdhPJz2iKsT4UdeLDp3IYFWYFmJDt/AdO2CmwgN2W9nvshSvkU0VD3bf3YM7lL0ZLRr9Zl3Uc4VQtXVFVolVRY7GfQ=
+X-Received: by 2002:aca:af10:: with SMTP id y16mr5269670oie.120.1615443510863;
+ Wed, 10 Mar 2021 22:18:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44D4B46A-8230-11EB-AF3D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <xmqqmtvafl62.fsf@gitster.g> <CAOLTT8SBv9QE22bMT2x6_DYNPZDaBjoEv8o6d2MenOnwKng8Xw@mail.gmail.com>
+ <xmqqeegmfedp.fsf@gitster.g>
+In-Reply-To: <xmqqeegmfedp.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 11 Mar 2021 14:18:19 +0800
+Message-ID: <CAOLTT8SfAPH8=asCPeEJD36xww553bkPmDm3AaTbne23zNkkXg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2021, #03; Wed, 10)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Wed, Mar 10, 2021 at 7:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->> --------------------------------------------------
->> [New Topics]
-> ...
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2021=E5=B9=B43=E6=9C=8811=E6=97=
+=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=881:28=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Is there any reason the topics at
+> ZheNing Hu <adlternative@gmail.com> writes:
 >
-> https://lore.kernel.org/git/pull.845.git.1614484707.gitgitgadget@gmail.com/T/#t
+> [ many many lines that you did not have to quote omitted; please be
+>   more considerate and save reader's time next time ]
 >
-> and
+> >> * zh/format-patch-fractional-reroll-count (2021-03-01) 1 commit
+> >>  - format-patch: allow a non-integral version numbers
+> >>
+> > I noticed that you used the'previous-count' version of
+> > "zh/format-patch-fractional-reroll-count" in seen.
+> >  Do you want me to deal with this version instead of the
+> >  previous version that Denton Liu and Eric Sunshine helped
+> > me complete?What
+> >
+> >  If you want me to deal with the `previous-count` version,
+> >  I will roll it back again and deal with some small details:
+> > use "strtol_i".
 >
-> https://lore.kernel.org/git/pull.973.git.git.1614905738.gitgitgadget@gmail.com/T/#t
+> I do not have any preference.
 >
-> haven't been picked up yet?
-
-While we are in pre-release freeze, I'd refrain from picking up a
-brand new code with nontrivial complexity that is under discusion on
-the list (because I know I cannot spare enough bandwidth to keep up
-with the discussion and picking up an early iteration, and risking
-to merge it down without refreshing it with a newer iteration by
-mistake, is not a good tradeoff), while I am busy dealing with
-prerelease issues.  I do use the spare time to follow discussions on
-topics that are already in tree and possibly replace them with their
-newer rounds, and also new code that are of less importance and
-easier to reason about.
-
+> I didn't even read the newer iteration as we are in pre-release
+> freeze and I've been busy dealing with issues necessary to resolve
+> before the upcoming release.
+>
+Alright.
+Thanks.
