@@ -2,190 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E86F5C4332E
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3842C433E0
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:00:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C69BE64FC4
-	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 00:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66A3C64F96
+	for <git@archiver.kernel.org>; Thu, 11 Mar 2021 01:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230228AbhCKAiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 10 Mar 2021 19:38:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50546 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230250AbhCKAii (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Mar 2021 19:38:38 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A43EC061574
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:38 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id d139-20020a1c1d910000b029010b895cb6f2so11779283wmd.5
-        for <git@vger.kernel.org>; Wed, 10 Mar 2021 16:38:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=dMhr+Gv2VLBJYwJz6UREAFs9FMhAGm7N3yrGCW/kKxQ=;
-        b=K25FXreiM1dNTe+1qjAOSrBGkoUo/NaOJ+/LYhpjft2SyDvUyyaD3H5bqs6Uk3Dd19
-         U7pVyXl4J6Vux8f1Wn1C4+H5jkI7PDsZABLDPh3kzqwfrWvHyZ19VZlqRbnEz0xmCWbO
-         GkBRRl8zKdOe95PzJa7tXRCBtupeHBLYOx3qb5AEpYjW9V72aKe7XsM7PQ/ZOLwGTJXy
-         qaYpSscORpyxbUPiLnSLt0QLbpP9E3gyvGpF7erBhNwgqJjd0+Kc3rlBVT06fBdgciCg
-         9B8VLssGsa/tBMRFhToNGJS7FphG1FyFI5HppURbqqLd9MjoD1Z6z0+ht9Y3U8O7kuWY
-         By9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=dMhr+Gv2VLBJYwJz6UREAFs9FMhAGm7N3yrGCW/kKxQ=;
-        b=iTxrSvG9gn9vaAqSYZ5vPoxDmah8HImldApkhVb5RP6A4ZvlRbKsEQmByqm3W90YZD
-         ppBAJC/pc6S+lIi9iOO2eRB745ZHZAyZX0zumgad34HmE0DeSuX+xxhKT4zJjq63J4SC
-         qnYJvh8zdifSH/2LVTW+ZgUu8+u2QldFCfxcl+ip1djvTw1DlwWsmBXFvm5YolV5EW7Q
-         8mqkldBf6tY6uSql86SS8lIvHxpfygkzH2IpXgmYzF3UzgQefolXKpC7buOijdMl5SjY
-         a5iQGDh3sCCFjeFWLPh7HfmMK9GkransK7nSIZIIQtaTAqM/wKXZYZ65Vp0DRoIzun/O
-         Nm/Q==
-X-Gm-Message-State: AOAM5313DGBIpKdocyy8lgce/GM0s8lDzI2LWoFQKkV6xGSwJnAdNvZp
-        wLg2p9hf3E3SGBwoM1Ppn+3ym1sDopw=
-X-Google-Smtp-Source: ABdhPJykR2VOMFkJofUQJMnuriU7ieUm87aea6H//uLdCxa73Vs0NXhnDd3VJqOcmPAOxwa02whQCA==
-X-Received: by 2002:a05:600c:214d:: with SMTP id v13mr5728557wml.7.1615423116915;
-        Wed, 10 Mar 2021 16:38:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j12sm1012625wrx.59.2021.03.10.16.38.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Mar 2021 16:38:36 -0800 (PST)
-Message-Id: <80a0c27a74ad0314a84e956acf233f6de3b16252.1615423112.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
-References: <pull.845.v2.git.1615248599.gitgitgadget@gmail.com>
-        <pull.845.v3.git.1615423111.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 11 Mar 2021 00:38:30 +0000
-Subject: [PATCH v3 7/8] merge-ort: skip rename detection entirely if possible
+        id S229641AbhCKA7z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 10 Mar 2021 19:59:55 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62035 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229646AbhCKA7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Mar 2021 19:59:45 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 98E91ADF82;
+        Wed, 10 Mar 2021 19:59:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cIecINQ//XjksrFSwtC3hWYgx7c=; b=k2xiiq
+        sv42pIOHIODocxfmD/mpN3Q0BwZvqcgRBAFciCWA9ryt71T5j2FIQdaYksBdGR6n
+        kDpTLzJX5gSya8Fk6HR2hGMZwuyqw0QPiMewYC1SCm/QBwlKBgUHqyq44eoriMXk
+        twkTec+5b+0ojcGJ1EaWkE9EApJUDJmCzz2QI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YI8HwaKnuBwXnbii+8Q/wmuu1HuWRSri
+        eDz2DZKedtkysA9aZl2qEn0WhCb6F0kyYM6Mag+/bnyRwHDyXV7mxn8QG0SuOWrz
+        2zUOwDIiLzVAq0SsgAgb/hhBHWGctuRab1qd+xo/asr4F9FTciYh7/5upNLK8WFj
+        UtIA/peWWrA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73E6CADF80;
+        Wed, 10 Mar 2021 19:59:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7B6BADF7E;
+        Wed, 10 Mar 2021 19:59:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, nmulcahey@google.com
+Subject: Re: [PATCH] fetch-pack: do not mix --pack_header and packfile uri
+References: <xmqq5z1ykckc.fsf@gitster.g>
+        <20210310232906.2135256-1-jonathantanmy@google.com>
+Date:   Wed, 10 Mar 2021 16:59:43 -0800
+In-Reply-To: <20210310232906.2135256-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 10 Mar 2021 15:29:06 -0800")
+Message-ID: <xmqqlfauh5ds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1.90 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1107AA32-8205-11EB-87C6-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-diffcore_rename_extended() will do a bunch of setup, then check for
-exact renames, then abort before inexact rename detection if there are
-no more sources or destinations that need to be matched.  It will
-sometimes be the case, however, that either
-  * we start with neither any sources or destinations
-  * we start with no *relevant* sources
-In the first of these two cases, the setup and exact rename detection
-will be very cheap since there are 0 files to operate on.  In the second
-case, it is quite possible to have thousands of files with none of the
-source ones being relevant.  Avoid calling diffcore_rename_extended() or
-even some of the setup before diffcore_rename_extended() when we can
-determine that rename detection is unnecessary.
+>> Then get_pack() can move a lot of code out of it to this helper and
+>> just call it.  The processing the other packfile obtained by the
+>> packfile URI mechanism out of band can open the packstream and call
+>> the helper the same way.  When packfile URI mechanism is in use, both
+>> invocations of the helper would get "you are not alone so fsck may
+>> hit missing objects" bit, if fsck-objects are asked for.
+>> 
+>> That would avoid the "duplicated logic" and still allow the code to
+>> choose the best disposition of the incoming packdata per packfile.
+>> 
+>> In an extreme case, it is not hard to imagine that somebody prepares
+>> a very small base packfile and feed it via packfile URI mechanism,
+>> but have accumulated so many objects that are not yet rolled into an
+>> updated base packfile---cloning from such a repository may result in
+>> running unpack-objects for the packfile that came out of band, while
+>> processing the in-stream packfile with index-pack.
+>> 
+>> Hmm?
+>
+> Your suggestion (as opposed to the current situation, in which we're
+> locked into using index-pack for the out-of-band packfiles) would make
+> this possible, yes.
 
-For the testcases mentioned in commit 557ac0350d ("merge-ort: begin
-performance work; instrument with trace2_region_* calls", 2020-10-28),
-this change improves the performance as follows:
+Just to make sure, I am not interested in running unpack-objects on
+oob packfiles, as they are expected to be "so old, big and not
+changing that it is worth pre-generating" packfiles, so "yes the
+approach would make that useless thing possible" is not a useful
+criteria to judge how good the alternative approach would be.  If
+the approach results in a cleaner design that gives us more
+flexibility without risking unnecessary code duplication, it would
+be a good sign that the approach is more sound than the direction we
+took so far, though.
 
-                            Before                  After
-    no-renames:        6.003 s ±  0.048 s     5.708 s ±  0.111 s
-    mega-renames:    114.009 s ±  0.236 s   102.171 s ±  0.440 s
-    just-one-mega:     3.489 s ±  0.017 s     3.471 s ±  0.015 s
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index eea14024c657..bd089cb9a76f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2157,6 +2157,19 @@ static int process_renames(struct merge_options *opt,
- 	return clean_merge;
- }
- 
-+static inline int possible_side_renames(struct rename_info *renames,
-+					unsigned side_index)
-+{
-+	return renames->pairs[side_index].nr > 0 &&
-+	       !strset_empty(&renames->relevant_sources[side_index]);
-+}
-+
-+static inline int possible_renames(struct rename_info *renames)
-+{
-+	return possible_side_renames(renames, 1) ||
-+	       possible_side_renames(renames, 2);
-+}
-+
- static void resolve_diffpair_statuses(struct diff_queue_struct *q)
- {
- 	/*
-@@ -2193,6 +2206,16 @@ static void detect_regular_renames(struct merge_options *opt,
- 	struct diff_options diff_opts;
- 	struct rename_info *renames = &opt->priv->renames;
- 
-+	if (!possible_side_renames(renames, side_index)) {
-+		/*
-+		 * No rename detection needed for this side, but we still need
-+		 * to make sure 'adds' are marked correctly in case the other
-+		 * side had directory renames.
-+		 */
-+		resolve_diffpair_statuses(&renames->pairs[side_index]);
-+		return;
-+	}
-+
- 	repo_diff_setup(opt->repo, &diff_opts);
- 	diff_opts.flags.recursive = 1;
- 	diff_opts.flags.rename_empty = 0;
-@@ -2310,6 +2333,8 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	int need_dir_renames, s, clean = 1;
- 
- 	memset(&combined, 0, sizeof(combined));
-+	if (!possible_renames(renames))
-+		goto cleanup;
- 
- 	trace2_region_enter("merge", "regular renames", opt->repo);
- 	detect_regular_renames(opt, MERGE_SIDE1);
-@@ -2344,6 +2369,25 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	clean &= process_renames(opt, &combined);
- 	trace2_region_leave("merge", "process renames", opt->repo);
- 
-+	goto simple_cleanup; /* collect_renames() handles some of cleanup */
-+
-+cleanup:
-+	/*
-+	 * Free now unneeded filepairs, which would have been handled
-+	 * in collect_renames() normally but we skipped that code.
-+	 */
-+	for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++) {
-+		struct diff_queue_struct *side_pairs;
-+		int i;
-+
-+		side_pairs = &renames->pairs[s];
-+		for (i = 0; i < side_pairs->nr; ++i) {
-+			struct diff_filepair *p = side_pairs->queue[i];
-+			diff_free_filepair(p);
-+		}
-+	}
-+
-+simple_cleanup:
- 	/* Free memory for renames->pairs[] and combined */
- 	for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++) {
- 		free(renames->pairs[s].queue);
--- 
-gitgitgadget
-
+Thanks.
